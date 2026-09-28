@@ -1,0 +1,37 @@
+{
+  "id": "pop_culture-virality-10",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.virality",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should messaging apps cap how many chats a single message can be forwarded to?",
+  "sides": [
+    "Yes, cap forwarding",
+    "No, leave it open"
+  ],
+  "answer": "Falsehoods travel by forwarding, and a cap slows them without anyone reading messages. After WhatsApp limited frequently forwarded messages to one chat at a time in April 2020, it reported a 70% drop in them. In India in 2018, forwarded rumours of child kidnappers preceded mob killings. A little friction can save lives.",
+  "move": "Whichever side you took, the hinge is whether friction slows lies more than truths.",
+  "counterpoint": "A cap is blunt: it slows a flood warning or a missing-child alert exactly as much as a lie, and people just copy and paste. Researchers modelling public WhatsApp groups in India, Brazil and Indonesia found forwarding limits delayed viral spread but did not stop it. Labelling and debunking target the lie; a cap taxes everyone.",
+  "keywords": [
+    "whatsapp",
+    "forwarding limits",
+    "misinformation",
+    "india"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Melo et al., WhatsApp forwarding limits, 2019",
+  "source_kind": "primary_document",
+  "reference": "de Freitas Melo, Coimbra Vieira, Garimella, Vaz de Melo & Benevenuto, Can WhatsApp Counter Misinformation by Limiting Message Forwarding?, Complex Networks, 2019",
+  "written": "2026-09-27"
+}

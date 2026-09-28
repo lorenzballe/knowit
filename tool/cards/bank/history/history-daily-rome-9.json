@@ -1,0 +1,39 @@
+{
+  "id": "history-daily-rome-9",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.daily_rome",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the firefighters Augustus created for Rome were recruited mainly from freed slaves?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In AD 6 Augustus formed seven cohorts of vigiles, each covering two of the city's fourteen regions, fighting fires and patrolling at night. Early recruits were mostly freedmen, and a law of AD 24 gave informally freed slaves full citizenship after six years' service. Rome's night watch was a ladder out of second-class freedom.",
+  "move": "Look at who was given a dangerous job, and what they were paid in.",
+  "trap": "Assuming the capital's guards would be citizen soldiers.",
+  "keywords": [
+    "vigiles",
+    "augustus",
+    "firefighting",
+    "freedmen",
+    "citizenship"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sablayrolles, Libertinus miles, 1996",
+  "source_kind": "book",
+  "reference": "Sablayrolles, Libertinus miles: les cohortes de vigiles, Collection de l'École française de Rome 224, 1996",
+  "written": "2026-09-27"
+}

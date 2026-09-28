@@ -1,0 +1,39 @@
+{
+  "id": "science-glass-9",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.glass",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A glassworks switches from sand and soda to 100% crushed recycled glass. Roughly how much furnace energy does it save?",
+  "options": [
+    "About a quarter",
+    "About 90%",
+    "About half"
+  ],
+  "correct": 0,
+  "answer": "About a quarter. Each 10% of recycled glass, called cullet, cuts furnace energy by about 2.5 to 3%. Cullet skips breaking down soda ash and limestone, but must still be melted again at around 1,500 °C. Aluminium saves about 95% because it skips freeing metal from ore; glass has no such step.",
+  "move": "A saving is only as large as the step it lets you skip.",
+  "trap": "About 90%, by analogy with the famous saving on recycled aluminium.",
+  "keywords": [
+    "glass recycling",
+    "cullet",
+    "furnace energy",
+    "aluminium recycling"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Worrell et al., Lawrence Berkeley National Laboratory, 2008",
+  "source_kind": "institution",
+  "reference": "https://eta-publications.lbl.gov/sites/default/files/glass_guidebook_en.pdf",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "history-plague-7",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.plague",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the Black Death killed people in poor health and in good health at about the same rate?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Sharon DeWitte and James Wood studied skeletons from East Smithfield, a London plague cemetery of 1348 to 1349. Compared with burials from ordinary times, people whose bones showed earlier stress, such as lesions or stunting, were likelier to be among the plague dead. Old hardship left marks that predicted who fell.",
+  "move": "Even a disaster that looks blind usually has a pattern in whom it takes.",
+  "trap": "Trusting chronicles that describe the healthy dying overnight.",
+  "keywords": [
+    "east smithfield",
+    "skeletons",
+    "frailty",
+    "sharon dewitte",
+    "selective mortality"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "DeWitte and Wood, PNAS, 2008",
+  "source_kind": "paper",
+  "reference": "DeWitte and Wood, Selectivity of Black Death mortality with respect to preexisting health, PNAS 105, 2008, 1436-1441",
+  "written": "2026-09-27"
+}

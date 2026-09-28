@@ -1,0 +1,39 @@
+{
+  "id": "psychology-confirmation-9",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.confirmation",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confirmation",
+  "question": "True or false: in the 2-4-6 rule task, calling the feedback two named rules instead of yes and no roughly triples success?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In the standard task about one person in five names the rule at the first attempt. When Tweney and colleagues said each triple fitted either a rule called DAX or one called MED, about 60% did. Hunting for MED examples sent people outside their own guess, so disconfirming felt like confirming.",
+  "move": "To test a belief, go looking for evidence of its rival.",
+  "trap": "Assuming a mere change of labels cannot change how people reason.",
+  "keywords": [
+    "2-4-6 task",
+    "rule discovery",
+    "ryan tweney",
+    "dual goals",
+    "hypothesis testing"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tweney et al., Quarterly J Experimental Psychology, 1980",
+  "source_kind": "paper",
+  "reference": "https://journals.sagepub.com/doi/10.1080/00335558008248237",
+  "written": "2026-09-27"
+}

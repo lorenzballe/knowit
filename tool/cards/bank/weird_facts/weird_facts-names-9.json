@@ -1,0 +1,46 @@
+{
+  "id": "weird_facts-names-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.names",
+  "also": [
+    "science.maths_curios.probability"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "South Korea's 2015 census: Kim 21.5%, Lee 14.7%, Park 8.4%. What % chance do two random strangers share one of these three surnames?",
+  "value": 7.5,
+  "unit": "%",
+  "tolerance": 0.2,
+  "answer": "0.046 + 0.022 + 0.007 ≈ 0.075, about 7.5%.",
+  "move": "For two things to match, multiply the chances first, then add the ways.",
+  "trap": "Adding the three shares to 44.6%, which describes one stranger, not two.",
+  "hint": "A surname counts only if both strangers carry it.",
+  "steps": [
+    "Both Kim: 0.215 × 0.215 ≈ 0.046.",
+    "Both Lee: 0.147 × 0.147 ≈ 0.022.",
+    "Both Park: 0.084 × 0.084 ≈ 0.007.",
+    "0.046 + 0.022 + 0.007 ≈ 0.075, about 7.5%."
+  ],
+  "keywords": [
+    "korean surnames",
+    "kim",
+    "census",
+    "probability"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Statistics Korea, 2015 census",
+  "source_kind": "statistics",
+  "reference": "Statistics Korea, 2015 Population and Housing Census: surnames and family origins, 2016",
+  "written": "2026-09-27"
+}

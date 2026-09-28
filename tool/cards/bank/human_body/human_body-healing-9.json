@@ -1,0 +1,39 @@
+{
+  "id": "human_body-healing-9",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.healing",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Three broken bones: one held rigid, one allowed to flex a little, one flexing a lot. Which grows a big bony callus?",
+  "options": [
+    "The rigidly held one",
+    "The one flexing a little",
+    "The one flexing a lot"
+  ],
+  "correct": 1,
+  "answer": "The one flexing a little. Callus, a bridging collar of new bone, forms when the gap flexes by roughly 2 to 10% of its width. Held rigid, a break knits directly with little callus; flexing much more, it fills with fibrous tissue and may never unite. Surgeons choose their fixings partly by this rule.",
+  "move": "Some strain is the signal to build; none, or too much, stops it.",
+  "trap": "Assuming stiller is always better, so the rigid one grows most bone.",
+  "keywords": [
+    "fracture fixation",
+    "callus",
+    "strain theory",
+    "non-union"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Perren, Clinical Orthopaedics, 1979",
+  "source_kind": "paper",
+  "reference": "Perren, Physical and biological aspects of fracture healing with special reference to internal fixation, Clinical Orthopaedics and Related Research, 1979",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "technology-training-7",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.training",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the same message cost more, and fit less, when written to a chatbot in some languages?",
+  "answer": "Because its word-pieces were learned mostly from English. The tokeniser, which chops text into the chunks a model reads, gives common English words one piece but splits rarer scripts into many. A 2023 study found the same text could take up to 15 times as many pieces. They pay more per sentence.",
+  "move": "A tool shaped by its commonest users charges everyone else a hidden tax.",
+  "keywords": [
+    "tokenisation",
+    "word-pieces",
+    "languages",
+    "language models",
+    "pricing"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Petrov et al., NeurIPS, 2023",
+  "source_kind": "paper",
+  "reference": "Petrov, La Malfa, Torr & Bibi, Language Model Tokenizers Introduce Unfairness Between Languages, NeurIPS, 2023",
+  "written": "2026-09-27"
+}

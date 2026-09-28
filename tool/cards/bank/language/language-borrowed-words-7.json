@@ -1,0 +1,42 @@
+{
+  "id": "language-borrowed-words-7",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.borrowed_words",
+  "also": [
+    "history.everyday_life.food"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "survivorship",
+  "question": "True or false: in Middle English, beef could name a living ox, not just its meat?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Norman French boef meant the animal, and English borrowed it with that sense: the plural beeves, meaning cattle, lasted into the 1800s. Mutton could likewise mean a live sheep. The neat split, English words in the field and French words on the table, settled over centuries, and Walter Scott's novel Ivanhoe made it famous.",
+  "move": "Today's neat divisions may be what is left after the untidy uses died.",
+  "trap": "Picturing Norman lords eating beef while Saxon serfs herded cows.",
+  "keywords": [
+    "beef",
+    "beeves",
+    "mutton",
+    "norman french",
+    "ivanhoe"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Durkin, Borrowed Words, 2014",
+  "source_kind": "book",
+  "reference": "Durkin, Borrowed Words: A History of Loanwords in English, Oxford University Press, 2014",
+  "written": "2026-09-27"
+}

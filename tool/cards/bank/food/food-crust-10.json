@@ -1,0 +1,40 @@
+{
+  "id": "food-crust-10",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.crust",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "The rules for certified Neapolitan pizza set the oven at about 485 °C. How long does the pizza bake?",
+  "options": [
+    "60 to 90 seconds",
+    "4 to 5 minutes",
+    "10 to 12 minutes"
+  ],
+  "correct": 0,
+  "answer": "60 to 90 seconds. At that heat the dome radiates so strongly that the rim puffs and blisters with dark spots before any crust can dry thick. The EU-registered rules ask for a soft, elastic pizza that folds easily, not a crisp one. A home oven at 250 °C needs about ten minutes.",
+  "move": "A number from your own kitchen is a poor guide to someone else's.",
+  "trap": "Carrying over a home oven's ten minutes to every pizza.",
+  "keywords": [
+    "neapolitan pizza",
+    "wood-fired oven",
+    "cornicione",
+    "baking time",
+    "tsg"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "EU Regulation 97/2010, Pizza Napoletana",
+  "source_kind": "primary_document",
+  "reference": "Commission Regulation (EU) No 97/2010 entering a name in the register of traditional specialities guaranteed (Pizza Napoletana (TSG)), 2010",
+  "written": "2026-09-27"
+}

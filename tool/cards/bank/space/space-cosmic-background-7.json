@@ -1,0 +1,35 @@
+{
+  "id": "space-cosmic-background-7",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.cosmic_background",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How has the cosmic background's temperature been measured as it was more than 10 billion years ago?",
+  "answer": "With McKellar's 1941 trick, taken far away. Atoms in a gas cloud seen against a distant quasar are stirred by the background radiation of their own era. Srianand's team found carbon atoms in a cloud at redshift 2.34 excited as if by 6 to 14 K, bracketing the 9.1 K predicted: an older, hotter sky.",
+  "move": "A method that works nearby can be carried where nobody can go.",
+  "keywords": [
+    "cosmic background temperature",
+    "quasar absorption",
+    "redshift",
+    "neutral carbon"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "space-cosmic-background-1"
+  ],
+  "figure": "none",
+  "source": "Srianand, Petitjean & Ledoux, Nature, 2000",
+  "source_kind": "paper",
+  "reference": "Srianand, Petitjean & Ledoux, The cosmic microwave background radiation temperature at a redshift of 2.34, Nature 408, 931, 2000",
+  "written": "2026-09-27"
+}

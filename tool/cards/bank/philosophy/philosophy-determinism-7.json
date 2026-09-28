@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-determinism-7",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.determinism",
+  "also": [
+    "science.physics.quantum"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confirmation",
+  "question": "True or false: the experiments that won the 2022 Nobel Prize in Physics proved the world cannot be deterministic?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The tests by Aspect, Clauser and Zeilinger ruled out local hidden variables: preset answers carried along by each particle. They left standing David Bohm's 1952 theory, fully deterministic, which predicts the same results by letting distant particles influence each other at once. Many-worlds is deterministic too. Dice are in the interpretation, not the data.",
+  "move": "Evidence that fits your theory proves little until the rivals fail to fit.",
+  "trap": "Reading no local hidden variables as no hidden causes at all.",
+  "keywords": [
+    "bell tests",
+    "bohmian mechanics",
+    "hidden variables",
+    "quantum indeterminism"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bell, Speakable and Unspeakable, 1987",
+  "source_kind": "book",
+  "reference": "Bell, Speakable and Unspeakable in Quantum Mechanics, Cambridge University Press, 1987",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "human_body-balance-8",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.balance",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Footprints show australopiths walked upright 3.7 million years ago. What did scans of their inner-ear canals suggest?",
+  "options": [
+    "Balance organs already like ours",
+    "Balance organs still like a great ape's",
+    "Balance organs unlike any living primate"
+  ],
+  "correct": 1,
+  "answer": "Balance organs still like a great ape's. Measuring the canals in fossil skulls in 1994, Spoor and colleagues found ape-sized vertical canals in australopiths, while Homo erectus already had the enlarged human ones. Upright walking came first; the equipment for running and balancing on two legs arrived later. The inner ear dates what footprints cannot.",
+  "move": "One piece of evidence that agrees does not settle the whole question.",
+  "trap": "Taking upright footprints as proof of a fully human body.",
+  "keywords": [
+    "australopithecus",
+    "semicircular canals",
+    "bipedalism",
+    "homo erectus",
+    "fossils"
+  ],
+  "era": "ancient",
+  "region": "africa",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Spoor, Wood & Zonneveld, Nature, 1994",
+  "source_kind": "paper",
+  "reference": "Spoor, Wood & Zonneveld, Implications of early hominid labyrinthine morphology for evolution of human bipedal locomotion, Nature, 1994",
+  "written": "2026-09-27"
+}

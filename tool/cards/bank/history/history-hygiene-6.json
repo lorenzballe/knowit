@@ -1,0 +1,36 @@
+{
+  "id": "history-hygiene-6",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.hygiene",
+  "also": [
+    "science.chemistry_at_home.cleaning"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did wealthy English households of the 1600s and 1700s do their big laundry only every few weeks or months?",
+  "answer": "Because they owned enough linen to wait. The great wash was a hired job of several days: soaking in lye, boiling, beating, rinsing and drying on hedges. A house stocked with dozens of shirts, shifts and sheets could hold out for a month or a quarter. The poor, with one or two shirts, washed constantly.",
+  "move": "How rarely a chore is done can measure wealth rather than neglect.",
+  "keywords": [
+    "laundry",
+    "linen",
+    "great wash",
+    "lye",
+    "housework"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Davidson, A Woman's Work Is Never Done, 1982",
+  "source_kind": "book",
+  "reference": "Davidson, A Woman's Work Is Never Done: A History of Housework in the British Isles 1650–1950, Chatto & Windus, 1982",
+  "written": "2026-09-27"
+}

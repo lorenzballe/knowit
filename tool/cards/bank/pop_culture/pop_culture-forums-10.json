@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-forums-10",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.forums",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should large online forums be required to verify that users register under their real names?",
+  "sides": [
+    "Yes, verify real names",
+    "No, allow pseudonyms"
+  ],
+  "answer": "Anonymity makes abuse cheap: harassment, defamation and coordinated lying cost nothing when nobody can be traced. A verified identity behind each account, even under a nickname, lets victims and courts reach offenders and makes people weigh a post before sending it. Signing what you publish is the ordinary price of speaking to thousands.",
+  "move": "Whichever side you took, the hinge is who holds the identity records, and how safely.",
+  "counterpoint": "South Korea tried it. From 2007 big sites had to verify identities; studies found abusive comments fell only modestly while posting fell, and in 2011 hackers stole the stored details of about 35 million users of one portal. The Constitutional Court struck the rule down in 2012. Pseudonyms protect whistle-blowers, abuse survivors and dissidents.",
+  "keywords": [
+    "real-name policy",
+    "south korea",
+    "anonymity",
+    "online abuse",
+    "data breach"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Constitutional Court of Korea, 2012",
+  "source_kind": "primary_document",
+  "reference": "Constitutional Court of Korea, 2010Hun-Ma47, decision on the internet real-name system, 23 August 2012",
+  "written": "2026-09-27"
+}

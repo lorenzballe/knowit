@@ -1,0 +1,32 @@
+{
+  "id": "cinema-miniatures-6",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.miniatures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a camera pan across a miniature hung close to the lens without the illusion breaking?",
+  "answer": "By turning around the lens's nodal point, the spot inside it where the light rays cross. Pivoted there, near and far objects keep their alignment, so a model castle hung a metre from the camera stays perched on a real hill kilometres away. Pivot anywhere else and the model slides across the landscape.",
+  "move": "Find the one point from which near and far never shift against each other.",
+  "keywords": [
+    "hanging miniature",
+    "nodal point",
+    "parallax",
+    "camera pan"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vaz & Barron, The Invisible Art, 2002",
+  "source_kind": "book",
+  "reference": "Vaz & Barron, The Invisible Art: The Legends of Movie Matte Painting, Chronicle Books, 2002",
+  "written": "2026-09-27"
+}

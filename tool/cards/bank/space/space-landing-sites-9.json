@@ -1,0 +1,38 @@
+{
+  "id": "space-landing-sites-9",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.landing_sites",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Japan's SLIM probe came down within 100 m of its target in 2024, even though it ended up upside down?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. SLIM landed about 55 m from its aim point, far closer than earlier robotic landers, by matching craters below against a map on board. But one of its two main engines lost a nozzle some 50 m up, and the lander tipped onto its nose, its solar cells facing west.",
+  "move": "Hitting the target and landing well are two separate tests.",
+  "trap": "Assuming a lander that tipped over must have missed its mark.",
+  "keywords": [
+    "slim",
+    "jaxa",
+    "precision landing",
+    "crater matching"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "JAXA, SLIM landing results, 2024",
+  "source_kind": "institution",
+  "reference": "Japan Aerospace Exploration Agency (JAXA), Smart Lander for Investigating Moon (SLIM): landing results briefing, January 2024",
+  "written": "2026-09-27"
+}

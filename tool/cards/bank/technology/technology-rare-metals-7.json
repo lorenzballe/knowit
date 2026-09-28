@@ -1,0 +1,40 @@
+{
+  "id": "technology-rare-metals-7",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.rare_metals",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A rare-earth mine doubles output to meet demand for magnet metals. What happens to its lanthanum and cerium?",
+  "options": [
+    "It doubles too, into a glutted market",
+    "It stays level; the mine skips them",
+    "It falls as refining favours magnet metals"
+  ],
+  "correct": 0,
+  "answer": "It doubles too, into a glutted market. The elements sit in the ore in fixed proportions: in bastnäsite, the commonest rare-earth ore, lanthanum and cerium make up roughly three-quarters of the rare earths, neodymium and praseodymium under a fifth. Chasing magnet metals fills warehouses with cheap cerium that nobody ordered.",
+  "move": "When goods come bundled, demand for one sets the supply of all.",
+  "trap": "Picturing a mine that can choose which elements it digs up.",
+  "keywords": [
+    "rare earths",
+    "balance problem",
+    "lanthanum",
+    "cerium",
+    "neodymium"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Binnemans & Jones, Journal of Sustainable Metallurgy, 2015",
+  "source_kind": "paper",
+  "reference": "doi:10.1007/s40831-014-0005-1",
+  "written": "2026-09-27"
+}

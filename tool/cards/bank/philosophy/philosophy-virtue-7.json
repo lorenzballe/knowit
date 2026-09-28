@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-virtue-7",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.virtue",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: Aristotle held that a person could be fully brave while lacking the other virtues?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. He allowed natural boldness without wisdom, but held that virtue in the full sense needs practical wisdom, and practical wisdom, once present, brings every virtue with it. Natural courage without it, he says, is like a strong body moving without sight: all the heavier its stumbles.",
+  "move": "Before counting qualities one by one, ask whether they share a root.",
+  "trap": "Treating the virtues as separate skills, learnt one at a time.",
+  "keywords": [
+    "unity of the virtues",
+    "practical wisdom",
+    "courage",
+    "aristotle"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Aristotle, Nicomachean Ethics VI.13",
+  "source_kind": "book",
+  "reference": "Aristotle, Nicomachean Ethics, trans. Irwin, 2nd edition, Hackett, 1999, 1144b1-1145a2",
+  "written": "2026-09-27"
+}

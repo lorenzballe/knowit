@@ -1,0 +1,39 @@
+{
+  "id": "human_body-taste-7",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.taste",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Rinse the mouth with a harmless compound that blocks the sweet receptor, then sip plain water. How does the water taste?",
+  "options": [
+    "Sweet",
+    "Faintly bitter",
+    "Of nothing at all"
+  ],
+  "correct": 0,
+  "answer": "Sweet. The blocker, lactisole, holds the sweet receptor below its normal resting activity. Water rinses the blocker away, the receptor rebounds above that resting level, and the brain reads the rebound as sweetness. The same kind of release may explain why water tastes sweet after a mouthful of artichoke.",
+  "move": "A signal that swings back past zero can feel like a new cause.",
+  "trap": "Water carries nothing sweet, so nothing sweet can be tasted.",
+  "keywords": [
+    "lactisole",
+    "sweet receptor",
+    "water taste",
+    "artichoke"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Galindo-Cuspinera et al., Nature, 2006",
+  "source_kind": "paper",
+  "reference": "Galindo-Cuspinera, Winnig, Bufe, Meyerhof & Breslin, A TAS1R receptor-based explanation of sweet 'water-taste', Nature, 2006",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,44 @@
+{
+  "id": "cinema-miniatures-8",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.miniatures",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A 1:25 model train, filmed by the square-root rule, must pass for a real one at 100 km/h. Model speed in km/h?",
+  "value": 20,
+  "unit": "km/h",
+  "answer": "The model must move 5 times faster to make up for it: 4 x 5 = 20 km/h.",
+  "move": "When two things are rescaled at once, apply both before trusting the result.",
+  "trap": "Answering 4 km/h, dividing by the scale and forgetting the camera.",
+  "hint": "Scale the distance first, then ask what the fast camera does to time.",
+  "steps": [
+    "Model distances are 25 times smaller: 100 / 25 = 4 km/h if time were unchanged.",
+    "The camera runs √25 = 5 times fast, so each real second lasts 5 on screen.",
+    "The model must move 5 times faster to make up for it: 4 x 5 = 20 km/h."
+  ],
+  "keywords": [
+    "scale models",
+    "high-speed filming",
+    "square-root rule",
+    "model trains"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "cinema-miniatures-2"
+  ],
+  "figure": "none",
+  "source": "Brosnan, Movie Magic, 1974",
+  "source_kind": "book",
+  "reference": "Brosnan, Movie Magic: The Story of Special Effects in the Cinema, Little, Brown, 1974",
+  "written": "2026-09-27"
+}

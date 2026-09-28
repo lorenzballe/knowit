@@ -1,0 +1,33 @@
+{
+  "id": "art-marble-6",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.marble",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is Michelangelo's David so slender when seen from the side?",
+  "answer": "Because the block had been cut into before him. Quarried at Carrara in the 1460s for a figure on Florence cathedral, the tall, narrow block was begun by Agostino di Duccio, then taken up and dropped by Antonio Rossellino. It lay unused until 1501. Michelangelo fitted David into a slab others had spoiled.",
+  "move": "Before praising a design, ask what it was forced to fit inside.",
+  "keywords": [
+    "michelangelo",
+    "david",
+    "agostino di duccio",
+    "carrara marble",
+    "florence cathedral"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Paoletti, Michelangelo's David, 2015",
+  "source_kind": "book",
+  "reference": "John T. Paoletti, Michelangelo's David: Florentine History and Civic Identity, Cambridge University Press, 2015",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "cinema-flops-7",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.flops",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A film costs $200 million to make and $100 million to market. Cinemas keep half of ticket sales. Break-even worldwide gross, in millions of dollars?",
+  "value": 600,
+  "unit": "million dollars",
+  "answer": "300 / 0.5 = 600 million dollars.",
+  "move": "Before comparing sales with costs, find out how much of each sale is yours.",
+  "trap": "Stopping at 300, as if the studio kept the whole ticket price.",
+  "hint": "Work out what the studio must receive, then how much must be sold to hand it that.",
+  "steps": [
+    "Costs to recover: 200 + 100 = 300 million dollars.",
+    "The studio receives half of every ticket sold.",
+    "300 / 0.5 = 600 million dollars."
+  ],
+  "keywords": [
+    "break-even",
+    "box office",
+    "marketing costs",
+    "exhibitors"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Epstein, The Hollywood Economist, 2010",
+  "source_kind": "book",
+  "reference": "Epstein, The Hollywood Economist: The Hidden Financial Reality Behind the Movies, Melville House, 2010",
+  "written": "2026-09-27"
+}

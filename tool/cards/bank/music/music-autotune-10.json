@@ -1,0 +1,39 @@
+{
+  "id": "music-autotune-10",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.autotune",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A singer's headphones play their voice back slightly sharp, as live pitch correction can. What does the voice do within a fraction of a second?",
+  "options": [
+    "Rises to follow the shift",
+    "Holds steady until the singer notices",
+    "Drops, against the shift"
+  ],
+  "correct": 2,
+  "answer": "Drops, against the shift. Burnett and colleagues shifted singers' feedback by small amounts: most responses opposed the shift, beginning roughly a tenth to a fifth of a second later, before any deliberate choice. The voice steers by what it hears. A singer's monitor mix is part of the steering wheel.",
+  "move": "A system that corrects itself by feedback will fight any change to what it senses.",
+  "trap": "Voices follow what they hear, as when singing along with a band.",
+  "keywords": [
+    "pitch-shift reflex",
+    "auditory feedback",
+    "singers",
+    "monitoring"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Burnett et al., JASA, 1998",
+  "source_kind": "paper",
+  "reference": "Burnett, Freedland, Larson & Hain, Voice F0 responses to manipulations in pitch feedback, Journal of the Acoustical Society of America, 1998",
+  "written": "2026-09-27"
+}

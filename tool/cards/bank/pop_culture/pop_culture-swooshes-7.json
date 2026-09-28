@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-swooshes-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.swooshes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do some football shirts carry the maker's logo woven faintly into the fabric itself?",
+  "answer": "To get round a size cap. UEFA's kit rules limit a manufacturer's mark to 20 square centimetres, about a matchbox face. They allow a tone-on-tone weave repeating a small maker's mark across the cloth, which FIFA bans at its own tournaments. The chest logo stays small; the shirt wears it dozens of times.",
+  "move": "When a rule caps the size of something, look for where the copies went.",
+  "keywords": [
+    "uefa kit regulations",
+    "football shirts",
+    "manufacturer logo",
+    "jacquard"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Footy Headlines, UEFA and FIFA kit rules",
+  "source_kind": "news_archive",
+  "reference": "https://www.footyheadlines.com/9825058572/jacquard-brand-patterns-are-allowed-by-uefa-but-banned-by-fifa.html",
+  "written": "2026-09-27"
+}

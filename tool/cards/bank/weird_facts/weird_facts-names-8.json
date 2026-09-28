@@ -1,0 +1,43 @@
+{
+  "id": "weird_facts-names-8",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.names",
+  "also": [
+    "science.maths_curios.probability"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "The bell-shaped curve of errors is called Gaussian. Who published it first?",
+  "options": [
+    "Carl Friedrich Gauss, in 1809",
+    "Pierre-Simon Laplace, in 1810",
+    "Abraham de Moivre, in 1733"
+  ],
+  "correct": 2,
+  "answer": "Abraham de Moivre, in 1733. He derived it to approximate coin-toss odds, 76 years before Gauss used it for errors in astronomy. The statistician Stephen Stigler later stated the rule that no discovery is named after its first discoverer, and credited it to the sociologist Robert Merton. The law obeys itself.",
+  "move": "A name on an idea records who made it famous, not who made it.",
+  "trap": "Trusting that a discovery carries the name of whoever found it.",
+  "keywords": [
+    "normal distribution",
+    "de moivre",
+    "gauss",
+    "stigler's law",
+    "eponymy"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stigler, Trans NY Acad Sci, 1980",
+  "source_kind": "reference_work",
+  "reference": "Stigler, Stigler's law of eponymy, Transactions of the New York Academy of Sciences, 1980",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "science-cooking-reactions-7",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cooking_reactions",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "A pressure cooker lifts boiling water from 100 °C to about 120 °C. If cooking reactions double every 10 °C, how many times faster?",
+  "value": 4,
+  "unit": "times faster",
+  "answer": "2 x 2 = 4 times faster.",
+  "move": "When a rate compounds, count the steps, not the size of the numbers.",
+  "trap": "About 20% faster, comparing 120 with 100.",
+  "hint": "Count the ten-degree steps, then double once for each.",
+  "steps": [
+    "120 - 100 = 20 °C, which is two steps of 10 °C.",
+    "Each step doubles the rate.",
+    "2 x 2 = 4 times faster."
+  ],
+  "keywords": [
+    "pressure cooker",
+    "reaction rate",
+    "boiling point",
+    "temperature"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fennema's Food Chemistry, 2008",
+  "source_kind": "book",
+  "reference": "Damodaran, Parkin & Fennema (eds), Fennema's Food Chemistry, 4th edition, CRC Press, 2008",
+  "written": "2026-09-27"
+}

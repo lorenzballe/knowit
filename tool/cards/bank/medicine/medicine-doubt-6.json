@@ -1,0 +1,33 @@
+{
+  "id": "medicine-doubt-6",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.doubt",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What were the first conscientious objectors recognised by British law refusing, years before anyone was conscripted to fight?",
+  "answer": "Smallpox vaccination. Under the Vaccination Act of 1898, parents who convinced two magistrates that they conscientiously believed the jab would harm their child were exempted from it. Magistrates often refused, so a 1907 act let parents simply sign a declaration. Conscience was first written into law against a lancet, not a rifle.",
+  "move": "An exemption written for one fight becomes the template for the next.",
+  "keywords": [
+    "conscientious objector",
+    "vaccination act 1898",
+    "smallpox",
+    "exemption",
+    "magistrates"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Durbach, Bodily Matters, 2005",
+  "source_kind": "book",
+  "reference": "Durbach, Bodily Matters: The Anti-Vaccination Movement in England, 1853–1907, Duke University Press, 2005",
+  "written": "2026-09-27"
+}

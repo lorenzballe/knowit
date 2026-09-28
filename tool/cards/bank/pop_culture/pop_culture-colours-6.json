@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-colours-6",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.colours",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why won't EU trademark law accept a painted colour swatch alone to define a colour mark?",
+  "answer": "Because the swatch fades. In Libertel, a 2003 case over a Dutch telecom firm's orange, the EU's top court held that a paper sample may deteriorate with time, so it cannot fix the sign for good; a recognised code such as a Pantone number can. The mark can be renewed forever; the paper cannot.",
+  "move": "A record that changes with age cannot settle a dispute years later.",
+  "keywords": [
+    "libertel",
+    "colour trademarks",
+    "pantone",
+    "court of justice",
+    "orange"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CJEU, Libertel, C-104/01, 2003",
+  "source_kind": "primary_document",
+  "reference": "https://ipcuria.eu/details.php?t=1&reference=C-104%2F01",
+  "written": "2026-09-27"
+}

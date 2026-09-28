@@ -1,0 +1,38 @@
+{
+  "id": "technology-telephones-7",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.telephones",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: on the classic digital phone network, calls between North America and Europe must be converted between two voice encodings?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Both squeeze loudness onto a curve, with fine steps for whispers and coarse ones for shouts, but on different curves: North America and Japan use mu-law, Europe and most of the world A-law. Every sample crossing between the two regions is translated at a gateway, millions a second on a busy route.",
+  "move": "Something that works seamlessly may be hiding a translator in the middle.",
+  "trap": "Assuming a network that connects everyone must share one format.",
+  "keywords": [
+    "mu-law",
+    "a-law",
+    "voice encoding",
+    "international calls"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bellamy, Digital Telephony, 2000",
+  "source_kind": "book",
+  "reference": "Bellamy, Digital Telephony, 3rd edition, Wiley, 2000",
+  "written": "2026-09-27"
+}

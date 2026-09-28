@@ -1,0 +1,39 @@
+{
+  "id": "economics-subscriptions-9",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.subscriptions",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: since 2022, British insurers may not quote renewing home and car customers more than new ones?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. From January 2022 the Financial Conduct Authority banned price walking, raising premiums year after year for customers who renew without shopping around. It had found about 6 million policyholders overpaying for their risk, by some £1.2 billion in 2018. A renewal quote may no longer exceed the price offered to an identical newcomer.",
+  "move": "Where a contract renews itself, check who is paying for staying.",
+  "trap": "Assuming firms may always charge loyal customers whatever they accept.",
+  "keywords": [
+    "price walking",
+    "loyalty penalty",
+    "insurance renewals",
+    "financial conduct authority",
+    "auto-renewal"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Financial Conduct Authority, PS21/5, 2021",
+  "source_kind": "institution",
+  "reference": "Financial Conduct Authority, General Insurance Pricing Practices: Policy Statement PS21/5, 2021",
+  "written": "2026-09-27"
+}

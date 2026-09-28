@@ -1,0 +1,42 @@
+{
+  "id": "language-irregular-verbs-9",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.irregular_verbs",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A regular verb such as walk has four forms. How many distinct forms does be have in standard English?",
+  "value": 8,
+  "unit": "forms",
+  "answer": "4 + 2 + 2 = 8 forms.",
+  "move": "Before counting, sort the pile into groups you cannot miss.",
+  "trap": "Listing present and past forms and forgetting been and being.",
+  "hint": "Sort them into present, past and the two participles.",
+  "steps": [
+    "Present: be, am, is, are = 4 forms.",
+    "Past: was, were = 2 forms.",
+    "Participles: been, being = 2 forms.",
+    "4 + 2 + 2 = 8 forms."
+  ],
+  "keywords": [
+    "verb be",
+    "suppletion",
+    "verb forms",
+    "english grammar"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Quirk et al., A Comprehensive Grammar, 1985",
+  "source_kind": "book",
+  "reference": "Quirk, Greenbaum, Leech & Svartvik, A Comprehensive Grammar of the English Language, Longman, 1985",
+  "written": "2026-09-27"
+}

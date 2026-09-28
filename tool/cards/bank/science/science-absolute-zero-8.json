@@ -1,0 +1,32 @@
+{
+  "id": "science-absolute-zero-8",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.absolute_zero",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the exact temperature of water's triple point, now that the kelvin has been redefined?",
+  "answer": "Nothing exact any more. From 1954 the scale was defined by that point, so it was 273.16 K by decree. Since May 2019 the kelvin rests on a fixed Boltzmann constant, which links energy to temperature, and the triple point became a measurement: 273.16 K, give or take a ten-thousandth of a kelvin.",
+  "move": "Redefine a standard and its old anchor becomes just another measurement.",
+  "keywords": [
+    "kelvin",
+    "triple point of water",
+    "boltzmann constant",
+    "si redefinition"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "BIPM, The International System of Units, 2019",
+  "source_kind": "standard",
+  "reference": "Bureau International des Poids et Mesures, The International System of Units (SI Brochure), 9th edition, 2019",
+  "written": "2026-09-27"
+}

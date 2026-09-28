@@ -1,0 +1,41 @@
+{
+  "id": "space-launch-windows-9",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.launch_windows",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: sending a probe from Earth into the Sun takes more change of speed than sending it out of the solar system?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Earth carries everything round the Sun at about 30 km/s; to fall in, a probe must cancel nearly all of that, while leaving the solar system takes only about 12 km/s more. Parker Solar Probe, which merely grazes the Sun, left in a window timed for Venus, whose seven flybys shed its speed.",
+  "move": "Moving sideways fast makes the centre the hardest place to reach.",
+  "trap": "Picturing the Sun as downhill, so falling in must be easy.",
+  "keywords": [
+    "parker solar probe",
+    "delta-v",
+    "venus flybys",
+    "solar escape"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fox et al., Space Science Reviews, 2016",
+  "source_kind": "paper",
+  "reference": "Fox et al., The Solar Probe Plus Mission: Humanity's First Visit to Our Star, Space Science Reviews 204, 7, 2016",
+  "written": "2026-09-27"
+}

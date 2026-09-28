@@ -1,0 +1,40 @@
+{
+  "id": "food-salt-7",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.salt",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "Some large cohorts find people who eat the least salt die sooner. What do critics chiefly suspect?",
+  "options": [
+    "Low-salt diets run short of iodine",
+    "Sick people eat less, salt included",
+    "Low salt harms the heart directly"
+  ],
+  "correct": 1,
+  "answer": "Sick people eat less, salt included. Frail, ill and dieting people eat less of everything, so a low salt reading can mark illness rather than cause it. Many cohorts also judged intake from one urine sample, which swings day to day. The low end of the curve fills with the unwell.",
+  "move": "When the sick do less of something, doing less of it looks deadly.",
+  "trap": "Harm to the heart directly, the reading the curve seems to show.",
+  "keywords": [
+    "sodium intake",
+    "j-curve",
+    "reverse causation",
+    "cohort studies",
+    "urine sampling"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cobb et al., Circulation, AHA advisory, 2014",
+  "source_kind": "paper",
+  "reference": "Cobb et al., Methodological issues in cohort studies that relate sodium intake to cardiovascular disease outcomes: a science advisory from the American Heart Association, Circulation, 2014",
+  "written": "2026-09-27"
+}

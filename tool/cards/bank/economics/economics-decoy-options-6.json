@@ -1,0 +1,32 @@
+{
+  "id": "economics-decoy-options-6",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.decoy_options",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can switching to the middle option after a shop adds an expensive top model ever be rational?",
+  "answer": "Yes, for a buyer who does not know what suits them. In Emir Kamenica's 2008 model, such shoppers read the product line itself: sellers stock what typical customers want, so a new top model signals that the middle one is the ordinary choice. The added option can carry information, not only exploit a bias.",
+  "move": "What a seller chooses to offer is itself a piece of evidence.",
+  "keywords": [
+    "product lines",
+    "compromise effect",
+    "inference",
+    "uninformed buyers"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kamenica, American Economic Review, 2008",
+  "source_kind": "paper",
+  "reference": "Kamenica, Contextual Inference in Markets: On the Informational Content of Product Lines, American Economic Review, 2008",
+  "written": "2026-09-27"
+}

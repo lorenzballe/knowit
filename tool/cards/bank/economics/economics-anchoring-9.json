@@ -1,0 +1,32 @@
+{
+  "id": "economics-anchoring-9",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.anchoring",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Warning people about anchors barely weakens them. What did weaken a seller's price's hold on car experts?",
+  "answer": "Arguing against it. Mussweiler, Strack and Pfeiffer gave car mechanics and dealers a seller's price for a used car; those first asked to list reasons it might be wrong were anchored far less. Earlier studies found forewarning did little. Knowing about the bias is not the cure; building the case for another number is.",
+  "move": "Before accepting a figure, argue for a different one out loud.",
+  "keywords": [
+    "used cars",
+    "car dealers",
+    "debiasing",
+    "considering the opposite"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mussweiler, Strack & Pfeiffer, PSPB, 2000",
+  "source_kind": "paper",
+  "reference": "Mussweiler, Strack & Pfeiffer, Overcoming the Inevitable Anchoring Effect: Considering the Opposite Compensates for Selective Accessibility, Personality and Social Psychology Bulletin, 2000",
+  "written": "2026-09-27"
+}

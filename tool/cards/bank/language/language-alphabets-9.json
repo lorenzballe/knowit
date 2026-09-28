@@ -1,0 +1,39 @@
+{
+  "id": "language-alphabets-9",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.alphabets",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: as Norse gained vowel sounds around 800, carvers cut the runic alphabet from 24 letters to 16?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The Younger Futhark of the Viking Age had 16 runes for a language with more distinct vowels than before, so one rune covered several sounds: u stood for u, o, y and w, and i also for e. Why is still debated. Readers leaned on context until dotted runes began splitting sounds around 1000.",
+  "move": "A system can grow simpler while the thing it describes grows richer.",
+  "trap": "Assuming a language with more sounds must need more letters.",
+  "keywords": [
+    "runes",
+    "younger futhark",
+    "old norse",
+    "vikings",
+    "vowels"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barnes, Runes: A Handbook, 2012",
+  "source_kind": "book",
+  "reference": "Barnes, Runes: A Handbook, Boydell Press, 2012",
+  "written": "2026-09-27"
+}

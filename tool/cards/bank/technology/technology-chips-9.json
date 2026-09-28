@@ -1,0 +1,39 @@
+{
+  "id": "technology-chips-9",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.chips",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "True or false: the top clock speed of desktop processors roughly tripled between 2005 and 2025?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Pentium 4 chips reached 3.8 GHz in 2004; the fastest desktop chips of 2025 boost to about 6 GHz, well under double. Clocks stalled when Dennard scaling ended: transistors kept shrinking, but their voltage stopped falling with them, so faster switching meant more heat than a chip could shed. Spare transistors became extra cores.",
+  "move": "When one trend rides on another, check the other is still running.",
+  "trap": "Transistor counts kept doubling, so speed seemed bound to follow.",
+  "keywords": [
+    "clock speed",
+    "dennard scaling",
+    "transistors",
+    "multicore processors",
+    "heat"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Dennard et al., IEEE JSSC, 1974",
+  "source_kind": "paper",
+  "reference": "Dennard, Gaensslen, Yu, Rideout, Bassous & LeBlanc, Design of ion-implanted MOSFET's with very small physical dimensions, IEEE Journal of Solid-State Circuits 9(5), 1974",
+  "written": "2026-09-27"
+}

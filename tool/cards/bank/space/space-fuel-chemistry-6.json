@@ -1,0 +1,32 @@
+{
+  "id": "space-fuel-chemistry-6",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.fuel_chemistry",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do many satellites fire their thrusters using a single propellant and no oxidiser at all?",
+  "answer": "By tearing hydrazine apart rather than burning it. Passed over a bed of iridium-coated pellets, hydrazine decomposes into hot nitrogen, hydrogen and ammonia, with no spark and no oxygen, even starting at room temperature. It fires reliably for years. The cost is the fuel itself: toxic enough that technicians load it in sealed suits.",
+  "move": "Energy can come from taking one thing apart, not only from joining two.",
+  "keywords": [
+    "hydrazine",
+    "monopropellant",
+    "iridium catalyst",
+    "satellite thrusters"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brown, Spacecraft Propulsion, AIAA, 1996",
+  "source_kind": "book",
+  "reference": "Brown, Spacecraft Propulsion, AIAA Education Series, American Institute of Aeronautics and Astronautics, 1996",
+  "written": "2026-09-27"
+}

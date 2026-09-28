@@ -1,0 +1,32 @@
+{
+  "id": "history-old-maps-7",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.old_maps",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the Mediterranean on medieval sea charts turned several degrees anticlockwise from its true position?",
+  "answer": "Most likely because it was drawn with a compass. Chart makers built coasts from sailors' magnetic bearings and distances, and the needle then pointed some degrees east of true north. Putting magnetic north at the top rotated the whole sea to match. The leading explanation, though disputed: the chart fossilised a magnetic field.",
+  "move": "A steady error in an old record may be the fingerprint of its instrument.",
+  "keywords": [
+    "portolan charts",
+    "magnetic declination",
+    "compass",
+    "mediterranean"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Campbell, History of Cartography, vol. 1, 1987",
+  "source_kind": "book",
+  "reference": "Campbell, Portolan Charts from the Late Thirteenth Century to 1500, in Harley & Woodward (eds), The History of Cartography, vol. 1, University of Chicago Press, 1987",
+  "written": "2026-09-27"
+}

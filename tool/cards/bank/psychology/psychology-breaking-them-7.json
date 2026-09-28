@@ -1,0 +1,33 @@
+{
+  "id": "psychology-breaking-them-7",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.breaking_them",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did a two-day strike on the London Underground in 2014 reveal about commuters' daily routes?",
+  "answer": "That many were not the best available. Larcom, Rauch and Willems tracked travel-card data: forced off their usual lines, about one commuter in twenty kept the new route after the strike ended. The minutes those switchers saved over the following months outweighed the time the strike cost everyone. A habit had stopped them looking.",
+  "move": "A routine never compared with another has been repeated, not chosen.",
+  "keywords": [
+    "london underground",
+    "tube strike",
+    "commuting",
+    "route choice",
+    "forced experimentation"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Larcom, Rauch & Willems, QJE, 2017",
+  "source_kind": "paper",
+  "reference": "Larcom, Rauch & Willems, The benefits of forced experimentation: striking evidence from the London Underground network, Quarterly Journal of Economics, 2017",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-oldest-8",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.oldest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What finally ended Kongō Gumi, the temple builder run by one family's descendants since 578?",
+  "answer": "Debt from property speculation. In Japan's 1980s bubble the firm borrowed heavily to invest in land; when prices collapsed, the assets behind its loans shrank, while commissions for temples dwindled. In 2006 it was absorbed into the Takamatsu construction group. Fourteen centuries of carpentry were undone by two decades of borrowing.",
+  "move": "Old institutions rarely die of age; they die of a new bet.",
+  "keywords": [
+    "kongō gumi",
+    "oldest company",
+    "japan",
+    "asset bubble",
+    "family business"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hutcheson, BusinessWeek, 2007",
+  "source_kind": "news_archive",
+  "reference": "Hutcheson, The End of a 1,400-Year-Old Business, BusinessWeek, April 2007",
+  "written": "2026-09-27"
+}

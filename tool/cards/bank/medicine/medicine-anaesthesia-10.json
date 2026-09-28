@@ -1,0 +1,43 @@
+{
+  "id": "medicine-anaesthesia-10",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.anaesthesia",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Half of patients stop moving at incision with 2% sevoflurane, or 104% nitrous oxide. With 60% nitrous oxide, what sevoflurane percentage gives that effect?",
+  "value": 0.85,
+  "unit": "percent sevoflurane",
+  "tolerance": 0.1,
+  "answer": "0.42 x 2% = about 0.85% sevoflurane.",
+  "move": "When two things share a job, count each as a fraction of its full dose.",
+  "trap": "Keeping the full 2%, since 60% nitrous oxide is below its own dose.",
+  "hint": "The two gases' effects add, each counted as a fraction of its own full dose.",
+  "steps": [
+    "60 / 104 = about 0.58 of the nitrous oxide dose.",
+    "1 - 0.58 = 0.42 of the sevoflurane dose still needed.",
+    "0.42 x 2% = about 0.85% sevoflurane."
+  ],
+  "keywords": [
+    "minimum alveolar concentration",
+    "sevoflurane",
+    "nitrous oxide",
+    "anaesthetic potency",
+    "additive effects"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Miller's Anesthesia, 9th edition, 2020",
+  "source_kind": "reference_work",
+  "reference": "Gropper (ed.), Miller's Anesthesia, 9th edition, Elsevier, 2020",
+  "written": "2026-09-27"
+}

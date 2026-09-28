@@ -1,0 +1,44 @@
+{
+  "id": "space-hawking-radiation-7",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.hawking_radiation",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A 500-billion-kg black hole lasts about 14 billion years. Lifetime goes with mass cubed. What mass lasts 14 years, in thousand tonnes?",
+  "value": 500,
+  "unit": "thousand tonnes",
+  "answer": "500 billion kg / 1,000 = 500 million kg = 500 thousand tonnes.",
+  "move": "When an effect goes with a cube, a vast change needs only a modest step.",
+  "trap": "Dividing the mass by a billion, as if lifetime followed mass.",
+  "hint": "Ask which number, cubed, gives the factor by which the lifetime shrinks.",
+  "steps": [
+    "14 billion years / 14 years = a lifetime 1 billion times shorter.",
+    "The cube root of 1 billion is 1,000, so the mass is 1,000 times smaller.",
+    "500 billion kg / 1,000 = 500 million kg = 500 thousand tonnes."
+  ],
+  "keywords": [
+    "black hole evaporation",
+    "primordial black holes",
+    "lifetime",
+    "cube law"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "space-hawking-radiation-3"
+  ],
+  "figure": "none",
+  "source": "Page, Physical Review D 13, 1976",
+  "source_kind": "paper",
+  "reference": "Page, Particle emission rates from a black hole: Massless particles from an uncharged, nonrotating hole, Physical Review D, 1976",
+  "written": "2026-09-27"
+}

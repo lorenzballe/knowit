@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-rebrands-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.rebrands",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How many times did Blackwater change its name in the four years after the Nisour Square shooting?",
+  "answer": "Twice. After its guards killed 17 Iraqi civilians in Baghdad's Nisour Square in September 2007, Blackwater became Xe Services in 2009 and, under new owners, Academi in 2011; in 2014 Academi was merged into a group called Constellis. Government security contracts kept coming under each new sign.",
+  "move": "Follow the contracts and the people, not the letterhead.",
+  "keywords": [
+    "blackwater",
+    "xe services",
+    "academi",
+    "constellis",
+    "private military contractors"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Foreign Policy, Blackwater's Descendants, 2014",
+  "source_kind": "news_archive",
+  "reference": "https://foreignpolicy.com/2014/07/01/blackwaters-descendants-are-doing-just-fine/",
+  "written": "2026-09-27"
+}

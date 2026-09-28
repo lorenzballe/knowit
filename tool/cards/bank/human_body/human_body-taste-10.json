@@ -1,0 +1,39 @@
+{
+  "id": "human_body-taste-10",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.taste",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: pure fatty acids, tasted with the nose blocked, taste rich and creamy?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Tasted alone, free fatty acids have a taste of their own, which volunteers sorted apart from sweet, sour, salty and savoury, and which is unpleasant, closest to bitter. The creaminess credited to fat comes mostly from texture and smell. At strength, the taste of fat is the taste of oil gone rancid.",
+  "move": "When several signals always arrive together, test each one alone.",
+  "trap": "Crediting the taste of fat with pleasures that belong to texture and smell.",
+  "keywords": [
+    "fatty acids",
+    "fat taste",
+    "oleogustus",
+    "rancidity",
+    "texture"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Running, Craig & Mattes, Chemical Senses, 2015",
+  "source_kind": "paper",
+  "reference": "Running, Craig & Mattes, Oleogustus: the unique taste of fat, Chemical Senses, 2015",
+  "written": "2026-09-27"
+}

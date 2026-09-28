@@ -1,0 +1,38 @@
+{
+  "id": "space-expansion-9",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.expansion",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Do DESI's 2025 results show that dark energy, the cause of accelerating expansion, is weakening over time?",
+  "sides": [
+    "Yes, it is weakening",
+    "No, not yet shown"
+  ],
+  "answer": "Three independent kinds of data point the same way. DESI's map of millions of galaxies, combined with the cosmic background and supernova distances, prefers a dark energy that fades with time, by 2.8 to 4.2 standard deviations depending on the supernova set. A constant dark energy, fixed forever, fits worse as the data grow.",
+  "move": "Whichever side you took, the supernova calibration is what decides it.",
+  "counterpoint": "The signal's strength depends heavily on which supernova catalogue is used, and supernova calibrations have shifted before. Below five standard deviations, physics has watched many three-sigma hints fade. The best fit also has dark energy behaving in a physically awkward way in the past, a hint that a simple formula may be fitting noise.",
+  "keywords": [
+    "desi",
+    "dark energy",
+    "baryon acoustic oscillations",
+    "supernovae",
+    "cosmological constant"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "DESI Collaboration, DR2 results, 2025",
+  "source_kind": "paper",
+  "reference": "DESI Collaboration, DESI DR2 Results II: Measurements of Baryon Acoustic Oscillations and Cosmological Constraints, 2025",
+  "written": "2026-09-27"
+}

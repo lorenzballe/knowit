@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-science-6",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.science",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When economists tested Max Planck's claim that science advances as its old guard dies, what did they find?",
+  "answer": "That it does. Azoulay, Fons-Rosen and Graff Zivin followed life-science fields after a star scientist died suddenly, in a 2019 study. The star's collaborators published less there afterwards, while outsiders moved in and wrote more of its papers, often citing different work. A single grave could reopen a door the living had held shut.",
+  "move": "Ask who guards the entrance to a field, not only who is right in it.",
+  "keywords": [
+    "max planck",
+    "scientific change",
+    "star scientists",
+    "life sciences"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Azoulay et al., American Economic Review, 2019",
+  "source_kind": "paper",
+  "reference": "Azoulay, Fons-Rosen & Graff Zivin, Does Science Advance One Funeral at a Time?, American Economic Review 109 (8), 2019, pp. 2889-2920",
+  "written": "2026-09-27"
+}

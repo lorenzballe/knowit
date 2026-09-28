@@ -1,0 +1,39 @@
+{
+  "id": "sport-ancient-9",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.ancient",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the Olympic truce obliged Greek states to halt all their wars while the Games were held?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The truce protected Elis, the festival and people travelling to and from it; wars elsewhere went on. Where it applied, it had teeth: Thucydides records that in 420 BC Elis fined Sparta 2,000 minae, two for each of 1,000 soldiers sent in during the truce, and barred Spartans from the Games.",
+  "move": "Check the scope of a famous promise before crediting it with more.",
+  "trap": "Reading the modern peace-for-all ideal back into the ancient rule.",
+  "keywords": [
+    "olympic truce",
+    "sparta",
+    "elis",
+    "thucydides",
+    "ekecheiria"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thucydides, History, Book 5",
+  "source_kind": "primary_document",
+  "reference": "Thucydides, History of the Peloponnesian War, Volume III: Books 5–6, trans. C. F. Smith, Loeb Classical Library, Harvard, 1921",
+  "written": "2026-09-27"
+}

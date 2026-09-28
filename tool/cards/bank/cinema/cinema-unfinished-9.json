@@ -1,0 +1,42 @@
+{
+  "id": "cinema-unfinished-9",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.unfinished",
+  "also": [
+    "cinema.lost_films.rediscovered"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Where did a complete workprint of Jerry Lewis's shelved The Day the Clown Cried surface in 2025?",
+  "options": [
+    "With a Swedish actor who kept it",
+    "In the Library of Congress",
+    "In Lewis's own family archive"
+  ],
+  "correct": 0,
+  "answer": "With a Swedish actor. Lewis gave his footage to the Library of Congress in 2015, sealed until 2024; opened, it proved to be hours of fragments with no finished cut. Then in May 2025 Hans Crispin revealed that he had held a complete workprint for decades. The famous donation was never the whole film.",
+  "move": "The most publicised copy is not always the most complete one.",
+  "trap": "Recalling the widely reported donation to the Library of Congress.",
+  "keywords": [
+    "day the clown cried",
+    "jerry lewis",
+    "library of congress",
+    "workprint"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Library of Congress newsroom, 2024",
+  "source_kind": "institution",
+  "reference": "https://newsroom.loc.gov/news/footage-from-jerry-lewis--film--the-day-the-clown-cried--opens-for-research-at-library-of-congress/s/73d6a4a2-2e21-4b63-aa03-aa8f0a778e64",
+  "written": "2026-09-27"
+}

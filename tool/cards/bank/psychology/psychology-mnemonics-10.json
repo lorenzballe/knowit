@@ -1,0 +1,41 @@
+{
+  "id": "psychology-mnemonics-10",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.mnemonics",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A memoriser folds every three playing cards into one person-action-object image. How many places must a route hold for one shuffled deck?",
+  "value": 18,
+  "unit": "places",
+  "answer": "The lone card needs a place of its own: 17 + 1 = 18 places.",
+  "move": "Count what is left over before deciding how much room is needed.",
+  "trap": "Seventeen, by rounding 52 divided by 3 down and losing a card.",
+  "hint": "Divide the deck into threes and see what is left over.",
+  "steps": [
+    "A deck has 52 cards.",
+    "52 / 3 = 17 full images, with 1 card left over.",
+    "The lone card needs a place of its own: 17 + 1 = 18 places."
+  ],
+  "keywords": [
+    "person action object",
+    "memory palace",
+    "playing cards",
+    "memory competitions"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Foer, Moonwalking with Einstein, 2011",
+  "source_kind": "book",
+  "reference": "Foer, Moonwalking with Einstein: The Art and Science of Remembering Everything, Penguin Press, 2011",
+  "written": "2026-09-27"
+}

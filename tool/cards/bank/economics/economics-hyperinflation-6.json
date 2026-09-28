@@ -1,0 +1,36 @@
+{
+  "id": "economics-hyperinflation-6",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.hyperinflation",
+  "also": [
+    "history.revolutions.france"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why were there almost no hyperinflations before the twentieth century, despite centuries of clipped and debased coins?",
+  "answer": "Because metal cannot be diluted fast enough. Debasing coins pushed prices up over years, not weeks; prices doubling within a month needs paper that costs almost nothing to print. Peter Bernholz's catalogue finds one clear case before 1900, revolutionary France's assignats in 1795 and 1796. The rest arrived with paper money, total war and defeat.",
+  "move": "Ask how fast a thing can be made before fearing a flood of it.",
+  "keywords": [
+    "debasement",
+    "assignats",
+    "paper money",
+    "french revolution",
+    "hyperinflation history"
+  ],
+  "era": "early_modern",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Bernholz, Monetary Regimes and Inflation, 2003",
+  "source_kind": "book",
+  "reference": "Bernholz, Monetary Regimes and Inflation: History, Economic and Political Relationships, Edward Elgar, 2003",
+  "written": "2026-09-27"
+}

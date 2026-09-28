@@ -1,0 +1,38 @@
+{
+  "id": "economics-printing-cash-7",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.printing_cash",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: US law lets the Treasury mint a platinum coin of any face value, even a trillion dollars?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A 1996 provision meant for collectors' bullion coins lets the Treasury Secretary set the denomination of platinum coins, and it names no limit. In the 2013 debt-ceiling fight it was proposed as a way round Congress; the Treasury and the Fed declined. A law written for collectors set no ceiling.",
+  "move": "Read what a law says, not only what it was meant for.",
+  "trap": "Assuming only the central bank, never the Treasury, can create money.",
+  "keywords": [
+    "platinum coin",
+    "debt ceiling",
+    "us treasury",
+    "coinage law"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "United States Code, 31 USC 5112(k)",
+  "source_kind": "primary_document",
+  "reference": "United States Code, Title 31, section 5112(k), as added by Public Law 104-208, 1996",
+  "written": "2026-09-27"
+}

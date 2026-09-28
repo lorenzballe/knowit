@@ -1,0 +1,33 @@
+{
+  "id": "medicine-robots-6",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.robots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What could surgeons at the controls of the market-leading surgical robot not feel until 2024?",
+  "answer": "How hard they were pushing or pulling. For over two decades the console sent motion but no force back, so surgeons judged tension by eye, watching tissue blanch and stretch and sutures bite. The da Vinci 5, cleared in the US in 2024, finally sent force back to the hands through some instruments.",
+  "move": "When a sense is missing, people quietly rebuild it from another.",
+  "keywords": [
+    "haptic feedback",
+    "da vinci",
+    "force feedback",
+    "robotic surgery",
+    "sutures"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Okamura, Current Opinion in Urology, 2009",
+  "source_kind": "paper",
+  "reference": "Okamura, Haptic feedback in robot-assisted minimally invasive surgery, Current Opinion in Urology, 2009",
+  "written": "2026-09-27"
+}

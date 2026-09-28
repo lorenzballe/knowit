@@ -1,0 +1,45 @@
+{
+  "id": "cinema-lighting-10",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.lighting",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "An actor stands 1 m from a bare lamp; the wall behind is 3 m from it. How many stops darker is the wall?",
+  "value": 3.2,
+  "unit": "stops",
+  "tolerance": 0.2,
+  "answer": "One stop halves the light and 2 x 2 x 2 = 8, so 9 times less is about 3.2 stops.",
+  "move": "When something spreads out in two directions, distance cuts it by the square.",
+  "trap": "Answering about 1.6 stops, as if light fell in step with distance.",
+  "hint": "Light spreads over an area, so ask how the area grows with distance.",
+  "steps": [
+    "The wall is 3 times farther from the lamp than the face.",
+    "Light falls with the square of distance: 3 x 3 = 9 times less.",
+    "One stop halves the light and 2 x 2 x 2 = 8, so 9 times less is about 3.2 stops."
+  ],
+  "keywords": [
+    "inverse square law",
+    "stops",
+    "key light",
+    "light falloff"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "cinema-lighting-5"
+  ],
+  "figure": "none",
+  "source": "Brown, Motion Picture and Video Lighting",
+  "source_kind": "book",
+  "reference": "Brown, Motion Picture and Video Lighting, 2nd edn, Focal Press, 2008",
+  "written": "2026-09-27"
+}

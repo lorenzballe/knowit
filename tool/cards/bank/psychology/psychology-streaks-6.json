@@ -1,0 +1,43 @@
+{
+  "id": "psychology-streaks-6",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.streaks",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "Someone keeps a daily habit with 95% probability each day, independently. What is the chance, in percent, of an unbroken 30-day streak?",
+  "value": 21.5,
+  "unit": "percent",
+  "tolerance": 1.5,
+  "answer": "0.215 is about 21.5%.",
+  "move": "Nearly reliable, repeated many times, is nearly certain to slip once.",
+  "trap": "Around 80 or 90%, since 95% a day sounds almost perfect.",
+  "hint": "Find how many days it takes for the survival odds to halve.",
+  "steps": [
+    "Each day the run survives with probability 0.95.",
+    "0.95 multiplied 14 times is about 0.488: the odds halve roughly every two weeks.",
+    "Thirty days is two such halvings plus two days: 0.488 × 0.488 × 0.9025 ≈ 0.215.",
+    "0.215 is about 21.5%."
+  ],
+  "keywords": [
+    "streaks",
+    "compound probability",
+    "habit apps",
+    "reliability"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Feller, Probability Theory, 1968",
+  "source_kind": "book",
+  "reference": "Feller, An Introduction to Probability Theory and Its Applications, Vol. 1, 3rd ed., Wiley, 1968",
+  "written": "2026-09-27"
+}

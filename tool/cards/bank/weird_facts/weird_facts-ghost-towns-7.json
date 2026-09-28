@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-ghost-towns-7",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.ghost_towns",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why have the beach hotels of Varosha, in Cyprus, stood mostly empty since 1974?",
+  "answer": "Because their future hangs on a settlement of divided Cyprus. When Turkish forces took the resort in 1974, its Greek Cypriot residents fled and the army fenced it off. UN Security Council Resolution 550 of 1984 called settlement by anyone but its inhabitants inadmissible. Parts reopened to visitors in 2020; its owners have not returned.",
+  "move": "An empty place can be worth more at a negotiating table than a full one.",
+  "keywords": [
+    "varosha",
+    "famagusta",
+    "cyprus",
+    "un security council"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "UN Security Council Resolution 550, 1984",
+  "source_kind": "primary_document",
+  "reference": "United Nations Security Council, Resolution 550 (1984), adopted 11 May 1984",
+  "written": "2026-09-27"
+}

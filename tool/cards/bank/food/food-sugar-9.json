@@ -1,0 +1,43 @@
+{
+  "id": "food-sugar-9",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.sugar",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Roughly how many tonnes of sugar cane must be cut and crushed to make one tonne of sugar?",
+  "value": 9,
+  "unit": "tonnes of cane",
+  "withinFactor": 3,
+  "answer": "1 / 0.11 = about 9 tonnes of cane per tonne of sugar.",
+  "move": "The heavier the raw material, the closer the factory must sit to it.",
+  "trap": "Guessing two or three tonnes, as if cane were mostly sugar.",
+  "hint": "Start from how much of a cane stalk is sucrose, then allow for what the mill loses.",
+  "steps": [
+    "Cane is roughly 13% sucrose by weight.",
+    "Mills recover about 85% of it: 0.13 x 0.85 = about 0.11 t of sugar per tonne of cane.",
+    "1 / 0.11 = about 9 tonnes of cane per tonne of sugar."
+  ],
+  "keywords": [
+    "sugar cane",
+    "sugar mill",
+    "sucrose",
+    "plantations",
+    "yield"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hugot, Handbook of Cane Sugar Engineering",
+  "source_kind": "book",
+  "reference": "Hugot, Handbook of Cane Sugar Engineering, 3rd edition, Elsevier, 1986",
+  "written": "2026-09-27"
+}

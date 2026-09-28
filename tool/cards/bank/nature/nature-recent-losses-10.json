@@ -1,0 +1,32 @@
+{
+  "id": "nature-recent-losses-10",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.recent_losses",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did scientists conclude in 2006 that the Yangtze river dolphin was probably gone, and what had killed it?",
+  "answer": "By searching its whole range, twice. A six-week survey in 2006 sent two boats about 3,400 km up and down the Yangtze, with observers and underwater microphones, and found no baiji. Turvey and colleagues blamed mainly accidental deaths in fishing gear, such as electrofishing, not hunting. Nobody had set out to kill it.",
+  "move": "Harm that nobody intends can still add up to an ending.",
+  "keywords": [
+    "baiji",
+    "yangtze river",
+    "bycatch",
+    "river dolphins"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Turvey et al., Biology Letters, 2007",
+  "source_kind": "paper",
+  "reference": "Turvey et al., First human-caused extinction of a cetacean species?, Biology Letters, 2007",
+  "written": "2026-09-27"
+}

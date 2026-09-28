@@ -1,0 +1,33 @@
+{
+  "id": "technology-oled-6",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.oled",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does an OLED television hide the wear on its most-used pixels?",
+  "answer": "By measuring the wear and driving tired pixels harder. When the set goes to standby, the panel runs a compensation cycle that senses each subpixel's electrical drift and raises its drive to match, so a worn channel logo fades back into its neighbours. The trick spends spare brightness; burn-in shows once that reserve runs out.",
+  "move": "A repair that borrows from reserve works until the reserve is gone.",
+  "keywords": [
+    "oled television",
+    "burn-in",
+    "pixel compensation",
+    "ageing",
+    "brightness headroom"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Handbook of Visual Display Technology, Springer, 2016",
+  "source_kind": "book",
+  "reference": "Chen, Cranton & Fihn (eds.), Handbook of Visual Display Technology, 2nd edition, Springer, 2016",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-zeno-8",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.zeno",
+  "also": [
+    "science.maths_curios.infinity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A lamp, off at first, is flicked after 1 minute, then half a minute, a quarter, and so on. On or off at two minutes?",
+  "options": [
+    "On, since the final flick turns it on",
+    "Nothing in the story settles it",
+    "Off, since it started off"
+  ],
+  "correct": 1,
+  "answer": "Nothing in the story settles it. James Thomson's 1954 lamp has no last switch to fix its state. Paul Benacerraf replied in 1962 that the description covers only the times before two minutes; the lamp could be on or off at two without contradiction. An endless list of instructions need not say how things end.",
+  "move": "A sequence with no last step says nothing about what comes after.",
+  "trap": "Picturing a last switch, though the sequence of switches has none.",
+  "keywords": [
+    "thomson's lamp",
+    "supertasks",
+    "infinity",
+    "paul benacerraf"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Benacerraf, Journal of Philosophy, 1962",
+  "source_kind": "paper",
+  "reference": "Thomson, Tasks and Super-Tasks, Analysis 15, 1954; Benacerraf, Tasks, Super-Tasks, and the Modern Eleatics, Journal of Philosophy 59, 1962",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "nature-root-networks-9",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.root_networks",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A fine root is 0.5 mm across; a fungal thread, 0.005 mm. Per unit of tissue volume, how many times more surface has the thread?",
+  "value": 100,
+  "unit": "times",
+  "answer": "0.25 / 0.0025 = 100 times.",
+  "move": "When surface is what pays, split one thick thing into many thin ones.",
+  "trap": "Squaring the width ratio and getting 10,000, as if comparing cross-sections.",
+  "hint": "Work out surface divided by volume for a long cylinder before comparing the two.",
+  "steps": [
+    "A long cylinder's surface divided by its volume is 2 divided by its radius.",
+    "So the ratio is the root's radius over the thread's: 0.25 mm over 0.0025 mm.",
+    "0.25 / 0.0025 = 100 times."
+  ],
+  "keywords": [
+    "fungal hyphae",
+    "fine roots",
+    "surface area",
+    "nutrient uptake"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smith & Read, Mycorrhizal Symbiosis, 2008",
+  "source_kind": "book",
+  "reference": "Smith & Read, Mycorrhizal Symbiosis, 3rd edition, Academic Press, 2008",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "medicine-painkillers-10",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.painkillers",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should doctors taper patients off long-term opioids when their pain has been stable on the same dose?",
+  "sides": [
+    "Yes, taper them",
+    "No, leave them"
+  ],
+  "answer": "Long-term opioids have never been shown to keep relieving chronic pain beyond a few months, while overdose risk climbs with dose and tolerance builds. A patient stable on a high dose still carries that risk every day. Slow, agreed tapers let some patients discover their pain is no worse without the drug.",
+  "move": "Whichever side you took, weigh the risk of stopping against the risk of staying.",
+  "counterpoint": "Tapering is not neutral. In a 2021 study of over 100,000 US patients on stable long-term opioids, those tapered had about 68% more overdoses and more than twice the mental-health crises of those kept on their dose. A patient pushed off a drug they depend on may turn to street supply, which is far deadlier.",
+  "keywords": [
+    "opioid tapering",
+    "long-term opioids",
+    "overdose",
+    "chronic pain"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Agnoli et al., JAMA, 2021",
+  "source_kind": "paper",
+  "reference": "Agnoli et al., Association of Dose Tapering With Overdose or Mental Health Crisis Among Patients Prescribed Long-term Opioids, JAMA, 2021",
+  "written": "2026-09-27"
+}

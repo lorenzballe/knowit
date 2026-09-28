@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-still-on-the-books-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.still_on_the_books",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "True or false: a Chester law still lets a person shoot a Welshman with a longbow inside the city walls after midnight?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The Law Commission's repeal team traced the story to a supposed 1403 city order imposing a curfew on Welsh people after Glyndŵr's rising, and could not confirm even that order existed. No law has ever permitted such a killing; it would be murder at any hour. The bow and the midnight are decoration.",
+  "move": "Each added detail should make a story harder to believe, not easier.",
+  "trap": "The precise weapon, place and hour make the rule sound documented.",
+  "keywords": [
+    "chester",
+    "legal myths",
+    "law commission",
+    "curfew",
+    "welsh"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Law Commission, Legal Curiosities, 2013",
+  "source_kind": "institution",
+  "reference": "Law Commission, Legal Curiosities: Fact or Fable?, Statute Law Repeals team, March 2013",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "history-straight-lines-7",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.straight_lines",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the Four Corners monument stands hundreds of metres from the point where four US states legally meet?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Surveyors of the 1860s and 1870s set the corner with the instruments they had; once the states accepted it, the surveyed mark became the border. In 1925 the Supreme Court upheld a flawed Colorado–New Mexico survey line on that principle. The monument may miss its intended meridian; the law follows the stone.",
+  "move": "Once a boundary is marked and accepted, the marker outranks the map.",
+  "trap": "Recalling news stories that the monument had been put in the wrong place.",
+  "keywords": [
+    "four corners",
+    "boundary surveys",
+    "new mexico",
+    "colorado",
+    "supreme court"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "US Supreme Court, New Mexico v. Colorado, 1925",
+  "source_kind": "primary_document",
+  "reference": "New Mexico v. Colorado, 267 U.S. 30, 1925",
+  "written": "2026-09-27"
+}

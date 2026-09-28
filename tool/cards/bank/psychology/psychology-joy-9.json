@@ -1,0 +1,38 @@
+{
+  "id": "psychology-joy-9",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.joy",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Does happiness really dip in middle age before rising again in later life?",
+  "sides": [
+    "Yes, the dip is real",
+    "No, it is an artefact"
+  ],
+  "answer": "Yes. David Blanchflower found the U-shape in data from 145 countries, with its low point in the late forties. Antidepressant use peaks in midlife too, and keepers' ratings of captive chimpanzees and orangutans trace a similar curve. A pattern that survives so many countries, measures and species is unlikely to be a statistical accident.",
+  "move": "Whichever side you took, it turns on comparing different people or following the same ones.",
+  "counterpoint": "No. Most U-shapes come from comparing different people at different ages in one survey, often only after adjusting for income, health and marriage, which themselves change with age. Reviewing studies that follow the same people over years, Nancy Galambos and colleagues found the midlife dip inconsistent: in many, well-being holds steady or rises through middle age.",
+  "keywords": [
+    "midlife",
+    "u-shape",
+    "life satisfaction",
+    "ageing",
+    "longitudinal studies"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Blanchflower, Journal of Population Economics, 2021",
+  "source_kind": "paper",
+  "reference": "Blanchflower, Is happiness U-shaped everywhere? Age and subjective well-being in 145 countries, Journal of Population Economics, 2021",
+  "written": "2026-09-27"
+}

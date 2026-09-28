@@ -1,0 +1,38 @@
+{
+  "id": "economics-anchoring-8",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.anchoring",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "True or false: the 2003 finding that the last digits of a social security number sway what people bid replicated at full size?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In Ariely, Loewenstein and Prelec's study, people with high final digits bid far more for wine and computer accessories. Maniadis, Tufano and List re-ran the design in 2014 and found a much weaker pull. Anchoring itself is well replicated; the first, striking measurement of this version sat at the high end.",
+  "move": "Expect the next measurement of a dramatic effect to be smaller.",
+  "trap": "Assuming a famous result's first measured size is its true size.",
+  "keywords": [
+    "replication",
+    "social security numbers",
+    "willingness to pay",
+    "anchoring effects"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Maniadis, Tufano & List, AER, 2014",
+  "source_kind": "paper",
+  "reference": "Maniadis, Tufano & List, One Swallow Doesn't Make a Summer: New Evidence on Anchoring Effects, American Economic Review, 2014",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "art-synthetics-7",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.synthetics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: zinc white, sold as a non-toxic substitute for lead white, gives a tougher, more flexible oil film?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Zinc oxide reacts with the fatty acids of drying oil to form zinc soaps, and the film turns brittle within decades. Zinc-rich grounds and layers, common from the late 19th century, crack and flake apart. Lead white also forms soaps but ages into a tough skin. The safer white proved the weaker one.",
+  "move": "A safer replacement can fail in ways the old material never did.",
+  "trap": "Assuming the newer, safer product must also be the sturdier one.",
+  "keywords": [
+    "zinc white",
+    "lead white",
+    "zinc soaps",
+    "cracking",
+    "oil paint"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Osmond, AICCM Bulletin, 2012",
+  "source_kind": "paper",
+  "reference": "Gillian Osmond, Zinc white: a review of zinc oxide pigment properties and implications for conservation, AICCM Bulletin, 2012",
+  "written": "2026-09-27"
+}

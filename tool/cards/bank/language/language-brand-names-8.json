@@ -1,0 +1,33 @@
+{
+  "id": "language-brand-names-8",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.brand_names",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When a US court ruled thermos a generic word in 1962, what did it still forbid rivals?",
+  "answer": "Using it as a brand. Aladdin Industries could sell thermos bottles, but only with a small t, only after its own name, as Aladdin's thermos, and never as the original or genuine one. Most buyers knew no other word for a vacuum flask, yet some still meant the maker, so the court split the word.",
+  "move": "Ask whether a ruling is all or nothing before assuming it was.",
+  "keywords": [
+    "thermos",
+    "genericide",
+    "aladdin industries",
+    "vacuum flask",
+    "trademark"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "King-Seeley Thermos v. Aladdin, 2d Cir. 1963",
+  "source_kind": "primary_document",
+  "reference": "King-Seeley Thermos Co. v. Aladdin Industries, Inc., 321 F.2d 577 (2d Cir. 1963)",
+  "written": "2026-09-27"
+}

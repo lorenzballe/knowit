@@ -1,0 +1,38 @@
+{
+  "id": "science-pigments-8",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.pigments",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a fluorescent orange paint can send back more orange light than the orange light falling on it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. An ordinary pigment can only return part of each colour it receives. A fluorescent one also absorbs blue and ultraviolet and re-emits that energy as orange, so at orange wavelengths its measured reflectance can pass 100%. That extra glow, made from light the eye barely registers, is why safety vests seem lit from within.",
+  "move": "Check whether the output was converted from something you were not counting.",
+  "trap": "False, because no surface returns more light than it receives.",
+  "keywords": [
+    "fluorescent pigments",
+    "reflectance",
+    "ultraviolet",
+    "high-visibility clothing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Christie, Colour Chemistry, 2015",
+  "source_kind": "book",
+  "reference": "Christie, Colour Chemistry, 2nd edition, Royal Society of Chemistry, 2015",
+  "written": "2026-09-27"
+}

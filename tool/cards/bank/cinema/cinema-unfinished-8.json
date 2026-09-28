@@ -1,0 +1,42 @@
+{
+  "id": "cinema-unfinished-8",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.unfinished",
+  "also": [
+    "cinema.lost_films.destroyed"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "The negative of Eisenstein's banned Bezhin Meadow was lost in the war. What is the 1967 version made from?",
+  "options": [
+    "A rough-cut print found in Berlin",
+    "Single frames saved from each shot",
+    "Scenes reshot from the script"
+  ],
+  "correct": 1,
+  "answer": "Single frames saved from each shot. Soviet authorities halted the film in 1937, and the negative was reportedly destroyed in wartime bombing. In 1967 Sergei Yutkevich and Naum Kleiman arranged frame clippings kept from the cut into a silent film of stills, about half an hour long, with titles and music by Prokofiev.",
+  "move": "When the whole is gone, the fragments someone kept become the work.",
+  "trap": "Expecting the usual rescue story, a forgotten print turning up somewhere.",
+  "keywords": [
+    "bezhin meadow",
+    "sergei eisenstein",
+    "still reconstruction",
+    "soviet censorship"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bordwell, The Cinema of Eisenstein, 1993",
+  "source_kind": "book",
+  "reference": "Bordwell, The Cinema of Eisenstein, Harvard University Press, 1993",
+  "written": "2026-09-27"
+}

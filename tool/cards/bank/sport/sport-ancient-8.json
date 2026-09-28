@@ -1,0 +1,40 @@
+{
+  "id": "sport-ancient-8",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.ancient",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Kyniska of Sparta, the first woman recorded as an Olympic victor, won in the 390s BC. In which event?",
+  "options": [
+    "The four-horse chariot race",
+    "The girls' footrace for Hera",
+    "The stade sprint"
+  ],
+  "correct": 0,
+  "answer": "The four-horse chariot race. At Olympia the crown for equestrian events went to the owner of the horses, not the driver, so a rich Spartan woman who never took the reins could win it, twice. Her monument at Olympia boasted that she was the only woman in Greece to have won that crown.",
+  "move": "Ask who a prize is awarded to, not who did the work.",
+  "trap": "Assuming women could win only at Hera's separate races for girls.",
+  "keywords": [
+    "kyniska",
+    "sparta",
+    "chariot race",
+    "women",
+    "olympia"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kyle, Sport and Spectacle in the Ancient World",
+  "source_kind": "book",
+  "reference": "Kyle, Sport and Spectacle in the Ancient World, Blackwell, 2007",
+  "written": "2026-09-27"
+}

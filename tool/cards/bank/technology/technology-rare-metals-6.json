@@ -1,0 +1,33 @@
+{
+  "id": "technology-rare-metals-6",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.rare_metals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does almost all of the world's primary gallium come from China?",
+  "answer": "Because gallium is a by-product of alumina refining, and China refines more than half the world's alumina. Bauxite holds tens of grams of gallium per tonne; recovering it needs an extra circuit at the refinery, which China built and subsidised while Western plants shut theirs as prices fell. In 2024 China made 99%.",
+  "move": "Map where the host material is processed, not where the ore is dug.",
+  "keywords": [
+    "gallium",
+    "alumina refining",
+    "bauxite",
+    "china",
+    "export controls"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "USGS Mineral Commodity Summaries 2025: Gallium",
+  "source_kind": "institution",
+  "reference": "https://pubs.usgs.gov/periodicals/mcs2025/mcs2025-gallium.pdf",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "nature-storms-9",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.storms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a dying tropical storm strengthen and form an eye over Oklahoma, three days after leaving the sea?",
+  "answer": "Wet ground stood in for the ocean. After an unusually rainy summer, central Oklahoma's soaked soils fed Erin's remnants heat and moisture, much as warm water feeds a hurricane. On 19 August 2007 an eye appeared on radar and sustained winds reached about 95 km/h. Farmland had become a shallow, muddy sea.",
+  "move": "When a supply is cut, check whether something nearby can pass for it.",
+  "keywords": [
+    "tropical storm erin",
+    "oklahoma",
+    "soil moisture",
+    "brown ocean effect"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Arndt et al., BAMS, 2009",
+  "source_kind": "paper",
+  "reference": "Arndt et al., Observations of the Overland Reintensification of Tropical Storm Erin (2007), Bulletin of the American Meteorological Society, 2009",
+  "written": "2026-09-27"
+}

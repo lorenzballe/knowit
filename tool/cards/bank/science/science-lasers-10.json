@@ -1,0 +1,32 @@
+{
+  "id": "science-lasers-10",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.lasers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a laser spot on a matt wall look grainy and shimmer as you move your head?",
+  "answer": "Because the grain is made inside your eye. A matt wall scatters the laser's single, orderly wave along paths of slightly different lengths, and on the retina they interfere, bright where they add and dark where they cancel. Formed in the eye, this speckle stays sharp with glasses off, and drifts as the head moves.",
+  "move": "Some patterns belong to the observer, not to the thing observed.",
+  "keywords": [
+    "laser speckle",
+    "interference",
+    "coherence",
+    "retina"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goodman, Speckle Phenomena in Optics, 2007",
+  "source_kind": "book",
+  "reference": "Goodman, Speckle Phenomena in Optics: Theory and Applications, Roberts and Company, 2007",
+  "written": "2026-09-27"
+}

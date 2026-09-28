@@ -1,0 +1,32 @@
+{
+  "id": "space-perseverance-10",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.perseverance",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Perseverance carry a slice of a Martian meteorite that was found in Oman?",
+  "answer": "To check its own eyes. The slice, of Sayh al Uhaymir 008, sits on the calibration target of SHERLOC, an instrument that reads minerals and organic traces with an ultraviolet laser. A known Martian rock lets the team tell a drifting instrument from a real novelty. Beside it, spacesuit fabric and visor samples weather.",
+  "move": "To trust a measurement of the unknown, carry something already known.",
+  "keywords": [
+    "sherloc",
+    "martian meteorite",
+    "calibration target",
+    "spacesuit materials"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fries et al., Space Science Reviews, 2022",
+  "source_kind": "paper",
+  "reference": "Fries et al., The SHERLOC Calibration Target on the Mars 2020 Perseverance Rover: Design, Operations, Outreach, and Future Human Exploration Functions, Space Science Reviews, 2022",
+  "written": "2026-09-27"
+}

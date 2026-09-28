@@ -1,0 +1,32 @@
+{
+  "id": "psychology-breaking-them-8",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.breaking_them",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can an if-then plan built around 'I will not eat crisps' backfire on a snacking habit?",
+  "answer": "It rehearses the very link it means to cut. Adriaanse and colleagues found that plans negating a habit, such as 'if I watch television, I will not eat crisps', worked worse than plans naming a replacement, and could tie the cue more tightly to the snack. The crisps stay in the plan.",
+  "move": "Name what to do instead, not only what to stop.",
+  "keywords": [
+    "implementation intentions",
+    "snacking",
+    "negation",
+    "replacement behaviour"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Adriaanse et al., PSPB, 2011",
+  "source_kind": "paper",
+  "reference": "Adriaanse, van Oosten, de Ridder, de Wit & Evers, Planning what not to eat: ironic effects of implementation intentions negating unhealthy habits, Personality and Social Psychology Bulletin, 2011",
+  "written": "2026-09-27"
+}

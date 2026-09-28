@@ -1,0 +1,40 @@
+{
+  "id": "art-mummy-brown-10",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.mummy_brown",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "Mummy brown owed much of its darkness to bitumen in the bodies. Which Egyptian mummies contain the most?",
+  "options": [
+    "Pyramid-age royal burials",
+    "Late and Graeco-Roman burials",
+    "All periods about equally"
+  ],
+  "correct": 1,
+  "answer": "Late and Graeco-Roman burials. Chemical analysis found petroleum bitumen absent or rare in early mummies, appearing in the New Kingdom and commonest in the Ptolemaic and Roman periods, when far more people were embalmed. Those plentiful late bodies were what dealers could buy. The brown on a Victorian palette came from ordinary townspeople, not pharaohs.",
+  "move": "The famous examples of a thing are rarely the ones in circulation.",
+  "trap": "Picturing the pharaohs of the pyramid age, the mummies everyone knows.",
+  "keywords": [
+    "petroleum bitumen",
+    "egyptian embalming",
+    "mummy brown",
+    "ptolemaic period",
+    "mummy trade"
+  ],
+  "era": "ancient",
+  "region": "africa",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Clark, Ikram and Evershed, 2016",
+  "source_kind": "paper",
+  "reference": "Katherine A. Clark, Salima Ikram and Richard P. Evershed, The significance of petroleum bitumen in ancient Egyptian mummies, Philosophical Transactions of the Royal Society A, vol. 374, 2016",
+  "written": "2026-09-27"
+}

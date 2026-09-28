@@ -1,0 +1,40 @@
+{
+  "id": "language-internet-slang-6",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.internet_slang",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In a 2015 Facebook study of typed laughter in posts and comments, roughly what share of laughs were lol?",
+  "options": [
+    "About 2%",
+    "About a quarter",
+    "About half"
+  ],
+  "correct": 0,
+  "answer": "About 2%. Facebook's researchers found haha in about 51% of the laughs, emoji in 34% and hehe in 13%; lol trailed at 1.9%. The acronym every article about online laughter reaches for was the rarest of the four. On the feed itself, people mostly just typed haha.",
+  "move": "What is most talked about is often not what is most done.",
+  "trap": "The famous acronym feels common because it is the one written about.",
+  "keywords": [
+    "lol",
+    "haha",
+    "facebook",
+    "emoji",
+    "laughter"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Facebook Research, The Not-So-Universal Language of Laughter",
+  "source_kind": "institution",
+  "reference": "Weinsberg, Adamic & Develin, The Not-So-Universal Language of Laughter, Facebook Research, 2015",
+  "written": "2026-09-27"
+}

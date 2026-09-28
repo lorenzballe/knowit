@@ -1,0 +1,36 @@
+{
+  "id": "cinema-editing-6",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.editing",
+  "also": [
+    "psychology.attention.focus"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What pattern did a 2010 study find growing, decade by decade, in the lengths of Hollywood shots?",
+  "answer": "A 1/f rhythm, the statistical pattern also found in how human attention drifts. James Cutting's team measured the shots of 150 films from 1935 to 2005: runs of long and short shots clustered at every scale, more strongly in later films. Nobody planned it; editors converged on it by feel, one cut at a time.",
+  "move": "A pattern nobody designed can still emerge from many small choices made by feel.",
+  "keywords": [
+    "shot length",
+    "1/f pattern",
+    "james cutting",
+    "attention",
+    "hollywood"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cutting et al., Psychological Science, 2010",
+  "source_kind": "paper",
+  "reference": "Cutting, DeLong & Nothelfer, Attention and the Evolution of Hollywood Film, Psychological Science 21(3), 2010",
+  "written": "2026-09-27"
+}

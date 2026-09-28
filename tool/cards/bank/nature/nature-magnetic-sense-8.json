@@ -1,0 +1,39 @@
+{
+  "id": "nature-magnetic-sense-8",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.magnetic_sense",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Google Earth images suggested grazing cattle face north–south. When a Czech team checked other images, what did it find?",
+  "options": [
+    "The same alignment, confirmed",
+    "Alignment with the wind instead",
+    "No detectable alignment"
+  ],
+  "correct": 2,
+  "answer": "No detectable alignment. Hert and colleagues analysed a fresh set of herds and found cattle facing every way. The original authors replied that many of those images were unusable, with slopes, power lines or unclear animals, and that proper filtering restores the pattern. The dispute is over which pictures belong in the sample.",
+  "move": "When two teams disagree, first compare which cases each one let in.",
+  "trap": "Assuming a striking pattern across thousands of images must be robust.",
+  "keywords": [
+    "cattle",
+    "magnetic alignment",
+    "google earth",
+    "replication"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hert et al., Journal of Comparative Physiology, 2011",
+  "source_kind": "paper",
+  "reference": "Hert et al., No alignment of cattle along geomagnetic field lines found, Journal of Comparative Physiology A, 2011; Begall et al., Magnetic alignment in grazing and resting cattle and deer, PNAS, 2008",
+  "written": "2026-09-27"
+}

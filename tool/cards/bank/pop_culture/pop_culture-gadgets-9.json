@@ -1,0 +1,43 @@
+{
+  "id": "pop_culture-gadgets-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.gadgets",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Over a 56k dial-up modem around 1999, roughly how many minutes did a 4 MB MP3 song take to download?",
+  "value": 11,
+  "unit": "minutes",
+  "withinFactor": 3,
+  "answer": "640 / 60 = about 11 minutes.",
+  "move": "Check whether a speed is quoted in bits or in bytes.",
+  "trap": "Reading 56k as kilobytes a second, eight times too fast.",
+  "hint": "Turn bytes into bits first; the 56 counts bits per second.",
+  "steps": [
+    "4 MB x 8 bits = 32 megabits, or 32,000 kilobits.",
+    "Good lines gave about 50 kilobits a second, below the 56 on the box.",
+    "32,000 / 50 = 640 seconds.",
+    "640 / 60 = about 11 minutes."
+  ],
+  "keywords": [
+    "dial-up modem",
+    "mp3",
+    "download speed",
+    "bits and bytes"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ITU-T Recommendation V.90, 1998",
+  "source_kind": "institution",
+  "reference": "International Telecommunication Union, ITU-T Recommendation V.90, Geneva, 1998",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "history-the-fall-8",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.the_fall",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 445, after Vandal wars, Rome cut the taxes due from the African provinces it had kept. To what share of before?",
+  "options": [
+    "One-eighth",
+    "Three-quarters",
+    "One-half"
+  ],
+  "correct": 0,
+  "answer": "One-eighth. Novel 13 of Valentinian III set the tax of Numidia and Mauretania Sitifensis at an eighth of its old level, so ruined were they. Carthage and the richest estates had been Vandal since 439. The western court paid its soldiers from taxes, and its best-paying provinces now paid almost nothing.",
+  "move": "Judge a loss by what can still be collected, not by what is still held.",
+  "trap": "Choosing half, the size of an ordinary emergency relief.",
+  "keywords": [
+    "valentinian iii",
+    "vandals",
+    "taxation",
+    "numidia",
+    "carthage"
+  ],
+  "era": "ancient",
+  "region": "africa",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Heather, The Fall of the Roman Empire, 2005",
+  "source_kind": "book",
+  "reference": "Heather, The Fall of the Roman Empire: A New History, Macmillan, 2005",
+  "written": "2026-09-27"
+}

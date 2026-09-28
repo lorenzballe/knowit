@@ -1,0 +1,43 @@
+{
+  "id": "history-france-8",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.france",
+  "also": [
+    "economics.money_and_banks.interest"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "From 1790 a French peasant could end a money due by paying 20 years' worth at once. At 5% interest, how costly was that?",
+  "options": [
+    "A bargain against paying for ever",
+    "The same as paying for ever",
+    "Far dearer than paying for ever"
+  ],
+  "correct": 1,
+  "answer": "The same as paying for ever. A lump sum lent at 5% earns a twentieth of itself each year, exactly the due it replaces. Few peasants had that capital, so most dues went on being paid, or refused, until the Convention abolished the rest without compensation in July 1793.",
+  "move": "Price any endless payment by dividing it by the interest rate.",
+  "trap": "Twenty years of payments looks smaller than payments without end.",
+  "keywords": [
+    "seigneurial dues",
+    "redemption",
+    "interest",
+    "peasants",
+    "feudalism"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jones, The Peasantry in the French Revolution",
+  "source_kind": "book",
+  "reference": "Jones, The Peasantry in the French Revolution, Cambridge University Press, 1988",
+  "written": "2026-09-27"
+}

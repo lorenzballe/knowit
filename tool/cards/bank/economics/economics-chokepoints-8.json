@@ -1,0 +1,42 @@
+{
+  "id": "economics-chokepoints-8",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.chokepoints",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Red Sea war cover rose from 0.05% to 0.7% of hull value per transit. Extra cost for a $150 million ship, in thousands of dollars?",
+  "value": 975,
+  "unit": "thousand dollars",
+  "answer": "150,000 x 0.0065 = 975 thousand dollars.",
+  "move": "Price a small percentage against the full value it is charged on.",
+  "trap": "Counting the whole 0.7% as new and forgetting the old premium.",
+  "hint": "Work out the rise in percentage points before touching the ship's value.",
+  "steps": [
+    "The premium rose by 0.7% - 0.05% = 0.65% of the ship's value.",
+    "$150 million is 150,000 thousand dollars.",
+    "150,000 x 0.0065 = 975 thousand dollars."
+  ],
+  "keywords": [
+    "war risk insurance",
+    "red sea",
+    "houthi attacks",
+    "hull value",
+    "shipping costs"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Policyholder Pulse, Red Sea premiums, 2024",
+  "source_kind": "news_archive",
+  "reference": "https://www.policyholderpulse.com/red-sea-transit-insurance-premiums-coverage-exclusions/",
+  "written": "2026-09-27"
+}

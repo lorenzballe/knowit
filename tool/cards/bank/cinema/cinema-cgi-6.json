@@ -1,0 +1,35 @@
+{
+  "id": "cinema-cgi-6",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.cgi",
+  "also": [
+    "cinema.how_films_are_made.lighting"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was every frame of O Brother, Where Art Thou?, from 2000, scanned into a computer before release?",
+  "answer": "To turn summer green into dusty gold. Shot in lush Mississippi, the film needed the look of a Depression-era drought, and no filter could drain the greens alone. Roger Deakins and Cinesite scanned the negative and regraded it digitally, widely cited as the first Hollywood feature finished that way throughout.",
+  "move": "When no tool can change one part alone, change the medium itself.",
+  "keywords": [
+    "digital intermediate",
+    "colour grading",
+    "roger deakins",
+    "cinesite"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "American Cinematographer, October 2000",
+  "source_kind": "news_archive",
+  "reference": "Fisher, Escaping from Chains, American Cinematographer, October 2000",
+  "written": "2026-09-27"
+}

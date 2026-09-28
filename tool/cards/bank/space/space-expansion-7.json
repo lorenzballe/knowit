@@ -1,0 +1,41 @@
+{
+  "id": "space-expansion-7",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.expansion",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "Expansion has stretched every wavelength of a distant galaxy's light 4 times. How many times dimmer does each patch of its surface look?",
+  "value": 256,
+  "unit": "times dimmer",
+  "answer": "16 × 16 = 256 times dimmer per patch.",
+  "move": "When several effects each multiply, the total runs away from intuition.",
+  "trap": "Stopping at 4, as though stretched wavelengths were the only effect.",
+  "hint": "Count every way expansion thins the light: energy per photon, arrival rate, and apparent size.",
+  "steps": [
+    "Each photon arrives with a quarter of its energy, and photons arrive a quarter as often: 4 × 4 = 16.",
+    "The image covers 4 × 4 = 16 times more sky than a static universe would give, thinning the light again.",
+    "16 × 16 = 256 times dimmer per patch."
+  ],
+  "keywords": [
+    "tolman test",
+    "surface brightness",
+    "redshift",
+    "distant galaxies"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Lubin & Sandage, Astronomical Journal, 2001",
+  "source_kind": "paper",
+  "reference": "Lubin & Sandage, The Tolman Surface Brightness Test for the Reality of the Expansion. IV., The Astronomical Journal 122, 1084, 2001",
+  "written": "2026-09-27"
+}

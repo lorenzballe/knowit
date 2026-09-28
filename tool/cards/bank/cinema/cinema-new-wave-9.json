@@ -1,0 +1,38 @@
+{
+  "id": "cinema-new-wave-9",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.new_wave",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: Agnès Varda's Cléo from 5 to 7 follows its heroine from five o'clock until seven?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The film runs about 90 minutes in close to real time, from 5 until about 6:30 in the evening, with chapter titles on screen keeping the clock. The half-hour the title promises never arrives: the story ends at a hospital, where Cléo finally hears the result of her cancer test.",
+  "move": "A title is a promise made before the work, not a description of it.",
+  "trap": "Taking the times in the title as the span of the film.",
+  "keywords": [
+    "cléo",
+    "agnès varda",
+    "real time",
+    "paris"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Flitterman-Lewis, To Desire Differently, 1990",
+  "source_kind": "book",
+  "reference": "Flitterman-Lewis, To Desire Differently: Feminism and the French Cinema, University of Illinois Press, 1990",
+  "written": "2026-09-27"
+}

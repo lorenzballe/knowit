@@ -1,0 +1,38 @@
+{
+  "id": "music-frequencies-10",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.frequencies",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the international agreement fixing A at 440 Hz was reached at a 1939 conference in London?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In May 1939 a conference in London called by the International Standards Association adopted 440 Hz for the A above middle C, and ISO confirmed it in 1955. A story circulating online says Nazi Germany imposed the figure; the decision was a multinational one, taken in London, months before the war began.",
+  "move": "The more sinister the origin story, the more its paperwork deserves a look.",
+  "trap": "A vivid tale of the pitch as a wartime plot crowds out the record.",
+  "keywords": [
+    "concert pitch",
+    "a440",
+    "standardisation",
+    "conspiracy theory"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Haynes, A History of Performing Pitch",
+  "source_kind": "book",
+  "reference": "Haynes, A History of Performing Pitch: The Story of A, Scarecrow Press, 2002",
+  "written": "2026-09-27"
+}

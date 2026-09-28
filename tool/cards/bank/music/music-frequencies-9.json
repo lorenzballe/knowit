@@ -1,0 +1,40 @@
+{
+  "id": "music-frequencies-9",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.frequencies",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "How does an unamplified opera tenor get heard over a full orchestra playing at the same time?",
+  "options": [
+    "More power than the whole orchestra",
+    "Notes above the orchestra's range",
+    "A strong peak near 3,000 Hz"
+  ],
+  "correct": 2,
+  "answer": "A strong peak near 3,000 Hz. Trained singers lower the larynx and widen the throat so several resonances of the vocal tract cluster, the singer's formant, boosting the voice between about 2,500 and 3,500 Hz. An orchestra is loudest far lower, around 500 Hz, so the voice slips through a gap.",
+  "move": "To be heard in a crowd, be different rather than louder.",
+  "trap": "Opera voices are famously loud, so power seems the obvious answer.",
+  "keywords": [
+    "singer's formant",
+    "opera",
+    "vocal tract",
+    "resonance",
+    "orchestra"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sundberg, The Science of the Singing Voice",
+  "source_kind": "book",
+  "reference": "Sundberg, The Science of the Singing Voice, Northern Illinois University Press, 1987",
+  "written": "2026-09-27"
+}

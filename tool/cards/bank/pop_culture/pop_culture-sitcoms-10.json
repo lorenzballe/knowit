@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-sitcoms-10",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.sitcoms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did all six Friends leads earn exactly the same fee per episode from 1996 onwards?",
+  "answer": "Because they bargained as one. From the third season the cast negotiated together, reportedly at the urging of David Schwimmer, then the best-paid of them, so none could be played off against another. By the last two seasons each earned about $1 million an episode. A walkout by one meant a walkout by six.",
+  "move": "A group that cannot be split can ask for what none could alone.",
+  "keywords": [
+    "friends",
+    "salaries",
+    "david schwimmer",
+    "collective bargaining"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Austerlitz, Generation Friends, 2019",
+  "source_kind": "book",
+  "reference": "Saul Austerlitz, Generation Friends: An Inside Look at the Show That Defined a Television Era, Dutton, 2019",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-zeno-10",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.zeno",
+  "also": [
+    "science.maths_curios.infinity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A 1 cm line is made of points, each of length zero. How can the zeros add up to 1 cm?",
+  "options": [
+    "Each point has a tiny non-zero length",
+    "The line's true length is zero",
+    "Length adds only over countable collections"
+  ],
+  "correct": 2,
+  "answer": "Length adds only over countable collections. Measure theory adds lengths over sets that can be listed one by one; a line's points cannot. Adolf Grünbaum used this in 1967 against Zeno's claim that a line of sizeless parts has no size. All the fractions between 0 and 1, taken together, have length zero.",
+  "move": "When parts cannot add to the whole, question the adding, not the parts.",
+  "trap": "Rescuing the sum by giving each point a sliver of length.",
+  "keywords": [
+    "paradox of plurality",
+    "measure theory",
+    "adolf grünbaum",
+    "continuum"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Grünbaum, Modern Science and Zeno's Paradoxes, 1967",
+  "source_kind": "book",
+  "reference": "Grünbaum, Modern Science and Zeno's Paradoxes, Wesleyan University Press, 1967",
+  "written": "2026-09-27"
+}

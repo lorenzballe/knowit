@@ -1,0 +1,38 @@
+{
+  "id": "human_body-telomeres-7",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.telomeres",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: every cancer must switch on telomerase to stop its chromosome tips wearing away?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Most do, but roughly 10 to 15% of cancers use a second route, alternative lengthening of telomeres, copying tip sequences from one chromosome to another by recombination. It is commoner in tumours of bone and soft tissue and in some brain cancers. A drug that blocked telomerase alone would leave these cells dividing.",
+  "move": "A barrier with two doors is not closed by shutting one.",
+  "trap": "Treating telomerase as the one lock every tumour must pick.",
+  "keywords": [
+    "cancer",
+    "telomerase",
+    "alternative lengthening",
+    "sarcoma"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cesare & Reddel, Nature Reviews Genetics, 2010",
+  "source_kind": "paper",
+  "reference": "Cesare & Reddel, Alternative lengthening of telomeres: models, mechanisms and implications, Nature Reviews Genetics, 2010",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "food-beer-10",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.beer",
+  "also": [
+    "history.empires.british"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conjunction",
+  "question": "True or false: India pale ale was invented as a new, extra-strong, extra-hoppy style so beer could survive the voyage to India?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Strong, heavily hopped October beers brewed for keeping existed in England long before, and George Hodgson's pale ale, shipped to India from the late 1700s, was one of them, not an invention. Brewing historians find India ales no stronger than many sold at home. The name India pale ale appears only around 1830.",
+  "move": "Each added detail in a story is one more thing that must be true.",
+  "trap": "Accepting the whole story because each detail makes it more vivid.",
+  "keywords": [
+    "india pale ale",
+    "george hodgson",
+    "october beer",
+    "hops",
+    "brewing history"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cornell, Amber, Gold and Black, 2010",
+  "source_kind": "book",
+  "reference": "Cornell, Amber, Gold and Black: The History of Britain's Great Beers, History Press, 2010",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "nature-migration-6",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.migration",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "regression",
+  "question": "Volunteers counted just 1,914 western monarchs at California's winter sites in 2020. What did the same count find in 2021?",
+  "options": [
+    "Over 100 times more",
+    "About the same, near 2,000",
+    "Fewer still, under 1,000"
+  ],
+  "correct": 0,
+  "answer": "Over 100 times more: 247,237. A record low owes something to one bad year of weather and breeding, and the next count tends to drift back. The rebound was not a recovery: estimates for the 1980s ran into the millions, and by 2024 the tally had sunk to about 9,000.",
+  "move": "After a record low, expect a bounce, and do not call it recovery.",
+  "trap": "Extending a collapse in a straight line from its lowest year.",
+  "keywords": [
+    "monarch butterflies",
+    "western monarch count",
+    "california",
+    "population counts"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Xerces Society, Western Monarch Count",
+  "source_kind": "statistics",
+  "reference": "https://westernmonarchcount.org/data/",
+  "written": "2026-09-27"
+}

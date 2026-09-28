@@ -1,0 +1,39 @@
+{
+  "id": "economics-interest-10",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.interest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "In the 2010s, how far below zero did any major central bank push its main policy rate?",
+  "options": [
+    "About −0.1%",
+    "About −3%",
+    "About −0.75%"
+  ],
+  "correct": 2,
+  "answer": "About −0.75%. Switzerland's central bank held that rate from 2015 to 2022 and Denmark's matched it for a year; nobody went deeper. What stops them is cash: notes pay zero, so beyond some point storing paper beats paying to keep a deposit. The floor under interest rates is a vault full of banknotes.",
+  "move": "Find the cheapest way out before believing a price can go anywhere.",
+  "trap": "Picking −0.1%, as if negative rates were only a gesture.",
+  "keywords": [
+    "negative interest rates",
+    "swiss national bank",
+    "cash hoarding",
+    "lower bound"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Swiss National Bank, policy decisions",
+  "source_kind": "institution",
+  "reference": "Swiss National Bank, Monetary policy assessment and press release of 15 January 2015, 2015",
+  "written": "2026-09-27"
+}

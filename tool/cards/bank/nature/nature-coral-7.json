@@ -1,0 +1,33 @@
+{
+  "id": "nature-coral-7",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.coral",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did drilling on Enewetak Atoll in 1951–52 hit beneath more than a kilometre of coral rock?",
+  "answer": "Volcanic basalt. Darwin had argued in 1842 that atolls are reefs on sinking volcanoes, the coral growing upward as the peak subsided. Drill holes went through more than 1,200 m of reef limestone, tens of millions of years old, to the volcano. Surface-dwelling corals had kept pace all the way down.",
+  "move": "A slow process sustained long enough builds what looks impossible.",
+  "keywords": [
+    "enewetak atoll",
+    "darwin",
+    "atolls",
+    "subsidence",
+    "drilling"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Ladd et al., AAPG Bulletin, 1953",
+  "source_kind": "paper",
+  "reference": "Ladd, Ingerson, Towson, Russell & Stephenson, Drilling on Eniwetok Atoll, Marshall Islands, Bulletin of the American Association of Petroleum Geologists, 1953",
+  "written": "2026-09-27"
+}

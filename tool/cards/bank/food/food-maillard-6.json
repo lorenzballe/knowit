@@ -1,0 +1,39 @@
+{
+  "id": "food-maillard-6",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.maillard",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: ordinary table sugar can join the Maillard reaction just as it is, without first breaking apart?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The reaction needs a reducing sugar, one whose reactive end is free to grab an amino acid. Sucrose locks both halves' reactive ends in the bond joining them; only once heat or acid splits it can they brown. A dough sweetened with honey darkens sooner than one with the same weight of sucrose.",
+  "move": "Before blaming an ingredient, check that it can take part in its current form.",
+  "trap": "True, since the Maillard reaction is simply sugar browning with protein.",
+  "keywords": [
+    "reducing sugars",
+    "sucrose",
+    "glucose",
+    "fructose",
+    "browning"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Belitz, Grosch & Schieberle, Food Chemistry",
+  "source_kind": "reference_work",
+  "reference": "Belitz, Grosch & Schieberle, Food Chemistry, 4th edition, Springer, 2009",
+  "written": "2026-09-27"
+}

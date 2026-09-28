@@ -1,0 +1,39 @@
+{
+  "id": "food-pasta-8",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.pasta",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Italy's leading durum wheat for pasta in the 1980s was bred from a radiation-induced mutant?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Creso, released in 1974 by Italian state nuclear researchers, came from crossing a line that descended from irradiated Cappelli wheat, which gave it shorter, sturdier stalks. It became for years Italy's most sown durum. Mutation breeding needs no labelling, unlike genetic engineering, so much pasta sold as traditional grew from irradiated lines.",
+  "move": "Check how a traditional product was bred before calling it untouched.",
+  "trap": "False, as radiation breeding sounds like the modern tampering Italy resists.",
+  "keywords": [
+    "creso",
+    "durum wheat",
+    "mutation breeding",
+    "radiation",
+    "cappelli"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IAEA Mutation Breeding Review, 1993",
+  "source_kind": "institution",
+  "reference": "Scarascia-Mugnozza, Bagnara, Bozzini et al., Mutation breeding for durum wheat improvement in Italy, Mutation Breeding Review No. 10, IAEA, 1993",
+  "written": "2026-09-27"
+}

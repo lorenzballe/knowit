@@ -1,0 +1,40 @@
+{
+  "id": "economics-1929-9",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.1929",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "In 1937 the American recovery broke, and industrial output fell by about a third within a year. What set it off?",
+  "options": [
+    "Tighter money and a smaller deficit",
+    "A new wave of bank failures",
+    "Tariff retaliation from Europe"
+  ],
+  "correct": 0,
+  "answer": "Tighter money and a smaller deficit. The Fed doubled banks' reserve requirements in 1936 and 1937, the Treasury stopped letting gold inflows expand the money supply, and new social security taxes shrank the federal deficit. Bank failures, the villain of 1930 to 1933, stayed rare. Output turned up after both policies were reversed in 1938.",
+  "move": "A relapse often comes from the cure being withdrawn too early.",
+  "trap": "Blaming the banks, because they were the villains last time.",
+  "keywords": [
+    "recession of 1937",
+    "reserve requirements",
+    "gold sterilisation",
+    "federal reserve",
+    "fiscal policy"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Irwin, Financial History Review, 2012",
+  "source_kind": "paper",
+  "reference": "Irwin, Gold sterilization and the recession of 1937-1938, Financial History Review, 2012",
+  "written": "2026-09-27"
+}

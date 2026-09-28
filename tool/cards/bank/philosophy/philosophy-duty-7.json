@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-duty-7",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.duty",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Kant grants that a world where nobody ever helps anybody could exist. Why, then, does refusing all help fail his test?",
+  "options": [
+    "As a law, it contradicts itself",
+    "No one could will it, needing help someday",
+    "It would lower everyone's total happiness"
+  ],
+  "correct": 1,
+  "answer": "No one could will it. Kant's universal-law test has two steps. A lying promise fails the first: made universal, promising collapses, so the maxim cannot even be conceived. Refusing help passes that step and fails the second, since anyone may one day need others' kindness and would have willed away all hope of it.",
+  "move": "When a rule fails a test, find out which part of the test it failed.",
+  "trap": "Treating every failed maxim as a contradiction, like the lying promise.",
+  "keywords": [
+    "categorical imperative",
+    "universal law",
+    "beneficence",
+    "immanuel kant"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kant, Groundwork, 4:421-424",
+  "source_kind": "book",
+  "reference": "Kant, Groundwork of the Metaphysics of Morals, trans. Gregor & Timmermann, Cambridge University Press, 2012, 4:421-424",
+  "written": "2026-09-27"
+}

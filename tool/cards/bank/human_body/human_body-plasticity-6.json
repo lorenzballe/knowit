@@ -1,0 +1,32 @@
+{
+  "id": "human_body-plasticity-6",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.plasticity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "After an arm is amputated, does the brain's map of the missing hand get taken over?",
+  "answer": "Apparently not. Schone, Makin and colleagues scanned three adults before and up to five years after planned arm amputations. Moving their phantom fingers lit up the same hand map as moving real ones had before surgery, and the lip area had not spread into it. The map stayed ready for a hand that was gone.",
+  "move": "Compare the same people before and after before announcing that something moved.",
+  "keywords": [
+    "amputation",
+    "phantom limb",
+    "body map",
+    "somatosensory cortex"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schone et al., Nature Neuroscience, 2025",
+  "source_kind": "paper",
+  "reference": "Schone et al., Stable cortical body maps before and after arm amputation, Nature Neuroscience, 2025",
+  "written": "2026-09-27"
+}

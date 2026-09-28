@@ -1,0 +1,38 @@
+{
+  "id": "economics-hyperinflation-10",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.hyperinflation",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a country stuck in hyperinflation give up its own currency and adopt the US dollar?",
+  "sides": [
+    "Yes, adopt the dollar",
+    "No, rebuild its own"
+  ],
+  "answer": "A government that has destroyed its money has no credibility left to rebuild it. Adopting the dollar ends inflation because no one can print it locally. Ecuador switched in 2000, as inflation headed towards 100%, and was in single digits within three years. Zimbabwe's price explosion stopped within weeks of dollars being allowed in 2009.",
+  "move": "Whichever side you took, the hinge is whether credibility can be rebuilt at home.",
+  "counterpoint": "A dollarised country gives up the power to lend in a panic, cut rates or let its currency fall in a slump. Ecuador could not devalue when oil prices crashed in 2015. Zimbabwe ran short of dollars and relaunched its own currency in 2019, which then inflated again. Stability that cannot bend breaks in the next shock.",
+  "keywords": [
+    "dollarisation",
+    "ecuador",
+    "zimbabwe",
+    "central banks",
+    "currency reform"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Edwards & Magendzo, dollarisation study, 2003",
+  "source_kind": "paper",
+  "reference": "Edwards & Magendzo, Dollarization and Economic Performance: What Do We Really Know?, International Journal of Finance and Economics, 2003",
+  "written": "2026-09-27"
+}

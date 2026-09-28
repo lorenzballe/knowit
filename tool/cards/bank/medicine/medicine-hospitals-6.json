@@ -1,0 +1,39 @@
+{
+  "id": "medicine-hospitals-6",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.hospitals",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "Reviewers read the notes of thousands of patients who died in English hospitals. What share of deaths did they judge more likely than not avoidable?",
+  "options": [
+    "About 1 in 3",
+    "About 1 in 30",
+    "About 1 in 300"
+  ],
+  "correct": 1,
+  "answer": "About 1 in 30. Hogan and colleagues found 3.6% across 34 hospital trusts, mostly among frail, elderly patients with little life left. With so few, a hospital's overall death rate mainly reflects who arrives how sick: its standardised mortality ratio showed no significant link to the avoidable deaths found in its own notes.",
+  "move": "Before ranking places by deaths, ask how many of them anyone could prevent.",
+  "trap": "About 1 in 3, recalling scandals where hospitals killed through neglect.",
+  "keywords": [
+    "avoidable deaths",
+    "case note review",
+    "hospital mortality",
+    "patient safety"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Hogan et al., BMJ, 2015",
+  "source_kind": "paper",
+  "reference": "Hogan et al., Avoidability of hospital deaths and association with hospital-wide mortality ratios: retrospective case record review and regression analysis, BMJ, 2015",
+  "written": "2026-09-27"
+}

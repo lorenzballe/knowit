@@ -1,0 +1,42 @@
+{
+  "id": "cinema-silence-7",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.silence",
+  "also": [
+    "psychology.emotions.fear"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A horror mixer adds a faint click a tenth of a second before the jump-scare crash. What happens to the audience's jolt?",
+  "options": [
+    "It gets weaker",
+    "It gets stronger",
+    "It stays the same"
+  ],
+  "correct": 0,
+  "answer": "It gets weaker. A faint sound roughly 30 to 500 milliseconds before a startling one damps the startle reflex; the effect, prepulse inhibition, has been replicated in countless laboratories. The nervous system uses the warning to brace. A mixer after the full jolt clears the track to near silence before the bang.",
+  "move": "A small warning takes the edge off a large surprise.",
+  "trap": "Expecting a warning sound to wind the audience tighter before the blow.",
+  "keywords": [
+    "prepulse inhibition",
+    "startle reflex",
+    "jump scares",
+    "horror films"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Braff, Geyer & Swerdlow, Psychopharmacology, 2001",
+  "source_kind": "paper",
+  "reference": "Braff, Geyer & Swerdlow, Human studies of prepulse inhibition of startle: normal subjects, patient groups, and pharmacological studies, Psychopharmacology, 2001",
+  "written": "2026-09-27"
+}

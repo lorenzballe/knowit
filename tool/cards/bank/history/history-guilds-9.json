@@ -1,0 +1,40 @@
+{
+  "id": "history-guilds-9",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.guilds",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A medieval guild statute forbids members to work by candlelight. What does the rule most safely show?",
+  "options": [
+    "That some did, or might, work at night",
+    "That nobody worked at night",
+    "That candles were too costly to use"
+  ],
+  "correct": 0,
+  "answer": "That some did, or might. Rules are written against things people do. The Paris Book of Trades of about 1268 bans night work in craft after craft, often because poor light spoiled work and hid shoddy goods. A ban shows a temptation existed; how often it won needs other records, such as the fines.",
+  "move": "A ban is evidence that someone was tempted.",
+  "trap": "Reading a rule as a description of how people behaved.",
+  "keywords": [
+    "night work",
+    "guild statutes",
+    "book of trades",
+    "paris",
+    "prescriptive sources"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Epstein, Wage Labor and Guilds, 1991",
+  "source_kind": "book",
+  "reference": "Epstein, Wage Labor and Guilds in Medieval Europe, University of North Carolina Press, 1991",
+  "written": "2026-09-27"
+}

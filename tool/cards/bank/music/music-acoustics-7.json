@@ -1,0 +1,39 @@
+{
+  "id": "music-acoustics-7",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.acoustics",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A listener in a concert hall moves from row 10 to row 20, doubling the distance to the orchestra. How much quieter?",
+  "options": [
+    "About 6 decibels quieter",
+    "Only a couple of decibels",
+    "About 20 decibels quieter"
+  ],
+  "correct": 1,
+  "answer": "Only a couple of decibels. Outdoors, sound falls about 6 dB per doubling of distance, but in a hall most of what reaches a seat is reverberation, sound bounced round the room, filling it evenly. A few metres from the stage, reflected sound already outweighs direct sound, so the level barely changes. Clarity does.",
+  "move": "A rule measured in the open may not survive four walls.",
+  "trap": "The textbook rule of 6 dB per doubling, made for open air.",
+  "keywords": [
+    "inverse square law",
+    "reverberation",
+    "critical distance",
+    "concert hall"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kuttruff, Room Acoustics, 2009",
+  "source_kind": "book",
+  "reference": "Kuttruff, Room Acoustics, 5th edition, Spon Press, 2009",
+  "written": "2026-09-27"
+}

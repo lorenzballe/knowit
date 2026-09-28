@@ -1,0 +1,39 @@
+{
+  "id": "language-dialects-10",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.dialects",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confirmation",
+  "question": "Appalachian mountain speech is often called living Elizabethan English. What do dialect historians find it to be?",
+  "options": [
+    "Settler speech of the 1700s, since changed",
+    "Shakespeare's English, largely preserved",
+    "Ulster Scots, kept almost intact"
+  ],
+  "correct": 0,
+  "answer": "Settler speech of the 1700s, since changed. Most families arrived in the 18th century, many from Ulster, long after Elizabeth I, and the dialect has kept innovating. Old features such as a-hunting and afeared are real, but the Elizabethan label came from writers who collected those and passed over the rest.",
+  "move": "A handful of antiques in a house does not make the house antique.",
+  "trap": "Hearing a few old-sounding words and taking them for the whole dialect.",
+  "keywords": [
+    "appalachian english",
+    "elizabethan english",
+    "ulster scots",
+    "a-prefixing"
+  ],
+  "era": "early_modern",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Montgomery, in Language Myths, 1998",
+  "source_kind": "book",
+  "reference": "Montgomery, In the Appalachians they speak like Shakespeare, in Bauer & Trudgill (eds), Language Myths, Penguin, 1998",
+  "written": "2026-09-27"
+}

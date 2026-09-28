@@ -1,0 +1,38 @@
+{
+  "id": "food-espresso-8",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.espresso",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a stovetop moka pot brews at a pressure close to an espresso machine's?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Steam in the lower chamber pushes water up through the coffee at under 2 bar, against about 9 in an espresso machine. That is too little to push through espresso-fine grounds or to whip oils and gas into lasting foam. Moka coffee is strong and heavy, but the cup carries no true crema.",
+  "move": "A product's nickname tells what it imitates, not how it works.",
+  "trap": "Trusting the nickname stovetop espresso to describe the physics.",
+  "keywords": [
+    "moka pot",
+    "brewing pressure",
+    "crema",
+    "stovetop coffee"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Navarini et al., Applied Thermal Engineering, 2009",
+  "source_kind": "paper",
+  "reference": "Navarini, Nobile, Pinto, Scheri & Suggi-Liverani, Experimental investigation of steam pressure coffee extraction in a stove-top coffee maker, Applied Thermal Engineering, 2009",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "music-chord-loops-6",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.chord_loops",
+  "also": [
+    "psychology.emotions.joy"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "In a 2019 study of chord sequences from 745 US hits, which moment gave listeners the most pleasure?",
+  "options": [
+    "A predictable chord after a predictable run",
+    "A surprising chord after an unpredictable run",
+    "A surprising chord after a predictable run"
+  ],
+  "correct": 2,
+  "answer": "A surprising chord after a predictable run. Vincent Cheung and colleagues modelled 80,000 chords, played without melody or lyrics, and had listeners rate them. Surprise pleased when expectation was confident; a safe chord pleased after uncertainty; a shock inside confusion did little. A loop earns its twist by being predictable first.",
+  "move": "A surprise only lands where there was a confident expectation to break.",
+  "trap": "Assuming more surprise always means more pleasure, whatever came before.",
+  "keywords": [
+    "expectation",
+    "surprise",
+    "uncertainty",
+    "chord progressions",
+    "pleasure"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cheung et al., Current Biology, 2019",
+  "source_kind": "paper",
+  "reference": "https://www.cell.com/current-biology/fulltext/S0960-9822(19)31258-8",
+  "written": "2026-09-27"
+}

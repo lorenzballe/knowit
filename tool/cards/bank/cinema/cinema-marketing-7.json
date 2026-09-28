@@ -1,0 +1,38 @@
+{
+  "id": "cinema-marketing-7",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.marketing",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "True or false: most films that critics pan were kept from critics until opening day?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Studios do hide some weak films, and a hidden film is very likely weak. But among 1,303 wide releases studied, cold openings were a small minority, while panned films were common; most were screened as usual. The chance a hidden film is bad is high; the chance a bad film was hidden is low.",
+  "move": "A rule that holds one way round rarely holds the other.",
+  "trap": "Flipping the true rule that hidden films are usually bad into its reverse.",
+  "keywords": [
+    "cold opening",
+    "film critics",
+    "review embargo",
+    "conditional probability"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Brown, Camerer & Lovallo, 2012",
+  "source_kind": "paper",
+  "reference": "doi:10.1257/mic.4.2.1",
+  "written": "2026-09-27"
+}

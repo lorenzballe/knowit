@@ -1,0 +1,40 @@
+{
+  "id": "art-famous-fakes-10",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.famous_fakes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "What showed that the British Museum's crystal skull, long sold as Aztec, was not carved before Columbus?",
+  "options": [
+    "Radiocarbon dating of the crystal",
+    "A confession by the dealer who sold it",
+    "Marks left by a rotating cutting wheel"
+  ],
+  "correct": 2,
+  "answer": "Marks left by a rotating cutting wheel. Scanning electron microscopes showed regular, parallel grooves cut by abrasive on a turning wheel, a lapidary tool unknown in the Americas before Europeans arrived. Pre-Columbian carvers ground stone by hand. Quartz holds no carbon to date, so the tool marks had to speak instead.",
+  "move": "When the material cannot be dated, date the tool that shaped it.",
+  "trap": "Carbon dating, the test that famously unmasks old fakes.",
+  "keywords": [
+    "crystal skull",
+    "british museum",
+    "lapidary wheel",
+    "electron microscopy",
+    "quartz"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sax et al., J. Archaeological Science, 2008",
+  "source_kind": "paper",
+  "reference": "Margaret Sax, Jane M. Walsh, Ian C. Freestone, Andrew H. Rankin & Nigel D. Meeks, The origins of two purportedly pre-Columbian Mexican crystal skulls, Journal of Archaeological Science, 2008",
+  "written": "2026-09-27"
+}

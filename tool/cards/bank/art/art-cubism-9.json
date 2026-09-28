@@ -1,0 +1,40 @@
+{
+  "id": "art-cubism-9",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.cubism",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Who first spoke of little cubes in Braque's 1908 landscapes, according to the critic who put the word in print?",
+  "options": [
+    "Henri Matisse",
+    "Pablo Picasso",
+    "Guillaume Apollinaire"
+  ],
+  "correct": 0,
+  "answer": "Henri Matisse. He sat on the 1908 Salon d'Automne jury that turned down Braque's L'Estaque landscapes, and Louis Vauxcelles, who printed the word cubes that November, credited him with the jibe. Apollinaire, meanwhile, wrote the preface for Braque's show. The movement's name began as a rival's sneer relayed by a hostile critic.",
+  "move": "Many labels begin as insults from rivals and stick anyway.",
+  "trap": "Crediting Picasso, the name everyone attaches to the movement.",
+  "keywords": [
+    "matisse",
+    "braque",
+    "louis vauxcelles",
+    "salon d'automne",
+    "l'estaque"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Danchev, Georges Braque: A Life, 2005",
+  "source_kind": "book",
+  "reference": "Alex Danchev, Georges Braque: A Life, Hamish Hamilton, 2005",
+  "written": "2026-09-27"
+}

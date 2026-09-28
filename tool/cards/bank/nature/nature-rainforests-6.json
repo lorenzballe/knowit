@@ -1,0 +1,32 @@
+{
+  "id": "nature-rainforests-6",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.rainforests",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What lay unrecognised beneath the swamp forests of the central Congo Basin until 2017?",
+  "answer": "The largest tropical peatland known. Coring the swamps by hand, Dargie and colleagues mapped about 145,000 km² of peat, larger than England, holding roughly 30 billion tonnes of carbon: about three years of the world's fossil-fuel emissions. Permanent waterlogging stops dead leaves rotting, so they pile up for millennia under the trees.",
+  "move": "The biggest store in a system can be the one nobody thought to dig for.",
+  "keywords": [
+    "congo basin",
+    "peatland",
+    "carbon store",
+    "swamp forest"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Dargie et al., Nature, 2017",
+  "source_kind": "paper",
+  "reference": "Dargie et al., Age, extent and carbon storage of the central Congo Basin peatland complex, Nature, 2017",
+  "written": "2026-09-27"
+}

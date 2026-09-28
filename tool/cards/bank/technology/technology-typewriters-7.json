@@ -1,0 +1,33 @@
+{
+  "id": "technology-typewriters-7",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.typewriters",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did 1980s Romania make typewriter owners register their machines with the police and hand over typed samples?",
+  "answer": "Because every typewriter signs its work. Worn, bent or slightly misaligned letters make each machine's print unique, so a sample on file could tie an anonymous leaflet to one machine. A 1983 decree required registration, a permit and fresh samples each year. In a police archive, a typeface became a fingerprint.",
+  "move": "Anything that wears in its own way leaves a signature behind.",
+  "keywords": [
+    "romania",
+    "ceaușescu",
+    "typewriter registration",
+    "forensics",
+    "surveillance"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Deletant, Ceaușescu and the Securitate, 1995",
+  "source_kind": "book",
+  "reference": "Deletant, Ceaușescu and the Securitate: Coercion and Dissent in Romania, 1965–1989, Hurst, 1995",
+  "written": "2026-09-27"
+}

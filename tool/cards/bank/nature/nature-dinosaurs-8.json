@@ -1,0 +1,43 @@
+{
+  "id": "nature-dinosaurs-8",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.dinosaurs",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "Take the dinosaur-killing asteroid as 10 km across, 3,000 kg/m³, at 20 km/s. Energy, in billions of Hiroshima bombs (6 × 10¹³ J each)?",
+  "value": 5,
+  "unit": "billion Hiroshima bombs",
+  "withinFactor": 3,
+  "answer": "3.2 × 10²³ ÷ (6 × 10¹³) ≈ 5 billion bombs.",
+  "move": "When speed is squared, a fast small thing can outweigh a slow huge one.",
+  "trap": "Reaching for millions, because no bomb scale feels big enough.",
+  "hint": "Kinetic energy is half the mass times the speed squared; start with the volume.",
+  "steps": [
+    "Volume: a sphere fills about half its cube, so about 520 km³, or 5.2 × 10¹¹ m³.",
+    "Mass: 5.2 × 10¹¹ × 3,000 ≈ 1.6 × 10¹⁵ kg.",
+    "Energy: ½ × 1.6 × 10¹⁵ × (2 × 10⁴)² ≈ 3.2 × 10²³ J.",
+    "3.2 × 10²³ ÷ (6 × 10¹³) ≈ 5 billion bombs."
+  ],
+  "keywords": [
+    "chicxulub impact",
+    "kinetic energy",
+    "asteroid",
+    "impact energy"
+  ],
+  "era": "ancient",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Collins et al., Meteoritics & Planetary Science, 2005",
+  "source_kind": "paper",
+  "reference": "Collins, Melosh & Marcus, Earth Impact Effects Program: A Web-based computer program for calculating the regional environmental consequences of a meteoroid impact on Earth, Meteoritics & Planetary Science, 2005",
+  "written": "2026-09-27"
+}

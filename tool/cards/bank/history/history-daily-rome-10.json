@@ -1,0 +1,40 @@
+{
+  "id": "history-daily-rome-10",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.daily_rome",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Augustus capped the height of new buildings along Rome's streets. At roughly what height?",
+  "options": [
+    "About 40 metres",
+    "About 10 metres",
+    "About 20 metres"
+  ],
+  "correct": 2,
+  "answer": "About 20 metres. Strabo gives the limit as 70 Roman feet, about 21 m, room for six or seven storeys of brick and timber; Trajan later lowered it to 60. Such blocks rarely survived fire and rebuilding. Juvenal's poorest tenant lives at the top, under the roof tiles, where the pigeons nest.",
+  "move": "What lasts was built to last, and homes rarely were.",
+  "trap": "Picturing Rome from its temples and low, one-storey ruins.",
+  "keywords": [
+    "insulae",
+    "building height",
+    "augustus",
+    "strabo",
+    "apartment blocks"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Strabo, Geography 5.3.7",
+  "source_kind": "primary_document",
+  "reference": "Strabo, Geography, vol. 2, trans. H. L. Jones, Loeb Classical Library, Harvard University Press, 1923",
+  "written": "2026-09-27"
+}

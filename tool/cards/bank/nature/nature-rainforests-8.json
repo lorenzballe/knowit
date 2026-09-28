@@ -1,0 +1,39 @@
+{
+  "id": "nature-rainforests-8",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.rainforests",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: aircraft sampling found that south-eastern Amazonia gives off more carbon than it absorbs, even leaving out fires?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. From 2010 to 2018, Gatti's team flew small planes up through the air at four Amazon sites. The south-east, heavily cleared and with hotter, drier dry seasons, was a net source even after fire emissions were subtracted: stressed trees grew less and died more. The standing forest there had stopped banking carbon.",
+  "move": "A label earned in one era needs checking against this era's measurements.",
+  "trap": "Assuming any standing rainforest must be soaking up carbon.",
+  "keywords": [
+    "amazon",
+    "carbon sink",
+    "aircraft sampling",
+    "deforestation",
+    "drought"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Gatti et al., Nature, 2021",
+  "source_kind": "paper",
+  "reference": "Gatti et al., Amazonia as a carbon source linked to deforestation and climate change, Nature, 2021",
+  "written": "2026-09-27"
+}

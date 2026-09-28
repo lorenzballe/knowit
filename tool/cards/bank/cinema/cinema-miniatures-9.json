@@ -1,0 +1,39 @@
+{
+  "id": "cinema-miniatures-9",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.miniatures",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "How were the rolling, glowing storm clouds of Close Encounters of the Third Kind, 1977, made?",
+  "options": [
+    "Smoke filmed at high speed",
+    "Cotton wool animated frame by frame",
+    "Paint injected into a tank of water"
+  ],
+  "correct": 2,
+  "answer": "Paint injected into a tank of water. Douglas Trumbull's team filled a large tank with a layer of fresh water over salt water, and white paint squirted in spread along the boundary between them like cloud under a warm layer of air. Lit and filmed slowly, the swirls became a sky of weather.",
+  "move": "To fake something huge, find a small system that behaves the same way.",
+  "trap": "Picking high-speed smoke, the usual way to make small effects look huge.",
+  "keywords": [
+    "cloud tank",
+    "close encounters",
+    "douglas trumbull",
+    "salt water"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "American Cinematographer, January 1978",
+  "source_kind": "news_archive",
+  "reference": "American Cinematographer, special issue on Close Encounters of the Third Kind, January 1978",
+  "written": "2026-09-27"
+}

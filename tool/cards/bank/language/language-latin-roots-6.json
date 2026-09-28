@@ -1,0 +1,33 @@
+{
+  "id": "language-latin-roots-6",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.latin_roots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Before it meant blowing up, what did the Latin-born verb explode mean in English?",
+  "answer": "To drive off with scornful noise, as an audience did a bad actor. Latin explodere joined ex, out, and plaudere, to clap, the root of applause: Roman crowds clapped performers off. English used it for rejecting ideas scornfully, hence an exploded theory. Bursting with a bang arrived only in the late 1700s.",
+  "move": "A word's older sense often hides inside one fixed phrase.",
+  "keywords": [
+    "explode",
+    "applause",
+    "plaudere",
+    "semantic change",
+    "theatre"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Onions, Oxford Dictionary of English Etymology, 1966",
+  "source_kind": "reference_work",
+  "reference": "Onions (ed.), The Oxford Dictionary of English Etymology, Clarendon Press, 1966",
+  "written": "2026-09-27"
+}

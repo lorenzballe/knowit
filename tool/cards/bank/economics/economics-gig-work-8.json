@@ -1,0 +1,38 @@
+{
+  "id": "economics-gig-work-8",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.gig_work",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: most people in the US who start earning through online platforms are still doing so a year later?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Following millions of bank accounts, the JPMorgan Chase Institute found that more than half of those who began earning on platforms had stopped within twelve months. Surveys of current drivers or couriers hear only from those who stayed, often the ones for whom the work paid. The quitters give their verdict by being absent.",
+  "move": "Ask who left before trusting what those who stayed report.",
+  "trap": "Judging platform work by the people still on it, who liked it.",
+  "keywords": [
+    "platform economy",
+    "churn",
+    "bank accounts",
+    "ride-hailing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "JPMorgan Chase Institute, 2016",
+  "source_kind": "institution",
+  "reference": "Farrell & Greig, Paychecks, Paydays, and the Online Platform Economy, JPMorgan Chase Institute, 2016",
+  "written": "2026-09-27"
+}

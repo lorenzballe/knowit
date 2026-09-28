@@ -1,0 +1,43 @@
+{
+  "id": "history-hygiene-10",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.hygiene",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "Estimate how many thousand tonnes of dung London's horses dropped on the city each day around 1900.",
+  "value": 3,
+  "unit": "thousand tonnes",
+  "withinFactor": 3,
+  "answer": "3,000,000 kg = 3,000 tonnes, about 3 thousand tonnes a day.",
+  "move": "Every old technology had a waste stream; ask who shovelled it.",
+  "trap": "Picturing a few carriages rather than a city's whole freight engine.",
+  "hint": "Start from how many horses a city of six million needed for buses, cabs and carts, then weigh one horse's daily output.",
+  "steps": [
+    "London had roughly 300,000 working horses around 1900.",
+    "A working horse drops roughly 10 kg of dung a day.",
+    "300,000 x 10 kg = 3,000,000 kg a day.",
+    "3,000,000 kg = 3,000 tonnes, about 3 thousand tonnes a day."
+  ],
+  "keywords": [
+    "horses",
+    "manure",
+    "london streets",
+    "street cleaning"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thompson, Victorian England: The Horse-Drawn Society, 1970",
+  "source_kind": "book",
+  "reference": "Thompson, Victorian England: The Horse-Drawn Society, inaugural lecture, Bedford College, University of London, 1970",
+  "written": "2026-09-27"
+}

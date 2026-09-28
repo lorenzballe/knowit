@@ -1,0 +1,32 @@
+{
+  "id": "psychology-forgetting-curve-10",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.forgetting_curve",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can repeated attempts to recall a list, with no restudy in between, make the total recalled rise?",
+  "answer": "Yes. Each attempt loses some items and recovers others missed before; when recoveries outnumber losses, net recall climbs, an effect called hypermnesia. Payne's 1987 review found it most reliably with pictures and vivid images, less with plain word lists. A curve built from one test per delay never sees the items that come back.",
+  "move": "Before recording a loss, try again later from another angle.",
+  "keywords": [
+    "hypermnesia",
+    "reminiscence",
+    "repeated recall",
+    "pictures"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Payne, Psychological Bulletin, 1987",
+  "source_kind": "paper",
+  "reference": "Payne, Hypermnesia and reminiscence in recall: a historical and empirical review, Psychological Bulletin, 1987",
+  "written": "2026-09-27"
+}

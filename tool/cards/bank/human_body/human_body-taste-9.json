@@ -1,0 +1,39 @@
+{
+  "id": "human_body-taste-9",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.taste",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Human sweet taste relies on a single receptor, built from two proteins. How many kinds of bitter receptor does the tongue carry?",
+  "options": [
+    "Also a single one",
+    "About 400",
+    "About 25"
+  ],
+  "correct": 2,
+  "answer": "About 25. Sweet has one job, spotting a few sugars, so one receptor, T1R2 joined to T1R3, suffices. Bitter guards against thousands of plant and microbial toxins of unrelated shapes, so it needs many receptors, several broadly tuned. They report through the same cells, which is why every poison tastes alike: bitter.",
+  "move": "A detector for many unlike threats needs many parts but one alarm.",
+  "trap": "Assuming each basic taste gets one receptor, as sweet does.",
+  "keywords": [
+    "bitter receptors",
+    "tas2r genes",
+    "sweet receptor",
+    "toxins"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Meyerhof et al., Chemical Senses, 2010",
+  "source_kind": "paper",
+  "reference": "Meyerhof, Batram, Kuhn et al., The molecular receptive ranges of human TAS2R bitter taste receptors, Chemical Senses, 2010",
+  "written": "2026-09-27"
+}

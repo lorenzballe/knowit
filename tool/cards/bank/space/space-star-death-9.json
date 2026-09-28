@@ -1,0 +1,39 @@
+{
+  "id": "space-star-death-9",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.star_death",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "True or false: Betelgeuse's sudden dimming in 2019 and 2020 was a sign that it was close to exploding?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A cooler patch on its surface let gas the star had puffed out condense into dust, which hid part of its face. Most models give Betelgeuse something like 100,000 years before it explodes, so the chance of that in any one year is around 1 in 100,000. Dust was always the likelier story.",
+  "move": "Before reading an omen, ask how often the rare thing happens at all.",
+  "trap": "Reading a dramatic change as the long-predicted explosion arriving.",
+  "keywords": [
+    "betelgeuse",
+    "great dimming",
+    "red supergiant",
+    "dust",
+    "supernova"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Montargès et al., Nature, 2021",
+  "source_kind": "paper",
+  "reference": "Montargès et al., A dusty veil shading Betelgeuse during its Great Dimming, Nature 594, 365, 2021",
+  "written": "2026-09-27"
+}

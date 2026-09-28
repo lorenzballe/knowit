@@ -1,0 +1,40 @@
+{
+  "id": "history-lost-countries-10",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.lost_countries",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "In Newfoundland's first 1948 referendum, self-government won 44.6%, union with Canada 41.1%, rule by commission 14.3%. Who won the runoff?",
+  "options": [
+    "Self-government, by a wide margin",
+    "Union with Canada, narrowly",
+    "Self-government, narrowly"
+  ],
+  "correct": 1,
+  "answer": "Union with Canada, narrowly: 52.3% to 47.7%. The commission option was gone, and its voters had already chosen not to restore the self-government that had gone bankrupt in 1934; most of them moved to Canada. Newfoundland, a dominion like Canada itself, became its tenth province on 31 March 1949.",
+  "move": "In a runoff, ask where the eliminated voters' second choices lie.",
+  "trap": "Expecting the first-round leader to win because it led.",
+  "keywords": [
+    "newfoundland",
+    "referendum",
+    "confederation",
+    "canada",
+    "dominion"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Neary, Newfoundland in the North Atlantic World, 1988",
+  "source_kind": "book",
+  "reference": "Neary, Newfoundland in the North Atlantic World, 1929–1949, McGill-Queen's University Press, 1988",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "science-insulation-9",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.insulation",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Metal fixings cover 1% of an insulated wall and pass 25 times more heat per square metre. By what percentage does total heat loss rise?",
+  "value": 24,
+  "unit": "per cent",
+  "answer": "0.99 + 0.25 = 1.24, so heat loss rises by 24%.",
+  "move": "A sliver of the area can carry a large share of the flow.",
+  "trap": "Expecting about 1% more, since the metal covers 1% of the area.",
+  "hint": "Weight each part of the wall by its area and by the heat it lets through.",
+  "steps": [
+    "Call the insulated wall's loss 1 unit per square metre.",
+    "99% of the area at 1 unit gives 0.99; 1% at 25 units gives 0.25.",
+    "0.99 + 0.25 = 1.24, so heat loss rises by 24%."
+  ],
+  "keywords": [
+    "thermal bridges",
+    "wall fixings",
+    "heat loss",
+    "u-value"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ISO 6946, thermal transmittance calculation",
+  "source_kind": "standard",
+  "reference": "ISO 6946:2017, Building components and building elements — Thermal resistance and thermal transmittance — Calculation methods",
+  "written": "2026-09-27"
+}

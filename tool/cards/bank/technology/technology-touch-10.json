@@ -1,0 +1,38 @@
+{
+  "id": "technology-touch-10",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.touch",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should car safety ratings require physical buttons for key controls instead of touchscreens?",
+  "sides": [
+    "Yes, require buttons",
+    "No, leave it to makers"
+  ],
+  "answer": "A button can be found by feel; a touchscreen needs eyes off the road. In a 2022 Swedish magazine test at 110 km/h, a set of tasks took 10 seconds in a 2005 Volvo and 44.6 seconds, about 1.4 km, in an MG Marvel R. Euro NCAP's ratings began rewarding buttons in 2026.",
+  "move": "Whichever side you took, it turns on measured glances away, not on hardware.",
+  "counterpoint": "One magazine's small test is thin evidence. Owners learn their layouts, and voice control and steering-wheel switches already cover the common tasks. Screens let makers fix and add functions by software update, where buttons for everything cost money and dashboard space. Ratings should score measured distraction, whatever the hardware, not freeze one design.",
+  "keywords": [
+    "car touchscreens",
+    "physical buttons",
+    "driver distraction",
+    "euro ncap",
+    "vi bilägare"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vi Bilägare, buttons versus touchscreens test, 2022",
+  "source_kind": "news_archive",
+  "reference": "https://www.vibilagare.se/english/physical-buttons-outperform-touchscreens-new-cars-test-finds",
+  "written": "2026-09-27"
+}

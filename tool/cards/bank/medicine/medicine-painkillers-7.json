@@ -1,0 +1,41 @@
+{
+  "id": "medicine-painkillers-7",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.painkillers",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Aspirin disables a platelet for its whole life. Platelets live about 10 days, replaced steadily. How many days until half are new?",
+  "value": 5,
+  "unit": "days",
+  "answer": "50 / 10 = 5 days.",
+  "move": "Ask whether a drug's effect lives in the blood or in what it touched.",
+  "trap": "Answering in hours, since aspirin itself leaves the blood within an hour.",
+  "hint": "Platelets have no nucleus, so a blocked one is never repaired; count replacements.",
+  "steps": [
+    "Platelets live about 10 days, so about 10% are replaced each day, the oldest first.",
+    "Half the platelets is 50%.",
+    "50 / 10 = 5 days."
+  ],
+  "keywords": [
+    "aspirin",
+    "platelets",
+    "cyclooxygenase",
+    "bleeding"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Patrono, New England Journal of Medicine, 1994",
+  "source_kind": "paper",
+  "reference": "Patrono, Aspirin as an antiplatelet drug, New England Journal of Medicine, 1994",
+  "written": "2026-09-27"
+}

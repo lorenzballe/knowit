@@ -1,0 +1,42 @@
+{
+  "id": "economics-charm-prices-6",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.charm_prices",
+  "also": [
+    "economics.money_and_banks.printing_cash"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "With new US pennies no longer minted, cash totals get rounded to the nearest five cents. Since most prices end in 99, who gains?",
+  "options": [
+    "Shops, by about a cent a sale",
+    "Neither side, to a fraction of a cent",
+    "Shoppers, by about a cent a sale"
+  ],
+  "correct": 1,
+  "answer": "Neither side, to a fraction of a cent. Only the total is rounded, and sales tax and mixed baskets scatter its last digit almost evenly. In nearly 200,000 real convenience-store sales, Whaples found shoppers gained about a cent per 40 transactions; a 2025 Richmond Fed estimate put the national cost near $6 million a year.",
+  "move": "Check which number actually gets rounded before counting who loses.",
+  "trap": "Rounding each 99-cent tag up, as if items were paid one by one.",
+  "keywords": [
+    "pennies",
+    "cash rounding",
+    "sales tax",
+    "price endings"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wang and Wong, Richmond Fed, 2025",
+  "source_kind": "institution",
+  "reference": "https://www.richmondfed.org/publications/research/economic_brief/2025/eb_25-27",
+  "written": "2026-09-27"
+}

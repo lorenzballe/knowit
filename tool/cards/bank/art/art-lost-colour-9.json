@@ -1,0 +1,40 @@
+{
+  "id": "art-lost-colour-9",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.lost_colour",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Paint vanished from a marble relief centuries ago. How can low, raking light still show its patterns?",
+  "options": [
+    "Pigment left a stain that catches light",
+    "Oil in the paint polished the marble",
+    "Painted areas weathered less and stand proud"
+  ],
+  "correct": 2,
+  "answer": "Painted areas weathered less and stand proud. While it lasted, paint shielded the stone beneath from rain and wind; bare marble around it wore away faster. The difference is a fraction of a millimetre, but light skimming the surface throws tiny shadows along each border. Meanders and hems reappear as faint relief.",
+  "move": "Something that is gone can leave its outline in what it protected.",
+  "trap": "Looking for a trace of the colour itself rather than its shield.",
+  "keywords": [
+    "raking light",
+    "weathering",
+    "painted reliefs",
+    "marble",
+    "polychromy"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brinkmann, Die Polychromie, 2003",
+  "source_kind": "book",
+  "reference": "Vinzenz Brinkmann, Die Polychromie der archaischen und frühklassischen Skulptur, Biering & Brinkmann, 2003",
+  "written": "2026-09-27"
+}

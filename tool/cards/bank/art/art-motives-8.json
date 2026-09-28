@@ -1,0 +1,39 @@
+{
+  "id": "art-motives-8",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.motives",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Why was Mark Landis never prosecuted, after fooling some 46 American museums with forgeries over three decades?",
+  "options": [
+    "The statute of limitations had run",
+    "He was judged unfit to stand trial",
+    "He never took money for them"
+  ],
+  "correct": 2,
+  "answer": "He never took money for them. Landis gave his copies away, sometimes posing as a priest, and claimed no tax deduction. Fraud needs a victim who lost something, and a free gift left the museums poorer only in pride. A museum registrar, Matthew Leininger, exposed him in 2008; Landis went on donating.",
+  "move": "Before asking why nobody punished it, ask who was harmed and how.",
+  "trap": "The statute of limitations, the usual technicality that frees old crimes.",
+  "keywords": [
+    "mark landis",
+    "museum donations",
+    "matthew leininger",
+    "fraud law"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "University of Cincinnati, 2012",
+  "source_kind": "institution",
+  "reference": "https://www.uc.edu/news/articles/legacy/enews/2012/03/uc-exhibit-focus--museums-vulnerability-to-an-artful-dodger-who-donates-forgeries.html",
+  "written": "2026-09-27"
+}

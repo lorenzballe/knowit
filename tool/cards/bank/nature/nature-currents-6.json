@@ -1,0 +1,36 @@
+{
+  "id": "nature-currents-6",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.currents",
+  "also": [
+    "space.the_moon.tides"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What keeps the deep ocean's slow overturning going, beyond cold water sinking near the poles?",
+  "answer": "Mixing, powered by tides and winds. Cold water sinks easily; the hard part is bringing it back up, which takes turbulence mixing it with lighter water. Munk and Wunsch put the need at about 2 terawatts, roughly half from tides breaking over seafloor ridges and half from winds. The Moon helps pump the abyss.",
+  "move": "Ask what brings a thing back, not just what sends it away.",
+  "keywords": [
+    "overturning circulation",
+    "ocean mixing",
+    "tides",
+    "wind energy",
+    "terawatts"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Munk & Wunsch, Deep-Sea Research, 1998",
+  "source_kind": "paper",
+  "reference": "Munk & Wunsch, Abyssal recipes II: energetics of tidal and wind mixing, Deep-Sea Research I, 1998",
+  "written": "2026-09-27"
+}

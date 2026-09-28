@@ -1,0 +1,39 @@
+{
+  "id": "economics-digital-money-9",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.digital_money",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "What fee does a shop in India pay to receive a customer's payment through UPI, the national phone payment system?",
+  "options": [
+    "About 2%, as with cards",
+    "Nothing, by government rule",
+    "About 0.5%, capped by law"
+  ],
+  "correct": 1,
+  "answer": "Nothing, by government rule. Since January 2020 banks and apps may not charge merchants for ordinary UPI payments; the government pays them a small subsidy instead. With no cost at either end, UPI passed ten billion payments a month in 2023. A street vendor's printed code takes payments as free as a department store's.",
+  "move": "When a service is free at both ends, look for who pays in between.",
+  "trap": "Expecting card-like fees, since someone must pay to run the system.",
+  "keywords": [
+    "upi",
+    "india",
+    "merchant fees",
+    "digital payments"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "India, Payment and Settlement Systems Act",
+  "source_kind": "primary_document",
+  "reference": "Payment and Settlement Systems Act, 2007, section 10A, inserted by the Finance (No. 2) Act, 2019, Government of India",
+  "written": "2026-09-27"
+}

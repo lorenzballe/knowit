@@ -1,0 +1,38 @@
+{
+  "id": "nature-recent-losses-8",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.recent_losses",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: one fungal disease has been linked to declines in over 500 amphibian species, including about 90 presumed extinctions?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Chytrid fungus, carried round the world by the trade in frogs, infects the thin skin through which amphibians take in water and salts. Scheele and colleagues tallied 501 declining species in 2019, the largest recorded loss of biodiversity to one disease, though the count is disputed. Whole streams in Central America fell silent.",
+  "move": "A threat that travels with trade reaches every place the trade does.",
+  "trap": "Assuming one disease rarely wipes out a species, let alone dozens.",
+  "keywords": [
+    "chytrid fungus",
+    "amphibians",
+    "frog declines",
+    "wildlife trade"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Scheele et al., Science, 2019",
+  "source_kind": "paper",
+  "reference": "Scheele et al., Amphibian fungal panzootic causes catastrophic and ongoing loss of biodiversity, Science, 2019",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "technology-dns-8",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.dns",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "An address record cached for a day is moved to new servers, with caching cut to 5 minutes. How long can the old address linger?",
+  "options": [
+    "About 5 minutes",
+    "Up to a week",
+    "Up to a day"
+  ],
+  "correct": 2,
+  "answer": "Up to a day. Resolvers, the servers that look names up for users, that fetched the record just before the change keep it for its old one-day lifetime; the new 5-minute rule reaches them only when they ask again. Careful operators cut the cache time a day ahead, wait out the old value, then move.",
+  "move": "A new rule reaches only those who ask again after it changes.",
+  "trap": "Assuming the new 5-minute setting applies the moment it is saved.",
+  "keywords": [
+    "time to live",
+    "dns caching",
+    "resolvers",
+    "server migration",
+    "propagation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mockapetris, RFC 1034, IETF, 1987",
+  "source_kind": "standard",
+  "reference": "Mockapetris, RFC 1034: Domain Names, Concepts and Facilities, IETF, 1987",
+  "written": "2026-09-27"
+}

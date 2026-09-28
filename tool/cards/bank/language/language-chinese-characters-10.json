@@ -1,0 +1,38 @@
+{
+  "id": "language-chinese-characters-10",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.chinese_characters",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sunkCost",
+  "question": "True or false: after printing a second, bolder round of simplified characters in 1977, China withdrew it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The 1977 draft pared more characters to a few strokes; a first batch of 248 went into trial use in newspapers. Readers found the new forms confusing, the trial was halted in 1978, and the scheme was formally revoked in 1986. The simplified set in use today is essentially the one fixed in 1964.",
+  "move": "What has already been printed is no reason to keep printing it.",
+  "trap": "Assuming a reform already printed and taught could not be undone.",
+  "keywords": [
+    "simplified characters",
+    "second simplification",
+    "script reform",
+    "1977 draft"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rohsenow, in Language Policy in the PRC, 2004",
+  "source_kind": "book",
+  "reference": "Rohsenow, Fifty years of script and written language reform in the P.R.C.: the genesis of the language law of 2001, in Zhou (ed.), Language Policy in the People's Republic of China, Kluwer Academic Publishers, 2004",
+  "written": "2026-09-27"
+}

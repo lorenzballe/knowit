@@ -1,0 +1,33 @@
+{
+  "id": "space-landing-sites-8",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.landing_sites",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did no spacecraft land on the Moon's far side until 2019?",
+  "answer": "Because nothing there can talk to Earth directly. The far side always faces away, so a lander needs a relay. China first sent a satellite, Queqiao, to loop beyond the Moon near a balance point of Earth's and the Moon's gravity, in 2018; only then did Chang'e-4 set down in Von Kármán crater.",
+  "move": "Where a signal cannot reach, the first thing to build is the messenger.",
+  "keywords": [
+    "chang'e-4",
+    "queqiao",
+    "far side",
+    "relay satellite",
+    "von kármán crater"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jia et al., Planetary and Space Science, 2018",
+  "source_kind": "paper",
+  "reference": "Jia et al., The scientific objectives and payloads of Chang'E-4 mission, Planetary and Space Science, 2018",
+  "written": "2026-09-27"
+}

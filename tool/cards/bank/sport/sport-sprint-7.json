@@ -1,0 +1,39 @@
+{
+  "id": "sport-sprint-7",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.sprint",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Bolt's 200 m world record, 19.19 seconds, is faster than twice his 100 m record?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Twice 9.58 is 19.16, so the 200 m record is 0.03 seconds slower, although its second half begins at full speed. The bend and the fatigue of the last 50 m cost almost exactly what the flying start gives back: both records average about 10.4 metres per second.",
+  "move": "List what a longer version adds and what it costs before comparing.",
+  "trap": "Crediting the flying second half and forgetting the bend and the fade.",
+  "keywords": [
+    "200 m",
+    "100 m",
+    "world record",
+    "usain bolt",
+    "bend running"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IAAF, Berlin 2009 official results",
+  "source_kind": "statistics",
+  "reference": "IAAF, 12th World Championships in Athletics, Berlin 2009, official results, men's 100 m and 200 m finals",
+  "written": "2026-09-27"
+}

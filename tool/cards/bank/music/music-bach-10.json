@@ -1,0 +1,41 @@
+{
+  "id": "music-bach-10",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.bach",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "In the 30 Goldberg Variations, every third from the 3rd is a canon, except the last, a medley of folk songs. How many canons?",
+  "value": 9,
+  "unit": "canons",
+  "answer": "So there are 9 canons.",
+  "move": "When counting a pattern, check what happens at its last step.",
+  "trap": "Stopping at 30 ÷ 3 = 10 and forgetting the exception.",
+  "hint": "List the variation numbers that are multiples of three.",
+  "steps": [
+    "Multiples of 3 up to 30: 30 ÷ 3 = 10 variations.",
+    "The 30th is the medley, not a canon: 10 − 1.",
+    "So there are 9 canons."
+  ],
+  "keywords": [
+    "goldberg variations",
+    "canon",
+    "quodlibet",
+    "bach"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schulenberg, The Keyboard Music of J. S. Bach",
+  "source_kind": "book",
+  "reference": "Schulenberg, The Keyboard Music of J. S. Bach, 2nd edition, Routledge, 2006",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "medicine-penicillin-9",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.penicillin",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "US penicillin output rose from 21 billion units in 1943 to 6.8 trillion in 1945. Roughly how many months did output take to double?",
+  "value": 2.9,
+  "unit": "months",
+  "tolerance": 0.3,
+  "answer": "24 months / 8.3 doublings = about 2.9 months per doubling.",
+  "move": "Turn a startling growth factor into doublings before judging its pace.",
+  "trap": "Guessing about a year per doubling, the pace of ordinary factories.",
+  "hint": "Find the overall growth factor, then ask how many doublings make it.",
+  "steps": [
+    "6,800 billion / 21 billion = about 324.",
+    "2^8 = 256 and 2^9 = 512, so 324 is about 8.3 doublings.",
+    "24 months / 8.3 doublings = about 2.9 months per doubling."
+  ],
+  "keywords": [
+    "penicillin production",
+    "second world war",
+    "fermentation",
+    "doubling time",
+    "industrial scale-up"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Gaynes, Emerging Infectious Diseases, 2017",
+  "source_kind": "paper",
+  "reference": "https://wwwnc.cdc.gov/eid/article/23/5/16-1556",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "weird_facts-tiny-nations-7",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.tiny_nations",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Tuvalu had about 10,600 residents in 2022. Australia's Falepili treaty offers 280 migration places a year. What % could move in 10 years?",
+  "value": 26.4,
+  "unit": "%",
+  "tolerance": 0.5,
+  "answer": "0.264 × 100 ≈ 26.4%.",
+  "move": "Multiply a small yearly rate by the years before calling it small.",
+  "trap": "Hearing 280 a year as a trickle rather than a quarter per decade.",
+  "hint": "Total the places first, then divide by the population.",
+  "steps": [
+    "280 places × 10 years = 2,800 places.",
+    "2,800 ÷ 10,600 ≈ 0.264.",
+    "0.264 × 100 ≈ 26.4%."
+  ],
+  "keywords": [
+    "tuvalu",
+    "falepili union",
+    "australia",
+    "climate migration"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Development Policy Centre, ANU, 2025",
+  "source_kind": "institution",
+  "reference": "https://devpolicy.org/the-first-falepili-union-visa-ballot-a-preliminary-assessment-20250826/",
+  "written": "2026-09-27"
+}

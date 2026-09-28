@@ -1,0 +1,38 @@
+{
+  "id": "food-chilli-10",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.chilli",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should extreme-heat novelty snacks be banned from sale to under-18s?",
+  "sides": [
+    "Yes, age-restrict them",
+    "No, warnings are enough"
+  ],
+  "answer": "These products exist to be dared on video, and children are the audience. In 2023 a 14-year-old in Massachusetts died after a one-chip challenge; the autopsy named the capsaicin dose alongside an undetected heart defect. Children cannot know they have such a defect. Alcohol and tobacco carry age limits for the same reason.",
+  "move": "Whichever side you took, decide whether the risk lies in the product or the dare.",
+  "counterpoint": "Deaths are vanishingly rare against millions of chips sold, and that one involved a hidden heart condition. Hot sauces as strong sit on every supermarket shelf; banning one packet format fixes the headline, not the risk. The maker withdrew it within days. Clear dose labels and school warnings reach the same children without a law that shops cannot enforce.",
+  "keywords": [
+    "one chip challenge",
+    "capsaicin",
+    "age limits",
+    "food regulation",
+    "social media"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CNN, autopsy report coverage, 2024",
+  "source_kind": "news_archive",
+  "reference": "https://www.cnn.com/2024/05/16/business/one-chip-challenge-autopsy/index.html",
+  "written": "2026-09-27"
+}

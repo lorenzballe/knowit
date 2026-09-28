@@ -1,0 +1,42 @@
+{
+  "id": "economics-silk-roads-9",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.silk_roads",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Pliny wrote that Indian goods sold in Rome at a hundred times their cost. If each middleman doubled the price, at least how many middlemen?",
+  "value": 7,
+  "unit": "middlemen",
+  "answer": "A seventh: 64 x 2 = 128, so 7 middlemen are enough.",
+  "move": "A few ordinary markups in a row multiply into an extraordinary one.",
+  "trap": "Dividing 100 by 2 and picturing about fifty middlemen.",
+  "hint": "Keep doubling from 1 until you pass 100.",
+  "steps": [
+    "Each middleman multiplies the price by 2.",
+    "Six in a row: 2 x 2 x 2 x 2 x 2 x 2 = 64, short of 100.",
+    "A seventh: 64 x 2 = 128, so 7 middlemen are enough."
+  ],
+  "keywords": [
+    "pliny the elder",
+    "indian ocean trade",
+    "markups",
+    "middlemen",
+    "roman trade"
+  ],
+  "era": "ancient",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Pliny the Elder, Natural History, Book 6",
+  "source_kind": "primary_document",
+  "reference": "Pliny the Elder, Natural History, Book 6, trans. Rackham, Loeb Classical Library, Harvard University Press, 1942",
+  "written": "2026-09-27"
+}

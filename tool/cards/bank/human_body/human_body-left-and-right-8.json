@@ -1,0 +1,33 @@
+{
+  "id": "human_body-left-and-right-8",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.left_and_right",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to a deaf person's sign language after a stroke in the left hemisphere?",
+  "answer": "It breaks down much as speech does in hearing people, though signing is a language of space and movement. Hickok, Bellugi and Klima found left-hemisphere damage caused sign aphasia, while right-hemisphere damage spared signing grammar yet disturbed drawing and spatial judgement. The hands still moved; the grammar was gone.",
+  "move": "Sort abilities by what they compute, not by which sense carries them.",
+  "keywords": [
+    "sign language",
+    "aphasia",
+    "deafness",
+    "stroke",
+    "language lateralisation"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hickok, Bellugi & Klima, Nature, 1996",
+  "source_kind": "paper",
+  "reference": "Hickok, Bellugi & Klima, The neurobiology of sign language and its implications for the neural basis of language, Nature, 1996",
+  "written": "2026-09-27"
+}

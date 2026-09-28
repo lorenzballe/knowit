@@ -1,0 +1,42 @@
+{
+  "id": "weird_facts-goosebumps-10",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.goosebumps",
+  "also": [
+    "medicine.diagnosis.symptoms"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Clinicians score gooseflesh as one item on a standard bedside scale. Which condition does that scale measure?",
+  "options": [
+    "Opioid withdrawal",
+    "Hypothermia",
+    "Anaphylactic shock"
+  ],
+  "correct": 0,
+  "answer": "Opioid withdrawal. The Clinical Opiate Withdrawal Scale grades gooseflesh alongside sweating, yawning, a running nose and wide pupils, because the sympathetic nervous system rebounds as opioids wear off and raises the skin's hairs. It is one proposed origin of the phrase cold turkey. A nurse can grade withdrawal partly by looking at a forearm.",
+  "move": "Ask what else can pull the same lever as the obvious cause.",
+  "trap": "Picking hypothermia, because cold is what gooseflesh always suggests.",
+  "keywords": [
+    "opioid withdrawal",
+    "withdrawal scale",
+    "gooseflesh",
+    "cold turkey"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wesson and Ling, J Psychoactive Drugs, 2003",
+  "source_kind": "reference_work",
+  "reference": "Wesson and Ling, The Clinical Opiate Withdrawal Scale (COWS), Journal of Psychoactive Drugs, 2003",
+  "written": "2026-09-27"
+}

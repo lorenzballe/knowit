@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-local-bans-8",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.local_bans",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Longyearbyen, in Norway's Svalbard archipelago, has a law forbidding residents to die there?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The town's small cemetery stopped taking new burials decades ago because bodies barely decay in permafrost; in 1998 scientists exhumed miners killed by the 1918 flu to search for the virus. The seriously ill are usually sent to mainland Norway for care. The famous ban is a headline about a cemetery.",
+  "move": "A strange rule reported everywhere may be a practice nobody wrote down.",
+  "trap": "Remembering the widely shared story of a town that outlawed death.",
+  "keywords": [
+    "longyearbyen",
+    "svalbard",
+    "permafrost",
+    "burials",
+    "1918 influenza"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Duncan, Hunting the 1918 Flu, 2003",
+  "source_kind": "reference_work",
+  "reference": "Duncan, Hunting the 1918 Flu: One Scientist's Search for a Killer Virus, University of Toronto Press, 2003",
+  "written": "2026-09-27"
+}

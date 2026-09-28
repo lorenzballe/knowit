@@ -1,0 +1,39 @@
+{
+  "id": "sport-swimming-6",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.swimming",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a relay swimmer whose take-off pad reads 0.02 seconds before the team-mate's touch is disqualified?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The block and wall sensors do not fire at the exact instant of the events they record, so the rules allow a reading of up to 0.03 seconds before the touch. A swimmer shown leaving 0.02 early may still have been on the block when the hand hit the wall.",
+  "move": "Before judging by an instrument, learn which way it errs.",
+  "trap": "Taking the sensor reading as the exact moment the swimmer left.",
+  "keywords": [
+    "relay takeover",
+    "touchpad",
+    "reaction time",
+    "disqualification",
+    "timing"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "SwimSwam, relay start rules explained",
+  "source_kind": "news_archive",
+  "reference": "https://swimswam.com/why-was-australias-0-03-relay-start-not-a-dq-a-rules-deep-dive/",
+  "written": "2026-09-27"
+}

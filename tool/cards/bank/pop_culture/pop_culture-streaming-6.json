@@ -1,0 +1,43 @@
+{
+  "id": "pop_culture-streaming-6",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.streaming",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "In Netflix's first full viewing report, for January to June 2023, what share of hours went to titles it licensed from others?",
+  "options": [
+    "About 10%",
+    "About 80%",
+    "About 45%"
+  ],
+  "correct": 2,
+  "answer": "About 45%. Netflix's own films and series took 55% of nearly 100 billion hours spread across more than 18,000 titles. Originals fill the home page and the awards lists; licensed shows, many made for broadcast networks years earlier, quietly filled almost half the evenings. The shop window is not the stockroom.",
+  "move": "What is advertised most is rarely where most of the time goes.",
+  "trap": "Judging viewing by the originals Netflix promotes most loudly.",
+  "keywords": [
+    "netflix",
+    "engagement report",
+    "licensed shows",
+    "originals",
+    "viewing hours"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "pop_culture-streaming-2"
+  ],
+  "figure": "bars",
+  "source": "Netflix, What We Watched report, 2023",
+  "source_kind": "company",
+  "reference": "http://about.netflix.com/en/news/what-we-watched-a-netflix-engagement-report",
+  "written": "2026-09-27"
+}

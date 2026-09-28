@@ -1,0 +1,37 @@
+{
+  "id": "history-straight-lines-10",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.straight_lines",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Did the borders drawn by colonial powers cause much of Africa's conflict after independence?",
+  "sides": [
+    "Yes, they caused much of it",
+    "No, their role is overstated"
+  ],
+  "answer": "Colonial negotiators, often knowing little of the ground, split many peoples' homelands between states. Michalopoulos and Papaioannou find that partitioned groups have suffered more political violence and discrimination since independence than groups left whole. Lines drawn for European bargaining handed new states rivals and grievances they had not chosen.",
+  "move": "Whichever side you took, comparing split peoples with whole ones decides it.",
+  "counterpoint": "Africa's borders have proved remarkably stable: since the Organisation of African Unity pledged in 1964 to keep them, wars between states over territory have been rare. Jeffrey Herbst argues the deeper problem was states too weak to govern their hinterlands, whatever the lines. Any redrawing would have split other peoples and invited new claims.",
+  "keywords": [
+    "africa",
+    "colonial borders",
+    "partitioned groups",
+    "conflict"
+  ],
+  "era": "twentieth",
+  "region": "africa",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Michalopoulos & Papaioannou, 2016; Herbst, 2000",
+  "source_kind": "paper",
+  "reference": "Michalopoulos & Papaioannou, The Long-Run Effects of the Scramble for Africa, American Economic Review, 2016; Herbst, States and Power in Africa, Princeton University Press, 2000",
+  "written": "2026-09-27"
+}

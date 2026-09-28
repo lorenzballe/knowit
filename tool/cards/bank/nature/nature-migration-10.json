@@ -1,0 +1,39 @@
+{
+  "id": "nature-migration-10",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.migration",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a dragonfly that breeds in rain-filled pools crosses the Indian Ocean between India and East Africa each year?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The globe skimmer reaches the Maldives in huge numbers each October, though the islands have almost no fresh water to breed in. Anderson inferred that it rides the monsoon winds from India to East Africa and back over several generations, a circuit of some 14,000 to 18,000 km.",
+  "move": "How small a traveller is says little about how far the wind can take it.",
+  "trap": "Assuming an insect of puddles and ponds could never cross an ocean.",
+  "keywords": [
+    "globe skimmer",
+    "dragonfly",
+    "indian ocean",
+    "maldives",
+    "monsoon"
+  ],
+  "era": "timeless",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Anderson, Journal of Tropical Ecology, 2009",
+  "source_kind": "paper",
+  "reference": "Anderson, Do dragonflies migrate across the western Indian Ocean?, Journal of Tropical Ecology, 2009",
+  "written": "2026-09-27"
+}

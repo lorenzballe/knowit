@@ -1,0 +1,39 @@
+{
+  "id": "cinema-lighting-8",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.lighting",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Films light moonlit scenes blue. Measured with an instrument, how does moonlight's colour compare with sunlight's?",
+  "options": [
+    "Slightly bluer",
+    "Slightly redder",
+    "Practically identical"
+  ],
+  "correct": 1,
+  "answer": "Slightly redder. Moonlight is sunlight bounced off grey-brown lunar rock, which reflects red a little better than blue. The blue is added by the eye: in dim light the rod cells take over, and they are most sensitive to blue-green, so night looks cool. Cinema copies the perception, not the physics.",
+  "move": "Ask whether a colour belongs to the thing or to the eye that sees it.",
+  "trap": "Picturing cool moonlight because cinema has always painted night blue.",
+  "keywords": [
+    "moonlight",
+    "colour temperature",
+    "rod cells",
+    "night scenes"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jensen et al., SIGGRAPH, 2001",
+  "source_kind": "paper",
+  "reference": "Jensen, Durand, Stark, Premože, Dorsey & Shirley, A Physically-Based Night Sky Model, SIGGRAPH, 2001",
+  "written": "2026-09-27"
+}

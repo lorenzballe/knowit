@@ -1,0 +1,42 @@
+{
+  "id": "psychology-distraction-9",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.distraction",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "In seven hours at a computer, roughly how many times does an office worker's attention switch to a different screen?",
+  "value": 536,
+  "unit": "switches",
+  "withinFactor": 3,
+  "answer": "25,200 / 47 ≈ 536 switches.",
+  "move": "A small number repeated all day is a large number by evening.",
+  "trap": "Assuming people stay on one screen for several minutes at a time.",
+  "hint": "Work out the seconds in the day, then guess how long one screen holds attention.",
+  "steps": [
+    "Seven hours is 7 × 3,600 = 25,200 seconds.",
+    "Measured attention on one screen averages about 47 seconds.",
+    "25,200 / 47 ≈ 536 switches."
+  ],
+  "keywords": [
+    "screen switching",
+    "attention span",
+    "office work",
+    "gloria mark"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mark, Attention Span, 2023",
+  "source_kind": "book",
+  "reference": "Mark, Attention Span: A Groundbreaking Way to Restore Balance, Happiness and Productivity, Hanover Square Press, 2023",
+  "written": "2026-09-27"
+}

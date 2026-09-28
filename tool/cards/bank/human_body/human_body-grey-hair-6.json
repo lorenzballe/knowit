@@ -1,0 +1,32 @@
+{
+  "id": "human_body-grey-hair-6",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.grey_hair",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does scalp hair lose its colour with age while the skin of the same scalp keeps its own?",
+  "answer": "Because the hair's pigment cells are rebuilt every cycle. Pigment cells in the skin are long-lived and work continuously; those in a hair bulb die off each time the follicle stops growing, and every new growth phase must be restocked from stem cells. Greying is a failure of that restocking, not of pigment itself.",
+  "move": "What is rebuilt from scratch on a cycle fails before what runs continuously.",
+  "keywords": [
+    "hair follicle",
+    "melanocytes",
+    "hair cycle",
+    "skin pigment"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tobin & Paus, Experimental Gerontology, 2001",
+  "source_kind": "paper",
+  "reference": "Tobin & Paus, Graying: gerontobiology of the hair follicle pigmentary unit, Experimental Gerontology, 2001",
+  "written": "2026-09-27"
+}

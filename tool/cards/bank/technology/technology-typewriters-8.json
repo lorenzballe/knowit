@@ -1,0 +1,38 @@
+{
+  "id": "technology-typewriters-8",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.typewriters",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: leaving a wider gap after a full stop than between words began with the typewriter?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Hand-set printing, above all in the 19th century, often put a wider space after a full stop than between words. Typing manuals copied that habit with the only unit a typewriter had, one fixed character width, so the wide gap became two keystrokes. The typewriter did not invent the gap; it made it countable.",
+  "move": "Before accepting a tidy origin story, look at what came before it.",
+  "trap": "Crediting fixed-width letters, a neat reason that nobody checks against print.",
+  "keywords": [
+    "sentence spacing",
+    "full stop",
+    "typesetting",
+    "monospaced type"
+  ],
+  "era": "nineteenth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bringhurst, The Elements of Typographic Style",
+  "source_kind": "book",
+  "reference": "Bringhurst, The Elements of Typographic Style, 3rd edition, Hartley & Marks, 2004",
+  "written": "2026-09-27"
+}

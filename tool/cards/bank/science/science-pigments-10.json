@@ -1,0 +1,42 @@
+{
+  "id": "science-pigments-10",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.pigments",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "Each transparent glaze passes 70% of light per crossing, and light crosses down and back. What share returns through three glazes, in per cent?",
+  "value": 12,
+  "unit": "per cent",
+  "tolerance": 1,
+  "answer": "0.49 x 0.49 x 0.49 ≈ 0.12, about 12 per cent.",
+  "move": "Losses that stack multiply, so a few thin layers can swallow most light.",
+  "trap": "Subtracting 30% per glaze, as if losses simply added up.",
+  "hint": "Count the crossings first, then multiply by 0.7 once for each.",
+  "steps": [
+    "Three glazes, down and back, make 6 crossings.",
+    "0.7 x 0.7 = 0.49, so each glaze passes about half, both ways.",
+    "0.49 x 0.49 x 0.49 ≈ 0.12, about 12 per cent."
+  ],
+  "keywords": [
+    "glazing",
+    "transparent paint",
+    "light absorption",
+    "oil painting"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kubelka & Munk, Z. techn. Physik, 1931",
+  "source_kind": "paper",
+  "reference": "Kubelka & Munk, Ein Beitrag zur Optik der Farbanstriche, Zeitschrift für technische Physik 12, 593, 1931",
+  "written": "2026-09-27"
+}

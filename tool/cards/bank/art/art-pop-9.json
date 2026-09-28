@@ -1,0 +1,43 @@
+{
+  "id": "art-pop-9",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.pop",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Which of these showed the word POP first, years before Pop art had a name?",
+  "options": [
+    "Alloway's mass-media essay",
+    "Hamilton's lollipop collage",
+    "A Paolozzi pin-up collage"
+  ],
+  "correct": 2,
+  "answer": "A Paolozzi pin-up collage, of 1947. Eduardo Paolozzi's I was a Rich Man's Plaything glues a pulp-magazine cover girl beside a revolver whose smoke reads POP, nine years before Hamilton's bodybuilder. He projected it among his scrapbook collages at the Institute of Contemporary Arts in 1952. The famous lollipop was the word's second outing.",
+  "move": "The famous first is often just the first that got noticed.",
+  "trap": "Choosing Hamilton's lollipop, the image credited with naming the movement.",
+  "keywords": [
+    "eduardo paolozzi",
+    "rich man's plaything",
+    "collage",
+    "independent group",
+    "pop"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "art-pop-4"
+  ],
+  "figure": "none",
+  "source": "Spencer, Eduardo Paolozzi: Writings and Interviews, 2000",
+  "source_kind": "book",
+  "reference": "Robin Spencer (ed.), Eduardo Paolozzi: Writings and Interviews, Oxford University Press, 2000",
+  "written": "2026-09-27"
+}

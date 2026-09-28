@@ -1,0 +1,33 @@
+{
+  "id": "art-first-photos-10",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.first_photos",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What change in 1840 let Talbot cut camera exposures from most of an hour to a minute or two?",
+  "answer": "He stopped waiting for the picture to appear. His earlier paper had to darken visibly. With the calotype, a brief exposure left an invisible latent image, which gallic acid and silver nitrate then developed into a full negative. Chemistry took over most of the work of light, as in every film camera since.",
+  "move": "When one stage is slow, find a later stage that can amplify its output.",
+  "keywords": [
+    "talbot",
+    "calotype",
+    "latent image",
+    "development",
+    "gallic acid"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schaaf, Photographic Art of Talbot, 2000",
+  "source_kind": "book",
+  "reference": "Larry J. Schaaf, The Photographic Art of William Henry Fox Talbot, Princeton University Press, 2000",
+  "written": "2026-09-27"
+}

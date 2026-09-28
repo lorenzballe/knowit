@@ -1,0 +1,40 @@
+{
+  "id": "food-pepper-10",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.pepper",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Two airtight jars of the same ground black pepper: one in a cupboard, one on a sunny sill. After months, the sill jar is…?",
+  "options": [
+    "Just as hot as the other",
+    "Noticeably less pungent",
+    "Hotter, its oils concentrated"
+  ],
+  "correct": 1,
+  "answer": "Noticeably less pungent. Piperine, the molecule that bites, has double bonds that light can twist into other shapes, isomers such as chavicine and isochavicine, which bite far less. A lid keeps out air and moisture, not light. Chemists tracked the twist in ground pepper in 2007: clear glass on a bright shelf slowly blunts it.",
+  "move": "Before trusting a seal, ask which enemy it actually shuts out.",
+  "trap": "Just as hot, because airtight storage is what keeps spices fresh.",
+  "keywords": [
+    "piperine",
+    "light",
+    "isomers",
+    "spice storage",
+    "pungency"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "J Agric Food Chem, 2007, piperine isomers",
+  "source_kind": "paper",
+  "reference": "https://pubmed.ncbi.nlm.nih.gov/17661483/",
+  "written": "2026-09-27"
+}

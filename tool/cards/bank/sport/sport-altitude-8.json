@@ -1,0 +1,33 @@
+{
+  "id": "sport-altitude-8",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.altitude",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does an athlete's haematocrit climb within days of arriving at altitude, long before new red cells are ready?",
+  "answer": "Because the blood loses water. In the first days high up, plasma volume falls, partly through extra urine and moisture lost in faster breathing, so the same red cells sit in less fluid and the haematocrit, the share of blood made of cells, rises. New cells take weeks: the early climb is a shrinking denominator.",
+  "move": "When a percentage rises, check whether the part grew or the whole shrank.",
+  "keywords": [
+    "haematocrit",
+    "plasma volume",
+    "red cells",
+    "acclimatisation",
+    "blood"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Sawka et al., Med Sci Sports Exerc, 2000",
+  "source_kind": "paper",
+  "reference": "Sawka, Convertino, Eichner, Schnieder & Young, Blood volume: importance and adaptations to exercise training, environmental stresses, and trauma/sickness, Medicine & Science in Sports & Exercise, 2000",
+  "written": "2026-09-27"
+}

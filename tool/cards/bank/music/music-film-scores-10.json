@@ -1,0 +1,41 @@
+{
+  "id": "music-film-scores-10",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.film_scores",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A cue starts on a click, one every 18 frames of 24-frame film. A door slams 9 seconds in. Which beat lands on it?",
+  "value": 13,
+  "unit": "beat number",
+  "answer": "The first click is beat 1, so the slam falls on beat 13.",
+  "move": "When counting along a line, decide whether you count posts or gaps.",
+  "trap": "Answering 12 by counting the gaps instead of the clicks.",
+  "hint": "Turn the frame count into seconds per beat first.",
+  "steps": [
+    "One beat lasts 18 ÷ 24 = 0.75 seconds.",
+    "9 ÷ 0.75 = 12 beats after the first click.",
+    "The first click is beat 1, so the slam falls on beat 13."
+  ],
+  "keywords": [
+    "click track",
+    "frame rate",
+    "film scoring",
+    "synchronisation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Davis, Complete Guide to Film Scoring",
+  "source_kind": "book",
+  "reference": "Davis, Complete Guide to Film Scoring, Berklee Press, 1999",
+  "written": "2026-09-27"
+}

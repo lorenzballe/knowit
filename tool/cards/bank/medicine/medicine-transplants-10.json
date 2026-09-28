@@ -1,0 +1,40 @@
+{
+  "id": "medicine-transplants-10",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.transplants",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Surgeons once hesitated over organs from people who died of drug overdoses. How did US kidney recipients fare with them?",
+  "options": [
+    "Worse, with more grafts failing",
+    "Worse at first, then catching up",
+    "About as well as other recipients"
+  ],
+  "correct": 2,
+  "answer": "About as well as other recipients. A study of US transplants from 2000 to 2017 found graft and patient survival with overdose donors no worse than with trauma deaths. Such donors are often young and healthy; their frequent hepatitis C is now curable. By 2017 overdoses supplied more than one US donor in eight.",
+  "move": "How something came to you says less than how it performs.",
+  "trap": "Picturing drug use as damaging every organ it passes through.",
+  "keywords": [
+    "overdose deaths",
+    "organ donors",
+    "kidney transplants",
+    "hepatitis c",
+    "opioid epidemic"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Durand et al., Annals of Internal Medicine, 2018",
+  "source_kind": "paper",
+  "reference": "Durand et al., The drug overdose epidemic and deceased-donor transplantation in the United States: a national registry study, Annals of Internal Medicine, 2018",
+  "written": "2026-09-27"
+}

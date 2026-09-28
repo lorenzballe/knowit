@@ -1,0 +1,46 @@
+{
+  "id": "music-reverb-10",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.reverb",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "Convolving audio directly with a 2-second hall recording takes roughly how many billion multiply-adds per second of sound?",
+  "value": 4.6,
+  "unit": "billion multiply-adds",
+  "withinFactor": 3,
+  "answer": "96,000 x 48,000 = about 4.6 billion.",
+  "move": "When every part meets every other part, the work grows as the square.",
+  "trap": "Counting the samples in the recording once, as if each were used once.",
+  "hint": "Count the samples in the hall recording, then how many output samples each one touches.",
+  "steps": [
+    "Studio audio runs at about 48,000 samples a second.",
+    "A 2-second hall recording holds 2 x 48,000 = 96,000 samples.",
+    "Each output sample needs all 96,000 multiplied and summed.",
+    "96,000 x 48,000 = about 4.6 billion."
+  ],
+  "keywords": [
+    "convolution reverb",
+    "impulse response",
+    "sample rate",
+    "fast fourier transform"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "music-reverb-3"
+  ],
+  "figure": "none",
+  "source": "Gardner, JAES, 1995",
+  "source_kind": "paper",
+  "reference": "Gardner, Efficient Convolution without Input-Output Delay, Journal of the Audio Engineering Society, 1995",
+  "written": "2026-09-27"
+}

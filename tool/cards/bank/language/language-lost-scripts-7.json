@@ -1,0 +1,33 @@
+{
+  "id": "language-lost-scripts-7",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.lost_scripts",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Alice Kober prove about the Linear B language without giving a single sound to its signs?",
+  "answer": "That it was inflected, changing word endings for grammar. In the 1940s she found sets of words sharing a stem but ending differently, later called Kober's triplets, and showed which signs must share a consonant or a vowel. She died in 1950; Michael Ventris, building such grids, read the tablets as Greek in 1952.",
+  "move": "Structure can be mapped long before anyone knows what it means.",
+  "keywords": [
+    "alice kober",
+    "linear b",
+    "michael ventris",
+    "inflection",
+    "decipherment"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fox, The Riddle of the Labyrinth, 2013",
+  "source_kind": "book",
+  "reference": "Fox, The Riddle of the Labyrinth: The Quest to Crack an Ancient Code, Ecco, 2013",
+  "written": "2026-09-27"
+}

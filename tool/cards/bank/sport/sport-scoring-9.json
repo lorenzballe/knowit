@@ -1,0 +1,39 @@
+{
+  "id": "sport-scoring-9",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.scoring",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "True or false: after rain, cricket's Duckworth–Lewis–Stern method can set the chasing side a target above the first side's total plus one?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The method treats overs and wickets as resources. If rain cuts the first innings short, the side batting first paced itself for 50 overs and lost its final surge with wickets in hand, so the chasers, who know their allowance from the start, are set more than was actually scored.",
+  "move": "When a contest is cut short, ask what each side still had left.",
+  "trap": "Assuming rain can only ever lower a target, never raise it.",
+  "keywords": [
+    "duckworth-lewis-stern",
+    "cricket",
+    "rain",
+    "target",
+    "one-day international"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Duckworth & Lewis, JORS, 1998",
+  "source_kind": "paper",
+  "reference": "Duckworth & Lewis, A fair method for resetting the target in interrupted one-day cricket matches, Journal of the Operational Research Society, 1998",
+  "written": "2026-09-27"
+}

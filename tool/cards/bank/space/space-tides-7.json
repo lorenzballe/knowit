@@ -1,0 +1,42 @@
+{
+  "id": "space-tides-7",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.tides",
+  "also": [
+    "nature.oceans.currents"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What mainly gives the Bay of Fundy tides of up to 16 m?",
+  "options": [
+    "Its funnel shape squeezing the water",
+    "Its position facing the open Atlantic",
+    "Its water sloshing at the tide's rhythm"
+  ],
+  "correct": 2,
+  "answer": "Its water sloshing at the tide's rhythm. The bay and the Gulf of Maine together have a natural period of about 13 hours, close to the 12.4-hour lunar tide, so each Atlantic tide pushes just as the water swings back, like a hand on a swing. The funnel adds height; resonance does most of it.",
+  "move": "Small pushes, timed to a thing's own rhythm, build enormous motion.",
+  "trap": "Crediting the funnel shape, which anyone can see on a map.",
+  "keywords": [
+    "bay of fundy",
+    "resonance",
+    "tidal range",
+    "gulf of maine"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Garrett, Nature, 1972",
+  "source_kind": "paper",
+  "reference": "Garrett, Tidal Resonance in the Bay of Fundy and Gulf of Maine, Nature, 1972",
+  "written": "2026-09-27"
+}

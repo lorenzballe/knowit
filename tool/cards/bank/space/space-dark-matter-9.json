@@ -1,0 +1,40 @@
+{
+  "id": "space-dark-matter-9",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.dark_matter",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "Halo dark bodies would magnify only about one background star in a million at a time, Paczyński calculated. How could that be tested?",
+  "options": [
+    "Watch millions of stars every night",
+    "Watch one bright star for decades",
+    "Watch for dimming, not brightening"
+  ],
+  "correct": 0,
+  "answer": "Watch millions of stars every night. With enough targets, a one-in-a-million alignment happens all the time. From the early 1990s the MACHO and EROS teams monitored millions of stars in the Magellanic Clouds. They caught some brightenings, but far too few: such dark bodies make up at most a small share of the halo.",
+  "move": "To catch a rare event, multiply the chances instead of waiting longer.",
+  "trap": "Waiting patiently on one target instead of multiplying the targets.",
+  "keywords": [
+    "microlensing",
+    "machos",
+    "magellanic clouds",
+    "paczynski",
+    "dark halo"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Paczyński, Astrophysical Journal, 1986",
+  "source_kind": "paper",
+  "reference": "Paczyński, Gravitational microlensing by the galactic halo, The Astrophysical Journal 304, 1, 1986",
+  "written": "2026-09-27"
+}

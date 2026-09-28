@@ -1,0 +1,39 @@
+{
+  "id": "technology-rare-metals-10",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.rare_metals",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: refining rare earths from monazite sand leaves a radioactive waste to manage?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Monazite carries thorium, typically several per cent by weight as oxide, and some uranium; separating out the rare earths leaves them concentrated in the residue. Lynas's plant in Malaysia, fed with ore from Western Australia, faced years of protest and licence conditions over where its thorium-bearing residue would be kept.",
+  "move": "Every ore arrives with passengers; ask who keeps them.",
+  "trap": "Radioactive waste brings reactors and uranium mines to mind, not magnets.",
+  "keywords": [
+    "monazite",
+    "thorium",
+    "radioactive waste",
+    "lynas",
+    "rare earth refining"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IAEA Safety Reports Series No. 68",
+  "source_kind": "institution",
+  "reference": "IAEA, Radiation Protection and NORM Residue Management in the Production of Rare Earths from Thorium Containing Minerals, Safety Reports Series No. 68, 2011",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-eternity-6",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.eternity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In Plato's Timaeus, what were the Sun, Moon and planets made for?",
+  "answer": "To make time. The maker could not give the created world full eternity, so he made a moving image of it, time, proceeding by number, and set the Sun, Moon and five planets in their courses to mark it. Before the heavens there were no days or years. The sky was built as a clock.",
+  "move": "Ask whether a thing is measured by its instrument or made by it.",
+  "keywords": [
+    "plato",
+    "timaeus",
+    "moving image of eternity",
+    "planets"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Plato, Timaeus 37c-39e",
+  "source_kind": "book",
+  "reference": "Plato, Timaeus, trans. Zeyl, Hackett, 2000, 37c-39e",
+  "written": "2026-09-27"
+}

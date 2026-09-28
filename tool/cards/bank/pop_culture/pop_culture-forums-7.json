@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-forums-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.forums",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "In 1995 a New York court treated Prodigy as publisher of a user's defamatory post; CompuServe had escaped in 1991. Why the difference?",
+  "options": [
+    "Prodigy charged users more",
+    "Prodigy screened its boards",
+    "CompuServe's poster was anonymous"
+  ],
+  "correct": 1,
+  "answer": "Prodigy screened its boards. In Cubby v. CompuServe, a service that did not review posts was treated like a bookshop, unaware of what it stocked; in Stratton Oakmont v. Prodigy, a service that policed content was treated as a publisher. Moderating raised the risk. Congress removed that penalty in 1996, in Section 230.",
+  "move": "Check whether a rule punishes the people who try hardest to comply.",
+  "trap": "Assuming the careful host must be the safer one in law.",
+  "keywords": [
+    "prodigy",
+    "compuserve",
+    "section 230",
+    "defamation",
+    "moderation"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stratton Oakmont v. Prodigy, N.Y. Sup. Ct., 1995",
+  "source_kind": "primary_document",
+  "reference": "Stratton Oakmont, Inc. v. Prodigy Services Co., 1995 WL 323710 (N.Y. Sup. Ct. 24 May 1995)",
+  "written": "2026-09-27"
+}

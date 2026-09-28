@@ -1,0 +1,39 @@
+{
+  "id": "sport-hosting-9",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.hosting",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "multipleComparisons",
+  "question": "Several cities submit honest but uncertain cost forecasts, and the cheapest-looking bid wins. How will the winner's forecast compare with its real cost?",
+  "options": [
+    "Too low, on average",
+    "About right, on average",
+    "Too high, on average"
+  ],
+  "correct": 0,
+  "answer": "Too low, on average. Each honest forecast errs both ways, but picking the lowest selects the one whose errors ran furthest in its favour. This is the winner's curse, first described in auctions for oil leases; Andreff applied it to sporting mega-events. Selection alone builds an overrun into the winning bid before anyone lies.",
+  "move": "The pick of many noisy guesses is usually the luckiest error.",
+  "trap": "Assuming honest errors cancel out, so the winning bid is unbiased.",
+  "keywords": [
+    "winner's curse",
+    "olympic bids",
+    "cost overruns",
+    "auctions"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Andreff, Handbook on Mega Sporting Events, 2012",
+  "source_kind": "book",
+  "reference": "Andreff, The winner's curse: why is the cost of sports mega-events so often underestimated?, in Maennig & Zimbalist (eds), International Handbook on the Economics of Mega Sporting Events, Edward Elgar, 2012",
+  "written": "2026-09-27"
+}

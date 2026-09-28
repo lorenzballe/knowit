@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-certainty-10",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.certainty",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: the very first proof in Euclid's Elements relies on a step none of its axioms justifies?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. To build an equilateral triangle, Euclid draws two circles and takes the point where they cross, but nothing in his postulates says they must cross. Every drawing showed them meeting, so the gap drew little notice until the nineteenth century; axiom systems such as David Hilbert's of 1899 closed it.",
+  "move": "A picture that always agrees with you cannot check your reasoning.",
+  "trap": "Trusting a proof that every diagram has confirmed for centuries.",
+  "keywords": [
+    "euclid",
+    "elements",
+    "axioms",
+    "david hilbert",
+    "proof"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Heath, Euclid's Elements, 1908",
+  "source_kind": "book",
+  "reference": "Heath, The Thirteen Books of Euclid's Elements, vol. 1, Cambridge University Press, 1908, notes on Proposition I.1",
+  "written": "2026-09-27"
+}

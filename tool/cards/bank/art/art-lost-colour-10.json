@@ -1,0 +1,40 @@
+{
+  "id": "art-lost-colour-10",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.lost_colour",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Why do most Roman marble portraits carved before about AD 130 stare with smooth, blank eyeballs?",
+  "options": [
+    "Blank eyes signalled calm or divinity",
+    "Irises and pupils were painted on",
+    "Glass eyes were set in and fell out"
+  ],
+  "correct": 1,
+  "answer": "Irises and pupils were painted on. The paint wore away, leaving smooth stone. Under Hadrian, sculptors began carving the iris as a ring and drilling the pupil. That shift is precise enough to help date a portrait: a carved pupil points to the second century or later.",
+  "move": "A missing detail is not proof it was never there.",
+  "trap": "Reading the blankness as a style chosen by the sculptor.",
+  "keywords": [
+    "roman portraits",
+    "eyes",
+    "pupils",
+    "hadrian",
+    "dating"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kleiner, Roman Sculpture, 1992",
+  "source_kind": "book",
+  "reference": "Diana E. E. Kleiner, Roman Sculpture, Yale University Press, 1992",
+  "written": "2026-09-27"
+}

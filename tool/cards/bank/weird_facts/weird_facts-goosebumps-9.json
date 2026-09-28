@@ -1,0 +1,42 @@
+{
+  "id": "weird_facts-goosebumps-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.goosebumps",
+  "also": [
+    "medicine.diagnosis.symptoms"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "baseRate",
+  "question": "A man paralysed from the neck down gets gooseflesh on his legs and a pounding headache. What is the likeliest trigger?",
+  "options": [
+    "A cold draught on his legs",
+    "Fear or a strong emotion",
+    "A full bladder"
+  ],
+  "correct": 2,
+  "answer": "A full bladder. Below a high spinal injury, a stretched bladder sets off an unchecked nerve surge that raises hairs, clamps blood vessels and sends blood pressure soaring, beyond the brain's reach. This is autonomic dysreflexia, an emergency, and emptying the bladder comes first. The gooseflesh is an alarm from below the break.",
+  "move": "Read a familiar symptom together with everything else you know about the person.",
+  "trap": "Blaming cold, the usual cause, and ignoring the headache and the injury.",
+  "keywords": [
+    "autonomic dysreflexia",
+    "spinal cord injury",
+    "bladder",
+    "blood pressure"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Consortium for Spinal Cord Medicine, 2001",
+  "source_kind": "institution",
+  "reference": "Consortium for Spinal Cord Medicine, Acute Management of Autonomic Dysreflexia, 2nd edition, Paralyzed Veterans of America, 2001",
+  "written": "2026-09-27"
+}

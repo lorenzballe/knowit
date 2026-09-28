@@ -1,0 +1,38 @@
+{
+  "id": "sport-set-pieces-9",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.set_pieces",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "independence",
+  "question": "True or false: in Palacios-Huerta's study of 1,417 professional penalties, kickers chose sides in patterns a goalkeeper could exploit?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Kickers' choices looked like fair coin tosses: where they aimed last time did not predict where they aimed next. Scoring rates were also statistically equal whichever way they went, as game theory predicts when both sides mix their choices well. A keeper studying a kicker's recent penalties learns nothing he can use.",
+  "move": "Against a sharp opponent, the best plan may be to be unpredictable.",
+  "trap": "Expecting humans to fall into habits that a sharp keeper can read.",
+  "keywords": [
+    "penalty kicks",
+    "game theory",
+    "minimax",
+    "palacios-huerta"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Palacios-Huerta, Review of Economic Studies, 2003",
+  "source_kind": "paper",
+  "reference": "Palacios-Huerta, Professionals Play Minimax, Review of Economic Studies, 2003",
+  "written": "2026-09-27"
+}

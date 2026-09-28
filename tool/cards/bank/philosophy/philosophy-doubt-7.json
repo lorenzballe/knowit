@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-doubt-7",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.doubt",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Fred Dretske say you can know an animal in a zoo pen is a zebra, yet not know it is no painted mule?",
+  "answer": "Because evidence that settles one question need not settle another it implies. Stripes in a zoo pen rule out horses and antelopes, the live alternatives, but look the same on a painted mule. Dretske argued in 1970 that knowledge need not pass along every known implication. The sceptic wins the mule and loses the zebra.",
+  "move": "Ask which alternatives your evidence actually rules out before claiming all of them.",
+  "keywords": [
+    "fred dretske",
+    "closure principle",
+    "zebra case",
+    "scepticism"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dretske, Journal of Philosophy, 1970",
+  "source_kind": "paper",
+  "reference": "Dretske, Epistemic Operators, Journal of Philosophy 67 (24), 1970, pp. 1007-1023",
+  "written": "2026-09-27"
+}

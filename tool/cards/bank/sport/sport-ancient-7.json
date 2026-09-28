@@ -1,0 +1,33 @@
+{
+  "id": "sport-ancient-7",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.ancient",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Egyptian wise men tell envoys from Elis about the fairness of the Olympic Games?",
+  "answer": "That the Games could not be fair while Eleans competed. Herodotus says the Eleans boasted of their rules to King Psammis; his sages asked whether men of Elis took part, and hearing yes, warned that judges from the host city would favour their own. Elis kept both roles: its citizens judged and competed.",
+  "move": "Before trusting a verdict, ask whether the judge has a stake in it.",
+  "keywords": [
+    "elis",
+    "herodotus",
+    "olympic judges",
+    "conflict of interest",
+    "egypt"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Herodotus, Histories, Book 2",
+  "source_kind": "primary_document",
+  "reference": "Herodotus, The Persian Wars, Volume I: Books 1–2, trans. A. D. Godley, Loeb Classical Library, Harvard, 1920",
+  "written": "2026-09-27"
+}

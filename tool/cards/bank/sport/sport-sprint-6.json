@@ -1,0 +1,42 @@
+{
+  "id": "sport-sprint-6",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.sprint",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Jamaica's 4 × 100 m relay record is 36.84 seconds. By how many seconds does it beat four times Bolt's 9.58?",
+  "value": 1.48,
+  "unit": "seconds",
+  "tolerance": 0.01,
+  "answer": "Difference: 38.32 - 36.84 = 1.48 seconds.",
+  "move": "Count how many times a job pays its start-up cost.",
+  "trap": "Expecting four runners to be slower than the fastest man four times.",
+  "hint": "Only the first of the four runners starts from blocks.",
+  "steps": [
+    "Four solo records back to back: 4 x 9.58 = 38.32 seconds.",
+    "Difference: 38.32 - 36.84 = 1.48 seconds."
+  ],
+  "keywords": [
+    "sprint relay",
+    "jamaica",
+    "flying start",
+    "baton exchange",
+    "world record"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "World Athletics records, men's 4 × 100 m",
+  "source_kind": "statistics",
+  "reference": "World Athletics, official world records list, men's 4 x 100 m relay, Jamaica 36.84, London 2012",
+  "written": "2026-09-27"
+}

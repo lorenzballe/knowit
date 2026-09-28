@@ -1,0 +1,39 @@
+{
+  "id": "nature-deep-sea-10",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.deep_sea",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In video surveys of Monterey Bay from the surface to 3,900 m, what share of the animals seen could make light?",
+  "options": [
+    "About one in twenty",
+    "About a quarter",
+    "About three-quarters"
+  ],
+  "correct": 2,
+  "answer": "About three-quarters. Classifying hundreds of thousands of animals filmed from remotely operated vehicles over many years, Martini and Haddock found 76% could produce light. In the open ocean below the sunlit layer, making light is the rule: it lures prey, startles attackers, and cancels a body's shadow against the faint light from above.",
+  "move": "The famous example of a trait can hide how ordinary the trait is.",
+  "trap": "Picturing glowing animals as rare curiosities like the anglerfish.",
+  "keywords": [
+    "bioluminescence",
+    "monterey bay",
+    "remotely operated vehicles",
+    "midwater animals"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Martini & Haddock, Scientific Reports, 2017",
+  "source_kind": "paper",
+  "reference": "Martini & Haddock, Quantification of bioluminescence from the surface to the deep sea demonstrates its predominance as an ecological trait, Scientific Reports, 2017",
+  "written": "2026-09-27"
+}

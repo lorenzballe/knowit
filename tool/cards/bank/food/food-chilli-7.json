@@ -1,0 +1,39 @@
+{
+  "id": "food-chilli-7",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.chilli",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: in a blind test, whole milk cooled a capsaicin burn better than skimmed milk?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Penn State researchers in 2019 gave volunteers capsaicin-spiked tomato juice, then one of seven drinks: whole and skimmed milk did equally well, and both beat water and seltzer. Fat dissolves capsaicin, which made it the obvious hero. The result points instead to milk's proteins, such as casein, pulling capsaicin off the tongue.",
+  "move": "A mechanism that sounds right still has to beat its control.",
+  "trap": "True, because capsaicin dissolves in fat and whole milk has more.",
+  "keywords": [
+    "capsaicin",
+    "milk",
+    "casein",
+    "oral burn",
+    "sensory panel"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nolden, Lenart & Hayes, Physiology & Behavior, 2019",
+  "source_kind": "paper",
+  "reference": "https://www.psu.edu/news/research/story/milk-best-drink-reduce-burn-chili-peppers",
+  "written": "2026-09-27"
+}

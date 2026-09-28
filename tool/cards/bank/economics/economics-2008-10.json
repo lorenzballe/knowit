@@ -1,0 +1,40 @@
+{
+  "id": "economics-2008-10",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.2008",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "In September 2008 Ireland guaranteed its banks' debts. How large were the liabilities covered, compared with a year's national output?",
+  "options": [
+    "About a fifth of it",
+    "About equal to it",
+    "More than twice it"
+  ],
+  "correct": 2,
+  "answer": "More than twice it. The guarantee covered about €400 billion of six banks' liabilities, deposits and most bonds alike, in an economy producing under €190 billion a year. Meant to stop a run, it turned bank losses into state debts: rescuing the banks cost about €64 billion, and in 2010 Ireland needed an EU-IMF bailout.",
+  "move": "Measure a promise against the income of whoever has to keep it.",
+  "trap": "Expecting a bailout to be a few per cent of output, as usual.",
+  "keywords": [
+    "ireland",
+    "bank guarantee",
+    "sovereign debt",
+    "anglo irish bank",
+    "bailout"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Oireachtas Banking Inquiry, 2016",
+  "source_kind": "institution",
+  "reference": "https://inquiries.oireachtas.ie/banking/volume-1-report/chapter-7/",
+  "written": "2026-09-27"
+}

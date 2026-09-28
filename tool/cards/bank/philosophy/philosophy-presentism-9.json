@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-presentism-9",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.presentism",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Einstein's line that the distinction between past, present and future is only a stubborn illusion first appeared where?",
+  "options": [
+    "In his 1905 paper on relativity",
+    "In a condolence letter to a friend's family",
+    "In a Paris debate with Henri Bergson"
+  ],
+  "correct": 1,
+  "answer": "In a condolence letter to a friend's family. Michele Besso, Einstein's friend since student days, died in March 1955; Einstein wrote to Besso's son and sister that Besso had left this strange world a little before him, which meant nothing to believing physicists. Einstein died four weeks later. The line was consolation first, physics second.",
+  "move": "Before quoting a famous line as doctrine, find the occasion it was written for.",
+  "trap": "The 1905 paper, because it is the most famous thing he wrote.",
+  "keywords": [
+    "albert einstein",
+    "michele besso",
+    "relativity",
+    "illusion of time"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Einstein-Besso correspondence, 1972",
+  "source_kind": "primary_document",
+  "reference": "Einstein to the Besso family, 21 March 1955, in Speziali (ed.), Albert Einstein - Michele Besso: Correspondance 1903-1955, Hermann, 1972",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "medicine-hospitals-10",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.hospitals",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should emergency stroke care be concentrated in a few large specialist hospitals rather than offered at every local one?",
+  "sides": [
+    "Yes, concentrate it",
+    "No, keep it local"
+  ],
+  "answer": "Outcomes follow expertise and volume. When London moved all acute stroke care into eight hyperacute units in 2010, with specialists and scanners round the clock, deaths fell further than in the rest of England; Manchester's partial version showed no such gain. A longer ambulance ride matters less than arriving where the team is waiting.",
+  "move": "Whichever side you took, the travel time to the nearest unit decides it.",
+  "counterpoint": "London is dense and distances short. In rural areas a central unit can be an hour or more away, and an untreated stroke destroys roughly 1.9 million nerve cells a minute. Closing local services also drains smaller hospitals of the staff and skills that every other emergency needs.",
+  "keywords": [
+    "stroke units",
+    "centralisation",
+    "london",
+    "emergency care",
+    "travel time"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Morris et al., BMJ, 2014",
+  "source_kind": "paper",
+  "reference": "Morris et al., Impact of centralising acute stroke services in English metropolitan areas on mortality and length of hospital stay: difference-in-differences analysis, BMJ, 2014",
+  "written": "2026-09-27"
+}

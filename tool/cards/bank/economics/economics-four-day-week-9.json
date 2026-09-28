@@ -1,0 +1,39 @@
+{
+  "id": "economics-four-day-week-9",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.four_day_week",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "Countries with shorter working hours tend to produce more per hour worked. What mainly explains the link?",
+  "options": [
+    "Short hours make each hour more productive",
+    "Long hours in poor countries are miscounted",
+    "Capital and technology raise both pay and leisure"
+  ],
+  "correct": 2,
+  "answer": "Capital and technology, which raise pay and let people buy leisure. Bick, Fuchs-Schündeln and Lagakos found adults in poor countries work substantially more hours than those in rich ones. Tired workers do lose some output per hour, but machines, skills and methods drive the gap. Short weeks are how prosperity is spent, not made.",
+  "move": "When two good things travel together, look for what feeds both.",
+  "trap": "Reading the link as short hours causing high output per hour.",
+  "keywords": [
+    "working hours",
+    "productivity",
+    "income",
+    "cross-country data"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bick, Fuchs-Schündeln & Lagakos, AER, 2018",
+  "source_kind": "paper",
+  "reference": "Bick, Fuchs-Schündeln & Lagakos, How Do Hours Worked Vary with Income? Cross-Country Evidence and Implications, American Economic Review, 2018",
+  "written": "2026-09-27"
+}

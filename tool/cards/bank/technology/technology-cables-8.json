@@ -1,0 +1,40 @@
+{
+  "id": "technology-cables-8",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.cables",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Roughly how often is a submarine cable damaged somewhere in the world?",
+  "options": [
+    "Nearly four times a week",
+    "A few times a year",
+    "Several times an hour"
+  ],
+  "correct": 0,
+  "answer": "Nearly four times a week. TeleGeography counted an average of about 199 faults a year from 2010 to 2023, a rate that has barely moved. About two-thirds come from fishing gear and dragged anchors. The odd break in a tense sea makes the news; the rest are quietly mended by specialist repair ships.",
+  "move": "Before calling an event suspicious, find out how often it happens anyway.",
+  "trap": "Only the breaks that make the news come to mind.",
+  "keywords": [
+    "cable faults",
+    "fishing",
+    "anchors",
+    "repair ships",
+    "sabotage"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "TeleGeography, submarine cable maintenance data",
+  "source_kind": "company",
+  "reference": "https://resources.telegeography.com/submarine-cable-maintenance-data",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "music-piano-10",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.piano",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should pianists playing music written before about 1850 ask for an unequal temperament instead of equal tuning?",
+  "sides": [
+    "Yes, tune it unequal",
+    "No, keep it equal"
+  ],
+  "answer": "Many tunings of that era gave each key its own colour: near-pure thirds in C, edgier ones in keys with many sharps or flats. Composers chose keys knowing it. Equal temperament makes every key identical, so a key picked for its sweetness sounds like any other. It erases a colour the score assumed.",
+  "move": "Whichever side you took, it turns on what is knowable about the tuning composers heard.",
+  "counterpoint": "The historical record is thinner than the argument. Broadwood had its tuners trained in equal temperament in 1846, and Alexander Ellis's 1885 measurements found working tuners already aiming at it. Which unequal tuning a composer heard is usually unknown, and choosing one imposes a guess. Equal tuning at least favours no key the composer never favoured.",
+  "keywords": [
+    "equal temperament",
+    "well temperament",
+    "piano tuning",
+    "broadwood"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jorgensen, Tuning, 1991",
+  "source_kind": "book",
+  "reference": "Jorgensen, Tuning: Containing the Perfection of Eighteenth-Century Temperament, Michigan State University Press, 1991",
+  "written": "2026-09-27"
+}

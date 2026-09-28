@@ -1,0 +1,40 @@
+{
+  "id": "human_body-neurons-10",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Microelectrode recordings suggested cortical neurons fire briskly. Why did later methods find many of them nearly silent?",
+  "options": [
+    "Electrodes find cells by their firing",
+    "Later studies used deeper anaesthesia",
+    "Early electrodes counted noise as spikes"
+  ],
+  "correct": 0,
+  "answer": "Electrodes find cells by their firing. An experimenter lowers an electrode until a cell crackles on the loudspeaker, so quiet neurons are passed by unrecorded. Methods that sample blind, such as patching onto cells or imaging hundreds at once, found many cortical neurons firing less than once a second, and some hardly at all.",
+  "move": "If the net only catches what moves, the still ones go uncounted.",
+  "trap": "Blaming the animal's state rather than how the cells were found.",
+  "keywords": [
+    "electrophysiology",
+    "sampling bias",
+    "firing rates",
+    "cortex",
+    "silent neurons"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Shoham, O'Connor & Segev, 2006",
+  "source_kind": "paper",
+  "reference": "Shoham, O'Connor & Segev, How silent is the brain: is there a dark matter problem in neuroscience?, Journal of Comparative Physiology A, 2006",
+  "written": "2026-09-27"
+}

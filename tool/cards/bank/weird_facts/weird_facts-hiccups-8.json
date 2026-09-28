@@ -1,0 +1,41 @@
+{
+  "id": "weird_facts-hiccups-8",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.hiccups",
+  "also": [
+    "medicine.diagnosis.symptoms"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: days of hiccups with nausea can be the first sign of an autoimmune disease of the optic nerves?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In neuromyelitis optica spectrum disorder, antibodies attack the area postrema, a brainstem patch that senses toxins and triggers vomiting. The 2015 diagnostic criteria list unexplained hiccups or vomiting as a core symptom, which can come before any attack on vision or the spinal cord. A stomach complaint can be a brain lesion's first sign.",
+  "move": "A common symptom in an uncommon pairing deserves a second look.",
+  "trap": "Filing lasting hiccups under stomach trouble, where they usually belong.",
+  "keywords": [
+    "neuromyelitis optica",
+    "area postrema",
+    "hiccups",
+    "autoimmune disease"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wingerchuk et al., Neurology, 2015",
+  "source_kind": "reference_work",
+  "reference": "Wingerchuk et al., International consensus diagnostic criteria for neuromyelitis optica spectrum disorders, Neurology, 2015",
+  "written": "2026-09-27"
+}

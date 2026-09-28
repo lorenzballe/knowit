@@ -1,0 +1,39 @@
+{
+  "id": "cinema-foley-9",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.foley",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In a car chase, which of these sounds is most likely performed by a Foley artist?",
+  "options": [
+    "The engine revving hard",
+    "The tyres screeching",
+    "The leather seat creaking"
+  ],
+  "correct": 2,
+  "answer": "The seat. Foley covers what bodies touch and move at human scale: hands on a wheel, a seatbelt, a jacket, a creaking seat. Engines, tyres and crashes are too big to perform, so they come from recordings of real cars and from effects libraries. The roar is borrowed; the creak is acted.",
+  "move": "The work hardest to notice is often the work done by hand.",
+  "trap": "Assuming the loudest, most dramatic sounds must be the handmade ones.",
+  "keywords": [
+    "foley",
+    "car chase",
+    "sound effects library",
+    "hard effects"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Yewdall, Practical Art of Motion Picture Sound",
+  "source_kind": "book",
+  "reference": "Yewdall, Practical Art of Motion Picture Sound, 4th edition, Focal Press, 2012",
+  "written": "2026-09-27"
+}

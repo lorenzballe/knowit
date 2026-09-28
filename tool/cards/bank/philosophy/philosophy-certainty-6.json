@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-certainty-6",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.certainty",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What circle did Antoine Arnauld find in the road Descartes took to certainty?",
+  "answer": "God propped up by clear ideas, and clear ideas by God. Descartes trusted clear and distinct perception because a good God would not deceive him, yet proved God from clearly perceived premises, as Arnauld objected in 1641. Descartes replied that an insight held in view needs no guarantee; only the memory of one does.",
+  "move": "Check whether the proof of a guarantee already relies on the guarantee.",
+  "keywords": [
+    "cartesian circle",
+    "antoine arnauld",
+    "clear and distinct perception",
+    "rené descartes"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Descartes, Fourth Objections and Replies, 1641",
+  "source_kind": "book",
+  "reference": "Descartes, Fourth Set of Objections and Replies, in The Philosophical Writings of Descartes II, trans. Cottingham, Stoothoff & Murdoch, Cambridge University Press, 1984",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "science-fire-9",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did droplets of heptane fuel do aboard the space station after their flames went out?",
+  "answer": "Many kept burning, unseen. In NASA's FLEX experiment, one large droplet's bright flame died, yet the droplet went on shrinking steadily: a cool flame, a slower reaction hundreds of degrees cooler and too dim for the eye, had taken over. On Earth such flames are fleeting; in weightlessness they held.",
+  "move": "When the visible sign stops, check whether the process has stopped too.",
+  "keywords": [
+    "cool flames",
+    "microgravity",
+    "international space station",
+    "heptane droplets"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nayagam et al., Combustion and Flame, 2012",
+  "source_kind": "paper",
+  "reference": "Nayagam, Dietrich, Ferkul, Hicks & Williams, Can cool flames support quasi-steady alkane droplet burning?, Combustion and Flame, 2012",
+  "written": "2026-09-27"
+}

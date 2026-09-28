@@ -1,0 +1,45 @@
+{
+  "id": "psychology-breaking-them-6",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.breaking_them",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "coincidence",
+  "question": "If each unaided quit attempt independently has a 4% chance of lasting, what is the percentage chance that at least one of 15 succeeds?",
+  "value": 46,
+  "unit": "percent",
+  "tolerance": 2,
+  "answer": "At least one success: 1 − 0.54 = 0.46, about 46%.",
+  "move": "A method that rarely works each time can still work eventually.",
+  "trap": "About 4%, as if one try's odds were a lifetime's odds.",
+  "hint": "Work out the chance that every single attempt fails.",
+  "steps": [
+    "Each attempt fails with probability 0.96.",
+    "0.96 is about e to the −0.041, so fifteen failures ≈ e to the −0.61 ≈ 0.54.",
+    "At least one success: 1 − 0.54 = 0.46, about 46%."
+  ],
+  "keywords": [
+    "smoking cessation",
+    "quit attempts",
+    "relapse",
+    "repeated trials"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "psychology-breaking-them-3"
+  ],
+  "figure": "none",
+  "source": "Hughes, Keely & Naud, Addiction, 2004",
+  "source_kind": "paper",
+  "reference": "Hughes, Keely & Naud, Shape of the relapse curve and long-term abstinence among untreated smokers, Addiction, 2004",
+  "written": "2026-09-27"
+}

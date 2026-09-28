@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-eternity-8",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.eternity",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Recurrence in miniature: a deterministic world has 1,000 possible states and changes once a second. At most how many seconds before it repeats?",
+  "value": 1000,
+  "unit": "seconds",
+  "answer": "Once a state recurs, determinism repeats all that follows: at most 1,000 seconds.",
+  "move": "Finite options and endless time make repetition a certainty, not a coincidence.",
+  "trap": "Assuming it could wander forever without coming back.",
+  "hint": "Count how many readings you can take before a new state runs out.",
+  "steps": [
+    "Readings at seconds 0, 1, ... 1,000 make 1,001 readings.",
+    "Only 1,000 distinct states exist, so two readings must match.",
+    "Once a state recurs, determinism repeats all that follows: at most 1,000 seconds."
+  ],
+  "keywords": [
+    "eternal recurrence",
+    "friedrich nietzsche",
+    "pigeonhole principle",
+    "determinism"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nietzsche, The Will to Power, section 1066",
+  "source_kind": "book",
+  "reference": "Nietzsche, The Will to Power, trans. Kaufmann & Hollingdale, Random House, 1967, section 1066",
+  "written": "2026-09-27"
+}

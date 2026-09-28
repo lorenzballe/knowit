@@ -1,0 +1,33 @@
+{
+  "id": "art-ultramarine-6",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.ultramarine",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is a corner of Michelangelo's unfinished Entombment in London still bare panel?",
+  "answer": "Probably because the blue never arrived. The blank at lower right was most likely meant for the kneeling Virgin, whose mantle needed ultramarine, the costliest pigment, which painters often added last. Michelangelo left for Florence and the marble block that became David. His Manchester Madonna, in the same gallery, lacks the same blue.",
+  "move": "An unfinished work often shows which material was hardest to get.",
+  "keywords": [
+    "michelangelo",
+    "entombment",
+    "unfinished painting",
+    "ultramarine",
+    "virgin's mantle"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "National Gallery, London",
+  "source_kind": "institution",
+  "reference": "https://www.nationalgallery.org.uk/paintings/michelangelo-the-entombment-or-christ-being-carried-to-his-tomb",
+  "written": "2026-09-27"
+}

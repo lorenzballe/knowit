@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-sneezes-8",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.sneezes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Galápagos marine iguanas sneeze constantly, leaving white crusts on their heads. What are they getting rid of?",
+  "options": [
+    "Salt pulled from their blood",
+    "Seawater caught in their nostrils",
+    "Sand from grazing the seabed"
+  ],
+  "correct": 0,
+  "answer": "Salt pulled from their blood. Grazing seaweed underwater, they swallow far more salt than their kidneys can clear, because reptile kidneys cannot make urine saltier than blood. Glands beside the nostrils concentrate it into brine, which a sharp snort sprays out. Schmidt-Nielsen and Fänge described the glands in 1958; the white crust is dried salt.",
+  "move": "When a body throws something out, ask where it was made.",
+  "trap": "Picking trapped seawater, the obvious nuisance for an animal that dives.",
+  "keywords": [
+    "marine iguanas",
+    "salt glands",
+    "galápagos",
+    "kidneys"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schmidt-Nielsen and Fänge, Nature, 1958",
+  "source_kind": "statistics",
+  "reference": "Schmidt-Nielsen and Fänge, Salt glands in marine reptiles, Nature, 1958",
+  "written": "2026-09-27"
+}

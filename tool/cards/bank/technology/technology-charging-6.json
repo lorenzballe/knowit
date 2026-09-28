@@ -1,0 +1,33 @@
+{
+  "id": "technology-charging-6",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.charging",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do electric cars slow their fast charging when the battery is cold, though cold cells cannot overheat?",
+  "answer": "Because cold graphite takes lithium in too slowly. Ions arriving faster than they can slip between the carbon layers settle on its surface as metallic lithium, a plating that locks away capacity and can grow spikes. So cars warm the pack first: choosing a fast charger as the destination often switches the battery heater on.",
+  "move": "A process that is safe when slow can turn harmful at speed.",
+  "keywords": [
+    "lithium plating",
+    "cold weather",
+    "fast charging",
+    "battery preconditioning",
+    "graphite"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Petzl et al., Journal of Power Sources, 2015",
+  "source_kind": "paper",
+  "reference": "Petzl, Kasper & Danzer, Lithium plating in a commercial lithium-ion battery: A low-temperature aging study, Journal of Power Sources, 2015",
+  "written": "2026-09-27"
+}

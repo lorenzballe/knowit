@@ -1,0 +1,43 @@
+{
+  "id": "economics-groceries-10",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.groceries",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "Roughly how many pounds a year does a UK family of four spend on food and drink it then throws away?",
+  "value": 1000,
+  "unit": "pounds a year",
+  "withinFactor": 3,
+  "answer": "£5,200 x 0.2 = about £1,040.",
+  "move": "A small share of a weekly habit is a large sum over a year.",
+  "trap": "Picturing the odd mouldy leftover, not a fifth of the shopping.",
+  "hint": "Start from the weekly food shop, then ask what fraction goes in the bin.",
+  "steps": [
+    "A family of four spends roughly £100 a week on food and drink at home.",
+    "£100 x 52 = £5,200 a year.",
+    "Surveys suggest about a fifth of food bought is wasted.",
+    "£5,200 x 0.2 = about £1,040."
+  ],
+  "keywords": [
+    "food waste",
+    "household budgets",
+    "wrap",
+    "leftovers"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "WRAP, household food waste, 2023",
+  "source_kind": "institution",
+  "reference": "https://www.wrap.ngo/media-centre/press-releases/urgent-action-needed-scale-tackle-food-waste-our-homes",
+  "written": "2026-09-27"
+}

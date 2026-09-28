@@ -1,0 +1,33 @@
+{
+  "id": "nature-clouds-10",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.clouds",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did researchers in Idaho in 2017 finally show that seeding clouds had made snow fall?",
+  "answer": "By making the snow carry a signature. An aircraft laid silver iodide across winter clouds in lines back and forth across the wind, and radar then showed matching lines of snow drifting downwind, a pattern no natural storm draws. Seven decades of seeding trials had failed to separate seeded snow from ordinary snow.",
+  "move": "When no control is possible, make the effect sign its own name.",
+  "keywords": [
+    "cloud seeding",
+    "silver iodide",
+    "radar",
+    "idaho",
+    "snowfall"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "French et al., PNAS, 2018",
+  "source_kind": "paper",
+  "reference": "French et al., Precipitation formation from orographic cloud seeding, Proceedings of the National Academy of Sciences, 2018",
+  "written": "2026-09-27"
+}

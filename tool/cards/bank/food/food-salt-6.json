@@ -1,0 +1,40 @@
+{
+  "id": "food-salt-6",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.salt",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In a five-year trial across 600 Chinese villages, salt with a quarter swapped for potassium chloride changed deaths how?",
+  "options": [
+    "About an eighth fewer",
+    "No detectable change",
+    "More, from excess potassium"
+  ],
+  "correct": 0,
+  "answer": "About an eighth fewer. The 2021 trial followed about 21,000 older villagers with past strokes or high blood pressure. Those given the 75:25 blend had 14% fewer strokes and 12% fewer deaths than those on ordinary salt, with no rise in dangerous potassium levels. Villagers kept cooking as before; the shaker did the work.",
+  "move": "Change the default ingredient and a whole population's habit changes with it.",
+  "trap": "More deaths, since extra potassium can stop a weak heart.",
+  "keywords": [
+    "salt substitute",
+    "potassium chloride",
+    "stroke",
+    "china",
+    "clinical trial"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Neal et al., NEJM, 2021",
+  "source_kind": "paper",
+  "reference": "Neal et al., Effect of salt substitution on cardiovascular events and death, New England Journal of Medicine, 2021",
+  "written": "2026-09-27"
+}

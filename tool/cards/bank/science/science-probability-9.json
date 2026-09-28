@@ -1,0 +1,38 @@
+{
+  "id": "science-probability-9",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.probability",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: precinct vote counts whose first digits break Benford's law are a reliable sign of electoral fraud?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Benford's law, where about 30% of numbers start with 1, holds for figures spread over many orders of magnitude. Precincts are drawn to similar sizes, so their counts cluster, say between 200 and 800, and cannot follow it. Tested on real elections, even a subtler second-digit version flagged honest counts and missed known fraud.",
+  "move": "A test works only on data shaped like the data it was built for.",
+  "trap": "True, because invented numbers do tend to break the law.",
+  "keywords": [
+    "benford's law",
+    "election fraud",
+    "vote counts",
+    "forensic statistics"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Deckert, Myagkov & Ordeshook, Political Analysis, 2011",
+  "source_kind": "paper",
+  "reference": "Deckert, Myagkov & Ordeshook, Benford's Law and the Detection of Election Fraud, Political Analysis, 2011",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "psychology-false-memories-6",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.false_memories",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "True or false: at a fair first lineup, most witnesses who declare high confidence have picked the right person?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Wixted and Wells's 2017 review found that at a first, fair, double-blind lineup, high-confidence picks were highly accurate, often above 90% correct in laboratory studies, while low-confidence picks were often wrong. The weak link between confidence and accuracy comes from certainty measured later, after feedback and rehearsal, by the time of the trial.",
+  "move": "Ask when a certainty was first measured, not how strong it sounds now.",
+  "trap": "False, because witness confidence is known to predict accuracy only weakly.",
+  "keywords": [
+    "eyewitness confidence",
+    "police lineup",
+    "identification accuracy",
+    "double-blind lineup"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "psychology-3"
+  ],
+  "figure": "none",
+  "source": "Wixted & Wells, eyewitness confidence review, 2017",
+  "source_kind": "paper",
+  "reference": "Wixted & Wells, The relationship between eyewitness confidence and identification accuracy: a new synthesis, Psychological Science in the Public Interest, 2017",
+  "written": "2026-09-27"
+}

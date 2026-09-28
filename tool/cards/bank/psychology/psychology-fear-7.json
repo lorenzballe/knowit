@@ -1,0 +1,40 @@
+{
+  "id": "psychology-fear-7",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.fear",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Of 298 women seen at a Stockholm clinic within a month of a sexual assault, how many said they could not move during it?",
+  "options": [
+    "About 7 in 10",
+    "About 1 in 10",
+    "About 1 in 3"
+  ],
+  "correct": 0,
+  "answer": "About 7 in 10. 70% reported significant tonic immobility, an involuntary paralysis under extreme fear, and 48% an extreme degree of it. Those who froze were more likely to have post-traumatic stress disorder and severe depression months later. The body had chosen stillness before the mind could choose anything.",
+  "move": "Before judging how someone reacted to danger, ask whether their body let them choose.",
+  "trap": "Picturing fear as fight or flight, the version films show.",
+  "keywords": [
+    "tonic immobility",
+    "sexual assault",
+    "freezing",
+    "post-traumatic stress",
+    "stockholm"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "source": "Möller, Söndergaard & Helström, Acta Obstetricia, 2017",
+  "source_kind": "paper",
+  "reference": "doi:10.1111/aogs.13174",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "economics-digital-money-6",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.digital_money",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does the money sitting in a Chinese Alipay or WeChat Pay balance actually live?",
+  "answer": "At the central bank. Since January 2019 China has required payment firms to hold 100% of customer balances at the People's Bank of China, in accounts that pay no interest. Before, the platforms parked this float at commercial banks and kept the interest. A phone balance became, in effect, a claim on the central bank.",
+  "move": "Ask who holds the money behind the number on your screen.",
+  "keywords": [
+    "alipay",
+    "wechat pay",
+    "customer funds",
+    "people's bank of china"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "People's Bank of China, 2018 notice",
+  "source_kind": "primary_document",
+  "reference": "People's Bank of China, Notice on Matters Concerning the Full Centralised Deposit of Customer Reserve Funds of Payment Institutions, 2018",
+  "written": "2026-09-27"
+}

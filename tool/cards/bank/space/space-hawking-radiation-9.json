@@ -1,0 +1,40 @@
+{
+  "id": "space-hawking-radiation-9",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.hawking_radiation",
+  "also": [
+    "science.physics.quantum"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Does the information in whatever falls into a black hole come back out in its Hawking radiation?",
+  "sides": [
+    "Yes, it comes out",
+    "No, it is lost"
+  ],
+  "answer": "Quantum theory has never lost information anywhere else, and the best-tested models from string theory describe black holes as ordinary quantum systems that cannot lose it. Since 2019, calculations have reproduced the curve Don Page predicted in 1993: radiation ever more scrambled until mid-life, then giving the information back. Hawking himself conceded in 2004.",
+  "move": "Whichever side you took, it turns on how far model universes speak for ours.",
+  "counterpoint": "Those calculations work in simplified model universes, or lean on assumptions about quantum gravity nobody can test. Hawking's original result follows from well-established physics, and a hole that ends in truly random radiation contradicts no observation. Unruh and Wald argue that information loss is a genuine prediction, which physics should accept rather than explain away.",
+  "keywords": [
+    "information paradox",
+    "page curve",
+    "hawking radiation",
+    "quantum gravity"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Unruh & Wald, Reports on Progress, 2017",
+  "source_kind": "paper",
+  "reference": "Unruh & Wald, Information loss, Reports on Progress in Physics, 2017",
+  "written": "2026-09-27"
+}

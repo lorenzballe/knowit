@@ -1,0 +1,32 @@
+{
+  "id": "human_body-telomeres-8",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.telomeres",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a child who did not inherit a parent's faulty telomerase gene still show its effects?",
+  "answer": "By inheriting the parent's short telomeres. Chromosomes arrive with the tips they already have, so a parent with a telomerase defect passes on shortened ones even when the child gets the healthy copy of the gene. In families with such mutations, lung scarring and bone-marrow failure tend to strike earlier with each generation.",
+  "move": "An inheritance can include the state of things, not only the instructions.",
+  "keywords": [
+    "telomere syndromes",
+    "anticipation",
+    "telomerase mutations",
+    "pulmonary fibrosis"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Armanios & Blackburn, Nat Rev Genet, 2012",
+  "source_kind": "paper",
+  "reference": "Armanios & Blackburn, The telomere syndromes, Nature Reviews Genetics, 2012",
+  "written": "2026-09-27"
+}

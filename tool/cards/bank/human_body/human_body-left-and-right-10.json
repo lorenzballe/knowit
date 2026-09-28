@@ -1,0 +1,39 @@
+{
+  "id": "human_body-left-and-right-10",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.left_and_right",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Over 90% of people have language mainly on the left. In what share of brains is the left planum temporale, a language area, larger?",
+  "options": [
+    "Nearly all of them",
+    "About two thirds",
+    "About half: no real bias"
+  ],
+  "correct": 1,
+  "answer": "About two thirds. Geschwind and Levitsky measured the planum temporale, a patch of cortex behind the hearing area, in 100 brains: it was larger on the left in 65, on the right in 11 and equal in 24. Anatomy leans the way language does, but loosely: in one brain in nine, the right was bigger.",
+  "move": "A strong lean in function can sit on a weak lean in form.",
+  "trap": "Letting the near-universal left bias for language set the anatomical figure.",
+  "keywords": [
+    "planum temporale",
+    "brain asymmetry",
+    "language areas",
+    "geschwind"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Geschwind & Levitsky, Science, 1968",
+  "source_kind": "paper",
+  "reference": "Geschwind & Levitsky, Human brain: left-right asymmetries in temporal speech region, Science, 1968",
+  "written": "2026-09-27"
+}

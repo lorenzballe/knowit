@@ -1,0 +1,40 @@
+{
+  "id": "sport-diet-6",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.diet",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Elite race walkers on a very low-carbohydrate, high-fat diet burned fat far faster than before. How did their race times change?",
+  "options": [
+    "Improved more than high-carbohydrate groups",
+    "Improved about as much as others",
+    "Did not improve, unlike the others"
+  ],
+  "correct": 2,
+  "answer": "Did not improve, unlike the others. In Burke's three-week study, fat adaptation raised fat burning to exceptionally high rates, but walking at race pace then cost more oxygen. Walkers eating plenty of carbohydrate cut roughly 5 to 7% from their 10 km times; the fat-adapted group gained nothing.",
+  "move": "A better number inside the machine is not a faster machine.",
+  "trap": "Taking record fat burning as proof of better endurance.",
+  "keywords": [
+    "ketogenic diet",
+    "fat adaptation",
+    "race walkers",
+    "exercise economy",
+    "carbohydrate"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Burke et al., Journal of Physiology, 2017",
+  "source_kind": "paper",
+  "reference": "Burke et al., Low carbohydrate, high fat diet impairs exercise economy and negates the performance benefit from intensified training in elite race walkers, Journal of Physiology, 2017",
+  "written": "2026-09-27"
+}

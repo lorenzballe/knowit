@@ -1,0 +1,39 @@
+{
+  "id": "space-light-years-10",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.light_years",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "In a catalogue of every star bright enough to detect, the farther stars are, on average, intrinsically brighter. Why?",
+  "options": [
+    "Bright stars gather far from the Sun",
+    "Only luminous stars are seen that far",
+    "Nearby stars are younger and fainter"
+  ],
+  "correct": 1,
+  "answer": "Only luminous stars are seen that far. Close to the Sun a catalogue picks up faint and bright stars alike; far away, only the brightest clear the limit. Gunnar Malmquist described this bias in the 1920s. Assume a typical brightness for a distant star in such a catalogue and it lands too close.",
+  "move": "Far away only the loudest are heard, so average them with care.",
+  "trap": "Taking a pattern in the catalogue as a pattern in the sky.",
+  "keywords": [
+    "malmquist bias",
+    "star catalogues",
+    "luminosity",
+    "stellar distances"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Binney & Merrifield, Galactic Astronomy, 1998",
+  "source_kind": "book",
+  "reference": "Binney & Merrifield, Galactic Astronomy, Princeton University Press, 1998",
+  "written": "2026-09-27"
+}

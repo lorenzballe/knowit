@@ -1,0 +1,32 @@
+{
+  "id": "language-alphabets-10",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.alphabets",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the Cherokee script use signs shaped like D, R and W for unrelated sounds?",
+  "answer": "Because Sequoyah borrowed shapes, not sounds. Unable to read English, he took some letter forms from print as bare designs, beside signs of his own, and gave each a Cherokee syllable. So D writes a, R writes e and W writes la. The type cut for printing in 1827 made the likeness stronger.",
+  "move": "A familiar shape can carry a value you have never met.",
+  "keywords": [
+    "cherokee syllabary",
+    "sequoyah",
+    "letter shapes",
+    "printing type"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bender, Signs of Cherokee Culture, 2002",
+  "source_kind": "book",
+  "reference": "Bender, Signs of Cherokee Culture: Sequoyah's Syllabary in Eastern Cherokee Life, University of North Carolina Press, 2002",
+  "written": "2026-09-27"
+}

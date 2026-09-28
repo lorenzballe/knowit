@@ -1,0 +1,40 @@
+{
+  "id": "science-lasers-7",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.lasers",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Blu-ray reads with a 405 nm laser against DVD's 650 nm, and its lens focuses more steeply. How much more does one layer hold?",
+  "options": [
+    "About 1.6 times as much",
+    "About 2.6 times as much",
+    "About 5 times as much"
+  ],
+  "correct": 2,
+  "answer": "About 5 times: 25 GB against 4.7. Data is read by a focused laser spot whose width scales with wavelength, so its area shrinks with the square: 1.6 squared is 2.6. The steeper lens, numerical aperture 0.85 against 0.60, narrows the spot again, and the two together shrink its area about fivefold.",
+  "move": "When a length shrinks, ask how many dimensions feel the saving.",
+  "trap": "About 1.6 times, scaling capacity with wavelength alone.",
+  "keywords": [
+    "blu-ray",
+    "dvd",
+    "wavelength",
+    "laser spot",
+    "numerical aperture"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Blu-ray Disc Association, BD-ROM white paper",
+  "source_kind": "standard",
+  "reference": "Blu-ray Disc Association, White Paper Blu-ray Disc Format: 1.C Physical Format Specifications for BD-ROM, 2010",
+  "written": "2026-09-27"
+}

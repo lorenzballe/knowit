@@ -1,0 +1,42 @@
+{
+  "id": "nature-migration-9",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.migration",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "A desert locust swarm packs about 40 million locusts into each km², each eating roughly its own weight daily. Tonnes eaten per km² daily?",
+  "value": 80,
+  "unit": "tonnes",
+  "withinFactor": 3,
+  "answer": "80 million g = 80 tonnes a day, as much as some 35,000 people eat.",
+  "move": "A tiny amount multiplied by an enormous count stops being tiny.",
+  "trap": "Picturing insects as nearly weightless and guessing a few kilograms.",
+  "hint": "Start from the weight of one locust, about that of two paper clips.",
+  "steps": [
+    "An adult desert locust weighs about 2 g, so it eats about 2 g a day.",
+    "40 million × 2 g = 80 million g.",
+    "80 million g = 80 tonnes a day, as much as some 35,000 people eat."
+  ],
+  "keywords": [
+    "desert locust",
+    "locust swarms",
+    "crop losses",
+    "fao"
+  ],
+  "era": "timeless",
+  "region": "africa",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FAO Locust Watch",
+  "source_kind": "institution",
+  "reference": "Food and Agriculture Organization of the United Nations, Locust Watch: Desert Locust frequently asked questions, FAO, 2020",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "medicine-blood-tests-8",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.blood_tests",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "About how many millilitres of blood are drawn for tests from a patient during a 10-day stay in intensive care?",
+  "value": 410,
+  "unit": "millilitres",
+  "withinFactor": 3,
+  "answer": "41 x 10 days = about 410 ml.",
+  "move": "A little taken every day becomes a lot by the end of the month.",
+  "trap": "Guessing a few spoonfuls, picturing one small tube at a time.",
+  "hint": "Count the draws in a day and the millilitres each one takes.",
+  "steps": [
+    "An intensive care patient has about 4.6 blood draws a day.",
+    "4.6 x 9 ml = about 41 ml a day.",
+    "41 x 10 days = about 410 ml."
+  ],
+  "keywords": [
+    "blood draws",
+    "intensive care",
+    "hospital anaemia",
+    "phlebotomy"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vincent et al., JAMA, 2002",
+  "source_kind": "paper",
+  "reference": "Vincent et al., Anemia and blood transfusion in critically ill patients, JAMA, 2002",
+  "written": "2026-09-27"
+}

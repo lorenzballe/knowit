@@ -1,0 +1,38 @@
+{
+  "id": "cinema-practical-7",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.practical",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the windows and bottles that shatter in today's films are mostly made of sugar glass?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Boiled sugar was the classic breakaway glass, but it is fragile to handle, softens under hot lamps and turns sticky in damp air. Modern breakaway windows and bottles are mostly cast from brittle plastic resins, which keep their shape for weeks and break into blunt, safer shards. Sugar survives mainly in the retold story.",
+  "move": "The famous method is often one the trade has quietly retired.",
+  "trap": "Repeating the sugar-glass story told in countless behind-the-scenes clips.",
+  "keywords": [
+    "breakaway glass",
+    "sugar glass",
+    "resin",
+    "props"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rickitt, Special Effects, 2007",
+  "source_kind": "book",
+  "reference": "Rickitt, Special Effects: The History and Technique, 2nd edn, Billboard Books, 2007",
+  "written": "2026-09-27"
+}

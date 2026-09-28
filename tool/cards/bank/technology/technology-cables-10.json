@@ -1,0 +1,39 @@
+{
+  "id": "technology-cables-10",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.cables",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: traders' fastest links between Chicago and New York dropped optical fibre for microwave radio?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Light in glass travels about a third slower than radio through air. In 2010 Spread Networks laid a near-straight fibre route for about $300 million, cutting the round trip to roughly 13 milliseconds; microwave tower chains soon did it in under 9. Heavy rain fades radio, so firms keep fibre as backup.",
+  "move": "Check what a signal travels through, not just what carries it.",
+  "trap": "Fibre sounds like the fastest medium, since it carries light.",
+  "keywords": [
+    "high-frequency trading",
+    "microwave links",
+    "spread networks",
+    "latency",
+    "optical fibre"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Laughlin, Aguirre & Grundfest, Financial Review, 2014",
+  "source_kind": "paper",
+  "reference": "Laughlin, Aguirre & Grundfest, Information Transmission between Financial Markets in Chicago and New York, Financial Review 49(2), 2014",
+  "written": "2026-09-27"
+}

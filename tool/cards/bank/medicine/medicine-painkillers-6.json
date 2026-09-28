@@ -1,0 +1,40 @@
+{
+  "id": "medicine-painkillers-6",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.painkillers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "For a year, patients with chronic back or arthritis pain were given either opioids or non-opioid painkillers. Which group ended with less pain?",
+  "options": [
+    "The opioid group",
+    "Neither, pain was the same",
+    "The non-opioid group"
+  ],
+  "correct": 2,
+  "answer": "The non-opioid group. The SPACE trial randomised 240 US veterans to opioids or to non-opioid drugs, mostly paracetamol and anti-inflammatories, raising doses as needed. After 12 months, function was no different and pain intensity was slightly lower without opioids, 3.5 against 4.0 out of 10. The opioid group reported more side effects.",
+  "move": "The strongest drug for an afternoon is not the strongest over a year.",
+  "trap": "The opioid group, since a stronger drug should leave less pain.",
+  "keywords": [
+    "opioids",
+    "chronic pain",
+    "space trial",
+    "veterans",
+    "osteoarthritis"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Krebs et al., JAMA, 2018",
+  "source_kind": "paper",
+  "reference": "Krebs et al., Effect of Opioid vs Nonopioid Medications on Pain-Related Function in Patients With Chronic Back Pain or Hip or Knee Osteoarthritis Pain: The SPACE Randomized Clinical Trial, JAMA, 2018",
+  "written": "2026-09-27"
+}

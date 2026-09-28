@@ -1,0 +1,41 @@
+{
+  "id": "science-absolute-zero-9",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.absolute_zero",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A perfect fridge in a 300 K room removes 1 joule from something at 3 K. Minimum work needed, in joules?",
+  "value": 99,
+  "unit": "joules",
+  "answer": "Only 1 joule came from the cold side, so work = 100 − 1 = 99 joules.",
+  "move": "The colder the target, the dearer each last step of progress becomes.",
+  "trap": "Expecting about 1 joule, as if cooling merely moved heat along.",
+  "hint": "Heat divided by temperature is entropy, and a perfect machine never creates or destroys any.",
+  "steps": [
+    "1 joule leaving at 3 K carries 1/3 joule per kelvin of entropy.",
+    "Releasing that entropy into the 300 K room takes 300 × 1/3 = 100 joules of heat.",
+    "Only 1 joule came from the cold side, so work = 100 − 1 = 99 joules."
+  ],
+  "keywords": [
+    "refrigeration",
+    "carnot limit",
+    "entropy",
+    "cryogenics"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pobell, Matter and Methods at Low Temperatures",
+  "source_kind": "book",
+  "reference": "Pobell, Matter and Methods at Low Temperatures, 3rd edition, Springer, 2007",
+  "written": "2026-09-27"
+}

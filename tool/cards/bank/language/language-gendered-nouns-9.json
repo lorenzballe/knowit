@@ -1,0 +1,43 @@
+{
+  "id": "language-gendered-nouns-9",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.gendered_nouns",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "German's definite article marks 4 cases across masculine, feminine, neuter and plural. How many distinct forms does it use?",
+  "value": 6,
+  "unit": "forms",
+  "answer": "4 + 1 + 1 = 6 forms.",
+  "move": "Count the containers and the contents separately; they rarely match.",
+  "trap": "Expecting sixteen slots to need close to sixteen different words.",
+  "hint": "Write out the masculine column in full, then see how much the others borrow.",
+  "steps": [
+    "4 cases × 4 columns = 16 slots to fill.",
+    "Masculine: der, den, dem, des = 4 forms.",
+    "Neuter adds das; its dative and genitive reuse dem and des.",
+    "Feminine and plural add only die, reusing der and den.",
+    "4 + 1 + 1 = 6 forms."
+  ],
+  "keywords": [
+    "german",
+    "definite article",
+    "grammatical case",
+    "syncretism"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Durrell, Hammer's German Grammar and Usage",
+  "source_kind": "book",
+  "reference": "Durrell, Hammer's German Grammar and Usage, 5th edition, Hodder Education, 2011",
+  "written": "2026-09-27"
+}

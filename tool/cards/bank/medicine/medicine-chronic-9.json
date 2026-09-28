@@ -1,0 +1,32 @@
+{
+  "id": "medicine-chronic-9",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.chronic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Chronic pain patients show less grey matter in pain-processing brain regions. What happened to it once a hip replacement ended the pain?",
+  "answer": "It came back. A 2009 German study scanned people with painful hip osteoarthritis, who showed the usual losses, then rescanned some after surgery had left them pain-free. Within months grey matter in those regions had partly returned. The shrinkage followed the pain rather than causing it: a brain reshaped by use, then reshaped by rest.",
+  "move": "Before calling a change a cause, see whether it undoes itself when the cause stops.",
+  "keywords": [
+    "grey matter",
+    "brain imaging",
+    "hip replacement",
+    "osteoarthritis"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rodriguez-Raecke et al., Journal of Neuroscience, 2009",
+  "source_kind": "paper",
+  "reference": "Rodriguez-Raecke et al., Brain gray matter decrease in chronic pain is the consequence and not the cause of pain, Journal of Neuroscience, 2009",
+  "written": "2026-09-27"
+}

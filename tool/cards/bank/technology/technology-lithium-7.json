@@ -1,0 +1,40 @@
+{
+  "id": "technology-lithium-7",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.lithium",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Sodium-ion batteries cannot store sodium in the graphite that lithium-ion cells use. What mainly stops it?",
+  "options": [
+    "Sodium ions are too big for it",
+    "Sodium binds too weakly to carbon",
+    "Sodium corrodes the graphite layers"
+  ],
+  "correct": 1,
+  "answer": "Weak bonding. Calculations show sodium's pull on the carbon layers is too feeble to pay for prying them apart, so sodium graphite would fall apart as it formed. Size cannot be the reason: potassium, a larger ion, slips into graphite readily. Sodium-ion cells use hard carbon instead, a disordered carbon full of gaps.",
+  "move": "Test the obvious cause on a case where it should apply even more.",
+  "trap": "Picturing a bigger ion jammed between layers built for a smaller one.",
+  "keywords": [
+    "sodium-ion batteries",
+    "graphite",
+    "intercalation",
+    "potassium",
+    "hard carbon"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Moriwake et al., RSC Advances, 2017",
+  "source_kind": "paper",
+  "reference": "Moriwake, Kuwabara, Fisher & Ikuhara, Why is sodium-intercalated graphite unstable?, RSC Advances, 2017",
+  "written": "2026-09-27"
+}

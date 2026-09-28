@@ -1,0 +1,36 @@
+{
+  "id": "music-film-scores-6",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.film_scores",
+  "also": [
+    "cinema.directors.hitchcock"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Bernard Herrmann write his score for Psycho, 1960, for a string orchestra alone?",
+  "answer": "To give a black-and-white film a black-and-white sound, he said, and to fit a tight budget. Dropping brass, woodwind and percussion left one colour, which he could push from lush to shrieking. The stabbing violins of the shower cue were written for a scene Hitchcock had wanted played with no music.",
+  "move": "A narrower palette forces every remaining colour to work harder.",
+  "keywords": [
+    "bernard herrmann",
+    "psycho",
+    "string orchestra",
+    "film score",
+    "shower scene"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smith, A Heart at Fire's Center, 1991",
+  "source_kind": "book",
+  "reference": "Smith, A Heart at Fire's Center: The Life and Music of Bernard Herrmann, University of California Press, 1991",
+  "written": "2026-09-27"
+}

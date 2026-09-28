@@ -1,0 +1,32 @@
+{
+  "id": "human_body-smell-6",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.smell",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can the same smell register more strongly through one nostril than through the other?",
+  "answer": "Because the nostrils take turns. Swelling of the nasal tissue shifts every few hours, so one nostril carries fast airflow and the other slow. Odours that dissolve quickly into the nasal lining are caught best in fast air; slow-dissolving ones need slow air. Each nostril samples a slightly different chemical world.",
+  "move": "Two sensors running at different speeds can catch what one would miss.",
+  "keywords": [
+    "nasal cycle",
+    "nostrils",
+    "airflow",
+    "odour absorption"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sobel et al., Nature, 1999",
+  "source_kind": "paper",
+  "reference": "Sobel, Khan, Saltman, Sullivan & Gabrieli, The world smells different to each nostril, Nature, 1999",
+  "written": "2026-09-27"
+}

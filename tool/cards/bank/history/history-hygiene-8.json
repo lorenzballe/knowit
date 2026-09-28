@@ -1,0 +1,39 @@
+{
+  "id": "history-hygiene-8",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.hygiene",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "Chadwick's 1842 report said Liverpool labourers died at an average age of 15. What does that figure mostly reflect?",
+  "options": [
+    "Most labourers dying in their teens",
+    "Huge numbers of deaths in infancy",
+    "Labourers leaving town before old age"
+  ],
+  "correct": 1,
+  "answer": "Huge numbers of deaths in infancy. An average age at death pools every death, and in poor districts a large share of children died before five, dragging the mean down. A fast-growing town full of young migrants also produces young deaths. Those who survived childhood lived far beyond 15. Many of those coffins were small.",
+  "move": "Before trusting an average, ask what the extremes are doing to it.",
+  "trap": "Reading an average age at death as a typical lifespan.",
+  "keywords": [
+    "edwin chadwick",
+    "liverpool",
+    "average age at death",
+    "infant mortality"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Chadwick, Sanitary Condition of the Labouring Population, 1842",
+  "source_kind": "primary_document",
+  "reference": "Chadwick, Report on the Sanitary Condition of the Labouring Population of Great Britain, 1842; ed. Flinn, Edinburgh University Press, 1965",
+  "written": "2026-09-27"
+}

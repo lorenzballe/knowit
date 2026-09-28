@@ -1,0 +1,43 @@
+{
+  "id": "food-saffron-8",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.saffron",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confirmation",
+  "question": "Saffron is graded by how strongly an extract absorbs blue light at 440 nm. Which cheap additive fools that test best?",
+  "options": [
+    "Tartrazine, a synthetic yellow dye",
+    "Ground turmeric root",
+    "Gardenia fruit extract"
+  ],
+  "correct": 2,
+  "answer": "Gardenia fruit extract. The fruit of Gardenia jasminoides makes many of the same crocin pigments as saffron, so the reading rises exactly as real saffron would make it rise. Synthetic dyes have their own check in the standard. Catching gardenia needs chromatography hunting for geniposide, a compound saffron never makes.",
+  "move": "A test that confirms the right ingredient cannot say whose it is.",
+  "trap": "Tartrazine, since a laboratory dye seems the most sophisticated forgery.",
+  "keywords": [
+    "gardenia",
+    "crocin",
+    "adulteration",
+    "geniposide",
+    "spectrophotometry"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "food-saffron-5"
+  ],
+  "figure": "none",
+  "source": "Food Chemistry, 2018, on gardenia adulteration",
+  "source_kind": "paper",
+  "reference": "https://pubmed.ncbi.nlm.nih.gov/29622218/",
+  "written": "2026-09-27"
+}

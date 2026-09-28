@@ -1,0 +1,33 @@
+{
+  "id": "sport-recovery-7",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.recovery",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In the fortnight before a big race, what should an athlete cut to taper well: training volume or intensity?",
+  "answer": "Volume. Pooling taper studies, Bosquet and colleagues found the best results came from tapers of about two weeks that cut weekly training volume by roughly 41 to 60%, while keeping intensity and the number of sessions the same. Easy, gentle weeks lose the sharpness that hard sessions keep: fewer kilometres, still run at speed.",
+  "move": "To rest without going stale, cut the amount and keep the edge.",
+  "keywords": [
+    "tapering",
+    "training volume",
+    "intensity",
+    "meta-analysis",
+    "race preparation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bosquet et al., Med Sci Sports Exerc, 2007",
+  "source_kind": "paper",
+  "reference": "Bosquet, Montpetit, Arvisais & Mujika, Effects of tapering on performance: a meta-analysis, Medicine & Science in Sports & Exercise, 2007",
+  "written": "2026-09-27"
+}

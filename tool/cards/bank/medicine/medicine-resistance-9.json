@@ -1,0 +1,40 @@
+{
+  "id": "medicine-resistance-9",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.resistance",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In a Dutch study, what share of travellers returning from southern Asia newly carried gut bacteria resistant to most penicillins and cephalosporins?",
+  "options": [
+    "About 1 in 20",
+    "About 1 in 3",
+    "About 3 in 4"
+  ],
+  "correct": 2,
+  "answer": "About 3 in 4. Of Dutch travellers who tested clear before leaving, 34% came home carrying ESBL bacteria, whose enzymes destroy most penicillins and cephalosporins; of those back from southern Asia, 75%. These were healthy tourists, not patients. Most carriers had lost the bacteria within a few months.",
+  "move": "Where a problem is most visible is not where most of it lives.",
+  "trap": "Picturing resistant bacteria as caught in hospitals, not on holiday.",
+  "keywords": [
+    "esbl",
+    "travellers",
+    "gut bacteria",
+    "southern asia",
+    "carriage"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Arcilla et al., Lancet Infectious Diseases, 2017",
+  "source_kind": "paper",
+  "reference": "Arcilla et al., Import and spread of extended-spectrum β-lactamase-producing Enterobacteriaceae by international travellers (COMBAT study): a prospective, multicentre cohort study, The Lancet Infectious Diseases, 2017",
+  "written": "2026-09-27"
+}

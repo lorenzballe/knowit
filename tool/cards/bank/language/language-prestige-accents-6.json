@@ -1,0 +1,40 @@
+{
+  "id": "language-prestige-accents-6",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.prestige_accents",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "When Meiji Japan set out to build a standard spoken language, whose speech became its model?",
+  "options": [
+    "Kyoto's old court nobility",
+    "Educated uptown Tokyo households",
+    "Tokyo's downtown merchants and craftsmen"
+  ],
+  "correct": 1,
+  "answer": "Educated uptown Tokyo households. Kyoto had been the imperial seat for over a thousand years, but power moved to Tokyo in 1868, and reformers such as Ueda Kazutoshi, writing in 1895, proposed the speech of educated Tokyo people. That meant the Yamanote, the hillside districts of officials and professionals, not the working downtown.",
+  "move": "A standard follows where power sits now, not where it sat longest.",
+  "trap": "Assuming centuries of court prestige made Kyoto speech the national model.",
+  "keywords": [
+    "standard japanese",
+    "yamanote",
+    "tokyo",
+    "kyoto",
+    "ueda kazutoshi"
+  ],
+  "era": "nineteenth",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shibatani, The Languages of Japan, 1990",
+  "source_kind": "book",
+  "reference": "Shibatani, The Languages of Japan, Cambridge University Press, 1990",
+  "written": "2026-09-27"
+}

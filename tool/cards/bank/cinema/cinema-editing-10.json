@@ -1,0 +1,33 @@
+{
+  "id": "cinema-editing-10",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.editing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "With almost no raw film stock after 1917, what did Lev Kuleshov's students cut to learn editing?",
+  "answer": "Existing prints, above all D. W. Griffith's Intolerance. New stock was scarce and precious, so Kuleshov's workshop took imported films apart and reassembled them in different orders to see how the meaning shifted. The editing theory later called Soviet montage was first rehearsed by rearranging an American epic on the bench.",
+  "move": "Take a master's finished work apart to learn what each piece does.",
+  "keywords": [
+    "lev kuleshov",
+    "intolerance",
+    "soviet montage",
+    "film stock",
+    "d. w. griffith"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Leyda, Kino, 1960",
+  "source_kind": "book",
+  "reference": "Leyda, Kino: A History of the Russian and Soviet Film, Allen & Unwin, 1960",
+  "written": "2026-09-27"
+}

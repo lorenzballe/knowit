@@ -1,0 +1,33 @@
+{
+  "id": "sport-ancient-6",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.ancient",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened to a runner who left the start too early in an ancient Greek footrace?",
+  "answer": "He was beaten. In Herodotus, a Corinthian commander reminds Themistocles that at the games those who start too soon are struck with rods, and officials holding rods stand beside runners on painted vases. Later, stadiums at Nemea and Isthmia had a starting gate, the hysplex, that dropped cords in front of every runner at once.",
+  "move": "When fairness hangs on one instant, build a machine for that instant.",
+  "keywords": [
+    "false start",
+    "hysplex",
+    "herodotus",
+    "footrace",
+    "nemea"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Herodotus, Histories, Book 8",
+  "source_kind": "primary_document",
+  "reference": "Herodotus, The Persian Wars, Volume IV: Books 8–9, trans. A. D. Godley, Loeb Classical Library, Harvard, 1925",
+  "written": "2026-09-27"
+}

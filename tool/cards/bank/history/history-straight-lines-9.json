@@ -1,0 +1,40 @@
+{
+  "id": "history-straight-lines-9",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.straight_lines",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Under the Sykes–Picot agreement of 1916, in which power's zone was Mosul, now in northern Iraq?",
+  "options": [
+    "France's",
+    "Britain's",
+    "Russia's"
+  ],
+  "correct": 0,
+  "answer": "France's. The 1916 map drew zones of influence, not borders, and put Mosul in the French area reaching out from Syria. In December 1918 Clemenceau agreed to let Britain have it, and in 1925 the League of Nations kept Mosul in British-run Iraq against Turkey's claim. Today's Syria–Iraq border came from those later bargains.",
+  "move": "Before crediting a famous plan, check it against what was finally built.",
+  "trap": "Reading today's Iraqi Mosul back into the 1916 plan.",
+  "keywords": [
+    "sykes-picot",
+    "mosul",
+    "iraq",
+    "syria",
+    "league of nations"
+  ],
+  "era": "twentieth",
+  "region": "middle_east",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Barr, A Line in the Sand, 2011",
+  "source_kind": "book",
+  "reference": "Barr, A Line in the Sand: Britain, France and the Struggle that Shaped the Middle East, Simon & Schuster, 2011",
+  "written": "2026-09-27"
+}

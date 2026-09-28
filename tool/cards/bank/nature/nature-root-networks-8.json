@@ -1,0 +1,40 @@
+{
+  "id": "nature-root-networks-8",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.root_networks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Pines, oaks, beeches and birches wrap their roots in a fungal sheath. What share of plant species do this?",
+  "options": [
+    "About 2%",
+    "About 30%",
+    "About 70%"
+  ],
+  "correct": 0,
+  "answer": "About 2%. Brundrett and Tedersoo's census puts sheathing, or ectomycorrhizal, partnerships at 2% of vascular plant species; 72% host another kind, whose fungi grow inside root cells. Yet the 2% includes the trees that dominate northern and temperate forests, so counted by trunks rather than by species, the rare partnership is everywhere.",
+  "move": "What dominates the landscape can still be a rarity on the list of kinds.",
+  "trap": "Seeing it on every familiar forest tree and assuming it is typical.",
+  "keywords": [
+    "ectomycorrhiza",
+    "arbuscular mycorrhiza",
+    "fungal partners",
+    "plant species",
+    "temperate forests"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Brundrett & Tedersoo, New Phytologist, 2018",
+  "source_kind": "paper",
+  "reference": "doi:10.1111/nph.14976",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "space-water-on-mars-10",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.water_on_mars",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Was early Mars warm enough for rain and flowing rivers over long stretches, rather than mostly frozen?",
+  "sides": [
+    "Yes, warm and wet",
+    "No, cold and icy"
+  ],
+  "answer": "Valley networks branch like river systems fed by rain, and deltas such as Jezero's and lake beds such as Gale's record water standing for long periods. Clays formed in water are widespread in the oldest rock. A frozen planet with brief melts struggles to carve so much; some greenhouse mix must have kept it warm.",
+  "move": "Whichever side you took, it turns on how long the water had to flow.",
+  "counterpoint": "The young Sun was about a quarter fainter, and no climate model keeps Mars above freezing for long with plausible gases. An icy highland climate, melted now and then by volcanic outbursts or impacts, can carve valleys and fill lakes in bursts. The rivers are real; a long warm climate is not required to explain them.",
+  "keywords": [
+    "early mars climate",
+    "valley networks",
+    "faint young sun",
+    "greenhouse"
+  ],
+  "era": "ancient",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wordsworth, Annual Review, 2016",
+  "source_kind": "paper",
+  "reference": "Wordsworth, The Climate of Early Mars, Annual Review of Earth and Planetary Sciences, 2016",
+  "written": "2026-09-27"
+}

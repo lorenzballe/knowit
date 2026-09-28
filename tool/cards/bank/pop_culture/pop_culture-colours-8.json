@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-colours-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.colours",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: John Deere once lost a court case trying to stop a rival selling farm loaders in its green?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In Deere v. Farmhand, decided in Iowa in 1982 and upheld on appeal, a court found farmers wanted loaders that matched their tractors, so the green did a job beyond naming the maker. Deere has won other colour cases since. On a farm, matching paint counted as a feature, not a signature.",
+  "move": "If buyers want a feature for its own sake, nobody may own it.",
+  "trap": "A famous brand colour seems protected against everyone, everywhere.",
+  "keywords": [
+    "john deere",
+    "green",
+    "aesthetic functionality",
+    "farm loaders"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Deere & Co. v. Farmhand, 1982",
+  "source_kind": "primary_document",
+  "reference": "https://www.leagle.com/decision/1982645560fsupp851621",
+  "written": "2026-09-27"
+}

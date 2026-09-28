@@ -1,0 +1,42 @@
+{
+  "id": "sport-balls-10",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.balls",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A ball reads 86 kPa above the 101 kPa outside air at 21 °C. Cooled to 10 °C, how many kPa does its reading lose?",
+  "value": 7,
+  "unit": "kPa",
+  "answer": "187 − 180 = 7 kPa.",
+  "move": "Scale from true zero, not from the zero a gauge shows.",
+  "trap": "Scaling only the 86 kPa gauge reading and getting about 3.",
+  "hint": "Gas pressure follows absolute temperature and total pressure, not the gauge's reading.",
+  "steps": [
+    "The gas law needs total pressure: 86 + 101 = 187 kPa.",
+    "In kelvin, 21 °C is 294 K and 10 °C is 283 K.",
+    "187 × 283 ÷ 294 ≈ 180 kPa total.",
+    "187 − 180 = 7 kPa."
+  ],
+  "keywords": [
+    "ball pressure",
+    "gas law",
+    "temperature",
+    "american football"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wells Report, NFL, 2015",
+  "source_kind": "primary_document",
+  "reference": "Wells, Karp & Reisner, Investigative Report Concerning Footballs Used During the AFC Championship Game on January 18, 2015, NFL, 2015",
+  "written": "2026-09-27"
+}

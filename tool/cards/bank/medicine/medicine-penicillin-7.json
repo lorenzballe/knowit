@@ -1,0 +1,36 @@
+{
+  "id": "medicine-penicillin-7",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.penicillin",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did attempts to repeat Fleming's 1928 plate, by dropping mould spores onto bacteria, keep failing?",
+  "answer": "Because penicillin kills only bacteria that are growing; established colonies shrug it off. Decades later Ronald Hare showed the mould had to get going first. A cool spell in London that summer let it spread while the staphylococci barely grew; warmer days then brought the bacteria up around a mould already making its drug.",
+  "move": "When a lucky result will not repeat, ask what the conditions were that day.",
+  "keywords": [
+    "alexander fleming",
+    "ronald hare",
+    "penicillium",
+    "staphylococci",
+    "weather"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "medicine-penicillin-4"
+  ],
+  "figure": "none",
+  "source": "Hare, The Birth of Penicillin, 1970",
+  "source_kind": "book",
+  "reference": "Hare, The Birth of Penicillin and the Disarming of Microbes, George Allen & Unwin, 1970",
+  "written": "2026-09-27"
+}

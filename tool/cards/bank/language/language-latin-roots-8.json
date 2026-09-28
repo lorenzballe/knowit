@@ -1,0 +1,40 @@
+{
+  "id": "language-latin-roots-8",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.latin_roots",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "French tête, head, descends from a Latin word. What did that Latin word first mean?",
+  "options": [
+    "Head",
+    "Pot or shell",
+    "Helmet"
+  ],
+  "correct": 1,
+  "answer": "Pot or shell. Testa meant an earthenware pot or a shell, and everyday Latin used it jokingly for the skull, as English says nut. Classical authors wrote caput. French grew from spoken Latin, not from books, which is why its horse, cheval, comes from caballus, a nag, not from equus.",
+  "move": "Ask what people said at home, not what they wrote for posterity.",
+  "trap": "Assuming French inherited the Latin that literature preserved.",
+  "keywords": [
+    "tête",
+    "testa",
+    "vulgar latin",
+    "french",
+    "caballus"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pope, From Latin to Modern French, 1934",
+  "source_kind": "book",
+  "reference": "Pope, From Latin to Modern French with Especial Consideration of Anglo-Norman, Manchester University Press, 1934",
+  "written": "2026-09-27"
+}

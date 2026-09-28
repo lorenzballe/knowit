@@ -1,0 +1,43 @@
+{
+  "id": "music-autotune-8",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.autotune",
+  "also": [
+    "music.sound_itself.frequencies"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "A band tunes to A = 432 Hz, but Auto-Tune stays at its default A = 440. What happens to the singer's in-tune notes?",
+  "options": [
+    "Left alone, since the key matches",
+    "Pulled about a third of a semitone sharp",
+    "Pushed up a whole semitone"
+  ],
+  "correct": 1,
+  "answer": "Pulled about a third of a semitone sharp. 440 is about 1.9% above 432, a semitone about 6%, so each note true to the band sits some 32 cents, hundredths of a semitone, below the software's grid. That is under half a semitone, so each snaps up. The voice floats sharp over the band.",
+  "move": "A default left untouched is still a choice made about every result.",
+  "trap": "Assuming the software only needs the key, not the reference pitch.",
+  "keywords": [
+    "auto-tune",
+    "concert pitch",
+    "432 hz",
+    "cents",
+    "reference tuning"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Antares Auto-Tune Artist manual",
+  "source_kind": "company",
+  "reference": "https://images.equipboard.com/uploads/item/manual/81444/antares-auto-tune-artist-manual.pdf",
+  "written": "2026-09-27"
+}

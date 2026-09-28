@@ -1,0 +1,43 @@
+{
+  "id": "language-prestige-accents-9",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.prestige_accents",
+  "also": [
+    "psychology.bias.halo_effect"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "In a 1960 Montreal study, one bilingual voice read in English and in French. How did French-Canadian listeners rate the French version?",
+  "options": [
+    "Higher than the English one",
+    "About the same as the English",
+    "Lower than the English one"
+  ],
+  "correct": 2,
+  "answer": "Lower than the English one. Each speaker recorded both versions, so any gap had to come from the language, not the voice. French-Canadian listeners rated the English guises better-looking, more intelligent and more dependable, and on some traits marked the French guises down further than English-Canadian listeners did.",
+  "move": "A group can absorb the very ranking that places it lower.",
+  "trap": "Expecting listeners to favour speakers of their own language.",
+  "keywords": [
+    "matched guise",
+    "wallace lambert",
+    "montreal",
+    "french canadians",
+    "language attitudes"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lambert et al., J. Abnormal Social Psychology, 1960",
+  "source_kind": "paper",
+  "reference": "Lambert, Hodgson, Gardner & Fillenbaum, Evaluational reactions to spoken languages, Journal of Abnormal and Social Psychology 60(1), 1960",
+  "written": "2026-09-27"
+}

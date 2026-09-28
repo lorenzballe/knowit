@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-names-7",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.names",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which effect of a person's own name has held up across a dozen languages?",
+  "answer": "A liking for its letters. Speakers of 12 European languages, asked for their favourite letters, picked those in their own names more often than other people did, Jozef Nuttin reported in 1987; later studies keep finding it. Bolder claims, that names steer careers or spouses, have mostly dissolved. The bias stays inside the alphabet.",
+  "move": "Keep the small effect that replicates; drop the big story built on it.",
+  "keywords": [
+    "name letter effect",
+    "initials",
+    "preferences",
+    "replication"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nuttin, Eur J Soc Psychol, 1987",
+  "source_kind": "statistics",
+  "reference": "Nuttin, Affective consequences of mere ownership: the name letter effect in twelve European languages, European Journal of Social Psychology, 1987",
+  "written": "2026-09-27"
+}

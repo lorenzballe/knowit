@@ -1,0 +1,32 @@
+{
+  "id": "music-mozart-6",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.mozart",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is Mozart's Clarinet Concerto usually played today in a version he never wrote?",
+  "answer": "Because he wrote it in 1791 for Anton Stadler's basset clarinet, an instrument reaching a major third lower, and his manuscript is lost. The first printed editions, from 1801, rewrote the low passages to fit an ordinary clarinet. Scholars have reconstructed the original, and some players now perform it on rebuilt basset clarinets.",
+  "move": "When the original is lost, the copy quietly becomes the standard.",
+  "keywords": [
+    "clarinet concerto",
+    "basset clarinet",
+    "anton stadler",
+    "lost manuscript"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lawson, Mozart: Clarinet Concerto, 1996",
+  "source_kind": "book",
+  "reference": "Lawson, Mozart: Clarinet Concerto, Cambridge Music Handbooks, Cambridge University Press, 1996",
+  "written": "2026-09-27"
+}

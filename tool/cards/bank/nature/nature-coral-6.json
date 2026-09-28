@@ -1,0 +1,41 @@
+{
+  "id": "nature-coral-6",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.coral",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "NOAA sums °C × weeks above summer peak, skipping any under 1 °C. How many °C-weeks: 8 weeks at +0.9, then 4 at +1.5?",
+  "value": 6,
+  "unit": "°C-weeks",
+  "answer": "4 × 1.5 = 6 °C-weeks.",
+  "move": "A threshold can turn a long mild stretch into zero; apply it first.",
+  "trap": "Counting all twelve weeks and getting 13.2.",
+  "hint": "Check which weeks clear the threshold before multiplying anything.",
+  "steps": [
+    "The 8 weeks at +0.9 °C fall below the 1 °C cut-off, so they add nothing.",
+    "The 4 weeks at +1.5 °C count in full: 4 × 1.5.",
+    "4 × 1.5 = 6 °C-weeks."
+  ],
+  "keywords": [
+    "degree heating weeks",
+    "coral bleaching",
+    "marine heatwaves",
+    "noaa coral reef watch"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Liu et al., Remote Sensing, 2014",
+  "source_kind": "paper",
+  "reference": "Liu et al., Reef-scale thermal stress monitoring of coral ecosystems: new 5-km global products from NOAA Coral Reef Watch, Remote Sensing, 2014",
+  "written": "2026-09-27"
+}

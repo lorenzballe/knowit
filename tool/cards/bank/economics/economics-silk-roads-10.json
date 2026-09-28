@@ -1,0 +1,40 @@
+{
+  "id": "economics-silk-roads-10",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.silk_roads",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "Under the early Han dynasty, much of the silk that reached Central Asian markets first left China how?",
+  "options": [
+    "As state gifts to nomad rulers",
+    "In Chinese merchants' caravans",
+    "By sea to Indian ports"
+  ],
+  "correct": 0,
+  "answer": "As state gifts to nomad rulers. Under the heqin treaties from 198 BC, the Han court paid the Xiongnu, the steppe confederation to its north, yearly silk, grain and wine for peace, and the payments grew. Nomad elites traded the surplus westward. Money paid to keep raiders out stocked markets far beyond the frontier.",
+  "move": "Follow a good back to whoever handed it out, not whoever sold it.",
+  "trap": "Picturing the trade as Chinese merchants carrying silk out themselves.",
+  "keywords": [
+    "han dynasty",
+    "xiongnu",
+    "heqin treaties",
+    "silk payments",
+    "steppe"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Yü Ying-shih, Trade and Expansion in Han China",
+  "source_kind": "book",
+  "reference": "Yü Ying-shih, Trade and Expansion in Han China: A Study in the Structure of Sino-Barbarian Economic Relations, University of California Press, 1967",
+  "written": "2026-09-27"
+}

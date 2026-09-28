@@ -1,0 +1,33 @@
+{
+  "id": "medicine-new-ones-6",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.new_ones",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did GlaxoSmithKline get from screening its chemical libraries against bacterial genes found by genome sequencing, 1995 to 2001?",
+  "answer": "No antibiotic. The company ran 67 screening campaigns against proteins bacteria cannot live without, finding 16 hits and 5 leads, none of which became a drug. The targets were sound; the chemicals were wrong. Libraries built for human medicines held few molecules able to cross a bacterial wall and escape its pumps.",
+  "move": "A good list of targets is worthless without something that can reach them.",
+  "keywords": [
+    "glaxosmithkline",
+    "genomics",
+    "high-throughput screening",
+    "drug discovery",
+    "chemical libraries"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Payne et al., Nature Reviews Drug Discovery, 2007",
+  "source_kind": "paper",
+  "reference": "Payne, Gwynn, Holmes & Pompliano, Drugs for bad bugs: confronting the challenges of antibacterial discovery, Nature Reviews Drug Discovery, 2007",
+  "written": "2026-09-27"
+}

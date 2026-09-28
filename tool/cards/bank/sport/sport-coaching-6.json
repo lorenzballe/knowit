@@ -1,0 +1,33 @@
+{
+  "id": "sport-coaching-6",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.coaching",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the 2018 Tampa Bay Rays start some games with a relief pitcher who threw only an inning or two?",
+  "answer": "To blunt the cost of facing hitters repeatedly. Batters do better each time they meet the same pitcher in a game, as they read his pitches and he tires. An opener faced the dangerous top of the order once; the usual starter came in later and met those hitters fewer times. Rivals soon copied it.",
+  "move": "Spend a resource that weakens with use where it counts most.",
+  "keywords": [
+    "opener",
+    "tampa bay rays",
+    "baseball",
+    "times through the order",
+    "pitching"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tango, Lichtman & Dolphin, The Book",
+  "source_kind": "book",
+  "reference": "Tango, Lichtman & Dolphin, The Book: Playing the Percentages in Baseball, Potomac Books, 2007",
+  "written": "2026-09-27"
+}

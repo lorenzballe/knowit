@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-stoics-9",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.stoics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Diogenes Laertius credits Chrysippus with 705 books. How many of them survive complete today?",
+  "options": [
+    "None of them",
+    "About a dozen",
+    "Roughly half"
+  ],
+  "correct": 0,
+  "answer": "None of them. Chrysippus built early Stoicism, but his books are known only from quotations, many by hostile critics such as Plutarch and Galen, plus charred scraps of Herculaneum papyri. The Stoicism most readers meet comes from Seneca, Epictetus and Marcus Aurelius, centuries later. The founding library is a heap of fragments.",
+  "move": "The voice that survives is not always the voice that founded it.",
+  "trap": "Assuming a founder's main works survive, as Plato's and Aristotle's did.",
+  "keywords": [
+    "chrysippus",
+    "lost books",
+    "herculaneum papyri",
+    "fragments"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Gould, The Philosophy of Chrysippus, 1970",
+  "source_kind": "book",
+  "reference": "Gould, The Philosophy of Chrysippus, State University of New York Press, 1970",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "weird_facts-tallest-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.tallest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "China's 2005 survey put Everest at 8,844 m while Nepal used 8,848 m. What explained most of the gap?",
+  "options": [
+    "China measured rock, not snow",
+    "The mountain had sunk since 1955",
+    "They used different sea levels"
+  ],
+  "correct": 0,
+  "answer": "China measured rock, not snow. Its 2005 survey used ice-penetrating radar to find the rock summit, about 3.5 m beneath the snow, and published that. In 2020 the two countries announced a joint figure of 8,848.86 m, taken to the top of the snow. The world's highest point wears a cap several metres thick.",
+  "move": "Before comparing two measurements, check they measured the same surface.",
+  "trap": "Knowing that heights depend on where sea level is taken to be.",
+  "keywords": [
+    "everest",
+    "summit height",
+    "snow cap",
+    "surveying",
+    "nepal",
+    "china"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Kathmandu Post, December 2020",
+  "source_kind": "news_archive",
+  "reference": "https://kathmandupost.com/national/2020/12/08/it-s-official-mount-everest-is-8-848-86-metres-tall",
+  "written": "2026-09-27"
+}

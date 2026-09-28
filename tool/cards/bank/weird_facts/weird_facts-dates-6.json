@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-dates-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.dates",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to unplanned births in the United States on Halloween and on Valentine's Day?",
+  "answer": "They shift with the holiday. Across 11 years of US birth certificates, Levy and colleagues found spontaneous births 5.3% lower on Halloween and 3.6% higher on Valentine's Day than in the surrounding weeks; caesareans moved further, down 16.9% and up 12.1%. Why labour nobody booked should lean away from a day of ghosts is unclear.",
+  "move": "Look for choice hidden inside events said to be left to nature.",
+  "keywords": [
+    "halloween",
+    "valentine's day",
+    "birth timing",
+    "caesarean"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Levy, Chung and Slade, 2011",
+  "source_kind": "statistics",
+  "reference": "Levy, Chung and Slade, Influence of Valentine's Day and Halloween on birth timing, Social Science & Medicine, 2011",
+  "written": "2026-09-27"
+}

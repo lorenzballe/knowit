@@ -1,0 +1,36 @@
+{
+  "id": "food-maillard-7",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.maillard",
+  "also": [
+    "human_body.ageing.longevity"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What links the crust on a seared steak to the slow yellowing of the eye's lens with age?",
+  "answer": "The same chemistry, at body heat for decades. Sugars bond to proteins' amino groups, as in the Maillard reaction, and slowly form brown, cross-linked products. Proteins at the lens's core are never replaced, so they collect them for life. Monnier and Cerami proposed in 1981 that this browning is part of ageing.",
+  "move": "Whatever is never replaced keeps a record of every slow reaction.",
+  "keywords": [
+    "glycation",
+    "eye lens",
+    "crystallins",
+    "ageing",
+    "advanced glycation end products"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Monnier & Cerami, Science, 1981",
+  "source_kind": "paper",
+  "reference": "Monnier & Cerami, Nonenzymatic browning in vivo: possible process for aging of long-lived proteins, Science, 1981",
+  "written": "2026-09-27"
+}

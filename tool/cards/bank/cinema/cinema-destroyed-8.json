@@ -1,0 +1,39 @@
+{
+  "id": "cinema-destroyed-8",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.destroyed",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "A nitrate reel never meets a flame. Left for decades in a warm, damp can, what does it become?",
+  "options": [
+    "A faded but intact reel",
+    "A brown, acrid powder",
+    "A solid, welded block"
+  ],
+  "correct": 1,
+  "answer": "A brown, acrid powder. Nitrate decays in stages with no fire at all: the image fades and yellows, the emulsion turns sticky and blisters, the reel welds into one solid block, and at last it crumbles to dust. Warmth and damp speed every stage. Many lost films ended as powder in their cans.",
+  "move": "The dramatic danger is rarely the one that does most of the damage.",
+  "trap": "Treating fire as nitrate’s only danger, so an unburnt reel must be safe.",
+  "keywords": [
+    "nitrate decomposition",
+    "film preservation",
+    "decay stages",
+    "silent films"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "National Film Preservation Foundation guide",
+  "source_kind": "institution",
+  "reference": "National Film Preservation Foundation, The Film Preservation Guide: The Basics for Archives, Libraries, and Museums, 2004",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "psychology-sunk-cost-6",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.sunk_cost",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Do people honour sunk time as strongly as they honour sunk money?",
+  "answer": "Much less. Dilip Soman found that people who had invested hours in an option were far less swayed by it than people who had paid money; time is not booked like cash. Once people were taught to price their time, the sunk-time effect appeared. The wasted afternoon never shows up on a statement.",
+  "move": "A cost nobody records is a cost nobody feels obliged to recover.",
+  "keywords": [
+    "sunk time",
+    "mental accounting",
+    "dilip soman",
+    "time and money",
+    "decision making"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Soman, Journal of Behavioral Decision Making, 2001",
+  "source_kind": "paper",
+  "reference": "Soman, The mental accounting of sunk time costs: why time is not like money, Journal of Behavioral Decision Making, 2001",
+  "written": "2026-09-27"
+}

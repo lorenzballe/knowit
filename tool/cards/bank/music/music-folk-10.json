@@ -1,0 +1,40 @@
+{
+  "id": "music-folk-10",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.folk",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Danny Boy is sung to an old Irish tune, the Londonderry Air. Who wrote its words?",
+  "options": [
+    "Thomas Moore, for his Irish Melodies",
+    "An English barrister, around 1910",
+    "An anonymous Ulster ballad singer"
+  ],
+  "correct": 1,
+  "answer": "An English barrister. Fred Weatherly, a lawyer and prolific songwriter, wrote the words in 1910 for another tune, then fitted them to the Londonderry Air in 1913, after his sister-in-law sent it from America. The tune itself had been noted down in County Londonderry and printed in 1855 without a name.",
+  "move": "Date the words and the tune separately; they rarely share a birthday.",
+  "trap": "Moore wrote the best-known Irish song lyrics, so his name comes first.",
+  "keywords": [
+    "danny boy",
+    "londonderry air",
+    "fred weatherly",
+    "irish song",
+    "lyrics"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Weatherly, Piano and Gown, 1926",
+  "source_kind": "book",
+  "reference": "Weatherly, Piano and Gown, London, 1926",
+  "written": "2026-09-27"
+}

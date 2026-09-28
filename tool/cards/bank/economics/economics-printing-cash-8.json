@@ -1,0 +1,41 @@
+{
+  "id": "economics-printing-cash-8",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.printing_cash",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "About £80 billion of Bank of England notes circulate, backed by interest-earning assets. At 5%, what does the Bank earn yearly, in £ billion?",
+  "value": 4,
+  "unit": "£ billion a year",
+  "answer": "£80 billion x 0.05 = £4 billion a year.",
+  "move": "Money that pays its holder nothing pays its issuer something.",
+  "trap": "Counting only face value minus printing cost as the issuer's gain.",
+  "hint": "A banknote is a loan to the Bank that pays its lender no interest.",
+  "steps": [
+    "Notes in circulation pay their holders nothing.",
+    "The assets bought with them earn about 5% a year.",
+    "£80 billion x 0.05 = £4 billion a year."
+  ],
+  "keywords": [
+    "seigniorage",
+    "banknotes",
+    "bank of england",
+    "interest income"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bank of England, Annual Report 2024",
+  "source_kind": "institution",
+  "reference": "Bank of England, Annual Report and Accounts, 1 March 2023 to 29 February 2024, Issue Department accounts, 2024",
+  "written": "2026-09-27"
+}

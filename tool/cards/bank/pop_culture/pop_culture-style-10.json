@@ -1,0 +1,37 @@
+{
+  "id": "pop_culture-style-10",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.style",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should governments require fashion models to prove they are healthy before they can work?",
+  "sides": [
+    "Yes, require proof",
+    "No, leave it to the trade"
+  ],
+  "answer": "Yes. The 1990s waif look showed that the industry rewards extreme thinness and cannot police itself: agencies profit from whichever body sells. France has required models to hold a medical certificate since 2017, and digitally slimmed photographs must be labelled as retouched. A model's health should not depend on the season's fashion.",
+  "move": "Whichever side you took, it turns on whether a certificate can measure harm.",
+  "counterpoint": "No. Thinness is a poor proxy for health: a body-mass cut-off catches naturally slender people and misses illness in others, and a doctor's letter is easy to obtain. Such laws police young women's bodies while leaving alone the photographers and buyers who create the demand. Better contracts, fair pay and unions protect models more directly.",
+  "keywords": [
+    "fashion models",
+    "waif look",
+    "medical certificates",
+    "france"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "French health law on models, 2016",
+  "source_kind": "primary_document",
+  "reference": "Loi n° 2016-41 du 26 janvier 2016 de modernisation de notre système de santé, with implementing decrees of May 2017",
+  "written": "2026-09-27"
+}

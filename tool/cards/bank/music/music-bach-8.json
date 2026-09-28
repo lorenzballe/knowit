@@ -1,0 +1,39 @@
+{
+  "id": "music-bach-8",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.bach",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "multipleComparisons",
+  "question": "Number the letters A=1, B=2 and so on: BACH sums to 14. Hunters then found 14 all over Bach's music. What does that show?",
+  "options": [
+    "That Bach signed his music in numbers",
+    "That his engravers added the numbers",
+    "Little; count enough and 14 turns up"
+  ],
+  "correct": 2,
+  "answer": "Little on its own. A piece offers thousands of countable things, notes, bars, entries, rests, and any small number will match some of them. Ruth Tatlow showed that such number alphabets were known in Bach's circle, yet a claim needs a count fixed before looking. Found after the fact, a 14 is what searching produces.",
+  "move": "Decide what you will count before you start counting.",
+  "trap": "The pattern keeps turning up, so it must have been put there.",
+  "keywords": [
+    "number alphabet",
+    "numerology",
+    "bach",
+    "pattern hunting"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tatlow, Cambridge University Press, 1991",
+  "source_kind": "book",
+  "reference": "Tatlow, Bach and the Riddle of the Number Alphabet, Cambridge University Press, 1991",
+  "written": "2026-09-27"
+}

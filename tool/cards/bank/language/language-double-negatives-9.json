@@ -1,0 +1,39 @@
+{
+  "id": "language-double-negatives-9",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.double_negatives",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In African American English, what does the sentence can't nobody beat him mean?",
+  "options": [
+    "Is there nobody who can beat him?",
+    "Nobody can beat him",
+    "Somebody is able to beat him"
+  ],
+  "correct": 1,
+  "answer": "Nobody can beat him. It is a statement: the negative verb moves to the front for emphasis, a pattern linguists call negative inversion, and the rising tune of a question is absent. William Labov set out its rules in 1972. Two negatives, one meaning, and no listener raised in the dialect hears a question.",
+  "move": "Read a sentence by the speaker's rules, not the listener's.",
+  "trap": "Reading the verb-first order as the mark of a question.",
+  "keywords": [
+    "african american english",
+    "negative inversion",
+    "william labov",
+    "negative concord"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Labov, Language, 1972",
+  "source_kind": "paper",
+  "reference": "Labov, Negative attraction and negative concord in English grammar, Language, 1972",
+  "written": "2026-09-27"
+}

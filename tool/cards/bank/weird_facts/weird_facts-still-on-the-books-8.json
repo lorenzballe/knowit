@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-still-on-the-books-8",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.still_on_the_books",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Which legal system in Britain lets an old statute lapse through long disuse, with no formal repeal?",
+  "options": [
+    "England and Wales",
+    "Scotland",
+    "Neither of them"
+  ],
+  "correct": 1,
+  "answer": "Scotland. Scots law, drawing on Roman civil law, holds that an old Act can fall into desuetude: long neglect plus a settled contrary practice ends its force. English law has none, which is why in 1818 an English court had to grant a defendant's demand for trial by combat; Parliament abolished it in 1819.",
+  "move": "Whether silence can kill a rule depends on whose rulebook it is.",
+  "trap": "Believing every law stands until formally repealed, as English law holds.",
+  "keywords": [
+    "desuetude",
+    "scots law",
+    "trial by combat",
+    "repeal",
+    "english law"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brown v Magistrates of Edinburgh, 1931",
+  "source_kind": "primary_document",
+  "reference": "Brown v Magistrates of Edinburgh, 1931 SLT 456, Court of Session, 1931",
+  "written": "2026-09-27"
+}

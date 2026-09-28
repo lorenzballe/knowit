@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-liar-8",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.liar",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: a liar-style paradox needs a word of negation, such as not or false?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In 1942 Haskell Curry showed that a sentence saying if this sentence is true, then the Moon is cheese proves anything. Assume it true: then its if-clause holds, so the Moon is cheese; that reasoning itself shows the sentence true. No negation anywhere, and logics built to tolerate the liar still struggle with it.",
+  "move": "A feature shared by every known case may not be the cause.",
+  "trap": "Generalising from the familiar liars, all of which contain a not.",
+  "keywords": [
+    "curry's paradox",
+    "haskell curry",
+    "self-reference",
+    "conditionals"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Curry, Journal of Symbolic Logic, 1942",
+  "source_kind": "paper",
+  "reference": "Curry, The Inconsistency of Certain Formal Logics, Journal of Symbolic Logic 7 (3), 1942",
+  "written": "2026-09-27"
+}

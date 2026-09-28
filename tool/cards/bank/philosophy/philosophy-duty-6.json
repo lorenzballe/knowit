@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-duty-6",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.duty",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did J. O. Urmson's soldier who throws himself on a grenade show that moral theories lacked?",
+  "answer": "A place for acts beyond duty. In Saints and Heroes (1958), Urmson noted that nobody thinks the soldier who smothers the blast was obliged to, or blames the comrades who dived clear. A scheme that ranks acts only as required, allowed or forbidden files him beside someone buying a sandwich.",
+  "move": "A scale with three marks cannot record everything worth measuring.",
+  "keywords": [
+    "supererogation",
+    "j. o. urmson",
+    "heroism",
+    "obligation"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Urmson, Saints and Heroes, 1958",
+  "source_kind": "book",
+  "reference": "Urmson, Saints and Heroes, in Melden (ed.), Essays in Moral Philosophy, University of Washington Press, 1958",
+  "written": "2026-09-27"
+}

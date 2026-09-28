@@ -1,0 +1,38 @@
+{
+  "id": "space-hawking-radiation-10",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.hawking_radiation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a spinning black hole evaporating by Hawking radiation loses its spin faster than it loses its mass?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Angular momentum leaves several times faster than energy, because spin boosts the emission of particles that themselves spin, such as photons and gravitons, sent out along the rotation. A fast spinner slows almost to a halt before it has given up most of its mass: old evaporating holes should be nearly still.",
+  "move": "When a thing drains through several outlets, they need not empty at one pace.",
+  "trap": "Assuming mass and spin drain away together, in proportion.",
+  "keywords": [
+    "black hole spin",
+    "angular momentum",
+    "hawking radiation",
+    "evaporation"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Page, Physical Review D 14, 1976",
+  "source_kind": "paper",
+  "reference": "doi:10.1103/PhysRevD.14.3260",
+  "written": "2026-09-27"
+}

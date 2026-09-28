@@ -1,0 +1,32 @@
+{
+  "id": "language-japanese-10",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.japanese",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Amakudari, descent from heaven, places retired officials in jobs. After a 2007 law barred ministries from arranging it, how did the education ministry continue?",
+  "answer": "Through a man who had already left. Serving staff could no longer broker the jobs, so a retired official did it for them. A watchdog traced a 2015 placement at Waseda University; the top civil servant resigned, and a 2017 report found 62 illegal cases. The ban covered the desk, not its former occupant.",
+  "move": "A rule that names who may not act invites someone else to.",
+  "keywords": [
+    "amakudari",
+    "education ministry",
+    "retirement jobs",
+    "waseda university"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Education ministry final report, 2017",
+  "source_kind": "primary_document",
+  "reference": "Ministry of Education, Culture, Sports, Science and Technology, Saishūshoku-tō mondai ni kakaru chōsa hōkoku (saishū matome), Tokyo, 30 March 2017",
+  "written": "2026-09-27"
+}

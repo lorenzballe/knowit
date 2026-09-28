@@ -1,0 +1,37 @@
+{
+  "id": "nature-migration-7",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.migration",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is the loss of milkweed from farmland the main cause of the eastern monarch butterfly's decline?",
+  "sides": [
+    "Yes, milkweed is the key",
+    "No, look at the journey"
+  ],
+  "answer": "Monarch caterpillars eat only milkweed, and herbicide-tolerant crops let farmers clear it from maize and soya fields across the Midwest, where most monarchs once bred. Pleasants and Oberhauser estimated Midwest milkweed fell by about 58% from 1999 to 2010, tracking the shrinking winter colonies in Mexico. Replant milkweed and the butterflies should follow.",
+  "move": "Whichever side you took, it turns on where in the year the butterflies go missing.",
+  "counterpoint": "Counts of breeding adults across the north show no matching decline, Inamine and colleagues found; the losses seem to happen between the breeding grounds and Mexico. Nectar shortages along the autumn route, drought and damage to the wintering forests fit that pattern. Milkweed in every garden helps little if the butterflies die on the way south.",
+  "keywords": [
+    "monarch butterflies",
+    "milkweed",
+    "herbicides",
+    "migration mortality"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pleasants & Oberhauser, 2013; Inamine et al., 2016",
+  "source_kind": "paper",
+  "reference": "Pleasants & Oberhauser, Milkweed loss in agricultural fields because of herbicide use, Insect Conservation and Diversity, 2013; Inamine, Ellner, Springer & Agrawal, Linking the continental migratory cycle of the monarch butterfly to understand its population decline, Oikos, 2016",
+  "written": "2026-09-27"
+}

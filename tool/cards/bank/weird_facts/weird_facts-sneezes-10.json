@@ -1,0 +1,42 @@
+{
+  "id": "weird_facts-sneezes-10",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.sneezes",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "In the first year of a sneezing fit lasting nearly three years, Donna Griffiths sneezed about a million times. One sneeze every how many seconds?",
+  "value": 31.5,
+  "unit": "seconds",
+  "tolerance": 0.5,
+  "answer": "31,536,000 ÷ 1,000,000 ≈ 31.5 seconds.",
+  "move": "Turn a huge total into a rate before judging whether it is plausible.",
+  "trap": "Guessing every few seconds, because a million sounds like nonstop sneezing.",
+  "hint": "Count the seconds in a whole year, nights included.",
+  "steps": [
+    "A year has 365 × 24 = 8,760 hours.",
+    "8,760 × 3,600 = 31,536,000 seconds.",
+    "31,536,000 ÷ 1,000,000 ≈ 31.5 seconds."
+  ],
+  "keywords": [
+    "donna griffiths",
+    "sneezing fit",
+    "guinness world records",
+    "rate"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Guinness World Records",
+  "source_kind": "reference_work",
+  "reference": "https://www.guinnessworldrecords.com/world-records/67595-longest-sneezing-fit",
+  "written": "2026-09-27"
+}

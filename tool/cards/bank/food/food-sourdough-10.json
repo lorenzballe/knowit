@@ -1,0 +1,38 @@
+{
+  "id": "food-sourdough-10",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.sourdough",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should only bread raised by a live starter be allowed to call itself sourdough?",
+  "sides": [
+    "Yes, protect the name",
+    "No, leave it open"
+  ],
+  "answer": "Supermarket loaves sold as sourdough can be ordinary yeasted bread soured with vinegar, acid powders or dried sourdough flavouring, made in hours. Buyers pay extra for a long fermentation that changes flavour, texture and keeping, and cannot see it on the shelf. Two days of honest fermentation compete on price with three hours.",
+  "move": "Whichever side you took, whether a process can be policed on the shelf decides it.",
+  "counterpoint": "A legal definition must fix numbers for acidity, hours and permitted yeast, and every number shuts out honest bakers whose methods differ while large firms engineer loaves to the letter. Enforcing it means laboratory tests whose cost lands on small bakeries. Ingredient lists already show added yeast and acids to anyone who cares to read them.",
+  "keywords": [
+    "sourdough labelling",
+    "food law",
+    "industrial bread",
+    "fermentation",
+    "pain au levain"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Whitley, Bread Matters, 2006",
+  "source_kind": "book",
+  "reference": "Whitley, Bread Matters: The State of Modern Bread and a Definitive Guide to Baking Your Own, Fourth Estate, 2006",
+  "written": "2026-09-27"
+}

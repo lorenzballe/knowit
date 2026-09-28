@@ -1,0 +1,39 @@
+{
+  "id": "nature-dinosaurs-9",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.dinosaurs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: lizards and snakes came through the extinction that ended the dinosaurs with only light losses?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Longrich, Bhullar and Gauthier counted lizard and snake species in the last Cretaceous rocks of western North America and found about 83% vanish at the impact layer. Small size, often credited with saving mammals, was not enough. Today's thousands of species descend from the few lineages that came through.",
+  "move": "A crowded family today may descend from a handful of lucky survivors.",
+  "trap": "Seeing lizards everywhere today and assuming their ancestors sailed through.",
+  "keywords": [
+    "lizards",
+    "snakes",
+    "squamates",
+    "cretaceous extinction",
+    "north america"
+  ],
+  "era": "ancient",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Longrich, Bhullar & Gauthier, PNAS, 2012",
+  "source_kind": "paper",
+  "reference": "Longrich, Bhullar & Gauthier, Mass extinction of lizards and snakes at the Cretaceous–Paleogene boundary, Proceedings of the National Academy of Sciences, 2012",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "art-patrons-7",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.patrons",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Julius II's tomb was planned in 1505 with some 40 statues. How many by Michelangelo's own hand stand in the version finished in 1545?",
+  "options": [
+    "About forty",
+    "About a dozen",
+    "Three"
+  ],
+  "correct": 2,
+  "answer": "Three: Moses, with Leah and Rachel beside him. After Julius died in 1513, his heirs forced new contracts in 1513, 1516, 1532 and 1542, each smaller. Assistants carved the rest, and the tomb went to San Pietro in Vincoli rather than St Peter's. Julius himself lies in St Peter's, not under his monument.",
+  "move": "A plan's scale says little about what survives the renegotiations.",
+  "trap": "Letting the planned forty set the guess for the finished tomb.",
+  "keywords": [
+    "julius ii",
+    "michelangelo",
+    "tomb",
+    "moses",
+    "san pietro in vincoli"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hibbard, Michelangelo, 1974",
+  "source_kind": "book",
+  "reference": "Howard Hibbard, Michelangelo, Harper & Row, 1974",
+  "written": "2026-09-27"
+}

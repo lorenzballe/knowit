@@ -1,0 +1,38 @@
+{
+  "id": "human_body-bone-strength-9",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.bone_strength",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the commonest fracture caused by fragile bones is a broken hip?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Fractures of the spine's vertebrae are commoner, and only about a third of them come to medical attention: a vertebra slowly crushes, and the sign is a stooped back or lost height rather than a fall and an ambulance. Hip fractures are rarer, but vivid, costly and often deadly, so they dominate the story.",
+  "move": "The injury that makes the news is rarely the commonest one.",
+  "trap": "Picturing the dramatic fall and ambulance that a hip fracture brings.",
+  "keywords": [
+    "osteoporosis",
+    "vertebral fractures",
+    "hip fractures",
+    "epidemiology"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cummings & Melton, The Lancet, 2002",
+  "source_kind": "paper",
+  "reference": "Cummings & Melton, Epidemiology and outcomes of osteoporotic fractures, The Lancet, 2002",
+  "written": "2026-09-27"
+}

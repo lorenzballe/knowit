@@ -1,0 +1,35 @@
+{
+  "id": "cinema-music-cues-10",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.music_cues",
+  "also": [
+    "music.composers.film_scores"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was the score of Arrival, 2016, ruled out of the Oscar race?",
+  "answer": "Because another composer's piece carries its key moments. Max Richter's On the Nature of Daylight, released in 2004, opens and closes the film, and the Academy's rules exclude scores diluted by pre-existing music. Jóhann Jóhannsson's original work was judged to fail that test. The film's emotional frame belonged to a track brought in from outside.",
+  "move": "Where the key moments come from says who authored the whole.",
+  "keywords": [
+    "arrival",
+    "jóhann jóhannsson",
+    "max richter",
+    "oscar rules"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Academy music award rules, 2016",
+  "source_kind": "primary_document",
+  "reference": "Academy of Motion Picture Arts and Sciences, Special Rules for the Music Awards, 89th Academy Awards, 2016",
+  "written": "2026-09-27"
+}

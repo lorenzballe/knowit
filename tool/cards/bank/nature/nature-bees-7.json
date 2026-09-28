@@ -1,0 +1,39 @@
+{
+  "id": "nature-bees-7",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.bees",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "If every pollinating animal vanished, by roughly how much would total world crop production fall?",
+  "options": [
+    "About a third",
+    "Under a tenth",
+    "About three quarters"
+  ],
+  "correct": 1,
+  "answer": "Under a tenth. Three quarters of leading crop types benefit from animal pollination, but the staples that make most of the tonnage, wheat, rice and maize, are wind- or self-pollinated. Aizen and colleagues put the direct loss at 3 to 8% of output. Fruit, nuts and coffee would suffer; bread would not.",
+  "move": "Before crediting a helper with everything, ask what happens without it.",
+  "trap": "Treating every crop that bees help as a crop that needs them.",
+  "keywords": [
+    "pollination",
+    "crop production",
+    "staple crops",
+    "pollinator decline"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Aizen et al., Annals of Botany, 2009",
+  "source_kind": "paper",
+  "reference": "Aizen, Garibaldi, Cunningham & Klein, How much does agriculture depend on pollinators? Lessons from long-term trends in crop production, Annals of Botany, 2009",
+  "written": "2026-09-27"
+}

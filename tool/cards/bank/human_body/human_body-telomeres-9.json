@@ -1,0 +1,38 @@
+{
+  "id": "human_body-telomeres-9",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.telomeres",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: children of older fathers tend to be born with longer telomeres?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Unlike most cells, the stem cells that make sperm keep telomerase active, and sperm telomeres lengthen as men age. Each extra year of a father's age adds measurably to his child's telomere length, in several populations. The effect carries on: grandchildren whose paternal grandfathers were older fathers show it too.",
+  "move": "Ageing wears most things down; check which parts it builds up.",
+  "trap": "Old father, old cells: assuming age only shortens what is passed on.",
+  "keywords": [
+    "paternal age",
+    "sperm",
+    "telomere length",
+    "inheritance"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Eisenberg, Hayes & Kuzawa, PNAS, 2012",
+  "source_kind": "paper",
+  "reference": "Eisenberg, Hayes & Kuzawa, Delayed paternal age of reproduction in humans is associated with longer telomeres across two generations of descendants, PNAS, 2012",
+  "written": "2026-09-27"
+}

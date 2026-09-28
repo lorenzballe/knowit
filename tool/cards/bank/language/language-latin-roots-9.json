@@ -1,0 +1,39 @@
+{
+  "id": "language-latin-roots-9",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.latin_roots",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: the s in island is there because the word comes from Latin insula?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Island is native English: Old English īegland, from īeg, island, and land, and it was written iland for centuries. The s was added in the 1500s by writers who linked it to isle, which really does come from Latin insula through French. The resemblance was put there with a pen.",
+  "move": "A resemblance can be manufactured by whoever did the copying.",
+  "trap": "Seeing isle inside island and assuming a shared Latin root.",
+  "keywords": [
+    "island",
+    "isle",
+    "insula",
+    "spelling",
+    "old english"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Upward & Davidson, History of English Spelling, 2011",
+  "source_kind": "book",
+  "reference": "Upward & Davidson, The History of English Spelling, Wiley-Blackwell, 2011",
+  "written": "2026-09-27"
+}

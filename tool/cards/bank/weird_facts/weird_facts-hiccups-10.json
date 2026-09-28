@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-hiccups-10",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.hiccups",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "A patient's hiccups return with every chemotherapy cycle. Swapping which drug most often stops them?",
+  "options": [
+    "The chemotherapy drug itself",
+    "The steroid given against nausea",
+    "The painkiller given with each cycle"
+  ],
+  "correct": 1,
+  "answer": "The steroid given against nausea. Dexamethasone rides along with many chemotherapy regimens, so its hiccups get blamed on the cancer drugs. In a 2017 crossover trial, switching to another steroid, methylprednisolone, cut hiccup intensity without worsening nausea, and hiccups returned in cycles given dexamethasone. The culprit was the passenger, not the driver.",
+  "move": "When two things always arrive together, test them separately before blaming one.",
+  "trap": "Blaming the chemotherapy, the drug that is always there when hiccups start.",
+  "keywords": [
+    "dexamethasone",
+    "chemotherapy",
+    "hiccups",
+    "methylprednisolone",
+    "side effects"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Oncologist, crossover trial, 2017",
+  "source_kind": "statistics",
+  "reference": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5679820/",
+  "written": "2026-09-27"
+}

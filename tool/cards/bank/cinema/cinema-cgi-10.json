@@ -1,0 +1,37 @@
+{
+  "id": "cinema-cgi-10",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.cgi",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should studios be allowed to recreate dead actors digitally for new roles, with their estates' consent?",
+  "sides": [
+    "Yes, with consent",
+    "No, not at all"
+  ],
+  "answer": "An estate already licenses a performer's name, voice and likeness, and consent keeps control with those who knew the actor's wishes. Rogue One brought back Peter Cushing's Grand Moff Tarkin in 2016 with his estate's approval. Since 2024 California law has required exactly this consent, so the practice is regulated, not wild.",
+  "move": "Whichever side you took, it turns on whether heirs can consent to a performance.",
+  "counterpoint": "A performance is choices made by a living person, and a replica makes new choices the actor never made, for a fee the actor never set. Heirs may have money motives the performer would have rejected, and every recreated role is one no living actor gets. Consent from heirs is not consent from the face doing the work.",
+  "keywords": [
+    "digital replicas",
+    "peter cushing",
+    "rogue one",
+    "likeness rights"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "California Assembly Bill 1836, 2024",
+  "source_kind": "primary_document",
+  "reference": "California Assembly Bill 1836, Use of Likeness: Digital Replica, 2024",
+  "written": "2026-09-27"
+}

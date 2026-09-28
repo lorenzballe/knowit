@@ -1,0 +1,39 @@
+{
+  "id": "music-acoustics-10",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.acoustics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A violinist and a timpanist sit 17 metres apart on a big stage. How late does each hear the other?",
+  "options": [
+    "About 50 ms, enough to smear",
+    "Too little to matter, under 5 ms",
+    "About half a second"
+  ],
+  "correct": 0,
+  "answer": "About 50 milliseconds. Sound covers about 343 metres a second, so 17 metres takes a twentieth of a second. Played strictly by ear, the back of the orchestra would drag behind the front. So players watch the conductor's beat, and those at the back play slightly ahead of what they hear.",
+  "move": "Over distance, trust the shared signal you see, not the one you hear.",
+  "trap": "Sound feels instant across a room, so the lag seems negligible.",
+  "keywords": [
+    "speed of sound",
+    "orchestra",
+    "conductor",
+    "ensemble timing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Meyer, Acoustics and the Performance of Music",
+  "source_kind": "book",
+  "reference": "Meyer, Acoustics and the Performance of Music, 5th edition, Springer, 2009",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "sport-shoes-9",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.shoes",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "True or false: once shoe weight was matched, habitual barefoot runners spent less energy barefoot than in light cushioned shoes?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Franz, Wierzbinski and Kram taped weights to bare feet to match shoes of about 150 g. Mass for mass, shod running cost about 3 to 4% less energy than running barefoot. Studies favouring bare feet had let the shoes' weight count against them. Mass aside, foam spares the legs some cushioning work.",
+  "move": "Before comparing two options, make them equal in everything but one.",
+  "trap": "Crediting bare feet with a saving that came from carrying less weight.",
+  "keywords": [
+    "barefoot running",
+    "shoe mass",
+    "running economy",
+    "cushioning"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Franz, Wierzbinski & Kram, MSSE, 2012",
+  "source_kind": "paper",
+  "reference": "https://journals.lww.com/acsm-msse/fulltext/2012/08000/metabolic_cost_of_running_barefoot_versus_shod__is.14.aspx",
+  "written": "2026-09-27"
+}

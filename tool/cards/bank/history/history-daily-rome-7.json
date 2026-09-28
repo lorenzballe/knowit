@@ -1,0 +1,43 @@
+{
+  "id": "history-daily-rome-7",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.daily_rome",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "Rome gets about 15 hours of daylight at midsummer and 9 at midwinter. How many minutes longer was a Roman daytime hour in June?",
+  "value": 30,
+  "unit": "minutes",
+  "answer": "75 - 45 = 30 minutes longer.",
+  "move": "Check whether a unit is fixed or a share of something that changes.",
+  "trap": "Taking an hour to be sixty minutes, so the answer is zero.",
+  "hint": "Romans cut the daylight, however long it was, into the same number of hours.",
+  "steps": [
+    "Sunrise to sunset was always divided into 12 hours.",
+    "Midsummer: 15 x 60 / 12 = 75 minutes.",
+    "Midwinter: 9 x 60 / 12 = 45 minutes.",
+    "75 - 45 = 30 minutes longer."
+  ],
+  "keywords": [
+    "roman hours",
+    "sundials",
+    "daylight",
+    "timekeeping",
+    "seasons"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hannah, Time in Antiquity, 2009",
+  "source_kind": "book",
+  "reference": "Hannah, Time in Antiquity, Routledge, 2009",
+  "written": "2026-09-27"
+}

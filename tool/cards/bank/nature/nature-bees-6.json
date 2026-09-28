@@ -1,0 +1,40 @@
+{
+  "id": "nature-bees-6",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.bees",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "A honeybee queen mates with about a dozen males. On average, how related is a worker to a sister chosen at random?",
+  "options": [
+    "About three quarters",
+    "About one half",
+    "About three tenths"
+  ],
+  "correct": 2,
+  "answer": "About three tenths. Sisters with the same father share three quarters of their genes, because a male passes on his whole genome; sisters with different fathers share a quarter. With a dozen fathers, most sisters are half-sisters, and the average falls to about 0.3, below the half a worker would share with her own young.",
+  "move": "The figure for the closest pair is not the average of the group.",
+  "trap": "Using the full-sister figure without asking how many fathers there were.",
+  "keywords": [
+    "kin selection",
+    "relatedness",
+    "haplodiploidy",
+    "queen mating",
+    "honeybees"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Crozier & Pamilo, Evolution of Social Insect Colonies",
+  "source_kind": "book",
+  "reference": "Crozier & Pamilo, Evolution of Social Insect Colonies: Sex Allocation and Kin Selection, Oxford University Press, 1996",
+  "written": "2026-09-27"
+}

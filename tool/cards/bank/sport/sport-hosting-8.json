@@ -1,0 +1,39 @@
+{
+  "id": "sport-hosting-8",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.hosting",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "In August 2012, the month of the London Olympics, how did overseas visits to the UK compare with August 2011?",
+  "options": [
+    "About 5% higher",
+    "About 20% higher",
+    "About 5% lower"
+  ],
+  "correct": 2,
+  "answer": "About 5% lower, by the Office for National Statistics' count. Olympic visitors came, but ordinary tourists and business travellers stayed away from the expected crowds, closures and prices. Those who did come spent more per head. The Games filled London's hotels partly with people who had replaced someone else.",
+  "move": "An event's crowd is net of the crowd it scares away.",
+  "trap": "Counting the Olympic visitors without asking who stayed away because of them.",
+  "keywords": [
+    "london 2012",
+    "tourism",
+    "overseas visits",
+    "displacement"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "ONS, Overseas Travel and Tourism, 2012",
+  "source_kind": "statistics",
+  "reference": "Office for National Statistics, Overseas Travel and Tourism, Monthly Release, October 2012",
+  "written": "2026-09-27"
+}

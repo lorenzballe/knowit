@@ -1,0 +1,38 @@
+{
+  "id": "medicine-germ-theory-10",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.germ_theory",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Was the rejection of Semmelweis's handwashing mainly the fault of doctors who refused evidence, rather than of a weak case?",
+  "sides": [
+    "Yes, the doctors failed",
+    "No, his case was weak"
+  ],
+  "answer": "The numbers were stark: after chlorine washing began, deaths on the doctors' ward fell to the midwives' level within months. Colleagues who saw them still let his post in Vienna lapse in 1849. Accepting the finding meant accepting that doctors' own hands had killed mothers, and that, not the data, was the obstacle.",
+  "move": "Whichever side you took, it turns on what counts as proof without a mechanism.",
+  "counterpoint": "Semmelweis did not publish his own full account until 1861, fourteen years on, and left others to report it second-hand. His cause, decaying organic matter, had no mechanism anyone could see, and he answered critics by calling them murderers. Without germs to point to, a doctor seeing mixed results elsewhere could reasonably doubt him.",
+  "keywords": [
+    "ignaz semmelweis",
+    "handwashing",
+    "childbed fever",
+    "vienna",
+    "evidence"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Loudon, The Tragedy of Childbed Fever, 2000",
+  "source_kind": "book",
+  "reference": "Loudon, The Tragedy of Childbed Fever, Oxford University Press, 2000",
+  "written": "2026-09-27"
+}

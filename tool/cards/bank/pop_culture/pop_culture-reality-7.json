@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-reality-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.reality",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Six years after The Biggest Loser, contestants had regained most of their weight. How did their resting metabolism compare?",
+  "options": [
+    "Back to normal for their size",
+    "About 500 kcal a day below expected",
+    "Faster than before, from extra muscle"
+  ],
+  "correct": 1,
+  "answer": "About 500 kcal a day below expected. A team at the US National Institutes of Health followed 14 contestants: they had lost 58 kg on average and regained 41 kg, yet burned about 500 kcal a day less at rest than people of their size and build. The slowdown outlasted the weight loss.",
+  "move": "The damage from an extreme can outlast the extreme itself.",
+  "trap": "Assuming metabolism recovers once the weight has come back.",
+  "keywords": [
+    "the biggest loser",
+    "metabolism",
+    "weight regain",
+    "national institutes of health"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fothergill et al., Obesity, 2016",
+  "source_kind": "statistics",
+  "reference": "doi:10.1002/oby.21538",
+  "written": "2026-09-27"
+}

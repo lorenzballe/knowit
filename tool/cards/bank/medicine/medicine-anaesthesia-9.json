@@ -1,0 +1,39 @@
+{
+  "id": "medicine-anaesthesia-9",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.anaesthesia",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confirmation",
+  "question": "True or false: the largest randomised trial of pulse oximeters during anaesthesia showed that they cut complications and deaths?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A Danish trial of 20,802 patients, published in 1993, found oximeters caught far more episodes of low blood oxygen and changed what anaesthetists did, yet complications and deaths did not differ between the groups. The clip was already standard and stayed so; no one would now run a trial that withholds it.",
+  "move": "Count outcomes, not alarms, before deciding a safeguard works.",
+  "trap": "Taking every low reading caught as proof the monitor saved someone.",
+  "keywords": [
+    "pulse oximetry",
+    "randomised trial",
+    "hypoxaemia",
+    "monitoring",
+    "denmark"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Moller et al., Anesthesiology, 1993",
+  "source_kind": "paper",
+  "reference": "Moller et al., Randomized evaluation of pulse oximetry in 20,802 patients: II. Perioperative events and postoperative complications, Anesthesiology, 1993",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "nature-ants-8",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.ants",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "An ant lifts 20 times its own weight. Scaled up 100 times in every direction, how many times its own weight could it lift?",
+  "value": 0.2,
+  "unit": "times its own weight",
+  "tolerance": 0.01,
+  "answer": "20 × 10,000 ÷ 1,000,000 = 0.2 times its own weight.",
+  "move": "Scale anything up and ask which parts grow as area and which as volume.",
+  "trap": "Assuming the ant keeps its twenty-to-one ratio at any size.",
+  "hint": "Strength grows with a muscle's cross-section; weight grows with its volume.",
+  "steps": [
+    "Strength follows muscle cross-section: 100 × 100 = 10,000 times stronger.",
+    "Weight follows volume: 100 × 100 × 100 = 1,000,000 times heavier.",
+    "20 × 10,000 ÷ 1,000,000 = 0.2 times its own weight."
+  ],
+  "keywords": [
+    "square-cube law",
+    "ant strength",
+    "scaling",
+    "muscle"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schmidt-Nielsen, Scaling, 1984",
+  "source_kind": "book",
+  "reference": "Schmidt-Nielsen, Scaling: Why Is Animal Size So Important?, Cambridge University Press, 1984",
+  "written": "2026-09-27"
+}

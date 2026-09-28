@@ -1,0 +1,33 @@
+{
+  "id": "sport-shoes-6",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.shoes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was John Carlos's 19.92 in the 200 m at the 1968 US Olympic trials never ratified as a world record?",
+  "answer": "Because of his shoes. Carlos ran in Puma's new brush spikes, whose soles carried dozens of short pins instead of the few spikes the rules allowed. The Echo Summit run beat the world record of the day but stands in no record book. Vince Matthews's 400 m in the same shoes went too.",
+  "move": "A result can be real and still be ruled out by what produced it.",
+  "keywords": [
+    "john carlos",
+    "brush spikes",
+    "puma",
+    "world record",
+    "1968 olympic trials"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Olympedia, John Carlos athlete profile",
+  "source_kind": "reference_work",
+  "reference": "https://www.olympedia.org/athletes/78197",
+  "written": "2026-09-27"
+}

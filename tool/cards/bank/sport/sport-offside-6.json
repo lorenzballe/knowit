@@ -1,0 +1,40 @@
+{
+  "id": "sport-offside-6",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.offside",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "An attacker in an offside position collects the rebound from a defender's goal-line block. What does the referee give?",
+  "options": [
+    "Offside: the block counts as a save",
+    "Play on: a deliberate touch resets it",
+    "Play on: offside is judged at the rebound"
+  ],
+  "correct": 0,
+  "answer": "Offside. A deliberate play by a defender normally frees an attacker who was in an offside position, but the Law makes one exception: a save, meaning any attempt to stop a ball going into or very close to the goal. A block on the line is a save, so the attacker is still penalised.",
+  "move": "Learn the exception before leaning on the rule it breaks.",
+  "trap": "Knowing that a defender's deliberate touch normally wipes out offside.",
+  "keywords": [
+    "offside",
+    "deliberate play",
+    "save",
+    "law 11",
+    "rebound"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The FA, Laws of the Game, Law 11",
+  "source_kind": "primary_document",
+  "reference": "https://www.thefa.com/football-rules-governance/lawsandrules/laws/football-11-11/law-11---offside",
+  "written": "2026-09-27"
+}

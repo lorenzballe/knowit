@@ -1,0 +1,40 @@
+{
+  "id": "history-daily-rome-8",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.daily_rome",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "survivorship",
+  "question": "Rome's Monte Testaccio, a hill over 30 m high, is built of broken jars. What had most of them held?",
+  "options": [
+    "Wine from Italy and Gaul",
+    "Olive oil from southern Spain",
+    "Fish sauce from North Africa"
+  ],
+  "correct": 1,
+  "answer": "Olive oil from southern Spain. Most sherds come from one kind of oil jar made in Baetica, with more from North Africa. Oil soaked into the unglazed clay and turned rancid, so these jars could not be reused, while wine jars could. The hill records which containers were thrown away, not what Rome used most.",
+  "move": "A rubbish heap shows what could not be reused, not what was used most.",
+  "trap": "Guessing wine, Rome's everyday drink, because it was consumed in bulk.",
+  "keywords": [
+    "monte testaccio",
+    "amphorae",
+    "olive oil",
+    "baetica",
+    "recycling"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Peña, Roman Pottery in the Archaeological Record, 2007",
+  "source_kind": "book",
+  "reference": "Peña, Roman Pottery in the Archaeological Record, Cambridge University Press, 2007",
+  "written": "2026-09-27"
+}

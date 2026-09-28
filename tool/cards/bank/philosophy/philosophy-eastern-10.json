@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-eastern-10",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.eastern",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Confucius said an upright son covers for a father who has stolen a sheep?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In Analects 13.18 the Duke of She boasts that in his land an upright man testifies against his father for stealing a sheep. Confucius replies that where he comes from, fathers cover for sons and sons for fathers, and uprightness lies in that. Chinese debates on family and law still argue over the passage.",
+  "move": "Loyalty and honesty sound like allies until they point at the same person.",
+  "trap": "Picturing Confucius as a law-and-order moralist who puts the state first.",
+  "keywords": [
+    "confucius",
+    "analects",
+    "filial piety",
+    "testimony",
+    "duke of she"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Confucius, Analects 13.18",
+  "source_kind": "primary_document",
+  "reference": "Confucius, The Analects, trans. Lau, Penguin, 1979",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "space-dark-matter-10",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.dark_matter",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "After decades of null results, should physicists build a xenon dark matter detector ten times larger?",
+  "sides": [
+    "Yes, build it",
+    "No, spend elsewhere"
+  ],
+  "answer": "A larger detector would cover most of the remaining range where particles of the long-favoured kind could hide, down to the neutrino fog where the method runs out. The cost is modest next to a collider, the technology is proven, and a clean null result would close off a whole class of theories.",
+  "move": "Whichever side you took, the worth of a clean null result decides it.",
+  "counterpoint": "Forty years of ever-larger detectors have found nothing, and the Large Hadron Collider found none of the new particles that made this kind of dark matter attractive. Lighter candidates such as axions remain far less explored and far cheaper to test. The next detector would buy a thinner slice of possibilities for more money.",
+  "keywords": [
+    "xenon detectors",
+    "wimps",
+    "axions",
+    "null results",
+    "research funding"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Aalbers et al., Journal of Physics G, 2023",
+  "source_kind": "paper",
+  "reference": "Aalbers et al., A next-generation liquid xenon observatory for dark matter and neutrino physics, Journal of Physics G: Nuclear and Particle Physics 50, 013001, 2023",
+  "written": "2026-09-27"
+}

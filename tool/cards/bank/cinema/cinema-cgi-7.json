@@ -1,0 +1,40 @@
+{
+  "id": "cinema-cgi-7",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.cgi",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "Pixar's computers grew vastly faster between Toy Story, 1995, and Monsters University, 2013. What happened to render time per frame?",
+  "options": [
+    "It fell to minutes",
+    "It fell to seconds",
+    "It stayed at hours"
+  ],
+  "correct": 2,
+  "answer": "It stayed at hours. Monsters University took about 29 hours to render each frame, on a farm of some 24,000 cores, because artists spent every gain on more hair, light bounces and detail. Graphics people call this Blinn's law: render time holds steady as machines speed up. The picture improves; the wait does not shrink.",
+  "move": "Faster tools save time only if the ambitions stay where they were.",
+  "trap": "Expecting faster machines to shorten the wait, as if the job stayed fixed.",
+  "keywords": [
+    "render farm",
+    "blinn's law",
+    "pixar",
+    "monsters university",
+    "render time"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "GamesBeat on Monsters University, 2013",
+  "source_kind": "news_archive",
+  "reference": "https://gamesbeat.com/the-making-of-pixars-latest-technological-marvel-monsters-university/",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "human_body-balance-7",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.balance",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What can cold water run into one ear briefly restore to some stroke patients?",
+  "answer": "Awareness of their own paralysis. After right-brain strokes some patients ignore the left side of space and deny that their left limbs are weak. Cold water in the left ear stirs the balance canals, and in a 1987 study the neglect and the denial faded for a while, returning as the stimulation wore off.",
+  "move": "A belief that no argument shifts may still yield to a change of input.",
+  "keywords": [
+    "caloric stimulation",
+    "anosognosia",
+    "hemineglect",
+    "stroke",
+    "vestibular system"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cappa et al., Neuropsychologia, 1987",
+  "source_kind": "paper",
+  "reference": "Cappa, Sterzi, Vallar & Bisiach, Remission of hemineglect and anosognosia during vestibular stimulation, Neuropsychologia, 1987",
+  "written": "2026-09-27"
+}

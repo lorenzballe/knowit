@@ -1,0 +1,36 @@
+{
+  "id": "economics-subscriptions-6",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.subscriptions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "After America's click-to-cancel rule was struck down, how did regulators still make Amazon pay over Prime cancellations?",
+  "answer": "Under an older law. The Restore Online Shoppers' Confidence Act of 2010 already required clear terms and a simple way to stop recurring charges. The Federal Trade Commission sued in 2023; in September 2025, days into trial, Amazon settled for $2.5 billion, including $1.5 billion in refunds. Internally, the cancellation maze was nicknamed the Iliad.",
+  "move": "When a new rule falls, look for the old one that already covered it.",
+  "keywords": [
+    "amazon prime",
+    "federal trade commission",
+    "rosca",
+    "cancellation",
+    "dark patterns"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "economics-subscriptions-1"
+  ],
+  "figure": "none",
+  "source": "Federal Trade Commission, September 2025",
+  "source_kind": "institution",
+  "reference": "https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-secures-historic-25-billion-settlement-against-amazon",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "pop_culture-reality-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.reality",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "An American Family's crew shot about 300 hours of film for 12 one-hour episodes. What percentage of the footage aired?",
+  "value": 4,
+  "unit": "per cent",
+  "answer": "0.04 x 100 = 4 per cent.",
+  "move": "What you are shown is a choice from what was recorded.",
+  "trap": "Assuming a documentary shows most of what the camera saw.",
+  "hint": "Put the hours that aired over the hours that were shot.",
+  "steps": [
+    "Broadcast time: 12 episodes x 1 hour = 12 hours.",
+    "12 / 300 = 0.04 of the footage.",
+    "0.04 x 100 = 4 per cent."
+  ],
+  "keywords": [
+    "an american family",
+    "footage",
+    "editing",
+    "loud family",
+    "pbs"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ruoff, An American Family, 2002",
+  "source_kind": "book",
+  "reference": "Jeffrey Ruoff, An American Family: A Televised Life, University of Minnesota Press, 2002",
+  "written": "2026-09-27"
+}

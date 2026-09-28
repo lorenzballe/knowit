@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-hiccups-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.hiccups",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "About 8 in 10 people with hiccups lasting over two days are men. A man starts hiccupping. What is most likely?",
+  "options": [
+    "The bout stops soon, like most bouts",
+    "An 8 in 10 chance it lasts days",
+    "A 1 in 2 chance it lasts days"
+  ],
+  "correct": 0,
+  "answer": "The bout stops soon, like most bouts. The 8 in 10 says who the rare persistent cases are, not how often a man's hiccups persist; nearly every bout, in anyone, ends within hours. Reviews put the male share of persistent cases at 80% to 90%. Being a man raises tiny odds, which stay tiny.",
+  "move": "Who the cases are says little about how likely a case is.",
+  "trap": "Reading the share of men among the cases as a man's own risk.",
+  "keywords": [
+    "persistent hiccups",
+    "men",
+    "conditional probability",
+    "sex differences"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Lee et al., J Pain Symptom Manage, 2016",
+  "source_kind": "statistics",
+  "reference": "Lee et al., Gender differences in hiccup patients: analysis of published case reports and case-control studies, Journal of Pain and Symptom Management, 2016",
+  "written": "2026-09-27"
+}

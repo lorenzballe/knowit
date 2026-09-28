@@ -1,0 +1,36 @@
+{
+  "id": "language-prestige-accents-10",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.prestige_accents",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Reading word lists aloud, which New Yorkers pronounced the prestige r in car more than even the upper middle class?",
+  "answer": "The lower middle class. In Labov's 1966 survey they used less r than the upper middle class in casual talk, but as the task grew more careful they climbed past them. Labov read it as linguistic insecurity: a class close enough to the top to aim at its speech, and anxious enough to overshoot.",
+  "move": "Those just below a line often follow its rules hardest.",
+  "keywords": [
+    "william labov",
+    "new york city",
+    "r-pronunciation",
+    "hypercorrection",
+    "lower middle class"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "language-prestige-accents-2"
+  ],
+  "figure": "none",
+  "source": "Labov, Social Stratification in New York, 1966",
+  "source_kind": "book",
+  "reference": "Labov, The Social Stratification of English in New York City, Center for Applied Linguistics, 1966",
+  "written": "2026-09-27"
+}

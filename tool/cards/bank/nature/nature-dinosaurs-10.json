@@ -1,0 +1,32 @@
+{
+  "id": "nature-dinosaurs-10",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.dinosaurs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How quickly did mammals grow large after the asteroid, and what did plants have to do with it?",
+  "answer": "Within about a million years, in step with the plants. Fossils from Corral Bluffs, Colorado, show the largest mammals reaching about 6 kg within 100,000 years of the impact and about 50 kg by 700,000 years, roughly when the first legumes appear there. Protein-rich beans seem to have fed the first big mammals.",
+  "move": "A recovery at the top waits on what recovers at the bottom.",
+  "keywords": [
+    "corral bluffs",
+    "mammal recovery",
+    "legumes",
+    "body size"
+  ],
+  "era": "ancient",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Lyson et al., Science, 2019",
+  "source_kind": "paper",
+  "reference": "Lyson et al., Exceptional continental record of biotic recovery after the Cretaceous–Paleogene mass extinction, Science, 2019",
+  "written": "2026-09-27"
+}

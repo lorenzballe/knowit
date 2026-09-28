@@ -1,0 +1,40 @@
+{
+  "id": "food-maillard-9",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.maillard",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "EU acrylamide rules name one ingredient that biscuit makers, baby biscuits included, should add where they can. Which?",
+  "options": [
+    "An enzyme that breaks down asparagine",
+    "An antioxidant such as rosemary extract",
+    "Ammonium bicarbonate as the raising agent"
+  ],
+  "correct": 0,
+  "answer": "An enzyme, asparaginase. It turns asparagine, the amino acid that becomes acrylamide during browning, into aspartic acid, which cannot. In dough it often cuts acrylamide by half or more without changing the bake. Regulation 2017/2158 lists it for biscuit makers where it works: one ingredient of the reaction is gone before the oven is lit.",
+  "move": "To stop an unwanted product, starve the reaction of its raw material.",
+  "trap": "An antioxidant, the usual remedy for anything linked to cancer.",
+  "keywords": [
+    "acrylamide",
+    "asparaginase",
+    "asparagine",
+    "baby biscuits",
+    "eu regulation"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Commission Regulation (EU) 2017/2158",
+  "source_kind": "primary_document",
+  "reference": "https://eur-lex.europa.eu/eli/reg/2017/2158/oj/eng",
+  "written": "2026-09-27"
+}

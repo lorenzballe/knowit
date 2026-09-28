@@ -1,0 +1,39 @@
+{
+  "id": "history-clothes-7",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.clothes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: the red coats of ordinary British soldiers in the 1700s were dyed with cochineal, the costly insect red?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Private soldiers' coats were mostly dyed with madder, a cheaper plant red that came out brick-coloured and faded towards brown or pink on campaign. Cochineal gave the bright scarlet of officers' coats, which they bought from their own tailors. The vivid red of battle paintings is usually an officer's.",
+  "move": "Ask whose clothes were painted and kept before picturing everyone's.",
+  "trap": "Picturing the scarlet of officers' portraits, the coats that were painted and kept.",
+  "keywords": [
+    "redcoats",
+    "cochineal",
+    "madder",
+    "dyes",
+    "british army"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Greenfield, A Perfect Red, 2005",
+  "source_kind": "book",
+  "reference": "Greenfield, A Perfect Red: Empire, Espionage, and the Quest for the Color of Desire, HarperCollins, 2005",
+  "written": "2026-09-27"
+}

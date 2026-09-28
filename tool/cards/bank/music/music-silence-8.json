@@ -1,0 +1,39 @@
+{
+  "id": "music-silence-8",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.silence",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Beethoven's Fifth Symphony begins with a rest, not with its famous notes?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The first bar opens with an eighth-note rest; three short Gs fill the remainder. The orchestra must enter together just after a beat that makes no sound, so conductors give a silent downbeat and the players come in off it. Misjudge the rest and the famous rhythm starts on the beat.",
+  "move": "A silent beat can be the part everyone has to agree on.",
+  "trap": "The four famous notes seem to be the very first thing written.",
+  "keywords": [
+    "beethoven",
+    "fifth symphony",
+    "rest",
+    "downbeat",
+    "conductor"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Beethoven, Symphony No. 5, ed. Del Mar",
+  "source_kind": "primary_document",
+  "reference": "Beethoven, Symphony No. 5 in C minor, Op. 67, ed. Del Mar, Bärenreiter, 1999",
+  "written": "2026-09-27"
+}

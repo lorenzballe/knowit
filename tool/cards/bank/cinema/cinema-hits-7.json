@@ -1,0 +1,38 @@
+{
+  "id": "cinema-hits-7",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.hits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the highest-grossing film worldwide in 2020 was a Hollywood production?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Depending on how the year is counted, first place went to Demon Slayer: Mugen Train, a Japanese anime, or The Eight Hundred, a Chinese war film; each took over $450 million. Cinemas in Japan and China reopened early in the pandemic while Hollywood held back its big releases. Neither contender was in English.",
+  "move": "A long record can end quietly when the conditions behind it change.",
+  "trap": "Recalling the Hollywood hits that dominate the film news one reads.",
+  "keywords": [
+    "demon slayer",
+    "the eight hundred",
+    "pandemic",
+    "asian box office"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Guinness World Records",
+  "source_kind": "institution",
+  "reference": "https://www.guinnessworldrecords.com/world-records/72369-highest-grossing-japanese-animated-film",
+  "written": "2026-09-27"
+}

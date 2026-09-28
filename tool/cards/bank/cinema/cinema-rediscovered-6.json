@@ -1,0 +1,37 @@
+{
+  "id": "cinema-rediscovered-6",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.rediscovered",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a rediscovered silent film be cleaned digitally beyond how it looked when new?",
+  "sides": [
+    "Yes, clean it fully",
+    "No, keep its period look"
+  ],
+  "answer": "Scratches, dust and flicker were never part of the film; they are damage done since. Removing them lets audiences see what the camera recorded, often more clearly than viewers of a worn print ever did. A restoration that leaves the damage in treats accidents as art and keeps these films looking quaint to new audiences.",
+  "move": "Whichever side you took, it turns on what counts as the original.",
+  "counterpoint": "Digital cleaning also strips grain, softens faces and smooths the texture audiences actually saw. Once the tools can invent detail, the restorer starts making a new film. An archive's duty is to show the film as it was projected in its day, and to keep the untouched scan so later restorers can choose differently.",
+  "keywords": [
+    "film restoration",
+    "digital cleaning",
+    "film grain",
+    "silent films"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fossati, From Grain to Pixel, 2009",
+  "source_kind": "book",
+  "reference": "Fossati, From Grain to Pixel: The Archival Life of Film in Transition, Amsterdam University Press, 2009",
+  "written": "2026-09-27"
+}

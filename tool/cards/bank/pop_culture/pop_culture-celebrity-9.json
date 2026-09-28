@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-celebrity-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.celebrity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "When Tiger Woods's scandal broke in 2009, roughly how much shareholder value did his sponsors lose, by one estimate?",
+  "options": [
+    "About $50 to 120 million",
+    "About $5 to 12 billion",
+    "About $0.5 to 1.2 billion"
+  ],
+  "correct": 1,
+  "answer": "About $5 to 12 billion. The economists Christopher Knittel and Victor Stango compared the share prices of his listed sponsors, among them Nike, PepsiCo, Electronic Arts and Accenture, with similar companies in the weeks after his car crash. The fall dwarfed his endorsement income of roughly $100 million a year.",
+  "move": "The cost of a scandal lands on everyone tied to the name.",
+  "trap": "Anchoring on his endorsement fees, which ran to tens of millions.",
+  "keywords": [
+    "tiger woods",
+    "endorsements",
+    "shareholder value",
+    "sponsors",
+    "nike"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Knittel and Stango, Management Science, 2014",
+  "source_kind": "statistics",
+  "reference": "Knittel and Stango, Celebrity Endorsements, Firm Value, and Reputation Risk: Evidence from the Tiger Woods Scandal, Management Science, 2014",
+  "written": "2026-09-27"
+}

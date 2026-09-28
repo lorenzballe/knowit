@@ -1,0 +1,42 @@
+{
+  "id": "space-martian-weather-8",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.martian_weather",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Mars's surface pressure is about 600 pascals and its gravity 3.7 m/s². How many kg of air sit above each square metre?",
+  "value": 162,
+  "unit": "kg",
+  "tolerance": 1,
+  "answer": "600 / 3.7 ≈ 162 kg.",
+  "move": "Pressure tells you weight; divide by the local pull to find the mass.",
+  "trap": "Scaling Earth's 10 tonnes by the pressure ratio alone, ignoring weaker gravity.",
+  "hint": "A pascal is one newton of weight on each square metre.",
+  "steps": [
+    "Pressure is the weight of the air above: 600 newtons on each square metre.",
+    "Mass = weight / gravity.",
+    "600 / 3.7 ≈ 162 kg."
+  ],
+  "keywords": [
+    "atmospheric pressure",
+    "air column",
+    "martian gravity",
+    "pascals"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Read & Lewis, The Martian Climate Revisited, 2004",
+  "source_kind": "book",
+  "reference": "Read & Lewis, The Martian Climate Revisited: Atmosphere and Environment of a Desert Planet, Springer-Praxis, 2004",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "space-perseverance-6",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.perseverance",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is bringing Perseverance's sealed samples back to Earth worth the billions it would cost?",
+  "sides": [
+    "Yes, bring them home",
+    "No, spend it elsewhere"
+  ],
+  "answer": "The samples were chosen with care from an ancient lake bed and its delta, and some hold textures that on Earth would hint at life. Only laboratories on Earth, with instruments too large to fly, can settle what they contain, and those labs will keep improving for decades. The tubes are already filled and sealed.",
+  "move": "Whichever side you took, it turns on what the same money would buy instead.",
+  "counterpoint": "In 2023 an independent review put the plan at 8 to 11 billion dollars, with no samples home before the late 2030s, and in 2025 the White House proposed cancelling it. That money could fly several missions to other worlds, while instruments landed on Mars keep getting better. A sealed tube can wait; budgets cannot.",
+  "keywords": [
+    "mars sample return",
+    "sample tubes",
+    "nasa budget",
+    "jezero crater"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "months",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NASA MSR Independent Review Board, 2023",
+  "source_kind": "institution",
+  "reference": "NASA, Mars Sample Return Independent Review Board-2 Final Report, 2023",
+  "written": "2026-09-27"
+}

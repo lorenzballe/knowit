@@ -1,0 +1,40 @@
+{
+  "id": "art-perspective-6",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.perspective",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "In a strict perspective drawing of a colonnade running parallel to the picture, which identical round columns come out widest?",
+  "options": [
+    "Those at the centre",
+    "All the same width",
+    "Those towards the edges"
+  ],
+  "correct": 2,
+  "answer": "Those towards the edges. Sight lines to a column far to one side meet the flat picture at a slant, so its outline is stretched sideways, like a torch beam striking a wall at an angle. Leonardo noticed the paradox: the columns farthest from the eye are drawn fattest. Painters quietly corrected them by eye.",
+  "move": "An exact rule can still produce a result nobody would accept.",
+  "trap": "Reasoning that columns at one depth must be drawn one width.",
+  "keywords": [
+    "marginal distortion",
+    "colonnade",
+    "leonardo",
+    "linear perspective",
+    "projection"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pirenne, Optics, Painting and Photography, 1970",
+  "source_kind": "book",
+  "reference": "M. H. Pirenne, Optics, Painting and Photography, Cambridge University Press, 1970",
+  "written": "2026-09-27"
+}

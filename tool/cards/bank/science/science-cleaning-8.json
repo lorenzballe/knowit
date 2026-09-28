@@ -1,0 +1,40 @@
+{
+  "id": "science-cleaning-8",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Kitchen sponges their owners regularly boiled or microwaved were compared with uncleaned ones. How did their bacteria compare?",
+  "options": [
+    "Far fewer bacteria",
+    "About as many bacteria",
+    "Almost no bacteria"
+  ],
+  "correct": 1,
+  "answer": "About as many. In a 2017 German study of 14 used sponges, those regularly heated held no significantly fewer bacteria, and more of the kinds linked to bad smells. Heat kills most cells, but survivors regrow within days in warm, wet, food-fed foam. The authors advised replacing sponges weekly instead.",
+  "move": "Judge a fix by the state a week later, not the moment after.",
+  "trap": "Far fewer, because boiling and microwaving kill bacteria.",
+  "keywords": [
+    "kitchen sponge",
+    "bacteria",
+    "microwave",
+    "sanitising",
+    "regrowth"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cardinale et al., Scientific Reports, 2017",
+  "source_kind": "paper",
+  "reference": "Cardinale, Kaiser, Lueders, Schnell & Egert, Microbiome analysis and confocal microscopy of used kitchen sponges reveal massive colonization by Acinetobacter, Moraxella and Chryseobacterium species, Scientific Reports 7, 5791, 2017",
+  "written": "2026-09-27"
+}

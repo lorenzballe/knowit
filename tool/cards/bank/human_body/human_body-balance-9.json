@@ -1,0 +1,32 @@
+{
+  "id": "human_body-balance-9",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.balance",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do some people who feel the ground rocking for weeks after a cruise feel better while driving?",
+  "answer": "Because the brain is still running the model of motion it built at sea. In mal de débarquement syndrome the rocking persists after landing, sometimes for months, mostly in middle-aged women. Passive motion in a car or train matches that model and quiets the illusion; standing still exposes it again.",
+  "move": "An illusion learned from motion can be soothed by motion.",
+  "keywords": [
+    "mal de debarquement",
+    "cruises",
+    "rocking sensation",
+    "motion"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cha, Seminars in Neurology, 2009",
+  "source_kind": "paper",
+  "reference": "Cha, Mal de debarquement, Seminars in Neurology, 2009",
+  "written": "2026-09-27"
+}

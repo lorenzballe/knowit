@@ -1,0 +1,41 @@
+{
+  "id": "history-food-6",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.food",
+  "also": [
+    "economics.everyday_costs.groceries"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: under England's medieval Assize of Bread, a farthing loaf kept its price while its weight followed wheat?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Local officials read the market price of wheat and set loaf weights from fixed tables: when wheat grew dear, the farthing and halfpenny loaves shrank; when it was cheap, they grew. Buyers paid in small fixed coins, so the loaf absorbed every harvest. Bakers caught selling light bread went to the pillory.",
+  "move": "When a price cannot move, look for what quietly shrinks instead.",
+  "trap": "Assuming bread prices rose and fell, as shop prices do today.",
+  "keywords": [
+    "assize of bread",
+    "bakers",
+    "wheat prices",
+    "loaf weight"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Davis, Economic History Review, 2004",
+  "source_kind": "paper",
+  "reference": "Davis, Baking for the Common Good: A Reassessment of the Assize of Bread in Medieval England, Economic History Review, 2004",
+  "written": "2026-09-27"
+}

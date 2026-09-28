@@ -1,0 +1,43 @@
+{
+  "id": "language-old-slang-6",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.old_slang",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "Before 1971, a quid was a pound and a tanner a sixpence. How many tanners made a quid?",
+  "value": 40,
+  "unit": "tanners",
+  "answer": "240 ÷ 6 = 40 tanners.",
+  "move": "Before converting, check which system the old number was counted in.",
+  "trap": "Using today's 100 pence and getting about 17 tanners.",
+  "hint": "Go through the shilling: the old pound was not split into 100.",
+  "steps": [
+    "A quid was 20 shillings, known as bob.",
+    "A bob was 12 pence.",
+    "20 × 12 = 240 pence in a quid.",
+    "240 ÷ 6 = 40 tanners."
+  ],
+  "keywords": [
+    "tanner",
+    "quid",
+    "bob",
+    "pre-decimal currency",
+    "shillings"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Green, Green's Dictionary of Slang, 2010",
+  "source_kind": "reference_work",
+  "reference": "Green, Green's Dictionary of Slang, 3 volumes, Chambers, 2010",
+  "written": "2026-09-27"
+}

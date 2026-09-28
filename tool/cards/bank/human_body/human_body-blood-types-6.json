@@ -1,0 +1,36 @@
+{
+  "id": "human_body-blood-types-6",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.blood_types",
+  "also": [
+    "human_body.gut.microbiome"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a person with group O blood carry antibodies against A and B cells they have never met?",
+  "answer": "Because they have met look-alikes. Gut bacteria carry sugars shaped much like the A and B antigens, and the immune system answers them: newborns have almost none of these antibodies, which build up over the first months. In 1969 Springer and Horton had people swallow a bacterium bearing B-like sugars, and their anti-B rose.",
+  "move": "When a defence exists before the threat, look for a rehearsal somewhere else.",
+  "keywords": [
+    "blood groups",
+    "antibodies",
+    "gut bacteria",
+    "antigens",
+    "infancy"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Springer & Horton, J Clin Invest, 1969",
+  "source_kind": "paper",
+  "reference": "Springer & Horton, Blood group isoantibody stimulation in man by feeding blood group-active bacteria, Journal of Clinical Investigation, 1969",
+  "written": "2026-09-27"
+}

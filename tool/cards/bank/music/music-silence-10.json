@@ -1,0 +1,39 @@
+{
+  "id": "music-silence-10",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.silence",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "In a 1953 study, 80 people with normal hearing sat alone in a soundproof room. How many reported hearing buzzing or ringing?",
+  "options": [
+    "About 1 in 20",
+    "About half",
+    "More than 9 in 10"
+  ],
+  "correct": 2,
+  "answer": "More than 9 in 10: Heller and Bergman reported 94%. Everyday noise masks the faint sounds a healthy hearing system makes; strip it away and most people notice them. Subjects were told to listen, which may have raised the figure; later studies found smaller shares. Clinics see only those who hear it through daily noise.",
+  "move": "Ask what the everyday noise was hiding before calling something rare.",
+  "trap": "Ringing in the ears sounds like a patient's complaint, so surely rare.",
+  "keywords": [
+    "tinnitus",
+    "soundproof room",
+    "heller and bergman",
+    "hearing"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Heller and Bergman, 1953",
+  "source_kind": "paper",
+  "reference": "Heller and Bergman, Tinnitus Aurium in Normally Hearing Persons, Annals of Otology, Rhinology and Laryngology, 1953",
+  "written": "2026-09-27"
+}

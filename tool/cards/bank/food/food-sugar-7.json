@@ -1,0 +1,40 @@
+{
+  "id": "food-sugar-7",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.sugar",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "The US tariff of 1890 let all foreign raw sugar in duty-free. What did that do to Hawaii's sugar planters?",
+  "options": [
+    "Erased their special advantage",
+    "Enriched them with freer access",
+    "Barred their sugar from US ports"
+  ],
+  "correct": 0,
+  "answer": "It erased their special advantage. Since an 1875 treaty, Hawaiian sugar alone had entered the US free; now everyone's did, and American growers got a bounty of two cents a pound besides. Hawaiian prices slumped. Annexation would make the islands domestic, bounty and all. In 1893 planters' allies overthrew the queen.",
+  "move": "A privilege given to everyone is a privilege taken from someone.",
+  "trap": "Enriched them, since duty-free entry sounds like a gift to exporters.",
+  "keywords": [
+    "mckinley tariff",
+    "hawaii",
+    "reciprocity treaty",
+    "annexation",
+    "sugar bounty"
+  ],
+  "era": "nineteenth",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kuykendall, The Hawaiian Kingdom, Volume III, 1967",
+  "source_kind": "book",
+  "reference": "Kuykendall, The Hawaiian Kingdom, Volume III: 1874-1893, The Kalakaua Dynasty, University of Hawaii Press, 1967",
+  "written": "2026-09-27"
+}

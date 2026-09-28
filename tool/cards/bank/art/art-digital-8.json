@@ -1,0 +1,40 @@
+{
+  "id": "art-digital-8",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.digital",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Light is scarce and noise dominates. Quadruple the light reaching each pixel: how much cleaner does the image get?",
+  "options": [
+    "Four times cleaner",
+    "Sixteen times cleaner",
+    "Twice as clean"
+  ],
+  "correct": 2,
+  "answer": "Twice as clean. Photons arrive at random, so a pixel expecting 100 varies by about the square root, 10: one part in ten. At 400 photons the variation is 20, one part in twenty. Signal grows four times, noise twice. This shot noise is physics, not a sensor flaw, and no engineer can remove it.",
+  "move": "Averages sharpen with the square root of the count, not the count.",
+  "trap": "Assuming the image cleans up in step with the light collected.",
+  "keywords": [
+    "shot noise",
+    "photons",
+    "signal-to-noise ratio",
+    "image sensors",
+    "low light"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Janesick, Photon Transfer, 2007",
+  "source_kind": "book",
+  "reference": "James R. Janesick, Photon Transfer: DN to λ, SPIE Press, 2007",
+  "written": "2026-09-27"
+}

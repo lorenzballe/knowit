@@ -1,0 +1,33 @@
+{
+  "id": "medicine-hospitals-9",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.hospitals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 18th-century London, what did a sick poor person usually need before a voluntary hospital would take them in?",
+  "answer": "A letter from a subscriber. Hospitals like the Westminster and the London ran on donations, and each subscription bought the right to recommend patients. Many turned away fevers, the incurable, pregnant women and young children, partly because deaths looked bad to donors. Admission day meant queuing with a patron's letter in hand.",
+  "move": "Ask who holds the ticket before asking who needs the seat.",
+  "keywords": [
+    "voluntary hospitals",
+    "subscribers",
+    "letters of recommendation",
+    "london",
+    "charity"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Woodward, To Do the Sick No Harm, 1974",
+  "source_kind": "book",
+  "reference": "Woodward, To Do the Sick No Harm: A Study of the British Voluntary Hospital System to 1875, Routledge & Kegan Paul, 1974",
+  "written": "2026-09-27"
+}

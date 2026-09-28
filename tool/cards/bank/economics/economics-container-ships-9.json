@@ -1,0 +1,43 @@
+{
+  "id": "economics-container-ships-9",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.container_ships",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "Before 2020, shipping a 40-foot container from Shanghai to northern Europe cost about $1,500. Roughly how many US cents per pair of boxed shoes?",
+  "value": 22,
+  "unit": "US cents per pair",
+  "withinFactor": 3,
+  "answer": "$1,500 / 6,900 = about 22 cents a pair.",
+  "move": "Divide a big bill by everything it carries before calling it big.",
+  "trap": "Guessing dollars per pair because ocean freight sounds expensive.",
+  "hint": "Start with how many shoeboxes fit in the box's usable space.",
+  "steps": [
+    "A 40-foot box holds about 67 cubic metres; real packing fills perhaps 55.",
+    "A shoebox of about 33 x 20 x 12 cm takes roughly 0.008 cubic metres.",
+    "55 / 0.008 = about 6,900 pairs per container.",
+    "$1,500 / 6,900 = about 22 cents a pair."
+  ],
+  "keywords": [
+    "freight rates",
+    "shoeboxes",
+    "40-foot container",
+    "shipping costs"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ISO 668 container dimensions, arithmetic",
+  "source_kind": "institution",
+  "reference": "ISO 668:2020, Series 1 freight containers: Classification, dimensions and ratings, International Organization for Standardization, 2020",
+  "written": "2026-09-27"
+}

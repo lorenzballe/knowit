@@ -1,0 +1,40 @@
+{
+  "id": "psychology-distraction-7",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.distraction",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In a driving simulator, which conversation hurt driving more: one with a passenger, or one on a hands-free phone?",
+  "options": [
+    "The hands-free phone conversation",
+    "The passenger conversation",
+    "Neither, they were about equal"
+  ],
+  "correct": 0,
+  "answer": "The hands-free phone call. Drews, Pasupathi and Strayer asked talking drivers to leave the motorway at a rest stop. Those on the phone missed the exit far more often. A passenger sees the road too, pausing the talk when traffic thickens and sometimes pointing out the exit. The caller talks on, blind to the lorry.",
+  "move": "A helper who shares the view is worth more than one who shares the words.",
+  "trap": "Neither, since a conversation seems equally demanding wherever the other person sits.",
+  "keywords": [
+    "driving",
+    "hands-free phones",
+    "passengers",
+    "conversation",
+    "simulator"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Drews, Pasupathi & Strayer, JEP: Applied, 2008",
+  "source_kind": "paper",
+  "reference": "Drews, Pasupathi & Strayer, Passenger and cell phone conversations in simulated driving, Journal of Experimental Psychology: Applied, 2008",
+  "written": "2026-09-27"
+}

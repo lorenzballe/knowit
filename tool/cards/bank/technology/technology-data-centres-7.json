@@ -1,0 +1,33 @@
+{
+  "id": "technology-data-centres-7",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.data_centres",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do modern data centres let the air entering their servers reach 27 °C?",
+  "answer": "Because cooling costs more than the servers mind. In 2008 ASHRAE, the engineering body whose guidance the industry follows, widened its recommended intake range to 18 to 27 °C, with hardware makers' agreement. Every degree warmer lets chillers rest or outside air do the work; the aisle behind the racks runs hotter still.",
+  "move": "Set conditions for what the equipment needs, not what feels comfortable.",
+  "keywords": [
+    "ashrae",
+    "server inlet temperature",
+    "cooling",
+    "chillers",
+    "free cooling"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ASHRAE TC 9.9, Thermal Guidelines, 2011",
+  "source_kind": "standard",
+  "reference": "ASHRAE TC 9.9, Thermal Guidelines for Data Processing Environments: Expanded Data Center Classes and Usage Guidance, ASHRAE, 2011",
+  "written": "2026-09-27"
+}

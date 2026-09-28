@@ -1,0 +1,39 @@
+{
+  "id": "science-primes-8",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.primes",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "independence",
+  "question": "In 2012, researchers recovered the private keys of tens of thousands of web servers, keys built from pairs of huge primes. How?",
+  "options": [
+    "Devices had too little randomness to pick primes",
+    "By chance, many keys shared a prime",
+    "Faster computers factored the keys"
+  ],
+  "correct": 0,
+  "answer": "Devices had too little randomness to pick primes. Routers made keys just after booting, before gathering unpredictable data, so separate machines chose the same prime. Two keys sharing a prime are split instantly by Euclid's method for common factors. By chance a match is hopeless: there are about 10^151 primes of the size used.",
+  "move": "When independent choices keep matching, look for what they share.",
+  "trap": "Blaming chance, as millions of keys make some matches inevitable.",
+  "keywords": [
+    "rsa keys",
+    "random number generation",
+    "common factors",
+    "network devices"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Heninger et al., USENIX Security Symposium, 2012",
+  "source_kind": "paper",
+  "reference": "Heninger, Durumeric, Wustrow & Halderman, Mining Your Ps and Qs: Detection of Widespread Weak Keys in Network Devices, USENIX Security Symposium, 2012",
+  "written": "2026-09-27"
+}

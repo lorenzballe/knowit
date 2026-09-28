@@ -1,0 +1,39 @@
+{
+  "id": "sport-marathon-8",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.marathon",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "True or false: among 643 finishers of a French marathon, those who had lost the most body weight tended to finish fastest?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Zouhal and colleagues weighed runners before and after the race: the more weight a runner had lost, the faster they had tended to finish, though the link was loose. Faster runners sweat more and spend less time drinking. The weight loss was a mark of the effort, and it did not cause the speed.",
+  "move": "A cost that rises with effort will look like a cause of success.",
+  "trap": "Knowing dehydration slows runners and assuming the thirstiest finish last.",
+  "keywords": [
+    "dehydration",
+    "body weight",
+    "sweat",
+    "marathon finishers",
+    "france"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zouhal et al., Br J Sports Med, 2011",
+  "source_kind": "paper",
+  "reference": "Zouhal et al., Inverse relationship between percentage body weight change and finishing time in 643 forty-two-kilometre marathon runners, British Journal of Sports Medicine, 2011",
+  "written": "2026-09-27"
+}

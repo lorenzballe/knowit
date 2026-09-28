@@ -1,0 +1,41 @@
+{
+  "id": "sport-ancient-10",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.ancient",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Counting 776 BC as the first Olympiad and one every four years, which Olympiad fell in AD 393, given no year zero?",
+  "value": 293,
+  "unit": "Olympiad number",
+  "answer": "292 + 1 = the 293rd Olympiad.",
+  "move": "When counting events across a span, check both ends of the fence.",
+  "trap": "Dividing the span by four and forgetting the first Games themselves.",
+  "hint": "Count the years between, then the four-year gaps, then the Games.",
+  "steps": [
+    "With no year zero, 776 BC to AD 393 spans 776 + 393 − 1 = 1,168 years.",
+    "1,168 ÷ 4 = 292 four-year gaps after the first Games.",
+    "292 + 1 = the 293rd Olympiad."
+  ],
+  "keywords": [
+    "olympiad",
+    "calendar",
+    "776 bc",
+    "year zero"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Bickerman, Chronology of the Ancient World",
+  "source_kind": "book",
+  "reference": "Bickerman, Chronology of the Ancient World, Thames and Hudson, 1968",
+  "written": "2026-09-27"
+}

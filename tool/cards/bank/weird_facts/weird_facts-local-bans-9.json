@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-local-bans-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.local_bans",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What exactly does Singapore's 1992 chewing gum law forbid, and what did a trade deal later change?",
+  "answer": "Importing and selling gum, not chewing it. The ban followed gum jamming door sensors on the new metro trains. From 2004, under a free trade agreement with the United States, therapeutic gum such as nicotine gum became legal, sold only by pharmacists and dentists, who record each buyer's name. Chewing was never the offence.",
+  "move": "Read which step of a chain a ban targets before judging it.",
+  "keywords": [
+    "singapore",
+    "chewing gum ban",
+    "free trade agreement",
+    "nicotine gum"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Senate Report 108-117, 2003",
+  "source_kind": "primary_document",
+  "reference": "United States Senate, Report 108-117, United States–Singapore Free Trade Agreement Implementation Act, 2003",
+  "written": "2026-09-27"
+}

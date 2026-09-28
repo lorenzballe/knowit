@@ -1,0 +1,42 @@
+{
+  "id": "cinema-destroyed-7",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.destroyed",
+  "also": [
+    "science.materials.plastics"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "A reel of acetate film starts to smell of vinegar. Left in the same store, how does its decay proceed?",
+  "options": [
+    "It holds steady",
+    "It slows as the acid escapes",
+    "It speeds up"
+  ],
+  "correct": 2,
+  "answer": "It speeds up. The acetate base breaks down into acetic acid, and that acid catalyses further breakdown, so once decay passes a threshold it feeds itself. The film shrinks, curls and turns brittle, and its fumes spread to cans nearby. Cold, dry storage is the only brake: it slows the chemistry that cannot be reversed.",
+  "move": "A process that makes its own fuel only moves one way.",
+  "trap": "Expecting decay to run at a steady pace, like slow fading.",
+  "keywords": [
+    "vinegar syndrome",
+    "acetate film",
+    "acetic acid",
+    "cold storage"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Image Permanence Institute, acetate storage guide",
+  "source_kind": "institution",
+  "reference": "Reilly, IPI Storage Guide for Acetate Film, Image Permanence Institute, Rochester Institute of Technology, 1993",
+  "written": "2026-09-27"
+}

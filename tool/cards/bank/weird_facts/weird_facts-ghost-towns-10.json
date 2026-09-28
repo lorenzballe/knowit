@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-ghost-towns-10",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.ghost_towns",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the legal capital of Montserrat is a town nobody has lived in since 1997?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Eruptions of the Soufrière Hills volcano buried Plymouth under ash and mudflows and forced its abandonment in 1997, when about half the island became an exclusion zone. Government moved to buildings at Brades, in the north, but Plymouth was never replaced in law. A British territory's capital is a town half-sunk in grey ash.",
+  "move": "What the law says and where life happens can drift far apart.",
+  "trap": "Assuming a capital must be where the government actually sits.",
+  "keywords": [
+    "montserrat",
+    "plymouth",
+    "soufriere hills",
+    "volcano",
+    "capital"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CIA World Factbook, Montserrat",
+  "source_kind": "reference_work",
+  "reference": "Central Intelligence Agency, The World Factbook: Montserrat, 2024",
+  "written": "2026-09-27"
+}

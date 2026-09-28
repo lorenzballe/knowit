@@ -1,0 +1,32 @@
+{
+  "id": "economics-charm-prices-7",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.charm_prices",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can ignoring the cents on price tags be rational for shoppers, and who pays for it?",
+  "answer": "Yes, and sellers can end up paying. In Kaushik Basu's 1997 model, shoppers who skim the cents make 99 every seller's best ending, since unread cents cost no sales. Once all prices end in 99 the cents carry no news, so skimming is sensible. Sellers then earn less than if everyone read every digit.",
+  "move": "When every seller plays the same trick, it stops carrying information.",
+  "keywords": [
+    "price endings",
+    "rational inattention",
+    "equilibrium",
+    "shoppers"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Basu, Economics Letters, 1997",
+  "source_kind": "paper",
+  "reference": "Basu, Why are so many goods priced to end in nine? And why this practice hurts the producers, Economics Letters, 1997",
+  "written": "2026-09-27"
+}

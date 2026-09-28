@@ -1,0 +1,32 @@
+{
+  "id": "cinema-flops-9",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.flops",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why might a studio spend millions releasing a film it already expects to flop?",
+  "answer": "Because the cinema run sets the price of what follows. Pay-television and other later deals have often paid for each film partly according to its box office, and a film that skipped cinemas sells for far less. Prints and adverts buy a track record. The cinema release works as an advertisement for the television sale.",
+  "move": "Judge a step by what it unlocks later, not only by its own return.",
+  "keywords": [
+    "pay television",
+    "output deals",
+    "release strategy",
+    "distribution windows"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Epstein, The Big Picture, 2005",
+  "source_kind": "book",
+  "reference": "Epstein, The Big Picture: The New Logic of Money and Power in Hollywood, Random House, 2005",
+  "written": "2026-09-27"
+}

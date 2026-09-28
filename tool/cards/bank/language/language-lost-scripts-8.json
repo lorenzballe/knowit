@@ -1,0 +1,39 @@
+{
+  "id": "language-lost-scripts-8",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.lost_scripts",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "multipleComparisons",
+  "question": "Dozens of rival decipherments of the Phaistos Disc each produce readable words. What does that tell a sceptic?",
+  "options": [
+    "Short texts fit almost any reading",
+    "One of them is probably right",
+    "The disc was made as a hoax"
+  ],
+  "correct": 0,
+  "answer": "Short texts fit almost any reading. The disc holds 242 stamped signs of 45 kinds, and no second text in its script has been found. Each decipherer chooses sounds for 45 signs, and that freedom lets one short text spell words in Greek, Luwian or almost anything. Rival readings cancel each other.",
+  "move": "When every guess can be made to fit, fitting proves nothing.",
+  "trap": "Assuming so many workable readings must include the true one.",
+  "keywords": [
+    "phaistos disc",
+    "decipherment",
+    "minoan crete",
+    "stamped signs"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Robinson, Lost Languages, 2002",
+  "source_kind": "book",
+  "reference": "Robinson, Lost Languages: The Enigma of the World's Undeciphered Scripts, McGraw-Hill, 2002",
+  "written": "2026-09-27"
+}

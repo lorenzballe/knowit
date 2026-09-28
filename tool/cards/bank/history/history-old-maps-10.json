@@ -1,0 +1,43 @@
+{
+  "id": "history-old-maps-10",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.old_maps",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Britain's 1714 Longitude Act paid its top prize for longitude within half a degree. Over a six-week voyage, allowed clock drift in seconds a day?",
+  "value": 2.9,
+  "unit": "seconds a day",
+  "tolerance": 0.3,
+  "answer": "120 / 42 = about 2.9 seconds a day.",
+  "move": "Convert a tolerance into the units of the instrument before judging it.",
+  "trap": "Treating half a degree as generous before converting it into time.",
+  "hint": "The Earth turns 360 degrees a day: turn the half degree into minutes of clock time first.",
+  "steps": [
+    "360° in 24 hours means 1° of longitude is 4 minutes of time.",
+    "Half a degree = 2 minutes = 120 seconds.",
+    "Six weeks = 42 days.",
+    "120 / 42 = about 2.9 seconds a day."
+  ],
+  "keywords": [
+    "longitude act",
+    "marine chronometer",
+    "longitude",
+    "navigation"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Longitude Act, 1714",
+  "source_kind": "primary_document",
+  "reference": "An Act for Providing a Publick Reward for such Person or Persons as shall Discover the Longitude at Sea, 1714; text in Andrewes (ed.), The Quest for Longitude, Harvard University, 1996",
+  "written": "2026-09-27"
+}

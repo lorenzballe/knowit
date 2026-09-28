@@ -1,0 +1,42 @@
+{
+  "id": "nature-forecasting-8",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.forecasting",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "Europe's main forecast model splits the atmosphere into columns about 9 km wide, each cut into 137 layers. Roughly how many grid points, in millions?",
+  "value": 860,
+  "unit": "million grid points",
+  "withinFactor": 3,
+  "answer": "6.3 million × 137 layers ≈ 860 million grid points.",
+  "move": "Size a problem in every dimension before calling it big.",
+  "trap": "Counting the columns and forgetting the layers stacked above each.",
+  "hint": "Divide Earth's surface by the area of one column, then stack the layers.",
+  "steps": [
+    "Earth's surface: about 510 million km².",
+    "One column covers 9 × 9 = 81 km², so about 6.3 million columns.",
+    "6.3 million × 137 layers ≈ 860 million grid points."
+  ],
+  "keywords": [
+    "ecmwf",
+    "weather models",
+    "grid points",
+    "supercomputers"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ECMWF, Integrated Forecasting System documentation",
+  "source_kind": "institution",
+  "reference": "ECMWF, IFS Documentation, Part III: Dynamics and Numerical Procedures, European Centre for Medium-Range Weather Forecasts, 2023",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "music-folk-8",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.folk",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Barbara Allen was a favourite of Appalachian singers. Where is the ballad first recorded?",
+  "options": [
+    "In a London diary of 1666",
+    "In a Scottish songbook of the 1790s",
+    "In Virginia field notes of 1916"
+  ],
+  "correct": 0,
+  "answer": "In a London diary of 1666. On 2 January that year Samuel Pepys wrote of hearing the actress Mrs Knipp sing her little Scotch song of Barbary Allen. Allan Ramsay printed a text in Edinburgh in 1740. It went on to become one of the most widely collected ballads in North America.",
+  "move": "Where a thing was found last says little about where it began.",
+  "trap": "The Appalachian field notes, because that is where the song lived.",
+  "keywords": [
+    "barbara allen",
+    "samuel pepys",
+    "ballads",
+    "appalachia",
+    "oral tradition"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Diary of Samuel Pepys, 1666",
+  "source_kind": "primary_document",
+  "reference": "Latham and Matthews (eds), The Diary of Samuel Pepys, vol. 7, G. Bell and Sons, 1972",
+  "written": "2026-09-27"
+}

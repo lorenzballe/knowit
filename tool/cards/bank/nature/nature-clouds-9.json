@@ -1,0 +1,39 @@
+{
+  "id": "nature-clouds-9",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.clouds",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the WMO's International Cloud Atlas still refuses to name clouds made by aircraft, factories or fires?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The 2017 edition gave them Latin names in the same scheme as natural clouds: homogenitus for clouds made by human activity, such as a cooling-tower plume, flammagenitus for clouds raised by fire, and homomutatus for contrails that spread into ordinary-looking cirrus. A fresh contrail is now, formally, cirrus homogenitus.",
+  "move": "A classification survives by adding names, not by guarding the old ones.",
+  "trap": "Assuming a scheme from 1802 was never stretched to modern skies.",
+  "keywords": [
+    "international cloud atlas",
+    "contrails",
+    "cloud classification",
+    "homogenitus",
+    "wildfire clouds"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "WMO, International Cloud Atlas, 2017",
+  "source_kind": "reference_work",
+  "reference": "World Meteorological Organization, International Cloud Atlas: Manual on the Observation of Clouds and Other Meteors, WMO-No. 407, 2017",
+  "written": "2026-09-27"
+}

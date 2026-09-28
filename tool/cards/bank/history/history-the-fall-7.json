@@ -1,0 +1,43 @@
+{
+  "id": "history-the-fall-7",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.the_fall",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "Victor of Vita says 80,000 Vandals and Alans, of every age and both sexes, crossed to Africa in 429. Estimate their fighting men, in thousands.",
+  "value": 20,
+  "unit": "thousand men",
+  "withinFactor": 3,
+  "answer": "Perhaps half of those were of fighting age: about 20,000.",
+  "move": "Split a headcount into the people who can actually do the job.",
+  "trap": "Treating all 80,000 as warriors, as if it were an army roll.",
+  "hint": "Take out the women first, then the children and the old.",
+  "steps": [
+    "Start from 80,000 people of all ages.",
+    "About half were male: 40,000.",
+    "Perhaps half of those were of fighting age: about 20,000."
+  ],
+  "keywords": [
+    "vandals",
+    "victor of vita",
+    "geiseric",
+    "north africa",
+    "army size"
+  ],
+  "era": "ancient",
+  "region": "africa",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Victor of Vita, History of the Vandal Persecution",
+  "source_kind": "primary_document",
+  "reference": "Victor of Vita, History of the Vandal Persecution, trans. John Moorhead, Liverpool University Press, 1992",
+  "written": "2026-09-27"
+}

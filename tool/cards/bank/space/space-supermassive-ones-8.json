@@ -1,0 +1,41 @@
+{
+  "id": "space-supermassive-ones-8",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.supermassive_ones",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "At its limit, a black hole shines 30,000 suns per solar mass. How many million solar masses match a galaxy shining like 30 billion suns?",
+  "value": 1,
+  "unit": "million suns",
+  "answer": "30 billion / 30,000 = 1 million suns.",
+  "move": "Judge a source by what each kilogram gives, not by its size.",
+  "trap": "Expecting a hole to need a galaxy's mass to match its light.",
+  "hint": "Divide the light you need by the light each solar mass of hole can give.",
+  "steps": [
+    "Light to match: 30 billion suns.",
+    "Light per solar mass of hole: 30,000 suns.",
+    "30 billion / 30,000 = 1 million suns."
+  ],
+  "keywords": [
+    "eddington limit",
+    "quasars",
+    "luminosity",
+    "galaxies"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frank, King & Raine, Accretion Power, 2002",
+  "source_kind": "book",
+  "reference": "Frank, King & Raine, Accretion Power in Astrophysics, 3rd edition, Cambridge University Press, 2002",
+  "written": "2026-09-27"
+}

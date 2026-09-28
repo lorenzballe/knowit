@@ -1,0 +1,41 @@
+{
+  "id": "music-silence-7",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.silence",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "The quietest rooms ever measured reach about −20 decibels, below the 0 dB threshold of hearing. How many times less sound intensity?",
+  "value": 100,
+  "unit": "times",
+  "answer": "So −20 dB is 100 times less than 0 dB.",
+  "move": "On a scale that multiplies, small numbers can hide very large ratios.",
+  "trap": "Reading 20 decibels as 20 times, as if the scale were linear.",
+  "hint": "Decibels count factors of ten, not equal steps.",
+  "steps": [
+    "Every 10 decibels is a factor of 10 in intensity.",
+    "20 decibels is two such steps: 10 × 10.",
+    "So −20 dB is 100 times less than 0 dB."
+  ],
+  "keywords": [
+    "decibels",
+    "anechoic chamber",
+    "threshold of hearing",
+    "logarithmic scale"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rossing, Moore and Wheeler, The Science of Sound",
+  "source_kind": "book",
+  "reference": "Rossing, Moore and Wheeler, The Science of Sound, 3rd edition, Addison Wesley, 2002",
+  "written": "2026-09-27"
+}

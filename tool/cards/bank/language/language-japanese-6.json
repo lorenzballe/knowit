@@ -1,0 +1,32 @@
+{
+  "id": "language-japanese-6",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.japanese",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the ancestor of kawaii, the Japanese word for cute, originally express?",
+  "answer": "Embarrassment, then pity. Kawaii descends from kaohayushi, a face aglow, used of blushing with shame; in medieval texts kawayushi meant pitiable, painful to watch, and only later lovable. The older sense survives next door, in kawaisō, pitiful. One root covers the stray kitten and the pang it causes.",
+  "move": "Tenderness and pity sit close enough for one word to hold both.",
+  "keywords": [
+    "kawaii",
+    "kawaisō",
+    "etymology",
+    "semantic change"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nihon Kokugo Daijiten, Shogakukan, 2001",
+  "source_kind": "reference_work",
+  "reference": "Nihon Kokugo Daijiten Henshū Iinkai (ed.), Nihon Kokugo Daijiten, 2nd edition, entry kawaii, Shogakukan, 2001",
+  "written": "2026-09-27"
+}

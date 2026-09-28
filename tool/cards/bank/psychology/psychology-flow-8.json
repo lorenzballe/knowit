@@ -1,0 +1,38 @@
+{
+  "id": "psychology-flow-8",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.flow",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should practice aimed at mastery be designed to feel like flow?",
+  "sides": [
+    "Yes, aim for flow",
+    "No, aim for struggle"
+  ],
+  "answer": "Mastery takes thousands of hours, and nobody sustains that without wanting to come back. Flow arises from clear goals, instant feedback and a stretch just beyond skill, which are also the conditions good practice needs. A learner absorbed in the task keeps going through the long middle years in which most people quit.",
+  "move": "Whichever side you took, the hinge is whether improvement needs failure to feel bad.",
+  "counterpoint": "Ericsson's work on expert violinists holds that improvement comes from solitary practice at the edge of failure, fixing specific weaknesses: effortful work he described as not inherently enjoyable. Flow thrives when skill already meets the challenge, so seeking it steers practice back towards what one can already do: the favourite piece, played well again.",
+  "keywords": [
+    "deliberate practice",
+    "flow",
+    "expertise",
+    "violinists",
+    "anders ericsson"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ericsson, Krampe & Tesch-Römer, Psychological Review, 1993",
+  "source_kind": "paper",
+  "reference": "Ericsson, Krampe & Tesch-Römer, The role of deliberate practice in the acquisition of expert performance, Psychological Review, 1993",
+  "written": "2026-09-27"
+}

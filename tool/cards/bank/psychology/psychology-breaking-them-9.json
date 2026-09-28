@@ -1,0 +1,39 @@
+{
+  "id": "psychology-breaking-them-9",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.breaking_them",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "Among people quitting smoking, how many of those who slip and smoke once go on to return to regular smoking?",
+  "options": [
+    "A small minority",
+    "About half",
+    "The large majority"
+  ],
+  "correct": 2,
+  "answer": "The large majority. Brandon and colleagues followed quitters after treatment and found about nine in ten who lapsed returned to regular smoking. Whether the first cigarette causes the fall or marks someone already struggling is still argued. Either way, a slip is rarely an isolated event: it is usually the first of many.",
+  "move": "Treat the first exception as the start of a pattern, not a one-off.",
+  "trap": "A small minority, since one cigarette seems a separate event from the rest.",
+  "keywords": [
+    "lapse",
+    "relapse",
+    "smoking cessation",
+    "abstinence violation"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brandon et al., Addictive Behaviors, 1990",
+  "source_kind": "paper",
+  "reference": "Brandon, Tiffany, Obremski & Baker, Postcessation cigarette use: the process of relapse, Addictive Behaviors, 1990",
+  "written": "2026-09-27"
+}

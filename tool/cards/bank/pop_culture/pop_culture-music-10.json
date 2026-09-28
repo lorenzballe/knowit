@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-music-10",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.music",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Oasis's Wonderwall never reached No. 1 on the UK singles chart?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. It peaked at No. 2 in November 1995, held off by Robson & Jerome's cover of I Believe, sung by two actors from the television drama Soldier Soldier. Oasis's next single, Don't Look Back in Anger, did reach No. 1. The song still sung in every pub lost its week to a soldier-show duo.",
+  "move": "What lasts and what won at the time are measured differently.",
+  "trap": "Assuming the song everyone still knows must have topped the chart.",
+  "keywords": [
+    "oasis",
+    "wonderwall",
+    "robson & jerome",
+    "uk singles chart"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Official Charts Company, Oasis chart history",
+  "source_kind": "statistics",
+  "reference": "Official Charts Company, Official Singles Chart archive, Oasis and Robson & Jerome, November 1995",
+  "written": "2026-09-27"
+}

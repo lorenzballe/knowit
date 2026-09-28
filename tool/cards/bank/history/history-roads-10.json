@@ -1,0 +1,43 @@
+{
+  "id": "history-roads-10",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.roads",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Pliny records Tiberius covering 200 Roman miles, of about 1.48 km each, in a day and a night. Average speed in km/h?",
+  "value": 12.3,
+  "unit": "km/h",
+  "tolerance": 0.5,
+  "answer": "296 / 24 = about 12.3 km/h.",
+  "move": "Speed over a whole day is set by the stops, not the pace.",
+  "trap": "Picturing a gallop, when the feat was never stopping for a day.",
+  "hint": "Turn the Roman miles into kilometres first, then share them over the hours.",
+  "steps": [
+    "200 Roman miles x 1.48 km = 296 km.",
+    "A day and a night is 24 hours.",
+    "296 / 24 = about 12.3 km/h."
+  ],
+  "keywords": [
+    "tiberius",
+    "drusus",
+    "pliny the elder",
+    "travel speed",
+    "carriages"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pliny the Elder, Natural History 7.84",
+  "source_kind": "primary_document",
+  "reference": "Pliny the Elder, Natural History, vol. 2, trans. H. Rackham, Loeb Classical Library, Harvard University Press, 1942",
+  "written": "2026-09-27"
+}

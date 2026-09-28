@@ -1,0 +1,40 @@
+{
+  "id": "medicine-resistance-10",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.resistance",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Across Europe, about 1 in 6 Staphylococcus aureus blood infections resist methicillin. In the Netherlands, roughly what share do?",
+  "options": [
+    "About 1 in 100",
+    "About 1 in 6, the same",
+    "About 1 in 3"
+  ],
+  "correct": 0,
+  "answer": "About 1 in 100. Since the late 1980s Dutch hospitals have practised search and destroy: patients at risk, including anyone treated in a foreign hospital, are swabbed on arrival and isolated until cleared, and carrier staff stay off wards until treated. Parts of southern and eastern Europe run at 1 in 3 or more.",
+  "move": "An average across many places says little about any one of them.",
+  "trap": "Assuming a rich, crowded European country sits near the European average.",
+  "keywords": [
+    "mrsa",
+    "netherlands",
+    "search and destroy",
+    "staphylococcus aureus",
+    "hospital screening"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ECDC, EARS-Net annual report for 2019",
+  "source_kind": "statistics",
+  "reference": "European Centre for Disease Prevention and Control, Antimicrobial resistance in the EU/EEA (EARS-Net), Annual Epidemiological Report for 2019, 2020",
+  "written": "2026-09-27"
+}

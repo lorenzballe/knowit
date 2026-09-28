@@ -1,0 +1,42 @@
+{
+  "id": "art-darkroom-7",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.darkroom",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "One patch of a negative has density 2.3, another 0.3. How many times more light passes the thinner patch?",
+  "value": 100,
+  "unit": "times",
+  "answer": "10 to the power 2.0 = 100 times.",
+  "move": "On a logarithmic scale, subtract the readings, then raise ten to the difference.",
+  "trap": "Dividing 2.3 by 0.3 and answering about eight.",
+  "hint": "Each whole unit of density cuts the light passing through by a factor of ten.",
+  "steps": [
+    "Density is the base-10 logarithm of incident over transmitted light.",
+    "The difference is 2.3 − 0.3 = 2.0.",
+    "10 to the power 2.0 = 100 times."
+  ],
+  "keywords": [
+    "optical density",
+    "negatives",
+    "logarithm",
+    "densitometer",
+    "light transmission"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ISO 5-2, density measurements",
+  "source_kind": "standard",
+  "reference": "ISO 5-2:2009, Photography and graphic technology — Density measurements — Part 2: Geometric conditions for transmittance density, International Organization for Standardization, 2009",
+  "written": "2026-09-27"
+}

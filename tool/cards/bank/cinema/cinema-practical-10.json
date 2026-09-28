@@ -1,0 +1,38 @@
+{
+  "id": "cinema-practical-10",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.practical",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should film-makers replace dangerous practical stunts and live gunfire with digital effects wherever possible?",
+  "sides": [
+    "Yes, go digital",
+    "No, keep them real"
+  ],
+  "answer": "Real danger buys a few seconds of screen time and can cost a life. A helicopter downed by special-effects explosions killed Vic Morrow and two children filming Twilight Zone: The Movie in 1982, and a prop gun killed the cinematographer Halyna Hutchins on Rust in 2021. Digital doubles and added muzzle flashes now look convincing.",
+  "move": "Whichever side you took, it turns on how much real risk an image may justify.",
+  "counterpoint": "Deaths are rare set against the vast number of stunts performed under coordinators, safety officers and firearms rules, and each disaster tightened those rules. Performers and audiences respond to real weight, speed and fire: films like Mad Max: Fury Road are praised for exactly that. Digital work has costs too, in long crunch hours for effects artists.",
+  "keywords": [
+    "stunts",
+    "twilight zone accident",
+    "rust shooting",
+    "digital doubles",
+    "film safety"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Farber & Green, Outrageous Conduct, 1988",
+  "source_kind": "book",
+  "reference": "Farber & Green, Outrageous Conduct: Art, Ego, and the Twilight Zone Case, Arbor House, 1988",
+  "written": "2026-09-27"
+}

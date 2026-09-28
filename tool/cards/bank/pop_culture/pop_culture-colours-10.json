@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-colours-10",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.colours",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Starbucks' first logo, in 1971, was brown. Where did the green that replaced it come from?",
+  "options": [
+    "A push to look environmental",
+    "Seattle's forests and the sea",
+    "A coffee chain Starbucks merged with"
+  ],
+  "correct": 2,
+  "answer": "A coffee chain Starbucks merged with. Howard Schultz had left Starbucks to found Il Giornale, whose logo was green; in 1987 he bought Starbucks and merged the two. The 1987 logo set the siren inside Il Giornale's green circle. The buyer's colour swallowed the seller's.",
+  "move": "Before reading meaning into a colour, ask who owned it first.",
+  "trap": "Green brings to mind eco-branding, so that story comes first.",
+  "keywords": [
+    "starbucks",
+    "il giornale",
+    "howard schultz",
+    "logo",
+    "green"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Starbucks, The Evolution of Our Logo",
+  "source_kind": "company",
+  "reference": "https://about.starbucks.com/history/the-evolution-of-our-logo/",
+  "written": "2026-09-27"
+}

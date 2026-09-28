@@ -1,0 +1,38 @@
+{
+  "id": "science-probability-10",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.probability",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Beauty is woken once if a coin lands heads, twice with memory wiped if tails. On waking, should she rate heads at one third?",
+  "sides": [
+    "Yes, one third",
+    "No, one half"
+  ],
+  "answer": "Of all the wakings the experiment produces, two in three follow tails. Betting at every waking, even odds on heads would lose money over many runs, while odds of one in three would break even. Each waking is one of three moments she cannot tell apart, and only one comes after heads.",
+  "move": "Whichever side you took, it turns on whether waking up counts as evidence.",
+  "counterpoint": "She knew the coin was fair, and waking tells her nothing new: she was certain to wake either way. Belief should move only with new information, so it stays at one half. Counting wakings changes the payoff of a bet, not the chance of the coin. Philosophers remain split: Adam Elga argued a third, David Lewis a half.",
+  "keywords": [
+    "sleeping beauty problem",
+    "credence",
+    "self-locating belief",
+    "adam elga",
+    "david lewis"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Elga, Analysis, 2000",
+  "source_kind": "paper",
+  "reference": "Elga, Self-locating belief and the Sleeping Beauty problem, Analysis, 2000",
+  "written": "2026-09-27"
+}

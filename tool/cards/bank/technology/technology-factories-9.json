@@ -1,0 +1,40 @@
+{
+  "id": "technology-factories-9",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Shops sold Pampers nappies at a steady rate. How did orders further up Procter & Gamble's supply chain behave?",
+  "options": [
+    "Just as steady as the sales",
+    "Steadier, smoothed by stock",
+    "Far more jumpy at each step"
+  ],
+  "correct": 2,
+  "answer": "Far more jumpy at each step. Distributors' orders to P&G swung more than shop sales, and P&G's orders to its own suppliers swung more still. Each stage read small blips as trends, batched its orders and hoarded when short. It is called the bullwhip effect: a flick at the handle, a crack at the tip.",
+  "move": "Each layer that reacts to the one below adds its own noise.",
+  "trap": "Expecting stock between the stages to absorb the ups and downs.",
+  "keywords": [
+    "bullwhip effect",
+    "supply chain",
+    "procter & gamble",
+    "orders",
+    "inventory"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lee, Padmanabhan & Whang, Sloan Management Review, 1997",
+  "source_kind": "paper",
+  "reference": "Lee, Padmanabhan & Whang, The Bullwhip Effect in Supply Chains, Sloan Management Review 38(3), 1997",
+  "written": "2026-09-27"
+}

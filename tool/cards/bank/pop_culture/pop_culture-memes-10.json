@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-memes-10",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.memes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "How many Britons saw the 1939 Keep Calm and Carry On poster on a wall during the war?",
+  "options": [
+    "Hardly any: it was held back",
+    "Millions, through the Blitz",
+    "Londoners only, in 1940"
+  ],
+  "correct": 0,
+  "answer": "Hardly any. The Ministry of Information printed about 2.45 million copies in 1939 to post after heavy bombing or invasion, never issued them, and most were pulped. A bookseller in Alnwick found one among old books in 2000 and framed it; reprints did the rest. The wartime poster is mostly a twenty-first-century one.",
+  "move": "The one copy that survived can stand in for a past that never happened.",
+  "trap": "It is everywhere now, so it seems it was everywhere then.",
+  "keywords": [
+    "keep calm poster",
+    "ministry of information",
+    "barter books",
+    "posters"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lewis, Keep Calm and Carry On, IWM, 2017",
+  "source_kind": "book",
+  "reference": "Bex Lewis, Keep Calm and Carry On: The Truth Behind the Poster, Imperial War Museum, 2017",
+  "written": "2026-09-27"
+}

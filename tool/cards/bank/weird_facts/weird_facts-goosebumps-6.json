@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-goosebumps-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.goosebumps",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does gooseflesh come with the start of a fever rather than with its end?",
+  "answer": "Because the brain raises its thermostat first. Immune signals push the hypothalamus's set point up, so a body at 37°C now registers as too cold: skin vessels close, hairs rise, muscles shiver. When the fever breaks, the set point falls and sweating starts. The chill is the heating coming on.",
+  "move": "A body fighting a change may be obeying a new target.",
+  "keywords": [
+    "fever",
+    "hypothalamus",
+    "chills",
+    "shivering"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Guyton and Hall, Medical Physiology, 2021",
+  "source_kind": "reference_work",
+  "reference": "Hall and Hall, Guyton and Hall Textbook of Medical Physiology, 14th edition, Elsevier, 2021",
+  "written": "2026-09-27"
+}

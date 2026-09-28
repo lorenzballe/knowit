@@ -1,0 +1,39 @@
+{
+  "id": "medicine-barbers-6",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.barbers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: the Church council held at Tours in 1163 declared that the Church abhors blood, barring clergy from surgery?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The phrase Ecclesia abhorret a sanguine appears in none of its canons; 18th-century French writers, notably the surgeon François Quesnay, spread it. The real restriction came at the Fourth Lateran Council in 1215, barring only priests, deacons and subdeacons from surgery that cut or burned. The famous line was written six centuries late.",
+  "move": "A quotation that fits the story perfectly is the first one to check.",
+  "trap": "True, since it fits the story of a Church hostile to cutting bodies.",
+  "keywords": [
+    "council of tours",
+    "fourth lateran council",
+    "canon law",
+    "clergy",
+    "surgery"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Amundsen, Bulletin of the History of Medicine, 1978",
+  "source_kind": "paper",
+  "reference": "Amundsen, Medieval canon law on medical and surgical practice by the clergy, Bulletin of the History of Medicine, 1978",
+  "written": "2026-09-27"
+}

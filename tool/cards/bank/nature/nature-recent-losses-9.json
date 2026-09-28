@@ -1,0 +1,39 @@
+{
+  "id": "nature-recent-losses-9",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.recent_losses",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Of mammal species once listed as extinct or missing since 1500, what share had been found alive again by 2011?",
+  "options": [
+    "More than a third",
+    "Fewer than one in fifty",
+    "About three quarters"
+  ],
+  "correct": 0,
+  "answer": "More than a third. Fisher and Blomberg found that species written off after their habitat was cleared often reappeared in unsurveyed fragments, while those hit by introduced predators or disease rarely did. Few had been properly searched for. Many turned up once someone looked in the right patch of remaining forest.",
+  "move": "No sightings means little until you know how hard anyone looked.",
+  "trap": "Treating years without a sighting as proof that a species has gone.",
+  "keywords": [
+    "rediscovered species",
+    "mammals",
+    "extinction declarations",
+    "surveys"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Fisher & Blomberg, Proc. R. Soc. B, 2011",
+  "source_kind": "paper",
+  "reference": "Fisher & Blomberg, Correlates of rediscovery and the detectability of extinction in mammals, Proceedings of the Royal Society B, 2011",
+  "written": "2026-09-27"
+}

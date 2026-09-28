@@ -1,0 +1,39 @@
+{
+  "id": "science-insulation-10",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.insulation",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "In water of the same temperature, why does a neoprene wetsuit keep a diver less warm at 20 metres than at the surface?",
+  "options": [
+    "The water inside is flushed out faster",
+    "Pressure crushes the gas bubbles in the foam",
+    "Denser deep water draws heat away faster"
+  ],
+  "correct": 1,
+  "answer": "Pressure crushes the gas bubbles in the foam. Neoprene insulates because it is mostly trapped gas; the water film inside does little. Total pressure doubles by 10 metres and triples by 20, so bubbles shrink, the suit thins and conducts more. Drysuit divers add gas as they descend to stop that squeeze.",
+  "move": "Find what a material's virtue is made of, then ask what squeezes it.",
+  "trap": "Blaming the water inside the suit, the part divers are told warms them.",
+  "keywords": [
+    "wetsuits",
+    "neoprene foam",
+    "diving",
+    "water pressure"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bardy et al., Journal of Physics D, 2005",
+  "source_kind": "paper",
+  "reference": "doi:10.1088/0022-3727/38/20/009",
+  "written": "2026-09-27"
+}

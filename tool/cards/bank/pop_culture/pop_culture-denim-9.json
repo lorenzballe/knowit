@@ -1,0 +1,42 @@
+{
+  "id": "pop_culture-denim-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.denim",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Taking 28 g an ounce and 0.84 square metres a square yard, what is 14-ounce-per-square-yard denim in grams per square metre?",
+  "value": 466.7,
+  "unit": "grams per square metre",
+  "tolerance": 10,
+  "answer": "392 / 0.84 = about 467 g per square metre.",
+  "move": "Convert every unit in a rate, the bottom as well as the top.",
+  "trap": "Converting the ounces and stopping at about 392 grams.",
+  "hint": "Convert the weight first, then spread it over a square metre instead of a square yard.",
+  "steps": [
+    "14 ounces x 28 g = 392 g per square yard.",
+    "A square yard is only 0.84 of a square metre, so divide by 0.84.",
+    "392 / 0.84 = about 467 g per square metre."
+  ],
+  "keywords": [
+    "denim weight",
+    "unit conversion",
+    "fabric",
+    "grams per square metre"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NIST, Guide for the Use of SI Units",
+  "source_kind": "institution",
+  "reference": "Thompson & Taylor, Guide for the Use of the International System of Units (SI), NIST Special Publication 811, 2008",
+  "written": "2026-09-27"
+}

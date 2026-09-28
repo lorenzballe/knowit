@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-still-on-the-books-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.still_on_the_books",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Under a statute from the 1320s, who owns a whale or sturgeon taken off the English coast?",
+  "answer": "The Crown. De Prerogativa Regis, a statute usually dated to about 1324, makes whales and sturgeon royal fish, and it has never been repealed. Strandings and catches are reported to the Receiver of Wreck, the official who handles wreck and royal claims. A carcass on the sand belongs, in law, to the King.",
+  "move": "Old rules survive when keeping them costs nobody anything.",
+  "keywords": [
+    "royal fish",
+    "whales",
+    "sturgeon",
+    "prerogativa regis",
+    "receiver of wreck"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Blackstone, Commentaries, Book 1",
+  "source_kind": "reference_work",
+  "reference": "Blackstone, Commentaries on the Laws of England, Book 1, ed. Lemmings, Oxford University Press, 2016",
+  "written": "2026-09-27"
+}

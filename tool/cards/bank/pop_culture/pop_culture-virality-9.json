@@ -1,0 +1,42 @@
+{
+  "id": "pop_culture-virality-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.virality",
+  "also": [
+    "pop_culture.logos_and_brands.swooshes"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the first YouTube video to pass a million views was an advert?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In late 2005 Nike's Touch of Gold, a clip of Ronaldinho hitting the crossbar again and again, became the first on the site reported to reach a million views. It looked like shaky amateur footage, which helped it travel. Brands learned early that an advert spreads best when it does not look like one.",
+  "move": "The homemade look is itself something that can be manufactured.",
+  "trap": "Early viral hits seem homemade, so an amateur clip comes first to mind.",
+  "keywords": [
+    "youtube",
+    "ronaldinho",
+    "nike",
+    "touch of gold",
+    "viral advertising"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Allocca, Videocracy, 2018",
+  "source_kind": "book",
+  "reference": "Kevin Allocca, Videocracy: How YouTube Is Changing the World, Bloomsbury, 2018",
+  "written": "2026-09-27"
+}

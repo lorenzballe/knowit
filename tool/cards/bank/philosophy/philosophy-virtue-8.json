@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-virtue-8",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.virtue",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: David Hume placed humility in the catalogue of vices rather than virtues?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In his 1751 Enquiry, Hume rejected celibacy, fasting, penance, self-denial, humility, silence and solitude, the monkish virtues, because they serve nobody's use or pleasure. Men of sense, he wrote, count them as vices. The gloomy enthusiast, he added, may get a place in the calendar after death, but scarcely in company while alive.",
+  "move": "Ask of any praised trait whom it has ever helped.",
+  "trap": "Assuming a Christian virtue kept its place in every moral catalogue.",
+  "keywords": [
+    "david hume",
+    "humility",
+    "monkish virtues",
+    "utility"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hume, Enquiry Concerning the Principles of Morals",
+  "source_kind": "book",
+  "reference": "Hume, An Enquiry Concerning the Principles of Morals 9.1, ed. Beauchamp, Clarendon Press, 1998",
+  "written": "2026-09-27"
+}

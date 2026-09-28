@@ -1,0 +1,39 @@
+{
+  "id": "economics-charm-prices-10",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.charm_prices",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A US supermarket began printing prices with sales tax included on its shelf tags. What happened to sales of those items?",
+  "options": [
+    "They fell by about 8%",
+    "No measurable change",
+    "They rose, as shoppers trusted them"
+  ],
+  "correct": 0,
+  "answer": "They fell by about 8%. Chetty, Looney and Kroft posted tax-inclusive tags on hundreds of products in one grocery store for three weeks. The same tax was already charged at the till, and shoppers knew the rates when asked. Sales still dropped against comparison aisles and stores: a $4.99 tag sells on the number printed.",
+  "move": "What a buyer sees at the shelf outweighs what they know at the till.",
+  "trap": "Expecting no change, since the tax was charged either way.",
+  "keywords": [
+    "sales tax",
+    "shelf tags",
+    "salience",
+    "grocery stores"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chetty, Looney & Kroft, AER, 2009",
+  "source_kind": "paper",
+  "reference": "Chetty, Looney & Kroft, Salience and Taxation: Theory and Evidence, American Economic Review, 2009",
+  "written": "2026-09-27"
+}

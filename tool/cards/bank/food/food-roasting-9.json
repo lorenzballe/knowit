@@ -1,0 +1,40 @@
+{
+  "id": "food-roasting-9",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.roasting",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "What gives a very dark roast most of its harsh, lingering bitterness?",
+  "options": [
+    "Caffeine concentrated by roasting",
+    "Breakdown products of chlorogenic acids",
+    "Carbon from charred bean surfaces"
+  ],
+  "correct": 1,
+  "answer": "Breakdown products of chlorogenic acids. Green beans are rich in these acids; roasting turns them first into lactones with a sharp bitterness, then, in dark roasts, into phenylindanes with a harsher, lingering one. Caffeine supplies only a small share of coffee's bitterness, which is why a decaffeinated dark roast still tastes bitter.",
+  "move": "The best-known suspect is not always the one doing most of the work.",
+  "trap": "Blaming caffeine, the one bitter molecule everyone has heard of.",
+  "keywords": [
+    "bitterness",
+    "chlorogenic acids",
+    "phenylindanes",
+    "caffeine",
+    "dark roast"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Blumberg, Frank & Hofmann, JAFC, 2010",
+  "source_kind": "paper",
+  "reference": "Blumberg, Frank & Hofmann, Quantitative studies on the influence of the bean roasting parameters and hot water percolation on the concentrations of bitter compounds in coffee brew, Journal of Agricultural and Food Chemistry, 2010",
+  "written": "2026-09-27"
+}

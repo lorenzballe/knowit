@@ -1,0 +1,40 @@
+{
+  "id": "art-patrons-9",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.patrons",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "What did Julius II first ask Michelangelo to paint on the Sistine Chapel ceiling in 1508?",
+  "options": [
+    "Scenes from Genesis",
+    "Twelve apostles",
+    "A starry blue sky"
+  ],
+  "correct": 1,
+  "answer": "Twelve apostles, with ornament filling the rest. In a letter of 1523 Michelangelo recalled telling the Pope it would be a poor thing, since the apostles too were poor, and Julius let him paint as he liked. The Creation scenes grew from the painter's objection, not the patron's plan.",
+  "move": "The first brief and the finished work can belong to different people.",
+  "trap": "Assuming the famous Genesis scenes were what the Pope ordered.",
+  "keywords": [
+    "sistine chapel ceiling",
+    "julius ii",
+    "michelangelo",
+    "apostles",
+    "commission"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ramsden, The Letters of Michelangelo, 1963",
+  "source_kind": "primary_document",
+  "reference": "E. H. Ramsden (trans. and ed.), The Letters of Michelangelo, 2 vols, Peter Owen, 1963",
+  "written": "2026-09-27"
+}

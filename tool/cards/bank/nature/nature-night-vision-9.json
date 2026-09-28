@@ -1,0 +1,44 @@
+{
+  "id": "nature-night-vision-9",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.night_vision",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "In the dark, a human pupil widens from about 2 mm across to 8 mm. By how many times does the light it admits rise?",
+  "value": 16,
+  "unit": "times",
+  "answer": "4 × 4 = 16 times.",
+  "move": "A gain that looks large can be small beside the range it must cover.",
+  "trap": "Answering 4, as if the light scaled with the width.",
+  "hint": "Think about the area of the opening, not its width.",
+  "steps": [
+    "The light admitted scales with the pupil's area, which grows with the square of its width.",
+    "8 / 2 = 4 times wider.",
+    "4 × 4 = 16 times."
+  ],
+  "keywords": [
+    "pupil",
+    "dark adaptation",
+    "light gathering",
+    "human eye"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "nature-night-vision-5"
+  ],
+  "figure": "none",
+  "source": "Wyszecki & Stiles, Color Science, 1982",
+  "source_kind": "book",
+  "reference": "Wyszecki & Stiles, Color Science: Concepts and Methods, Quantitative Data and Formulae, 2nd edition, Wiley, 1982",
+  "written": "2026-09-27"
+}

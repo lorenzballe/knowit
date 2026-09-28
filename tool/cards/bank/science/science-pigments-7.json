@@ -1,0 +1,33 @@
+{
+  "id": "science-pigments-7",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.pigments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do cadmium yellows and reds have such clean, sharp colours?",
+  "answer": "Because they are semiconductors. Cadmium sulphide absorbs every photon energetic enough to lift an electron across its band gap and reflects the rest, so its colour stops at a sharp edge: blue and violet go, longer waves return. Swapping some sulphur for selenium narrows the gap, sliding the edge through orange to deep red.",
+  "move": "A clean boundary in what comes out often means a threshold inside.",
+  "keywords": [
+    "cadmium pigments",
+    "band gap",
+    "semiconductors",
+    "cadmium sulphide",
+    "selenium"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fiedler & Bayard, Artists' Pigments, 1986",
+  "source_kind": "book",
+  "reference": "Fiedler & Bayard, Cadmium Yellows, Oranges and Reds, in Feller (ed.), Artists' Pigments: A Handbook of Their History and Characteristics, vol. 1, National Gallery of Art, Washington, 1986",
+  "written": "2026-09-27"
+}

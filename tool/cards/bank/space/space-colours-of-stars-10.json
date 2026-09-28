@@ -1,0 +1,40 @@
+{
+  "id": "space-colours-of-stars-10",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.colours_of_stars",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Dust between the stars makes a distant star look redder. What does that dust do to its dark spectral lines?",
+  "options": [
+    "Leaves them where they were",
+    "Shifts them towards the red",
+    "Erases the ones in the blue"
+  ],
+  "correct": 0,
+  "answer": "Leaves them where they were. Dust scatters blue light more than red, dimming colours unevenly, but it moves no wavelength. That is the lever astronomers use: the line pattern gives the star's type and so its true colour, and the gap between that and the colour seen measures the dust in the way.",
+  "move": "A filter changes the mix of notes, never the notes themselves.",
+  "trap": "Treating dust reddening as a redshift, the stretch that motion causes.",
+  "keywords": [
+    "interstellar dust",
+    "reddening",
+    "redshift",
+    "spectral lines",
+    "colour excess"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Draine, Interstellar Medium, 2011",
+  "source_kind": "book",
+  "reference": "Draine, Physics of the Interstellar and Intergalactic Medium, Princeton University Press, 2011",
+  "written": "2026-09-27"
+}

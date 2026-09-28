@@ -1,0 +1,33 @@
+{
+  "id": "music-jazz-6",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.jazz",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is Buddy Bolden, named by New Orleans players as the first jazz bandleader, known only from their memories?",
+  "answer": "Because he stopped playing before jazz was recorded. Bolden was committed to the state asylum at Jackson, Louisiana, in 1907, a decade before the first jazz record, and died there in 1931. A cylinder he supposedly cut in the 1890s has never been found. His sound survives only in other players' descriptions.",
+  "move": "The first of anything is often the least documented.",
+  "keywords": [
+    "buddy bolden",
+    "new orleans",
+    "cornet",
+    "asylum",
+    "wax cylinder"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marquis, In Search of Buddy Bolden, 1978",
+  "source_kind": "book",
+  "reference": "Marquis, In Search of Buddy Bolden: First Man of Jazz, Louisiana State University Press, 1978",
+  "written": "2026-09-27"
+}

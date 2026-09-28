@@ -1,0 +1,36 @@
+{
+  "id": "psychology-why-we-dream-6",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.why_we_dream",
+  "also": [
+    "human_body.the_brain.neurons"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can brain damage abolish dreaming while REM sleep carries on normally?",
+  "answer": "Yes. The neuropsychologist Mark Solms found patients who stopped dreaming entirely after damage to forebrain regions, including white matter deep in the frontal lobes, while their REM cycles continued. Damage to the brainstem that disrupts REM rarely ended dreaming. The dream machine and the REM switch turned out to be separate parts.",
+  "move": "Two things that usually happen together may still run on different machinery.",
+  "keywords": [
+    "mark solms",
+    "brain lesions",
+    "rem sleep",
+    "forebrain",
+    "loss of dreaming"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Solms, Behavioral and Brain Sciences, 2000",
+  "source_kind": "paper",
+  "reference": "Solms, Dreaming and REM sleep are controlled by different brain mechanisms, Behavioral and Brain Sciences, 2000",
+  "written": "2026-09-27"
+}

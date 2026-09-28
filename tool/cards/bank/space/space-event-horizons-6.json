@@ -1,0 +1,42 @@
+{
+  "id": "space-event-horizons-6",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.event_horizons",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Averaged over the space inside its event horizon, how dense is a black hole of a billion suns?",
+  "options": [
+    "Denser than an atomic nucleus",
+    "About as dense as rock",
+    "Far less dense than water"
+  ],
+  "correct": 2,
+  "answer": "Far less dense than water: about 18 kg per cubic metre, about 15 times air. The horizon's radius grows in step with the mass, so the volume inside grows with its cube, and the average density falls with the mass squared. A hole of one sun averages 80 times denser than a nucleus.",
+  "move": "When the container grows faster than its contents, the average thins out.",
+  "trap": "Picturing every black hole as matter crushed beyond nuclear density.",
+  "keywords": [
+    "black hole density",
+    "event horizon",
+    "schwarzschild radius",
+    "supermassive black holes"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carroll, Spacetime and Geometry, 2004",
+  "source_kind": "book",
+  "reference": "Carroll, Spacetime and Geometry: An Introduction to General Relativity, Addison-Wesley, 2004",
+  "written": "2026-09-27"
+}

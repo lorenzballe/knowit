@@ -1,0 +1,43 @@
+{
+  "id": "technology-data-centres-8",
+  "topic": "technology",
+  "genre": "technology.the_internet",
+  "strand": "technology.the_internet.data_centres",
+  "also": [
+    "science.maths_curios.probability"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conjunction",
+  "question": "Each server answers slowly one time in 100. A search waits for replies from 100 servers at once. How often is it slow?",
+  "options": [
+    "About 1 in 100 searches",
+    "About 63 in 100 searches",
+    "Every single search"
+  ],
+  "correct": 1,
+  "answer": "About 63 in 100 searches. A search is fast only if all 100 servers are, and the chance of that is 0.99 to the power 100, about 37%. Google's Jeffrey Dean and Luiz Barroso used this to explain why big services resend slow requests. A rare delay per machine becomes the usual delay per user.",
+  "move": "When everything must go right at once, small risks multiply fast.",
+  "trap": "Each server is fine 99% of the time, so the whole seems fine.",
+  "keywords": [
+    "tail latency",
+    "fan-out",
+    "servers",
+    "google",
+    "probability"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Dean & Barroso, Communications of the ACM, 2013",
+  "source_kind": "paper",
+  "reference": "Dean & Barroso, The Tail at Scale, Communications of the ACM 56(2), 2013",
+  "written": "2026-09-27"
+}

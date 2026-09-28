@@ -1,0 +1,39 @@
+{
+  "id": "science-lasers-9",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.lasers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 2022 America's National Ignition Facility got 3.15 MJ of fusion from 2.05 MJ of laser light. What did the lasers draw from the grid?",
+  "options": [
+    "About 2 MJ",
+    "About 3,000 MJ",
+    "About 300 MJ"
+  ],
+  "correct": 2,
+  "answer": "About 300 MJ. The shot beat the light delivered to the target, the milestone called ignition, but the flash lamps powering NIF's lasers turn under 1% of their electricity into ultraviolet light on target. Counted from the wall socket, the shot returned about one joule for every hundred spent.",
+  "move": "Ask where the boundary was drawn before accepting a claimed gain.",
+  "trap": "About 2 MJ, taking the laser energy as the whole bill.",
+  "keywords": [
+    "national ignition facility",
+    "fusion ignition",
+    "laser efficiency",
+    "energy gain"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Indirect Drive ICF Collaboration, PRL, 2024",
+  "source_kind": "paper",
+  "reference": "Abu-Shawareb et al. (Indirect Drive ICF Collaboration), Achievement of Target Gain Larger than Unity in an Inertial Fusion Experiment, Physical Review Letters 132, 065102, 2024",
+  "written": "2026-09-27"
+}

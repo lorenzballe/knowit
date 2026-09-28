@@ -1,0 +1,42 @@
+{
+  "id": "nature-coral-8",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.coral",
+  "also": [
+    "weird_facts.records.oldest"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a coral colony collected alive has been radiocarbon-dated at more than 4,000 years old?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Roark and colleagues dated a black coral colony taken from hundreds of metres down off Hawaii at about 4,265 years, and deep-sea gold corals at about 2,700. They are among the oldest animals known. A trawl net dragged across such a bed can break in seconds what grew since the Bronze Age.",
+  "move": "Recovery time is set by the slowest grower, not the average one.",
+  "trap": "Picturing corals as fast-growing, short-lived reef builders like those in shallow water.",
+  "keywords": [
+    "black coral",
+    "deep-sea corals",
+    "radiocarbon dating",
+    "longevity",
+    "trawling"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Roark et al., PNAS, 2009",
+  "source_kind": "paper",
+  "reference": "Roark et al., Extreme longevity in proteinaceous deep-sea corals, PNAS, 2009",
+  "written": "2026-09-27"
+}

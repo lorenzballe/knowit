@@ -1,0 +1,32 @@
+{
+  "id": "technology-mainframes-9",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.mainframes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did reading a bit from a mainframe's magnetic core memory erase it?",
+  "answer": "Because reading meant forcing the core to 0. Each ferrite ring stored a bit as the direction of its magnetism; to read it, the machine pushed it towards 0 and watched a wire for the pulse of a flip. A pulse meant a 1, now wiped, so every read ended in a rewrite.",
+  "move": "Some measurements destroy what they measure, so plan to put it back.",
+  "keywords": [
+    "core memory",
+    "ferrite cores",
+    "destructive read",
+    "non-volatile memory"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Forrester, Journal of Applied Physics, 1951",
+  "source_kind": "paper",
+  "reference": "Forrester, Digital Information Storage in Three Dimensions Using Magnetic Cores, Journal of Applied Physics, 1951",
+  "written": "2026-09-27"
+}

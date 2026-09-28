@@ -1,0 +1,39 @@
+{
+  "id": "language-irregular-verbs-10",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.irregular_verbs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "True or false: fell, as in to fell a tree, was built from the verb fall?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Germanic made verbs meaning cause to do from strong verbs: fell is make fall, set is make sit, lay is make lie, drench is make drink. The new verbs were mostly regular, so a tree is felled while the man fell. The lie and lay muddle is the same old pair, still arguing.",
+  "move": "Two look-alike words in one language are rarely strangers.",
+  "trap": "Taking fell the verb for a chance echo of fell the past.",
+  "keywords": [
+    "causative verbs",
+    "fall and fell",
+    "lie and lay",
+    "germanic",
+    "strong verbs"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ringe, From Proto-Indo-European to Proto-Germanic",
+  "source_kind": "book",
+  "reference": "Ringe, From Proto-Indo-European to Proto-Germanic, Oxford University Press, 2006",
+  "written": "2026-09-27"
+}

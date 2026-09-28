@@ -1,0 +1,33 @@
+{
+  "id": "music-techno-8",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.techno",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What story did the anonymous Detroit duo Drexciya build around their electro records of the 1990s?",
+  "answer": "An undersea nation. Their sleeves told of the babies of pregnant African women thrown overboard from slave ships, born able to breathe water and grown into a people beneath the Atlantic. James Stinson and Gerald Donald kept their faces off the records, and their track titles read like dispatches from that ocean.",
+  "move": "A myth can carry a history too heavy for a plain statement.",
+  "keywords": [
+    "drexciya",
+    "afrofuturism",
+    "detroit electro",
+    "middle passage",
+    "james stinson"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Eshun, More Brilliant than the Sun, 1998",
+  "source_kind": "book",
+  "reference": "Eshun, More Brilliant than the Sun: Adventures in Sonic Fiction, Quartet Books, 1998",
+  "written": "2026-09-27"
+}

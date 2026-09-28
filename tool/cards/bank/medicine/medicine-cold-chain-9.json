@@ -1,0 +1,39 @@
+{
+  "id": "medicine-cold-chain-9",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.cold_chain",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "True or false: a clinic fridge that read 2 to 8 °C at every twice-daily check has probably kept its vaccines in range?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Two readings a day sample two moments; a swing out of range between them leaves no trace. When US federal inspectors put their own monitors in the vaccine fridges of 45 providers for two weeks, vaccine at about three quarters spent at least 5 hours outside 2 to 8 °C.",
+  "move": "A check made at fixed times sees nothing that happens between them.",
+  "trap": "Treating a clean logbook as proof the fridge stayed in range.",
+  "keywords": [
+    "vaccine fridge",
+    "temperature log",
+    "data logger",
+    "monitoring",
+    "vaccines for children"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US HHS Office of Inspector General, 2012",
+  "source_kind": "primary_document",
+  "reference": "Office of Inspector General, US Department of Health and Human Services, Vaccines for Children Program: Vulnerabilities in Vaccine Management, OEI-04-10-00430, 2012",
+  "written": "2026-09-27"
+}

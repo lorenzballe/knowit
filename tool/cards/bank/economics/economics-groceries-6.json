@@ -1,0 +1,33 @@
+{
+  "id": "economics-groceries-6",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.groceries",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When new supermarkets opened in America's food deserts, how much did local diets change?",
+  "answer": "Barely at all. Allcott, Diamond and Dubé tracked what households bought as supermarkets arrived: locals switched stores but bought much the same food. Families who moved to neighbourhoods with healthier shops kept their old habits too. Their model put only about 9% of the nutrition gap between rich and poor down to what shops offer.",
+  "move": "Before blaming the supply, check what people choose when it arrives.",
+  "keywords": [
+    "food deserts",
+    "supermarkets",
+    "nutrition",
+    "healthy eating",
+    "poverty"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Allcott, Diamond & Dubé, QJE, 2019",
+  "source_kind": "paper",
+  "reference": "Allcott, Diamond & Dubé, Food Deserts and the Causes of Nutritional Inequality, Quarterly Journal of Economics, 2019",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "language-nordic-7",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.nordic",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A Swedish sambo, an unmarried live-in partner, dies without a will. What can the survivor claim?",
+  "options": [
+    "An heir's share, as a spouse would",
+    "A share of the jointly used home",
+    "Nothing, since the law ignores sambos"
+  ],
+  "correct": 1,
+  "answer": "A share of the jointly used home. Sweden's Cohabitees Act lets the survivor ask for the shared home and household goods bought for joint use to be divided between them. Beyond that there is no right to inherit. A partner of thirty years can leave with half the sofa and none of the savings.",
+  "move": "An everyday word for a relationship is not a legal status.",
+  "trap": "Reading a word everyone uses for partner as equal to spouse.",
+  "keywords": [
+    "sambo",
+    "cohabitation",
+    "inheritance",
+    "sweden",
+    "sambolagen"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sambolag (2003:376), Sveriges riksdag",
+  "source_kind": "primary_document",
+  "reference": "Sambolag (SFS 2003:376), sections 3, 8 and 18, Sveriges riksdag, 2003",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-stoics-10",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.stoics",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Does the Stoic focus on what one can control breed passivity towards injustice?",
+  "sides": [
+    "Yes, it breeds passivity",
+    "No, it breeds resistance"
+  ],
+  "answer": "Teach people that only their own judgements matter, and injustice becomes weather. Seneca urged kindness to slaves in his forty-seventh letter but never called for abolition. Epictetus, himself once a slave, taught that chains touch only the body. A creed that makes suffering bearable also makes it easier to leave in place.",
+  "move": "It turns on whether accepting the unchangeable shrinks or steadies the fight for the rest.",
+  "counterpoint": "Under Nero and Vespasian the boldest senators were Stoics. Thrasea Paetus walked out rather than applaud Nero's murder of his mother, and was later forced to kill himself; Helvidius Priscus defied Vespasian and was executed. Believing death no evil made them hard to frighten. Indifference to outcomes let them act without hope of winning.",
+  "keywords": [
+    "stoic opposition",
+    "thrasea paetus",
+    "seneca",
+    "slavery",
+    "injustice"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tacitus, Annals 14.12 and 16.21-35",
+  "source_kind": "primary_document",
+  "reference": "Tacitus, The Annals, trans. Woodman, Hackett, 2004",
+  "written": "2026-09-27"
+}

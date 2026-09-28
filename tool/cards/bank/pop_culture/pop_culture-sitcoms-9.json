@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-sitcoms-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.sitcoms",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "baseRate",
+  "question": "After Seinfeld, three of its stars each led a new sitcom cancelled within two seasons. How good is the evidence for a curse?",
+  "options": [
+    "Strong: three flops in a row is rare",
+    "Weak: most new series flop anyway",
+    "Strong, but only for the two men"
+  ],
+  "correct": 1,
+  "answer": "Weak. Most new network series fail: US networks cancel roughly half in their first year, and fewer still survive a second. If two in three fail, three flops from three tries happens nearly one time in three. Julia Louis-Dreyfus then won a 2006 Emmy for The New Adventures of Old Christine.",
+  "move": "Before explaining a run of failures, ask how often things fail anyway.",
+  "trap": "Judging three failures rare without knowing how often new shows fail.",
+  "keywords": [
+    "seinfeld",
+    "cancellation",
+    "julia louis-dreyfus",
+    "network sitcoms"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Hollywood Reporter, TV Long View, 2020",
+  "source_kind": "news_archive",
+  "reference": "https://www.hollywoodreporter.com/tv/tv-news/networks-first-year-cancellation-rate-stays-low-2019-20-1302859/",
+  "written": "2026-09-27"
+}

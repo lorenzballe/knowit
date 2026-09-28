@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-tabloids-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.tabloids",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "In 2016 a celebrity's name was all over foreign websites. Did Britain's Supreme Court still bar The Sun on Sunday from printing it?",
+  "options": [
+    "Yes: printing would add fresh intrusion",
+    "No: the secret was already out",
+    "No, but it awarded him damages"
+  ],
+  "correct": 0,
+  "answer": "Yes. In PJS v News Group Newspapers the court kept the injunction by four to one. Privacy guards against intrusion, not only disclosure, and British front pages would add a flood of fresh intrusion that scattered websites had not. The couple's young children weighed too. Lord Toulson dissented: the story was out.",
+  "move": "Judge a step by what it adds, not by what already happened.",
+  "trap": "Treating privacy as a secret that is lost once anyone knows.",
+  "keywords": [
+    "pjs",
+    "privacy injunction",
+    "supreme court",
+    "sun on sunday"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "UK Supreme Court, PJS v News Group, 2016",
+  "source_kind": "primary_document",
+  "reference": "PJS v News Group Newspapers Ltd [2016] UKSC 26, judgment of 19 May 2016",
+  "written": "2026-09-27"
+}

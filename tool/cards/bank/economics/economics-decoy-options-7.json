@@ -1,0 +1,39 @@
+{
+  "id": "economics-decoy-options-7",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.decoy_options",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A newcomer almost identical to brand A, and just as good, goes on sale beside brands A and B. Whose share falls most?",
+  "options": [
+    "B's, as A now looks better",
+    "Both by the same proportion",
+    "A's, as the newcomer splits its buyers"
+  ],
+  "correct": 2,
+  "answer": "A's. Tversky called it the similarity effect: a near-copy competes for the same buyers, so it draws mostly from its twin, not evenly from all. A decoy helps its target only by being plainly worse. Put a red bus beside the blue one, and the buses split their riders while the car keeps its share.",
+  "move": "A newcomer takes first from whatever it most resembles.",
+  "trap": "Treating any similar newcomer as a decoy that makes A shine.",
+  "keywords": [
+    "similarity effect",
+    "market share",
+    "choice models",
+    "red bus blue bus"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tversky, Psychological Review, 1972",
+  "source_kind": "paper",
+  "reference": "Tversky, Elimination by Aspects: A Theory of Choice, Psychological Review, 1972",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-octopuses-10",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.octopuses",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What lets an octopus taste whatever its suckers touch?",
+  "answer": "Receptors found only in cephalopods. Van Giesen and colleagues showed that sensory cells in the suckers carry chemotactile receptors, kin to the brain's receptors for acetylcholine, a neurotransmitter. They respond to terpenoids, oily compounds that barely dissolve and so must be touched rather than smelled. A sucker pressed on prey samples it like a tongue.",
+  "move": "Some signals can only be read by contact, never at a distance.",
+  "keywords": [
+    "octopus suckers",
+    "chemotactile receptors",
+    "taste by touch",
+    "terpenoids"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "van Giesen et al., Cell, 2020",
+  "source_kind": "primary_document",
+  "reference": "van Giesen, Kilian, Allard & Bellono, Molecular Basis of Chemotactile Sensation in Octopus, Cell, 2020",
+  "written": "2026-09-27"
+}

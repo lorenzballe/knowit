@@ -1,0 +1,41 @@
+{
+  "id": "human_body-healing-10",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.healing",
+  "also": [
+    "medicine.pain.painkillers"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should people recovering from a broken bone avoid anti-inflammatory painkillers such as ibuprofen?",
+  "sides": [
+    "Yes, avoid them",
+    "No, they are fine"
+  ],
+  "answer": "Inflammation is the first stage of bone repair: it recruits the cells that build the callus, and drugs like ibuprofen block the prostaglandins that signal it. Animal studies show slower healing, and a 2019 meta-analysis of 16 studies found NSAID users about twice as likely to suffer delayed healing or none. Other painkillers exist.",
+  "move": "Whichever side you took, it turns on dose, duration and who takes them.",
+  "counterpoint": "The same meta-analysis found no effect in children or with low doses, which is how most people use them, and much of the adult signal comes from observational studies in which worse fractures bring both more pain relief and slower healing. The usual alternative, opioids, carries dangers of its own.",
+  "keywords": [
+    "nsaids",
+    "ibuprofen",
+    "fracture healing",
+    "prostaglandins",
+    "non-union"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wheatley et al., JAAOS, 2019",
+  "source_kind": "paper",
+  "reference": "Wheatley et al., Effect of NSAIDs on Bone Healing Rates: A Meta-analysis, Journal of the American Academy of Orthopaedic Surgeons, 2019",
+  "written": "2026-09-27"
+}

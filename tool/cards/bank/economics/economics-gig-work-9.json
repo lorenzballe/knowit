@@ -1,0 +1,32 @@
+{
+  "id": "economics-gig-work-9",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.gig_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Gig apps sell the freedom to choose your hours. In an experiment, how much pay would job seekers give up for it?",
+  "answer": "Almost nothing, on average. Mas and Pallais offered call-centre job applicants schedules at different wages. Most would pay little to set their own hours, yet the average applicant would forgo 20% of pay to avoid a schedule the employer could change at short notice. People pay to escape someone else's calendar, not to own one.",
+  "move": "Ask what people pay to avoid something, not only to get it.",
+  "keywords": [
+    "flexible hours",
+    "scheduling",
+    "call centres",
+    "job seekers"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mas and Pallais, AER, 2017",
+  "source_kind": "paper",
+  "reference": "Mas & Pallais, Valuing Alternative Work Arrangements, American Economic Review, 2017",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "nature-clouds-8",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.clouds",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Surface air is 24°C, dew point 16°C. Rising, it cools 10°C per km and its dew point 2°C per km. Cloud base height, in metres?",
+  "value": 1000,
+  "unit": "metres",
+  "answer": "8 ÷ 8 = 1 km, so cloud base sits at 1,000 metres.",
+  "move": "When two things move at once, follow the gap between them.",
+  "trap": "Forgetting that the dew point falls too, and stopping at 800 metres.",
+  "hint": "Follow the gap between temperature and dew point as the air climbs.",
+  "steps": [
+    "Starting gap: 24 − 16 = 8°C.",
+    "The gap closes by 10 − 2 = 8°C per km.",
+    "8 ÷ 8 = 1 km, so cloud base sits at 1,000 metres."
+  ],
+  "keywords": [
+    "cloud base",
+    "dew point",
+    "lapse rate",
+    "cumulus"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ahrens, Meteorology Today",
+  "source_kind": "book",
+  "reference": "Ahrens, Meteorology Today: An Introduction to Weather, Climate, and the Environment, 9th edition, Brooks/Cole, 2009",
+  "written": "2026-09-27"
+}

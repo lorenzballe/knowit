@@ -1,0 +1,35 @@
+{
+  "id": "human_body-microbiome-7",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.microbiome",
+  "also": [
+    "human_body.gut.digestion"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do colon bacteria that make vitamin B12 not spare vegans from needing supplements?",
+  "answer": "Because they make it downstream of the exit. B12 is absorbed at the far end of the small intestine, bound to intrinsic factor, a carrier protein made by the stomach. The colon comes after that point, so vitamin made there leaves in the faeces, much of it in forms human cells cannot use.",
+  "move": "A supply is useless if it arrives past the point of collection.",
+  "keywords": [
+    "vitamin b12",
+    "colon bacteria",
+    "intrinsic factor",
+    "vegan diet"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Degnan, Taga & Goodman, Cell Metabolism, 2014",
+  "source_kind": "paper",
+  "reference": "Degnan, Taga & Goodman, Vitamin B12 as a modulator of gut microbial ecology, Cell Metabolism, 2014",
+  "written": "2026-09-27"
+}

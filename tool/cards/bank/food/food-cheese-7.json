@@ -1,0 +1,33 @@
+{
+  "id": "food-cheese-7",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.cheese",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do the rules for Comté forbid feeding the cows silage, the fermented grass many dairies rely on?",
+  "answer": "To keep out spores that burst cheeses. Silage carries Clostridium bacteria whose spores survive the cow's gut, reach the milk on specks of dung and outlast cheesemaking. Months later, in the ripening cellar, they wake, turn lactate into butyric acid and gas, and split wheels with rancid cracks. The ban protects the long ageing.",
+  "move": "A rule that looks like it is about taste may be about hidden risk.",
+  "keywords": [
+    "comté",
+    "silage",
+    "clostridium tyrobutyricum",
+    "late blowing",
+    "butyric acid"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McSweeney, Cheese Problems Solved, 2007",
+  "source_kind": "book",
+  "reference": "McSweeney (ed.), Cheese Problems Solved, Woodhead Publishing, 2007",
+  "written": "2026-09-27"
+}

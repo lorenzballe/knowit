@@ -1,0 +1,39 @@
+{
+  "id": "space-cosmic-background-8",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.cosmic_background",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A galaxy cluster's hot gas scatters the cosmic background, leaving a faint shadow on it. How does that shadow fade with distance?",
+  "options": [
+    "With the square of distance",
+    "Barely at all",
+    "Faster than the cluster's own light"
+  ],
+  "correct": 1,
+  "answer": "Barely at all. The shadow is a fixed fraction of the background's brightness, and the background lies behind every cluster, however far. A cluster's own light fades with distance, but its dent in the microwave sky does not. Surveys use it to find clusters from when the universe was under a third of its age.",
+  "move": "Measured against the backdrop behind it, distance stops mattering.",
+  "trap": "Assuming everything seen across space dims with the square of distance.",
+  "keywords": [
+    "sunyaev-zeldovich effect",
+    "galaxy clusters",
+    "hot gas",
+    "microwave sky"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Birkinshaw, Physics Reports, 1999",
+  "source_kind": "paper",
+  "reference": "Birkinshaw, The Sunyaev-Zel'dovich effect, Physics Reports 310, 97, 1999",
+  "written": "2026-09-27"
+}

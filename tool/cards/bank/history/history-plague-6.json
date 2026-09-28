@@ -1,0 +1,33 @@
+{
+  "id": "history-plague-6",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.plague",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What trace of the Black Death can still be found in the genes of living Europeans?",
+  "answer": "A defence with a price. In 2022 Klunk and colleagues compared DNA from Londoners and Danes who died before, during and after it. Variants of an immune gene, ERAP2, rose fast: two copies of the favoured version raised the odds of surviving by roughly 40%. That version now brings a higher risk of Crohn's disease.",
+  "move": "A defence chosen by one crisis can become a weakness in the next.",
+  "keywords": [
+    "erap2",
+    "ancient dna",
+    "natural selection",
+    "crohn's disease",
+    "immunity"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Klunk et al., Nature, 2022",
+  "source_kind": "paper",
+  "reference": "Klunk et al., Evolution of immune genes is associated with the Black Death, Nature 611, 2022, 312-319",
+  "written": "2026-09-27"
+}

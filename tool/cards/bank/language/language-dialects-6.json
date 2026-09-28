@@ -1,0 +1,33 @@
+{
+  "id": "language-dialects-6",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.dialects",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can Norwegian ministers and newsreaders speak their own home dialects on national broadcasts?",
+  "answer": "Because Norway has no official spoken standard. It has two written ones, Bokmål, grown out of Danish, and Nynorsk, which Ivar Aasen built in the 1850s from rural dialects, but no rule says how either must be pronounced. A minister from Bergen or Trøndelag can address parliament exactly as she talks at home.",
+  "move": "A written standard does not have to come with a spoken one.",
+  "keywords": [
+    "norwegian",
+    "bokmål",
+    "nynorsk",
+    "ivar aasen",
+    "dialect"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Haugen, Language Conflict and Language Planning, 1966",
+  "source_kind": "book",
+  "reference": "Haugen, Language Conflict and Language Planning: The Case of Modern Norwegian, Harvard University Press, 1966",
+  "written": "2026-09-27"
+}

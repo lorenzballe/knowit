@@ -1,0 +1,39 @@
+{
+  "id": "art-mummy-brown-9",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.mummy_brown",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: some of the mummy sold in sixteenth-century Europe was made from people dead only a few years?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 1564 Guy de la Fontaine, a royal physician, visited a mummy dealer in Alexandria who admitted his stock was recent corpses, of slaves and the unclaimed, filled with bitumen and dried. Demand had outrun the old tombs. The ancient Egyptian in the jar was sometimes a stranger dead a few seasons.",
+  "move": "When demand outgrows a genuine source, suspect the supply of counterfeits.",
+  "trap": "Assuming Egypt's ancient tombs could meet all of Europe's demand.",
+  "keywords": [
+    "mumia",
+    "counterfeit mummies",
+    "alexandria",
+    "guy de la fontaine",
+    "mummy trade"
+  ],
+  "era": "early_modern",
+  "region": "africa",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pringle, The Mummy Congress, 2001",
+  "source_kind": "book",
+  "reference": "Heather Pringle, The Mummy Congress: Science, Obsession, and the Everlasting Dead, Hyperion, 2001",
+  "written": "2026-09-27"
+}

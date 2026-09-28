@@ -1,0 +1,41 @@
+{
+  "id": "cinema-music-cues-7",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.music_cues",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "From the cue's first beat, the hit must fall on bar 16's first beat, in 4/4, 30 seconds later. Tempo, in beats per minute?",
+  "value": 120,
+  "unit": "beats per minute",
+  "answer": "2 × 60 = 120 beats per minute.",
+  "move": "Count the gaps between the posts, not the posts.",
+  "trap": "Counting 16 full bars, 64 beats, and landing on 128.",
+  "hint": "Count the beats already gone by when bar 16 begins, not the bars named.",
+  "steps": [
+    "Bar 16 begins after 15 full bars: 15 × 4 = 60 beats.",
+    "60 beats in 30 seconds = 2 beats a second.",
+    "2 × 60 = 120 beats per minute."
+  ],
+  "keywords": [
+    "click track",
+    "tempo",
+    "hit point",
+    "bar counting"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hagen, Scoring for Films, 1971",
+  "source_kind": "book",
+  "reference": "Hagen, Scoring for Films: A Complete Text, Criterion Music, 1971",
+  "written": "2026-09-27"
+}

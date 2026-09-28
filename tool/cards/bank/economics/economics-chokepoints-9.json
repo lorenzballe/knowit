@@ -1,0 +1,42 @@
+{
+  "id": "economics-chokepoints-9",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.chokepoints",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: during Panama's 2023 drought, a gas carrier paid close to $4 million just to jump the queue?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. With Gatun Lake low, the canal cut daily crossings, and ships without bookings bid at auction for the few spare slots. On 8 November 2023 Japan's Eneos paid $3.975 million for its gas carrier to pass, on top of the ordinary toll. Waiting weeks, or sailing round South America, would have cost more.",
+  "move": "A queue has a price, and scarcity reveals it.",
+  "trap": "Measuring the claim against ordinary tolls of a few hundred thousand.",
+  "keywords": [
+    "panama canal",
+    "slot auctions",
+    "drought",
+    "gatun lake",
+    "eneos"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "economics-chokepoints-3"
+  ],
+  "figure": "none",
+  "source": "The Maritime Executive, November 2023",
+  "source_kind": "news_archive",
+  "reference": "https://maritime-executive.com/article/panama-canal-auction-sets-record-4m-for-slot-as-congestion-grows",
+  "written": "2026-09-27"
+}

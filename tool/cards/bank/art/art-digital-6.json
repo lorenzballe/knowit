@@ -1,0 +1,36 @@
+{
+  "id": "art-digital-6",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.digital",
+  "also": [
+    "technology.where_things_come_from.chips"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What was the charge-coupled device, the sensor in early digital cameras, first invented to do?",
+  "answer": "To store data. In 1969 Willard Boyle and George Smith at Bell Labs designed it as a memory that passed packets of charge along a chip like buckets in a line. Light frees charge in silicon, so the chip could also read an image. The memory failed; the sensor won them a 2009 Nobel Prize.",
+  "move": "An invention often succeeds at a job it was never designed for.",
+  "keywords": [
+    "charge-coupled device",
+    "bell labs",
+    "boyle and smith",
+    "image sensors",
+    "nobel prize"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nobel Prize in Physics 2009",
+  "source_kind": "institution",
+  "reference": "https://www.nobelprize.org/prizes/physics/2009/press-release/",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,35 @@
+{
+  "id": "music-reverb-7",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.reverb",
+  "also": [
+    "music.sound_itself.acoustics"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did London's Royal Festival Hall, judged too dry, get a longer bass reverberation in the 1960s?",
+  "answer": "With microphones and loudspeakers. P. H. Parkin and K. Morgan's assisted resonance used many channels, each tuned to prolong one narrow frequency: a microphone heard the hall, an amplifier fed it back. Empty, the 125-hertz band rose from about 1.4 to 2.5 seconds. A concert hall ran on a reverb unit.",
+  "move": "When the structure cannot change, check whether a signal can stand in for it.",
+  "keywords": [
+    "royal festival hall",
+    "assisted resonance",
+    "reverberation time",
+    "london"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Parkin & Morgan, JASA, 1970",
+  "source_kind": "paper",
+  "reference": "Parkin & Morgan, 'Assisted Resonance' in The Royal Festival Hall, London: 1965–1969, Journal of the Acoustical Society of America, 1970",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "psychology-focus-7",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.focus",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a flash at one spot first speed up, then slow down, responses to a target there?",
+  "answer": "Attention jumps to the flash, then is steered away from it. Posner and Cohen found targets at a flashed spot were detected faster for roughly the first 150 milliseconds, but more slowly after about 300, when nothing had appeared there. This inhibition of return keeps a searching eye from rechecking where it just looked.",
+  "move": "A quick second look at the same place is usually wasted.",
+  "keywords": [
+    "inhibition of return",
+    "spatial cueing",
+    "visual search",
+    "michael posner"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Posner & Cohen, Attention and Performance X, 1984",
+  "source_kind": "book",
+  "reference": "Posner & Cohen, Components of visual orienting, in Bouma & Bouwhuis (eds), Attention and Performance X, Erlbaum, 1984",
+  "written": "2026-09-27"
+}

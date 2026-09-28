@@ -1,0 +1,39 @@
+{
+  "id": "human_body-longevity-8",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.longevity",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "survivorship",
+  "question": "Mix frail and robust people, each group's death risk doubling every 8 years. How does the whole population's risk rise at extreme ages?",
+  "options": [
+    "Doubling every 8 years, as before",
+    "Doubling more slowly than every 8 years",
+    "Doubling faster than every 8 years"
+  ],
+  "correct": 1,
+  "answer": "More slowly. The frail die first, so each year the survivors are a more robust crowd, and the average risk climbs less steeply than anyone's own risk does. Vaupel and colleagues showed in 1979 that this sorting alone can bend the curve towards a plateau, even if no individual's risk ever stops doubling.",
+  "move": "A group can change because of who leaves, while no member changes.",
+  "trap": "Assuming a mix behaves like the groups it is made of.",
+  "keywords": [
+    "frailty",
+    "mortality plateau",
+    "heterogeneity",
+    "demography"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vaupel, Manton & Stallard, Demography, 1979",
+  "source_kind": "paper",
+  "reference": "Vaupel, Manton & Stallard, The impact of heterogeneity in individual frailty on the dynamics of mortality, Demography, 1979",
+  "written": "2026-09-27"
+}

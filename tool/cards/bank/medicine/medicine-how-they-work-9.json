@@ -1,0 +1,33 @@
+{
+  "id": "medicine-how-they-work-9",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.how_they_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does a shingles vaccine made of a single viral protein beat the live-virus vaccine in people over 70?",
+  "answer": "Through its adjuvant. Shingrix pairs one protein, glycoprotein E, with AS01, which combines a detoxified fragment of bacterial membrane and QS-21, a saponin from the bark of a Chilean soapbark tree. It rouses ageing T cells. In trials it cut shingles by about 90% in people over 70; the live vaccine had managed about 38%.",
+  "move": "The helper added to a message can matter more than the message.",
+  "keywords": [
+    "shingles",
+    "shingrix",
+    "adjuvant",
+    "qs-21",
+    "ageing immune system"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cunningham et al., NEJM, 2016",
+  "source_kind": "paper",
+  "reference": "Cunningham et al., Efficacy of the herpes zoster subunit vaccine in adults 70 years of age or older, New England Journal of Medicine, 2016",
+  "written": "2026-09-27"
+}

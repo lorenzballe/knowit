@@ -1,0 +1,40 @@
+{
+  "id": "economics-rent-8",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.rent",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "In the 1990s France extended housing benefit to many more renters. Of each extra euro of benefit, how much went into higher rents?",
+  "options": [
+    "Most of it",
+    "About a quarter",
+    "Almost none"
+  ],
+  "correct": 0,
+  "answer": "Most of it. Gabrielle Fack estimated that between 50 and 80 cents of each extra euro ended up as higher rent for low-income tenants. Flats barely grew in number while the reform drew students into renting alone. A subsidy to buyers in a market that cannot expand ends up with the sellers.",
+  "move": "Before subsidising buyers, ask whether sellers can make any more.",
+  "trap": "Assuming the benefit stays with the tenant it is paid to.",
+  "keywords": [
+    "housing benefit",
+    "tax incidence",
+    "france",
+    "landlords",
+    "students"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fack, Labour Economics, 2006",
+  "source_kind": "paper",
+  "reference": "Fack, Are housing benefit an effective way to redistribute income? Evidence from a natural experiment in France, Labour Economics, 2006",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "language-brand-names-6",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.brand_names",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In the 1920s the tyre maker B. F. Goodrich gave a product the name Zipper. Which product?",
+  "options": [
+    "A slide fastener",
+    "Rubber overshoes",
+    "A bicycle tyre"
+  ],
+  "correct": 1,
+  "answer": "Rubber overshoes. Goodrich sold galoshes closed by a hookless slide fastener and named the boots Zippers, after the sound. Buyers moved the name from the boot to the fastener, and Goodrich could defend its trademark only for footwear. The fastener's own maker had been selling it under the clumsy name hookless fastener.",
+  "move": "The thing a name ends up on is not always the thing it began on.",
+  "trap": "Assuming the famous name was coined for the famous invention.",
+  "keywords": [
+    "zipper",
+    "b. f. goodrich",
+    "galoshes",
+    "trademark",
+    "slide fastener"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Friedel, Zipper: An Exploration in Novelty",
+  "source_kind": "book",
+  "reference": "Friedel, Zipper: An Exploration in Novelty, W. W. Norton, 1994",
+  "written": "2026-09-27"
+}

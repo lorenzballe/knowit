@@ -1,0 +1,41 @@
+{
+  "id": "nature-clouds-7",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.clouds",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in tropical clouds, raindrops can form with no ice anywhere in the cloud?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Where cloud tops stay above freezing, bigger droplets fall faster than small ones, sweep them up and merge, growing into raindrops within tens of minutes. Satellite radar shows much of the rain over tropical oceans falling this way, from clouds whose tops never reach the freezing level.",
+  "move": "A rule learned in one climate may be only one of several routes.",
+  "trap": "Applying the rule that rain starts as snow to every cloud.",
+  "keywords": [
+    "warm rain",
+    "collision and coalescence",
+    "raindrops",
+    "tropical oceans"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "nature-clouds-3"
+  ],
+  "figure": "none",
+  "source": "Lau & Wu, Geophysical Research Letters, 2003",
+  "source_kind": "paper",
+  "reference": "Lau & Wu, Warm rain processes over tropical oceans and climate implications, Geophysical Research Letters, 2003",
+  "written": "2026-09-27"
+}

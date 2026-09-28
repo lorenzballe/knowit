@@ -1,0 +1,32 @@
+{
+  "id": "psychology-false-memories-8",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.false_memories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How common is it to keep a vivid memory of an event one no longer believes happened?",
+  "answer": "Common enough: about a fifth of the people Mazzoni, Scoboria and Harvey surveyed reported at least one. These nonbelieved memories kept most of the sensory detail of believed ones. Belief was usually withdrawn because someone, often family, said the event never happened. The picture of the day stayed; the conviction behind it left.",
+  "move": "Seeing a scene clearly and believing it happened are separate verdicts.",
+  "keywords": [
+    "nonbelieved memories",
+    "autobiographical memory",
+    "belief",
+    "social feedback"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mazzoni, Scoboria & Harvey, Psychological Science, 2010",
+  "source_kind": "paper",
+  "reference": "doi:10.1177/0956797610379865",
+  "written": "2026-09-27"
+}

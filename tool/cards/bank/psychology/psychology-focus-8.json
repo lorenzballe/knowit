@@ -1,0 +1,39 @@
+{
+  "id": "psychology-focus-8",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.focus",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A visual search task is made harder by adding more items to scan. What happens to interference from an irrelevant flanking letter?",
+  "options": [
+    "It grows, as focus gets stretched",
+    "It shrinks, as spare capacity runs out",
+    "It stays about the same"
+  ],
+  "correct": 1,
+  "answer": "It shrinks. In Lavie's load theory, a crowded display uses up perception, leaving none to process the distractor. Loading working memory does the reverse: holding digits in mind increased flanker interference in Lavie and colleagues' 2004 study, because control of what gets in weakened. Busy eyes filter well; a busy mind filters badly.",
+  "move": "Ask which part of the system is busy before predicting what leaks through.",
+  "trap": "It grows, since a harder task seems to make focus more fragile.",
+  "keywords": [
+    "perceptual load",
+    "load theory",
+    "flanker task",
+    "working memory"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lavie et al., JEP: General, 2004",
+  "source_kind": "paper",
+  "reference": "Lavie, Hirst, de Fockert & Viding, Load theory of selective attention and cognitive control, Journal of Experimental Psychology: General, 2004",
+  "written": "2026-09-27"
+}

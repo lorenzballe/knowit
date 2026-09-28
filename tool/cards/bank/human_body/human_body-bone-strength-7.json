@@ -1,0 +1,42 @@
+{
+  "id": "human_body-bone-strength-7",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.bone_strength",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "An astronaut's hip loses about 1.5% of its bone a month. A six-month mission equals how many years of 1%-a-year ageing?",
+  "value": 9,
+  "unit": "years",
+  "answer": "9% / 1% a year = 9 years.",
+  "move": "Check the time unit on a rate before calling it small.",
+  "trap": "Hearing 1.5% as small without noticing it is per month.",
+  "hint": "Work out the total lost in orbit, then divide by the yearly rate.",
+  "steps": [
+    "1.5% a month x 6 months = 9% lost in orbit.",
+    "Ageing on Earth takes about 1% a year.",
+    "9% / 1% a year = 9 years."
+  ],
+  "keywords": [
+    "astronauts",
+    "bone loss",
+    "spaceflight",
+    "hip",
+    "weightlessness"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lang et al., JBMR, 2004",
+  "source_kind": "paper",
+  "reference": "doi:10.1359/JBMR.040307",
+  "written": "2026-09-27"
+}

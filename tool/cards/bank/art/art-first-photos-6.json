@@ -1,0 +1,33 @@
+{
+  "id": "art-first-photos-6",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.first_photos",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who wrote the word photographie in his notes years before 1839, and where?",
+  "answer": "Hercule Florence, a French-born artist living in Campinas, Brazil. In the early 1830s, far from Paris, he fixed images with silver salts, printed labels and diplomas by light, and called the method photographie in his notebooks. They lay unread until the historian Boris Kossoy studied them in the 1970s.",
+  "move": "A claim to be first usually means first among those who were noticed.",
+  "keywords": [
+    "hercule florence",
+    "campinas",
+    "brazil",
+    "silver salts",
+    "invention"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kossoy, Hercule Florence, 1980",
+  "source_kind": "book",
+  "reference": "Boris Kossoy, Hercule Florence: a descoberta isolada da fotografia no Brasil, Duas Cidades, 1980",
+  "written": "2026-09-27"
+}

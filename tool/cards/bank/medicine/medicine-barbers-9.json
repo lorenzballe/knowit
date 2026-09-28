@@ -1,0 +1,33 @@
+{
+  "id": "medicine-barbers-9",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.barbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a late medieval barber decide on which day to bleed a patient, and from which part of the body?",
+  "answer": "By the Moon's place in the zodiac. Almanacs showed a zodiac man, each body part ruled by a sign, and the rule was never to bleed a part while the Moon stood in its sign. A bloodletting calendar for 1457 was among the first things printed at Mainz. The sky booked the appointment.",
+  "move": "A rule followed precisely can still rest on nothing at all.",
+  "keywords": [
+    "bloodletting",
+    "zodiac man",
+    "almanacs",
+    "astrology",
+    "barber-surgeons"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Siraisi, Medieval and Early Renaissance Medicine, 1990",
+  "source_kind": "book",
+  "reference": "Siraisi, Medieval and Early Renaissance Medicine: An Introduction to Knowledge and Practice, University of Chicago Press, 1990",
+  "written": "2026-09-27"
+}

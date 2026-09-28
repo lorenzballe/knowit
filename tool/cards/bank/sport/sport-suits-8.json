@@ -1,0 +1,39 @@
+{
+  "id": "sport-suits-8",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.suits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In a cycling time trial, roughly what share of the air drag comes from the rider rather than the bike?",
+  "options": [
+    "About a quarter",
+    "About half",
+    "About three quarters"
+  ],
+  "correct": 2,
+  "answer": "About three quarters. A bike is thin and edge-on to the wind; the rider is a broad, blunt shape on top, and reviews put the body's share at roughly 70 to 80%. So teams lavish care on skinsuits and helmets. The fabric wraps the largest drag source in the race.",
+  "move": "Look for the cost where the mass is, not where the engineering shows.",
+  "trap": "Seeing sculpted carbon frames and guessing the bike makes half the drag.",
+  "keywords": [
+    "time trial",
+    "skinsuit",
+    "aerodynamic drag",
+    "cycling"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Crouch et al., Sports Engineering, 2017",
+  "source_kind": "paper",
+  "reference": "Crouch, Burton, LaBry & Blair, Riding against the wind: a review of competition cycling aerodynamics, Sports Engineering, 2017",
+  "written": "2026-09-27"
+}

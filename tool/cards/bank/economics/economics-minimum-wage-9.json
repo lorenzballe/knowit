@@ -1,0 +1,42 @@
+{
+  "id": "economics-minimum-wage-9",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.minimum_wage",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "The US federal minimum of $7.25 took effect in July 2009; prices have since risen about 50%. Its worth in 2009 dollars?",
+  "value": 4.83,
+  "unit": "dollars",
+  "tolerance": 0.05,
+  "answer": "$7.25 / 1.50 = about $4.83 in 2009 dollars.",
+  "move": "Deflate by dividing, never by subtracting the percentage.",
+  "trap": "Taking 50% off $7.25 and getting $3.63.",
+  "hint": "Ask what $1.50 today buys in 2009 goods.",
+  "steps": [
+    "Prices up about 50%: what cost $1.00 in 2009 now costs $1.50.",
+    "Real value = today's wage divided by 1.50.",
+    "$7.25 / 1.50 = about $4.83 in 2009 dollars."
+  ],
+  "keywords": [
+    "federal minimum wage",
+    "inflation",
+    "real wages",
+    "consumer prices"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "BLS, Consumer Price Index, 2025",
+  "source_kind": "statistics",
+  "reference": "US Bureau of Labor Statistics, Consumer Price Index for All Urban Consumers (CPI-U), 2025",
+  "written": "2026-09-27"
+}

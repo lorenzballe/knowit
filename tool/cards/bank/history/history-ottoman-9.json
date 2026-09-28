@@ -1,0 +1,39 @@
+{
+  "id": "history-ottoman-9",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.ottoman",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the Ottoman capitulations, privileges for French merchants, were first forced on a weakened empire?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Selim II granted them in 1569, at the height of Ottoman power, as a favour to a useful ally against the Habsburgs, and they were renewed at each accession. Only after 1740, when they were made permanent and Europe grew stronger, did they become a lever for foreigners to escape Ottoman courts and taxes.",
+  "move": "Ask what a rule meant when it was made, not what it later became.",
+  "trap": "Reading their later role back into how they began.",
+  "keywords": [
+    "capitulations",
+    "selim ii",
+    "france",
+    "trade privileges",
+    "habsburgs"
+  ],
+  "era": "early_modern",
+  "region": "middle_east",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "İnalcık, Encyclopaedia of Islam, Imtiyāzāt",
+  "source_kind": "reference_work",
+  "reference": "İnalcık, Imtiyāzāt, in The Encyclopaedia of Islam, new edition, vol. 3, Brill, 1971",
+  "written": "2026-09-27"
+}

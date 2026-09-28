@@ -1,0 +1,40 @@
+{
+  "id": "economics-2008-9",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.2008",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "After the US government rescued the insurer AIG in 2008, where did much of the rescue money go?",
+  "options": [
+    "To AIG's own policyholders",
+    "To banks that had bought its protection",
+    "To AIG's shareholders"
+  ],
+  "correct": 1,
+  "answer": "To banks that had bought its protection. AIG had sold credit default swaps, insurance-like contracts on mortgage bonds, and owed collateral it lacked. The rescue let those banks be paid in full, 100 cents on the dollar: Goldman Sachs, Société Générale and Deutsche Bank each received more than $11 billion. Saving AIG saved its creditors.",
+  "move": "When a rescue is announced, ask whose debts it pays.",
+  "trap": "Assuming an insurer's rescue mainly protects its policyholders.",
+  "keywords": [
+    "aig",
+    "credit default swaps",
+    "counterparties",
+    "bailout",
+    "goldman sachs"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "SIGTARP, AIG counterparty payments, 2009",
+  "source_kind": "institution",
+  "reference": "Office of the Special Inspector General for the Troubled Asset Relief Program, Factors Affecting Efforts to Limit Payments to AIG Counterparties, 2009",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-fan-clubs-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.fan_clubs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "What drove the Japanese idol group AKB48's repeated million-selling first weeks for singles in the 2010s?",
+  "options": [
+    "Ballots and handshake tickets inside the CDs",
+    "A national habit of buying physical CDs",
+    "Heavy buying by fans across Asia"
+  ],
+  "correct": 0,
+  "answer": "Ballots and handshake tickets inside the CDs. Each copy of the single before the group's annual election held one vote on which members would front the next record, and other editions held tickets to shake a member's hand. Devoted fans bought dozens of copies, some hundreds. A million copies did not mean a million buyers.",
+  "move": "Count the people behind a number, not just the units.",
+  "trap": "Crediting Japan's CD habit, real but far too weak for such totals.",
+  "keywords": [
+    "akb48",
+    "idol groups",
+    "cd sales",
+    "fan voting",
+    "handshake events"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Galbraith and Karlin, Idols and Celebrity, 2012",
+  "source_kind": "book",
+  "reference": "Patrick W. Galbraith and Jason G. Karlin (eds.), Idols and Celebrity in Japanese Media Culture, Palgrave Macmillan, 2012",
+  "written": "2026-09-27"
+}

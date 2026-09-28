@@ -1,0 +1,38 @@
+{
+  "id": "science-lasers-6",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.lasers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: photons in a steady laser beam reach a detector at random moments, like raindrops, not evenly spaced?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A laser's wave is steady and orderly, yet its photons arrive independently of one another: counts per time slice scatter like raindrops on a roof. Light from a bulb or star is lumpier still: its photons bunch. Evenly spaced photons need special sources, such as a single atom emitting one by one.",
+  "move": "An orderly whole can be built from parts that arrive at random.",
+  "trap": "False, because perfectly ordered light should deliver photons in step.",
+  "keywords": [
+    "photon statistics",
+    "laser light",
+    "poisson distribution",
+    "photon bunching"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Loudon, The Quantum Theory of Light, 2000",
+  "source_kind": "book",
+  "reference": "Loudon, The Quantum Theory of Light, 3rd edition, Oxford University Press, 2000",
+  "written": "2026-09-27"
+}

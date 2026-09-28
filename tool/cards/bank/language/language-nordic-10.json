@@ -1,0 +1,37 @@
+{
+  "id": "language-nordic-10",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.nordic",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Do national words like hygge and lagom reveal something real about the people who use them?",
+  "sides": [
+    "Yes, they mark real values",
+    "No, they are mostly marketing"
+  ],
+  "answer": "A language grows everyday words for what its speakers keep talking about. Anna Wierzbicka's studies of cultural key words show such terms bundle expectations outsiders miss, and hygge carries unspoken rules about warmth, equality and not dominating the talk that Danes recognise at once. A word used every day is a record of priorities.",
+  "move": "The hinge is whether a common word proves a common behaviour.",
+  "counterpoint": "The hygge boom of 2016 was a publishing trend aimed at foreign buyers, selling candles and blankets as a national trait. When Terracciano and colleagues compared national stereotypes with measured personality across 49 cultures in 2005, the two did not match. English has cosy, and no one reads a national soul into it.",
+  "keywords": [
+    "hygge",
+    "lagom",
+    "national character",
+    "linguistic relativity"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wierzbicka, Understanding Cultures through Their Key Words",
+  "source_kind": "book",
+  "reference": "Wierzbicka, Understanding Cultures through Their Key Words, Oxford University Press, 1997",
+  "written": "2026-09-27"
+}

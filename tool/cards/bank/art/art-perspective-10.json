@@ -1,0 +1,42 @@
+{
+  "id": "art-perspective-10",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.perspective",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A painted square-tiled floor's diagonals meet the horizon 60 cm each side of the vanishing point. From how many cm should it be viewed?",
+  "value": 60,
+  "unit": "cm",
+  "answer": "Viewing distance = 60 cm.",
+  "move": "A picture built by rule tells you where to stand, if you read it.",
+  "hint": "Work out where a line at 45 degrees to the picture vanishes.",
+  "steps": [
+    "Diagonals of square tiles run at 45 degrees to the picture.",
+    "Such lines vanish where a 45-degree sight line from the eye meets the picture.",
+    "That point lies as far from the central vanishing point as the eye is from the picture.",
+    "Viewing distance = 60 cm."
+  ],
+  "keywords": [
+    "distance point",
+    "vanishing point",
+    "tiled floor",
+    "viewing distance",
+    "diagonals"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kemp, The Science of Art, 1990",
+  "source_kind": "book",
+  "reference": "Martin Kemp, The Science of Art: Optical Themes in Western Art from Brunelleschi to Seurat, Yale University Press, 1990",
+  "written": "2026-09-27"
+}

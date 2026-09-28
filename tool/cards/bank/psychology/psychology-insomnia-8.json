@@ -1,0 +1,41 @@
+{
+  "id": "psychology-insomnia-8",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.insomnia",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "About a third of adults report insomnia symptoms; about 6% meet full diagnostic criteria. What percentage of the symptomatic meet them?",
+  "value": 18,
+  "unit": "percent",
+  "answer": "18 / 100 = 18 percent.",
+  "move": "Before a rate reassures or alarms you, ask what it is a share of.",
+  "trap": "Answering 6, the disorder's share of all adults, not of the symptomatic.",
+  "hint": "Picture 300 adults and count who falls in each group.",
+  "steps": [
+    "Of 300 adults, a third, 100, report symptoms.",
+    "6% of 300 = 18 meet the criteria, all among those 100.",
+    "18 / 100 = 18 percent."
+  ],
+  "keywords": [
+    "insomnia disorder",
+    "insomnia symptoms",
+    "prevalence",
+    "diagnostic criteria"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Ohayon, Sleep Medicine Reviews, 2002",
+  "source_kind": "paper",
+  "reference": "Ohayon, Epidemiology of insomnia: what we know and what we still need to learn, Sleep Medicine Reviews, 2002",
+  "written": "2026-09-27"
+}

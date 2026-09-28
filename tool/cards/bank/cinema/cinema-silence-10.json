@@ -1,0 +1,44 @@
+{
+  "id": "cinema-silence-10",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.silence",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Cinemas play a test signal 20 dB below full scale at 85 dB. Room noise is 35 dB. Usable range, in dB?",
+  "value": 70,
+  "unit": "dB",
+  "answer": "105 − 35 = 70 dB.",
+  "move": "A range runs from the floor to the ceiling, not from the middle.",
+  "trap": "Counting from 85 dB, as if the calibration level were the ceiling.",
+  "hint": "Find the loudest level the system allows first, then subtract the floor.",
+  "steps": [
+    "Full scale is 20 dB above the test signal: 85 + 20 = 105 dB.",
+    "The quietest usable sound must sit above the room's 35 dB.",
+    "105 − 35 = 70 dB."
+  ],
+  "keywords": [
+    "cinema calibration",
+    "dynamic range",
+    "decibels",
+    "background noise"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "cinema-silence-2"
+  ],
+  "figure": "bars",
+  "source": "SMPTE RP 200, cinema sound levels",
+  "source_kind": "standard",
+  "reference": "SMPTE RP 200:2012, Relative and Absolute Sound Pressure Levels for Motion-Picture Multichannel Sound Systems",
+  "written": "2026-09-27"
+}

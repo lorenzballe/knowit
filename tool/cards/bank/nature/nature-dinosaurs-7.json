@@ -1,0 +1,39 @@
+{
+  "id": "nature-dinosaurs-7",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.dinosaurs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Ruthenium isotopes in the impact layer reveal what kind of body struck Chicxulub. What was it?",
+  "options": [
+    "A carbon-rich asteroid formed beyond Jupiter",
+    "An icy comet from the outer solar system",
+    "A stony asteroid from the inner belt"
+  ],
+  "correct": 0,
+  "answer": "A carbon-rich asteroid formed beyond Jupiter. Fischer-Gödde and colleagues found ruthenium in the boundary clay matching carbonaceous meteorites, which formed in the outer solar system before settling into the asteroid belt, and not comets or the stony asteroids common near Earth. The killer was a dark rock from the belt's cold outer reaches.",
+  "move": "An origin far away does not settle what kind of thing arrived.",
+  "trap": "Linking an outer solar system origin with comets rather than asteroids.",
+  "keywords": [
+    "chicxulub impactor",
+    "ruthenium isotopes",
+    "carbonaceous asteroid",
+    "comets"
+  ],
+  "era": "ancient",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fischer-Gödde et al., Science, 2024",
+  "source_kind": "paper",
+  "reference": "Fischer-Gödde et al., Ruthenium isotopes show the Chicxulub impactor was a carbonaceous-type asteroid, Science, 2024",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "food-chilli-6",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.chilli",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A lab rates a dried chilli at 100,000 Scoville units. The fresh pod was 80% water. Its rating by fresh weight, in thousands?",
+  "value": 20,
+  "unit": "thousand Scoville units",
+  "answer": "100,000 / 5 = 20,000 Scoville units, or 20 thousand.",
+  "move": "Before comparing two concentrations, check that both divide by the same thing.",
+  "trap": "Assuming drying changes nothing, since no capsaicin is lost.",
+  "hint": "Drying removes water, not capsaicin: ask how much fresh pod holds one gram of dry matter.",
+  "steps": [
+    "100 g of fresh pod at 80% water holds 20 g of dry matter.",
+    "The same capsaicin is spread over 100 g fresh instead of 20 g dry: 5 times the mass.",
+    "100,000 / 5 = 20,000 Scoville units, or 20 thousand."
+  ],
+  "keywords": [
+    "scoville scale",
+    "capsaicin",
+    "dry weight",
+    "hplc",
+    "water content"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Collins, Mayer Wasmund & Bosland, HortScience, 1995",
+  "source_kind": "paper",
+  "reference": "Collins, Mayer Wasmund & Bosland, Improved method for quantifying capsaicinoids in Capsicum using high-performance liquid chromatography, HortScience, 1995",
+  "written": "2026-09-27"
+}

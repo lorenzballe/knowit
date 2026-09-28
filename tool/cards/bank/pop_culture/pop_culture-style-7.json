@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-style-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.style",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "Generra sold $50 million of colour-changing Hypercolor clothes between February and May 1991. Where was the company by mid-1992?",
+  "options": [
+    "Still growing on Hypercolor alone",
+    "Bought out by a sportswear giant",
+    "In bankruptcy protection"
+  ],
+  "correct": 2,
+  "answer": "In bankruptcy protection, filed in July 1992. Demand overshot anything Generra had planned for, and it chased dye supplies and factory capacity just as the fad peaked. The heat-sensitive colour faded with washing. Shirts that changed colour with body heat went cold within a year.",
+  "move": "Build for the ordinary year, not the best one.",
+  "trap": "Extrapolating a peak season as if the fad would hold its height.",
+  "keywords": [
+    "hypercolor",
+    "generra",
+    "fads",
+    "bankruptcy",
+    "t-shirts"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Seattle Times, 30 March 1993",
+  "source_kind": "news_archive",
+  "reference": "https://archive.seattletimes.com/archive/19930330/1693271/generra-slashes-its-operations",
+  "written": "2026-09-27"
+}

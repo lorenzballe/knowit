@@ -1,0 +1,33 @@
+{
+  "id": "human_body-fingerprints-7",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.fingerprints",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do a child's fingerprints fade from a surface sooner than an adult's?",
+  "answer": "Their residue lacks grease. Oak Ridge chemists led by Michelle Buchanan found children's prints rich in small fatty acids that evaporate, while adults' carry heavier waxy esters from the oil glands of the face, which switch on at puberty and reach the fingers by touch. A missing child's prints can vanish from a suspect's car.",
+  "move": "Ask what makes a trace last, not only who could have left it.",
+  "keywords": [
+    "latent fingerprints",
+    "children",
+    "sebum",
+    "forensic chemistry",
+    "oak ridge"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Buchanan et al., Oak Ridge National Laboratory",
+  "source_kind": "institution",
+  "reference": "https://impact.ornl.gov/en/publications/chemical-characterization-of-fingerprints-from-adults-and-childre/",
+  "written": "2026-09-27"
+}

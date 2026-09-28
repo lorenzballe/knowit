@@ -1,0 +1,32 @@
+{
+  "id": "science-insulation-6",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.insulation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do spacecraft insulation blankets stack many thin metal-coated layers that must not touch each other?",
+  "answer": "In a vacuum heat crosses only as radiation, and each shiny layer reflects most of it back, so more layers mean proportionally less flow. Layers that touch conduct heat, so fine netting keeps them apart. Stitched, pinned and pressed at the edges, a fitted blanket often does several times worse than a flat sample.",
+  "move": "Extra layers help only while each one stays apart from the next.",
+  "keywords": [
+    "multilayer insulation",
+    "spacecraft",
+    "thermal radiation",
+    "vacuum"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gilmore, Spacecraft Thermal Control Handbook, 2002",
+  "source_kind": "book",
+  "reference": "Gilmore (ed.), Spacecraft Thermal Control Handbook, Volume 1: Fundamental Technologies, 2nd edition, The Aerospace Press, 2002",
+  "written": "2026-09-27"
+}

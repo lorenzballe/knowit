@@ -1,0 +1,43 @@
+{
+  "id": "economics-2008-8",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.2008",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "At the end of 2007 Lehman Brothers held assets about 31 times its equity. What percentage fall in asset values erases the equity?",
+  "value": 3.2,
+  "unit": "per cent",
+  "tolerance": 0.1,
+  "answer": "0.032 x 100 = 3.2%.",
+  "move": "The more a firm borrows, the smaller the loss that ends it.",
+  "trap": "Assuming a bank can only fail after a fall of a third or more.",
+  "hint": "Equity is the slice of assets the owners would lose first.",
+  "steps": [
+    "Equity is 1 part in every 31 of assets.",
+    "1 / 31 = 0.032 of assets.",
+    "0.032 x 100 = 3.2%."
+  ],
+  "keywords": [
+    "lehman brothers",
+    "leverage",
+    "equity",
+    "balance sheet",
+    "investment banks"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lehman Brothers, Form 10-K, fiscal 2007",
+  "source_kind": "company",
+  "reference": "Lehman Brothers Holdings Inc., Annual Report on Form 10-K for the fiscal year ended 30 November 2007, 2008",
+  "written": "2026-09-27"
+}

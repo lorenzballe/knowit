@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-socrates-9",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.socrates",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Plato and Xenophon each wrote a defence speech for Socrates. Which of them was in court to hear the real one?",
+  "options": [
+    "Both of them",
+    "Neither of them",
+    "Plato only"
+  ],
+  "correct": 2,
+  "answer": "Plato only. Plato names himself twice among those present, once as a guarantor of the fine Socrates offered. Xenophon was away in Asia with Greek mercenaries and credits his account to Hermogenes. Yet Plato's Phaedo says Plato was ill on the day Socrates died: the most famous death scene in philosophy is secondhand.",
+  "move": "Before trusting a vivid account, ask where its author was standing.",
+  "trap": "Both, since each wrote the speech as if from the courtroom.",
+  "keywords": [
+    "plato",
+    "xenophon",
+    "trial of socrates",
+    "eyewitness",
+    "socratic problem"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Plato, Apology 34a, 38b; Phaedo 59b",
+  "source_kind": "primary_document",
+  "reference": "Plato, Complete Works, ed. Cooper, Hackett, 1997",
+  "written": "2026-09-27"
+}

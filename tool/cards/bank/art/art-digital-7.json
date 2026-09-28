@@ -1,0 +1,45 @@
+{
+  "id": "art-digital-7",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.digital",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A 24-megapixel camera records 14 bits per pixel in its raw file. Uncompressed, how many megabytes is one picture?",
+  "value": 42,
+  "unit": "megabytes",
+  "answer": "336 million bits / 8 bits per byte = 42 megabytes.",
+  "move": "Before multiplying, check how many numbers each item really stores.",
+  "trap": "Multiplying by three colours per pixel and reaching about 126 megabytes.",
+  "hint": "A raw file keeps each pixel's single filtered reading; colour is computed later.",
+  "steps": [
+    "Each pixel holds one colour reading, not three: 24 million readings.",
+    "24 million × 14 bits = 336 million bits.",
+    "336 million bits / 8 bits per byte = 42 megabytes."
+  ],
+  "keywords": [
+    "raw files",
+    "bit depth",
+    "megapixels",
+    "file size",
+    "bayer filter"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "technology-4"
+  ],
+  "figure": "none",
+  "source": "Fraser & Schewe, Real World Camera Raw, 2005",
+  "source_kind": "book",
+  "reference": "Bruce Fraser & Jeff Schewe, Real World Camera Raw with Adobe Photoshop CS2, Peachpit Press, 2005",
+  "written": "2026-09-27"
+}

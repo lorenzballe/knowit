@@ -1,0 +1,38 @@
+{
+  "id": "medicine-placebo-7",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.placebo",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "True or false: in nerve-pain drug trials from 1990 to 2013, placebo responses grew in European and Asian trials as in American ones?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Tuttle and colleagues found the rise only in US trials, where placebo groups improved steadily while drug groups stayed flat, shrinking the drugs' advantage. Trials elsewhere showed no such rise. US trials had grown larger and longer over those years, which points to how trials were run, not to more suggestible patients.",
+  "move": "When a result drifts over time, check what changed in how it was measured.",
+  "trap": "True, treating the placebo response as a fixed property of a pill.",
+  "keywords": [
+    "placebo response",
+    "neuropathic pain",
+    "clinical trials",
+    "united states"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tuttle et al., Pain, 2015",
+  "source_kind": "paper",
+  "reference": "https://journals.lww.com/pain/abstract/2015/12000/increasing_placebo_responses_over_time_in_u_s_.27.aspx",
+  "written": "2026-09-27"
+}

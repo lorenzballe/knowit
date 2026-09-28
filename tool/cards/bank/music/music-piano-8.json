@@ -1,0 +1,32 @@
+{
+  "id": "music-piano-8",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.piano",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What can the middle pedal of a concert grand hold that the right-hand pedal cannot?",
+  "answer": "Only the notes already down when it is pressed. The sostenuto pedal, patented by Steinway in 1874, keeps up the dampers of keys held at that moment, while every other damper works normally. A pianist can hold a deep bass note for bars and play crisp chords above it. One pedal, a selective memory.",
+  "move": "A tool that remembers only part of the moment can be the more useful one.",
+  "keywords": [
+    "sostenuto pedal",
+    "dampers",
+    "steinway",
+    "sustain"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lieberman, Steinway & Sons, 1995",
+  "source_kind": "book",
+  "reference": "Lieberman, Steinway & Sons, Yale University Press, 1995",
+  "written": "2026-09-27"
+}

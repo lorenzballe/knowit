@@ -1,0 +1,40 @@
+{
+  "id": "sport-marathon-6",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.marathon",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Of the nine men's marathon world records set between 2003 and 2023, how many were run in Berlin?",
+  "options": [
+    "Three",
+    "Five",
+    "Eight"
+  ],
+  "correct": 2,
+  "answer": "Eight. Every record from Paul Tergat's 2:04:55 in 2003 to Eliud Kipchoge's 2:01:09 in 2022 was set in Berlin; only a Chicago run in 2023 broke the sequence. The course is flat with few sharp turns, late September is usually cool, and the organisers build the elite field and pacing around record attempts.",
+  "move": "When results cluster in one place, ask what that place selects for.",
+  "trap": "Three: picturing records shared among London, Chicago and New York.",
+  "keywords": [
+    "berlin marathon",
+    "world record",
+    "paul tergat",
+    "eliud kipchoge",
+    "course"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "World Athletics, men's marathon record progression",
+  "source_kind": "statistics",
+  "reference": "World Athletics, Records by event: men's marathon world record progression, 2024",
+  "written": "2026-09-27"
+}

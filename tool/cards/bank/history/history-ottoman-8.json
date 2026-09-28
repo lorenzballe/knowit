@@ -1,0 +1,40 @@
+{
+  "id": "history-ottoman-8",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.ottoman",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "Süleyman's first siege of Vienna, in 1529, lasted barely three weeks. What mainly ended it?",
+  "options": [
+    "A relieving Christian army",
+    "Plague in the Ottoman camp",
+    "Distance, rain and the approach of winter"
+  ],
+  "correct": 2,
+  "answer": "Distance, rain and the approach of winter. The army left Istanbul in May and, slowed by rains that forced it to leave much of its heavy artillery behind, reached Vienna only in late September. With winter near and supplies thin, it withdrew in mid-October. The campaign season, more than the enemy, set the empire's reach.",
+  "move": "Before crediting the enemy, check the calendar and the supply line.",
+  "trap": "Recalling 1683, when a relieving army did break the siege.",
+  "keywords": [
+    "siege of vienna",
+    "suleyman the magnificent",
+    "campaign season",
+    "logistics",
+    "artillery"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Imber, The Ottoman Empire, 1300-1650, 2002",
+  "source_kind": "book",
+  "reference": "Imber, The Ottoman Empire, 1300-1650: The Structure of Power, Palgrave Macmillan, 2002",
+  "written": "2026-09-27"
+}

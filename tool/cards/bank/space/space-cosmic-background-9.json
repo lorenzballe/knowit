@@ -1,0 +1,38 @@
+{
+  "id": "space-cosmic-background-9",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.cosmic_background",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the cosmic background holds more energy today than all the starlight and dust glow filling intergalactic space?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Summed over the sky, the afterglow of the Big Bang outshines the combined glow of every galaxy, from ultraviolet to far infrared, by ten to one or more. Stars have shone for over 13 billion years, yet the leftover heat of one early moment still carries most of the light in the universe.",
+  "move": "The brightest thing in view is not always the largest stock.",
+  "trap": "Picturing starlight, visible everywhere, as the universe's main light.",
+  "keywords": [
+    "cosmic background",
+    "extragalactic background light",
+    "starlight",
+    "infrared background"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Hauser & Dwek, Annual Review, 2001",
+  "source_kind": "paper",
+  "reference": "Hauser & Dwek, The Cosmic Infrared Background: Measurements and Implications, Annual Review of Astronomy and Astrophysics 39, 249, 2001",
+  "written": "2026-09-27"
+}

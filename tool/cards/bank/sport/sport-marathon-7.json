@@ -1,0 +1,40 @@
+{
+  "id": "sport-marathon-7",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.marathon",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "In 1991, with the record at 2:06:50, a physiologist put the best measured aerobic capacity, endurance and economy into one runner. His limit?",
+  "options": [
+    "About 2:05, just under the record",
+    "About 1:58, far under it",
+    "About 2:03, a clear step under"
+  ],
+  "correct": 1,
+  "answer": "About 1:58, far under it. Michael Joyner combined the highest oxygen uptake, the largest share of it sustainable for hours and the thriftiest stride then measured, and got 1:57:58. Each trait existed in someone; no one runner had all three. In 2019 Kipchoge ran 1:59:40 in Vienna, with rotating pacers, unratified.",
+  "move": "A limit built from everyone's best parts describes nobody yet.",
+  "trap": "Anchoring on 2:06:50 and allowing the limit only a small margin.",
+  "keywords": [
+    "michael joyner",
+    "marathon limit",
+    "physiological model",
+    "running economy",
+    "eliud kipchoge"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Joyner, Journal of Applied Physiology, 1991",
+  "source_kind": "paper",
+  "reference": "Joyner, Modeling: optimal marathon performance on the basis of physiological factors, Journal of Applied Physiology, 1991",
+  "written": "2026-09-27"
+}

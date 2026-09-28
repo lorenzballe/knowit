@@ -1,0 +1,37 @@
+{
+  "id": "economics-printing-cash-10",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.printing_cash",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should central banks be allowed to pay for transfers straight to households when a slump is deep?",
+  "sides": [
+    "Yes, allow it",
+    "No, keep it barred"
+  ],
+  "answer": "With rates at zero, bond buying mostly lifts asset prices, which helps people who own assets. A one-off transfer paid with newly created money reaches spending directly and adds no public debt. Adair Turner argues that, used rarely and under strict rules, it is less dangerous than letting demand and prices sink for years.",
+  "move": "It turns on whether a rule can hold once the first exception is made.",
+  "counterpoint": "The danger is not the first transfer but the second. Once governments learn the central bank will pay for handouts, every downturn and every election brings pressure for more, and independence ends quietly. The transfers of 2020 and 2021, largely matched by central bank bond buying, were followed by the fastest inflation in forty years.",
+  "keywords": [
+    "helicopter money",
+    "monetary financing",
+    "central bank independence",
+    "inflation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Turner, Between Debt and the Devil, 2015",
+  "source_kind": "book",
+  "reference": "Turner, Between Debt and the Devil: Money, Credit, and Fixing Global Finance, Princeton University Press, 2015",
+  "written": "2026-09-27"
+}

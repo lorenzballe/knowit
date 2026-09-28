@@ -1,0 +1,33 @@
+{
+  "id": "history-plague-10",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.plague",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did chroniclers call the plague's return in 1361 the mortality of children?",
+  "answer": "Because it fell hardest on the young. Chroniclers in England and France recorded that the second outbreak took children and youths above all. One explanation: most adults alive in 1361 had come through 1348, while those born since had never met it. The dead of 1361 were the generation meant to refill the villages.",
+  "move": "Ask what the survivors of the last disaster share before predicting the next.",
+  "keywords": [
+    "second pestilence",
+    "children",
+    "recurrent plague",
+    "immunity",
+    "chronicles"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Horrox, The Black Death, 1994",
+  "source_kind": "primary_document",
+  "reference": "Horrox (ed. and trans.), The Black Death, Manchester Medieval Sources, Manchester University Press, 1994",
+  "written": "2026-09-27"
+}

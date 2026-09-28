@@ -1,0 +1,33 @@
+{
+  "id": "language-how-they-form-6",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.how_they_form",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What has happened to the Great Lakes vowel shift, the Northern Cities Shift, among speakers born since the 1980s?",
+  "answer": "It is retreating in several cities. Older speakers in Michigan and upstate New York say cot close to cat and cat almost as kyat; a Lansing study of speakers born across the 20th century found the youngest backing away from both, though one part carried on. Grandparents and grandchildren now split on cat.",
+  "move": "A trend that ran for decades can reverse within a single generation.",
+  "keywords": [
+    "northern cities shift",
+    "vowels",
+    "michigan",
+    "lansing",
+    "sound change"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wagner et al., Penn Working Papers, 2016",
+  "source_kind": "paper",
+  "reference": "Wagner, Mason, Nesbitt, Pevan & Savage, Reversal and Re-Organization of the Northern Cities Shift in Michigan, University of Pennsylvania Working Papers in Linguistics 22(2), 2016",
+  "written": "2026-09-27"
+}

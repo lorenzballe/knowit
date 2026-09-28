@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-music-6",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.music",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why were CDs sold in America until 1993 inside cardboard boxes twice their height?",
+  "answer": "To fit shops built for vinyl. The longbox, about 30 cm tall, let a CD stand in racks made for LPs and was harder to slip into a pocket. Artists and campaigners attacked the waste, and the labels dropped it in 1993. R.E.M. printed a voter-registration petition on theirs in 1991.",
+  "move": "Packaging often fits the old shelf rather than the new product.",
+  "keywords": [
+    "longbox",
+    "compact disc",
+    "record shops",
+    "packaging",
+    "r.e.m."
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Knopper, Appetite for Self-Destruction, 2009",
+  "source_kind": "book",
+  "reference": "Steve Knopper, Appetite for Self-Destruction: The Spectacular Crash of the Record Industry in the Digital Age, Free Press, 2009",
+  "written": "2026-09-27"
+}

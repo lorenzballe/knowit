@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-local-bans-10",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.local_bans",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Flagstaff, Arizona, ban advertising searchlights in 1958?",
+  "answer": "To protect the telescopes. Lowell Observatory and the US Naval Observatory's new station on the edge of town needed a dark sky, and one searchlight could wash it out. The 1958 ordinance is generally counted the first lighting law written to keep skies dark. In 2001 Flagstaff became the first International Dark Sky City.",
+  "move": "Protect a quiet resource before the noise that would drown it arrives.",
+  "keywords": [
+    "flagstaff",
+    "light pollution",
+    "searchlights",
+    "lowell observatory",
+    "dark sky"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "City of Flagstaff, Dark Sky History",
+  "source_kind": "institution",
+  "reference": "https://flagstaff.az.gov/3855/Dark-Sky-History-in-Flagstaff",
+  "written": "2026-09-27"
+}

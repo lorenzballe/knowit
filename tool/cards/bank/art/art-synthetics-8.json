@@ -1,0 +1,33 @@
+{
+  "id": "art-synthetics-8",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.synthetics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a yellow used by Titian and Vermeer drop out of art history for two centuries?",
+  "answer": "It fell out of use, then out of the books. Lead-tin yellow, made by roasting lead and tin oxides, left palettes in the 18th century, and later writers mistook its traces for Naples yellow. Richard Jacobi identified it in 1941; Hermann Kühn mapped it across old masters. The Milkmaid's bodice spent two centuries unnamed.",
+  "move": "A thing can be in plain sight and still be missing from the record.",
+  "keywords": [
+    "lead-tin yellow",
+    "vermeer",
+    "titian",
+    "naples yellow",
+    "hermann kühn"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kühn, Artists' Pigments, 1993",
+  "source_kind": "book",
+  "reference": "Hermann Kühn, Lead-Tin Yellow, in Artists' Pigments vol. 2, ed. Ashok Roy, National Gallery of Art, Washington, 1993",
+  "written": "2026-09-27"
+}

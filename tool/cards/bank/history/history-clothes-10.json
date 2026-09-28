@@ -1,0 +1,37 @@
+{
+  "id": "history-clothes-10",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.clothes",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Did corsets seriously harm the health of most Victorian women who wore them?",
+  "sides": [
+    "Yes, widely harmful",
+    "No, mostly exaggerated"
+  ],
+  "answer": "Worn daily from girlhood, while bones still grow, corsets pressed on the lower ribs and organs for decades. Doctors of the period linked them to breathlessness, fainting and displaced organs, and skeletons of women from the era show ribs bent inward. A garment worn that long needed no extreme lacing to leave its mark.",
+  "move": "Whichever side you took, how tightly the ordinary wearer laced decides it.",
+  "counterpoint": "Most women laced moderately: the waist sizes corsetmakers sold ran mostly from about 50 to 75 cm, and the tiny waists of fashion plates were drawings. Steele argues the medical campaign mixed real cases with moral panic about vanity. Many women found a corset supportive, much like a modern bra, and worked in one all day.",
+  "keywords": [
+    "corsets",
+    "victorian women",
+    "tight-lacing",
+    "health"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Steele, The Corset: A Cultural History, 2001",
+  "source_kind": "book",
+  "reference": "Steele, The Corset: A Cultural History, Yale University Press, 2001",
+  "written": "2026-09-27"
+}

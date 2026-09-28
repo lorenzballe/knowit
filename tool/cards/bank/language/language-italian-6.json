@@ -1,0 +1,33 @@
+{
+  "id": "language-italian-6",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.italian",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why might omertà, the Mafia's law of silence, be a word for humility?",
+  "answer": "Because the Camorra called itself the society of humility. The Treccani dictionary derives omertà from umiltà in a Neapolitan form: members owed submission to a chief and his rules. A rival etymology points to Sicilian omu, man, and manliness; scholars have not settled it. Either way, keeping quiet was dressed as a virtue.",
+  "move": "Watch for a duty imposed by force that is named as a virtue.",
+  "keywords": [
+    "omertà",
+    "camorra",
+    "mafia",
+    "etymology",
+    "umiltà"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Treccani, Vocabolario, entry omertà",
+  "source_kind": "reference_work",
+  "reference": "https://www.treccani.it/vocabolario/omerta/",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "music-frequencies-7",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.frequencies",
+  "also": [
+    "technology.old_machines.telephones"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A phone line passes nothing below about 300 Hz. A man speaks with a fundamental of 120 Hz. What pitch do listeners hear?",
+  "options": [
+    "His usual pitch, about 120 Hz",
+    "About 360 Hz, the lowest left",
+    "No steady pitch, only buzz"
+  ],
+  "correct": 0,
+  "answer": "His usual pitch, about 120 Hz. The line strips the fundamental but keeps the harmonics at 360, 480, 600 Hz and up, spaced 120 Hz apart, and the brain reads pitch from that spacing: the missing fundamental. The same trick lets a laptop speaker that cannot play 100 Hz still carry a bass line.",
+  "move": "A pattern can reveal a missing piece that no single part contains.",
+  "trap": "Pitch seems to be the lowest frequency present, and that was cut.",
+  "keywords": [
+    "missing fundamental",
+    "pitch",
+    "harmonics",
+    "telephone",
+    "voice"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Plack, The Sense of Hearing, 2014",
+  "source_kind": "book",
+  "reference": "Plack, The Sense of Hearing, 2nd edition, Psychology Press, 2014",
+  "written": "2026-09-27"
+}

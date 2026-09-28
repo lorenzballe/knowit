@@ -1,0 +1,43 @@
+{
+  "id": "sport-fouls-6",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.fouls",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "An NBA possession averages about 1.1 points. Fouling a 45% free-throw shooter sends him to the line twice. How many points does each foul save?",
+  "value": 0.2,
+  "unit": "points",
+  "tolerance": 0.05,
+  "answer": "Saving: 1.1 - 0.9 = 0.2 points per trip.",
+  "move": "Price a deliberate sacrifice against the ordinary outcome it replaces.",
+  "trap": "Reading 45% as nearly nothing and expecting a huge saving.",
+  "hint": "Work out what two free throws are worth on average first.",
+  "steps": [
+    "One free throw is worth 1 x 0.45 = 0.45 points on average.",
+    "Two free throws: 2 x 0.45 = 0.9 points.",
+    "Saving: 1.1 - 0.9 = 0.2 points per trip."
+  ],
+  "keywords": [
+    "intentional foul",
+    "free throws",
+    "expected points",
+    "nba",
+    "possessions"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Oliver, Basketball on Paper, 2004",
+  "source_kind": "book",
+  "reference": "Oliver, Basketball on Paper: Rules and Tools for Performance Analysis, Potomac Books, 2004",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "economics-1929-8",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.1929",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: an investor who bought American shares at the 1929 peak waited about 25 years to break even?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False, once dividends and falling prices are counted. The Dow's price regained its 1929 high only in 1954, but by Mark Hulbert's reckoning a Dow portfolio bought at the peak, dividends reinvested, was back to even in real terms by late 1936. Deflation made every dividend cheque buy more.",
+  "move": "An index of prices is not a record of what owners earned.",
+  "trap": "Reading the Dow's price chart as an investor's wealth.",
+  "keywords": [
+    "dow jones",
+    "dividends",
+    "deflation",
+    "total return",
+    "break-even"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hulbert, The New York Times, 2009",
+  "source_kind": "news_archive",
+  "reference": "Hulbert, 25 Years to Break Even? Not Really, The New York Times, April 2009",
+  "written": "2026-09-27"
+}

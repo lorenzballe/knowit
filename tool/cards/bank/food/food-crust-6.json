@@ -1,0 +1,33 @@
+{
+  "id": "food-crust-6",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.crust",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a crusty loaf crackle audibly for minutes after it comes out of the oven?",
+  "answer": "Its crust is cracking. Out of the oven, the thin, dry, glassy crust cools and contracts faster than the hot, moist crumb beneath, which stays swollen. The stiff shell cannot stretch to fit, so it splits into a web of fine cracks. Bakers call it singing; a pale, underbaked crust stays soft and silent.",
+  "move": "Bond a stiff layer to one that moves differently, and expect cracks.",
+  "keywords": [
+    "bread crust",
+    "cooling",
+    "contraction",
+    "crazing",
+    "crumb"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gisslen, Professional Baking, 2017",
+  "source_kind": "book",
+  "reference": "Gisslen, Professional Baking, 7th edition, Wiley, 2017",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "nature-root-networks-7",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.root_networks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Stripping a ring of bark from pines stops sugar reaching their roots. Within two months, how far did the soil's CO2 output fall?",
+  "options": [
+    "Barely, under 10%",
+    "By about half",
+    "By about 90%"
+  ],
+  "correct": 1,
+  "answer": "By about half. In Högberg's boreal pine plots, soil respiration, the CO2 the ground gives off, fell about 54% against untouched plots within one to two months, and by up to 37% within five days. Half the soil's breath was sugar made in the needles days earlier, burned by roots and their fungi.",
+  "move": "To find what feeds a process, cut one supply and watch the output.",
+  "trap": "Assuming the soil's CO2 comes mainly from old leaves rotting.",
+  "keywords": [
+    "girdling",
+    "soil respiration",
+    "scots pine",
+    "mycorrhizal fungi",
+    "photosynthesis"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Högberg et al., Nature, 2001",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/35081058",
+  "written": "2026-09-27"
+}

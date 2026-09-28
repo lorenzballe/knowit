@@ -1,0 +1,40 @@
+{
+  "id": "technology-refresh-rates-9",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.refresh_rates",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "In 2013 reviewers captured what two linked AMD graphics cards really showed on screen. How did that compare with software frame counters?",
+  "options": [
+    "It matched the counters closely",
+    "It beat the counters slightly",
+    "It fell well short of them"
+  ],
+  "correct": 2,
+  "answer": "It fell well short of them. Counters such as FRAPS logged frames as the game handed them over, but with two cards taking turns many frames reached the screen as runts, slivers a few pixel rows tall, or not at all. PC Perspective's capture method discarded those, and AMD shipped a frame-pacing fix that summer.",
+  "move": "Measure where the result is used, not where it is produced.",
+  "trap": "Trusting the counter, since it counts every frame the game made.",
+  "keywords": [
+    "frame rate",
+    "crossfire",
+    "runt frames",
+    "frame pacing",
+    "benchmarks"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "PC Perspective, Frame Rating Dissected, 2013",
+  "source_kind": "news_archive",
+  "reference": "https://pcper.com/2013/03/frame-rating-dissected-full-details-on-capture-based-graphics-performance-testing/6/",
+  "written": "2026-09-27"
+}

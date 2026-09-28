@@ -1,0 +1,32 @@
+{
+  "id": "medicine-scans-9",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.scans",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is a radiologist who has just spotted one abnormality on a scan more likely to miss a second?",
+  "answer": "Because finding something tends to end the search. Called satisfaction of search, it was shown in experiments where adding an obvious abnormality to a film lowered radiologists' detection of a subtler one elsewhere on the same image. Checklists and a deliberate second sweep are the usual defences. The broken rib hides the lung nodule.",
+  "move": "After the first find, search again as if nothing had been found.",
+  "keywords": [
+    "satisfaction of search",
+    "radiology errors",
+    "perception",
+    "missed diagnosis"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Berbaum et al., Investigative Radiology, 1990",
+  "source_kind": "paper",
+  "reference": "Berbaum et al., Satisfaction of search in diagnostic radiology, Investigative Radiology, 1990",
+  "written": "2026-09-27"
+}

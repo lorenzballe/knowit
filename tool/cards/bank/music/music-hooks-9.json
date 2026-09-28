@@ -1,0 +1,38 @@
+{
+  "id": "music-hooks-9",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.hooks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: most tunes that get stuck in people's heads are experienced as unpleasant?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Andrea Halpern and James Bartlett had people log each stuck tune in a diary as it happened: the large majority of episodes were not unpleasant, and many came from music the person liked and had heard recently. The maddening ones get reported. Mostly, the loop is a favourite song replaying itself.",
+  "move": "Complaints sample the bad days, not the ordinary ones.",
+  "trap": "The maddening episodes are the ones remembered and talked about.",
+  "keywords": [
+    "earworms",
+    "diary study",
+    "involuntary musical imagery",
+    "memory"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Halpern & Bartlett, Music Perception, 2011",
+  "source_kind": "paper",
+  "reference": "https://digitalcommons.bucknell.edu/fac_journ/296/",
+  "written": "2026-09-27"
+}

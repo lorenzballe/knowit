@@ -1,0 +1,39 @@
+{
+  "id": "history-mongol-8",
+  "topic": "history",
+  "genre": "history.empires",
+  "strand": "history.empires.mongol",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "True or false: the Mongol Empire had split into rival khanates before it reached its greatest extent?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. After Möngke died in 1259, his brothers Kublai and Ariq Böke fought a civil war, and by 1262 the Golden Horde and Persia's Ilkhanate were at war in the Caucasus. The greatest extent came with Kublai's conquest of Song China, completed in 1279. Maps of one vast empire colour four quarrelling states alike.",
+  "move": "A single colour on a map can hide a quarrel.",
+  "trap": "Assuming the largest map shows the empire at its most united.",
+  "keywords": [
+    "golden horde",
+    "ilkhanate",
+    "kublai khan",
+    "ariq boke",
+    "song china"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Morgan, The Mongols, 2007",
+  "source_kind": "book",
+  "reference": "Morgan, The Mongols, 2nd edition, Blackwell, 2007",
+  "written": "2026-09-27"
+}

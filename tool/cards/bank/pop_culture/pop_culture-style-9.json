@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-style-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.style",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "By James Laver's 1937 timeline of taste, how should a 1990s look strike people about 30 years later?",
+  "options": [
+    "Hideous",
+    "Amusing",
+    "Beautiful"
+  ],
+  "correct": 1,
+  "answer": "Amusing. The costume historian set out a timetable: a style looks indecent ten years before its time, smart in it, hideous ten years after, ridiculous at twenty, amusing at thirty, quaint at fifty and, many steps later, beautiful at 150. Grunge flannel and slip dresses were back in shops around 2020.",
+  "move": "Taste runs on a clock; judge old styles by their age.",
+  "trap": "Stopping at hideous, which is Laver's verdict only ten years on.",
+  "keywords": [
+    "james laver",
+    "fashion cycles",
+    "nineties revival",
+    "grunge"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Laver, Taste and Fashion, 1937",
+  "source_kind": "book",
+  "reference": "James Laver, Taste and Fashion: From the French Revolution to the Present Day, Harrap, 1937",
+  "written": "2026-09-27"
+}

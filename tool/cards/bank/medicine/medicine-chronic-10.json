@@ -1,0 +1,33 @@
+{
+  "id": "medicine-chronic-10",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.chronic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When British GPs sort new back pain patients by their risk of lasting disability, what do most of the questions ask about?",
+  "answer": "Fear, worry and mood, not the spine. Keele University's nine-item STarT Back tool gives five questions to how bothersome the pain is, fear of movement, catastrophising, anxiety and low mood. High scorers get intensive physiotherapy, low scorers reassurance. In a 2011 trial of 851 patients, this sorting cut disability more and cost less.",
+  "move": "How a person reads the first weeks may predict a long illness best.",
+  "keywords": [
+    "start back tool",
+    "low back pain",
+    "stratified care",
+    "keele university",
+    "fear of movement"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hill et al., The Lancet, 2011",
+  "source_kind": "paper",
+  "reference": "Hill et al., Comparison of stratified primary care management for low back pain with current best practice (STarT Back): a randomised controlled trial, The Lancet, 2011",
+  "written": "2026-09-27"
+}

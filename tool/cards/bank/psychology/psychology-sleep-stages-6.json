@@ -1,0 +1,33 @@
+{
+  "id": "psychology-sleep-stages-6",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.sleep_stages",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When thousands of trained scorers staged the same sleep recordings, how often did they agree?",
+  "answer": "About 83% of the time overall, and only about 63% for N1, the lightest stage. In the American Academy of Sleep Medicine's own agreement programme, REM was scored most consistently, N1 and deep N3 least. Sleep stages are rules applied by eye to 30-second pages of brainwaves. One scorer's light sleep is another's wakefulness.",
+  "move": "When a category needs a judge, ask how often two judges agree.",
+  "keywords": [
+    "sleep scoring",
+    "inter-rater agreement",
+    "polysomnography",
+    "sleep stages",
+    "n1 sleep"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rosenberg & Van Hout, JCSM, 2013",
+  "source_kind": "paper",
+  "reference": "Rosenberg & Van Hout, The American Academy of Sleep Medicine inter-scorer reliability program: sleep stage scoring, Journal of Clinical Sleep Medicine, 2013",
+  "written": "2026-09-27"
+}

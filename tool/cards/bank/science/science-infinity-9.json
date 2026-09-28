@@ -1,0 +1,38 @@
+{
+  "id": "science-infinity-9",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.infinity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a square contains exactly as many points as one of its sides?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Cantor proved it in 1877, in letters to Dedekind. Interleaving the digits of a point's two coordinates gives one number on the side; Dedekind spotted a snag with decimals like 0.1999…, which equals 0.2, and Cantor repaired the pairing so it matched exactly. A solid cube holds no more points than a line segment.",
+  "move": "Bigger in size and more in number are different questions.",
+  "trap": "Thinking a square must hold more, since it holds whole lines of points.",
+  "keywords": [
+    "georg cantor",
+    "cardinality",
+    "dimension",
+    "richard dedekind"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gouvêa, American Mathematical Monthly, 2011",
+  "source_kind": "paper",
+  "reference": "Gouvêa, Was Cantor Surprised?, American Mathematical Monthly, 2011",
+  "written": "2026-09-27"
+}

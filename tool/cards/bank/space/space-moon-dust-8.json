@@ -1,0 +1,41 @@
+{
+  "id": "space-moon-dust-8",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.moon_dust",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Apollo lunar soil in a kitchen microwave starts to melt before a cup of water would boil?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Nearly every grain carries specks of pure metallic iron, the same ones that darken old soil, and microwaves couple strongly with them. The specks also let a magnet lift much of the finest dust. Paving for a lunar base could be made this way: dust baked into solid slabs by microwave, with no binder.",
+  "move": "A trace ingredient can decide how the whole material behaves.",
+  "trap": "Assuming rock powder, like sand, ignores microwaves.",
+  "keywords": [
+    "nanophase iron",
+    "microwave sintering",
+    "lunar soil",
+    "magnets"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "space-moon-dust-5"
+  ],
+  "figure": "none",
+  "source": "Taylor, Schmitt, Carrier & Nakagawa, 2005",
+  "source_kind": "paper",
+  "reference": "Taylor, Schmitt, Carrier & Nakagawa, The Lunar Dust Problem: From Liability to Asset, AIAA 1st Space Exploration Conference, 2005",
+  "written": "2026-09-27"
+}

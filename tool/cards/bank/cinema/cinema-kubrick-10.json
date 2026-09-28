@@ -1,0 +1,40 @@
+{
+  "id": "cinema-kubrick-10",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.kubrick",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "To earn an R rating in America, how was the orgy scene in Kubrick's Eyes Wide Shut, 1999, altered?",
+  "options": [
+    "Digital figures were added in front",
+    "About a minute of it was cut",
+    "Its shots were darkened and blurred"
+  ],
+  "correct": 0,
+  "answer": "Digital figures were added in front. Rather than cut shots, Warner Bros. placed computer-generated cloaked onlookers between the camera and the most explicit action, so the scene kept its length and rhythm. Kubrick had died that March. Europe saw the scene unaltered; American viewers saw it only on a later unrated home release.",
+  "move": "Something can be hidden by adding to it as well as by cutting.",
+  "trap": "Assuming a censor's demand is met by cutting, as it usually is.",
+  "keywords": [
+    "eyes wide shut",
+    "film rating",
+    "digital figures",
+    "censorship",
+    "warner bros."
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kolker & Abrams, Eyes Wide Shut, 2019",
+  "source_kind": "book",
+  "reference": "Kolker & Abrams, Eyes Wide Shut: Stanley Kubrick and the Making of His Final Film, Oxford University Press, 2019",
+  "written": "2026-09-27"
+}

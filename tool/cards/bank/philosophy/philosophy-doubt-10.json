@@ -1,0 +1,37 @@
+{
+  "id": "philosophy-doubt-10",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.doubt",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "When an equally careful friend reaches the opposite conclusion from the same evidence, should you move halfway?",
+  "sides": [
+    "Yes, split the difference",
+    "No, hold your ground"
+  ],
+  "answer": "Two friends split a restaurant bill and get different shares. Neither should keep trusting their own sum: nothing in the situation says which of two equally good calculators slipped. David Christensen and Adam Elga argued in 2007 that disagreement from a true equal is evidence of your own error, and should be weighed as such.",
+  "move": "It turns on whether your own reasoning counts as evidence about itself.",
+  "counterpoint": "If you reasoned correctly, the evidence supports you, and a friend's mistake does not change what the evidence says. Thomas Kelly argued in 2005 that splitting the difference rewards whoever reasoned badly. And applied to philosophy, politics or science, the halfway rule would dissolve almost every considered view, since some careful person always disagrees.",
+  "keywords": [
+    "peer disagreement",
+    "david christensen",
+    "thomas kelly",
+    "conciliationism"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Christensen, Philosophical Review, 2007",
+  "source_kind": "paper",
+  "reference": "Christensen, Epistemology of Disagreement: The Good News, Philosophical Review 116 (2), 2007; Elga, Reflection and Disagreement, Noûs 41 (3), 2007; Kelly, The Epistemic Significance of Disagreement, Oxford Studies in Epistemology 1, 2005",
+  "written": "2026-09-27"
+}

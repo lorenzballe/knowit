@@ -1,0 +1,39 @@
+{
+  "id": "psychology-streaks-10",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.streaks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A car wash gave loyalty cards needing eight stamps, or ten stamps with two already filled. Which card was completed more often?",
+  "options": [
+    "Both about equally",
+    "The eight-stamp card",
+    "The card with two filled"
+  ],
+  "correct": 2,
+  "answer": "The card with two filled: 34% of those customers earned the free wash, against 19% with the plain eight-stamp card. Nunes and Drèze called it the endowed progress effect. Both cards needed eight more washes; only one looked a fifth done. A run that seems already under way is harder to abandon.",
+  "move": "Show people how far they have come, not only how far remains.",
+  "trap": "Both about equally, since each card needs exactly eight more washes.",
+  "keywords": [
+    "endowed progress",
+    "loyalty cards",
+    "car wash",
+    "goal gradient"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nunes & Drèze, Journal of Consumer Research, 2006",
+  "source_kind": "paper",
+  "reference": "Nunes & Drèze, The endowed progress effect: how artificial advancement increases effort, Journal of Consumer Research, 2006",
+  "written": "2026-09-27"
+}

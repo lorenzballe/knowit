@@ -1,0 +1,42 @@
+{
+  "id": "cinema-cgi-9",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.cgi",
+  "also": [
+    "cinema.special_effects.practical"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "Mad Max: Fury Road, praised for real vehicles and stunts, has about 2,700 shots. How many carry digital visual effects?",
+  "options": [
+    "About a tenth",
+    "About a third",
+    "About three quarters"
+  ],
+  "correct": 2,
+  "answer": "About three quarters: more than 2,000 shots. The stunts were real, but digital work erased safety rigs, replaced skies, added the sandstorm, extended landscapes and removed Charlize Theron's left forearm for Furiosa. The effects in it are the kind nobody notices, which is why the film reads as practical.",
+  "move": "The work that goes unnoticed is often the work that went best.",
+  "trap": "Letting the famous real stunts stand for the whole film.",
+  "keywords": [
+    "fury road",
+    "visual effects shots",
+    "stunts",
+    "furiosa"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "fxguide on Fury Road's visual effects",
+  "source_kind": "news_archive",
+  "reference": "https://www.fxguide.com/fxfeatured/a-graphic-tale-the-visual-effects-of-mad-max-fury-road/",
+  "written": "2026-09-27"
+}

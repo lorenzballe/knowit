@@ -1,0 +1,39 @@
+{
+  "id": "medicine-new-ones-9",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.new_ones",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "True or false: new antibiotics are usually approved after trials showing they cure more patients than the older drugs they rival?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Most pass non-inferiority trials, showing only that the new drug is no worse than an old one beyond a set margin, often 10 percentage points. They mostly enrol patients whose bacteria the old drug still kills, as resistant cases are too scattered to recruit. Drugs meant for superbugs are proven on ordinary infections.",
+  "move": "Ask who a trial enrolled before trusting what it says about others.",
+  "trap": "Assuming the trial proved it better on the resistant infections it targets.",
+  "keywords": [
+    "non-inferiority trials",
+    "drug approval",
+    "antibiotic trials",
+    "fda",
+    "resistant infections"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FDA guidance on complicated urinary infections",
+  "source_kind": "primary_document",
+  "reference": "US Food and Drug Administration, Complicated Urinary Tract Infections: Developing Drugs for Treatment, Guidance for Industry, 2018",
+  "written": "2026-09-27"
+}

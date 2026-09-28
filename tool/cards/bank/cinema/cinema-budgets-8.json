@@ -1,0 +1,37 @@
+{
+  "id": "cinema-budgets-8",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.budgets",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should governments pay film productions to shoot within their borders through tax credits?",
+  "sides": [
+    "Yes, keep paying",
+    "No, stop paying"
+  ],
+  "answer": "Productions are mobile and nearly every rival offers incentives, so a place that refuses simply loses the work. Credits bring crews, studios and suppliers that stay: rebates helped fill soundstages in Budapest and London year after year, and the skilled jobs they sustain grew from the first subsidised shoots. Screen tourism adds more on top.",
+  "move": "Whichever side you took, it turns on whether the jobs stay once the subsidy stops.",
+  "counterpoint": "Independent audits keep finding that a state recovers well under half of each credit dollar in new tax, so the rest is taken from schools and roads. Many jobs are short and filled by crews flown in, and when a neighbour bids higher the productions move. Tannenwald's 2010 review found little lasting return for the money.",
+  "keywords": [
+    "film tax credits",
+    "subsidies",
+    "soundstages",
+    "public budgets"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tannenwald, CBPP, 2010",
+  "source_kind": "paper",
+  "reference": "Tannenwald, State Film Subsidies: Not Much Bang for Too Many Bucks, Center on Budget and Policy Priorities, 2010",
+  "written": "2026-09-27"
+}

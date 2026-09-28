@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-ghost-towns-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.ghost_towns",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "survivorship",
+  "question": "Bodie, California, is often called the best-preserved gold-rush ghost town. What share of the buildings it had in 1880 still stands?",
+  "options": [
+    "About 90%",
+    "About half",
+    "About 5%"
+  ],
+  "correct": 2,
+  "answer": "About 5%. Fires, including a large one in 1932, salvage and weather took the rest; what stands has been kept in arrested decay, stabilised but not restored, since the state park opened in 1962. The streets feel complete because what vanished leaves no gap. The typical boomtown is the one that left nothing to visit.",
+  "move": "What survives to be seen is a poor sample of what once stood.",
+  "trap": "Judging the town by what stands, since vanished buildings leave no trace.",
+  "keywords": [
+    "bodie",
+    "gold rush",
+    "ghost town",
+    "arrested decay",
+    "california"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "California State Parks, Bodie",
+  "source_kind": "institution",
+  "reference": "https://www.parks.ca.gov/?page_id=509",
+  "written": "2026-09-27"
+}

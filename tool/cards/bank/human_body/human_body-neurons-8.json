@@ -1,0 +1,39 @@
+{
+  "id": "human_body-neurons-8",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the rods and cones of the eye pass on their light signals without firing nerve impulses?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Rods and cones signal with graded shifts in voltage, and light makes them release less transmitter, not more: they release it most steadily in the dark. The first all-or-nothing spikes on the way to the brain appear two cells later, in the ganglion cells whose fibres bundle into the optic nerve.",
+  "move": "The textbook case of a thing is rarely the only way it works.",
+  "trap": "Assuming every nerve cell talks in spikes, as textbook neurons do.",
+  "keywords": [
+    "photoreceptors",
+    "rods and cones",
+    "graded potentials",
+    "retina",
+    "ganglion cells"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rodieck, The First Steps in Seeing, 1998",
+  "source_kind": "book",
+  "reference": "Rodieck, The First Steps in Seeing, Sinauer Associates, 1998",
+  "written": "2026-09-27"
+}

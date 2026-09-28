@@ -1,0 +1,43 @@
+{
+  "id": "art-lost-colour-8",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.lost_colour",
+  "also": [
+    "science.light_and_colour.pigments"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "Which colours on ancient marble statues are most likely to have vanished leaving no trace for analysis?",
+  "options": [
+    "Mineral blues like Egyptian blue",
+    "Plant and insect dyes like madder",
+    "Earth reds and yellows like ochre"
+  ],
+  "correct": 1,
+  "answer": "Plant and insect dyes like madder. Mineral pigments are stable crystals and leave grains to detect; dyes are organic molecules that light breaks down and damp and microbes consume. So the colours found lean towards the durable ones, and a reconstruction built only from finds is harsher and flatter than the original.",
+  "move": "What your instrument can detect decides the picture it gives you.",
+  "trap": "Picking blue, because blue is the famous lost colour of antiquity.",
+  "keywords": [
+    "organic dyes",
+    "madder",
+    "polychromy",
+    "pigment analysis",
+    "reconstructions"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Østergaard, Tracking Colour, 2009",
+  "source_kind": "institution",
+  "reference": "Jan Stubbe Østergaard (ed), Tracking Colour: The Polychromy of Greek and Roman Sculpture in the Ny Carlsberg Glyptotek, Preliminary Report 1, Ny Carlsberg Glyptotek, 2009",
+  "written": "2026-09-27"
+}

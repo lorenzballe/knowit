@@ -1,0 +1,38 @@
+{
+  "id": "science-steel-10",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the Eiffel Tower, finished in 1889 as cheap steel spread across Europe, is built of steel?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. It is puddled iron, a wrought iron made by stirring molten pig iron to burn out its carbon, then hammering out the slag. Bessemer steel existed, but its quality still varied, and Eiffel's firm had built its viaducts in wrought iron. Some 2.5 million rivets hold its 7,300 tonnes together.",
+  "move": "Builders reach for the material they know, not the newest one on offer.",
+  "trap": "True, since a landmark of 1889 sounds like a steel-age showpiece.",
+  "keywords": [
+    "eiffel tower",
+    "puddled iron",
+    "wrought iron",
+    "rivets"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Loyrette, Gustave Eiffel, 1985",
+  "source_kind": "book",
+  "reference": "Loyrette, Gustave Eiffel, Rizzoli, 1985",
+  "written": "2026-09-27"
+}

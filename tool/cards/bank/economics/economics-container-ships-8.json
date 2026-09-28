@@ -1,0 +1,39 @@
+{
+  "id": "economics-container-ships-8",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.container_ships",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Fuel burned per hour rises with the cube of speed. Slow a ship from 20 to 16 knots: what happens to fuel per voyage?",
+  "options": [
+    "Falls to about 51%",
+    "Falls to about 64%",
+    "Falls to about 80%"
+  ],
+  "correct": 1,
+  "answer": "Falls to about 64%. Per hour, 0.8 cubed is 0.51, but the slower ship spends 1.25 times as long at sea, so per voyage the saving follows the square: 0.8 squared is 0.64. A line keeping a weekly service must also add ships to the loop, which eats part of the gain.",
+  "move": "When a rate falls, check whether the time it runs for grows.",
+  "trap": "Applying the cube to the whole voyage and forgetting the extra hours.",
+  "keywords": [
+    "slow steaming",
+    "bunker fuel",
+    "ship speed",
+    "liner services"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Notteboom & Vernimmen, Journal of Transport Geography, 2009",
+  "source_kind": "paper",
+  "reference": "Notteboom & Vernimmen, The effect of high fuel costs on liner service configuration in container shipping, Journal of Transport Geography, 2009",
+  "written": "2026-09-27"
+}

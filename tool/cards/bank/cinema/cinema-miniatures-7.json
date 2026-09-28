@@ -1,0 +1,38 @@
+{
+  "id": "cinema-miniatures-7",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.miniatures",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in Star Wars, 1977, the model spaceships mostly stood still while the camera flew past them?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. ILM's Dykstraflex, a computer-controlled camera rig, tracked, panned and tilted past models fixed on poles before a blue screen, and could repeat the same move exactly for each separate element. That let many ships, engine glows and lasers be layered into one shot. The dogfights were flown by the camera.",
+  "move": "Motion on a screen does not say which of two things moved.",
+  "trap": "Picturing models flown on wires past a fixed camera, as in older films.",
+  "keywords": [
+    "star wars",
+    "dykstraflex",
+    "motion control",
+    "spaceship models"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rinzler, The Making of Star Wars, 2007",
+  "source_kind": "book",
+  "reference": "Rinzler, The Making of Star Wars: The Definitive Story Behind the Original Film, Del Rey, 2007",
+  "written": "2026-09-27"
+}

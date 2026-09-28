@@ -1,0 +1,40 @@
+{
+  "id": "science-rust-6",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.rust",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Steel and copper touching in seawater: which fails faster, steel rivets holding copper plates, or copper rivets holding steel plates?",
+  "options": [
+    "Steel rivets in copper plates",
+    "Copper rivets in steel plates",
+    "Both at about the same rate"
+  ],
+  "correct": 0,
+  "answer": "Steel rivets in copper plates. Steel corrodes either way, at a rate set by how much copper surface draws electrons from it. A small steel rivet in a broad copper plate takes the whole attack on a tiny area and is eaten quickly; a broad steel plate spreads it thin, barely pitted round copper rivets.",
+  "move": "Judge a harm by how concentrated it is, not only by its size.",
+  "trap": "Both at the same rate, since the same two metals touch.",
+  "keywords": [
+    "galvanic corrosion",
+    "rivets",
+    "copper",
+    "steel",
+    "seawater"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fontana, Corrosion Engineering, 1986",
+  "source_kind": "book",
+  "reference": "Fontana, Corrosion Engineering, 3rd edition, McGraw-Hill, 1986",
+  "written": "2026-09-27"
+}

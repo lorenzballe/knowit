@@ -1,0 +1,33 @@
+{
+  "id": "history-daily-rome-6",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.daily_rome",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When Rome granted a household the right to draw aqueduct water, what exactly did the grant fix?",
+  "answer": "The bore of a bronze nozzle, not the flow. Frontinus, water commissioner from AD 97, calls each grant a calix: a stamped bronze pipe of set size, fitted where the private pipe left the tank. Flow depends on depth too; he warns that one set lower draws more. Rome sold water by the hole.",
+  "move": "Ask whether the thing measured is the thing being paid for.",
+  "keywords": [
+    "frontinus",
+    "aqueducts",
+    "water rights",
+    "calix",
+    "water supply"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frontinus, De Aquaeductu, ed. Rodgers, 2004",
+  "source_kind": "primary_document",
+  "reference": "Frontinus, De Aquaeductu Urbis Romae, ed. R. H. Rodgers, Cambridge University Press, 2004",
+  "written": "2026-09-27"
+}

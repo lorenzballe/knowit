@@ -1,0 +1,40 @@
+{
+  "id": "cinema-hitchcock-9",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.hitchcock",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "Why could audiences almost never see Vertigo or Rear Window in cinemas through the 1970s?",
+  "options": [
+    "Their colour negatives had faded",
+    "Hitchcock owned them and held them back",
+    "Television deals barred cinema showings"
+  ],
+  "correct": 1,
+  "answer": "Hitchcock owned them and held them back. His Paramount deal returned four films to him eight years after release, and Rope was his own company's. He kept all five off screens, The Trouble with Harry and The Man Who Knew Too Much among them. Universal bought them after his death and re-released them from 1983.",
+  "move": "Scarcity can be an owner's strategy rather than an accident of time.",
+  "trap": "Blaming faded colour, the story told by Vertigo's famous 1996 restoration.",
+  "keywords": [
+    "vertigo",
+    "rear window",
+    "film rights",
+    "re-release",
+    "universal"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Times, 15 November 1983",
+  "source_kind": "news_archive",
+  "reference": "The Times, Return of the missing Hitchcocks, 15 November 1983",
+  "written": "2026-09-27"
+}

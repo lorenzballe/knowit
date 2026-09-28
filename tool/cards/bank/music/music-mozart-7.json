@@ -1,0 +1,40 @@
+{
+  "id": "music-mozart-7",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.mozart",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "Mozart died leaving his Requiem unfinished. Which part of it had he fully orchestrated?",
+  "options": [
+    "Only the opening Requiem aeternam",
+    "Everything up to the Lacrimosa",
+    "The Lacrimosa, his last music"
+  ],
+  "correct": 0,
+  "answer": "Only the opening Requiem aeternam. For the Kyrie, the sequence and the offertory he left the voices and bass line, with some instrumental cues; helpers such as Joseph Eybler and Franz Xaver Süssmayr filled in the orchestra. The Lacrimosa stops after eight bars, and for the Sanctus onward no page in Mozart's hand survives.",
+  "move": "A sketch in a master's hand is not the finished thing.",
+  "trap": "The Lacrimosa, because the story says he died writing it.",
+  "keywords": [
+    "requiem",
+    "süssmayr",
+    "eybler",
+    "lacrimosa",
+    "unfinished work"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wolff, Mozart's Requiem, 1994",
+  "source_kind": "book",
+  "reference": "Wolff, Mozart's Requiem: Historical and Analytical Studies, Documents, Score, University of California Press, 1994",
+  "written": "2026-09-27"
+}

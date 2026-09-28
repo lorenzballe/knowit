@@ -1,0 +1,38 @@
+{
+  "id": "music-mozart-8",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.mozart",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: Mozart's Symphony No. 37 is mostly the work of another composer?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The symphony long catalogued as K. 444 is Michael Haydn's Symphony in G; Mozart copied it out in 1783, probably for a concert in Linz, and wrote only its short slow introduction. Because the manuscript was in his hand, 19th-century editors counted it among his works, and the numbering still carries the gap.",
+  "move": "Ask how a catalogue decided what belonged in it.",
+  "trap": "A symphony numbered among his works must be his work.",
+  "keywords": [
+    "symphony no. 37",
+    "michael haydn",
+    "köchel catalogue",
+    "attribution"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zaslaw, Mozart's Symphonies, 1989",
+  "source_kind": "book",
+  "reference": "Zaslaw, Mozart's Symphonies: Context, Performance Practice, Reception, Clarendon Press, 1989",
+  "written": "2026-09-27"
+}

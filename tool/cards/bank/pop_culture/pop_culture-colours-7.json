@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-colours-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.colours",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are Hermès boxes orange rather than the cream they used to be?",
+  "answer": "Because of a wartime shortage, by the house's own account. In occupied Paris, Hermès's supplier ran out of the cream card it used, and orange paperboard was all that remained. The firm took it rather than go without boxes, and kept it after the war. A colour nobody had picked became the house's own.",
+  "move": "Many signatures began as whatever happened to be left in stock.",
+  "keywords": [
+    "hermès",
+    "orange box",
+    "packaging",
+    "second world war",
+    "paris"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Fashion Law, on Hermès orange",
+  "source_kind": "news_archive",
+  "reference": "https://www.thefashionlaw.com/a-shortage-of-product-packaging-during-wwii-led-hermes-to-adopt-a-new-hue-the-result-was-the-birth-of-a-color-mark/",
+  "written": "2026-09-27"
+}

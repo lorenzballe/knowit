@@ -1,0 +1,39 @@
+{
+  "id": "sport-coaching-9",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.coaching",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "True or false: among German professional footballers, those born late in the youth selection year tended to earn more than early-born ones?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Ashworth and Heyndels found that players born just before the cut-off date, the youngest in their youth age groups, later earned more. Youth coaches favour the physically older children, so the late-born who still reach the top have cleared a harder filter. Fewer of them make it; those who do are, on average, better.",
+  "move": "Those who got through a harder gate are often the stronger group.",
+  "trap": "Assuming the early-born head start must carry into adult pay.",
+  "keywords": [
+    "relative age effect",
+    "talent selection",
+    "bundesliga",
+    "youth football",
+    "birth dates"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ashworth & Heyndels, J. Sports Economics, 2007",
+  "source_kind": "paper",
+  "reference": "Ashworth & Heyndels, Selection bias and peer effects in team sports: the effect of age grouping on earnings of German soccer players, Journal of Sports Economics, 2007",
+  "written": "2026-09-27"
+}

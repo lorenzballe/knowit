@@ -1,0 +1,39 @@
+{
+  "id": "music-folk-7",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.folk",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: We Shall Overcome, which grew out of a church hymn, was never under copyright?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. An arrangement credited to Zilphia Horton, Frank Hamilton, Guy Carawan and Pete Seeger was registered in the early 1960s, and a publisher licensed the song for decades, the writers' share funding Black cultural work in the South. A lawsuit ended in a 2018 settlement leaving the song in the public domain.",
+  "move": "A song everyone sings can still have an owner on paper.",
+  "trap": "An old hymn sung at marches sounds like it belongs to everyone.",
+  "keywords": [
+    "we shall overcome",
+    "copyright",
+    "public domain",
+    "pete seeger",
+    "civil rights"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US District Court, New York, 2018",
+  "source_kind": "primary_document",
+  "reference": "We Shall Overcome Foundation v. The Richmond Organization, Inc., US District Court for the Southern District of New York, 2018",
+  "written": "2026-09-27"
+}

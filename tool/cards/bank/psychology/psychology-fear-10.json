@@ -1,0 +1,43 @@
+{
+  "id": "psychology-fear-10",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.fear",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "survivorship",
+  "question": "In 1934 Bregman tried Watson's loud-noise method on 15 infants, with wooden blocks and curtains instead of a rat. How many learned fear?",
+  "options": [
+    "Most of them",
+    "About half",
+    "None of them"
+  ],
+  "correct": 2,
+  "answer": "None of them. Bregman failed to condition fear of a single object in any infant. Watson's success rested on one child and a furry animal; later work on preparedness found fear attaches readily to snakes, spiders and heights, barely to furniture. The textbooks kept the rat and lost the curtains.",
+  "move": "A classic is one success; ask how many attempts were never retold.",
+  "trap": "Treating the one famous success as what the method usually does.",
+  "keywords": [
+    "little albert",
+    "conditioning",
+    "infants",
+    "preparedness",
+    "replication"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "psychology-fear-4"
+  ],
+  "figure": "none",
+  "source": "Bregman, Journal of Genetic Psychology, 1934",
+  "source_kind": "paper",
+  "reference": "Bregman, An attempt to modify the emotional attitudes of infants by the conditioned response technique, Journal of Genetic Psychology, 1934",
+  "written": "2026-09-27"
+}

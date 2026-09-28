@@ -1,0 +1,38 @@
+{
+  "id": "human_body-healing-8",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.healing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a well-healed broken bone ends up permanently stronger at the break than elsewhere?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The callus, a collar of new bone around the break, briefly makes the site thicker, but over months and years remodelling carves it back to the original shape and strength. Unlike skin, bone heals by making true bone again rather than scar. A child's healed fracture can become hard to find on later X-rays.",
+  "move": "A patch that looks bulky while healing is not the finished repair.",
+  "trap": "Mistaking the temporary thick collar of callus for lasting reinforcement.",
+  "keywords": [
+    "fracture healing",
+    "callus",
+    "bone remodelling",
+    "regeneration"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Einhorn & Gerstenfeld, Nat Rev Rheumatology, 2015",
+  "source_kind": "paper",
+  "reference": "Einhorn & Gerstenfeld, Fracture healing: mechanisms and interventions, Nature Reviews Rheumatology, 2015",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "economics-anchoring-6",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.anchoring",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "A shop raises an €80 jacket to €100 for two weeks, then advertises a sale. Under 2022 EU rules, what earlier price must it show?",
+  "options": [
+    "€100, the price just before the sale",
+    "€80, its lowest price in 30 days",
+    "Any price it once genuinely charged"
+  ],
+  "correct": 1,
+  "answer": "€80, its lowest price in 30 days. Since May 2022 EU law has required any announced price cut to cite the lowest price charged in the previous 30 days, and in 2024 the EU Court of Justice ruled the percentage must be counted from it. A '30% off' tag of €70 is 12.5% off.",
+  "move": "Before trusting a discount, ask what the price was a month ago.",
+  "trap": "Taking the price just before the sale as the natural reference.",
+  "keywords": [
+    "price reductions",
+    "reference prices",
+    "consumer law",
+    "european union",
+    "discounts"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "EU Price Indication Directive, Article 6a",
+  "source_kind": "primary_document",
+  "reference": "Directive (EU) 2019/2161 of the European Parliament and of the Council, Article 2, inserting Article 6a into Directive 98/6/EC, 2019",
+  "written": "2026-09-27"
+}

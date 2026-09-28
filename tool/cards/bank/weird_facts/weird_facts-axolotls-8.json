@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-axolotls-8",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.axolotls",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "Surgeons make a small wound on an axolotl's arm. What must they add for a whole extra limb to grow there?",
+  "options": [
+    "A nerve plus skin from the other side",
+    "A rerouted nerve and nothing more",
+    "Stem cells from a regrowing limb"
+  ],
+  "correct": 0,
+  "answer": "A nerve plus skin from the other side of the limb. In Endo, Bryant and Gardiner's model, a rerouted nerve alone raises a bud that stalls. Grafted skin brings cells that record a different position; where front meets back, a complete extra limb grows. A limb is built from a disagreement about location.",
+  "move": "A condition that is needed is not yet a condition that is enough.",
+  "trap": "Knowing nerves are required for regrowth and assuming they suffice.",
+  "keywords": [
+    "axolotl",
+    "accessory limb model",
+    "limb regeneration",
+    "nerves",
+    "positional identity"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Endo, Bryant & Gardiner, Developmental Biology, 2004",
+  "source_kind": "primary_document",
+  "reference": "Endo, Bryant & Gardiner, A stepwise model system for limb regeneration, Developmental Biology, 2004",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "medicine-doubt-9",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.doubt",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "Of 3 million people over 80, 1 in 10 die yearly. If all are vaccinated, how many die within a week anyway, in thousands?",
+  "value": 5.8,
+  "unit": "thousand deaths",
+  "withinFactor": 3,
+  "answer": "About 5,800 deaths within a week of the jab, about 5.8 thousand.",
+  "move": "Before reading meaning into timing, count how often it happens anyway.",
+  "trap": "Treating each death soon after a jab as needing a vaccine explanation.",
+  "hint": "Work out the yearly deaths first, then take one week's share of them.",
+  "steps": [
+    "Deaths in a year: 3,000,000 x 0.1 = 300,000.",
+    "Deaths in a week: 300,000 / 52 = about 5,800.",
+    "About 5,800 deaths within a week of the jab, about 5.8 thousand."
+  ],
+  "keywords": [
+    "background deaths",
+    "vaccine safety",
+    "elderly mortality",
+    "coincidence",
+    "adverse event reports"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ONS, Deaths registered in England and Wales",
+  "source_kind": "statistics",
+  "reference": "Office for National Statistics, Deaths registered in England and Wales: 2019, 2020",
+  "written": "2026-09-27"
+}

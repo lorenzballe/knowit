@@ -1,0 +1,39 @@
+{
+  "id": "language-how-they-form-10",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.how_they_form",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "A new pronunciation takes hold in a city over several generations. What shape does its spread usually trace?",
+  "options": [
+    "Slow start, fast middle, slow finish",
+    "Steady gains, about equal each decade",
+    "Fast start, then gradual slowing"
+  ],
+  "correct": 0,
+  "answer": "Slow start, fast middle, slow finish. At first few speakers meet the new form, so it creeps; once many use it, each user exposes others and the change surges; the last holdouts, often the oldest and most isolated, take longest. Plotted against time, changes in many languages trace this S-shaped curve.",
+  "move": "Early slowness says little about how fast something will spread later.",
+  "trap": "Picturing a change creeping forward by the same amount each decade.",
+  "keywords": [
+    "s-curve",
+    "sound change",
+    "language change",
+    "diffusion"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Blythe & Croft, Language, 2012",
+  "source_kind": "paper",
+  "reference": "Blythe & Croft, S-curves and the mechanisms of propagation in language change, Language 88(2), 2012",
+  "written": "2026-09-27"
+}

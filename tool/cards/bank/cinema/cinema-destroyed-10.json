@@ -1,0 +1,42 @@
+{
+  "id": "cinema-destroyed-10",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.destroyed",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Keeping a film master costs $1,059 a year; a 4K digital master, $12,514. Extra for 100 titles over 10 years, in millions of dollars?",
+  "value": 11.5,
+  "unit": "million dollars",
+  "tolerance": 0.1,
+  "answer": "1,145,500 × 10 years = 11,455,000, about 11.5 million dollars.",
+  "move": "Count what it costs to keep a thing, not only to make it.",
+  "trap": "Assuming digital storage is cheap because disks keep getting cheaper.",
+  "hint": "Find the extra cost of one title for one year first.",
+  "steps": [
+    "12,514 − 1,059 = 11,455 dollars extra per title per year.",
+    "11,455 × 100 titles = 1,145,500 dollars a year.",
+    "1,145,500 × 10 years = 11,455,000, about 11.5 million dollars."
+  ],
+  "keywords": [
+    "digital dilemma",
+    "digital preservation",
+    "film archives",
+    "storage costs"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Academy, The Digital Dilemma, 2007",
+  "source_kind": "institution",
+  "reference": "Academy of Motion Picture Arts and Sciences Science and Technology Council, The Digital Dilemma: Strategic Issues in Archiving and Accessing Digital Motion Picture Materials, 2007",
+  "written": "2026-09-27"
+}

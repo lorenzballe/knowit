@@ -1,0 +1,40 @@
+{
+  "id": "art-synthetics-10",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.synthetics",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "survivorship",
+  "question": "Van Gogh's Roses of 1890, now in New York, shows pale white blooms against green. What colour did he paint them?",
+  "options": [
+    "White, as they look now",
+    "Pale yellow",
+    "Pink"
+  ],
+  "correct": 2,
+  "answer": "Pink. He used a red lake made from eosin, a synthetic dye of the 1870s that fades fast in light, and the petals have lost nearly all of it. He wrote to Theo that such colours were unstable, so he laid them on raw. The roses paled on the wall, not on the easel.",
+  "move": "What survives on the surface may not be what was put there.",
+  "trap": "Trusting the colours on the wall as the colours he chose.",
+  "keywords": [
+    "van gogh",
+    "eosin",
+    "geranium lake",
+    "fading",
+    "roses"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vellekoop et al., Van Gogh's Studio Practice, 2013",
+  "source_kind": "book",
+  "reference": "Marije Vellekoop, Muriel Geldof, Ella Hendriks, Leo Jansen and Alberto de Tagle (eds.), Van Gogh's Studio Practice, Mercatorfonds and Yale University Press, 2013",
+  "written": "2026-09-27"
+}

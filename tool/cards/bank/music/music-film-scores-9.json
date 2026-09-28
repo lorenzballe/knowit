@@ -1,0 +1,33 @@
+{
+  "id": "music-film-scores-9",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.film_scores",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the Oscar for the score of the 1936 film Anthony Adverse not go to its composer, Erich Korngold?",
+  "answer": "Because in the award's first years the scoring Oscar went to the studio's music department, and its head collected it. Leo Forbstein of Warner Bros took the statuette, though Korngold wrote the music. The Academy soon changed the rule, and composers began to receive the award in their own names.",
+  "move": "Check whose name is on a prize before crediting the work.",
+  "keywords": [
+    "erich korngold",
+    "anthony adverse",
+    "academy awards",
+    "music department",
+    "leo forbstein"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carroll, The Last Prodigy, 1997",
+  "source_kind": "book",
+  "reference": "Carroll, The Last Prodigy: A Biography of Erich Wolfgang Korngold, Amadeus Press, 1997",
+  "written": "2026-09-27"
+}

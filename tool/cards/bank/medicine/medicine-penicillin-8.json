@@ -1,0 +1,43 @@
+{
+  "id": "medicine-penicillin-8",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.penicillin",
+  "also": [
+    "medicine.antibiotics.resistance"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "After more than 80 years of use, which of these bacteria does plain penicillin still almost always kill?",
+  "options": [
+    "Streptococcus pyogenes, behind strep throat",
+    "Staphylococcus aureus, from Fleming's plate",
+    "Neisseria gonorrhoeae, behind gonorrhoea"
+  ],
+  "correct": 0,
+  "answer": "Streptococcus pyogenes. Most Staphylococcus aureus now makes an enzyme that cuts penicillin, and gonorrhoea outgrew it by the end of the 1980s. The strep behind sore throats and scarlet fever has produced no strain resistant by standard tests, though some needing more drug were reported in 2020. Its first-choice drug is still penicillin.",
+  "move": "The famous early case is rarely the best guide to the present.",
+  "trap": "Picking staph, the bacterium penicillin is famous for killing first.",
+  "keywords": [
+    "streptococcus pyogenes",
+    "staphylococcus aureus",
+    "gonorrhoea",
+    "penicillin susceptibility",
+    "strep throat"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Horn et al., Clinical Infectious Diseases, 1998",
+  "source_kind": "paper",
+  "reference": "Horn, Zabriskie et al., Why have group A streptococci remained susceptible to penicillin? Report on a symposium, Clinical Infectious Diseases, 1998",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "history-industrial-10",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.industrial",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Did Britain industrialise first mainly because of cheap coal and high wages, rather than a culture of useful knowledge?",
+  "sides": [
+    "Yes, prices decided it",
+    "No, know-how decided it"
+  ],
+  "answer": "The evidence is in prices. Around 1750 wages in London were far higher, relative to the cost of energy and capital, than in Paris, Vienna or Beijing, and coal was cheap on British coalfields. Only there did it pay to invent machines that swapped labour for coal. The same machines lost money elsewhere for decades.",
+  "move": "Whichever side you took, why the high-wage Dutch did not industrialise decides it.",
+  "counterpoint": "The Dutch Republic paid wages as high as Britain's and burned cheap peat, yet built no steam engines. Joel Mokyr points to what was rare in Britain: a large body of skilled mechanics and a culture that published, tested and shared useful knowledge. Prices explain which machines paid; they do not explain who could build them.",
+  "keywords": [
+    "industrial revolution",
+    "coal",
+    "high wages",
+    "useful knowledge"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Allen, 2009; Mokyr, The Enlightened Economy, 2009",
+  "source_kind": "paper",
+  "reference": "Allen, The Industrial Revolution in Miniature: The Spinning Jenny in Britain, France, and India, Journal of Economic History, 2009; Mokyr, The Enlightened Economy: An Economic History of Britain 1700–1850, Yale University Press, 2009",
+  "written": "2026-09-27"
+}

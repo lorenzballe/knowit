@@ -1,0 +1,39 @@
+{
+  "id": "technology-limits-6",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.limits",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "True or false: ImageNet classifiers lost 11 to 14 points on a fresh test set because of years of tuning to the old one?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Recht and colleagues rebuilt the test set by the original recipe, and every model dropped, but in step: rankings held, and gains on the old set carried over to the new. Overfitting would have hurt the most heavily tuned models most. The new images were simply a little harder.",
+  "move": "Before blaming a cause, check whether everything untouched by it moved too.",
+  "trap": "Blaming the drop on years of models tuned against one public test.",
+  "keywords": [
+    "imagenet",
+    "test sets",
+    "overfitting",
+    "distribution shift",
+    "benchmarks"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Recht et al., ICML, 2019",
+  "source_kind": "paper",
+  "reference": "Recht, Roelofs, Schmidt & Shankar, Do ImageNet Classifiers Generalize to ImageNet?, ICML, 2019",
+  "written": "2026-09-27"
+}

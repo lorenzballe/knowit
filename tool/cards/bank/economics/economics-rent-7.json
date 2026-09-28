@@ -1,0 +1,39 @@
+{
+  "id": "economics-rent-7",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.rent",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "True or false: large new market-rate apartment blocks in poor neighbourhoods tend to push up rents in nearby buildings?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Asquith, Mast and Reed studied large new buildings in low-income areas of American cities and found nearby rents fell by about 6% against those slightly farther away. The new flats absorbed demand that would have bid up the old. Developers build where rents are already climbing, which is why the two look linked.",
+  "move": "Check whether the thing blamed simply goes where the trouble already is.",
+  "trap": "Seeing cranes arrive where rents rise and reading it as cause.",
+  "keywords": [
+    "new construction",
+    "gentrification",
+    "housing supply",
+    "nearby rents",
+    "filtering"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Asquith, Mast & Reed, REStat, 2023",
+  "source_kind": "paper",
+  "reference": "Asquith, Mast & Reed, Local Effects of Large New Apartment Buildings in Low-Income Areas, Review of Economics and Statistics, 2023",
+  "written": "2026-09-27"
+}

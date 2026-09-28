@@ -1,0 +1,40 @@
+{
+  "id": "technology-touch-9",
+  "topic": "technology",
+  "genre": "technology.screens",
+  "strand": "technology.screens.touch",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A Wacom-type stylus reports its position and how hard it presses, with no battery inside. What powers it?",
+  "options": [
+    "Nothing; the screen just senses the nib",
+    "Energy stored while it sits docked",
+    "A magnetic field from behind the screen"
+  ],
+  "correct": 2,
+  "answer": "A magnetic field from behind the screen. A grid of coils under the display pulses a field; a coil and capacitor in the pen resonate with it and send back a faint signal the grid locates. Pressing the nib alters that reply. Samsung's first Galaxy Note pen, in 2011, worked this way.",
+  "move": "Before assuming a gadget carries its own power, look for what feeds it.",
+  "trap": "A pen that clips into its slot seems to charge there.",
+  "keywords": [
+    "stylus",
+    "electromagnetic resonance",
+    "wacom",
+    "digitiser",
+    "s pen"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wacom, EMR method support note",
+  "source_kind": "company",
+  "reference": "https://support.wacom.com/hc/en-us/articles/1500006270401-What-is-the-EMR-Electro-Magnetic-Resonance-method-incorporated-in-a-pen-tablet",
+  "written": "2026-09-27"
+}

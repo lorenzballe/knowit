@@ -1,0 +1,39 @@
+{
+  "id": "economics-four-day-week-7",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.four_day_week",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "In 1982 France cut the legal week from 40 to 39 hours, monthly pay unchanged. What happened to workers who had been on 40?",
+  "options": [
+    "More of them lost their jobs",
+    "More were hired to share the work",
+    "No measurable change in jobs"
+  ],
+  "correct": 0,
+  "answer": "More of them lost their jobs. Crépon and Kramarz compared them with similar workers already on 36 to 39 hours, whom the law left alone. Same monthly pay for fewer hours raised their hourly cost, above all near the minimum wage, and their job losses rose. The freed hour went to nobody.",
+  "move": "Before sharing out work, check what each share now costs.",
+  "trap": "Assuming fewer hours per worker spreads the same work over more people.",
+  "keywords": [
+    "working hours",
+    "work sharing",
+    "france",
+    "job losses"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Crépon and Kramarz, JPE, 2002",
+  "source_kind": "paper",
+  "reference": "Crépon & Kramarz, Employed 40 Hours or Not Employed 39: Lessons from the 1982 Mandatory Reduction of the Workweek, Journal of Political Economy, 2002",
+  "written": "2026-09-27"
+}

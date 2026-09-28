@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-liar-6",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.liar",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Alfred Tarski conclude a language cannot contain, if the liar is to be kept out?",
+  "answer": "Its own word for truth. In 1933 Tarski proved that no consistent language able to describe its own sentences can define true for all of them. Truth for one language must be defined in a richer metalanguage, whose truth needs a richer one still. English, which applies true to itself freely, he judged inconsistent.",
+  "move": "A system that judges itself may need a second system to judge it.",
+  "keywords": [
+    "alfred tarski",
+    "truth",
+    "metalanguage",
+    "undefinability"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Tarski, The Concept of Truth, 1933",
+  "source_kind": "book",
+  "reference": "Tarski, The Concept of Truth in Formalized Languages, in Logic, Semantics, Metamathematics, trans. Woodger, Clarendon Press, 1956",
+  "written": "2026-09-27"
+}

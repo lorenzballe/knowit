@@ -1,0 +1,39 @@
+{
+  "id": "psychology-cues-9",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.cues",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Shown pictures of cigarettes or drugs, which response in people with addictions moves the most?",
+  "options": [
+    "Their reported craving",
+    "Their heart rate",
+    "Their skin's sweat response"
+  ],
+  "correct": 0,
+  "answer": "Their reported craving. Carter and Tiffany pooled cue-reactivity studies: drug cues raised self-reported craving strongly, while heart rate and sweat responses rose only a little. The cue speaks loudest to the want itself. A glimpse of a lighter can bring on the urge while the pulse barely changes.",
+  "move": "The body's signals are not always the truest measure of a pull.",
+  "trap": "Their heart rate, since the body seems to react before the mind admits it.",
+  "keywords": [
+    "cue reactivity",
+    "craving",
+    "addiction",
+    "smoking cues"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carter & Tiffany, Addiction, 1999",
+  "source_kind": "paper",
+  "reference": "Carter & Tiffany, Meta-analysis of cue-reactivity in addiction research, Addiction, 1999",
+  "written": "2026-09-27"
+}

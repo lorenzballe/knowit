@@ -1,0 +1,33 @@
+{
+  "id": "food-roasting-6",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.roasting",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which vitamin is nearly absent from green coffee beans but made in quantity by roasting them?",
+  "answer": "Niacin, vitamin B3. Green beans hold about 1% trigonelline, a bitter alkaloid; roasting heat strips a methyl group from it, leaving nicotinic acid, which is niacin. Light roasts carry about 10 mg per 100 g, very dark Italian roasts about 40 mg. A cup from 10 g of dark beans holds a few milligrams.",
+  "move": "Processing can create a nutrient as well as destroy one.",
+  "keywords": [
+    "niacin",
+    "trigonelline",
+    "nicotinic acid",
+    "vitamin b3",
+    "dark roast"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Adrian & Frangne, Adv. Exp. Med. Biol., 1991",
+  "source_kind": "paper",
+  "reference": "https://link.springer.com/chapter/10.1007/978-1-4899-2626-5_4",
+  "written": "2026-09-27"
+}

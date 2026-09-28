@@ -1,0 +1,36 @@
+{
+  "id": "language-latin-roots-10",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.latin_roots",
+  "also": [
+    "history.ancient_rome.daily_rome"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which Latin words did the Anglo-Saxons already have before they ever reached Britain?",
+  "answer": "Words for Roman goods and building: street from strata, wine from vinum, cheese from caseus, kitchen from coquina. Germanic tribes picked them up trading with the Empire on the continent, which is why German has Straße, Wein, Käse and Küche. Four centuries of Roman Britain left Old English very few words of its own.",
+  "move": "Trace a word's route before assuming it came by the obvious road.",
+  "keywords": [
+    "street",
+    "wine",
+    "cheese",
+    "old english",
+    "germanic tribes"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kastovsky, Cambridge History of the English Language",
+  "source_kind": "book",
+  "reference": "Kastovsky, Semantics and vocabulary, in Hogg (ed.), The Cambridge History of the English Language, vol. 1, Cambridge University Press, 1992",
+  "written": "2026-09-27"
+}

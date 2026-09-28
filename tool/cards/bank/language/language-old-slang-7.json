@@ -1,0 +1,39 @@
+{
+  "id": "language-old-slang-7",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.old_slang",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "In 17th-century thieves' cant, rum meant fine or excellent. What did rum mean to most Victorian readers?",
+  "options": [
+    "Drunk, after the spirit",
+    "Excellent, as it had before",
+    "Odd or strange"
+  ],
+  "correct": 2,
+  "answer": "Odd or strange. In cant a rum cove was a fine fellow and rum booze was good wine; by the late 18th century the word had flipped, by a path nobody has traced for certain. A rum go was a puzzling turn of events. The fine fellow had become a suspicious one.",
+  "move": "Praise can sour into suspicion without a single letter changing.",
+  "trap": "Linking the adjective to the drink and guessing it meant drunk.",
+  "keywords": [
+    "rum",
+    "thieves' cant",
+    "semantic change",
+    "victorian slang"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Coleman, A History of Cant and Slang Dictionaries",
+  "source_kind": "book",
+  "reference": "Coleman, A History of Cant and Slang Dictionaries, Volume 1: 1567–1784, Oxford University Press, 2004",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "psychology-fear-6",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.fear",
+  "also": [
+    "human_body.the_brain.neurons"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does the amygdala produce the conscious feeling of being afraid?",
+  "answer": "Probably not, argues Joseph LeDoux, who mapped its threat circuits. Shown snakes or angry faces too briefly to be seen, people still sweat and the amygdala responds, yet they report no fear. On his view it runs the defence; cortical circuits build the feeling. The palms can brace for a snake the eyes never saw.",
+  "move": "A body reacting and a person feeling are two measurements, not one.",
+  "keywords": [
+    "amygdala",
+    "joseph ledoux",
+    "threat circuits",
+    "conscious fear",
+    "masked faces"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "LeDoux & Pine, American Journal of Psychiatry, 2016",
+  "source_kind": "paper",
+  "reference": "LeDoux & Pine, Using neuroscience to help understand fear and anxiety: a two-system framework, American Journal of Psychiatry, 2016",
+  "written": "2026-09-27"
+}

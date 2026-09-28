@@ -1,0 +1,39 @@
+{
+  "id": "art-marble-8",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.marble",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a marble statue in clean, dry air can crumble into grains from daily sunshine alone?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Calcite, the crystal marble is made of, expands along one axis when warmed and shrinks slightly across it. Repeated heating and cooling pries neighbouring grains apart, and the surface loosens into a powder, a decay called sugaring. Thin marble cladding panels on sunny façades have bowed out of shape for the same reason.",
+  "move": "A small daily push, repeated for centuries, breaks what no single blow could.",
+  "trap": "Blaming city smoke and acid rain, the familiar enemies of stone.",
+  "keywords": [
+    "calcite",
+    "thermal expansion",
+    "sugaring",
+    "marble decay",
+    "weathering"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Siegesmund et al., Int. J. Earth Sciences, 2000",
+  "source_kind": "paper",
+  "reference": "Siegesmund, Ullemeyer, Weiss & Tschegg, Physical weathering of marbles caused by anisotropic thermal expansion, International Journal of Earth Sciences, 2000",
+  "written": "2026-09-27"
+}

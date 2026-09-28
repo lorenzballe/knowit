@@ -1,0 +1,32 @@
+{
+  "id": "human_body-plasticity-10",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.plasticity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened to the extra grey matter of new adult jugglers once they stopped practising?",
+  "answer": "It partly shrank back. In 2004 Draganski's team scanned volunteers before and after three months learning a three-ball cascade: a region that tracks visual motion gained grey matter. Three months without juggling later, the gain had faded, though it stayed above where it began. The tissue followed the practice, down as well as up.",
+  "move": "Ask what happens after the practice stops before calling a change permanent.",
+  "keywords": [
+    "juggling",
+    "grey matter",
+    "brain imaging",
+    "motor learning"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Draganski et al., Nature, 2004",
+  "source_kind": "paper",
+  "reference": "Draganski et al., Neuroplasticity: changes in grey matter induced by training, Nature, 2004",
+  "written": "2026-09-27"
+}

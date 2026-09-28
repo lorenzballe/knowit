@@ -1,0 +1,42 @@
+{
+  "id": "history-straight-lines-8",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.straight_lines",
+  "also": [
+    "history.maps_and_borders.old_maps"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Why does a piece of Minnesota lie north of the 49th parallel, reachable by road only through Canada?",
+  "options": [
+    "A swap to keep a fur-trading post",
+    "An undivided reserve of a Native nation",
+    "A treaty drafted on a faulty map"
+  ],
+  "correct": 2,
+  "answer": "A treaty drafted on a faulty map. The 1783 peace ran the border to the north-western point of the Lake of the Woods and due west to the Mississippi, which their map showed further north; its source lies far south. An 1818 treaty dropped a line from there to the 49th parallel, stranding the Angle.",
+  "move": "Old boundary wording outlives the map it was written against.",
+  "trap": "Assuming an odd border must record a local deal, not a paper error.",
+  "keywords": [
+    "northwest angle",
+    "lake of the woods",
+    "treaty of paris",
+    "minnesota"
+  ],
+  "era": "early_modern",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Treaty of Paris, 1783, Article 2",
+  "source_kind": "primary_document",
+  "reference": "Treaty of Paris, 1783, Article 2, and Convention of 1818, Article 2, in Miller (ed.), Treaties and Other International Acts of the United States of America, vol. 2, Government Printing Office, 1931",
+  "written": "2026-09-27"
+}

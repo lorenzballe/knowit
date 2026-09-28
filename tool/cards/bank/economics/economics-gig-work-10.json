@@ -1,0 +1,37 @@
+{
+  "id": "economics-gig-work-10",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.gig_work",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should app couriers and drivers be classed as employees unless the platform proves otherwise?",
+  "sides": [
+    "Yes, employees by default",
+    "No, self-employed by default"
+  ],
+  "answer": "The app sets the price, assigns the work, rates the worker and can switch them off: control in all but name. A presumption puts the burden of proof on the side holding the data. Spain's 2021 rider law did this for riders, and the EU's 2024 platform work directive requires every member state to follow.",
+  "move": "It turns on whether flexibility can survive inside an employment contract.",
+  "counterpoint": "Most platform workers log on for a few hours around other jobs and value choosing when; Chen and colleagues estimated Uber drivers gain more than twice the surplus they would on fixed schedules. Employment brings shifts and headcount caps. After Spain's rider law, Deliveroo left the country and other platforms moved riders to subcontracting fleets.",
+  "keywords": [
+    "employment status",
+    "platform work directive",
+    "delivery riders",
+    "flexibility"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chen et al., Journal of Political Economy, 2019",
+  "source_kind": "paper",
+  "reference": "Chen, Chevalier, Rossi & Oehlsen, The Value of Flexible Work: Evidence from Uber Drivers, Journal of Political Economy, 2019",
+  "written": "2026-09-27"
+}

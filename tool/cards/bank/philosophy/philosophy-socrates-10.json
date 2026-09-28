@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-socrates-10",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.socrates",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does poison hemlock kill the way Plato's Phaedo describes the death of Socrates?",
+  "answer": "Probably, though it was long doubted. Critics said the plant brings vomiting and convulsions, so Plato must have prettified the scene. Enid Bloch showed that Conium maculatum can cause a creeping paralysis rising up the legs, as the Phaedo tells it, with the mind clear. The cold reached his waist before his last words.",
+  "move": "Before calling a witness a liar, check what the event could look like.",
+  "keywords": [
+    "hemlock",
+    "phaedo",
+    "death of socrates",
+    "conium maculatum",
+    "poisoning"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "source": "Bloch, in Brickhouse & Smith, 2002",
+  "source_kind": "book",
+  "reference": "Bloch, Hemlock Poisoning and the Death of Socrates: Did Plato Tell the Truth?, in Brickhouse & Smith (eds), The Trial and Execution of Socrates, Oxford University Press, 2002",
+  "written": "2026-09-27"
+}

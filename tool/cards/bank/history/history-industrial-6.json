@@ -1,0 +1,36 @@
+{
+  "id": "history-industrial-6",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.industrial",
+  "also": [
+    "technology.where_things_come_from.factories"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why were many of England's first water-powered cotton mills staffed by pauper children sent from distant parishes?",
+  "answer": "Because the mills stood where nobody lived. Water power meant remote Pennine and Derbyshire valleys with no labour force, so owners took apprentices from workhouses in London and the south, housed on site. Parishes were glad to shed their keep. At Styal, Quarry Bank Mill built an apprentice house beside the stream.",
+  "move": "A factory's site decides its workforce before any wage is offered.",
+  "keywords": [
+    "parish apprentices",
+    "cotton mills",
+    "child labour",
+    "water power",
+    "workhouses"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Honeyman, Child Workers in England, 2007",
+  "source_kind": "book",
+  "reference": "Honeyman, Child Workers in England, 1780–1820: Parish Apprentices and the Making of the Early Industrial Labour Force, Ashgate, 2007",
+  "written": "2026-09-27"
+}

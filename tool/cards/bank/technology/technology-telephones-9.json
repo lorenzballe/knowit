@@ -1,0 +1,39 @@
+{
+  "id": "technology-telephones-9",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.telephones",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Why were Bell System telephones built to survive decades of drops and daily use?",
+  "options": [
+    "Makers simply built things better then",
+    "Regulators set strict durability rules",
+    "Bell owned the phones and paid repairs"
+  ],
+  "correct": 2,
+  "answer": "Because Bell owned them. For most of the 20th century Americans rented their phones from the Bell System, which made them through Western Electric and paid for every repair. A phone that lasted thirty years was profit; one that broke was cost. Once customers could buy their own, throwaway phones arrived.",
+  "move": "To predict how long a thing lasts, ask who pays when it breaks.",
+  "trap": "Crediting the era's craftsmanship when the repair bill decided it.",
+  "keywords": [
+    "bell system",
+    "western electric",
+    "telephone rental",
+    "durability"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wu, The Master Switch, 2010",
+  "source_kind": "book",
+  "reference": "Wu, The Master Switch: The Rise and Fall of Information Empires, Knopf, 2010",
+  "written": "2026-09-27"
+}

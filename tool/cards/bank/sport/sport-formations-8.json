@@ -1,0 +1,38 @@
+{
+  "id": "sport-formations-8",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.formations",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: until 2001, the NBA's rules forbade teams from playing a zone defence?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. For most of the league's history, illegal-defence rules made each defender guard a man rather than an area, which left stars free to beat one opponent at a time. In 2001 the NBA allowed zones but added defensive three seconds: no defender may wait in the lane that long without closely guarding someone.",
+  "move": "Look for the rule behind a style that everyone calls natural.",
+  "trap": "Assuming the pro game always allowed what schools and colleges played.",
+  "keywords": [
+    "nba",
+    "zone defence",
+    "illegal defence",
+    "defensive three seconds"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NBA, Official Rules, 2001–02",
+  "source_kind": "standard",
+  "reference": "National Basketball Association, Official Rules of the National Basketball Association 2001–02, 2001",
+  "written": "2026-09-27"
+}

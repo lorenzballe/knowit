@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-fast-fashion-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.fast_fashion",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Where does almost all recycled polyester in clothing come from?",
+  "options": [
+    "Old polyester clothes",
+    "Factory fabric offcuts",
+    "Plastic drinks bottles"
+  ],
+  "correct": 2,
+  "answer": "Plastic drinks bottles, about 98% of it by Textile Exchange's figures. Bottles are clean, single-material and easy to collect; old clothes mix fibres, dyes and zips. The catch is that bottles could have become bottles again; spun into fleece, the plastic leaves that loop. A recycled jacket is usually a bottle's last stop.",
+  "move": "Ask what a recycled product was before, and what it can become after.",
+  "trap": "Recycled clothing sounds like clothing made from old clothes.",
+  "keywords": [
+    "recycled polyester",
+    "pet bottles",
+    "textile recycling",
+    "fleece"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Textile Exchange, Materials Market Report 2023",
+  "source_kind": "statistics",
+  "reference": "Textile Exchange, Materials Market Report, 2023",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "art-motives-10",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.motives",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a convicted forger be free to sell openly signed pastiches of the masters he once faked?",
+  "sides": [
+    "Yes, let him sell",
+    "No, it rewards the fraud"
+  ],
+  "answer": "Yes. The crime was the lie about who painted a picture, not the skill. A pastiche signed by its maker and sold as his tells the truth, and the sentence has been served. John Myatt, jailed in 1999, has sold such genuine fakes openly for years, and buyers know what they get.",
+  "move": "Whichever side you took, it turns on whether a label can travel with the object.",
+  "counterpoint": "No. Notoriety is the selling point, so the fraud keeps paying. A signature on the front can be painted out or hidden under a frame, and a skilled pastiche is a fake waiting for its next owner. Paintings outlive paperwork: once the bill of sale is lost, only the forger's skill remains, and that skill was the weapon.",
+  "keywords": [
+    "john myatt",
+    "pastiche",
+    "genuine fakes",
+    "art market"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Salisbury & Sujo, Provenance, 2009",
+  "source_kind": "book",
+  "reference": "Laney Salisbury & Aly Sujo, Provenance: How a Con Man and a Forger Rewrote the History of Modern Art, Penguin Press, 2009",
+  "written": "2026-09-27"
+}

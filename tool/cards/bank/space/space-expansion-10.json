@@ -1,0 +1,42 @@
+{
+  "id": "space-expansion-10",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.expansion",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Light sent today can reach galaxies now within 16 billion light-years; the observable universe spans 46 billion. What percentage of its volume is reachable?",
+  "value": 4.3,
+  "unit": "percent",
+  "tolerance": 0.5,
+  "answer": "About 4.3% of the observable volume.",
+  "move": "Cube a ratio of distances before judging how much space it holds.",
+  "trap": "Stopping at the ratio of distances, about a third.",
+  "hint": "The share of a radius is not the share of a volume.",
+  "steps": [
+    "16 ÷ 46 ≈ 0.35 of the radius.",
+    "Volume goes with the cube: 0.35 × 0.35 × 0.35 ≈ 0.043.",
+    "About 4.3% of the observable volume."
+  ],
+  "keywords": [
+    "cosmic event horizon",
+    "observable universe",
+    "accelerating expansion",
+    "reachable galaxies"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Davis & Lineweaver, PASA, 2004",
+  "source_kind": "paper",
+  "reference": "Davis & Lineweaver, Expanding Confusion: Common Misconceptions of Cosmological Horizons and the Superluminal Expansion of the Universe, Publications of the Astronomical Society of Australia 21, 97, 2004",
+  "written": "2026-09-27"
+}

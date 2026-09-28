@@ -1,0 +1,38 @@
+{
+  "id": "economics-decoy-options-8",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.decoy_options",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: when a strong option is shown as sold out, choices shift towards the remaining option most like it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Researchers call it a phantom decoy: an attractive option that turns out to be unavailable. In Highhouse's hiring experiments, a strong phantom candidate pushed choices towards the remaining candidate most like it. The best option on display sets the standard even when nobody can take it: a sold-out label still works the shelf.",
+  "move": "The option you cannot have still sets the standard for those you can.",
+  "trap": "Assuming an option nobody can pick cannot sway the choice.",
+  "keywords": [
+    "phantom decoys",
+    "sold out",
+    "hiring decisions",
+    "choice sets"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Highhouse, OBHDP, 1996",
+  "source_kind": "paper",
+  "reference": "Highhouse, Context-Dependent Selection: The Effects of Decoy and Phantom Job Candidates, Organizational Behavior and Human Decision Processes, 1996",
+  "written": "2026-09-27"
+}

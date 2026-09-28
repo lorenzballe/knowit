@@ -1,0 +1,38 @@
+{
+  "id": "human_body-grey-hair-7",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.grey_hair",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: grey hair has darkened again in lung cancer patients treated with immune-boosting drugs?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In a Spanish series in 2017, 14 of 52 patients on drugs that release the immune system's brakes, anti-PD-1 and anti-PD-L1, saw grey hair darken, mostly all over. Thirteen of the 14 had cancer that was stable or shrinking. In melanoma the same drugs can do the reverse, bleaching patches of skin.",
+  "move": "The same lever can darken one body and bleach another.",
+  "trap": "Expecting immune-boosting drugs to attack pigment cells, not restore them.",
+  "keywords": [
+    "immunotherapy",
+    "repigmentation",
+    "lung cancer",
+    "pd-1"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rivera et al., JAMA Dermatology, 2017",
+  "source_kind": "paper",
+  "reference": "Rivera, Boada, Bielsa et al., Hair repigmentation during immunotherapy treatment with an anti-programmed cell death 1 and anti-programmed cell death ligand 1 agent for lung cancer, JAMA Dermatology, 2017",
+  "written": "2026-09-27"
+}

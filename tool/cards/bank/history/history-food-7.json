@@ -1,0 +1,40 @@
+{
+  "id": "history-food-7",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.food",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "In December 1918 Germany's health office blamed 763,000 civilian deaths on the Allied food blockade. How was that figure reached?",
+  "options": [
+    "Counting death certificates that named starvation",
+    "Counting all deaths above the pre-war level",
+    "Modelling deaths from the calorie shortfall"
+  ],
+  "correct": 1,
+  "answer": "Counting all deaths above the pre-war level. The memorandum compared each war year's civilian deaths with peacetime and credited the whole excess to the blockade, including extra deaths from tuberculosis and the influenza of 1918. Hunger made both deadlier, yet influenza also killed the well fed.",
+  "move": "An excess over a baseline counts everything that changed, not only the cause named.",
+  "trap": "Taking an official death toll as a count of named cases.",
+  "keywords": [
+    "allied blockade",
+    "first world war",
+    "excess deaths",
+    "hunger",
+    "influenza"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Cox, Economic History Review, 2015",
+  "source_kind": "paper",
+  "reference": "Cox, Hunger Games: or How the Allied Blockade in the First World War Deprived German Children of Nutrition, and Allied Food Aid Subsequently Saved Them, Economic History Review, 2015",
+  "written": "2026-09-27"
+}

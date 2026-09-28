@@ -1,0 +1,40 @@
+{
+  "id": "psychology-sunk-cost-7",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.sunk_cost",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sunkCost",
+  "question": "Students told their own earlier funding choice had failed, and others told a predecessor made it, split new money. Who gave the failing division more?",
+  "options": [
+    "Those who inherited the choice",
+    "Neither group, on average",
+    "Those who had made the choice"
+  ],
+  "correct": 2,
+  "answer": "Those who had made the choice. In Barry Staw's 1976 study, students who had personally picked a division that then failed put more of the new money into it than students handed the same failure. Later reviews count personal responsibility among the steadiest drivers of escalation. The money was the same; only the signature differed.",
+  "move": "Hand a failing project to someone who did not start it.",
+  "trap": "Expecting the people who chose to learn fastest from their own failure.",
+  "keywords": [
+    "escalation of commitment",
+    "barry staw",
+    "responsibility",
+    "business decisions",
+    "failing projects"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Staw, Organizational Behavior and Human Performance, 1976",
+  "source_kind": "paper",
+  "reference": "Staw, Knee-deep in the big muddy: a study of escalating commitment to a chosen course of action, Organizational Behavior and Human Performance, 1976",
+  "written": "2026-09-27"
+}

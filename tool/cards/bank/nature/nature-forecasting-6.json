@@ -1,0 +1,35 @@
+{
+  "id": "nature-forecasting-6",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.forecasting",
+  "also": [
+    "philosophy.free_will.determinism"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who put a butterfly into the title of Edward Lorenz's 1972 talk on chaos, and what creature had he used before?",
+  "answer": "The session's convener, Philip Merilees, when Lorenz sent no title: Does the flap of a butterfly's wings in Brazil set off a tornado in Texas? In a 1963 paper Lorenz had cited a single flap of a seagull's wings. The point was the same, that tiny errors grow until forecasts fail. The butterfly stuck.",
+  "move": "The wording that spreads an idea is often not its author's.",
+  "keywords": [
+    "edward lorenz",
+    "chaos theory",
+    "butterfly effect",
+    "predictability"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lorenz, The Essence of Chaos, 1993",
+  "source_kind": "book",
+  "reference": "Lorenz, The Essence of Chaos, University of Washington Press, 1993",
+  "written": "2026-09-27"
+}

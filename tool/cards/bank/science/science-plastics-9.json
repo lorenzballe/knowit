@@ -1,0 +1,38 @@
+{
+  "id": "science-plastics-9",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: more than half the weight of PVC plastic comes from common salt rather than oil or gas?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. PVC's repeating unit, C₂H₃Cl, is 57% chlorine by weight, and that chlorine comes from brine split by electricity, which also yields caustic soda. Only the rest comes from ethylene made from oil or gas. Hence PVC burns reluctantly, and burning it releases hydrogen chloride, which turns to hydrochloric acid in water.",
+  "move": "Ask what a thing is made of by weight, not by reputation.",
+  "trap": "False, since every plastic is assumed to be made from oil.",
+  "keywords": [
+    "pvc",
+    "chlorine",
+    "brine electrolysis",
+    "ethylene"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Allsopp & Vianello, Ullmann's Encyclopedia, 2000",
+  "source_kind": "reference_work",
+  "reference": "Allsopp & Vianello, Poly(Vinyl Chloride), Ullmann's Encyclopedia of Industrial Chemistry, Wiley-VCH, 2000",
+  "written": "2026-09-27"
+}

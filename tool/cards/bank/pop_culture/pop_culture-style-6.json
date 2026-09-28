@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-style-6",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.style",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who mailed American personnel managers a guide to dressing down for work in 1992, and why?",
+  "answer": "Levi Strauss, maker of Dockers khakis. Its Guide to Casual Businesswear went to about 25,000 human-resources managers, with photographs and rules for looking relaxed but not sloppy. The trousers in the pictures did the selling. Casual Friday reached many offices as a trouser maker's dress code.",
+  "move": "When a rule arrives looking neutral, ask who wrote the first draft.",
+  "keywords": [
+    "casual friday",
+    "dockers",
+    "levi strauss",
+    "dress codes",
+    "office wear"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Levi Strauss & Co., Dockers history, 2014",
+  "source_kind": "company",
+  "reference": "https://www.levistrauss.com/2014/07/07/dockers-and-the-birth-of-casual-fridays/",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "cinema-kubrick-9",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.kubrick",
+  "also": [
+    "cinema.how_films_are_made.editing"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Days after 2001: A Space Odyssey opened in 1968, Kubrick cut 19 minutes. How did prints already in cinemas lose them?",
+  "answer": "By instructions sent to the cinemas. Kubrick and his editor Ray Lovejoy settled the trims in a few days in April, and detailed lists of what to remove went to the cinemas already screening the 70 mm prints, so the cuts could be made there. The version audiences know is the recut, not the premiere.",
+  "move": "Ask which version is meant before quoting what a work contains.",
+  "keywords": [
+    "2001 a space odyssey",
+    "ray lovejoy",
+    "70 mm prints",
+    "premiere",
+    "re-editing"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Kubrick Site, post-premiere edits",
+  "source_kind": "reference_work",
+  "reference": "http://www.visual-memory.co.uk/amk/doc/brown3.html",
+  "written": "2026-09-27"
+}

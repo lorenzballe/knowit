@@ -1,0 +1,33 @@
+{
+  "id": "sport-altitude-7",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.altitude",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do altitude camps often begin with a blood test for iron rather than for red cells?",
+  "answer": "Because thin air cannot build blood without iron. In 1992 Stray-Gundersen's group reported that runners who arrived at altitude with low iron stores, measured as serum ferritin, did not increase their red cell volume at all, while runners with adequate stores did. Camps now commonly screen ferritin weeks ahead and supplement anyone low.",
+  "move": "Before pressing the accelerator, check there is fuel in the tank.",
+  "keywords": [
+    "iron",
+    "ferritin",
+    "red cell volume",
+    "altitude camp",
+    "supplements"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stray-Gundersen et al., Med Sci Sports Exerc, 1992",
+  "source_kind": "paper",
+  "reference": "Stray-Gundersen et al., Failure of red cell volume to increase to altitude exposure in iron deficient runners, Medicine & Science in Sports & Exercise, 1992",
+  "written": "2026-09-27"
+}

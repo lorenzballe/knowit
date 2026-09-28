@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-sneakers-10",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.sneakers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Nike's first shoe with an air cushion was a basketball shoe?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. It was a running shoe: the Tailwind of 1978 carried a gas-filled bag devised by Frank Rudy, a former aerospace engineer, and was launched at the Honolulu Marathon. The Air Force 1, the first basketball shoe with the cushion, came four years later. For years Air was sold as a feeling, not a look.",
+  "move": "The version everyone remembers is rarely the first version made.",
+  "trap": "Air's most famous early shoes are basketball ones, so they come to mind.",
+  "keywords": [
+    "nike tailwind",
+    "air cushioning",
+    "frank rudy",
+    "running shoes"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Knight, Shoe Dog, 2016",
+  "source_kind": "book",
+  "reference": "Phil Knight, Shoe Dog: A Memoir by the Creator of Nike, Scribner, 2016",
+  "written": "2026-09-27"
+}

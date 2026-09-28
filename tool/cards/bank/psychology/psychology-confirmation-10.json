@@ -1,0 +1,38 @@
+{
+  "id": "psychology-confirmation-10",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.confirmation",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is favouring one's own side a defect of reasoning, or a feature that works in groups?",
+  "sides": [
+    "A defect to correct",
+    "A feature for groups"
+  ],
+  "answer": "A defect. Doctors, analysts and investors mostly reason alone or among colleagues who already agree, and there myside bias does its damage unchecked. No opponent is guaranteed to turn up. A faculty that works well only when someone else happens to challenge it is a faculty with a flaw, and training should aim at it.",
+  "move": "Whichever side you took, it turns on whether anyone is there to argue back.",
+  "counterpoint": "A feature. Hugo Mercier and Dan Sperber argue reasoning evolved to make and judge arguments among others: people are lazy critics of their own reasons and sharp critics of other people's. Groups that argue solve logic problems, such as Wason's card task, that most individuals fail. Spread across a debate, the bias becomes a division of labour.",
+  "keywords": [
+    "myside bias",
+    "argumentative theory",
+    "group reasoning",
+    "hugo mercier",
+    "dan sperber"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mercier & Sperber, Behavioral and Brain Sciences, 2011",
+  "source_kind": "paper",
+  "reference": "Mercier & Sperber, Why do humans reason? Arguments for an argumentative theory, Behavioral and Brain Sciences, 2011",
+  "written": "2026-09-27"
+}

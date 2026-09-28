@@ -1,0 +1,41 @@
+{
+  "id": "medicine-placebo-9",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.placebo",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "In a pain trial, 40% on the drug and 30% on placebo got relief. What percentage of the drug's responders owe it to the drug?",
+  "value": 25,
+  "unit": "percent",
+  "answer": "(40 - 30) / 40 = 25%.",
+  "move": "Subtract what the dummy achieved before praising what the real thing did.",
+  "trap": "Answering 100%, crediting the drug with every patient who got better.",
+  "hint": "Ask how many of the drug group would have responded to a dummy pill.",
+  "steps": [
+    "Of 100 patients on the drug, 40 get the relief.",
+    "About 30 of them would have got it from placebo, as the other arm did.",
+    "(40 - 30) / 40 = 25%."
+  ],
+  "keywords": [
+    "placebo arm",
+    "responder rate",
+    "drug trials",
+    "attributable effect"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Laupacis, Sackett & Roberts, NEJM, 1988",
+  "source_kind": "arithmetic",
+  "reference": "Laupacis, Sackett & Roberts, An assessment of clinically useful measures of the consequences of treatment, New England Journal of Medicine, 1988",
+  "written": "2026-09-27"
+}

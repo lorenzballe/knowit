@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-virality-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.virality",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: UK police confirmed cases of children harmed by the 2019 Momo challenge?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Warnings that a staring face was urging children to hurt themselves swept Britain in February 2019, but the NSPCC, the Samaritans and internet-safety groups said they had seen no evidence of harm, and warned the publicity itself was the risk. The face was a Japanese artist's 2016 sculpture. The warnings did the spreading.",
+  "move": "A warning shared a million times is evidence of the warning, not the danger.",
+  "trap": "So many urgent warnings made the harm seem proven.",
+  "keywords": [
+    "momo challenge",
+    "moral panic",
+    "hoax",
+    "samaritans",
+    "nspcc"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Guardian, 28 February 2019",
+  "source_kind": "news_archive",
+  "reference": "Jim Waterson, report on charities calling the Momo challenge a hoax, The Guardian, 28 February 2019",
+  "written": "2026-09-27"
+}

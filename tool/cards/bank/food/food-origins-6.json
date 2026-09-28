@@ -1,0 +1,36 @@
+{
+  "id": "food-origins-6",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.origins",
+  "also": [
+    "history.everyday_life.food"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "From how many coffee trees does most of the arabica grown in Latin America descend?",
+  "answer": "A handful, chiefly one. Dutch traders took coffee from Yemen to Java; in 1706 a Javan plant reached Amsterdam's botanical garden. A descendant given to Louis XIV in 1714 stocked the Paris hothouse; seedlings from these two founded plantations in Suriname and Martinique. That Typica line, with Bourbon from Réunion, underlies most Latin American coffee.",
+  "move": "When a whole region grows one plant, ask how few it started from.",
+  "keywords": [
+    "typica",
+    "amsterdam botanical garden",
+    "louis xiv",
+    "martinique",
+    "arabica diversity"
+  ],
+  "era": "early_modern",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Anthony et al., Theor. Appl. Genet., 2002",
+  "source_kind": "paper",
+  "reference": "Anthony, Combes, Astorga, Bertrand, Graziosi & Lashermes, The origin of cultivated Coffea arabica L. varieties revealed by AFLP and SSR markers, Theoretical and Applied Genetics, 2002",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "medicine-cold-chain-10",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.cold_chain",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "BCG comes in 20-dose vials, discarded six hours after opening. A clinic vaccinates 5 newborns per session. How many doses per child?",
+  "value": 4,
+  "unit": "doses per child",
+  "answer": "20 / 5 = 4 doses per child.",
+  "move": "Count what is opened, not only what is used.",
+  "trap": "Thinking wastage means spoiled stock, not opened vials.",
+  "hint": "Each session opens one vial, and whatever is left at the end is thrown away.",
+  "steps": [
+    "Each session opens one 20-dose vial.",
+    "Five doses are given; the other 15 are discarded.",
+    "20 / 5 = 4 doses per child."
+  ],
+  "keywords": [
+    "bcg vaccine",
+    "multi-dose vials",
+    "vaccine wastage",
+    "open vial policy",
+    "newborns"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "WHO, Monitoring vaccine wastage, 2005",
+  "source_kind": "institution",
+  "reference": "World Health Organization, Monitoring vaccine wastage at country level: guidelines for programme managers, WHO/V&B/03.18 Rev.1, 2005",
+  "written": "2026-09-27"
+}

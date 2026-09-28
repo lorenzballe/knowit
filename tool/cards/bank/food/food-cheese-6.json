@@ -1,0 +1,33 @@
+{
+  "id": "food-cheese-6",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.cheese",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did French researchers warn in 2020 that the white mould on Camembert could be in trouble?",
+  "answer": "It is a single clone. Since the early 1900s makers have used one white strain of Penicillium camemberti, chosen for its clean look. It multiplies only by copying itself and now makes few spores, so it is hard to propagate and cannot adapt. Before that choice, Camembert rinds were grey-green or bluish, even spotted brown.",
+  "move": "A choice made for looks can quietly remove the capacity to adapt.",
+  "keywords": [
+    "camembert",
+    "penicillium camemberti",
+    "clonal strain",
+    "mould",
+    "domestication"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ropars et al., Current Biology, 2020",
+  "source_kind": "paper",
+  "reference": "Ropars, Didiot, Rodríguez de la Vega et al., Domestication of the emblematic white cheese-making fungus Penicillium camemberti and its diversification into cheese-specific lineages, Current Biology, 2020",
+  "written": "2026-09-27"
+}

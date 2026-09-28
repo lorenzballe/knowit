@@ -1,0 +1,39 @@
+{
+  "id": "sport-coaching-7",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.coaching",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "Runner on first, nobody out: a sacrifice bunt moves him to second at the cost of an out. What happens to expected runs?",
+  "options": [
+    "They rise",
+    "They stay level",
+    "They fall"
+  ],
+  "correct": 2,
+  "answer": "They fall, by roughly a quarter in run-expectancy tables since Lindsey's in 1963: an out is worth more than a base. Yet the chance of scoring at least one run barely moves, so late in a close game, when one run decides it, the bunt is near break-even.",
+  "move": "Before judging a move, ask whether the goal is many points or one.",
+  "trap": "Assuming a runner in scoring position must be worth the out.",
+  "keywords": [
+    "sacrifice bunt",
+    "run expectancy",
+    "baseball strategy",
+    "george lindsey"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lindsey, Operations Research, 1963",
+  "source_kind": "paper",
+  "reference": "Lindsey, An Investigation of Strategies in Baseball, Operations Research, 1963",
+  "written": "2026-09-27"
+}

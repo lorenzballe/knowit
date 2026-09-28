@@ -1,0 +1,36 @@
+{
+  "id": "art-abstraction-6",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.abstraction",
+  "also": [
+    "art.colour_and_pigment.synthetics"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Harvard bring back the lost colour of Rothko's faded murals in 2014 without touching the paint?",
+  "answer": "With light. The crimson in the five panels, mixed partly with Lithol Red, a fugitive synthetic pigment, had turned pale blue and brown in a sunlit dining room. Conservators photographed the canvases, calculated the missing colour point by point, and projected it back onto them. Switch off the projectors, and it fades again.",
+  "move": "The gentlest repair is one that can be switched off.",
+  "keywords": [
+    "rothko",
+    "harvard murals",
+    "lithol red",
+    "projection",
+    "conservation"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Harvard Art Museums, 2014",
+  "source_kind": "institution",
+  "reference": "Mary Schneider Enriquez (ed.), Mark Rothko's Harvard Murals, Harvard Art Museums, 2014",
+  "written": "2026-09-27"
+}

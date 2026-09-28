@@ -1,0 +1,33 @@
+{
+  "id": "history-the-fall-9",
+  "topic": "history",
+  "genre": "history.ancient_rome",
+  "strand": "history.ancient_rome.the_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long did the Roman Senate go on meeting after the last western emperor was deposed?",
+  "answer": "More than a century. Under Odoacer and the Gothic kings the Senate still sat, and its leading men still held the consulship. Its last known collective act came in 603, when it acclaimed portraits of the eastern emperor Phocas in Rome. Around 630 its meeting house, the Curia, was turned into the church of Sant'Adriano.",
+  "move": "Institutions often outlive the power that once gave them meaning.",
+  "keywords": [
+    "roman senate",
+    "curia",
+    "phocas",
+    "odoacer",
+    "late antiquity"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Cambridge Ancient History, vol. 14",
+  "source_kind": "reference_work",
+  "reference": "Humphries, Italy, A.D. 425-605, in Cameron, Ward-Perkins and Whitby (eds.), The Cambridge Ancient History, vol. 14, Cambridge University Press, 2000",
+  "written": "2026-09-27"
+}

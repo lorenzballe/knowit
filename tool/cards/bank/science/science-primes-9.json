@@ -1,0 +1,42 @@
+{
+  "id": "science-primes-9",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.primes",
+  "also": [
+    "science.maths_curios.probability"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "Pick two whole numbers at random. What is the chance they share no prime factor at all?",
+  "options": [
+    "About 95%",
+    "About 61%",
+    "About 25%"
+  ],
+  "correct": 1,
+  "answer": "About 61%: exactly 6/π². Both numbers are even a quarter of the time, both divisible by 3 a ninth, by 5 a twenty-fifth. Each prime spoils a sliver of pairs, but the survivals multiply: 3/4 × 8/9 × 24/25 and on. Euler's sum of 1/n² supplies the π. Two pairs in five share a factor.",
+  "move": "Count every small way to fail before trusting the total.",
+  "trap": "About 95%, since a shared factor seems rare between random numbers.",
+  "keywords": [
+    "coprime numbers",
+    "probability",
+    "leonhard euler",
+    "basel problem"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Apostol, Introduction to Analytic Number Theory",
+  "source_kind": "book",
+  "reference": "Apostol, Introduction to Analytic Number Theory, Springer, 1976",
+  "written": "2026-09-27"
+}

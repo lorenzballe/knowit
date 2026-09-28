@@ -1,0 +1,33 @@
+{
+  "id": "history-guilds-10",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.guilds",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the Holy Roman Emperor do about the ribbon loom in 1685?",
+  "answer": "He banned it. The engine loom wove many ribbons at once, and ribbon-weavers' guilds pressed for its suppression; an imperial edict of 1685 forbade it across the Empire and was renewed in 1719. Saxony allowed it openly only in 1765. Basel, outside the Empire, allowed it, and its ribbon trade flourished.",
+  "move": "Banning a machine at home rarely stops it working next door.",
+  "keywords": [
+    "ribbon loom",
+    "engine loom",
+    "imperial edict",
+    "basel",
+    "innovation"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Epstein and Prak, Guilds, Innovation, 2008",
+  "source_kind": "book",
+  "reference": "Epstein and Prak (eds.), Guilds, Innovation and the European Economy, 1400-1800, Cambridge University Press, 2008",
+  "written": "2026-09-27"
+}

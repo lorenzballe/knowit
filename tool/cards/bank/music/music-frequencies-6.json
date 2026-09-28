@@ -1,0 +1,32 @@
+{
+  "id": "music-frequencies-6",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.frequencies",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a sequence of tones seem to climb forever without its frequencies ever getting higher?",
+  "answer": "By stacking octaves under a fixed loudness curve. Roger Shepard built each tone from components an octave apart, loudest mid-range and fading at both ends. As the set steps up, top components fade out while new ones fade in at the bottom, so after twelve steps the sound is back where it began.",
+  "move": "A staircase that returns to its start was built as a circle.",
+  "keywords": [
+    "shepard tone",
+    "octaves",
+    "pitch perception",
+    "auditory illusion"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shepard, JASA, 1964",
+  "source_kind": "paper",
+  "reference": "Shepard, Circularity in Judgments of Relative Pitch, Journal of the Acoustical Society of America, 1964",
+  "written": "2026-09-27"
+}

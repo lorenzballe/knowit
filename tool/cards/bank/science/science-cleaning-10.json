@@ -1,0 +1,38 @@
+{
+  "id": "science-cleaning-10",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should families clean their homes less to lower their children's risk of allergies?",
+  "sides": [
+    "Yes, clean less",
+    "No, clean as usual"
+  ],
+  "answer": "Yes. Children raised on traditional farms, among animals and dust, have far less allergy and asthma: Amish children in Indiana had about a quarter of the asthma of Hutterite children with similar genes but industrial farms. The immune system seems to need early microbial training, and a scrubbed, disinfected home withholds it.",
+  "move": "Whichever side you took, the hinge is whether household cleaning is the exposure that matters.",
+  "counterpoint": "No. The protective exposures in those studies are farms, livestock, siblings and pets, not dirty kitchens, and no trial shows that cleaning less prevents allergy. Kitchen and hand hygiene still stop real infections such as salmonella and norovirus. The better rule is targeted hygiene: clean where and when germs spread, and get children outdoors.",
+  "keywords": [
+    "hygiene hypothesis",
+    "allergy",
+    "asthma",
+    "amish",
+    "targeted hygiene"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stein et al., NEJM, 2016",
+  "source_kind": "paper",
+  "reference": "Stein et al., Innate Immunity and Asthma Risk in Amish and Hutterite Farm Children, New England Journal of Medicine 375, 411, 2016",
+  "written": "2026-09-27"
+}

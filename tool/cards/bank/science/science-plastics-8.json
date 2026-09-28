@@ -1,0 +1,39 @@
+{
+  "id": "science-plastics-8",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.plastics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Microbeads in cosmetics were banned in several countries. By a 2017 estimate, what share of the tiny plastic shed straight into oceans were they?",
+  "options": [
+    "About 2%",
+    "About 30%",
+    "About 60%"
+  ],
+  "correct": 0,
+  "answer": "About 2%. The IUCN's estimate put synthetic textiles, shedding fibres in the wash, at about 35% and tyres wearing down on roads at 28%, with city dust next. Microbeads were easy to picture and easy to ban, so the law came first. The bigger sources are the laundry and the road.",
+  "move": "Before cheering a ban, ask what share of the problem it touched.",
+  "trap": "About 30%, because microbeads were the source that made the headlines.",
+  "keywords": [
+    "microbeads",
+    "microplastics",
+    "synthetic textiles",
+    "tyre wear"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Boucher & Friot, IUCN, 2017",
+  "source_kind": "institution",
+  "reference": "Boucher & Friot, Primary Microplastics in the Oceans: A Global Evaluation of Sources, IUCN, 2017",
+  "written": "2026-09-27"
+}

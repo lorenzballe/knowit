@@ -1,0 +1,32 @@
+{
+  "id": "human_body-gut-and-mood-10",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.gut_and_mood",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which treatment for irritable bowel syndrome has beaten its comparison in trials with no drug, diet or procedure reaching the gut?",
+  "answer": "Gut-directed hypnotherapy. Hypnotised patients are guided to imagine calming the bowel, such as a warm hand on the abdomen. It beat psychotherapy with placebo pills in a small Manchester trial in 1984. In a Dutch trial of 354 adults in 2019, 41% treated singly and 33% in groups got adequate relief, against 17% given education.",
+  "move": "A symptom felt in one organ may be treated through another.",
+  "keywords": [
+    "hypnotherapy",
+    "irritable bowel syndrome",
+    "gut-brain axis",
+    "clinical trials"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Flik et al., Lancet Gastroenterol Hepatol, 2019",
+  "source_kind": "paper",
+  "reference": "doi:10.1016/S2468-1253(18)30310-8",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "language-japanese-8",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.japanese",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In Buddhist texts, what did gaman, the Japanese word for stoic endurance, originally mean?",
+  "options": [
+    "Patience in the face of suffering",
+    "Self-conceit, a defilement of mind",
+    "Obedience owed to a teacher"
+  ],
+  "correct": 1,
+  "answer": "Self-conceit, a defilement of mind. Written with the characters for self and pride, gaman rendered the Sanskrit term for conceit of self, one of the vices Buddhist teaching lists. Stubborn pride that refuses to yield slid, over centuries, into admirable holding firm. The same two characters now praise what they once rebuked.",
+  "move": "A vice and a virtue can be one act seen from two sides.",
+  "trap": "Assuming a word for a virtue has always praised it.",
+  "keywords": [
+    "gaman",
+    "buddhism",
+    "conceit",
+    "endurance",
+    "semantic change"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nakamura, Bukkyōgo daijiten, 1975",
+  "source_kind": "reference_work",
+  "reference": "Nakamura Hajime, Bukkyōgo daijiten (Great Dictionary of Buddhist Terms), Tokyo Shoseki, 1975",
+  "written": "2026-09-27"
+}

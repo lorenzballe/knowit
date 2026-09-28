@@ -1,0 +1,39 @@
+{
+  "id": "medicine-penicillin-10",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.penicillin",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: despite a vast wartime effort, chemists first built a penicillin entirely from scratch only in 1957?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. During the war about 1,000 chemists in 39 Allied laboratories tried to synthesise it and failed: its four-atom beta-lactam ring was too strained for the methods of the day. John Sheehan at MIT completed penicillin V in 1957. Penicillin is still grown by mould in fermentation tanks, with chemists reshaping its side chain afterwards.",
+  "move": "What a living cell makes easily can still defeat a whole laboratory.",
+  "trap": "Assuming a drug this vital was soon made by chemists instead.",
+  "keywords": [
+    "john sheehan",
+    "penicillin synthesis",
+    "beta-lactam ring",
+    "fermentation",
+    "wartime research"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sheehan, The Enchanted Ring, 1982",
+  "source_kind": "book",
+  "reference": "Sheehan, The Enchanted Ring: The Untold Story of Penicillin, MIT Press, 1982",
+  "written": "2026-09-27"
+}

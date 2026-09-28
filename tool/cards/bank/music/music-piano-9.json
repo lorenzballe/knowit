@@ -1,0 +1,45 @@
+{
+  "id": "music-piano-9",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.piano",
+  "also": [
+    "music.sound_itself.acoustics"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A hammer strikes a 1,000 mm string 125 mm from its end. Which is the lowest harmonic it cannot excite? Give its number.",
+  "value": 8,
+  "unit": "harmonic number",
+  "answer": "The lowest harmonic with a node at 1/8: the 8th.",
+  "move": "A push delivered exactly where something stands still cannot start it moving.",
+  "trap": "Answering 7, recalling the old lore that hammers silence the seventh.",
+  "hint": "Each harmonic has still points, nodes, at fixed fractions of the length.",
+  "steps": [
+    "125 / 1,000 = 1/8 of the length.",
+    "The nth harmonic has nodes at every 1/n of the string.",
+    "Striking at a node cannot set that harmonic going.",
+    "The lowest harmonic with a node at 1/8: the 8th."
+  ],
+  "keywords": [
+    "hammer strike point",
+    "harmonics",
+    "nodes",
+    "piano strings"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Helmholtz, On the Sensations of Tone",
+  "source_kind": "book",
+  "reference": "Helmholtz, On the Sensations of Tone, trans. Ellis, Dover, 1954",
+  "written": "2026-09-27"
+}

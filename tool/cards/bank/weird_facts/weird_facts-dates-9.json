@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-dates-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.dates",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "In 1997 Belgian youth football moved its age cut-off from 1 August to 1 January. What happened to selected players' birth months?",
+  "options": [
+    "The cluster stayed in August to October",
+    "Birth months spread out evenly",
+    "The cluster moved to January to March"
+  ],
+  "correct": 2,
+  "answer": "The cluster moved to January to March. Boys born just after 1 August had been overrepresented; afterwards those born just after 1 January took their place. Being oldest in the age group, not the season of birth, was doing the selecting. A few extra months of growth passed for talent.",
+  "move": "Move the arbitrary line and see whether the advantage moves with it.",
+  "trap": "Keeping the old months, as if autumn births carried some advantage.",
+  "keywords": [
+    "relative age effect",
+    "youth football",
+    "birth month",
+    "cut-off date",
+    "belgium"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Helsen et al., Am J Hum Biol, 2000",
+  "source_kind": "statistics",
+  "reference": "Helsen, Starkes and Van Winckel, Effect of a change in selection year on success in male soccer players, American Journal of Human Biology, 2000",
+  "written": "2026-09-27"
+}

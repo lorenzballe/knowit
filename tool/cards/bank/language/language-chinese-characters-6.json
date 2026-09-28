@@ -1,0 +1,36 @@
+{
+  "id": "language-chinese-characters-6",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.chinese_characters",
+  "also": [
+    "technology.old_machines.mainframes"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Japan's 1978 computer character set held characters that no dictionary recorded. Where did one of them, 妛, come from?",
+  "answer": "From a paste-up. A place name wrote 山 stacked above 女 as a single character. Compilers pasted the two printed pieces onto a sheet, and on the copy the edge where the paper met read as a stroke. So 妛 entered the standard, and later Unicode: a character born from a paper edge.",
+  "move": "An official list can preserve a clerk's error as faithfully as a fact.",
+  "keywords": [
+    "ghost characters",
+    "jis standard",
+    "kanji",
+    "unicode",
+    "place names"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "JIS X 0208:1997, Annex 7",
+  "source_kind": "primary_document",
+  "reference": "Japanese Standards Association, JIS X 0208:1997, 7-bit and 8-bit double byte coded Kanji sets for information interchange, Annex 7, 1997",
+  "written": "2026-09-27"
+}

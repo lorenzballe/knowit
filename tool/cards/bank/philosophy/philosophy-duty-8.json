@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-duty-8",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.duty",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "True or false: if a man chose to set off too late to keep a promise, most say he no longer ought to keep it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In Chituc and colleagues' 2016 experiments, most people said he still ought to meet his friend, though he no longer could. When a breakdown he was not to blame for stopped him, fewer said so. Their verdicts tracked blame, not ability: the old maxim that ought implies can fitted only the blameless.",
+  "move": "Before naming the cause, check what else always comes with it.",
+  "trap": "Crediting inability, which in everyday cases arrives together with blamelessness.",
+  "keywords": [
+    "ought implies can",
+    "promises",
+    "blame",
+    "experimental philosophy"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chituc et al., Cognition, 2016",
+  "source_kind": "paper",
+  "reference": "Chituc, Henne, Sinnott-Armstrong & De Brigard, Blame, not ability, impacts moral 'ought' judgments for impossible actions, Cognition 150, 2016, pp. 20-25",
+  "written": "2026-09-27"
+}

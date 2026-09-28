@@ -1,0 +1,35 @@
+{
+  "id": "space-launch-windows-6",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.launch_windows",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do the cheapest Mars launch windows come round only about every 15 years, not every 26 months?",
+  "answer": "Because Mars's orbit is lopsided. Its distance from the Sun swings between about 207 and 249 million km, so some windows aim at a nearer Mars than others. Seven windows of about 26 months add up to 15 years, almost exactly eight Martian years, so only then does the same geometry come back.",
+  "move": "When two cycles nearly share a multiple, expect a slow rhythm on top.",
+  "keywords": [
+    "mars",
+    "launch windows",
+    "orbital eccentricity",
+    "synodic period"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "space-launch-windows-1"
+  ],
+  "figure": "timeline",
+  "source": "JPL Mission Design Handbook, 1983",
+  "source_kind": "institution",
+  "reference": "Sergeyevsky, Snyder & Cunniff, Interplanetary Mission Design Handbook, Volume I, Part 2: Earth to Mars Ballistic Mission Opportunities, 1990–2005, JPL Publication 82-43, 1983",
+  "written": "2026-09-27"
+}

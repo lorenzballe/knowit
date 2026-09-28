@@ -1,0 +1,43 @@
+{
+  "id": "weird_facts-local-bans-7",
+  "topic": "weird_facts",
+  "genre": "weird_facts.strange_laws",
+  "strand": "weird_facts.strange_laws.local_bans",
+  "also": [
+    "science.materials.plastics"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "After Californian towns banned thin carry-out bags, how much of the plastic saved was cancelled by extra bin-bag purchases?",
+  "options": [
+    "About 3%",
+    "About 90%",
+    "About 30%"
+  ],
+  "correct": 2,
+  "answer": "About 30%. Using shop scanner data, Taylor found the bans cut carry-out bag plastic by about 18,000 tonnes a year, while bin-bag purchases rose by about 5,400 tonnes, offsetting about 29%. Sales of the smallest bin bags jumped 120%. The free shopping bag had been doing a second job under the kitchen sink.",
+  "move": "Ask what second job the banned thing was quietly doing.",
+  "trap": "Treating the old bags as used once, then thrown straight away.",
+  "keywords": [
+    "plastic bag bans",
+    "california",
+    "bin bags",
+    "substitution",
+    "leakage"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Taylor, J. Environmental Economics and Management, 2019",
+  "source_kind": "primary_document",
+  "reference": "Taylor, Bag leakage: The effect of disposable carryout bag regulations on unregulated bags, Journal of Environmental Economics and Management, 2019",
+  "written": "2026-09-27"
+}

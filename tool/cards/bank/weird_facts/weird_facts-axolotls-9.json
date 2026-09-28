@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-axolotls-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.axolotls",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to an axolotl's power to regrow limbs if it is made to metamorphose?",
+  "answer": "It weakens. Monaghan and colleagues induced metamorphosis with thyroxine, then amputated limbs: regrowth took almost twice as long, and the new limbs often had missing or fused wrist bones and digits. The cells of their blastema, the bud of new tissue, divided more slowly. Growing up cost them part of the trick.",
+  "move": "Staying unfinished can be what keeps a body able to rebuild.",
+  "keywords": [
+    "axolotl",
+    "metamorphosis",
+    "limb regeneration",
+    "blastema"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Monaghan et al., Regeneration, 2014",
+  "source_kind": "primary_document",
+  "reference": "doi:10.1002/reg2.8",
+  "written": "2026-09-27"
+}

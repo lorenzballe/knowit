@@ -1,0 +1,39 @@
+{
+  "id": "music-layering-10",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.layering",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "An engineer adds a quiet synth layer under a chorus, and the chorus now sounds better. What should be checked first?",
+  "options": [
+    "Whether the chorus simply got louder",
+    "Which instrument the layer doubles",
+    "How the layer sounds in mono"
+  ],
+  "correct": 0,
+  "answer": "Whether the chorus simply got louder. Side by side, the louder of two otherwise identical versions tends to sound fuller and clearer, even by a decibel, so any added layer starts with an unfair edge. Mastering engineers match levels before comparing. Turned down to the old level, many layers stop earning their place.",
+  "move": "Before crediting a change, check whether it also changed the amount.",
+  "trap": "Looking at what the layer plays, as if its content caused the lift.",
+  "keywords": [
+    "loudness bias",
+    "mixing",
+    "level matching",
+    "a/b comparison"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Katz, Mastering Audio, 2007",
+  "source_kind": "book",
+  "reference": "Katz, Mastering Audio: The Art and the Science, 2nd edn, Focal Press, 2007",
+  "written": "2026-09-27"
+}

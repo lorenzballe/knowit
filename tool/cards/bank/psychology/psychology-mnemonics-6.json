@@ -1,0 +1,39 @@
+{
+  "id": "psychology-mnemonics-6",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.mnemonics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "After twelve 10-word lists, students who had woven each list into a story recalled 93% of all words. Controls given equal study time?",
+  "options": [
+    "About 80%",
+    "About 50%",
+    "About 13%"
+  ],
+  "correct": 2,
+  "answer": "About 13%. In Bower and Clark's 1969 study, each control got a story-maker's study time, and straight after each list both groups recalled nearly everything. The gap opened on the final test of all twelve, when plain lists had blurred together. The stories kept each list in its own room.",
+  "move": "Test a method at the end of the week, not the end of the lesson.",
+  "trap": "About 80%, because a strong group's score sets where the other feels plausible.",
+  "keywords": [
+    "narrative chaining",
+    "story method",
+    "serial recall",
+    "interference"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bower & Clark, Psychonomic Science, 1969",
+  "source_kind": "paper",
+  "reference": "Bower & Clark, Narrative stories as mediators for serial learning, Psychonomic Science, 1969",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "art-detection-10",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.detection",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What lets radiocarbon date the linseed oil in a modern forgery to within a few years?",
+  "answer": "Fallout from nuclear tests. Bomb tests of the 1950s and early 1960s nearly doubled the carbon-14 in northern air, and it has fallen year by year since, so plants grown after 1955 carry a datable signature. In 2019 a speck of oil from a painting dated 1866 proved to come from flax harvested after 1958.",
+  "move": "A disturbance that ruins one kind of record can become a clock for another.",
+  "keywords": [
+    "radiocarbon dating",
+    "bomb carbon",
+    "linseed oil",
+    "nuclear tests",
+    "paint binder"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hendriks et al., PNAS, 2019",
+  "source_kind": "paper",
+  "reference": "Laura Hendriks, Irka Hajdas et al., Uncovering modern paint forgeries by radiocarbon dating, Proceedings of the National Academy of Sciences, 2019",
+  "written": "2026-09-27"
+}

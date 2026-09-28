@@ -1,0 +1,33 @@
+{
+  "id": "art-patrons-8",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.patrons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "According to his bookseller, what did Cosimo de' Medici do to settle his conscience over money made in banking?",
+  "answer": "He spent it on a friary. Vespasiano da Bisticci says Cosimo, uneasy that some of his wealth was ill-gotten, asked Pope Eugenius IV for a remedy and was told to spend 10,000 florins on building. He rebuilt San Marco, spending far more. Fra Angelico's frescoes in its cells were part of the penance.",
+  "move": "Behind a generous gift, look for the debt the giver wanted cleared.",
+  "keywords": [
+    "cosimo de' medici",
+    "san marco",
+    "eugenius iv",
+    "usury",
+    "fra angelico"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vespasiano da Bisticci, Memoirs, 1926",
+  "source_kind": "primary_document",
+  "reference": "Vespasiano da Bisticci, The Vespasiano Memoirs, trans. William George and Emily Waters, Routledge, 1926",
+  "written": "2026-09-27"
+}

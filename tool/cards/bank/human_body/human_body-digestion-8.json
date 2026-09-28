@@ -1,0 +1,39 @@
+{
+  "id": "human_body-digestion-8",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.digestion",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Before the stomach lets solid food into the intestine, how small must the pieces be ground?",
+  "options": [
+    "About 1 to 2 millimetres",
+    "About 1 centimetre",
+    "Under a tenth of a millimetre"
+  ],
+  "correct": 0,
+  "answer": "About 1 to 2 millimetres. The lower stomach grinds food against the nearly closed pylorus, its muscular outlet, which lets liquid and fine particles through and pushes larger pieces back for more churning. That is why solids leave the stomach only after a lag, while a drink starts leaving almost at once.",
+  "move": "A gate that sets a size limit also sets the pace.",
+  "trap": "Assuming chewed, swallowed lumps pass on much as they are.",
+  "keywords": [
+    "pylorus",
+    "stomach",
+    "gastric emptying",
+    "food particles"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kong & Singh, Journal of Food Science, 2008",
+  "source_kind": "paper",
+  "reference": "Kong & Singh, Disintegration of solid foods in human stomach, Journal of Food Science, 2008",
+  "written": "2026-09-27"
+}

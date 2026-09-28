@@ -1,0 +1,38 @@
+{
+  "id": "human_body-heartbeat-7",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.heartbeat",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in a healthy person at rest, the heart speeds up with each breath in?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Breathing in briefly quietens the vagus nerve, the heart's brake, so the pulse quickens; breathing out restores the brake and it slows. The swing, called respiratory sinus arrhythmia, is largest in the young and fit and shrinks with age and heart disease. A pulse as steady as a metronome is the worse sign.",
+  "move": "Some wobble in a signal can be the sign that it is working.",
+  "trap": "Picturing a healthy heart as a metronome, so any wobble means trouble.",
+  "keywords": [
+    "respiratory sinus arrhythmia",
+    "vagus nerve",
+    "heart rate variability",
+    "breathing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ESC and NASPE Task Force, Circulation, 1996",
+  "source_kind": "paper",
+  "reference": "Task Force of the European Society of Cardiology and the North American Society of Pacing and Electrophysiology, Heart rate variability: standards of measurement, physiological interpretation and clinical use, Circulation, 1996",
+  "written": "2026-09-27"
+}

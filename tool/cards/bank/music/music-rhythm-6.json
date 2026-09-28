@@ -1,0 +1,32 @@
+{
+  "id": "music-rhythm-6",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.rhythm",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a beat stop feeling like a beat once it slows to one every three seconds?",
+  "answer": "Because prediction gives out. Beyond about two seconds between pulses, listeners stop anticipating the next sound and start reacting to it: their taps trail each click instead of meeting it. Justin London puts felt metre between roughly 100 milliseconds and 2 seconds per beat. A slow dirge is counted in the pulses inside each step.",
+  "move": "Past a certain gap, anticipation turns into reaction, and the pattern dissolves.",
+  "keywords": [
+    "beat perception",
+    "tempo limits",
+    "metre",
+    "anticipation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "London, Hearing in Time, 2012",
+  "source_kind": "book",
+  "reference": "London, Hearing in Time: Psychological Aspects of Musical Meter, 2nd edn, Oxford University Press, 2012",
+  "written": "2026-09-27"
+}

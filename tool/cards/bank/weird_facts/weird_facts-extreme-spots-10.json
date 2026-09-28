@@ -1,0 +1,41 @@
+{
+  "id": "weird_facts-extreme-spots-10",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.extreme_spots",
+  "also": [
+    "sport.training.altitude"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should Nepal cap the number of Everest climbing permits each season?",
+  "sides": [
+    "Yes, cap the permits",
+    "No, raise the bar instead"
+  ],
+  "answer": "Crowding kills where every hour above 8,000 m drains the body. In May 2019 climbers queued for hours below the summit, and 11 died on the mountain that season. Permits are sold with little check on experience, so a hard cap is the one rule that reliably thins the queue on the few calm days.",
+  "move": "Whichever side you took, it turns on whether danger comes from numbers or from skill.",
+  "counterpoint": "Permit fees and the wages of guides and porters are a lifeline for Sherpa communities, and a cap would hand scarce slots to the richest clients. Deaths track weather and inexperience more than numbers. Better to demand proof of an earlier high summit and to spread departures across the weather window.",
+  "keywords": [
+    "mount everest",
+    "climbing permits",
+    "nepal",
+    "sherpas",
+    "overcrowding"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Himalayan Database",
+  "source_kind": "statistics",
+  "reference": "Hawley and Salisbury, The Himalayan Database: The Expedition Archives of Elizabeth Hawley, 2023",
+  "written": "2026-09-27"
+}

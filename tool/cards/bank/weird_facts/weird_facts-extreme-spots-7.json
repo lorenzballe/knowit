@@ -1,0 +1,45 @@
+{
+  "id": "weird_facts-extreme-spots-7",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.extreme_spots",
+  "also": [
+    "sport.training.altitude"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "In 1981 West's team measured 253 mmHg of air pressure on Everest's summit; sea level is 760. What % of sea-level oxygen pressure is that?",
+  "value": 33.3,
+  "unit": "%",
+  "tolerance": 0.5,
+  "answer": "253 ÷ 760 ≈ 0.333, about 33.3%.",
+  "move": "Separate the share of something from the total it is a share of.",
+  "trap": "Believing mountain air holds a smaller percentage of oxygen than sea-level air.",
+  "hint": "Ask whether the share of oxygen in air changes as you climb.",
+  "steps": [
+    "Air is about 21% oxygen at every altitude.",
+    "So oxygen pressure falls in step with total pressure.",
+    "253 ÷ 760 ≈ 0.333, about 33.3%."
+  ],
+  "keywords": [
+    "mount everest",
+    "air pressure",
+    "oxygen",
+    "altitude"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "West et al., J Appl Physiol, 1983",
+  "source_kind": "statistics",
+  "reference": "West et al., Barometric pressures at extreme altitudes on Mt. Everest: physiological significance, Journal of Applied Physiology, 1983",
+  "written": "2026-09-27"
+}

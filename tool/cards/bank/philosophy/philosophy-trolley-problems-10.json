@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-trolley-problems-10",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.trolley_problems",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "In the 2020 PhilPapers survey, 63% of philosophers would pull the switch. What share would push the man off the footbridge?",
+  "options": [
+    "About three fifths",
+    "About two fifths",
+    "About a fifth"
+  ],
+  "correct": 2,
+  "answer": "About a fifth. Bourget and Chalmers's survey of some 1,800 philosophers found roughly half against pushing and the rest undecided or elsewhere, while only 13% refused to switch. The people who argue about these cases for a living mostly hold the same split verdict the puzzle was invented to explain.",
+  "move": "A figure given in the question is not evidence about the answer.",
+  "trap": "Guessing near the 63% who switch, the figure just given.",
+  "keywords": [
+    "philpapers survey",
+    "footbridge case",
+    "philosophers",
+    "switch case"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Bourget & Chalmers, Philosophers' Imprint, 2023",
+  "source_kind": "statistics",
+  "reference": "Bourget & Chalmers, Philosophers on Philosophy: The 2020 PhilPapers Survey, Philosophers' Imprint 23, 2023",
+  "written": "2026-09-27"
+}

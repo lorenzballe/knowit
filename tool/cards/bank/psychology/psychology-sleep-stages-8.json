@@ -1,0 +1,43 @@
+{
+  "id": "psychology-sleep-stages-8",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.sleep_stages",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Men spent 18.9% of the night in deep sleep aged 16 to 25, and 3.4% aged 36 to 50. By what percentage did it fall?",
+  "value": 82,
+  "unit": "percent",
+  "tolerance": 1,
+  "answer": "0.82 = about 82 percent.",
+  "move": "A fall in percentage points and a fall in percent are different numbers.",
+  "trap": "Answering 15.5, the change in points rather than the relative fall.",
+  "hint": "Subtract first, then divide by where it started, not where it ended.",
+  "steps": [
+    "Drop in share: 18.9 - 3.4 = 15.5 percentage points.",
+    "Relative to the start: 15.5 / 18.9 ≈ 0.82.",
+    "0.82 = about 82 percent."
+  ],
+  "keywords": [
+    "slow-wave sleep",
+    "ageing",
+    "deep sleep",
+    "eve van cauter",
+    "growth hormone"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Van Cauter, Leproult & Plat, JAMA, 2000",
+  "source_kind": "paper",
+  "reference": "Van Cauter, Leproult & Plat, Age-related changes in slow wave sleep and REM sleep and relationship with growth hormone and cortisol levels in healthy men, JAMA, 2000",
+  "written": "2026-09-27"
+}

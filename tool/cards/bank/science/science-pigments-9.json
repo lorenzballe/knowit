@@ -1,0 +1,33 @@
+{
+  "id": "science-pigments-9",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.pigments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why has Maya blue outlasted centuries of tropical rain when indigo, the dye that colours it, fades on its own?",
+  "answer": "Because the dye is caged in clay. Maya painters heated indigo with palygorskite, a clay whose crystals are threaded with channels under a nanometre wide; the molecules lodge in or over them, shielded from light and chemicals. The pigment resists acids that strip plain indigo, and still colours the Bonampak murals.",
+  "move": "A fragile thing can last if it is given a hard place to live.",
+  "keywords": [
+    "maya blue",
+    "indigo",
+    "palygorskite",
+    "clay",
+    "bonampak"
+  ],
+  "era": "medieval",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Van Olphen, Science, 1966",
+  "source_kind": "paper",
+  "reference": "Van Olphen, Maya Blue: A Clay-Organic Pigment?, Science 154, 645, 1966",
+  "written": "2026-09-27"
+}

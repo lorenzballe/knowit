@@ -1,0 +1,33 @@
+{
+  "id": "psychology-why-we-dream-7",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.why_we_dream",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "After an experience, on which nights is it most likely to turn up in a dream?",
+  "answer": "The next night or two, and again about five to seven days later. Tore Nielsen's team found this dream-lag effect in REM dreams, and other labs have repeated it. One reading is that memories are still being reworked days after the event. Tuesday's argument may return the following Monday.",
+  "move": "If an effect fades, check whether it comes back before calling it over.",
+  "keywords": [
+    "dream-lag effect",
+    "tore nielsen",
+    "memory consolidation",
+    "dream content",
+    "rem dreams"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Nielsen et al., Journal of Sleep Research, 2004",
+  "source_kind": "paper",
+  "reference": "Nielsen, Kuiken, Alain, Stenstrom & Powell, Immediate and delayed incorporations of events into dreams: further replication and implications for dream function, Journal of Sleep Research, 2004",
+  "written": "2026-09-27"
+}

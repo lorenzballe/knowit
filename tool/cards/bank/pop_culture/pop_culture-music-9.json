@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-music-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.music",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "regression",
+  "question": "Hootie & the Blowfish's 1994 debut sold over 20 million copies in the US. How many did its 1996 follow-up sell there?",
+  "options": [
+    "About 3 million",
+    "About 10 million",
+    "About 20 million"
+  ],
+  "correct": 0,
+  "answer": "About 3 million, certified triple platinum by 1998. Cracked Rear View had needed everything to go right: the radio format of the moment, four hit singles, years of touring. Fairweather Johnson entered the chart at No. 1 and still sold about a seventh as much. A freak success is a poor forecast.",
+  "move": "After an outlier, expect the next result to be closer to ordinary.",
+  "trap": "Expecting a sequel to keep half a record-breaking debut's sales.",
+  "keywords": [
+    "hootie & the blowfish",
+    "cracked rear view",
+    "fairweather johnson",
+    "album sales"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "RIAA Gold & Platinum certifications",
+  "source_kind": "statistics",
+  "reference": "Recording Industry Association of America, Gold & Platinum certifications for Cracked Rear View and Fairweather Johnson, 1998",
+  "written": "2026-09-27"
+}

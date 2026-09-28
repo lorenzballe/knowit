@@ -1,0 +1,38 @@
+{
+  "id": "cinema-hitchcock-8",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.hitchcock",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Hitchcock shot Dial M for Murder, a thriller set almost entirely in one flat, in 3-D?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Warner Bros. ordered it in 3-D in 1953, at the height of the craze, and Hitchcock worked around a bulky 3-D camera, sinking it in a pit for low angles and filling the foreground with lamps and furniture. By the 1954 release the fad had faded, and most audiences saw it flat.",
+  "move": "The best-remembered uses of a technology are rarely a full list of them.",
+  "trap": "Picturing 3-D only as monsters and spears flying at the audience.",
+  "keywords": [
+    "dial m for murder",
+    "3-d",
+    "warner bros.",
+    "stereoscopic film"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zone, 3-D Revolution, 2012",
+  "source_kind": "book",
+  "reference": "Zone, 3-D Revolution: The History of Modern Stereoscopic Cinema, University Press of Kentucky, 2012",
+  "written": "2026-09-27"
+}

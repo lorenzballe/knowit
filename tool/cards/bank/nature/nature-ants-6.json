@@ -1,0 +1,39 @@
+{
+  "id": "nature-ants-6",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.ants",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Biologists paint-marked every worker in lab colonies of Temnothorax ants. Roughly what share turned out to be inactive most of the time?",
+  "options": [
+    "Under one in twenty",
+    "About two in five",
+    "Over four in five"
+  ],
+  "correct": 1,
+  "answer": "About two in five. Charbonneau and Dornhaus followed individually marked ants and found a large, consistent group that rarely worked. Later removal experiments suggest they are partly a reserve: take away the busiest workers and some idle ones step in. The ants on a trail are the busy ones; the idle wait in the dark.",
+  "move": "The members seen working were chosen, in part, by being seen.",
+  "trap": "Judging a colony by its foragers, the only ants anyone watches.",
+  "keywords": [
+    "temnothorax",
+    "inactive workers",
+    "division of labour",
+    "ant colonies"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Charbonneau & Dornhaus, Behavioral Ecology and Sociobiology, 2015",
+  "source_kind": "paper",
+  "reference": "Charbonneau & Dornhaus, Workers 'specialized' on inactivity: behavioral consistency of inactive workers and their role in task allocation, Behavioral Ecology and Sociobiology, 2015",
+  "written": "2026-09-27"
+}

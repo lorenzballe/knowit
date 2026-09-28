@@ -1,0 +1,40 @@
+{
+  "id": "sport-swimming-8",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.swimming",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confounding",
+  "question": "At the 2013 world championships, 50 m swimmers moving from lanes 1–4 to lanes 5–8 improved about 1%. Those moving the other way?",
+  "options": [
+    "Improved about 1% as well",
+    "Improved about half as much",
+    "Got about 0.6% slower"
+  ],
+  "correct": 2,
+  "answer": "Got about 0.6% slower. Cornett, Brammer and Stager also found 1,500 m splits differing by direction of travel, the signature of a slow current along the Barcelona pool. Seeding is symmetrical across the two halves, so the lanes, not the swimmers' form, were shifting results by more than the gaps between medals.",
+  "move": "When everyone who moves one way gains, suspect the ground they moved to.",
+  "trap": "Crediting later-round improvement to the swimmers rather than their lanes.",
+  "keywords": [
+    "lane bias",
+    "pool current",
+    "barcelona 2013",
+    "50 m events",
+    "world championships"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cornett et al., Med Sci Sports Exerc, 2015",
+  "source_kind": "paper",
+  "reference": "Cornett, Brammer & Stager, Current controversy: analysis of the 2013 FINA World Swimming Championships, Medicine & Science in Sports & Exercise, 2015",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-tabloids-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.tabloids",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Before 2013, why did American celebrities sometimes sue American tabloids in London rather than at home?",
+  "answer": "English libel law favoured them. In London a published claim was presumed false and the paper had to prove it true; in the United States a public figure must prove the paper knew it was false or recklessly ignored the truth. Kate Hudson won damages from the National Enquirer's British edition in 2006.",
+  "move": "Where a case is heard can decide it before anyone speaks.",
+  "keywords": [
+    "libel tourism",
+    "national enquirer",
+    "kate hudson",
+    "defamation act",
+    "actual malice"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Defamation Act 2013, United Kingdom",
+  "source_kind": "primary_document",
+  "reference": "Defamation Act 2013, c. 26, United Kingdom; New York Times Co. v. Sullivan, 376 U.S. 254, 1964",
+  "written": "2026-09-27"
+}

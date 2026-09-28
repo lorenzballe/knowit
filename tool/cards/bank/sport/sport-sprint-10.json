@@ -1,0 +1,40 @@
+{
+  "id": "sport-sprint-10",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.sprint",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "What mainly lets the fastest sprinters reach higher top speeds than slower runners?",
+  "options": [
+    "Hitting the ground with more force",
+    "Swinging their legs through the air faster",
+    "Having longer legs than their rivals"
+  ],
+  "correct": 0,
+  "answer": "Hitting the ground with more force. Weyand's team found that runners with very different top speeds swung their legs through the air in about the same time. The faster ones pushed harder during briefer ground contacts, travelling farther with each step. Speed is made in the instant a shoe is on the track.",
+  "move": "Look for the cause in the part that is hardest to see.",
+  "trap": "Seeing a blur of legs and crediting how fast they swing.",
+  "keywords": [
+    "sprinting",
+    "ground force",
+    "stride",
+    "leg swing",
+    "biomechanics"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Weyand et al., Journal of Applied Physiology, 2000",
+  "source_kind": "paper",
+  "reference": "Weyand, Sternlight, Bellizzi & Wright, Faster top running speeds are achieved with greater ground forces not more rapid leg movements, Journal of Applied Physiology, 2000",
+  "written": "2026-09-27"
+}

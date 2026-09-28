@@ -1,0 +1,33 @@
+{
+  "id": "food-pepper-7",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.pepper",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What gives some white pepper its faint smell of a cowshed?",
+  "answer": "Skatole and p-cresol, the compounds that scent manure. White pepper is made by soaking ripe berries for days until the skins rot off, and bacteria in that soak make both. German chemists found them topping the odour list of faulty powders in 2005. The seed is washed white; the smell stays.",
+  "move": "A cleaning step can leave its own mark on what it cleans.",
+  "keywords": [
+    "white pepper",
+    "skatole",
+    "p-cresol",
+    "retting",
+    "off-flavour"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Steinhaus & Schieberle, J Agric Food Chem, 2005",
+  "source_kind": "paper",
+  "reference": "Steinhaus & Schieberle, Characterization of odorants causing an atypical aroma in white pepper powder (Piper nigrum L.) based on quantitative measurements and orthonasal breakthrough thresholds, Journal of Agricultural and Food Chemistry, 2005",
+  "written": "2026-09-27"
+}

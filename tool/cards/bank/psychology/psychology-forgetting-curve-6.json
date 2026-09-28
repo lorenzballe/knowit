@@ -1,0 +1,39 @@
+{
+  "id": "psychology-forgetting-curve-6",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.forgetting_curve",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "simpson",
+  "question": "True or false: averaging many people's forgetting curves can produce a shape that none of the individual curves has?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Suppose each person forgets exponentially, losing a fixed share per hour, but people differ in their rate. The group average then sags into a power curve: steep at first, then a long flat tail. Murre and Chessa proved it mathematically in 2011. A law found in the average may describe nobody in the room.",
+  "move": "Check a pattern in the individuals before crediting the average with it.",
+  "trap": "False: an average of similar curves should look like each of them.",
+  "keywords": [
+    "forgetting curve",
+    "power law",
+    "averaging",
+    "individual differences",
+    "exponential decay"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Murre & Chessa, Psychonomic Bulletin & Review, 2011",
+  "source_kind": "paper",
+  "reference": "doi:10.3758/s13423-011-0076-y",
+  "written": "2026-09-27"
+}

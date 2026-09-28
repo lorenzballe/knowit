@@ -1,0 +1,38 @@
+{
+  "id": "human_body-longevity-7",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.longevity",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "True or false: wiping out every death from cancer would lengthen US life expectancy at birth by only about 3 years?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Olshansky, Carnes and Cassel calculated in 1990 that eliminating all cancer would add about 3 years to life expectancy at birth. Most cancer deaths come late in life, and the people spared still face a steeply rising risk of dying of something else within a few years.",
+  "move": "Removing one cause of an outcome leaves the others waiting.",
+  "trap": "Counting the lives saved without asking what those people die of next.",
+  "keywords": [
+    "cancer",
+    "life expectancy",
+    "competing risks",
+    "mortality"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Olshansky, Carnes & Cassel, Science, 1990",
+  "source_kind": "paper",
+  "reference": "Olshansky, Carnes & Cassel, In search of Methuselah: estimating the upper limits to human longevity, Science, 1990",
+  "written": "2026-09-27"
+}

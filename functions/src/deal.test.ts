@@ -41,10 +41,10 @@ test('the hashes are the phone\'s, bit for bit', () => {
 
 test('the shelves that turn over are the phone\'s, card for card', () => {
   assert.deepEqual(pickedCards(bank, DAY, 6).map((c) => c.id), [
-    'space-supermassive-ones-1', 'sport-altitude-5', 'economics-interest-4', 'weird_facts-tallest-5', 'technology-factories-5', 'thinking-10',
+    'space-expansion-7', 'sport-modern-10', 'economics-rent-7', 'weird_facts-axolotls-7', 'technology-factories-5', 'thinking-10',
   ]);
   assert.deepEqual(pickedCards(bank, ALL_TIME_SEED, 6).map((c) => c.id), [
-    'language-double-negatives-3', 'economics-interest-4', 'nature-clouds-5', 'technology-limits-5', 'thinking-h13', 'medicine-painkillers-5',
+    'language-double-negatives-3', 'economics-rent-7', 'nature-bees-6', 'technology-training-6', 'thinking-h13', 'medicine-resistance-7',
   ]);
 });
 

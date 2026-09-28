@@ -1,0 +1,33 @@
+{
+  "id": "space-supermassive-ones-9",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.supermassive_ones",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did X-rays from a galaxy seen 470 million years after the Big Bang upset ideas of how giant black holes begin?",
+  "answer": "Its black hole already weighed tens of millions of suns, about as much as all the galaxy's stars together. A hole grown from a dead star of 100 suns could hardly have got there in time. It fits a seed born big: a gas cloud collapsing straight into a hole of 10,000 suns or more.",
+  "move": "When something is already huge at birth, ask whether it started big.",
+  "keywords": [
+    "uhz1",
+    "black hole seeds",
+    "direct collapse",
+    "early universe",
+    "x-rays"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bogdán et al., Nature Astronomy, 2024",
+  "source_kind": "paper",
+  "reference": "Bogdán et al., Evidence for heavy-seed origin of early supermassive black holes from a z≈10 X-ray quasar, Nature Astronomy, 2024",
+  "written": "2026-09-27"
+}

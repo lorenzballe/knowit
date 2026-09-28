@@ -1,0 +1,38 @@
+{
+  "id": "economics-rent-10",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.rent",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should landlords be allowed to end a tenancy without giving any reason?",
+  "sides": [
+    "Yes, keep that right",
+    "No, require a reason"
+  ],
+  "answer": "A landlord who cannot recover a home without proving a legal ground in court will screen tenants harder, price the risk into rents, or sell up. Court backlogs make eviction slow even for unpaid rent. Fewer landlords means fewer homes to let, and the tenants turned away are the ones with thin references.",
+  "move": "Whichever side you took, the hinge is how fast courts handle the fair cases.",
+  "counterpoint": "Without a reason required, a tenant who asks for repairs can simply be removed, so many never ask. In England the end of a private tenancy has long been one of the commonest triggers of homelessness. Scotland ended no-fault eviction in 2017 and England followed from 1 May 2026, keeping grounds for arrears, sale and moving in.",
+  "keywords": [
+    "no-fault eviction",
+    "section 21",
+    "renters' rights act",
+    "tenancy",
+    "homelessness"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Renters' Rights Act 2025",
+  "source_kind": "primary_document",
+  "reference": "Renters' Rights Act 2025, Acts of the Parliament of the United Kingdom, 2025",
+  "written": "2026-09-27"
+}

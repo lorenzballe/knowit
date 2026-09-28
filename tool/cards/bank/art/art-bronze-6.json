@@ -1,0 +1,40 @@
+{
+  "id": "art-bronze-6",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.bronze",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "How were life-size Greek bronzes such as the Riace warriors usually cast?",
+  "options": [
+    "In a single pour of metal",
+    "In pieces, then joined in bronze",
+    "As hammered sheets riveted together"
+  ],
+  "correct": 1,
+  "answer": "In pieces, then joined in bronze. Founders cast head, arms, legs and torso separately in hollow lost-wax moulds, then fused the joints by pouring molten bronze into them. Small pours fill thin walls; one huge pour risks a half-filled figure. Cellini's heroic one-pour Perseus of 1549 was the exception, and some toes failed to fill.",
+  "move": "The famous way of doing something is often the rare way.",
+  "trap": "Picturing the one dramatic pour that Renaissance founders made famous.",
+  "keywords": [
+    "lost-wax casting",
+    "riace warriors",
+    "greek bronzes",
+    "cellini",
+    "perseus"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mattusch, Greek Bronze Statuary, 1988",
+  "source_kind": "book",
+  "reference": "Carol C. Mattusch, Greek Bronze Statuary: From the Beginnings through the Fifth Century B.C., Cornell University Press, 1988",
+  "written": "2026-09-27"
+}

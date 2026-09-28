@@ -1,0 +1,39 @@
+{
+  "id": "space-landing-sites-7",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.landing_sites",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Orbital photos suggested Apollo 16's highland landing site was covered in volcanic lava. What did the crew's rocks show?",
+  "options": [
+    "Rock shattered and welded by impacts",
+    "Lava flows, as the photos suggested",
+    "Sediment laid down by ancient water"
+  ],
+  "correct": 0,
+  "answer": "Rock shattered and welded by impacts. The smooth Cayley plains looked like lava, and the site was chosen partly to sample volcanism in the highlands. Nearly every rock the crew brought back was breccia: older rock broken and fused by impacts. The plains are now read as debris thrown from distant basins.",
+  "move": "A resemblance seen from far away is a hypothesis, not a finding.",
+  "trap": "Trusting that ground which looked like lava from orbit was lava.",
+  "keywords": [
+    "apollo 16",
+    "cayley plains",
+    "breccia",
+    "lunar highlands"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NASA, Apollo 16 Preliminary Science Report, 1972",
+  "source_kind": "institution",
+  "reference": "NASA, Apollo 16 Preliminary Science Report, NASA SP-315, 1972",
+  "written": "2026-09-27"
+}

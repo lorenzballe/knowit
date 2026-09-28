@@ -1,0 +1,38 @@
+{
+  "id": "space-martian-weather-9",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.martian_weather",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: on Mars, spring in the northern hemisphere lasts about as long as spring in the southern?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Northern spring runs 194 Martian days, southern spring only 142. Mars's orbit is stretched, and a planet moves slowest when farthest from the Sun, which Mars is in late northern spring. So the mild northern seasons drag on, while the hotter southern summer passes quickly.",
+  "move": "Before assuming equal shares, check whether the thing moves at a steady pace.",
+  "trap": "Assuming seasons split the year evenly, as they nearly do on Earth.",
+  "keywords": [
+    "martian seasons",
+    "orbital eccentricity",
+    "aphelion",
+    "sols"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Allison & McEwen, Planetary and Space Science, 2000",
+  "source_kind": "paper",
+  "reference": "Allison & McEwen, A post-Pathfinder evaluation of areocentric solar coordinates with improved timing recipes for Mars seasonal/diurnal climate studies, Planetary and Space Science, 2000",
+  "written": "2026-09-27"
+}

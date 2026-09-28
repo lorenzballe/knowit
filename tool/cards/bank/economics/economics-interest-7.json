@@ -1,0 +1,38 @@
+{
+  "id": "economics-interest-7",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.interest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: on one long reconstruction, real interest rates have been drifting down for about 700 years, not just since the 1980s?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Paul Schmelzing's Bank of England working paper rebuilt real rates back to 1311 and found a yearly decline of roughly 0.6 to 1.6 basis points, hundredths of a percentage point, through wars and plagues. The fall since the 1980s sits near that old trend line: the latest stretch of a very long slope.",
+  "move": "Before calling a trend new, look further back than your own lifetime.",
+  "trap": "Treating the fall since the 1980s as new because it is recent.",
+  "keywords": [
+    "real interest rates",
+    "long run",
+    "secular decline",
+    "economic history"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Schmelzing, Bank of England, 2020",
+  "source_kind": "paper",
+  "reference": "Schmelzing, Eight centuries of global real interest rates, R-G, and the 'suprasecular' decline, 1311-2018, Bank of England Staff Working Paper No. 845, 2020",
+  "written": "2026-09-27"
+}

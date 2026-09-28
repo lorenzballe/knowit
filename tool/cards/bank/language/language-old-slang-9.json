@@ -1,0 +1,33 @@
+{
+  "id": "language-old-slang-9",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.old_slang",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What kind of book was the first dictionary compiled in Australia?",
+  "answer": "A glossary of thieves' slang, written by a convict. James Hardy Vaux, transported for theft, compiled his Vocabulary of the Flash Language in 1812 at the Newcastle penal settlement and dedicated it to the commandant. It was printed in London in 1819 with his memoirs. Australia's first lexicographer was defining the words for picking pockets.",
+  "move": "The people being policed often leave the best record of how they spoke.",
+  "keywords": [
+    "james hardy vaux",
+    "flash language",
+    "convicts",
+    "newcastle",
+    "dictionaries"
+  ],
+  "era": "nineteenth",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vaux, Memoirs, ed. McLachlan, 1964",
+  "source_kind": "book",
+  "reference": "Vaux, The Memoirs of James Hardy Vaux, Including His Vocabulary of the Flash Language, ed. McLachlan, Heinemann, 1964",
+  "written": "2026-09-27"
+}

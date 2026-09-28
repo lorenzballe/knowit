@@ -1,0 +1,42 @@
+{
+  "id": "music-layering-9",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.layering",
+  "also": [
+    "music.sound_itself.acoustics"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A vocal plays hard left and an exact copy, 10 milliseconds late, plays hard right. Where do listeners hear it?",
+  "options": [
+    "Dead centre, between the speakers",
+    "As two voices, one each side",
+    "From the left, where it arrives first"
+  ],
+  "correct": 2,
+  "answer": "From the left, where it arrives first. Within about 30 milliseconds the ear fuses a sound with its echo and places it at the first arrival. Helmut Haas found the late copy could be up to about 10 decibels louder before it pulled the image back. Wide doubles made by delay lean toward one speaker.",
+  "move": "Whatever reaches you first gets to say where it came from.",
+  "trap": "Equal levels in both speakers should put the voice in the middle.",
+  "keywords": [
+    "precedence effect",
+    "helmut haas",
+    "stereo",
+    "double tracking"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Haas, Acustica, 1951",
+  "source_kind": "paper",
+  "reference": "Haas, Über den Einfluss eines Einfachechos auf die Hörsamkeit von Sprache, Acustica, 1951",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-memes-9",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.memes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the EU copyright directive of 2019 banned memes built on copyrighted images?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Campaigners warned that Article 17, which makes large platforms liable for uploads, would kill memes, but the final text requires every member state to let users upload quotation, criticism, review, caricature, parody and pastiche. Before, those exceptions were optional. The directive written to police uploads made the joke a legal right across the EU.",
+  "move": "Read the final text before repeating what the campaign said it contained.",
+  "trap": "The meme ban headlines were vivid and repeated, so they stick.",
+  "keywords": [
+    "article 17",
+    "eu copyright directive",
+    "parody",
+    "pastiche",
+    "upload filters"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Directive (EU) 2019/790, Article 17",
+  "source_kind": "primary_document",
+  "reference": "https://eur-lex.europa.eu/eli/dir/2019/790/oj",
+  "written": "2026-09-27"
+}

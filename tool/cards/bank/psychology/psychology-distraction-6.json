@@ -1,0 +1,38 @@
+{
+  "id": "psychology-distraction-6",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.distraction",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: people who multitask the most, such as phoning while driving, are the ones best able to do it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Sanbonmatsu and colleagues found that those who multitasked most scored lower on a test of juggling tasks in mind, while rating their own ability higher. Frequent multitaskers also scored higher on impulsivity and sensation seeking. The habit tracks a temperament that finds single tasks dull, not a talent that makes several easy.",
+  "move": "Ask what kind of person chooses a behaviour before crediting the behaviour with a skill.",
+  "trap": "True, because practice at anything should make people better at it.",
+  "keywords": [
+    "multitasking",
+    "impulsivity",
+    "self-assessment",
+    "phone use while driving"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sanbonmatsu et al., PLoS ONE, 2013",
+  "source_kind": "paper",
+  "reference": "Sanbonmatsu, Strayer, Medeiros-Ward & Watson, Who multi-tasks and why? Multi-tasking ability, perceived multi-tasking ability, impulsivity, and sensation seeking, PLoS ONE, 2013",
+  "written": "2026-09-27"
+}

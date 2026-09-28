@@ -1,0 +1,38 @@
+{
+  "id": "cinema-cgi-8",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.cgi",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confirmation",
+  "question": "True or false: Masahiro Mori drew his 1970 uncanny valley curve from measurements of how people reacted to robots?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Mori's essay in the Japanese magazine Energy was a thought experiment: the curve dipping into a valley where near-human figures turn eerie was sketched, not measured. Computer-animated films such as The Polar Express, in 2004, made it famous. Experiments since have found the dip in some setups and not others.",
+  "move": "Ask whether a famous curve was measured or simply drawn.",
+  "trap": "Taking a curve that vivid examples seem to confirm for measured data.",
+  "keywords": [
+    "uncanny valley",
+    "masahiro mori",
+    "the polar express",
+    "computer animation"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mori, IEEE Robotics & Automation Magazine, 2012",
+  "source_kind": "paper",
+  "reference": "Mori, The Uncanny Valley, trans. MacDorman & Kageki, IEEE Robotics & Automation Magazine 19(2), 2012",
+  "written": "2026-09-27"
+}

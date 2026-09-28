@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-virality-7",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.virality",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What came of the goal behind the Kony 2012 film, one of that year's most-shared videos?",
+  "answer": "It was never met. Invisible Children's film drew about 100 million views in six days in March 2012, urging the capture of Joseph Kony, the Lord's Resistance Army leader, within the year. The US and Uganda ended their hunt in 2017 with him still free. The most watched arrest warrant of 2012 remained unserved.",
+  "move": "Count what changed on the ground, not how many people watched.",
+  "keywords": [
+    "kony 2012",
+    "invisible children",
+    "joseph kony",
+    "lord's resistance army"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pew Research Center, The Viral Kony 2012 Video",
+  "source_kind": "institution",
+  "reference": "Rainie, Hitlin, Jurkowitz, Dimock & Neidorf, The Viral Kony 2012 Video, Pew Research Center, 2012",
+  "written": "2026-09-27"
+}

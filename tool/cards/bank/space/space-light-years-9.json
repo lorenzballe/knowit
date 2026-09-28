@@ -1,0 +1,42 @@
+{
+  "id": "space-light-years-9",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.light_years",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Andromeda's light left it 2.5 million years ago, and it approaches the Milky Way at 110 km/s. How many light-years closer is it now?",
+  "value": 917,
+  "unit": "light-years",
+  "tolerance": 15,
+  "answer": "275,000,000 ÷ 300,000 ≈ 917 light-years.",
+  "move": "An old picture is only stale if its subject moves fast.",
+  "trap": "Assuming a picture 2.5 million years old must be badly out of date.",
+  "hint": "Compare the galaxy's speed with the speed of light; the travel time is given.",
+  "steps": [
+    "In 2.5 million years light covers 2.5 million light-years; Andromeda covers the share 110 ÷ 300,000 of that.",
+    "2,500,000 × 110 = 275,000,000.",
+    "275,000,000 ÷ 300,000 ≈ 917 light-years."
+  ],
+  "keywords": [
+    "andromeda galaxy",
+    "light travel time",
+    "approach speed",
+    "local group"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "van der Marel et al., Astrophysical Journal, 2012",
+  "source_kind": "paper",
+  "reference": "van der Marel, Fardal, Besla et al., The M31 Velocity Vector. II. Radial Orbit toward the Milky Way and Implied Local Group Mass, The Astrophysical Journal 753, 8, 2012",
+  "written": "2026-09-27"
+}

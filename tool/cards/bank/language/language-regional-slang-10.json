@@ -1,0 +1,40 @@
+{
+  "id": "language-regional-slang-10",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.regional_slang",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Craic, the Irish word for fun and lively talk, is spelled like Gaelic. Where did it come from?",
+  "options": [
+    "Irish Gaelic, then borrowed into English",
+    "English crack, respelled the Irish way",
+    "Old Norse, by way of Viking Dublin"
+  ],
+  "correct": 1,
+  "answer": "English crack, respelled the Irish way. In Scots and northern English, crack meant news or lively talk, as in what's the crack. Irish speakers borrowed it in the 20th century and wrote it craic, a spelling first found in a dictionary in 1977. English then took its own word back, in Gaelic dress.",
+  "move": "A spelling tells you where a word settled, not where it started.",
+  "trap": "The Gaelic spelling makes an ancient Irish origin look certain.",
+  "keywords": [
+    "craic",
+    "crack",
+    "hiberno-english",
+    "irish language",
+    "scots"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dolan, A Dictionary of Hiberno-English, 2004",
+  "source_kind": "reference_work",
+  "reference": "Dolan, A Dictionary of Hiberno-English, 2nd edition, Gill & Macmillan, 2004",
+  "written": "2026-09-27"
+}

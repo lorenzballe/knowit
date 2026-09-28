@@ -1,0 +1,38 @@
+{
+  "id": "music-acoustics-9",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.acoustics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: at the ancient theatre of Epidaurus, a whisper on stage is clearly understood in the top rows?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In 2017 acousticians from Eindhoven University of Technology measured the theatre at many seats: a whisper stopped being intelligible about halfway up, while a normally projected voice carried to the top. Guides' demonstrations take place in an empty, silent theatre, before visitors told exactly what to listen for.",
+  "move": "A demonstration staged to succeed is not a test.",
+  "trap": "Guides' demonstrations seem to prove it to visitors every day.",
+  "keywords": [
+    "epidaurus",
+    "greek theatre",
+    "whisper",
+    "acoustic myth"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Eindhoven University of Technology, 2017",
+  "source_kind": "institution",
+  "reference": "Eindhoven University of Technology, news release on the acoustics of ancient Greek theatres, 2017",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "human_body-smell-10",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.smell",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Is the difficulty of naming smells a limit of the human nose, or of the English language?",
+  "answer": "Of the language, at least in part. English speakers asked to name familiar odours often fumble and fall back on sources: it smells like lemon. Jahai foragers of the Malay Peninsula, whose language has about a dozen abstract smell words, named odours as concisely and consistently as colours, much as English uses red.",
+  "move": "Before blaming the instrument, check whether the vocabulary exists.",
+  "keywords": [
+    "jahai",
+    "smell words",
+    "odour naming",
+    "language"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Majid & Burenhult, Cognition, 2014",
+  "source_kind": "paper",
+  "reference": "Majid & Burenhult, Odors are expressible in language, as long as you speak the right language, Cognition, 2014",
+  "written": "2026-09-27"
+}

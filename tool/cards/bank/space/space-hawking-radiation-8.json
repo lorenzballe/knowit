@@ -1,0 +1,42 @@
+{
+  "id": "space-hawking-radiation-8",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.hawking_radiation",
+  "also": [
+    "space.edge_of_the_universe.dark_matter"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "survivorship",
+  "question": "Why can't dark matter be primordial black holes weighing between 1 and 100 billion tonnes?",
+  "options": [
+    "They would have evaporated long ago",
+    "They would have merged into heavier ones",
+    "Their Hawking glow would show in gamma rays"
+  ],
+  "correct": 2,
+  "answer": "Their Hawking glow would show in gamma rays. Holes this heavy have not had time to evaporate, yet are still hot enough to shine. If they made up the dark matter, their combined gamma rays would outshine the background actually measured. Holes from there up to asteroid mass remain allowed.",
+  "move": "Near a cut-off, look at what is still alive, not only at what died.",
+  "trap": "Assuming the limit comes from holes that died, not ones still shining.",
+  "keywords": [
+    "primordial black holes",
+    "dark matter",
+    "gamma rays",
+    "evaporation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carr & Kühnel, Annual Review, 2020",
+  "source_kind": "paper",
+  "reference": "Carr & Kühnel, Primordial Black Holes as Dark Matter: Recent Developments, Annual Review of Nuclear and Particle Science, 2020",
+  "written": "2026-09-27"
+}

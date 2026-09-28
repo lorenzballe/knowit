@@ -1,0 +1,40 @@
+{
+  "id": "science-absolute-zero-10",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.absolute_zero",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In a sealed, insulated cell below about 0.3 K, liquid helium-3 is squeezed until part of it freezes. What happens to its temperature?",
+  "options": [
+    "It rises, as freezing releases heat",
+    "It holds steady while freezing",
+    "It falls, as freezing absorbs heat"
+  ],
+  "correct": 2,
+  "answer": "It falls. Freezing usually releases heat because the solid is tidier than the liquid. In cold helium-3 it is reversed: quantum rules hold the liquid in near-order, while in the solid each nucleus's spin points any which way. So freezing draws heat in. Cornell physicists squeezed their way to about 2 thousandths of a kelvin.",
+  "move": "When a rule rests on which side is tidier, check which side is.",
+  "trap": "Expecting heat to be released, as when water turns to ice.",
+  "keywords": [
+    "helium-3",
+    "pomeranchuk cooling",
+    "nuclear spin",
+    "entropy",
+    "freezing"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Richardson, Reviews of Modern Physics, 1997",
+  "source_kind": "paper",
+  "reference": "Richardson, The Pomeranchuk effect, Reviews of Modern Physics, 1997",
+  "written": "2026-09-27"
+}

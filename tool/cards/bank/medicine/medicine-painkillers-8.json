@@ -1,0 +1,38 @@
+{
+  "id": "medicine-painkillers-8",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.painkillers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: after Britain limited the size of paracetamol packs in 1998, deaths from paracetamol overdose fell by about 40%?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Shops were limited to 16 tablets a pack and pharmacies to 32. Measured against the trend before the law, Hawton and colleagues estimated 43% fewer paracetamol poisoning deaths in England and Wales over the following 11 years, about 765 lives. Many overdoses are impulsive and use whatever is in the cupboard.",
+  "move": "Small frictions matter most for decisions made within a single hour.",
+  "trap": "Assuming anyone set on an overdose would simply buy several packs.",
+  "keywords": [
+    "paracetamol",
+    "overdose",
+    "pack size",
+    "suicide prevention"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hawton et al., BMJ, 2013",
+  "source_kind": "paper",
+  "reference": "Hawton et al., Long term effect of reduced pack sizes of paracetamol on poisoning deaths and liver transplant activity in England and Wales: interrupted time series analyses, BMJ, 2013",
+  "written": "2026-09-27"
+}

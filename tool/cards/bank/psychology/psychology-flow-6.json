@@ -1,0 +1,32 @@
+{
+  "id": "psychology-flow-6",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.flow",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Do people in flow report feeling happy while it is happening?",
+  "answer": "Not at the time. Csikszentmihalyi noted that someone deep in a task has no attention spare for checking their feelings; to notice happiness they would have to step out of the absorption. The glow is reported afterwards, looking back. A climber on a hard pitch is thinking about the next hold, not about joy.",
+  "move": "Some good states can only be recognised once they have ended.",
+  "keywords": [
+    "flow",
+    "happiness",
+    "self-awareness",
+    "absorption"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Csikszentmihalyi, Flow, 1990",
+  "source_kind": "book",
+  "reference": "Csikszentmihalyi, Flow: The Psychology of Optimal Experience, Harper & Row, 1990",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-doubt-8",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.doubt",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "baseRate",
+  "question": "A witness is right 99 times in 100. By Hume's test, should you believe his report that a dead man rose again?",
+  "options": [
+    "Yes, a 99% record is reliable",
+    "No, the event's rarity outweighs him",
+    "Only if a second witness agrees"
+  ],
+  "correct": 1,
+  "answer": "No, the event's rarity outweighs him. Hume's 1748 rule: accept testimony only if its falsehood would be more miraculous than what it reports. A witness wrong once in a hundred is an everyday thing; a return from death has never been seen against countless deaths. Every grave that stayed shut testifies on the other side.",
+  "move": "Weigh how often a witness errs against how often such things happen.",
+  "trap": "Trusting the witness's 99% record and ignoring how rare the event is.",
+  "keywords": [
+    "david hume",
+    "miracles",
+    "testimony",
+    "probability"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Hume, Enquiry, section 10",
+  "source_kind": "book",
+  "reference": "Hume, An Enquiry Concerning Human Understanding, section 10, ed. Beauchamp, Oxford University Press, 1999",
+  "written": "2026-09-27"
+}

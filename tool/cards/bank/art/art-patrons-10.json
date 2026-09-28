@@ -1,0 +1,33 @@
+{
+  "id": "art-patrons-10",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.patrons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who paid for Botticelli's Adoration of the Magi of about 1475, in which Medici faces play the kings?",
+  "answer": "Not the Medici. The patron was Guasparre del Lama, a money-changer of modest standing, for his altar in Santa Maria Novella. Casting Cosimo and his sons as the Magi advertised his loyalty to the city's real rulers. His own face is thought to be in the crowd: a broker painted into the Medici circle.",
+  "move": "When the powerful appear in a picture, ask who wanted to flatter them.",
+  "keywords": [
+    "botticelli",
+    "adoration of the magi",
+    "guasparre del lama",
+    "medici portraits",
+    "santa maria novella"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lightbown, Sandro Botticelli, 1978",
+  "source_kind": "book",
+  "reference": "Ronald Lightbown, Sandro Botticelli: Life and Work, 2 vols, Paul Elek, 1978",
+  "written": "2026-09-27"
+}

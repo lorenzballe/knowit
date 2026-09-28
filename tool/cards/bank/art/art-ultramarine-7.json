@@ -1,0 +1,43 @@
+{
+  "id": "art-ultramarine-7",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.ultramarine",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "anchoring",
+  "question": "Ghirlandaio's 1485 contract priced ultramarine at 4 florins per 28 g ounce. At 3.5 g of gold a florin, grams of gold per gram?",
+  "value": 0.5,
+  "unit": "grams of gold",
+  "tolerance": 0.05,
+  "answer": "14 g / 28 g = 0.5 g of gold per gram of blue.",
+  "move": "Test a proverbial comparison by putting both sides in one unit.",
+  "trap": "Taking the saying worth its weight in gold literally.",
+  "hint": "Turn the price of one ounce into grams of gold first.",
+  "steps": [
+    "4 florins x 3.5 g = 14 g of gold per ounce.",
+    "An ounce of ultramarine weighs about 28 g.",
+    "14 g / 28 g = 0.5 g of gold per gram of blue."
+  ],
+  "keywords": [
+    "ultramarine price",
+    "ghirlandaio",
+    "florin",
+    "gold",
+    "painting contract"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baxandall, Painting and Experience, 1972",
+  "source_kind": "book",
+  "reference": "Michael Baxandall, Painting and Experience in Fifteenth-Century Italy, Oxford University Press, 1972",
+  "written": "2026-09-27"
+}

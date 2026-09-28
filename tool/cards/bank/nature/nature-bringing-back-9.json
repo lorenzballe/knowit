@@ -1,0 +1,42 @@
+{
+  "id": "nature-bringing-back-9",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.bringing_back",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "A revived population of effective size 10 loses 5% of its remaining genetic diversity each generation. About how many generations until half is gone?",
+  "value": 13.5,
+  "unit": "generations",
+  "tolerance": 1,
+  "answer": "So about 14 generations; worked exactly, about 13.5 generations.",
+  "move": "A loss taken as a share of what remains takes longer to halve it.",
+  "trap": "Dividing 50% by 5% and answering 10 generations.",
+  "hint": "Losses compound; the rule of 70 gives a halving time.",
+  "steps": [
+    "Losses compound: each generation keeps 95% of what was left, not of the start.",
+    "Rule of 70 for halving times: 70 ÷ 5 = 14.",
+    "So about 14 generations; worked exactly, about 13.5 generations."
+  ],
+  "keywords": [
+    "genetic diversity",
+    "effective population size",
+    "inbreeding",
+    "founder populations"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Frankham et al., Introduction to Conservation Genetics",
+  "source_kind": "book",
+  "reference": "Frankham, Ballou & Briscoe, Introduction to Conservation Genetics, 2nd edition, Cambridge University Press, 2010",
+  "written": "2026-09-27"
+}

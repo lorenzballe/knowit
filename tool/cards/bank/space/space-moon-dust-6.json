@@ -1,0 +1,32 @@
+{
+  "id": "space-moon-dust-6",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.moon_dust",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What made a thin line of light glow along the Moon's horizon after sunset, as three Surveyor landers saw?",
+  "answer": "Dust hovering just above the ground. Sunlight and the solar wind charge the surface, and along the sharp edge between sunlit and shadowed ground the electric field grows strong enough to lift grains about a hundredth of a millimetre across. Floating 3 to 30 cm up, they scattered the last sunlight into a bright thread.",
+  "move": "When nothing seems able to move a thing, look for a quieter force.",
+  "keywords": [
+    "horizon glow",
+    "surveyor",
+    "electrostatic levitation",
+    "lunar terminator"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rennilson & Criswell, The Moon, 1974",
+  "source_kind": "paper",
+  "reference": "Rennilson & Criswell, Surveyor observations of lunar horizon-glow, The Moon, 1974",
+  "written": "2026-09-27"
+}

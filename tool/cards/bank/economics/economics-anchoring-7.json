@@ -1,0 +1,32 @@
+{
+  "id": "economics-anchoring-7",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.anchoring",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When estate agents valued a house after seeing its list price, what set them apart from amateurs?",
+  "answer": "Not their accuracy but their denial. In Northcraft and Neale's study, agents who toured the same house valued it higher when handed a higher list price, much as students did. The students admitted the list price had swayed them; most agents said they had ignored it. The anchor worked on people sure it had not.",
+  "move": "Feeling unmoved by a number is no evidence that it did not move you.",
+  "keywords": [
+    "estate agents",
+    "list price",
+    "house valuation",
+    "experts"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Northcraft and Neale, OBHDP, 1987",
+  "source_kind": "paper",
+  "reference": "Northcraft & Neale, Experts, Amateurs, and Real Estate: An Anchoring-and-Adjustment Perspective on Property Pricing Decisions, Organizational Behavior and Human Decision Processes, 1987",
+  "written": "2026-09-27"
+}

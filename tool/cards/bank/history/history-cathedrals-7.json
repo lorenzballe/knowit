@@ -1,0 +1,43 @@
+{
+  "id": "history-cathedrals-7",
+  "topic": "history",
+  "genre": "history.middle_ages",
+  "strand": "history.middle_ages.cathedrals",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A masonry arch stands firmly. Rebuilt at twice the size, in the same stone and proportions, does it still stand?",
+  "options": [
+    "No, it crushes under its own weight",
+    "Yes, if its proportions are kept",
+    "Only with extra buttressing added"
+  ],
+  "correct": 1,
+  "answer": "Yes, if its proportions are kept. Doubling the size doubles the stress, but in a cathedral stress is a small fraction of what stone can bear, so crushing never decides. What decides is whether the line of thrust stays inside the masonry, which depends on shape alone. That is why medieval rules of proportion worked.",
+  "move": "Ask whether size or shape decides failure before scaling anything up.",
+  "trap": "Reasoning that bigger structures always fail under their own weight.",
+  "keywords": [
+    "masonry arches",
+    "scale",
+    "jacques heyman",
+    "line of thrust",
+    "gothic design"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "history-cathedrals-1"
+  ],
+  "figure": "none",
+  "source": "Heyman, The stone skeleton, 1966",
+  "source_kind": "paper",
+  "reference": "Heyman, The stone skeleton, International Journal of Solids and Structures 2, 1966, 249-279",
+  "written": "2026-09-27"
+}

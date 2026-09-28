@@ -1,0 +1,32 @@
+{
+  "id": "science-primes-6",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.primes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "3, 5 and 7 are evenly spaced primes. How long can a run of evenly spaced primes get?",
+  "answer": "Any length, Ben Green and Terence Tao proved in 2004. Unless a run starts at a small prime, as 3, 5, 7 does, its step must be a multiple of every prime up to its length, or some term would divide by it. A run of 26, found in 2010, steps by multiples of 223,092,870.",
+  "move": "Before hunting for a pattern, ask what shape it is forced to take.",
+  "keywords": [
+    "green-tao theorem",
+    "arithmetic progressions",
+    "prime numbers",
+    "terence tao"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Green & Tao, Annals of Mathematics, 2008",
+  "source_kind": "paper",
+  "reference": "Green & Tao, The primes contain arbitrarily long arithmetic progressions, Annals of Mathematics, 2008",
+  "written": "2026-09-27"
+}

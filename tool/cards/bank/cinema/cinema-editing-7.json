@@ -1,0 +1,39 @@
+{
+  "id": "cinema-editing-7",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.editing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A film's shots average 6 seconds each. How long is its median shot, the one in the middle?",
+  "options": [
+    "Longer than 6 seconds",
+    "Shorter than 6 seconds",
+    "About the same, 6 seconds"
+  ],
+  "correct": 1,
+  "answer": "Shorter than 6 seconds. Shot lengths are lopsided: most shots are brief, and a few long takes drag the average up. Barry Salt's counts, begun in the 1970s, show this long tail film after film. One two-minute take adds as much running time as twenty 6-second shots.",
+  "move": "When a few giants sit in the data, the average describes almost nobody.",
+  "trap": "Treating the average shot as the typical one, as if lengths were symmetrical.",
+  "keywords": [
+    "average shot length",
+    "median",
+    "barry salt",
+    "long takes"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Salt, Film Quarterly, 1974",
+  "source_kind": "paper",
+  "reference": "Salt, Statistical Style Analysis of Motion Pictures, Film Quarterly 28(1), 1974",
+  "written": "2026-09-27"
+}

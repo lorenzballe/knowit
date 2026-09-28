@@ -1,0 +1,39 @@
+{
+  "id": "food-saffron-6",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.saffron",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a saffron thread picked this morning smells far weaker than the same thread dried?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The famous smell, safranal, barely exists in the living flower. The stigma's own enzymes split it off a bitter molecule, picrocrocin, once drying heat reaches them, and the change goes on for weeks in the jar. Toasting threads over embers or in ovens makes the aroma as much as it keeps it.",
+  "move": "Some qualities are made by the processing, not saved from the harvest.",
+  "trap": "False, since drying always drives off the volatile oils that carry aroma.",
+  "keywords": [
+    "safranal",
+    "picrocrocin",
+    "drying",
+    "aroma",
+    "glucosidase"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Foods, 2021, saffron dehydration study",
+  "source_kind": "paper",
+  "reference": "https://www.mdpi.com/2304-8158/10/2/404",
+  "written": "2026-09-27"
+}

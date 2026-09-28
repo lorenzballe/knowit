@@ -1,0 +1,40 @@
+{
+  "id": "economics-silk-roads-8",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.silk_roads",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "By weight, what was the main Chinese export on ships sailing to the Persian Gulf in the ninth century?",
+  "options": [
+    "Silk",
+    "Tea",
+    "Ceramics"
+  ],
+  "correct": 2,
+  "answer": "Ceramics. Silk was valuable but light; bowls and jars were cheap, heavy and could be packed by the thousand. The Belitung wreck, a sewn-plank ship from the Arabian Sea lost off Indonesia around 830, held about 60,000 ceramic pieces, mostly Changsha bowls, some painted with Arabic-style script. The sea road ran on pottery.",
+  "move": "A famous name tells you what was prized, not what was carried.",
+  "trap": "The route's name makes silk seem the bulk of it.",
+  "keywords": [
+    "belitung wreck",
+    "changsha bowls",
+    "maritime trade",
+    "tang ceramics",
+    "persian gulf"
+  ],
+  "era": "medieval",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Krahl et al., Shipwrecked, Smithsonian, 2010",
+  "source_kind": "book",
+  "reference": "Krahl, Guy, Wilson & Raby (eds.), Shipwrecked: Tang Treasures and Monsoon Winds, Smithsonian Institution, 2010",
+  "written": "2026-09-27"
+}

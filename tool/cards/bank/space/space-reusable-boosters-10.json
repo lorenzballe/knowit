@@ -1,0 +1,39 @@
+{
+  "id": "space-reusable-boosters-10",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.reusable_boosters",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: landing a Falcon 9 booster for reuse costs less than a tenth of the payload it could otherwise lift?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The booster must hold back fuel to turn or brake, re-enter and land, and carry legs and grid fins, so it lets the upper stage go at a lower speed. SpaceX has listed 8.3 tonnes to a high transfer orbit expended against 5.5 tonnes landed: a third of the payload left behind.",
+  "move": "Every way back has to be paid for on the way out.",
+  "trap": "Picturing the landing as a last small puff of spare fuel.",
+  "keywords": [
+    "falcon 9",
+    "booster landing",
+    "payload penalty",
+    "propellant reserve",
+    "spacex"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "SpaceX, Falcon 9 capabilities, 2023",
+  "source_kind": "institution",
+  "reference": "SpaceX, Falcon 9 vehicle page, payload to geosynchronous transfer orbit, expendable and reusable, spacex.com/vehicles/falcon-9, 2023",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "sport-formations-10",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.formations",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is a team's listed formation, such as 4-3-3, still a useful description of how it plays?",
+  "sides": [
+    "Yes, still useful",
+    "No, it misleads"
+  ],
+  "answer": "Yes. The starting shape decides who covers which space when the ball is lost, and that is when most goals are conceded. Coaches still pick players for the slots, and switching from four at the back to three changes every duel on the pitch. A line of numbers compresses a lot of real structure.",
+  "move": "Whichever side you took, the hinge is which phase of play you describe.",
+  "counterpoint": "No. Modern teams change shape with the ball: a side listed as 4-3-3 may attack as 3-2-5 and defend as 4-4-2, with full-backs stepping into midfield. Tracking data shows players drifting constantly. A single line of numbers describes the kick-off picture and little of the ninety minutes after it.",
+  "keywords": [
+    "formations",
+    "4-3-3",
+    "tactical shape",
+    "full-backs"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cox, Zonal Marking",
+  "source_kind": "book",
+  "reference": "Cox, Zonal Marking: The Making of Modern European Football, HarperCollins, 2019",
+  "written": "2026-09-27"
+}

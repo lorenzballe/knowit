@@ -1,0 +1,43 @@
+{
+  "id": "art-perspective-7",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.perspective",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Eye 1.5 m up, picture 1 m ahead. Floor lines appear 50 cm and 10 cm below the horizon. How many metres apart are they?",
+  "value": 12,
+  "unit": "metres",
+  "answer": "15 - 3 = 12 m of floor.",
+  "move": "On a flat picture, the far distance is packed into a thin strip.",
+  "trap": "Assuming equal drops in the picture mean equal stretches of floor.",
+  "hint": "By similar triangles, the drop below the horizon shrinks in proportion to distance.",
+  "steps": [
+    "A floor line d metres away sits 1.5 x 1 / d metres below the horizon.",
+    "50 cm below: d = 1.5 / 0.5 = 3 m.",
+    "10 cm below: d = 1.5 / 0.1 = 15 m.",
+    "15 - 3 = 12 m of floor."
+  ],
+  "keywords": [
+    "horizon line",
+    "similar triangles",
+    "foreshortening",
+    "picture plane",
+    "floor"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Field, The Invention of Infinity, 1997",
+  "source_kind": "book",
+  "reference": "J. V. Field, The Invention of Infinity: Mathematics and Art in the Renaissance, Oxford University Press, 1997",
+  "written": "2026-09-27"
+}

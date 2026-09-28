@@ -1,0 +1,43 @@
+{
+  "id": "food-yeast-10",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.yeast",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "Roughly how many yeast cells are in a 7 g sachet of dried baker's yeast, in billions?",
+  "value": 200,
+  "unit": "billion cells",
+  "withinFactor": 3,
+  "answer": "7 g ÷ 35 trillionths of a gram = about 200 billion cells.",
+  "move": "When the parts are too small to see, count them by weight.",
+  "trap": "Guessing millions, because a sachet holds only a spoonful.",
+  "hint": "Start from the size of one cell, then what it weighs once dried.",
+  "steps": [
+    "A baker's yeast cell is about 6 µm across: roughly 110 cubic micrometres.",
+    "At about the density of water, one living cell weighs some 110 trillionths of a gram.",
+    "Drying leaves about a third of that: roughly 35 trillionths of a gram.",
+    "7 g ÷ 35 trillionths of a gram = about 200 billion cells."
+  ],
+  "keywords": [
+    "yeast cells",
+    "dried yeast",
+    "cell size",
+    "fermi estimate"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Milo & Phillips, Cell Biology by the Numbers",
+  "source_kind": "book",
+  "reference": "Milo & Phillips, Cell Biology by the Numbers, Garland Science, 2015",
+  "written": "2026-09-27"
+}

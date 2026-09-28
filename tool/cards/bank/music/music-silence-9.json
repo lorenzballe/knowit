@@ -1,0 +1,32 @@
+{
+  "id": "music-silence-9",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.silence",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does the brain do when a few seconds are cut out of a song the listener knows well?",
+  "answer": "It keeps hearing. Kraemer and colleagues scanned people listening to music with short gaps of silence inserted: during gaps in familiar songs, auditory cortex stayed more active than during gaps in unknown ones, and listeners reported the tune carrying on in their heads. Memory filled the silence with the missing bars.",
+  "move": "What the listener expects is part of what the listener hears.",
+  "keywords": [
+    "auditory cortex",
+    "silence",
+    "musical memory",
+    "brain imaging"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kraemer et al., Nature, 2005",
+  "source_kind": "paper",
+  "reference": "Kraemer, Macrae, Green and Kelley, Sound of Silence Activates Auditory Cortex, Nature, 2005",
+  "written": "2026-09-27"
+}

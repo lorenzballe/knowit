@@ -1,0 +1,33 @@
+{
+  "id": "science-rust-8",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.rust",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the Parthenon's early 20th-century restoration end up cracking the marble it was meant to save?",
+  "answer": "Its iron rusted. Nikolaos Balanos joined blocks with unprotected iron clamps and dowels; as they corroded they swelled and split the stone from inside. The ancient builders had sealed their iron in molten lead, which kept water out, and many of their clamps survived. Today's restorers have swapped his iron for titanium.",
+  "move": "When copying an old technique, copy the precautions that made it last.",
+  "keywords": [
+    "parthenon",
+    "iron clamps",
+    "titanium",
+    "nikolaos balanos",
+    "marble"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Economakis (ed.), Acropolis Restoration, 1994",
+  "source_kind": "book",
+  "reference": "Economakis (ed.), Acropolis Restoration: The CCAM Interventions, Academy Editions, London, 1994",
+  "written": "2026-09-27"
+}

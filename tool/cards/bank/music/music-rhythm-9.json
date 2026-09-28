@@ -1,0 +1,42 @@
+{
+  "id": "music-rhythm-9",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.rhythm",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "At 125 beats per minute, a drum machine at 75% swing delays each second sixteenth note by how many milliseconds?",
+  "value": 60,
+  "unit": "milliseconds",
+  "answer": "180 - 120 = 60 ms.",
+  "move": "Turn a percentage into time before judging how big a nudge is.",
+  "trap": "Taking 75% as a delay of three quarters of the whole beat.",
+  "hint": "Swing is a percentage of the time taken by a pair of sixteenths.",
+  "steps": [
+    "One beat: 60,000 / 125 = 480 ms.",
+    "A pair of sixteenths fills an eighth: 480 / 2 = 240 ms.",
+    "Straight, the second lands at 50% of 240 = 120 ms; at 75%, 180 ms.",
+    "180 - 120 = 60 ms."
+  ],
+  "keywords": [
+    "swing",
+    "drum machines",
+    "sixteenth notes",
+    "roger linn"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Roger Linn, Attack Magazine, 2013",
+  "source_kind": "news_archive",
+  "reference": "https://www.attackmagazine.com/features/interview/roger-linn-swing-groove-magic-mpc-timing/",
+  "written": "2026-09-27"
+}

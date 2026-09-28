@@ -1,0 +1,33 @@
+{
+  "id": "weird_facts-tiny-nations-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.tiny_nations",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Tuvalu write into its constitution in 2023 in case its islands disappear under the sea?",
+  "answer": "That the state lasts for ever. The amended constitution, in force from 1 October 2023, declares that Tuvalu shall remain in perpetuity despite any loss of territory, and keeps its maritime baselines unchanged whatever happens to the coast. Statehood has long rested on land; Tuvalu is betting its legal existence can outlast its ground.",
+  "move": "Where the facts may vanish, fix the rules before they do.",
+  "keywords": [
+    "tuvalu",
+    "constitution",
+    "sea level rise",
+    "statehood",
+    "maritime boundaries"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Library of Congress, Global Legal Monitor, 2023",
+  "source_kind": "institution",
+  "reference": "https://www.loc.gov/item/global-legal-monitor/2023-09-28/tuvalu-constitutional-amendment-enshrines-statehood-in-perpetuity-in-response-to-climate-change/",
+  "written": "2026-09-27"
+}

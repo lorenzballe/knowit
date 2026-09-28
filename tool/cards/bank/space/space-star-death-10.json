@@ -1,0 +1,42 @@
+{
+  "id": "space-star-death-10",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.star_death",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "True or false: as the dying Sun swells into a red giant, the orbits of Mars and Jupiter will grow wider?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The swelling Sun blows away about a third of its mass as wind, so its grip weakens and every planet drifts outwards, by about half again. Earth may not escape this way. Schröder and Smith calculated that tides raised on the bloated Sun would still drag Earth inwards to be swallowed.",
+  "move": "When the centre loses weight, whatever circles it drifts away.",
+  "trap": "Picturing the Sun that swallows Earth as pulling planets closer.",
+  "keywords": [
+    "red giant",
+    "sun",
+    "earth's orbit",
+    "stellar mass loss",
+    "engulfment"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schröder & Smith, MNRAS, 2008",
+  "source_kind": "paper",
+  "reference": "Schröder & Smith, Distant future of the Sun and Earth revisited, Monthly Notices of the Royal Astronomical Society 386, 155, 2008",
+  "written": "2026-09-27"
+}

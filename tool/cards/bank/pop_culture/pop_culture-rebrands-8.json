@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-rebrands-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.rebrands",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Nissan do with the Datsun name almost three decades after dropping it?",
+  "answer": "Revived it for buyers who had never owned one. Nissan phased Datsun out in the early 1980s, then relaunched it in 2013 as a budget badge for India, Indonesia, Russia and South Africa. Sales stayed weak, and by 2022 the badge was gone again. The name's goodwill had been earned elsewhere.",
+  "move": "Old goodwill lives with the people who remember it, not with the name.",
+  "keywords": [
+    "datsun",
+    "nissan",
+    "brand revival",
+    "emerging markets"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "The Truth About Cars, April 2022",
+  "source_kind": "news_archive",
+  "reference": "https://www.thetruthaboutcars.com/2022/04/datsun-is-dead-again/",
+  "written": "2026-09-27"
+}

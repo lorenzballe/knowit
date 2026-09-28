@@ -1,0 +1,39 @@
+{
+  "id": "human_body-plasticity-7",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.plasticity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A lazy eye can often be treated well into the school years. By when should a baby's dense one-sided cataract come out?",
+  "options": [
+    "Before the child starts school",
+    "Within about six weeks of birth",
+    "Around the first birthday"
+  ],
+  "correct": 1,
+  "answer": "Within about six weeks of birth. A cloudy lens starves one eye of sharp images while the other claims the visual cortex. Birch and Stager studied 45 such children: acuity was best when treated in the first six weeks and fell with each week of delay after. The window shuts in weeks, not years.",
+  "move": "Before borrowing a deadline from a similar case, ask which clock applies.",
+  "trap": "Letting the school-age window for a lazy eye set the deadline.",
+  "keywords": [
+    "congenital cataract",
+    "critical period",
+    "amblyopia",
+    "visual development"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Birch & Stager, IOVS, 1996",
+  "source_kind": "paper",
+  "reference": "Birch & Stager, The critical period for surgical treatment of dense congenital unilateral cataract, Investigative Ophthalmology & Visual Science, 1996",
+  "written": "2026-09-27"
+}

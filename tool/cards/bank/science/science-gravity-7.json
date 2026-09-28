@@ -1,0 +1,39 @@
+{
+  "id": "science-gravity-7",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.gravity",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "The Sun has 333,000 times Earth's mass and sits about 390 times farther from the Moon. Which pulls the Moon harder?",
+  "options": [
+    "Earth, about 100 times harder",
+    "Both pull about equally",
+    "The Sun, about twice as hard"
+  ],
+  "correct": 2,
+  "answer": "The Sun, about twice as hard. Divide 333,000 by 390 squared, about 152,000, and the Sun wins by 2.2 to 1. The Moon stays with Earth because the Sun pulls both almost equally, so only the small difference counts. Traced from above, the Moon's path round the Sun never loops; it always bends sunward.",
+  "move": "Before naming the strongest influence, ask what acts equally on everything nearby.",
+  "trap": "Earth, by far, because the Moon is visibly circling Earth.",
+  "keywords": [
+    "moon",
+    "sun",
+    "inverse square law",
+    "lunar orbit"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Roy, Orbital Motion, 2005",
+  "source_kind": "book",
+  "reference": "Roy, Orbital Motion, 4th edition, Institute of Physics Publishing, 2005",
+  "written": "2026-09-27"
+}

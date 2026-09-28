@@ -1,0 +1,40 @@
+{
+  "id": "history-clothes-8",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.clothes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Florence's sumptuary law of 1343 banned many luxurious gowns. How could a woman keep one she already owned?",
+  "options": [
+    "By wearing it only at home",
+    "By cutting it to a legal style",
+    "By paying to have it sealed"
+  ],
+  "correct": 2,
+  "answer": "By paying to have it sealed. Officials inspected forbidden garments, entered each in a register and marked it with an official seal once the owner paid a fee; unsealed gowns drew fines. The law raised money as well as restraining display, and its register survives as an inventory of Florentine wardrobes, gown by gown.",
+  "move": "A ban you can pay your way out of is a tax.",
+  "trap": "Assuming a ban must mean altering the gown, not paying for it.",
+  "keywords": [
+    "sumptuary law",
+    "florence",
+    "gowns",
+    "fines",
+    "registers"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Killerby, Sumptuary Law in Italy, 2002",
+  "source_kind": "book",
+  "reference": "Killerby, Sumptuary Law in Italy 1200–1500, Clarendon Press, 2002",
+  "written": "2026-09-27"
+}

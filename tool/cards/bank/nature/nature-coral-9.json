@@ -1,0 +1,39 @@
+{
+  "id": "nature-coral-9",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.coral",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "As seawater acidifies, which part of a coral reef is expected to switch first from building up to dissolving?",
+  "options": [
+    "The sands and sediments",
+    "The living coral skeletons",
+    "The algae-cemented reef crest"
+  ],
+  "correct": 0,
+  "answer": "The sands and sediments. Eyre and colleagues found sediment dissolution about ten times as sensitive to acidification as coral growth, partly because microbes breathing in the sand already acidify the water between grains. Some reefs' sediments already dissolve on balance; most are projected to this century. The reef can wash away from below.",
+  "move": "The weakest link is often the part nobody photographs.",
+  "trap": "Picturing the living corals, the visible builders, as the first to fail.",
+  "keywords": [
+    "ocean acidification",
+    "reef sediments",
+    "calcium carbonate",
+    "dissolution"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Eyre et al., Science, 2018",
+  "source_kind": "paper",
+  "reference": "Eyre et al., Coral reefs will transition to net dissolving before end of century, Science, 2018; Eyre, Andersson & Cyronak, Benthic coral reef calcium carbonate dissolution in an acidifying ocean, Nature Climate Change, 2014",
+  "written": "2026-09-27"
+}

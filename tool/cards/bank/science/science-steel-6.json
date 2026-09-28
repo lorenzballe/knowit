@@ -1,0 +1,32 @@
+{
+  "id": "science-steel-6",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.steel",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did new high-strength steel rods on San Francisco's Bay Bridge crack soon after being tightened in 2013?",
+  "answer": "Hydrogen embrittlement. Hydrogen atoms, small enough to slip between iron atoms, had got into the steel and, under high tension, gathered at the seams between its microscopic crystals until cracks opened. The stronger the steel, the likelier this is. Of 96 rods, 32 broke, and a $25 million steel saddle took over their job.",
+  "move": "The strongest version of a material can carry the most delicate weakness.",
+  "keywords": [
+    "hydrogen embrittlement",
+    "bay bridge",
+    "high-strength steel",
+    "anchor rods"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Toll Bridge Program Oversight Committee, 2013",
+  "source_kind": "institution",
+  "reference": "Toll Bridge Program Oversight Committee, Report on the A354 Grade BD High-Strength Steel Rods on the New East Span of the San Francisco–Oakland Bay Bridge, 2013",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "medicine-doubt-7",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.doubt",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Japan dropped the combined MMR vaccine in 1993. In one Yokohama ward, what happened to autism diagnoses among children born afterwards?",
+  "options": [
+    "They fell back towards earlier levels",
+    "They levelled off at 1993 rates",
+    "They kept rising, as before"
+  ],
+  "correct": 2,
+  "answer": "They kept rising, as before. Japan stopped MMR over meningitis from its mumps strain, which made its removal a test. A study of every child born in Kohoku ward from 1988 to 1996 found cumulative autism incidence climbed across the cohorts with no dip. Cohorts never given MMR had the highest rates.",
+  "move": "Take away the suspect and watch whether the trend even notices.",
+  "trap": "Expecting removal of a suspected cause to at least slow the rise.",
+  "keywords": [
+    "mmr vaccine",
+    "autism",
+    "japan",
+    "yokohama",
+    "natural experiment"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Honda et al., J Child Psychol Psychiatry, 2005",
+  "source_kind": "paper",
+  "reference": "Honda, Shimizu & Rutter, No effect of MMR withdrawal on the incidence of autism: a total population study, Journal of Child Psychology and Psychiatry, 2005",
+  "written": "2026-09-27"
+}

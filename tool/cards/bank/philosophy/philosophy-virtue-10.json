@@ -1,0 +1,37 @@
+{
+  "id": "philosophy-virtue-10",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.virtue",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is a bank robber who stays calm under fire to finish the job showing real courage?",
+  "sides": [
+    "Yes, it is courage",
+    "No, not true courage"
+  ],
+  "answer": "Courage is mastery of fear in the face of danger, and the robber has exactly that: the same steadiness would earn a medal in a fireman. Philippa Foot granted in 1978 that a murderer can be courageous; the courage is simply not working as a virtue in him. Denying the word blurs a real trait.",
+  "move": "It turns on whether a virtue can be named apart from the end it serves.",
+  "counterpoint": "Aristotle says the brave face danger for the sake of what is noble, and Plato's Laches ties courage to knowing what is worth fearing. Risking death to take money is misjudging what matters, so it is recklessness, not courage. Calling it brave hands a thief the praise owed to someone who stays in a burning house.",
+  "keywords": [
+    "courage",
+    "philippa foot",
+    "bank robber",
+    "unity of the virtues"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Foot, Virtues and Vices, 1978",
+  "source_kind": "book",
+  "reference": "Foot, Virtues and Vices, in Virtues and Vices and Other Essays in Moral Philosophy, Blackwell, 1978",
+  "written": "2026-09-27"
+}

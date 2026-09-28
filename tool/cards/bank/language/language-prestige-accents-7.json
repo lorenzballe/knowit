@@ -1,0 +1,39 @@
+{
+  "id": "language-prestige-accents-7",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.prestige_accents",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Hanover's name for the purest spoken German comes from Standard German having grown out of its local dialect?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Hanover's people once spoke Low German, and High German reached them as a written language learned at school. Northerners therefore pronounced the standard as it was spelled, with no central or southern dialect bending it. Theodor Siebs's stage pronunciation of 1898 leaned north, and Hanover kept the name.",
+  "move": "Those who learn a standard from books may end up its best speakers.",
+  "trap": "Assuming the purest standard must be spoken where it was born.",
+  "keywords": [
+    "hanover",
+    "standard german",
+    "low german",
+    "theodor siebs",
+    "pronunciation"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barbour & Stevenson, Variation in German, 1990",
+  "source_kind": "book",
+  "reference": "Barbour & Stevenson, Variation in German: A Critical Approach to German Sociolinguistics, Cambridge University Press, 1990",
+  "written": "2026-09-27"
+}

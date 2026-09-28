@@ -1,0 +1,40 @@
+{
+  "id": "science-cleaning-6",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Household bleach is sold at about pH 12. Brought down to pH 7 at the same strength, does it kill germs faster or slower?",
+  "options": [
+    "Much slower, being less alkaline",
+    "About the same, being equally strong",
+    "Much faster, despite being milder"
+  ],
+  "correct": 2,
+  "answer": "Much faster. Bleach kills mainly as hypochlorous acid, which dominates below about pH 7.5; at pH 12 nearly all of it sits as hypochlorite ion, some 80 to 100 times less potent. Makers keep it alkaline for shelf life, because the acid form breaks down quickly, and acidified further it gives off chlorine gas.",
+  "move": "The form that keeps on the shelf is not always the form that works.",
+  "trap": "Much slower, since a milder, less caustic liquid seems weaker.",
+  "keywords": [
+    "bleach",
+    "hypochlorous acid",
+    "ph",
+    "sodium hypochlorite",
+    "disinfection"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "White's Handbook of Chlorination, 2010",
+  "source_kind": "book",
+  "reference": "Black & Veatch Corporation, White's Handbook of Chlorination and Alternative Disinfectants, 5th edition, Wiley, 2010",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "space-reusable-boosters-8",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.reusable_boosters",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: a rocket took off, hovered and landed upright on its own engines as early as 1993?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. McDonnell Douglas's DC-X, a 12-metre test vehicle, first flew at White Sands, New Mexico, in August 1993, and made a dozen flights in all, none higher than a few kilometres. In 1996 a landing leg failed to extend; it toppled and burned. Funding ended, and the idea waited two decades for a sponsor.",
+  "move": "Inventions that died leave no fleet to remind anyone of them.",
+  "trap": "Dating vertical landing from the programmes that survived to fly today.",
+  "keywords": [
+    "dc-x",
+    "delta clipper",
+    "vertical landing",
+    "white sands",
+    "mcdonnell douglas"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Launius & Jenkins, Coming Home, NASA, 2012",
+  "source_kind": "book",
+  "reference": "Launius & Jenkins, Coming Home: Reentry and Recovery from Space, NASA SP-2011-593, 2012",
+  "written": "2026-09-27"
+}

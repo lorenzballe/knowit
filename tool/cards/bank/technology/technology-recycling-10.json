@@ -1,0 +1,43 @@
+{
+  "id": "technology-recycling-10",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.recycling",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Hard-rock lithium ore often holds about 0.5% lithium. How many times richer is LiFePO4 cathode powder (Li 7, Fe 56, P 31, O 16)?",
+  "value": 8.8,
+  "unit": "times",
+  "tolerance": 0.3,
+  "answer": "4.4% / 0.5% = 8.8 times richer.",
+  "move": "Judge a waste stream as an ore: its grade matters more than its origin.",
+  "trap": "Assuming a battery's waste must be poorer in metal than a mine.",
+  "hint": "Work out lithium's share of the powder's mass first.",
+  "steps": [
+    "Molar mass: 7 + 56 + 31 + 4 × 16 = 158.",
+    "Lithium's share: 7 / 158 = about 4.4%.",
+    "4.4% / 0.5% = 8.8 times richer."
+  ],
+  "keywords": [
+    "lithium iron phosphate",
+    "ore grade",
+    "spodumene",
+    "urban mining",
+    "cathode powder"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Kesler et al., Ore Geology Reviews, 2012",
+  "source_kind": "paper",
+  "reference": "Kesler, Gruber, Medina, Keoleian, Everson & Wallington, Global lithium resources: Relative importance of pegmatite, brine and other deposits, Ore Geology Reviews, 2012",
+  "written": "2026-09-27"
+}

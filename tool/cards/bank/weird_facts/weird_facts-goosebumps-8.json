@@ -1,0 +1,41 @@
+{
+  "id": "weird_facts-goosebumps-8",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.goosebumps",
+  "also": [
+    "medicine.diagnosis.symptoms"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "True or false: gooseflesh on a body recovered from water is good evidence that the person drowned?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. After death, the tiny muscles that raise hairs stiffen in rigor mortis like any other, and cold water adds its effect, so puckered skin follows many kinds of death. Pathologists read it as cold or rigor, useless for proving drowning. It shows where the body lay, not how death came.",
+  "move": "A sign that turns up in every case proves none of them.",
+  "trap": "Taking a sign often seen in drownings as a sign of drowning.",
+  "keywords": [
+    "drowning",
+    "forensic pathology",
+    "rigor mortis",
+    "cutis anserina"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Saukko and Knight, Forensic Pathology, 2016",
+  "source_kind": "reference_work",
+  "reference": "Saukko and Knight, Knight's Forensic Pathology, 4th edition, CRC Press, 2016",
+  "written": "2026-09-27"
+}

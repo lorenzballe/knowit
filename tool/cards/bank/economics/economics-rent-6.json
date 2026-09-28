@@ -1,0 +1,33 @@
+{
+  "id": "economics-rent-6",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.rent",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What pushed Britain into controlling rents in 1915, in the middle of a world war?",
+  "answer": "A rent strike in Glasgow. As munitions workers crowded in, landlords raised rents; by late 1915 around 20,000 tenants refused to pay the increases, led largely by women such as Mary Barbour. With shipyard output at stake, Parliament froze rents at pre-war levels within weeks. Some form of rent control lasted over seventy years.",
+  "move": "Emergency rules outlive emergencies when enough people come to depend on them.",
+  "keywords": [
+    "rent control",
+    "glasgow rent strike",
+    "mary barbour",
+    "munitions",
+    "first world war"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Increase of Rent Act 1915",
+  "source_kind": "primary_document",
+  "reference": "Increase of Rent and Mortgage Interest (War Restrictions) Act 1915, 5 & 6 Geo. 5, UK Parliament, 1915",
+  "written": "2026-09-27"
+}

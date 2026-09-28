@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-twins-8",
+  "topic": "weird_facts",
+  "genre": "weird_facts.coincidences",
+  "strand": "weird_facts.coincidences.twins",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Across countries, twin birth rates differ more than twofold. Which kind of twinning accounts for nearly all of that difference?",
+  "options": [
+    "Identical twins, from one egg",
+    "Fraternal twins, from two eggs",
+    "Both kinds in equal measure"
+  ],
+  "correct": 1,
+  "answer": "Fraternal twins, from two eggs. Identical twinning, one embryo splitting, runs at about 4 per 1,000 births almost everywhere. Releasing two eggs at once varies with a mother's genes, age and fertility treatment, and is most common in Central Africa. The world map of twins is a map of double ovulation.",
+  "move": "When a total varies, find the part of it that stays constant.",
+  "trap": "Picking identical twins, the kind people assume runs in families.",
+  "keywords": [
+    "fraternal twins",
+    "identical twins",
+    "twinning rates",
+    "ovulation",
+    "central africa"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "Smits and Monden, PLOS ONE, 2011",
+  "source_kind": "statistics",
+  "reference": "doi:10.1371/journal.pone.0025239",
+  "written": "2026-09-27"
+}

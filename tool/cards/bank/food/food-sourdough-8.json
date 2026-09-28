@@ -1,0 +1,42 @@
+{
+  "id": "food-sourdough-8",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.sourdough",
+  "also": [
+    "human_body.gut.digestion"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "True or false: a well-fermented sourdough made from ordinary wheat flour is safe for people with coeliac disease?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Ordinary sourdough fermentation breaks down only a little of the gluten. The hopeful headlines trace to Italian trials in which selected bacteria plus fungal enzymes digested wheat for hours, bringing gluten below 10 parts per million, and patients tolerated it. A bakery loaf stays thousands of times above the 20 ppm gluten-free limit.",
+  "move": "Before trusting a result, check that the thing tested is the thing sold.",
+  "trap": "Stretching a specially processed trial loaf to every sourdough on sale.",
+  "keywords": [
+    "coeliac disease",
+    "gluten",
+    "sourdough",
+    "lactobacilli",
+    "gluten-free limit"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Greco et al., Clin. Gastroenterol. Hepatol., 2011",
+  "source_kind": "paper",
+  "reference": "Greco, Gobbetti, Auricchio et al., Safety for patients with celiac disease of baked goods made of wheat flour hydrolyzed during food processing, Clinical Gastroenterology and Hepatology, 2011",
+  "written": "2026-09-27"
+}

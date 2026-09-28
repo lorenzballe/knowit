@@ -1,0 +1,42 @@
+{
+  "id": "music-guitar-6",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.guitar",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "If each fret takes 1/18 of the string left, where does fret 2 sit on a 648 mm scale, in mm from the nut?",
+  "value": 70,
+  "unit": "mm",
+  "answer": "36 + 34 = 70 mm.",
+  "move": "When each step takes a share of what is left, the steps shrink.",
+  "trap": "Doubling the first gap to 72 mm, as if frets were evenly spaced.",
+  "hint": "Find the first fret, then apply the same rule to what remains.",
+  "steps": [
+    "Fret 1: 648 / 18 = 36 mm from the nut.",
+    "String left: 648 - 36 = 612 mm.",
+    "Next gap: 612 / 18 = 34 mm.",
+    "36 + 34 = 70 mm."
+  ],
+  "keywords": [
+    "fret spacing",
+    "rule of 18",
+    "scale length",
+    "luthiers"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Cumpiano & Natelson, Guitarmaking, 1994",
+  "source_kind": "book",
+  "reference": "Cumpiano & Natelson, Guitarmaking: Tradition and Technology, Chronicle Books, 1994",
+  "written": "2026-09-27"
+}

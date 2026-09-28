@@ -1,0 +1,40 @@
+{
+  "id": "food-pasta-6",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.pasta",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "In 1930 the Futurist Marinetti called on Italians to give up pasta. What did he urge instead, and why?",
+  "options": [
+    "Meat, to build soldierly bodies",
+    "Rice, grown at home, not imported wheat",
+    "Bread, the older peasant staple"
+  ],
+  "correct": 1,
+  "answer": "Rice, grown in the north instead of wheat bought abroad. His Manifesto of Futurist Cooking called pasta heavy, a cause of lethargy and pessimism, and promised that dropping it would free Italy from costly foreign grain. That chimed with the regime's drive for self-sufficiency in wheat. Italians went on eating pasta; the manifesto sold newspapers.",
+  "move": "Behind an aesthetic crusade, look for the balance of trade.",
+  "trap": "Meat, since Futurism worshipped war, speed and the virile body.",
+  "keywords": [
+    "futurism",
+    "marinetti",
+    "rice",
+    "autarky",
+    "wheat imports"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marinetti, The Futurist Cookbook, 1932",
+  "source_kind": "book",
+  "reference": "Marinetti, The Futurist Cookbook, trans. Suzanne Brill, Penguin Modern Classics, 2014",
+  "written": "2026-09-27"
+}

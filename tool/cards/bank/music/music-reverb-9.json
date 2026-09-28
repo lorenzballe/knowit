@@ -1,0 +1,42 @@
+{
+  "id": "music-reverb-9",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.reverb",
+  "also": [
+    "music.sound_itself.acoustics"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A vocal reverb has a 2-second decay, under a dense mix that hides anything 30 dB quieter. How long is the tail audible?",
+  "options": [
+    "About 1 second",
+    "About 2 seconds",
+    "About 4 seconds"
+  ],
+  "correct": 0,
+  "answer": "About 1 second. A reverb's decay time is how long its tail takes to fall 60 decibels, to a millionth of its energy. The tail loses a steady number of decibels each second, 30 here, so the mix swallows it halfway. Soloed, the same vocal would trail on for the full two seconds.",
+  "move": "Ask what threshold a quoted duration is measured to before planning around it.",
+  "trap": "Taking the 2 seconds on the dial as the time the tail is heard.",
+  "keywords": [
+    "decay time",
+    "decibels",
+    "masking",
+    "mixing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Izhaki, Mixing Audio, 2008",
+  "source_kind": "book",
+  "reference": "Izhaki, Mixing Audio: Concepts, Practices and Tools, Focal Press, 2008",
+  "written": "2026-09-27"
+}

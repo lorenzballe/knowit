@@ -1,0 +1,32 @@
+{
+  "id": "psychology-streaks-8",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.streaks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Among people keeping New Year's resolutions, what predicted who was still at it months later?",
+  "answer": "How much they enjoyed it, not how much it mattered to them. Woolley and Fishbach surveyed people about their resolutions early in the year and again weeks later: the pleasure they took in the activity predicted persistence, while its rated importance did not. A run that feels good today keeps going; a worthy one breaks.",
+  "move": "Choose the version of a good habit that feels good while doing it.",
+  "keywords": [
+    "new year's resolutions",
+    "enjoyment",
+    "persistence",
+    "immediate rewards"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Woolley & Fishbach, PSPB, 2017",
+  "source_kind": "paper",
+  "reference": "Woolley & Fishbach, Immediate rewards predict adherence to long-term goals, Personality and Social Psychology Bulletin, 2017",
+  "written": "2026-09-27"
+}

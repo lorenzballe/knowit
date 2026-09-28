@@ -1,0 +1,41 @@
+{
+  "id": "food-roasting-10",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.roasting",
+  "also": [
+    "science.chemistry_at_home.cooking_reactions"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: a very dark roast coffee usually holds less acrylamide than a light roast?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Acrylamide forms early in roasting, from the amino acid asparagine and sugars, and peaks within the first minutes. As the roast goes on, it is destroyed faster than it forms, so dark roasts end with less. Stored coffee keeps losing it slowly. The blackest beans are not the ones carrying the most.",
+  "move": "What forms along the way can also be used up along the way.",
+  "trap": "Assuming a darker, more burnt bean must carry more of a toxin.",
+  "keywords": [
+    "acrylamide",
+    "asparagine",
+    "roast degree",
+    "coffee"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bagdonaite, Derler & Murkovic, JAFC, 2008",
+  "source_kind": "paper",
+  "reference": "Bagdonaite, Derler & Murkovic, Determination of acrylamide during roasting of coffee, Journal of Agricultural and Food Chemistry, 2008",
+  "written": "2026-09-27"
+}

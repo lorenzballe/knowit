@@ -1,0 +1,40 @@
+{
+  "id": "music-jazz-7",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.jazz",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Why did bebop players like Charlie Parker write new melodies over the chords of existing songs such as Cherokee?",
+  "options": [
+    "To show off their harmonic skill",
+    "Chords owed nothing; melodies earned royalties",
+    "Publishers had refused them licences"
+  ],
+  "correct": 1,
+  "answer": "Because a chord sequence cannot be copyrighted and a melody can. Recording Cherokee meant paying its publisher; Parker's Ko-Ko of 1945, a new line over the same changes, made Parker the composer, and saved the label a fee. Hundreds of bebop tunes sit on borrowed chords, those of I Got Rhythm above all.",
+  "move": "When something is copied, check which part the law lets through free.",
+  "trap": "Bebop's harmonic daring makes the showing-off story feel complete.",
+  "keywords": [
+    "bebop",
+    "contrafact",
+    "charlie parker",
+    "copyright",
+    "chord changes"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Owens, Bebop: The Music and Its Players",
+  "source_kind": "book",
+  "reference": "Owens, Bebop: The Music and Its Players, Oxford University Press, 1995",
+  "written": "2026-09-27"
+}

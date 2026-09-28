@@ -1,0 +1,33 @@
+{
+  "id": "economics-chokepoints-6",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.chokepoints",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does crude on a fully loaded supertanker cross Egypt when the Suez Canal is too shallow for it?",
+  "answer": "Partly by pipe. The SUMED pipeline runs about 320 km from Ain Sukhna on the Gulf of Suez to Sidi Kerir near Alexandria. A supertanker pumps part of its oil ashore, sails through the canal lighter, and takes the oil back on the Mediterranean side. Canal and pipeline sell one crossing in two pieces.",
+  "move": "When the channel is too narrow, split the load, not the journey.",
+  "keywords": [
+    "sumed pipeline",
+    "suez canal",
+    "supertankers",
+    "draught",
+    "crude oil"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "map",
+  "source": "US Energy Information Administration",
+  "source_kind": "institution",
+  "reference": "US Energy Information Administration, World Oil Transit Chokepoints, 2017",
+  "written": "2026-09-27"
+}

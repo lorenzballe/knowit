@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-memes-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.memes",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "In 2013 Baauer's Harlem Shake entered the Billboard Hot 100 at number one. What mainly put it there?",
+  "options": [
+    "Radio play after the dance craze",
+    "Download sales from a TV advert",
+    "A new rule counting YouTube plays"
+  ],
+  "correct": 2,
+  "answer": "A new rule counting YouTube plays. Billboard began adding YouTube data to the Hot 100 that very week, and plays of thousands of fan-made clips using the track's audio counted towards it. The dance videos did not merely advertise the song; they were its numbers.",
+  "move": "When a record falls, check first whether the measuring changed.",
+  "trap": "Assuming the chart counted the same things as the week before.",
+  "keywords": [
+    "harlem shake",
+    "baauer",
+    "billboard hot 100",
+    "youtube",
+    "charts"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Billboard, Hot 100 chart news, 2013",
+  "source_kind": "news_archive",
+  "reference": "Billboard, Hot 100 chart news on adding YouTube data and the Harlem Shake debut, 20 February 2013",
+  "written": "2026-09-27"
+}

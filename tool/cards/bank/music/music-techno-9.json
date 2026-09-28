@@ -1,0 +1,38 @@
+{
+  "id": "music-techno-9",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.techno",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Berlin's techno club culture is on Germany's official register of intangible cultural heritage?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In March 2024 German authorities, advised by the German Commission for UNESCO, added techno culture in Berlin to the national inventory of intangible cultural heritage, the register that holds amateur choral singing and German bread culture. The application argued that the clubs are places where an art form is made, not just nightlife.",
+  "move": "Ask who applied before reading much into an official label.",
+  "trap": "News of clubs fighting closures makes the state look like techno's opponent.",
+  "keywords": [
+    "intangible heritage",
+    "unesco",
+    "berlin clubs",
+    "techno culture"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "German Commission for UNESCO, 2024",
+  "source_kind": "institution",
+  "reference": "German Commission for UNESCO, Nationwide Inventory of Intangible Cultural Heritage: Techno Culture in Berlin, 2024",
+  "written": "2026-09-27"
+}

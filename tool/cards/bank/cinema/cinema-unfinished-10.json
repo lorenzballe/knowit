@@ -1,0 +1,32 @@
+{
+  "id": "cinema-unfinished-10",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.unfinished",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What survives of Something's Got to Give, the film Marilyn Monroe left unfinished in 1962?",
+  "answer": "Far more than legend suggests. Shooting stopped after Monroe was fired in June 1962, and she died that August, but Fox kept the footage. In 2001 about 37 minutes were assembled from it for a documentary, Marilyn: The Final Days, putting her last completed scenes, including a night-time swim, in order for the first time.",
+  "move": "Unfinished work often survives in pieces long after the plan has died.",
+  "keywords": [
+    "something's got to give",
+    "marilyn monroe",
+    "20th century fox",
+    "dailies"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marilyn: The Final Days, 2001",
+  "source_kind": "primary_document",
+  "reference": "Marilyn: The Final Days, documentary, Prometheus Entertainment for AMC, 2001",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "technology-factories-10",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "also": [
+    "psychology.bias.confirmation"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: the original Hawthorne lighting data show output rising with every change of light, even dimming?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The records were thought lost until the economists Steven Levitt and John List found and analysed them in 2011. The famous pattern, output up whatever the lights did, was not there. They found only faint effects, such as slightly higher output on days of active experimenting. The legend had been retold for decades unchecked.",
+  "move": "A result everyone cites is not the same as a result anyone checked.",
+  "trap": "It is the textbook account, repeated so often it feels checked.",
+  "keywords": [
+    "hawthorne effect",
+    "western electric",
+    "illumination experiments",
+    "levitt and list",
+    "productivity"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Levitt & List, AEJ: Applied Economics, 2011",
+  "source_kind": "paper",
+  "reference": "doi:10.1257/app.3.1.224",
+  "written": "2026-09-27"
+}

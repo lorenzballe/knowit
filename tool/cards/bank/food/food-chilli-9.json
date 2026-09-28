@@ -1,0 +1,43 @@
+{
+  "id": "food-chilli-9",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.chilli",
+  "also": [
+    "medicine.pain.chronic"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "availability",
+  "question": "A one-hour patch holding 8% capsaicin can ease nerve pain for about three months. How?",
+  "options": [
+    "It releases endorphins that dull pain",
+    "It blocks nerves like a local anaesthetic",
+    "Pain-fibre endings retreat from the skin"
+  ],
+  "correct": 2,
+  "answer": "Pain-fibre endings retreat from the skin. A massive dose overloads the TRPV1 nerve endings, and their terminals in the outer skin withdraw; biopsies show fewer fibres there for weeks. The endings regrow, so relief fades after roughly 12 weeks. The patch first burns, then leaves the skin with fewer wires to carry pain.",
+  "move": "A relief that lasts months points to a structure changed, not a signal blocked.",
+  "trap": "Endorphins, the popular explanation for the chilli-eater's high.",
+  "keywords": [
+    "capsaicin patch",
+    "neuropathic pain",
+    "nerve fibres",
+    "trpv1",
+    "defunctionalisation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Anand & Bley, British Journal of Anaesthesia, 2011",
+  "source_kind": "paper",
+  "reference": "https://www.bjanaesthesia.org/article/S0007-0912(17)33029-5/fulltext",
+  "written": "2026-09-27"
+}

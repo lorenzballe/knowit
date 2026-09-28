@@ -1,0 +1,39 @@
+{
+  "id": "science-relativity-10",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.relativity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Mercury's orbit swivels about 5,600 arcseconds a century as seen from Earth. How much of that is general relativity's doing?",
+  "options": [
+    "Nearly all of it",
+    "Under 1% of it",
+    "About half of it"
+  ],
+  "correct": 1,
+  "answer": "About 43 arcseconds, under 1%. Some 5,026 come from Earth's own slowly wobbling axis, which shifts the sky's reference grid, and about 532 from the pulls of other planets; Newton's physics explained all that. Relativity's triumph is the small residue, first flagged by Le Verrier in 1859, that nothing else could account for.",
+  "move": "Subtract what would have happened anyway before crediting the famous cause.",
+  "trap": "Nearly all of it, since the orbit is relativity's famous proof.",
+  "keywords": [
+    "mercury",
+    "perihelion precession",
+    "general relativity",
+    "le verrier"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Clemence, Reviews of Modern Physics, 1947",
+  "source_kind": "paper",
+  "reference": "Clemence, The Relativity Effect in Planetary Motions, Reviews of Modern Physics 19, 361, 1947",
+  "written": "2026-09-27"
+}

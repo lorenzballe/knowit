@@ -1,0 +1,38 @@
+{
+  "id": "nature-rainforests-9",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.rainforests",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is the Amazon close to a tipping point beyond which much of it turns to savanna?",
+  "sides": [
+    "Yes, it is close",
+    "No, that is unproven"
+  ],
+  "answer": "The forest makes much of its own rain, so clearing weakens the rain the rest depends on. Lovejoy and Nobre put the threshold at 20 to 25% deforestation, and about 17% was already gone. Boulton and colleagues found satellite signs of falling resilience across more than three-quarters of the forest since the early 2000s.",
+  "move": "Whichever side you took, it turns on whether the rain feedback works locally or basin-wide.",
+  "counterpoint": "The threshold is an argument from models, and the models disagree: many show dieback only under severe warming, and extra CO2 helps trees save water. Flores and colleagues project 10 to 47% of the forest exposed to compounding stresses by 2050, grave but patchy, region by region. A single basin-wide flip is not what the evidence shows.",
+  "keywords": [
+    "amazon tipping point",
+    "savanna",
+    "deforestation",
+    "rainfall recycling",
+    "resilience"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lovejoy & Nobre, Science Advances, 2018",
+  "source_kind": "paper",
+  "reference": "Lovejoy & Nobre, Amazon tipping point, Science Advances, 2018; Boulton, Lenton & Boers, Pronounced loss of Amazon rainforest resilience since the early 2000s, Nature Climate Change, 2022; Flores et al., Critical transitions in the Amazon forest system, Nature, 2024",
+  "written": "2026-09-27"
+}

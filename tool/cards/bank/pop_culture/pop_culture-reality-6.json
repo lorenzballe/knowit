@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-reality-6",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.reality",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a 1988 strike by Hollywood screenwriters help put Cops on American television?",
+  "answer": "It made a show without writers attractive. Networks had passed on John Langley and Malcolm Barbour's unscripted police ride-alongs for years; with the Writers Guild on strike, the young Fox network took them up as cheap programming no union writer could withhold. Cops premiered in March 1989 with no host, script or narrator.",
+  "move": "A shortage of one thing is a market for whatever needs none of it.",
+  "keywords": [
+    "cops",
+    "writers guild strike",
+    "fox",
+    "john langley"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "LAist, The Frame, on making Cops",
+  "source_kind": "news_archive",
+  "reference": "https://laist.com/shows/the-frame/cops-on-tv-inside-the-making-of-cops-the-longest-running-reality-show-in-tv-history",
+  "written": "2026-09-27"
+}

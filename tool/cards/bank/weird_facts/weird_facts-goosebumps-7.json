@@ -1,0 +1,32 @@
+{
+  "id": "weird_facts-goosebumps-7",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.goosebumps",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can human skin that looks almost hairless still bristle visibly with gooseflesh?",
+  "answer": "Because the follicles never left. Comparing primates, Kamberov and colleagues found human skin has a chimpanzee-like density of hair follicles; the hairs shrank into fine, pale down rather than disappearing. Each follicle kept its small muscle, which still pulls the hair upright and puckers the skin. Human fur was turned down, not removed.",
+  "move": "Something that looks absent may only have been made smaller.",
+  "keywords": [
+    "hair follicles",
+    "chimpanzees",
+    "body hair",
+    "human evolution"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kamberov et al., J Hum Evol, 2018",
+  "source_kind": "statistics",
+  "reference": "Kamberov et al., Comparative evidence for the independent evolution of hair and sweat gland traits in primates, Journal of Human Evolution, 2018",
+  "written": "2026-09-27"
+}

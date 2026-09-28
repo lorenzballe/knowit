@@ -1,0 +1,33 @@
+{
+  "id": "economics-1929-7",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.1929",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much of a share's price did American buyers on credit typically have to put down by late 1929?",
+  "answer": "About 40 to 50%, not the 10% of legend. Rappoport and White found that brokers raised margin requirements from late 1928 and charged steep rates on loans to speculators, as if pricing in a fall. Ten or twenty per cent had been common earlier. The lenders saw the danger before October did.",
+  "move": "Watch what lenders demand; it shows what they privately expect.",
+  "keywords": [
+    "margin buying",
+    "brokers' loans",
+    "stock market crash",
+    "speculation",
+    "wall street"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rappoport & White, American Economic Review, 1994",
+  "source_kind": "paper",
+  "reference": "Rappoport & White, Was the Crash of 1929 Expected?, American Economic Review, 1994",
+  "written": "2026-09-27"
+}

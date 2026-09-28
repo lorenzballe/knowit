@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-liar-7",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.liar",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "confirmation",
+  "question": "A theory rules liar sentences neither true nor false. Then what of the sentence 'This sentence is not true'?",
+  "options": [
+    "It comes out true, and the paradox returns",
+    "It is neither, and the paradox is solved",
+    "It comes out simply false"
+  ],
+  "correct": 0,
+  "answer": "It comes out true, and the paradox returns. If the sentence is neither true nor false, then it is not true, which is exactly what it says, so it is true. This strengthened liar, or revenge paradox, dogs every theory with truth-value gaps, Kripke's included. Each patch hands the liar a new word to use.",
+  "move": "Test a fix against the problem restated in the fix's own terms.",
+  "trap": "Checking the gap theory only against the sentence it was built for.",
+  "keywords": [
+    "strengthened liar",
+    "revenge paradox",
+    "truth-value gaps",
+    "saul kripke"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Beall, Glanzberg & Ripley, Formal Theories of Truth",
+  "source_kind": "book",
+  "reference": "Beall, Glanzberg & Ripley, Formal Theories of Truth, Oxford University Press, 2018",
+  "written": "2026-09-27"
+}

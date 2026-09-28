@@ -1,0 +1,39 @@
+{
+  "id": "music-film-scores-7",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.film_scores",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: cinemas in the United States pay no performance royalties for the music in the films they show?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 1948, in Alden-Rochelle v. ASCAP, a federal court barred the songwriters' society from collecting licence fees from American cinemas, finding its system an illegal restraint of trade. Since then producers buy the performing rights up front along with the music. Composers still collect when the film plays on television or in cinemas abroad.",
+  "move": "Check where a rule stops before assuming it applies everywhere.",
+  "trap": "Radio, television and bars all pay, so cinemas surely do.",
+  "keywords": [
+    "performance royalties",
+    "ascap",
+    "cinemas",
+    "antitrust",
+    "film music"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Alden-Rochelle v. ASCAP, 1948",
+  "source_kind": "primary_document",
+  "reference": "Alden-Rochelle, Inc. v. American Society of Composers, Authors and Publishers, 80 F. Supp. 888, S.D.N.Y., 1948",
+  "written": "2026-09-27"
+}

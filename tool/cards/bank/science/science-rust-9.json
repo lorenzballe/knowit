@@ -1,0 +1,42 @@
+{
+  "id": "science-rust-9",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.rust",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A hand warmer holds 20 g of iron powder; rusting frees about 7 kJ per gram. At 3 watts, how many hours of heat?",
+  "value": 13,
+  "unit": "hours",
+  "tolerance": 1,
+  "answer": "46,700 / 3,600 ≈ 13 hours.",
+  "move": "Slow release can make a vigorous reaction look like nothing at all.",
+  "trap": "A few minutes, picturing heat on the scale of a struck match.",
+  "hint": "Find the total energy first, then divide by the rate it is spent.",
+  "steps": [
+    "20 g x 7 kJ = 140 kJ, or 140,000 joules.",
+    "At 3 joules a second: 140,000 / 3 ≈ 46,700 seconds.",
+    "46,700 / 3,600 ≈ 13 hours."
+  ],
+  "keywords": [
+    "hand warmer",
+    "iron powder",
+    "oxidation",
+    "heat of reaction"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CRC Handbook of Chemistry and Physics, 2016",
+  "source_kind": "reference_work",
+  "reference": "Haynes (ed.), CRC Handbook of Chemistry and Physics, 97th edition, CRC Press, 2016",
+  "written": "2026-09-27"
+}

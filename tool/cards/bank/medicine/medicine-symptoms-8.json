@@ -1,0 +1,39 @@
+{
+  "id": "medicine-symptoms-8",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.symptoms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: in Britain's spring 2020 Covid wave, losing smell or taste predicted a positive test better than fever did?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Among symptom-app users who were tested, 65% of positives reported loss of smell and taste, against 22% of negatives; it was the strongest single predictor, ahead of fever and persistent cough. Britain added it to the official symptom list only in May 2020, after weeks of telling people to watch for fever and cough.",
+  "move": "The symptom everyone watches for is not always the one that sorts cases.",
+  "trap": "False, because fever and cough were the famous signs of Covid.",
+  "keywords": [
+    "covid-19",
+    "loss of smell",
+    "anosmia",
+    "symptom app",
+    "fever"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Menni et al., Nature Medicine, 2020",
+  "source_kind": "paper",
+  "reference": "Menni et al., Real-time tracking of self-reported symptoms to predict potential COVID-19, Nature Medicine, 2020",
+  "written": "2026-09-27"
+}

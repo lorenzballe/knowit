@@ -1,0 +1,40 @@
+{
+  "id": "psychology-sunk-cost-8",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.sunk_cost",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sunkCost",
+  "question": "Once spending on a project passes the budget its owner set, what happens to their appetite for further worthwhile spending?",
+  "options": [
+    "They escalate, to rescue the money",
+    "They refuse, even when it would pay",
+    "They judge only the future returns"
+  ],
+  "correct": 1,
+  "answer": "They refuse, even when it would pay. Chip Heath found people track spending against a mental budget: below it, sunk costs pull them onward; once it is exceeded, they turn down investments with good prospects. Both errors look backwards at money already gone. A house left one roof short is the same mistake, inverted.",
+  "move": "Past spending is a bad reason to stop as well as to continue.",
+  "trap": "Assuming sunk costs can only ever push people to keep going.",
+  "keywords": [
+    "de-escalation",
+    "mental budget",
+    "chip heath",
+    "mental accounting",
+    "investment"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Heath, Organizational Behavior and Human Decision Processes, 1995",
+  "source_kind": "paper",
+  "reference": "Heath, Escalation and de-escalation of commitment in response to sunk costs: the role of budgeting in mental accounting, Organizational Behavior and Human Decision Processes, 1995",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "food-emulsions-6",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.emulsions",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A mayonnaise turns so stiff and greasy that more oil will not go in. What lets it take more?",
+  "options": [
+    "A spoonful of water",
+    "Another egg yolk",
+    "A pinch of salt"
+  ],
+  "correct": 0,
+  "answer": "A spoonful of water. The limit is room, not emulsifier: every droplet needs a film of water round it, and packed tighter the films thin until droplets merge. One yolk carries emulsifier for far more oil than recipes use. Add water or lemon juice little by little and the same yolk keeps swallowing oil.",
+  "move": "Find which ingredient has run out before adding more of the famous one.",
+  "trap": "Another yolk, because the yolk is the emulsifier everyone names.",
+  "keywords": [
+    "mayonnaise",
+    "egg yolk",
+    "water phase",
+    "droplet packing",
+    "broken sauce"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "food-emulsions-4"
+  ],
+  "figure": "none",
+  "source": "This, Molecular Gastronomy, 2006",
+  "source_kind": "book",
+  "reference": "This, Molecular Gastronomy: Exploring the Science of Flavor, Columbia University Press, 2006",
+  "written": "2026-09-27"
+}

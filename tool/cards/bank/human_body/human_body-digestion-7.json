@@ -1,0 +1,42 @@
+{
+  "id": "human_body-digestion-7",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.digestion",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "The body's 3 grams of bile acid cycle between gut and liver 6 times a day, 97% reabsorbed each pass. Grams lost daily?",
+  "value": 0.54,
+  "unit": "grams",
+  "tolerance": 0.05,
+  "answer": "18 x 0.03 = 0.54 grams a day.",
+  "move": "A small leak on a busy loop is charged again on every lap.",
+  "trap": "Taking 3% of the 3-gram pool and forgetting the six passes.",
+  "hint": "Count how many grams pass through the gut in a day, not how many the body holds.",
+  "steps": [
+    "Grams passing through the gut each day: 3 x 6 = 18.",
+    "Share lost on each pass: 100% - 97% = 3%.",
+    "18 x 0.03 = 0.54 grams a day."
+  ],
+  "keywords": [
+    "bile acids",
+    "enterohepatic circulation",
+    "liver",
+    "reabsorption"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dawson & Karpen, Journal of Lipid Research, 2015",
+  "source_kind": "paper",
+  "reference": "Dawson & Karpen, Intestinal transport and metabolism of bile acids, Journal of Lipid Research, 2015",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "space-event-horizons-7",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.event_horizons",
+  "also": [
+    "science.physics.relativity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "An astronaut falls into a large black hole from far away. Looking straight up as she crosses the horizon, what does she see?",
+  "options": [
+    "The sky above, redder and dimmer",
+    "The universe's whole future flashing past",
+    "Nothing, as all light is cut off"
+  ],
+  "correct": 0,
+  "answer": "The sky above, redder and dimmer. Outside clocks do not race for her: she is falling away from the light that chases her in. For a fall that starts at rest far away, light from straight overhead reaches her at half its original frequency. The stars behind her redden; no future flashes by.",
+  "move": "What one side sees of the other need not mirror what the other sees.",
+  "trap": "Reasoning that if outsiders see her frozen, she must see them race.",
+  "keywords": [
+    "event horizon",
+    "infalling observer",
+    "redshift",
+    "time dilation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hamilton & Lisle, American Journal of Physics, 2008",
+  "source_kind": "paper",
+  "reference": "Hamilton & Lisle, The river model of black holes, American Journal of Physics, 2008",
+  "written": "2026-09-27"
+}

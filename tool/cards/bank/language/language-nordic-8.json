@@ -1,0 +1,39 @@
+{
+  "id": "language-nordic-8",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.nordic",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "coincidence",
+  "question": "True or false: löyly, the Finnish word for sauna steam, shares an ancestor with the Hungarian word for soul?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Löyly and Hungarian lélek, soul, descend from a reconstructed Uralic word for breath or spirit, with relatives in Mansi and Khanty, spoken in western Siberia. Finnish kept the breath rising off the stones; Hungarian kept the soul. Linguists accept the link because the same sound changes recur across many other shared words.",
+  "move": "A resemblance counts as evidence only when it repeats in a pattern.",
+  "trap": "Dismissing a match between distant languages as chance resemblance.",
+  "keywords": [
+    "löyly",
+    "sauna",
+    "uralic languages",
+    "hungarian",
+    "etymology"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Suomen sanojen alkuperä, vol. 2, 1995",
+  "source_kind": "reference_work",
+  "reference": "Itkonen & Kulonen (eds.), Suomen sanojen alkuperä: Etymologinen sanakirja, vol. 2, Suomalaisen Kirjallisuuden Seura and Kotimaisten kielten tutkimuskeskus, Helsinki, 1995",
+  "written": "2026-09-27"
+}

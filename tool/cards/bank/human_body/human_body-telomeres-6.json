@@ -1,0 +1,40 @@
+{
+  "id": "human_body-telomeres-6",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.telomeres",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Two newborns' telomeres differ by 3,000 base pairs, a normal gap. Adults lose about 30 a year. How many years of loss is the gap?",
+  "value": 100,
+  "unit": "years",
+  "answer": "3,000 / 30 = 100 years.",
+  "move": "Where someone starts can matter more than how fast they travel.",
+  "trap": "Assuming decades of lifestyle must outweigh a difference present at birth.",
+  "hint": "Divide the gap between the babies by what an adult loses in a year.",
+  "steps": [
+    "The gap at birth is 3,000 base pairs; an adult loses about 30 a year.",
+    "3,000 / 30 = 100 years."
+  ],
+  "keywords": [
+    "telomere length",
+    "newborns",
+    "telomere attrition",
+    "base pairs"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Benetos et al., Aging Cell, 2013",
+  "source_kind": "paper",
+  "reference": "Benetos, Kark, Susser et al., Tracking and fixed ranking of leukocyte telomere length across the adult life course, Aging Cell, 2013",
+  "written": "2026-09-27"
+}

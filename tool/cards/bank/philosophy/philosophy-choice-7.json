@@ -1,0 +1,42 @@
+{
+  "id": "philosophy-choice-7",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.choice",
+  "also": [
+    "human_body.the_brain.neurons"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "baseRate",
+  "question": "Brain scans in a 2008 study foretold which of two buttons people would freely press, seconds early. How often were they right?",
+  "options": [
+    "About nine times in ten",
+    "About six times in ten",
+    "About three times in four"
+  ],
+  "correct": 1,
+  "answer": "About six times in ten. Chun Siong Soon and John-Dylan Haynes decoded frontal and parietal activity up to 7 seconds before people felt they had decided. But left or right is a two-way choice: guessing blind scores 50%. The scan beat a tossed coin by roughly one call in ten.",
+  "move": "Before admiring a forecaster, ask how often a coin would have been right.",
+  "trap": "Hearing predicted seconds ahead and picturing a near-certain prediction.",
+  "keywords": [
+    "fmri",
+    "john-dylan haynes",
+    "decision prediction",
+    "chance level"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Soon et al., Nature Neuroscience, 2008",
+  "source_kind": "paper",
+  "reference": "https://pubmed.ncbi.nlm.nih.gov/18408715/",
+  "written": "2026-09-27"
+}

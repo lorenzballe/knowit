@@ -1,0 +1,33 @@
+{
+  "id": "psychology-halo-effect-7",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.halo_effect",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In real small-claims courts, did a baby-faced defendant always do better than a mature-faced one?",
+  "answer": "No: it depended on the charge. Leslie Zebrowitz and Susan McDonald found baby-faced defendants more likely to win cases alleging intentional harm, and less likely to win cases alleging negligence. A face that looks innocent also looks naive and careless. The same round cheeks helped against one accusation and hurt against the other.",
+  "move": "A good impression is specific; ask which quality it is vouching for.",
+  "keywords": [
+    "baby face",
+    "small claims court",
+    "leslie zebrowitz",
+    "negligence",
+    "face perception"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zebrowitz & McDonald, Law and Human Behavior, 1991",
+  "source_kind": "paper",
+  "reference": "Zebrowitz & McDonald, The impact of litigants' baby-facedness and attractiveness on adjudications in small claims courts, Law and Human Behavior, 1991",
+  "written": "2026-09-27"
+}

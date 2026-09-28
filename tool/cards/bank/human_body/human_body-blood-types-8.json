@@ -1,0 +1,39 @@
+{
+  "id": "human_body-blood-types-8",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.blood_types",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "About 15% of Europeans are Rh-negative. Roughly what share of Han Chinese people are?",
+  "options": [
+    "About 15%",
+    "About 5%",
+    "Under 1%"
+  ],
+  "correct": 2,
+  "answer": "Under 1%, around 0.3 to 0.5%. The gene loss behind Rh-negative blood is common in Europe, commonest among Basques, and rare in East Asia. Chinese blood services treat Rh-negative donors as a rare group, nicknamed panda blood for its scarcity.",
+  "move": "A figure learned in one population is only a guess in another.",
+  "trap": "Carrying the familiar European figure over to another population.",
+  "keywords": [
+    "rh-negative",
+    "china",
+    "blood donors",
+    "population genetics"
+  ],
+  "era": "timeless",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Daniels, Human Blood Groups, 2013",
+  "source_kind": "book",
+  "reference": "Daniels, Human Blood Groups, 3rd edition, Wiley-Blackwell, 2013",
+  "written": "2026-09-27"
+}

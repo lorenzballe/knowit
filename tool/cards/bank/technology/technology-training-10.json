@@ -1,0 +1,32 @@
+{
+  "id": "technology-training-10",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.training",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do AI labs delete near-identical passages from the text they train models on?",
+  "answer": "Because repeated text gets memorised and recited. Lee and colleagues found one 61-word English sentence repeated over 60,000 times in C4, a widely used web dataset. Models trained after duplicates were removed emitted memorised text about ten times less often. The web's boilerplate is what a model learns by heart.",
+  "move": "Whatever is repeated most is learned by rote, not understood.",
+  "keywords": [
+    "deduplication",
+    "memorisation",
+    "training data",
+    "c4 dataset"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lee et al., ACL, 2022",
+  "source_kind": "paper",
+  "reference": "Lee et al., Deduplicating Training Data Makes Language Models Better, ACL, 2022",
+  "written": "2026-09-27"
+}

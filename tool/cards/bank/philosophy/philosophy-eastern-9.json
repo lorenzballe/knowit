@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-eastern-9",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.eastern",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "India's ancient materialists denied rebirth and any world beyond this one. Where does most of what is known about them come from?",
+  "options": [
+    "Their founding sutra, preserved entire",
+    "Greek envoys' reports of Indian sages",
+    "Rival schools quoting them to refute them"
+  ],
+  "correct": 2,
+  "answer": "Rival schools quoting them to refute them. The Carvaka or Lokayata texts, including a sutra ascribed to Brihaspati, are lost; scholars rebuild them from fragments in Buddhist, Jain and Hindu works written to defeat them. One sceptical treatise from the eighth century AD survives. The school stands trial with only the prosecution's papers.",
+  "move": "When only opponents kept the record, read it as a case for the prosecution.",
+  "trap": "Assuming a school's own founding text survived, as scriptures of rival schools did.",
+  "keywords": [
+    "carvaka",
+    "lokayata",
+    "indian materialism",
+    "lost texts"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bhattacharya, Studies on the Carvaka/Lokayata, 2011",
+  "source_kind": "book",
+  "reference": "Bhattacharya, Studies on the Carvaka/Lokayata, Anthem Press, 2011",
+  "written": "2026-09-27"
+}

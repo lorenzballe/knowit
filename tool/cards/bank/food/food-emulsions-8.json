@@ -1,0 +1,39 @@
+{
+  "id": "food-emulsions-8",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.emulsions",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: brominated vegetable oil was put in citrus sodas to stop their flavour oil floating up?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Citrus oil is lighter than sugary water, so its droplets rise. Bromine atoms are heavy; bonded to vegetable oil, they made a weighting agent that brought the droplets up to the drink's density, at up to 15 parts per million. The US revoked its approval in 2024 after thyroid effects in animal studies.",
+  "move": "Ask what job an odd ingredient does before guessing why it is there.",
+  "trap": "False, as a bromine compound sounds like a preservative or flame retardant.",
+  "keywords": [
+    "brominated vegetable oil",
+    "weighting agent",
+    "citrus soda",
+    "density",
+    "fda"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US FDA, revocation of BVO authorisation, 2024",
+  "source_kind": "institution",
+  "reference": "https://www.fda.gov/food/food-additives-petitions/brominated-vegetable-oil-bvo",
+  "written": "2026-09-27"
+}

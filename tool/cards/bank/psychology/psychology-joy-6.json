@@ -1,0 +1,33 @@
+{
+  "id": "psychology-joy-6",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.joy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What became of the claim that flourishing needs positive emotions to outnumber negative ones by 2.9013 to 1?",
+  "answer": "It was withdrawn. The ratio, published in American Psychologist in 2005, came from equations for fluid turbulence applied to business teams without justification. In 2013 Nicholas Brown, a part-time graduate student, with Alan Sokal and Harris Friedman, showed the maths was baseless, and the journal withdrew the model. The four decimal places were the warning.",
+  "move": "Distrust precision that the measurement beneath it could never have delivered.",
+  "keywords": [
+    "positivity ratio",
+    "flourishing",
+    "fluid dynamics",
+    "retraction",
+    "positive psychology"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brown, Sokal & Friedman, American Psychologist, 2013",
+  "source_kind": "paper",
+  "reference": "Brown, Sokal & Friedman, The complex dynamics of wishful thinking: the critical positivity ratio, American Psychologist, 2013",
+  "written": "2026-09-27"
+}

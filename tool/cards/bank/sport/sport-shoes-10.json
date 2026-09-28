@@ -1,0 +1,40 @@
+{
+  "id": "sport-shoes-10",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.shoes",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Each 100 g added to a running shoe raises energy cost by about 1%. How many extra grams per shoe would cancel a 4% saving?",
+  "value": 400,
+  "unit": "grams per shoe",
+  "answer": "4 × 100 g = 400 g per shoe.",
+  "move": "Put a percentage into a unit you can hold in your hand.",
+  "hint": "Count how many of the 1% penalties fit inside the saving.",
+  "steps": [
+    "Each 100 g on each shoe costs about 1% more energy.",
+    "A 4% saving is four of those 1% steps.",
+    "4 × 100 g = 400 g per shoe."
+  ],
+  "keywords": [
+    "shoe mass",
+    "energy cost",
+    "running economy",
+    "super shoes"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Franz, Wierzbinski & Kram, 2012",
+  "source_kind": "paper",
+  "reference": "https://pubmed.ncbi.nlm.nih.gov/22367745/",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "cinema-flops-6",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.flops",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Harry Potter and the Order of the Phoenix, which grossed about $940 million, officially lost money?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True, on paper. A 2010 profit statement for the 2007 film showed it about $167 million in the red. Distribution fees, advertising and interest, much of it paid to Warner Bros. and its own affiliates, were deducted before any net profit. Anyone paid a share of net profits got nothing from a near-billion-dollar hit.",
+  "move": "Ask who writes the costs before trusting the bottom line.",
+  "trap": "Reading a near-billion-dollar gross as proof the books show a profit.",
+  "keywords": [
+    "hollywood accounting",
+    "net profits",
+    "harry potter",
+    "warner bros"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Deadline, Warner Bros profit statement, 2010",
+  "source_kind": "news_archive",
+  "reference": "https://deadline.com/2010/07/studio-shame-even-harry-potter-pic-loses-money-because-of-warner-bros-phony-baloney-accounting-51886/",
+  "written": "2026-09-27"
+}

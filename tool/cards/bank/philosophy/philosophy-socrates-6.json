@@ -1,0 +1,32 @@
+{
+  "id": "philosophy-socrates-6",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.socrates",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "According to Xenophon, why did Socrates make so little effort to win his acquittal?",
+  "answer": "He thought it a good time to die. In Xenophon's Apology, Socrates tells his friend Hermogenes that death now would spare him old age: failing sight and hearing, slower learning, faster forgetting. Plato's Socrates argues for his life as a public duty; Xenophon's treats the verdict almost as a mercy. Two pupils, two different deaths.",
+  "move": "When two witnesses explain the same act, ask what each needed it to mean.",
+  "keywords": [
+    "xenophon",
+    "trial of socrates",
+    "old age",
+    "socratic problem"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Xenophon, Apology of Socrates 1-9",
+  "source_kind": "primary_document",
+  "reference": "Xenophon, Conversations of Socrates, trans. Tredennick & Waterfield, Penguin, 1990",
+  "written": "2026-09-27"
+}

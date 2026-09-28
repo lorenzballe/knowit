@@ -1,0 +1,38 @@
+{
+  "id": "cinema-editing-8",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.editing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Hollywood features edited on Avid computers in the 1990s no longer had their camera negative cut by hand?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The computer edited video copies of the rushes, then printed a cut list of key numbers, codes exposed along the film's edge at the factory. A negative cutter found those frames and spliced the original negative, in gloves, with cement. Most features were finished this way until digital grading took over in the 2000s.",
+  "move": "A new tool at one stage can leave the old craft untouched at the next.",
+  "trap": "Assuming the computer's cut became the film, as it did later.",
+  "keywords": [
+    "negative cutting",
+    "avid",
+    "key numbers",
+    "nonlinear editing"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ohanian, Digital Nonlinear Editing, 1998",
+  "source_kind": "book",
+  "reference": "Ohanian, Digital Nonlinear Editing: Editing Film and Video on the Desktop, 2nd edn, Focal Press, 1998",
+  "written": "2026-09-27"
+}

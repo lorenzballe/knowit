@@ -1,0 +1,39 @@
+{
+  "id": "space-dark-matter-7",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.dark_matter",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Cosmic dark matter outweighs ordinary matter about five to one. In the dwarf galaxy Segue 1, by how much does it outweigh the stars?",
+  "options": [
+    "About five to one",
+    "About a hundred to one",
+    "More than a thousand to one"
+  ],
+  "correct": 2,
+  "answer": "More than a thousand to one. Simon and colleagues measured the motions of Segue 1's faint stars and found roughly 3,400 Suns' worth of mass for every Sun's worth of light, where stars alone give about 2. Tiny galaxies lose their gas easily and make few stars, leaving their dark matter almost bare.",
+  "move": "An average ratio says little about the extremes it averages over.",
+  "trap": "Letting the cosmic five-to-one set the scale for every galaxy.",
+  "keywords": [
+    "segue 1",
+    "dwarf galaxies",
+    "mass-to-light ratio",
+    "dark matter"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Simon et al., Astrophysical Journal, 2011",
+  "source_kind": "paper",
+  "reference": "Simon et al., A Complete Spectroscopic Survey of the Milky Way Satellite Segue 1: The Darkest Galaxy, The Astrophysical Journal 733, 46, 2011",
+  "written": "2026-09-27"
+}

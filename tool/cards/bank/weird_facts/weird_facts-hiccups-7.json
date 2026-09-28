@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-hiccups-7",
+  "topic": "weird_facts",
+  "genre": "weird_facts.body_oddities",
+  "strand": "weird_facts.body_oddities.hiccups",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Watching a developing foetus by ultrasound, which of these movements appears first?",
+  "options": [
+    "Breathing movements",
+    "Hiccups",
+    "Sucking and swallowing"
+  ],
+  "correct": 1,
+  "answer": "Hiccups. Filming early pregnancies by ultrasound, de Vries, Visser and Prechtl first saw hiccups at about 9 weeks, breathing movements at about 10, and sucking and swallowing weeks later. So the hiccup is no glitch of mature breathing: its circuit runs before breathing has started. The first rhythm on the screen is the jerk.",
+  "move": "An apparent malfunction may be older than the system it disrupts.",
+  "trap": "Choosing breathing, since a hiccup looks like a breath gone wrong.",
+  "keywords": [
+    "foetal hiccups",
+    "ultrasound",
+    "foetal movements",
+    "pregnancy"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "de Vries et al., Early Hum Dev, 1982",
+  "source_kind": "statistics",
+  "reference": "de Vries, Visser and Prechtl, The emergence of fetal behaviour. I. Qualitative aspects, Early Human Development, 1982",
+  "written": "2026-09-27"
+}

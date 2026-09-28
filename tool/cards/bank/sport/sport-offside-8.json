@@ -1,0 +1,39 @@
+{
+  "id": "sport-offside-8",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.offside",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "A forward pass reaches an attacker while the goalkeeper is stranded upfield behind him and one defender guards the line. Offside?",
+  "options": [
+    "Onside: a defender is still goal-side",
+    "Offside: one opponent is not enough",
+    "Onside: the keeper is out of play"
+  ],
+  "correct": 1,
+  "answer": "Offside. The Law counts opponents, not a defender plus a goalkeeper: at the moment of the pass an attacker needs at least two of them level with him or nearer their goal line. With the keeper caught upfield, a lone defender on the line leaves him offside, however empty the goal looks.",
+  "move": "Check what a rule actually counts, not the usual picture of it.",
+  "trap": "Picturing the goalkeeper as always the last man back.",
+  "keywords": [
+    "offside",
+    "goalkeeper",
+    "second-last opponent",
+    "law 11"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IFAB, Laws of the Game 2024/25",
+  "source_kind": "primary_document",
+  "reference": "https://www.tff.org/Resources/TFF/Documents/MHK/2024-2025/laws-of-the-game.pdf",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,45 @@
+{
+  "id": "space-launch-windows-10",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.launch_windows",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "A minimum-energy path to Neptune, 30 times Earth's distance from the Sun, is half an orbit. Roughly how many years does it take?",
+  "value": 31,
+  "unit": "years",
+  "withinFactor": 3,
+  "answer": "The trip is half that orbit: 61 ÷ 2 ≈ 31 years.",
+  "move": "When the direct route takes a lifetime, find something to borrow speed from.",
+  "trap": "Scaling up from the eight-month Mars trip by distance alone.",
+  "hint": "Kepler: period in years is the orbit's average distance, in Earth–Sun units, to the power 1.5.",
+  "steps": [
+    "The path's orbit spans 1 to 30 Earth–Sun distances: average (1 + 30) ÷ 2 ≈ 15.5.",
+    "Kepler: period ≈ 15.5 to the power 1.5 ≈ 15.5 × 4 ≈ 61 years.",
+    "The trip is half that orbit: 61 ÷ 2 ≈ 31 years."
+  ],
+  "keywords": [
+    "neptune",
+    "hohmann transfer",
+    "kepler's third law",
+    "gravity assist"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Murray & Dermott, Solar System Dynamics, 1999",
+  "source_kind": "book",
+  "reference": "Murray & Dermott, Solar System Dynamics, Cambridge University Press, 1999",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "music-guitar-8",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.guitar",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: swapping a short lead for a long one can audibly dull a passive electric guitar?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A passive pickup is a coil with high inductance, and a cable adds capacitance, roughly 100 picofarads a metre. Together they make a filter with a bright peak; more capacitance pulls it lower, by well over a thousand hertz from a short lead to a long one. Tone lives partly in the lead.",
+  "move": "Check whether the connection is part of the circuit before calling it neutral.",
+  "trap": "A cable is just a wire, so its length cannot change the sound.",
+  "keywords": [
+    "guitar cable",
+    "capacitance",
+    "pickups",
+    "tone",
+    "resonance"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zollner, Physik der Elektrogitarre, 2014",
+  "source_kind": "book",
+  "reference": "Zollner, Physik der Elektrogitarre, Hochschule Regensburg, 2014",
+  "written": "2026-09-27"
+}

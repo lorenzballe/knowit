@@ -1,0 +1,40 @@
+{
+  "id": "psychology-joy-7",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.joy",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "In 2010, emotional well-being seemed to stop rising above about $75,000 a year. What did a 2023 joint reanalysis find?",
+  "options": [
+    "It holds only for an unhappy minority",
+    "The plateau holds for nearly everyone",
+    "Well-being falls again at high incomes"
+  ],
+  "correct": 0,
+  "answer": "It holds only for an unhappy minority. Kahneman and Killingsworth, whose studies disagreed, reanalysed jointly with Barbara Mellers as arbiter. For most people well-being kept rising with income; only in the least happy fifth or so did it level off, near $100,000. The 2010 measures had mostly registered unhappiness, and saw where misery stops shrinking.",
+  "move": "An average curve can describe the unhappiest few and almost nobody else.",
+  "trap": "Reading a famous threshold as a ceiling that applies to everyone.",
+  "keywords": [
+    "income",
+    "emotional well-being",
+    "daniel kahneman",
+    "adversarial collaboration",
+    "plateau"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Killingsworth, Kahneman & Mellers, PNAS, 2023",
+  "source_kind": "paper",
+  "reference": "https://pubmed.ncbi.nlm.nih.gov/36857342/",
+  "written": "2026-09-27"
+}

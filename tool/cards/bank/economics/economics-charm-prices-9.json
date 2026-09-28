@@ -1,0 +1,42 @@
+{
+  "id": "economics-charm-prices-9",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.charm_prices",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "In 2002 a German café converted its DM 4.50 cake at 1.95583 marks to the euro, then priced it at €2.49. Percentage rise?",
+  "value": 8.3,
+  "unit": "percent",
+  "tolerance": 0.3,
+  "answer": "0.19 / 2.30 = about 8.3%.",
+  "move": "Convert both prices into one currency before judging a change.",
+  "trap": "Seeing 2.49 below 4.50 and feeling the price has fallen.",
+  "hint": "First turn the mark price into euros; 1.95583 is just under 2.",
+  "steps": [
+    "4.50 / 1.95583 = about €2.30, the exact euro price.",
+    "2.49 - 2.30 = €0.19 added by the new charm price.",
+    "0.19 / 2.30 = about 8.3%."
+  ],
+  "keywords": [
+    "euro changeover",
+    "deutschmark",
+    "price points",
+    "café prices"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Council Regulation (EC) No 2866/98",
+  "source_kind": "primary_document",
+  "reference": "Council Regulation (EC) No 2866/98 of 31 December 1998 on the conversion rates between the euro and the currencies of the Member States adopting the euro, 1998",
+  "written": "2026-09-27"
+}

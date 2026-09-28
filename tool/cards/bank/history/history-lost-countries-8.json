@@ -1,0 +1,38 @@
+{
+  "id": "history-lost-countries-8",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.lost_countries",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Egypt went on calling itself the United Arab Republic for a decade after Syria walked out in 1961?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Syria left the union after an army coup in September 1961, but Nasser kept the name and the flag as a standing offer of wider Arab unity. Egypt became the Arab Republic of Egypt only in September 1971, a year after his death. For ten years a union of one sat on the map.",
+  "move": "Ask what a name still claims before assuming it describes anything.",
+  "trap": "Assuming a state's name changes as soon as its union ends.",
+  "keywords": [
+    "united arab republic",
+    "egypt",
+    "syria",
+    "nasser"
+  ],
+  "era": "twentieth",
+  "region": "middle_east",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Podeh, The Decline of Arab Unity, 1999",
+  "source_kind": "book",
+  "reference": "Podeh, The Decline of Arab Unity: The Rise and Fall of the United Arab Republic, Sussex Academic Press, 1999",
+  "written": "2026-09-27"
+}

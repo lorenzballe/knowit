@@ -1,0 +1,33 @@
+{
+  "id": "psychology-confirmation-6",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.confirmation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In the classic 1979 study where mixed evidence drove death-penalty views apart, how was the widening measured?",
+  "answer": "By asking people how far their views had shifted. Supporters and opponents read the same two studies, rated the one agreeing with them as better, and reported moving further apart. Later studies that measured attitudes directly, before and after, mostly found no widening. The biased rating held up; the polarisation lived largely in the self-report.",
+  "move": "When people say they changed, check whether anyone measured the before.",
+  "keywords": [
+    "attitude polarisation",
+    "death penalty",
+    "biased assimilation",
+    "self-report",
+    "lord ross lepper"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Miller et al., J Personality Social Psychology, 1993",
+  "source_kind": "paper",
+  "reference": "Miller, McHoskey, Bane & Dowd, The attitude polarization phenomenon: role of response measure, attitude extremity, and behavioral consequences of reported attitude change, Journal of Personality and Social Psychology, 1993",
+  "written": "2026-09-27"
+}

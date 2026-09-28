@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-fan-clubs-6",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.fan_clubs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did members of the Beatles' official fan club receive every December from 1963 to 1969 that no shop sold?",
+  "answer": "A Christmas record. Each year the band recorded a few minutes of jokes, carols and greetings for members only, pressed on a thin, bendable flexi-disc and posted out. The last ones were assembled from pieces each Beatle recorded separately, as the four drifted apart. The club was a mailing list with its own private release.",
+  "move": "A thing nobody else can buy turns customers into members.",
+  "keywords": [
+    "beatles",
+    "fan club",
+    "christmas records",
+    "flexi-disc"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lewisohn, The Complete Beatles Chronicle, 1992",
+  "source_kind": "book",
+  "reference": "Mark Lewisohn, The Complete Beatles Chronicle, Pyramid Books, 1992",
+  "written": "2026-09-27"
+}

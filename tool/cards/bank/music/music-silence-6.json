@@ -1,0 +1,33 @@
+{
+  "id": "music-silence-6",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.silence",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did the performance of Cage's organ piece at Halberstadt, planned to last 639 years, begin in 2001?",
+  "answer": "With a silence of 17 months. ORGAN²/ASLSP, As Slow As Possible, opens with a rest; stretched to end in 2640, that rest lasted from 5 September 2001 to 5 February 2003, the bellows running and no pipe sounding. Now each chord change, months or years apart, draws a crowd.",
+  "move": "Stretch any plan far enough and its pauses become events.",
+  "keywords": [
+    "john cage",
+    "halberstadt",
+    "organ",
+    "as slow as possible",
+    "long performance"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "John Cage Organ Foundation Halberstadt, 2001",
+  "source_kind": "institution",
+  "reference": "John-Cage-Orgel-Stiftung Halberstadt, ORGAN²/ASLSP performance schedule, St Burchardi, 2001",
+  "written": "2026-09-27"
+}

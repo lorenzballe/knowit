@@ -1,0 +1,40 @@
+{
+  "id": "food-saffron-10",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.saffron",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "What has traditionally dyed the brownish-orange robes of Thai forest monks?",
+  "options": [
+    "Jackfruit heartwood",
+    "Saffron threads",
+    "Annatto seeds"
+  ],
+  "correct": 0,
+  "answer": "Jackfruit heartwood. Monks chip the wood, boil it into a dye and soak the cloth again and again, so each robe's shade drifts with the tree. Saffron, dearer per gram than silver, was never a dye for men living on alms. The robes are called saffron for their colour, as oranges name a shade.",
+  "move": "A colour's name is a comparison, not a list of ingredients.",
+  "trap": "Saffron threads, because the robes are known by that name.",
+  "keywords": [
+    "monastic robes",
+    "jackfruit",
+    "dye",
+    "theravada",
+    "thailand"
+  ],
+  "era": "timeless",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Abhayagiri Monastery, Making Robes",
+  "source_kind": "institution",
+  "reference": "https://www.abhayagiri.org/tales/2-two-making-robes",
+  "written": "2026-09-27"
+}

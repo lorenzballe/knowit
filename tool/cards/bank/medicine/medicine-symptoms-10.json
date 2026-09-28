@@ -1,0 +1,33 @@
+{
+  "id": "medicine-symptoms-10",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.symptoms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In a Belgian study of 3,890 children seen by family doctors, which clue to serious infection stood out as unusually powerful?",
+  "answer": "The doctor's gut feeling that something was wrong, even when the clinical assessment said the illness was not severe. That feeling was about 25 times as common in seriously ill children as in the rest, though the margin of error was wide. It was often set off by parents saying this illness felt different.",
+  "move": "An unease you cannot yet explain is still evidence worth writing down.",
+  "keywords": [
+    "gut feeling",
+    "serious infection",
+    "children",
+    "general practice",
+    "parental concern"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Van den Bruel et al., BMJ, 2012",
+  "source_kind": "paper",
+  "reference": "doi:10.1136/bmj.e6144",
+  "written": "2026-09-27"
+}

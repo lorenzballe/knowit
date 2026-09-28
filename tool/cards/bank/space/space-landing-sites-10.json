@@ -1,0 +1,33 @@
+{
+  "id": "space-landing-sites-10",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.landing_sites",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Is there anywhere near the Moon's south pole where the Sun never sets?",
+  "answer": "No. Nineteenth-century astronomers imagined peaks of eternal light, but laser height maps show that even the best spots, on ridges near Shackleton crater, go dark each year. The best are lit for over 80% of the time, yet still face spells of darkness lasting a day or more. Planners weigh such rims hour by hour.",
+  "move": "Almost always is a different engineering problem from always.",
+  "keywords": [
+    "peaks of eternal light",
+    "shackleton crater",
+    "lunar south pole",
+    "illumination",
+    "lola"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mazarico et al., Icarus, 2011",
+  "source_kind": "paper",
+  "reference": "Mazarico, Neumann, Smith, Zuber & Torrence, Illumination conditions of the lunar polar regions using LOLA topography, Icarus, 2011",
+  "written": "2026-09-27"
+}

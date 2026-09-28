@@ -1,0 +1,39 @@
+{
+  "id": "psychology-streaks-7",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.streaks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Students were paid to visit the gym eight times in one month. Once payment ended, what did former non-regulars do?",
+  "options": [
+    "Returned to their old rate",
+    "Kept going about twice as often",
+    "Went less than before the pay"
+  ],
+  "correct": 1,
+  "answer": "Kept going about twice as often. Charness and Gneezy found that paying for a month of visits raised attendance for weeks after the money stopped, almost entirely among students who had not been regulars. Those already going had no habit to build. The paid month bought a run that kept itself going.",
+  "move": "Pay for the first stretch of a habit, not for every step.",
+  "trap": "Returned to their old rate, because the reason for going had disappeared.",
+  "keywords": [
+    "gym attendance",
+    "financial incentives",
+    "habit formation",
+    "field experiment"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Charness & Gneezy, Econometrica, 2009",
+  "source_kind": "paper",
+  "reference": "Charness & Gneezy, Incentives to exercise, Econometrica, 2009",
+  "written": "2026-09-27"
+}

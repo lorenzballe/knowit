@@ -1,0 +1,40 @@
+{
+  "id": "economics-subscriptions-8",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.subscriptions",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "A newspaper offered 2.1 million readers a trial that renewed automatically or one that simply ended. Which left more subscribers two years later?",
+  "options": [
+    "The trial that renewed automatically",
+    "The trial that simply ended",
+    "About the same number"
+  ],
+  "correct": 1,
+  "answer": "The trial that simply ended. Miller, Sahni and Strulov-Shlain found far more of those on auto-renewal kept paying straight after the trial than on the other offer. But readers wary of forgetting shunned it: sign-ups fell 24%, and two years on the paper had about 10% fewer subscribers. Readers saw the trap coming.",
+  "move": "Judge a tactic by everyone it reached, not only by those who said yes.",
+  "trap": "Judging auto-renewal only by the readers who accepted it.",
+  "keywords": [
+    "auto-renewal",
+    "free trials",
+    "newspapers",
+    "field experiment",
+    "inertia"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Miller, Sahni & Strulov-Shlain, field experiment, 2022",
+  "source_kind": "paper",
+  "reference": "Miller, Sahni & Strulov-Shlain, Sophisticated Consumers with Inertia: Long-Term Implications from a Large-Scale Field Experiment, Stanford GSB Working Paper, 2022",
+  "written": "2026-09-27"
+}

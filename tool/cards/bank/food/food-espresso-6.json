@@ -1,0 +1,36 @@
+{
+  "id": "food-espresso-6",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.espresso",
+  "also": [
+    "history.everyday_life.food"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the machine patented in Turin in 1884, often called the first espresso machine, make?",
+  "answer": "Coffee in bulk. Angelo Moriondo's machine used steam and hot water under pressure to brew large batches for his hotel and bar, not single cups. The cup made quickly to order came with Luigi Bezzera's patent of 1901 and the machines Desiderio Pavoni built from it, shown at the 1906 Milan fair as caffè espresso.",
+  "move": "Credit an invention to whoever made it do the job it is known for.",
+  "keywords": [
+    "angelo moriondo",
+    "luigi bezzera",
+    "desiderio pavoni",
+    "espresso machine",
+    "turin"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Morris, Coffee: A Global History, 2019",
+  "source_kind": "book",
+  "reference": "Morris, Coffee: A Global History, Reaktion Books, 2019",
+  "written": "2026-09-27"
+}

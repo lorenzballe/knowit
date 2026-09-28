@@ -1,0 +1,40 @@
+{
+  "id": "economics-hyperinflation-9",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.hyperinflation",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "As a government prints money ever faster, what happens to the real resources it gains from printing?",
+  "options": [
+    "They rise, peak, then fall",
+    "They keep rising with the printing",
+    "They stay about constant"
+  ],
+  "correct": 0,
+  "answer": "They rise, peak, then fall. Printing taxes money holders: the take is inflation times the real cash people hold. Faster inflation makes people hold less, so past some rate the base shrinks faster than the rate rises. Cagan found governments in hyperinflation printing well beyond that peak, getting less for more.",
+  "move": "A tax that shrinks what it taxes has a ceiling on what it raises.",
+  "trap": "Assuming more printing always buys the state more.",
+  "keywords": [
+    "seigniorage",
+    "inflation tax",
+    "money demand",
+    "government revenue",
+    "laffer curve"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bailey, Journal of Political Economy, 1956",
+  "source_kind": "paper",
+  "reference": "Bailey, The Welfare Cost of Inflationary Finance, Journal of Political Economy, 1956",
+  "written": "2026-09-27"
+}

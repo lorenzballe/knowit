@@ -1,0 +1,43 @@
+{
+  "id": "language-chinese-characters-7",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.chinese_characters",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Modern Chinese uses about 3,500 common characters; Mandarin has about 400 syllables, ignoring tone. How many characters per syllable?",
+  "value": 9,
+  "unit": "characters per syllable",
+  "withinFactor": 3,
+  "answer": "About 9 characters share each toneless syllable.",
+  "move": "When many things share few labels, the label alone cannot tell them apart.",
+  "trap": "Picturing one sound per character, as letters pair with sounds.",
+  "hint": "Divide the written inventory by the spoken one.",
+  "steps": [
+    "Common characters in modern Chinese: about 3,500.",
+    "Mandarin syllables, ignoring tone: about 400.",
+    "3,500 / 400 = 8.75.",
+    "About 9 characters share each toneless syllable."
+  ],
+  "keywords": [
+    "homophones",
+    "mandarin syllables",
+    "common characters",
+    "pinyin"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "DeFrancis, The Chinese Language, 1984",
+  "source_kind": "book",
+  "reference": "DeFrancis, The Chinese Language: Fact and Fantasy, University of Hawaii Press, 1984",
+  "written": "2026-09-27"
+}

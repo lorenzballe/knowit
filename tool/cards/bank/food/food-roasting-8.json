@@ -1,0 +1,40 @@
+{
+  "id": "food-roasting-8",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.roasting",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "A medium roast leaves beans about 15% lighter than they went in. What is most of the missing weight?",
+  "options": [
+    "Gases made by browning reactions",
+    "Water already in the green bean",
+    "Oils and chaff lost as smoke"
+  ],
+  "correct": 1,
+  "answer": "Water already in the green bean. Green coffee is dried to about 11% moisture before shipping, and roasting drives nearly all of it off. Carbon dioxide, water made by browning reactions and other volatiles make up the few per cent left. The smoke pouring from a roaster is dramatic but light.",
+  "move": "The loss you can see is rarely the loss that weighs most.",
+  "trap": "Picturing the smoke and chaff as where the weight goes.",
+  "keywords": [
+    "roast loss",
+    "green coffee",
+    "moisture",
+    "coffee roasting",
+    "smoke"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Clarke & Macrae, Coffee: Chemistry, 1985",
+  "source_kind": "book",
+  "reference": "Clarke & Macrae (eds), Coffee, Volume 1: Chemistry, Elsevier Applied Science, 1985",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "pop_culture-streaming-8",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.streaming",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Hollywood writers win in 2023 that finally tied their streaming pay to how many people watched?",
+  "answer": "A success bonus. Under the deal that ended the 2023 strike, a streaming series or film seen by at least 20% of a service's domestic subscribers in its first 90 days earns its writers a bonus of 50% of the fixed residual, the fee for reuse. Before, a flop and a global hit paid alike.",
+  "move": "Ask whether the people who make a hit share in its size.",
+  "keywords": [
+    "writers guild",
+    "residuals",
+    "2023 strike",
+    "streaming bonus"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Writers Guild of America, 2023 contract summary",
+  "source_kind": "primary_document",
+  "reference": "Writers Guild of America, Summary of the 2023 WGA Memorandum of Agreement, September 2023",
+  "written": "2026-09-27"
+}

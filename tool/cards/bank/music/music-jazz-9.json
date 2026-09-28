@@ -1,0 +1,38 @@
+{
+  "id": "music-jazz-9",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.jazz",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a jazz soloist earn a composer's royalty for an improvised solo on someone else's tune?",
+  "sides": [
+    "Yes, pay the soloist",
+    "No, pay the tune"
+  ],
+  "answer": "An improvised chorus is composition in real time: a new melody, often more memorable than the tune under it. Players transcribe and study famous solos as works in their own right. Yet the composer's credit, and the royalty with it, goes to whoever wrote the song, perhaps thirty-two bars written decades earlier.",
+  "move": "Whichever side you took, the hinge is whether improvising counts as writing.",
+  "counterpoint": "The solo exists only because the tune's chords and form were there to improvise on, and the soloist is already paid as a performer, through session fees and recording royalties. Splitting composer credit among every soloist on every take would make licensing a standard unworkable and fence off the shared material jazz is built from.",
+  "keywords": [
+    "improvisation",
+    "royalties",
+    "copyright",
+    "jazz solo",
+    "authorship"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Toynbee, Making Popular Music, 2000",
+  "source_kind": "book",
+  "reference": "Toynbee, Making Popular Music: Musicians, Creativity and Institutions, Arnold, 2000",
+  "written": "2026-09-27"
+}

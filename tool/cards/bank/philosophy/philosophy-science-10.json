@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-science-10",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.science",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Karl Popper, champion of falsifiability, once called Darwinism not a testable scientific theory?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In his 1976 autobiography Unended Quest, Popper called Darwinism a metaphysical research programme: useful for guiding research, but not testable. Two years later, in a lecture printed in Dialectica, he publicly recanted, saying he had changed his mind about the testability of natural selection. The strictest gatekeeper had first shut out biology's central theory.",
+  "move": "A test for real science should be tried on the science everyone accepts.",
+  "trap": "Assuming the great falsifier never doubted biology's best-supported theory.",
+  "keywords": [
+    "karl popper",
+    "natural selection",
+    "falsifiability",
+    "metaphysical research programme"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Popper, Dialectica, 1978",
+  "source_kind": "paper",
+  "reference": "Popper, Unended Quest, Fontana, 1976, section 37; Popper, Natural Selection and the Emergence of Mind, Dialectica 32 (3-4), 1978",
+  "written": "2026-09-27"
+}

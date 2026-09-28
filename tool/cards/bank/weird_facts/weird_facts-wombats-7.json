@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-wombats-7",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.wombats",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Where do wild wombats get most of their water, even in the dry season?",
+  "options": [
+    "Water held in the plants they eat",
+    "Drinking at dams and waterholes",
+    "Dew licked from grass at night"
+  ],
+  "correct": 0,
+  "answer": "From the plants they eat. Measuring water turnover in all three species, Evans and colleagues found water already inside their food was the main source in wet and dry seasons alike. Wombats also ran lower field metabolic rates than any other Australian marsupial measured: a slow engine needs little cooling and little drink.",
+  "move": "Before asking how a system refills, ask how little it spends.",
+  "trap": "Picturing a large grazer that must walk to water every night.",
+  "keywords": [
+    "wombats",
+    "water turnover",
+    "metabolic rate",
+    "drought",
+    "marsupials"
+  ],
+  "era": "timeless",
+  "region": "oceania",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Evans, Green & Newgrain, Oecologia, 2003",
+  "source_kind": "primary_document",
+  "reference": "Evans, Green & Newgrain, The field energetics and water fluxes of free-living wombats (Marsupialia: Vombatidae), Oecologia, 2003",
+  "written": "2026-09-27"
+}

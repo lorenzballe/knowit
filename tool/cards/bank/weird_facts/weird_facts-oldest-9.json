@@ -1,0 +1,40 @@
+{
+  "id": "weird_facts-oldest-9",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.oldest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Some solid grains found on Earth are older than the Earth itself. How old are the oldest dated?",
+  "options": [
+    "About 4.6 billion years",
+    "About 7 billion years",
+    "About 13 billion years"
+  ],
+  "correct": 1,
+  "answer": "About 7 billion years. Heck and colleagues dated silicon carbide grains from the Murchison meteorite, which fell in Australia in 1969, by neon that cosmic rays made in them in space. Most had drifted under 300 million years; a few, about 3 billion. They are dust from stars that died before the Sun formed.",
+  "move": "The age of a container says little about the age of its contents.",
+  "trap": "Taking the Solar System's age as a ceiling on anything we can hold.",
+  "keywords": [
+    "presolar grains",
+    "murchison meteorite",
+    "stardust",
+    "silicon carbide",
+    "cosmic rays"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Heck et al., PNAS, 2020",
+  "source_kind": "primary_document",
+  "reference": "doi:10.1073/pnas.1904573117",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "sport-fouls-9",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.fouls",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Since 2022, what does the NBA award when a defender fouls on purpose to stop a fast break?",
+  "options": [
+    "Two free throws and the ball",
+    "One free throw and the ball",
+    "Only the ball, as for most fouls"
+  ],
+  "correct": 1,
+  "answer": "One free throw and the ball. A foul that killed a fast break used to cost only an inbound pass, cheap against a likely dunk. Since the 2022–23 season the attacking side also shoots one free throw, taken by any player on the court, so its best shooter steps up and it keeps possession.",
+  "move": "Make the price of a shortcut exceed what the shortcut buys.",
+  "trap": "Assuming the league still prices a tactical foul like any other.",
+  "keywords": [
+    "take foul",
+    "fast break",
+    "nba",
+    "free throw",
+    "tactical foul"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NBA Official Rules, 2022-23",
+  "source_kind": "primary_document",
+  "reference": "National Basketball Association, Official Playing Rules 2022-23 season, transition take foul",
+  "written": "2026-09-27"
+}

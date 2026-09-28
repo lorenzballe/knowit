@@ -1,0 +1,39 @@
+{
+  "id": "psychology-sunk-cost-9",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.sunk_cost",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in a US study, older adults were less prone than young adults to throwing good money after bad?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. JoNell Strough and colleagues gave younger and older adults scenarios pitting money already spent against a better option, such as a dull film already paid for. Older adults more often chose the better future. One proposed reason is that older people dwell less on past losses. Here experience outran the quicker minds.",
+  "move": "Do not assume every mental skill declines on the same schedule.",
+  "trap": "Assuming decision-making simply gets worse as people age.",
+  "keywords": [
+    "ageing",
+    "older adults",
+    "sunk cost",
+    "decision making",
+    "jonell strough"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Strough et al., Psychological Science, 2008",
+  "source_kind": "paper",
+  "reference": "Strough, Mehta, McFall & Schuller, Are older adults less subject to the sunk-cost fallacy than younger adults?, Psychological Science, 2008",
+  "written": "2026-09-27"
+}

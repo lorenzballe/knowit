@@ -1,0 +1,42 @@
+{
+  "id": "history-industrial-9",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.industrial",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "By hand, spinning 45 kg of fine cotton yarn took about 50,000 hours. Working 12-hour days, 300 days a year, how many years?",
+  "value": 14,
+  "unit": "years",
+  "tolerance": 1,
+  "answer": "About 14 years, against about 135 hours on a self-acting mule by 1825.",
+  "move": "Turn a pile of hours into a working life before judging it.",
+  "trap": "Dividing by 24 hours and 365 days, as if spinners never slept.",
+  "hint": "Turn the hours into working days first, then the days into years.",
+  "steps": [
+    "50,000 hours / 12 hours a day = about 4,170 working days.",
+    "4,170 days / 300 days a year = about 13.9 years.",
+    "About 14 years, against about 135 hours on a self-acting mule by 1825."
+  ],
+  "keywords": [
+    "hand spinning",
+    "cotton yarn",
+    "spinning mule",
+    "labour productivity"
+  ],
+  "era": "nineteenth",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Allen, The British Industrial Revolution, 2009",
+  "source_kind": "book",
+  "reference": "Allen, The British Industrial Revolution in Global Perspective, Cambridge University Press, 2009, after Catling, The Spinning Mule, 1970",
+  "written": "2026-09-27"
+}

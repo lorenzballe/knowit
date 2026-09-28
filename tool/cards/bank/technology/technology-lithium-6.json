@@ -1,0 +1,33 @@
+{
+  "id": "technology-lithium-6",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.lithium",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a lithium-ion cell use copper foil on one electrode and aluminium foil on the other?",
+  "answer": "Because each survives on only one side. At the negative electrode's low voltage, aluminium absorbs lithium and crumbles into alloy, so heavier, dearer copper goes there. At the positive side copper would dissolve, so aluminium goes there. Drain a cell to zero and the copper dissolves too, regrowing as metal spikes that can short it.",
+  "move": "When a design uses two materials for one job, ask what each one cannot survive.",
+  "keywords": [
+    "current collectors",
+    "copper foil",
+    "aluminium foil",
+    "over-discharge",
+    "lithium alloy"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Degradation in lithium ion battery current collectors, 2021",
+  "source_kind": "paper",
+  "reference": "doi:10.1088/2515-7655/ac0c04",
+  "written": "2026-09-27"
+}

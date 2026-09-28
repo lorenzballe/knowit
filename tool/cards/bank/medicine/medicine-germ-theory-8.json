@@ -1,0 +1,42 @@
+{
+  "id": "medicine-germ-theory-8",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.germ_theory",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Before antisepsis, 16 of Lister's 35 amputation patients died; afterwards, 6 of 40. At the old rate, how many fewer deaths is that?",
+  "value": 12,
+  "unit": "deaths",
+  "answer": "18 - 6 = 12 fewer deaths.",
+  "move": "Compare rates, not counts, whenever the two groups differ in size.",
+  "trap": "Answering 10, by subtracting the raw death counts 16 and 6.",
+  "hint": "Scale the old death rate up to 40 patients first.",
+  "steps": [
+    "Old death rate: 16 / 35 = about 46%.",
+    "At that rate, 40 patients: 40 x 0.46 = about 18 deaths.",
+    "18 - 6 = 12 fewer deaths."
+  ],
+  "keywords": [
+    "joseph lister",
+    "antisepsis",
+    "amputation",
+    "glasgow royal infirmary",
+    "carbolic acid"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Tröhler, JRSM, 2015",
+  "source_kind": "paper",
+  "reference": "Tröhler, Statistics and the British controversy about the effects of Joseph Lister's system of antisepsis for surgery, 1867-1890, Journal of the Royal Society of Medicine, 2015",
+  "written": "2026-09-27"
+}

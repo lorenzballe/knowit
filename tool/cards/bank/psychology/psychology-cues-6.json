@@ -1,0 +1,41 @@
+{
+  "id": "psychology-cues-6",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.cues",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "survivorship",
+  "question": "True or false: extended training in the lab reliably makes people keep working for a snack they no longer want?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Rats do it, and a 2009 human study reported it after three days of training. De Wit and colleagues then tried five times to induce it in people, with longer training and varied designs; none worked. Failures like these rarely reach print, so a lone success can stand for years.",
+  "move": "Ask how many attempts failed quietly before trusting the one that worked.",
+  "trap": "True, since the rat result and one human study seem to settle it.",
+  "keywords": [
+    "habit induction",
+    "outcome devaluation",
+    "replication",
+    "laboratory habits"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "builds_on": [
+    "psychology-cues-3"
+  ],
+  "figure": "none",
+  "source": "de Wit et al., JEP: General, 2018",
+  "source_kind": "paper",
+  "reference": "de Wit et al., Shifting the balance between goals and habits: five failures in experimental habit induction, Journal of Experimental Psychology: General, 2018",
+  "written": "2026-09-27"
+}

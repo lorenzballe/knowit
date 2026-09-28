@@ -1,0 +1,33 @@
+{
+  "id": "technology-chips-6",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.chips",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does the extreme-ultraviolet light in the newest chip-printing machines come from?",
+  "answer": "From exploding drops of molten tin. About 50,000 times a second a droplet thinner than a hair falls through a vacuum chamber and is hit twice by a carbon-dioxide laser: a weak pulse flattens it, a strong one turns it into a plasma that glows at 13.5 nanometres. A curved mirror gathers the light.",
+  "move": "When no solid part can survive a job, make the part disposable.",
+  "keywords": [
+    "euv lithography",
+    "tin droplets",
+    "carbon dioxide laser",
+    "plasma",
+    "light source"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fomenkov et al., Advanced Optical Technologies, 2017",
+  "source_kind": "paper",
+  "reference": "Fomenkov et al., Light sources for high-volume manufacturing EUV lithography: technology, performance, and power scaling, Advanced Optical Technologies 6(3-4), 2017",
+  "written": "2026-09-27"
+}

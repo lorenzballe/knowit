@@ -1,0 +1,39 @@
+{
+  "id": "language-regional-slang-9",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.regional_slang",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "True or false: Scots wee, meaning small, began as a piece of baby talk, like teeny?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Wee began as a noun meaning a small amount, from Old English wǣg, a weight. A little wee meant a little bit, and in Scots and northern English the noun hardened into an adjective. The small-sounding vowel is a lucky fit. In a wee dram, a Scot is still weighing out the whisky.",
+  "move": "A word that sounds like its meaning may have fallen into it by chance.",
+  "trap": "The ee sound feels small, so the word seems made to fit.",
+  "keywords": [
+    "wee",
+    "scots",
+    "old english",
+    "etymology",
+    "sound symbolism"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hoad, Concise Oxford Dictionary of English Etymology",
+  "source_kind": "reference_work",
+  "reference": "Hoad (ed.), The Concise Oxford Dictionary of English Etymology, Oxford University Press, 1986",
+  "written": "2026-09-27"
+}

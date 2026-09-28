@@ -1,0 +1,42 @@
+{
+  "id": "pop_culture-swooshes-6",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.swooshes",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "In 1983 Nike gave the swoosh's designer 500 shares. Six two-for-one stock splits followed. How many shares, in thousands, did they become?",
+  "value": 32,
+  "unit": "thousand shares",
+  "answer": "500 x 64 = 32,000 shares, or 32 thousand.",
+  "move": "Count repeated doublings as powers of two, never as additions.",
+  "trap": "Adding 500 shares per split, as if each split repeated the gift.",
+  "hint": "Work out what one split does to the count, then do it again six times.",
+  "steps": [
+    "Each two-for-one split doubles the number of shares held.",
+    "Six splits multiply it by 2 x 2 x 2 x 2 x 2 x 2 = 64.",
+    "500 x 64 = 32,000 shares, or 32 thousand."
+  ],
+  "keywords": [
+    "carolyn davidson",
+    "nike",
+    "stock splits",
+    "shares",
+    "doubling"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "CNBC, on the swoosh designer's shares, 2018",
+  "source_kind": "news_archive",
+  "reference": "https://www.cnbc.com/2018/09/05/heres-how-much-nikes-billionaire-founder-paid-for-its-swoosh-logo.html",
+  "written": "2026-09-27"
+}

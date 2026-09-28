@@ -1,0 +1,38 @@
+{
+  "id": "medicine-resistance-8",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.resistance",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should doctors stop telling patients to finish the whole antibiotic course even after they feel better?",
+  "sides": [
+    "Yes, drop the rule",
+    "No, keep the rule"
+  ],
+  "answer": "The rule has little evidence behind it. Resistance is bred mostly in the harmless bacteria living on and in the body, which meet the drug every extra day, not in the infection itself. Trials keep finding shorter courses as good as long ones for pneumonia and urinary infections. Every needless day is more exposure.",
+  "move": "The decider is whether patients can be trusted with a rule that needs judgement.",
+  "counterpoint": "Patients judge feeling better poorly, and stopping early is not the same as a shorter course tested in a trial. For some infections, such as tuberculosis and streptococcal sore throat, stopping early does bring relapse or complications. A simple, universal message gets followed; a message to stop when better may become stop whenever.",
+  "keywords": [
+    "antibiotic course",
+    "course length",
+    "patient advice",
+    "shorter courses",
+    "relapse"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Llewelyn et al., BMJ, 2017",
+  "source_kind": "paper",
+  "reference": "Llewelyn et al., The antibiotic course has had its day, BMJ, 2017",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "economics-four-day-week-8",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.four_day_week",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Kellogg's ran six-hour shifts at its Battle Creek cereal plant from 1930. Why did the six-hour day end?",
+  "answer": "Partly because workers voted it out. W.K. Kellogg moved to four six-hour shifts in 1930 to spread jobs through the Depression. After the Second World War, department after department chose eight hours and the extra pay, men leading the switch, with management pressing too. The last six-hour holdouts, mostly women, lost it in 1985.",
+  "move": "Shorter hours last only while people keep choosing them over pay.",
+  "keywords": [
+    "kellogg's",
+    "six-hour day",
+    "battle creek",
+    "working hours"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "Hunnicutt, Kellogg's Six-Hour Day, 1996",
+  "source_kind": "book",
+  "reference": "Hunnicutt, Kellogg's Six-Hour Day, Temple University Press, 1996",
+  "written": "2026-09-27"
+}

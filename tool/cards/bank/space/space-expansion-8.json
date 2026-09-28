@@ -1,0 +1,38 @@
+{
+  "id": "space-expansion-8",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.expansion",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: since cosmic expansion is accelerating, the Hubble rate, recession speed per unit of distance, is rising?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The Hubble rate has fallen throughout cosmic history and still falls, from about 67 km/s per megaparsec, or 3.26 million light-years, today towards about 56. Acceleration means each galaxy's recession speed grows, but its distance grows faster, so speed divided by distance shrinks. Then it settles, and distances double every 12 billion years.",
+  "move": "A growing quantity can have a shrinking rate of growth.",
+  "trap": "Reading faster expansion as a larger expansion rate.",
+  "keywords": [
+    "hubble rate",
+    "accelerating expansion",
+    "dark energy",
+    "hubble constant"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Ryden, Introduction to Cosmology, 2017",
+  "source_kind": "book",
+  "reference": "Ryden, Introduction to Cosmology, 2nd ed., Cambridge University Press, 2017",
+  "written": "2026-09-27"
+}

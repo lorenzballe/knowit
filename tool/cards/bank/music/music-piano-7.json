@@ -1,0 +1,39 @@
+{
+  "id": "music-piano-7",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.piano",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "What did Sébastien Érard's 1821 double escapement let a pianist do that the older action did not?",
+  "options": [
+    "Sustain a note after letting go",
+    "Play softly without a pedal",
+    "Restrike a key before it fully rose"
+  ],
+  "correct": 2,
+  "answer": "Restrike a key before it fully rose. In a single escapement the key must come nearly all the way up before the hammer can be thrown again. Érard added a lever that catches the hammer partway down and resets the action early. Fast repeated notes and trills became playable at the speed of Liszt.",
+  "move": "Speed is often limited by the reset, not by the stroke itself.",
+  "trap": "Assuming the great piano inventions were about loudness or sustain.",
+  "keywords": [
+    "double escapement",
+    "erard",
+    "repetition",
+    "piano action"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Good, Giraffes, Black Dragons, and Other Pianos",
+  "source_kind": "book",
+  "reference": "Good, Giraffes, Black Dragons, and Other Pianos: A Technological History from Cristofori to the Modern Concert Grand, Stanford University Press, 2001",
+  "written": "2026-09-27"
+}

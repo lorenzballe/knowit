@@ -1,0 +1,40 @@
+{
+  "id": "space-colours-of-stars-9",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.colours_of_stars",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "A cool brown dwarf's sodium vapour swallows most of its yellow and green light. What colour would it look up close?",
+  "options": [
+    "Dull red",
+    "Magenta",
+    "Deep brown"
+  ],
+  "correct": 1,
+  "answer": "Magenta, according to model spectra. Broad sodium absorption removes the middle of the visible spectrum, and what escapes is mostly deep red with a little blue: a purple-red. The name brown dwarf, coined by Jill Tarter in 1975, was chosen before any had been seen, not from a measurement.",
+  "move": "A name records what someone expected, not what was later seen.",
+  "trap": "Picturing any cooling hot body glowing dull red, like an ember.",
+  "keywords": [
+    "brown dwarfs",
+    "magenta",
+    "sodium",
+    "potassium",
+    "jill tarter"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Burrows et al., Reviews of Modern Physics, 2001",
+  "source_kind": "paper",
+  "reference": "Burrows, Hubbard, Lunine & Liebert, The theory of brown dwarfs and extrasolar giant planets, Reviews of Modern Physics 73, 719, 2001",
+  "written": "2026-09-27"
+}

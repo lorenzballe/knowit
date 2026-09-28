@@ -1,0 +1,33 @@
+{
+  "id": "cinema-kubrick-6",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.kubrick",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did Kubrick film the ruined Vietnamese city of Hue for Full Metal Jacket?",
+  "answer": "In East London. Beckton Gas Works, a derelict industrial site due for demolition, had concrete buildings that resembled the colonial blocks of Hue. The crew knocked holes in them with explosives and a wrecking ball, and brought in palm trees from Spain. Kubrick, who avoided flying, staged the battle within driving distance of his home.",
+  "move": "Before building what is needed, look for what is about to be torn down.",
+  "keywords": [
+    "full metal jacket",
+    "beckton gas works",
+    "hue",
+    "location shooting",
+    "london"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baxter, Stanley Kubrick: A Biography",
+  "source_kind": "book",
+  "reference": "Baxter, Stanley Kubrick: A Biography, HarperCollins, 1997",
+  "written": "2026-09-27"
+}

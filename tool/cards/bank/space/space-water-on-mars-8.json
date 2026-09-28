@@ -1,0 +1,40 @@
+{
+  "id": "space-water-on-mars-8",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.water_on_mars",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Mars's south polar ice deposits hold about 1.6 million km³. Spread over the planet's 145 million km², how many metres deep?",
+  "value": 11,
+  "unit": "metres",
+  "answer": "0.011 km x 1,000 = 11 m.",
+  "move": "A huge volume spread over a whole planet becomes a thin coat.",
+  "trap": "Losing three zeros when turning kilometres into metres.",
+  "hint": "Divide the volume by the area, and keep kilometres until the end.",
+  "steps": [
+    "1.6 million km³ / 145 million km² ≈ 0.011 km.",
+    "0.011 km x 1,000 = 11 m."
+  ],
+  "keywords": [
+    "south polar layered deposits",
+    "water ice",
+    "marsis",
+    "global equivalent layer"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Plaut et al., Science, 2007",
+  "source_kind": "paper",
+  "reference": "Plaut et al., Subsurface Radar Sounding of the South Polar Layered Deposits of Mars, Science, 2007",
+  "written": "2026-09-27"
+}

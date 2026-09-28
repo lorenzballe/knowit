@@ -1,0 +1,39 @@
+{
+  "id": "art-cubism-7",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.cubism",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: neither Picasso nor Braque showed in the 1911 Paris Salon room that introduced Cubism to the public?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Room 41 of the Salon des Indépendants hung Metzinger, Gleizes, Le Fauconnier, Léger and Delaunay, and the press uproar made them the Cubists. Picasso and Braque sold privately through Kahnweiler, shunning the Salons. The first book on Cubism, in 1912, was by Gleizes and Metzinger. The public met the style through other painters.",
+  "move": "Who reached the audience first shapes what a name comes to mean.",
+  "trap": "Assuming the inventors of a style were the ones who showed it.",
+  "keywords": [
+    "salon des indépendants",
+    "salon cubists",
+    "metzinger",
+    "gleizes",
+    "kahnweiler"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cottington, Cubism and Its Histories, 2004",
+  "source_kind": "book",
+  "reference": "David Cottington, Cubism and Its Histories, Manchester University Press, 2004",
+  "written": "2026-09-27"
+}

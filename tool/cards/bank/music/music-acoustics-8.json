@@ -1,0 +1,41 @@
+{
+  "id": "music-acoustics-8",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.acoustics",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A studio is 3.43 m long; sound travels 343 m/s. At what lowest frequency, in Hz, does a standing wave fit between its end walls?",
+  "value": 50,
+  "unit": "Hz",
+  "answer": "Frequency: 343 ÷ 6.86 = 50 Hz.",
+  "move": "Measure the room before blaming the speaker for a boomy note.",
+  "trap": "Fitting a whole wavelength in the room and answering 100 Hz.",
+  "hint": "Ask how much of one wave fits between two hard walls at the lowest resonance.",
+  "steps": [
+    "The lowest standing wave fits half a wavelength between the walls.",
+    "Wavelength: 2 × 3.43 = 6.86 m.",
+    "Frequency: 343 ÷ 6.86 = 50 Hz."
+  ],
+  "keywords": [
+    "room modes",
+    "standing waves",
+    "studio acoustics",
+    "bass"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Everest and Pohlmann, Master Handbook of Acoustics",
+  "source_kind": "book",
+  "reference": "Everest and Pohlmann, Master Handbook of Acoustics, 5th edition, McGraw-Hill, 2009",
+  "written": "2026-09-27"
+}

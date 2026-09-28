@@ -1,0 +1,39 @@
+{
+  "id": "art-first-photos-8",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.first_photos",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: by the 1860s a typical studio portrait needed only seconds of exposure?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Faster lenses and, from 1851, wet collodion plates cut exposure from the minutes of 1839 to a few seconds in a bright studio. Head rests were still used. The solemn expressions of Victorian portraits owe more to manners, which treated a broad grin as foolish, than to chemistry.",
+  "move": "A number from the start of a story rarely holds by its middle.",
+  "trap": "Carrying the famous exposure times of 1839 forward by twenty years.",
+  "keywords": [
+    "wet collodion",
+    "exposure time",
+    "portrait studios",
+    "head rests",
+    "victorian portraits"
+  ],
+  "era": "nineteenth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Newhall, The History of Photography, 1982",
+  "source_kind": "book",
+  "reference": "Beaumont Newhall, The History of Photography: From 1839 to the Present, Museum of Modern Art, 1982",
+  "written": "2026-09-27"
+}

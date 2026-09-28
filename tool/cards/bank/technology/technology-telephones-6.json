@@ -1,0 +1,41 @@
+{
+  "id": "technology-telephones-6",
+  "topic": "technology",
+  "genre": "technology.old_machines",
+  "strand": "technology.old_machines.telephones",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A phone channel carries sound up to 4,000 hertz, sampled at twice that rate in 8-bit samples. How many kbit/s for 24 calls?",
+  "value": 1536,
+  "unit": "kbit/s",
+  "answer": "24 calls × 64 kbit/s = 1,536 kbit/s.",
+  "move": "Find the rate for one, then multiply by how many share the line.",
+  "trap": "Multiplying 4,000 by 8 bits and forgetting to double the sampling rate.",
+  "hint": "A signal must be sampled at least twice as often as its highest pitch.",
+  "steps": [
+    "Sampling at twice 4,000 hertz: 8,000 samples a second.",
+    "8,000 samples × 8 bits = 64 kbit/s for one call.",
+    "24 calls × 64 kbit/s = 1,536 kbit/s."
+  ],
+  "keywords": [
+    "pulse code modulation",
+    "sampling",
+    "digital telephony",
+    "bit rate"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ITU-T Recommendation G.711",
+  "source_kind": "standard",
+  "reference": "ITU-T Recommendation G.711, Pulse code modulation (PCM) of voice frequencies, 1988",
+  "written": "2026-09-27"
+}

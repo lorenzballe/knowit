@@ -1,0 +1,36 @@
+{
+  "id": "psychology-why-we-cry-6",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.why_we_cry",
+  "also": [
+    "human_body.the_brain.neurons"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can a person sob uncontrollably while feeling no sadness at all?",
+  "answer": "Yes. After strokes, multiple sclerosis or motor neurone disease, some people burst into crying or laughter at trivial triggers with no matching feeling, a condition called pseudobulbar affect. Damage to pathways that normally gate the brainstem's crying programme is thought to release it. The face weeps while its owner waits for it to stop.",
+  "move": "An expression and the feeling it usually signals can come apart.",
+  "keywords": [
+    "pseudobulbar affect",
+    "pathological crying",
+    "stroke",
+    "brainstem",
+    "multiple sclerosis"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Parvizi et al., Brain, 2001",
+  "source_kind": "paper",
+  "reference": "Parvizi, Anderson, Martin, Damasio & Damasio, Pathological laughter and crying: a link to the cerebellum, Brain, 2001",
+  "written": "2026-09-27"
+}

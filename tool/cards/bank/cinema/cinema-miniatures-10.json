@@ -1,0 +1,36 @@
+{
+  "id": "cinema-miniatures-10",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.miniatures",
+  "also": [
+    "cinema.special_effects.practical"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why was Toho's 1954 Godzilla a man in a heavy rubber suit rather than a stop-motion puppet like King Kong?",
+  "answer": "Time. Effects director Eiji Tsuburaya admired King Kong's stop-motion, but animating a monster frame by frame would have taken far longer than Toho's schedule allowed. So the actor Haruo Nakajima wore a suit of roughly 100 kg and trampled a 1:25 miniature Tokyo, shot at high speed so everything he broke fell heavily.",
+  "move": "The schedule often chooses the technique before the artist does.",
+  "keywords": [
+    "godzilla",
+    "eiji tsuburaya",
+    "suitmation",
+    "haruo nakajima",
+    "toho"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ryfle, Japan's Favorite Mon-Star, 1998",
+  "source_kind": "book",
+  "reference": "Ryfle, Japan's Favorite Mon-Star: The Unauthorized Biography of the Big G, ECW Press, 1998",
+  "written": "2026-09-27"
+}

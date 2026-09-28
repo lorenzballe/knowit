@@ -1,0 +1,39 @@
+{
+  "id": "nature-storms-6",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.storms",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "sampling",
+  "question": "Mobile radar clocked winds above 450 km/h inside the 2013 El Reno tornado, the widest on record. What was its official rating?",
+  "options": [
+    "EF5, the top of the scale",
+    "EF3, the middle of the scale",
+    "EF1, near the bottom"
+  ],
+  "correct": 1,
+  "answer": "EF3. The Enhanced Fujita scale rates a tornado by the damage surveyors find, matched against a list of buildings and trees, not by any measured wind. El Reno, up to 4.2 km wide, spent its fiercest minutes over open farmland. Where it blew hardest, almost nothing stood to be wrecked.",
+  "move": "A scale read from damage can only see what was there to be damaged.",
+  "trap": "Taking the scale as a measure of wind, when it grades wreckage.",
+  "keywords": [
+    "el reno tornado",
+    "enhanced fujita scale",
+    "mobile radar",
+    "damage surveys"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wakimoto et al., Monthly Weather Review, 2016",
+  "source_kind": "paper",
+  "reference": "Wakimoto et al., Aerial Damage Survey of the 2013 El Reno Tornado Combined with Mobile Radar Data, Monthly Weather Review, 2016",
+  "written": "2026-09-27"
+}

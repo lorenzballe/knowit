@@ -1,0 +1,42 @@
+{
+  "id": "weird_facts-fastest-8",
+  "topic": "weird_facts",
+  "genre": "weird_facts.records",
+  "strand": "weird_facts.records.fastest",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "In summer 2012 Greenland's Jakobshavn glacier flowed about 17 km a year, four times its 1990s pace. How many more metres a day?",
+  "value": 35,
+  "unit": "metres a day",
+  "tolerance": 2,
+  "answer": "46.6 − 11.6 = 35 m a day faster.",
+  "move": "Turn a yearly rate into a daily one to see it move.",
+  "trap": "Treating a glacier as too slow for its speed to matter daily.",
+  "hint": "Find the daily speed in 2012, then a quarter of it for the 1990s.",
+  "steps": [
+    "17 km a year = 17,000 m / 365 days ≈ 46.6 m a day in 2012.",
+    "A quarter of that pace: 46.6 / 4 ≈ 11.6 m a day in the 1990s.",
+    "46.6 − 11.6 = 35 m a day faster."
+  ],
+  "keywords": [
+    "jakobshavn isbræ",
+    "glacier speed",
+    "greenland",
+    "ice flow"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Joughin et al., The Cryosphere, 2014",
+  "source_kind": "primary_document",
+  "reference": "Joughin, Smith, Shean & Floricioiu, Brief Communication: Further summer speedup of Jakobshavn Isbræ, The Cryosphere, 2014",
+  "written": "2026-09-27"
+}

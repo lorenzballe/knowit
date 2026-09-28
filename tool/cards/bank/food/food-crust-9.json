@@ -1,0 +1,42 @@
+{
+  "id": "food-crust-9",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.crust",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A baguette is a cylinder 6 cm across with a 3 mm crust. Ignoring the ends, what percentage of its volume is crust?",
+  "value": 19,
+  "unit": "%",
+  "answer": "100% − 81% = 19% crust.",
+  "move": "When a thin skin wraps something round, its share is bigger than it looks.",
+  "trap": "Taking 3 mm of a 30 mm radius as a tenth.",
+  "hint": "Compare the cross-section of the whole loaf with that of the crumb inside it.",
+  "steps": [
+    "The radius is 30 mm; the crumb inside the crust has a radius of 27 mm.",
+    "Volume goes with the square of the radius: (27 ÷ 30)² = 0.81.",
+    "So the crumb is 81% of the volume.",
+    "100% − 81% = 19% crust."
+  ],
+  "keywords": [
+    "baguette",
+    "crust",
+    "cylinder",
+    "geometry"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "nested_circles",
+  "source": "Geometry of a cylinder",
+  "source_kind": "arithmetic",
+  "reference": "Calvel, The Taste of Bread, trans. Wirtz, Aspen Publishers, 2001",
+  "written": "2026-09-27"
+}

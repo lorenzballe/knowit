@@ -1,0 +1,38 @@
+{
+  "id": "human_body-fingerprints-10",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.fingerprints",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the number of ridges on a person's fingertips is almost entirely set by their genes?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Total ridge count, summed over ten fingers, is among the most heritable human traits measured: Holt found correlations of about 0.95 between identical twins and about 0.5 between siblings, close to what genes alone would predict. The count is inherited; the exact print is not.",
+  "move": "A trait can be inherited in its totals while its details are not.",
+  "trap": "Knowing twins' prints differ and concluding ridges are not inherited.",
+  "keywords": [
+    "ridge count",
+    "heritability",
+    "twins",
+    "dermatoglyphics"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Holt, The Genetics of Dermal Ridges, 1968",
+  "source_kind": "book",
+  "reference": "Holt, The Genetics of Dermal Ridges, Charles C Thomas, 1968",
+  "written": "2026-09-27"
+}

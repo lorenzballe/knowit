@@ -1,0 +1,39 @@
+{
+  "id": "history-industrial-8",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.industrial",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "counterfactual",
+  "question": "Robert Fogel asked how much poorer the United States would have been in 1890 with no railways at all. His answer?",
+  "options": [
+    "A few per cent of national income",
+    "About a quarter of national income",
+    "More than half of national income"
+  ],
+  "correct": 0,
+  "answer": "A few per cent of national income. Fogel measured railways against the next best option, canals, rivers and wagons, not against nothing, and put the saving on moving farm goods below 5% of 1890 output. The exact figure is still argued over, but the method stuck: an invention is worth its lead over the alternative.",
+  "move": "Value any invention by its lead over the next best option.",
+  "trap": "Comparing railways with no transport at all rather than with canals.",
+  "keywords": [
+    "railways",
+    "robert fogel",
+    "social savings",
+    "canals"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Fogel, Railroads and American Economic Growth, 1964",
+  "source_kind": "book",
+  "reference": "Fogel, Railroads and American Economic Growth: Essays in Econometric History, Johns Hopkins Press, 1964",
+  "written": "2026-09-27"
+}

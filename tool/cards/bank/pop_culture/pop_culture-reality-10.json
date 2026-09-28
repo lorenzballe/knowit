@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-reality-10",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.reality",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which film gave its name to a delusion psychiatrists began meeting in the 2000s: living inside a hidden reality show?",
+  "answer": "The Truman Show. The psychiatrist Joel Gold and his brother, the philosopher Ian Gold, described patients who believed concealed cameras were filming them for a secret programme. Persecutory delusions are ancient, but their content follows the age: earlier patients feared radio waves or spies, these feared an unseen television audience.",
+  "move": "Fears take the shape of whatever technology feels most watchful at the time.",
+  "keywords": [
+    "truman show delusion",
+    "joel gold",
+    "ian gold",
+    "paranoia",
+    "hidden cameras"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gold and Gold, Suspicious Minds, 2014",
+  "source_kind": "book",
+  "reference": "Joel Gold and Ian Gold, Suspicious Minds: How Culture Shapes Madness, Free Press, 2014",
+  "written": "2026-09-27"
+}

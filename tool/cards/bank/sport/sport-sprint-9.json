@@ -1,0 +1,33 @@
+{
+  "id": "sport-sprint-9",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.sprint",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What do the winning times of the Kentucky Derby suggest about how far the 100 m record can fall?",
+  "answer": "That records have a ceiling. Derby times stopped improving decades ago despite intense breeding, and greyhound times levelled off too. Fitting the same kind of levelling curve to men's 100 m records, the biologist Mark Denny estimated a limit of about 9.48 seconds in 2008, a year before the record fell to 9.58.",
+  "move": "Look at a race that stopped improving to see where yours is heading.",
+  "keywords": [
+    "kentucky derby",
+    "greyhounds",
+    "100 m",
+    "limits",
+    "mark denny"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Denny, Journal of Experimental Biology, 2008",
+  "source_kind": "paper",
+  "reference": "Denny, Limits to running speed in dogs, horses and humans, Journal of Experimental Biology, 2008",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-choice-10",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.choice",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "God replays Alice's choice 1,000 times from exactly the same past; she lies about half the time. What did van Inwagen conclude?",
+  "options": [
+    "That her lies were fixed in advance",
+    "That she chose freely every time",
+    "That the outcome was mere chance"
+  ],
+  "correct": 2,
+  "answer": "That the outcome was mere chance. Peter van Inwagen, himself no determinist, aimed this replay at views that ground freedom in undetermined choices. Watching results settle near half and half, anyone would treat her next choice like a coin toss. Nothing in her reasons picks this lie over that truth.",
+  "move": "Removing a cause does not put anyone in charge of the result.",
+  "trap": "Assuming that an undetermined choice must be a free one.",
+  "keywords": [
+    "peter van inwagen",
+    "rollback argument",
+    "luck",
+    "indeterminism"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "van Inwagen, Philosophical Perspectives, 2000",
+  "source_kind": "paper",
+  "reference": "van Inwagen, Free Will Remains a Mystery, Philosophical Perspectives 14, 2000",
+  "written": "2026-09-27"
+}

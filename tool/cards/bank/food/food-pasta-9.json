@@ -1,0 +1,38 @@
+{
+  "id": "food-pasta-9",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.pasta",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should pasta labels have to say where the wheat in it was grown?",
+  "sides": [
+    "Yes, name the origin",
+    "No, the maker is enough"
+  ],
+  "answer": "A packet with an Italian flag leads buyers to assume Italian wheat, when much of it is imported, often from Canada. Since 2018 Italy has required packets to say where the wheat was grown, if only as EU or non-EU. Farmers get a shot at a premium, and buyers who care about pesticides can choose.",
+  "move": "Whichever side you took, it turns on whether origin predicts anything measurable in the packet.",
+  "counterpoint": "Pasta quality comes from protein-rich wheat and the maker's skill, not a passport, and Italy grows too little durum of the needed quality to meet its own demand. Canadian durum is often among the best. Origin labels mostly work as disguised protectionism, inviting buyers to punish imported grain on a feeling rather than on any measured difference.",
+  "keywords": [
+    "origin labelling",
+    "durum wheat",
+    "canada",
+    "italy",
+    "pasta packaging"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Italian decree on wheat origin labelling, 2017",
+  "source_kind": "primary_document",
+  "reference": "Decreto interministeriale 26 luglio 2017, indicazione dell'origine del grano duro per paste di semola di grano duro, Gazzetta Ufficiale, 2017",
+  "written": "2026-09-27"
+}

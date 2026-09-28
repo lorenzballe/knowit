@@ -1,0 +1,40 @@
+{
+  "id": "medicine-barbers-8",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.barbers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Edinburgh's barbers and surgeons were incorporated as one craft in 1505. Which monopoly in the burgh came with it?",
+  "options": [
+    "Distilling aqua vitae, an early whisky",
+    "Brewing and selling ale",
+    "Making soap and tallow candles"
+  ],
+  "correct": 0,
+  "answer": "Distilling aqua vitae. Spirit was then a medicine, and the new craft's freemen gained the sole right to make it in Edinburgh; James IV ratified their charter in 1506. The same charter required every member to know anatomy and all the veins, for bloodletting. For a time, Edinburgh's spirit came from its surgeons.",
+  "move": "Ask what a product was for when a trade first claimed it.",
+  "trap": "Soap and candles, since barbers used soap every working day.",
+  "keywords": [
+    "edinburgh",
+    "barber-surgeons",
+    "aqua vitae",
+    "seal of cause",
+    "whisky"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dingwall, A Famous and Flourishing Society, 2005",
+  "source_kind": "book",
+  "reference": "Dingwall, A Famous and Flourishing Society: The History of the Royal College of Surgeons of Edinburgh, 1505-2005, Edinburgh University Press, 2005",
+  "written": "2026-09-27"
+}

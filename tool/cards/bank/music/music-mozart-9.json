@@ -1,0 +1,33 @@
+{
+  "id": "music-mozart-9",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.mozart",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How old was Mozart when he wrote his variations on the tune now sung as Twinkle, Twinkle?",
+  "answer": "About 25, not a child. The twelve variations K. 265, on the French song Ah, vous dirai-je, maman, were long dated to his Paris stay of 1778; study of the paper and handwriting puts them in Vienna around 1781 or 1782. The English words, Jane Taylor's poem of 1806, came to the tune later.",
+  "move": "A childish tune says nothing about the age of the person using it.",
+  "keywords": [
+    "twinkle twinkle",
+    "ah vous dirai-je maman",
+    "k. 265",
+    "paper dating",
+    "variations"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tyson, Mozart: Studies of the Autograph Scores",
+  "source_kind": "book",
+  "reference": "Tyson, Mozart: Studies of the Autograph Scores, Harvard University Press, 1987",
+  "written": "2026-09-27"
+}

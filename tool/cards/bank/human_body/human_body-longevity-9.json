@@ -1,0 +1,37 @@
+{
+  "id": "human_body-longevity-9",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.longevity",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should ageing itself be classified as a disease?",
+  "sides": [
+    "Yes, call it a disease",
+    "No, keep it apart"
+  ],
+  "answer": "Ageing is the main risk factor for cancer, heart disease and dementia, and its mechanisms can be slowed in animals. Regulators approve drugs for diseases, so a medicine that delays ageing itself has no clear route to approval. Naming it a disease would open trials of drugs aimed at the cause, not its consequences.",
+  "move": "Whichever side you took, what the label would change in practice is the hinge.",
+  "counterpoint": "A condition every person develops is the baseline against which disease is defined. Labelling old age a disease invites doctors to write it on death certificates instead of finding treatable causes, and hands marketers a licence. After objections, the WHO withdrew old age as a diagnosis from its new classification in 2022. Trials can target specific age-related conditions.",
+  "keywords": [
+    "ageing",
+    "disease classification",
+    "drug regulation",
+    "icd-11"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bulterijs et al., Frontiers in Genetics, 2015",
+  "source_kind": "paper",
+  "reference": "Bulterijs, Hull, Björk & Roy, It is time to classify biological aging as a disease, Frontiers in Genetics, 2015",
+  "written": "2026-09-27"
+}

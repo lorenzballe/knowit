@@ -1,0 +1,33 @@
+{
+  "id": "nature-dinosaurs-6",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.dinosaurs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can fossil fish from North Dakota reveal the season in which the dinosaur-killing asteroid struck?",
+  "answer": "Through their bones. Paddlefish and sturgeon buried at Tanis laid down bone in yearly bands, like tree rings, and During and colleagues found each one's growth had just begun to quicken for the year: northern spring. Impact beads lodged in their gills show they died within about an hour of the strike.",
+  "move": "Anything that grows in layers keeps a calendar up to its last day.",
+  "keywords": [
+    "tanis",
+    "paddlefish",
+    "bone growth",
+    "chicxulub impact",
+    "season"
+  ],
+  "era": "ancient",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "During et al., Nature, 2022",
+  "source_kind": "paper",
+  "reference": "During et al., The Mesozoic terminated in boreal spring, Nature, 2022",
+  "written": "2026-09-27"
+}

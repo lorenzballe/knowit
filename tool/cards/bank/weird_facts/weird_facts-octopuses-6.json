@@ -1,0 +1,39 @@
+{
+  "id": "weird_facts-octopuses-6",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.octopuses",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the common octopus, a master of colour camouflage, has only one kind of light-sensitive pigment in its eyes?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Its retina carries a single visual pigment, most sensitive to blue-green light, so it cannot compare wavelengths the way eyes with two or more pigments do. Behavioural tests by Messenger in 1977 found no sign that octopuses tell colours apart. Yet the same animal vanishes against red weed and green algae.",
+  "move": "A result that looks like skill may run on a different sense entirely.",
+  "trap": "Assuming an animal that matches colours so well must see them.",
+  "keywords": [
+    "common octopus",
+    "visual pigment",
+    "colour blindness",
+    "camouflage",
+    "retina"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Messenger, J. Exp. Biology, 1977",
+  "source_kind": "primary_document",
+  "reference": "Messenger, Evidence that Octopus is colour blind, Journal of Experimental Biology, 1977",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-eternity-7",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.eternity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "What did Augustine answer to the question: what was God doing before he made heaven and earth?",
+  "options": [
+    "There was no before: time began with it",
+    "Preparing hell for people who pry",
+    "Contemplating the world he would make"
+  ],
+  "correct": 0,
+  "answer": "There was no before: time began with it. In the Confessions, around 400, Augustine quotes the joke reply, preparing hell for those who pry, and refuses it as a dodge. God made time with the world, so there was no then in which to sit idle. The question asks for a date before dates.",
+  "move": "A witty answer that everyone repeats may be the one its author rejected.",
+  "trap": "The hell quip, the line everyone remembers from the passage.",
+  "keywords": [
+    "augustine",
+    "confessions",
+    "creation",
+    "beginning of time"
+  ],
+  "era": "ancient",
+  "region": "africa",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Augustine, Confessions XI.12-13",
+  "source_kind": "book",
+  "reference": "Augustine, Confessions XI.12-13, trans. Chadwick, Oxford University Press, 1991",
+  "written": "2026-09-27"
+}

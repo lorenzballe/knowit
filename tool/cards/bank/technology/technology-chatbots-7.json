@@ -1,0 +1,33 @@
+{
+  "id": "technology-chatbots-7",
+  "topic": "technology",
+  "genre": "technology.ai",
+  "strand": "technology.ai.chatbots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a chatbot answer the same prompt differently even with its randomness turned fully off?",
+  "answer": "Because of other people's requests. Servers run many users' prompts together, and the batch size changes the order in which chips add up numbers; sums rounded in a different order differ in the last digits, and one changed word-piece alters everything after it. In 2025 researchers showed that batch-independent arithmetic makes answers repeat exactly.",
+  "move": "Two runs of the same thing can differ because of what ran beside them.",
+  "keywords": [
+    "nondeterminism",
+    "batching",
+    "floating point",
+    "inference",
+    "chatbots"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "He, Thinking Machines Lab, 2025",
+  "source_kind": "company",
+  "reference": "He & Thinking Machines Lab, Defeating Nondeterminism in LLM Inference, Connectionism, 2025",
+  "written": "2026-09-27"
+}

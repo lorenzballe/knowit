@@ -1,0 +1,40 @@
+{
+  "id": "psychology-confirmation-7",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.confirmation",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Cards show A, K, 2 and 3. To test the rule that an A never has a 2 behind it, which do most people turn?",
+  "options": [
+    "A and 2, the ones named",
+    "A and 3, which fit the rule",
+    "Only the A"
+  ],
+  "correct": 0,
+  "answer": "A and 2, the ones named, which here is correct. Jonathan Evans showed in 1973 that people mostly turn the cards a rule mentions, whatever the logic. With the plain rule that habit looks like seeking confirmation; with the negated rule it looks like flawless falsification. The famous error was largely attention to named things.",
+  "move": "Change the question slightly and see whether the mistake follows the logic or the wording.",
+  "trap": "Expecting people to seek the cards that would confirm the rule.",
+  "keywords": [
+    "selection task",
+    "matching bias",
+    "jonathan evans",
+    "falsification",
+    "logic"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Evans & Lynch, British Journal of Psychology, 1973",
+  "source_kind": "paper",
+  "reference": "Evans & Lynch, Matching bias in the selection task, British Journal of Psychology, 1973",
+  "written": "2026-09-27"
+}

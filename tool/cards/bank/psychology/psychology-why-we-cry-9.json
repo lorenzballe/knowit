@@ -1,0 +1,39 @@
+{
+  "id": "psychology-why-we-cry-9",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.why_we_cry",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "True or false: across 41 countries, faces with tears added were generally judged less competent than the same faces without?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In a large experiment run in 41 countries, adding tears made the same face look warmer and more helpless, and raised people's willingness to offer support. Competence ratings did not drop in general, only under particular conditions. Tears asked for help without, in most settings, making their owner look less capable.",
+  "move": "A signal that brings help need not cost the sender standing.",
+  "trap": "Assuming crying reads everywhere as weakness, as the stereotype says.",
+  "keywords": [
+    "tears",
+    "competence",
+    "warmth",
+    "social support",
+    "cross-cultural study"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zickfeld et al., 41-country tears study",
+  "source_kind": "paper",
+  "reference": "https://www.researchgate.net/publication/352005575_Tears_do_not_influence_competence_in_general_but_only_under_specific_circumstances_A_systematic_investigation_across_41_countries",
+  "written": "2026-09-27"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "nature-bringing-back-6",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.bringing_back",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should public conservation money go towards bringing extinct species back to life?",
+  "sides": [
+    "Yes, fund revival",
+    "No, save the living"
+  ],
+  "answer": "Revival draws money that would never reach conservation otherwise: private investors have put hundreds of millions into de-extinction companies. The tools it builds, from frozen cell banks to gene edits for disease resistance, already help endangered living species. A revived grazer or seed-spreader can also restore ecological roles that have been empty for centuries.",
+  "move": "Whichever side you took, it turns on whether revival money would exist otherwise.",
+  "counterpoint": "Bennett and colleagues costed revival for New Zealand and New South Wales: keeping revived species alive in the wild would absorb money that could protect more living species, a net loss of biodiversity. A revived animal also needs the habitat and safety whose absence killed it the first time. Rescue is cheaper before the last one dies.",
+  "keywords": [
+    "de-extinction",
+    "conservation funding",
+    "biodiversity",
+    "cloning"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bennett et al., Nature Ecology & Evolution, 2017",
+  "source_kind": "paper",
+  "reference": "Bennett et al., Spending limited resources on de-extinction could lead to net biodiversity loss, Nature Ecology & Evolution, 2017",
+  "written": "2026-09-27"
+}

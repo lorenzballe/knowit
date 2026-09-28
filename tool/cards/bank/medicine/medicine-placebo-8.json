@@ -1,0 +1,32 @@
+{
+  "id": "medicine-placebo-8",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.placebo",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the same painkiller dose relieve less pain when a hidden machine delivers it than when a doctor gives it openly?",
+  "answer": "Because part of any drug's effect is knowing it has arrived. In studies by Fabrizio Benedetti's group in Turin, surgical patients whose painkiller came by a hidden, pre-programmed infusion needed larger doses for the same relief as those who watched it given. Every open dose carries a placebo inside it; hidden dosing strips it out.",
+  "move": "Every visible treatment is two treatments: the substance and the scene around it.",
+  "keywords": [
+    "hidden administration",
+    "open treatment",
+    "expectation",
+    "postoperative pain"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Colloca et al., Lancet Neurology, 2004",
+  "source_kind": "paper",
+  "reference": "Colloca, Lopiano, Lanotte & Benedetti, Overt versus covert treatment for pain, anxiety, and Parkinson's disease, The Lancet Neurology, 2004",
+  "written": "2026-09-27"
+}
