@@ -13,7 +13,8 @@
 /// a few amounts; `scale` puts things orders of magnitude apart on one
 /// logarithmic line; `line` is a quantity that changes along another; `split`
 /// is one whole in parts; `timeline` is when; `area` is how much bigger, as
-/// the eye judges bigger. A card uses the one that shows its point and no
+/// the eye judges bigger; `tree` is a crowd split by one question and then
+/// another, in counts. A card uses the one that shows its point and no
 /// other, and a card whose point is not a quantity carries none.
 ///
 /// The JSON is kept exactly as it arrived, so a card read and written back
@@ -125,9 +126,34 @@ sealed class Diagram {
           );
         }).toList(),
       ),
+      'tree' => TreeDiagram(raw, caption, root: r.node()),
       _ => null,
     };
   }
+}
+
+/// A crowd split and split again, in counts rather than percentages: a
+/// thousand screened, ten of them ill, nine of those caught and eighty-nine
+/// of the healthy flagged too. Natural frequencies are how people get
+/// conditional probability right, so this is the picture for it.
+class TreeDiagram extends Diagram {
+  final TreeNode root;
+  const TreeDiagram(super.raw, super.caption, {required this.root});
+}
+
+class TreeNode {
+  final double n;
+  final String label;
+  final bool highlight;
+  final List<TreeNode> children;
+  const TreeNode({
+    required this.n,
+    required this.label,
+    this.highlight = false,
+    this.children = const [],
+  });
+
+  int get depth => children.isEmpty ? 0 : 1 + children.map((c) => c.depth).reduce((a, b) => a > b ? a : b);
 }
 
 /// One labelled amount: a bar, a point on a scale, a circle, a slice.
@@ -373,6 +399,16 @@ class _Reader {
       log: r.flag('log'),
     );
   }
+
+  /// This object as a tree node, its `branches` read as its children.
+  TreeNode node() => TreeNode(
+    n: number('n'),
+    label: text('label'),
+    highlight: flag('hi'),
+    children: [
+      for (final b in objects('branches', optional: true)) _Reader(b, id).node(),
+    ],
+  );
 
   List<(double, double)> points(String key) {
     final v = raw[key];

@@ -52,6 +52,7 @@ class _DiagramViewState extends State<DiagramView>
     LineDiagram() => const Duration(milliseconds: 2800),
     ScaleDiagram() => const Duration(milliseconds: 2600),
     TimelineDiagram() => const Duration(milliseconds: 2600),
+    TreeDiagram() => const Duration(milliseconds: 3200),
     _ => const Duration(milliseconds: 2200),
   };
 
@@ -141,6 +142,7 @@ _DiagramPainter _painterFor(Diagram d, Animation<double> t, Color ink) =>
       SplitDiagram() => _SplitPainter(d, t, ink),
       LineDiagram() => _LinePainter(d, t, ink),
       TimelineDiagram() => _TimelinePainter(d, t, ink),
+      TreeDiagram() => _TreePainter(d, t, ink),
     };
 
 // ── Shared drawing ─────────────────────────────────────────────────────────
@@ -962,7 +964,27 @@ class _LinePainter extends _DiagramPainter {
         k == 0 ? path.moveTo(pts[k].dx, pts[k].dy) : path.lineTo(pts[k].dx, pts[k].dy);
       }
       final strongOne = !anyHighlight || s.highlight;
-      canvas.drawPath(partial(path, p), stroke(strongOne ? strong : mid, strongOne ? 2.6 : 1.8));
+      final drawn = partial(path, p);
+      if (strongOne && order.length == 1 && p > 0) {
+        // A faint wash under the one curve, following the pen.
+        final tip = drawn.computeMetrics().fold<Offset?>(null, (_, m) => m.getTangentForOffset(m.length)?.position);
+        if (tip != null) {
+          final wash = Path.from(drawn)
+            ..lineTo(tip.dx, bottom)
+            ..lineTo(pts.first.dx, bottom)
+            ..close();
+          canvas.drawPath(wash, fill(inkAt(0.07)));
+        }
+      }
+      canvas.drawPath(drawn, stroke(strongOne ? strong : mid, strongOne ? 2.6 : 1.8));
+      if (p > 0 && p < 1) {
+        // The pen itself, while it is still drawing.
+        final tip = drawn.computeMetrics().fold<Offset?>(null, (_, m) => m.getTangentForOffset(m.length)?.position);
+        if (tip != null) {
+          canvas.drawCircle(tip, strongOne ? 4.2 : 3.2, fill(strongOne ? strong : mid));
+          canvas.drawCircle(tip, strongOne ? 8 : 6, fill(inkAt(0.14)));
+        }
+      }
       if (s.label.isNotEmpty) {
         final tp = layoutText(s.label, size: 11, weight: FontWeight.w600, alpha: strongOne ? 0.9 : 0.6, maxWidth: 150, maxLines: 1);
         final w = tp.width;
@@ -1208,6 +1230,116 @@ class _TimelinePainter extends _DiagramPainter {
         drawText(canvas, when, Offset(box.center.dx, box.top), anchor: const Offset(0.5, 0), opacity: o, rise: -4);
         drawText(canvas, what, Offset(box.center.dx, box.top + when.height), anchor: const Offset(0.5, 0), opacity: o, rise: -4);
       }
+    }
+  }
+}
+
+// ── tree: a crowd split, and split again, in counts ───────────────────────
+
+class _TreePainter extends _DiagramPainter {
+  final TreeDiagram d;
+  _TreePainter(this.d, super.t, super.ink);
+
+  static const _levelH = 96.0;
+  static const _blockH = 50.0;
+
+  @override
+  double heightFor(double width) => d.root.depth * _levelH + _blockH + 6;
+
+  /// Every node with where it sits: leaves share the width evenly, in
+  /// order; a parent sits over the middle of its children.
+  List<({TreeNode node, TreeNode? parent, int depth, double x})> _layout(double width) {
+    final leaves = <TreeNode>[];
+    void collect(TreeNode n) => n.children.isEmpty ? leaves.add(n) : n.children.forEach(collect);
+    collect(d.root);
+    final slot = width / leaves.length;
+    final out = <({TreeNode node, TreeNode? parent, int depth, double x})>[];
+    double place(TreeNode n, TreeNode? parent, int depth) {
+      final double x;
+      if (n.children.isEmpty) {
+        x = (leaves.indexOf(n) + 0.5) * slot;
+      } else {
+        final xs = [for (final c in n.children) place(c, n, depth + 1)];
+        x = (xs.first + xs.last) / 2;
+      }
+      out.add((node: n, parent: parent, depth: depth, x: x));
+      return x;
+    }
+
+    place(d.root, null, 0);
+    return out;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final v = t.value;
+    final nodes = _layout(size.width);
+    final xOf = {for (final e in nodes) e.node: e.x};
+    final leafCount = nodes.where((e) => e.node.children.isEmpty).length;
+    final slot = size.width / leafCount;
+    final total = d.root.n;
+    // Which nodes lie on the way to something highlighted, so the eye can
+    // follow the path down to it.
+    final onPath = <TreeNode>{};
+    bool mark(TreeNode n) {
+      var hit = n.highlight;
+      for (final c in n.children) {
+        if (mark(c)) hit = true;
+      }
+      if (hit) onPath.add(n);
+      return hit;
+    }
+
+    final anyHighlight = mark(d.root);
+    final depthMax = math.max(1, d.root.depth);
+    double linkStart(int depth) => 0.12 + (0.62 / depthMax) * (depth - 1);
+    final linkLen = 0.62 / depthMax * 0.8;
+
+    // Links first, beneath the numbers: each drawn from parent to child by
+    // the pen, as thick as the share of the crowd it carries.
+    for (final e in nodes) {
+      final parent = e.parent;
+      if (parent == null) continue;
+      final a = Offset(xOf[parent]!, (e.depth - 1) * _levelH + _blockH + 2);
+      final b = Offset(e.x, e.depth * _levelH - 4);
+      final path = Path()
+        ..moveTo(a.dx, a.dy)
+        ..cubicTo(a.dx, a.dy + 26, b.dx, b.dy - 26, b.dx, b.dy);
+      final start = linkStart(e.depth);
+      final p = phase(v, start, start + linkLen);
+      final w = 1.3 + 7 * math.sqrt(e.node.n / total);
+      final emphasised = !anyHighlight || onPath.contains(e.node);
+      final colour = emphasised ? inkAt(0.42) : inkAt(0.16);
+      canvas.drawPath(partial(path, p), stroke(colour, w)..strokeCap = StrokeCap.butt);
+    }
+
+    // The nodes: a number that counts up as it arrives, and what it counts.
+    for (final e in nodes) {
+      final n = e.node;
+      final top = e.depth * _levelH;
+      final start = e.depth == 0 ? 0.0 : linkStart(e.depth) + linkLen * 0.7;
+      final o = phase(v, start, start + 0.14);
+      if (o <= 0) continue;
+      final count = n.n == n.n.roundToDouble() ? (n.n * phase(v, start, start + 0.2)).roundToDouble() : n.n;
+      final strongOne = !anyHighlight || n.highlight || e.depth == 0;
+      final alpha = strongOne ? 0.95 : onPath.contains(n) ? 0.75 : 0.5;
+      final maxW = e.depth == 0 ? size.width * 0.7 : slot - 6;
+      final number = layoutText(sayNumber(count), size: 19, weight: FontWeight.w600, alpha: alpha, display: true);
+      final label = layoutText(n.label, size: 11, weight: n.highlight ? FontWeight.w700 : FontWeight.w500, alpha: alpha * 0.85, maxWidth: maxW, maxLines: 2, align: TextAlign.center);
+      final x = e.x.clamp(maxW / 2, size.width - maxW / 2);
+      if (n.highlight) {
+        // The count the card is about gets a ground of its own.
+        final g = phase(v, 0.78, 0.94);
+        final w = math.max(number.width, label.width) + 14;
+        final box = RRect.fromRectAndRadius(
+          Rect.fromCenter(center: Offset(x, top + (number.height + label.height) / 2), width: w, height: number.height + label.height + 8),
+          const Radius.circular(8),
+        );
+        if (g > 0) canvas.drawRRect(box, fill(inkAt(0.12 * g)));
+        if (g > 0) canvas.drawRRect(box, stroke(inkAt(0.5 * g), 1.2));
+      }
+      drawText(canvas, number, Offset(x, top), anchor: const Offset(0.5, 0), opacity: o, rise: 5);
+      drawText(canvas, label, Offset(x, top + number.height), anchor: const Offset(0.5, 0), opacity: o, rise: 5);
     }
   }
 }

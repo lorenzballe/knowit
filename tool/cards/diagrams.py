@@ -21,11 +21,11 @@ import math
 import sys
 from pathlib import Path
 
-KINDS = ("dots", "bars", "scale", "area", "split", "line", "timeline")
+KINDS = ("dots", "bars", "scale", "area", "split", "line", "timeline", "tree")
 
 # Room on a phone-width card, measured on the rendered previews.
 CAPTION_WORDS = 18
-LABEL_CHARS = {"dots": 34, "bars": 40, "scale": 26, "area": 26, "split": 22, "line": 30, "timeline": 34, "span": 22, "mark": 30}
+LABEL_CHARS = {"dots": 34, "bars": 40, "scale": 26, "area": 26, "split": 22, "line": 30, "timeline": 34, "span": 22, "mark": 30, "tree": 28}
 UNIT_CHARS = 24
 
 ITEMS = {"bars": (2, 6), "scale": (2, 5), "area": (2, 3), "split": (2, 5)}
@@ -56,6 +56,7 @@ def check_diagram(d) -> list[str]:
         "split": {"unit", "parts"},
         "line": {"x", "y", "series", "marks"},
         "timeline": {"from", "to", "events", "spans"},
+        "tree": {"n", "label", "branches"},
     }[kind]
     for key in d:
         if key not in known:
@@ -211,6 +212,41 @@ def check_diagram(d) -> list[str]:
                     out.append(f"timeline: span {i + 1} runs forwards inside the line")
                     continue
                 label(s.get("label"), f"span {i + 1}", LABEL_CHARS["span"])
+    elif kind == "tree":
+        leaves = []
+
+        def node(nd, where, depth):
+            if not isinstance(nd, dict) or not _num(nd.get("n")) or nd["n"] <= 0:
+                out.append(f"tree: {where} has a positive count n")
+                return
+            for k in nd:
+                if k not in ("n", "label", "hi", "branches", "type", "caption"):
+                    out.append(f"tree: {where} has no field {k!r}")
+            label(nd.get("label"), where, LABEL_CHARS["tree"])
+            kids = nd.get("branches")
+            if kids is None:
+                leaves.append(nd)
+                return
+            if depth >= 2:
+                out.append("tree: two levels of branching at most")
+                return
+            if not isinstance(kids, list) or not 2 <= len(kids) <= 3:
+                out.append(f"tree: {where} splits into 2 or 3 branches")
+                return
+            for i, c in enumerate(kids):
+                node(c, f"{where}, branch {i + 1}", depth + 1)
+            if all(isinstance(c, dict) and _num(c.get("n")) for c in kids):
+                s = sum(c["n"] for c in kids)
+                if abs(s - nd["n"]) > max(0.5, 0.01 * nd["n"]):
+                    out.append(f"tree: the branches of {where} add up to {s:g}, not {nd['n']:g}")
+
+        node(d, "the root", 0)
+        if "branches" not in d:
+            out.append("tree: the root splits")
+        if len(leaves) > 6:
+            out.append("tree: six ends at most, or the labels have no room")
+        if not any(isinstance(x, dict) and x.get("hi") for x in leaves):
+            out.append("tree: mark the count the card is about with hi")
     return out
 
 
