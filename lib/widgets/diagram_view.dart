@@ -241,13 +241,15 @@ const _superscripts = {
 
 /// A power of ten as a tick label: plain where a plain number is short,
 /// 10ⁿ where it is not.
-String sayPower(int k) {
-  if (k >= -2 && k <= 4) return sayNumber(math.pow(10, k).toDouble());
+String sayPower(int k, {int lowest = 0}) {
   String sup(int n) =>
       n.toString().split('').map((c) => _superscripts[c]).join();
   // The app's fonts have no superscript minus, so a small power is written
-  // as a fraction: 1/10⁶ for a millionth.
-  if (k < 0) return '1/10${sup(-k)}';
+  // as a fraction: 1/10⁶ for a millionth. When an axis goes that far down,
+  // every decade below 1 is written the same way, so the notation holds.
+  if (k < 0 && (k < -2 || lowest < -2))
+    return k == -1 ? '1/10' : '1/10${sup(-k)}';
+  if (k >= -2 && k <= 4) return sayNumber(math.pow(10.0, k).toDouble());
   return '10${sup(k)}';
 }
 
@@ -731,7 +733,7 @@ class _ScalePainter extends _DiagramPainter {
       // A decade an item sits on is already labelled by the item itself.
       final taken = items.any((it) => (_log10(it.value) - k).abs() < 0.02);
       if ((k - kLo) % every == 0 && !taken) {
-        final tick = layoutText(sayPower(k), size: 10, alpha: 0.5);
+        final tick = layoutText(sayPower(k, lowest: kLo), size: 10, alpha: 0.5);
         drawText(
           canvas,
           tick,
@@ -1204,7 +1206,9 @@ class _LinePainter extends _DiagramPainter {
       : (v - a.min) / (a.max - a.min);
 
   String _tickLabel(DiagramAxis a, double v) {
-    if (a.log) return sayPower(_log10(v).round());
+    if (a.log) {
+      return sayPower(_log10(v).round(), lowest: (_log10(a.min) - 1e-9).ceil());
+    }
     // Years are written without a thousands comma.
     if (a.min >= 1000 && a.max <= 2200 && v == v.roundToDouble()) {
       return v.round().toString();
