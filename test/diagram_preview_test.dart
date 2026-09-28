@@ -6,6 +6,7 @@
 //   flutter test test/diagram_preview_test.dart \
 //     --dart-define=DIAGRAM_PREVIEW=/some/dir \
 //     [--dart-define=DIAGRAM_SOURCE=cards.json] [--dart-define=DIAGRAM_ONLY=id1,id2]
+//     [--dart-define=DIAGRAM_FPS=30]
 //
 // With a source, it draws the diagrams in that file (a JSON list of objects
 // with `id` and `diagram`, the card's text taken from the bank); without
@@ -23,6 +24,8 @@ import 'package:flutter_test/flutter_test.dart';
 const _out = String.fromEnvironment('DIAGRAM_PREVIEW');
 const _source = String.fromEnvironment('DIAGRAM_SOURCE');
 const _only = String.fromEnvironment('DIAGRAM_ONLY');
+// Frames per second; when set, every frame is written too, under <id>/.
+const _fps = int.fromEnvironment('DIAGRAM_FPS');
 
 Map<String, Object?>? _bankCard(String id) {
   for (final dir in Directory('tool/cards/bank').listSync().whereType<Directory>()) {
@@ -84,6 +87,16 @@ void main() {
       if (d == null) {
         stderr.writeln('$id: no diagram this app draws');
         continue;
+      }
+      if (_fps > 0) {
+        // Every frame of the animation, for a video to be made from.
+        final dir = Directory('$_out/$id')..createSync(recursive: true);
+        final n = (diagramDuration(d).inMilliseconds * _fps / 1000).ceil();
+        for (var f = 0; f <= n; f++) {
+          final img = await renderDiagramStill(d, pill.ink, width, at: f / n, ground: pill.color, margin: margin, pixelRatio: 3);
+          final png = await img.toByteData(format: ui.ImageByteFormat.png);
+          File('${dir.path}/f_${f.toString().padLeft(4, '0')}.png').writeAsBytesSync(png!.buffer.asUint8List());
+        }
       }
       final frames = <ui.Image>[];
       for (final at in moments) {
