@@ -850,6 +850,29 @@ class AppLocalizationsZh extends AppLocalizations {
   String get introThirtyLine => '一条通知，五张卡片，和一段你不想中断的连续记录。';
 
   @override
+  String introNotifyWhen(String time) {
+    return '明天 $time';
+  }
+
+  @override
+  String get introNotifyLine => '今天的五张已就绪。第 1 天。';
+
+  @override
+  String get introOneOfFive => '1 / 5';
+
+  @override
+  String get introDayOne => '第 1 天';
+
+  @override
+  String get introTapTomorrow => '明天点按揭晓';
+
+  @override
+  String get introDayOneTomorrow => '第 1 天 · 明天';
+
+  @override
+  String get introDaySevenStreak => '第 7 天 · 第一段连续记录';
+
+  @override
   String get continueWithApple => '使用 Apple 继续';
 
   @override

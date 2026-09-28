@@ -870,6 +870,29 @@ class AppLocalizationsTr extends AppLocalizations {
       'Bir bildirim, beş kart ve bozmak istemeyeceğin bir seri.';
 
   @override
+  String introNotifyWhen(String time) {
+    return 'Yarın, $time';
+  }
+
+  @override
+  String get introNotifyLine => 'Beşin hazır. 1. gün.';
+
+  @override
+  String get introOneOfFive => '1 / 5';
+
+  @override
+  String get introDayOne => '1. GÜN';
+
+  @override
+  String get introTapTomorrow => 'CEVAP İÇİN YARIN DOKUN';
+
+  @override
+  String get introDayOneTomorrow => '1. GÜN · YARIN';
+
+  @override
+  String get introDaySevenStreak => '7. GÜN · İLK SERİ';
+
+  @override
   String get continueWithApple => 'Apple ile devam et';
 
   @override

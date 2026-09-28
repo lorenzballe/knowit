@@ -857,6 +857,29 @@ class AppLocalizationsKo extends AppLocalizations {
   String get introThirtyLine => '알림 하나, 카드 다섯 장, 그리고 끊고 싶지 않은 연속 기록.';
 
   @override
+  String introNotifyWhen(String time) {
+    return '내일 $time';
+  }
+
+  @override
+  String get introNotifyLine => '오늘의 다섯 장이 준비됐어요. 1일째.';
+
+  @override
+  String get introOneOfFive => '1 / 5';
+
+  @override
+  String get introDayOne => '1일째';
+
+  @override
+  String get introTapTomorrow => '내일 탭해서 확인하세요';
+
+  @override
+  String get introDayOneTomorrow => '1일째 · 내일';
+
+  @override
+  String get introDaySevenStreak => '7일째 · 첫 연속 기록';
+
+  @override
   String get continueWithApple => 'Apple로 계속';
 
   @override

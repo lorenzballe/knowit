@@ -876,6 +876,29 @@ class AppLocalizationsNl extends AppLocalizations {
       'Eén melding, vijf kaarten, en een reeks die je niet wilt breken.';
 
   @override
+  String introNotifyWhen(String time) {
+    return 'Morgen, $time';
+  }
+
+  @override
+  String get introNotifyLine => 'Je vijf staan klaar. Dag 1.';
+
+  @override
+  String get introOneOfFive => '1 VAN 5';
+
+  @override
+  String get introDayOne => 'DAG 1';
+
+  @override
+  String get introTapTomorrow => 'TIK MORGEN OM HET TE ONTDEKKEN';
+
+  @override
+  String get introDayOneTomorrow => 'DAG 1 · MORGEN';
+
+  @override
+  String get introDaySevenStreak => 'DAG 7 · EERSTE REEKS';
+
+  @override
   String get continueWithApple => 'Doorgaan met Apple';
 
   @override

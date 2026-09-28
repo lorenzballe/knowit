@@ -854,6 +854,29 @@ class AppLocalizationsJa extends AppLocalizations {
   String get introThirtyLine => '通知が1つ、カードが5枚、そして途切れさせたくない連続記録。';
 
   @override
+  String introNotifyWhen(String time) {
+    return '明日 $time';
+  }
+
+  @override
+  String get introNotifyLine => '今日の5枚が届いています。1日目。';
+
+  @override
+  String get introOneOfFive => '1 / 5';
+
+  @override
+  String get introDayOne => '1日目';
+
+  @override
+  String get introTapTomorrow => '明日タップして答えを見る';
+
+  @override
+  String get introDayOneTomorrow => '1日目 · 明日';
+
+  @override
+  String get introDaySevenStreak => '7日目 · 初めての連続記録';
+
+  @override
   String get continueWithApple => 'Appleで続ける';
 
   @override

@@ -903,6 +903,29 @@ class AppLocalizationsRu extends AppLocalizations {
       'Одно уведомление, пять карточек и серия, которую не захочется прервать.';
 
   @override
+  String introNotifyWhen(String time) {
+    return 'Завтра, $time';
+  }
+
+  @override
+  String get introNotifyLine => 'Ваши пять готовы. День 1.';
+
+  @override
+  String get introOneOfFive => '1 ИЗ 5';
+
+  @override
+  String get introDayOne => 'ДЕНЬ 1';
+
+  @override
+  String get introTapTomorrow => 'НАЖМИ ЗАВТРА, ЧТОБЫ УЗНАТЬ';
+
+  @override
+  String get introDayOneTomorrow => 'ДЕНЬ 1 · ЗАВТРА';
+
+  @override
+  String get introDaySevenStreak => 'ДЕНЬ 7 · ПЕРВАЯ СЕРИЯ';
+
+  @override
   String get continueWithApple => 'Продолжить с Apple';
 
   @override

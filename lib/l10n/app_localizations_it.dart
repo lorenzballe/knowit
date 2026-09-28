@@ -877,6 +877,29 @@ class AppLocalizationsIt extends AppLocalizations {
       'Una notifica, cinque carte, e una serie che non vorrai spezzare.';
 
   @override
+  String introNotifyWhen(String time) {
+    return 'Domani, $time';
+  }
+
+  @override
+  String get introNotifyLine => 'Le tue cinque sono pronte. Giorno 1.';
+
+  @override
+  String get introOneOfFive => '1 DI 5';
+
+  @override
+  String get introDayOne => 'GIORNO 1';
+
+  @override
+  String get introTapTomorrow => 'TOCCA DOMANI PER SCOPRIRLO';
+
+  @override
+  String get introDayOneTomorrow => 'GIORNO 1 · DOMANI';
+
+  @override
+  String get introDaySevenStreak => 'GIORNO 7 · PRIMA SERIE';
+
+  @override
   String get continueWithApple => 'Continua con Apple';
 
   @override
