@@ -23,11 +23,19 @@ class MagicCard extends StatefulWidget {
     required this.line,
     required this.action,
     required this.onAction,
+    this.note,
     this.skip,
     this.onSkip,
   });
 
   final String eyebrow;
+
+  /// Where the reader's week has got to, under the eyebrow, with a key to
+  /// find it by: how many welcome days are left, that the welcome week
+  /// ends tonight, or that a week kept makes tomorrow one more of their
+  /// own. Said here, beside the offer, rather than over the shelf, where
+  /// it would take room from the cards.
+  final (String, String)? note;
   final String headline;
   final String line;
   final String action;
@@ -93,6 +101,19 @@ class _MagicCardState extends State<MagicCard>
                 Eyebrow(widget.eyebrow),
               ],
             ),
+            if (widget.note case final (String, String) note) ...[
+              const SizedBox(height: 12),
+              Text(
+                note.$2,
+                key: ValueKey(note.$1),
+                style: AppText.body(
+                  size: 13.5,
+                  weight: FontWeight.w600,
+                  height: 1.35,
+                  color: ink.withValues(alpha: 0.85),
+                ),
+              ),
+            ],
             const Spacer(),
             // Two lines at most, in whatever size two lines take: the
             // Italian is two words longer, the German longer again.

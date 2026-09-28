@@ -36,7 +36,7 @@ import 'package:astuto/widgets/record_share_sheet.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/utils/share_text.dart';
 import 'package:astuto/widgets/chunky.dart';
-import 'package:astuto/widgets/flip_card.dart';
+import 'package:astuto/widgets/magic_card.dart';
 import 'package:astuto/widgets/scaled_text.dart';
 import 'package:astuto/widgets/share_day.dart';
 import 'package:astuto/widgets/motion.dart';
@@ -1734,22 +1734,9 @@ void main() {
     expect(find.text(front.barMove), findsOneWidget);
     expect(find.text(front.answer), findsNothing);
 
-    // A first day is a welcome day, and the header says how much of the
-    // week is left right under the day's line.
-    final Finder welcome = find.byKey(const ValueKey('welcome-left'));
-    expect(welcome, findsOneWidget);
-    expect(
-      find.text('Your first week: 6 more days with four of the five yours.'),
-      findsOneWidget,
-    );
-    final double dayLine = tester
-        .getBottomLeft(find.text('Day 1 · five read'))
-        .dy;
-    expect(tester.getTopLeft(welcome).dy, greaterThan(dayLine));
-    expect(
-      tester.getBottomLeft(welcome).dy,
-      lessThan(tester.getTopLeft(find.byType(FlipCard)).dy),
-    );
+    // The week is said on the card after the fifth, not over the shelf:
+    // the header and the eyebrow are what they are on every evening.
+    expect(find.byKey(const ValueKey('welcome-left')), findsNothing);
   });
 
   testWidgets('the free plan is offered the upsell instead', (tester) async {
@@ -1796,6 +1783,17 @@ void main() {
         expect(find.text('Make all five yours.'), findsOneWidget);
         expect(find.text('Try 7 days free'), findsOneWidget);
         expect(find.text('Skip'), findsNothing);
+        // A first day is a welcome day, and the card says how much of the
+        // week is left, under its eyebrow.
+        expect(
+          find.descendant(
+            of: find.byKey(const ValueKey('magic-card')),
+            matching: find.text(
+              'Your first week: 6 more days with four of the five yours.',
+            ),
+          ),
+          findsOneWidget,
+        );
         await tester.pump(const Duration(seconds: 6));
         await _settle(tester);
         expect(find.text('Day 1 · five read'), findsNothing);
@@ -4631,98 +4629,107 @@ void main() {
     });
   });
 
-  group('the finished day on a phone', () {
+  group('the card after the fifth on a phone', () {
     // Outside the test body: FontLoader needs real asynchrony.
     setUpAll(_loadRealFonts);
 
-    Future<Rect> frontCard(
-      WidgetTester tester,
-      Map<String, Object> store,
-    ) async {
+    testWidgets('says the week on the shelf too, and the cards keep their '
+        'size', (tester) async {
       tester.view.physicalSize = const Size(402, 874) * 3;
       tester.view.devicePixelRatio = 3;
       addTearDown(tester.view.reset);
-      SharedPreferences.setMockInitialValues(store);
-      await tester.pumpWidget(const SizedBox());
+      SharedPreferences.setMockInitialValues(_installed());
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
       await _finishDay(tester);
-      return tester.getRect(find.byType(FlipCard));
-    }
 
-    testWidgets('the line about the plan takes no room from the cards', (
-      tester,
-    ) async {
-      // An evening with nothing to say about the plan: past the welcome
-      // week, and not the evening a week is kept.
-      final DateTime now = DateTime.now();
-      final DateTime today = DateTime(now.year, now.month, now.day);
-      final Rect plain = await frontCard(tester, {
-        ..._installed(),
-        'knowit.streak': 9,
-        'knowit.lastCompletionDate': dateKey(
-          today.subtract(const Duration(days: 1)),
-        ),
-        'knowit.completedDates': [
-          for (var back = 9; back >= 1; back--)
-            dateKey(today.subtract(Duration(days: back))),
-        ],
-      });
-      expect(find.byKey(const ValueKey('welcome-left')), findsNothing);
-      expect(find.byKey(const ValueKey('week-reward')), findsNothing);
+      // The shelf opens on the first card, with the eyebrow over it and
+      // nothing about the week in the way.
       expect(find.text("TODAY'S FIVE"), findsOneWidget);
+      expect(find.byKey(const ValueKey('welcome-left')), findsNothing);
 
-      // A welcome evening: the line under the day's, where the eyebrow was,
-      // and the card exactly where and as big as it was.
-      final Rect welcome = await frontCard(tester, _installed());
-      final Finder line = find.byKey(const ValueKey('welcome-left'));
-      expect(line, findsOneWidget);
-      expect(welcome, plain);
-      final double dayLine = tester
-          .getBottomLeft(find.text('Day 1 · five read'))
-          .dy;
-      expect(tester.getTopLeft(line).dy, moreOrLessEquals(dayLine + 4));
-      expect(tester.getBottomLeft(line).dy, lessThan(welcome.top));
-      // The eyebrow gave way: still laid out, not drawn.
-      final Visibility eyebrow = tester.widget<Visibility>(
-        find
-            .ancestor(
-              of: find.text("TODAY'S FIVE"),
-              matching: find.byType(Visibility),
-            )
-            .first,
+      // The last card on the shelf is the offer, and it says it there.
+      for (var i = 0; i < kPillsPerDay; i++) {
+        await tester.fling(
+          find.byType(TodayDoneView),
+          const Offset(-300, 0),
+          900,
+        );
+        await _settle(tester);
+      }
+      final Finder magic = find.byKey(const ValueKey('shelf-magic'));
+      expect(magic, findsOneWidget);
+      expect(
+        find.descendant(
+          of: magic,
+          matching: find.byKey(const ValueKey('welcome-left')),
+        ),
+        findsOneWidget,
       );
-      expect(eyebrow.visible, isFalse);
     });
 
-    testWidgets('every language says it in the same room', (tester) async {
-      // The longest the line gets: the evening the welcome week ends, and
-      // the evening a week is kept, on a narrow phone.
-      final List<String> all = [];
+    testWidgets('fits the longest of it in every language on a small phone', (
+      tester,
+    ) async {
+      // The card's size on a small phone, measured in the app itself.
+      tester.view.physicalSize = const Size(375, 667) * 2;
+      tester.view.devicePixelRatio = 2;
+      addTearDown(tester.view.reset);
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      for (var i = 0; i < kPillsPerDay; i++) {
+        await _swipeCardAway(tester);
+      }
+      final Size card = tester.getSize(
+        find.byKey(const ValueKey('magic-card')),
+      );
+
       for (final Locale locale in AppLocalizations.supportedLocales) {
         final l = await AppLocalizations.delegate.load(locale);
-        all.addAll([
+        final notes = [
           l.welcomeDaysLeft(6),
           l.welcomeDaysLeft(1),
           l.welcomeWeekEnds,
           l.weekKeptThreeOwn,
-        ]);
-      }
-      final TextStyle style = AppText.body(
-        size: 12.5,
-        weight: FontWeight.w600,
-        height: 1.35,
-      );
-      for (final String text in all) {
-        final painter = TextPainter(
-          text: TextSpan(text: text, style: style),
-          textDirection: TextDirection.ltr,
-        )..layout(maxWidth: 360 - 42 - 24);
-        expect(
-          painter.computeLineMetrics(),
-          hasLength(lessThanOrEqualTo(2)),
-          reason: text,
+        ];
+        final String longest = notes.reduce(
+          (a, b) => a.length >= b.length ? a : b,
         );
+        for (final String headline in [
+          l.plusCardHeadline,
+          l.theOthersYours(3),
+        ]) {
+          await tester.pumpWidget(
+            MaterialApp(
+              locale: locale,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              theme: buildAstutoTheme(Brightness.dark),
+              home: Scaffold(
+                body: Center(
+                  child: SizedBox.fromSize(
+                    size: card,
+                    child: MagicCard(
+                      eyebrow: l.plusNameCaps,
+                      note: ('note', longest),
+                      headline: headline,
+                      line: l.magicLine,
+                      action: l.magicUnlock,
+                      onAction: () {},
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+          await tester.pump();
+          expect(
+            tester.takeException(),
+            isNull,
+            reason: '${locale.languageCode}: $headline / $longest',
+          );
+        }
       }
     });
   });

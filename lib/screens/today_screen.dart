@@ -179,12 +179,14 @@ class _TodayScreenState extends State<TodayScreen> {
               index: app.todayIndex,
               // After the last pill, on the free plan, the card that offers
               // the rest of the day: the cards dealt at random, the reader's
-              // own instead. It is thrown like the rest.
+              // own instead. It is thrown like the rest, and it says where
+              // the reader's week has got to.
               trailing: app.isPlus
                   ? null
                   : MagicCard(
                       key: const ValueKey('magic-card'),
                       eyebrow: context.l10n.plusNameCaps,
+                      note: weekNoteOf(context, app),
                       // Through the welcome week four of five are already
                       // theirs: what Astute+ offers is that they stay so.
                       headline: app.inWelcome
@@ -242,7 +244,6 @@ class _TodayScreenState extends State<TodayScreen> {
     final int count = deck.length + (app.isPlus ? 0 : 1);
     final int at = _shelfAt.clamp(0, count - 1);
     final Color colour = at < deck.length ? deck[at].color : kSpectrum[9];
-    final (String, String)? plan = _ShelfHeader.planOf(context, app);
 
     return Stack(
       key: key,
@@ -252,14 +253,7 @@ class _TodayScreenState extends State<TodayScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              // The margin under the header is the plan line's to start in,
-              // on the evenings there is one (see TodayDoneView.plan).
-              padding: EdgeInsets.fromLTRB(
-                24,
-                0,
-                24,
-                plan == null ? kShelfHeaderGap : 0,
-              ),
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 15),
               child: _ShelfHeader(app: app, colour: colour),
             ),
             Expanded(
@@ -267,7 +261,6 @@ class _TodayScreenState extends State<TodayScreen> {
                 app: app,
                 at: at,
                 onPick: (k) => setState(() => _shelfAt = k),
-                plan: plan,
               ),
             ),
           ],
@@ -362,12 +355,7 @@ class _ReadingHeader extends StatelessWidget {
 /// The header once the day is done: a dot in the front card's colour, which
 /// day this was, and at the far end what was kept. One line, because the
 /// screen under it is the subject and a header should say where you are
-/// rather than take a third of the room saying it — and under it, on the
-/// free plan, the one thing about the plan worth saying tonight: how the
-/// first week is going, or that tomorrow a week kept is rewarded. That
-/// second line is drawn by the shelf, in the room its eyebrow and this
-/// header's margin take on every other evening, so the cards under it are
-/// the size they are on every other evening (see TodayDoneView.plan).
+/// rather than take a third of the room saying it.
 /// Two pools of the front card's colour thrown on the ground, one high
 /// behind the card and a fainter one low behind the controls — the
 /// artboard's two blurred circles, at its positions but at a third of its
@@ -481,24 +469,6 @@ class _ShelfHeader extends StatelessWidget {
     final int liked = app.likedToday;
     if (liked == 0) return context.l10n.holdACardYouLike;
     return context.l10n.likedToday(liked);
-  }
-
-  /// What the plan does next, when there is something to say: every
-  /// evening of the welcome week how many of its days are left, so four of
-  /// five being theirs reads as a welcome with an end rather than as the
-  /// rule; the evening it ends, what tomorrow looks like and what Astute+
-  /// keeps; and the evening a week is kept, that tomorrow has one more of
-  /// their own, said once, where it reads as a reward rather than a rule.
-  static (String, String)? planOf(BuildContext context, AppState app) {
-    if (app.welcomeEndsTonight) {
-      return ('welcome-ends', context.l10n.welcomeWeekEnds);
-    }
-    final int left = app.welcomeDaysLeftAfterToday;
-    if (left > 0) return ('welcome-left', context.l10n.welcomeDaysLeft(left));
-    if (app.tomorrowIsRewarded) {
-      return ('week-reward', context.l10n.weekKeptThreeOwn);
-    }
-    return null;
   }
 
   @override

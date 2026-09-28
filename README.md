@@ -148,21 +148,10 @@ it names is the one that will actually be on top in the morning. A card
 that came due and found no room in the five waits here too. The way on is
 **Your journey** — the day just went somewhere on the ladder, and that is
 the one thing worth a button at the end of it; Explore is a tab already.
-On the free plan the header has a second line, under the day's own, for
-the one thing about the plan worth saying tonight: every evening of the
-welcome week how many of its days are left, the seventh evening that the
-week ends tonight, and the evening a week is kept that three of tomorrow's
-five are the reader's own instead of two. It sits under "Day 2 · five
-read" rather than down by the line about tomorrow, because that is the
-line read first, and it takes no room from the cards: it is drawn in the
-room the header's margin and the eyebrow over the shelf ("Today's five ·
-01 / 05") take on every other evening, and the eyebrow, which says what
-the header and the dots already say, gives way to it. The card is where
-it is and as big as it is on every evening, which a test on a phone holds
-it to, and every one of these lines fits in two lines in all thirteen
-languages on a 360-point phone, which a second test holds them to. The
-evening the week ends says only the fact; what Astute+ keeps is on the
-card after the fifth.
+The evenings there is something to say about the plan, it is said on the
+card after the fifth rather than on this screen (see *The sixth card*):
+the shelf is the day's five, and a line added over them would take room
+from the cards.
 
 ## The sixth card
 
@@ -185,6 +174,17 @@ still. `PillCardStack` takes it as `trailing`, one card after the deck
 with no back and nothing to answer; the shell keeps the tabs locked while
 any deck is on the table, the sixth card included, because a throw and a
 swipe to the next tab are the same gesture and the deck has to win it.
+
+It is also where the week is said, under its eyebrow, once the day is done
+(`weekNoteOf`): every evening of the welcome week how many of its days are
+left, so four of five being the reader's own reads as a welcome with an end
+rather than as the rule; the seventh evening that the week ends tonight and
+what tomorrow looks like; and the evening a week is kept that tomorrow
+three of the five are the reader's own instead of two, said once, the night
+before, where it reads as a reward rather than a rule. The offer and where
+the week has got to are the same subject, so they share a card, and a test
+holds the longest of them to fitting it in every language on a small
+phone.
 
 ## Your journey
 
@@ -594,10 +594,10 @@ judged, and the onboarding has just asked the reader what they like: a
 first morning of cards they did not choose would answer that the
 question was for show. So the first week is theirs, dealt by the reading of
 their onboarding, a notch above, opening on what they came for. Every
-evening of it the finished day says how many welcome days are left, and on
-the seventh it says the week ends tonight, what tomorrow looks like, and
-what Astute+ keeps — so the eighth morning is a thing they were told, not
-one they notice. Through the week the card after the fifth offers to *make
+evening of it the card after the fifth says how many welcome days are
+left, and on the seventh that the week ends tonight and what tomorrow
+looks like, beside what Astute+ keeps — so the eighth morning is a thing
+they were told, not one they notice. Through the week the card after the fifth offers to *make
 all five yours*, since four already are.
 
 From the eighth day, on the free plan two of them are the reader's own —

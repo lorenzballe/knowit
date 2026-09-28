@@ -39,7 +39,7 @@ const int kOwnCardsFree = 2;
 /// choose would answer that the question was for show. So the first week
 /// is theirs, read by `ReaderProfile`, a notch above their level, opening
 /// on what they came for. From the eighth day the free day is two of their
-/// own and three at random, and the finished day says so the evening
+/// own and three at random, and the card after the fifth says so the evening
 /// before it changes.
 const int kWelcomeDays = 7;
 const int kOwnCardsWelcome = 4;
