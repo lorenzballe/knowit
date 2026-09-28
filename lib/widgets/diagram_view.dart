@@ -903,7 +903,13 @@ class _AreaPainter extends _DiagramPainter {
     ];
     // Circles sit side by side, pushed apart where their labels need room.
     final natural = [
-      for (final i in items) layoutText(i.label, size: 11.5, maxLines: 1).width,
+      // Name or amount, whichever is wider, plus a little air between.
+      for (final i in items)
+        math.max(
+              layoutText(i.label, size: 11.5, maxLines: 1).width,
+              layoutText(sayAmount(i.value, d.unit), size: 10.5).width,
+            ) +
+            12,
     ];
     final gaps = [
       for (var i = 0; i + 1 < items.length; i++)
