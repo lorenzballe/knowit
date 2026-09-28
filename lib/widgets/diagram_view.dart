@@ -260,18 +260,19 @@ String sayPower(int k, {int lowest = 0}) {
 /// An amount with its unit, the way it is written: a currency sign before
 /// the number (€100), a per cent sign against it (57%), any other unit
 /// after it with a space (3.14 mm²).
-String sayAmount(double v, String unit) {
+String sayAmount(double v, String unit, {String? said}) {
   final u = unit.trim();
-  if (u.isEmpty) return sayNumber(v);
+  final n = said ?? sayNumber(v);
+  if (u.isEmpty) return n;
   if (const {'€', r'$', '£', '¥', '₹'}.contains(u)) {
     // Money with cents shows both digits: $16.50, never $16.5.
     final cents = (v * 100).round() % 100 != 0 && v.abs() < 1000;
-    return '$u${cents ? v.toStringAsFixed(2) : sayNumber(v)}';
+    return '$u${cents ? v.toStringAsFixed(2) : n}';
   }
   if (u.startsWith('%') || u == '¢' || u == '°' || u == '×') {
-    return '${sayNumber(v)}$u';
+    return '$n$u';
   }
-  return '${sayNumber(v)} $u';
+  return '$n $u';
 }
 
 String sayFactor(double f) => '×${_twoSig(f)}';
@@ -585,7 +586,25 @@ class _BarsPainter extends _DiagramPainter {
   /// A unit of more than a word or two is written once, above the bars,
   /// rather than after every figure.
   bool get _unitOnce => d.unit.length > 8;
-  String _amount(double v) => _unitOnce ? sayNumber(v) : sayAmount(v, d.unit);
+  String _amount(double v) {
+    final said = _places > 0 && v.abs() < 1000
+        ? v.toStringAsFixed(_places)
+        : null;
+    return _unitOnce
+        ? (said ?? sayNumber(v))
+        : sayAmount(v, d.unit, said: said);
+  }
+
+  /// One number of decimals for every bar, so 1.0 stands beside 6.2
+  /// rather than a bare 1.
+  int get _places => d.items
+      .map((i) {
+        final s = sayNumber(i.value);
+        return s.contains('.') && !s.contains(' ')
+            ? s.length - s.indexOf('.') - 1
+            : 0;
+      })
+      .fold(0, math.max);
   double get _head => _unitOnce ? 18 : 0;
 
   @override
@@ -659,13 +678,9 @@ class _BarsPainter extends _DiagramPainter {
       // Counting up in the same steps as the final figure: whole numbers
       // stay whole on the way.
       final raw = item.value * grow;
-      final said = sayNumber(item.value);
-      final places = said.contains('.') && !said.contains(' ')
-          ? said.length - said.indexOf('.') - 1
-          : 0;
       final shown = grow >= 1
           ? item.value
-          : double.parse(raw.toStringAsFixed(places));
+          : double.parse(raw.toStringAsFixed(_places));
       final value = layoutText(
         _amount(shown),
         size: 14,
@@ -1185,7 +1200,7 @@ class _LinePainter extends _DiagramPainter {
   @override
   double heightFor(double width) => 200;
 
-  List<double> _ticks(DiagramAxis a) {
+  List<double> _ticks(DiagramAxis a, {bool whole = false}) {
     if (a.log) {
       final lo = (_log10(a.min) - 1e-9).ceil();
       final hi = (_log10(a.max) + 1e-9).floor();
@@ -1194,12 +1209,14 @@ class _LinePainter extends _DiagramPainter {
     final span = a.max - a.min;
     final raw = span / 4;
     final mag = math.pow(10, (_log10(raw)).floor()).toDouble();
-    final step = [
+    final stepRaw = [
       1,
       2,
       5,
       10,
     ].map((m) => m * mag).firstWhere((s) => span / s <= 6);
+    // Counts (siblings, days, doses) get whole-number ticks only.
+    final step = whole ? math.max(1.0, stepRaw.roundToDouble()) : stepRaw;
     final first = (a.min / step).ceil() * step;
     return [for (var x = first; x <= a.max + step * 1e-9; x += step) x];
   }
@@ -1312,7 +1329,10 @@ class _LinePainter extends _DiagramPainter {
         opacity: tickP,
       );
     }
-    for (final x in _ticks(d.x)) {
+    final wholeX = d.series.every(
+      (s) => s.points.every((p) => p.$1 == p.$1.roundToDouble()),
+    );
+    for (final x in _ticks(d.x, whole: wholeX)) {
       final p = at(x, d.y.min);
       drawText(
         canvas,
