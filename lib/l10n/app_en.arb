@@ -1504,9 +1504,9 @@
  "lovedIn": "Loved in {subject}",
  "@lovedIn": {"placeholders": {"subject": {"type": "String"}}},
  "lovedLine": "What readers kept most, and you have not read yet",
- "welcomeDaysLeft": "{n, plural, =1{Your first week: tomorrow is its last day, four of the five yours.} other{Your first week: {n} more days with four of the five yours.}}",
+ "welcomeDaysLeft": "{n, plural, =1{Your first two weeks: tomorrow is the last day, four of the five yours.} other{Your first two weeks: {n} more days with four of the five yours.}}",
  "@welcomeDaysLeft": {"placeholders": {"n": {"type": "int"}}},
- "welcomeWeekEnds": "Your first week ends tonight. From tomorrow, two of the five are yours.",
+ "welcomeWeekEnds": "Your first two weeks end tonight. From tomorrow, two of the five are yours.",
  "forYouShelf": "For you",
  "forYouLine": "What your reading puts first",
  "exploreOffline": "You are offline. This is Explore as it was last read."

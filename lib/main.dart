@@ -421,11 +421,15 @@ class _AstutoRootState extends State<AstutoRoot> {
 
   /// A step passed over rather than answered.
   void _skip(_Stage from, _Stage to) {
+    _noteSkipped(from);
+    _go(to);
+  }
+
+  void _noteSkipped(_Stage from) {
     Analytics.capture('onboarding step skipped', {
       'step': from.screen,
       'ms_on_step': _stageClock.elapsedMilliseconds,
     });
-    _go(to);
   }
 
   /// Returns whether the intro should move on. Only backing out of the
@@ -539,7 +543,15 @@ class _AstutoRootState extends State<AstutoRoot> {
             await _app.setTopicMix(weights);
             if (mounted) _go(_Stage.genres);
           },
-          onSkip: () => _skip(_Stage.subjects, _Stage.offer),
+          // Skipping the mix skips the offer too, straight to the first
+          // day: a reader who has said nothing about what they want to
+          // read, and has not seen a card yet, does not know what Astute+
+          // would be selling them. The card after the fifth offers it
+          // every evening instead.
+          onSkip: () {
+            _noteSkipped(_Stage.subjects);
+            _finishOnboarding();
+          },
         );
 
       // The same answer, one layer finer: which six of each subject, and
@@ -558,8 +570,8 @@ class _AstutoRootState extends State<AstutoRoot> {
       // The offer, once, straight after the mix: the reader has just said
       // what they want to read about, and this is where the day made of
       // exactly that is sold — with the way past it written under it.
-      // Skipping the mix lands here too; the offer is not a reward for
-      // finishing a form.
+      // Passing over the genres lands here too, because the subjects were
+      // set; passing over the subjects does not (see above).
       case _Stage.offer:
         return PaywallScreen(
           app: _app,

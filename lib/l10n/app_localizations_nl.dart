@@ -1755,15 +1755,15 @@ class AppLocalizationsNl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'Je eerste week: nog $n dagen met vier van de vijf van jou.',
-      one: 'Je eerste week: morgen is de laatste dag, vier van de vijf zijn van jou.',
+      other: 'Je eerste twee weken: nog $n dagen met vier van de vijf van jou.',
+      one: 'Je eerste twee weken: morgen is de laatste dag, vier van de vijf zijn van jou.',
     );
     return '$_temp0';
   }
 
   @override
   String get welcomeWeekEnds =>
-      'Je eerste week eindigt vanavond. Vanaf morgen zijn twee van de vijf van jou.';
+      'Je eerste twee weken eindigen vanavond. Vanaf morgen zijn twee van de vijf van jou.';
 
   @override
   String get forYouShelf => 'Voor jou';

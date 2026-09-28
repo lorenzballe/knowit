@@ -1762,15 +1762,15 @@ class AppLocalizationsFr extends AppLocalizations {
       n,
       locale: localeName,
       other:
-          'Ta première semaine : encore $n jours avec quatre des cinq à toi.',
-      one: 'Ta première semaine : demain est son dernier jour, quatre des cinq sont à toi.',
+          'Tes deux premières semaines : encore $n jours avec quatre des cinq à toi.',
+      one: 'Tes deux premières semaines : demain est le dernier jour, quatre des cinq sont à toi.',
     );
     return '$_temp0';
   }
 
   @override
   String get welcomeWeekEnds =>
-      'Ta première semaine se termine ce soir. Dès demain, deux des cinq sont à toi.';
+      'Tes deux premières semaines se terminent ce soir. Dès demain, deux des cinq sont à toi.';
 
   @override
   String get forYouShelf => 'Pour toi';

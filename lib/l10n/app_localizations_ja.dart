@@ -1692,13 +1692,13 @@ class AppLocalizationsJa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '最初の1週間：5枚中4枚があなたのカードの日が、あと$n日。',
+      other: '最初の2週間：5枚中4枚があなたのカードの日が、あと$n日。',
     );
     return '$_temp0';
   }
 
   @override
-  String get welcomeWeekEnds => '最初の1週間は今夜で終わり。明日からは5枚中2枚があなたのカード。';
+  String get welcomeWeekEnds => '最初の2週間は今夜で終わり。明日からは5枚中2枚があなたのカード。';
 
   @override
   String get forYouShelf => 'あなたへ';

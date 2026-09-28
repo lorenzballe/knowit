@@ -1704,13 +1704,13 @@ class AppLocalizationsKo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '첫 주: 다섯 장 중 네 장이 당신의 카드인 날이 $n일 남았어요.',
+      other: '첫 2주: 다섯 장 중 네 장이 당신의 카드인 날이 $n일 남았어요.',
     );
     return '$_temp0';
   }
 
   @override
-  String get welcomeWeekEnds => '첫 주가 오늘 밤 끝나요. 내일부터 다섯 장 중 두 장이 당신의 카드예요.';
+  String get welcomeWeekEnds => '첫 2주가 오늘 밤 끝나요. 내일부터 다섯 장 중 두 장이 당신의 카드예요.';
 
   @override
   String get forYouShelf => '당신을 위해';

@@ -402,8 +402,8 @@
  "lovedSinceTheStart": "Le più amate da sempre",
  "lovedIn": "Le più amate in {subject}",
  "lovedLine": "Quelle che i lettori hanno tenuto di più, e che non hai ancora letto",
- "welcomeDaysLeft": "{n, plural, =1{La tua prima settimana: domani è l'ultimo giorno, quattro delle cinque sono tue.} other{La tua prima settimana: ancora {n} giorni con quattro delle cinque tue.}}",
- "welcomeWeekEnds": "La tua prima settimana finisce stasera. Da domani, due delle cinque sono tue.",
+ "welcomeDaysLeft": "{n, plural, =1{Le tue prime due settimane: domani è l'ultimo giorno, quattro delle cinque sono tue.} other{Le tue prime due settimane: ancora {n} giorni con quattro delle cinque tue.}}",
+ "welcomeWeekEnds": "Le tue prime due settimane finiscono stasera. Da domani, due delle cinque sono tue.",
  "forYouShelf": "Per te",
  "forYouLine": "Quello che la tua lettura mette al primo posto",
  "exploreOffline": "Sei offline. Questa è Esplora come l'hai letta l'ultima volta."

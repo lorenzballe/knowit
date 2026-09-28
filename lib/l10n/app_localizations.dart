@@ -2535,13 +2535,13 @@ abstract class AppLocalizations {
   /// No description provided for @welcomeDaysLeft.
   ///
   /// In en, this message translates to:
-  /// **'{n, plural, =1{Your first week: tomorrow is its last day, four of the five yours.} other{Your first week: {n} more days with four of the five yours.}}'**
+  /// **'{n, plural, =1{Your first two weeks: tomorrow is the last day, four of the five yours.} other{Your first two weeks: {n} more days with four of the five yours.}}'**
   String welcomeDaysLeft(int n);
 
   /// No description provided for @welcomeWeekEnds.
   ///
   /// In en, this message translates to:
-  /// **'Your first week ends tonight. From tomorrow, two of the five are yours.'**
+  /// **'Your first two weeks end tonight. From tomorrow, two of the five are yours.'**
   String get welcomeWeekEnds;
 
   /// No description provided for @forYouShelf.

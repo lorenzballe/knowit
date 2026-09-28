@@ -1805,19 +1805,19 @@ class AppLocalizationsPl extends AppLocalizations {
       n,
       locale: localeName,
       other:
-          'Twój pierwszy tydzień: jeszcze $n dni, w których cztery z pięciu są twoje.',
+          'Twoje pierwsze dwa tygodnie: jeszcze $n dni, w których cztery z pięciu są twoje.',
       many:
-          'Twój pierwszy tydzień: jeszcze $n dni, w których cztery z pięciu są twoje.',
+          'Twoje pierwsze dwa tygodnie: jeszcze $n dni, w których cztery z pięciu są twoje.',
       few:
-          'Twój pierwszy tydzień: jeszcze $n dni, w których cztery z pięciu są twoje.',
-      one: 'Twój pierwszy tydzień: jutro ostatni dzień, cztery z pięciu są twoje.',
+          'Twoje pierwsze dwa tygodnie: jeszcze $n dni, w których cztery z pięciu są twoje.',
+      one: 'Twoje pierwsze dwa tygodnie: jutro ostatni dzień, cztery z pięciu są twoje.',
     );
     return '$_temp0';
   }
 
   @override
   String get welcomeWeekEnds =>
-      'Twój pierwszy tydzień kończy się dziś wieczorem. Od jutra dwie z pięciu są twoje.';
+      'Twoje pierwsze dwa tygodnie kończą się dziś wieczorem. Od jutra dwie z pięciu są twoje.';
 
   @override
   String get forYouShelf => 'Dla ciebie';

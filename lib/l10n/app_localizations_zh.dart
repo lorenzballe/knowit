@@ -1693,13 +1693,13 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '你的第一周：五张中有四张是你的，还剩$n天。',
+      other: '你的前两周：五张中有四张是你的，还剩$n天。',
     );
     return '$_temp0';
   }
 
   @override
-  String get welcomeWeekEnds => '你的第一周今晚结束。从明天起，五张中有两张是你的。';
+  String get welcomeWeekEnds => '你的前两周今晚结束。从明天起，五张中有两张是你的。';
 
   @override
   String get forYouShelf => '为你推荐';

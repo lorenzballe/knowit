@@ -172,8 +172,9 @@ test('a free reader\'s first day is a welcome day: four of their own and one at 
   assert.notDeepEqual(dealDay(bank, p, DAY, 'reader-2').own, d.own);
 });
 
-test('after the welcome week: two of their own, and three at random from the mix as it was set', () => {
-  const done = Array.from({ length: WELCOME_DAYS }, (_, i) => shiftDate('2026-09-20', i));
+test('after the welcome: two of their own, and three at random from the mix as it was set', () => {
+  // Every day of the welcome read, the last of them yesterday.
+  const done = Array.from({ length: WELCOME_DAYS }, (_, i) => shiftDate(DAY, i - WELCOME_DAYS));
   const snapshot = { topicWeights: { space: 1, science: 0.5 }, pickedTopics: ['space', 'science', 'thinking'], completedDates: done, seenIds: ['space-2'] };
   const p = profileOf(snapshot);
   assert.equal(dayNumberOf(p, DAY), WELCOME_DAYS);

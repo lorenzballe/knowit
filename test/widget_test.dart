@@ -1489,7 +1489,8 @@ void main() {
     expect(find.byType(PillCardStack), findsOneWidget);
   });
 
-  testWidgets('skipping the mix still meets the offer once', (tester) async {
+  testWidgets('skipping the mix goes straight to the first day, with no '
+      'offer', (tester) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -1498,10 +1499,11 @@ void main() {
     // The mix's own Skip, in its heading's row.
     await tester.tap(find.text('Skip'));
     await _settle(tester);
-    // The offer is not a reward for finishing a form.
-    await _continueFree(tester);
+    // A reader who has said nothing and seen no card is not sold anything
+    // yet: the first day, straight away.
+    expect(find.byType(PaywallScreen), findsNothing);
     expect(find.byType(PillCardStack), findsOneWidget);
-    // And it is not asked again.
+    // And the first run is not asked again.
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getBool('knowit.onboarded'), isTrue);
   });
@@ -1739,6 +1741,42 @@ void main() {
     expect(find.byKey(const ValueKey('welcome-left')), findsNothing);
   });
 
+  testWidgets('the shelf keeps the mark the reader\'s own cards had', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+    await _finishDay(tester);
+
+    final app = AppState();
+    await app.init();
+    // A first day: four of the reader's own, one at random.
+    expect(app.ownIdsToday, hasLength(kOwnCardsWelcome));
+    var marked = 0;
+    for (var i = 0; i < kPillsPerDay; i++) {
+      final Pill front = app.todaysDeck[i];
+      expect(find.text(front.question), findsOneWidget, reason: front.id);
+      final bool own = app.ownIdsToday.contains(front.id);
+      if (own) marked++;
+      expect(
+        find.descendant(
+          of: find.byKey(ValueKey('shelf-face-${front.id}-front')),
+          matching: find.text('FOR YOU'),
+        ),
+        own ? findsOneWidget : findsNothing,
+        reason: front.id,
+      );
+      await tester.fling(
+        find.byType(TodayDoneView),
+        const Offset(-300, 0),
+        900,
+      );
+      await _settle(tester);
+    }
+    expect(marked, kOwnCardsWelcome);
+  });
+
   testWidgets('the free plan is offered the upsell instead', (tester) async {
     SharedPreferences.setMockInitialValues(_installed());
     await tester.pumpWidget(const AstutoApp());
@@ -1789,7 +1827,8 @@ void main() {
           find.descendant(
             of: find.byKey(const ValueKey('magic-card')),
             matching: find.text(
-              'Your first week: 6 more days with four of the five yours.',
+              'Your first two weeks: 13 more days with four of the five '
+              'yours.',
             ),
           ),
           findsOneWidget,

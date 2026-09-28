@@ -1740,15 +1740,15 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'İlk haftan: beş karttan dördünün senin olduğu $n gün daha.',
-      one: 'İlk haftan: yarın son günü, beş karttan dördü senin.',
+      other: 'İlk iki haftan: beş karttan dördünün senin olduğu $n gün daha.',
+      one: 'İlk iki haftan: yarın son gün, beş karttan dördü senin.',
     );
     return '$_temp0';
   }
 
   @override
   String get welcomeWeekEnds =>
-      'İlk haftan bu gece bitiyor. Yarından itibaren beş karttan ikisi senin.';
+      'İlk iki haftan bu gece bitiyor. Yarından itibaren beş karttan ikisi senin.';
 
   @override
   String get forYouShelf => 'Senin için';

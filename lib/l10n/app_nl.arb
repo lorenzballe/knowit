@@ -402,8 +402,8 @@
  "lovedSinceTheStart": "Het meest geliefd sinds het begin",
  "lovedIn": "Het meest geliefd in {subject}",
  "lovedLine": "Wat lezers het vaakst bewaarden en jij nog niet hebt gelezen",
- "welcomeDaysLeft": "{n, plural, =1{Je eerste week: morgen is de laatste dag, vier van de vijf zijn van jou.} other{Je eerste week: nog {n} dagen met vier van de vijf van jou.}}",
- "welcomeWeekEnds": "Je eerste week eindigt vanavond. Vanaf morgen zijn twee van de vijf van jou.",
+ "welcomeDaysLeft": "{n, plural, =1{Je eerste twee weken: morgen is de laatste dag, vier van de vijf zijn van jou.} other{Je eerste twee weken: nog {n} dagen met vier van de vijf van jou.}}",
+ "welcomeWeekEnds": "Je eerste twee weken eindigen vanavond. Vanaf morgen zijn twee van de vijf van jou.",
  "forYouShelf": "Voor jou",
  "forYouLine": "Wat je lezen vooropzet",
  "exploreOffline": "Je bent offline. Dit is Verkennen zoals het het laatst gelezen is."

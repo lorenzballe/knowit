@@ -402,8 +402,8 @@
  "lovedSinceTheStart": "Başından beri en sevilenler",
  "lovedIn": "{subject} alanında en sevilenler",
  "lovedLine": "Okurların en çok sakladığı ve senin henüz okumadığın kartlar",
- "welcomeDaysLeft": "{n, plural, =1{İlk haftan: yarın son günü, beş karttan dördü senin.} other{İlk haftan: beş karttan dördünün senin olduğu {n} gün daha.}}",
- "welcomeWeekEnds": "İlk haftan bu gece bitiyor. Yarından itibaren beş karttan ikisi senin.",
+ "welcomeDaysLeft": "{n, plural, =1{İlk iki haftan: yarın son gün, beş karttan dördü senin.} other{İlk iki haftan: beş karttan dördünün senin olduğu {n} gün daha.}}",
+ "welcomeWeekEnds": "İlk iki haftan bu gece bitiyor. Yarından itibaren beş karttan ikisi senin.",
  "forYouShelf": "Senin için",
  "forYouLine": "Okumanın öne çıkardıkları",
  "exploreOffline": "Çevrimdışısın. Bu, Keşfet'in en son okunduğu hâli."
