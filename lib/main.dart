@@ -17,6 +17,7 @@ import 'screens/intro_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/explore_screen.dart';
 import 'screens/mix_screen.dart';
+import 'screens/paywall_screen.dart';
 import 'screens/today_screen.dart';
 import 'state/app_state.dart';
 import 'sync/account.dart';
@@ -210,14 +211,12 @@ class _PhoneFrame extends StatelessWidget {
 /// Where the first-run flow lives. Everything before [_Stage.shell] runs once
 /// per install; after that the app opens straight on the tab bar.
 /// The onboarding is the intro that says what the app is, then the subject
-/// run that fills the deck, and then the first day. No price is shown on the
-/// way in: a reader who has not read a card yet does not know what Astute+
-/// would be selling them, so it is offered where they can judge it, on the
-/// card after the fifth, every evening.
+/// run that fills the deck, then the offer, once, and then the first day.
 enum _Stage {
   intro,
   subjects,
   genres,
+  offer,
   comeback,
   shell;
 
@@ -228,6 +227,7 @@ enum _Stage {
     _Stage.intro => 'intro',
     _Stage.subjects => 'onboarding subjects',
     _Stage.genres => 'onboarding genres',
+    _Stage.offer => 'onboarding offer',
     _Stage.comeback => 'comeback',
     _Stage.shell => 'today',
   };
@@ -537,8 +537,11 @@ class _AstutoRootState extends State<AstutoRoot> {
             await _app.setTopicMix(weights);
             if (mounted) _go(_Stage.genres);
           },
-          // Skipping the mix skips the genres too, straight to the first
-          // day.
+          // Skipping the mix skips the offer too, straight to the first
+          // day: a reader who has said nothing about what they want to
+          // read, and has not seen a card yet, does not know what Astute+
+          // would be selling them. The card after the fifth offers it
+          // every evening instead.
           onSkip: () {
             _noteSkipped(_Stage.subjects);
             _finishOnboarding();
@@ -553,12 +556,27 @@ class _AstutoRootState extends State<AstutoRoot> {
           app: _app,
           onDone: (genresOff, strandsOff) async {
             await _app.setGenresOff(genresOff, strandsOff);
-            await _finishOnboarding();
+            if (mounted) _go(_Stage.offer);
           },
           onSkip: () {
             _noteSkipped(_Stage.genres);
-            _finishOnboarding();
+            _go(_Stage.offer);
           },
+        );
+
+      // The offer, once, straight after the mix: the reader has just said
+      // what they want to read about, and this is where the day made of
+      // exactly that is sold. What it sells first is the free trial, so
+      // nothing is paid today, and the way past it is written under it.
+      // Most trials start on the first day, which is why it is here and not
+      // only on the card after the fifth. Passing over the genres lands
+      // here too, because the subjects were set; passing over the subjects
+      // does not (see above).
+      case _Stage.offer:
+        return PaywallScreen(
+          app: _app,
+          source: 'onboarding',
+          onClose: _finishOnboarding,
         );
 
       case _Stage.comeback:
