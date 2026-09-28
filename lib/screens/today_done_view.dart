@@ -1206,6 +1206,7 @@ class _Dots extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool still = MediaQuery.disableAnimationsOf(context);
+    final Color faint = context.p.ink.withValues(alpha: 0.18);
     return SizedBox(
       height: height,
       child: Row(
@@ -1234,12 +1235,25 @@ class _Dots extends StatelessWidget {
                       width: k == at ? 22 : 6,
                       height: 6,
                       decoration: BoxDecoration(
-                        color: k != at
-                            ? context.p.ink.withValues(alpha: 0.18)
-                            : (k < deck.length ? deck[k].color : null),
-                        gradient: k == at && k >= deck.length
-                            ? const LinearGradient(colors: kSpectrum)
+                        color: k < deck.length
+                            ? (k == at ? deck[k].color : faint)
                             : null,
+                        // The offer's dot is every colour when it is the
+                        // one, and grey as a gradient of greys when it is
+                        // not, so the change is each grey turning into its
+                        // colour, as quick as the other dots. Grey as a
+                        // plain colour, the dot faded the rainbow in from
+                        // nothing and arrived half a second late.
+                        gradient: k < deck.length
+                            ? null
+                            : LinearGradient(
+                                colors: k == at
+                                    ? kSpectrum
+                                    : List<Color>.filled(
+                                        kSpectrum.length,
+                                        faint,
+                                      ),
+                              ),
                         borderRadius: BorderRadius.circular(9),
                       ),
                     ),

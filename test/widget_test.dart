@@ -1965,6 +1965,40 @@ void main() {
       expect(tester.state(find.byType(MagicCard)), same(atTheFront));
     });
 
+    testWidgets('the offer\'s dot is every colour as soon as the offer is '
+        'reached', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await _finishDay(tester);
+
+      // The dot as it is painted: its gradient's colours, whatever point
+      // the change has reached.
+      List<Color> painted() {
+        final Finder dot = find.descendant(
+          of: find.bySemanticsLabel('ASTUTE+'),
+          matching: find.byType(DecoratedBox),
+        );
+        final decoration =
+            tester.widget<DecoratedBox>(dot.last).decoration as BoxDecoration;
+        return decoration.gradient?.colors ?? [decoration.color!];
+      }
+
+      // Grey while another card is at the front.
+      expect(painted().toSet(), hasLength(1));
+
+      await tester.tap(find.bySemanticsLabel('ASTUTE+'));
+      // One frame into the change: already colour, not a gradient faded
+      // to nothing on its way in.
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 16));
+      for (final Color c in painted()) {
+        expect(c.a, greaterThanOrEqualTo(0.18), reason: '$c');
+      }
+      await _settle(tester);
+      expect(painted(), kSpectrum);
+    });
+
     testWidgets('the shelf ends on the card that offers the rest of the day', (
       tester,
     ) async {
