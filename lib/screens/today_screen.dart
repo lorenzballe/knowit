@@ -187,15 +187,11 @@ class _TodayScreenState extends State<TodayScreen> {
                       key: const ValueKey('magic-card'),
                       eyebrow: context.l10n.plusNameCaps,
                       note: weekNoteOf(context, app),
-                      // Through the welcome four of five are already
-                      // theirs: what Astute+ offers is that they stay so.
-                      headline: app.inWelcome
-                          ? context.l10n.plusCardHeadline
-                          : context.l10n.theOthersYours(
-                              app.todaysDeck.length - app.ownIdsToday.length,
-                            ),
+                      headline: context.l10n.theOthersYours(
+                        app.todaysDeck.length - app.ownIdsToday.length,
+                      ),
                       line: context.l10n.magicLine,
-                      action: context.l10n.magicUnlock,
+                      action: plusActionOf(context),
                       onAction: () => _offer(context),
                     ),
               onAdvance: () => app.todayIndex >= app.todaysDeck.length

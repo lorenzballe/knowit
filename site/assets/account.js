@@ -203,7 +203,7 @@ function showPlan(info) {
   const note = $('#plan-note');
   const manage = $('#plan-manage');
   if (ent) {
-    status.innerHTML = '<span>Astute<span class="plus-sign">+</span></span>' + (ent.periodType === 'trial' ? '<span class="badge soft">Free week</span>' : '');
+    status.innerHTML = '<span>Astute<span class="plus-sign">+</span></span>' + (ent.periodType === 'trial' ? '<span class="badge soft">Free trial</span>' : '');
     const where = STORE_NAMES[ent.store] || 'a store';
     const when = ent.expirationDate ? (ent.willRenew ? 'Renews on ' : 'Ends on ') + longDate(ent.expirationDate) + '. ' : '';
     note.textContent = when + 'Bought on ' + where + '. All five cards are yours, on every phone signed in with this account.';
@@ -266,7 +266,7 @@ function trialText(phase) {
   const p = phase.period;
   if (!p) return 'a while';
   const n = p.number, u = p.unit;
-  if (u === 'week' && n === 1) return '7 days';
+  if (u === 'week') return (7 * n) + ' days';
   return n + ' ' + u + (n === 1 ? '' : 's');
 }
 

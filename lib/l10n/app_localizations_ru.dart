@@ -117,7 +117,20 @@ class AppLocalizationsRu extends AppLocalizations {
   String get exploreTodaysBest => 'Лучшее за сегодня';
 
   @override
-  String get magicUnlock => 'Попробуй 7 дней бесплатно';
+  String magicUnlock(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days дня',
+      many: '$days дней',
+      few: '$days дня',
+      one: '$days день',
+    );
+    return 'Попробуй $_temp0 бесплатно';
+  }
+
+  @override
+  String get getPlus => 'Перейти на Astute+';
 
   @override
   String nothingInYet(String subject) {
@@ -673,7 +686,17 @@ class AppLocalizationsRu extends AppLocalizations {
   String get plusNameCaps => 'ASTUTE+';
 
   @override
-  String get sevenDaysFree => '7 дней бесплатно';
+  String trialDaysFree(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days дня',
+      many: '$days дней',
+      few: '$days дня',
+      one: '$days день',
+    );
+    return '$_temp0 бесплатно';
+  }
 
   @override
   String get seeThePlans => 'ПОСМОТРЕТЬ ТАРИФЫ';
@@ -1006,8 +1029,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get plusIsActive => 'ASTUTE+ АКТИВЕН';
 
   @override
-  String tryFreeThen(String price, String suffix) {
-    return '7 дней бесплатно, затем $price$suffix';
+  String tryFreeThen(int days, String price, String suffix) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days дня',
+      many: '$days дней',
+      few: '$days дня',
+      one: '$days день',
+    );
+    return '$_temp0 бесплатно, затем $price$suffix';
   }
 
   @override
@@ -1817,23 +1848,6 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get lovedLine =>
       'То, что читатели сохраняли чаще всего, а вы ещё не читали';
-
-  @override
-  String welcomeDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Ваши первые две недели: ещё $n дня, когда четыре из пяти ваши.',
-      many: 'Ваши первые две недели: ещё $n дней, когда четыре из пяти ваши.',
-      few: 'Ваши первые две недели: ещё $n дня, когда четыре из пяти ваши.',
-      one: 'Ваши первые две недели: завтра последний день, четыре из пяти карточек ваши.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get welcomeWeekEnds =>
-      'Первые две недели заканчиваются сегодня. С завтра две из пяти — ваши.';
 
   @override
   String get forYouShelf => 'Для вас';

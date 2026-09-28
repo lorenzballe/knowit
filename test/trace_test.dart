@@ -85,14 +85,14 @@ void main() {
       uidOverride: 'me',
       clock: () => now,
     );
-    trace.note('day started', {'own': 4, 'welcome': true});
+    trace.note('day started', {'own': 2, 'reviews': 1});
     await trace.flush();
     expect(trace.waiting, 1);
     expect(store.appends, 0);
     store.refusing = false;
     await trace.flush();
     expect(trace.waiting, 0);
-    expect(store.days['me']!['2026-10-03']!.single['own'], 4);
+    expect(store.days['me']!['2026-10-03']!.single['own'], 2);
     // And what is waiting survives a launch.
     final MemoryTraceStore later = MemoryTraceStore()..refusing = true;
     final Trace before = Trace(

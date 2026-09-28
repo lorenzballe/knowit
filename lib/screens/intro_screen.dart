@@ -57,6 +57,16 @@ const double kIntroHintSlot = 26;
 const int kIntroSpareAbove = 3;
 const int kIntroSpareBelow = 1;
 
+/// Where the column starts under the safe area, and where Skip does: Skip
+/// sits over the picture's top right corner and takes no room of its own.
+const double kIntroTop = 14;
+const double kIntroSkipTop = 8;
+
+/// The clear line kept between Skip's box and a drawing that reaches the
+/// top right corner — the last scene's notification, which spans the width.
+/// Sixteen points under the word itself, as the canvas has it.
+const double kIntroUnderSkip = 12;
+
 /// The margin down each side of the screen: the words and the buttons keep
 /// it, and the last scene's drawing lines up on it.
 const double kIntroSide = 22;
@@ -165,7 +175,7 @@ class _IntroScreenState extends State<IntroScreen> {
 
             SafeArea(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 14, 0, 26),
+                padding: const EdgeInsets.fromLTRB(0, kIntroTop, 0, 26),
                 child: Column(
                   children: [
                     Expanded(
@@ -189,6 +199,21 @@ class _IntroScreenState extends State<IntroScreen> {
                             0,
                             math.min(wanted, spare),
                           );
+                          // How much of the band's top a drawing that
+                          // spans the width has to leave under Skip, in the
+                          // band's own units: Skip's foot is a fixed height
+                          // down this column, and the band starts under the
+                          // share of the spare room that goes above it.
+                          final double over =
+                              math.max(0, spare - band) *
+                              kIntroSpareAbove /
+                              (kIntroSpareAbove + kIntroSpareBelow);
+                          final double skipFoot =
+                              kIntroSkipTop + SkipCorner.height - kIntroTop;
+                          final double underSkip = band <= 0
+                              ? 0
+                              : math.max(0, skipFoot + kIntroUnderSkip - over) /
+                                    (band / _SceneStage.bandHeight);
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
@@ -202,7 +227,10 @@ class _IntroScreenState extends State<IntroScreen> {
                                   key: const ValueKey('intro-stage'),
                                   child: _Swap(
                                     scene: _scene,
-                                    child: _IntroScene(index: _scene),
+                                    child: _IntroScene(
+                                      index: _scene,
+                                      underSkip: underSkip,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -282,7 +310,7 @@ class _IntroScreenState extends State<IntroScreen> {
             Positioned(
               left: 0,
               right: 0,
-              top: safe.top + 8,
+              top: safe.top + kIntroSkipTop,
               child: SkipCorner(onTap: _skipIntro, color: Colors.white),
             ),
           ],
@@ -659,9 +687,13 @@ class _GoogleG extends StatelessWidget {
 
 /// The five scenes.
 class _IntroScene extends StatelessWidget {
-  const _IntroScene({required this.index});
+  const _IntroScene({required this.index, this.underSkip = 0});
 
   final int index;
+
+  /// The top of the band a drawing across the whole width must leave for
+  /// Skip, in the band's units. See [kIntroUnderSkip].
+  final double underSkip;
 
   @override
   Widget build(BuildContext context) {
@@ -670,7 +702,7 @@ class _IntroScene extends StatelessWidget {
       1 => const _SceneRain(),
       2 => const _SceneCard(),
       3 => const _SceneChips(),
-      _ => const _SceneTomorrow(),
+      _ => _SceneTomorrow(underSkip: underSkip),
     };
   }
 }
@@ -1545,11 +1577,48 @@ class _SceneChips extends StatelessWidget {
 /// it its full height, the notification, the card and the days start and
 /// end on the lines the buttons do. On a phone short enough to shrink the
 /// band the column shrinks with it, centred, which keeps it clear of Skip.
-/// It stands on the band's foot and is short enough that the room left at
-/// the top keeps the notification off Skip on every phone, the ones whose
-/// band starts right under the corner included.
+///
+/// It stands on the band's foot and leaves [underSkip] at the top, which
+/// puts the notification sixteen points under Skip on every phone, as the
+/// canvas has it. Whatever the band has above that, the card and the days
+/// grow into: from the sizes that fit the phone whose band starts right
+/// under the corner, up towards the canvas's own.
 class _SceneTomorrow extends StatelessWidget {
-  const _SceneTomorrow();
+  const _SceneTomorrow({this.underSkip = 0});
+
+  /// The top of the band left for Skip, in the band's units.
+  final double underSkip;
+
+  /// Each height the drawing is made of, as short as it goes and as the
+  /// canvas drew it: the room under Skip decides where between the two.
+  static const (double, double) _noticePad = (7.5, 10.3);
+  static const (double, double) _gapToCard = (8.0, 10.3);
+  static const (double, double) _cardHeight = (92.0, 118.0);
+  static const (double, double) _cardPad = (12.5, 13.7);
+  static const (double, double) _gapToDays = (11.0, 20.5);
+  static const (double, double) _dayHeight = (25.0, 34.2);
+  static const (double, double) _gapToFoot = (6.0, 6.8);
+
+  /// What does not grow: the notification's words, the gap between the
+  /// two rows of days, and the captions under them.
+  static const double _noticeWords = 30;
+  static const double _dayGap = 4.3;
+  static const double _footLine = 8.6;
+
+  static double _grown((double, double) size, double t) =>
+      size.$1 + (size.$2 - size.$1) * t;
+
+  /// The whole drawing's height, [t] of the way from short to the canvas's.
+  static double _heightAt(double t) =>
+      _noticeWords +
+      2 * _grown(_noticePad, t) +
+      _grown(_gapToCard, t) +
+      _grown(_cardHeight, t) +
+      _grown(_gapToDays, t) +
+      2 * _grown(_dayHeight, t) +
+      _dayGap +
+      _grown(_gapToFoot, t) +
+      _footLine;
 
   /// The first card: a real subject, in its own colour.
   static final TopicStyle _subject = kTopics['economics']!;
@@ -1580,6 +1649,12 @@ class _SceneTomorrow extends StatelessWidget {
       const TimeOfDay(hour: 8, minute: 30),
       alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context),
     );
+    // Two points to spare: the words' own lines round a little over the
+    // heights added up here.
+    final double room = _SceneStage.bandHeight - underSkip - 2;
+    final double short = _heightAt(0);
+    final double t = ((room - short) / (_heightAt(1) - short)).clamp(0.0, 1.0);
+    double at((double, double) size) => _grown(size, t);
     return SizedBox(
       width: _SceneStage.width,
       height: _SceneStage.bandHeight,
@@ -1593,9 +1668,13 @@ class _SceneTomorrow extends StatelessWidget {
             children: [
               _Rise(
                 key: const ValueKey('intro-notice'),
-                child: _notice(l.introNotifyWhen(time), l.introNotifyLine),
+                child: _notice(
+                  l.introNotifyWhen(time),
+                  l.introNotifyLine,
+                  pad: at(_noticePad),
+                ),
               ),
-              const SizedBox(height: 8),
+              SizedBox(height: at(_gapToCard)),
               _Rise(
                 key: const ValueKey('intro-first-card'),
                 delay: const Duration(milliseconds: 550),
@@ -1603,15 +1682,17 @@ class _SceneTomorrow extends StatelessWidget {
                   '${_subject.name.toUpperCase()} · ${l.introOneOfFive}',
                   l.introDayOne,
                   l.introTapTomorrow,
+                  height: at(_cardHeight),
+                  pad: at(_cardPad),
                 ),
               ),
-              const SizedBox(height: 11),
+              SizedBox(height: at(_gapToDays)),
               KeyedSubtree(
                 key: const ValueKey('intro-fortnight'),
                 child: Column(
                   children: [
                     for (int row = 0; row < 2; row++) ...[
-                      if (row > 0) const SizedBox(height: 4.3),
+                      if (row > 0) const SizedBox(height: _dayGap),
                       Row(
                         children: [
                           for (int col = 0; col < 7; col++) ...[
@@ -1625,6 +1706,7 @@ class _SceneTomorrow extends StatelessWidget {
                                 child: _DayTile(
                                   day: row * 7 + col + 1,
                                   five: _five,
+                                  height: at(_dayHeight),
                                 ),
                               ),
                             ),
@@ -1635,7 +1717,7 @@ class _SceneTomorrow extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 6),
+              SizedBox(height: at(_gapToFoot)),
               // One caption under each end of the days: the first is short
               // in every language, and the second takes what is left.
               Row(
@@ -1656,9 +1738,9 @@ class _SceneTomorrow extends StatelessWidget {
   }
 
   /// The morning's notification, as the lock screen shows it.
-  Widget _notice(String when, String line) {
+  Widget _notice(String when, String line, {required double pad}) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(12, 7.5, 12, 7.5),
+      padding: EdgeInsets.fromLTRB(12, pad, 12, pad),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(17),
@@ -1731,7 +1813,13 @@ class _SceneTomorrow extends StatelessWidget {
   }
 
   /// The first of the five, face up, the way the deck deals it.
-  Widget _card(String eyebrow, String day, String foot) {
+  Widget _card(
+    String eyebrow,
+    String day,
+    String foot, {
+    required double height,
+    required double pad,
+  }) {
     final Color ink = _subject.ink;
     final TextStyle meta = AppText.label(
       size: 7.7,
@@ -1741,8 +1829,8 @@ class _SceneTomorrow extends StatelessWidget {
       color: ink.withValues(alpha: 0.55),
     );
     return Container(
-      height: 92,
-      padding: const EdgeInsets.fromLTRB(15.4, 12.5, 15.4, 12.5),
+      height: height,
+      padding: EdgeInsets.fromLTRB(15.4, pad, 15.4, pad),
       decoration: BoxDecoration(
         color: _subject.color,
         borderRadius: BorderRadius.circular(19),
@@ -1820,10 +1908,11 @@ class _SceneTomorrow extends StatelessWidget {
 /// subjects' colours; the seventh and the fourteenth marked with a dashed
 /// edge; the rest still dark.
 class _DayTile extends StatelessWidget {
-  const _DayTile({required this.day, required this.five});
+  const _DayTile({required this.day, required this.five, this.height = 25});
 
   final int day;
   final List<Color> five;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -1833,7 +1922,7 @@ class _DayTile extends StatelessWidget {
         ? Colors.white
         : Colors.white.withValues(alpha: marked ? 0.55 : 0.28);
     final Widget tile = Container(
-      height: 25,
+      height: height,
       padding: const EdgeInsets.fromLTRB(4.3, 3.4, 4.3, 3.4),
       decoration: BoxDecoration(
         // The lit day is solid: a glow is drawn under the whole box, and

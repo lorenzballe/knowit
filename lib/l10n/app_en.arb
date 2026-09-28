@@ -104,7 +104,15 @@
   }
  },
  "exploreTodaysBest": "Explore today's best",
- "magicUnlock": "Try 7 days free",
+ "magicUnlock": "Try {days} days free",
+ "@magicUnlock": {
+  "description": "The action on the card after the fifth for a reader the store will still give the free trial. {days} is the trial's length, as the store has it.",
+  "placeholders": {"days": {"type": "int"}}
+ },
+ "getPlus": "Get Astute+",
+ "@getPlus": {
+  "description": "The same action for a reader who has already had the free trial, which the store gives once."
+ },
  "nothingInYet": "Nothing in {subject} yet.",
  "@nothingInYet": {
   "placeholders": {
@@ -612,7 +620,10 @@
   }
  },
  "plusNameCaps": "ASTUTE+",
- "sevenDaysFree": "7 days free",
+ "trialDaysFree": "{days} days free",
+ "@trialDaysFree": {
+  "placeholders": {"days": {"type": "int"}}
+ },
  "seeThePlans": "SEE THE PLANS",
  "recordStartsToday": "Your record starts today.",
  "dayWord": "{n, plural, =1{day} other{days}}",
@@ -875,9 +886,10 @@
  "perkArchiveTitle": "Your whole archive",
  "perkArchiveLine": "Every day you have read, kept for good. The free plan keeps a week.",
  "plusIsActive": "ASTUTE+ IS ACTIVE",
- "tryFreeThen": "Try 7 days free, then {price}{suffix}",
+ "tryFreeThen": "Try {days} days free, then {price}{suffix}",
  "@tryFreeThen": {
   "placeholders": {
+   "days": {"type": "int"},
    "price": {
     "type": "String"
    },
@@ -1537,9 +1549,6 @@
  "lovedIn": "Loved in {subject}",
  "@lovedIn": {"placeholders": {"subject": {"type": "String"}}},
  "lovedLine": "What readers kept most, and you have not read yet",
- "welcomeDaysLeft": "{n, plural, =1{Your first two weeks: tomorrow is the last day, four of the five yours.} other{Your first two weeks: {n} more days with four of the five yours.}}",
- "@welcomeDaysLeft": {"placeholders": {"n": {"type": "int"}}},
- "welcomeWeekEnds": "Your first two weeks end tonight. From tomorrow, two of the five are yours.",
  "forYouShelf": "For you",
  "forYouLine": "What your reading puts first",
  "exploreOffline": "You are offline. This is Explore as it was last read."

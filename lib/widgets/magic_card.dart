@@ -31,10 +31,9 @@ class MagicCard extends StatefulWidget {
   final String eyebrow;
 
   /// Where the reader's week has got to, under the eyebrow, with a key to
-  /// find it by: how many welcome days are left, that the welcome
-  /// ends tonight, or that a week kept makes tomorrow one more of their
-  /// own. Said here, beside the offer, rather than over the shelf, where
-  /// it would take room from the cards.
+  /// find it by: that a week kept makes tomorrow one more of their own.
+  /// Said here, beside the offer, rather than over the shelf, where it
+  /// would take room from the cards.
   final (String, String)? note;
   final String headline;
   final String line;

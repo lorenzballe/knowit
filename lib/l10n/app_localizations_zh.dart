@@ -115,7 +115,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get exploreTodaysBest => '探索今日精选';
 
   @override
-  String get magicUnlock => '免费试用7天';
+  String magicUnlock(int days) {
+    return '免费试用$days天';
+  }
+
+  @override
+  String get getPlus => '升级到 Astute+';
 
   @override
   String nothingInYet(String subject) {
@@ -643,7 +648,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get plusNameCaps => 'ASTUTE+';
 
   @override
-  String get sevenDaysFree => '免费 7 天';
+  String trialDaysFree(int days) {
+    return '免费 $days 天';
+  }
 
   @override
   String get seeThePlans => '查看方案';
@@ -948,8 +955,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get plusIsActive => 'ASTUTE+ 已激活';
 
   @override
-  String tryFreeThen(String price, String suffix) {
-    return '免费试用 7 天，之后 $price$suffix';
+  String tryFreeThen(int days, String price, String suffix) {
+    return '免费试用 $days 天，之后 $price$suffix';
   }
 
   @override
@@ -1710,19 +1717,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get lovedLine => '读者保留最多、而你还没读过的卡片';
-
-  @override
-  String welcomeDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '你的前两周：五张中有四张是你的，还剩$n天。',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get welcomeWeekEnds => '你的前两周今晚结束。从明天起，五张中有两张是你的。';
 
   @override
   String get forYouShelf => '为你推荐';

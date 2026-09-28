@@ -383,7 +383,7 @@
     plans.forEach(p => p.setAttribute('aria-pressed', String(p === b)));
     if (cta) {
       cta.textContent = b.dataset.plan === 'yearly'
-        ? 'Try 7 days free, then €29.99/yr'
+        ? 'Try 14 days free, then €29.99/yr'
         : 'Start monthly · €3.99/mo';
     }
   }));

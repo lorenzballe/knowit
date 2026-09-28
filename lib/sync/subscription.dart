@@ -48,6 +48,31 @@ const String kRevenueCatAndroidKey = String.fromEnvironment(
 const List<String> kYearlyPackageIds = ['\$rc_annual', 'yearly', 'annual'];
 const List<String> kMonthlyPackageIds = ['\$rc_monthly', 'monthly'];
 
+/// The free trial the yearly plan is sold with: two weeks, set in App Store
+/// Connect and Play Console as the year's introductory offer.
+///
+/// The app says it only where the store has not answered, or where there is
+/// no store: once it has, the days are the store's own, so a trial changed
+/// in the store is said right without a new build, and one the store has
+/// not been set to give is never promised.
+const int kTrialDays = 14;
+
+/// The days an introductory offer lasts, from the store's own period.
+int? daysOfPeriod(PeriodUnit unit, int units) => switch (unit) {
+  PeriodUnit.day => units,
+  PeriodUnit.week => 7 * units,
+  PeriodUnit.month => 30 * units,
+  PeriodUnit.year => 365 * units,
+  PeriodUnit.unknown => null,
+};
+
+/// How many days free a package starts with, or null when it charges today.
+int? freeDaysOf(Package? package) {
+  final IntroductoryPrice? intro = package?.storeProduct.introductoryPrice;
+  if (intro == null || intro.price != 0) return null;
+  return daysOfPeriod(intro.periodUnit, intro.periodNumberOfUnits);
+}
+
 /// Whether the reader has actually paid, and what it would cost if not.
 ///
 /// The plan used to be a bool the app wrote to itself, which is a wish rather
@@ -74,6 +99,40 @@ class Subscription extends ChangeNotifier {
   bool _isPlus = false;
   bool _reviewAccess = false;
   Offering? _offering;
+
+  /// What Apple says about the reader and the year's introductory offer.
+  /// Apple gives it once per reader, and a product's offer is the same for
+  /// everyone who looks at it, so on an iPhone it has to be asked. Google
+  /// Play only hands over the offers the reader can still have.
+  IntroEligibilityStatus? _yearlyEligibility;
+
+  /// How many days free the yearly plan starts with for this reader, or
+  /// null when it starts with none for them: the store's introductory offer
+  /// at no charge, unless the store says this reader has had it. Before the
+  /// store answers, and where there is none, the plan as sold.
+  int? get trialDays {
+    final Package? year = yearly;
+    if (year == null) return kTrialDays;
+    final int? days = freeDaysOf(year);
+    if (days == null) return null;
+    return switch (_yearlyEligibility) {
+      IntroEligibilityStatus.introEligibilityStatusIneligible ||
+      IntroEligibilityStatus.introEligibilityStatusNoIntroOfferExists => null,
+      _ => days,
+    };
+  }
+
+  /// Stands in for the store's answers, for the tests: what is on sale, and
+  /// what Apple says about the reader and the year's free days.
+  @visibleForTesting
+  void answerForTest({
+    Offering? offering,
+    IntroEligibilityStatus? yearlyEligibility,
+  }) {
+    _offering = offering;
+    _yearlyEligibility = yearlyEligibility;
+    notifyListeners();
+  }
 
   /// True once the store has answered at least once. Until then the app
   /// should not claim the reader has nothing.
@@ -170,6 +229,7 @@ class Subscription extends ChangeNotifier {
       Purchases.addCustomerInfoUpdateListener(_apply);
       _apply(await Purchases.getCustomerInfo());
       await _loadOffering();
+      await _checkTrialEligibility();
       // What the store put on sale, as it priced it: a plan missing here is
       // a paywall selling with prices written into the app.
       final StoreProduct? year = yearly?.storeProduct;
@@ -226,6 +286,27 @@ class Subscription extends ChangeNotifier {
     }
   }
 
+  /// Asks Apple whether the reader can still have the year's free days:
+  /// at launch, and whenever the plan changes, because a trial started or
+  /// ended is exactly what turns the answer.
+  Future<void> _checkTrialEligibility() async {
+    if (kIsWeb || defaultTargetPlatform != TargetPlatform.iOS) return;
+    final String? id = yearly?.storeProduct.identifier;
+    if (id == null) return;
+    try {
+      final Map<String, IntroEligibility> said =
+          await Purchases.checkTrialOrIntroductoryPriceEligibility([id]);
+      final IntroEligibilityStatus? status = said[id]?.status;
+      if (status == _yearlyEligibility) return;
+      _yearlyEligibility = status;
+      notifyListeners();
+    } catch (error) {
+      // Unknown, which says the offer as the store has it: Apple itself
+      // shows the real terms on its sheet before anything is charged.
+      debugPrint('Could not ask about the free trial: $error');
+    }
+  }
+
   void _apply(CustomerInfo info) {
     _ready = true;
     final bool active = info.entitlements.active.containsKey(kPlusEntitlement);
@@ -233,6 +314,7 @@ class Subscription extends ChangeNotifier {
     if (active == _isPlus) return;
     _isPlus = active;
     notifyListeners();
+    _checkTrialEligibility();
   }
 
   String? _entitlementSaid;

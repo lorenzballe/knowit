@@ -64,21 +64,22 @@ Future<void> _finishDay(WidgetTester tester) async {
 }
 
 /// What a fresh install on the free plan is dealt today: every subject,
-/// nothing read — a welcome day, four of the reader's own and one at random.
+/// nothing read — two of the reader's own and three at random, as every
+/// free day.
 List<Pill> get _todaysFive {
   // A first day as the app deals it to a reader who never set the mix:
   // read by ReaderProfile as having said nothing, so it opens on the
   // subjects that hook most people, a notch above.
   final ReaderProfile untold = ReaderProfile.read(weights: const {});
-  // And a welcome day: four of the five the reader's own, and one at
-  // random from the mix as it was set, which here is nothing at all.
+  // Three at random from the mix as it was set, which here is nothing at
+  // all.
   return dealDay(
     date: DateTime.now(),
     topics: kTopicOrder.toSet(),
     weights: untold.weightsOn(0, const {}),
     mix: const {},
     levels: untold.levelsUnder(const {}),
-    own: kOwnCardsWelcome,
+    own: kOwnCardsFree,
   ).cards;
 }
 
@@ -99,13 +100,6 @@ Future<void> _openJourney(WidgetTester tester, {bool plus = true}) async {
 /// has an offer of its own with the same button.
 Finder _onJourney(String text) =>
     find.descendant(of: find.byType(JourneyScreen), matching: find.text(text));
-
-/// Walks past the offer the onboarding ends on.
-Future<void> _continueFree(WidgetTester tester) async {
-  expect(find.byType(PaywallScreen), findsOneWidget);
-  await tester.tap(find.text('Continue free'));
-  await _settle(tester);
-}
 
 /// An install that is past the first run, on the free plan unless told
 /// otherwise.
@@ -303,8 +297,9 @@ void main() {
     await tester.tap(find.text('Skip'));
     await _settle(tester);
 
-    // Four, and last: the offer, with the way past it written under it.
-    await _continueFree(tester);
+    // And then the first day, with no price on the way in.
+    expect(find.byType(PaywallScreen), findsNothing);
+    expect(find.byType(PillCardStack), findsOneWidget);
 
     // And the answers are kept, not just used once.
     final prefs = await SharedPreferences.getInstance();
@@ -626,7 +621,7 @@ void main() {
       // Taking the trial carries the reader through to the journey.
       await tester.tap(find.text('Day one'));
       await _settle(tester);
-      await tester.tap(find.textContaining('Try 7 days free, then'));
+      await tester.tap(find.textContaining('Try 14 days free, then'));
       await _settle(tester);
       expect(find.byType(JourneyScreen), findsOneWidget);
 
@@ -708,7 +703,7 @@ void main() {
       // The paywall stands in for the journey; taking the trial should
       // carry the reader through to what they reached for.
       await _openJourney(tester, plus: false);
-      await tester.tap(find.textContaining('Try 7 days free, then'));
+      await tester.tap(find.textContaining('Try 14 days free, then'));
       await _settle(tester);
 
       final prefs = await SharedPreferences.getInstance();
@@ -1217,8 +1212,8 @@ void main() {
     });
   });
 
-  test('the first day is dealt from the mix, four of the reader\'s own and one '
-      'at random', () async {
+  test('the first day is dealt from the mix, two of the reader\'s own and '
+      'three at random', () async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
     final app = AppState();
     await app.init();
@@ -1228,7 +1223,7 @@ void main() {
       _todaysFive.map((p) => p.id).toList(),
     );
     expect(app.todaysDeck, hasLength(kPillsPerDay));
-    expect(app.ownIdsToday, hasLength(kOwnCardsWelcome));
+    expect(app.ownIdsToday, hasLength(kOwnCardsFree));
     // And the phone writes down what it was dealt, for the archive.
     final prefs = await SharedPreferences.getInstance();
     final noted = jsonDecode(prefs.getString('knowit.deckHistory')!) as Map;
@@ -1462,9 +1457,8 @@ void main() {
     expect(find.byKey(const ValueKey('tab-Profile')), findsOneWidget);
   });
 
-  testWidgets('the onboarding is two screens and then the cards', (
-    tester,
-  ) async {
+  testWidgets('the onboarding is the intro and the mix, then the cards, '
+      'with no price on the way in', (tester) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -1483,9 +1477,30 @@ void main() {
     await tester.tap(find.text('Skip'));
     await _settle(tester);
 
-    // Four: the offer, once, with the way past it under it — and the cards
-    // start straight after, because there is nothing else to ask.
-    await _continueFree(tester);
+    // And the cards, straight after: a reader who has not read one yet
+    // does not know what Astute+ would sell them, so no offer is made on
+    // the way in. The card after the fifth makes it, every evening.
+    expect(find.byType(PaywallScreen), findsNothing);
+    expect(find.byType(PillCardStack), findsOneWidget);
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getBool('knowit.onboarded'), isTrue);
+  });
+
+  testWidgets('setting the genres goes straight to the first day too', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+    await tester.tap(find.text('Skip'));
+    await _settle(tester);
+    await tester.tap(find.text('Next'));
+    await _settle(tester);
+    expect(find.text('Your mix'), findsOneWidget);
+    // Answered rather than walked past: the same road, to the cards.
+    await tester.tap(find.textContaining('genres on'));
+    await _settle(tester);
+    expect(find.byType(PaywallScreen), findsNothing);
     expect(find.byType(PillCardStack), findsOneWidget);
   });
 
@@ -1551,8 +1566,9 @@ void main() {
     await _settle(tester);
 
     // Yearly leads and is preselected, so the call to action opens on it:
-    // the year starts with a free week, and says nothing is charged today.
-    expect(find.text('Try 7 days free, then €29,99/yr'), findsOneWidget);
+    // the year starts with two weeks free, and says nothing is charged
+    // today.
+    expect(find.text('Try 14 days free, then €29,99/yr'), findsOneWidget);
     expect(find.text('No charge today · cancel any time'), findsOneWidget);
 
     // The saving is worked out from the two prices rather than asserted.
@@ -1564,7 +1580,7 @@ void main() {
     await tester.tap(find.text('Monthly'));
     await _settle(tester);
     expect(find.text('Subscribe for €3,99/mo'), findsOneWidget);
-    expect(find.textContaining('Try 7 days free'), findsNothing);
+    expect(find.textContaining('Try 14 days free'), findsNothing);
     expect(
       find.text('Cancel any time · No payment is taken in this build'),
       findsOneWidget,
@@ -1672,13 +1688,13 @@ void main() {
 
     final app = AppState();
     await app.init();
-    // A first day is a welcome day: four of the five the reader's own,
-    // and one at random.
-    expect(app.ownIdsToday, hasLength(kOwnCardsWelcome));
+    // A first day is like every free day: two of the five the reader's
+    // own, and three at random.
+    expect(app.ownIdsToday, hasLength(kOwnCardsFree));
     expect(app.todaysDeck, hasLength(kPillsPerDay));
 
-    // Reading through, the reader's own carry the mark and the card at
-    // random does not. The card underneath peeks out, so the mark is read off the
+    // Reading through, the reader's own carry the mark and the cards at
+    // random do not. The card underneath peeks out, so the mark is read off the
     // card itself rather than counted on the screen.
     var marked = 0;
     for (var i = 0; i < kPillsPerDay; i++) {
@@ -1699,7 +1715,7 @@ void main() {
       await _swipeCardAway(tester);
       await _settle(tester);
     }
-    expect(marked, kOwnCardsWelcome);
+    expect(marked, kOwnCardsFree);
   });
 
   testWidgets(
@@ -1736,9 +1752,9 @@ void main() {
     expect(find.text(front.barMove), findsOneWidget);
     expect(find.text(front.answer), findsNothing);
 
-    // The week is said on the card after the fifth, not over the shelf:
-    // the header and the eyebrow are what they are on every evening.
-    expect(find.byKey(const ValueKey('welcome-left')), findsNothing);
+    // Nothing about the week is said over the shelf: the header and the
+    // eyebrow are what they are on every evening.
+    expect(find.byKey(const ValueKey('week-reward')), findsNothing);
   });
 
   testWidgets('the shelf keeps the mark the reader\'s own cards had', (
@@ -1751,8 +1767,8 @@ void main() {
 
     final app = AppState();
     await app.init();
-    // A first day: four of the reader's own, one at random.
-    expect(app.ownIdsToday, hasLength(kOwnCardsWelcome));
+    // A first day: two of the reader's own, three at random.
+    expect(app.ownIdsToday, hasLength(kOwnCardsFree));
     var marked = 0;
     for (var i = 0; i < kPillsPerDay; i++) {
       final Pill front = app.todaysDeck[i];
@@ -1774,7 +1790,7 @@ void main() {
       );
       await _settle(tester);
     }
-    expect(marked, kOwnCardsWelcome);
+    expect(marked, kOwnCardsFree);
   });
 
   testWidgets('the free plan is offered the upsell instead', (tester) async {
@@ -1786,7 +1802,7 @@ void main() {
 
     // The offer is the last card on the shelf, not a line on this screen:
     // what the shelf opens on is the day's first card and its share.
-    expect(find.text('Try 7 days free'), findsNothing);
+    expect(find.text('Try 14 days free'), findsNothing);
     expect(find.bySemanticsLabel('Share this card'), findsOneWidget);
   });
 
@@ -1818,21 +1834,13 @@ void main() {
         await _swipeCardAway(tester);
         await _settle(tester);
         expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
-        expect(find.text('Make all five yours.'), findsOneWidget);
-        expect(find.text('Try 7 days free'), findsOneWidget);
+        // A first day is like any free day: three of the five were dealt at
+        // random, and the card offers those too.
+        expect(find.text('The other 3, yours.'), findsOneWidget);
+        expect(find.text('Try 14 days free'), findsOneWidget);
         expect(find.text('Skip'), findsNothing);
-        // A first day is a welcome day, and the card says how much of the
-        // week is left, under its eyebrow.
-        expect(
-          find.descendant(
-            of: find.byKey(const ValueKey('magic-card')),
-            matching: find.text(
-              'Your first two weeks: 13 more days with four of the five '
-              'yours.',
-            ),
-          ),
-          findsOneWidget,
-        );
+        // Nothing about the week yet: no week has been kept.
+        expect(find.byKey(const ValueKey('week-reward')), findsNothing);
         await tester.pump(const Duration(seconds: 6));
         await _settle(tester);
         expect(find.text('Day 1 · five read'), findsNothing);
@@ -1852,7 +1860,7 @@ void main() {
         await tester.pumpWidget(const AstutoApp());
         await _settle(tester);
         await readFive(tester);
-        await tester.tap(find.text('Try 7 days free'));
+        await tester.tap(find.text('Try 14 days free'));
         await _settle(tester);
         expect(find.byType(PaywallScreen), findsOneWidget);
         // Back without the trial: the card is still on the table.
@@ -1931,14 +1939,14 @@ void main() {
       // Past the fifth: the offer, at the front, and the counter gives way
       // to the plan's name. No skip here — a swipe is the way back.
       expect(find.byKey(const ValueKey('shelf-magic')), findsOneWidget);
-      expect(find.text('Make all five yours.'), findsOneWidget);
+      expect(find.text('The other 3, yours.'), findsOneWidget);
       expect(find.text('Skip'), findsNothing);
       expect(find.text('06 / 05'), findsNothing);
       expect(find.text('ASTUTE+'), findsWidgets);
       await tester.tap(
         find.descendant(
           of: find.byKey(const ValueKey('shelf-magic')),
-          matching: find.text('Try 7 days free'),
+          matching: find.text('Try 14 days free'),
         ),
       );
       await _settle(tester);
@@ -4775,6 +4783,15 @@ void main() {
           greaterThanOrEqualTo(12),
           reason: 'on a $phone phone, the notification crowds Skip',
         );
+        // And no further under it than that where the band reaches up to
+        // Skip: the room above is the card's and the days', to grow into.
+        if (band.top < skip.bottom + 16) {
+          expect(
+            notice.top - skip.bottom,
+            lessThanOrEqualTo(24),
+            reason: 'on a $phone phone, the drawing leaves the top empty',
+          );
+        }
       }
     });
 
@@ -4806,12 +4823,21 @@ void main() {
     // Outside the test body: FontLoader needs real asynchrony.
     setUpAll(_loadRealFonts);
 
-    testWidgets('says the week on the shelf too, and the cards keep their '
-        'size', (tester) async {
+    testWidgets('says a week kept on the shelf too, and the cards keep '
+        'their size', (tester) async {
       tester.view.physicalSize = const Size(402, 874) * 3;
       tester.view.devicePixelRatio = 3;
       addTearDown(tester.view.reset);
-      SharedPreferences.setMockInitialValues(_installed());
+      // Six days kept, the last of them yesterday: today makes the week.
+      final DateTime now = DateTime.now();
+      final String yesterday = dateKey(
+        DateTime(now.year, now.month, now.day - 1),
+      );
+      SharedPreferences.setMockInitialValues({
+        ..._installed(),
+        'knowit.streak': 6,
+        'knowit.lastCompletionDate': yesterday,
+      });
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
       await _finishDay(tester);
@@ -4819,7 +4845,7 @@ void main() {
       // The shelf opens on the first card, with the eyebrow over it and
       // nothing about the week in the way.
       expect(find.text("TODAY'S FIVE"), findsOneWidget);
-      expect(find.byKey(const ValueKey('welcome-left')), findsNothing);
+      expect(find.byKey(const ValueKey('week-reward')), findsNothing);
 
       // The last card on the shelf is the offer, and it says it there.
       for (var i = 0; i < kPillsPerDay; i++) {
@@ -4835,7 +4861,7 @@ void main() {
       expect(
         find.descendant(
           of: magic,
-          matching: find.byKey(const ValueKey('welcome-left')),
+          matching: find.byKey(const ValueKey('week-reward')),
         ),
         findsOneWidget,
       );
@@ -4860,18 +4886,10 @@ void main() {
 
       for (final Locale locale in AppLocalizations.supportedLocales) {
         final l = await AppLocalizations.delegate.load(locale);
-        final notes = [
-          l.welcomeDaysLeft(6),
-          l.welcomeDaysLeft(1),
-          l.welcomeWeekEnds,
-          l.weekKeptThreeOwn,
-        ];
-        final String longest = notes.reduce(
-          (a, b) => a.length >= b.length ? a : b,
-        );
+        final String longest = l.weekKeptThreeOwn;
         for (final String headline in [
-          l.plusCardHeadline,
           l.theOthersYours(3),
+          l.theOthersYours(2),
         ]) {
           await tester.pumpWidget(
             MaterialApp(
@@ -4888,7 +4906,7 @@ void main() {
                       note: ('note', longest),
                       headline: headline,
                       line: l.magicLine,
-                      action: l.magicUnlock,
+                      action: l.magicUnlock(14),
                       onAction: () {},
                     ),
                   ),

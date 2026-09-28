@@ -129,14 +129,17 @@ card that came due for review. **Your journey**: the level and the numbers,
 every subject opened strand by strand, what stayed when a card came back,
 and the card to say tonight — the screen is Astute+; the profile keeps the
 record itself free. **Your whole archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
-seven days free, offered once at the end of the onboarding with "continue
-free" written under it — to a reader who set their mix. One who skips the
-subjects goes straight to their first day: they have said nothing about
-what they want and seen no card, so they do not yet know what it would
-be selling them, and the card after the fifth offers it every evening. The paywall is sheet 111a, with the app's own three
-icon tiles; its button promises the free week only where the store's
-introductory offer gives one, and says "charged today" otherwise. The mix, the streak, the freezes, the friends, the
-sharing and the search are free: they are how the app spreads.
+fourteen days free, the only free trial there is. No price is shown on the
+way in: the onboarding ends on the first day, because a reader who has not
+read a card yet does not know what Astute+ would be selling them. The card
+after the fifth offers it every evening, and the profile keeps the plans.
+The paywall is sheet 111a, with the app's own three icon tiles; its button
+says the free days the store gives this reader (`Subscription.trialDays`):
+as many as the year's introductory offer holds, none for a reader Apple
+says has had them, and "charged today" otherwise. The card after the fifth
+says them the same way, and plainly *Get Astute+* to a reader past the
+trial. The mix, the streak, the freezes, the friends, the sharing and the
+search are free: they are how the app spreads.
 
 ## Today, done
 
@@ -182,15 +185,11 @@ any deck is on the table, the sixth card included, because a throw and a
 swipe to the next tab are the same gesture and the deck has to win it.
 
 It is also where the week is said, under its eyebrow, once the day is done
-(`weekNoteOf`): every evening of the welcome, the first two weeks, how many
-of its days are left, so four of five being the reader's own reads as a
-welcome with an end rather than as the rule; the last evening that it ends
-tonight and what tomorrow looks like; and the evening a week is kept that tomorrow
-three of the five are the reader's own instead of two, said once, the night
-before, where it reads as a reward rather than a rule. The offer and where
-the week has got to are the same subject, so they share a card, and a test
-holds the longest of them to fitting it in every language on a small
-phone.
+(`weekNoteOf`): the evening a week is kept, that tomorrow three of the five
+are the reader's own instead of two, said once, the night before, where it
+reads as a reward rather than a rule. The offer and where the week has got
+to are the same subject, so they share a card, and a test holds the
+longest of it to fitting in every language on a small phone.
 
 ## Your journey
 
@@ -593,22 +592,13 @@ days until the pool runs dry.
 
 A day is five cards on both plans.
 
-**The welcome.** A free reader's first two weeks — fourteen days read, not
-days since the install — hold four cards of their own and one dealt at
-random (`kWelcomeDays`, `kOwnCardsWelcome`). The first days are when an
-app is judged, and the onboarding has just asked the reader what they
-like: a first morning of cards they did not choose would answer that the
-question was for show. So the first two weeks are theirs, dealt by the
-reading of their onboarding, a notch above, opening on what they came
-for, and long enough to miss them when they stop. Every evening of it the
-card after the fifth says how many welcome days are left, and on the last
-that the welcome ends tonight and what tomorrow looks like, beside what
-Astute+ keeps — so the fifteenth morning is a thing they were told, not
-one they notice. Through the welcome the card after the fifth offers to
-*make all five yours*, since four already are. Four rather than five, so
-there is one at random every day to set them against.
+**No welcome.** The first days read used to be a welcome, four of the
+five the reader's own with no card asked for. Beside Astute+'s free trial
+it was a second free thing, and two free things read as one too many: the
+one way to try all five is now the trial, and the free day is the same
+from the first morning, so what Astute+ adds is there to see from the start.
 
-From the fifteenth day, on the free plan two of them are the reader's own —
+On the free plan two of the five are the reader's own —
 dealt from the mix, from the subjects and strands they kept on, at the
 level the onboarding was read to start them at (see *Reading the
 onboarding*) — and three are dealt at random (`pillsAtRandom`): from the
@@ -779,11 +769,14 @@ dashboards, and has to agree with three names here.
 
 - **App Store Connect**, app Astute: a subscription group *Astute+* with
   two auto-renewable subscriptions, `com.astuto.app.plus.yearly` (a year,
-  €29,99, an introductory offer of one free week) and
+  €29,99, an introductory offer of two free weeks) and
   `com.astuto.app.plus.monthly` (a month, €3,99, no offer). The ids carry
   the bundle id so they can never meet another app's in the same account.
-  The week has to be seven days: the paywall says "Try 7 days free" when
-  the store reports a free introductory offer, and nothing else.
+  The app says the free days the store reports, so a trial changed here is
+  said right without a new build; before the store answers it says
+  `kTrialDays`, fourteen, which is what the offer should be set to. Google
+  Play's year carries the same two weeks as an offer on its base plan, for
+  new customers.
 - **RevenueCat**, in a project of Astute's own: the App Store app with
   bundle `com.astuto.app` (its public key is `REVENUECAT_IOS_KEY` in
   `codemagic.yaml`), the account's In-App Purchase key uploaded to it, both
@@ -824,7 +817,7 @@ dashboards, and has to agree with three names here.
 
 **Checking it from the phone.** The debug section at the foot of the
 profile reads back what the store answered: whether it did, the offering,
-the product, price and free week of each plan as the store priced them, and
+the product, price and free days of each plan as the store priced them, and
 whether the entitlement is active. A plan that reads "not in the offering"
 is a RevenueCat package missing; one whose price never arrives is an App
 Store product not yet *Ready to Submit*. The first subscriptions go to App
@@ -867,7 +860,9 @@ to scan.
   IBAN), with Stripe Tax on so VAT is collected where it is due.
 - **RevenueCat**, project Astute: *Apps & providers → + New → Web Billing*,
   connected to that Stripe account. Two products, `plus_yearly` (a year,
-  €29.99, seven days free) and `plus_monthly` (a month, €3.99), both
+  €29.99, fourteen days free; a Web Billing product's trial cannot be
+  changed once it is made, so a new length is a new product) and
+  `plus_monthly` (a month, €3.99), both
   attached to the `astuto_pro` entitlement, and packaged as *Annual* and
   *Monthly* in the offering the web app sees as current. The web app's
   public API key goes into `keys.js` as `REVENUECAT_WEB_KEY`: the sandbox

@@ -58,7 +58,6 @@ export function dayDocument(deal: Deal, bank: Bank, profile: Profile, nowMs: num
     own: deal.own,
     reviews: deal.reviews,
     ownCount: deal.ownCount,
-    welcome: deal.welcome,
     day: deal.day,
     bank: bank.version,
     dealtAt: nowMs,
