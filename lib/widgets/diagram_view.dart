@@ -687,7 +687,7 @@ class _ScalePainter extends _DiagramPainter {
   _ScalePainter(this.d, super.t, super.ink);
 
   @override
-  double heightFor(double width) => 178;
+  double heightFor(double width) => 200;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -698,7 +698,9 @@ class _ScalePainter extends _DiagramPainter {
     final kLo = lo == hi ? lo - 1 : lo;
     final decades = math.max(1, hi - kLo);
     const pad = 14.0;
-    final axisY = size.height * 0.56;
+    // Room above for stacked labels; below for ticks, the bracket, its
+    // factor and the unit.
+    final axisY = size.height - 100;
     double xOf(double value) =>
         pad + (size.width - 2 * pad) * ((_log10(value) - kLo) / decades);
 
@@ -1266,7 +1268,7 @@ class _LinePainter extends _DiagramPainter {
         .map((y) => layoutText(_tickLabel(d.y, y), size: 10).width)
         .fold<double>(0, math.max);
     final left = yLabelW + 8;
-    const top = 14.0;
+    const top = 24.0;
     final bottom = size.height - 30;
     final right = size.width - 8;
     Offset at(double x, double y) => Offset(
@@ -1321,7 +1323,7 @@ class _LinePainter extends _DiagramPainter {
       drawText(
         canvas,
         layoutText(d.y.label, size: 10, weight: FontWeight.w600, alpha: 0.55),
-        Offset(left + 6, top - 12),
+        Offset(left + 6, top - 20),
         opacity: tickP,
       );
     }
@@ -1341,7 +1343,7 @@ class _LinePainter extends _DiagramPainter {
       if (d.y.label.isNotEmpty)
         Rect.fromLTWH(
           left + 6,
-          top - 12,
+          top - 20,
           layoutText(d.y.label, size: 10, weight: FontWeight.w600).width,
           14,
         ),
