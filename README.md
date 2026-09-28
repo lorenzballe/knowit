@@ -129,10 +129,13 @@ card that came due for review. **Your journey**: the level and the numbers,
 every subject opened strand by strand, what stayed when a card came back,
 and the card to say tonight — the screen is Astute+; the profile keeps the
 record itself free. **Your whole archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
-fourteen days free, the only free trial there is. No price is shown on the
-way in: the onboarding ends on the first day, because a reader who has not
-read a card yet does not know what Astute+ would be selling them. The card
-after the fifth offers it every evening, and the profile keeps the plans.
+fourteen days free, the only free trial there is, offered once at the end
+of the onboarding with "continue free" written under it — to a reader who
+set their mix. That is where most trials start, on the first day, and a
+trial asks for nothing today. One who skips the subjects goes straight to
+their first day: they have said nothing about what they want and seen no
+card. The card after the fifth offers it every evening, and the profile
+keeps the plans.
 The paywall is sheet 111a, with the app's own three icon tiles; its button
 says the free days the store gives this reader (`Subscription.trialDays`):
 as many as the year's introductory offer holds, none for a reader Apple

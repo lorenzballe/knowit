@@ -371,29 +371,28 @@ class _TodayDoneViewState extends State<TodayDoneView>
           if (x.abs() > stage.width / 2 + _cardWidth / 2) continue;
           final double dist = math.min(x.abs() / _step, 1);
           final bool front = k == at;
+          // Keyed by its place on the shelf, and wrapped the same way at
+          // the front as to the side: a card that changes place in the
+          // paint order, or comes to the front, is the same card carried
+          // over, not a new one built in its place. Built anew, the card
+          // after the fifth started its rim's turn over mid-swipe.
           layers.add(
             Transform.translate(
+              key: ValueKey('shelf-layer-$k'),
               offset: Offset(x, 0),
               child: Transform.scale(
                 scale: 1 - dist * 0.07,
                 child: Opacity(
                   opacity: 1 - dist * 0.5,
-                  child: front
-                      ? (k < deck.length
-                            ? _card(k, deck[k], glow: 1 - dist, front: true)
-                            : _sixth(context))
-                      : ExcludeSemantics(
-                          child: IgnorePointer(
-                            child: k < deck.length
-                                ? _card(
-                                    k,
-                                    deck[k],
-                                    glow: 1 - dist,
-                                    front: false,
-                                  )
-                                : _sixth(context),
-                          ),
-                        ),
+                  child: ExcludeSemantics(
+                    excluding: !front,
+                    child: IgnorePointer(
+                      ignoring: !front,
+                      child: k < deck.length
+                          ? _card(k, deck[k], glow: 1 - dist, front: front)
+                          : _sixth(context),
+                    ),
+                  ),
                 ),
               ),
             ),

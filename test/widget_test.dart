@@ -101,6 +101,13 @@ Future<void> _openJourney(WidgetTester tester, {bool plus = true}) async {
 Finder _onJourney(String text) =>
     find.descendant(of: find.byType(JourneyScreen), matching: find.text(text));
 
+/// Walks past the offer the onboarding ends on.
+Future<void> _continueFree(WidgetTester tester) async {
+  expect(find.byType(PaywallScreen), findsOneWidget);
+  await tester.tap(find.text('Continue free'));
+  await _settle(tester);
+}
+
 /// An install that is past the first run, on the free plan unless told
 /// otherwise.
 Map<String, Object> _installed({bool plus = false, List<String>? saved}) => {
@@ -297,8 +304,8 @@ void main() {
     await tester.tap(find.text('Skip'));
     await _settle(tester);
 
-    // And then the first day, with no price on the way in.
-    expect(find.byType(PaywallScreen), findsNothing);
+    // Four, and last: the offer, with the way past it written under it.
+    await _continueFree(tester);
     expect(find.byType(PillCardStack), findsOneWidget);
 
     // And the answers are kept, not just used once.
@@ -1457,8 +1464,8 @@ void main() {
     expect(find.byKey(const ValueKey('tab-Profile')), findsOneWidget);
   });
 
-  testWidgets('the onboarding is the intro and the mix, then the cards, '
-      'with no price on the way in', (tester) async {
+  testWidgets('the onboarding is the intro and the mix, the offer once, and '
+      'then the cards', (tester) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -1477,18 +1484,17 @@ void main() {
     await tester.tap(find.text('Skip'));
     await _settle(tester);
 
-    // And the cards, straight after: a reader who has not read one yet
-    // does not know what Astute+ would sell them, so no offer is made on
-    // the way in. The card after the fifth makes it, every evening.
-    expect(find.byType(PaywallScreen), findsNothing);
+    // Four: the offer, once, with the free trial first and the way past
+    // it under it — and the cards start straight after, because there is
+    // nothing else to ask.
+    expect(find.text('Try 14 days free, then €29,99/yr'), findsOneWidget);
+    await _continueFree(tester);
     expect(find.byType(PillCardStack), findsOneWidget);
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getBool('knowit.onboarded'), isTrue);
   });
 
-  testWidgets('setting the genres goes straight to the first day too', (
-    tester,
-  ) async {
+  testWidgets('setting the genres ends on the offer too', (tester) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -1497,10 +1503,11 @@ void main() {
     await tester.tap(find.text('Next'));
     await _settle(tester);
     expect(find.text('Your mix'), findsOneWidget);
-    // Answered rather than walked past: the same road, to the cards.
+    // Answered rather than walked past: the same road, to the offer and
+    // then the cards.
     await tester.tap(find.textContaining('genres on'));
     await _settle(tester);
-    expect(find.byType(PaywallScreen), findsNothing);
+    await _continueFree(tester);
     expect(find.byType(PillCardStack), findsOneWidget);
   });
 
@@ -1925,6 +1932,38 @@ void main() {
         await _settle(tester);
       }
     }
+
+    testWidgets('the card after the fifth is the same card at the front and '
+        'to the side, so its rim keeps turning', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await _finishDay(tester);
+      for (var i = 0; i < kPillsPerDay; i++) {
+        await tester.fling(
+          find.byType(TodayDoneView),
+          const Offset(-300, 0),
+          900,
+        );
+        await _settle(tester);
+      }
+      final State atTheFront = tester.state(find.byType(MagicCard));
+      // Back to the fifth: the card after it waits at the side, and it is
+      // the card that was at the front, carried over rather than built
+      // again with its rim's turn starting over.
+      await tester.fling(find.byType(TodayDoneView), const Offset(300, 0), 900);
+      await _settle(tester);
+      expect(find.text('05 / 05'), findsOneWidget);
+      expect(tester.state(find.byType(MagicCard)), same(atTheFront));
+      // And to the front again, still the same.
+      await tester.fling(
+        find.byType(TodayDoneView),
+        const Offset(-300, 0),
+        900,
+      );
+      await _settle(tester);
+      expect(tester.state(find.byType(MagicCard)), same(atTheFront));
+    });
 
     testWidgets('the shelf ends on the card that offers the rest of the day', (
       tester,

@@ -50,27 +50,45 @@ class MagicCard extends StatefulWidget {
 
 class _MagicCardState extends State<MagicCard>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _turn = AnimationController(
+  /// One turn of the rim.
+  static const Duration _period = Duration(milliseconds: 2800);
+
+  /// One clock for every rim. Where the rim is in its turn is read off it
+  /// on every frame, rather than counted from when the card was built: the
+  /// shelf builds the card again when it comes back in from the edge, and
+  /// the deck's card gives way to the shelf's, and each started its turn
+  /// over from the top. Read off one clock, a card built again is at the
+  /// point in the turn it would have reached.
+  static final Stopwatch _clock = Stopwatch()..start();
+
+  static double get _turnNow =>
+      (_clock.elapsedMicroseconds % _period.inMicroseconds) /
+      _period.inMicroseconds;
+
+  /// Only a heartbeat: it asks for a frame, and the frame asks the clock.
+  late final AnimationController _beat = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 2800),
+    duration: _period,
   );
+
+  bool _still = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     // A phone that asked for less motion gets the rim standing still; it
     // is still every colour, it just does not spin.
-    final bool still = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
-    if (still) {
-      _turn.stop();
-    } else if (!_turn.isAnimating) {
-      _turn.repeat();
+    _still = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
+    if (_still) {
+      _beat.stop();
+    } else if (!_beat.isAnimating) {
+      _beat.repeat();
     }
   }
 
   @override
   void dispose() {
-    _turn.dispose();
+    _beat.dispose();
     super.dispose();
   }
 
@@ -78,9 +96,9 @@ class _MagicCardState extends State<MagicCard>
   Widget build(BuildContext context) {
     final Color ink = context.p.ink;
     return AnimatedBuilder(
-      animation: _turn,
+      animation: _beat,
       builder: (context, child) => CustomPaint(
-        painter: _Rim(turn: _turn.value),
+        painter: _Rim(turn: _still ? 0 : _turnNow),
         child: child,
       ),
       child: Container(
