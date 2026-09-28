@@ -380,7 +380,6 @@
   "mixFull": "いっぱい",
   "forYouChip": "あなた向け",
   "againChip": "もう一度",
-  "theOthersYours": "{n, plural, =1{残りの1枚も、あなたのものに。} other{残りの{n}枚も、あなたのものに。}}",
   "magicLine": "毎日5枚、あなたのために選んだカード。あなたのミックスから、あなたのレベルで、読んだものは二度と出ません。明日から。",
   "everyCardForYou": "すべてのカードを、あなたのために。",
   "perkOwnTitle": "毎日5枚、すべてあなたのもの",

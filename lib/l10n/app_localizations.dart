@@ -2400,12 +2400,6 @@ abstract class AppLocalizations {
   /// **'AGAIN'**
   String get againChip;
 
-  /// No description provided for @theOthersYours.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{The other one, yours.} other{The other {n}, yours.}}'**
-  String theOthersYours(int n);
-
   /// No description provided for @magicLine.
   ///
   /// In en, this message translates to:

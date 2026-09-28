@@ -66,7 +66,7 @@ void main() {
     );
     for (final String badge in const [
       'site/assets/badges/app-store.svg',
-      'site/assets/badges/google-play.png',
+      'site/assets/badges/google-play.svg',
       // The code a computer's visitor scans, which leads to /get.
       'site/assets/qr-get.svg',
     ]) {

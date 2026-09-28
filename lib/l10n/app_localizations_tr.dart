@@ -1621,17 +1621,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get againChip => 'TEKRAR';
 
   @override
-  String theOthersYours(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Diğer $n kart da senin.',
-      one: 'Diğeri de senin.',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get magicLine =>
       'Her gün senin için seçilmiş beş kart: karışımından, seviyende, daha önce okuduğun hiçbiri yok. Yarından itibaren.';
 

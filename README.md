@@ -177,7 +177,7 @@ The one card in the app that is not a card. On the free plan it is the
 last card in the deck: it peeks from under the fifth like any next card,
 comes to the top when the fifth is thrown, and is thrown the same way — a
 rim of every colour the deck has, turning, with its light spilling onto
-the table, and one offer: "the other three, yours". The button is the
+the table, and one offer: "all five, yours". The button is the
 paywall. Nothing times out and nothing says skip; a throw is the way past
 it, as it is past every other card. Then it is the last card on the shelf
 too, after the five, with the counter giving way to the plan's name and a

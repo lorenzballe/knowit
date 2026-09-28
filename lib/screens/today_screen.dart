@@ -62,8 +62,8 @@ class _TodayScreenState extends State<TodayScreen> {
   /// Whether the card after the fifth is still on the table. It is dealt
   /// only when the day is finished *here*, in this session — opening the
   /// app onto a day already done goes straight to the shelf — and only on
-  /// the free plan, where there is something to offer: the other three
-  /// cards, the reader's own. It leaves the way every card leaves: thrown.
+  /// the free plan, where there is something to offer: all five cards,
+  /// the reader's own. It leaves the way every card leaves: thrown.
   bool _magic = false;
 
   /// Which of the finished day's cards is at the front of the shelf. Held
@@ -178,8 +178,8 @@ class _TodayScreenState extends State<TodayScreen> {
               deck: app.todaysDeck,
               index: app.todayIndex,
               // After the last pill, on the free plan, the card that offers
-              // the rest of the day: the cards dealt at random, the reader's
-              // own instead. It is thrown like the rest, and it says where
+              // the whole day: all five the reader's own, the ones dealt at
+              // random too. It is thrown like the rest, and it says where
               // the reader's week has got to.
               trailing: app.isPlus
                   ? null
@@ -187,9 +187,7 @@ class _TodayScreenState extends State<TodayScreen> {
                       key: const ValueKey('magic-card'),
                       eyebrow: context.l10n.plusNameCaps,
                       note: weekNoteOf(context, app),
-                      headline: context.l10n.theOthersYours(
-                        app.todaysDeck.length - app.ownIdsToday.length,
-                      ),
+                      headline: context.l10n.plusCardHeadline,
                       line: context.l10n.magicLine,
                       action: plusActionOf(context),
                       onAction: () => _offer(context),

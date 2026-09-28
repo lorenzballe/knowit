@@ -1588,17 +1588,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get againChip => 'もう一度';
 
   @override
-  String theOthersYours(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '残りの$n枚も、あなたのものに。',
-      one: '残りの1枚も、あなたのものに。',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get magicLine =>
       '毎日5枚、あなたのために選んだカード。あなたのミックスから、あなたのレベルで、読んだものは二度と出ません。明日から。';
 

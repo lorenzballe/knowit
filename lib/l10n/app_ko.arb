@@ -380,7 +380,6 @@
   "mixFull": "가득",
   "forYouChip": "당신을 위한",
   "againChip": "다시",
-  "theOthersYours": "{n, plural, =1{나머지 한 장도 당신의 것으로.} other{나머지 {n}장도 당신의 것으로.}}",
   "magicLine": "매일 당신을 위해 고른 다섯 장: 당신의 믹스에서, 당신의 수준으로, 읽은 카드는 다시 없이. 내일부터.",
   "everyCardForYou": "모든 카드를, 당신을 위해.",
   "perkOwnTitle": "매일 다섯 장, 전부 당신의 것",

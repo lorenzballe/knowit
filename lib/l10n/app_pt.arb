@@ -380,7 +380,6 @@
   "mixFull": "No máximo",
   "forYouChip": "PARA TI",
   "againChip": "DE NOVO",
-  "theOthersYours": "{n, plural, =1{A outra, tua.} other{As outras {n}, tuas.}}",
   "magicLine": "Cinco cartas por dia escolhidas para ti: da tua mistura, ao teu nível, nunca uma já lida. A partir de amanhã.",
   "everyCardForYou": "Cada carta, escolhida para ti.",
   "perkOwnTitle": "Cinco cartas por dia, todas tuas",

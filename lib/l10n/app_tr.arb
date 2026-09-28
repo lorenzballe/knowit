@@ -380,7 +380,6 @@
   "mixFull": "Tam",
   "forYouChip": "SANA ÖZEL",
   "againChip": "TEKRAR",
-  "theOthersYours": "{n, plural, =1{Diğeri de senin.} other{Diğer {n} kart da senin.}}",
   "magicLine": "Her gün senin için seçilmiş beş kart: karışımından, seviyende, daha önce okuduğun hiçbiri yok. Yarından itibaren.",
   "everyCardForYou": "Her kart, senin için seçilmiş.",
   "perkOwnTitle": "Günde beş kart, hepsi senin",
