@@ -32,6 +32,35 @@
   "mature": false,
   "language": "en",
   "figure": "map",
+  "diagram": {
+    "type": "timeline",
+    "from": 1530,
+    "to": 1760,
+    "events": [
+      {
+        "at": 1539,
+        "label": "Ulloa reaches the gulf's head"
+      },
+      {
+        "at": 1747,
+        "label": "Decreed: no island",
+        "hi": true
+      }
+    ],
+    "spans": [
+      {
+        "from": 1539,
+        "to": 1620,
+        "label": "drawn as a peninsula"
+      },
+      {
+        "from": 1620,
+        "to": 1747,
+        "label": "drawn as an island"
+      }
+    ],
+    "caption": "The truth came first; the island error arrived eighty years later and lasted over a century."
+  },
   "source": "McLaughlin & Mayo, California Map Society, 1995",
   "source_kind": "reference_work",
   "reference": "McLaughlin & Mayo, The Mapping of California as an Island: An Illustrated Checklist, California Map Society Occasional Paper No. 5, 1995",

@@ -43,7 +43,7 @@
     "y": {
       "label": "solar masses",
       "min": 10,
-      "max": 1000000000,
+      "max": 10000000000,
       "log": true
     },
     "series": [

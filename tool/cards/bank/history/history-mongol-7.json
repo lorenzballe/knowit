@@ -32,7 +32,19 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 1000,
+    "groups": [
+      {
+        "n": 95,
+        "label": "units of a thousand men",
+        "hi": true
+      }
+    ],
+    "caption": "Each dot is 1,000 Mongols: an army of 95,000 among perhaps a million."
+  },
   "source": "The Secret History, trans. de Rachewiltz",
   "source_kind": "primary_document",
   "reference": "de Rachewiltz (trans.), The Secret History of the Mongols: A Mongolian Epic Chronicle of the Thirteenth Century, Brill, 2004",

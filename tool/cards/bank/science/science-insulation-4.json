@@ -34,7 +34,7 @@
   "figure": "bars",
   "diagram": {
     "type": "bars",
-    "unit": "× the sandstone",
+    "unit": "relative resistance",
     "items": [
       {
         "label": "1 m of sandstone",

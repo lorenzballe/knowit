@@ -25,6 +25,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "g",
+    "items": [
+      {
+        "label": "Water, 1 m³ of cloud",
+        "value": 0.5,
+        "hi": true
+      },
+      {
+        "label": "Air in the same 1 m³",
+        "value": 1000
+      }
+    ],
+    "caption": "A cubic metre of cloud is a kilogram of air holding half a gram of water."
+  },
   "source": "Wallace & Hobbs, Atmospheric Science, 2006",
   "source_kind": "book",
   "reference": "Wallace & Hobbs, Atmospheric Science: An Introductory Survey, 2nd edition, Academic Press, 2006",

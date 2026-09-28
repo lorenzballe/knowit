@@ -26,6 +26,27 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1870,
+    "to": 1912,
+    "events": [
+      {
+        "at": 1877,
+        "label": "Ottoman parliament meets",
+        "hi": true
+      },
+      {
+        "at": 1890,
+        "label": "Japan's first parliament"
+      },
+      {
+        "at": 1908,
+        "label": "parliament meets again"
+      }
+    ],
+    "caption": "Opened 13 years before Japan's, it was sent home in 1878 and returned only in 1908."
+  },
   "source": "Devereux, The First Ottoman Constitutional Period, 1963",
   "source_kind": "book",
   "reference": "Devereux, The First Ottoman Constitutional Period: A Study of the Midhat Constitution and Parliament, Johns Hopkins Press, 1963",

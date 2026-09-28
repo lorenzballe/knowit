@@ -29,6 +29,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "split",
+    "unit": "£",
+    "parts": [
+      {
+        "label": "rest of the tax",
+        "value": 559
+      },
+      {
+        "label": "paid from wage fines",
+        "value": 675,
+        "hi": true
+      }
+    ],
+    "caption": "Of Essex's £1,234 tax in 1352, £675 came from fined workers."
+  },
   "source": "Victoria County History of Essex, vol. 4",
   "source_kind": "reference_work",
   "reference": "https://www.british-history.ac.uk/vch/essex/vol4/pp296-302",

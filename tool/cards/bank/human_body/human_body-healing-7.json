@@ -28,7 +28,7 @@
   "figure": "bars",
   "diagram": {
     "type": "bars",
-    "unit": "relative healing time",
+    "unit": "× as long",
     "items": [
       {
         "label": "Burned by day",

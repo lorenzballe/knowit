@@ -33,6 +33,23 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 1000,
+    "groups": [
+      {
+        "n": 27,
+        "label": "route known for certain",
+        "hi": true
+      },
+      {
+        "n": 74,
+        "label": "hypothetical",
+        "spread": true
+      }
+    ],
+    "caption": "Of every 1,000 km of Roman road, 27 follow a known course; most are placed from texts."
+  },
   "source": "de Soto et al., Scientific Data, 2025",
   "source_kind": "paper",
   "reference": "https://www.nature.com/articles/s41597-025-06140-z",

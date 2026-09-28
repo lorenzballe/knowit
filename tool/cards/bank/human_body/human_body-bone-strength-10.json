@@ -27,7 +27,7 @@
   "figure": "bars",
   "diagram": {
     "type": "bars",
-    "unit": "× force to split along",
+    "unit": "× the force",
     "items": [
       {
         "label": "Splitting along the bone",

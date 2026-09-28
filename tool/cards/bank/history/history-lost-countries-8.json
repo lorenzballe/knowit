@@ -30,7 +30,35 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1958,
+    "to": 1974,
+    "events": [
+      {
+        "at": 1961,
+        "label": "Syria walks out"
+      },
+      {
+        "at": 1970,
+        "label": "Nasser dies"
+      },
+      {
+        "at": 1971,
+        "label": "Renamed Arab Republic of Egypt",
+        "hi": true
+      }
+    ],
+    "spans": [
+      {
+        "from": 1961,
+        "to": 1971,
+        "label": "a union of one"
+      }
+    ],
+    "caption": "The name outlived the union by ten years, and Nasser by one."
+  },
   "source": "Podeh, The Decline of Arab Unity, 1999",
   "source_kind": "book",
   "reference": "Podeh, The Decline of Arab Unity: The Rise and Fall of the United Arab Republic, Sussex Academic Press, 1999",

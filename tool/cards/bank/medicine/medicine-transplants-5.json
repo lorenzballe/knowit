@@ -38,16 +38,16 @@
     "unit": "hours",
     "items": [
       {
-        "label": "Heart: 4 to 6 hours",
+        "label": "Heart",
         "value": 6
       },
       {
-        "label": "Kidney: commonly 24 to 36",
+        "label": "Kidney",
         "value": 36,
         "hi": true
       }
     ],
-    "caption": "A heart has 4 to 6 hours; a kidney commonly 24 to 36."
+    "caption": "Upper limits: a heart has 4 to 6 hours on ice, a kidney commonly 24 to 36."
   },
   "source": "Jing et al., Acta Pharmacologica Sinica, 2018",
   "source_kind": "paper",

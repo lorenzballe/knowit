@@ -26,6 +26,34 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1832,
+    "to": 1841,
+    "events": [
+      {
+        "at": 1833,
+        "label": "Abolition Act"
+      },
+      {
+        "at": 1834,
+        "label": "freed, but apprenticed"
+      },
+      {
+        "at": 1838,
+        "label": "protest ends apprenticeship",
+        "hi": true
+      }
+    ],
+    "spans": [
+      {
+        "from": 1834,
+        "to": 1840,
+        "label": "unpaid work as planned"
+      }
+    ],
+    "caption": "Freedom was due only after four to six more years of unpaid work."
+  },
   "source": "Draper, The Price of Emancipation, 2010",
   "source_kind": "book",
   "reference": "Draper, The Price of Emancipation: Slave-Ownership, Compensation and British Slave Society at the End of Slavery, Cambridge University Press, 2010",

@@ -25,6 +25,23 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "tree",
+    "n": 61,
+    "label": "Partula species",
+    "branches": [
+      {
+        "n": 55,
+        "label": "gone from the wild",
+        "hi": true
+      },
+      {
+        "n": 6,
+        "label": "still in the wild"
+      }
+    ],
+    "caption": "One released predator removed about 55 of 61 tree snail species from the wild."
+  },
   "source": "Haponski et al., Evolutionary Applications, 2019",
   "source_kind": "paper",
   "reference": "Haponski et al., Deconstructing an infamous extinction crisis: Survival of Partula species on Moorea and Tahiti, Evolutionary Applications, 2019",

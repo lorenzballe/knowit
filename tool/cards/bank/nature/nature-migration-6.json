@@ -32,6 +32,26 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "scale",
+    "unit": "monarchs",
+    "items": [
+      {
+        "label": "2020 count",
+        "value": 1914
+      },
+      {
+        "label": "2024 count",
+        "value": 9000
+      },
+      {
+        "label": "2021 count",
+        "value": 247237,
+        "hi": true
+      }
+    ],
+    "caption": "A record low bounced back over 100-fold, then sank again."
+  },
   "source": "Xerces Society, Western Monarch Count",
   "source_kind": "statistics",
   "reference": "https://westernmonarchcount.org/data/",

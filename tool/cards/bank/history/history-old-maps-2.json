@@ -35,6 +35,21 @@
   "mature": false,
   "language": "en",
   "figure": "map",
+  "diagram": {
+    "type": "area",
+    "items": [
+      {
+        "label": "Patch at the equator",
+        "value": 1
+      },
+      {
+        "label": "Same patch at 60°",
+        "value": 4,
+        "hi": true
+      }
+    ],
+    "caption": "Stretched twice east–west and twice north–south: four times the area."
+  },
   "source": "Snyder, Map Projections: A Working Manual, 1987",
   "source_kind": "reference_work",
   "reference": "Snyder, Map Projections: A Working Manual, US Geological Survey Professional Paper 1395, 1987",

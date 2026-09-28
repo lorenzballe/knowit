@@ -32,6 +32,23 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1480,
+    "to": 1740,
+    "events": [
+      {
+        "at": 1493,
+        "label": "Hebrew book printed"
+      },
+      {
+        "at": 1729,
+        "label": "first Ottoman Turkish book",
+        "hi": true
+      }
+    ],
+    "caption": "Istanbul's presses ran for over two centuries before one printed Ottoman Turkish."
+  },
   "source": "Sabev, Waiting for Müteferrika, 2018",
   "source_kind": "book",
   "reference": "Sabev, Waiting for Müteferrika: Glimpses of Early Modern Ottoman Printing (1726-1746), Academic Studies Press, 2018",

@@ -35,6 +35,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "scale",
+    "unit": "hours",
+    "items": [
+      {
+        "label": "Self-acting mule, 1825",
+        "value": 135
+      },
+      {
+        "label": "Spinning by hand",
+        "value": 50000,
+        "hi": true
+      }
+    ],
+    "caption": "The same 45 kg of yarn: about 14 working years by hand, under two weeks by machine."
+  },
   "source": "Allen, The British Industrial Revolution, 2009",
   "source_kind": "book",
   "reference": "Allen, The British Industrial Revolution in Global Perspective, Cambridge University Press, 2009, after Catling, The Spinning Mule, 1970",

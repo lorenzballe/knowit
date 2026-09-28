@@ -31,6 +31,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 34,
+        "label": "households with no fixed bath",
+        "hi": true
+      }
+    ],
+    "caption": "In 1951 more than one household in three still had no fixed bath."
+  },
   "source": "General Register Office, Census 1951 Housing Report",
   "source_kind": "primary_document",
   "reference": "General Register Office, Census 1951 England and Wales: Housing Report, HMSO, 1956",

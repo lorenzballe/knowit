@@ -33,6 +33,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "points",
+    "items": [
+      {
+        "label": "Self-government gained",
+        "value": 3.1
+      },
+      {
+        "label": "Union with Canada gained",
+        "value": 11.2,
+        "hi": true
+      }
+    ],
+    "caption": "Union gained 11 of the commission's 14 points, turning a 3.5-point deficit into victory."
+  },
   "source": "Neary, Newfoundland in the North Atlantic World, 1988",
   "source_kind": "book",
   "reference": "Neary, Newfoundland in the North Atlantic World, 1929–1949, McGill-Queen's University Press, 1988",

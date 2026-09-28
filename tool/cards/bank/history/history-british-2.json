@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "people",
+    "items": [
+      {
+        "label": "Indian Civil Service",
+        "value": 1000,
+        "hi": true
+      },
+      {
+        "label": "people it governed",
+        "value": 300000000
+      }
+    ],
+    "caption": "About 1,000 officers for nearly 300 million people: one for every 300,000."
+  },
   "source": "Gilmour, The Ruling Caste, 2005",
   "source_kind": "book",
   "reference": "Gilmour, The Ruling Caste: Imperial Lives in the Victorian Raj, John Murray, 2005",

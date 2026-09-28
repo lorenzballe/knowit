@@ -32,7 +32,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "tax before",
+        "value": 100
+      },
+      {
+        "label": "tax from 445",
+        "value": 12.5,
+        "hi": true
+      }
+    ],
+    "caption": "Numidia and Mauretania Sitifensis now owed an eighth of their old tax."
+  },
   "source": "Heather, The Fall of the Roman Empire, 2005",
   "source_kind": "book",
   "reference": "Heather, The Fall of the Roman Empire: A New History, Macmillan, 2005",

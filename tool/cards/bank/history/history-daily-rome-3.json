@@ -36,6 +36,26 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "slaves and outsiders",
+        "value": 40
+      },
+      {
+        "label": "wives and children",
+        "value": 40
+      },
+      {
+        "label": "men on the grain list",
+        "value": 20,
+        "hi": true
+      }
+    ],
+    "caption": "The 200,000 men on the grain list were a fifth of a city of a million."
+  },
   "source": "Res Gestae 15; Morley, Metropolis and Hinterland",
   "source_kind": "book",
   "reference": "Morley, Metropolis and Hinterland: The City of Rome and the Italian Economy, 200 B.C.-A.D. 200, Cambridge University Press, 1996",

@@ -31,6 +31,23 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "tree",
+    "n": 501,
+    "label": "species declining",
+    "branches": [
+      {
+        "n": 411,
+        "label": "declined"
+      },
+      {
+        "n": 90,
+        "label": "presumed extinct",
+        "hi": true
+      }
+    ],
+    "caption": "Of 501 species hit by chytrid, about 90 are presumed extinct."
+  },
   "source": "Scheele et al., Science, 2019",
   "source_kind": "paper",
   "reference": "Scheele et al., Amphibian fungal panzootic causes catastrophic and ongoing loss of biodiversity, Science, 2019",

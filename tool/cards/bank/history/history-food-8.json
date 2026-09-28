@@ -37,6 +37,26 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "split",
+    "unit": "kcal",
+    "parts": [
+      {
+        "label": "Biscuit",
+        "value": 1600
+      },
+      {
+        "label": "Beer",
+        "value": 1350
+      },
+      {
+        "label": "Meat and dry stores",
+        "value": 2000,
+        "hi": true
+      }
+    ],
+    "caption": "About 4,950 kcal a day, and biscuit only a third of it."
+  },
   "source": "Macdonald, Feeding Nelson's Navy, 2004",
   "source_kind": "book",
   "reference": "Macdonald, Feeding Nelson's Navy: The True Story of Food at Sea in the Georgian Era, Chatham Publishing, 2004",

@@ -32,6 +32,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 40,
+        "label": "inactive most of the time",
+        "hi": true
+      }
+    ],
+    "caption": "About two workers in five rarely work."
+  },
   "source": "Charbonneau & Dornhaus, Behavioral Ecology and Sociobiology, 2015",
   "source_kind": "paper",
   "reference": "Charbonneau & Dornhaus, Workers 'specialized' on inactivity: behavioral consistency of inactive workers and their role in task allocation, Behavioral Ecology and Sociobiology, 2015",

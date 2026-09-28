@@ -166,12 +166,36 @@ double pop(double t, double a, double b) {
 /// million, words above, three significant figures at most.
 String sayNumber(double v) {
   final a = v.abs();
+  if (a >= 1e15) {
+    // Past trillions, words stop helping: a power of ten.
+    final e = (math.log(a) / math.ln10).floor();
+    final m = v / math.pow(10.0, e);
+    final sup = e.toString().split('').map((c) => _superscripts[c]).join();
+    return '${_sig(m)} × 10$sup';
+  }
   if (a >= 1e12) return '${_sig(v / 1e12)} trillion';
   if (a >= 1e9) return '${_sig(v / 1e9)} billion';
   if (a >= 1e6) return '${_sig(v / 1e6)} million';
   if (a >= 1000) return _commas(v.round());
-  if (a >= 100) return v.round().toString();
+  if (a >= 100) {
+    // 110.7 stays 110.7: a hundred-odd with a decimal is usually the point.
+    if ((v * 10).round() % 10 != 0 && a < 1000) return v.toStringAsFixed(1);
+    return v.round().toString();
+  }
   return _sig(v);
+}
+
+/// Two significant figures, for factors: ×18,000, ×2.7, ×8.2.
+String _twoSig(double v) {
+  if (v <= 0) return sayNumber(v);
+  final e = (math.log(v) / math.ln10).floor();
+  // A factor that is already round (×16, ×125,000) is printed as it is.
+  final three = math.pow(10.0, e - 2);
+  if (((v / three).round() * three - v).abs() <= v * 1e-9) return sayNumber(v);
+  // Three figures for big factors (×125,000), two for small ones (×2.7).
+  final unit = math.pow(10.0, v >= 100 ? e - 2 : e - 1);
+  final r = (v / unit).round() * unit;
+  return sayNumber(r.toDouble());
 }
 
 String _sig(double v) {
@@ -202,15 +226,29 @@ String _commas(int n) {
 }
 
 const _superscripts = {
-  '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶',
-  '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻',
+  '0': '⁰',
+  '1': '¹',
+  '2': '²',
+  '3': '³',
+  '4': '⁴',
+  '5': '⁵',
+  '6': '⁶',
+  '7': '⁷',
+  '8': '⁸',
+  '9': '⁹',
+  '-': '⁻',
 };
 
 /// A power of ten as a tick label: plain where a plain number is short,
 /// 10ⁿ where it is not.
 String sayPower(int k) {
   if (k >= -2 && k <= 4) return sayNumber(math.pow(10, k).toDouble());
-  return '10${k.toString().split('').map((c) => _superscripts[c]).join()}';
+  String sup(int n) =>
+      n.toString().split('').map((c) => _superscripts[c]).join();
+  // The app's fonts have no superscript minus, so a small power is written
+  // as a fraction: 1/10⁶ for a millionth.
+  if (k < 0) return '1/10${sup(-k)}';
+  return '10${sup(k)}';
 }
 
 /// How many times bigger, as a factor to print beside a bracket.
@@ -220,12 +258,18 @@ String sayPower(int k) {
 String sayAmount(double v, String unit) {
   final u = unit.trim();
   if (u.isEmpty) return sayNumber(v);
-  if (const {'€', r'$', '£', '¥', '₹'}.contains(u)) return '$u${sayNumber(v)}';
-  if (u == '%') return '${sayNumber(v)}%';
+  if (const {'€', r'$', '£', '¥', '₹'}.contains(u)) {
+    // Money with cents shows both digits: $16.50, never $16.5.
+    final cents = (v * 100).round() % 100 != 0 && v.abs() < 1000;
+    return '$u${cents ? v.toStringAsFixed(2) : sayNumber(v)}';
+  }
+  if (u.startsWith('%') || u == '¢' || u == '°' || u == '×') {
+    return '${sayNumber(v)}$u';
+  }
   return '${sayNumber(v)} $u';
 }
 
-String sayFactor(double f) => '×${sayNumber(f)}';
+String sayFactor(double f) => '×${_twoSig(f)}';
 
 double _log10(double v) => math.log(v) / math.ln10;
 
@@ -267,7 +311,12 @@ abstract class _DiagramPainter extends CustomPainter {
   }) {
     final style = display
         ? AppText.display(size: size, weight: weight, color: inkAt(alpha))
-        : AppText.body(size: size, weight: weight, color: inkAt(alpha), height: 1.2);
+        : AppText.body(
+            size: size,
+            weight: weight,
+            color: inkAt(alpha),
+            height: 1.2,
+          );
     return TextPainter(
       text: TextSpan(text: text, style: style),
       textDirection: TextDirection.ltr,
@@ -334,7 +383,13 @@ abstract class _DiagramPainter extends CustomPainter {
       ..lineTo(b.dx, b.dy - lift)
       ..lineTo(b.dx, b.dy);
     canvas.drawPath(partial(path, phase(p, 0, 0.7)), stroke(mid, 1.3));
-    final tp = layoutText(text, size: 15, weight: FontWeight.w600, alpha: 0.95, display: true);
+    final tp = layoutText(
+      text,
+      size: 15,
+      weight: FontWeight.w600,
+      alpha: 0.95,
+      display: true,
+    );
     drawText(
       canvas,
       tp,
@@ -364,15 +419,21 @@ class _DotsPainter extends _DiagramPainter {
   double heightFor(double width) {
     if (!_thousand) return math.min(150, width * 0.46);
     final pitch = width / _cols;
-    return _rows * pitch + 22 + d.groups.length * 22;
+    return _rows * pitch + 22 + d.groups.length * 22 + 6;
   }
 
   Color _groupColour(int g) {
     if (d.groups.length == 1 || d.groups[g].highlight) return strong;
-    return switch (g) {
+    // With a group marked, every other one recedes, whatever its place.
+    final anyHighlight = d.groups.any((x) => x.highlight);
+    var rank = anyHighlight ? 1 : 0;
+    for (var i = 0; i < g; i++) {
+      if (!d.groups[i].highlight) rank++;
+    }
+    return switch (rank) {
       0 => strong,
-      1 => inkAt(0.55),
-      _ => inkAt(0.34),
+      1 => inkAt(0.48),
+      _ => inkAt(0.3),
     };
   }
 
@@ -404,7 +465,10 @@ class _DotsPainter extends _DiagramPainter {
         owner[at++] = g;
       }
     }
-    final free = [for (var i = 0; i < d.total; i++) if (owner[i] < 0) i];
+    final free = [
+      for (var i = 0; i < d.total; i++)
+        if (owner[i] < 0) i,
+    ];
     var seed = 0x2545F491;
     for (var i = free.length - 1; i > 0; i--) {
       seed = (seed * 1103515245 + 12345) & 0x7fffffff;
@@ -460,7 +524,12 @@ class _DotsPainter extends _DiagramPainter {
       weight: FontWeight.w600,
       alpha: 0.55,
     );
-    drawText(canvas, head, Offset(legendX, legendY), opacity: phase(v, 0.2, 0.34));
+    drawText(
+      canvas,
+      head,
+      Offset(legendX, legendY),
+      opacity: phase(v, 0.2, 0.34),
+    );
     legendY += head.height + 6;
     for (var g = 0; g < d.groups.length; g++) {
       final groupStart = fillStart + g * window;
@@ -477,7 +546,7 @@ class _DotsPainter extends _DiagramPainter {
         d.groups[g].label,
         size: 12,
         alpha: 0.78,
-        maxWidth: math.max(40, legendW - 60),
+        maxWidth: math.max(60, legendW - 24 - math.max(number.width, 30)),
       );
       final o = phase(v, groupStart - 0.04, groupStart + 0.08);
       canvas.drawCircle(
@@ -489,7 +558,10 @@ class _DotsPainter extends _DiagramPainter {
       drawText(
         canvas,
         label,
-        Offset(legendX + 22 + math.max(number.width, 30), legendY + (number.height - label.height) / 2 + 1),
+        Offset(
+          legendX + 22 + math.max(number.width, 30),
+          legendY + (number.height - label.height) / 2 + 1,
+        ),
         opacity: o,
       );
       legendY += math.max(number.height, label.height) + (_thousand ? 0 : 6);
@@ -505,8 +577,14 @@ class _BarsPainter extends _DiagramPainter {
 
   static const _row = 38.0;
 
+  /// A unit of more than a word or two is written once, above the bars,
+  /// rather than after every figure.
+  bool get _unitOnce => d.unit.length > 8;
+  String _amount(double v) => _unitOnce ? sayNumber(v) : sayAmount(v, d.unit);
+  double get _head => _unitOnce ? 18 : 0;
+
   @override
-  double heightFor(double width) => d.items.length * _row + 2;
+  double heightFor(double width) => _head + d.items.length * _row + 2;
 
   double _scaled(double v, double lo, double hi) {
     if (!d.log) return v / hi;
@@ -523,9 +601,22 @@ class _BarsPainter extends _DiagramPainter {
     final anyHighlight = d.items.any((i) => i.highlight);
     // Room at the end of the longest bar for its number.
     final widest = d.items
-        .map((i) => layoutText(sayAmount(i.value, d.unit), size: 14, display: true).width)
+        .map((i) => layoutText(_amount(i.value), size: 14, display: true).width)
         .reduce(math.max);
     final track = size.width - widest - 10;
+    if (_unitOnce) {
+      final unit = layoutText(
+        d.unit.toUpperCase(),
+        size: 10,
+        weight: FontWeight.w600,
+        alpha: 0.55,
+        maxWidth: size.width,
+        maxLines: 1,
+      );
+      drawText(canvas, unit, Offset.zero, opacity: phase(v, 0, 0.14));
+      canvas.save();
+      canvas.translate(0, _head);
+    }
 
     for (var i = 0; i < d.items.length; i++) {
       final item = d.items[i];
@@ -534,24 +625,44 @@ class _BarsPainter extends _DiagramPainter {
       final grow = phase(v, start, start + 0.42);
       final colour = !anyHighlight || item.highlight ? strong : mid;
 
-      final label = layoutText(item.label, size: 12, alpha: 0.78, maxWidth: size.width, maxLines: 1);
-      drawText(canvas, label, Offset(0, top), opacity: phase(v, start - 0.06, start + 0.1));
+      final label = layoutText(
+        item.label,
+        size: 12,
+        alpha: 0.78,
+        maxWidth: size.width,
+        maxLines: 1,
+      );
+      drawText(
+        canvas,
+        label,
+        Offset(0, top),
+        opacity: phase(v, start - 0.06, start + 0.1),
+      );
 
       final barTop = top + label.height + 4;
       final full = math.max(3.0, track * _scaled(item.value, lo, hi));
       final w = full * grow;
       if (w > 0) {
         canvas.drawRRect(
-          RRect.fromRectAndRadius(Rect.fromLTWH(0, barTop, w, 11), const Radius.circular(5.5)),
+          RRect.fromRectAndRadius(
+            Rect.fromLTWH(0, barTop, w, 11),
+            const Radius.circular(5.5),
+          ),
           fill(colour),
         );
       }
       // Counting up in the same steps as the final figure: whole numbers
       // stay whole on the way.
       final raw = item.value * grow;
-      final shown = item.value == item.value.roundToDouble() ? raw.roundToDouble() : raw;
+      final said = sayNumber(item.value);
+      final places = said.contains('.') && !said.contains(' ')
+          ? said.length - said.indexOf('.') - 1
+          : 0;
+      final shown = grow >= 1
+          ? item.value
+          : double.parse(raw.toStringAsFixed(places));
       final value = layoutText(
-        sayAmount(shown, d.unit),
+        _amount(shown),
         size: 14,
         weight: FontWeight.w600,
         alpha: !anyHighlight || item.highlight ? 0.95 : 0.6,
@@ -565,6 +676,7 @@ class _BarsPainter extends _DiagramPainter {
         opacity: phase(v, start, start + 0.12),
       );
     }
+    if (_unitOnce) canvas.restore();
   }
 }
 
@@ -581,8 +693,8 @@ class _ScalePainter extends _DiagramPainter {
   void paint(Canvas canvas, Size size) {
     final v = t.value;
     final items = [...d.items]..sort((a, b) => a.value.compareTo(b.value));
-    final lo = _log10(items.first.value).floor();
-    final hi = _log10(items.last.value).ceil();
+    final lo = (_log10(items.first.value) + 1e-9).floor();
+    final hi = (_log10(items.last.value) - 1e-9).ceil();
     final kLo = lo == hi ? lo - 1 : lo;
     final decades = math.max(1, hi - kLo);
     const pad = 14.0;
@@ -597,20 +709,52 @@ class _ScalePainter extends _DiagramPainter {
     canvas.drawPath(partial(axis, phase(v, 0, 0.22)), stroke(soft, 1.6));
 
     // Decade ticks, thinned when there are many.
-    final every = decades <= 7 ? 1 : decades <= 14 ? 2 : 3;
+    final every = decades <= 7
+        ? 1
+        : decades <= 14
+        ? 2
+        : 3;
     for (var k = kLo; k <= kLo + decades; k++) {
       final x = pad + (size.width - 2 * pad) * ((k - kLo) / decades);
-      final p = phase(v, 0.08 + 0.14 * (k - kLo) / decades, 0.2 + 0.14 * (k - kLo) / decades);
-      canvas.drawLine(Offset(x, axisY - 4 * p), Offset(x, axisY + 4 * p), stroke(soft, 1.2));
-      if ((k - kLo) % every == 0) {
+      final p = phase(
+        v,
+        0.08 + 0.14 * (k - kLo) / decades,
+        0.2 + 0.14 * (k - kLo) / decades,
+      );
+      canvas.drawLine(
+        Offset(x, axisY - 4 * p),
+        Offset(x, axisY + 4 * p),
+        stroke(soft, 1.2),
+      );
+      // A decade an item sits on is already labelled by the item itself.
+      final taken = items.any((it) => (_log10(it.value) - k).abs() < 0.02);
+      if ((k - kLo) % every == 0 && !taken) {
         final tick = layoutText(sayPower(k), size: 10, alpha: 0.5);
-        drawText(canvas, tick, Offset(x, axisY + 8), anchor: const Offset(0.5, 0), opacity: p);
+        drawText(
+          canvas,
+          tick,
+          Offset(x, axisY + 8),
+          anchor: const Offset(0.5, 0),
+          opacity: p,
+        );
       }
     }
-    if (d.unit.isNotEmpty) {
-      // Under the tick numbers, clear of the bracket that comes later.
-      final unit = layoutText(d.unit, size: 10, weight: FontWeight.w600, alpha: 0.5);
-      drawText(canvas, unit, Offset(size.width - pad, size.height), anchor: const Offset(1, 1), opacity: phase(v, 0.2, 0.34));
+    if (d.unit.length > 1) {
+      // Under the tick numbers, clear of the bracket that comes later. A
+      // bare sign (\$, %) is already on every item and would sit alone.
+      final unit = layoutText(
+        d.unit,
+        size: 10,
+        weight: FontWeight.w600,
+        alpha: 0.5,
+      );
+      drawText(
+        canvas,
+        unit,
+        Offset(size.width - pad, size.height),
+        anchor: const Offset(1, 1),
+        opacity: phase(v, 0.2, 0.34),
+      );
     }
 
     // Items drop onto the line one by one, labels alternating above.
@@ -626,10 +770,19 @@ class _ScalePainter extends _DiagramPainter {
       canvas.drawCircle(Offset(x, axisY), 5.5 * p, fill(colour));
       points.add(Offset(x, axisY));
 
-      final name = layoutText(item.label, size: 11.5, alpha: 0.85, maxWidth: 110, maxLines: 2, align: TextAlign.center);
+      final name = layoutText(
+        item.label,
+        size: 11.5,
+        alpha: 0.85,
+        maxWidth: 140,
+        maxLines: 2,
+        align: TextAlign.center,
+      );
       // A long unit is written once, under the axis; beside each item it
       // would wrap and read badly in the singular ("1 Earth–Sun distances").
-      final said = d.unit.length <= 10 ? sayAmount(item.value, d.unit) : sayNumber(item.value);
+      final said = d.unit.length <= 10
+          ? sayAmount(item.value, d.unit)
+          : sayNumber(item.value);
       final amount = layoutText(said, size: 10.5, alpha: 0.55, maxWidth: 110);
       final h = name.height + amount.height + 2;
       // Stack labels upwards until they clear what is already placed.
@@ -649,15 +802,33 @@ class _ScalePainter extends _DiagramPainter {
         Offset(x, box.bottom + 2),
         stroke(inkAt(0.22 * o), 1),
       );
-      drawText(canvas, name, Offset(box.center.dx, box.top), anchor: const Offset(0.5, 0), opacity: o, rise: 4);
-      drawText(canvas, amount, Offset(box.center.dx, box.top + name.height + 2), anchor: const Offset(0.5, 0), opacity: o, rise: 4);
+      drawText(
+        canvas,
+        name,
+        Offset(box.center.dx, box.top),
+        anchor: const Offset(0.5, 0),
+        opacity: o,
+        rise: 4,
+      );
+      drawText(
+        canvas,
+        amount,
+        Offset(box.center.dx, box.top + name.height + 2),
+        anchor: const Offset(0.5, 0),
+        opacity: o,
+        rise: 4,
+      );
     }
 
     // The point of the picture: how many times apart the ends are.
     if (items.length >= 2) {
-      final f = items.last.value / items.first.value;
+      // From the smallest to the one the card is about (the largest when
+      // none is marked): the factor printed is the card's own comparison.
+      var j = items.lastIndexWhere((i) => i.highlight);
+      if (j <= 0) j = items.length - 1;
+      final f = items[j].value / items.first.value;
       final a = points.first + const Offset(0, 30);
-      final b = points.last + const Offset(0, 30);
+      final b = points[j] + const Offset(0, 30);
       final p = phase(v, 0.76, 1);
       if (p > 0) {
         final path = Path()
@@ -666,8 +837,21 @@ class _ScalePainter extends _DiagramPainter {
           ..lineTo(b.dx, b.dy + 8)
           ..lineTo(b.dx, b.dy);
         canvas.drawPath(partial(path, phase(p, 0, 0.7)), stroke(mid, 1.3));
-        final tp = layoutText(sayFactor(f), size: 15, weight: FontWeight.w600, alpha: 0.95, display: true);
-        drawText(canvas, tp, Offset((a.dx + b.dx) / 2, a.dy + 12), anchor: const Offset(0.5, 0), opacity: phase(p, 0.45, 1), rise: -4);
+        final tp = layoutText(
+          sayFactor(f),
+          size: 15,
+          weight: FontWeight.w600,
+          alpha: 0.95,
+          display: true,
+        );
+        drawText(
+          canvas,
+          tp,
+          Offset((a.dx + b.dx) / 2, a.dy + 12),
+          anchor: const Offset(0.5, 0),
+          opacity: phase(p, 0.45, 1),
+          rise: -4,
+        );
       }
     }
   }
@@ -688,17 +872,27 @@ class _AreaPainter extends _DiagramPainter {
     final items = d.items;
     final hi = items.map((i) => i.value).reduce(math.max);
     final labelRoom = 40.0;
-    final maxR = math.min((size.height - labelRoom - 34) / 2, size.width / (items.length * 2.3));
-    final radii = [for (final i in items) math.max(1.6, maxR * math.sqrt(i.value / hi))];
+    final maxR = math.min(
+      (size.height - labelRoom - 34) / 2,
+      size.width / (items.length * 2.3),
+    );
+    final radii = [
+      for (final i in items) math.max(1.6, maxR * math.sqrt(i.value / hi)),
+    ];
     // Circles sit side by side, pushed apart where their labels need room.
     final natural = [
       for (final i in items) layoutText(i.label, size: 11.5, maxLines: 1).width,
     ];
     final gaps = [
       for (var i = 0; i + 1 < items.length; i++)
-        math.max(18.0, (natural[i] + natural[i + 1]) / 2 + 10 - radii[i] - radii[i + 1]),
+        math.max(
+          18.0,
+          (natural[i] + natural[i + 1]) / 2 + 10 - radii[i] - radii[i + 1],
+        ),
     ];
-    var totalW = radii.fold<double>(0, (s, r) => s + 2 * r) + gaps.fold<double>(0, (s, g) => s + g);
+    var totalW =
+        radii.fold<double>(0, (s, r) => s + 2 * r) +
+        gaps.fold<double>(0, (s, g) => s + g);
     if (totalW > size.width) {
       // Too wide for one line each: close up, and let the labels wrap.
       for (var i = 0; i < gaps.length; i++) {
@@ -718,9 +912,12 @@ class _AreaPainter extends _DiagramPainter {
     double room(int i) {
       double w = 2 * math.min(centres[i].dx, size.width - centres[i].dx);
       if (i > 0) w = math.min(w, centres[i].dx - centres[i - 1].dx - 6);
-      if (i < items.length - 1) w = math.min(w, centres[i + 1].dx - centres[i].dx - 6);
+      if (i < items.length - 1) {
+        w = math.min(w, centres[i + 1].dx - centres[i].dx - 6);
+      }
       return math.max(w, 2 * radii[i]);
     }
+
     for (var i = 0; i < items.length; i++) {
       final r = radii[i];
       final c = centres[i];
@@ -729,23 +926,56 @@ class _AreaPainter extends _DiagramPainter {
       final strongOne = !anyHighlight || items[i].highlight;
       // The outline is drawn first, then it fills.
       final ring = Path()..addOval(Rect.fromCircle(center: c, radius: r));
-      canvas.drawPath(partial(ring, phase(g, 0, 0.6)), stroke(strongOne ? strong : mid, 1.4));
+      canvas.drawPath(
+        partial(ring, phase(g, 0, 0.6)),
+        stroke(strongOne ? strong : mid, 1.4),
+      );
       final f = phase(g, 0.4, 1);
       if (f > 0) {
         canvas.drawCircle(c, r * f, fill(inkAt((strongOne ? 0.8 : 0.35) * f)));
       }
-      final name = layoutText(items[i].label, size: 11.5, alpha: 0.85, maxWidth: math.min(140, room(i)), maxLines: 2, align: TextAlign.center);
-      final amount = layoutText(sayAmount(items[i].value, d.unit), size: 10.5, alpha: 0.55);
+      final name = layoutText(
+        items[i].label,
+        size: 11.5,
+        alpha: 0.85,
+        maxWidth: math.min(140, room(i)),
+        maxLines: 2,
+        align: TextAlign.center,
+      );
+      final amount = layoutText(
+        sayAmount(items[i].value, d.unit),
+        size: 10.5,
+        alpha: 0.55,
+      );
       final o = phase(v, start + 0.15, start + 0.3);
-      drawText(canvas, name, Offset(c.dx, base + 6), anchor: const Offset(0.5, 0), opacity: o);
-      drawText(canvas, amount, Offset(c.dx, base + 7 + name.height), anchor: const Offset(0.5, 0), opacity: o);
+      drawText(
+        canvas,
+        name,
+        Offset(c.dx, base + 6),
+        anchor: const Offset(0.5, 0),
+        opacity: o,
+      );
+      drawText(
+        canvas,
+        amount,
+        Offset(c.dx, base + 7 + name.height),
+        anchor: const Offset(0.5, 0),
+        opacity: o,
+      );
     }
     if (items.length >= 2) {
       final lo = items.map((i) => i.value).reduce(math.min);
       final a = centres.first - Offset(0, radii.first + 8);
       final b = centres.last - Offset(0, radii.last + 8);
       final top = math.min(a.dy, b.dy);
-      factorBracket(canvas, Offset(a.dx, top), Offset(b.dx, top), sayFactor(hi / lo), phase(v, 0.72, 1), lift: 8);
+      factorBracket(
+        canvas,
+        Offset(a.dx, top),
+        Offset(b.dx, top),
+        sayFactor(hi / lo),
+        phase(v, 0.72, 1),
+        lift: 8,
+      );
     }
   }
 }
@@ -759,12 +989,128 @@ class _SplitPainter extends _DiagramPainter {
   static const _barH = 26.0;
 
   @override
-  double heightFor(double width) => _barH + 16 + 2 * 38;
+  double heightFor(double width) => _layout(width).height;
 
   Color _partColour(int i) {
     final anyHighlight = d.parts.any((p) => p.highlight);
-    if (anyHighlight) return d.parts[i].highlight ? strong : [inkAt(0.4), inkAt(0.24), inkAt(0.16)][i % 3];
+    if (anyHighlight) {
+      return d.parts[i].highlight
+          ? strong
+          : [inkAt(0.4), inkAt(0.24), inkAt(0.16)][i % 3];
+    }
     return [strong, inkAt(0.55), inkAt(0.32), inkAt(0.18)][i % 4];
+  }
+
+  String _share(DiagramItem part) =>
+      d.unit == '%' ? '${_sig(part.value)}%' : sayAmount(part.value, d.unit);
+
+  /// Where each part's label hangs: under its own slice where there is
+  /// room, otherwise on a lower row or slid sideways, but always with the
+  /// slice's leader line landing on the label and crossing no other.
+  ({
+    List<double> centres,
+    List<Rect> boxes,
+    List<TextPainter> numbers,
+    List<TextPainter> labels,
+    double height,
+  })
+  _layout(double w) {
+    final total = d.parts.fold<double>(0, (s, p) => s + p.value);
+    final centres = <double>[];
+    var x = 0.0;
+    for (final part in d.parts) {
+      final pw = w * part.value / total;
+      centres.add(x + pw / 2);
+      x += pw;
+    }
+    final numbers = [
+      for (final p in d.parts)
+        layoutText(
+          _share(p),
+          size: 14,
+          weight: FontWeight.w600,
+          alpha: 0.95,
+          display: true,
+        ),
+    ];
+    final labels = [
+      for (final p in d.parts)
+        layoutText(
+          p.label,
+          size: 11,
+          weight: p.highlight ? FontWeight.w700 : FontWeight.w500,
+          alpha: 0.75,
+          maxWidth: 130,
+          maxLines: 1,
+        ),
+    ];
+    final boxes = List<Rect>.filled(d.parts.length, Rect.zero);
+    final placed = <Rect>[];
+    final leaders = <Rect>[];
+    // The biggest slices choose first: their labels matter most.
+    final order = [for (var i = 0; i < d.parts.length; i++) i]
+      ..sort((a, b) => d.parts[b].value.compareTo(d.parts[a].value));
+    for (final i in order) {
+      final bw = math.max(numbers[i].width, labels[i].width);
+      final bh = numbers[i].height + labels[i].height;
+      final c = centres[i];
+      Rect? chosen;
+      Rect? line;
+      // First try to keep off every other slice's centre too, so the
+      // leaders still to come have a clear way down; then relax that.
+      search:
+      for (final strict in [true, false]) {
+        // A label that must straddle a neighbour's centre goes a row down,
+        // so the neighbour's leader can still reach a label above it.
+        for (var row = strict ? 0 : 1; row < 5; row++) {
+          final top = _barH + 12 + row * (bh + 8);
+          // Slide from centred to either side, keeping the leader on the box.
+          for (final f in [0.5, 0.3, 0.7, 0.12, 0.88, 0.02, 0.98]) {
+            final left = (c - bw * f)
+                .clamp(0.0, math.max(0.0, w - bw))
+                .toDouble();
+            if (c < left + 1 || c > left + bw - 1) continue;
+            final box = Rect.fromLTWH(left, top, bw, bh);
+            final lead = Rect.fromLTRB(c - 1, _barH + 2, c + 1, top - 1);
+            final clash =
+                placed.any(
+                  (r) =>
+                      r.inflate(4).overlaps(box) || r.inflate(2).overlaps(lead),
+                ) ||
+                leaders.any((l) => l.inflate(3).overlaps(box)) ||
+                (strict &&
+                    [
+                      for (var j = 0; j < centres.length; j++)
+                        if (j != i) centres[j],
+                    ].any((cj) => cj > box.left - 4 && cj < box.right + 4));
+            if (!clash) {
+              chosen = box;
+              line = lead;
+              break search;
+            }
+          }
+        }
+      }
+      chosen ??= Rect.fromLTWH(
+        (c - bw / 2).clamp(0.0, math.max(0.0, w - bw)),
+        _barH + 12,
+        bw,
+        bh,
+      );
+      line ??= Rect.fromLTRB(c - 1, _barH + 2, c + 1, chosen.top - 1);
+      boxes[i] = chosen;
+      placed.add(chosen);
+      leaders.add(line);
+    }
+    final height =
+        placed.fold<double>(_barH, (m, r) => math.max(m, r.bottom)) + 8;
+    return (
+      centres: centres,
+      boxes: boxes,
+      numbers: numbers,
+      labels: labels,
+      height: height,
+    );
   }
 
   @override
@@ -772,45 +1118,48 @@ class _SplitPainter extends _DiagramPainter {
     final v = t.value;
     final total = d.parts.fold<double>(0, (s, p) => s + p.value);
     final w = size.width;
+    final layout = _layout(w);
     // The whole, as an empty track, then filled part by part.
-    final track = RRect.fromRectAndRadius(Rect.fromLTWH(0, 0, w * phase(v, 0, 0.2), _barH), const Radius.circular(8));
+    final track = RRect.fromRectAndRadius(
+      Rect.fromLTWH(0, 0, w * phase(v, 0, 0.2), _barH),
+      const Radius.circular(8),
+    );
     canvas.drawRRect(track, fill(faint));
     canvas.save();
-    canvas.clipRRect(RRect.fromRectAndRadius(Rect.fromLTWH(0, 0, w, _barH), const Radius.circular(8)));
+    canvas.clipRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromLTWH(0, 0, w, _barH),
+        const Radius.circular(8),
+      ),
+    );
     var x = 0.0;
-    final centres = <double>[];
     for (var i = 0; i < d.parts.length; i++) {
       final pw = w * d.parts[i].value / total;
       final start = 0.18 + i * (0.5 / d.parts.length);
       final g = phase(v, start, start + 0.3);
       canvas.drawRect(Rect.fromLTWH(x, 0, pw * g, _barH), fill(_partColour(i)));
-      centres.add(x + pw / 2);
       x += pw;
     }
     canvas.restore();
 
-    // Labels hang below on leader lines, in two rows where they would touch.
-    final rowEnds = [double.negativeInfinity, double.negativeInfinity];
     for (var i = 0; i < d.parts.length; i++) {
-      final part = d.parts[i];
-      final share = d.unit == '%' ? '${_sig(part.value)}%' : sayAmount(part.value, d.unit);
-      final number = layoutText(share, size: 14, weight: FontWeight.w600, alpha: 0.95, display: true);
-      final label = layoutText(part.label, size: 11, alpha: 0.72, maxWidth: 120, maxLines: 1);
-      final bw = math.max(number.width, label.width);
-      var left = (centres[i] - bw / 2).clamp(0.0, w - bw);
-      var row = left > rowEnds[0] + 8 ? 0 : 1;
-      if (row == 1 && left <= rowEnds[1] + 8) left = rowEnds[1] + 8;
-      rowEnds[row] = left + bw;
-      final top = _barH + 12 + row * 38;
+      final box = layout.boxes[i];
+      final c = layout.centres[i];
       final start = 0.18 + i * (0.5 / d.parts.length) + 0.18;
       final o = phase(v, start, start + 0.16);
       canvas.drawLine(
-        Offset(centres[i], _barH + 2),
-        Offset(centres[i], top - 1),
+        Offset(c, _barH + 2),
+        Offset(c, box.top - 1),
         stroke(inkAt(0.25 * o), 1),
       );
-      drawText(canvas, number, Offset(left, top), opacity: o, rise: 4);
-      drawText(canvas, label, Offset(left, top + number.height), opacity: o, rise: 4);
+      drawText(canvas, layout.numbers[i], box.topLeft, opacity: o, rise: 4);
+      drawText(
+        canvas,
+        layout.labels[i],
+        box.topLeft + Offset(0, layout.numbers[i].height),
+        opacity: o,
+        rise: 4,
+      );
     }
   }
 }
@@ -826,14 +1175,19 @@ class _LinePainter extends _DiagramPainter {
 
   List<double> _ticks(DiagramAxis a) {
     if (a.log) {
-      final lo = _log10(a.min).ceil();
-      final hi = _log10(a.max).floor();
+      final lo = (_log10(a.min) - 1e-9).ceil();
+      final hi = (_log10(a.max) + 1e-9).floor();
       return [for (var k = lo; k <= hi; k++) math.pow(10, k).toDouble()];
     }
     final span = a.max - a.min;
     final raw = span / 4;
     final mag = math.pow(10, (_log10(raw)).floor()).toDouble();
-    final step = [1, 2, 2.5, 5, 10].map((m) => m * mag).firstWhere((s) => span / s <= 5);
+    final step = [
+      1,
+      2,
+      5,
+      10,
+    ].map((m) => m * mag).firstWhere((s) => span / s <= 6);
     final first = (a.min / step).ceil() * step;
     return [for (var x = first; x <= a.max + step * 1e-9; x += step) x];
   }
@@ -845,21 +1199,24 @@ class _LinePainter extends _DiagramPainter {
   String _tickLabel(DiagramAxis a, double v) {
     if (a.log) return sayPower(_log10(v).round());
     // Years are written without a thousands comma.
-    if (a.min >= 1000 && a.max <= 2200 && v == v.roundToDouble()) return v.round().toString();
+    if (a.min >= 1000 && a.max <= 2200 && v == v.roundToDouble()) {
+      return v.round().toString();
+    }
     return sayNumber(v);
   }
 
-  /// Whether the polyline through [pts] passes through [r].
-  static bool _crosses(Rect r, List<Offset> pts) {
+  /// How many sample points of the polyline through [pts] fall in [r].
+  static int _hits(Rect r, List<Offset> pts) {
+    var n = 0;
     for (var k = 0; k + 1 < pts.length; k++) {
       final a = pts[k];
       final b = pts[k + 1];
-      final n = math.max(2, ((b - a).distance / 3).ceil());
-      for (var j = 0; j <= n; j++) {
-        if (r.contains(Offset.lerp(a, b, j / n)!)) return true;
+      final m = math.max(2, ((b - a).distance / 3).ceil());
+      for (var j = 0; j <= m; j++) {
+        if (r.contains(Offset.lerp(a, b, j / m)!)) n++;
       }
     }
-    return false;
+    return n;
   }
 
   /// The first of [candidates] (top-left corners) where a box of [w]×[h]
@@ -872,20 +1229,33 @@ class _LinePainter extends _DiagramPainter {
     List<List<Offset>> curves,
     List<Rect> placed,
   ) {
-    Rect? fallback;
-    for (final c in candidates) {
+    // Every candidate is also tried further out; the first clean one wins,
+    // or else the one the curves touch least.
+    final all = <Offset>[
+      ...candidates,
+      for (final c in candidates) c + Offset(0, c.dy < 0 ? -16 : 16),
+      for (final c in candidates) c + Offset(0, c.dy < 0 ? -32 : 32),
+    ];
+    Rect? best;
+    var bestScore = 1 << 30;
+    for (final c in all) {
       final r = Rect.fromLTWH(
         c.dx.clamp(area.left, math.max(area.left, area.right - w)),
         c.dy.clamp(area.top, math.max(area.top, area.bottom - h)),
         w,
         h,
       );
-      final hitsBox = placed.any((p) => p.inflate(2).overlaps(r));
-      if (hitsBox) continue;
-      fallback ??= r;
-      if (!curves.any((pts) => _crosses(r.inflate(2), pts))) return r;
+      final score =
+          (placed.any((p) => p.inflate(2).overlaps(r)) ? 100000 : 0) +
+          curves.fold<int>(0, (n, pts) => n + _hits(r.inflate(2), pts));
+      if (score == 0) return r;
+      if (score < bestScore) {
+        bestScore = score;
+        best = r;
+      }
     }
-    return fallback ?? Rect.fromLTWH(candidates.first.dx, candidates.first.dy, w, h);
+    return best ??
+        Rect.fromLTWH(candidates.first.dx, candidates.first.dy, w, h);
   }
 
   @override
@@ -913,23 +1283,53 @@ class _LinePainter extends _DiagramPainter {
     final tickP = phase(v, 0.12, 0.3);
     for (final y in yTicks) {
       final p = at(d.x.min, y);
-      if (y != d.y.min) canvas.drawLine(Offset(left, p.dy), Offset(left + (right - left) * tickP, p.dy), stroke(inkAt(0.08), 1));
-      drawText(canvas, layoutText(_tickLabel(d.y, y), size: 10, alpha: 0.5), Offset(left - 6, p.dy), anchor: const Offset(1, 0.5), opacity: tickP);
+      if (y != d.y.min) {
+        canvas.drawLine(
+          Offset(left, p.dy),
+          Offset(left + (right - left) * tickP, p.dy),
+          stroke(inkAt(0.08), 1),
+        );
+      }
+      drawText(
+        canvas,
+        layoutText(_tickLabel(d.y, y), size: 10, alpha: 0.5),
+        Offset(left - 6, p.dy),
+        anchor: const Offset(1, 0.5),
+        opacity: tickP,
+      );
     }
     for (final x in _ticks(d.x)) {
       final p = at(x, d.y.min);
-      drawText(canvas, layoutText(_tickLabel(d.x, x), size: 10, alpha: 0.5), Offset(p.dx, bottom + 5), anchor: const Offset(0.5, 0), opacity: tickP);
+      drawText(
+        canvas,
+        layoutText(_tickLabel(d.x, x), size: 10, alpha: 0.5),
+        Offset(p.dx, bottom + 5),
+        anchor: const Offset(0.5, 0),
+        opacity: tickP,
+      );
     }
     if (d.x.label.isNotEmpty) {
-      drawText(canvas, layoutText(d.x.label, size: 10, weight: FontWeight.w600, alpha: 0.55), Offset(right, size.height), anchor: const Offset(1, 1), opacity: tickP);
+      drawText(
+        canvas,
+        layoutText(d.x.label, size: 10, weight: FontWeight.w600, alpha: 0.55),
+        Offset(right, size.height),
+        anchor: const Offset(1, 1),
+        opacity: tickP,
+      );
     }
     if (d.y.label.isNotEmpty) {
-      drawText(canvas, layoutText(d.y.label, size: 10, weight: FontWeight.w600, alpha: 0.55), Offset(left + 6, top - 12), opacity: tickP);
+      drawText(
+        canvas,
+        layoutText(d.y.label, size: 10, weight: FontWeight.w600, alpha: 0.55),
+        Offset(left + 6, top - 12),
+        opacity: tickP,
+      );
     }
 
     // Where everything goes is settled before anything is drawn, so no label
     // lands on a curve, a mark or another label.
-    final order = [...d.series]..sort((a, b) => (a.highlight ? 1 : 0) - (b.highlight ? 1 : 0));
+    final order = [...d.series]
+      ..sort((a, b) => (a.highlight ? 1 : 0) - (b.highlight ? 1 : 0));
     final anyHighlight = d.series.any((s) => s.highlight);
     final curves = [
       for (final s in order) [for (final pt in s.points) at(pt.$1, pt.$2)],
@@ -939,7 +1339,12 @@ class _LinePainter extends _DiagramPainter {
     final placed = <Rect>[
       // The y-axis title sits in the top-left corner.
       if (d.y.label.isNotEmpty)
-        Rect.fromLTWH(left + 6, top - 12, layoutText(d.y.label, size: 10, weight: FontWeight.w600).width, 14),
+        Rect.fromLTWH(
+          left + 6,
+          top - 12,
+          layoutText(d.y.label, size: 10, weight: FontWeight.w600).width,
+          14,
+        ),
     ];
     final dots = [for (final m in d.marks) at(m.x, m.y)];
     for (final o in dots) {
@@ -956,19 +1361,33 @@ class _LinePainter extends _DiagramPainter {
     final markBox = <Rect>[];
     for (var i = 0; i < d.marks.length; i++) {
       final o = dots[i];
-      final tp = layoutText(d.marks[i].label, size: 11.5, weight: FontWeight.w600, alpha: 0.92, maxWidth: 170, maxLines: 2);
+      final tp = layoutText(
+        d.marks[i].label,
+        size: 11.5,
+        weight: FontWeight.w600,
+        alpha: 0.92,
+        maxWidth: 170,
+        maxLines: 2,
+      );
       final w = tp.width;
       final h = tp.height;
-      final box = _place([
-        o + Offset(8, -8 - h), // above right
-        o + Offset(-8 - w, -8 - h), // above left
-        o + const Offset(8, 8), // below right
-        o + Offset(-8 - w, 8), // below left
-        o + Offset(-w / 2, -14 - h), // above
-        o + Offset(-w / 2, 12), // below
-        o + Offset(8, -30 - h), // higher still
-        o + Offset(-8 - w, -30 - h),
-      ], w, h, plot, obstacles, placed);
+      final box = _place(
+        [
+          o + Offset(8, -8 - h), // above right
+          o + Offset(-8 - w, -8 - h), // above left
+          o + const Offset(8, 8), // below right
+          o + Offset(-8 - w, 8), // below left
+          o + Offset(-w / 2, -14 - h), // above
+          o + Offset(-w / 2, 12), // below
+          o + Offset(8, -30 - h), // higher still
+          o + Offset(-8 - w, -30 - h),
+        ],
+        w,
+        h,
+        plot,
+        obstacles,
+        placed,
+      );
       placed.add(box);
       markText.add(tp);
       markBox.add(box);
@@ -982,13 +1401,18 @@ class _LinePainter extends _DiagramPainter {
       final pts = curves[i];
       final path = Path();
       for (var k = 0; k < pts.length; k++) {
-        k == 0 ? path.moveTo(pts[k].dx, pts[k].dy) : path.lineTo(pts[k].dx, pts[k].dy);
+        k == 0
+            ? path.moveTo(pts[k].dx, pts[k].dy)
+            : path.lineTo(pts[k].dx, pts[k].dy);
       }
       final strongOne = !anyHighlight || s.highlight;
       final drawn = partial(path, p);
       if (strongOne && order.length == 1 && p > 0) {
         // A faint wash under the one curve, following the pen.
-        final tip = drawn.computeMetrics().fold<Offset?>(null, (_, m) => m.getTangentForOffset(m.length)?.position);
+        final tip = drawn.computeMetrics().fold<Offset?>(
+          null,
+          (_, m) => m.getTangentForOffset(m.length)?.position,
+        );
         if (tip != null) {
           final wash = Path.from(drawn)
             ..lineTo(tip.dx, bottom)
@@ -997,23 +1421,43 @@ class _LinePainter extends _DiagramPainter {
           canvas.drawPath(wash, fill(inkAt(0.07)));
         }
       }
-      canvas.drawPath(drawn, stroke(strongOne ? strong : mid, strongOne ? 2.6 : 1.8));
+      canvas.drawPath(
+        drawn,
+        stroke(strongOne ? strong : mid, strongOne ? 2.6 : 1.8),
+      );
       if (p > 0 && p < 1) {
         // The pen itself, while it is still drawing.
-        final tip = drawn.computeMetrics().fold<Offset?>(null, (_, m) => m.getTangentForOffset(m.length)?.position);
+        final tip = drawn.computeMetrics().fold<Offset?>(
+          null,
+          (_, m) => m.getTangentForOffset(m.length)?.position,
+        );
         if (tip != null) {
-          canvas.drawCircle(tip, strongOne ? 4.2 : 3.2, fill(strongOne ? strong : mid));
+          canvas.drawCircle(
+            tip,
+            strongOne ? 4.2 : 3.2,
+            fill(strongOne ? strong : mid),
+          );
           canvas.drawCircle(tip, strongOne ? 8 : 6, fill(inkAt(0.14)));
         }
       }
       if (s.label.isNotEmpty) {
-        final tp = layoutText(s.label, size: 11, weight: FontWeight.w600, alpha: strongOne ? 0.9 : 0.6, maxWidth: 150, maxLines: 1);
+        final tp = layoutText(
+          s.label,
+          size: 11,
+          weight: FontWeight.w600,
+          alpha: strongOne ? 0.9 : 0.6,
+          maxWidth: 200,
+          maxLines: 1,
+        );
         final w = tp.width;
         final h = tp.height;
         // Beside the curve somewhere along its second half, above it or below.
         final cands = <Offset>[];
         for (final f in [0.72, 0.55, 0.88, 0.4, 0.25]) {
-          final q = _along(pts, pts.first.dx + (pts.last.dx - pts.first.dx) * f);
+          final q = _along(
+            pts,
+            pts.first.dx + (pts.last.dx - pts.first.dx) * f,
+          );
           cands
             ..add(q + Offset(4, -8 - h))
             ..add(q + const Offset(4, 8))
@@ -1022,7 +1466,12 @@ class _LinePainter extends _DiagramPainter {
         }
         final box = _place(cands, w, h, plot, obstacles, placed);
         placed.add(box);
-        drawText(canvas, tp, box.topLeft, opacity: phase(v, start + 0.34, start + 0.46));
+        drawText(
+          canvas,
+          tp,
+          box.topLeft,
+          opacity: phase(v, start + 0.34, start + 0.46),
+        );
       }
     }
 
@@ -1035,7 +1484,13 @@ class _LinePainter extends _DiagramPainter {
       _dashed(canvas, Offset(o.dx, bottom), o, phase(v, start, start + 0.1));
       _dashed(canvas, Offset(left, o.dy), o, phase(v, start, start + 0.1));
       canvas.drawCircle(o, 4.5 * p, fill(strong));
-      drawText(canvas, markText[i], markBox[i].topLeft, opacity: phase(v, start + 0.04, start + 0.14), rise: 4);
+      drawText(
+        canvas,
+        markText[i],
+        markBox[i].topLeft,
+        opacity: phase(v, start + 0.04, start + 0.14),
+        rise: 4,
+      );
     }
   }
 
@@ -1045,7 +1500,11 @@ class _LinePainter extends _DiagramPainter {
       final a = pts[k];
       final b = pts[k + 1];
       if (x >= a.dx && x <= b.dx) {
-        return Offset.lerp(a, b, b.dx == a.dx ? 0 : (x - a.dx) / (b.dx - a.dx))!;
+        return Offset.lerp(
+          a,
+          b,
+          b.dx == a.dx ? 0 : (x - a.dx) / (b.dx - a.dx),
+        )!;
       }
     }
     return pts.last;
@@ -1058,7 +1517,10 @@ class _LinePainter extends _DiagramPainter {
       ..lineTo(a.dx + (b.dx - a.dx) * p, a.dy + (b.dy - a.dy) * p);
     for (final m in path.computeMetrics()) {
       for (var s = 0.0; s < m.length; s += 6) {
-        canvas.drawPath(m.extractPath(s, math.min(s + 3, m.length)), stroke(inkAt(0.35), 1));
+        canvas.drawPath(
+          m.extractPath(s, math.min(s + 3, m.length)),
+          stroke(inkAt(0.35), 1),
+        );
       }
     }
   }
@@ -1078,7 +1540,8 @@ class _TimelinePainter extends _DiagramPainter {
     return l.rise + l.fall;
   }
 
-  double _xOf(double y, double width) => _pad + (width - 2 * _pad) * ((y - d.from) / (d.to - d.from));
+  double _xOf(double y, double width) =>
+      _pad + (width - 2 * _pad) * ((y - d.from) / (d.to - d.from));
 
   /// Where every label goes, as boxes whose y is measured from the axis
   /// (negative above it). Event labels sit above the line where they fit
@@ -1092,7 +1555,8 @@ class _TimelinePainter extends _DiagramPainter {
     List<TextPainter> spanText,
     double rise,
     double fall,
-  }) _layout(double width) {
+  })
+  _layout(double width) {
     final placed = <Rect>[];
     final stalks = <Rect>[];
     // The end years.
@@ -1107,31 +1571,59 @@ class _TimelinePainter extends _DiagramPainter {
     final whens = <TextPainter>[];
     for (final e in events) {
       final x = _xOf(e.at, width);
-      final when = layoutText(year(e.at), size: 10.5, weight: FontWeight.w600, alpha: 0.6);
-      final what = layoutText(e.label, size: 11.5, weight: e.highlight ? FontWeight.w700 : FontWeight.w500, alpha: e.highlight ? 0.95 : 0.8, maxWidth: 120, maxLines: 2, align: TextAlign.center);
+      final when = layoutText(
+        year(e.at),
+        size: 10.5,
+        weight: FontWeight.w600,
+        alpha: 0.6,
+      );
+      final what = layoutText(
+        e.label,
+        size: 11.5,
+        weight: e.highlight ? FontWeight.w700 : FontWeight.w500,
+        alpha: e.highlight ? 0.95 : 0.8,
+        maxWidth: 150,
+        maxLines: 2,
+        align: TextAlign.center,
+      );
       final w = math.max(when.width, what.width);
       final h = when.height + what.height;
-      final left = (x - w / 2).clamp(0.0, width - w);
       Rect? chosen;
       Rect? stalk;
-      // Nearest first: just above, just below, then further out each way.
+      // Nearest first: just above, just below, then further out each way;
+      // at each height the label may also slide, as long as its own stalk
+      // still lands on it.
       for (var k = 0; k < 16 && chosen == null; k++) {
-        final above = k.isEven;
-        final step = (k ~/ 2) * 10.0;
-        final box = above
-            ? Rect.fromLTWH(left, -14 - step - h, w, h)
-            : Rect.fromLTWH(left, 14 + step, w, h);
-        final line = above
-            ? Rect.fromLTRB(x - 1, box.bottom, x + 1, -6)
-            : Rect.fromLTRB(x - 1, 6, x + 1, box.top);
-        final clash = placed.any((p) => p.inflate(3).overlaps(box) || p.inflate(2).overlaps(line)) ||
-            stalks.any((s) => s.inflate(3).overlaps(box));
-        if (!clash) {
-          chosen = box;
-          stalk = line;
+        for (final f in const [0.5, 0.3, 0.7, 0.1, 0.9]) {
+          if (chosen != null) break;
+          final left = (x - w * f).clamp(0.0, width - w).toDouble();
+          if (x < left + 2 || x > left + w - 2) continue;
+          final above = k.isEven;
+          final step = (k ~/ 2) * 10.0;
+          final box = above
+              ? Rect.fromLTWH(left, -14 - step - h, w, h)
+              : Rect.fromLTWH(left, 14 + step, w, h);
+          final line = above
+              ? Rect.fromLTRB(x - 1, box.bottom, x + 1, -6)
+              : Rect.fromLTRB(x - 1, 6, x + 1, box.top);
+          final clash =
+              placed.any(
+                (p) =>
+                    p.inflate(3).overlaps(box) || p.inflate(2).overlaps(line),
+              ) ||
+              stalks.any((s) => s.inflate(3).overlaps(box));
+          if (!clash) {
+            chosen = box;
+            stalk = line;
+          }
         }
       }
-      chosen ??= Rect.fromLTWH(left, -14 - h, w, h);
+      chosen ??= Rect.fromLTWH(
+        (x - w / 2).clamp(0.0, width - w).toDouble(),
+        -14 - h,
+        w,
+        h,
+      );
       stalk ??= Rect.fromLTRB(x - 1, chosen.bottom, x + 1, -6);
       placed.add(chosen);
       stalks.add(stalk);
@@ -1147,7 +1639,14 @@ class _TimelinePainter extends _DiagramPainter {
     for (final s in d.spans) {
       final x0 = _xOf(s.from, width);
       final x1 = _xOf(s.to, width);
-      final tp = layoutText(s.label, size: 11, weight: FontWeight.w600, alpha: 0.8, maxWidth: math.max(80, x1 - x0 + 40), maxLines: 1);
+      final tp = layoutText(
+        s.label,
+        size: 11,
+        weight: FontWeight.w600,
+        alpha: 0.8,
+        maxWidth: math.max(80, x1 - x0 + 40),
+        maxLines: 1,
+      );
       final centre = (x0 + x1) / 2 - tp.width / 2;
       Rect? chosen;
       search:
@@ -1155,23 +1654,43 @@ class _TimelinePainter extends _DiagramPainter {
         final ys = [12.0 + 14 * row, -12.0 - tp.height - 14 * row];
         for (final y in ys) {
           for (final dx in [0.0, 30, -30, 60, -60, 90, -90]) {
-            final r = Rect.fromLTWH((centre + dx).clamp(0.0, width - tp.width), y, tp.width, tp.height);
-            if (!placed.any((p) => p.inflate(3).overlaps(r)) && !stalks.any((l) => l.inflate(2).overlaps(r))) {
+            final r = Rect.fromLTWH(
+              (centre + dx).clamp(0.0, width - tp.width),
+              y,
+              tp.width,
+              tp.height,
+            );
+            if (!placed.any((p) => p.inflate(3).overlaps(r)) &&
+                !stalks.any((l) => l.inflate(2).overlaps(r))) {
               chosen = r;
               break search;
             }
           }
         }
       }
-      chosen ??= Rect.fromLTWH(centre.clamp(0.0, width - tp.width), 12, tp.width, tp.height);
+      chosen ??= Rect.fromLTWH(
+        centre.clamp(0.0, width - tp.width),
+        12,
+        tp.width,
+        tp.height,
+      );
       placed.add(chosen);
       spanBoxes.add(chosen);
       spanText.add(tp);
     }
 
     final rise = placed.fold<double>(20, (m, r) => math.max(m, -r.top)) + 6;
-    final fall = placed.fold<double>(24, (m, r) => math.max(m, r.bottom)) + 6;
-    return (boxes: boxes, whats: whats, whens: whens, spanBoxes: spanBoxes, spanText: spanText, rise: rise, fall: fall);
+    // Room for descenders and for the small drift a label makes as it lands.
+    final fall = placed.fold<double>(24, (m, r) => math.max(m, r.bottom)) + 10;
+    return (
+      boxes: boxes,
+      whats: whats,
+      whens: whens,
+      spanBoxes: spanBoxes,
+      spanText: spanText,
+      rise: rise,
+      fall: fall,
+    );
   }
 
   /// A point on the line as a reader says it: a year by default, or a
@@ -1182,7 +1701,8 @@ class _TimelinePainter extends _DiagramPainter {
   }
 
   static String _year(double y) {
-    final n = y.round();
+    // August 2029 is still 2029.
+    final n = y.floor();
     if (n < 0) return '${_commas(-n)} BC';
     if (n < 1000) return 'AD $n';
     return n.toString();
@@ -1194,15 +1714,32 @@ class _TimelinePainter extends _DiagramPainter {
     const pad = _pad;
     final layout = _layout(size.width);
     final axisY = layout.rise;
-    double xOf(double y) => pad + (size.width - 2 * pad) * ((y - d.from) / (d.to - d.from));
+    double xOf(double y) =>
+        pad + (size.width - 2 * pad) * ((y - d.from) / (d.to - d.from));
 
     canvas.drawPath(
-      partial(Path()..moveTo(pad, axisY)..lineTo(size.width - pad, axisY), phase(v, 0, 0.24)),
+      partial(
+        Path()
+          ..moveTo(pad, axisY)
+          ..lineTo(size.width - pad, axisY),
+        phase(v, 0, 0.24),
+      ),
       stroke(soft, 1.6),
     );
     final ends = phase(v, 0.12, 0.28);
-    drawText(canvas, layoutText(year(d.from), size: 10, alpha: 0.5), Offset(pad, axisY + 8), opacity: ends);
-    drawText(canvas, layoutText(year(d.to), size: 10, alpha: 0.5), Offset(size.width - pad, axisY + 8), anchor: const Offset(1, 0), opacity: ends);
+    drawText(
+      canvas,
+      layoutText(year(d.from), size: 10, alpha: 0.5),
+      Offset(pad, axisY + 8),
+      opacity: ends,
+    );
+    drawText(
+      canvas,
+      layoutText(year(d.to), size: 10, alpha: 0.5),
+      Offset(size.width - pad, axisY + 8),
+      anchor: const Offset(1, 0),
+      opacity: ends,
+    );
 
     // Stretches of time grow along the line as bands.
     for (var i = 0; i < d.spans.length; i++) {
@@ -1242,21 +1779,61 @@ class _TimelinePainter extends _DiagramPainter {
       final start = 0.38 + i * (0.44 / math.max(1, events.length));
       final p = pop(v, start, start + 0.14);
       final strongOne = !anyHighlight || e.highlight;
-      canvas.drawCircle(Offset(x, axisY), 5 * p, fill(strongOne ? strong : mid));
+      canvas.drawCircle(
+        Offset(x, axisY),
+        5 * p,
+        fill(strongOne ? strong : mid),
+      );
       final when = layout.whens[i];
       final what = layout.whats[i];
       final box = layout.boxes[i].shift(Offset(0, axisY));
       final o = phase(v, start + 0.04, start + 0.16);
       if (box.bottom <= axisY) {
         // Above the line: what happened, then the year, then the stalk.
-        canvas.drawLine(Offset(x, axisY - 6), Offset(x, box.bottom + 2), stroke(inkAt(0.2 * o), 1));
-        drawText(canvas, what, Offset(box.center.dx, box.top), anchor: const Offset(0.5, 0), opacity: o, rise: 4);
-        drawText(canvas, when, Offset(box.center.dx, box.top + what.height), anchor: const Offset(0.5, 0), opacity: o, rise: 4);
+        canvas.drawLine(
+          Offset(x, axisY - 6),
+          Offset(x, box.bottom + 2),
+          stroke(inkAt(0.2 * o), 1),
+        );
+        drawText(
+          canvas,
+          what,
+          Offset(box.center.dx, box.top),
+          anchor: const Offset(0.5, 0),
+          opacity: o,
+          rise: 4,
+        );
+        drawText(
+          canvas,
+          when,
+          Offset(box.center.dx, box.top + what.height),
+          anchor: const Offset(0.5, 0),
+          opacity: o,
+          rise: 4,
+        );
       } else {
         // Below it, mirrored: the year nearest the line.
-        canvas.drawLine(Offset(x, axisY + 6), Offset(x, box.top - 2), stroke(inkAt(0.2 * o), 1));
-        drawText(canvas, when, Offset(box.center.dx, box.top), anchor: const Offset(0.5, 0), opacity: o, rise: -4);
-        drawText(canvas, what, Offset(box.center.dx, box.top + when.height), anchor: const Offset(0.5, 0), opacity: o, rise: -4);
+        canvas.drawLine(
+          Offset(x, axisY + 6),
+          Offset(x, box.top - 2),
+          stroke(inkAt(0.2 * o), 1),
+        );
+        drawText(
+          canvas,
+          when,
+          Offset(box.center.dx, box.top),
+          anchor: const Offset(0.5, 0),
+          opacity: o,
+          rise: -4,
+        );
+        drawText(
+          canvas,
+          what,
+          Offset(box.center.dx, box.top + when.height),
+          anchor: const Offset(0.5, 0),
+          opacity: o,
+          rise: -4,
+        );
       }
     }
   }
@@ -1276,9 +1853,12 @@ class _TreePainter extends _DiagramPainter {
 
   /// Every node with where it sits: leaves share the width evenly, in
   /// order; a parent sits over the middle of its children.
-  List<({TreeNode node, TreeNode? parent, int depth, double x})> _layout(double width) {
+  List<({TreeNode node, TreeNode? parent, int depth, double x})> _layout(
+    double width,
+  ) {
     final leaves = <TreeNode>[];
-    void collect(TreeNode n) => n.children.isEmpty ? leaves.add(n) : n.children.forEach(collect);
+    void collect(TreeNode n) =>
+        n.children.isEmpty ? leaves.add(n) : n.children.forEach(collect);
     collect(d.root);
     final slot = width / leaves.length;
     final out = <({TreeNode node, TreeNode? parent, int depth, double x})>[];
@@ -1338,7 +1918,10 @@ class _TreePainter extends _DiagramPainter {
       final w = 1.3 + 7 * math.sqrt(e.node.n / total);
       final emphasised = !anyHighlight || onPath.contains(e.node);
       final colour = emphasised ? inkAt(0.42) : inkAt(0.16);
-      canvas.drawPath(partial(path, p), stroke(colour, w)..strokeCap = StrokeCap.butt);
+      canvas.drawPath(
+        partial(path, p),
+        stroke(colour, w)..strokeCap = StrokeCap.butt,
+      );
     }
 
     // The nodes: a number that counts up as it arrives, and what it counts.
@@ -1348,26 +1931,64 @@ class _TreePainter extends _DiagramPainter {
       final start = e.depth == 0 ? 0.0 : linkStart(e.depth) + linkLen * 0.7;
       final o = phase(v, start, start + 0.14);
       if (o <= 0) continue;
-      final count = n.n == n.n.roundToDouble() ? (n.n * phase(v, start, start + 0.2)).roundToDouble() : n.n;
+      // A split is a fixed partition, so each count arrives whole rather
+      // than rising past its own parent.
+      final count = n.n;
       final strongOne = !anyHighlight || n.highlight || e.depth == 0;
-      final alpha = strongOne ? 0.95 : onPath.contains(n) ? 0.75 : 0.5;
+      final alpha = strongOne
+          ? 0.95
+          : onPath.contains(n)
+          ? 0.75
+          : 0.5;
       final maxW = e.depth == 0 ? size.width * 0.7 : slot - 6;
-      final number = layoutText(sayNumber(count), size: 19, weight: FontWeight.w600, alpha: alpha, display: true);
-      final label = layoutText(n.label, size: 11, weight: n.highlight ? FontWeight.w700 : FontWeight.w500, alpha: alpha * 0.85, maxWidth: maxW, maxLines: 2, align: TextAlign.center);
+      final number = layoutText(
+        sayNumber(count),
+        size: 19,
+        weight: FontWeight.w600,
+        alpha: alpha,
+        display: true,
+      );
+      final label = layoutText(
+        n.label,
+        size: 11,
+        weight: n.highlight ? FontWeight.w700 : FontWeight.w500,
+        alpha: alpha * 0.85,
+        maxWidth: maxW,
+        maxLines: 2,
+        align: TextAlign.center,
+      );
       final x = e.x.clamp(maxW / 2, size.width - maxW / 2);
       if (n.highlight) {
         // The count the card is about gets a ground of its own.
         final g = phase(v, 0.78, 0.94);
         final w = math.max(number.width, label.width) + 14;
         final box = RRect.fromRectAndRadius(
-          Rect.fromCenter(center: Offset(x, top + (number.height + label.height) / 2), width: w, height: number.height + label.height + 8),
+          Rect.fromCenter(
+            center: Offset(x, top + (number.height + label.height) / 2),
+            width: w,
+            height: number.height + label.height + 8,
+          ),
           const Radius.circular(8),
         );
         if (g > 0) canvas.drawRRect(box, fill(inkAt(0.12 * g)));
         if (g > 0) canvas.drawRRect(box, stroke(inkAt(0.5 * g), 1.2));
       }
-      drawText(canvas, number, Offset(x, top), anchor: const Offset(0.5, 0), opacity: o, rise: 5);
-      drawText(canvas, label, Offset(x, top + number.height), anchor: const Offset(0.5, 0), opacity: o, rise: 5);
+      drawText(
+        canvas,
+        number,
+        Offset(x, top),
+        anchor: const Offset(0.5, 0),
+        opacity: o,
+        rise: 5,
+      );
+      drawText(
+        canvas,
+        label,
+        Offset(x, top + number.height),
+        anchor: const Offset(0.5, 0),
+        opacity: o,
+        rise: 5,
+      );
     }
   }
 }
@@ -1385,16 +2006,46 @@ Future<ui.Image> renderDiagramStill(
   double at = 1,
   Color? ground,
   double margin = 0,
+  bool caption = false,
 }) async {
   final painter = _painterFor(d, AlwaysStoppedAnimation(at), ink);
   final h = painter.heightFor(width);
+  // The caption as the card sets it: under the picture, fading in at the end.
+  TextPainter? words;
+  if (caption && d.caption.isNotEmpty) {
+    words = TextPainter(
+      text: TextSpan(
+        text: d.caption,
+        style: AppText.body(
+          size: 12,
+          height: 1.4,
+          color: ink.withValues(alpha: 0.62),
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout(maxWidth: width);
+  }
+  final extra = words == null ? 0.0 : 8 + words.height;
   final recorder = ui.PictureRecorder();
   final canvas = Canvas(recorder);
   canvas.scale(pixelRatio);
-  final full = Size(width + 2 * margin, h + 2 * margin);
-  if (ground != null) canvas.drawRect(Offset.zero & full, Paint()..color = ground);
+  final full = Size(width + 2 * margin, h + extra + 2 * margin);
+  if (ground != null) {
+    canvas.drawRect(Offset.zero & full, Paint()..color = ground);
+  }
   canvas.translate(margin, margin);
   painter.paint(canvas, Size(width, h));
+  if (words != null) {
+    final o = Curves.easeOut.transform(((at - 0.7) / 0.3).clamp(0.0, 1.0));
+    if (o > 0) {
+      canvas.saveLayer(
+        Rect.fromLTWH(0, h, width, extra + 4),
+        Paint()..color = Color.fromRGBO(0, 0, 0, o),
+      );
+      words.paint(canvas, Offset(0, h + 8));
+      canvas.restore();
+    }
+  }
   return recorder.endRecording().toImage(
     (full.width * pixelRatio).ceil(),
     (full.height * pixelRatio).ceil(),
@@ -1405,5 +2056,8 @@ Future<ui.Image> renderDiagramStill(
 Duration diagramDuration(Diagram d) => _DiagramViewState._durationOf(d);
 
 /// The height a diagram takes at [width], without its caption.
-double diagramHeight(Diagram d, double width) =>
-    _painterFor(d, const AlwaysStoppedAnimation(1), const Color(0xFF000000)).heightFor(width);
+double diagramHeight(Diagram d, double width) => _painterFor(
+  d,
+  const AlwaysStoppedAnimation(1),
+  const Color(0xFF000000),
+).heightFor(width);

@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Water wheels",
+        "value": 75,
+        "hi": true
+      },
+      {
+        "label": "Steam engines",
+        "value": 25
+      }
+    ],
+    "caption": "Of water and steam power together in 1800, water wheels supplied three parts in four."
+  },
   "source": "Crafts, Economic Journal, 2004",
   "source_kind": "paper",
   "reference": "Crafts, Steam as a General Purpose Technology: A Growth Accounting Perspective, Economic Journal, 2004",

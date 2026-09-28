@@ -113,7 +113,10 @@ def check_diagram(d) -> list[str]:
         else:
             values = []
             for i, it in enumerate(items):
-                if not isinstance(it, dict) or not _num(it.get("value")) or it["value"] <= 0:
+                # A bar may stand at zero (nothing at all is sometimes the
+                # point); everything else is drawn by size or on a log line.
+                zero_ok = kind == "bars" and not d.get("log")
+                if not isinstance(it, dict) or not _num(it.get("value")) or it["value"] < 0 or (it["value"] == 0 and not zero_ok):
                     out.append(f"{kind}: {key[:-1]} {i + 1} has a positive value")
                     continue
                 values.append(it["value"])
@@ -121,8 +124,10 @@ def check_diagram(d) -> list[str]:
                 for k in it:
                     if k not in ("label", "value", "hi"):
                         out.append(f"{kind}: an item has no field {k!r}")
-            if len(values) == len(items) and values:
-                spread = max(values) / min(values)
+            if len(values) == len(items) and values and max(values) <= 0:
+                out.append(f"{kind}: at least one value above zero")
+            elif len(values) == len(items) and values:
+                spread = max(values) / max(min(values), max(values) / 60) if kind == "bars" and not d.get("log") and min(values) == 0 else max(values) / min(values)
                 if kind == "scale" and spread < 10:
                     out.append("scale: for things under ten times apart, use bars")
                 if kind == "bars" and not d.get("log") and spread > 60:

@@ -35,6 +35,133 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "years unpaid",
+      "min": 0,
+      "max": 10
+    },
+    "y": {
+      "label": "ingots owed",
+      "min": 0,
+      "max": 1100
+    },
+    "series": [
+      {
+        "label": "adding one",
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            9,
+            10
+          ],
+          [
+            10,
+            11
+          ]
+        ]
+      },
+      {
+        "label": "doubling every year",
+        "hi": true,
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            8
+          ],
+          [
+            4,
+            16
+          ],
+          [
+            5,
+            32
+          ],
+          [
+            6,
+            64
+          ],
+          [
+            7,
+            128
+          ],
+          [
+            8,
+            256
+          ],
+          [
+            9,
+            512
+          ],
+          [
+            10,
+            1024
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 5,
+        "y": 32,
+        "label": "5 years: 32"
+      },
+      {
+        "x": 10,
+        "y": 1024,
+        "label": "10 years: 1,024"
+      }
+    ],
+    "caption": "Adding one a year would owe 11 ingots; doubling owes 1,024."
+  },
   "source": "Allsen, Asia Major, 1989",
   "source_kind": "paper",
   "reference": "Allsen, Mongolian Princes and Their Merchant Partners, 1200-1260, Asia Major, third series, 2, 1989, 83-126",

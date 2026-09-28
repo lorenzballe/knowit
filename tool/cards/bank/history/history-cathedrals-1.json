@@ -35,6 +35,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "m",
+    "items": [
+      {
+        "label": "Beauvais vault",
+        "value": 48
+      },
+      {
+        "label": "sandstone column crushes",
+        "value": 2000,
+        "hi": true
+      }
+    ],
+    "caption": "The highest Gothic vault uses a fortieth of the height stone could bear."
+  },
   "source": "Heyman, Ingenia, Royal Academy of Engineering",
   "source_kind": "institution",
   "reference": "https://www.ingenia.org.uk/articles/why-ancient-cathedrals-stand-up-the-structural-design-of-masonry/",

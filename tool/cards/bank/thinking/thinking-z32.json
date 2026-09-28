@@ -44,7 +44,7 @@
     },
     "series": [
       {
-        "label": "budget, 1% a year",
+        "label": "budget, +1% a year",
         "points": [
           [
             0,
@@ -93,7 +93,7 @@
         ]
       },
       {
-        "label": "cost, 3% a year",
+        "label": "cost, +3% a year",
         "hi": true,
         "points": [
           [
@@ -147,7 +147,7 @@
       {
         "x": 30,
         "y": 242.7,
-        "label": "1.8× the budget"
+        "label": "cost: about 1.8× the budget"
       }
     ],
     "caption": "Two points a year apart, and after thirty years the cost is 80% larger."

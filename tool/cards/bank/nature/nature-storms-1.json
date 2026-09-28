@@ -32,6 +32,30 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Wind, what the category rates",
+        "value": 8
+      },
+      {
+        "label": "Surf, drownings offshore",
+        "value": 12
+      },
+      {
+        "label": "Rain floods inland",
+        "value": 27
+      },
+      {
+        "label": "Storm surge",
+        "value": 49,
+        "hi": true
+      }
+    ],
+    "caption": "Share of deaths, 1963 to 2012: water behind nearly nine in ten, wind 8%."
+  },
   "source": "Rappaport, Bulletin of the AMS, 2014",
   "source_kind": "paper",
   "reference": "doi:10.1175/BAMS-D-12-00074.1",

@@ -33,6 +33,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "mW/m²",
+    "items": [
+      {
+        "label": "All aviation CO₂ since 1940",
+        "value": 34
+      },
+      {
+        "label": "Contrail cirrus",
+        "value": 57,
+        "hi": true
+      }
+    ],
+    "caption": "Warming in 2018: contrails outweigh all the carbon dioxide aviation has ever emitted."
+  },
   "source": "Lee et al., Atmospheric Environment, 2021",
   "source_kind": "paper",
   "reference": "Lee et al., The contribution of global aviation to anthropogenic climate forcing for 2000 to 2018, Atmospheric Environment, 2021",

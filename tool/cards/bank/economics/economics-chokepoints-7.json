@@ -38,7 +38,7 @@
   "figure": "none",
   "diagram": {
     "type": "scale",
-    "unit": "$",
+    "unit": "dollars",
     "items": [
       {
         "label": "Goods held up a day",

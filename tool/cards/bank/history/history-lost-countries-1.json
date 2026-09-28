@@ -32,6 +32,23 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1860,
+    "to": 1955,
+    "events": [
+      {
+        "at": 1871,
+        "label": "Largest state of new Empire"
+      },
+      {
+        "at": 1947,
+        "label": "Law No. 46 dissolves Prussia",
+        "hi": true
+      }
+    ],
+    "caption": "Prussia outlived unification by 76 years; it ended by Allied law, not in 1871."
+  },
   "source": "Clark, Iron Kingdom, 2006",
   "source_kind": "book",
   "reference": "Clark, Iron Kingdom: The Rise and Downfall of Prussia, 1600–1947, Allen Lane, 2006",

@@ -32,6 +32,23 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "tree",
+    "n": 208,
+    "label": "embryos transferred",
+    "branches": [
+      {
+        "n": 1,
+        "label": "born alive, died in minutes",
+        "hi": true
+      },
+      {
+        "n": 207,
+        "label": "never born"
+      }
+    ],
+    "caption": "One of 208 embryos reached birth."
+  },
   "source": "Folch et al., Theriogenology, 2009",
   "source_kind": "paper",
   "reference": "Folch et al., First birth of an animal from an extinct subspecies (Capra pyrenaica pyrenaica) by cloning, Theriogenology, 2009",

@@ -36,6 +36,119 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "years of paying the due",
+      "min": 0,
+      "max": 100
+    },
+    "y": {
+      "label": "worth today, in years of dues",
+      "min": 0,
+      "max": 22
+    },
+    "series": [
+      {
+        "label": "paying the due, at 5%",
+        "hi": true,
+        "points": [
+          [
+            0,
+            0.0
+          ],
+          [
+            5,
+            4.3
+          ],
+          [
+            10,
+            7.7
+          ],
+          [
+            15,
+            10.4
+          ],
+          [
+            20,
+            12.5
+          ],
+          [
+            25,
+            14.1
+          ],
+          [
+            30,
+            15.4
+          ],
+          [
+            35,
+            16.4
+          ],
+          [
+            40,
+            17.2
+          ],
+          [
+            45,
+            17.8
+          ],
+          [
+            50,
+            18.3
+          ],
+          [
+            55,
+            18.6
+          ],
+          [
+            60,
+            18.9
+          ],
+          [
+            65,
+            19.2
+          ],
+          [
+            70,
+            19.3
+          ],
+          [
+            75,
+            19.5
+          ],
+          [
+            80,
+            19.6
+          ],
+          [
+            85,
+            19.7
+          ],
+          [
+            90,
+            19.8
+          ],
+          [
+            95,
+            19.8
+          ],
+          [
+            100,
+            19.8
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 100,
+        "y": 19.8,
+        "label": "for ever: 20, the buy-out"
+      }
+    ],
+    "caption": "However long the dues run, at 5% they never add up to more than the buy-out."
+  },
   "source": "Jones, The Peasantry in the French Revolution",
   "source_kind": "book",
   "reference": "Jones, The Peasantry in the French Revolution, Cambridge University Press, 1988",

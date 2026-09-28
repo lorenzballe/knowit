@@ -26,6 +26,23 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1250,
+    "to": 1600,
+    "events": [
+      {
+        "at": 1284,
+        "label": "48 m choir vault falls"
+      },
+      {
+        "at": 1573,
+        "label": "153 m tower falls",
+        "hi": true
+      }
+    ],
+    "caption": "The tower built instead of a nave was finished in 1569 and stood four years."
+  },
   "source": "Cathédrale de Beauvais, historical overview",
   "source_kind": "institution",
   "reference": "https://cathedrale-beauvais.fr/en/historical-overview-of-beauvais-cathedral/",

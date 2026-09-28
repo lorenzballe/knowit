@@ -33,6 +33,18 @@
   "mature": false,
   "language": "en",
   "figure": "map",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 13,
+        "label": "oil-rich rock: mass extinction",
+        "hi": true
+      }
+    ],
+    "caption": "Only about 13% of Earth's surface held the rock whose soot darkened the sky."
+  },
   "source": "Kaiho & Oshima, Scientific Reports, 2017",
   "source_kind": "paper",
   "reference": "Kaiho & Oshima, Site of asteroid impact changed the history of life on Earth: the low probability of mass extinction, Scientific Reports, 2017",

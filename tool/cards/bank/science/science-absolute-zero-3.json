@@ -40,7 +40,7 @@
     },
     "series": [
       {
-        "label": "each round divides by 10",
+        "label": "÷ 10 a round",
         "hi": true,
         "points": [
           [

@@ -33,7 +33,7 @@
   "figure": "bars",
   "diagram": {
     "type": "bars",
-    "unit": "relative speed",
+    "unit": "× as fast",
     "items": [
       {
         "label": "Left open to scab",

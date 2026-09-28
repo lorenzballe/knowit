@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "million names",
+    "items": [
+      {
+        "label": "Chartists' claim",
+        "value": 5.7
+      },
+      {
+        "label": "Counted by Commons clerks",
+        "value": 1.98,
+        "hi": true
+      }
+    ],
+    "caption": "Padded by nearly four million, yet almost two million real names remained."
+  },
   "source": "Chase, Chartism: A New History, 2007",
   "source_kind": "book",
   "reference": "Chase, Chartism: A New History, Manchester University Press, 2007",

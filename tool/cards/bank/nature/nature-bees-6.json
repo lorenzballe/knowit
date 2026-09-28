@@ -32,7 +32,30 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "items": [
+      {
+        "label": "Full sister, same father",
+        "value": 0.75
+      },
+      {
+        "label": "Her own young",
+        "value": 0.5
+      },
+      {
+        "label": "Half-sister, other father",
+        "value": 0.25
+      },
+      {
+        "label": "Average sister, a dozen fathers",
+        "value": 0.3,
+        "hi": true
+      }
+    ],
+    "caption": "Share of genes in common: with a dozen fathers, the average sister is below her own young."
+  },
   "source": "Crozier & Pamilo, Evolution of Social Insect Colonies",
   "source_kind": "book",
   "reference": "Crozier & Pamilo, Evolution of Social Insect Colonies: Sex Allocation and Kin Selection, Oxford University Press, 1996",

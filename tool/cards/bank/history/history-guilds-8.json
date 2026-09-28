@@ -33,6 +33,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 41,
+        "label": "became freemen",
+        "hi": true
+      }
+    ],
+    "caption": "Of every 100 apprentices bound, about 41 took up the freedom of the City."
+  },
   "source": "Rappaport, Worlds within Worlds, 1989",
   "source_kind": "book",
   "reference": "Rappaport, Worlds within Worlds: Structures of Life in Sixteenth-Century London, Cambridge University Press, 1989",

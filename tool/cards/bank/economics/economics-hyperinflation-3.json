@@ -47,7 +47,7 @@
     },
     "series": [
       {
-        "label": "Zimbabwe, 2008",
+        "label": "Zimbabwe: doubles in 25 h",
         "points": [
           [
             0,
@@ -104,7 +104,7 @@
         ]
       },
       {
-        "label": "Hungary, 1946",
+        "label": "Hungary: doubles in 15 h",
         "hi": true,
         "points": [
           [
@@ -166,12 +166,12 @@
       {
         "x": 120,
         "y": 256,
-        "label": "every 15 hours: ×256"
+        "label": "×256"
       },
       {
         "x": 120,
         "y": 27.86,
-        "label": "every 25 hours: ×28"
+        "label": "×28"
       }
     ],
     "caption": "After five days, Hungary's prices had multiplied 256 times, Zimbabwe's 28."

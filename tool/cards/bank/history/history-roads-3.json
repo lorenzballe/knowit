@@ -33,6 +33,26 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "× sea cost",
+    "items": [
+      {
+        "label": "by sea",
+        "value": 1
+      },
+      {
+        "label": "river barge, 5 to 10",
+        "value": 7.5
+      },
+      {
+        "label": "by wagon",
+        "value": 52,
+        "hi": true
+      }
+    ],
+    "caption": "Hauling by land cost about fifty times the sea rate."
+  },
   "source": "Scheidel, ORBIS working paper, Stanford",
   "source_kind": "paper",
   "reference": "https://orbis.stanford.edu/assets/Scheidel_59.pdf",

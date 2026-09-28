@@ -33,6 +33,22 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "bars",
+    "unit": "species",
+    "items": [
+      {
+        "label": "Expected at the normal rate",
+        "value": 8
+      },
+      {
+        "label": "Gone or probably gone",
+        "value": 477,
+        "hi": true
+      }
+    ],
+    "caption": "Among 40,000 vertebrates since 1900: about 60 times the background rate."
+  },
   "source": "Ceballos et al., Science Advances, 2015",
   "source_kind": "paper",
   "reference": "Ceballos et al., Accelerated modern human-induced species losses: Entering the sixth mass extinction, Science Advances, 2015",

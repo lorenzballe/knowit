@@ -26,6 +26,23 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 470,
+    "to": 525,
+    "events": [
+      {
+        "at": 476,
+        "label": "last emperor deposed"
+      },
+      {
+        "at": 518,
+        "label": "Marcellinus dates the end",
+        "hi": true
+      }
+    ],
+    "caption": "The date was fixed four decades later, in Constantinople."
+  },
   "source": "Croke, Chiron, 1983",
   "source_kind": "paper",
   "reference": "Croke, A.D. 476: The Manufacture of a Turning Point, Chiron 13, 1983, 81-119",

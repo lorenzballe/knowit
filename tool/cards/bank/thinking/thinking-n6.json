@@ -29,7 +29,37 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "unit": "min",
+    "from": 0,
+    "to": 36,
+    "events": [
+      {
+        "at": 0,
+        "label": "both leave at 6am"
+      },
+      {
+        "at": 12,
+        "label": "12-minute bus"
+      },
+      {
+        "at": 18,
+        "label": "18-minute bus"
+      },
+      {
+        "at": 24,
+        "label": "12-minute bus"
+      },
+      {
+        "at": 36,
+        "label": "together again",
+        "hi": true
+      }
+    ],
+    "caption": "The 12-minute bus leaves three times and the 18-minute bus twice; the last ones coincide."
+  },
   "source": "Least common multiple",
   "source_kind": "arithmetic",
   "reference": "Hardy & Wright, An Introduction to the Theory of Numbers, Oxford University Press, 2008"

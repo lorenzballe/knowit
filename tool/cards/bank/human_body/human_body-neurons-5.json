@@ -30,20 +30,20 @@
     "unit": "days to travel a metre",
     "items": [
       {
-        "label": "Vesicles, 400 mm/day",
+        "label": "Vesicles",
         "value": 2.5
       },
       {
-        "label": "Proteins, 1 mm/day",
+        "label": "Proteins at best",
         "value": 1000
       },
       {
-        "label": "Proteins, 0.2 mm/day",
+        "label": "Proteins at worst",
         "value": 5000,
         "hi": true
       }
     ],
-    "caption": "Under three days for the fastest cargo; up to fourteen years for the slowest."
+    "caption": "At 400 mm a day, under three days; at 0.2 to 1 mm, three to fourteen years."
   },
   "source": "Roy, The Neuroscientist, 2014",
   "source_kind": "paper",

@@ -25,7 +25,30 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": -275,
+    "to": -150,
+    "events": [
+      {
+        "at": -263,
+        "label": "Catania's sundial set up"
+      },
+      {
+        "at": -164,
+        "label": "corrected dial beside it",
+        "hi": true
+      }
+    ],
+    "spans": [
+      {
+        "from": -263,
+        "to": -164,
+        "label": "99 years, wrong hours"
+      }
+    ]
+  },
   "source": "Pliny the Elder, Natural History 7.214",
   "source_kind": "primary_document",
   "reference": "Pliny the Elder, Natural History, vol. 2, trans. H. Rackham, Loeb Classical Library, Harvard University Press, 1942",

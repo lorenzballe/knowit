@@ -33,6 +33,22 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Nobles' share of the condemned",
+        "value": 8
+      },
+      {
+        "label": "Condemned nobles' share of nobles",
+        "value": 1,
+        "hi": true
+      }
+    ],
+    "caption": "The same 1,300 nobles: 8% of 16,594 condemned, but about 1% of 100,000-plus nobles."
+  },
   "source": "Greer, The Incidence of the Terror, 1935",
   "source_kind": "book",
   "reference": "Greer, The Incidence of the Terror during the French Revolution: A Statistical Interpretation, Harvard University Press, 1935",

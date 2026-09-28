@@ -32,6 +32,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 83,
+        "label": "species gone at the impact layer",
+        "hi": true
+      }
+    ],
+    "caption": "About 83 in 100 lizard and snake species vanished."
+  },
   "source": "Longrich, Bhullar & Gauthier, PNAS, 2012",
   "source_kind": "paper",
   "reference": "Longrich, Bhullar & Gauthier, Mass extinction of lizards and snakes at the Cretaceous–Paleogene boundary, Proceedings of the National Academy of Sciences, 2012",

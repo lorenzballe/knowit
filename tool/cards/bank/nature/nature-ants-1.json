@@ -32,6 +32,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "million t carbon",
+    "items": [
+      {
+        "label": "All the world's people",
+        "value": 60
+      },
+      {
+        "label": "All the world's ants",
+        "value": 12,
+        "hi": true
+      }
+    ],
+    "caption": "Twenty quadrillion ants hold about a fifth of humanity's carbon, not an equal share."
+  },
   "source": "Schultheiss et al., PNAS, 2022",
   "source_kind": "paper",
   "reference": "Schultheiss et al., The abundance, biomass, and distribution of ants on Earth, Proceedings of the National Academy of Sciences, 2022",

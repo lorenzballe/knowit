@@ -33,6 +33,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "all other revenue",
+        "value": 83
+      },
+      {
+        "label": "opium",
+        "value": 17,
+        "hi": true
+      }
+    ],
+    "caption": "About one rupee in six of the Raj's revenue came from opium."
+  },
   "source": "Richards, Modern Asian Studies, 1981",
   "source_kind": "paper",
   "reference": "Richards, The Indian Empire and Peasant Production of Opium in the Nineteenth Century, Modern Asian Studies 15, 1981, 59-82",

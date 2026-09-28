@@ -33,7 +33,7 @@
   "figure": "bars",
   "diagram": {
     "type": "bars",
-    "unit": "ridge-count correlation",
+    "unit": "correlation",
     "items": [
       {
         "label": "Siblings",

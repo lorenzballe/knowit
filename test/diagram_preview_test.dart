@@ -93,14 +93,14 @@ void main() {
         final dir = Directory('$_out/$id')..createSync(recursive: true);
         final n = (diagramDuration(d).inMilliseconds * _fps / 1000).ceil();
         for (var f = 0; f <= n; f++) {
-          final img = await renderDiagramStill(d, pill.ink, width, at: f / n, ground: pill.color, margin: margin, pixelRatio: 3);
+          final img = await renderDiagramStill(d, pill.ink, width, at: f / n, ground: pill.color, margin: margin, pixelRatio: 3, caption: true);
           final png = await img.toByteData(format: ui.ImageByteFormat.png);
           File('${dir.path}/f_${f.toString().padLeft(4, '0')}.png').writeAsBytesSync(png!.buffer.asUint8List());
         }
       }
       final frames = <ui.Image>[];
       for (final at in moments) {
-        frames.add(await renderDiagramStill(d, pill.ink, width, at: at, ground: pill.color, margin: margin));
+        frames.add(await renderDiagramStill(d, pill.ink, width, at: at, ground: pill.color, margin: margin, caption: true));
       }
       final fw = frames.first.width.toDouble();
       final fh = frames.first.height.toDouble();

@@ -31,16 +31,16 @@
     "unit": "µm²",
     "items": [
       {
-        "label": "Raw milk, 4 µm",
+        "label": "Raw, 4 µm",
         "value": 12.566
       },
       {
-        "label": "Homogenised, 1 µm",
+        "label": "Homogenised",
         "value": 0.7854,
         "hi": true
       }
     ],
-    "caption": "A quarter the width, a sixteenth the area: it rises sixteen times slower."
+    "caption": "Homogenised globules, 1 µm: a quarter the width, a sixteenth the area, sixteen times slower to rise."
   },
   "source": "Walstra et al., Dairy Science and Technology, 2006",
   "source_kind": "book",

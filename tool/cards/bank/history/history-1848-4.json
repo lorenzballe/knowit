@@ -25,7 +25,31 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": 1845,
+    "to": 1862,
+    "events": [
+      {
+        "at": 1848,
+        "label": "Revolt: freedom proclaimed",
+        "hi": true
+      },
+      {
+        "at": 1859,
+        "label": "Denmark's planned end"
+      }
+    ],
+    "spans": [
+      {
+        "from": 1848,
+        "to": 1859,
+        "label": "the wait avoided"
+      }
+    ],
+    "caption": "The revolt won in an afternoon what Denmark's plan would have taken eleven years to grant."
+  },
   "source": "Hall, Slave Society, Danish West Indies, 1992",
   "source_kind": "book",
   "reference": "Hall, Slave Society in the Danish West Indies: St Thomas, St John and St Croix, ed. Higman, Johns Hopkins University Press, 1992",
