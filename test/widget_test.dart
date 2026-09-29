@@ -281,7 +281,7 @@ void main() {
     // The mix opens with everything in, so the reader turns things down
     // rather than building a deck from nothing.
     expect(find.text('Science'), findsOneWidget);
-    expect(find.text('18 of 18 subjects in the mix'), findsOneWidget);
+    expect(find.text('21 of 21 subjects in the mix'), findsOneWidget);
 
     // Press at the very left of a tile — that is zero — and it leaves the
     // mix, with the count saying so.
@@ -289,7 +289,7 @@ void main() {
       tester.getTopLeft(find.text('Science')).translate(-28, 6),
     );
     await _settle(tester);
-    expect(find.text('17 of 18 subjects in the mix'), findsOneWidget);
+    expect(find.text('20 of 21 subjects in the mix'), findsOneWidget);
 
     await tester.tap(find.text('Next'));
     await _settle(tester);
