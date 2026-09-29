@@ -1,0 +1,42 @@
+{
+  "id": "maths-scaling-1",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.scaling",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A mouse is scaled up 20 times in every direction, shape unchanged. How many times more load falls on each square centimetre of leg bone?",
+  "value": 20,
+  "unit": "times",
+  "answer": "Load on each square centimetre: 8,000 / 400 = 20 times.",
+  "move": "When lengths grow, areas and volumes grow faster, and by different powers.",
+  "trap": "Answering 8,000, the rise in weight alone.",
+  "hint": "Weight follows volume, but the strength of a bone follows its cross-section.",
+  "steps": [
+    "Weight follows volume: 20 x 20 x 20 = 8,000 times.",
+    "Bone strength follows cross-section: 20 x 20 = 400 times.",
+    "Load on each square centimetre: 8,000 / 400 = 20 times."
+  ],
+  "keywords": [
+    "square-cube law",
+    "galileo",
+    "bone strength",
+    "scaling",
+    "mouse"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Galileo, Two New Sciences, trans. Drake, 1974",
+  "source_kind": "book",
+  "reference": "Galileo, Two New Sciences, trans. Stillman Drake, University of Wisconsin Press, 1974",
+  "written": "2026-09-29"
+}

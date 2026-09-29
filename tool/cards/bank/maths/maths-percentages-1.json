@@ -1,0 +1,42 @@
+{
+  "id": "maths-percentages-1",
+  "topic": "maths",
+  "genre": "maths.growth",
+  "strand": "maths.growth.percentages",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A £60 price tag includes 20% VAT. How many pounds of it is VAT?",
+  "value": 10,
+  "unit": "pounds",
+  "answer": "VAT = 60 - 50 = 10 pounds.",
+  "move": "Ask which number the percentage was taken from.",
+  "trap": "Taking 20% of £60, which is £12.",
+  "hint": "The 20% was added to the price before tax, not to the £60.",
+  "steps": [
+    "The pre-tax price plus 20% makes 60, so 1.2 x price = 60.",
+    "Pre-tax price = 60 / 1.2 = 50.",
+    "VAT = 60 - 50 = 10 pounds."
+  ],
+  "keywords": [
+    "vat",
+    "sales tax",
+    "reverse percentage",
+    "price",
+    "hmrc"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "HMRC, VAT Notice 700, 2024",
+  "source_kind": "institution",
+  "reference": "HM Revenue and Customs, VAT Notice 700: The VAT Guide, 2024",
+  "written": "2026-09-29"
+}

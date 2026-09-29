@@ -1,0 +1,42 @@
+{
+  "id": "maths-fermi-2",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.fermi",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Roughly how many hairs grow on an adult human scalp, in thousands?",
+  "value": 100,
+  "unit": "thousand hairs",
+  "withinFactor": 3,
+  "answer": "600 x 170 = about 100 thousand hairs.",
+  "move": "Split the unknown into two things you can guess, then multiply.",
+  "trap": "Guessing a round million because hair feels endless.",
+  "hint": "Treat the scalp as a patch of skin and count hairs per square centimetre.",
+  "steps": [
+    "A scalp covers roughly 600 square centimetres.",
+    "Hair density there is roughly 170 hairs per square centimetre.",
+    "600 x 170 = about 100 thousand hairs."
+  ],
+  "keywords": [
+    "scalp",
+    "hair follicles",
+    "hair density",
+    "fermi estimate"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Robbins, Human Hair, Springer, 2012",
+  "source_kind": "book",
+  "reference": "Robbins, Chemical and Physical Behavior of Human Hair, 5th edition, Springer, 2012",
+  "written": "2026-09-29"
+}

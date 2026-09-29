@@ -1,0 +1,39 @@
+{
+  "id": "maths-units-2",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.units",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a nautical mile is one minute of latitude, the same length everywhere on Earth?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Earth is slightly flattened, so a minute of latitude spans about 1,843 metres at the equator and about 1,862 metres near the poles. An international conference in 1929 fixed the nautical mile at exactly 1,852 metres, roughly the average, so that charts and speeds in knots agree everywhere.",
+  "move": "A unit drawn from nature still needs one number written down.",
+  "trap": "Assuming a round Earth gives every degree of latitude equal length.",
+  "keywords": [
+    "nautical mile",
+    "latitude",
+    "oblate earth",
+    "knots",
+    "navigation"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bowditch, American Practical Navigator, 2019",
+  "source_kind": "institution",
+  "reference": "Bowditch, The American Practical Navigator, National Geospatial-Intelligence Agency, 2019",
+  "written": "2026-09-29"
+}

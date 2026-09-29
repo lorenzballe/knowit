@@ -1,0 +1,42 @@
+{
+  "id": "maths-projections-1",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.projections",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "On a Mercator map, how many times its true area is an island at 60 degrees north drawn?",
+  "value": 4,
+  "unit": "times",
+  "answer": "Area grows 2 x 2 = 4 times.",
+  "move": "Check how many directions a distortion acts in.",
+  "trap": "Answering 2, forgetting that the stretch acts in both directions.",
+  "hint": "Mercator stretches lengths by 1 divided by the cosine of the latitude.",
+  "steps": [
+    "Lengths are stretched by 1 / cos(latitude); at 60 degrees, cos = 0.5.",
+    "Lengths grow 1 / 0.5 = 2 times, in both directions.",
+    "Area grows 2 x 2 = 4 times."
+  ],
+  "keywords": [
+    "mercator projection",
+    "map distortion",
+    "latitude",
+    "area",
+    "cartography"
+  ],
+  "era": "early_modern",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Snyder, Map Projections: A Working Manual, 1987",
+  "source_kind": "institution",
+  "reference": "Snyder, Map Projections: A Working Manual, USGS Professional Paper 1395, 1987",
+  "written": "2026-09-29"
+}

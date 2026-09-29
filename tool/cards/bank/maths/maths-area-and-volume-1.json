@@ -1,0 +1,43 @@
+{
+  "id": "maths-area-and-volume-1",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.area_and_volume",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A 100-metre rope is laid out as a circle instead of a square. How many extra square metres does it enclose?",
+  "value": 170.8,
+  "unit": "square metres",
+  "tolerance": 0.2,
+  "answer": "795.8 - 625 = 170.8 square metres.",
+  "move": "Same boundary, same effort: the shape alone changes what it holds.",
+  "trap": "Guessing a few square metres, since both use the same rope.",
+  "hint": "A circle's area from its circumference C is C squared divided by 4 x pi.",
+  "steps": [
+    "Square: sides of 25 m enclose 25 x 25 = 625 square metres.",
+    "Circle: area = 100 x 100 / (4 x 3.1416) = 795.8 square metres.",
+    "795.8 - 625 = 170.8 square metres."
+  ],
+  "keywords": [
+    "isoperimetric problem",
+    "circle",
+    "perimeter",
+    "area",
+    "dido"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Blåsjö, American Mathematical Monthly, 2005",
+  "source_kind": "paper",
+  "reference": "Blåsjö, The Isoperimetric Problem, American Mathematical Monthly, 2005",
+  "written": "2026-09-29"
+}

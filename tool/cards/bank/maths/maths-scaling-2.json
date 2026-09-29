@@ -1,0 +1,40 @@
+{
+  "id": "maths-scaling-2",
+  "topic": "maths",
+  "genre": "maths.shapes",
+  "strand": "maths.shapes.scaling",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "An elephant weighs 200,000 times a mouse. By Kleiber's three-quarter law, its total energy use is about how many times the mouse's?",
+  "options": [
+    "About 200,000 times",
+    "About 9,500 times",
+    "About 900 times"
+  ],
+  "correct": 1,
+  "answer": "About 9,500 times. Metabolic rate rises as mass to the power 0.75, and 200,000 to the power 0.75 is about 9,500. Each gram of elephant therefore burns about a twentieth of the energy of a gram of mouse, which is why small animals eat so much for their size.",
+  "move": "Compare per unit of size before you compare totals.",
+  "trap": "Assuming energy use is simply proportional to weight.",
+  "keywords": [
+    "kleiber's law",
+    "metabolic rate",
+    "allometry",
+    "elephant",
+    "mouse"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kleiber, Physiological Reviews, 1947",
+  "source_kind": "paper",
+  "reference": "Kleiber, Body size and metabolic rate, Physiological Reviews, 1947",
+  "written": "2026-09-29"
+}

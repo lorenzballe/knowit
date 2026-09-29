@@ -1,0 +1,33 @@
+{
+  "id": "maths-fermi-1",
+  "topic": "maths",
+  "genre": "maths.estimation",
+  "strand": "maths.estimation.fermi",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Enrico Fermi measure the yield of the Trinity test from where he stood?",
+  "answer": "He dropped scraps of paper and watched how far the blast wave carried them. About 40 seconds after the flash it reached him, and the falling scraps shifted about 2.5 metres. From that shift alone he put the yield at ten thousand tonnes of TNT. The measured figure was about twice that.",
+  "move": "Measure with what is in your hand before the instruments report.",
+  "keywords": [
+    "enrico fermi",
+    "trinity test",
+    "blast wave",
+    "order of magnitude",
+    "tnt equivalent"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fermi, Trinity observations, 1945",
+  "source_kind": "primary_document",
+  "reference": "Fermi, My Observations During the Explosion at Trinity on July 16, 1945, Los Alamos report, 1945",
+  "written": "2026-09-29"
+}

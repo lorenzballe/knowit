@@ -1,0 +1,43 @@
+{
+  "id": "maths-charts-1",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.charts",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A chart draws 18 as a bar 0.6 long and 27.5 as a bar 5.3 long. Tufte's lie factor, visual change divided by data change?",
+  "value": 14.8,
+  "unit": "times",
+  "tolerance": 0.1,
+  "answer": "Lie factor = 783 / 53 = 14.8.",
+  "move": "Compare the size of the change drawn with the change measured.",
+  "trap": "Dividing the two lengths and forgetting to check the data.",
+  "hint": "Work out each change as a percentage of its starting value, then divide one by the other.",
+  "steps": [
+    "Change drawn: (5.3 - 0.6) / 0.6 = 7.83, or 783%.",
+    "Change in the data: (27.5 - 18) / 18 = 0.53, or 53%.",
+    "Lie factor = 783 / 53 = 14.8."
+  ],
+  "keywords": [
+    "edward tufte",
+    "lie factor",
+    "fuel economy",
+    "bar chart",
+    "data graphics"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tufte, Visual Display of Quantitative Information, 1983",
+  "source_kind": "book",
+  "reference": "Tufte, The Visual Display of Quantitative Information, Graphics Press, 1983",
+  "written": "2026-09-29"
+}

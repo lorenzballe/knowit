@@ -1,0 +1,40 @@
+{
+  "id": "maths-polls-2",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.polls",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "What share of the people Pew Research Center's typical telephone survey tried to reach actually answered, in 2018?",
+  "options": [
+    "About 36%",
+    "About 6%",
+    "About 60%"
+  ],
+  "correct": 1,
+  "answer": "About 6%. Pew's typical telephone response rate fell from 36% in 1997 to 9% in 2012 and 6% in 2018. Pollsters then weight the few who answer to match the country's age, education and region, which works only if the missing 94% resemble the weighted ones.",
+  "move": "Ask who declined to answer before you trust those who did.",
+  "trap": "Assuming most of the people called agree to answer.",
+  "keywords": [
+    "response rate",
+    "pew research center",
+    "telephone survey",
+    "weighting",
+    "non-response"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kennedy and Hartig, Pew Research Center, 2019",
+  "source_kind": "institution",
+  "reference": "Kennedy and Hartig, Response Rates in Telephone Surveys Have Resumed Their Decline, Pew Research Center, 2019",
+  "written": "2026-09-29"
+}

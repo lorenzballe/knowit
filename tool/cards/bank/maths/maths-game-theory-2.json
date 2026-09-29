@@ -1,0 +1,33 @@
+{
+  "id": "maths-game-theory-2",
+  "topic": "maths",
+  "genre": "maths.puzzles",
+  "strand": "maths.puzzles.game_theory",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did every one of the top eight entries in Axelrod's first prisoner's dilemma tournament share?",
+  "answer": "They were all nice: none ever defected first. Tit for Tat, the shortest entry, cooperated on the first move and then copied its opponent's last move, and won. The seven lower-scoring entries all defected first at some point, and ran into retaliation.",
+  "move": "Do not be the first to strike, but answer every strike.",
+  "keywords": [
+    "robert axelrod",
+    "tit for tat",
+    "prisoner's dilemma",
+    "tournament",
+    "cooperation"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Axelrod, Journal of Conflict Resolution, 1980",
+  "source_kind": "paper",
+  "reference": "Axelrod, Effective Choice in the Prisoner's Dilemma, Journal of Conflict Resolution, 1980",
+  "written": "2026-09-29"
+}

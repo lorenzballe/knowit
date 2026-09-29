@@ -1978,5 +1978,335 @@
     }
    ]
   }
+ ],
+ "maths": [
+  {
+   "id": "maths.estimation",
+   "label": "Estimation",
+   "strands": [
+    {
+     "id": "maths.estimation.fermi",
+     "label": "Fermi problems"
+    },
+    {
+     "id": "maths.estimation.big_numbers",
+     "label": "Big numbers"
+    },
+    {
+     "id": "maths.estimation.units",
+     "label": "Units and scale"
+    }
+   ]
+  },
+  {
+   "id": "maths.statistics",
+   "label": "Statistics",
+   "strands": [
+    {
+     "id": "maths.statistics.averages",
+     "label": "Averages"
+    },
+    {
+     "id": "maths.statistics.charts",
+     "label": "Misleading charts"
+    },
+    {
+     "id": "maths.statistics.polls",
+     "label": "Samples and polls"
+    }
+   ]
+  },
+  {
+   "id": "maths.growth",
+   "label": "Growth",
+   "strands": [
+    {
+     "id": "maths.growth.percentages",
+     "label": "Percentages"
+    },
+    {
+     "id": "maths.growth.compounding",
+     "label": "Compounding"
+    },
+    {
+     "id": "maths.growth.logarithms",
+     "label": "Logarithms"
+    }
+   ]
+  },
+  {
+   "id": "maths.shapes",
+   "label": "Shapes",
+   "strands": [
+    {
+     "id": "maths.shapes.area_and_volume",
+     "label": "Area and volume"
+    },
+    {
+     "id": "maths.shapes.scaling",
+     "label": "Scaling"
+    },
+    {
+     "id": "maths.shapes.projections",
+     "label": "Maps and projections"
+    }
+   ]
+  },
+  {
+   "id": "maths.puzzles",
+   "label": "Puzzles",
+   "strands": [
+    {
+     "id": "maths.puzzles.paradoxes",
+     "label": "Paradoxes"
+    },
+    {
+     "id": "maths.puzzles.game_theory",
+     "label": "Game theory"
+    },
+    {
+     "id": "maths.puzzles.logic",
+     "label": "Logic"
+    }
+   ]
+  },
+  {
+   "id": "maths.everyday_maths",
+   "label": "Everyday maths",
+   "strands": [
+    {
+     "id": "maths.everyday_maths.money",
+     "label": "Money maths"
+    },
+    {
+     "id": "maths.everyday_maths.risk",
+     "label": "Everyday risk"
+    },
+    {
+     "id": "maths.everyday_maths.algorithms",
+     "label": "Algorithms"
+    }
+   ]
+  }
+ ],
+ "physics": [
+  {
+   "id": "physics.motion",
+   "label": "Motion",
+   "strands": [
+    {
+     "id": "physics.motion.speed",
+     "label": "Speed"
+    },
+    {
+     "id": "physics.motion.collisions",
+     "label": "Collisions"
+    },
+    {
+     "id": "physics.motion.falling",
+     "label": "Falling"
+    }
+   ]
+  },
+  {
+   "id": "physics.energy",
+   "label": "Energy",
+   "strands": [
+    {
+     "id": "physics.energy.power",
+     "label": "Power"
+    },
+    {
+     "id": "physics.energy.efficiency",
+     "label": "Efficiency"
+    },
+    {
+     "id": "physics.energy.engines",
+     "label": "Engines"
+    }
+   ]
+  },
+  {
+   "id": "physics.waves",
+   "label": "Waves",
+   "strands": [
+    {
+     "id": "physics.waves.sound",
+     "label": "Sound"
+    },
+    {
+     "id": "physics.waves.radio",
+     "label": "Radio"
+    },
+    {
+     "id": "physics.waves.resonance",
+     "label": "Resonance"
+    }
+   ]
+  },
+  {
+   "id": "physics.electricity",
+   "label": "Electricity",
+   "strands": [
+    {
+     "id": "physics.electricity.circuits",
+     "label": "Circuits"
+    },
+    {
+     "id": "physics.electricity.lightning",
+     "label": "Lightning"
+    },
+    {
+     "id": "physics.electricity.magnets",
+     "label": "Magnets"
+    }
+   ]
+  },
+  {
+   "id": "physics.everyday_physics",
+   "label": "Everyday physics",
+   "strands": [
+    {
+     "id": "physics.everyday_physics.bikes",
+     "label": "Bikes"
+    },
+    {
+     "id": "physics.everyday_physics.kitchen",
+     "label": "Kitchen physics"
+    },
+    {
+     "id": "physics.everyday_physics.flight",
+     "label": "Flight"
+    }
+   ]
+  },
+  {
+   "id": "physics.fluids",
+   "label": "Fluids",
+   "strands": [
+    {
+     "id": "physics.fluids.water_pressure",
+     "label": "Water pressure"
+    },
+    {
+     "id": "physics.fluids.air_pressure",
+     "label": "Air pressure"
+    },
+    {
+     "id": "physics.fluids.floating",
+     "label": "Floating"
+    }
+   ]
+  }
+ ],
+ "life": [
+  {
+   "id": "life.habits",
+   "label": "Habits",
+   "strands": [
+    {
+     "id": "life.habits.routines",
+     "label": "Routines"
+    },
+    {
+     "id": "life.habits.deep_work",
+     "label": "Deep work"
+    },
+    {
+     "id": "life.habits.screens",
+     "label": "Screens"
+    }
+   ]
+  },
+  {
+   "id": "life.decisions",
+   "label": "Decisions",
+   "strands": [
+    {
+     "id": "life.decisions.big_choices",
+     "label": "Big choices"
+    },
+    {
+     "id": "life.decisions.regret",
+     "label": "Regret"
+    },
+    {
+     "id": "life.decisions.risk_taking",
+     "label": "Risk-taking"
+    }
+   ]
+  },
+  {
+   "id": "life.money_and_time",
+   "label": "Money and time",
+   "strands": [
+    {
+     "id": "life.money_and_time.saving",
+     "label": "Saving"
+    },
+    {
+     "id": "life.money_and_time.spending",
+     "label": "Spending"
+    },
+    {
+     "id": "life.money_and_time.time",
+     "label": "Time"
+    }
+   ]
+  },
+  {
+   "id": "life.people",
+   "label": "People",
+   "strands": [
+    {
+     "id": "life.people.friendship",
+     "label": "Friendship"
+    },
+    {
+     "id": "life.people.conversation",
+     "label": "Conversation"
+    },
+    {
+     "id": "life.people.kindness",
+     "label": "Kindness"
+    }
+   ]
+  },
+  {
+   "id": "life.growth",
+   "label": "Growth",
+   "strands": [
+    {
+     "id": "life.growth.failure",
+     "label": "Failure"
+    },
+    {
+     "id": "life.growth.learning",
+     "label": "Learning"
+    },
+    {
+     "id": "life.growth.limits",
+     "label": "Limits"
+    }
+   ]
+  },
+  {
+   "id": "life.meaning",
+   "label": "Meaning",
+   "strands": [
+    {
+     "id": "life.meaning.purpose",
+     "label": "Purpose"
+    },
+    {
+     "id": "life.meaning.gratitude",
+     "label": "Gratitude"
+    },
+    {
+     "id": "life.meaning.mortality",
+     "label": "Mortality"
+    }
+   ]
+  }
  ]
 }

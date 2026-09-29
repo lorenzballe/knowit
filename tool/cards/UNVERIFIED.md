@@ -674,3 +674,14 @@ Each line: card id | the claim | what to search for.
 - weird_facts-extreme-spots-8 | Lake Maracaibo about 233 flashes per km² a year; Africa 283 of the top 500 (Albrecht et al., BAMS, 2016) | Albrecht 2016 lightning hotspots Maracaibo 283 Africa
 - weird_facts-goosebumps-9 | Consortium for Spinal Cord Medicine, Acute Management of Autonomic Dysreflexia, 2nd edition, PVA, 2001 | Consortium for Spinal Cord Medicine autonomic dysreflexia guideline 2001 second edition
 - weird_facts-extreme-spots-6 | Verkhoyansk about -68°C in February 1892; WMO accepted 38°C of 20 June 2020 in 2021 | WMO Verkhoyansk 38 C Arctic record 2021
+
+## Maths, Physics and Life (written 2026-09-29, 108 cards)
+
+Written without the web, from memory: every figure and reference on
+`maths-*`, `physics-*` and `life-*` cards still wants a reader to open its
+source. The writers flagged these first: maths-compounding-2 (Kellison
+reference), maths-logarithms-2, maths-units-1, maths-averages-1,
+maths-polls-2, maths-logic-1, maths-fermi-1/2; physics-floating-1,
+physics-circuits-1, physics-bikes-2, physics-speed-2, physics-efficiency-2,
+physics-air-pressure-2; life-purpose-2, life-gratitude-2, life-limits-2,
+life-risk-taking-1, life-regret-2, life-failure-2, life-spending-2.

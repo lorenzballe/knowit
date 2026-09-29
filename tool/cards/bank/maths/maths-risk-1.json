@@ -1,0 +1,40 @@
+{
+  "id": "maths-risk-1",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.risk",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "UK Lotto jackpot odds are about 1 in 45 million per ticket. A weekly player buys one for 100 years. Chance of ever winning?",
+  "options": [
+    "About 1 in 9,000",
+    "About 1 in 900",
+    "About 1 in 90,000"
+  ],
+  "correct": 0,
+  "answer": "About 1 in 9,000. A hundred years is 5,200 tickets, and 5,200 divided by 45,057,474 is about 0.012%, or 1 in 8,700. Repeated tries add almost linearly when each chance is tiny. Of 8,700 people playing for a century, one would win.",
+  "move": "Multiply a tiny chance by the number of tries you will get.",
+  "trap": "Picturing lottery winners on television makes a lifetime of tickets feel likely to pay.",
+  "keywords": [
+    "national lottery",
+    "lotto odds",
+    "combinations",
+    "expected value",
+    "jackpot"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ross, A First Course in Probability, 2019",
+  "source_kind": "book",
+  "reference": "Ross, A First Course in Probability, 10th edition, Pearson, 2019",
+  "written": "2026-09-29"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "maths-money-2",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.money",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "An investment earns 5% a year; fees cut the yearly return to 4%. After 40 years, by what percentage is the pot smaller?",
+  "value": 31.8,
+  "unit": "percent",
+  "tolerance": 0.1,
+  "answer": "4.80 / 7.04 = 0.682, so the pot is 31.8% smaller.",
+  "move": "Small yearly differences are large ones once the years are counted.",
+  "trap": "Reading a one-point fee as a pot that is 1% smaller.",
+  "hint": "Compare the growth factors 1.05 and 1.04, each raised to the 40th power.",
+  "steps": [
+    "With no fee: 1.05 to the power 40 = about 7.04 times the start.",
+    "With the fee: 1.04 to the power 40 = about 4.80 times the start.",
+    "4.80 / 7.04 = 0.682, so the pot is 31.8% smaller."
+  ],
+  "keywords": [
+    "investment fees",
+    "compound growth",
+    "pension pot",
+    "return",
+    "index funds"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bogle, Little Book of Common Sense Investing, 2007",
+  "source_kind": "book",
+  "reference": "Bogle, The Little Book of Common Sense Investing, Wiley, 2007",
+  "written": "2026-09-29"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "maths-averages-2",
+  "topic": "maths",
+  "genre": "maths.statistics",
+  "strand": "maths.statistics.averages",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do your friends have, on average, more friends than you do?",
+  "answer": "Popular people appear on many friend lists and quiet ones on few, so counting friends over-samples the well connected. In a group of one hub and four people who know only the hub, the average person has 1.6 friends but the average friend has 2.5. Feld showed in 1991 this holds in any uneven network.",
+  "move": "What you meet is weighted by how often it turns up.",
+  "keywords": [
+    "friendship paradox",
+    "scott feld",
+    "social networks",
+    "degree",
+    "sampling"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Feld, American Journal of Sociology, 1991",
+  "source_kind": "paper",
+  "reference": "Feld, Why Your Friends Have More Friends Than You Do, American Journal of Sociology, 1991",
+  "written": "2026-09-29"
+}

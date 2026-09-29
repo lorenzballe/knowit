@@ -1,0 +1,42 @@
+{
+  "id": "maths-algorithms-1",
+  "topic": "maths",
+  "genre": "maths.everyday_maths",
+  "strand": "maths.everyday_maths.algorithms",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "What is the smallest number of pair comparisons that is guaranteed to sort any five distinct items?",
+  "value": 7,
+  "unit": "comparisons",
+  "answer": "2^6 = 64 is below 120, so 6 fail; 2^7 = 128 is enough, and a known method achieves 7 comparisons.",
+  "move": "Count the possible answers first; each question can halve them at best.",
+  "trap": "Comparing every pair once: 10 comparisons.",
+  "hint": "Count the possible orders, then ask how many yes-or-no answers can tell them apart.",
+  "steps": [
+    "Five items can be ordered in 5 x 4 x 3 x 2 x 1 = 120 ways.",
+    "Each comparison at best halves the possibilities, so k comparisons separate 2^k orders.",
+    "2^6 = 64 is below 120, so 6 fail; 2^7 = 128 is enough, and a known method achieves 7 comparisons."
+  ],
+  "keywords": [
+    "sorting",
+    "comparison sort",
+    "information theory",
+    "merge insertion",
+    "lower bound"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Knuth, Sorting and Searching, 1998",
+  "source_kind": "book",
+  "reference": "Knuth, The Art of Computer Programming, Volume 3: Sorting and Searching, 2nd edition, Addison-Wesley, 1998",
+  "written": "2026-09-29"
+}
