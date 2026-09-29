@@ -1,0 +1,33 @@
+{
+  "id": "life-routines-1",
+  "topic": "life",
+  "genre": "life.habits",
+  "strand": "life.habits.routines",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What share of everyday actions did a diary study find people performed as habits, often while thinking of something else?",
+  "answer": "About 43%. Wood, Quinn and Kashy prompted students at intervals to record what they were doing. Close to half of the actions were habits: repeated almost daily, in the same place, and often carried out while the mind was on something else. Most of a day is run by what was decided long ago.",
+  "move": "Ask which of today's actions you chose, and which merely happened again.",
+  "keywords": [
+    "habits",
+    "diary study",
+    "automatic behaviour",
+    "routine",
+    "context"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wood, Quinn and Kashy, JPSP, 2002",
+  "source_kind": "paper",
+  "reference": "Wood, Quinn and Kashy, Habits in Everyday Life: Thought, Emotion, and Action, Journal of Personality and Social Psychology, 2002",
+  "written": "2026-09-29"
+}

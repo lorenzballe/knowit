@@ -1,0 +1,32 @@
+{
+  "id": "physics-engines-2",
+  "topic": "physics",
+  "genre": "physics.energy",
+  "strand": "physics.energy.engines",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which came first: the science of how heat engines work, or the engines themselves?",
+  "answer": "The engines, by about a century. Newcomen's engine was pumping water from 1712, and Watt's separate condenser followed in 1769. Carnot's 1824 analysis of their efficiency limit came after over a century of running engines, and rested on the caloric theory of heat, later abandoned. Thermodynamics was written for engines that already worked.",
+  "move": "Working things often precede the theory that explains them.",
+  "keywords": [
+    "newcomen engine",
+    "watt",
+    "carnot",
+    "thermodynamics"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carnot, Reflections on the Motive Power of Fire",
+  "source_kind": "book",
+  "reference": "Carnot, Reflections on the Motive Power of Fire, ed. Mendoza, Dover, 1960",
+  "written": "2026-09-29"
+}

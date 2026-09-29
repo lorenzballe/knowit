@@ -1,0 +1,33 @@
+{
+  "id": "life-purpose-1",
+  "topic": "life",
+  "genre": "life.meaning",
+  "strand": "life.meaning.purpose",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did a fourteen-year follow-up of about 6,000 American adults find about purpose in life and dying?",
+  "answer": "Lower mortality, at every age. In Hill and Turiano's study, adults with a stronger sense of purpose were less likely to die during the follow-up, and the link held for young, middle-aged and older adults alike. It is an association: illness may also dull purpose.",
+  "move": "Ask what today is for, even if the answer is small.",
+  "keywords": [
+    "purpose in life",
+    "mortality",
+    "midus",
+    "longevity",
+    "hill and turiano"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hill and Turiano, Psychological Science, 2014",
+  "source_kind": "paper",
+  "reference": "Hill and Turiano, Purpose in Life as a Predictor of Mortality Across Adulthood, Psychological Science, 2014",
+  "written": "2026-09-29"
+}

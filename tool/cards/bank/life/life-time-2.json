@@ -1,0 +1,33 @@
+{
+  "id": "life-time-2",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.time",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Do people with long commutes gain enough elsewhere, in pay or housing, to make up for the journey?",
+  "answer": "No. Stutzer and Frey, using German panel data, found that people with longer commutes reported lower satisfaction with life, and their extra pay or better housing did not make up for it. They called it the commuting paradox, since standard theory says people would be compensated.",
+  "move": "A cheaper home further out has a price paid daily in minutes.",
+  "keywords": [
+    "commuting",
+    "life satisfaction",
+    "stutzer and frey",
+    "germany",
+    "housing"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stutzer and Frey, Scandinavian Journal of Economics, 2008",
+  "source_kind": "paper",
+  "reference": "Stutzer and Frey, Stress that Doesn't Pay: The Commuting Paradox, Scandinavian Journal of Economics, 2008",
+  "written": "2026-09-29"
+}

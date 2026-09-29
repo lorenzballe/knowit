@@ -1,0 +1,33 @@
+{
+  "id": "life-deep-work-1",
+  "topic": "life",
+  "genre": "life.habits",
+  "strand": "life.habits.deep_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a task you have just left unfinished keep hurting your work on the next one?",
+  "answer": "Attention residue. In Leroy's experiments, people pulled off a task before finishing it kept thinking about it, and did worse on the next task than people who had finished the first. The residue was strongest when the earlier task was unfinished and time was short.",
+  "move": "Finish something small before switching, or write down where you stopped.",
+  "keywords": [
+    "attention residue",
+    "task switching",
+    "sophie leroy",
+    "concentration",
+    "unfinished tasks"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Leroy, Organizational Behavior and Human Decision Processes, 2009",
+  "source_kind": "paper",
+  "reference": "Leroy, Why is it so hard to do my work? The challenge of attention residue when switching between work tasks, Organizational Behavior and Human Decision Processes, 2009",
+  "written": "2026-09-29"
+}

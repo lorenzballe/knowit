@@ -1,0 +1,39 @@
+{
+  "id": "physics-kitchen-2",
+  "topic": "physics",
+  "genre": "physics.everyday_physics",
+  "strand": "physics.everyday_physics.kitchen",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "30 g of salt, about two tablespoons, dissolves in 2 litres of water. By how much does the boiling point rise?",
+  "options": [
+    "About 0.3 °C",
+    "About 3 °C",
+    "About 10 °C"
+  ],
+  "correct": 0,
+  "answer": "About 0.3 °C. Boiling point rises by roughly 0.51 °C for every mole of dissolved particles per kilogram of water. 30 g of salt is half a mole, which splits into two ions: about 1 mole of particles in 2 kg. That gives 0.26 °C, so cooks salt for taste, not for temperature.",
+  "move": "Do the small sum before you believe a kitchen rule.",
+  "trap": "Believing salted water boils hot enough to cook noticeably faster.",
+  "keywords": [
+    "boiling point elevation",
+    "salt",
+    "colligative properties",
+    "cooking water"
+  ],
+  "era": "nineteenth",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Atkins and de Paula, Physical Chemistry, 2014",
+  "source_kind": "book",
+  "reference": "Atkins and de Paula, Physical Chemistry, Oxford University Press, 2014",
+  "written": "2026-09-29"
+}

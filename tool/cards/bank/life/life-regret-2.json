@@ -1,0 +1,33 @@
+{
+  "id": "life-regret-2",
+  "topic": "life",
+  "genre": "life.decisions",
+  "strand": "life.decisions.regret",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Photography students chose one of two prints to keep. Who liked it more later: those who could swap it, or those who could not?",
+  "answer": "Those who could not swap. In Gilbert and Ebert's studies, students whose choice was final grew fonder of their print than students who could change their minds within days, yet people expect the option to swap to leave them happier. A final choice lets the mind stop comparing.",
+  "move": "Keep an open door only where you will actually use it.",
+  "keywords": [
+    "reversible decisions",
+    "affective forecasting",
+    "gilbert",
+    "photography",
+    "commitment"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gilbert and Ebert, JPSP, 2002",
+  "source_kind": "paper",
+  "reference": "Gilbert and Ebert, Decisions and Revisions: The Affective Forecasting of Changeable Outcomes, Journal of Personality and Social Psychology, 2002",
+  "written": "2026-09-29"
+}

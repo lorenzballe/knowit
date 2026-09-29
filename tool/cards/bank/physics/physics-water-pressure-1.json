@@ -1,0 +1,39 @@
+{
+  "id": "physics-water-pressure-1",
+  "topic": "physics",
+  "genre": "physics.fluids",
+  "strand": "physics.fluids.water_pressure",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A diver takes a breath from a tank at 10 metres, then rises holding it. By what factor would her lung air expand?",
+  "options": [
+    "About 1.1 times",
+    "About 2 times",
+    "About 10 times"
+  ],
+  "correct": 1,
+  "answer": "About 2 times. Every 10 metres of sea water adds about one atmosphere, so pressure is 2 atmospheres at 10 m and 1 at the surface. By Boyle's law, gas volume doubles as pressure halves. The biggest proportional change comes near the surface, which is why holding the breath while rising can burst lung tissue.",
+  "move": "Ask for the ratio, not the size of the step.",
+  "trap": "Treating 10 metres as too shallow to matter.",
+  "keywords": [
+    "scuba diving",
+    "boyle's law",
+    "lung overexpansion",
+    "water pressure"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bove and Davis, Diving Medicine, 2004",
+  "source_kind": "book",
+  "reference": "Bove and Davis, Diving Medicine, 4th ed., Saunders, 2004",
+  "written": "2026-09-29"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "life-failure-2",
+  "topic": "life",
+  "genre": "life.growth",
+  "strand": "life.growth.failure",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Venture-backed founders whose first company failed started another. Compared with first-time founders, how likely was the new one to succeed?",
+  "options": [
+    "Clearly higher",
+    "About the same",
+    "Clearly lower"
+  ],
+  "correct": 1,
+  "answer": "About the same. Gompers and colleagues found first-time founders succeeded about 22% of the time and founders with an earlier success about 30%, while founders who had failed did no better than first-timers. Failure carried no measurable edge; success did.",
+  "move": "Learning from failure is a claim to test, not a given.",
+  "trap": "Assuming what a failure teaches must show in the next attempt.",
+  "keywords": [
+    "entrepreneurs",
+    "venture capital",
+    "failure",
+    "gompers",
+    "performance persistence"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gompers and colleagues, Journal of Financial Economics, 2010",
+  "source_kind": "paper",
+  "reference": "Gompers, Kovner, Lerner and Scharfstein, Performance persistence in entrepreneurship, Journal of Financial Economics, 2010",
+  "written": "2026-09-29"
+}

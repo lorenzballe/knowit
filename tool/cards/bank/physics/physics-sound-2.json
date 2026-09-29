@@ -1,0 +1,39 @@
+{
+  "id": "physics-sound-2",
+  "topic": "physics",
+  "genre": "physics.waves",
+  "strand": "physics.waves.sound",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "One machine in a workshop produces 80 decibels. Ten identical machines run together. About how loud is the room?",
+  "options": [
+    "About 800 dB",
+    "About 160 dB",
+    "About 90 dB"
+  ],
+  "correct": 2,
+  "answer": "About 90 dB. The decibel scale is logarithmic: each tenfold rise in sound power adds 10 dB. Ten machines carry ten times the power, so 80 becomes 90. Two machines add only 3 dB, which is why doubling a noise source is barely noticed.",
+  "move": "Check whether a scale is linear before you add or multiply on it.",
+  "trap": "Multiplying the 80 dB by ten, as if decibels were plain units.",
+  "keywords": [
+    "decibel",
+    "logarithmic scale",
+    "noise",
+    "sound power"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Everest and Pohlmann, Master Handbook of Acoustics, 2015",
+  "source_kind": "book",
+  "reference": "Everest & Pohlmann, Master Handbook of Acoustics, McGraw-Hill, 2015",
+  "written": "2026-09-29"
+}

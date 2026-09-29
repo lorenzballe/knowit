@@ -1,0 +1,37 @@
+{
+  "id": "physics-efficiency-2",
+  "topic": "physics",
+  "genre": "physics.energy",
+  "strand": "physics.energy.efficiency",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Will making appliances, cars and buildings more efficient actually reduce the world's energy use?",
+  "sides": [
+    "Yes, it will",
+    "No, rebound cancels it"
+  ],
+  "answer": "Efficiency standards have held demand down while economies grew. American refrigerators use far less electricity than in the 1970s despite being larger, and better insulation cuts heating demand directly. Where a rebound exists, it usually eats back only part of the saving, so net use still falls, and it falls at low cost.",
+  "move": "The size of the rebound decides this, whichever side you argued.",
+  "counterpoint": "Cheaper energy services invite more use. Jevons argued in 1865 that better steam engines raised coal consumption, and lighting has grown so much that efficiency gains were spent on more light. Reviews put household rebound below 30%, but economy-wide effects, where savings are respent elsewhere, are poorly measured and could be larger.",
+  "keywords": [
+    "energy efficiency",
+    "rebound effect",
+    "jevons paradox",
+    "appliances"
+  ],
+  "era": "nineteenth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sorrell, Energy Policy, 2009",
+  "source_kind": "paper",
+  "reference": "Sorrell, Jevons' Paradox revisited: The evidence for backfire from improved energy efficiency, Energy Policy, 2009",
+  "written": "2026-09-29"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "life-big-choices-2",
+  "topic": "life",
+  "genre": "life.decisions",
+  "strand": "life.decisions.big_choices",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "A jam experiment found shoppers bought less from 24 jams than from 6. Across 50 later experiments, what was the average effect of more choice?",
+  "options": [
+    "Near zero on average",
+    "Strongly negative on average",
+    "Strongly positive on average"
+  ],
+  "correct": 0,
+  "answer": "Near zero on average. Scheibehenne's meta-analysis found a mean effect of about zero, with wide variation: more choice hurt in some studies and helped in others. In the original study, 3% of shoppers bought from the 24-jar table and 30% from the six-jar table.",
+  "move": "Before trusting a famous experiment, ask what the pile of later ones says.",
+  "trap": "The retold jam story agrees with how choosing feels.",
+  "keywords": [
+    "choice overload",
+    "jam experiment",
+    "meta-analysis",
+    "consumer choice",
+    "replication"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Scheibehenne, Greifeneder and Todd, 2010",
+  "source_kind": "paper",
+  "reference": "Scheibehenne, Greifeneder and Todd, Can There Ever Be Too Many Options? A Meta-Analytic Review of Choice Overload, Journal of Consumer Research, 2010",
+  "written": "2026-09-29"
+}

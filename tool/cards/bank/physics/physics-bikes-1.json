@@ -1,0 +1,38 @@
+{
+  "id": "physics-bikes-1",
+  "topic": "physics",
+  "genre": "physics.everyday_physics",
+  "strand": "physics.everyday_physics.bikes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: a bicycle can balance itself while rolling even when its wheels' gyroscopic effect has been cancelled out?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 2011 Kooijman and colleagues built a bicycle with extra counter-spinning wheels that cancelled the gyroscopic effect, and with negative trail, so the front wheel touched the ground ahead of the steering axis. It still steadied itself when pushed. Mass distribution and steering geometry alone can produce self-stability.",
+  "move": "Remove the supposed cause and see whether the effect survives.",
+  "trap": "The classic story credits the spinning wheels' gyroscopic effect.",
+  "keywords": [
+    "bicycle",
+    "gyroscope",
+    "self-stability",
+    "trail"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kooijman and others, Science, 2011",
+  "source_kind": "paper",
+  "reference": "Kooijman et al., A bicycle can be self-stable without gyroscopic or caster effects, Science, 2011",
+  "written": "2026-09-29"
+}

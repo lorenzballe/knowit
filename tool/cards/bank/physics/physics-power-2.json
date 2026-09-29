@@ -1,0 +1,32 @@
+{
+  "id": "physics-power-2",
+  "topic": "physics",
+  "genre": "physics.energy",
+  "strand": "physics.energy.power",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does almost every kettle sold in Britain draw about 3 kilowatts, and not more?",
+  "answer": "The 13 amp plug. At 230 volts it can carry about 3,000 watts, because power is volts times amps, so 3 kW is the ceiling for a kettle sold with a standard plug. On 120 volt American circuits the same current gives far less, which is why kettles there are commonly rated near 1.5 kW.",
+  "move": "Find the fuse or plug limit before wondering why a device stops there.",
+  "keywords": [
+    "kettle",
+    "13 amp plug",
+    "mains voltage",
+    "watts"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "BS 1363-1, British Standards Institution, 2016",
+  "source_kind": "standard",
+  "reference": "British Standard BS 1363-1:2016, 13 A plugs, socket-outlets, adaptors and connection units, British Standards Institution, 2016",
+  "written": "2026-09-29"
+}

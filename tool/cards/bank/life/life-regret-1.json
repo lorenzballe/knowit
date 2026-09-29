@@ -1,0 +1,33 @@
+{
+  "id": "life-regret-1",
+  "topic": "life",
+  "genre": "life.decisions",
+  "strand": "life.decisions.regret",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Over a lifetime, do people come to regret the things they did, or the things they did not do?",
+  "answer": "Mostly what they did not do. Gilovich and Medvec found that in the short run people regret actions more, but over the long run regrets of inaction grow. Actions can be explained away or repaired, while a missed chance leaves imagined outcomes open, and imagined outcomes are never disappointing.",
+  "move": "Ask which choice you would still be explaining in twenty years.",
+  "keywords": [
+    "regret",
+    "inaction",
+    "gilovich",
+    "missed opportunities",
+    "time"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gilovich and Medvec, Psychological Review, 1995",
+  "source_kind": "paper",
+  "reference": "Gilovich and Medvec, The Experience of Regret: What, When, and Why, Psychological Review, 1995",
+  "written": "2026-09-29"
+}

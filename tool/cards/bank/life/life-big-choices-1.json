@@ -1,0 +1,33 @@
+{
+  "id": "life-big-choices-1",
+  "topic": "life",
+  "genre": "life.decisions",
+  "strand": "life.decisions.big_choices",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened to people who let a coin toss decide a real decision, such as quitting a job?",
+  "answer": "Those the coin told to make the change were happier six months later than those told to stay. Levitt asked more than 20,000 volunteers on a website to toss a coin over a real dilemma. His reading: when a choice is close, people lean towards the status quo more than they should.",
+  "move": "When two options feel equal, suspect that fear of change is tipping them.",
+  "keywords": [
+    "coin toss",
+    "status quo",
+    "life decisions",
+    "steven levitt",
+    "happiness"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Levitt, Review of Economic Studies, 2021",
+  "source_kind": "paper",
+  "reference": "Levitt, Heads or Tails: The Impact of a Coin Toss on Major Life Decisions and Subsequent Happiness, Review of Economic Studies, 2021",
+  "written": "2026-09-29"
+}

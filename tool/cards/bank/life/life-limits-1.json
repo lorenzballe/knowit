@@ -1,0 +1,40 @@
+{
+  "id": "life-limits-1",
+  "topic": "life",
+  "genre": "life.growth",
+  "strand": "life.growth.limits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "In sport, about what share of differences in performance did deliberate practice account for in one meta-analysis?",
+  "options": [
+    "About 1%",
+    "About 80%",
+    "About 18%"
+  ],
+  "correct": 2,
+  "answer": "About 18%. Macnamara and colleagues' meta-analysis found deliberate practice explained about 26% of differences in performance in games, 21% in music, 18% in sports, 4% in education and under 1% in professions. Practice matters a great deal; it leaves most of the difference unexplained.",
+  "move": "Treat effort as necessary, not sufficient, and keep looking for the rest.",
+  "trap": "Retold tales of champions make practice seem nearly the whole story.",
+  "keywords": [
+    "deliberate practice",
+    "expertise",
+    "talent",
+    "meta-analysis",
+    "macnamara"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Macnamara, Hambrick and colleagues, Psychological Science, 2014",
+  "source_kind": "paper",
+  "reference": "Macnamara, Hambrick and Oswald, Deliberate Practice and Performance in Music, Games, Sports, Education, and Professions: A Meta-Analysis, Psychological Science, 2014",
+  "written": "2026-09-29"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "physics-speed-2",
+  "topic": "physics",
+  "genre": "physics.motion",
+  "strand": "physics.motion.speed",
+  "also": [
+    "physics.motion.collisions"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should cities cap speeds at 30 km/h on every street where people walk and cycle?",
+  "sides": [
+    "Yes, cap at 30",
+    "No, keep it higher"
+  ],
+  "answer": "Impact energy grows with the square of speed, so a small cut in speed removes a large share of the harm. In one large study of pedestrian crashes, the risk of death rose from about 10% at 37 km/h to about 50% at 68 km/h. London's 20 mph zones cut road casualties by about 40%.",
+  "move": "Whichever side you took, enforcement decides it: a limit only works when drivers obey.",
+  "counterpoint": "A limit changes behaviour only where it is obeyed and enforced, and drivers often ignore signs on wide roads built for faster travel. Slower streets lengthen journeys, buses and ambulances included, and can push traffic onto side streets. Targeting schools, shops and crossings buys much of the safety at far less cost.",
+  "keywords": [
+    "speed limits",
+    "pedestrian safety",
+    "kinetic energy",
+    "30 km/h zones"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tefft, Accident Analysis and Prevention, 2013",
+  "source_kind": "paper",
+  "reference": "Tefft, Impact speed and a pedestrian's risk of severe injury or death, Accident Analysis & Prevention, 2013",
+  "written": "2026-09-29"
+}

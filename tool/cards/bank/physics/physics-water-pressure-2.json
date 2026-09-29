@@ -1,0 +1,32 @@
+{
+  "id": "physics-water-pressure-2",
+  "topic": "physics",
+  "genre": "physics.fluids",
+  "strand": "physics.fluids.water_pressure",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What sets the water pressure at the base of a dam: the lake's depth, or how much water it holds?",
+  "answer": "Depth alone. Pressure is density times gravity times depth: for 20 m of water, 1,000 x 9.81 x 20, about 196 kPa above the air, whether the lake is a pond or a hundred kilometres long. Total force does grow with width, and dams thicken towards the base because pressure rises with depth.",
+  "move": "Ask which quantity really sets an effect, not which is largest.",
+  "keywords": [
+    "dam",
+    "hydrostatic pressure",
+    "depth",
+    "reservoir"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Munson and others, Fundamentals of Fluid Mechanics, 2013",
+  "source_kind": "book",
+  "reference": "Munson, Young, Okiishi & Huebsch, Fundamentals of Fluid Mechanics, Wiley, 2013",
+  "written": "2026-09-29"
+}

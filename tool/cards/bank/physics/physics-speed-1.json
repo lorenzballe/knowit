@@ -1,0 +1,39 @@
+{
+  "id": "physics-speed-1",
+  "topic": "physics",
+  "genre": "physics.motion",
+  "strand": "physics.motion.speed",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A van climbs a 30 km hill at 30 km/h, then returns down at 60 km/h. What is its average speed for the round trip?",
+  "options": [
+    "45 km/h",
+    "40 km/h",
+    "50 km/h"
+  ],
+  "correct": 1,
+  "answer": "40 km/h. Average speed is total distance divided by total time, not the mean of two speeds. The climb takes 1 hour and the return 30 minutes, so 60 km takes 1.5 hours. The slow leg lasts longer, so it counts for more in the average.",
+  "move": "When rates are averaged, weigh each by the time spent at it.",
+  "trap": "Averaging the two speeds ignores that the slow leg lasts longer.",
+  "keywords": [
+    "average speed",
+    "round trip",
+    "harmonic mean",
+    "distance and time"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Young and Freedman, University Physics, 2016",
+  "source_kind": "book",
+  "reference": "Young & Freedman, University Physics with Modern Physics, Pearson, 2016",
+  "written": "2026-09-29"
+}

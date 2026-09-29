@@ -1,0 +1,32 @@
+{
+  "id": "physics-floating-2",
+  "topic": "physics",
+  "genre": "physics.fluids",
+  "strand": "physics.fluids.floating",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a loaded ship's hull carry several different load lines rather than a single one?",
+  "answer": "Water density changes with salt, so the same ship floats at different depths. Fresh water, about 1,000 kg/m³, gives 2.5% less lift per volume than sea water at 1,025, so a box-shaped barge drawing 4 m in the sea sinks about 10 cm more in a river. Other marks allow for season and region.",
+  "move": "Check what the medium is doing before blaming the object.",
+  "keywords": [
+    "load line",
+    "plimsoll mark",
+    "buoyancy",
+    "fresh water"
+  ],
+  "era": "nineteenth",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IMO, International Convention on Load Lines, 1966",
+  "source_kind": "institution",
+  "reference": "International Convention on Load Lines, International Maritime Organization, 1966",
+  "written": "2026-09-29"
+}

@@ -1,0 +1,32 @@
+{
+  "id": "physics-air-pressure-2",
+  "topic": "physics",
+  "genre": "physics.fluids",
+  "strand": "physics.fluids.air_pressure",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a jet cruising at 11 km keep its cabin at the pressure of a mountain, not sea level?",
+  "answer": "A sea-level cabin at 11 km would make the hull hold back about 0.8 atmosphere on every flight, and the fuselage would need to be heavier to survive that cycle. Instead US rules cap normal cabin altitude at 8,000 ft (2,438 m). Newer airliners such as the Boeing 787 hold about 6,000 ft.",
+  "move": "Every comfort is paid for somewhere, often in weight.",
+  "keywords": [
+    "cabin pressure",
+    "pressurisation",
+    "airliner",
+    "fuselage fatigue"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Federal Regulations, 14 CFR 25.841, 2020",
+  "source_kind": "standard",
+  "reference": "Code of Federal Regulations, Title 14, section 25.841, Pressurized cabins, 2020",
+  "written": "2026-09-29"
+}

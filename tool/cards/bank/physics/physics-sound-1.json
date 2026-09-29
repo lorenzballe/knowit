@@ -1,0 +1,32 @@
+{
+  "id": "physics-sound-1",
+  "topic": "physics",
+  "genre": "physics.waves",
+  "strand": "physics.waves.sound",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Water is far denser than air, so why does sound travel about four times faster through it?",
+  "answer": "Speed depends on stiffness as well as density: it is the square root of stiffness divided by density. Water is about 830 times denser than air but about 15,000 times stiffer (bulk modulus 2.2 GPa against 142 kPa). That ratio is about 19, and its square root is 4.3: 1,480 m/s against 343.",
+  "move": "Before crediting one factor, ask which other factor moved with it.",
+  "keywords": [
+    "speed of sound",
+    "bulk modulus",
+    "water",
+    "density"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kinsler and others, Fundamentals of Acoustics, 2000",
+  "source_kind": "book",
+  "reference": "Kinsler, Frey, Coppens & Sanders, Fundamentals of Acoustics, Wiley, 2000",
+  "written": "2026-09-29"
+}

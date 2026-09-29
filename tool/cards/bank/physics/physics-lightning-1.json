@@ -1,0 +1,39 @@
+{
+  "id": "physics-lightning-1",
+  "topic": "physics",
+  "genre": "physics.electricity",
+  "strand": "physics.electricity.lightning",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Satellites count every flash of lightning on Earth. About how many flashes occur worldwide each second?",
+  "options": [
+    "About 4",
+    "About 44",
+    "About 440"
+  ],
+  "correct": 1,
+  "answer": "About 44. Satellite optical sensors, watching for years, measured a global mean of 44 flashes a second, well over a billion a year, mostly over land in the tropics. Anyone counting from one town sees only a few storms a year and guesses far lower.",
+  "move": "Your own patch is a small sample; look for someone who counted everywhere.",
+  "trap": "Judging by the few storms seen from one town.",
+  "keywords": [
+    "lightning",
+    "optical transient detector",
+    "thunderstorms",
+    "satellite"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Christian and others, Journal of Geophysical Research, 2003",
+  "source_kind": "paper",
+  "reference": "Christian et al., Global frequency and distribution of lightning as observed from space by the Optical Transient Detector, Journal of Geophysical Research, 2003",
+  "written": "2026-09-29"
+}

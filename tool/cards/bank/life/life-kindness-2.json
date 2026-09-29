@@ -1,0 +1,38 @@
+{
+  "id": "life-kindness-2",
+  "topic": "life",
+  "genre": "life.people",
+  "strand": "life.people.kindness",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Does a kind act done partly for the good feeling deserve less credit?",
+  "sides": [
+    "Yes, less credit",
+    "No, full credit"
+  ],
+  "answer": "Motive is what separates kindness from self-service. Andreoni's warm-glow model treats giving as partly buying the donor a good feeling, and brain scans show giving activates reward regions. If a gift is partly a purchase of pleasure, credit should shrink with the share taken.",
+  "move": "Whichever side you took, motive or outcome is the question that decides it.",
+  "counterpoint": "The recipient cannot taste the motive: a meal feeds the same whoever is warmed by giving it. Givers who enjoy giving keep giving, while those asked to feel nothing quit first. Aknin and colleagues found that happiness and giving reinforce each other, so the pleasure is how charity sustains itself, and a kindness that costs nothing is not thereby smaller.",
+  "keywords": [
+    "warm glow",
+    "altruism",
+    "charitable giving",
+    "motive",
+    "andreoni"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Andreoni, Economic Journal, 1990",
+  "source_kind": "paper",
+  "reference": "Andreoni, Impure Altruism and Donations to Public Goods: A Theory of Warm-Glow Giving, Economic Journal, 1990",
+  "written": "2026-09-29"
+}

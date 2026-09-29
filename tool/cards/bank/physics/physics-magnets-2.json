@@ -1,0 +1,39 @@
+{
+  "id": "physics-magnets-2",
+  "topic": "physics",
+  "genre": "physics.electricity",
+  "strand": "physics.electricity.magnets",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "A strong magnet is dropped down a copper pipe. Copper is not attracted to magnets. How does the magnet fall?",
+  "options": [
+    "Slowly, at a steady speed",
+    "Freely, unaffected by the pipe",
+    "Faster, dragged along by the copper"
+  ],
+  "correct": 0,
+  "answer": "Slowly, at a steady speed. The falling magnet's changing field drives circling currents in the copper, and by Lenz's law those currents oppose the motion. Drag rises with speed until it balances weight, so the magnet takes several seconds to drop a metre that free fall covers in under half a second.",
+  "move": "Test what a thing does, not what its label says it should.",
+  "trap": "Copper is not magnetic, so the pipe should do nothing.",
+  "keywords": [
+    "eddy currents",
+    "lenz's law",
+    "copper pipe",
+    "neodymium magnet"
+  ],
+  "era": "nineteenth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Griffiths, Introduction to Electrodynamics, 2017",
+  "source_kind": "book",
+  "reference": "Griffiths, Introduction to Electrodynamics, 4th ed., Cambridge University Press, 2017",
+  "written": "2026-09-29"
+}

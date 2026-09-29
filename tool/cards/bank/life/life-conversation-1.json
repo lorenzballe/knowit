@@ -1,0 +1,33 @@
+{
+  "id": "life-conversation-1",
+  "topic": "life",
+  "genre": "life.people",
+  "strand": "life.people.conversation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Strangers asked to talk about deep topics expected it to be awkward. How did it actually turn out?",
+  "answer": "It was less awkward and more connecting than they expected. In Kardas, Kumar and Epley's studies, strangers forecast that deep questions would feel awkward and that partners would care little; afterwards they felt closer and more at ease than predicted, and partners were more interested than they thought.",
+  "move": "Ask the deeper question; the awkwardness is mostly rehearsed, not received.",
+  "keywords": [
+    "deep conversation",
+    "strangers",
+    "small talk",
+    "epley",
+    "connection"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kardas, Kumar and Epley, JPSP, 2022",
+  "source_kind": "paper",
+  "reference": "Kardas, Kumar and Epley, Overly shallow? Miscalibrated expectations create a barrier to deeper conversation, Journal of Personality and Social Psychology, 2022",
+  "written": "2026-09-29"
+}

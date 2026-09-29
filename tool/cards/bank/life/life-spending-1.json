@@ -1,0 +1,33 @@
+{
+  "id": "life-spending-1",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.spending",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Given $5 or $20 to spend by evening, who ended the day happier: those who spent it on themselves, or on others?",
+  "answer": "Those who spent it on others. In Dunn, Aknin and Norton's field experiment, participants handed $5 or $20 in the morning were happier that evening if they spent it on someone else. The amount made no difference; the recipient did.",
+  "move": "Try giving a small sum away and notice what it does to you.",
+  "keywords": [
+    "prosocial spending",
+    "happiness",
+    "dunn",
+    "gifts",
+    "field experiment"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dunn, Aknin and Norton, Science, 2008",
+  "source_kind": "paper",
+  "reference": "Dunn, Aknin and Norton, Spending Money on Others Promotes Happiness, Science, 2008",
+  "written": "2026-09-29"
+}

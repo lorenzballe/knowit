@@ -1,0 +1,33 @@
+{
+  "id": "life-friendship-1",
+  "topic": "life",
+  "genre": "life.people",
+  "strand": "life.people.friendship",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much did strong social relationships raise the odds of survival, in a pooling of 148 studies?",
+  "answer": "By about 50%. Holt-Lunstad's meta-analysis of 148 studies with 308,849 participants found people with stronger social relationships had 50% greater odds of survival over an average of 7.5 years, comparable with quitting smoking. The studies are observational, so the link is not proof of cause.",
+  "move": "Schedule the people you would miss before the work you would not.",
+  "keywords": [
+    "social relationships",
+    "survival",
+    "meta-analysis",
+    "loneliness",
+    "holt-lunstad"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Holt-Lunstad, Smith and Layton, PLoS Medicine, 2010",
+  "source_kind": "paper",
+  "reference": "Holt-Lunstad, Smith and Layton, Social Relationships and Mortality Risk: A Meta-analytic Review, PLoS Medicine, 2010",
+  "written": "2026-09-29"
+}

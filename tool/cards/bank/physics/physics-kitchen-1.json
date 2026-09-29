@@ -1,0 +1,38 @@
+{
+  "id": "physics-kitchen-1",
+  "topic": "physics",
+  "genre": "physics.everyday_physics",
+  "strand": "physics.everyday_physics.kitchen",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a microwave oven runs at 2.45 gigahertz because that is the resonant frequency of water molecules?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Water absorbs microwaves over a broad range, and its absorption peaks nearer 20 GHz at room temperature. The 2.45 GHz band was set aside for industrial and domestic use, and it penetrates food by a centimetre or more, so heat forms below the surface instead of only on it.",
+  "move": "A frequency chosen for convenience is not evidence of a natural law.",
+  "trap": "Resonance sounds like the natural explanation for waves heating water.",
+  "keywords": [
+    "microwave oven",
+    "2.45 gigahertz",
+    "water absorption",
+    "dielectric heating"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Metaxas and Meredith, Industrial Microwave Heating, 1983",
+  "source_kind": "book",
+  "reference": "Metaxas & Meredith, Industrial Microwave Heating, Peter Peregrinus, 1983",
+  "written": "2026-09-29"
+}

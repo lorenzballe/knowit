@@ -1,0 +1,32 @@
+{
+  "id": "physics-flight-2",
+  "topic": "physics",
+  "genre": "physics.everyday_physics",
+  "strand": "physics.everyday_physics.flight",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What decides when a wing stalls, if it is not simply how slowly the aircraft flies?",
+  "answer": "The wing's angle to the airflow, about 15 degrees for many wings, beyond which smooth flow separates and lift collapses. Speed only sets how much lift a given angle gives. In a 60 degree banked turn the load doubles and the stall speed rises 41%, so a plane can stall well above its book speed.",
+  "move": "Find what a limit really depends on before trusting its usual proxy.",
+  "keywords": [
+    "stall",
+    "angle of attack",
+    "bank angle",
+    "load factor"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FAA, Pilot's Handbook of Aeronautical Knowledge, 2016",
+  "source_kind": "institution",
+  "reference": "Federal Aviation Administration, Pilot's Handbook of Aeronautical Knowledge, FAA-H-8083-25B, 2016",
+  "written": "2026-09-29"
+}

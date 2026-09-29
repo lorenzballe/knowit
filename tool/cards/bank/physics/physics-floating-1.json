@@ -1,0 +1,39 @@
+{
+  "id": "physics-floating-1",
+  "topic": "physics",
+  "genre": "physics.fluids",
+  "strand": "physics.fluids.floating",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A boat floating in a pond carries a stone. The stone is thrown overboard. What happens to the pond's water level?",
+  "options": [
+    "It falls",
+    "It stays the same",
+    "It rises"
+  ],
+  "correct": 0,
+  "answer": "It falls. In the boat, the stone is supported by displaced water equal to its weight. A 10 kg granite stone displaces 10 litres there, but sunk it displaces only its own volume, about 3.7 litres. The boat rises, the stone takes little room, and the pond level drops.",
+  "move": "Ask what a thing displaces in each position before comparing them.",
+  "trap": "The water still holds the same stone, so nothing seems to change.",
+  "keywords": [
+    "archimedes",
+    "displacement",
+    "buoyancy",
+    "granite"
+  ],
+  "era": "ancient",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Halliday, Resnick and Walker, Fundamentals of Physics, 2013",
+  "source_kind": "book",
+  "reference": "Halliday, Resnick & Walker, Fundamentals of Physics, Wiley, 2013",
+  "written": "2026-09-29"
+}

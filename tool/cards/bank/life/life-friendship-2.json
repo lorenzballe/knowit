@@ -1,0 +1,33 @@
+{
+  "id": "life-friendship-2",
+  "topic": "life",
+  "genre": "life.people",
+  "strand": "life.people.friendship",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "About how many hours together does it take for an acquaintance to become a friend?",
+  "answer": "About 50 hours to become a casual friend, about 90 to become a friend, and over 200 for a close friend. Hall surveyed adults who had recently moved and tracked students. Time together predicted closeness, and the time counted most when spent joking, catching up and talking about things that mattered.",
+  "move": "Count friendship in hours spent, and spend them on purpose.",
+  "keywords": [
+    "friendship",
+    "time together",
+    "jeffrey hall",
+    "new friends",
+    "closeness"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hall, Journal of Social and Personal Relationships, 2019",
+  "source_kind": "paper",
+  "reference": "Hall, How many hours does it take to make a friend? Journal of Social and Personal Relationships, 2019",
+  "written": "2026-09-29"
+}

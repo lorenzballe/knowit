@@ -1,0 +1,33 @@
+{
+  "id": "life-risk-taking-2",
+  "topic": "life",
+  "genre": "life.decisions",
+  "strand": "life.decisions.risk_taking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How large must the possible win in an even coin toss be before most people accept a possible loss?",
+  "answer": "About twice as large. In Tversky and Kahneman's median estimate, losses weigh about 2.25 times as much as equal gains, so someone risking 100 on a coin toss typically wants a possible win near 225. Later estimates vary by person and setting.",
+  "move": "Check whether fear of losing is pricing a bet, not its odds.",
+  "keywords": [
+    "loss aversion",
+    "prospect theory",
+    "kahneman",
+    "coin toss",
+    "gambles"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tversky and Kahneman, J. Risk and Uncertainty, 1992",
+  "source_kind": "paper",
+  "reference": "Tversky and Kahneman, Advances in Prospect Theory: Cumulative Representation of Uncertainty, Journal of Risk and Uncertainty, 1992",
+  "written": "2026-09-29"
+}
