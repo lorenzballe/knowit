@@ -46,6 +46,9 @@ const List<MixSubject> kMixSubjects = [
   MixSubject('medicine', 'Medicine', Color(0xFFFF3B30)),
   MixSubject('food', 'Food', Color(0xFFFF7A1A)),
   MixSubject('history', 'History', Color(0xFFFFB000)),
+  MixSubject('maths', 'Maths', Color(0xFFB9B4FF)),
+  MixSubject('physics', 'Physics', Color(0xFF8CFFD2)),
+  MixSubject('life', 'Life', Color(0xFFFFC49B)),
 ];
 
 /// Below this a subject is out of the mix rather than merely quiet.

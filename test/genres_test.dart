@@ -98,7 +98,7 @@ void main() {
           expect(genreIdOf(strand.id), genre.id);
         }
       }
-      expect(kAllGenres, hasLength(108));
+      expect(kAllGenres, hasLength(126));
     });
   });
 
@@ -146,8 +146,15 @@ void main() {
       expect(y('Economics'), lessThan(y('Sport')));
       expect(y('Sport'), lessThan(y('Nature')));
       // And the one subject actually turned down is below all of them,
-      // because weight still decides before the grid does.
-      expect(y('Nature'), lessThan(y('Science')));
+      // because weight still decides before the grid does: so far down a
+      // list of twenty-one that it is not even built until scrolled to.
+      expect(find.text('Science', skipOffstage: false), findsNothing);
+      await tester.scrollUntilVisible(
+        find.text('Science', skipOffstage: false),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+      expect(find.text('Science', skipOffstage: false), findsOneWidget);
     });
 
     testWidgets('a subject left out of the mix keeps a quiet line', (
@@ -187,7 +194,7 @@ void main() {
     ) async {
       final app = await _app({'history': 1.0});
       await _pump(tester, app);
-      expect(find.text('Continue · 108 of 108 genres on'), findsOneWidget);
+      expect(find.text('Continue · 126 of 126 genres on'), findsOneWidget);
     });
 
     testWidgets('a genre tapped off is handed over at the end', (tester) async {
@@ -197,7 +204,7 @@ void main() {
 
       await tester.tap(find.text('Ancient Rome'));
       await tester.pump();
-      expect(find.text('Continue · 107 of 108 genres on'), findsOneWidget);
+      expect(find.text('Continue · 125 of 126 genres on'), findsOneWidget);
 
       await tester.tap(find.textContaining('Continue ·'));
       await tester.pump();
@@ -251,7 +258,7 @@ void main() {
       await app.setGenresOff({'history.ancient_rome'}, const {});
 
       await _pump(tester, app);
-      expect(find.text('Continue · 107 of 108 genres on'), findsOneWidget);
+      expect(find.text('Continue · 125 of 126 genres on'), findsOneWidget);
 
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getStringList('knowit.genresOff'), ['history.ancient_rome']);
