@@ -368,9 +368,17 @@ class _MixTile extends StatelessWidget {
                                   weight: FontWeight.w700,
                                   height: 1.1,
                                   spacing: -0.3,
-                                  color: Colors.white.withValues(
-                                    alpha: live ? 0.95 : 0.3,
-                                  ),
+                                  // Dark on a pale fill, but only once the
+                                  // fill is under it; a dimmed tile's label
+                                  // sits on black either way.
+                                  color:
+                                      (live &&
+                                                  kPaleSubjects.contains(
+                                                    subject.name,
+                                                  )
+                                              ? const Color(0xFF10100C)
+                                              : Colors.white)
+                                          .withValues(alpha: live ? 0.95 : 0.3),
                                 ),
                               ),
                             ),
