@@ -95,20 +95,14 @@ final Map<String, TopicStyle> kTopics = {
   'art': _topic('Art', kSpectrum[12]),
   'medicine': _topic('Medicine', kSpectrum[15]),
   'food': _topic('Food', kSpectrum[16]),
-  // Three that came after the wheel was drawn. Its eighteen saturated hues
-  // are all spoken for, so these take the pale end instead: close to none
-  // of them, and still a colour rather than Thinking's white.
-  'maths': _topic('Maths', kLateSubjects[0]),
-  'physics': _topic('Physics', kLateSubjects[1]),
-  'life': _topic('Life', kLateSubjects[2]),
+  // One that came after the wheel was drawn. Its eighteen saturated hues
+  // are all spoken for, so it takes the pale end instead: close to none of
+  // them, and still a colour rather than Thinking's white.
+  'life': _topic('Life', kLateSubjects[0]),
 };
 
-/// The hues of the subjects added after the eighteen: lavender, mint, peach.
-const List<Color> kLateSubjects = [
-  Color(0xFFB9B4FF),
-  Color(0xFF8CFFD2),
-  Color(0xFFFFC49B),
-];
+/// The hues of the subjects added after the eighteen: peach, for Life.
+const List<Color> kLateSubjects = [Color(0xFFFFC49B)];
 
 /// The paper a reasoning card is printed on.
 const Color kThinkingWhite = Color(0xFFF2F1EC);
@@ -134,8 +128,6 @@ const List<String> kTopicOrder = [
   'art',
   'medicine',
   'food',
-  'maths',
-  'physics',
   'life',
 ];
 

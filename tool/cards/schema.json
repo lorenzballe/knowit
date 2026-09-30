@@ -13,7 +13,7 @@
       "description": "Topic key, a dash, then anything unique. Never reused, even for a retired card."
     },
     "topic": {
-      "enum": ["thinking", "space", "technology", "language", "nature", "economics", "pop_culture", "science", "history", "psychology", "weird_facts", "human_body", "philosophy", "sport", "cinema", "music", "art", "medicine", "food", "maths", "physics", "life"]
+      "enum": ["thinking", "space", "technology", "language", "nature", "economics", "pop_culture", "science", "history", "psychology", "weird_facts", "human_body", "philosophy", "sport", "cinema", "music", "art", "medicine", "food", "life"]
     },
     "kind": {
       "enum": ["read", "pickOne", "number", "estimate", "debate"],

@@ -1,6 +1,5 @@
-// Photographs everything the three newest subjects (Maths, Physics, Life)
-// touch: the mix, the genres, Explore's shelf for each and a card of each,
-// front and back.
+// Photographs everything the newest subject, Life, touches: the mix, the
+// genres and Explore's shelf for it.
 //
 //   flutter test tool/subject_shots.dart --update-goldens
 //
@@ -92,15 +91,8 @@ void main() {
       pushWidget: (_) async {},
     );
     await tester.runAsync(app.init);
-    // The three new ones asked for most, so they lead the list.
-    await tester.runAsync(
-      () => app.setTopicMix({
-        'maths': 1,
-        'physics': 0.9,
-        'life': 0.8,
-        'science': 0.3,
-      }),
-    );
+    // The new one asked for most, so it leads the list.
+    await tester.runAsync(() => app.setTopicMix({'life': 0.8, 'science': 0.3}));
     await tester.pumpWidget(
       onboarding(GenresScreen(app: app, onDone: (_, _) {}, onSkip: () {})),
     );
@@ -111,7 +103,7 @@ void main() {
     await shoot(tester, 'genres-2');
   });
 
-  testWidgets('Explore and a card, for each new subject', (tester) async {
+  testWidgets('Explore, for the new subject', (tester) async {
     // ignore: invalid_use_of_visible_for_testing_member
     SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
     await tester.pumpWidget(const AstutoApp());
@@ -133,7 +125,7 @@ void main() {
       await settle(tester);
     }
 
-    for (final subject in ['Maths', 'Physics', 'Life']) {
+    for (final subject in ['Life']) {
       final chip = find.byKey(ValueKey('subject-$subject-off'));
       await reveal(chip);
       await tester.tap(chip);
