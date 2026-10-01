@@ -551,33 +551,22 @@ void main() {
   });
 
   group('Astute+ is three things, and the free plan shows their shape', () {
-    testWidgets('the archive opens on the free plan, a week deep', (
+    testWidgets('the archive is Astute+ only: the free plan meets the paywall', (
       tester,
     ) async {
-      final now = DateTime.now();
-      final yesterday = now.subtract(const Duration(days: 1));
-      final lastMonth = now.subtract(const Duration(days: 10));
       SharedPreferences.setMockInitialValues({
         ..._installed(),
-        'knowit.completedDates': [dateKey(lastMonth), dateKey(yesterday)],
+        'knowit.completedDates': [
+          dateKey(DateTime.now().subtract(const Duration(days: 1))),
+        ],
       });
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
       await _openSetting(tester, 'Archive');
 
-      // The archive, not the paywall: today and yesterday are there.
-      expect(find.text('The archive'), findsOneWidget);
-      expect(find.text('Today'), findsOneWidget);
-      expect(find.text('Yesterday'), findsOneWidget);
-      // The day ten days back is behind the lock, and the row says so —
-      // named and counted rather than silently missing.
-      expect(find.byKey(const ValueKey('archive-locked')), findsOneWidget);
-      expect(find.text('Before this week'), findsOneWidget);
-      expect(find.text('1 day'), findsOneWidget);
-      await tester.tap(find.byKey(const ValueKey('archive-locked')));
-      await _settle(tester);
       expect(_paywallHeadline, findsOneWidget);
+      expect(find.text('The archive'), findsNothing);
     });
 
     testWidgets('the mix is free to edit', (tester) async {

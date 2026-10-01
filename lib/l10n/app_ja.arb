@@ -207,7 +207,7 @@
   "dayStreakCaps": "日連続",
   "sourceLabel": "出典 · {source}",
   "perkArchiveTitle": "あなたのアーカイブすべて",
-  "perkArchiveLine": "読んだ日をすべて、ずっと保存。無料版は1週間。",
+  "perkArchiveLine": "読んだ日をすべて、ずっと保存。",
   "plusIsActive": "ASTUTE+ 有効",
   "tryFreeThen": "7日間無料で試す。その後{price}{suffix}",
   "subscribeFor": "{price}{suffix}で登録",

@@ -947,8 +947,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get perkArchiveTitle => 'Je hele archief';
 
   @override
-  String get perkArchiveLine =>
-      'Elke dag die je las, voorgoed bewaard. Gratis blijft een week.';
+  String get perkArchiveLine => 'Elke dag die je las, voorgoed bewaard.';
 
   @override
   String get plusIsActive => 'ASTUTE+ IS ACTIEF';

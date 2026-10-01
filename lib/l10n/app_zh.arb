@@ -207,7 +207,7 @@
   "dayStreakCaps": "天连续",
   "sourceLabel": "来源 · {source}",
   "perkArchiveTitle": "你的全部档案",
-  "perkArchiveLine": "你读过的每一天，永久保存。免费版保留一周。",
+  "perkArchiveLine": "你读过的每一天，永久保存。",
   "plusIsActive": "ASTUTE+ 已激活",
   "tryFreeThen": "免费试用 7 天，之后 {price}{suffix}",
   "subscribeFor": "以 {price}{suffix} 订阅",

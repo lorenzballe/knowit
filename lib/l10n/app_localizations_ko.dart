@@ -926,7 +926,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get perkArchiveTitle => '당신의 모든 기록';
 
   @override
-  String get perkArchiveLine => '읽은 모든 날을 영원히. 무료는 일주일.';
+  String get perkArchiveLine => '읽은 모든 날을 영원히.';
 
   @override
   String get plusIsActive => 'ASTUTE+ 활성화됨';

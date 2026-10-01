@@ -979,8 +979,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get perkArchiveTitle => 'Całe twoje archiwum';
 
   @override
-  String get perkArchiveLine =>
-      'Każdy przeczytany dzień, na zawsze. Za darmo zostaje tydzień.';
+  String get perkArchiveLine => 'Każdy przeczytany dzień, na zawsze.';
 
   @override
   String get plusIsActive => 'ASTUTE+ JEST AKTYWNY';

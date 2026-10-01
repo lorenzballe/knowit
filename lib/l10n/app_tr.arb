@@ -207,7 +207,7 @@
   "dayStreakCaps": "GÜNLÜK SERİ",
   "sourceLabel": "Kaynak · {source}",
   "perkArchiveTitle": "Tüm arşivin",
-  "perkArchiveLine": "Okuduğun her gün, kalıcı olarak. Ücretsizde bir hafta kalır.",
+  "perkArchiveLine": "Okuduğun her gün, kalıcı olarak.",
   "plusIsActive": "ASTUTE+ ETKİN",
   "tryFreeThen": "7 gün ücretsiz, sonra {price}{suffix}",
   "subscribeFor": "{price}{suffix} ile abone ol",

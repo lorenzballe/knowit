@@ -940,8 +940,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get perkArchiveTitle => 'Tüm arşivin';
 
   @override
-  String get perkArchiveLine =>
-      'Okuduğun her gün, kalıcı olarak. Ücretsizde bir hafta kalır.';
+  String get perkArchiveLine => 'Okuduğun her gün, kalıcı olarak.';
 
   @override
   String get plusIsActive => 'ASTUTE+ ETKİN';

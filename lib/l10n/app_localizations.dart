@@ -1365,7 +1365,7 @@ abstract class AppLocalizations {
   /// No description provided for @perkArchiveLine.
   ///
   /// In en, this message translates to:
-  /// **'Every day you have read, kept for good. The free plan keeps a week.'**
+  /// **'Every day you have read, kept for good.'**
   String get perkArchiveLine;
 
   /// No description provided for @plusIsActive.

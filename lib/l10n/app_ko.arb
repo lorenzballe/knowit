@@ -207,7 +207,7 @@
   "dayStreakCaps": "일 연속",
   "sourceLabel": "출처 · {source}",
   "perkArchiveTitle": "당신의 모든 기록",
-  "perkArchiveLine": "읽은 모든 날을 영원히. 무료는 일주일.",
+  "perkArchiveLine": "읽은 모든 날을 영원히.",
   "plusIsActive": "ASTUTE+ 활성화됨",
   "tryFreeThen": "7일 무료 체험 후 {price}{suffix}",
   "subscribeFor": "{price}{suffix}에 구독하기",

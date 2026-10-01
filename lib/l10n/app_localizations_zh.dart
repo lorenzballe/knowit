@@ -919,7 +919,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get perkArchiveTitle => '你的全部档案';
 
   @override
-  String get perkArchiveLine => '你读过的每一天，永久保存。免费版保留一周。';
+  String get perkArchiveLine => '你读过的每一天，永久保存。';
 
   @override
   String get plusIsActive => 'ASTUTE+ 已激活';

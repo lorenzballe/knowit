@@ -207,7 +207,7 @@
   "dayStreakCaps": "ДНЕЙ ПОДРЯД",
   "sourceLabel": "Источник · {source}",
   "perkArchiveTitle": "Весь твой архив",
-  "perkArchiveLine": "Каждый прочитанный день — навсегда. Бесплатно хранится неделя.",
+  "perkArchiveLine": "Каждый прочитанный день — навсегда.",
   "plusIsActive": "ASTUTE+ АКТИВЕН",
   "tryFreeThen": "7 дней бесплатно, затем {price}{suffix}",
   "subscribeFor": "Подписаться за {price}{suffix}",

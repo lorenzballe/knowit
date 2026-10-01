@@ -948,8 +948,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get perkArchiveTitle => 'Dein ganzes Archiv';
 
   @override
-  String get perkArchiveLine =>
-      'Jeder gelesene Tag, für immer. Gratis bleibt eine Woche.';
+  String get perkArchiveLine => 'Jeder gelesene Tag, für immer.';
 
   @override
   String get plusIsActive => 'ASTUTE+ IST AKTIV';

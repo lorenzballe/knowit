@@ -207,7 +207,7 @@
   "dayStreakCaps": "DIAS SEGUIDOS",
   "sourceLabel": "Fonte · {source}",
   "perkArchiveTitle": "Todo o teu arquivo",
-  "perkArchiveLine": "Cada dia que leste, para sempre. Grátis fica uma semana.",
+  "perkArchiveLine": "Cada dia que leste, para sempre.",
   "plusIsActive": "ASTUTE+ ESTÁ ATIVO",
   "tryFreeThen": "7 dias grátis, depois {price}{suffix}",
   "subscribeFor": "Subscrever por {price}{suffix}",

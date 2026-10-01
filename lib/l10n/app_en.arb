@@ -840,7 +840,7 @@
   }
  },
  "perkArchiveTitle": "Your whole archive",
- "perkArchiveLine": "Every day you have read, kept for good. The free plan keeps a week.",
+ "perkArchiveLine": "Every day you have read, kept for good.",
  "plusIsActive": "ASTUTE+ IS ACTIVE",
  "tryFreeThen": "Try 7 days free, then {price}{suffix}",
  "@tryFreeThen": {

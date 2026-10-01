@@ -949,8 +949,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get perkArchiveTitle => 'Todo tu archivo';
 
   @override
-  String get perkArchiveLine =>
-      'Cada día que has leído, para siempre. Gratis se guarda una semana.';
+  String get perkArchiveLine => 'Cada día que has leído, para siempre.';
 
   @override
   String get plusIsActive => 'ASTUTE+ ESTÁ ACTIVO';

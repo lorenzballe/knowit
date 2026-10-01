@@ -207,7 +207,7 @@
   "dayStreakCaps": "TAGE IN SERIE",
   "sourceLabel": "Quelle · {source}",
   "perkArchiveTitle": "Dein ganzes Archiv",
-  "perkArchiveLine": "Jeder gelesene Tag, für immer. Gratis bleibt eine Woche.",
+  "perkArchiveLine": "Jeder gelesene Tag, für immer.",
   "plusIsActive": "ASTUTE+ IST AKTIV",
   "tryFreeThen": "7 Tage gratis, dann {price}{suffix}",
   "subscribeFor": "Abonnieren für {price}{suffix}",

@@ -923,7 +923,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get perkArchiveTitle => 'あなたのアーカイブすべて';
 
   @override
-  String get perkArchiveLine => '読んだ日をすべて、ずっと保存。無料版は1週間。';
+  String get perkArchiveLine => '読んだ日をすべて、ずっと保存。';
 
   @override
   String get plusIsActive => 'ASTUTE+ 有効';

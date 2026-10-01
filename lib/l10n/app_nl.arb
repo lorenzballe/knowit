@@ -207,7 +207,7 @@
   "dayStreakCaps": "DAGEN OP RIJ",
   "sourceLabel": "Bron · {source}",
   "perkArchiveTitle": "Je hele archief",
-  "perkArchiveLine": "Elke dag die je las, voorgoed bewaard. Gratis blijft een week.",
+  "perkArchiveLine": "Elke dag die je las, voorgoed bewaard.",
   "plusIsActive": "ASTUTE+ IS ACTIEF",
   "tryFreeThen": "7 dagen gratis, daarna {price}{suffix}",
   "subscribeFor": "Abonneer voor {price}{suffix}",

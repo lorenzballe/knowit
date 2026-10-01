@@ -976,8 +976,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get perkArchiveTitle => 'Весь твой архив';
 
   @override
-  String get perkArchiveLine =>
-      'Каждый прочитанный день — навсегда. Бесплатно хранится неделя.';
+  String get perkArchiveLine => 'Каждый прочитанный день — навсегда.';
 
   @override
   String get plusIsActive => 'ASTUTE+ АКТИВЕН';

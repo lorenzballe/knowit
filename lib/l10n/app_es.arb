@@ -207,7 +207,7 @@
   "dayStreakCaps": "DÍAS DE RACHA",
   "sourceLabel": "Fuente · {source}",
   "perkArchiveTitle": "Todo tu archivo",
-  "perkArchiveLine": "Cada día que has leído, para siempre. Gratis se guarda una semana.",
+  "perkArchiveLine": "Cada día que has leído, para siempre.",
   "plusIsActive": "ASTUTE+ ESTÁ ACTIVO",
   "tryFreeThen": "7 días gratis, luego {price}{suffix}",
   "subscribeFor": "Suscríbete por {price}{suffix}",
