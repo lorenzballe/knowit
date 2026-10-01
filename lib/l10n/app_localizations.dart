@@ -2561,6 +2561,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You are offline. This is Explore as it was last read.'**
   String get exploreOffline;
+
+  /// No description provided for @themeMyths.
+  ///
+  /// In en, this message translates to:
+  /// **'Myths, busted'**
+  String get themeMyths;
+
+  /// No description provided for @themeMythsLine.
+  ///
+  /// In en, this message translates to:
+  /// **'What almost everyone believes, and why it is wrong'**
+  String get themeMythsLine;
+
+  /// No description provided for @themeParadoxes.
+  ///
+  /// In en, this message translates to:
+  /// **'Paradoxes'**
+  String get themeParadoxes;
+
+  /// No description provided for @themeParadoxesLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Two true things that should not both be true'**
+  String get themeParadoxesLine;
+
+  /// No description provided for @themeNumbers.
+  ///
+  /// In en, this message translates to:
+  /// **'Numbers that surprise'**
+  String get themeNumbers;
+
+  /// No description provided for @themeNumbersLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Where the figure is the twist'**
+  String get themeNumbersLine;
+
+  /// No description provided for @themePractical.
+  ///
+  /// In en, this message translates to:
+  /// **'Use it today'**
+  String get themePractical;
+
+  /// No description provided for @themePracticalLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Something to try before tonight'**
+  String get themePracticalLine;
+
+  /// No description provided for @themeOrigins.
+  ///
+  /// In en, this message translates to:
+  /// **'Where it came from'**
+  String get themeOrigins;
+
+  /// No description provided for @themeOriginsLine.
+  ///
+  /// In en, this message translates to:
+  /// **'The beginnings of things you use every day'**
+  String get themeOriginsLine;
+
+  /// No description provided for @themeStories.
+  ///
+  /// In en, this message translates to:
+  /// **'True stories'**
+  String get themeStories;
+
+  /// No description provided for @themeStoriesLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Things that really happened'**
+  String get themeStoriesLine;
+
+  /// No description provided for @themeDebates.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a side'**
+  String get themeDebates;
+
+  /// No description provided for @themeDebatesLine.
+  ///
+  /// In en, this message translates to:
+  /// **'No right answer, only a better argument'**
+  String get themeDebatesLine;
+
+  /// No description provided for @themeWorkItOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Work it out'**
+  String get themeWorkItOut;
+
+  /// No description provided for @themeWorkItOutLine.
+  ///
+  /// In en, this message translates to:
+  /// **'A number to reach in your head'**
+  String get themeWorkItOutLine;
+
+  /// No description provided for @themeSeen.
+  ///
+  /// In en, this message translates to:
+  /// **'Seen, not read'**
+  String get themeSeen;
+
+  /// No description provided for @themeSeenLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards that draw their point'**
+  String get themeSeenLine;
+
+  /// No description provided for @themeSharpest.
+  ///
+  /// In en, this message translates to:
+  /// **'For the sharpest'**
+  String get themeSharpest;
+
+  /// No description provided for @themeSharpestLine.
+  ///
+  /// In en, this message translates to:
+  /// **'The hardest cards there are'**
+  String get themeSharpestLine;
+
+  /// No description provided for @themePast0.
+  ///
+  /// In en, this message translates to:
+  /// **'The ancient world'**
+  String get themePast0;
+
+  /// No description provided for @themePast1.
+  ///
+  /// In en, this message translates to:
+  /// **'The 1600s to the 1800s'**
+  String get themePast1;
+
+  /// No description provided for @themePast2.
+  ///
+  /// In en, this message translates to:
+  /// **'The last century'**
+  String get themePast2;
+
+  /// No description provided for @themePastLine.
+  ///
+  /// In en, this message translates to:
+  /// **'A different age every time it comes round'**
+  String get themePastLine;
+
+  /// No description provided for @themePlace0.
+  ///
+  /// In en, this message translates to:
+  /// **'Asia and the Middle East'**
+  String get themePlace0;
+
+  /// No description provided for @themePlace1.
+  ///
+  /// In en, this message translates to:
+  /// **'The Americas'**
+  String get themePlace1;
+
+  /// No description provided for @themePlace2.
+  ///
+  /// In en, this message translates to:
+  /// **'Europe'**
+  String get themePlace2;
+
+  /// No description provided for @themePlaceLine.
+  ///
+  /// In en, this message translates to:
+  /// **'A different part of the world every time it comes round'**
+  String get themePlaceLine;
 }
 
 class _AppLocalizationsDelegate

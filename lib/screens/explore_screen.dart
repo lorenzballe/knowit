@@ -7,6 +7,7 @@ import '../l10n/l10n.dart';
 
 import '../data/pills_repository.dart';
 import '../data/pill_bank.dart';
+import '../data/themed_shelves.dart';
 import '../data/topics.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
@@ -352,6 +353,34 @@ class ExploreScreenState extends State<ExploreScreen> {
                 pillById(place.id)!,
           ];
 
+    // The themes that turn over: four a day round a fixed cycle, the same
+    // for everybody, never a card already read and never one already on a
+    // shelf above.
+    final Set<String> shown = {
+      for (final p in [...forYou, ...fresh]) p.id,
+    };
+    final List<ThemedShelf> themes = themedShelves(
+      _only(PillBank.cards)
+          .where((p) => unread(p) && !shown.contains(p.id))
+          .toList(),
+      day: themeDay(DateTime.now()),
+    );
+    List<Widget> themed(Iterable<ThemedShelf> list) => [
+      for (final t in list) ...[
+        const SizedBox(height: 24),
+        _Shelf(
+          key: ValueKey('theme-${t.key}'),
+          title: _themeTitle(context, t),
+          line: _themeLine(context, t),
+          child: _SmallRow(
+            pills: t.pills,
+            onOpen: _open,
+            onShown: (p) => _seen('theme-${t.key}', p),
+          ),
+        ),
+      ],
+    ];
+
     return Stack(
       children: [
         ListView(
@@ -434,6 +463,7 @@ class ExploreScreenState extends State<ExploreScreen> {
                       },
                     ),
             ),
+            ...themed(themes),
             if (loved.isNotEmpty) ...[
               const SizedBox(height: 24),
               _Shelf(
@@ -617,6 +647,46 @@ class ExploreScreenState extends State<ExploreScreen> {
       countsAsRead: true,
     );
   }
+}
+
+String _themeTitle(BuildContext context, ThemedShelf t) {
+  final l = context.l10n;
+  return switch (t.theme) {
+    ShelfTheme.myths => l.themeMyths,
+    ShelfTheme.paradoxes => l.themeParadoxes,
+    ShelfTheme.numbers => l.themeNumbers,
+    ShelfTheme.practical => l.themePractical,
+    ShelfTheme.origins => l.themeOrigins,
+    ShelfTheme.stories => l.themeStories,
+    ShelfTheme.debates => l.themeDebates,
+    ShelfTheme.workItOut => l.themeWorkItOut,
+    ShelfTheme.seen => l.themeSeen,
+    ShelfTheme.sharpest => l.themeSharpest,
+    ShelfTheme.past => [l.themePast0, l.themePast1, l.themePast2][t.variant],
+    ShelfTheme.place => [
+      l.themePlace0,
+      l.themePlace1,
+      l.themePlace2,
+    ][t.variant],
+  };
+}
+
+String _themeLine(BuildContext context, ThemedShelf t) {
+  final l = context.l10n;
+  return switch (t.theme) {
+    ShelfTheme.myths => l.themeMythsLine,
+    ShelfTheme.paradoxes => l.themeParadoxesLine,
+    ShelfTheme.numbers => l.themeNumbersLine,
+    ShelfTheme.practical => l.themePracticalLine,
+    ShelfTheme.origins => l.themeOriginsLine,
+    ShelfTheme.stories => l.themeStoriesLine,
+    ShelfTheme.debates => l.themeDebatesLine,
+    ShelfTheme.workItOut => l.themeWorkItOutLine,
+    ShelfTheme.seen => l.themeSeenLine,
+    ShelfTheme.sharpest => l.themeSharpestLine,
+    ShelfTheme.past => l.themePastLine,
+    ShelfTheme.place => l.themePlaceLine,
+  };
 }
 
 /// The title, and the way into the whole pool.
@@ -833,6 +903,7 @@ class _SubjectRow extends StatelessWidget {
 /// shelf can be turned, the control that turns it, level with its name.
 class _Shelf extends StatelessWidget {
   const _Shelf({
+    super.key,
     required this.title,
     required this.line,
     required this.child,

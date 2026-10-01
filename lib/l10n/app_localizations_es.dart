@@ -1775,4 +1775,91 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get exploreOffline =>
       'Estás sin conexión. Esto es Explorar tal como se leyó por última vez.';
+
+  @override
+  String get themeMyths => 'Mitos derribados';
+
+  @override
+  String get themeMythsLine => 'Lo que casi todos creen, y por qué es falso';
+
+  @override
+  String get themeParadoxes => 'Paradojas';
+
+  @override
+  String get themeParadoxesLine =>
+      'Dos cosas ciertas que no deberían serlo a la vez';
+
+  @override
+  String get themeNumbers => 'Números que sorprenden';
+
+  @override
+  String get themeNumbersLine => 'Donde la cifra es el giro';
+
+  @override
+  String get themePractical => 'Para usar hoy';
+
+  @override
+  String get themePracticalLine => 'Algo que probar antes de esta noche';
+
+  @override
+  String get themeOrigins => 'De dónde viene';
+
+  @override
+  String get themeOriginsLine => 'El origen de cosas que usas cada día';
+
+  @override
+  String get themeStories => 'Historias reales';
+
+  @override
+  String get themeStoriesLine => 'Cosas que pasaron de verdad';
+
+  @override
+  String get themeDebates => 'Elige un bando';
+
+  @override
+  String get themeDebatesLine =>
+      'No hay respuesta correcta, solo un argumento mejor';
+
+  @override
+  String get themeWorkItOut => 'Haz la cuenta';
+
+  @override
+  String get themeWorkItOutLine => 'Un número que sacar de cabeza';
+
+  @override
+  String get themeSeen => 'Para ver';
+
+  @override
+  String get themeSeenLine => 'Cartas que dibujan su idea';
+
+  @override
+  String get themeSharpest => 'Para los más agudos';
+
+  @override
+  String get themeSharpestLine => 'Las cartas más difíciles que hay';
+
+  @override
+  String get themePast0 => 'El mundo antiguo';
+
+  @override
+  String get themePast1 => 'Del siglo XVII al XIX';
+
+  @override
+  String get themePast2 => 'El siglo pasado';
+
+  @override
+  String get themePastLine => 'Una época distinta cada vez que vuelve';
+
+  @override
+  String get themePlace0 => 'Asia y Oriente Medio';
+
+  @override
+  String get themePlace1 => 'Las Américas';
+
+  @override
+  String get themePlace2 => 'Europa';
+
+  @override
+  String get themePlaceLine =>
+      'Una parte del mundo distinta cada vez que vuelve';
 }

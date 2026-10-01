@@ -1491,23 +1491,75 @@
  "topOfTheWeek": "Top of the week",
  "topOfTheMonth": "Top of the month",
  "topIn": "Top in {subject}",
- "@topIn": {"placeholders": {"subject": {"type": "String"}}},
+ "@topIn": {
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
  "topLineWeek": "Most liked, saved and said in the last 7 days",
  "topLineMonth": "Most liked, saved and said in the last 30 days",
  "topWeek": "Week",
  "topMonth": "Month",
  "topReaders": "{n, plural, =1{1 reader} other{{n} readers}}",
- "@topReaders": {"placeholders": {"n": {"type": "int"}}},
+ "@topReaders": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
  "topEmpty": "Nothing on the list yet. Every card you like, save or say counts.",
  "readMark": "Read",
  "lovedSinceTheStart": "Loved since the start",
  "lovedIn": "Loved in {subject}",
- "@lovedIn": {"placeholders": {"subject": {"type": "String"}}},
+ "@lovedIn": {
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
  "lovedLine": "What readers kept most, and you have not read yet",
  "welcomeDaysLeft": "{n, plural, =1{Your first week: tomorrow is its last day, four of the five yours.} other{Your first week: {n} more days with four of the five yours.}}",
- "@welcomeDaysLeft": {"placeholders": {"n": {"type": "int"}}},
+ "@welcomeDaysLeft": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
  "welcomeWeekEnds": "Your first week ends tonight. From tomorrow one of the five is yours and three are everybody's; Astute+ keeps all five yours.",
  "forYouShelf": "For you",
  "forYouLine": "What your reading puts first",
- "exploreOffline": "You are offline. This is Explore as it was last read."
+ "exploreOffline": "You are offline. This is Explore as it was last read.",
+ "themeMyths": "Myths, busted",
+ "themeMythsLine": "What almost everyone believes, and why it is wrong",
+ "themeParadoxes": "Paradoxes",
+ "themeParadoxesLine": "Two true things that should not both be true",
+ "themeNumbers": "Numbers that surprise",
+ "themeNumbersLine": "Where the figure is the twist",
+ "themePractical": "Use it today",
+ "themePracticalLine": "Something to try before tonight",
+ "themeOrigins": "Where it came from",
+ "themeOriginsLine": "The beginnings of things you use every day",
+ "themeStories": "True stories",
+ "themeStoriesLine": "Things that really happened",
+ "themeDebates": "Pick a side",
+ "themeDebatesLine": "No right answer, only a better argument",
+ "themeWorkItOut": "Work it out",
+ "themeWorkItOutLine": "A number to reach in your head",
+ "themeSeen": "Seen, not read",
+ "themeSeenLine": "Cards that draw their point",
+ "themeSharpest": "For the sharpest",
+ "themeSharpestLine": "The hardest cards there are",
+ "themePast0": "The ancient world",
+ "themePast1": "The 1600s to the 1800s",
+ "themePast2": "The last century",
+ "themePastLine": "A different age every time it comes round",
+ "themePlace0": "Asia and the Middle East",
+ "themePlace1": "The Americas",
+ "themePlace2": "Europe",
+ "themePlaceLine": "A different part of the world every time it comes round"
 }

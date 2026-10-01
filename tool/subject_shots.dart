@@ -135,4 +135,23 @@ void main() {
       await settle(tester);
     }
   });
+
+  testWidgets('Explore, scrolled to the turning themes', (tester) async {
+    // ignore: invalid_use_of_visible_for_testing_member
+    SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+    await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+    await settle(tester);
+    final down = find
+        .byWidgetPredicate(
+          (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+        )
+        .first;
+    for (int i = 0; i < 4; i++) {
+      await tester.drag(down, const Offset(0, -560));
+      await settle(tester);
+      await shoot(tester, 'explore-themes-$i');
+    }
+  });
 }

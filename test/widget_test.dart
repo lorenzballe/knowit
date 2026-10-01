@@ -383,10 +383,45 @@ void main() {
     // always there — here, with no counts to read, as its places empty.
     expect(find.text("Today's shelf"), findsOneWidget);
     expect(find.text('The same for everyone, and only today'), findsOneWidget);
-    expect(find.text('The ones that ask the most'), findsOneWidget);
-    expect(find.text('Across everyone, not just your mix'), findsOneWidget);
     expect(find.text('Top of the week'), findsOneWidget);
     expect(find.byKey(const ValueKey('top-empty')), findsOneWidget);
+    // Further down, today's turning themes and then the ones that ask most.
+    final Finder asking = find.text(
+      'The ones that ask the most',
+      skipOffstage: false,
+    );
+    await tester.scrollUntilVisible(
+      asking,
+      400,
+      scrollable: find
+          .byWidgetPredicate(
+            (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+          )
+          .first,
+    );
+    expect(asking, findsOneWidget);
+    expect(
+      find.text('Across everyone, not just your mix', skipOffstage: false),
+      findsOneWidget,
+    );
+    expect(
+      find.byWidgetPredicate(
+        (w) =>
+            w.key is ValueKey<String> &&
+            (w.key! as ValueKey<String>).value.startsWith('theme-'),
+        skipOffstage: false,
+      ),
+      findsWidgets,
+    );
+    await tester.scrollUntilVisible(
+      find.text("Today's shelf"),
+      -400,
+      scrollable: find
+          .byWidgetPredicate(
+            (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+          )
+          .first,
+    );
 
     // The subject row narrows every shelf at once. A card from another
     // subject is on the top shelf before, and gone after.
@@ -1359,7 +1394,7 @@ void main() {
 
     // On to Profile, and back again, and the bar follows the finger.
     await tester.dragFrom(
-      tester.getCenter(find.text('The ones that ask the most')),
+      tester.getCenter(find.text("Today's shelf")),
       const Offset(-300, 0),
     );
     await _settle(tester);

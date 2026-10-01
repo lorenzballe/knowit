@@ -1709,4 +1709,88 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get exploreOffline => 'オフラインです。これは最後に読み込んだ「探す」です。';
+
+  @override
+  String get themeMyths => '覆される神話';
+
+  @override
+  String get themeMythsLine => 'ほとんどの人が信じていること、そしてその誤り';
+
+  @override
+  String get themeParadoxes => 'パラドックス';
+
+  @override
+  String get themeParadoxesLine => '両方とも真であるはずのない二つの真実';
+
+  @override
+  String get themeNumbers => '驚きの数字';
+
+  @override
+  String get themeNumbersLine => '数字そのものが意外な結末';
+
+  @override
+  String get themePractical => '今日使える';
+
+  @override
+  String get themePracticalLine => '今夜までに試せること';
+
+  @override
+  String get themeOrigins => 'その始まり';
+
+  @override
+  String get themeOriginsLine => '毎日使うものの起源';
+
+  @override
+  String get themeStories => '本当にあった話';
+
+  @override
+  String get themeStoriesLine => '実際に起きたこと';
+
+  @override
+  String get themeDebates => 'どちらにつく？';
+
+  @override
+  String get themeDebatesLine => '正解はない、より良い論拠があるだけ';
+
+  @override
+  String get themeWorkItOut => '計算してみよう';
+
+  @override
+  String get themeWorkItOutLine => '頭の中で出す数字';
+
+  @override
+  String get themeSeen => '見て分かる';
+
+  @override
+  String get themeSeenLine => '要点を描くカード';
+
+  @override
+  String get themeSharpest => '鋭い人へ';
+
+  @override
+  String get themeSharpestLine => 'いちばん難しいカード';
+
+  @override
+  String get themePast0 => '古代の世界';
+
+  @override
+  String get themePast1 => '17〜19世紀';
+
+  @override
+  String get themePast2 => '前世紀';
+
+  @override
+  String get themePastLine => '来るたびに違う時代';
+
+  @override
+  String get themePlace0 => 'アジアと中東';
+
+  @override
+  String get themePlace1 => '南北アメリカ';
+
+  @override
+  String get themePlace2 => 'ヨーロッパ';
+
+  @override
+  String get themePlaceLine => '来るたびに違う地域';
 }

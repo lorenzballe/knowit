@@ -1710,4 +1710,88 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get exploreOffline => '你已离线。这是上次读取的\"探索\"页面。';
+
+  @override
+  String get themeMyths => '破除迷思';
+
+  @override
+  String get themeMythsLine => '几乎人人都信的事，以及它错在哪里';
+
+  @override
+  String get themeParadoxes => '悖论';
+
+  @override
+  String get themeParadoxesLine => '不该同时为真的两件真事';
+
+  @override
+  String get themeNumbers => '令人惊讶的数字';
+
+  @override
+  String get themeNumbersLine => '数字本身就是反转';
+
+  @override
+  String get themePractical => '今天就能用';
+
+  @override
+  String get themePracticalLine => '今晚之前可以试试的事';
+
+  @override
+  String get themeOrigins => '它从哪里来';
+
+  @override
+  String get themeOriginsLine => '你每天用的东西的起源';
+
+  @override
+  String get themeStories => '真实故事';
+
+  @override
+  String get themeStoriesLine => '真正发生过的事';
+
+  @override
+  String get themeDebates => '选一边';
+
+  @override
+  String get themeDebatesLine => '没有标准答案，只有更好的论证';
+
+  @override
+  String get themeWorkItOut => '算一算';
+
+  @override
+  String get themeWorkItOutLine => '心算得出的数字';
+
+  @override
+  String get themeSeen => '一看就懂';
+
+  @override
+  String get themeSeenLine => '把要点画出来的卡片';
+
+  @override
+  String get themeSharpest => '给最敏锐的人';
+
+  @override
+  String get themeSharpestLine => '最难的卡片';
+
+  @override
+  String get themePast0 => '古代世界';
+
+  @override
+  String get themePast1 => '17至19世纪';
+
+  @override
+  String get themePast2 => '上个世纪';
+
+  @override
+  String get themePastLine => '每次回来都换一个时代';
+
+  @override
+  String get themePlace0 => '亚洲与中东';
+
+  @override
+  String get themePlace1 => '美洲';
+
+  @override
+  String get themePlace2 => '欧洲';
+
+  @override
+  String get themePlaceLine => '每次回来都换一个地区';
 }
