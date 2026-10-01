@@ -362,7 +362,7 @@
   "yourMix": "나의 믹스",
   "genresLine": "장르를 탭하면 건너뜁니다. 길게 누르면 안의 세 갈래가 바로 아래에 열립니다.",
   "insideGenre": "이 안에",
-  "nOfSixOn": "6개 중 {n}개 켜짐",
+  "nOfSixOn": "{total}개 중 {n}개 켜짐",
   "offInYourMix": "믹스에 없음",
   "continueGenresOn": "계속 · {total}개 중 {on}개 장르 켜짐",
   "mixRarely": "드물게",

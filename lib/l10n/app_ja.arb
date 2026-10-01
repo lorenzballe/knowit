@@ -362,7 +362,7 @@
   "yourMix": "あなたのミックス",
   "genresLine": "ジャンルをタップすると外せます。長押しすると、中の三つの筋がすぐ下に開きます。",
   "insideGenre": "この中身",
-  "nOfSixOn": "6つ中{n}つオン",
+  "nOfSixOn": "{total}つ中{n}つオン",
   "offInYourMix": "ミックスに入っていません",
   "continueGenresOn": "続ける · {total}中{on}ジャンルがオン",
   "mixRarely": "まれに",

@@ -362,7 +362,7 @@
   "yourMix": "Jouw mix",
   "genresLine": "Tik op een genre om het over te slaan. Houd het vast en de drie draden erin openen er vlak onder.",
   "insideGenre": "Binnenin",
-  "nOfSixOn": "{n} van 6 aan",
+  "nOfSixOn": "{n} van {total} aan",
   "offInYourMix": "niet in jouw mix",
   "continueGenresOn": "Doorgaan · {on} van {total} genres aan",
   "mixRarely": "Zelden",

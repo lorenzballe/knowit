@@ -362,7 +362,7 @@
   "yourMix": "你的组合",
   "genresLine": "点一下跳过某个类别。长按，里面的三条线索就在下面展开。",
   "insideGenre": "里面有",
-  "nOfSixOn": "6 个中开启 {n} 个",
+  "nOfSixOn": "{total} 个中开启 {n} 个",
   "offInYourMix": "不在你的组合里",
   "continueGenresOn": "继续 · {total} 个类别中开启 {on} 个",
   "mixRarely": "很少",

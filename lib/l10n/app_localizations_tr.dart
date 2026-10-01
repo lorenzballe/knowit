@@ -1556,8 +1556,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get insideGenre => 'İçinde';
 
   @override
-  String nOfSixOn(int n) {
-    return '6 türden $n açık';
+  String nOfSixOn(int n, int total) {
+    return '$total türden $n açık';
   }
 
   @override

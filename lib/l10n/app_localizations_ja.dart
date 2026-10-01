@@ -1524,8 +1524,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get insideGenre => 'この中身';
 
   @override
-  String nOfSixOn(int n) {
-    return '6つ中$nつオン';
+  String nOfSixOn(int n, int total) {
+    return '$totalつ中$nつオン';
   }
 
   @override

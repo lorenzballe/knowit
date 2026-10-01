@@ -107,6 +107,72 @@
      "label": "Plastics"
     }
    ]
+  },
+  {
+   "id": "science.how_science_knows",
+   "label": "How science knows",
+   "strands": [
+    {
+     "id": "science.how_science_knows.experiments",
+     "label": "Experiments"
+    },
+    {
+     "id": "science.how_science_knows.correlation_or_cause",
+     "label": "Correlation or cause"
+    },
+    {
+     "id": "science.how_science_knows.replication",
+     "label": "Replication"
+    },
+    {
+     "id": "science.how_science_knows.peer_review",
+     "label": "Peer review"
+    }
+   ]
+  },
+  {
+   "id": "science.read_a_study",
+   "label": "Read a study",
+   "strands": [
+    {
+     "id": "science.read_a_study.sample_size",
+     "label": "Sample size"
+    },
+    {
+     "id": "science.read_a_study.relative_or_absolute",
+     "label": "Relative or absolute"
+    },
+    {
+     "id": "science.read_a_study.headlines_and_papers",
+     "label": "Headlines and papers"
+    },
+    {
+     "id": "science.read_a_study.who_funded_it",
+     "label": "Who funded it"
+    }
+   ]
+  },
+  {
+   "id": "science.numbers_and_chance",
+   "label": "Numbers and chance",
+   "strands": [
+    {
+     "id": "science.numbers_and_chance.base_rates",
+     "label": "Base rates"
+    },
+    {
+     "id": "science.numbers_and_chance.coincidences",
+     "label": "Coincidences"
+    },
+    {
+     "id": "science.numbers_and_chance.big_numbers",
+     "label": "Big numbers"
+    },
+    {
+     "id": "science.numbers_and_chance.estimating",
+     "label": "Estimating"
+    }
+   ]
   }
  ],
  "space": [
@@ -215,6 +281,42 @@
     {
      "id": "space.edge_of_the_universe.cosmic_background",
      "label": "Cosmic background"
+    }
+   ]
+  },
+  {
+   "id": "space.think_at_scale",
+   "label": "Think at scale",
+   "strands": [
+    {
+     "id": "space.think_at_scale.sizes",
+     "label": "Sizes"
+    },
+    {
+     "id": "space.think_at_scale.distances",
+     "label": "Distances"
+    },
+    {
+     "id": "space.think_at_scale.deep_time",
+     "label": "Deep time"
+    }
+   ]
+  },
+  {
+   "id": "space.are_we_alone",
+   "label": "Are we alone",
+   "strands": [
+    {
+     "id": "space.are_we_alone.fermi_paradox",
+     "label": "Fermi paradox"
+    },
+    {
+     "id": "space.are_we_alone.evidence_and_hope",
+     "label": "Evidence and hope"
+    },
+    {
+     "id": "space.are_we_alone.extraordinary_claims",
+     "label": "Extraordinary claims"
     }
    ]
   }
@@ -327,6 +429,116 @@
      "label": "Insomnia"
     }
    ]
+  },
+  {
+   "id": "psychology.know_your_own_mind",
+   "label": "Know your own mind",
+   "strands": [
+    {
+     "id": "psychology.know_your_own_mind.overconfidence",
+     "label": "Overconfidence"
+    },
+    {
+     "id": "psychology.know_your_own_mind.hindsight",
+     "label": "Hindsight"
+    },
+    {
+     "id": "psychology.know_your_own_mind.blind_spots",
+     "label": "Blind spots"
+    },
+    {
+     "id": "psychology.know_your_own_mind.self_deception",
+     "label": "Self-deception"
+    }
+   ]
+  },
+  {
+   "id": "psychology.resist_persuasion",
+   "label": "Resist persuasion",
+   "strands": [
+    {
+     "id": "psychology.resist_persuasion.social_proof",
+     "label": "Social proof"
+    },
+    {
+     "id": "psychology.resist_persuasion.scarcity_tricks",
+     "label": "Scarcity tricks"
+    },
+    {
+     "id": "psychology.resist_persuasion.authority",
+     "label": "Authority"
+    },
+    {
+     "id": "psychology.resist_persuasion.framing",
+     "label": "Framing"
+    }
+   ]
+  },
+  {
+   "id": "psychology.think_under_pressure",
+   "label": "Think under pressure",
+   "strands": [
+    {
+     "id": "psychology.think_under_pressure.stress_and_choices",
+     "label": "Stress and choices"
+    },
+    {
+     "id": "psychology.think_under_pressure.fast_and_slow",
+     "label": "Fast and slow"
+    },
+    {
+     "id": "psychology.think_under_pressure.gut_feelings",
+     "label": "Gut feelings"
+    },
+    {
+     "id": "psychology.think_under_pressure.decision_fatigue",
+     "label": "Decision fatigue"
+    }
+   ]
+  },
+  {
+   "id": "psychology.change_your_mind",
+   "label": "Change your mind",
+   "strands": [
+    {
+     "id": "psychology.change_your_mind.being_wrong",
+     "label": "Being wrong"
+    },
+    {
+     "id": "psychology.change_your_mind.backfire",
+     "label": "Backfire"
+    },
+    {
+     "id": "psychology.change_your_mind.updating_beliefs",
+     "label": "Updating beliefs"
+    },
+    {
+     "id": "psychology.change_your_mind.steelmanning",
+     "label": "Steelmanning"
+    }
+   ]
+  },
+  {
+   "id": "psychology.motivation",
+   "label": "Motivation",
+   "strands": [
+    {
+     "id": "psychology.motivation.procrastination",
+     "label": "Procrastination"
+    },
+    {
+     "id": "psychology.motivation.willpower_myths",
+     "label": "Willpower myths"
+    },
+    {
+     "id": "psychology.motivation.goals_that_work",
+     "label": "Goals that work"
+    },
+    {
+     "id": "psychology.motivation.rewards",
+     "label": "Rewards"
+    }
+   ]
   }
  ],
  "economics": [
@@ -435,6 +647,112 @@
     {
      "id": "economics.everyday_costs.subscriptions",
      "label": "Subscriptions"
+    }
+   ]
+  },
+  {
+   "id": "economics.think_in_incentives",
+   "label": "Think in incentives",
+   "strands": [
+    {
+     "id": "economics.think_in_incentives.who_pays",
+     "label": "Who pays"
+    },
+    {
+     "id": "economics.think_in_incentives.hidden_incentives",
+     "label": "Hidden incentives"
+    },
+    {
+     "id": "economics.think_in_incentives.unintended_effects",
+     "label": "Unintended effects"
+    },
+    {
+     "id": "economics.think_in_incentives.perverse_rewards",
+     "label": "Perverse rewards"
+    }
+   ]
+  },
+  {
+   "id": "economics.spot_a_bad_deal",
+   "label": "Spot a bad deal",
+   "strands": [
+    {
+     "id": "economics.spot_a_bad_deal.fine_print",
+     "label": "Fine print"
+    },
+    {
+     "id": "economics.spot_a_bad_deal.too_good_to_be_true",
+     "label": "Too good to be true"
+    },
+    {
+     "id": "economics.spot_a_bad_deal.fees_that_grow",
+     "label": "Fees that grow"
+    },
+    {
+     "id": "economics.spot_a_bad_deal.free_is_not_free",
+     "label": "Free is not free"
+    }
+   ]
+  },
+  {
+   "id": "economics.read_money_news",
+   "label": "Read money news",
+   "strands": [
+    {
+     "id": "economics.read_money_news.averages_that_mislead",
+     "label": "Averages that mislead"
+    },
+    {
+     "id": "economics.read_money_news.percent_or_points",
+     "label": "Percent or points"
+    },
+    {
+     "id": "economics.read_money_news.real_or_nominal",
+     "label": "Real or nominal"
+    },
+    {
+     "id": "economics.read_money_news.cherry_picked_charts",
+     "label": "Cherry-picked charts"
+    }
+   ]
+  },
+  {
+   "id": "economics.your_money_decisions",
+   "label": "Your money decisions",
+   "strands": [
+    {
+     "id": "economics.your_money_decisions.opportunity_cost",
+     "label": "Opportunity cost"
+    },
+    {
+     "id": "economics.your_money_decisions.present_bias",
+     "label": "Present bias"
+    },
+    {
+     "id": "economics.your_money_decisions.mental_accounting",
+     "label": "Mental accounting"
+    },
+    {
+     "id": "economics.your_money_decisions.risk_and_reward",
+     "label": "Risk and reward"
+    }
+   ]
+  },
+  {
+   "id": "economics.markets_and_hype",
+   "label": "Markets and hype",
+   "strands": [
+    {
+     "id": "economics.markets_and_hype.bubbles",
+     "label": "Bubbles"
+    },
+    {
+     "id": "economics.markets_and_hype.survivor_stories",
+     "label": "Survivor stories"
+    },
+    {
+     "id": "economics.markets_and_hype.get_rich_quick",
+     "label": "Get rich quick"
     }
    ]
   }
@@ -547,6 +865,68 @@
      "label": "Limits"
     }
    ]
+  },
+  {
+   "id": "technology.think_about_tech",
+   "label": "Think about tech",
+   "strands": [
+    {
+     "id": "technology.think_about_tech.hype_cycles",
+     "label": "Hype cycles"
+    },
+    {
+     "id": "technology.think_about_tech.who_profits",
+     "label": "Who profits"
+    },
+    {
+     "id": "technology.think_about_tech.attention_economy",
+     "label": "Attention economy"
+    },
+    {
+     "id": "technology.think_about_tech.defaults",
+     "label": "Defaults"
+    }
+   ]
+  },
+  {
+   "id": "technology.truth_online",
+   "label": "Truth online",
+   "strands": [
+    {
+     "id": "technology.truth_online.fakes_and_deepfakes",
+     "label": "Fakes and deepfakes"
+    },
+    {
+     "id": "technology.truth_online.algorithms_and_bubbles",
+     "label": "Algorithms and bubbles"
+    },
+    {
+     "id": "technology.truth_online.checking_a_source",
+     "label": "Checking a source"
+    },
+    {
+     "id": "technology.truth_online.viral_lies",
+     "label": "Viral lies"
+    }
+   ]
+  },
+  {
+   "id": "technology.using_ai_well",
+   "label": "Using AI well",
+   "strands": [
+    {
+     "id": "technology.using_ai_well.when_ai_is_wrong",
+     "label": "When AI is wrong"
+    },
+    {
+     "id": "technology.using_ai_well.asking_well",
+     "label": "Asking well"
+    },
+    {
+     "id": "technology.using_ai_well.thinking_for_yourself",
+     "label": "Thinking for yourself"
+    }
+   ]
   }
  ],
  "history": [
@@ -655,6 +1035,64 @@
     {
      "id": "history.maps_and_borders.old_maps",
      "label": "Old maps"
+    }
+   ]
+  },
+  {
+   "id": "history.learn_from_the_past",
+   "label": "Learn from the past",
+   "strands": [
+    {
+     "id": "history.learn_from_the_past.repeated_mistakes",
+     "label": "Repeated mistakes"
+    },
+    {
+     "id": "history.learn_from_the_past.who_wrote_it",
+     "label": "Who wrote it"
+    },
+    {
+     "id": "history.learn_from_the_past.hindsight_in_history",
+     "label": "Hindsight in history"
+    },
+    {
+     "id": "history.learn_from_the_past.what_if",
+     "label": "What if"
+    }
+   ]
+  },
+  {
+   "id": "history.decisions_that_changed_history",
+   "label": "Decisions that changed history",
+   "strands": [
+    {
+     "id": "history.decisions_that_changed_history.bad_calls",
+     "label": "Bad calls"
+    },
+    {
+     "id": "history.decisions_that_changed_history.groupthink",
+     "label": "Groupthink"
+    },
+    {
+     "id": "history.decisions_that_changed_history.leaders_under_pressure",
+     "label": "Leaders under pressure"
+    }
+   ]
+  },
+  {
+   "id": "history.propaganda",
+   "label": "Propaganda",
+   "strands": [
+    {
+     "id": "history.propaganda.posters_and_slogans",
+     "label": "Posters and slogans"
+    },
+    {
+     "id": "history.propaganda.rewriting_the_past",
+     "label": "Rewriting the past"
+    },
+    {
+     "id": "history.propaganda.enemies_made_up",
+     "label": "Enemies made up"
     }
    ]
   }
@@ -767,6 +1205,46 @@
      "label": "Longevity"
     }
    ]
+  },
+  {
+   "id": "human_body.health_claims",
+   "label": "Health claims",
+   "strands": [
+    {
+     "id": "human_body.health_claims.miracle_cures",
+     "label": "Miracle cures"
+    },
+    {
+     "id": "human_body.health_claims.supplements",
+     "label": "Supplements"
+    },
+    {
+     "id": "human_body.health_claims.wellness_trends",
+     "label": "Wellness trends"
+    },
+    {
+     "id": "human_body.health_claims.studies_on_mice",
+     "label": "Studies on mice"
+    }
+   ]
+  },
+  {
+   "id": "human_body.your_body_your_choices",
+   "label": "Your body, your choices",
+   "strands": [
+    {
+     "id": "human_body.your_body_your_choices.sleep_and_thinking",
+     "label": "Sleep and thinking"
+    },
+    {
+     "id": "human_body.your_body_your_choices.exercise_and_the_brain",
+     "label": "Exercise and the brain"
+    },
+    {
+     "id": "human_body.your_body_your_choices.food_and_mood",
+     "label": "Food and mood"
+    }
+   ]
   }
  ],
  "philosophy": [
@@ -875,6 +1353,46 @@
     {
      "id": "philosophy.paradoxes.liar",
      "label": "Liar"
+    }
+   ]
+  },
+  {
+   "id": "philosophy.arguments",
+   "label": "Arguments",
+   "strands": [
+    {
+     "id": "philosophy.arguments.good_arguments",
+     "label": "Good arguments"
+    },
+    {
+     "id": "philosophy.arguments.fallacies",
+     "label": "Fallacies"
+    },
+    {
+     "id": "philosophy.arguments.hidden_premises",
+     "label": "Hidden premises"
+    },
+    {
+     "id": "philosophy.arguments.thought_experiments",
+     "label": "Thought experiments"
+    }
+   ]
+  },
+  {
+   "id": "philosophy.living_well",
+   "label": "Living well",
+   "strands": [
+    {
+     "id": "philosophy.living_well.happiness",
+     "label": "Happiness"
+    },
+    {
+     "id": "philosophy.living_well.meaning",
+     "label": "Meaning"
+    },
+    {
+     "id": "philosophy.living_well.stoic_tools",
+     "label": "Stoic tools"
     }
    ]
   }
@@ -987,6 +1505,24 @@
      "label": "Style"
     }
    ]
+  },
+  {
+   "id": "pop_culture.behind_the_hype",
+   "label": "Behind the hype",
+   "strands": [
+    {
+     "id": "pop_culture.behind_the_hype.manufactured_fame",
+     "label": "Manufactured fame"
+    },
+    {
+     "id": "pop_culture.behind_the_hype.trends",
+     "label": "Trends"
+    },
+    {
+     "id": "pop_culture.behind_the_hype.fake_reviews",
+     "label": "Fake reviews"
+    }
+   ]
   }
  ],
  "nature": [
@@ -1095,6 +1631,42 @@
     {
      "id": "nature.extinction.bringing_back",
      "label": "Bringing back"
+    }
+   ]
+  },
+  {
+   "id": "nature.systems_thinking",
+   "label": "Systems thinking",
+   "strands": [
+    {
+     "id": "nature.systems_thinking.feedback_loops",
+     "label": "Feedback loops"
+    },
+    {
+     "id": "nature.systems_thinking.tipping_points",
+     "label": "Tipping points"
+    },
+    {
+     "id": "nature.systems_thinking.chain_reactions",
+     "label": "Chain reactions"
+    }
+   ]
+  },
+  {
+   "id": "nature.nature_myths",
+   "label": "Nature myths",
+   "strands": [
+    {
+     "id": "nature.nature_myths.animal_myths",
+     "label": "Animal myths"
+    },
+    {
+     "id": "nature.nature_myths.natural_is_better",
+     "label": "Natural is better"
+    },
+    {
+     "id": "nature.nature_myths.balance_of_nature",
+     "label": "Balance of nature"
     }
    ]
   }
@@ -1207,6 +1779,46 @@
      "label": "Old slang"
     }
    ]
+  },
+  {
+   "id": "language.words_that_persuade",
+   "label": "Words that persuade",
+   "strands": [
+    {
+     "id": "language.words_that_persuade.loaded_words",
+     "label": "Loaded words"
+    },
+    {
+     "id": "language.words_that_persuade.euphemisms",
+     "label": "Euphemisms"
+    },
+    {
+     "id": "language.words_that_persuade.spin",
+     "label": "Spin"
+    },
+    {
+     "id": "language.words_that_persuade.great_speeches",
+     "label": "Great speeches"
+    }
+   ]
+  },
+  {
+   "id": "language.say_it_clearly",
+   "label": "Say it clearly",
+   "strands": [
+    {
+     "id": "language.say_it_clearly.plain_words",
+     "label": "Plain words"
+    },
+    {
+     "id": "language.say_it_clearly.arguing_well",
+     "label": "Arguing well"
+    },
+    {
+     "id": "language.say_it_clearly.listening",
+     "label": "Listening"
+    }
+   ]
   }
  ],
  "weird_facts": [
@@ -1315,6 +1927,24 @@
     {
      "id": "weird_facts.odd_places.extreme_spots",
      "label": "Extreme spots"
+    }
+   ]
+  },
+  {
+   "id": "weird_facts.too_strange_to_be_true",
+   "label": "Too strange to be true",
+   "strands": [
+    {
+     "id": "weird_facts.too_strange_to_be_true.myths_that_spread",
+     "label": "Myths that spread"
+    },
+    {
+     "id": "weird_facts.too_strange_to_be_true.hoaxes",
+     "label": "Hoaxes"
+    },
+    {
+     "id": "weird_facts.too_strange_to_be_true.how_to_check",
+     "label": "How to check"
     }
    ]
   }
@@ -1427,6 +2057,42 @@
      "label": "Coaching"
     }
    ]
+  },
+  {
+   "id": "sport.luck_or_skill",
+   "label": "Luck or skill",
+   "strands": [
+    {
+     "id": "sport.luck_or_skill.hot_hand",
+     "label": "Hot hand"
+    },
+    {
+     "id": "sport.luck_or_skill.regression",
+     "label": "Regression"
+    },
+    {
+     "id": "sport.luck_or_skill.streaks",
+     "label": "Streaks"
+    }
+   ]
+  },
+  {
+   "id": "sport.sport_and_numbers",
+   "label": "Sport and numbers",
+   "strands": [
+    {
+     "id": "sport.sport_and_numbers.analytics",
+     "label": "Analytics"
+    },
+    {
+     "id": "sport.sport_and_numbers.bad_stats",
+     "label": "Bad stats"
+    },
+    {
+     "id": "sport.sport_and_numbers.betting_odds",
+     "label": "Betting odds"
+    }
+   ]
   }
  ],
  "cinema": [
@@ -1535,6 +2201,24 @@
     {
      "id": "cinema.lost_films.unfinished",
      "label": "Unfinished"
+    }
+   ]
+  },
+  {
+   "id": "cinema.how_films_persuade",
+   "label": "How films persuade",
+   "strands": [
+    {
+     "id": "cinema.how_films_persuade.music_and_mood",
+     "label": "Music and mood"
+    },
+    {
+     "id": "cinema.how_films_persuade.editing_tricks",
+     "label": "Editing tricks"
+    },
+    {
+     "id": "cinema.how_films_persuade.based_on_a_true_story",
+     "label": "Based on a true story"
     }
    ]
   }
@@ -1647,6 +2331,24 @@
      "label": "Silence"
     }
    ]
+  },
+  {
+   "id": "music.why_we_like_what_we_like",
+   "label": "Why we like what we like",
+   "strands": [
+    {
+     "id": "music.why_we_like_what_we_like.familiarity",
+     "label": "Familiarity"
+    },
+    {
+     "id": "music.why_we_like_what_we_like.taste_and_status",
+     "label": "Taste and status"
+    },
+    {
+     "id": "music.why_we_like_what_we_like.earworms",
+     "label": "Earworms"
+    }
+   ]
   }
  ],
  "art": [
@@ -1755,6 +2457,24 @@
     {
      "id": "art.forgeries.motives",
      "label": "Motives"
+    }
+   ]
+  },
+  {
+   "id": "art.what_makes_it_valuable",
+   "label": "What makes it valuable",
+   "strands": [
+    {
+     "id": "art.what_makes_it_valuable.price_and_value",
+     "label": "Price and value"
+    },
+    {
+     "id": "art.what_makes_it_valuable.hype_in_art",
+     "label": "Hype in art"
+    },
+    {
+     "id": "art.what_makes_it_valuable.seeing_for_yourself",
+     "label": "Seeing for yourself"
     }
    ]
   }
@@ -1867,6 +2587,42 @@
      "label": "Hospitals"
     }
    ]
+  },
+  {
+   "id": "medicine.judge_a_treatment",
+   "label": "Judge a treatment",
+   "strands": [
+    {
+     "id": "medicine.judge_a_treatment.placebo_or_real",
+     "label": "Placebo or real"
+    },
+    {
+     "id": "medicine.judge_a_treatment.risk_numbers",
+     "label": "Risk numbers"
+    },
+    {
+     "id": "medicine.judge_a_treatment.side_effects",
+     "label": "Side effects"
+    },
+    {
+     "id": "medicine.judge_a_treatment.screening",
+     "label": "Screening"
+    }
+   ]
+  },
+  {
+   "id": "medicine.medical_myths",
+   "label": "Medical myths",
+   "strands": [
+    {
+     "id": "medicine.medical_myths.online_diagnosis",
+     "label": "Online diagnosis"
+    },
+    {
+     "id": "medicine.medical_myths.detox",
+     "label": "Detox"
+    }
+   ]
   }
  ],
  "food": [
@@ -1977,6 +2733,24 @@
      "label": "Potatoes"
     }
    ]
+  },
+  {
+   "id": "food.food_claims",
+   "label": "Food claims",
+   "strands": [
+    {
+     "id": "food.food_claims.superfoods",
+     "label": "Superfoods"
+    },
+    {
+     "id": "food.food_claims.labels",
+     "label": "Labels"
+    },
+    {
+     "id": "food.food_claims.diet_studies",
+     "label": "Diet studies"
+    }
+   ]
   }
  ],
  "life": [
@@ -2085,6 +2859,116 @@
     {
      "id": "life.meaning.mortality",
      "label": "Mortality"
+    }
+   ]
+  },
+  {
+   "id": "life.ask_better_questions",
+   "label": "Ask better questions",
+   "strands": [
+    {
+     "id": "life.ask_better_questions.questions_to_yourself",
+     "label": "Questions to yourself"
+    },
+    {
+     "id": "life.ask_better_questions.questions_to_others",
+     "label": "Questions to others"
+    },
+    {
+     "id": "life.ask_better_questions.the_why_behind",
+     "label": "The why behind"
+    },
+    {
+     "id": "life.ask_better_questions.first_principles",
+     "label": "First principles"
+    }
+   ]
+  },
+  {
+   "id": "life.clear_thinking",
+   "label": "Clear thinking",
+   "strands": [
+    {
+     "id": "life.clear_thinking.pros_and_cons",
+     "label": "Pros and cons"
+    },
+    {
+     "id": "life.clear_thinking.second_order_effects",
+     "label": "Second-order effects"
+    },
+    {
+     "id": "life.clear_thinking.inversion",
+     "label": "Inversion"
+    },
+    {
+     "id": "life.clear_thinking.reversible_or_not",
+     "label": "Reversible or not"
+    }
+   ]
+  },
+  {
+   "id": "life.learn_anything",
+   "label": "Learn anything",
+   "strands": [
+    {
+     "id": "life.learn_anything.practice_that_works",
+     "label": "Practice that works"
+    },
+    {
+     "id": "life.learn_anything.learning_from_mistakes",
+     "label": "Learning from mistakes"
+    },
+    {
+     "id": "life.learn_anything.reading_well",
+     "label": "Reading well"
+    },
+    {
+     "id": "life.learn_anything.teaching_it_back",
+     "label": "Teaching it back"
+    }
+   ]
+  },
+  {
+   "id": "life.handle_setbacks",
+   "label": "Handle setbacks",
+   "strands": [
+    {
+     "id": "life.handle_setbacks.reframing",
+     "label": "Reframing"
+    },
+    {
+     "id": "life.handle_setbacks.what_you_control",
+     "label": "What you control"
+    },
+    {
+     "id": "life.handle_setbacks.failing_forward",
+     "label": "Failing forward"
+    },
+    {
+     "id": "life.handle_setbacks.comparison",
+     "label": "Comparison"
+    }
+   ]
+  },
+  {
+   "id": "life.time_and_attention",
+   "label": "Time and attention",
+   "strands": [
+    {
+     "id": "life.time_and_attention.saying_no",
+     "label": "Saying no"
+    },
+    {
+     "id": "life.time_and_attention.deep_focus",
+     "label": "Deep focus"
+    },
+    {
+     "id": "life.time_and_attention.priorities",
+     "label": "Priorities"
+    },
+    {
+     "id": "life.time_and_attention.rest",
+     "label": "Rest"
     }
    ]
   }

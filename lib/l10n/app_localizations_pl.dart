@@ -1617,8 +1617,8 @@ class AppLocalizationsPl extends AppLocalizations {
   String get insideGenre => 'W środku';
 
   @override
-  String nOfSixOn(int n) {
-    return '$n z 6 włączonych';
+  String nOfSixOn(int n, int total) {
+    return '$n z $total włączonych';
   }
 
   @override

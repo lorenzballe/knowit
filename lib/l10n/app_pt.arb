@@ -362,7 +362,7 @@
   "yourMix": "A tua mistura",
   "genresLine": "Toca num género para o saltar. Mantém premido e os três fios lá dentro abrem-se logo abaixo.",
   "insideGenre": "Dentro",
-  "nOfSixOn": "{n} de 6 ativos",
+  "nOfSixOn": "{n} de {total} ativos",
   "offInYourMix": "fora da tua mistura",
   "continueGenresOn": "Continuar · {on} de {total} géneros ativos",
   "mixRarely": "Raramente",

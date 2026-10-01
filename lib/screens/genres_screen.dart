@@ -342,7 +342,7 @@ class _Subject extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    dark ? l.offInYourMix : '${_level(l)} · ${l.nOfSixOn(on)}',
+                    dark ? l.offInYourMix : '${_level(l)} · ${l.nOfSixOn(on, genres.length)}',
                     style: AppText.body(size: 10.5, color: p.inkFaint),
                   ),
                 ],

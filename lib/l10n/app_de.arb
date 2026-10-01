@@ -362,7 +362,7 @@
   "yourMix": "Dein Mix",
   "genresLine": "Tippe ein Genre an, um es zu überspringen. Halte es, und die drei Stränge darin öffnen sich direkt darunter.",
   "insideGenre": "Darin",
-  "nOfSixOn": "{n} von 6 an",
+  "nOfSixOn": "{n} von {total} an",
   "offInYourMix": "nicht in deinem Mix",
   "continueGenresOn": "Weiter · {on} von {total} Genres an",
   "mixRarely": "Selten",

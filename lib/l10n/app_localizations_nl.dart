@@ -1570,8 +1570,8 @@ class AppLocalizationsNl extends AppLocalizations {
   String get insideGenre => 'Binnenin';
 
   @override
-  String nOfSixOn(int n) {
-    return '$n van 6 aan';
+  String nOfSixOn(int n, int total) {
+    return '$n van $total aan';
   }
 
   @override

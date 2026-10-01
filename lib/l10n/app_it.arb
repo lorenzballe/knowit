@@ -362,7 +362,7 @@
   "yourMix": "Il tuo mix",
   "genresLine": "Tocca un genere per saltarlo. Tienilo premuto e i tre filoni dentro si aprono qui sotto.",
   "insideGenre": "Dentro",
-  "nOfSixOn": "{n} di 6 attivi",
+  "nOfSixOn": "{n} di {total} attivi",
   "offInYourMix": "fuori dal tuo mix",
   "continueGenresOn": "Continua · {on} di {total} generi attivi",
   "mixRarely": "Di rado",

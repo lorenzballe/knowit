@@ -73,6 +73,33 @@ const Map<String, List<Genre>> kGenres = {
       Strand('science.materials.steel', 'Steel'),
       Strand('science.materials.plastics', 'Plastics'),
     ]),
+    Genre('science.how_science_knows', 'How science knows', [
+      Strand('science.how_science_knows.experiments', 'Experiments'),
+      Strand(
+        'science.how_science_knows.correlation_or_cause',
+        'Correlation or cause',
+      ),
+      Strand('science.how_science_knows.replication', 'Replication'),
+      Strand('science.how_science_knows.peer_review', 'Peer review'),
+    ]),
+    Genre('science.read_a_study', 'Read a study', [
+      Strand('science.read_a_study.sample_size', 'Sample size'),
+      Strand(
+        'science.read_a_study.relative_or_absolute',
+        'Relative or absolute',
+      ),
+      Strand(
+        'science.read_a_study.headlines_and_papers',
+        'Headlines and papers',
+      ),
+      Strand('science.read_a_study.who_funded_it', 'Who funded it'),
+    ]),
+    Genre('science.numbers_and_chance', 'Numbers and chance', [
+      Strand('science.numbers_and_chance.base_rates', 'Base rates'),
+      Strand('science.numbers_and_chance.coincidences', 'Coincidences'),
+      Strand('science.numbers_and_chance.big_numbers', 'Big numbers'),
+      Strand('science.numbers_and_chance.estimating', 'Estimating'),
+    ]),
   ],
   'space': [
     Genre('space.black_holes', 'Black holes', [
@@ -108,6 +135,16 @@ const Map<String, List<Genre>> kGenres = {
         'Cosmic background',
       ),
     ]),
+    Genre('space.think_at_scale', 'Think at scale', [
+      Strand('space.think_at_scale.sizes', 'Sizes'),
+      Strand('space.think_at_scale.distances', 'Distances'),
+      Strand('space.think_at_scale.deep_time', 'Deep time'),
+    ]),
+    Genre('space.are_we_alone', 'Are we alone', [
+      Strand('space.are_we_alone.fermi_paradox', 'Fermi paradox'),
+      Strand('space.are_we_alone.evidence_and_hope', 'Evidence and hope'),
+      Strand('space.are_we_alone.extraordinary_claims', 'Extraordinary claims'),
+    ]),
   ],
   'psychology': [
     Genre('psychology.memory', 'Memory', [
@@ -139,6 +176,45 @@ const Map<String, List<Genre>> kGenres = {
       Strand('psychology.sleep_and_dreams.sleep_stages', 'Sleep stages'),
       Strand('psychology.sleep_and_dreams.why_we_dream', 'Why we dream'),
       Strand('psychology.sleep_and_dreams.insomnia', 'Insomnia'),
+    ]),
+    Genre('psychology.know_your_own_mind', 'Know your own mind', [
+      Strand('psychology.know_your_own_mind.overconfidence', 'Overconfidence'),
+      Strand('psychology.know_your_own_mind.hindsight', 'Hindsight'),
+      Strand('psychology.know_your_own_mind.blind_spots', 'Blind spots'),
+      Strand('psychology.know_your_own_mind.self_deception', 'Self-deception'),
+    ]),
+    Genre('psychology.resist_persuasion', 'Resist persuasion', [
+      Strand('psychology.resist_persuasion.social_proof', 'Social proof'),
+      Strand('psychology.resist_persuasion.scarcity_tricks', 'Scarcity tricks'),
+      Strand('psychology.resist_persuasion.authority', 'Authority'),
+      Strand('psychology.resist_persuasion.framing', 'Framing'),
+    ]),
+    Genre('psychology.think_under_pressure', 'Think under pressure', [
+      Strand(
+        'psychology.think_under_pressure.stress_and_choices',
+        'Stress and choices',
+      ),
+      Strand('psychology.think_under_pressure.fast_and_slow', 'Fast and slow'),
+      Strand('psychology.think_under_pressure.gut_feelings', 'Gut feelings'),
+      Strand(
+        'psychology.think_under_pressure.decision_fatigue',
+        'Decision fatigue',
+      ),
+    ]),
+    Genre('psychology.change_your_mind', 'Change your mind', [
+      Strand('psychology.change_your_mind.being_wrong', 'Being wrong'),
+      Strand('psychology.change_your_mind.backfire', 'Backfire'),
+      Strand(
+        'psychology.change_your_mind.updating_beliefs',
+        'Updating beliefs',
+      ),
+      Strand('psychology.change_your_mind.steelmanning', 'Steelmanning'),
+    ]),
+    Genre('psychology.motivation', 'Motivation', [
+      Strand('psychology.motivation.procrastination', 'Procrastination'),
+      Strand('psychology.motivation.willpower_myths', 'Willpower myths'),
+      Strand('psychology.motivation.goals_that_work', 'Goals that work'),
+      Strand('psychology.motivation.rewards', 'Rewards'),
     ]),
   ],
   'economics': [
@@ -172,6 +248,69 @@ const Map<String, List<Genre>> kGenres = {
       Strand('economics.everyday_costs.groceries', 'Groceries'),
       Strand('economics.everyday_costs.subscriptions', 'Subscriptions'),
     ]),
+    Genre('economics.think_in_incentives', 'Think in incentives', [
+      Strand('economics.think_in_incentives.who_pays', 'Who pays'),
+      Strand(
+        'economics.think_in_incentives.hidden_incentives',
+        'Hidden incentives',
+      ),
+      Strand(
+        'economics.think_in_incentives.unintended_effects',
+        'Unintended effects',
+      ),
+      Strand(
+        'economics.think_in_incentives.perverse_rewards',
+        'Perverse rewards',
+      ),
+    ]),
+    Genre('economics.spot_a_bad_deal', 'Spot a bad deal', [
+      Strand('economics.spot_a_bad_deal.fine_print', 'Fine print'),
+      Strand(
+        'economics.spot_a_bad_deal.too_good_to_be_true',
+        'Too good to be true',
+      ),
+      Strand('economics.spot_a_bad_deal.fees_that_grow', 'Fees that grow'),
+      Strand('economics.spot_a_bad_deal.free_is_not_free', 'Free is not free'),
+    ]),
+    Genre('economics.read_money_news', 'Read money news', [
+      Strand(
+        'economics.read_money_news.averages_that_mislead',
+        'Averages that mislead',
+      ),
+      Strand(
+        'economics.read_money_news.percent_or_points',
+        'Percent or points',
+      ),
+      Strand('economics.read_money_news.real_or_nominal', 'Real or nominal'),
+      Strand(
+        'economics.read_money_news.cherry_picked_charts',
+        'Cherry-picked charts',
+      ),
+    ]),
+    Genre('economics.your_money_decisions', 'Your money decisions', [
+      Strand(
+        'economics.your_money_decisions.opportunity_cost',
+        'Opportunity cost',
+      ),
+      Strand('economics.your_money_decisions.present_bias', 'Present bias'),
+      Strand(
+        'economics.your_money_decisions.mental_accounting',
+        'Mental accounting',
+      ),
+      Strand(
+        'economics.your_money_decisions.risk_and_reward',
+        'Risk and reward',
+      ),
+    ]),
+    Genre('economics.markets_and_hype', 'Markets and hype', [
+      Strand('economics.markets_and_hype.bubbles', 'Bubbles'),
+      Strand(
+        'economics.markets_and_hype.experts_forecasts',
+        'Experts\' forecasts',
+      ),
+      Strand('economics.markets_and_hype.survivor_stories', 'Survivor stories'),
+      Strand('economics.markets_and_hype.get_rich_quick', 'Get rich quick'),
+    ]),
   ],
   'technology': [
     Genre('technology.where_things_come_from', 'Where things come from', [
@@ -203,6 +342,35 @@ const Map<String, List<Genre>> kGenres = {
       Strand('technology.ai.training', 'Training'),
       Strand('technology.ai.chatbots', 'Chatbots'),
       Strand('technology.ai.limits', 'Limits'),
+    ]),
+    Genre('technology.think_about_tech', 'Think about tech', [
+      Strand('technology.think_about_tech.hype_cycles', 'Hype cycles'),
+      Strand('technology.think_about_tech.who_profits', 'Who profits'),
+      Strand(
+        'technology.think_about_tech.attention_economy',
+        'Attention economy',
+      ),
+      Strand('technology.think_about_tech.defaults', 'Defaults'),
+    ]),
+    Genre('technology.truth_online', 'Truth online', [
+      Strand(
+        'technology.truth_online.fakes_and_deepfakes',
+        'Fakes and deepfakes',
+      ),
+      Strand(
+        'technology.truth_online.algorithms_and_bubbles',
+        'Algorithms and bubbles',
+      ),
+      Strand('technology.truth_online.checking_a_source', 'Checking a source'),
+      Strand('technology.truth_online.viral_lies', 'Viral lies'),
+    ]),
+    Genre('technology.using_ai_well', 'Using AI well', [
+      Strand('technology.using_ai_well.when_ai_is_wrong', 'When AI is wrong'),
+      Strand('technology.using_ai_well.asking_well', 'Asking well'),
+      Strand(
+        'technology.using_ai_well.thinking_for_yourself',
+        'Thinking for yourself',
+      ),
     ]),
   ],
   'history': [
@@ -236,6 +404,38 @@ const Map<String, List<Genre>> kGenres = {
       Strand('history.maps_and_borders.lost_countries', 'Lost countries'),
       Strand('history.maps_and_borders.old_maps', 'Old maps'),
     ]),
+    Genre('history.learn_from_the_past', 'Learn from the past', [
+      Strand(
+        'history.learn_from_the_past.repeated_mistakes',
+        'Repeated mistakes',
+      ),
+      Strand('history.learn_from_the_past.who_wrote_it', 'Who wrote it'),
+      Strand(
+        'history.learn_from_the_past.hindsight_in_history',
+        'Hindsight in history',
+      ),
+      Strand('history.learn_from_the_past.what_if', 'What if'),
+    ]),
+    Genre(
+      'history.decisions_that_changed_history',
+      'Decisions that changed history',
+      [
+        Strand('history.decisions_that_changed_history.bad_calls', 'Bad calls'),
+        Strand(
+          'history.decisions_that_changed_history.groupthink',
+          'Groupthink',
+        ),
+        Strand(
+          'history.decisions_that_changed_history.leaders_under_pressure',
+          'Leaders under pressure',
+        ),
+      ],
+    ),
+    Genre('history.propaganda', 'Propaganda', [
+      Strand('history.propaganda.posters_and_slogans', 'Posters and slogans'),
+      Strand('history.propaganda.rewriting_the_past', 'Rewriting the past'),
+      Strand('history.propaganda.enemies_made_up', 'Enemies made up'),
+    ]),
   ],
   'human_body': [
     Genre('human_body.the_brain', 'The brain', [
@@ -267,6 +467,26 @@ const Map<String, List<Genre>> kGenres = {
       Strand('human_body.ageing.telomeres', 'Telomeres'),
       Strand('human_body.ageing.grey_hair', 'Grey hair'),
       Strand('human_body.ageing.longevity', 'Longevity'),
+    ]),
+    Genre('human_body.health_claims', 'Health claims', [
+      Strand('human_body.health_claims.miracle_cures', 'Miracle cures'),
+      Strand('human_body.health_claims.supplements', 'Supplements'),
+      Strand('human_body.health_claims.wellness_trends', 'Wellness trends'),
+      Strand('human_body.health_claims.studies_on_mice', 'Studies on mice'),
+    ]),
+    Genre('human_body.your_body_your_choices', 'Your body, your choices', [
+      Strand(
+        'human_body.your_body_your_choices.sleep_and_thinking',
+        'Sleep and thinking',
+      ),
+      Strand(
+        'human_body.your_body_your_choices.exercise_and_the_brain',
+        'Exercise and the brain',
+      ),
+      Strand(
+        'human_body.your_body_your_choices.food_and_mood',
+        'Food and mood',
+      ),
     ]),
   ],
   'philosophy': [
@@ -300,6 +520,17 @@ const Map<String, List<Genre>> kGenres = {
       Strand('philosophy.paradoxes.zeno', 'Zeno'),
       Strand('philosophy.paradoxes.liar', 'Liar'),
     ]),
+    Genre('philosophy.arguments', 'Arguments', [
+      Strand('philosophy.arguments.good_arguments', 'Good arguments'),
+      Strand('philosophy.arguments.fallacies', 'Fallacies'),
+      Strand('philosophy.arguments.hidden_premises', 'Hidden premises'),
+      Strand('philosophy.arguments.thought_experiments', 'Thought experiments'),
+    ]),
+    Genre('philosophy.living_well', 'Living well', [
+      Strand('philosophy.living_well.happiness', 'Happiness'),
+      Strand('philosophy.living_well.meaning', 'Meaning'),
+      Strand('philosophy.living_well.stoic_tools', 'Stoic tools'),
+    ]),
   ],
   'pop_culture': [
     Genre('pop_culture.logos_and_brands', 'Logos and brands', [
@@ -332,6 +563,14 @@ const Map<String, List<Genre>> kGenres = {
       Strand('pop_culture.nineties.music', 'Music'),
       Strand('pop_culture.nineties.style', 'Style'),
     ]),
+    Genre('pop_culture.behind_the_hype', 'Behind the hype', [
+      Strand(
+        'pop_culture.behind_the_hype.manufactured_fame',
+        'Manufactured fame',
+      ),
+      Strand('pop_culture.behind_the_hype.trends', 'Trends'),
+      Strand('pop_culture.behind_the_hype.fake_reviews', 'Fake reviews'),
+    ]),
   ],
   'nature': [
     Genre('nature.trees_and_forests', 'Trees and forests', [
@@ -363,6 +602,16 @@ const Map<String, List<Genre>> kGenres = {
       Strand('nature.extinction.dinosaurs', 'Dinosaurs'),
       Strand('nature.extinction.recent_losses', 'Recent losses'),
       Strand('nature.extinction.bringing_back', 'Bringing back'),
+    ]),
+    Genre('nature.systems_thinking', 'Systems thinking', [
+      Strand('nature.systems_thinking.feedback_loops', 'Feedback loops'),
+      Strand('nature.systems_thinking.tipping_points', 'Tipping points'),
+      Strand('nature.systems_thinking.chain_reactions', 'Chain reactions'),
+    ]),
+    Genre('nature.nature_myths', 'Nature myths', [
+      Strand('nature.nature_myths.animal_myths', 'Animal myths'),
+      Strand('nature.nature_myths.natural_is_better', 'Natural is better'),
+      Strand('nature.nature_myths.balance_of_nature', 'Balance of nature'),
     ]),
   ],
   'language': [
@@ -399,6 +648,17 @@ const Map<String, List<Genre>> kGenres = {
       Strand('language.slang.regional_slang', 'Regional slang'),
       Strand('language.slang.old_slang', 'Old slang'),
     ]),
+    Genre('language.words_that_persuade', 'Words that persuade', [
+      Strand('language.words_that_persuade.loaded_words', 'Loaded words'),
+      Strand('language.words_that_persuade.euphemisms', 'Euphemisms'),
+      Strand('language.words_that_persuade.spin', 'Spin'),
+      Strand('language.words_that_persuade.great_speeches', 'Great speeches'),
+    ]),
+    Genre('language.say_it_clearly', 'Say it clearly', [
+      Strand('language.say_it_clearly.plain_words', 'Plain words'),
+      Strand('language.say_it_clearly.arguing_well', 'Arguing well'),
+      Strand('language.say_it_clearly.listening', 'Listening'),
+    ]),
   ],
   'weird_facts': [
     Genre('weird_facts.animal_oddities', 'Animal oddities', [
@@ -434,6 +694,14 @@ const Map<String, List<Genre>> kGenres = {
       Strand('weird_facts.odd_places.tiny_nations', 'Tiny nations'),
       Strand('weird_facts.odd_places.extreme_spots', 'Extreme spots'),
     ]),
+    Genre('weird_facts.too_strange_to_be_true', 'Too strange to be true', [
+      Strand(
+        'weird_facts.too_strange_to_be_true.myths_that_spread',
+        'Myths that spread',
+      ),
+      Strand('weird_facts.too_strange_to_be_true.hoaxes', 'Hoaxes'),
+      Strand('weird_facts.too_strange_to_be_true.how_to_check', 'How to check'),
+    ]),
   ],
   'sport': [
     Genre('sport.rules_and_why', 'Rules and why', [
@@ -465,6 +733,16 @@ const Map<String, List<Genre>> kGenres = {
       Strand('sport.tactics.formations', 'Formations'),
       Strand('sport.tactics.set_pieces', 'Set pieces'),
       Strand('sport.tactics.coaching', 'Coaching'),
+    ]),
+    Genre('sport.luck_or_skill', 'Luck or skill', [
+      Strand('sport.luck_or_skill.hot_hand', 'Hot hand'),
+      Strand('sport.luck_or_skill.regression', 'Regression'),
+      Strand('sport.luck_or_skill.streaks', 'Streaks'),
+    ]),
+    Genre('sport.sport_and_numbers', 'Sport and numbers', [
+      Strand('sport.sport_and_numbers.analytics', 'Analytics'),
+      Strand('sport.sport_and_numbers.bad_stats', 'Bad stats'),
+      Strand('sport.sport_and_numbers.betting_odds', 'Betting odds'),
     ]),
   ],
   'cinema': [
@@ -498,6 +776,14 @@ const Map<String, List<Genre>> kGenres = {
       Strand('cinema.lost_films.rediscovered', 'Rediscovered'),
       Strand('cinema.lost_films.unfinished', 'Unfinished'),
     ]),
+    Genre('cinema.how_films_persuade', 'How films persuade', [
+      Strand('cinema.how_films_persuade.music_and_mood', 'Music and mood'),
+      Strand('cinema.how_films_persuade.editing_tricks', 'Editing tricks'),
+      Strand(
+        'cinema.how_films_persuade.based_on_a_true_story',
+        'Based on a true story',
+      ),
+    ]),
   ],
   'music': [
     Genre('music.why_songs_work', 'Why songs work', [
@@ -529,6 +815,14 @@ const Map<String, List<Genre>> kGenres = {
       Strand('music.sound_itself.frequencies', 'Frequencies'),
       Strand('music.sound_itself.acoustics', 'Acoustics'),
       Strand('music.sound_itself.silence', 'Silence'),
+    ]),
+    Genre('music.why_we_like_what_we_like', 'Why we like what we like', [
+      Strand('music.why_we_like_what_we_like.familiarity', 'Familiarity'),
+      Strand(
+        'music.why_we_like_what_we_like.taste_and_status',
+        'Taste and status',
+      ),
+      Strand('music.why_we_like_what_we_like.earworms', 'Earworms'),
     ]),
   ],
   'art': [
@@ -562,6 +856,14 @@ const Map<String, List<Genre>> kGenres = {
       Strand('art.forgeries.detection', 'Detection'),
       Strand('art.forgeries.motives', 'Motives'),
     ]),
+    Genre('art.what_makes_it_valuable', 'What makes it valuable', [
+      Strand('art.what_makes_it_valuable.price_and_value', 'Price and value'),
+      Strand('art.what_makes_it_valuable.hype_in_art', 'Hype in art'),
+      Strand(
+        'art.what_makes_it_valuable.seeing_for_yourself',
+        'Seeing for yourself',
+      ),
+    ]),
   ],
   'medicine': [
     Genre('medicine.vaccines', 'Vaccines', [
@@ -593,6 +895,17 @@ const Map<String, List<Genre>> kGenres = {
       Strand('medicine.medical_history.barbers', 'Barbers'),
       Strand('medicine.medical_history.germ_theory', 'Germ theory'),
       Strand('medicine.medical_history.hospitals', 'Hospitals'),
+    ]),
+    Genre('medicine.judge_a_treatment', 'Judge a treatment', [
+      Strand('medicine.judge_a_treatment.placebo_or_real', 'Placebo or real'),
+      Strand('medicine.judge_a_treatment.risk_numbers', 'Risk numbers'),
+      Strand('medicine.judge_a_treatment.side_effects', 'Side effects'),
+      Strand('medicine.judge_a_treatment.screening', 'Screening'),
+    ]),
+    Genre('medicine.medical_myths', 'Medical myths', [
+      Strand('medicine.medical_myths.old_wives_tales', 'Old wives\' tales'),
+      Strand('medicine.medical_myths.online_diagnosis', 'Online diagnosis'),
+      Strand('medicine.medical_myths.detox', 'Detox'),
     ]),
   ],
   'food': [
@@ -626,6 +939,11 @@ const Map<String, List<Genre>> kGenres = {
       Strand('food.food_history.sugar', 'Sugar'),
       Strand('food.food_history.potatoes', 'Potatoes'),
     ]),
+    Genre('food.food_claims', 'Food claims', [
+      Strand('food.food_claims.superfoods', 'Superfoods'),
+      Strand('food.food_claims.labels', 'Labels'),
+      Strand('food.food_claims.diet_studies', 'Diet studies'),
+    ]),
   ],
   'life': [
     Genre('life.habits', 'Habits', [
@@ -657,6 +975,48 @@ const Map<String, List<Genre>> kGenres = {
       Strand('life.meaning.purpose', 'Purpose'),
       Strand('life.meaning.gratitude', 'Gratitude'),
       Strand('life.meaning.mortality', 'Mortality'),
+    ]),
+    Genre('life.ask_better_questions', 'Ask better questions', [
+      Strand(
+        'life.ask_better_questions.questions_to_yourself',
+        'Questions to yourself',
+      ),
+      Strand(
+        'life.ask_better_questions.questions_to_others',
+        'Questions to others',
+      ),
+      Strand('life.ask_better_questions.the_why_behind', 'The why behind'),
+      Strand('life.ask_better_questions.first_principles', 'First principles'),
+    ]),
+    Genre('life.clear_thinking', 'Clear thinking', [
+      Strand('life.clear_thinking.pros_and_cons', 'Pros and cons'),
+      Strand(
+        'life.clear_thinking.second_order_effects',
+        'Second-order effects',
+      ),
+      Strand('life.clear_thinking.inversion', 'Inversion'),
+      Strand('life.clear_thinking.reversible_or_not', 'Reversible or not'),
+    ]),
+    Genre('life.learn_anything', 'Learn anything', [
+      Strand('life.learn_anything.practice_that_works', 'Practice that works'),
+      Strand(
+        'life.learn_anything.learning_from_mistakes',
+        'Learning from mistakes',
+      ),
+      Strand('life.learn_anything.reading_well', 'Reading well'),
+      Strand('life.learn_anything.teaching_it_back', 'Teaching it back'),
+    ]),
+    Genre('life.handle_setbacks', 'Handle setbacks', [
+      Strand('life.handle_setbacks.reframing', 'Reframing'),
+      Strand('life.handle_setbacks.what_you_control', 'What you control'),
+      Strand('life.handle_setbacks.failing_forward', 'Failing forward'),
+      Strand('life.handle_setbacks.comparison', 'Comparison'),
+    ]),
+    Genre('life.time_and_attention', 'Time and attention', [
+      Strand('life.time_and_attention.saying_no', 'Saying no'),
+      Strand('life.time_and_attention.deep_focus', 'Deep focus'),
+      Strand('life.time_and_attention.priorities', 'Priorities'),
+      Strand('life.time_and_attention.rest', 'Rest'),
     ]),
   ],
 };

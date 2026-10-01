@@ -1576,8 +1576,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get insideGenre => 'Dedans';
 
   @override
-  String nOfSixOn(int n) {
-    return '$n sur 6 actifs';
+  String nOfSixOn(int n, int total) {
+    return '$n sur $total actifs';
   }
 
   @override

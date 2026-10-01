@@ -1522,8 +1522,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get insideGenre => '里面有';
 
   @override
-  String nOfSixOn(int n) {
-    return '6 个中开启 $n 个';
+  String nOfSixOn(int n, int total) {
+    return '$total 个中开启 $n 个';
   }
 
   @override

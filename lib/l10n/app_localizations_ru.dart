@@ -1614,8 +1614,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get insideGenre => 'Внутри';
 
   @override
-  String nOfSixOn(int n) {
-    return '$n из 6 включено';
+  String nOfSixOn(int n, int total) {
+    return '$n из $total включено';
   }
 
   @override

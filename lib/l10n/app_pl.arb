@@ -362,7 +362,7 @@
   "yourMix": "Twój miks",
   "genresLine": "Dotknij gatunku, żeby go pominąć. Przytrzymaj, a trzy nurty w środku otworzą się tuż pod nim.",
   "insideGenre": "W środku",
-  "nOfSixOn": "{n} z 6 włączonych",
+  "nOfSixOn": "{n} z {total} włączonych",
   "offInYourMix": "poza twoim miksem",
   "continueGenresOn": "Dalej · {on} z {total} gatunków włączonych",
   "mixRarely": "Rzadko",

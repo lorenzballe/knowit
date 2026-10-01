@@ -2295,8 +2295,8 @@ abstract class AppLocalizations {
   /// No description provided for @nOfSixOn.
   ///
   /// In en, this message translates to:
-  /// **'{n} of 6 on'**
-  String nOfSixOn(int n);
+  /// **'{n} of {total} on'**
+  String nOfSixOn(int n, int total);
 
   /// No description provided for @offInYourMix.
   ///

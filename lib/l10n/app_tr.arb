@@ -362,7 +362,7 @@
   "yourMix": "Senin karışımın",
   "genresLine": "Atlamak için bir türe dokun. Basılı tut, içindeki üç damar hemen altında açılsın.",
   "insideGenre": "İçinde",
-  "nOfSixOn": "6 türden {n} açık",
+  "nOfSixOn": "{total} türden {n} açık",
   "offInYourMix": "karışımında değil",
   "continueGenresOn": "Devam · {total} türden {on} açık",
   "mixRarely": "Nadiren",

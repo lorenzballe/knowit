@@ -362,7 +362,7 @@
   "yourMix": "Ton mélange",
   "genresLine": "Touche un genre pour le passer. Maintiens-le et les trois fils qu’il contient s’ouvrent juste dessous.",
   "insideGenre": "Dedans",
-  "nOfSixOn": "{n} sur 6 actifs",
+  "nOfSixOn": "{n} sur {total} actifs",
   "offInYourMix": "hors de ton mélange",
   "continueGenresOn": "Continuer · {on} genres sur {total} actifs",
   "mixRarely": "Rarement",

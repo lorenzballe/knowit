@@ -1536,8 +1536,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get insideGenre => '이 안에';
 
   @override
-  String nOfSixOn(int n) {
-    return '6개 중 $n개 켜짐';
+  String nOfSixOn(int n, int total) {
+    return '$total개 중 $n개 켜짐';
   }
 
   @override

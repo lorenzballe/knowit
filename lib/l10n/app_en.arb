@@ -1406,10 +1406,13 @@
  "yourMix": "Your mix",
  "genresLine": "Tap a genre to skip it. Hold one and the three strands inside open right below.",
  "insideGenre": "Inside",
- "nOfSixOn": "{n} of 6 on",
+ "nOfSixOn": "{n} of {total} on",
  "@nOfSixOn": {
   "placeholders": {
    "n": {
+    "type": "int"
+   },
+   "total": {
     "type": "int"
    }
   }
