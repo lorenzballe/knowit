@@ -42,8 +42,10 @@ class Board {
   final int asked;
   final String updated;
 
-  /// How the question of the day went — the one card two friends have in
-  /// common — and how sure they said they were. Null until answered.
+  /// How the question of the day went, and how sure they said they were:
+  /// published by builds that still dealt it, read so a friend on one still
+  /// shows it. Null until answered, and always null from this build, which
+  /// deals no card that is everybody's.
   final bool? questionRight;
   final int? questionSure;
 

@@ -117,7 +117,18 @@ class AppLocalizationsPl extends AppLocalizations {
   String get exploreTodaysBest => 'Odkryj to, co dziś najlepsze';
 
   @override
-  String get magicUnlock => 'Wypróbuj 7 dni za darmo';
+  String magicUnlock(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days dni',
+      one: '$days dzień',
+    );
+    return 'Wypróbuj $_temp0 za darmo';
+  }
+
+  @override
+  String get getPlus => 'Przejdź na Astute+';
 
   @override
   String nothingInYet(String subject) {
@@ -674,7 +685,15 @@ class AppLocalizationsPl extends AppLocalizations {
   String get plusNameCaps => 'ASTUTE+';
 
   @override
-  String get sevenDaysFree => '7 dni za darmo';
+  String trialDaysFree(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days dni',
+      one: '$days dzień',
+    );
+    return '$_temp0 za darmo';
+  }
 
   @override
   String get seeThePlans => 'ZOBACZ PLANY';
@@ -906,6 +925,29 @@ class AppLocalizationsPl extends AppLocalizations {
       'Jedno powiadomienie, pięć kart i seria, której nie będziesz chciał przerwać.';
 
   @override
+  String introNotifyWhen(String time) {
+    return 'Jutro, $time';
+  }
+
+  @override
+  String get introNotifyLine => 'Twoja piątka jest gotowa. Dzień 1.';
+
+  @override
+  String get introOneOfFive => '1 Z 5';
+
+  @override
+  String get introDayOne => 'DZIEŃ 1';
+
+  @override
+  String get introTapTomorrow => 'DOTKNIJ JUTRO, BY SIĘ DOWIEDZIEĆ';
+
+  @override
+  String get introDayOneTomorrow => 'DZIEŃ 1 · JUTRO';
+
+  @override
+  String get introDaySevenStreak => 'DZIEŃ 7 · PIERWSZA SERIA';
+
+  @override
   String get continueWithApple => 'Kontynuuj z Apple';
 
   @override
@@ -926,9 +968,6 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get barMoveCaps => 'DO ZAPAMIĘTANIA';
-
-  @override
-  String get askYourselfCaps => 'ZAPYTAJ SIEBIE';
 
   @override
   String get theBarMoveCaps => 'ZDANIE NA IMPREZĘ';
@@ -988,8 +1027,14 @@ class AppLocalizationsPl extends AppLocalizations {
   String get plusIsActive => 'ASTUTE+ JEST AKTYWNY';
 
   @override
-  String tryFreeThen(String price, String suffix) {
-    return '7 dni gratis, potem $price$suffix';
+  String tryFreeThen(int days, String price, String suffix) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days dni',
+      one: '$days dzień',
+    );
+    return '$_temp0 gratis, potem $price$suffix';
   }
 
   @override
@@ -1654,17 +1699,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get againChip => 'ZNOWU';
 
   @override
-  String theOthersYours(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Pozostałe $n, twoje.',
-      one: 'Ta druga, twoja.',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get magicLine =>
       'Pięć kart dziennie wybranych dla ciebie: z twojego miksu, na twoim poziomie, nigdy już przeczytana. Od jutra.';
 
@@ -1676,7 +1710,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'Z twoich wątków, na twoim poziomie, nigdy już przeczytana. Za darmo masz jedną dziennie.';
+      'Z twoich wątków, na twoim poziomie, nigdy już przeczytana. Za darmo masz dwie dziennie.';
 
   @override
   String get plusCardHeadline => 'Wszystkie pięć, twoje.';
@@ -1737,7 +1771,8 @@ class AppLocalizationsPl extends AppLocalizations {
       'Nic jeszcze nie wróciło. Karta wraca po trzech dniach, potem po tygodniu, potem po miesiącu — a to, co wtedy trafisz, naprawdę wiesz.';
 
   @override
-  String get weekKeptTwoOwn => 'Tydzień z rzędu: jutro dwie z pięciu są twoje.';
+  String get weekKeptThreeOwn =>
+      'Tydzień z rzędu: jutro trzy z pięciu są twoje.';
 
   @override
   String get perkJourneyLine =>
@@ -1801,26 +1836,6 @@ class AppLocalizationsPl extends AppLocalizations {
       'To, co czytelnicy zachowywali najczęściej, a ty jeszcze nie czytałeś';
 
   @override
-  String welcomeDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other:
-          'Twój pierwszy tydzień: jeszcze $n dni, w których cztery z pięciu są twoje.',
-      many:
-          'Twój pierwszy tydzień: jeszcze $n dni, w których cztery z pięciu są twoje.',
-      few:
-          'Twój pierwszy tydzień: jeszcze $n dni, w których cztery z pięciu są twoje.',
-      one: 'Twój pierwszy tydzień: jutro ostatni dzień, cztery z pięciu są twoje.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get welcomeWeekEnds =>
-      'Twój pierwszy tydzień kończy się dziś wieczorem. Od jutra jedna z pięciu jest twoja, a trzy są wspólne; z Astute+ wszystkie pięć zostają twoje.';
-
-  @override
   String get forYouShelf => 'Dla ciebie';
 
   @override
@@ -1829,6 +1844,9 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get exploreOffline =>
       'Jesteś offline. To Odkrywaj w wersji z ostatniego odczytu.';
+
+  @override
+  String get askYourselfCaps => 'ZAPYTAJ SIEBIE';
 
   @override
   String get themeMyths => 'Obalone mity';

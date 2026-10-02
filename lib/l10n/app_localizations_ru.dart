@@ -117,7 +117,20 @@ class AppLocalizationsRu extends AppLocalizations {
   String get exploreTodaysBest => 'Лучшее за сегодня';
 
   @override
-  String get magicUnlock => 'Попробуй 7 дней бесплатно';
+  String magicUnlock(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days дня',
+      many: '$days дней',
+      few: '$days дня',
+      one: '$days день',
+    );
+    return 'Попробуй $_temp0 бесплатно';
+  }
+
+  @override
+  String get getPlus => 'Перейти на Astute+';
 
   @override
   String nothingInYet(String subject) {
@@ -673,7 +686,17 @@ class AppLocalizationsRu extends AppLocalizations {
   String get plusNameCaps => 'ASTUTE+';
 
   @override
-  String get sevenDaysFree => '7 дней бесплатно';
+  String trialDaysFree(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days дня',
+      many: '$days дней',
+      few: '$days дня',
+      one: '$days день',
+    );
+    return '$_temp0 бесплатно';
+  }
 
   @override
   String get seeThePlans => 'ПОСМОТРЕТЬ ТАРИФЫ';
@@ -903,6 +926,29 @@ class AppLocalizationsRu extends AppLocalizations {
       'Одно уведомление, пять карточек и серия, которую не захочется прервать.';
 
   @override
+  String introNotifyWhen(String time) {
+    return 'Завтра, $time';
+  }
+
+  @override
+  String get introNotifyLine => 'Ваши пять готовы. День 1.';
+
+  @override
+  String get introOneOfFive => '1 ИЗ 5';
+
+  @override
+  String get introDayOne => 'ДЕНЬ 1';
+
+  @override
+  String get introTapTomorrow => 'НАЖМИ ЗАВТРА, ЧТОБЫ УЗНАТЬ';
+
+  @override
+  String get introDayOneTomorrow => 'ДЕНЬ 1 · ЗАВТРА';
+
+  @override
+  String get introDaySevenStreak => 'ДЕНЬ 7 · ПЕРВАЯ СЕРИЯ';
+
+  @override
   String get continueWithApple => 'Продолжить с Apple';
 
   @override
@@ -923,9 +969,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get barMoveCaps => 'ЧТО ЗАПОМНИТЬ';
-
-  @override
-  String get askYourselfCaps => 'СПРОСИ СЕБЯ';
 
   @override
   String get theBarMoveCaps => 'ФРАЗА ДЛЯ РАЗГОВОРА';
@@ -985,8 +1028,16 @@ class AppLocalizationsRu extends AppLocalizations {
   String get plusIsActive => 'ASTUTE+ АКТИВЕН';
 
   @override
-  String tryFreeThen(String price, String suffix) {
-    return '7 дней бесплатно, затем $price$suffix';
+  String tryFreeThen(int days, String price, String suffix) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days дня',
+      many: '$days дней',
+      few: '$days дня',
+      one: '$days день',
+    );
+    return '$_temp0 бесплатно, затем $price$suffix';
   }
 
   @override
@@ -1651,17 +1702,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get againChip => 'СНОВА';
 
   @override
-  String theOthersYours(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Остальные $n — твои.',
-      one: 'Ещё одна — твоя.',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get magicLine =>
       'Пять карточек в день, выбранных для тебя: из твоего микса, на твоём уровне, ни одной уже прочитанной. С завтрашнего дня.';
 
@@ -1673,7 +1713,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'Из твоих веток, на твоём уровне, ни одной уже прочитанной. Бесплатно — одна в день.';
+      'Из твоих веток, на твоём уровне, ни одной уже прочитанной. Бесплатно — две в день.';
 
   @override
   String get plusCardHeadline => 'Все пять — твои.';
@@ -1734,7 +1774,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Пока ничего не вернулось. Карточка возвращается через три дня, потом через неделю, потом через месяц — и то, что ты угадываешь тогда, ты знаешь по-настоящему.';
 
   @override
-  String get weekKeptTwoOwn => 'Неделя подряд: завтра две из пяти — твои.';
+  String get weekKeptThreeOwn => 'Неделя подряд: завтра три из пяти — твои.';
 
   @override
   String get perkJourneyLine =>
@@ -1798,23 +1838,6 @@ class AppLocalizationsRu extends AppLocalizations {
       'То, что читатели сохраняли чаще всего, а вы ещё не читали';
 
   @override
-  String welcomeDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Ваша первая неделя: ещё $n дня, когда четыре из пяти ваши.',
-      many: 'Ваша первая неделя: ещё $n дней, когда четыре из пяти ваши.',
-      few: 'Ваша первая неделя: ещё $n дня, когда четыре из пяти ваши.',
-      one: 'Ваша первая неделя: завтра последний день, четыре из пяти карточек ваши.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get welcomeWeekEnds =>
-      'Ваша первая неделя заканчивается сегодня вечером. С завтрашнего дня одна из пяти карточек ваша, а три — общие; с Astute+ все пять остаются вашими.';
-
-  @override
   String get forYouShelf => 'Для вас';
 
   @override
@@ -1823,6 +1846,9 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get exploreOffline =>
       'Вы офлайн. Это раздел «Обзор» в том виде, в каком он был прочитан в последний раз.';
+
+  @override
+  String get askYourselfCaps => 'СПРОСИ СЕБЯ';
 
   @override
   String get themeMyths => 'Развенчанные мифы';

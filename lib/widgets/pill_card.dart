@@ -34,8 +34,8 @@ class PillCard extends StatelessWidget {
   /// True when this card is in today's deck because it came back.
   final bool isReview;
 
-  /// True when this card was dealt from the reader's own mix on a day
-  /// where the others were everybody's — the free day says which is which.
+  /// True when this card was chosen for the reader on a day where the
+  /// others came at random — the free day says which is which.
   final bool isOwn;
 
   const PillCard({

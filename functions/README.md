@@ -66,9 +66,9 @@ ones that shape a reader's day:
 | profile.ts   | `CLAMP` 0.6            | no tag ever more than ±0.6: a hundred likes must not make one strand the whole deck     |
 | profile.ts   | `RECENT_STRAND_DAYS` 7 | a strand looked at this week is met again later, not tomorrow                           |
 | deal.ts      | `RECENT_STRAND_WEIGHT` 0.5 | ...at half its weight, not none: a liking is still a liking                          |
-| deal.ts      | `EXPLORER_SHARE` 0.5   | about every other day one read is from a strand never met, on level alone; seeded by reader and date, so every server agrees |
+| deal.ts      | `EXPLORER_SHARE` 0.5   | about every other day that has one of the reader's own reads — on the free plan, the morning after a week kept — that read is from a strand never met, on level alone; seeded by reader and date, so every server agrees |
 | deal.ts      | fit 1.5/1.0/0.7, 0.5–3.0 | the phone's own ladder (`lib/data/pills_repository.dart`): a read below the level first, a hard ask only once the level is there |
-| deal.ts      | `OWN_WELCOME` 4, `OWN_FREE` 1, `WELCOME_DAYS` 7 | the welcome week, and the shared day after it (see the root README)          |
+| deal.ts      | `OWN_FREE` 2, `OWN_REWARDED` 3 | the free day from the first morning, and the morning after a week kept; the rest of a free day at random (`dealRandom`, see the root README) |
 | serve.ts     | `TRACE_DAYS` 21, `ACTIVE_DAYS` 14, `PREPARE_TOMORROW_FROM` 17 | three weeks of trace kept, two weeks of absence before a reader is left alone, tomorrow dealt from five in the afternoon |
 | explore.ts   | the crowd, `popularity` | the launch crowd, the phone's numbers bit for bit (`lib/sync/tally.dart`)              |
 

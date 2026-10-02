@@ -137,7 +137,6 @@ class Trace extends ChangeNotifier {
     'tab': 'tab',
     'by': 'by',
     'own': 'own',
-    'welcome': 'wel',
     'streak_days': 'streak',
     'is_plus': 'plus',
     'cards': 'n',

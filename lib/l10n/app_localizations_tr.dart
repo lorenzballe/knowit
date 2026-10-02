@@ -115,7 +115,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get exploreTodaysBest => 'Bugünün en iyilerini keşfet';
 
   @override
-  String get magicUnlock => '7 gün ücretsiz dene';
+  String magicUnlock(int days) {
+    return '$days gün ücretsiz dene';
+  }
+
+  @override
+  String get getPlus => 'Astute+\'a geç';
 
   @override
   String nothingInYet(String subject) {
@@ -657,7 +662,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get plusNameCaps => 'ASTUTE+';
 
   @override
-  String get sevenDaysFree => '7 gün ücretsiz';
+  String trialDaysFree(int days) {
+    return '$days gün ücretsiz';
+  }
 
   @override
   String get seeThePlans => 'PLANLARI GÖR';
@@ -870,6 +877,29 @@ class AppLocalizationsTr extends AppLocalizations {
       'Bir bildirim, beş kart ve bozmak istemeyeceğin bir seri.';
 
   @override
+  String introNotifyWhen(String time) {
+    return 'Yarın, $time';
+  }
+
+  @override
+  String get introNotifyLine => 'Beşin hazır. 1. gün.';
+
+  @override
+  String get introOneOfFive => '1 / 5';
+
+  @override
+  String get introDayOne => '1. GÜN';
+
+  @override
+  String get introTapTomorrow => 'CEVAP İÇİN YARIN DOKUN';
+
+  @override
+  String get introDayOneTomorrow => '1. GÜN · YARIN';
+
+  @override
+  String get introDaySevenStreak => '7. GÜN · İLK SERİ';
+
+  @override
   String get continueWithApple => 'Apple ile devam et';
 
   @override
@@ -890,9 +920,6 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get barMoveCaps => 'AKILDA KALAN';
-
-  @override
-  String get askYourselfCaps => 'KENDİNE SOR';
 
   @override
   String get theBarMoveCaps => 'MASADA SÖYLENECEK SÖZ';
@@ -949,8 +976,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get plusIsActive => 'ASTUTE+ ETKİN';
 
   @override
-  String tryFreeThen(String price, String suffix) {
-    return '7 gün ücretsiz, sonra $price$suffix';
+  String tryFreeThen(int days, String price, String suffix) {
+    return '$days gün ücretsiz, sonra $price$suffix';
   }
 
   @override
@@ -1593,17 +1620,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get againChip => 'TEKRAR';
 
   @override
-  String theOthersYours(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Diğer $n kart da senin.',
-      one: 'Diğeri de senin.',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get magicLine =>
       'Her gün senin için seçilmiş beş kart: karışımından, seviyende, daha önce okuduğun hiçbiri yok. Yarından itibaren.';
 
@@ -1615,7 +1631,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'Senin konu dallarından, senin seviyende, daha önce okuduğun hiçbiri yok. Ücretsizde günde bir.';
+      'Senin konu dallarından, senin seviyende, daha önce okuduğun hiçbiri yok. Ücretsizde günde iki.';
 
   @override
   String get plusCardHeadline => 'Beşi de senin olsun.';
@@ -1676,7 +1692,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Henüz hiçbir şey geri gelmedi. Bir kart üç gün, sonra bir hafta, sonra bir ay sonra döner — o zaman doğru bildiğin, gerçekten bildiğindir.';
 
   @override
-  String get weekKeptTwoOwn => 'Bir hafta tamam: yarın beşten ikisi senin.';
+  String get weekKeptThreeOwn => 'Bir hafta tamam: yarın beşten üçü senin.';
 
   @override
   String get perkJourneyLine =>
@@ -1738,21 +1754,6 @@ class AppLocalizationsTr extends AppLocalizations {
       'Okurların en çok sakladığı ve senin henüz okumadığın kartlar';
 
   @override
-  String welcomeDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'İlk haftan: beş karttan dördünün senin olduğu $n gün daha.',
-      one: 'İlk haftan: yarın son günü, beş karttan dördü senin.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get welcomeWeekEnds =>
-      'İlk haftan bu gece bitiyor. Yarından itibaren beş karttan biri senin, üçü herkesin; Astute+ ile beşi de senin kalır.';
-
-  @override
   String get forYouShelf => 'Senin için';
 
   @override
@@ -1761,6 +1762,9 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get exploreOffline =>
       'Çevrimdışısın. Bu, Keşfet\'in en son okunduğu hâli.';
+
+  @override
+  String get askYourselfCaps => 'KENDİNE SOR';
 
   @override
   String get themeMyths => 'Çürütülen mitler';

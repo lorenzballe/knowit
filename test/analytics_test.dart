@@ -161,8 +161,8 @@ void main() {
       expect(day, isNotNull);
       expect(day!['cards'], 5);
       expect(day['reviews'], 0);
-      expect(day['own'], kOwnCardsWelcome, reason: 'a first day welcomes');
-      expect(day['welcome'], isTrue);
+      expect(day['own'], kOwnCardsFree, reason: 'a first day like any other');
+      expect(day.containsKey('welcome'), isFalse);
       expect(day['is_plus'], false);
     });
 
@@ -266,10 +266,7 @@ void main() {
         expect(seen, isNotNull);
         expect(seen!['position'], 1);
         expect(seen['of'], app.todaysDeck.length);
-        expect(
-          seen['slot'],
-          isIn(['question_of_day', 'own', 'common', 'review']),
-        );
+        expect(seen['slot'], isIn(['own', 'random', 'review']));
         expect(
           seen['challenge'],
           isIn(['fact', 'pick_one', 'type_number', 'estimate', 'take_a_side']),

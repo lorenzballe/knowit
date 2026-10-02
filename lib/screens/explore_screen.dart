@@ -145,6 +145,14 @@ class ExploreScreenState extends State<ExploreScreen> {
   /// a reader who found the top list and one who never saw it.
   final Set<int> _depths = {};
 
+  /// What the reader had read when the shelves were dealt, and the day they
+  /// were dealt on. The shelves for finding things leave those cards out; a
+  /// card read since stays where it is, marked, until the next day deals
+  /// them again. Taken off the moment it was read, it went from under the
+  /// reader's thumb: back from the card, the row had closed up over it.
+  Set<String> _readWhenDealt = const {};
+  String? _dealtOn;
+
   void _scrolled() {
     if (!_shelves.hasClients) return;
     final ScrollPosition pos = _shelves.position;
@@ -206,8 +214,8 @@ class ExploreScreenState extends State<ExploreScreen> {
               ? _found(context)
               : ListenableBuilder(
                   // The counts, and what the reader has read: a card read
-                  // here leaves the shelves for finding things as soon as
-                  // the reader is back on them.
+                  // here is marked where it sits as soon as the reader is
+                  // back on its shelf.
                   listenable: Listenable.merge([
                     Tallies.instance,
                     Served.instance,
@@ -225,10 +233,17 @@ class ExploreScreenState extends State<ExploreScreen> {
     // Today's shelf is the same for everybody and changes at midnight —
     // which is what the canvas means by "written this morning". Nothing
     // here is dealt from the reader's own mix.
-    // The shelves for finding things hold only cards the reader has not
-    // read — a card already read is not a find. The top list is the one
-    // shelf that keeps them, marked, because it is one list for everybody.
-    bool unread(Pill p) => !widget.app.seenIds.contains(p.id);
+    // The shelves for finding things hold only cards the reader had not
+    // read when they were dealt — a card already read is not a find. The
+    // top list keeps them all, marked, because it is one list for
+    // everybody; the others keep, marked, only what was read since.
+    final String today = daySeed(DateTime.now());
+    if (_dealtOn != today) {
+      _dealtOn = today;
+      _readWhenDealt = {...widget.app.seenIds};
+    }
+    bool unread(Pill p) => !_readWhenDealt.contains(p.id);
+    bool read(Pill p) => widget.app.seenIds.contains(p.id);
 
     // Explore as the server assembled it, when it has: the same shelves,
     // from the newest bank, and one more that is the reader's own. Without
@@ -374,6 +389,7 @@ class ExploreScreenState extends State<ExploreScreen> {
           line: _themeLine(context, t),
           child: _SmallRow(
             pills: t.pills,
+            isRead: read,
             onOpen: _open,
             onShown: (p) => _seen('theme-${t.key}', p),
           ),
@@ -410,6 +426,7 @@ class ExploreScreenState extends State<ExploreScreen> {
                 line: context.l10n.forYouLine,
                 child: _SmallRow(
                   pills: forYou,
+                  isRead: read,
                   onOpen: _open,
                   onShown: (p) => _seen('foryou', p),
                 ),
@@ -422,6 +439,7 @@ class ExploreScreenState extends State<ExploreScreen> {
                 line: context.l10n.sameForEveryone,
                 child: _BigRow(
                   pills: fresh,
+                  isRead: read,
                   onOpen: _open,
                   onShown: (p) => _seen('today', p),
                 ),
@@ -450,7 +468,7 @@ class ExploreScreenState extends State<ExploreScreen> {
                   ? const _TopGhost()
                   : _TopRow(
                       ranked: top,
-                      isRead: (p) => !unread(p),
+                      isRead: read,
                       onShown: (p) => _seen('top', p),
                       onOpen: (i) {
                         Analytics.capture('explore top opened', {
@@ -473,6 +491,7 @@ class ExploreScreenState extends State<ExploreScreen> {
                 line: context.l10n.lovedLine,
                 child: _SmallRow(
                   pills: loved,
+                  isRead: read,
                   onShown: (p) => _seen('loved', p),
                   onOpen: (shelf, pill) {
                     Analytics.capture('explore loved opened', {
@@ -491,6 +510,7 @@ class ExploreScreenState extends State<ExploreScreen> {
                 line: context.l10n.acrossEveryone,
                 child: _RowList(
                   pills: asking,
+                  isRead: read,
                   onOpen: _open,
                   onShown: (p) => _seen('asking', p),
                 ),
@@ -503,6 +523,7 @@ class ExploreScreenState extends State<ExploreScreen> {
                 line: line,
                 child: _SmallRow(
                   pills: mine,
+                  isRead: read,
                   onOpen: _open,
                   onShown: (p) => _seen('mine', p),
                 ),
@@ -968,9 +989,15 @@ class _Shelf extends StatelessWidget {
 
 /// The top shelf: cards at a size you can read across the room.
 class _BigRow extends StatelessWidget {
-  const _BigRow({required this.pills, required this.onOpen, this.onShown});
+  const _BigRow({
+    required this.pills,
+    required this.isRead,
+    required this.onOpen,
+    this.onShown,
+  });
 
   final List<Pill> pills;
+  final bool Function(Pill) isRead;
   final void Function(List<Pill>, Pill) onOpen;
   final ValueChanged<Pill>? onShown;
 
@@ -1019,6 +1046,10 @@ class _BigRow extends StatelessWidget {
                           ),
                         ),
                       ),
+                      if (isRead(pill)) ...[
+                        const SizedBox(width: 6),
+                        _ReadTick(pill: pill, color: pill.ink, size: 14),
+                      ],
                     ],
                   ),
                   // The canvas was drawn around four-word questions and
@@ -1066,9 +1097,15 @@ class _BigRow extends StatelessWidget {
 
 /// The middle shelf: rows, with the subject's colour carrying its mark.
 class _RowList extends StatelessWidget {
-  const _RowList({required this.pills, required this.onOpen, this.onShown});
+  const _RowList({
+    required this.pills,
+    required this.isRead,
+    required this.onOpen,
+    this.onShown,
+  });
 
   final List<Pill> pills;
+  final bool Function(Pill) isRead;
   final void Function(List<Pill>, Pill) onOpen;
   final ValueChanged<Pill>? onShown;
 
@@ -1085,7 +1122,11 @@ class _RowList extends StatelessWidget {
           for (final pill in pills)
             Padding(
               padding: EdgeInsets.only(bottom: pill == pills.last ? 0 : 7),
-              child: _CardRow(pill: pill, onTap: () => onOpen(pills, pill)),
+              child: _CardRow(
+                pill: pill,
+                read: isRead(pill),
+                onTap: () => onOpen(pills, pill),
+              ),
             ),
         ],
       ),
@@ -1096,10 +1137,13 @@ class _RowList extends StatelessWidget {
 /// One card as a row: a block of its colour with its mark on it, and the
 /// question beside it.
 class _CardRow extends StatelessWidget {
-  const _CardRow({required this.pill, required this.onTap});
+  const _CardRow({required this.pill, required this.onTap, this.read = false});
 
   final Pill pill;
   final VoidCallback onTap;
+
+  /// Read already: a tick after the subject's name.
+  final bool read;
 
   @override
   Widget build(BuildContext context) {
@@ -1144,15 +1188,31 @@ class _CardRow extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 4),
-                        Text(
-                          pill.topic,
-                          style: AppText.body(
-                            size: 10.5,
-                            weight: FontWeight.w500,
-                            height: 1,
-                            spacing: 0.3,
-                            color: context.p.ink.withValues(alpha: 0.36),
-                          ),
+                        Row(
+                          children: [
+                            Flexible(
+                              child: Text(
+                                pill.topic,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppText.body(
+                                  size: 10.5,
+                                  weight: FontWeight.w500,
+                                  height: 1,
+                                  spacing: 0.3,
+                                  color: context.p.ink.withValues(alpha: 0.36),
+                                ),
+                              ),
+                            ),
+                            if (read) ...[
+                              const SizedBox(width: 5),
+                              _ReadTick(
+                                pill: pill,
+                                color: context.p.ink.withValues(alpha: 0.5),
+                                size: 12,
+                              ),
+                            ],
+                          ],
                         ),
                       ],
                     ),
@@ -1170,9 +1230,15 @@ class _CardRow extends StatelessWidget {
 /// The bottom shelf: smaller cards, because by here the reader is looking
 /// rather than reading.
 class _SmallRow extends StatelessWidget {
-  const _SmallRow({required this.pills, required this.onOpen, this.onShown});
+  const _SmallRow({
+    required this.pills,
+    required this.isRead,
+    required this.onOpen,
+    this.onShown,
+  });
 
   final List<Pill> pills;
+  final bool Function(Pill) isRead;
   final void Function(List<Pill>, Pill) onOpen;
   final ValueChanged<Pill>? onShown;
 
@@ -1203,7 +1269,14 @@ class _SmallRow extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SubjectIcon(subject: pill.topic, size: 15, ink: pill.ink),
+                  Row(
+                    children: [
+                      SubjectIcon(subject: pill.topic, size: 15, ink: pill.ink),
+                      const Spacer(),
+                      if (isRead(pill))
+                        _ReadTick(pill: pill, color: pill.ink, size: 14),
+                    ],
+                  ),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 10),
@@ -1230,6 +1303,30 @@ class _SmallRow extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+/// A card read already, where it sits on a shelf: the tick the top list
+/// marks one with, so a card read from a shelf can stay on it without
+/// being taken for one still to find.
+class _ReadTick extends StatelessWidget {
+  const _ReadTick({required this.pill, required this.color, this.size = 14});
+
+  final Pill pill;
+  final Color color;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: context.l10n.readMark,
+      child: Icon(
+        Icons.check_circle_rounded,
+        key: ValueKey('explore-read-${pill.id}'),
+        size: size,
+        color: color.withValues(alpha: 0.8),
       ),
     );
   }

@@ -36,6 +36,7 @@ import 'package:astuto/widgets/record_share_sheet.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/utils/share_text.dart';
 import 'package:astuto/widgets/chunky.dart';
+import 'package:astuto/widgets/magic_card.dart';
 import 'package:astuto/widgets/scaled_text.dart';
 import 'package:astuto/widgets/share_day.dart';
 import 'package:astuto/widgets/motion.dart';
@@ -63,20 +64,22 @@ Future<void> _finishDay(WidgetTester tester) async {
 }
 
 /// What a fresh install on the free plan is dealt today: every subject,
-/// nothing read — the question of the day, two of the edition's, and two of
-/// the reader's own from the whole pool.
+/// nothing read — two of the reader's own and three at random, as every
+/// free day.
 List<Pill> get _todaysFive {
   // A first day as the app deals it to a reader who never set the mix:
   // read by ReaderProfile as having said nothing, so it opens on the
   // subjects that hook most people, a notch above.
   final ReaderProfile untold = ReaderProfile.read(weights: const {});
-  // And a welcome day: four of the five the reader's own.
+  // Three at random from the mix as it was set, which here is nothing at
+  // all.
   return dealDay(
     date: DateTime.now(),
     topics: kTopicOrder.toSet(),
     weights: untold.weightsOn(0, const {}),
+    mix: const {},
     levels: untold.levelsUnder(const {}),
-    own: kOwnCardsWelcome,
+    own: kOwnCardsFree,
   ).cards;
 }
 
@@ -303,6 +306,7 @@ void main() {
 
     // Four, and last: the offer, with the way past it written under it.
     await _continueFree(tester);
+    expect(find.byType(PillCardStack), findsOneWidget);
 
     // And the answers are kept, not just used once.
     final prefs = await SharedPreferences.getInstance();
@@ -648,7 +652,7 @@ void main() {
       // Taking the trial carries the reader through to the journey.
       await tester.tap(find.text('Day one'));
       await _settle(tester);
-      await tester.tap(find.textContaining('Try 7 days free, then'));
+      await tester.tap(find.textContaining('Try 14 days free, then'));
       await _settle(tester);
       expect(find.byType(JourneyScreen), findsOneWidget);
 
@@ -730,7 +734,7 @@ void main() {
       // The paywall stands in for the journey; taking the trial should
       // carry the reader through to what they reached for.
       await _openJourney(tester, plus: false);
-      await tester.tap(find.textContaining('Try 7 days free, then'));
+      await tester.tap(find.textContaining('Try 14 days free, then'));
       await _settle(tester);
 
       final prefs = await SharedPreferences.getInstance();
@@ -952,9 +956,9 @@ void main() {
       await Future<void>.delayed(Duration.zero);
 
       // What is in the reader's head that morning, not what is in the
-      // app's counter: the question of the day it lands on.
+      // app's counter: the first question of the morning it lands on.
       final Reminder first = t.armed.single.first;
-      expect(first.body, questionOfTheDay(first.when).question);
+      expect(first.body, t.app.leadOn(first.when).question);
       expect(first.body, isNot(contains('13 days')));
       expect(first.title, 'Your five are ready');
     });
@@ -977,8 +981,8 @@ void main() {
       );
 
       // Today and fourteen more, each at the reader's hour, each with the
-      // card that opens that day — the calendar is the same for everybody,
-      // so tonight knows what the morning after next will ask.
+      // card that opens that day, dealt tonight the way that morning will
+      // deal it.
       expect(plan, hasLength(AppState.kPlannedDays + 1));
       for (var i = 0; i < plan.length; i++) {
         expect(plan[i].id, i + 1);
@@ -990,7 +994,7 @@ void main() {
         );
       }
       final third = DateTime.now().add(const Duration(days: 3));
-      expect(plan[3].body, questionOfTheDay(third).question);
+      expect(plan[3].body, t.app.leadOn(third).question);
       expect(plan.map((r) => r.body).toSet().length, greaterThan(10));
     });
 
@@ -1021,7 +1025,7 @@ void main() {
       expect(on(0).title, 'Your five are ready');
       // Tomorrow: two days since — the freeze is what holds, so say so.
       expect(on(1).title, 'Your freeze is holding');
-      expect(on(1).body, contains(questionOfTheDay(on(1).when).question));
+      expect(on(1).body, contains(t.app.leadOn(on(1).when).question));
       // A week: the card they were sure about and wrong about.
       expect(on(6).title, 'You were sure about this one');
       expect(on(6).body, contains(miss.question));
@@ -1053,7 +1057,10 @@ void main() {
       // Handed over at launch, without being asked.
       expect(pushed, hasLength(1));
       final data = pushed.single;
-      final Pill lead = questionOfTheDay(DateTime.now());
+      // The first question of the reader's own day.
+      final Pill lead = app.leadOn(DateTime.now());
+      expect(lead.asksSomething, isTrue);
+      expect(app.ownIdsToday, contains(lead.id));
       expect(data['edition'], editionOf(DateTime.now()));
       expect(data['question'], lead.question);
       expect(data['streak'], 7);
@@ -1078,20 +1085,15 @@ void main() {
       final ahead = data['ahead'] as Map<String, String>;
       expect(ahead, hasLength(AppState.kPlannedDays + 1));
       final third = DateTime.now().add(const Duration(days: 3));
-      expect(ahead[dateKey(third)], questionOfTheDay(third).question);
+      final Pill thirdLead = app.leadOn(third);
+      expect(ahead[dateKey(third)], thirdLead.question);
       final aheadColor = data['aheadColor'] as Map<String, String>;
       final aheadTopic = data['aheadTopic'] as Map<String, String>;
       final aheadInk = data['aheadInk'] as Map<String, String>;
       expect(aheadColor.keys, orderedEquals(ahead.keys));
-      expect(
-        aheadColor[dateKey(third)],
-        AppState.hexOf(questionOfTheDay(third).color),
-      );
-      expect(
-        aheadInk[dateKey(third)],
-        AppState.hexOf(questionOfTheDay(third).ink),
-      );
-      expect(aheadTopic[dateKey(third)], questionOfTheDay(third).topic);
+      expect(aheadColor[dateKey(third)], AppState.hexOf(thirdLead.color));
+      expect(aheadInk[dateKey(third)], AppState.hexOf(thirdLead.ink));
+      expect(aheadTopic[dateKey(third)], thirdLead.topic);
       // And nothing a stranger reading the home screen should not see.
       expect(data.keys, isNot(contains('answers')));
 
@@ -1241,30 +1243,23 @@ void main() {
     });
   });
 
-  test(
-    'the first day is dealt from the mix, around the question of the day',
-    () async {
-      SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
-      final app = AppState();
-      await app.init();
+  test('the first day is dealt from the mix, two of the reader\'s own and '
+      'three at random', () async {
+    SharedPreferences.setMockInitialValues({'knowit.onboarded': true});
+    final app = AppState();
+    await app.init();
 
-      // Four cards of the reader's own and the one everybody gets — the one
-      // a friend who says "did you get it?" is talking about.
-      expect(
-        app.todaysDeck.map((p) => p.id).toList(),
-        _todaysFive.map((p) => p.id).toList(),
-      );
-      expect(app.todaysDeck, hasLength(kPillsPerDay));
-      expect(
-        app.todaysDeck.map((p) => p.id),
-        contains(questionOfTheDay(DateTime.now()).id),
-      );
-      // And the phone writes down what it was dealt, for the archive.
-      final prefs = await SharedPreferences.getInstance();
-      final noted = jsonDecode(prefs.getString('knowit.deckHistory')!) as Map;
-      expect(noted[dateKey(DateTime.now())], _todaysFive.map((p) => p.id));
-    },
-  );
+    expect(
+      app.todaysDeck.map((p) => p.id).toList(),
+      _todaysFive.map((p) => p.id).toList(),
+    );
+    expect(app.todaysDeck, hasLength(kPillsPerDay));
+    expect(app.ownIdsToday, hasLength(kOwnCardsFree));
+    // And the phone writes down what it was dealt, for the archive.
+    final prefs = await SharedPreferences.getInstance();
+    final noted = jsonDecode(prefs.getString('knowit.deckHistory')!) as Map;
+    expect(noted[dateKey(DateTime.now())], _todaysFive.map((p) => p.id));
+  });
 
   test('a day never fills up with opinions', () {
     // Debates are ungraded, so a deck of them measures nothing. With twenty
@@ -1493,9 +1488,8 @@ void main() {
     expect(find.byKey(const ValueKey('tab-Profile')), findsOneWidget);
   });
 
-  testWidgets('the onboarding is two screens and then the cards', (
-    tester,
-  ) async {
+  testWidgets('the onboarding is the intro and the mix, the offer once, and '
+      'then the cards', (tester) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -1514,13 +1508,35 @@ void main() {
     await tester.tap(find.text('Skip'));
     await _settle(tester);
 
-    // Four: the offer, once, with the way past it under it — and the cards
-    // start straight after, because there is nothing else to ask.
+    // Four: the offer, once, with the free trial first and the way past
+    // it under it — and the cards start straight after, because there is
+    // nothing else to ask.
+    expect(find.text('Try 14 days free, then €29,99/yr'), findsOneWidget);
+    await _continueFree(tester);
+    expect(find.byType(PillCardStack), findsOneWidget);
+    final prefs = await SharedPreferences.getInstance();
+    expect(prefs.getBool('knowit.onboarded'), isTrue);
+  });
+
+  testWidgets('setting the genres ends on the offer too', (tester) async {
+    SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+    await tester.tap(find.text('Skip'));
+    await _settle(tester);
+    await tester.tap(find.text('Next'));
+    await _settle(tester);
+    expect(find.text('Your mix'), findsOneWidget);
+    // Answered rather than walked past: the same road, to the offer and
+    // then the cards.
+    await tester.tap(find.textContaining('genres on'));
+    await _settle(tester);
     await _continueFree(tester);
     expect(find.byType(PillCardStack), findsOneWidget);
   });
 
-  testWidgets('skipping the mix still meets the offer once', (tester) async {
+  testWidgets('skipping the mix goes straight to the first day, with no '
+      'offer', (tester) async {
     SharedPreferences.setMockInitialValues({'knowit.onboarded': false});
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
@@ -1529,10 +1545,11 @@ void main() {
     // The mix's own Skip, in its heading's row.
     await tester.tap(find.text('Skip'));
     await _settle(tester);
-    // The offer is not a reward for finishing a form.
-    await _continueFree(tester);
+    // A reader who has said nothing and seen no card is not sold anything
+    // yet: the first day, straight away.
+    expect(find.byType(PaywallScreen), findsNothing);
     expect(find.byType(PillCardStack), findsOneWidget);
-    // And it is not asked again.
+    // And the first run is not asked again.
     final prefs = await SharedPreferences.getInstance();
     expect(prefs.getBool('knowit.onboarded'), isTrue);
   });
@@ -1580,8 +1597,9 @@ void main() {
     await _settle(tester);
 
     // Yearly leads and is preselected, so the call to action opens on it:
-    // the year starts with a free week, and says nothing is charged today.
-    expect(find.text('Try 7 days free, then €29,99/yr'), findsOneWidget);
+    // the year starts with two weeks free, and says nothing is charged
+    // today.
+    expect(find.text('Try 14 days free, then €29,99/yr'), findsOneWidget);
     expect(find.text('No charge today · cancel any time'), findsOneWidget);
 
     // The saving is worked out from the two prices rather than asserted.
@@ -1593,7 +1611,7 @@ void main() {
     await tester.tap(find.text('Monthly'));
     await _settle(tester);
     expect(find.text('Subscribe for €3,99/mo'), findsOneWidget);
-    expect(find.textContaining('Try 7 days free'), findsNothing);
+    expect(find.textContaining('Try 14 days free'), findsNothing);
     expect(
       find.text('Cancel any time · No payment is taken in this build'),
       findsOneWidget,
@@ -1701,16 +1719,13 @@ void main() {
 
     final app = AppState();
     await app.init();
-    // A first day is a welcome day: four of the five the reader's own.
-    expect(app.ownIdsToday, hasLength(kOwnCardsWelcome));
+    // A first day is like every free day: two of the five the reader's
+    // own, and three at random.
+    expect(app.ownIdsToday, hasLength(kOwnCardsFree));
     expect(app.todaysDeck, hasLength(kPillsPerDay));
-    // The question of the day is dealt, and it is nobody's own.
-    final question = questionOfTheDay(DateTime.now());
-    expect(app.todaysDeck.map((p) => p.id), contains(question.id));
-    expect(app.ownIdsToday, isNot(contains(question.id)));
 
-    // Reading through, the two own cards carry the mark and the others
-    // do not. The card underneath peeks out, so the mark is read off the
+    // Reading through, the reader's own carry the mark and the cards at
+    // random do not. The card underneath peeks out, so the mark is read off the
     // card itself rather than counted on the screen.
     var marked = 0;
     for (var i = 0; i < kPillsPerDay; i++) {
@@ -1731,7 +1746,7 @@ void main() {
       await _swipeCardAway(tester);
       await _settle(tester);
     }
-    expect(marked, kOwnCardsWelcome);
+    expect(marked, kOwnCardsFree);
   });
 
   testWidgets(
@@ -1743,10 +1758,6 @@ void main() {
       final app = AppState();
       await app.init();
       expect(app.ownIdsToday, hasLength(kPillsPerDay));
-      expect(
-        app.todaysDeck.map((p) => p.id),
-        isNot(contains(questionOfTheDay(DateTime.now()).id)),
-      );
       expect(find.text('FOR YOU'), findsNothing);
     },
   );
@@ -1771,6 +1782,46 @@ void main() {
     expect(find.text(front.question), findsOneWidget);
     expect(find.text(front.barMove), findsOneWidget);
     expect(find.text(front.answer), findsNothing);
+
+    // Nothing about the week is said over the shelf: the header and the
+    // eyebrow are what they are on every evening.
+    expect(find.byKey(const ValueKey('week-reward')), findsNothing);
+  });
+
+  testWidgets('the shelf keeps the mark the reader\'s own cards had', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+    await _finishDay(tester);
+
+    final app = AppState();
+    await app.init();
+    // A first day: two of the reader's own, three at random.
+    expect(app.ownIdsToday, hasLength(kOwnCardsFree));
+    var marked = 0;
+    for (var i = 0; i < kPillsPerDay; i++) {
+      final Pill front = app.todaysDeck[i];
+      expect(find.text(front.question), findsOneWidget, reason: front.id);
+      final bool own = app.ownIdsToday.contains(front.id);
+      if (own) marked++;
+      expect(
+        find.descendant(
+          of: find.byKey(ValueKey('shelf-face-${front.id}-front')),
+          matching: find.text('FOR YOU'),
+        ),
+        own ? findsOneWidget : findsNothing,
+        reason: front.id,
+      );
+      await tester.fling(
+        find.byType(TodayDoneView),
+        const Offset(-300, 0),
+        900,
+      );
+      await _settle(tester);
+    }
+    expect(marked, kOwnCardsFree);
   });
 
   testWidgets('the free plan is offered the upsell instead', (tester) async {
@@ -1782,7 +1833,7 @@ void main() {
 
     // The offer is the last card on the shelf, not a line on this screen:
     // what the shelf opens on is the day's first card and its share.
-    expect(find.text('Try 7 days free'), findsNothing);
+    expect(find.text('Try 14 days free'), findsNothing);
     expect(find.bySemanticsLabel('Share this card'), findsOneWidget);
   });
 
@@ -1814,9 +1865,13 @@ void main() {
         await _swipeCardAway(tester);
         await _settle(tester);
         expect(find.byKey(const ValueKey('magic-card')), findsOneWidget);
+        // A first day is like any free day: the card offers the whole day,
+        // all five the reader's own.
         expect(find.text('Make all five yours.'), findsOneWidget);
-        expect(find.text('Try 7 days free'), findsOneWidget);
+        expect(find.text('Try 14 days free'), findsOneWidget);
         expect(find.text('Skip'), findsNothing);
+        // Nothing about the week yet: no week has been kept.
+        expect(find.byKey(const ValueKey('week-reward')), findsNothing);
         await tester.pump(const Duration(seconds: 6));
         await _settle(tester);
         expect(find.text('Day 1 · five read'), findsNothing);
@@ -1836,7 +1891,7 @@ void main() {
         await tester.pumpWidget(const AstutoApp());
         await _settle(tester);
         await readFive(tester);
-        await tester.tap(find.text('Try 7 days free'));
+        await tester.tap(find.text('Try 14 days free'));
         await _settle(tester);
         expect(find.byType(PaywallScreen), findsOneWidget);
         // Back without the trial: the card is still on the table.
@@ -1902,6 +1957,72 @@ void main() {
       }
     }
 
+    testWidgets('the card after the fifth is the same card at the front and '
+        'to the side, so its rim keeps turning', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await _finishDay(tester);
+      for (var i = 0; i < kPillsPerDay; i++) {
+        await tester.fling(
+          find.byType(TodayDoneView),
+          const Offset(-300, 0),
+          900,
+        );
+        await _settle(tester);
+      }
+      final State atTheFront = tester.state(find.byType(MagicCard));
+      // Back to the fifth: the card after it waits at the side, and it is
+      // the card that was at the front, carried over rather than built
+      // again with its rim's turn starting over.
+      await tester.fling(find.byType(TodayDoneView), const Offset(300, 0), 900);
+      await _settle(tester);
+      expect(find.text('05 / 05'), findsOneWidget);
+      expect(tester.state(find.byType(MagicCard)), same(atTheFront));
+      // And to the front again, still the same.
+      await tester.fling(
+        find.byType(TodayDoneView),
+        const Offset(-300, 0),
+        900,
+      );
+      await _settle(tester);
+      expect(tester.state(find.byType(MagicCard)), same(atTheFront));
+    });
+
+    testWidgets('the offer\'s dot is every colour as soon as the offer is '
+        'reached', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await _finishDay(tester);
+
+      // The dot as it is painted: its gradient's colours, whatever point
+      // the change has reached.
+      List<Color> painted() {
+        final Finder dot = find.descendant(
+          of: find.bySemanticsLabel('ASTUTE+'),
+          matching: find.byType(DecoratedBox),
+        );
+        final decoration =
+            tester.widget<DecoratedBox>(dot.last).decoration as BoxDecoration;
+        return decoration.gradient?.colors ?? [decoration.color!];
+      }
+
+      // Grey while another card is at the front.
+      expect(painted().toSet(), hasLength(1));
+
+      await tester.tap(find.bySemanticsLabel('ASTUTE+'));
+      // One frame into the change: already colour, not a gradient faded
+      // to nothing on its way in.
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 16));
+      for (final Color c in painted()) {
+        expect(c.a, greaterThanOrEqualTo(0.18), reason: '$c');
+      }
+      await _settle(tester);
+      expect(painted(), kSpectrum);
+    });
+
     testWidgets('the shelf ends on the card that offers the rest of the day', (
       tester,
     ) async {
@@ -1922,7 +2043,7 @@ void main() {
       await tester.tap(
         find.descendant(
           of: find.byKey(const ValueKey('shelf-magic')),
-          matching: find.text('Try 7 days free'),
+          matching: find.text('Try 14 days free'),
         ),
       );
       await _settle(tester);
@@ -2402,9 +2523,9 @@ void main() {
 
       final app = AppState();
       await app.init();
-      // The day is the question of the day, the edition's two and the
-      // reader's two — none of them the card that came back.
-      expect(app.todaysDeck.map((p) => p.id), contains(question.id));
+      // The day is the reader's own and the cards at random — none of them
+      // the card that came back.
+      expect(app.todaysDeck.map((p) => p.id), isNot(contains(due.id)));
       expect(app.reviewIdsToday, isEmpty);
       expect(app.reviewsWaiting, hasLength(1));
       await finish(tester);
@@ -3196,6 +3317,39 @@ void main() {
       expect(sizeOf(tester), 20);
       expect(find.byType(SingleChildScrollView), findsWidgets);
     });
+  });
+
+  testWidgets('a card read from a shelf stays on it, marked', (tester) async {
+    SharedPreferences.setMockInitialValues(_installed());
+    await tester.pumpWidget(const AstutoApp());
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+    await _settle(tester);
+
+    final Pill first = pickedPills(
+      seed: daySeed(DateTime.now()),
+      count: 12,
+    ).first;
+    expect(find.byKey(ValueKey('explore-${first.id}')), findsWidgets);
+    expect(find.byKey(ValueKey('explore-read-${first.id}')), findsNothing);
+
+    // Opened and closed: it counts as read, and the shelf it came from
+    // still holds it, where it was, with the tick the top list uses. Taken
+    // off the moment it was read, it went from under the reader's thumb.
+    final Offset before = tester.getTopLeft(
+      find.byKey(ValueKey('explore-${first.id}')).first,
+    );
+    await tester.tap(find.byKey(ValueKey('explore-${first.id}')).first);
+    await _settle(tester);
+    await tester.tap(find.bySemanticsLabel('Close'));
+    await _settle(tester);
+
+    expect(find.byKey(ValueKey('explore-${first.id}')), findsWidgets);
+    expect(find.byKey(ValueKey('explore-read-${first.id}')), findsWidgets);
+    expect(
+      tester.getTopLeft(find.byKey(ValueKey('explore-${first.id}')).first),
+      before,
+    );
   });
 
   testWidgets('a re-read card is the size of the one it re-reads', (
@@ -4616,11 +4770,15 @@ void main() {
           parts.add(mark);
         }
         if (scene == 4) {
-          // The ring is the streak's box: the count sits in its middle.
-          final Rect count = tester.getRect(find.text('13'));
-          parts.add(
-            Rect.fromCenter(center: count.center, width: 158, height: 158),
-          );
+          // Tomorrow morning: the notification, the first card and the
+          // fourteen days, each a box of its own.
+          for (final key in [
+            'intro-notice',
+            'intro-first-card',
+            'intro-fortnight',
+          ]) {
+            parts.add(tester.getRect(find.byKey(ValueKey(key))));
+          }
         }
         if (scene == 1) {
           // The cards' box stands on the band's foot and is its width, to
@@ -4653,6 +4811,240 @@ void main() {
             reason: 'scene ${scene + 1} draws under Skip',
           );
         }
+      }
+    });
+  });
+
+  group('the last scene of the intro', () {
+    // Outside the test body: FontLoader needs real asynchrony.
+    setUpAll(_loadRealFonts);
+
+    Future<void> pumpLastScene(
+      WidgetTester tester,
+      Size size,
+      EdgeInsets pad,
+    ) async {
+      tester.view.physicalSize = size * 3;
+      tester.view.devicePixelRatio = 3;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          theme: buildAstutoTheme(Brightness.dark),
+          home: MediaQuery(
+            data: MediaQueryData(padding: pad, size: size),
+            child: IntroScreen(
+              key: ValueKey(size),
+              onContinue: () {},
+              onApple: () async => false,
+              onGoogle: () async => false,
+              onNotConnected: (_) {},
+            ),
+          ),
+        ),
+      );
+      await _settle(tester);
+      for (int scene = 1; scene < 5; scene++) {
+        await tester.fling(
+          find.byType(IntroScreen),
+          const Offset(-300, 0),
+          900,
+        );
+        await _settle(tester);
+      }
+      expect(find.text('Thirty seconds a day'), findsOneWidget);
+    }
+
+    const List<String> parts = [
+      'intro-notice',
+      'intro-first-card',
+      'intro-fortnight',
+    ];
+
+    testWidgets('lines up with the buttons, clear of Skip, on every phone '
+        'tall enough for the whole band', (tester) async {
+      // The notification, the card and the days start and end where the
+      // buttons do — and the phones whose band starts right under Skip are
+      // the ones that matter, which is why this walks several.
+      const sizes = [
+        (Size(393, 852), EdgeInsets.only(top: 59, bottom: 34)),
+        (Size(390, 844), EdgeInsets.only(top: 47, bottom: 34)),
+        (Size(402, 874), EdgeInsets.only(top: 59, bottom: 34)),
+        (Size(430, 932), EdgeInsets.only(top: 62, bottom: 34)),
+      ];
+      for (final (Size size, EdgeInsets pad) in sizes) {
+        await pumpLastScene(tester, size, pad);
+        final String phone = '${size.width.toInt()} by ${size.height.toInt()}';
+        final Rect band = tester.getRect(
+          find.byKey(const ValueKey('intro-stage')),
+        );
+        final Rect skip = tester.getRect(find.text('Skip'));
+        final Rect apple = tester.getRect(
+          find
+              .ancestor(
+                of: find.text('Continue with Apple'),
+                matching: find.byType(Container),
+              )
+              .first,
+        );
+        for (final key in parts) {
+          final Rect part = tester.getRect(find.byKey(ValueKey(key)));
+          expect(
+            part.left,
+            closeTo(apple.left, 0.5),
+            reason: 'on a $phone phone, $key starts off the buttons\' line',
+          );
+          expect(
+            part.right,
+            closeTo(apple.right, 0.5),
+            reason: 'on a $phone phone, $key ends off the buttons\' line',
+          );
+          expect(part.top, greaterThanOrEqualTo(band.top));
+          expect(part.bottom, lessThanOrEqualTo(band.bottom + 0.5));
+        }
+        // Skip keeps a clear line of its own over the notification.
+        final Rect notice = tester.getRect(
+          find.byKey(const ValueKey('intro-notice')),
+        );
+        expect(
+          notice.top - skip.bottom,
+          greaterThanOrEqualTo(12),
+          reason: 'on a $phone phone, the notification crowds Skip',
+        );
+        // And no further under it than that where the band reaches up to
+        // Skip: the room above is the card's and the days', to grow into.
+        if (band.top < skip.bottom + 16) {
+          expect(
+            notice.top - skip.bottom,
+            lessThanOrEqualTo(24),
+            reason: 'on a $phone phone, the drawing leaves the top empty',
+          );
+        }
+      }
+    });
+
+    testWidgets('on a short phone shrinks with its band, centred and clear '
+        'of Skip', (tester) async {
+      // An SE: the band is shallower than the width wants, so the drawing
+      // is fitted to its height like every other scene, and stays in the
+      // middle — away from Skip in the corner.
+      await pumpLastScene(
+        tester,
+        const Size(375, 667),
+        const EdgeInsets.only(top: 20),
+      );
+      final Rect band = tester.getRect(
+        find.byKey(const ValueKey('intro-stage')),
+      );
+      final Rect skip = tester.getRect(find.text('Skip'));
+      for (final key in parts) {
+        final Rect part = tester.getRect(find.byKey(ValueKey(key)));
+        expect(part.center.dx, closeTo(band.center.dx, 0.5));
+        expect(part.top, greaterThanOrEqualTo(band.top));
+        expect(part.bottom, lessThanOrEqualTo(band.bottom + 0.5));
+        expect(part.overlaps(skip), isFalse, reason: '$key draws under Skip');
+      }
+    });
+  });
+
+  group('the card after the fifth on a phone', () {
+    // Outside the test body: FontLoader needs real asynchrony.
+    setUpAll(_loadRealFonts);
+
+    testWidgets('says a week kept on the shelf too, and the cards keep '
+        'their size', (tester) async {
+      tester.view.physicalSize = const Size(402, 874) * 3;
+      tester.view.devicePixelRatio = 3;
+      addTearDown(tester.view.reset);
+      // Six days kept, the last of them yesterday: today makes the week.
+      final DateTime now = DateTime.now();
+      final String yesterday = dateKey(
+        DateTime(now.year, now.month, now.day - 1),
+      );
+      SharedPreferences.setMockInitialValues({
+        ..._installed(),
+        'knowit.streak': 6,
+        'knowit.lastCompletionDate': yesterday,
+      });
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await _finishDay(tester);
+
+      // The shelf opens on the first card, with the eyebrow over it and
+      // nothing about the week in the way.
+      expect(find.text("TODAY'S FIVE"), findsOneWidget);
+      expect(find.byKey(const ValueKey('week-reward')), findsNothing);
+
+      // The last card on the shelf is the offer, and it says it there.
+      for (var i = 0; i < kPillsPerDay; i++) {
+        await tester.fling(
+          find.byType(TodayDoneView),
+          const Offset(-300, 0),
+          900,
+        );
+        await _settle(tester);
+      }
+      final Finder magic = find.byKey(const ValueKey('shelf-magic'));
+      expect(magic, findsOneWidget);
+      expect(
+        find.descendant(
+          of: magic,
+          matching: find.byKey(const ValueKey('week-reward')),
+        ),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('fits the longest of it in every language on a small phone', (
+      tester,
+    ) async {
+      // The card's size on a small phone, measured in the app itself.
+      tester.view.physicalSize = const Size(375, 667) * 2;
+      tester.view.devicePixelRatio = 2;
+      addTearDown(tester.view.reset);
+      SharedPreferences.setMockInitialValues(_installed());
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      for (var i = 0; i < kPillsPerDay; i++) {
+        await _swipeCardAway(tester);
+      }
+      final Size card = tester.getSize(
+        find.byKey(const ValueKey('magic-card')),
+      );
+
+      for (final Locale locale in AppLocalizations.supportedLocales) {
+        final l = await AppLocalizations.delegate.load(locale);
+        final String longest = l.weekKeptThreeOwn;
+        await tester.pumpWidget(
+          MaterialApp(
+            locale: locale,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            theme: buildAstutoTheme(Brightness.dark),
+            home: Scaffold(
+              body: Center(
+                child: SizedBox.fromSize(
+                  size: card,
+                  child: MagicCard(
+                    eyebrow: l.plusNameCaps,
+                    note: ('note', longest),
+                    headline: l.plusCardHeadline,
+                    line: l.magicLine,
+                    action: l.magicUnlock(14),
+                    onAction: () {},
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+        expect(
+          tester.takeException(),
+          isNull,
+          reason: '${locale.languageCode}: ${l.plusCardHeadline} / $longest',
+        );
       }
     });
   });

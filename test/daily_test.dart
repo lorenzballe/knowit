@@ -29,7 +29,7 @@ List<Pill> _whole({
 ).cards;
 
 void main() {
-  group('The question of the day', () {
+  group('The question of the day, in the calendar', () {
     test('is the same question for everybody, and for the same day twice', () {
       final day = DateTime(2026, 10, 14);
       final a = questionOfTheDay(day).id;
@@ -95,25 +95,17 @@ void main() {
   });
 
   group('A free day', () {
-    test('is the question of the day, three of the edition\'s and one of the reader\'s own', () {
+    test('is two of the reader\'s own and three at random', () {
       final day = DateTime(2026, 10, 14);
       final deal = dealDay(date: day);
       final cards = deal.cards;
       expect(cards, hasLength(kPillsPerDay));
       expect(cards.map((p) => p.id).toSet(), hasLength(kPillsPerDay));
-      expect(deal.question?.id, questionOfTheDay(day).id);
-      expect(cards.map((p) => p.id), contains(questionOfTheDay(day).id));
       expect(deal.own, hasLength(kOwnCardsFree));
-      expect(deal.own, isNot(contains(deal.question!.id)));
-      // The other three are the edition's: the same for everybody, and they
-      // tell rather than ask.
-      final common = cards
-          .where((p) => !deal.own.contains(p.id) && p.id != deal.question!.id)
-          .toList();
-      expect(common, hasLength(3));
-      final edition = commonOfEdition(editionOf(day)).map((p) => p.id);
-      for (final p in common) {
-        expect(edition, contains(p.id));
+      // The reader's own hold the asking slots; the three at random tell.
+      final chance = cards.where((p) => !deal.own.contains(p.id)).toList();
+      expect(chance, hasLength(kPillsPerDay - kOwnCardsFree));
+      for (final p in chance) {
         expect(p.asksSomething, isFalse, reason: p.id);
       }
       expect(
@@ -121,59 +113,104 @@ void main() {
         asksInADay(kPillsPerDay),
       );
       expect(cards.first.asksSomething, isFalse, reason: 'opens on a read');
+      // Nothing in it is the calendar's.
+      expect(cards.map((p) => p.id), isNot(contains(questionOfTheDay(day).id)));
+      final edition = commonOfEdition(editionOf(day)).map((p) => p.id).toSet();
+      expect(chance.where((p) => edition.contains(p.id)).length, lessThan(3));
     });
 
-    test('the mix governs the reader\'s own, and the rest ignores it', () {
+    test('the cards at random come from the subjects kept on, and spread', () {
       final day = DateTime(2026, 10, 14);
+      const keys = {'space', 'history', 'food', 'music', 'thinking'};
+      final names = {for (final k in keys) kTopics[k]!.name};
+      final reading = {
+        for (final k in const ['space', 'history', 'food', 'music'])
+          kTopics[k]!.name,
+      };
+      for (var d = 0; d < 20; d++) {
+        final date = day.add(Duration(days: d));
+        final deal = dealDay(
+          date: date,
+          topics: keys,
+          weights: const {'space': 1, 'history': 1, 'food': 1, 'music': 1},
+        );
+        final chance = deal.cards
+            .where((p) => !deal.own.contains(p.id))
+            .toList();
+        expect(chance, hasLength(3), reason: '$date');
+        for (final p in chance) {
+          expect(names, contains(p.topic), reason: p.id);
+        }
+        // A subject the day already holds only once every other subject
+        // is in it: the three cover what the reader's own left out.
+        final missing = reading.difference({
+          for (final p in deal.cards)
+            if (deal.own.contains(p.id)) p.topic,
+        });
+        final got = chance.map((p) => p.topic).toSet();
+        if (missing.length >= 3) {
+          expect(got, hasLength(3), reason: '$date');
+          expect(missing, containsAll(got), reason: '$date');
+        } else {
+          expect(got, containsAll(missing), reason: '$date');
+        }
+      }
+    });
+
+    test('the cards at random keep to the mix as it was set', () {
+      final day = DateTime(2026, 10, 14);
+      // One subject kept, a genre of it turned off: three from what is
+      // left of it, before any other subject.
       final deal = dealDay(
         date: day,
-        topics: {'space', 'history'},
-        weights: const {'space': 1, 'history': 1},
+        topics: const {'space', 'thinking'},
+        genresOff: const {'space.the_moon'},
       );
-      // The card that asks lives under Thinking, whatever the mix; the
-      // card that tells is the mix's entirely.
-      for (final id in deal.own) {
-        final Pill p = PillBank.byId(id)!;
-        if (p.asksSomething) continue;
-        expect(p.topic, anyOf('Space', 'History'), reason: id);
+      final chance = deal.cards.where((p) => !deal.own.contains(p.id));
+      for (final p in chance) {
+        expect(p.topic, kTopics['space']!.name, reason: p.id);
+        // On the mix through a strand that is still on.
+        expect(
+          p.strands.any((s) => !s.startsWith('space.the_moon.')),
+          isTrue,
+          reason: p.id,
+        );
       }
-      final question = questionOfTheDay(day);
-      expect(deal.cards.map((p) => p.id), contains(question.id));
-      expect(kTopics['thinking']!.name, question.topic);
+      // A subject turned all the way down is drawn far less often than one
+      // at the top, and never more.
+      var up = 0, down = 0;
+      for (var d = 0; d < 40; d++) {
+        final dealt = dealDay(
+          date: day.add(Duration(days: d)),
+          topics: const {'space', 'history', 'thinking'},
+          mix: const {'space': 1, 'history': 0.1},
+        );
+        for (final p in dealt.cards.where((p) => !dealt.own.contains(p.id))) {
+          if (p.topic == kTopics['space']!.name) up++;
+          if (p.topic == kTopics['history']!.name) down++;
+        }
+      }
+      expect(up, greaterThan(down));
     });
 
-    test('the welcome week: four of the five the reader\'s own, then the '
-        'shared day', () {
-      for (var d = 0; d < kWelcomeDays; d++) {
-        expect(ownCardsFor(plus: false, streak: 0, day: d), kOwnCardsWelcome);
-        expect(inWelcomeWeek(d), isTrue);
-      }
-      expect(
-        ownCardsFor(plus: false, streak: 0, day: kWelcomeDays),
-        kOwnCardsFree,
-      );
-      expect(inWelcomeWeek(kWelcomeDays), isFalse);
-      // The week kept is rewarded after the welcome, not during it.
-      expect(ownCardsFor(plus: false, streak: 7, day: 7), kOwnCardsRewarded);
-      expect(ownCardsFor(plus: true, streak: 0, day: 0), kPillsPerDay);
-
+    test('a card already read is not dealt at random', () {
       final day = DateTime(2026, 10, 14);
-      final deal = dealDay(date: day, own: kOwnCardsWelcome);
-      expect(deal.cards, hasLength(kPillsPerDay));
-      expect(deal.own, hasLength(kOwnCardsWelcome));
-      // Only the question of the day is everybody's.
-      expect(deal.question?.id, questionOfTheDay(day).id);
-      expect(
-        deal.cards.where((p) => !deal.own.contains(p.id)).map((p) => p.id),
-        [deal.question!.id],
-      );
-      expect(
-        deal.cards.where((p) => p.asksSomething).length,
-        asksInADay(kPillsPerDay),
-      );
+      final first = dealDay(date: day);
+      final read = first.cards.map((p) => p.id).toSet();
+      final again = dealDay(date: day, exclude: read);
+      expect(again.cards.map((p) => p.id).toSet().intersection(read), isEmpty);
     });
 
-    test('a week kept makes two of the five the reader\'s own', () {
+    test('there is no welcome: the first free day is two of the five the '
+        'reader\'s own, like every other', () {
+      // The first week kept is rewarded like any other: there is no
+      // welcome in front of it any more.
+      expect(ownCardsFor(plus: false, streak: 0), kOwnCardsFree);
+      expect(ownCardsFor(plus: false, streak: 7), kOwnCardsRewarded);
+      expect(ownCardsFor(plus: true, streak: 0), kPillsPerDay);
+    });
+
+    test('a week kept makes three of the five the reader\'s own', () {
       expect(ownCardsFor(plus: false, streak: 0), kOwnCardsFree);
       expect(ownCardsFor(plus: false, streak: 6), kOwnCardsFree);
       expect(ownCardsFor(plus: false, streak: 7), kOwnCardsRewarded);
@@ -181,16 +218,20 @@ void main() {
       expect(ownCardsFor(plus: false, streak: 14), kOwnCardsRewarded);
       expect(ownCardsFor(plus: true, streak: 0), kPillsPerDay);
       expect(ownCardsFor(plus: true, streak: 7), kPillsPerDay);
+      expect(kOwnCardsFree, 2);
+      expect(kOwnCardsRewarded, 3);
 
       final day = DateTime(2026, 10, 14);
       final deal = dealDay(date: day, own: kOwnCardsRewarded);
       expect(deal.cards, hasLength(kPillsPerDay));
       expect(deal.own, hasLength(kOwnCardsRewarded));
-      expect(deal.cards.map((p) => p.id), contains(questionOfTheDay(day).id));
+      expect(deal.cards.where((p) => !deal.own.contains(p.id)), hasLength(2));
     });
+  });
 
+  group('The calendar', () {
     test(
-      'the edition\'s cards are everybody\'s, and keep clear of yesterday\'s',
+      'the edition\'s cards keep clear of yesterday\'s, and no day deals them',
       () {
         final a = commonOfEdition(40).map((p) => p.id).toList();
         resetCalendar();
@@ -207,35 +248,15 @@ void main() {
         }
       },
     );
-
-    test(
-      'a reader who has read one of the edition\'s takes the next spare',
-      () {
-        final day = DateTime(2026, 10, 14);
-        final edition = commonOfEdition(editionOf(day))
-            .map((p) => p.id)
-            .toList();
-        final deal = dealDay(date: day, exclude: {edition.first});
-        final ids = deal.cards.map((p) => p.id).toList();
-        expect(ids, isNot(contains(edition.first)));
-        expect(ids, contains(edition[1]));
-        expect(ids, contains(edition[2]));
-        expect(deal.cards, hasLength(kPillsPerDay));
-      },
-    );
   });
 
   group('A day that is all the reader\'s own', () {
-    test('holds five from the mix and no question of the day', () {
+    test('holds five from the mix and nothing at random', () {
       final day = DateTime(2026, 10, 14);
       final deal = dealDay(date: day, own: kPillsPerDay);
-      expect(deal.question, isNull);
       expect(deal.cards, hasLength(kPillsPerDay));
       expect(deal.own, hasLength(kPillsPerDay));
-      expect(
-        deal.cards.map((p) => p.id),
-        isNot(contains(questionOfTheDay(day).id)),
-      );
+      expect(deal.cards.map((p) => p.id).toSet(), deal.own);
       expect(
         deal.cards.where((p) => p.asksSomething).length,
         asksInADay(kPillsPerDay),
@@ -261,12 +282,12 @@ void main() {
         deck.where((p) => p.asksSomething).length,
         asksInADay(kPillsPerDay),
       );
-      // On a free day the review is the reader's own, beside the question
-      // of the day.
+      // A review handed to a free day is the reader's own, beside the
+      // cards at random.
       final free = dealDay(date: day, reviews: due);
       expect(free.cards.map((p) => p.id), contains(due.first.id));
       expect(free.own, contains(due.first.id));
-      expect(free.cards.map((p) => p.id), contains(questionOfTheDay(day).id));
+      expect(free.own, hasLength(kOwnCardsFree));
       expect(free.cards.map((p) => p.id).toSet(), hasLength(kPillsPerDay));
     });
 

@@ -3,12 +3,13 @@
 // The same day the phone deals for itself (lib/data/daily.dart and
 // lib/data/pills_repository.dart), card for card in its rules — five cards,
 // two that ask, one debate at most, a fresh strand before a second card of
-// one, the hardest early, a debate to close, the welcome week, the question
-// of the day and the edition's common cards from the frozen calendar — but
-// dealt from a profile the phone never had: what held the reader and what
-// they threw on, read off the trace. Where the phone's draw and this one
-// differ, this one is the reader's; where they must agree — everything
-// that is everybody's — both read the calendar.
+// one, the hardest early, a debate to close, and on the
+// free plan the reader's own beside cards dealt at random from the mix —
+// but dealt from a profile the phone never had: what held the reader and
+// what they threw on, read off the trace. Where the phone's draw and this
+// one differ, this one is the reader's. Nothing in a day is everybody's:
+// the calendar's question and cards are kept, the same on both sides, but
+// no day deals them.
 
 import { Bank, Card, asks, graded, isDebate, editionOf, genreOf, strandsOf, traitsOf } from './bank.js';
 import { Profile, dayNumberOf, reviewsDue, streakOn, weightsOn, readOnboarding } from './profile.js';
@@ -16,25 +17,21 @@ import { rng, seedOf, shuffle } from './rng.js';
 
 export const PILLS_PER_DAY = 5;
 export const ASK_SHARE = 0.4;
-export const OWN_FREE = 1;
-export const OWN_REWARDED = 2;
-export const WELCOME_DAYS = 7;
-export const OWN_WELCOME = 4;
+export const OWN_FREE = 2;
+export const OWN_REWARDED = 3;
 export const COMMON_SPARES = 8;
 
 export const asksInADay = (count: number): number => Math.round(count * ASK_SHARE);
 
-export function ownCardsFor(plus: boolean, streak: number, day: number): number {
+/** How many of the five are the reader's own: all on Astute+, two free, three the morning after a week kept (lib/data/daily.dart). */
+export function ownCardsFor(plus: boolean, streak: number): number {
   if (plus) return PILLS_PER_DAY;
-  if (day >= 0 && day < WELCOME_DAYS) return OWN_WELCOME;
   return streak > 0 && streak % 7 === 0 ? OWN_REWARDED : OWN_FREE;
 }
 
-export const inWelcomeWeek = (day: number): boolean => day >= 0 && day < WELCOME_DAYS;
-
 // ── The calendar ─────────────────────────────────────────────────────────
 
-/** The question of the day: the calendar's, or chained past its end. */
+/** The question of the day: the calendar's, or chained past its end. No day deals it. */
 export function questionOfEdition(bank: Bank, edition: number): Card | null {
   const frozen = bank.editions.get(edition);
   const card = frozen ? bank.byId.get(frozen) : undefined;
@@ -53,7 +50,7 @@ export function questionOfEdition(bank: Bank, edition: number): Card | null {
   return fresh[0] ?? shuffle([...pool], rng(edition * 7919 + 104729))[0];
 }
 
-/** The edition's common cards: the calendar's, or chained past its end. */
+/** The edition's cards: the calendar's, or chained past its end. No day deals them. */
 export function commonOfEdition(bank: Bank, edition: number): Card[] {
   const frozen = bank.commons.get(edition);
   if (frozen) {
@@ -228,6 +225,94 @@ export function dealOwn(bank: Bank, profile: Profile, weights: Record<string, nu
   return { cards: deck, explorer: explorer[0] ?? null };
 }
 
+// ── The rest, at random ──────────────────────────────────────────────────
+
+export interface RandomOptions {
+  seed: string;
+  count: number;
+  /** How many of [count] should ask: none, unless the reader's own left the day short of questions. */
+  asking: number;
+  exclude: Set<string>;
+  /** Subjects and strands the day already holds. */
+  topicsDealt: Set<string>;
+  strandsDealt: Set<string>;
+}
+
+/**
+ * Cards dealt at random: what is left of a free day once the reader's own
+ * are dealt (pillsAtRandom in lib/data/pills_repository.dart). Nothing
+ * about the reader goes into them but what the reader set: the subjects
+ * kept on, as much of each as the mix asks for, and never a genre or a
+ * strand turned off. No level, no taste, no review — the difference with
+ * the cards chosen for them. Never a card already read while one is
+ * unread, never a card before the one it builds on, and a subject or a
+ * strand the day already holds only when nothing else on the mix will do.
+ * Reads, unless [asking] says the day still wants a question; never a
+ * debate, because a day has one at most and the reader's own may hold it.
+ * Seeded by reader and date, so every server agrees with itself.
+ */
+export function dealRandom(bank: Bank, profile: Profile, o: RandomOptions): Card[] {
+  if (o.count <= 0) return [];
+  const next = rng(seedOf(o.seed));
+  const pool = shuffle([...bank.live], next);
+  const wanted = profile.topics;
+  const onTopic = (c: Card) => wanted.size === 0 || wanted.has(c.topic);
+  const strandOn = (s: string) => !profile.strandsOff.has(s) && !profile.genresOff.has(genreOf(s));
+  const onMix = (c: Card) => onTopic(c) && (strandsOf(c).length === 0 || strandsOf(c).some(strandOn));
+  const ready = (c: Card) => (c.builds_on ?? []).every((id) => o.exclude.has(id));
+  const tierOf = (c: Card): number => {
+    const read = o.exclude.has(c.id) ? 4 : 0;
+    if (onMix(c)) return read + (ready(c) ? 0 : 1);
+    if (onTopic(c)) return read + 2;
+    return read + 3;
+  };
+  // Inside a tier, the exponential race on the mix alone.
+  const even = Object.keys(profile.mix).length === 0;
+  const tiers: { key: number; c: Card }[][] = Array.from({ length: 8 }, () => []);
+  for (const c of pool) {
+    const w = even ? 1 : profile.mix[c.topic] ?? 0;
+    const u = Math.max(1e-12, Math.min(1, next()));
+    tiers[tierOf(c)].push({ key: -Math.log(u) / (w <= 0 ? 1e-6 : w), c });
+  }
+  const ordered = tiers.map((tier) => tier.sort((a, b) => a.key - b.key).map((k) => k.c));
+
+  const picked: Card[] = [];
+  const topics = new Set(o.topicsDealt);
+  const strands = new Set(o.strandsDealt);
+  // 0: a subject and a strand the day has not got yet; 1: a strand it has not got; 2: anything.
+  const repeatOf = (c: Card): number => (c.strand && strands.has(c.strand) ? 2 : topics.has(c.topic) ? 1 : 0);
+  const admit = (c: Card) => {
+    picked.push(c);
+    topics.add(c.topic);
+    if (c.strand) strands.add(c.strand);
+  };
+  // A tier at a time, the freshest first inside it: a reader who kept one
+  // subject gets a second card of it before a card of a subject turned off.
+  const take = (n: number, wants: (c: Card) => boolean) => {
+    let got = 0;
+    for (const tier of ordered) {
+      for (let allowed = 0; allowed <= 2 && got < n; allowed++) {
+        for (const c of tier) {
+          if (got >= n) break;
+          if (!wants(c) || picked.includes(c) || repeatOf(c) > allowed) continue;
+          admit(c);
+          got++;
+        }
+      }
+      if (got >= n) break;
+    }
+  };
+  take(Math.min(o.asking, o.count), (c) => asks(c) && !isDebate(c));
+  take(o.count - picked.length, (c) => !asks(c));
+  if (picked.length < o.count) {
+    for (const c of ordered.flat()) {
+      if (picked.length >= o.count) break;
+      if (!picked.includes(c) && !isDebate(c)) admit(c);
+    }
+  }
+  return picked;
+}
+
 /** Gives a day a shape rather than a sort order: opens on a read, alternates, the hardest early, a debate to close. */
 export function arrangeDay(cards: Card[]): Card[] {
   if (cards.length < 3) return cards;
@@ -256,69 +341,62 @@ export interface Deal {
   edition: number;
   cards: Card[];
   own: string[];
-  question: string | null;
   reviews: string[];
   /** The one read dealt from a strand never met, taste set aside, or null: tomorrow's trace says whether it took. */
   explorer: string | null;
   ownCount: number;
-  welcome: boolean;
   day: number;
 }
 
-/** A day for the reader, as `dealDay` in daily.dart deals it, from the profile. */
+/** A day for the reader, as `dealDay` in daily.dart deals it, from the profile: their own first, the rest at random. */
 export function dealDay(bank: Bank, profile: Profile, date: string, uid: string): Deal {
   const edition = editionOf(date);
   const day = dayNumberOf(profile, date);
-  const own = ownCardsFor(profile.plus, streakOn(profile, date), day);
+  const own = ownCardsFor(profile.plus, streakOn(profile, date));
   const count = PILLS_PER_DAY;
   const asking = asksInADay(count);
-  const whole = own >= count;
-  const question = whole ? null : questionOfEdition(bank, edition);
+  const ownCount = Math.min(own, count);
+  const whole = ownCount >= count;
 
   // A review is the reader's own, coming back: one at most, so a day always
   // has one question it has never asked. On Astute+ only, as on the phone.
   const reviews = profile.plus
-    ? reviewsDue(profile, bank, date).filter((c) => c.id !== question?.id).slice(0, Math.max(0, asking - 1))
+    ? reviewsDue(profile, bank, date).slice(0, Math.max(0, Math.min(ownCount, asking - 1)))
     : [];
+  const taken = new Set<string>([...profile.seen, ...reviews.map((c) => c.id)]);
 
-  const taken = new Set<string>([...profile.seen, ...(question ? [question.id] : []), ...reviews.map((c) => c.id)]);
-  const common: Card[] = [];
-  if (!whole) {
-    const wanted = Math.max(0, count - 1 - own);
-    const mix = profile.topics;
-    const onMix = (c: Card) => mix.size === 0 || mix.has(c.topic);
-    const spares = commonOfEdition(bank, edition);
-    for (const c of [...spares.filter(onMix), ...spares.filter((c) => !onMix(c))]) {
-      if (common.length >= wanted) break;
-      if (taken.has(c.id)) continue;
-      taken.add(c.id);
-      common.push(c);
-    }
-  }
-
-  const dealt = (question ? 1 : 0) + common.length;
-  const ownAsks = Math.max(0, asking - (question ? 1 : 0));
+  // The reader's own: the asking slots are theirs before they are chance's,
+  // because a question at the reader's level trains and one at random only quizzes.
+  const ownAsks = Math.min(asking, ownCount);
   const reading = readOnboarding(profile.weights, profile.genresOff, profile.strandsOff);
   const weights = weightsOn(reading, day, profile.weights);
   const { cards: rest, explorer } = dealOwn(bank, profile, weights, {
     seed: `${uid}:${date}`,
     explore: !whole && explorerDay(uid, date),
-    count: Math.max(0, count - dealt - reviews.length),
+    count: Math.max(0, ownCount - reviews.length),
     asking: Math.max(0, ownAsks - reviews.length),
     exclude: taken,
-    strandsDealt: new Set([...(question ? [question] : []), ...common, ...reviews].map((c) => c.strand ?? '').filter(Boolean)),
+    strandsDealt: new Set(reviews.map((c) => c.strand ?? '').filter(Boolean)),
   });
   const mine = [...reviews, ...rest];
+
+  // What the reader's own leave, at random from the mix as it was set.
+  const chance = dealRandom(bank, profile, {
+    seed: `random:${uid}:${date}`,
+    count: Math.max(0, count - mine.length),
+    asking: Math.max(0, asking - mine.filter(asks).length),
+    exclude: new Set([...taken, ...mine.map((c) => c.id)]),
+    topicsDealt: new Set(mine.map((c) => c.topic)),
+    strandsDealt: new Set(mine.map((c) => c.strand ?? '').filter(Boolean)),
+  });
   return {
     date,
     edition,
-    cards: arrangeDay([...(question ? [question] : []), ...common, ...mine]),
+    cards: arrangeDay([...mine, ...chance]),
     own: mine.map((c) => c.id),
-    question: question?.id ?? null,
     reviews: reviews.map((c) => c.id),
     explorer: explorer?.id ?? null,
     ownCount: own,
-    welcome: !profile.plus && inWelcomeWeek(day),
     day,
   };
 }

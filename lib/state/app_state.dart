@@ -133,9 +133,9 @@ class AppState extends ChangeNotifier {
   /// Every pill id already read, so later days open on something new.
   Set<String> seenIds = {};
 
-  /// Which of today's cards are the reader's own — dealt from their mix
-  /// rather than from the edition everybody gets. Two of five on the free
-  /// plan, and every one of them on Astute+.
+  /// Which of today's cards are the reader's own — chosen for them rather
+  /// than dealt at random. Two of five on the free plan, and every one of
+  /// them on Astute+.
   Set<String> ownIdsToday = {};
 
   /// Which of today's cards the reader has already answered once — the
@@ -402,27 +402,10 @@ class AppState extends ChangeNotifier {
   }
 
   /// How many of a day's cards are the reader's own: all five on Astute+;
-  /// two on the free plan, and three on the morning after a full week
-  /// kept — the streak's own reward, tasted once a week.
-  int get ownCardsToday =>
-      ownCardsFor(plus: isPlus, streak: liveStreak, day: dayNumberOf(today));
-
-  /// True through the reader's first [kWelcomeDays] days read, when four of
-  /// the free day's five are their own. See [kOwnCardsWelcome].
-  bool get inWelcome => !isPlus && inWelcomeWeek(dayNumberOf(today));
-
-  /// How many welcome days are left after today, on the free plan.
-  int get welcomeDaysLeftAfterToday {
-    final tomorrow = DateTime(today.year, today.month, today.day + 1);
-    final int day = dayNumberOf(tomorrow);
-    return isPlus || !inWelcomeWeek(day) ? 0 : kWelcomeDays - day;
-  }
-
-  /// True the evening the welcome week ends: today was a welcome day, and
-  /// tomorrow is the first shared one. Said once, the night before, so the
-  /// change is a thing the reader was told rather than one they notice.
-  bool get welcomeEndsTonight =>
-      inWelcome && welcomeDaysLeftAfterToday == 0 && todayCompleted;
+  /// on the free plan two, and three on the morning after a full week kept
+  /// — the streak's own reward, tasted once a week. The rest are dealt at
+  /// random.
+  int get ownCardsToday => ownCardsFor(plus: isPlus, streak: liveStreak);
 
   /// The onboarding's answers, read as a person rather than a form: a
   /// starting level a notch above for every subject, the strands picked by
@@ -489,8 +472,9 @@ class AppState extends ChangeNotifier {
   /// onboarding was read as (a notch above, see [ReaderProfile]), leaned
   /// only by the strands picked by hand, from the subjects and strands
   /// they kept on — the mix is everybody's — and what came due waits after
-  /// the day instead. On both, the first three days lean to the top of the
-  /// mix.
+  /// the day instead; what is not their own is dealt at random, from the
+  /// mix as they set it and nothing else. On both, the first three days
+  /// lean to the top of the mix.
   Deal _deal(
     DateTime date, {
     required Set<String> exclude,
@@ -500,6 +484,7 @@ class AppState extends ChangeNotifier {
     date: date,
     topics: pickedTopics,
     weights: profile.weightsOn(dayNumberOf(date), leanedWeights),
+    mix: topicWeights,
     levels: isPlus ? measuredLevels : profile.levelsUnder(topicLevels),
     taste: isPlus ? profile.tasteWith(taste) : profile.lean,
     genresOff: genresOff,
@@ -569,8 +554,6 @@ class AppState extends ChangeNotifier {
       // re-asking. The whole claim of the plan is the first number; the
       // whole claim of the review ladder is the second.
       'own': ownIdsToday.length,
-      // The welcome week: the first seven days read, four of five their own.
-      'welcome': inWelcome,
       'reviews': reviewIdsToday.length,
       'topics': pickedTopics.length,
       'streak_days': streak,
@@ -580,9 +563,6 @@ class AppState extends ChangeNotifier {
       'slots': [for (final p in todaysDeck) cardFacts(p.id)['slot']].join(','),
       'challenges': [for (final p in todaysDeck) challengeKind(p.challenge)]
           .join(','),
-      'question_of_day': todaysDeck.any(
-        (p) => p.id == questionOfTheDay(today).id,
-      ),
     });
     _sayCardUp();
   }
@@ -620,7 +600,7 @@ class AppState extends ChangeNotifier {
       day,
       exclude: const {},
       reviews: const [],
-      own: ownCardsFor(plus: isPlus, streak: 0, day: dayNumberOf(day)),
+      own: ownCardsFor(plus: isPlus, streak: 0),
     ).cards;
   }
 
@@ -665,13 +645,6 @@ class AppState extends ChangeNotifier {
     final double? sure = todays.isEmpty
         ? null
         : todays.fold<int>(0, (a, j) => a + j.confidence) / todays.length;
-
-    // The question of the day, on its own: the one square a friend's grid
-    // has in the same place.
-    final Pill question = questionOfTheDay(today);
-    final Answer? said = todaysDeck.any((p) => p.id == question.id)
-        ? answers[question.id]
-        : null;
     return DaySummary(
       edition: editionOf(today),
       squares: squares.toString(),
@@ -679,10 +652,6 @@ class AppState extends ChangeNotifier {
       right: right,
       sure: sure,
       streak: liveStreak,
-      questionRight: said == null
-          ? null
-          : question.challenge.accepts(said.response),
-      questionSure: said?.confidence,
     );
   }
 
@@ -737,11 +706,9 @@ class AppState extends ChangeNotifier {
         ? null
         : reviewIdsToday.contains(pillId)
         ? 'review'
-        : questionOfTheDay(today).id == pillId
-        ? 'question_of_day'
         : ownIdsToday.contains(pillId)
         ? 'own'
-        : 'common';
+        : 'random';
     return {
       'pill_id': pillId,
       'topic': p?.topic,
@@ -1290,11 +1257,7 @@ class AppState extends ChangeNotifier {
       tomorrow,
       exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
       reviews: _reviewsDue(tomorrow),
-      own: ownCardsFor(
-        plus: isPlus,
-        streak: liveStreak,
-        day: dayNumberOf(tomorrow),
-      ),
+      own: ownCardsFor(plus: isPlus, streak: liveStreak),
     ).cards;
   }
 
@@ -1306,27 +1269,22 @@ class AppState extends ChangeNotifier {
   /// three cards of the reader's own instead of two. Astute+ has five every
   /// day, so there it is nothing to say.
   bool get tomorrowIsRewarded =>
-      !isPlus &&
-      liveStreak > 0 &&
-      liveStreak % 7 == 0 &&
-      !inWelcomeWeek(
-        dayNumberOf(DateTime(today.year, today.month, today.day + 1)),
-      );
+      !isPlus && liveStreak > 0 && liveStreak % 7 == 0;
 
   /// The card a morning opens on — for the reminder that quotes it and the
-  /// widget that shows it. The question of the day on the free plan, where
-  /// it is dealt; on Astute+ the first of the reader's own that asks, dealt
-  /// the way that morning will deal it for a reader who has been away since
-  /// tonight, which is the reader a reminder is for.
+  /// widget that shows it: the first card of the day that asks, which on
+  /// either plan is the reader's own, dealt the way that morning will deal
+  /// it for a reader who has been away since tonight, which is the reader a
+  /// reminder is for. The calendar's question only when there is no deck
+  /// to open on.
   Pill leadOn(DateTime day) {
-    if (!isPlus) return questionOfTheDay(day);
     final List<Pill> deck = dateKey(day) == dateKey(today)
         ? todaysDeck
         : _deal(
             day,
             exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
             reviews: _reviewsDue(day),
-            own: kPillsPerDay,
+            own: ownCardsFor(plus: isPlus, streak: liveStreak),
           ).cards;
     if (deck.isEmpty) return questionOfTheDay(day);
     return deck.firstWhere((p) => p.asksSomething, orElse: () => deck.first);
@@ -1583,8 +1541,6 @@ class AppState extends ChangeNotifier {
       squares: dayClosed ? d.squares : '',
       right: d.right,
       asked: d.asked,
-      questionRight: d.questionRight,
-      questionSure: d.questionSure,
       updated: dateKey(today),
     );
   }
@@ -1769,9 +1725,9 @@ class AppState extends ChangeNotifier {
   ///
   /// The card the morning opens on and the streak, and the same for each of
   /// the next fourteen mornings, so the widget turns over at midnight on
-  /// its own. The question of the day on the free plan; on Astute+ one of
-  /// the reader's own. Nothing about the reader beyond the streak: the
-  /// widget is on the home screen, where anyone can read it.
+  /// its own: on either plan the first of the reader's own that asks.
+  /// Nothing about the reader beyond the streak: the widget is on the home
+  /// screen, where anyone can read it.
   /// Everything the home-screen widget will need, handed over whole.
   ///
   /// The widget draws the card the way the app does — the subject's colour
@@ -2262,8 +2218,6 @@ class DaySummary {
     required this.right,
     required this.sure,
     required this.streak,
-    this.questionRight,
-    this.questionSure,
   });
 
   /// One square a card: read, right, wrong, a side taken, or passed.
@@ -2284,11 +2238,6 @@ class DaySummary {
   /// when nothing today carried one.
   final double? sure;
   final int streak;
-
-  /// How the question of the day went — null until it was answered — and
-  /// how sure the reader said they were.
-  final bool? questionRight;
-  final int? questionSure;
 }
 
 /// One confidence level and how it actually turned out.

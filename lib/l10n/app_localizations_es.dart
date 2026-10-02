@@ -115,7 +115,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get exploreTodaysBest => 'Explora lo mejor de hoy';
 
   @override
-  String get magicUnlock => 'Prueba 7 días gratis';
+  String magicUnlock(int days) {
+    return 'Prueba $days días gratis';
+  }
+
+  @override
+  String get getPlus => 'Hazte Astute+';
 
   @override
   String nothingInYet(String subject) {
@@ -664,7 +669,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get plusNameCaps => 'ASTUTE+';
 
   @override
-  String get sevenDaysFree => '7 días gratis';
+  String trialDaysFree(int days) {
+    return '$days días gratis';
+  }
 
   @override
   String get seeThePlans => 'VER LOS PLANES';
@@ -878,6 +885,29 @@ class AppLocalizationsEs extends AppLocalizations {
       'Una notificación, cinco tarjetas y una racha que no querrás romper.';
 
   @override
+  String introNotifyWhen(String time) {
+    return 'Mañana, $time';
+  }
+
+  @override
+  String get introNotifyLine => 'Tus cinco están listas. Día 1.';
+
+  @override
+  String get introOneOfFive => '1 DE 5';
+
+  @override
+  String get introDayOne => 'DÍA 1';
+
+  @override
+  String get introTapTomorrow => 'TOCA MAÑANA PARA DESCUBRIRLO';
+
+  @override
+  String get introDayOneTomorrow => 'DÍA 1 · MAÑANA';
+
+  @override
+  String get introDaySevenStreak => 'DÍA 7 · PRIMERA RACHA';
+
+  @override
   String get continueWithApple => 'Continuar con Apple';
 
   @override
@@ -898,9 +928,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get barMoveCaps => 'LO QUE TE LLEVAS';
-
-  @override
-  String get askYourselfCaps => 'PREGÚNTATE';
 
   @override
   String get theBarMoveCaps => 'LA FRASE DE BAR';
@@ -958,8 +985,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get plusIsActive => 'ASTUTE+ ESTÁ ACTIVO';
 
   @override
-  String tryFreeThen(String price, String suffix) {
-    return '7 días gratis, luego $price$suffix';
+  String tryFreeThen(int days, String price, String suffix) {
+    return '$days días gratis, luego $price$suffix';
   }
 
   @override
@@ -1609,17 +1636,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get againChip => 'DE NUEVO';
 
   @override
-  String theOthersYours(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Las otras $n, tuyas.',
-      one: 'La otra, tuya.',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get magicLine =>
       'Cinco cartas al día elegidas para ti: de tu mezcla, a tu nivel, nunca una ya leída. Desde mañana.';
 
@@ -1631,7 +1647,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'De tus ramas, a tu nivel, nunca una ya leída. Gratis tienes una al día.';
+      'De tus ramas, a tu nivel, nunca una ya leída. Gratis tienes dos al día.';
 
   @override
   String get plusCardHeadline => 'Las cinco, tuyas.';
@@ -1692,8 +1708,8 @@ class AppLocalizationsEs extends AppLocalizations {
       'Aún no ha vuelto nada. Una carta vuelve a los tres días, luego a la semana, luego al mes — y lo que aciertas entonces es lo que de verdad sabes.';
 
   @override
-  String get weekKeptTwoOwn =>
-      'Una semana seguida: mañana dos de las cinco son tuyas.';
+  String get weekKeptThreeOwn =>
+      'Una semana seguida: mañana tres de las cinco son tuyas.';
 
   @override
   String get perkJourneyLine =>
@@ -1755,21 +1771,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Lo que más han guardado los lectores y tú aún no has leído';
 
   @override
-  String welcomeDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Tu primera semana: $n días más con cuatro de las cinco tuyas.',
-      one: 'Tu primera semana: mañana es el último día, cuatro de las cinco son tuyas.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get welcomeWeekEnds =>
-      'Tu primera semana termina esta noche. Desde mañana una de las cinco es tuya y tres son de todos; Astute+ mantiene las cinco tuyas.';
-
-  @override
   String get forYouShelf => 'Para ti';
 
   @override
@@ -1778,6 +1779,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get exploreOffline =>
       'Estás sin conexión. Esto es Explorar tal como se leyó por última vez.';
+
+  @override
+  String get askYourselfCaps => 'PREGÚNTATE';
 
   @override
   String get themeMyths => 'Mitos derribados';

@@ -104,7 +104,19 @@
   }
  },
  "exploreTodaysBest": "Explore today's best",
- "magicUnlock": "Try 7 days free",
+ "magicUnlock": "Try {days} days free",
+ "@magicUnlock": {
+  "description": "The action on the card after the fifth for a reader the store will still give the free trial. {days} is the trial's length, as the store has it.",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "getPlus": "Get Astute+",
+ "@getPlus": {
+  "description": "The same action for a reader who has already had the free trial, which the store gives once."
+ },
  "nothingInYet": "Nothing in {subject} yet.",
  "@nothingInYet": {
   "placeholders": {
@@ -612,7 +624,14 @@
   }
  },
  "plusNameCaps": "ASTUTE+",
- "sevenDaysFree": "7 days free",
+ "trialDaysFree": "{days} days free",
+ "@trialDaysFree": {
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
  "seeThePlans": "SEE THE PLANS",
  "recordStartsToday": "Your record starts today.",
  "dayWord": "{n, plural, =1{day} other{days}}",
@@ -780,6 +799,39 @@
  "introMixLine": "Turn a topic down to see less of it, or off for good.",
  "introThirtyTitle": "Thirty seconds a day",
  "introThirtyLine": "One notification, five cards, and a streak you will not want to break.",
+ "introNotifyWhen": "Tomorrow, {time}",
+ "@introNotifyWhen": {
+  "description": "The time on the notification drawn in the intro's last scene. {time} is 8:30 in the reader's clock format.",
+  "placeholders": {
+   "time": {
+    "type": "String"
+   }
+  }
+ },
+ "introNotifyLine": "Your five are ready. Day 1.",
+ "@introNotifyLine": {
+  "description": "The line of the notification drawn in the intro's last scene."
+ },
+ "introOneOfFive": "1 OF 5",
+ "@introOneOfFive": {
+  "description": "On the card drawn in the intro's last scene, after the subject: the first of the day's five. Capitals where the script has them."
+ },
+ "introDayOne": "DAY 1",
+ "@introDayOne": {
+  "description": "The day on the card drawn in the intro's last scene. Capitals where the script has them."
+ },
+ "introTapTomorrow": "TAP TOMORROW TO FIND OUT",
+ "@introTapTomorrow": {
+  "description": "The foot of the card drawn in the intro's last scene: its answer opens tomorrow. Capitals where the script has them."
+ },
+ "introDayOneTomorrow": "DAY 1 · TOMORROW",
+ "@introDayOneTomorrow": {
+  "description": "Under the fourteen days in the intro's last scene, at the left: day one is tomorrow."
+ },
+ "introDaySevenStreak": "DAY 7 · FIRST STREAK",
+ "@introDaySevenStreak": {
+  "description": "Under the fourteen days in the intro's last scene, at the right: the seventh day is the first streak."
+ },
  "continueWithApple": "Continue with Apple",
  "continueWithGoogle": "Continue with Google",
  "continueWithEmail": "Continue with Email",
@@ -787,7 +839,6 @@
  "skip": "Skip",
  "tapToRevealLower": "tap to reveal",
  "barMoveCaps": "WHAT TO KEEP",
- "askYourselfCaps": "ASK YOURSELF",
  "theBarMoveCaps": "THE BAR MOVE",
  "widgetFootPlain": "Five cards, two minutes.",
  "@widgetFootPlain": {
@@ -843,9 +894,12 @@
  "perkArchiveTitle": "Your whole archive",
  "perkArchiveLine": "Every day you have read, kept for good.",
  "plusIsActive": "ASTUTE+ IS ACTIVE",
- "tryFreeThen": "Try 7 days free, then {price}{suffix}",
+ "tryFreeThen": "Try {days} days free, then {price}{suffix}",
  "@tryFreeThen": {
   "placeholders": {
+   "days": {
+    "type": "int"
+   },
    "price": {
     "type": "String"
    },
@@ -1437,18 +1491,10 @@
  "mixFull": "Full",
  "forYouChip": "FOR YOU",
  "againChip": "AGAIN",
- "theOthersYours": "{n, plural, =1{The other one, yours.} other{The other {n}, yours.}}",
- "@theOthersYours": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
  "magicLine": "Five cards a day chosen for you: from your mix, at your level, never one you have read. From tomorrow.",
  "everyCardForYou": "Every card, chosen for you.",
  "perkOwnTitle": "Five cards a day, all yours",
- "perkOwnLine": "From your strands, at your level, never one you have read. Free days give you one.",
+ "perkOwnLine": "From your strands, at your level, never one you have read. Free days give you two.",
  "plusCardHeadline": "Make all five yours.",
  "plusCardLine": "Five cards a day from your mix, at your level. Your journey. Your whole archive.",
  "continueFree": "Continue free",
@@ -1490,7 +1536,7 @@
   }
  },
  "nothingBackYet": "Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.",
- "weekKeptTwoOwn": "A week kept: tomorrow two of the five are yours.",
+ "weekKeptThreeOwn": "A week kept: tomorrow three of the five are yours.",
  "perkJourneyLine": "Your level, every subject strand by strand, what stayed, and the card to say tonight.",
  "topOfTheWeek": "Top of the week",
  "topOfTheMonth": "Top of the month",
@@ -1526,18 +1572,10 @@
   }
  },
  "lovedLine": "What readers kept most, and you have not read yet",
- "welcomeDaysLeft": "{n, plural, =1{Your first week: tomorrow is its last day, four of the five yours.} other{Your first week: {n} more days with four of the five yours.}}",
- "@welcomeDaysLeft": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "welcomeWeekEnds": "Your first week ends tonight. From tomorrow one of the five is yours and three are everybody's; Astute+ keeps all five yours.",
  "forYouShelf": "For you",
  "forYouLine": "What your reading puts first",
  "exploreOffline": "You are offline. This is Explore as it was last read.",
+ "askYourselfCaps": "ASK YOURSELF",
  "themeMyths": "Myths, busted",
  "themeMythsLine": "What almost everyone believes, and why it is wrong",
  "themeParadoxes": "Paradoxes",

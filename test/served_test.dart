@@ -20,8 +20,6 @@ ServedDay _aDay(String date, {bool fromCache = false}) {
     cards: cards,
     own: cards.skip(1).map((p) => p.id).toSet(),
     reviews: const {},
-    question: cards.last.id,
-    welcome: true,
     fromCache: fromCache,
   );
 }
@@ -42,8 +40,10 @@ void main() {
     expect(back, isNotNull);
     expect(back!.cards.map((p) => p.id), day.cards.map((p) => p.id));
     expect(back.own, day.own);
-    expect(back.question, day.question);
-    expect(back.welcome, isTrue);
+    expect(back.reviews, day.reviews);
+    // A day written by a server from before the welcome went says so;
+    // the phone reads it and pays the word no mind.
+    expect(ServedDay.parse({...day.toJson(), 'welcome': true}), isNotNull);
     final Map<String, Object?> broken = day.toJson();
     (broken['cards'] as List)[0] = {
       ...cardToJson(day.cards.first),
@@ -98,10 +98,8 @@ void main() {
       await alone.init();
       expect(alone.dealtBy, 'phone');
       expect(alone.todaysDeck, hasLength(kPillsPerDay));
-      expect(
-        alone.todaysDeck.map((p) => p.id),
-        contains(questionOfTheDay(DateTime.now()).id),
-      );
+      // A first day: two of the reader's own, three at random.
+      expect(alone.ownIdsToday, hasLength(kOwnCardsFree));
       for (final p in alone.todaysDeck) {
         expect(PillBank.byId(p.id), isNotNull, reason: 'dealt from the bank');
       }

@@ -115,7 +115,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get exploreTodaysBest => '今日のベストを見る';
 
   @override
-  String get magicUnlock => '7日間無料で試す';
+  String magicUnlock(int days) {
+    return '$days日間無料で試す';
+  }
+
+  @override
+  String get getPlus => 'Astute+にする';
 
   @override
   String nothingInYet(String subject) {
@@ -646,7 +651,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get plusNameCaps => 'ASTUTE+';
 
   @override
-  String get sevenDaysFree => '7日間無料';
+  String trialDaysFree(int days) {
+    return '$days日間無料';
+  }
 
   @override
   String get seeThePlans => 'プランを見る';
@@ -854,6 +861,29 @@ class AppLocalizationsJa extends AppLocalizations {
   String get introThirtyLine => '通知が1つ、カードが5枚、そして途切れさせたくない連続記録。';
 
   @override
+  String introNotifyWhen(String time) {
+    return '明日 $time';
+  }
+
+  @override
+  String get introNotifyLine => '今日の5枚が届いています。1日目。';
+
+  @override
+  String get introOneOfFive => '1 / 5';
+
+  @override
+  String get introDayOne => '1日目';
+
+  @override
+  String get introTapTomorrow => '明日タップして答えを見る';
+
+  @override
+  String get introDayOneTomorrow => '1日目 · 明日';
+
+  @override
+  String get introDaySevenStreak => '7日目 · 初めての連続記録';
+
+  @override
   String get continueWithApple => 'Appleで続ける';
 
   @override
@@ -873,9 +903,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get barMoveCaps => '持ち帰ること';
-
-  @override
-  String get askYourselfCaps => '自分に問う';
 
   @override
   String get theBarMoveCaps => '会話のひと言';
@@ -932,8 +959,8 @@ class AppLocalizationsJa extends AppLocalizations {
   String get plusIsActive => 'ASTUTE+ 有効';
 
   @override
-  String tryFreeThen(String price, String suffix) {
-    return '7日間無料で試す。その後$price$suffix';
+  String tryFreeThen(int days, String price, String suffix) {
+    return '$days日間無料で試す。その後$price$suffix';
   }
 
   @override
@@ -1561,17 +1588,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get againChip => 'もう一度';
 
   @override
-  String theOthersYours(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '残りの$n枚も、あなたのものに。',
-      one: '残りの1枚も、あなたのものに。',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get magicLine =>
       '毎日5枚、あなたのために選んだカード。あなたのミックスから、あなたのレベルで、読んだものは二度と出ません。明日から。';
 
@@ -1582,7 +1598,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get perkOwnTitle => '毎日5枚、すべてあなたのもの';
 
   @override
-  String get perkOwnLine => 'あなたの選んだ系統から、あなたのレベルで、既読は二度と出ません。無料版は1日1枚。';
+  String get perkOwnLine => 'あなたの選んだ系統から、あなたのレベルで、既読は二度と出ません。無料版は1日2枚。';
 
   @override
   String get plusCardHeadline => '5枚すべてを、あなたのものに。';
@@ -1639,7 +1655,7 @@ class AppLocalizationsJa extends AppLocalizations {
       'まだ何も戻ってきていません。カードは3日後、1週間後、1か月後に戻ってきます。そのとき正解できるものが、本当に知っていることです。';
 
   @override
-  String get weekKeptTwoOwn => '1週間続いた：明日は5枚のうち2枚があなたのカード。';
+  String get weekKeptThreeOwn => '1週間続いた：明日は5枚のうち3枚があなたのカード。';
 
   @override
   String get perkJourneyLine => 'あなたのレベル、系統ごとの各分野、残ったこと、そして今夜話すカード。';
@@ -1691,20 +1707,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get lovedLine => '読者がいちばん残したカードで、あなたがまだ読んでいないもの';
 
   @override
-  String welcomeDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '最初の1週間：5枚中4枚があなたのカードの日が、あと$n日。',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get welcomeWeekEnds =>
-      '最初の1週間は今夜で終わり。明日からは5枚中1枚があなたのカード、3枚はみんなのカード。Astute+なら5枚すべてあなたのまま。';
-
-  @override
   String get forYouShelf => 'あなたへ';
 
   @override
@@ -1712,6 +1714,9 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get exploreOffline => 'オフラインです。これは最後に読み込んだ「探す」です。';
+
+  @override
+  String get askYourselfCaps => '自分に問う';
 
   @override
   String get themeMyths => '覆される神話';

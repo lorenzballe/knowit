@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import '../data/pills_repository.dart' show dateKey;
 import '../models/pill.dart';
 import '../state/app_state.dart';
+import '../sync/subscription.dart';
 import '../theme.dart';
 import '../widgets/flip_card.dart';
 import '../widgets/hold_to_keep.dart';
@@ -34,6 +35,29 @@ import '../widgets/subject_icon.dart';
 ///
 /// Which card is at the front belongs to the screen above, because the
 /// header's dot and the glow behind everything take that card's colour.
+/// What the card after the fifth says about the plan tonight, on the
+/// free plan, with a key for what it says: the evening a week is kept,
+/// that tomorrow has one more of their own, said once, where it reads as a
+/// reward rather than a rule. It is said on the card that makes the offer,
+/// beside what Astute+ keeps, and only once the day is done, because until
+/// then tonight has not happened.
+/// What the offer's button says: the free days the store will give this
+/// reader, as many as it gives, or plainly Astute+ once they have had them
+/// — the store gives the trial once, and a button that promises it again
+/// is one Apple would charge through.
+String plusActionOf(BuildContext context) {
+  final int? days = Subscription.instance.trialDays;
+  return days == null ? context.l10n.getPlus : context.l10n.magicUnlock(days);
+}
+
+(String, String)? weekNoteOf(BuildContext context, AppState app) {
+  if (app.isPlus || !app.todayCompleted) return null;
+  if (app.tomorrowIsRewarded) {
+    return ('week-reward', context.l10n.weekKeptThreeOwn);
+  }
+  return null;
+}
+
 class TodayDoneView extends StatefulWidget {
   final AppState app;
 
@@ -93,7 +117,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
   double _cardHeight = _artHeight;
 
   /// Whether the shelf ends on the card that offers the rest of the day.
-  /// It does on the free plan, where three of the five were everybody's,
+  /// It does on the free plan, where three of the five came at random,
   /// and never on Astute+, so nobody is sold what they already have.
   bool get _offer => !widget.app.isPlus;
 
@@ -295,12 +319,7 @@ class _TodayDoneViewState extends State<TodayDoneView>
         // the one about tomorrow.
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 6, 24, 0),
-          child: _Tomorrow(
-            lead: _tomorrowsLead(app),
-            rewarded: app.tomorrowIsRewarded,
-            welcomeLeft: app.welcomeDaysLeftAfterToday,
-            welcomeEnds: app.welcomeEndsTonight,
-          ),
+          child: _Tomorrow(lead: _tomorrowsLead(app)),
         ),
         if (app.reviewsWaiting.isNotEmpty)
           Padding(
@@ -352,29 +371,28 @@ class _TodayDoneViewState extends State<TodayDoneView>
           if (x.abs() > stage.width / 2 + _cardWidth / 2) continue;
           final double dist = math.min(x.abs() / _step, 1);
           final bool front = k == at;
+          // Keyed by its place on the shelf, and wrapped the same way at
+          // the front as to the side: a card that changes place in the
+          // paint order, or comes to the front, is the same card carried
+          // over, not a new one built in its place. Built anew, the card
+          // after the fifth started its rim's turn over mid-swipe.
           layers.add(
             Transform.translate(
+              key: ValueKey('shelf-layer-$k'),
               offset: Offset(x, 0),
               child: Transform.scale(
                 scale: 1 - dist * 0.07,
                 child: Opacity(
                   opacity: 1 - dist * 0.5,
-                  child: front
-                      ? (k < deck.length
-                            ? _card(k, deck[k], glow: 1 - dist, front: true)
-                            : _sixth(context))
-                      : ExcludeSemantics(
-                          child: IgnorePointer(
-                            child: k < deck.length
-                                ? _card(
-                                    k,
-                                    deck[k],
-                                    glow: 1 - dist,
-                                    front: false,
-                                  )
-                                : _sixth(context),
-                          ),
-                        ),
+                  child: ExcludeSemantics(
+                    excluding: !front,
+                    child: IgnorePointer(
+                      ignoring: !front,
+                      child: k < deck.length
+                          ? _card(k, deck[k], glow: 1 - dist, front: front)
+                          : _sixth(context),
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -413,9 +431,19 @@ class _TodayDoneViewState extends State<TodayDoneView>
   Widget _card(int k, Pill pill, {required double glow, required bool front}) {
     final app = widget.app;
     final bool saved = app.isSaved(pill.id);
+    // The mark the card carried in the deck, kept on the shelf: the reader's
+    // own on the free plan, where the others came at random, and a card
+    // back for another go on either plan. One card, marked one way.
+    final String? chip = app.reviewIdsToday.contains(pill.id)
+        ? context.l10n.againChip
+        : !app.isPlus && app.ownIdsToday.contains(pill.id)
+        ? context.l10n.forYouChip
+        : null;
     Widget face(bool back) => _CardFace(
+      key: ValueKey('shelf-face-${pill.id}-${back ? 'back' : 'front'}'),
       pill: pill,
       number: k + 1,
+      chip: chip,
       width: _cardWidth,
       height: _cardHeight,
       back: back,
@@ -450,11 +478,10 @@ class _TodayDoneViewState extends State<TodayDoneView>
       height: _cardHeight,
       child: MagicCard(
         eyebrow: l.plusNameCaps,
-        headline: app.inWelcome
-            ? l.plusCardHeadline
-            : l.theOthersYours(app.todaysDeck.length - app.ownIdsToday.length),
+        note: weekNoteOf(context, app),
+        headline: l.plusCardHeadline,
         line: l.magicLine,
-        action: l.magicUnlock,
+        action: plusActionOf(context),
         onAction: _sell,
       ),
     );
@@ -463,8 +490,8 @@ class _TodayDoneViewState extends State<TodayDoneView>
   static String _two(int n) => n.toString().padLeft(2, '0');
 }
 
-/// The cards that came due and found no room in the five — the day has
-/// two asking slots and one is everybody's — waiting to be answered again.
+/// The cards that came due and found no room in the five — Astute+ takes
+/// one a day at most, and the free day none — waiting to be answered again.
 class _ReviewLine extends StatelessWidget {
   const _ReviewLine({required this.app});
 
@@ -586,8 +613,10 @@ class _Fade extends StatelessWidget {
 /// foot, so turning it over changes what you read and not where things are.
 class _CardFace extends StatelessWidget {
   const _CardFace({
+    super.key,
     required this.pill,
     required this.number,
+    this.chip,
     required this.width,
     required this.height,
     required this.back,
@@ -599,6 +628,10 @@ class _CardFace extends StatelessWidget {
 
   final Pill pill;
   final int number;
+
+  /// The deck's mark beside the subject, "For you" or "Again", when the
+  /// card carried one.
+  final String? chip;
   final double width;
   final double height;
   final bool back;
@@ -658,16 +691,45 @@ class _CardFace extends StatelessWidget {
               SubjectIcon(subject: pill.topic, size: 16 * s, ink: ink),
               SizedBox(width: 8 * s),
               Expanded(
-                child: Text(
-                  pill.topic.toUpperCase(),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.label(
-                    size: 9.5 * s,
-                    weight: FontWeight.w700,
-                    spacing: 1.4,
-                    color: sub,
-                  ),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        pill.topic.toUpperCase(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppText.label(
+                          size: 9.5 * s,
+                          weight: FontWeight.w700,
+                          spacing: 1.4,
+                          color: sub,
+                        ),
+                      ),
+                    ),
+                    if (chip case final String chip) ...[
+                      SizedBox(width: 8 * s),
+                      // The deck's own chip, at the shelf's scale.
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 7 * s,
+                          vertical: 2.5 * s,
+                        ),
+                        decoration: BoxDecoration(
+                          color: pill.wash,
+                          borderRadius: BorderRadius.circular(999),
+                        ),
+                        child: Text(
+                          chip,
+                          maxLines: 1,
+                          style: AppText.label(
+                            size: 8.5 * s,
+                            spacing: 1,
+                            color: ink.withValues(alpha: 0.7),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
               ),
               Text(
@@ -1142,6 +1204,7 @@ class _Dots extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool still = MediaQuery.disableAnimationsOf(context);
+    final Color faint = context.p.ink.withValues(alpha: 0.18);
     return SizedBox(
       height: height,
       child: Row(
@@ -1170,12 +1233,25 @@ class _Dots extends StatelessWidget {
                       width: k == at ? 22 : 6,
                       height: 6,
                       decoration: BoxDecoration(
-                        color: k != at
-                            ? context.p.ink.withValues(alpha: 0.18)
-                            : (k < deck.length ? deck[k].color : null),
-                        gradient: k == at && k >= deck.length
-                            ? const LinearGradient(colors: kSpectrum)
+                        color: k < deck.length
+                            ? (k == at ? deck[k].color : faint)
                             : null,
+                        // The offer's dot is every colour when it is the
+                        // one, and grey as a gradient of greys when it is
+                        // not, so the change is each grey turning into its
+                        // colour, as quick as the other dots. Grey as a
+                        // plain colour, the dot faded the rainbow in from
+                        // nothing and arrived half a second late.
+                        gradient: k < deck.length
+                            ? null
+                            : LinearGradient(
+                                colors: k == at
+                                    ? kSpectrum
+                                    : List<Color>.filled(
+                                        kSpectrum.length,
+                                        faint,
+                                      ),
+                              ),
                         borderRadius: BorderRadius.circular(9),
                       ),
                     ),
@@ -1195,30 +1271,10 @@ class _Dots extends StatelessWidget {
 /// which are settled by tonight, so the subject named here is the one that
 /// will actually be on top in the morning.
 class _Tomorrow extends StatelessWidget {
-  const _Tomorrow({
-    required this.lead,
-    this.rewarded = false,
-    this.welcomeLeft = 0,
-    this.welcomeEnds = false,
-  });
+  const _Tomorrow({required this.lead});
 
   /// The card on top of tomorrow's deck, or null if there is somehow none.
   final Pill? lead;
-
-  /// True the evening a week is kept on the free plan: tomorrow has three
-  /// cards of the reader's own instead of two, and this is where it is
-  /// said — once, the night before, where it reads as a reward rather
-  /// than as a rule.
-  final bool rewarded;
-
-  /// Welcome days still to come after today, on the free plan: said every
-  /// evening of the week, so four of five being theirs reads as a welcome
-  /// with an end rather than as the rule.
-  final int welcomeLeft;
-
-  /// True the evening the welcome week ends: tomorrow is the first shared
-  /// day, and the reader hears it tonight, with what Astute+ keeps.
-  final bool welcomeEnds;
 
   @override
   Widget build(BuildContext context) {
@@ -1245,45 +1301,16 @@ class _Tomorrow extends StatelessWidget {
           const SizedBox(width: 12),
         ],
         Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                lead == null
-                    ? context.l10n.tomorrowsFiveOpenIn(when)
-                    : context.l10n.topicOpensTomorrow(lead.topic, when),
-                style: AppText.body(
-                  size: 13.5,
-                  weight: FontWeight.w500,
-                  height: 1.35,
-                  color: context.p.ink.withValues(alpha: 0.6),
-                ),
-              ),
-              if (rewarded || welcomeEnds || welcomeLeft > 0)
-                Padding(
-                  padding: const EdgeInsets.only(top: 3),
-                  child: Text(
-                    welcomeEnds
-                        ? context.l10n.welcomeWeekEnds
-                        : welcomeLeft > 0
-                        ? context.l10n.welcomeDaysLeft(welcomeLeft)
-                        : context.l10n.weekKeptTwoOwn,
-                    key: ValueKey(
-                      welcomeEnds
-                          ? 'welcome-ends'
-                          : welcomeLeft > 0
-                          ? 'welcome-left'
-                          : 'week-reward',
-                    ),
-                    style: AppText.body(
-                      size: 12.5,
-                      weight: FontWeight.w600,
-                      height: 1.35,
-                      color: context.p.ink.withValues(alpha: 0.8),
-                    ),
-                  ),
-                ),
-            ],
+          child: Text(
+            lead == null
+                ? context.l10n.tomorrowsFiveOpenIn(when)
+                : context.l10n.topicOpensTomorrow(lead.topic, when),
+            style: AppText.body(
+              size: 13.5,
+              weight: FontWeight.w500,
+              height: 1.35,
+              color: context.p.ink.withValues(alpha: 0.6),
+            ),
           ),
         ),
       ],

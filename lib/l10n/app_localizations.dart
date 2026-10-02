@@ -252,11 +252,17 @@ abstract class AppLocalizations {
   /// **'Explore today\'s best'**
   String get exploreTodaysBest;
 
-  /// No description provided for @magicUnlock.
+  /// The action on the card after the fifth for a reader the store will still give the free trial. {days} is the trial's length, as the store has it.
   ///
   /// In en, this message translates to:
-  /// **'Try 7 days free'**
-  String get magicUnlock;
+  /// **'Try {days} days free'**
+  String magicUnlock(int days);
+
+  /// The same action for a reader who has already had the free trial, which the store gives once.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Astute+'**
+  String get getPlus;
 
   /// No description provided for @nothingInYet.
   ///
@@ -1014,11 +1020,11 @@ abstract class AppLocalizations {
   /// **'ASTUTE+'**
   String get plusNameCaps;
 
-  /// No description provided for @sevenDaysFree.
+  /// No description provided for @trialDaysFree.
   ///
   /// In en, this message translates to:
-  /// **'7 days free'**
-  String get sevenDaysFree;
+  /// **'{days} days free'**
+  String trialDaysFree(int days);
 
   /// No description provided for @seeThePlans.
   ///
@@ -1248,6 +1254,48 @@ abstract class AppLocalizations {
   /// **'One notification, five cards, and a streak you will not want to break.'**
   String get introThirtyLine;
 
+  /// The time on the notification drawn in the intro's last scene. {time} is 8:30 in the reader's clock format.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow, {time}'**
+  String introNotifyWhen(String time);
+
+  /// The line of the notification drawn in the intro's last scene.
+  ///
+  /// In en, this message translates to:
+  /// **'Your five are ready. Day 1.'**
+  String get introNotifyLine;
+
+  /// On the card drawn in the intro's last scene, after the subject: the first of the day's five. Capitals where the script has them.
+  ///
+  /// In en, this message translates to:
+  /// **'1 OF 5'**
+  String get introOneOfFive;
+
+  /// The day on the card drawn in the intro's last scene. Capitals where the script has them.
+  ///
+  /// In en, this message translates to:
+  /// **'DAY 1'**
+  String get introDayOne;
+
+  /// The foot of the card drawn in the intro's last scene: its answer opens tomorrow. Capitals where the script has them.
+  ///
+  /// In en, this message translates to:
+  /// **'TAP TOMORROW TO FIND OUT'**
+  String get introTapTomorrow;
+
+  /// Under the fourteen days in the intro's last scene, at the left: day one is tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'DAY 1 · TOMORROW'**
+  String get introDayOneTomorrow;
+
+  /// Under the fourteen days in the intro's last scene, at the right: the seventh day is the first streak.
+  ///
+  /// In en, this message translates to:
+  /// **'DAY 7 · FIRST STREAK'**
+  String get introDaySevenStreak;
+
   /// No description provided for @continueWithApple.
   ///
   /// In en, this message translates to:
@@ -1289,12 +1337,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'WHAT TO KEEP'**
   String get barMoveCaps;
-
-  /// No description provided for @askYourselfCaps.
-  ///
-  /// In en, this message translates to:
-  /// **'ASK YOURSELF'**
-  String get askYourselfCaps;
 
   /// No description provided for @theBarMoveCaps.
   ///
@@ -1383,8 +1425,8 @@ abstract class AppLocalizations {
   /// No description provided for @tryFreeThen.
   ///
   /// In en, this message translates to:
-  /// **'Try 7 days free, then {price}{suffix}'**
-  String tryFreeThen(String price, String suffix);
+  /// **'Try {days} days free, then {price}{suffix}'**
+  String tryFreeThen(int days, String price, String suffix);
 
   /// The paywall's button for a plan that starts without a free trial.
   ///
@@ -2358,12 +2400,6 @@ abstract class AppLocalizations {
   /// **'AGAIN'**
   String get againChip;
 
-  /// No description provided for @theOthersYours.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{The other one, yours.} other{The other {n}, yours.}}'**
-  String theOthersYours(int n);
-
   /// No description provided for @magicLine.
   ///
   /// In en, this message translates to:
@@ -2385,7 +2421,7 @@ abstract class AppLocalizations {
   /// No description provided for @perkOwnLine.
   ///
   /// In en, this message translates to:
-  /// **'From your strands, at your level, never one you have read. Free days give you one.'**
+  /// **'From your strands, at your level, never one you have read. Free days give you two.'**
   String get perkOwnLine;
 
   /// No description provided for @plusCardHeadline.
@@ -2448,11 +2484,11 @@ abstract class AppLocalizations {
   /// **'Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.'**
   String get nothingBackYet;
 
-  /// No description provided for @weekKeptTwoOwn.
+  /// No description provided for @weekKeptThreeOwn.
   ///
   /// In en, this message translates to:
-  /// **'A week kept: tomorrow two of the five are yours.'**
-  String get weekKeptTwoOwn;
+  /// **'A week kept: tomorrow three of the five are yours.'**
+  String get weekKeptThreeOwn;
 
   /// No description provided for @perkJourneyLine.
   ///
@@ -2538,18 +2574,6 @@ abstract class AppLocalizations {
   /// **'What readers kept most, and you have not read yet'**
   String get lovedLine;
 
-  /// No description provided for @welcomeDaysLeft.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{Your first week: tomorrow is its last day, four of the five yours.} other{Your first week: {n} more days with four of the five yours.}}'**
-  String welcomeDaysLeft(int n);
-
-  /// No description provided for @welcomeWeekEnds.
-  ///
-  /// In en, this message translates to:
-  /// **'Your first week ends tonight. From tomorrow one of the five is yours and three are everybody\'s; Astute+ keeps all five yours.'**
-  String get welcomeWeekEnds;
-
   /// No description provided for @forYouShelf.
   ///
   /// In en, this message translates to:
@@ -2567,6 +2591,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You are offline. This is Explore as it was last read.'**
   String get exploreOffline;
+
+  /// No description provided for @askYourselfCaps.
+  ///
+  /// In en, this message translates to:
+  /// **'ASK YOURSELF'**
+  String get askYourselfCaps;
 
   /// No description provided for @themeMyths.
   ///

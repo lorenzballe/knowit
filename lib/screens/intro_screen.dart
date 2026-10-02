@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../data/topics.dart';
 import '../l10n/l10n.dart';
 
 import '../theme.dart';
@@ -55,6 +56,20 @@ const double kIntroHintSlot = 26;
 /// than a wider gap over its buttons.
 const int kIntroSpareAbove = 3;
 const int kIntroSpareBelow = 1;
+
+/// Where the column starts under the safe area, and where Skip does: Skip
+/// sits over the picture's top right corner and takes no room of its own.
+const double kIntroTop = 14;
+const double kIntroSkipTop = 8;
+
+/// The clear line kept between Skip's box and a drawing that reaches the
+/// top right corner — the last scene's notification, which spans the width.
+/// Sixteen points under the word itself, as the canvas has it.
+const double kIntroUnderSkip = 12;
+
+/// The margin down each side of the screen: the words and the buttons keep
+/// it, and the last scene's drawing lines up on it.
+const double kIntroSide = 22;
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({
@@ -160,7 +175,7 @@ class _IntroScreenState extends State<IntroScreen> {
 
             SafeArea(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 14, 0, 26),
+                padding: const EdgeInsets.fromLTRB(0, kIntroTop, 0, 26),
                 child: Column(
                   children: [
                     Expanded(
@@ -184,6 +199,21 @@ class _IntroScreenState extends State<IntroScreen> {
                             0,
                             math.min(wanted, spare),
                           );
+                          // How much of the band's top a drawing that
+                          // spans the width has to leave under Skip, in the
+                          // band's own units: Skip's foot is a fixed height
+                          // down this column, and the band starts under the
+                          // share of the spare room that goes above it.
+                          final double over =
+                              math.max(0, spare - band) *
+                              kIntroSpareAbove /
+                              (kIntroSpareAbove + kIntroSpareBelow);
+                          final double skipFoot =
+                              kIntroSkipTop + SkipCorner.height - kIntroTop;
+                          final double underSkip = band <= 0
+                              ? 0
+                              : math.max(0, skipFoot + kIntroUnderSkip - over) /
+                                    (band / _SceneStage.bandHeight);
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
@@ -197,14 +227,17 @@ class _IntroScreenState extends State<IntroScreen> {
                                   key: const ValueKey('intro-stage'),
                                   child: _Swap(
                                     scene: _scene,
-                                    child: _IntroScene(index: _scene),
+                                    child: _IntroScene(
+                                      index: _scene,
+                                      underSkip: underSkip,
+                                    ),
                                   ),
                                 ),
                               ),
                               const SizedBox(height: kIntroCopyGap),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
-                                  horizontal: 22,
+                                  horizontal: kIntroSide,
                                 ),
                                 // Pinned by the top: the copy going out and
                                 // the copy coming in share a top edge, so
@@ -250,7 +283,9 @@ class _IntroScreenState extends State<IntroScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 22),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: kIntroSide,
+                      ),
                       child: _SignInBlock(
                         onApple: () async {
                           if (await widget.onApple()) widget.onContinue();
@@ -275,7 +310,7 @@ class _IntroScreenState extends State<IntroScreen> {
             Positioned(
               left: 0,
               right: 0,
-              top: safe.top + 8,
+              top: safe.top + kIntroSkipTop,
               child: SkipCorner(onTap: _skipIntro, color: Colors.white),
             ),
           ],
@@ -652,9 +687,13 @@ class _GoogleG extends StatelessWidget {
 
 /// The five scenes.
 class _IntroScene extends StatelessWidget {
-  const _IntroScene({required this.index});
+  const _IntroScene({required this.index, this.underSkip = 0});
 
   final int index;
+
+  /// The top of the band a drawing across the whole width must leave for
+  /// Skip, in the band's units. See [kIntroUnderSkip].
+  final double underSkip;
 
   @override
   Widget build(BuildContext context) {
@@ -663,7 +702,7 @@ class _IntroScene extends StatelessWidget {
       1 => const _SceneRain(),
       2 => const _SceneCard(),
       3 => const _SceneChips(),
-      _ => const _SceneStreak(),
+      _ => _SceneTomorrow(underSkip: underSkip),
     };
   }
 }
@@ -1529,182 +1568,486 @@ class _SceneChips extends StatelessWidget {
   }
 }
 
-/// Scene 4 — the streak ring and the week behind it.
-class _SceneStreak extends StatelessWidget {
-  const _SceneStreak();
+/// Scene 4 — tomorrow morning and the fortnight it starts: the notification
+/// that brings the five, the first of them, and the next fourteen days with
+/// day one lit and the first week marked.
+///
+/// The three are one column, and the column is the buttons' width: where the
+/// band is as wide as the screen, which is every phone tall enough to give
+/// it its full height, the notification, the card and the days start and
+/// end on the lines the buttons do. On a phone short enough to shrink the
+/// band the column shrinks with it, centred, which keeps it clear of Skip.
+///
+/// It stands on the band's foot and leaves [underSkip] at the top, which
+/// puts the notification sixteen points under Skip on every phone, as the
+/// canvas has it. Whatever the band has above that, the card and the days
+/// grow into: from the sizes that fit the phone whose band starts right
+/// under the corner, up towards the canvas's own.
+class _SceneTomorrow extends StatelessWidget {
+  const _SceneTomorrow({this.underSkip = 0});
+
+  /// The top of the band left for Skip, in the band's units.
+  final double underSkip;
+
+  /// Each height the drawing is made of, as short as it goes and as the
+  /// canvas drew it: the room under Skip decides where between the two.
+  static const (double, double) _noticePad = (7.5, 10.3);
+  static const (double, double) _gapToCard = (8.0, 10.3);
+  static const (double, double) _cardHeight = (92.0, 118.0);
+  static const (double, double) _cardPad = (12.5, 13.7);
+  static const (double, double) _gapToDays = (11.0, 20.5);
+  static const (double, double) _dayHeight = (25.0, 34.2);
+  static const (double, double) _gapToFoot = (6.0, 6.8);
+
+  /// What does not grow: the notification's words, the gap between the
+  /// two rows of days, and the captions under them.
+  static const double _noticeWords = 30;
+  static const double _dayGap = 4.3;
+  static const double _footLine = 8.6;
+
+  static double _grown((double, double) size, double t) =>
+      size.$1 + (size.$2 - size.$1) * t;
+
+  /// The whole drawing's height, [t] of the way from short to the canvas's.
+  static double _heightAt(double t) =>
+      _noticeWords +
+      2 * _grown(_noticePad, t) +
+      _grown(_gapToCard, t) +
+      _grown(_cardHeight, t) +
+      _grown(_gapToDays, t) +
+      2 * _grown(_dayHeight, t) +
+      _dayGap +
+      _grown(_gapToFoot, t) +
+      _footLine;
+
+  /// The first card: a real subject, in its own colour.
+  static final TopicStyle _subject = kTopics['economics']!;
+
+  /// The five of day one, one colour for each card's subject.
+  static final List<Color> _five = [
+    kSpectrum[2],
+    kSpectrum[0],
+    kSpectrum[14],
+    kSpectrum[12],
+    kSpectrum[6],
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          width: 138,
-          height: 138,
-          child: Stack(
-            alignment: Alignment.center,
+    final l = context.l10n;
+    final double screen = MediaQuery.sizeOf(context).width;
+    // The band is drawn [_SceneStage.width] wide and shown as wide as the
+    // screen, so the buttons' margin, in the band's units, is the margin
+    // over the scale.
+    final double column = screen <= 0
+        ? 306
+        : (_SceneStage.width * (1 - 2 * kIntroSide / screen)).clamp(
+            240.0,
+            _SceneStage.width,
+          );
+    final String time = MaterialLocalizations.of(context).formatTimeOfDay(
+      const TimeOfDay(hour: 8, minute: 30),
+      alwaysUse24HourFormat: MediaQuery.alwaysUse24HourFormatOf(context),
+    );
+    // Two points to spare: the words' own lines round a little over the
+    // heights added up here.
+    final double room = _SceneStage.bandHeight - underSkip - 2;
+    final double short = _heightAt(0);
+    final double t = ((room - short) / (_heightAt(1) - short)).clamp(0.0, 1.0);
+    double at((double, double) size) => _grown(size, t);
+    return SizedBox(
+      width: _SceneStage.width,
+      height: _SceneStage.bandHeight,
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: SizedBox(
+          width: column,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              CustomPaint(
-                size: const Size(138, 138),
-                painter: _RingPainter(
-                  // 258 of 360 degrees, as drawn on the canvas.
-                  progress: 258 / 360,
-                  color: const Color(0xFFFF2E9C),
-                  track: Colors.white.withValues(alpha: 0.09),
-                  stroke: 9,
+              _Rise(
+                key: const ValueKey('intro-notice'),
+                child: _notice(
+                  l.introNotifyWhen(time),
+                  l.introNotifyLine,
+                  pad: at(_noticePad),
                 ),
               ),
-              const _Pulse(size: 114, color: Color(0x66FF2E9C)),
+              SizedBox(height: at(_gapToCard)),
               _Rise(
+                key: const ValueKey('intro-first-card'),
+                delay: const Duration(milliseconds: 550),
+                child: _card(
+                  '${_subject.name.toUpperCase()} · ${l.introOneOfFive}',
+                  l.introDayOne,
+                  l.introTapTomorrow,
+                  height: at(_cardHeight),
+                  pad: at(_cardPad),
+                ),
+              ),
+              SizedBox(height: at(_gapToDays)),
+              KeyedSubtree(
+                key: const ValueKey('intro-fortnight'),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      '13',
-                      style: AppText.body(
-                        size: 46,
-                        weight: FontWeight.w700,
-                        height: 1,
-                        spacing: -2.4,
-                        color: Colors.white,
+                    for (int row = 0; row < 2; row++) ...[
+                      if (row > 0) const SizedBox(height: _dayGap),
+                      Row(
+                        children: [
+                          for (int col = 0; col < 7; col++) ...[
+                            if (col > 0) const SizedBox(width: 4.3),
+                            Expanded(
+                              child: _Rise(
+                                delay: Duration(
+                                  milliseconds: 40 * (row * 7 + col + 1),
+                                ),
+                                duration: const Duration(milliseconds: 500),
+                                child: _DayTile(
+                                  day: row * 7 + col + 1,
+                                  five: _five,
+                                  height: at(_dayHeight),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ],
                       ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      'DAY STREAK',
-                      style: AppText.label(
-                        size: 10,
-                        spacing: 1.7,
-                        color: Colors.white.withValues(alpha: 0.5),
-                      ),
-                    ),
+                    ],
                   ],
                 ),
+              ),
+              SizedBox(height: at(_gapToFoot)),
+              // One caption under each end of the days: the first is short
+              // in every language, and the second takes what is left.
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _foot(l.introDayOneTomorrow),
+                  const SizedBox(width: 12),
+                  Flexible(
+                    child: _foot(l.introDaySevenStreak, align: TextAlign.right),
+                  ),
+                ],
               ),
             ],
           ),
         ),
-        const SizedBox(height: 18),
-        SizedBox(
-          height: 56,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              for (int i = 0; i < 7; i++) ...[
-                if (i > 0) const SizedBox(width: 10),
-                _Grow(
-                  delay: Duration(milliseconds: (100 + i * 70)),
-                  child: Container(
-                    width: 18,
-                    height: i < 5 ? 18 + i * 6 : 18,
-                    decoration: BoxDecoration(
-                      color: i < 5
-                          ? const Color(0xFFFF2E9C)
-                          : Colors.white.withValues(alpha: 0.10),
-                      borderRadius: BorderRadius.circular(7),
+      ),
+    );
+  }
+
+  /// The morning's notification, as the lock screen shows it.
+  Widget _notice(String when, String line, {required double pad}) {
+    return Container(
+      padding: EdgeInsets.fromLTRB(12, pad, 12, pad),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(17),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(7.7),
+            child: Image.asset(
+              'assets/brand/mark-light.png',
+              width: 29,
+              height: 29,
+              fit: BoxFit.cover,
+              filterQuality: FilterQuality.medium,
+            ),
+          ),
+          const SizedBox(width: 9.4),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: 2),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    Text(
+                      'Astute',
+                      style: AppText.body(
+                        size: 10.7,
+                        weight: FontWeight.w600,
+                        height: 1,
+                        color: Colors.white,
+                      ),
                     ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        when,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.right,
+                        style: AppText.body(
+                          size: 9,
+                          height: 1,
+                          color: Colors.white.withValues(alpha: 0.5),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 3.4),
+                FitText(
+                  line,
+                  maxLines: 1,
+                  minSize: 8,
+                  style: AppText.body(
+                    size: 10.7,
+                    height: 1.3,
+                    color: Colors.white.withValues(alpha: 0.85),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// The first of the five, face up, the way the deck deals it.
+  Widget _card(
+    String eyebrow,
+    String day,
+    String foot, {
+    required double height,
+    required double pad,
+  }) {
+    final Color ink = _subject.ink;
+    final TextStyle meta = AppText.label(
+      size: 7.7,
+      weight: FontWeight.w700,
+      spacing: 1.55,
+      height: 1,
+      color: ink.withValues(alpha: 0.55),
+    );
+    return Container(
+      height: height,
+      padding: EdgeInsets.fromLTRB(15.4, pad, 15.4, pad),
+      decoration: BoxDecoration(
+        color: _subject.color,
+        borderRadius: BorderRadius.circular(19),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x80000000),
+            blurRadius: 34,
+            offset: Offset(0, 17),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  eyebrow,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: meta,
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(day, style: meta),
+            ],
+          ),
+          Text(
+            'Why does cinema popcorn cost more than the ticket?',
+            maxLines: 2,
+            style: AppText.display(
+              size: 16,
+              weight: FontWeight.w600,
+              height: 1.15,
+              spacing: -0.35,
+              color: ink,
+            ),
+          ),
+          FitText(
+            foot,
+            maxLines: 1,
+            minSize: 6,
+            style: AppText.label(
+              size: 8.1,
+              spacing: 1.2,
+              height: 1,
+              color: ink.withValues(alpha: 0.5),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// A caption under the days, one at each end.
+  Widget _foot(String text, {TextAlign align = TextAlign.left}) {
+    return FitText(
+      text,
+      maxLines: 1,
+      minSize: 6,
+      textAlign: align,
+      style: AppText.label(
+        size: 8.6,
+        spacing: 0.7,
+        height: 1,
+        color: Colors.white.withValues(alpha: 0.4),
+      ),
+    );
+  }
+}
+
+/// One of the fourteen days: the first lit, with its five in their
+/// subjects' colours; the seventh and the fourteenth marked with a dashed
+/// edge; the rest still dark.
+class _DayTile extends StatelessWidget {
+  const _DayTile({required this.day, required this.five, this.height = 25});
+
+  final int day;
+  final List<Color> five;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    final bool lit = day == 1;
+    final bool marked = day == 7 || day == 14;
+    final Color ink = lit
+        ? Colors.white
+        : Colors.white.withValues(alpha: marked ? 0.55 : 0.28);
+    final Widget tile = Container(
+      height: height,
+      padding: const EdgeInsets.fromLTRB(4.3, 3.4, 4.3, 3.4),
+      decoration: BoxDecoration(
+        // The lit day is solid: a glow is drawn under the whole box, and
+        // through a see-through one it greyed the day it was meant to ring.
+        color: lit
+            ? Color.alphaBlend(
+                Colors.white.withValues(alpha: 0.1),
+                const Color(0xFF09090C),
+              )
+            : Colors.white.withValues(alpha: 0.035),
+        borderRadius: BorderRadius.circular(7.7),
+        border: lit ? Border.all(color: Colors.white, width: 1.3) : null,
+        boxShadow: lit
+            ? [
+                BoxShadow(
+                  color: Colors.white.withValues(alpha: 0.6),
+                  blurRadius: 22,
+                  spreadRadius: -3.4,
+                ),
+              ]
+            : null,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            '$day',
+            style: AppText.body(
+              size: 6.8,
+              weight: FontWeight.w600,
+              height: 1,
+              color: ink,
+            ),
+          ),
+          Row(
+            children: [
+              for (int k = 0; k < five.length; k++) ...[
+                if (k > 0) const SizedBox(width: 1.7),
+                Container(
+                  width: 3.85,
+                  height: 3.85,
+                  decoration: BoxDecoration(
+                    color: lit ? five[k] : Colors.white.withValues(alpha: 0.08),
+                    borderRadius: BorderRadius.circular(1.3),
                   ),
                 ),
               ],
             ],
           ),
-        ),
-      ],
+        ],
+      ),
+    );
+    if (!marked) return tile;
+    return CustomPaint(
+      foregroundPainter: _DashedEdge(
+        color: Colors.white.withValues(alpha: 0.3),
+        width: 1.3,
+        radius: 7.7,
+      ),
+      child: tile,
     );
   }
 }
 
-class _RingPainter extends CustomPainter {
-  const _RingPainter({
-    required this.progress,
+/// A dashed rounded edge, drawn just inside the box — the canvas's
+/// `1.5px dashed`, which a border in Flutter has no way of saying.
+class _DashedEdge extends CustomPainter {
+  const _DashedEdge({
     required this.color,
-    required this.track,
-    required this.stroke,
+    required this.width,
+    required this.radius,
   });
 
-  final double progress;
   final Color color;
-  final Color track;
-  final double stroke;
+  final double width;
+  final double radius;
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Rect rect = (Offset.zero & size).deflate(stroke / 2);
-    final Paint p = Paint()
+    final Rect rect = (Offset.zero & size).deflate(width / 2);
+    final Path edge = Path()
+      ..addRRect(RRect.fromRectAndRadius(rect, Radius.circular(radius)));
+    final Paint paint = Paint()
+      ..color = color
       ..style = PaintingStyle.stroke
-      ..strokeWidth = stroke;
-    canvas.drawArc(rect, 0, 2 * math.pi, false, p..color = track);
-    canvas.drawArc(
-      rect,
-      -math.pi / 2,
-      progress * 2 * math.pi,
-      false,
-      p..color = color,
-    );
+      ..strokeWidth = width;
+    final double dash = width * 2.4;
+    final double gap = width * 1.8;
+    for (final metric in edge.computeMetrics()) {
+      for (double at = 0; at < metric.length; at += dash + gap) {
+        canvas.drawPath(
+          metric.extractPath(at, math.min(at + dash, metric.length)),
+          paint,
+        );
+      }
+    }
   }
 
   @override
-  bool shouldRepaint(covariant _RingPainter old) =>
-      old.progress != progress || old.color != color;
+  bool shouldRepaint(covariant _DashedEdge old) =>
+      old.color != color || old.width != width || old.radius != radius;
 }
 
-/// Lifts and fades in — the canvas `obcCount`.
+/// Rises into place and fades in, after [delay] — the canvas `obRise`.
 class _Rise extends StatefulWidget {
-  const _Rise({required this.child});
+  const _Rise({
+    super.key,
+    required this.child,
+    this.delay = Duration.zero,
+    this.duration = const Duration(milliseconds: 600),
+  });
 
   final Widget child;
+  final Duration delay;
+  final Duration duration;
 
   @override
   State<_Rise> createState() => _RiseState();
 }
 
 class _RiseState extends State<_Rise> with SingleTickerProviderStateMixin {
-  late final AnimationController _c = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 750),
-  )..forward();
-
-  @override
-  void dispose() {
-    _c.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (MediaQuery.disableAnimationsOf(context)) return widget.child;
-    return AnimatedBuilder(
-      animation: _c,
-      builder: (context, child) {
-        final double t = Curves.easeOutCubic.transform(_c.value);
-        return Opacity(
-          opacity: t,
-          child: Transform.translate(
-            offset: Offset(0, 14 * (1 - t)),
-            child: Transform.scale(scale: 0.9 + 0.1 * t, child: child),
-          ),
-        );
-      },
-      child: widget.child,
-    );
-  }
-}
-
-/// Grows from its base — the canvas `obcGrow`.
-class _Grow extends StatefulWidget {
-  const _Grow({required this.child, required this.delay});
-
-  final Widget child;
-  final Duration delay;
-
-  @override
-  State<_Grow> createState() => _GrowState();
-}
-
-class _GrowState extends State<_Grow> with SingleTickerProviderStateMixin {
-  late final Duration _total = widget.delay + const Duration(milliseconds: 600);
+  // The delay is an interval inside one controller rather than a timer, as
+  // in [_Pop]: a pending Future.delayed outlives a disposed widget.
+  late final Duration _total = widget.delay + widget.duration;
   late final double _start =
       widget.delay.inMicroseconds / _total.inMicroseconds;
   late final AnimationController _c = AnimationController(
@@ -1725,12 +2068,11 @@ class _GrowState extends State<_Grow> with SingleTickerProviderStateMixin {
       animation: _c,
       builder: (context, child) {
         final double raw = ((_c.value - _start) / (1 - _start)).clamp(0, 1);
-        final double t = Curves.easeOutCubic.transform(raw);
+        final double t = Curves.ease.transform(raw);
         return Opacity(
           opacity: t,
-          child: Transform(
-            alignment: Alignment.bottomCenter,
-            transform: Matrix4.diagonal3Values(1, 0.2 + 0.8 * t, 1),
+          child: Transform.translate(
+            offset: Offset(0, 12 * (1 - t)),
             child: child,
           ),
         );

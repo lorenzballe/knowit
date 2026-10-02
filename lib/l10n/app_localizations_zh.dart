@@ -115,7 +115,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get exploreTodaysBest => '探索今日精选';
 
   @override
-  String get magicUnlock => '免费试用7天';
+  String magicUnlock(int days) {
+    return '免费试用$days天';
+  }
+
+  @override
+  String get getPlus => '升级到 Astute+';
 
   @override
   String nothingInYet(String subject) {
@@ -643,7 +648,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get plusNameCaps => 'ASTUTE+';
 
   @override
-  String get sevenDaysFree => '免费 7 天';
+  String trialDaysFree(int days) {
+    return '免费 $days 天';
+  }
 
   @override
   String get seeThePlans => '查看方案';
@@ -850,6 +857,29 @@ class AppLocalizationsZh extends AppLocalizations {
   String get introThirtyLine => '一条通知，五张卡片，和一段你不想中断的连续记录。';
 
   @override
+  String introNotifyWhen(String time) {
+    return '明天 $time';
+  }
+
+  @override
+  String get introNotifyLine => '今天的五张已就绪。第 1 天。';
+
+  @override
+  String get introOneOfFive => '1 / 5';
+
+  @override
+  String get introDayOne => '第 1 天';
+
+  @override
+  String get introTapTomorrow => '明天点按揭晓';
+
+  @override
+  String get introDayOneTomorrow => '第 1 天 · 明天';
+
+  @override
+  String get introDaySevenStreak => '第 7 天 · 第一段连续记录';
+
+  @override
   String get continueWithApple => '使用 Apple 继续';
 
   @override
@@ -869,9 +899,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get barMoveCaps => '值得记住';
-
-  @override
-  String get askYourselfCaps => '问问自己';
 
   @override
   String get theBarMoveCaps => '饭桌上的那句话';
@@ -928,8 +955,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get plusIsActive => 'ASTUTE+ 已激活';
 
   @override
-  String tryFreeThen(String price, String suffix) {
-    return '免费试用 7 天，之后 $price$suffix';
+  String tryFreeThen(int days, String price, String suffix) {
+    return '免费试用 $days 天，之后 $price$suffix';
   }
 
   @override
@@ -1559,17 +1586,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get againChip => '再来一次';
 
   @override
-  String theOthersYours(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '剩下的$n张，也为你。',
-      one: '剩下的一张，也为你。',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get magicLine => '每天五张为你挑选的卡片：来自你的组合，匹配你的水平，绝不重复已读。明天开始。';
 
   @override
@@ -1579,7 +1595,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get perkOwnTitle => '每天五张，全部为你';
 
   @override
-  String get perkOwnLine => '来自你选的分支，按你的水平，绝不重复已读。免费版每天一张。';
+  String get perkOwnLine => '来自你选的分支，按你的水平，绝不重复已读。免费版每天两张。';
 
   @override
   String get plusCardHeadline => '让五张全都为你。';
@@ -1636,7 +1652,7 @@ class AppLocalizationsZh extends AppLocalizations {
       '还没有卡片回来。一张卡片会在三天后、一周后、一个月后再次出现——那时你答对的，才是你真正知道的。';
 
   @override
-  String get weekKeptTwoOwn => '坚持了一周：明天五张里有两张是你的。';
+  String get weekKeptThreeOwn => '坚持了一周：明天五张里有三张是你的。';
 
   @override
   String get perkJourneyLine => '你的等级、逐个分支的每个学科、你记住了什么，以及今晚要讲的那张卡片。';
@@ -1692,20 +1708,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get lovedLine => '读者保留最多、而你还没读过的卡片';
 
   @override
-  String welcomeDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '你的第一周：五张中有四张是你的，还剩$n天。',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get welcomeWeekEnds =>
-      '你的第一周今晚结束。从明天起，五张中有一张是你的，三张是大家的；Astute+ 让五张都属于你。';
-
-  @override
   String get forYouShelf => '为你推荐';
 
   @override
@@ -1713,6 +1715,9 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get exploreOffline => '你已离线。这是上次读取的\"探索\"页面。';
+
+  @override
+  String get askYourselfCaps => '问问自己';
 
   @override
   String get themeMyths => '破除迷思';

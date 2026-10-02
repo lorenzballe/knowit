@@ -210,9 +210,8 @@ class _PhoneFrame extends StatelessWidget {
 
 /// Where the first-run flow lives. Everything before [_Stage.shell] runs once
 /// per install; after that the app opens straight on the tab bar.
-/// The onboarding is two screens and no more: the intro that says what the
-/// app is, then the subject run that fills the deck. Everything else waits
-/// until there is something worth signing in to keep.
+/// The onboarding is the intro that says what the app is, then the subject
+/// run that fills the deck, then the offer, once, and then the first day.
 enum _Stage {
   intro,
   subjects,
@@ -420,12 +419,11 @@ class _AstutoRootState extends State<AstutoRoot> {
   }
 
   /// A step passed over rather than answered.
-  void _skip(_Stage from, _Stage to) {
+  void _noteSkipped(_Stage from) {
     Analytics.capture('onboarding step skipped', {
       'step': from.screen,
       'ms_on_step': _stageClock.elapsedMilliseconds,
     });
-    _go(to);
   }
 
   /// Returns whether the intro should move on. Only backing out of the
@@ -539,7 +537,15 @@ class _AstutoRootState extends State<AstutoRoot> {
             await _app.setTopicMix(weights);
             if (mounted) _go(_Stage.genres);
           },
-          onSkip: () => _skip(_Stage.subjects, _Stage.offer),
+          // Skipping the mix skips the offer too, straight to the first
+          // day: a reader who has said nothing about what they want to
+          // read, and has not seen a card yet, does not know what Astute+
+          // would be selling them. The card after the fifth offers it
+          // every evening instead.
+          onSkip: () {
+            _noteSkipped(_Stage.subjects);
+            _finishOnboarding();
+          },
         );
 
       // The same answer, one layer finer: which six of each subject, and
@@ -552,14 +558,20 @@ class _AstutoRootState extends State<AstutoRoot> {
             await _app.setGenresOff(genresOff, strandsOff);
             if (mounted) _go(_Stage.offer);
           },
-          onSkip: () => _skip(_Stage.genres, _Stage.offer),
+          onSkip: () {
+            _noteSkipped(_Stage.genres);
+            _go(_Stage.offer);
+          },
         );
 
       // The offer, once, straight after the mix: the reader has just said
       // what they want to read about, and this is where the day made of
-      // exactly that is sold — with the way past it written under it.
-      // Skipping the mix lands here too; the offer is not a reward for
-      // finishing a form.
+      // exactly that is sold. What it sells first is the free trial, so
+      // nothing is paid today, and the way past it is written under it.
+      // Most trials start on the first day, which is why it is here and not
+      // only on the card after the fifth. Passing over the genres lands
+      // here too, because the subjects were set; passing over the subjects
+      // does not (see above).
       case _Stage.offer:
         return PaywallScreen(
           app: _app,

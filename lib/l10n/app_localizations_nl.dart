@@ -115,7 +115,12 @@ class AppLocalizationsNl extends AppLocalizations {
   String get exploreTodaysBest => 'Ontdek het beste van vandaag';
 
   @override
-  String get magicUnlock => 'Probeer 7 dagen gratis';
+  String magicUnlock(int days) {
+    return 'Probeer $days dagen gratis';
+  }
+
+  @override
+  String get getPlus => 'Neem Astute+';
 
   @override
   String nothingInYet(String subject) {
@@ -661,7 +666,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get plusNameCaps => 'ASTUTE+';
 
   @override
-  String get sevenDaysFree => '7 dagen gratis';
+  String trialDaysFree(int days) {
+    return '$days dagen gratis';
+  }
 
   @override
   String get seeThePlans => 'BEKIJK DE ABONNEMENTEN';
@@ -876,6 +883,29 @@ class AppLocalizationsNl extends AppLocalizations {
       'Eén melding, vijf kaarten, en een reeks die je niet wilt breken.';
 
   @override
+  String introNotifyWhen(String time) {
+    return 'Morgen, $time';
+  }
+
+  @override
+  String get introNotifyLine => 'Je vijf staan klaar. Dag 1.';
+
+  @override
+  String get introOneOfFive => '1 VAN 5';
+
+  @override
+  String get introDayOne => 'DAG 1';
+
+  @override
+  String get introTapTomorrow => 'TIK MORGEN OM HET TE ONTDEKKEN';
+
+  @override
+  String get introDayOneTomorrow => 'DAG 1 · MORGEN';
+
+  @override
+  String get introDaySevenStreak => 'DAG 7 · EERSTE REEKS';
+
+  @override
   String get continueWithApple => 'Doorgaan met Apple';
 
   @override
@@ -896,9 +926,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get barMoveCaps => 'OM TE ONTHOUDEN';
-
-  @override
-  String get askYourselfCaps => 'VRAAG JEZELF';
 
   @override
   String get theBarMoveCaps => 'DE ZIN VOOR AAN DE BAR';
@@ -956,8 +983,8 @@ class AppLocalizationsNl extends AppLocalizations {
   String get plusIsActive => 'ASTUTE+ IS ACTIEF';
 
   @override
-  String tryFreeThen(String price, String suffix) {
-    return '7 dagen gratis, daarna $price$suffix';
+  String tryFreeThen(int days, String price, String suffix) {
+    return '$days dagen gratis, daarna $price$suffix';
   }
 
   @override
@@ -1607,17 +1634,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get againChip => 'OPNIEUW';
 
   @override
-  String theOthersYours(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'De andere $n, van jou.',
-      one: 'De andere, van jou.',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get magicLine =>
       'Vijf kaarten per dag voor jou gekozen: uit je mix, op jouw niveau, nooit een die je al las. Vanaf morgen.';
 
@@ -1629,7 +1645,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get perkOwnLine =>
-      'Uit jouw draden, op jouw niveau, nooit een die je al las. Gratis krijg je er één per dag.';
+      'Uit jouw draden, op jouw niveau, nooit een die je al las. Gratis krijg je er twee per dag.';
 
   @override
   String get plusCardHeadline => 'Alle vijf van jou.';
@@ -1690,8 +1706,8 @@ class AppLocalizationsNl extends AppLocalizations {
       'Er is nog niets teruggekomen. Een kaart komt terug na drie dagen, dan een week, dan een maand — en wat je dan goed hebt, weet je echt.';
 
   @override
-  String get weekKeptTwoOwn =>
-      'Een week volgehouden: morgen zijn twee van de vijf van jou.';
+  String get weekKeptThreeOwn =>
+      'Een week volgehouden: morgen zijn drie van de vijf van jou.';
 
   @override
   String get perkJourneyLine =>
@@ -1753,21 +1769,6 @@ class AppLocalizationsNl extends AppLocalizations {
       'Wat lezers het vaakst bewaarden en jij nog niet hebt gelezen';
 
   @override
-  String welcomeDaysLeft(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Je eerste week: nog $n dagen met vier van de vijf van jou.',
-      one: 'Je eerste week: morgen is de laatste dag, vier van de vijf zijn van jou.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get welcomeWeekEnds =>
-      'Je eerste week eindigt vanavond. Vanaf morgen is één van de vijf van jou en drie zijn van iedereen; met Astute+ blijven alle vijf van jou.';
-
-  @override
   String get forYouShelf => 'Voor jou';
 
   @override
@@ -1776,6 +1777,9 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get exploreOffline =>
       'Je bent offline. Dit is Verkennen zoals het het laatst gelezen is.';
+
+  @override
+  String get askYourselfCaps => 'VRAAG JEZELF';
 
   @override
   String get themeMyths => 'Mythes ontkracht';

@@ -19,7 +19,7 @@ APP_STORE = 'https://apps.apple.com/app/id6806852300'
 PLAY = 'https://play.google.com/store/apps/details?id=com.astuto.app'
 
 BADGES = f'''<a href="{APP_STORE}"><img src="/assets/badges/app-store.svg" width="156" height="52" alt="Download on the App Store"></a>
-        <a href="{PLAY}"><img src="/assets/badges/google-play.png" width="175" height="52" alt="Get it on Google Play"></a>'''
+        <a href="{PLAY}"><img src="/assets/badges/google-play.svg" width="176" height="52" alt="Get it on Google Play"></a>'''
 
 
 def header(p, home):
