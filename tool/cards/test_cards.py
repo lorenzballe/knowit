@@ -64,19 +64,32 @@ def thinking_card(**over) -> dict:
 class TheGenres(unittest.TestCase):
     def test_the_tree_is_read_off_the_app(self):
         tree = genres.by_topic()
-        self.assertEqual(len(tree), 18)
+        # Every subject but Thinking: the eighteen the app opened with, and
+        # Life.
+        self.assertEqual(len(tree), 19)
+        self.assertIn("life", tree)
         self.assertNotIn("thinking", tree)
         for topic, gs in tree.items():
-            self.assertEqual(len(gs), 6, topic)
+            # Six genres each to begin with, and the ways of thinking since.
+            self.assertGreaterEqual(len(gs), 6, topic)
             for g in gs:
-                self.assertEqual(len(g.strands), 3, g.id)
+                self.assertIn(len(g.strands), (3, 4), g.id)
                 self.assertEqual(g.topic, topic)
                 for s in g.strands:
                     self.assertEqual(s.genre, g.id)
                     self.assertTrue(s.id.startswith(g.id + "."))
-        self.assertEqual(len(genres.strands_by_id()), 324)
+        # Counted, so that a genre or a strand the reader cannot make out
+        # shows here rather than as cards the gate turns away.
+        self.assertEqual(sum(len(gs) for gs in tree.values()), 158)
+        self.assertEqual(len(genres.strands_by_id()), 499)
         self.assertEqual(genres.describe("space.black_holes.event_horizons"), "Black holes · Event horizons")
         self.assertEqual(genres.strands_of("thinking"), [])
+
+    def test_a_label_with_an_apostrophe_is_read_whole(self):
+        # Escaped in the app's source; cut at the apostrophe, both strands
+        # fell out of the tree.
+        self.assertEqual(genres.describe("medicine.medical_myths.old_wives_tales"), "Medical myths · Old wives' tales")
+        self.assertEqual(genres.describe("economics.markets_and_hype.experts_forecasts"), "Markets and hype · Experts' forecasts")
 
 
 class TheGate(unittest.TestCase):

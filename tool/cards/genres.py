@@ -1,8 +1,9 @@
 """The genres and their strands, read off the app's own list.
 
-`lib/data/genres.dart` is the one place the tree lives: nineteen subjects,
-six genres each, three strands under every genre, the names a reader would
-give for what they want to read about. This reads that file rather than
+`lib/data/genres.dart` is the one place the tree lives: every subject but
+Thinking, six genres each to begin with and the ways of thinking added since,
+three or four strands under every genre, the names a reader would give for
+what they want to read about. This reads that file rather than
 copying it, so a strand renamed in the app is renamed here in the same
 commit, and a card tagged with a strand the app no longer has fails the
 gate instead of being a card the phone quietly cannot deal.
@@ -46,6 +47,17 @@ class Genre:
         return self.id.split(".", 1)[0]
 
 
+# A Dart string, in either quote, escapes and all. Read as anything up to the
+# next quote, `'Old wives\' tales'` ended at its apostrophe, the strand no
+# longer matched, and it fell out of the tree without a word: the gate would
+# then have turned away every card written under it.
+_STR = r"""(?:'((?:[^'\\]|\\.)*)'|"((?:[^"\\]|\\.)*)")"""
+
+
+def _text(single: str | None, double: str | None) -> str:
+    return re.sub(r"\\(.)", r"\1", single if single is not None else double)
+
+
 def _closing_bracket(text: str, start: int) -> int:
     """The index of the `]` that closes the `[` just before [start]."""
     depth = 1
@@ -65,14 +77,19 @@ def load(path: Path = DART) -> tuple[Genre, ...]:
     src = path.read_text(encoding="utf-8")
     body = src[src.index("kGenres = {"):]
     out: list[Genre] = []
-    for g in re.finditer(r"Genre\(\s*'([^']+)',\s*'([^']+)',\s*\[", body):
+    for g in re.finditer(rf"Genre\(\s*{_STR},\s*{_STR},\s*\[", body):
         end = _closing_bracket(body, g.end())
         chunk = body[g.end():end]
+        genre_id = _text(g.group(1), g.group(2))
         strands = tuple(
-            Strand(sid, label)
-            for sid, label in re.findall(r"Strand\(\s*'([^']+)',\s*'([^']+)',?\s*\)", chunk)
+            Strand(_text(a, b), _text(c, d))
+            for a, b, c, d in re.findall(rf"Strand\(\s*{_STR},\s*{_STR},?\s*\)", chunk)
         )
-        out.append(Genre(g.group(1), g.group(2), strands))
+        # Every strand the app lists, or none of the tree: one that cannot
+        # be read is a fault in this file, not a strand to leave out.
+        if len(strands) != chunk.count("Strand("):
+            raise ValueError(f"a strand under {genre_id} that genres.py could not read")
+        out.append(Genre(genre_id, _text(g.group(3), g.group(4)), strands))
     if not out:
         raise ValueError("no genres found in genres.dart")
     return tuple(out)
