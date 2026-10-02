@@ -872,7 +872,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get tapToRevealLower => 'タップで表示';
 
   @override
-  String get barMoveCaps => '会話のひと言';
+  String get barMoveCaps => '持ち帰ること';
+
+  @override
+  String get askYourselfCaps => '自分に問う';
 
   @override
   String get theBarMoveCaps => '会話のひと言';

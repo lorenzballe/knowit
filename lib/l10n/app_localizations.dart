@@ -1287,8 +1287,14 @@ abstract class AppLocalizations {
   /// No description provided for @barMoveCaps.
   ///
   /// In en, this message translates to:
-  /// **'BAR MOVE'**
+  /// **'WHAT TO KEEP'**
   String get barMoveCaps;
+
+  /// No description provided for @askYourselfCaps.
+  ///
+  /// In en, this message translates to:
+  /// **'ASK YOURSELF'**
+  String get askYourselfCaps;
 
   /// No description provided for @theBarMoveCaps.
   ///

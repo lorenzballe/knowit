@@ -922,7 +922,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tapToRevealLower => 'нажми, чтобы открыть';
 
   @override
-  String get barMoveCaps => 'ФРАЗА ДЛЯ РАЗГОВОРА';
+  String get barMoveCaps => 'ЧТО ЗАПОМНИТЬ';
+
+  @override
+  String get askYourselfCaps => 'СПРОСИ СЕБЯ';
 
   @override
   String get theBarMoveCaps => 'ФРАЗА ДЛЯ РАЗГОВОРА';

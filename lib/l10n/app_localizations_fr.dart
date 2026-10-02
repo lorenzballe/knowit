@@ -899,7 +899,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get tapToRevealLower => 'touche pour révéler';
 
   @override
-  String get barMoveCaps => 'LA PHRASE DE COMPTOIR';
+  String get barMoveCaps => 'À RETENIR';
+
+  @override
+  String get askYourselfCaps => 'DEMANDE-TOI';
 
   @override
   String get theBarMoveCaps => 'LA PHRASE DE COMPTOIR';

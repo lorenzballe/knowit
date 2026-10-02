@@ -896,7 +896,10 @@ class AppLocalizationsPt extends AppLocalizations {
   String get tapToRevealLower => 'toca para revelar';
 
   @override
-  String get barMoveCaps => 'A FRASE DE BAR';
+  String get barMoveCaps => 'PARA LEVAR CONTIGO';
+
+  @override
+  String get askYourselfCaps => 'PERGUNTA-TE';
 
   @override
   String get theBarMoveCaps => 'A FRASE DE BAR';

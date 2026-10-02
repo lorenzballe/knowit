@@ -69,7 +69,7 @@ TAG_KEYS = ("keywords", "era", "region", "hook", "mood", "numeracy", "abstractio
 KEY_ORDER = [
     "id", "topic", "genre", "strand", "also", "kind", "difficulty", "principle", "question",
     "options", "correct", "value", "unit", "tolerance", "withinFactor", "sides",
-    "answer", "move", "trap", "hint", "steps", "simply", "counterpoint",
+    "answer", "move", "ask", "trap", "hint", "steps", "simply", "counterpoint",
     *TAG_KEYS, "builds_on", "figure", "diagram",
     "source", "source_kind", "reference", "quote", "written", "disabled",
 ]
@@ -196,6 +196,15 @@ def check_card(card: dict, *, strict: bool = False, schema: dict | None = None,
     steps = card.get("steps", [])
     principle = card["principle"]
     difficulty = card["difficulty"]
+
+    # The question to carry: about the reader's own life, so it is a question
+    # and it is short enough to remember.
+    ask = card.get("ask")
+    if ask is not None:
+        if not isinstance(ask, str) or not ask.strip().endswith("?"):
+            problems.append("ask is a question, and ends with a question mark")
+        elif len(ask.split()) > 25:
+            problems.append("ask runs past 25 words")
 
     # The shape each kind has to have.
     if kind == "read":

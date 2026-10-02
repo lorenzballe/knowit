@@ -895,7 +895,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get tapToRevealLower => 'tik om te onthullen';
 
   @override
-  String get barMoveCaps => 'DE ZIN VOOR AAN DE BAR';
+  String get barMoveCaps => 'OM TE ONTHOUDEN';
+
+  @override
+  String get askYourselfCaps => 'VRAAG JEZELF';
 
   @override
   String get theBarMoveCaps => 'DE ZIN VOOR AAN DE BAR';

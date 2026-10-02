@@ -27,6 +27,7 @@
     "question": { "type": "string", "minLength": 1 },
     "answer": { "type": "string", "description": "The reveal. On a number or estimate card it is the last line of the steps." },
     "move": { "type": "string", "minLength": 1, "description": "The one line that survives the card." },
+    "ask": { "type": "string", "description": "The question the reader takes into their own day: the card turned on their life. One sentence ending in a question mark." },
     "trap": { "type": "string", "description": "The wrong answer most people reach for first, and why it feels right." },
     "hint": { "type": "string", "description": "A way in, without the number." },
     "steps": { "type": "array", "items": { "type": "string", "minLength": 1 }, "description": "The worked solution, one move per line." },

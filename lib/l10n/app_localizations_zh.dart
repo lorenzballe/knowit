@@ -868,7 +868,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tapToRevealLower => '点按揭晓';
 
   @override
-  String get barMoveCaps => '饭桌上的那句话';
+  String get barMoveCaps => '值得记住';
+
+  @override
+  String get askYourselfCaps => '问问自己';
 
   @override
   String get theBarMoveCaps => '饭桌上的那句话';

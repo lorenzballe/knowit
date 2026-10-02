@@ -875,7 +875,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tapToRevealLower => '탭하여 보기';
 
   @override
-  String get barMoveCaps => '대화용 한 문장';
+  String get barMoveCaps => '기억할 것';
+
+  @override
+  String get askYourselfCaps => '스스로에게 물어보기';
 
   @override
   String get theBarMoveCaps => '대화용 한 문장';

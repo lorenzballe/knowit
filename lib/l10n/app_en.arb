@@ -786,7 +786,8 @@
  "termsLine": "By signing up you agree to our Terms of Service & Privacy Policy",
  "skip": "Skip",
  "tapToRevealLower": "tap to reveal",
- "barMoveCaps": "BAR MOVE",
+ "barMoveCaps": "WHAT TO KEEP",
+ "askYourselfCaps": "ASK YOURSELF",
  "theBarMoveCaps": "THE BAR MOVE",
  "widgetFootPlain": "Five cards, two minutes.",
  "@widgetFootPlain": {

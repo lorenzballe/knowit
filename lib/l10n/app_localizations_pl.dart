@@ -925,7 +925,10 @@ class AppLocalizationsPl extends AppLocalizations {
   String get tapToRevealLower => 'dotknij, by odsłonić';
 
   @override
-  String get barMoveCaps => 'ZDANIE NA IMPREZĘ';
+  String get barMoveCaps => 'DO ZAPAMIĘTANIA';
+
+  @override
+  String get askYourselfCaps => 'ZAPYTAJ SIEBIE';
 
   @override
   String get theBarMoveCaps => 'ZDANIE NA IMPREZĘ';

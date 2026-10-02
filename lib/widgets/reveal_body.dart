@@ -140,6 +140,17 @@ class _RevealBodyState extends State<RevealBody> {
           ink: widget.ink,
           wash: widget.wash,
         ),
+        // What the card is for: the lesson turned into a question about the
+        // reader's own life, to carry through the day.
+        if (pill.ask.isNotEmpty) ...[
+          const SizedBox(height: 10),
+          _Panel(
+            label: context.l10n.askYourselfCaps,
+            body: pill.ask,
+            ink: widget.ink,
+            wash: widget.wash,
+          ),
+        ],
         const SizedBox(height: 13),
         Text(
           context.l10n.sourceLabel(pill.source),

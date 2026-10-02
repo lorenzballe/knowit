@@ -337,6 +337,10 @@ class Pill {
   final String question;
   final String answer;
   final String barMove;
+
+  /// The question the reader takes away and asks of their own life: what
+  /// the card is for. Empty on a card not yet given one.
+  final String ask;
   final String source;
 
   /// What the card asks before it turns over.
@@ -428,6 +432,7 @@ class Pill {
     required this.question,
     required this.answer,
     required this.barMove,
+    this.ask = '',
     required this.source,
     this.challenge = const NoChallenge(),
     this.hint = '',

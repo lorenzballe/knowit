@@ -889,7 +889,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tapToRevealLower => 'görmek için dokun';
 
   @override
-  String get barMoveCaps => 'MASADA SÖYLENECEK SÖZ';
+  String get barMoveCaps => 'AKILDA KALAN';
+
+  @override
+  String get askYourselfCaps => 'KENDİNE SOR';
 
   @override
   String get theBarMoveCaps => 'MASADA SÖYLENECEK SÖZ';

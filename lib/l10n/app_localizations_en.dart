@@ -893,7 +893,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tapToRevealLower => 'tap to reveal';
 
   @override
-  String get barMoveCaps => 'BAR MOVE';
+  String get barMoveCaps => 'WHAT TO KEEP';
+
+  @override
+  String get askYourselfCaps => 'ASK YOURSELF';
 
   @override
   String get theBarMoveCaps => 'THE BAR MOVE';
