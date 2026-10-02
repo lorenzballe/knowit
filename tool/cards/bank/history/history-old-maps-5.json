@@ -9,6 +9,7 @@
   "question": "What happened to the map of France when astronomers timed the moons of Jupiter from its coasts in the 1670s?",
   "answer": "It shrank. Picard and La Hire timed eclipses of Io, Jupiter's nearest large moon, at coastal ports and compared them with the same eclipses in Paris: the difference in local time gave the longitude. Brest moved well east of where maps had put it, and the Atlantic coast pulled in towards Paris.",
   "move": "Every longitude is a time difference; a map is only as good as its clocks.",
+  "ask": "What of mine is only as good as the clocks or measures I used to make it?",
   "keywords": [
     "jean picard",
     "philippe de la hire",
@@ -29,6 +30,5 @@
   "source": "Konvitz, Cartography in France, 1987",
   "source_kind": "book",
   "reference": "Konvitz, Cartography in France, 1660–1848: Science, Engineering, and Statecraft, University of Chicago Press, 1987",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

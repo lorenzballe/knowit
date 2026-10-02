@@ -9,6 +9,7 @@
   "question": "Why did an Ottoman sultan's brother, not his son, inherit the throne in 1617?",
   "answer": "Because a brother had been left alive. New sultans often killed their brothers; Mehmed III had nineteen executed in 1595. Ahmed I, enthroned at 13 in 1603 without an heir, spared his brother Mustafa. When Ahmed died in 1617, Mustafa succeeded instead of a son, and the throne began passing to the dynasty's eldest male.",
   "move": "One exception kept alive can quietly become the new rule.",
+  "ask": "What exception did I keep alive that has quietly become the new rule?",
   "keywords": [
     "ottoman succession",
     "fratricide",
@@ -29,6 +30,5 @@
   "source": "Peirce, The Imperial Harem, 1993",
   "source_kind": "book",
   "reference": "Peirce, The Imperial Harem: Women and Sovereignty in the Ottoman Empire, Oxford University Press, 1993",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }
