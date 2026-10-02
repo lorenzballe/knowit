@@ -1900,12 +1900,6 @@ class AppLocalizationsTr extends AppLocalizations {
   String get themePuzzlesLine => 'Bir kalem ve bir dakikalık bilmeceler';
 
   @override
-  String get holdStrandHint => 'Açılarını seçmek için bir dala basılı tut';
-
-  @override
-  String get anglesComing => 'Kartlar yazıldıkça açılar gelecek';
-
-  @override
   String get weekRecapCaps => 'BU HAFTA KENDİNE SORDUN';
 
   @override

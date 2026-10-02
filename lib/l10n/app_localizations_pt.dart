@@ -1916,14 +1916,6 @@ class AppLocalizationsPt extends AppLocalizations {
   String get themePuzzlesLine => 'Quebra-cabeças para uma caneta e um minuto';
 
   @override
-  String get holdStrandHint =>
-      'Mantém premido um fio para escolher os seus ângulos';
-
-  @override
-  String get anglesComing =>
-      'Os ângulos chegam à medida que se escrevem cartas';
-
-  @override
   String get weekRecapCaps => 'ESTA SEMANA PERGUNTASTE-TE';
 
   @override

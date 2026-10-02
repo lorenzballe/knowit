@@ -102,7 +102,7 @@ void main() {
     await settle(tester);
     await shoot(tester, 'genres-2');
 
-    // Hold a genre for its strands, then a strand for its angles.
+    // Hold a genre for the strands inside it.
     await tester.pumpWidget(const SizedBox());
     await tester.runAsync(
       () => app.setTopicMix({'economics': 0.9, 'life': 0.3}),
@@ -115,11 +115,9 @@ void main() {
     await settle(tester);
     await shoot(tester, 'reasoning-genre');
     await tester.longPress(find.text('Think in incentives'));
-    await tester.longPress(find.text('Pricing tricks'));
+    await tester.longPress(find.text('Inequality'));
     await settle(tester);
-    await tester.longPress(find.text('Anchoring'));
-    await settle(tester);
-    await shoot(tester, 'angles');
+    await shoot(tester, 'new-genre');
   });
 
   testWidgets('the week told back', (tester) async {

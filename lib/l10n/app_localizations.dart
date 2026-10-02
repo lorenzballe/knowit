@@ -2331,7 +2331,7 @@ abstract class AppLocalizations {
   /// No description provided for @genresLine.
   ///
   /// In en, this message translates to:
-  /// **'Tap a genre to skip it. Hold one and the three strands inside open right below.'**
+  /// **'Tap a genre to skip it. Hold one and the smaller topics inside open right below.'**
   String get genresLine;
 
   /// No description provided for @insideGenre.
@@ -2849,18 +2849,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Puzzles you can solve with a pen and a minute'**
   String get themePuzzlesLine;
-
-  /// No description provided for @holdStrandHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Hold a strand to choose its angles'**
-  String get holdStrandHint;
-
-  /// No description provided for @anglesComing.
-  ///
-  /// In en, this message translates to:
-  /// **'Angles arrive as cards are written'**
-  String get anglesComing;
 
   /// No description provided for @weekRecapCaps.
   ///

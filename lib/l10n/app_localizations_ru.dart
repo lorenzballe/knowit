@@ -1981,12 +1981,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get themePuzzlesLine => 'Задачки на ручку и минуту';
 
   @override
-  String get holdStrandHint => 'Удерживай нить, чтобы выбрать её ракурсы';
-
-  @override
-  String get anglesComing => 'Ракурсы появятся по мере новых карточек';
-
-  @override
   String get weekRecapCaps => 'НА ЭТОЙ НЕДЕЛЕ ТЫ СПРАШИВАЛ СЕБЯ';
 
   @override

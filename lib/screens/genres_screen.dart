@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 
 import '../analytics.dart';
 import '../data/genres.dart';
-import '../data/pill_bank.dart';
 import '../data/topics.dart';
 import '../l10n/l10n.dart';
 import '../state/app_state.dart';
@@ -113,14 +112,10 @@ class _GenresScreenState extends State<GenresScreen> {
     });
   }
 
-  void _toggleStrand(Strand strand) => _toggleOff(strand.id);
-
-  /// A strand, or an angle under one (`strand@hook`): both live in the
-  /// strands-off set, which the dealers read for either.
-  void _toggleOff(String id) {
+  void _toggleStrand(Strand strand) {
     HapticFeedback.selectionClick();
     setState(() {
-      if (!_strandsOff.remove(id)) _strandsOff.add(id);
+      if (!_strandsOff.remove(strand.id)) _strandsOff.add(strand.id);
     });
   }
 
@@ -195,7 +190,6 @@ class _GenresScreenState extends State<GenresScreen> {
                                 onTapGenre: _toggleGenre,
                                 onHoldGenre: _openGenre,
                                 onTapStrand: _toggleStrand,
-                                onTapAngle: _toggleOff,
                               )
                             : _SubjectOff(topicKey: key),
                       );
@@ -254,7 +248,6 @@ class _Subject extends StatelessWidget {
   final ValueChanged<Genre> onTapGenre;
   final ValueChanged<Genre> onHoldGenre;
   final ValueChanged<Strand> onTapStrand;
-  final ValueChanged<String> onTapAngle;
 
   const _Subject({
     required this.topicKey,
@@ -265,7 +258,6 @@ class _Subject extends StatelessWidget {
     required this.onTapGenre,
     required this.onHoldGenre,
     required this.onTapStrand,
-    required this.onTapAngle,
   });
 
   /// How much of the wheel this subject got, as one of five words.
@@ -350,9 +342,7 @@ class _Subject extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    dark
-                        ? l.offInYourMix
-                        : '${_level(l)} · ${l.nOfSixOn(on, genres.length)}',
+                    dark ? l.offInYourMix : '${_level(l)} · ${l.nOfSixOn(on, genres.length)}',
                     style: AppText.body(size: 10.5, color: p.inkFaint),
                   ),
                 ],
@@ -384,7 +374,6 @@ class _Subject extends StatelessWidget {
                     strandsOff: strandsOff,
                     genreOff: genresOff.contains(genre.id),
                     onTapStrand: onTapStrand,
-                    onTapAngle: onTapAngle,
                   ),
             ],
           ),
@@ -500,13 +489,12 @@ class _GenreChip extends StatelessWidget {
 ///
 /// A sheet would cover the six the reader is comparing against and cost a
 /// Done button to get back from. This keeps the list exactly where it was.
-class _Inside extends StatefulWidget {
+class _Inside extends StatelessWidget {
   final Genre genre;
   final Color colour;
   final Set<String> strandsOff;
   final bool genreOff;
   final ValueChanged<Strand> onTapStrand;
-  final ValueChanged<String> onTapAngle;
 
   const _Inside({
     required this.genre,
@@ -514,34 +502,11 @@ class _Inside extends StatefulWidget {
     required this.strandsOff,
     required this.genreOff,
     required this.onTapStrand,
-    required this.onTapAngle,
   });
-
-  @override
-  State<_Inside> createState() => _InsideState();
-}
-
-/// The angles a strand's cards come from, in the order they are offered,
-/// with the hook each one is.
-const List<(String, String)> _kAngles = [
-  ('misconception', 'Myths, busted'),
-  ('mechanism', 'How it works'),
-  ('practical', 'Useful today'),
-  ('paradox', 'Paradoxes'),
-  ('puzzle', 'Puzzles'),
-  ('number', 'Numbers'),
-  ('story', 'Stories'),
-  ('origin', 'Where it began'),
-];
-
-class _InsideState extends State<_Inside> {
-  /// The strand whose angles are open: one at a time, under its row.
-  String? _held;
 
   @override
   Widget build(BuildContext context) {
     final Palette p = context.p;
-    final genre = widget.genre;
     return Padding(
       padding: const EdgeInsets.only(top: 8, left: 2),
       child: Column(
@@ -549,19 +514,15 @@ class _InsideState extends State<_Inside> {
         children: [
           Row(
             children: [
-              Container(width: 16, height: 1, color: widget.colour),
+              Container(width: 16, height: 1, color: colour),
               const SizedBox(width: 8),
-              Flexible(
-                child: Text(
-                  '${context.l10n.insideGenre} ${genre.label}'.toUpperCase(),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.label(
-                    size: 9,
-                    weight: FontWeight.w700,
-                    spacing: 1.2,
-                    color: p.inkFaint,
-                  ),
+              Text(
+                '${context.l10n.insideGenre} ${genre.label}'.toUpperCase(),
+                style: AppText.label(
+                  size: 9,
+                  weight: FontWeight.w700,
+                  spacing: 1.2,
+                  color: p.inkFaint,
                 ),
               ),
             ],
@@ -570,125 +531,14 @@ class _InsideState extends State<_Inside> {
           for (final strand in genre.strands) ...[
             _StrandRow(
               strand: strand,
-              colour: widget.colour,
+              colour: colour,
               // A strand under a genre that is off is off with it, and says
               // so rather than offering a choice that changes nothing.
-              off: widget.genreOff || widget.strandsOff.contains(strand.id),
-              open: _held == strand.id,
-              onTap: widget.genreOff ? null : () => widget.onTapStrand(strand),
-              onHold: widget.genreOff
-                  ? null
-                  : () {
-                      HapticFeedback.mediumImpact();
-                      setState(
-                        () => _held = _held == strand.id ? null : strand.id,
-                      );
-                    },
+              off: genreOff || strandsOff.contains(strand.id),
+              onTap: genreOff ? null : () => onTapStrand(strand),
             ),
-            if (_held == strand.id &&
-                !widget.genreOff &&
-                !widget.strandsOff.contains(strand.id))
-              _Angles(
-                strand: strand,
-                colour: widget.colour,
-                strandsOff: widget.strandsOff,
-                onTap: widget.onTapAngle,
-              ),
             if (strand != genre.strands.last) const SizedBox(height: 6),
           ],
-          const SizedBox(height: 6),
-          Text(
-            context.l10n.holdStrandHint,
-            style: AppText.body(size: 10.5, color: p.inkFaint),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// The third layer: the angles a strand's cards take — the myths it
-/// busts, how it works, the stories — each one on or off. Only the angles
-/// the strand has cards for are offered.
-class _Angles extends StatelessWidget {
-  final Strand strand;
-  final Color colour;
-  final Set<String> strandsOff;
-  final ValueChanged<String> onTap;
-
-  const _Angles({
-    required this.strand,
-    required this.colour,
-    required this.strandsOff,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final Palette p = context.p;
-    final Set<String> hooks = {
-      for (final c in PillBank.cards)
-        if (c.strand == strand.id) c.hook,
-    };
-    final angles = [
-      for (final a in _kAngles)
-        if (hooks.contains(a.$1)) a,
-    ];
-    if (angles.isEmpty) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(26, 8, 0, 2),
-        child: Text(
-          context.l10n.anglesComing,
-          style: AppText.body(size: 11, color: p.inkFaint),
-        ),
-      );
-    }
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(26, 8, 0, 2),
-      child: Wrap(
-        spacing: 6,
-        runSpacing: 6,
-        children: [
-          for (final (hook, label) in angles)
-            Builder(
-              builder: (context) {
-                final String id = '${strand.id}@$hook';
-                final bool off = strandsOff.contains(id);
-                return Semantics(
-                  button: true,
-                  toggled: !off,
-                  label: label,
-                  child: GestureDetector(
-                    key: ValueKey('angle-$id'),
-                    onTap: () => onTap(id),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 180),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 6,
-                      ),
-                      decoration: BoxDecoration(
-                        color: off
-                            ? Colors.transparent
-                            : colour.withValues(alpha: 0.2),
-                        borderRadius: BorderRadius.circular(99),
-                        border: Border.all(
-                          color: off ? p.line : colour.withValues(alpha: 0.5),
-                        ),
-                      ),
-                      child: Text(
-                        label,
-                        style: AppText.body(
-                          size: 11,
-                          weight: FontWeight.w600,
-                          color: off ? p.inkFaint : p.ink,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
         ],
       ),
     );
@@ -699,17 +549,13 @@ class _StrandRow extends StatelessWidget {
   final Strand strand;
   final Color colour;
   final bool off;
-  final bool open;
   final VoidCallback? onTap;
-  final VoidCallback? onHold;
 
   const _StrandRow({
     required this.strand,
     required this.colour,
     required this.off,
     required this.onTap,
-    this.open = false,
-    this.onHold,
   });
 
   @override
@@ -722,7 +568,6 @@ class _StrandRow extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        onLongPress: onHold,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           height: 38,
@@ -756,12 +601,6 @@ class _StrandRow extends StatelessWidget {
                   ),
                 ),
               ),
-              if (!off)
-                Icon(
-                  open ? Icons.expand_less : Icons.more_horiz,
-                  size: 16,
-                  color: p.inkFaint,
-                ),
             ],
           ),
         ),

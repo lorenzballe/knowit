@@ -1590,7 +1590,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get genresLine =>
-      'Tap a genre to skip it. Hold one and the three strands inside open right below.';
+      'Tap a genre to skip it. Hold one and the smaller topics inside open right below.';
 
   @override
   String get insideGenre => 'Inside';
@@ -1907,12 +1907,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get themePuzzlesLine =>
       'Puzzles you can solve with a pen and a minute';
-
-  @override
-  String get holdStrandHint => 'Hold a strand to choose its angles';
-
-  @override
-  String get anglesComing => 'Angles arrive as cards are written';
 
   @override
   String get weekRecapCaps => 'THIS WEEK YOU ASKED YOURSELF';

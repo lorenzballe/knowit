@@ -1857,12 +1857,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get themePuzzlesLine => '펜 하나와 1분이면 푸는 수수께끼';
 
   @override
-  String get holdStrandHint => '가닥을 길게 눌러 관점을 고르세요';
-
-  @override
-  String get anglesComing => '카드가 쓰이는 대로 관점이 추가돼요';
-
-  @override
   String get weekRecapCaps => '이번 주 스스로에게 던진 질문';
 
   @override

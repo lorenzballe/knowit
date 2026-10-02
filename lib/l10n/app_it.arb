@@ -368,7 +368,7 @@
   "usageOn": "Condivisi, senza il tuo nome né le tue parole.",
   "usageOff": "Non si misura più nulla.",
   "yourMix": "Il tuo mix",
-  "genresLine": "Tocca un genere per saltarlo. Tienilo premuto e i tre filoni dentro si aprono qui sotto.",
+  "genresLine": "Tocca un genere per saltarlo. Tienilo premuto e i sotto-argomenti dentro si aprono qui sotto.",
   "insideGenre": "Dentro",
   "nOfSixOn": "{n} di {total} attivi",
   "offInYourMix": "fuori dal tuo mix",
@@ -455,8 +455,6 @@
   "themeHowItWorksLine": "Il meccanismo dietro qualcosa che vedi ogni giorno",
   "themePuzzles": "Rompicapi",
   "themePuzzlesLine": "Enigmi da risolvere con una penna e un minuto",
-  "holdStrandHint": "Tieni premuto un filone per sceglierne gli angoli",
-  "anglesComing": "Gli angoli arrivano man mano che si scrivono le carte",
   "weekRecapCaps": "QUESTA SETTIMANA TI SEI CHIESTO",
   "weekRecapLine": "Le domande che le tue carte ti hanno lasciato",
   "weekRecapMore": "Altre {n} della tua settimana con Plus"

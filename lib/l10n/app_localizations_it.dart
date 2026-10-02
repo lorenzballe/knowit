@@ -1596,7 +1596,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get genresLine =>
-      'Tocca un genere per saltarlo. Tienilo premuto e i tre filoni dentro si aprono qui sotto.';
+      'Tocca un genere per saltarlo. Tienilo premuto e i sotto-argomenti dentro si aprono qui sotto.';
 
   @override
   String get insideGenre => 'Dentro';
@@ -1917,14 +1917,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get themePuzzlesLine =>
       'Enigmi da risolvere con una penna e un minuto';
-
-  @override
-  String get holdStrandHint =>
-      'Tieni premuto un filone per sceglierne gli angoli';
-
-  @override
-  String get anglesComing =>
-      'Gli angoli arrivano man mano che si scrivono le carte';
 
   @override
   String get weekRecapCaps => 'QUESTA SETTIMANA TI SEI CHIESTO';

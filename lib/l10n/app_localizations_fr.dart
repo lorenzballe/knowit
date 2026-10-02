@@ -1923,13 +1923,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get themePuzzlesLine => 'Des énigmes pour un stylo et une minute';
 
   @override
-  String get holdStrandHint => 'Maintiens un fil pour choisir ses angles';
-
-  @override
-  String get anglesComing =>
-      'Les angles arrivent à mesure que les cartes s\'écrivent';
-
-  @override
   String get weekRecapCaps => 'CETTE SEMAINE TU T\'ES DEMANDÉ';
 
   @override

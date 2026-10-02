@@ -1918,14 +1918,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get themePuzzlesLine => 'Enigmas para un lápiz y un minuto';
 
   @override
-  String get holdStrandHint =>
-      'Mantén pulsada una línea para elegir sus ángulos';
-
-  @override
-  String get anglesComing =>
-      'Los ángulos llegan a medida que se escriben cartas';
-
-  @override
   String get weekRecapCaps => 'ESTA SEMANA TE PREGUNTASTE';
 
   @override
