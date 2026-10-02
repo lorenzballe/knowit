@@ -9,6 +9,7 @@
   "question": "What did a Roman rhetoric handbook from the 80s BC advise about the images used to memorise a speech?",
   "answer": "Make them outrageous. The anonymous Rhetorica ad Herennium says ordinary sights slip away while the strange, shameful or ridiculous stick. So images should be very beautiful or very ugly, crowned, stained with blood, or comic. The fifth place along the route holds a golden hand, the tenth a friend called Decimus.",
   "move": "Make the thing to be kept impossible to overlook, and it will stay.",
+  "ask": "How could I make what I want to remember impossible to overlook?",
   "keywords": [
     "method of loci",
     "rhetorica ad herennium",
@@ -28,6 +29,5 @@
   "source": "Rhetorica ad Herennium, Book III",
   "source_kind": "book",
   "reference": "[Cicero], Rhetorica ad Herennium, trans. Caplan, Loeb Classical Library, Harvard University Press, 1954",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }
