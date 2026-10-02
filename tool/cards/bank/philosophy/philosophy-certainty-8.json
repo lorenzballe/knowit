@@ -12,7 +12,7 @@
   "tolerance": 0.02,
   "answer": "1,826,200 + 1 = about 1.83 million to one.",
   "move": "However long the record, a count of successes never adds up to certainty.",
-  "ask": "What am I certain about tomorrow only because it has always happened so far?",
+  "ask": "What am I sure will happen tomorrow only because it always has?",
   "trap": "Answering certainty, because the sun has never once failed.",
   "hint": "Count the sunrises first; the rule's odds are one more than that count, to one.",
   "steps": [

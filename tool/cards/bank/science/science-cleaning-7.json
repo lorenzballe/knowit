@@ -9,6 +9,7 @@
   "question": "What lets the oxygen bleach in European washing powder whiten clothes at 40 °C?",
   "answer": "A booster called TAED. Oxygen bleach, sodium percarbonate, releases hydrogen peroxide, which bleaches well only from about 60 °C. TAED reacts with that peroxide to make peracetic acid, a stronger oxidiser that works at 40 °C and below. It spread across Europe as wash temperatures fell: an ingredient whose job is to spare the boiler.",
   "move": "When a process needs heat, look for a helper that lowers the bar.",
+  "ask": "When something is hard to start, what small helper could make it easy?",
   "keywords": [
     "taed",
     "oxygen bleach",
@@ -29,6 +30,5 @@
   "source": "Smulders, Laundry Detergents, 2002",
   "source_kind": "book",
   "reference": "Smulders, Laundry Detergents, Wiley-VCH, 2002",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. In Lily Ross Taylor's 1961 study of epitaphs from Rome, freed slaves far outnumbered the freeborn among those whose status is given. That says more about who paid for stones than about Rome: freed people had reasons to record their citizenship, marriages and children in stone. The freeborn poor mostly left no epitaph.",
   "move": "Ask who paid to be remembered before treating the remembered as typical.",
-  "ask": "Whose success stories do I hear most, and who never got to tell theirs?",
+  "ask": "Whose success stories do I hear most, and whose never get told?",
   "trap": "False, since former slaves must have been a small minority.",
   "keywords": [
     "epitaphs",

@@ -11,6 +11,7 @@
   "unit": "molecules",
   "answer": "So 20 molecules: 2 to the power 20 is the first to pass a million.",
   "move": "Irreversible is mostly a matter of how many pieces are involved.",
+  "ask": "What in my life feels impossible to undo only because so many small things would have to line up?",
   "trap": "Guessing thousands, because a million sounds like it needs a crowd.",
   "hint": "Each extra molecule halves the chance; count the halvings it takes to pass a million.",
   "steps": [
@@ -39,6 +40,5 @@
   "source": "Feynman, The Character of Physical Law, 1965",
   "source_kind": "book",
   "reference": "Feynman, The Character of Physical Law, BBC, 1965, chapter 5",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

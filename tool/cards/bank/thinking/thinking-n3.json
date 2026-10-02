@@ -9,6 +9,7 @@
   "unit": "summers",
   "answer": "So the 13th summer takes it to 5 m.",
   "move": "The last step is bigger than all the ones before it.",
+  "ask": "Where in my life is the latest step bigger than all the earlier ones put together?",
   "hint": "It only keeps 20 cm a year — except in the summer it finally gets there.",
   "steps": [
     "Each full year, summer then winter, adds 60 - 40 = 20 cm.",

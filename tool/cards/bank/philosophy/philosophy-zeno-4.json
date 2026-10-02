@@ -17,7 +17,7 @@
   "correct": 0,
   "answer": "True. It is the quantum Zeno effect, predicted by Misra and Sudarshan in 1977. In 1990 Wayne Itano's team pushed beryllium ions from one energy level towards another while probing them with laser pulses: the more often they looked, the fewer ions made the jump. A watched pot, at this scale, does not boil.",
   "move": "Check whether the act of checking is part of what you are measuring.",
-  "ask": "Where does my checking something change the thing I am checking?",
+  "ask": "Where does my checking something change the very thing I am checking?",
   "trap": "Assuming a measurement only records a change and cannot prevent it.",
   "keywords": [
     "quantum zeno effect",

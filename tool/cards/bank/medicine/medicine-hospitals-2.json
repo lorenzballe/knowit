@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "About 40%. Simpson counted 855 deaths in 2,089 hospital amputations, against 226 in 2,098 done in country practice, about 11%. He called the difference hospitalism, blaming crowded, badly aired wards. Critics answered that city hospitals got the worst injuries. Either way, the operating table was safer in a farmhouse kitchen.",
   "move": "Check where the danger sat before crediting the place that treated it.",
-  "ask": "Where did the danger actually sit in something I blame on the place that handled it?",
+  "ask": "Where did the danger really sit in something I blame on the place that handled it?",
   "trap": "Guessing low, from a modern sense that amputation is survivable.",
   "keywords": [
     "james young simpson",

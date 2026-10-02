@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "It reaches zero. The values climb for an absurdly long time, but every such sequence ends at zero, as Reuben Goodstein proved in 1944; from 4 it takes about 3 × 2^402,653,211 steps. In 1982 Kirby and Paris showed ordinary arithmetic cannot prove it: the proof must count past every whole number.",
   "move": "However long a trend has run, ask what could force it to turn.",
-  "ask": "Which long trend am I extrapolating without asking what could force it to turn?",
+  "ask": "Which trend am I assuming will go on and on, and what could make it turn?",
   "trap": "It grows forever, since every term checked is bigger than the last.",
   "keywords": [
     "goodstein sequences",

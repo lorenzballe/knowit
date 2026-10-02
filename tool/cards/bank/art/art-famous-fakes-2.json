@@ -29,5 +29,6 @@
   "source": "Archaeology magazine, Tracking the Etruscan Warriors",
   "source_kind": "news_archive",
   "reference": "https://archive.archaeology.org/online/features/hoaxes/warriors.html",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

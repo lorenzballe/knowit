@@ -15,7 +15,7 @@
   "correct": 1,
   "answer": "About 140 years. A doubling takes roughly 70 divided by the growth rate in per cent: 70 / 0.5 = 140, five generations. Total output grew nearer 2% a year and doubled in about 35 years, but most of it fed a growing population, not richer lives.",
   "move": "Divide 70 by any growth rate before calling it a revolution.",
-  "ask": "What growth rate am I calling dramatic that, divided into 70, turns out slow or fast?",
+  "ask": "Which growth rate do I call fast or slow without dividing it into 70 first?",
   "trap": "Dividing 100% by 0.5% gives 200, forgetting that growth compounds.",
   "keywords": [
     "industrial revolution",

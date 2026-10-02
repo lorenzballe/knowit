@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. DAMA, under the Gran Sasso mountain in Italy, has reported since the late 1990s a yearly rise and fall in its sodium iodide crystals, as Earth's orbit should vary its speed through dark matter. ANAIS-112 in Spain and COSINE-100 in South Korea used the same kind of crystal and found no such swing.",
   "move": "Repeating a result is not the same as having it repeated.",
-  "ask": "Which result do I treat as confirmed when it was only ever repeated by the same people?",
+  "ask": "Which result do I call confirmed when it was only ever repeated by the same people?",
   "trap": "A signal that repeats every year for decades feels too steady to be wrong.",
   "keywords": [
     "dama/libra",

@@ -32,5 +32,6 @@
   "source": "NIST, First Digital Image",
   "source_kind": "institution",
   "reference": "https://www.nist.gov/mathematics-statistics/first-digital-image",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

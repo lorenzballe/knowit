@@ -12,7 +12,7 @@
   "tolerance": 0.1,
   "answer": "0.42 x 2% = about 0.85% sevoflurane.",
   "move": "When two things share a job, count each as a fraction of its full dose.",
-  "ask": "Where do I add up two helpers as whole units when each is really only a fraction of the job?",
+  "ask": "Where am I adding two things up as if each did the whole job, when each does only part?",
   "trap": "Keeping the full 2%, since 60% nitrous oxide is below its own dose.",
   "hint": "The two gases' effects add, each counted as a fraction of its own full dose.",
   "steps": [

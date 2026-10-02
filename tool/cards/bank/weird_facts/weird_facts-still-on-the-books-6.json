@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The Law Commission's repeal team traced the story to a supposed 1403 city order imposing a curfew on Welsh people after Glyndŵr's rising, and could not confirm even that order existed. No law has ever permitted such a killing; it would be murder at any hour. The bow and the midnight are decoration.",
   "move": "Each added detail should make a story harder to believe, not easier.",
+  "ask": "Does each extra detail in a story I share make it more believable, or less?",
   "trap": "The precise weapon, place and hour make the rule sound documented.",
   "keywords": [
     "chester",

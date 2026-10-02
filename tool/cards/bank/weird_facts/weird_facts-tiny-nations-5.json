@@ -37,5 +37,6 @@
   "source": "IMSEE, Monaco en Chiffres, 2024",
   "source_kind": "statistics",
   "reference": "IMSEE (Monaco Statistics), Monaco en Chiffres, 2024",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

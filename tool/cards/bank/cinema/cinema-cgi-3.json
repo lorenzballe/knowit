@@ -9,6 +9,7 @@
   "question": "Why did computer-generated skin look like wax or plastic until about 2001?",
   "answer": "Renderers treated light as bouncing off the surface. In real skin much of it goes in, scatters among the layers and comes out nearby, softening shadows and glowing red at thin edges like ears. Henrik Wann Jensen and colleagues published a practical model of this subsurface scattering in 2001, and Gollum's skin soon used it.",
   "move": "When something looks lifeless, check what happens beneath its surface.",
+  "ask": "When something feels lifeless to me, what have I not looked at underneath?",
   "keywords": [
     "subsurface scattering",
     "skin rendering",
@@ -28,6 +29,5 @@
   "source": "Jensen et al., SIGGRAPH, 2001",
   "source_kind": "paper",
   "reference": "Jensen, Marschner, Levoy & Hanrahan, A Practical Model for Subsurface Light Transport, SIGGRAPH, 2001",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

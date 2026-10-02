@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "Under 0.01%. About 99% escapes as neutrinos, carrying off the energy of a core falling in to a ball some 20 km across. About 1% drives the blast outwards, and the light is a hundredth of that or less. That sliver is still enough to outshine a galaxy of billions of stars for weeks.",
   "move": "What can be seen of an event may be its smallest part.",
-  "ask": "What part of an event do I see, and is it the smallest part?",
+  "ask": "What part of an event can I see, and is it the smallest part?",
   "trap": "Taking the flash that outshines a galaxy as most of the output.",
   "keywords": [
     "core collapse",

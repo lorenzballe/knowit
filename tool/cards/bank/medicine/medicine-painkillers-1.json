@@ -9,7 +9,7 @@
   "question": "What did the US approve in January 2025 that no pain drug had offered for over twenty years?",
   "answer": "A new mechanism. Suzetrigine blocks NaV1.8, a sodium channel found mainly in peripheral pain-sensing nerves, so the signal is stopped before it reaches the spinal cord. It works outside the brain, gives no high, and is not a controlled substance. Its approval covers acute pain only, tested after bunion surgery and tummy tucks.",
   "move": "Stopping a message at its source spares everything downstream.",
-  "ask": "Where could I stop a message at its source instead of managing everything downstream?",
+  "ask": "Where could I stop a problem at its source instead of managing it downstream?",
   "keywords": [
     "suzetrigine",
     "nav1.8",

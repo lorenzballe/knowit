@@ -12,6 +12,7 @@
   "question": "How did tabloid investigators get into famous people's voicemail in the early 2000s without any hacking skill?",
   "answer": "With the factory PIN. Mobile voicemail could be dialled from any phone, and many owners never changed the default four-digit code their network set. A private investigator working for the News of the World needed only a number and that code. The Leveson Inquiry laid out the method in 2012.",
   "move": "Most locks are opened by the key that came in the box.",
+  "ask": "Which of my accounts or settings still run on the default that came in the box?",
   "keywords": [
     "phone hacking",
     "voicemail",

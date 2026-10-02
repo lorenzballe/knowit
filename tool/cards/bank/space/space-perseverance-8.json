@@ -15,7 +15,7 @@
   "correct": 1,
   "answer": "The rock crumbled to powder. It was so weathered that the percussive drill broke it up, and nothing held together in the tube. The team kept the sealed tube anyway: it holds a sample of thin Martian air, taken in by accident, and became the mission's only atmospheric sample.",
   "move": "When a tool comes back empty, question the material before the tool.",
-  "ask": "When something came back empty, did I question the material before the tool?",
+  "ask": "When something comes back empty, do I question the material before the tool?",
   "trap": "Blaming the machine, when the failure lay in the material.",
   "keywords": [
     "roubion",

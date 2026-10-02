@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "To choose where the loaf bursts. The surface sets while the dough is still expanding, so the loaf must split somewhere. A cut gives it a planned weak line, so it opens there instead of tearing along its side. The raised flap on a baguette, called the ear, is that controlled rupture.",
   "move": "If something is bound to break, decide in advance where.",
-  "ask": "Where in my plans is something sure to break, and have I chosen where?",
+  "ask": "Where in my plans is something bound to go wrong, and have I picked where?",
   "trap": "Assuming a vent is needed so trapped steam can get out.",
   "keywords": [
     "scoring",

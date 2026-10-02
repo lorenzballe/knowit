@@ -9,6 +9,7 @@
   "question": "What happened to a man who pinched his nose and shut his mouth to stifle a sneeze?",
   "answer": "He tore his throat. The trapped pressure burst through the back of his pharynx, and air leaked into the tissues of his neck and chest, which crackled when pressed. Doctors in Leicester fed him through a tube and kept him in hospital for a week, then reported the case in 2018.",
   "move": "Blocking an outlet does not remove the force; it chooses where it goes.",
+  "ask": "Where am I blocking something instead of letting it out, and where will the force go instead?",
   "keywords": [
     "sneezing",
     "pharynx",

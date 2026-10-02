@@ -9,6 +9,7 @@
   "question": "How can a phone take a colour photograph of a scene too dark for its owner to see colour?",
   "answer": "By merging a burst. Google's Night Sight, described in 2019, captures a series of frames, aligns them to cancel hand shake, and averages away the noise, lengthening each exposure when the scene holds still. It produced clean colour pictures at about 0.3 lux, a light level at which human vision has turned grey and indistinct.",
   "move": "Many weak measurements, carefully combined, can beat one strong one.",
+  "ask": "Where could I beat one big effort by combining many small, weak signals carefully?",
   "keywords": [
     "night sight",
     "burst photography",

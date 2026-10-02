@@ -15,7 +15,7 @@
   "tolerance": 3,
   "answer": "2,083,000 / 8,760 hours a year ≈ 237.8 years.",
   "move": "Proof that something works says nothing yet about making enough of it.",
-  "ask": "Where do I mistake proof that something works for proof it can work at scale?",
+  "ask": "Do I take proof that something works for proof that it works at scale?",
   "trap": "Taking a successful demonstration as nearly a working supply.",
   "hint": "Turn the tonnes into grams, the grams into hours, and the hours into years.",
   "steps": [

@@ -29,5 +29,6 @@
   "source": "University of Chicago Biological Sciences, 2022",
   "source_kind": "institution",
   "reference": "https://biologicalsciences.uchicago.edu/news/octopus-cholesterol-death-spiral",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

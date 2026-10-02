@@ -35,5 +35,6 @@
   "source": "Accenture announcement, 2000",
   "source_kind": "primary_document",
   "reference": "https://www.scoop.co.nz/stories/BU0010/S00185/andersen-consulting-announces-new-name-accenture.htm",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

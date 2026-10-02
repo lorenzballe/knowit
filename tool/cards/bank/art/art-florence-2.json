@@ -36,5 +36,6 @@
   "source": "Herlihy and Klapisch-Zuber, Tuscans and Their Families, 1985",
   "source_kind": "book",
   "reference": "David Herlihy and Christiane Klapisch-Zuber, Tuscans and Their Families: A Study of the Florentine Catasto of 1427, Yale University Press, 1985",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

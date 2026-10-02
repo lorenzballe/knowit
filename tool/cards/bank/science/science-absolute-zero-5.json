@@ -18,7 +18,7 @@
   "correct": 2,
   "answer": "About 25 times air pressure. Helium atoms are so light, and attract each other so weakly, that their quantum jiggle, a motion that persists even at absolute zero, shakes any crystal apart. At ordinary pressure helium would stay liquid at absolute zero itself: the one element that cold alone cannot freeze.",
   "move": "Rules learned from ordinary cases can fail at the extremes.",
-  "ask": "Which rule I learned from ordinary cases am I applying where conditions are extreme?",
+  "ask": "Which rule that works for me day to day might fail in an extreme situation?",
   "trap": "Assuming cold alone freezes everything, as it does every familiar liquid.",
   "keywords": [
     "liquid helium",

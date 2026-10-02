@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. Oxygen makes up about 20.9% of dry air at any height athletes train at. What falls is the pressure: at 2,500 m it is about three quarters of sea level, so each breath carries fewer molecules of everything. Altitude tents work the other way, removing oxygen to mimic the same shortage.",
   "move": "Separate how much of the mixture is there from how much mixture there is.",
-  "ask": "What problem am I blaming on 'not enough' when the real issue is the conditions around it?",
+  "ask": "Is what I call 'not enough' really about the conditions around it?",
   "trap": "Assuming thin air means air with less oxygen in the mix.",
   "keywords": [
     "oxygen",

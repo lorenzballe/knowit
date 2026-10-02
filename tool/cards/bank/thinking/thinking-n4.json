@@ -9,6 +9,7 @@
   "unit": "codes",
   "answer": "26 x 25 x 24 x 23 = 358,800.",
   "move": "Forbidding repeats barely dents the count. It is still a third of a million.",
+  "ask": "What do I think has too few possibilities to matter, without having counted them?",
   "hint": "Each position has one fewer letter available than the last.",
   "steps": [
     "26 choices, then 25, then 24, then 23.",

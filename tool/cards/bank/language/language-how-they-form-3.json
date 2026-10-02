@@ -17,6 +17,7 @@
   "correct": 0,
   "answer": "True. Spelling keeps the r because it was said. Dropping r after a vowel spread through southern England in the eighteenth century and became the standard there in the nineteenth; most of North America, Scotland and Ireland kept it. On this sound, an Ohioan is nearer Shakespeare's London than a London newsreader is.",
   "move": "The older form of a thing may survive best far from home.",
+  "ask": "What older habit of mine am I dropping that people elsewhere still keep?",
   "trap": "Assuming the mother country kept the older pronunciation.",
   "keywords": [
     "rhoticity",
@@ -38,6 +39,5 @@
   "source": "Wells, Accents of English, 1982",
   "source_kind": "book",
   "reference": "Wells, Accents of English, Cambridge University Press, 1982",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

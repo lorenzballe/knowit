@@ -9,7 +9,7 @@
   "question": "In elite freestyle races, what separates faster swimmers: more strokes per minute or more distance per stroke?",
   "answer": "Distance per stroke. Filming swimmers at the US Olympic trials, Craig and colleagues found the faster ones travelled farther with each stroke, and that swimmers slowed late in a race mainly because each stroke carried them less far, not because their arms turned over more slowly. Long strokes, not busy arms, marked the fastest swimmers.",
   "move": "Count how much each repetition achieves before counting the repetitions.",
-  "ask": "Where am I counting repetitions when I should be counting what each repetition achieves?",
+  "ask": "Am I counting repetitions when I should count what each one achieves?",
   "keywords": [
     "stroke rate",
     "distance per stroke",

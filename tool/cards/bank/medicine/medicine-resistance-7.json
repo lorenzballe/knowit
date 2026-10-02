@@ -11,7 +11,7 @@
   "unit": "million cavities",
   "answer": "So one cavity in 10^6, that is 1 million.",
   "move": "Two independent locks multiply the difficulty only if both are used together.",
-  "ask": "Where do two independent locks help me only if I use both at once?",
+  "ask": "Where do two safeguards help me only if I use both at once?",
   "trap": "Seeing 100 resisters to drug A per cavity and expecting double ones.",
   "hint": "Resistance to each drug arises separately, so the chances multiply.",
   "steps": [

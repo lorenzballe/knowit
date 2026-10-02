@@ -29,5 +29,6 @@
   "source": "EDN, 2019",
   "source_kind": "news_archive",
   "reference": "https://www.edn.com/blizzard-brings-about-bulletin-board-systems-january-16-1978/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

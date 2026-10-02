@@ -11,7 +11,7 @@
   "unit": "% of the daily limit",
   "answer": "3 / 5 = 0.6, or 60%.",
   "move": "Check exactly what a number counts before comparing it with a limit.",
-  "ask": "Before I compare a number with a limit, do I know exactly what the number counts?",
+  "ask": "Before I compare a number with a limit, do I know what the number counts?",
   "trap": "Reading 1.2 g as salt and answering 24%.",
   "hint": "Salt is sodium chloride: sodium is only part of its weight.",
   "steps": [

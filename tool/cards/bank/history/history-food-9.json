@@ -9,6 +9,7 @@
   "question": "In medieval English towns, who relied most on ready-cooked food from cookshops, and why?",
   "answer": "The poor, not the rich. A family in one rented room often had no oven, little fuel and nowhere to store food, so a hot pie cost less than cooking. The rich kept kitchens and cooks. By the 1170s London already had a public cookshop on the riverbank, open day and night.",
   "move": "Ask who lacks a kitchen before calling ready-made food a luxury.",
+  "ask": "Who around me lacks the time or tools to cook, and do I call their choice laziness?",
   "keywords": [
     "cookshops",
     "medieval towns",
@@ -29,6 +30,5 @@
   "source": "Carlin, Food and Eating in Medieval Europe",
   "source_kind": "book",
   "reference": "Carlin, Fast Food and Urban Living Standards in Medieval England, in Carlin & Rosenthal (eds), Food and Eating in Medieval Europe, Hambledon Press, 1998",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

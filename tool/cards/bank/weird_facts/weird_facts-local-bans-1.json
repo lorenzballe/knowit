@@ -28,5 +28,6 @@
   "source": "NPR, March 2008",
   "source_kind": "news_archive",
   "reference": "https://www.npr.org/2008/03/07/87974995/mayor-bans-death-in-french-town",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -9,6 +9,7 @@
   "question": "How did Gustave Le Gray get both detailed clouds and a lit sea into his 1850s seascapes?",
   "answer": "By printing two negatives on one sheet. Collodion plates were far more sensitive to blue than to other colours, so a sky exposed long enough for the darker sea burned out white. Le Gray exposed one plate for the sky and one for the water, sometimes on different days, and joined them along the horizon.",
   "move": "When one setting cannot hold everything, capture the parts separately and join them.",
+  "ask": "Where am I forcing one setting to cover everything when I could handle the parts separately and combine them?",
   "keywords": [
     "gustave le gray",
     "combination printing",

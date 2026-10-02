@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. From about 1490 carvers such as Tilman Riemenschneider delivered limewood altarpieces with only a thin, tinted glaze, letting the carving carry the image. His Münnerstadt altarpiece was finished bare in 1492; a dozen years later the parish had Veit Stoss paint it. The later colour, not the bare wood, was the alteration.",
   "move": "Correct an old mistake without overcorrecting into a new one.",
+  "ask": "After I correct an old mistake, am I now overcorrecting into a new one?",
   "trap": "Having learned old sculpture was painted, assuming all of it was.",
   "keywords": [
     "riemenschneider",

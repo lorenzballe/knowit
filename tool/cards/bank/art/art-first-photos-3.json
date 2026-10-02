@@ -12,6 +12,7 @@
   "tolerance": 1,
   "answer": "4.17 × 4.17 ≈ 17.4 times the light.",
   "move": "When a width changes, ask whether what matters is an area.",
+  "ask": "When a number I rely on changes in width, have I asked whether the thing that matters is an area?",
   "trap": "Dividing the f-numbers and answering four, forgetting the opening is an area.",
   "hint": "The f-number measures the width of the opening; light passes through an area.",
   "steps": [

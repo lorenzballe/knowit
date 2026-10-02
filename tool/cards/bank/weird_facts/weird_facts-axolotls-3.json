@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 35 per km². Density fell to about 100 by 2008 and kept falling, a drop of more than 99% in 16 years. Polluted canals, introduced carp and tilapia, and the loss of the chinampas, the old farm islands, did it. The world's best-studied salamander is nearly gone from its only home.",
   "move": "Let a starting number set the scale, never the size of the change.",
+  "ask": "What starting number am I letting set my sense of scale, when the real story is the percentage change?",
   "trap": "Halving or a tenfold fall already feels drastic from 6,000.",
   "keywords": [
     "xochimilco",

@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. An eight-state study published in 1991 found it raised in under 1% of felony cases, and it succeeded in only about a quarter of those. The public knows it from a few trials, such as John Hinckley's acquittal in 1982 for shooting President Reagan. Of a hundred felony defendants, fewer than one pleads insanity.",
   "move": "The cases you have heard of were picked by the news, not by chance.",
-  "ask": "Which 'common' danger have I judged from the cases the news picked for me?",
+  "ask": "Which danger do I think is common only because the news showed me those cases?",
   "trap": "Judging its frequency by the famous trials that made the news.",
   "keywords": [
     "insanity defence",

@@ -9,6 +9,7 @@
   "question": "Why was probenecid, a drug now taken for gout, first developed around 1950?",
   "answer": "To make scarce penicillin last longer. The kidneys pump penicillin actively into the urine, clearing it within hours. Karl Beyer's team at Sharp & Dohme designed a molecule that competes for the same pump, so penicillin stays in the blood longer and at higher levels. It also stops the kidneys reclaiming uric acid, hence gout.",
   "move": "When supply is short, slow the leak before building more.",
+  "ask": "When something is scarce, could I slow the leak before making more?",
   "keywords": [
     "probenecid",
     "penicillin",
@@ -29,6 +30,5 @@
   "source": "Beyer et al., American Journal of Physiology, 1951",
   "source_kind": "paper",
   "reference": "Beyer, Russo, Tillson, Miller, Verwey & Gass, 'Benemid', p-(di-n-propylsulfamyl)-benzoic acid: its renal affinity and its elimination, American Journal of Physiology, 1951",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

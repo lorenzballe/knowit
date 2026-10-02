@@ -9,7 +9,7 @@
   "question": "Why can almost no bacteria grow in saturated brine, though it is mostly water?",
   "answer": "Because its water is held, not free. Microbes need water they can take up, measured as water activity, 0 to 1. Most bacteria stop below about 0.91, Staphylococcus aureus near 0.86; saturated brine sits near 0.75, so cells lose water instead of gaining it. Only salt-loving microbes thrive, and they turn salt ponds pink.",
   "move": "Ask how much of a resource is usable, not how much is present.",
-  "ask": "What resource do I think I have plenty of that is not actually available for use?",
+  "ask": "What do I think I have plenty of that I cannot actually use?",
   "keywords": [
     "water activity",
     "salt curing",

@@ -9,7 +9,7 @@
   "question": "Why did ESA's Rosetta spacecraft end up studying a different comet from the one it was built for?",
   "answer": "Because it missed its launch window. Rosetta was due to leave in January 2003 for comet Wirtanen, but a new version of its Ariane 5 rocket failed in December 2002 and the fleet was grounded. No later departure could reach Wirtanen, so ESA chose comet 67P, launched in March 2004 and arrived in 2014.",
   "move": "When the deadline cannot move, be ready to change the destination.",
-  "ask": "If my deadline cannot move, which destination should I be ready to change?",
+  "ask": "If my deadline can't move, what destination should I be ready to change?",
   "keywords": [
     "rosetta",
     "comet 67p",

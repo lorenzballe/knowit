@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "Still 100%. Bayes' rule multiplies the odds held beforehand by the strength of the evidence, and certainty means infinite odds: a thousand to one against still leaves infinity. The statistician Dennis Lindley named the lesson Cromwell's rule, after Oliver Cromwell's 1650 plea to the Church of Scotland: think it possible you may be mistaken.",
   "move": "Keep a sliver of doubt, or no evidence will ever reach you.",
-  "ask": "What belief am I so sure of that no evidence could ever move me?",
+  "ask": "What am I so sure about that nothing could ever change my mind?",
   "trap": "Letting the strength of the evidence stand in for the answer.",
   "keywords": [
     "cromwell's rule",

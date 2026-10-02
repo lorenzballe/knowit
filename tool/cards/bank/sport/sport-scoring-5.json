@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "About 62%. A game needs four points and a two-point margin, so a small edge on each point compounds: all the paths through 40-15 and deuce are tilted the same way. At 60% of points the figure is about 74%. Sets and matches magnify it again, which is how small edges become lopsided scorelines.",
   "move": "A small edge repeated through a winner-takes-all format becomes a large one.",
-  "ask": "What small edge of mine repeats so often that it becomes decisive?",
+  "ask": "What small edge of mine repeats often enough to become decisive?",
   "trap": "Expecting the share of games to mirror the share of points.",
   "keywords": [
     "tennis scoring",

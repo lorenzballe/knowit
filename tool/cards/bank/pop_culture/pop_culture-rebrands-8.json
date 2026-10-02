@@ -28,5 +28,6 @@
   "source": "The Truth About Cars, April 2022",
   "source_kind": "news_archive",
   "reference": "https://www.thetruthaboutcars.com/2022/04/datsun-is-dead-again/",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

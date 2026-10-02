@@ -18,6 +18,7 @@
   "correct": 2,
   "answer": "It speeds up. The acetate base breaks down into acetic acid, and that acid catalyses further breakdown, so once decay passes a threshold it feeds itself. The film shrinks, curls and turns brittle, and its fumes spread to cans nearby. Cold, dry storage is the only brake: it slows the chemistry that cannot be reversed.",
   "move": "A process that makes its own fuel only moves one way.",
+  "ask": "What in my life is feeding itself and only moves one way?",
   "trap": "Expecting decay to run at a steady pace, like slow fading.",
   "keywords": [
     "vinegar syndrome",
@@ -38,6 +39,5 @@
   "source": "Image Permanence Institute, acetate storage guide",
   "source_kind": "institution",
   "reference": "Reilly, IPI Storage Guide for Acetate Film, Image Permanence Institute, Rochester Institute of Technology, 1993",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

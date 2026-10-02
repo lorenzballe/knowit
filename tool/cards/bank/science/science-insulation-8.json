@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. Across 3,400 German homes, occupants used on average 30% less heating energy than their calculated rating, and the gap widened as ratings worsened. Ratings assume every room kept warm; people in draughty houses heat fewer rooms, less. So insulation priced against the rating saves less than forecast: part of the waste was never burned.",
   "move": "Measure a saving against what was really used, not what was modelled.",
-  "ask": "Do I judge my savings by the model or by what I actually used?",
+  "ask": "Do I trust what the plan says I will save, or what I actually used?",
   "trap": "Assuming a leaky house wastes even more in practice than on paper.",
   "keywords": [
     "prebound effect",

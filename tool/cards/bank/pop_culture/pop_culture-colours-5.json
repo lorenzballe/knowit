@@ -29,5 +29,6 @@
   "source": "The Hill, 2022",
   "source_kind": "news_archive",
   "reference": "https://thehill.com/homenews/nexstar_media_wire/3591855-brown-wasnt-always-upss-color-heres-why-it-is-now/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

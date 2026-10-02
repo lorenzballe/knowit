@@ -14,6 +14,7 @@
   "unit": "people",
   "answer": "0.693 × 365 ≈ 253 people.",
   "move": "A match with anyone comes quickly; a match with you comes slowly.",
+  "ask": "Am I waiting for a coincidence that includes me, when any coincidence at all would do?",
   "trap": "Answering 23, the number for any two people sharing a birthday.",
   "hint": "Work out the chance that every one of them misses your date.",
   "steps": [

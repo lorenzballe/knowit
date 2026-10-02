@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "As much convergence in non-echolocating pairs. Thomas and Hahn, and separately Zou and Zhang, ran the same test on mammals with no sonar in common and found as many shared changes or more; across thousands of genes, chance and shared constraints throw up matches. What survives is narrower, such as the hearing protein prestin.",
   "move": "Search enough places and matches appear; ask how many chance alone would give.",
-  "ask": "When I find a pattern, have I asked how often chance alone would produce the same match?",
+  "ask": "When I spot a pattern, how often would pure chance give me the same one?",
   "trap": "Trusting hits from a scan of thousands of genes without a baseline.",
   "keywords": [
     "convergent evolution",

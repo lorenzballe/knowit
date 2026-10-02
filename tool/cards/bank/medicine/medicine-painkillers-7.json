@@ -11,7 +11,7 @@
   "unit": "days",
   "answer": "50 / 10 = 5 days.",
   "move": "Ask whether a drug's effect lives in the blood or in what it touched.",
-  "ask": "Is the effect of what I take lasting in me or only while it is in my system?",
+  "ask": "Does what I take last in me, or only while it is still in my system?",
   "trap": "Answering in hours, since aspirin itself leaves the blood within an hour.",
   "hint": "Platelets have no nucleus, so a blocked one is never repaired; count replacements.",
   "steps": [

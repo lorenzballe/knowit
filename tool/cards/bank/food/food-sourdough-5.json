@@ -12,7 +12,7 @@
   "tolerance": 0.1,
   "answer": "That is about 5.9 tonnes.",
   "move": "Count the rounds of multiplication before trusting a gut guess.",
-  "ask": "What am I underestimating because it multiplies each round rather than adding up?",
+  "ask": "What am I underestimating because it grows a little more each round?",
   "trap": "Adding 200 g a day and getting 2.1 kg instead of multiplying.",
   "hint": "Each feed adds twice the starter's weight, so work out what it is multiplied by each day.",
   "steps": [

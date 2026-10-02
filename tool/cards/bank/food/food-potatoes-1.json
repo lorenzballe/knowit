@@ -17,7 +17,7 @@
   "correct": 1,
   "answer": "False. In 2013 researchers sequenced blight DNA from potato leaves pressed in herbaria during the famine years. The famine strain, which they named HERB-1, differs from US-1, the lineage long blamed, and from modern strains; it was displaced during the 20th century. Its last traces sat for over a century in museum drawers.",
   "move": "The culprit still at large may not be the one that did the damage.",
-  "ask": "Which villain am I still fighting that may not be the one that did the damage?",
+  "ask": "Am I still fighting a villain that was not the real cause of the damage?",
   "trap": "Assuming the strain around today is the one that struck then.",
   "keywords": [
     "phytophthora infestans",

@@ -9,7 +9,7 @@
   "question": "Mercator published his navigators' projection in 1569. Who first explained the mathematics that let others draw it?",
   "answer": "An English mathematician, Edward Wright, in 1599. Mercator never said how he spaced his parallels, so nobody could copy the method exactly. Wright showed the spacing must grow as the running sum of the secant of latitude, and printed a table of it minute by minute: an integral, done by patient addition, before calculus existed.",
   "move": "Whoever makes a method copyable often matters more than whoever invented it.",
-  "ask": "Who in my field made the method copyable, and do I credit them or only the inventor?",
+  "ask": "Who made the method copyable in my field, and do I credit them or only the inventor?",
   "keywords": [
     "edward wright",
     "mercator projection",

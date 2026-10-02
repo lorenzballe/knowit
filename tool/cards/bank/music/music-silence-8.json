@@ -35,5 +35,6 @@
   "source": "Beethoven, Symphony No. 5, ed. Del Mar",
   "source_kind": "primary_document",
   "reference": "Beethoven, Symphony No. 5 in C minor, Op. 67, ed. Del Mar, Bärenreiter, 1999",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

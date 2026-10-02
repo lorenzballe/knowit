@@ -9,6 +9,7 @@
   "question": "Are people more likely to die on their birthday than on an ordinary day?",
   "answer": "Yes, a little. Among about 2.4 million Swiss deaths from 1969 to 2008, 13.8% more fell on the birthday than chance predicts. Heart disease and strokes drove most of it; suicides and accidents rose too. Nobody knows why; the excess sits on one square of each person's calendar.",
   "move": "An anniversary can change what people do, and that can show up in the records.",
+  "ask": "Which date on my calendar quietly changes how I act?",
   "keywords": [
     "birthdays",
     "mortality",

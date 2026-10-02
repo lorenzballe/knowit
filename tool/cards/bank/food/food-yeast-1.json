@@ -15,7 +15,7 @@
   "correct": 1,
   "answer": "Rich sugar makes yeast brew alcohol. Even with plenty of air, baker's yeast switches to fermenting when sugar is abundant, spending it on ethanol instead of new cells. Factories therefore feed molasses gradually, keeping sugar so scarce that the yeast burns it with oxygen and multiplies. The product is cells, not beer.",
   "move": "If a machine wastes fuel when rich, feed it lean on purpose.",
-  "ask": "Where am I wasting effort by feeding something too richly, so it burns out instead of growing?",
+  "ask": "Where am I wasting effort by feeding something too much at once?",
   "trap": "Picturing sugar as a poison at high doses, as in jam.",
   "keywords": [
     "baker's yeast",

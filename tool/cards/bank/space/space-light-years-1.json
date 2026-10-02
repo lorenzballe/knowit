@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. Most naked-eye stars lie within about 1,000 light-years, so the light arriving tonight left them within the last millennium. Stars live millions to billions of years. Only a rare giant near its end, such as Betelgeuse, has even a small chance of being gone.",
   "move": "A line repeated often enough starts to sound like a measurement.",
-  "ask": "Which line have I repeated so often that I have never checked it?",
+  "ask": "Which line have I heard so often that I never checked it?",
   "trap": "The dead-stars line is repeated so often it sounds like a fact.",
   "keywords": [
     "naked-eye stars",

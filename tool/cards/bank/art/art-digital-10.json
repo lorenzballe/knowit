@@ -16,6 +16,7 @@
   ],
   "answer": "Yes. Every digital image is already computed: colours are interpolated, noise removed, frames merged. Recognising the moon and restoring texture that optics and shake destroyed is one more step on that line. The moon shows Earth the same face every night, so the added detail is what was really there, faithfully rendered.",
   "move": "Whichever side you took, it turns on whether a photograph must come from the light.",
+  "ask": "When software fills in details I never saw, do I still call the result what I observed?",
   "counterpoint": "No. In 2023 a user photographed a deliberately blurred picture of the moon on a monitor, and a Samsung phone returned craters the blurred source did not contain. A photograph records light from the scene; this one supplied detail from a trained model's memory. Accurate or not, it shows what the moon usually looks like, not what the lens saw.",
   "keywords": [
     "computational photography",

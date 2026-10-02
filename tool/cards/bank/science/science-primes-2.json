@@ -9,7 +9,7 @@
   "question": "Has the number 1 always been excluded from the primes?",
   "answer": "No. Many mathematicians counted it as prime into the twentieth century; D. N. Lehmer's 1914 table of primes up to ten million starts with 1. It was dropped for convenience: with 1 as a prime, factorising stops being unique, since 6 = 2 × 3 = 1 × 2 × 3.",
   "move": "A definition is a tool; ask what would break if it changed.",
-  "ask": "Which definition in my life could I change, and what would really break if I did?",
+  "ask": "Which definition in my life could I change, and what would really break?",
   "keywords": [
     "number one",
     "prime numbers",

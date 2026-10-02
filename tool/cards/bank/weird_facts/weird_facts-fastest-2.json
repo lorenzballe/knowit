@@ -12,6 +12,7 @@
   "tolerance": 5,
   "answer": "About 2,087 km/h, faster than sound in air.",
   "move": "Scale a record to size before comparing it with another.",
+  "ask": "Which comparison have I made without first scaling for size?",
   "trap": "Picturing a tiny mite as slow because its absolute speed is low.",
   "hint": "Turn body lengths per second into metres per second first.",
   "steps": [

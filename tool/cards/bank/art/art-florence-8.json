@@ -11,6 +11,7 @@
   "unit": "per cent",
   "answer": "48 / 77 = about 0.62, so 60 per cent to the nearest 10.",
   "move": "Measure a great work in the years of life it consumed.",
+  "ask": "How many years of my life will my current big project consume, and is that the price I meant to pay?",
   "hint": "Add the two spans of years, then compare the total with his lifespan.",
   "steps": [
     "1424 - 1403 = 21 years.",

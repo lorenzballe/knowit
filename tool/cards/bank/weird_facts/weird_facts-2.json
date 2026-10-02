@@ -27,5 +27,6 @@
   "figure": "none",
   "source": "UNEP Global Mercury Assessment",
   "source_kind": "institution",
-  "reference": "UNEP, Global Mercury Assessment 2018, 2019"
+  "reference": "UNEP, Global Mercury Assessment 2018, 2019",
+  "disabled": true
 }

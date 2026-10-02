@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. In 2005 Steve Huffman and Alexis Ohanian gave their own submission page a hidden field that registered any new username they typed, so an empty site looked busy. Huffman has said nearly all submissions in the first weeks were theirs. The links they chose set the tone that the first real users copied.",
   "move": "A crowd you can count by name is not yet a crowd of people.",
+  "ask": "How many of the voices that look like a crowd to me are actually few people?",
   "trap": "False: a front page full of different names reads as independent agreement.",
   "keywords": [
     "reddit",

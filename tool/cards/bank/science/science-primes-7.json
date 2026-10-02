@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. Littlewood proved in 1914 that the true count overtakes the estimate, called li(x), and falls back again infinitely often. Nobody has seen it happen: the first crossing lies somewhere between 10^19 and about 10^316, beyond any computer. Stanley Skewes's first bound on it, in 1933, was a tower of three powers of ten.",
   "move": "Where the numbers grow too big to check, only a proof can speak.",
-  "ask": "Which belief of mine rests on checks that stop where the numbers get too big to test?",
+  "ask": "Which belief of mine rests on checks that stop where things get too big to test?",
   "trap": "True, since every one of trillions of checks agrees.",
   "keywords": [
     "skewes number",

@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "Devices had too little randomness to pick primes. Routers made keys just after booting, before gathering unpredictable data, so separate machines chose the same prime. Two keys sharing a prime are split instantly by Euclid's method for common factors. By chance a match is hopeless: there are about 10^151 primes of the size used.",
   "move": "When independent choices keep matching, look for what they share.",
-  "ask": "When independent choices keep coming out the same, do I ask what they secretly share?",
+  "ask": "When separate choices keep coming out the same, do I ask what they share?",
   "trap": "Blaming chance, as millions of keys make some matches inevitable.",
   "keywords": [
     "rsa keys",

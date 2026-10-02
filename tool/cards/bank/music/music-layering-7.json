@@ -14,6 +14,7 @@
   "unit": "singers",
   "answer": "10 times the power takes 10 singers.",
   "move": "When perception runs on ratios, doubling the effect costs far more than doubling the effort.",
+  "ask": "When something needs to feel twice as strong, do I know how much more it really takes?",
   "trap": "Two singers, as if two voices made twice the sound.",
   "hint": "Perceived loudness doubles for roughly every 10 decibels added.",
   "steps": [
@@ -158,6 +159,5 @@
   "source": "Stevens, JASA, 1955",
   "source_kind": "paper",
   "reference": "Stevens, The Measurement of Loudness, Journal of the Acoustical Society of America, 1955",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

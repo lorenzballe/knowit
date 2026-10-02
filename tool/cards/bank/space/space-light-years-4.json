@@ -12,7 +12,7 @@
   "question": "When a galaxy is reported as 13.4 billion light-years away, what does that number measure?",
   "answer": "How long its light travelled, not where the galaxy is. Space stretched while the light was in transit. GN-z11's light set out about 13.4 billion years ago, when the galaxy was some 2.7 billion light-years from here; today it is about 32 billion. The headline number is neither.",
   "move": "Ask what a number measures before asking how big it is.",
-  "ask": "What number do I quote regularly without knowing what it actually measures?",
+  "ask": "What number do I quote without knowing what it actually measures?",
   "keywords": [
     "gn-z11",
     "light-travel distance",

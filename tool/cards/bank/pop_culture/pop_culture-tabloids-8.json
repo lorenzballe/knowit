@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Her phone was hacked in 2002, and her family later received £2 million in settlement. But in December 2011 police told the Leveson Inquiry the deletions that raised her parents' hopes were probably automatic, not the hackers' doing, and The Guardian corrected its report. The plain charge was true; the vivid detail was not.",
   "move": "Each vivid detail added to a charge is one more thing to prove.",
+  "ask": "Which vivid detail in a story I believe have I never checked?",
   "trap": "Believing the detailed version because it was the one most repeated.",
   "keywords": [
     "milly dowler",

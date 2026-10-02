@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "The evacuation and its hardships. Japan counts more than 2,000 disaster-related deaths in Fukushima prefecture, among them frail elderly people moved from hospitals and care homes, and deaths from stress and interrupted treatment. One worker's death has been officially linked to radiation. Futaba, the town beside the plant, had no residents at all until 2022.",
   "move": "Count the harm done by the escape as carefully as the harm escaped.",
+  "ask": "When I flee a risk, have I counted what the escape itself costs?",
   "trap": "Picturing radiation as the killer because it is the frightening part.",
   "keywords": [
     "fukushima",

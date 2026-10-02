@@ -18,7 +18,7 @@
   "correct": 0,
   "answer": "About half as big. A tide is the difference in pull between Earth's near and far sides, and that difference falls with the cube of distance. The Sun is 390 times farther off than the Moon, so its tide is only 46% of the Moon's: enough to swell the tides at new and full moon.",
   "move": "Ask whether an effect follows the force or the difference across it.",
-  "ask": "Do I react to the force of a problem or to the difference it makes across things?",
+  "ask": "Do I react to the size of a problem or to how much it differs across things?",
   "trap": "Letting the 180-times figure set the size of the tide.",
   "keywords": [
     "tides",

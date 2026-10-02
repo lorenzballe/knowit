@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. The fizz is the two cancelling out: acid meets base and leaves carbon dioxide, water and sodium acetate, a mild salt. Whichever is in excess is all that still cleans. Vinegar alone dissolves limescale; bicarbonate alone scours and lifts grease. Poured together, they send bubbling salty water down the drain.",
   "move": "Before crediting the dramatic step, compare it with the plain one alone.",
-  "ask": "Which dramatic step in my routine have I never compared with the plain version alone?",
+  "ask": "Which dramatic trick in my routine have I never compared with the plain way?",
   "trap": "True, because the vigorous fizzing looks like cleaning at work.",
   "keywords": [
     "bicarbonate of soda",

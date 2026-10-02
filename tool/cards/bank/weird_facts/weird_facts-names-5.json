@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Kennedy's personal secretary really was Evelyn Lincoln, from his Senate years to his death. Lincoln's secretaries were John Nicolay and John Hay, with William Stoddard as an assistant; there was no Kennedy. The mirror comes from a coincidence list that circulated in the 1960s, where one true detail carries an invented twin.",
   "move": "When a story is perfectly symmetrical, check the half nobody bothered to source.",
+  "ask": "Which perfectly symmetrical story have I passed on without sourcing both halves?",
   "trap": "Letting the true half vouch for the tidy mirrored half.",
   "keywords": [
     "abraham lincoln",

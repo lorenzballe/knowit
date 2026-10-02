@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. Laurens Hammond filed a spring reverb patent in 1939, to make his electric organ sound as if it filled a church: coiled springs carried the signal as slow mechanical waves. Guitar amplifiers took up spring tanks built on his design in the early 1960s. Surf guitar's drip came from a church organ's problem.",
   "move": "A tool's most famous user is often not the one it was made for.",
-  "ask": "Which tool or idea am I crediting to its famous user, when it was invented for someone else?",
+  "ask": "Which tool or idea do I credit to its famous user, when it was made for someone else?",
   "trap": "False, since the sound is most famous from surf and twang guitar.",
   "keywords": [
     "spring reverb",

@@ -35,5 +35,6 @@
   "source": "Artnet News, the tiara of Saitaphernes",
   "source_kind": "news_archive",
   "reference": "https://news.artnet.com/art-world/the-hunt-the-tiara-of-saitaphernes-2558944",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

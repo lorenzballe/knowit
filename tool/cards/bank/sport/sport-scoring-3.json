@@ -12,7 +12,7 @@
   "tolerance": 0.5,
   "answer": "p x 3 = 1, so p = 1/3, about 33.3%.",
   "move": "Compare options by what each attempt is worth, not by how often it succeeds.",
-  "ask": "Am I choosing options by how often they succeed or by what each attempt is worth?",
+  "ask": "Do I choose by how often something works, or by what each try is worth?",
   "trap": "Expecting a harder shot to need a similar success rate to pay.",
   "hint": "Work out how many points one two-point attempt is worth on average.",
   "steps": [

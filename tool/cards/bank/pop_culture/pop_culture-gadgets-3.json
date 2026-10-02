@@ -40,5 +40,6 @@
   "source": "Hillebrand, GSM and UMTS, 2002",
   "source_kind": "book",
   "reference": "Friedhelm Hillebrand (ed.), GSM and UMTS: The Creation of Global Mobile Communication, Wiley, 2002",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

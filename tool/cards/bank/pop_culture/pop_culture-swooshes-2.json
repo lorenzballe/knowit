@@ -29,5 +29,6 @@
   "source": "Nike, company history of the Swoosh",
   "source_kind": "company",
   "reference": "https://about.nike.com/en/magazine/nike-swoosh-logo-history",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

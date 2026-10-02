@@ -12,6 +12,7 @@
   "question": "Why did hurricanes with women's names look deadlier in a much-publicised 2014 study?",
   "answer": "Critics pointed to its sample. From 1953 to 1978 every Atlantic hurricane got a woman's name, and storms of that era killed more people on average, before modern forecasts and evacuation plans. The authors defended their result, but here a name's gender and a storm's decade moved together.",
   "move": "When two things changed in the same years, either could be doing the work.",
+  "ask": "When two things changed together, which have I credited without ruling out the other?",
   "keywords": [
     "hurricane names",
     "storm deaths",

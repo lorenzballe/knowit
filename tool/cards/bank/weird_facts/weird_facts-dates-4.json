@@ -9,6 +9,7 @@
   "question": "How many leap days has a single Norwegian mother given birth on?",
   "answer": "Three. Karin Henriksen had Heidi on 29 February 1960, Olav on 29 February 1964 and Leif-Martin on 29 February 1968. Any one birth has about a 1-in-1,461 chance of landing on a leap day, so three chosen births all doing so is about 1 in 3 billion. Guinness lists the family's record.",
   "move": "Among billions of families, one-in-a-billion events have names and addresses.",
+  "ask": "Which rare event am I treating as meaningful when someone, somewhere, was always going to get it?",
   "keywords": [
     "leap day",
     "henriksen family",

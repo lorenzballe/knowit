@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. An ordinary pigment can only return part of each colour it receives. A fluorescent one also absorbs blue and ultraviolet and re-emits that energy as orange, so at orange wavelengths its measured reflectance can pass 100%. That extra glow, made from light the eye barely registers, is why safety vests seem lit from within.",
   "move": "Check whether the output was converted from something you were not counting.",
-  "ask": "When output beats input, have I asked what hidden source it was converted from?",
+  "ask": "When I get more out than I put in, have I asked where the extra really came from?",
   "trap": "False, because no surface returns more light than it receives.",
   "keywords": [
     "fluorescent pigments",

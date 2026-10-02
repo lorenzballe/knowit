@@ -12,7 +12,7 @@
   "question": "What happens when two Olympic swimmers touch the wall in exactly the same hundredth of a second?",
   "answer": "They share the medal. Swimming stopped separating racers by thousandths after 1972, when Gunnar Larsson won the Olympic 400 m medley by 0.002 seconds. So ties stand: at Sydney in 2000, Anthony Ervin and Gary Hall Jr both clocked 21.98 in the 50 m freestyle, and two gold medals were awarded.",
   "move": "When the measurement cannot separate two results, do not invent a winner.",
-  "ask": "When my measure cannot separate two results, do I invent a winner anyway?",
+  "ask": "When my measure can't separate two results, do I invent a winner anyway?",
   "keywords": [
     "dead heat",
     "gunnar larsson",

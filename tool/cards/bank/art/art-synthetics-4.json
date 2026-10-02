@@ -28,5 +28,6 @@
   "source": "Moser and Thomas, Phthalocyanine Compounds, 1963",
   "source_kind": "book",
   "reference": "Frank H. Moser and Arthur L. Thomas, Phthalocyanine Compounds, Reinhold, 1963",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

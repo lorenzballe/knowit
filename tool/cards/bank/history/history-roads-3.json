@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About fifty times. Estimates from the edict's maximum prices vary, but land haulage always comes out dozens of times dearer than sea; Stanford's model of Roman travel costs uses 52, with river barges at 5 to 10. Rome's grain came by ship from Egypt and Africa; roads carried soldiers, officials and letters.",
   "move": "Follow the bulk freight, not the monuments, to see how an economy moved.",
+  "ask": "Where does the real work in my world move: the showpieces, or the heavy everyday flow?",
   "trap": "About twice as dear, since paved roads suggest easy haulage.",
   "keywords": [
     "diocletian's price edict",
@@ -36,6 +37,5 @@
   "source": "Scheidel, ORBIS working paper, Stanford",
   "source_kind": "paper",
   "reference": "https://orbis.stanford.edu/assets/Scheidel_59.pdf",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

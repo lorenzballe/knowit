@@ -17,7 +17,7 @@
   "correct": 1,
   "answer": "False. Ordinary sourdough fermentation breaks down only a little of the gluten. The hopeful headlines trace to Italian trials in which selected bacteria plus fungal enzymes digested wheat for hours, bringing gluten below 10 parts per million, and patients tolerated it. A bakery loaf stays thousands of times above the 20 ppm gluten-free limit.",
   "move": "Before trusting a result, check that the thing tested is the thing sold.",
-  "ask": "Before I trust a result, have I checked it was done on the thing I actually have?",
+  "ask": "Before I trust a result, was it tested on the thing I actually have?",
   "trap": "Stretching a specially processed trial loaf to every sourdough on sale.",
   "keywords": [
     "coeliac disease",

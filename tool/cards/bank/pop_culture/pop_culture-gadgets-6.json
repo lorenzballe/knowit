@@ -32,5 +32,6 @@
   "source": "Leidecker and Brusse, NASA Goddard, 2006",
   "source_kind": "institution",
   "reference": "https://nepp.nasa.gov/whisker/reference/tech_papers/2006-Leidecker-Tin-Whisker-Failures.pdf",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

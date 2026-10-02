@@ -11,7 +11,7 @@
   "unit": "per cent",
   "answer": "0.99 + 0.25 = 1.24, so heat loss rises by 24%.",
   "move": "A sliver of the area can carry a large share of the flow.",
-  "ask": "Which small slice of my budget, time or day carries a surprisingly large share of the loss?",
+  "ask": "Which small slice of my money or time is causing a surprisingly large share of the loss?",
   "trap": "Expecting about 1% more, since the metal covers 1% of the area.",
   "hint": "Weight each part of the wall by its area and by the heat it lets through.",
   "steps": [

@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. Roger Federer won 218 points to Novak Djokovic's 204, and 36 games to 32, yet lost in five sets. Tennis counts points only inside games, games only inside sets, and Djokovic won all three tie-breaks. Federer's surplus sat in sets he had already won, including one taken 6-1.",
   "move": "A total can favour one side while every decisive count favours the other.",
-  "ask": "Which total am I celebrating while the counts that actually decide the outcome favour the other side?",
+  "ask": "Which total am I celebrating while the counts that decide things favour the other side?",
   "trap": "Assuming whoever wins more points must win the match.",
   "keywords": [
     "wimbledon 2019",

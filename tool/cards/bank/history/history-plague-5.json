@@ -12,7 +12,7 @@
   "question": "What did England do with the fines it took from workers demanding post-plague wages?",
   "answer": "It paid village taxes with them. Under the labour laws that capped pay after the Black Death, fines went to lighten each village's share of a parliamentary tax. In Essex in 1352 they came to £710, and £675 went to poorer villages: more than half the county's £1,234 assessment was paid from workers' fines.",
   "move": "Follow a fine to see whose bill it quietly pays.",
-  "ask": "When a fine or fee is collected from me, whose bill does it really pay?",
+  "ask": "When a fee is taken from me, whose bill does it really pay?",
   "keywords": [
     "statute of labourers",
     "black death",

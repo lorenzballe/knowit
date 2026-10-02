@@ -12,6 +12,7 @@
   "question": "Why do crews making artificial rain light it from behind rather than from the camera side?",
   "answer": "Lit from the front, falling water nearly vanishes. Each drop is a tiny lens that shines only when light passes through it towards the lens, so rain towers are backlit against dark backgrounds, often with drops larger than real rain. A real downpour on location often barely registers on film, and crews add their own.",
   "move": "Something that is obvious to the eye can still be invisible to the camera.",
+  "ask": "What looks obvious to me but would be invisible to someone else?",
   "keywords": [
     "artificial rain",
     "rain towers",
@@ -31,6 +32,5 @@
   "source": "Box, Set Lighting Technician's Handbook",
   "source_kind": "book",
   "reference": "Box, Set Lighting Technician's Handbook, 4th edn, Focal Press, 2010",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

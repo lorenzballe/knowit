@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "Craftsmen, journeymen and shopkeepers. George Rudé traced the trades of several hundred men on the official list: most were settled working people of the Faubourg Saint-Antoine, joiners, cabinet-makers, locksmiths and wine-sellers, beside a few dozen soldiers. Vagrants and the destitute barely appear. The crowd had addresses and trades.",
   "move": "Before believing a description of a crowd, ask who wrote it.",
-  "ask": "Before I believe a description of a crowd or group, do I ask who wrote it?",
+  "ask": "Before I believe a description of a crowd, do I ask who wrote it?",
   "trap": "Imagining the crowd as a rabble of the destitute, as its enemies described it.",
   "keywords": [
     "bastille",

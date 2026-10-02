@@ -9,6 +9,7 @@
   "question": "What was klieg eyes, the complaint that sent film actors of the 1920s to eye doctors?",
   "answer": "Inflamed, burning eyes caused by ultraviolet light from carbon-arc studio lamps, the Kliegl brothers' klieg lights among them. An arc between carbon rods throws out ultraviolet along with its white glare, and actors worked close under banks of them for hours. Glass screens over the arcs, and later tungsten lamps, ended most cases.",
   "move": "When a whole group shares one symptom, look at what they all stood under.",
+  "ask": "When a whole group shares one problem, what are they all standing under?",
   "keywords": [
     "klieg eyes",
     "carbon arc lamps",
@@ -28,6 +29,5 @@
   "source": "Bordwell, Staiger & Thompson, 1985",
   "source_kind": "book",
   "reference": "Bordwell, Staiger & Thompson, The Classical Hollywood Cinema: Film Style and Mode of Production to 1960, Columbia University Press, 1985",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

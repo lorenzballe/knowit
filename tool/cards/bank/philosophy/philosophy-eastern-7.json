@@ -9,7 +9,7 @@
   "question": "What was Gongsun Long's point in claiming that a white horse is not a horse?",
   "answer": "That the two terms pick out different things. Ask for a horse, and a yellow or black one will do; ask for a white horse, and they will not. So white horse is not identical with horse, though every white horse is one. The whole argument hangs on two senses of the word is.",
   "move": "Ask whether is means the same as or belongs among.",
-  "ask": "When I say 'X is Y', do I mean X equals Y or X belongs among Y?",
+  "ask": "When I say 'A is B', do I mean they're the same, or that A is one kind of B?",
   "keywords": [
     "gongsun long",
     "white horse",

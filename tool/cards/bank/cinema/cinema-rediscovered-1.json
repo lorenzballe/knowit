@@ -9,6 +9,7 @@
   "question": "Why did hundreds of lost silent films turn up under a hockey rink in the Yukon?",
   "answer": "Because Dawson City was the end of the line. Prints arrived years after release and were not worth the freight back, so they piled up. Around 1929 many were dumped into a disused swimming pool as fill, later covered by a rink. In 1978 a bulldozer found more than 500 reels, preserved by permafrost.",
   "move": "What is too costly to move is sometimes the thing that lasts.",
+  "ask": "What do I have that lasted only because it was too much trouble to move?",
   "keywords": [
     "dawson city",
     "yukon",
@@ -29,6 +30,5 @@
   "source": "Morrison, Dawson City: Frozen Time, 2016",
   "source_kind": "primary_document",
   "reference": "Morrison (director), Dawson City: Frozen Time, Hypnotic Pictures, 2016",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

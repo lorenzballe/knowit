@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Campaigners warned that Article 17, which makes large platforms liable for uploads, would kill memes, but the final text requires every member state to let users upload quotation, criticism, review, caricature, parody and pastiche. Before, those exceptions were optional. The directive written to police uploads made the joke a legal right across the EU.",
   "move": "Read the final text before repeating what the campaign said it contained.",
+  "ask": "Before I repeat what a campaign said a law contains, have I read the final text?",
   "trap": "The meme ban headlines were vivid and repeated, so they stick.",
   "keywords": [
     "article 17",

@@ -18,6 +18,7 @@
   "correct": 0,
   "answer": "A city deadline. The niches on the guilds' grain-hall church had been assigned in 1339, and most stood empty for decades. In 1406 the commune gave the guilds ten years to fill theirs or forfeit them. Ghiberti's bronze Baptist and Donatello's St Mark followed. A clause in a decree bought early masterpieces.",
   "move": "Before crediting a mood for a change, look for the deadline behind it.",
+  "ask": "Before I credit a mood or a spirit for a change, what deadline or deadline-maker is behind it?",
   "trap": "Crediting civic rivalry, which had left the niches empty for decades.",
   "keywords": [
     "orsanmichele",

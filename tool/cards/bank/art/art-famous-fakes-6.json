@@ -9,6 +9,7 @@
   "question": "Besides the paintings, what did John Drewe forge in the Myatt–Drewe fraud, and where did he put it?",
   "answer": "Their history, placed inside the archives. Drewe won access to the Tate Gallery archive and the Victoria and Albert Museum's library, then slipped in doctored exhibition catalogues and gallery records listing John Myatt's fakes as long-known works. A researcher checking a picture's provenance found the fraud's own paperwork waiting on the shelf.",
   "move": "Check who put the record there before trusting what it confirms.",
+  "ask": "Before I trust a record that confirms my view, do I know who put it there?",
   "keywords": [
     "john drewe",
     "john myatt",

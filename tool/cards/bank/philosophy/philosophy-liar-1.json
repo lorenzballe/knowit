@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. If the sentence were true, the Cretan saying it would be lying, so it cannot be true. But it can simply be false: one Cretan who sometimes tells the truth suffices. The line is credited to the poet Epimenides; the New Testament letter to Titus quotes it and adds: this testimony is true.",
   "move": "The opposite of all is not none; it is merely not all.",
+  "ask": "When I say 'everyone does it', do I mean everyone, or just not no one?",
   "trap": "Treating it as false means every Cretan always tells the truth.",
   "keywords": [
     "epimenides",
@@ -34,6 +35,5 @@
   "source": "Prior, Journal of Symbolic Logic, 1958",
   "source_kind": "paper",
   "reference": "Prior, Epimenides the Cretan, Journal of Symbolic Logic 23 (3), 1958",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

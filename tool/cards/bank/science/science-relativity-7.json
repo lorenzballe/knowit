@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "About 0.0002% faster. At 450 GeV a proton already moves within about two millionths of light speed, and near that limit extra energy goes into momentum, not speed. At 7,000 GeV the gap shrinks to about one hundred-millionth. A lap of the 27 km ring takes about 89 microseconds before the ramp and after it.",
   "move": "Near a hard limit, more effort buys almost nothing of what you measure.",
-  "ask": "Where am I pouring extra effort into something near a hard limit that returns almost nothing?",
+  "ask": "Where am I pouring effort into something near its limit that gives almost nothing back?",
   "trap": "About fifteen times, taking more energy to mean proportionally more speed.",
   "keywords": [
     "large hadron collider",

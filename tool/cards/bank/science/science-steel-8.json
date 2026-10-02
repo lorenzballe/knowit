@@ -12,7 +12,7 @@
   "tolerance": 0.02,
   "answer": "13.4 thousand moles × 44 g ≈ 590 kg, about 0.59 tonnes of CO₂.",
   "move": "When emissions come from the chemistry itself, cleaner energy cannot remove them.",
-  "ask": "Which of my problems comes from the chemistry of the thing itself, not from how it is powered?",
+  "ask": "Which of my problems comes from the thing itself, not from how it is powered?",
   "trap": "Guessing near zero, as if the carbon were only fuel for heat.",
   "hint": "Count atoms: iron weighs 56 per atom, CO₂ 44 per molecule, and Fe₂O₃ sets the oxygen per iron.",
   "steps": [

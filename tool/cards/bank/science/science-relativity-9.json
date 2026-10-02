@@ -9,7 +9,7 @@
   "question": "What did LIGO's first convincing gravitational-wave signal, seen in September 2010, turn out to be?",
   "answer": "A planted fake. A few insiders could secretly inject simulated signals into the detectors to test the analysis. The 2010 event, nicknamed the Big Dog, passed every check; the collaboration wrote a paper and voted to submit it. In March 2011 a sealed envelope revealed the injection. The real first detection came in 2015.",
   "move": "A checking process is proven only once it has been fed a convincing fake.",
-  "ask": "Which checking process of mine has never been tested with a convincing fake?",
+  "ask": "Which of my checks has never been tested with a convincing fake?",
   "keywords": [
     "ligo",
     "gravitational waves",

@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Less than 1%. The Ellen MacArthur Foundation estimated in 2017 that about 73% of clothing fibre ends up burned or landfilled, around 12% is downcycled into insulation, cleaning cloths and mattress stuffing, and under 1% returns as new garments. The equivalent of a rubbish lorry of textiles is burned or buried every second.",
   "move": "A bin marked recycling tells you where things go in, not where they end.",
+  "ask": "Which of my green habits tells me where things go in, not where they end up?",
   "trap": "About 15%: donation bins make recycling look routine.",
   "keywords": [
     "textile recycling",

@@ -9,6 +9,7 @@
   "question": "According to his bookseller, what did Cosimo de' Medici do to settle his conscience over money made in banking?",
   "answer": "He spent it on a friary. Vespasiano da Bisticci says Cosimo, uneasy that some of his wealth was ill-gotten, asked Pope Eugenius IV for a remedy and was told to spend 10,000 florins on building. He rebuilt San Marco, spending far more. Fra Angelico's frescoes in its cells were part of the penance.",
   "move": "Behind a generous gift, look for the debt the giver wanted cleared.",
+  "ask": "Behind a generous gift I received or gave, what debt was being cleared?",
   "keywords": [
     "cosimo de' medici",
     "san marco",

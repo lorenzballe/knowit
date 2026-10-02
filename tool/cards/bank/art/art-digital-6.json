@@ -32,5 +32,6 @@
   "source": "Nobel Prize in Physics 2009",
   "source_kind": "institution",
   "reference": "https://www.nobelprize.org/prizes/physics/2009/press-release/",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

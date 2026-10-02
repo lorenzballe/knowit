@@ -28,5 +28,6 @@
   "source": "Wilkinson et al., Parasites & Vectors, 2021",
   "source_kind": "primary_document",
   "reference": "doi:10.1186/s13071-020-04500-9",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

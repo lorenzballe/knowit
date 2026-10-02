@@ -18,7 +18,7 @@
   "correct": 1,
   "answer": "Random noise averaged back from movements. Aaron Schurger's team modelled the brain as drifting activity that triggers a movement whenever it crosses a threshold. Align recordings on each movement and average them: only drifts that reached the threshold are counted, so a smooth ramp appears. The ramp is drawn by the averaging.",
   "move": "Line up only the cases where something happened, and a build-up will appear.",
-  "ask": "Which pattern have I noticed in my life only because I counted just the times it happened?",
+  "ask": "What pattern did I notice only because I counted the times it happened and forgot the times it didn't?",
   "trap": "Reading the early ramp as the brain deciding before the person knows.",
   "keywords": [
     "readiness potential",

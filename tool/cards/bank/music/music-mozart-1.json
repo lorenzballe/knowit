@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. He was buried in December 1791 in a shared grave at St Marx under Joseph II's burial rules, which sent most middle-class Viennese to common graves with no mourners at the graveside. His third-class funeral was the ordinary kind. He left debts, but in the 1780s he had been among Vienna's well-paid musicians.",
   "move": "A vivid scene from a film is not a record of what happened.",
-  "ask": "Which vivid scene from a film or story am I treating as a record of what happened?",
+  "ask": "Which vivid scene from a film am I treating as a record of what happened?",
   "trap": "The rain-soaked pauper's burial from films is the first picture.",
   "keywords": [
     "mozart's burial",

@@ -9,6 +9,7 @@
   "question": "Who paid for Botticelli's Adoration of the Magi of about 1475, in which Medici faces play the kings?",
   "answer": "Not the Medici. The patron was Guasparre del Lama, a money-changer of modest standing, for his altar in Santa Maria Novella. Casting Cosimo and his sons as the Magi advertised his loyalty to the city's real rulers. His own face is thought to be in the crowd: a broker painted into the Medici circle.",
   "move": "When the powerful appear in a picture, ask who wanted to flatter them.",
+  "ask": "When someone powerful appears flatteringly in a picture or a story, who wanted them to look that way?",
   "keywords": [
     "botticelli",
     "adoration of the magi",

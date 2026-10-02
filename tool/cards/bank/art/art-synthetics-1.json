@@ -18,6 +18,7 @@
   "correct": 0,
   "answer": "Light altering the chromium. His chrome yellow, a synthetic lead chromate, darkens where light reduces its chromium to a greenish-brown form. Synchrotron studies in 2011 found the change in a thin skin at the paint surface, worst in the paler, sulfur-rich grades. Cleaning cannot fix it: the brown is the paint itself.",
   "move": "Before blaming the dirt on top, check the thing underneath.",
+  "ask": "Before I blame the dirt on top, have I checked what is wrong with the thing underneath?",
   "trap": "Varnish yellows and can be removed, so it seems the natural culprit.",
   "keywords": [
     "chrome yellow",

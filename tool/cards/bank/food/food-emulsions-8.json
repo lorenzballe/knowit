@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. Citrus oil is lighter than sugary water, so its droplets rise. Bromine atoms are heavy; bonded to vegetable oil, they made a weighting agent that brought the droplets up to the drink's density, at up to 15 parts per million. The US revoked its approval in 2024 after thyroid effects in animal studies.",
   "move": "Ask what job an odd ingredient does before guessing why it is there.",
-  "ask": "What odd rule or habit do I tolerate without asking what job it was put there to do?",
+  "ask": "What odd thing do I put up with without asking what it is there for?",
   "trap": "False, as a bromine compound sounds like a preservative or flame retardant.",
   "keywords": [
     "brominated vegetable oil",

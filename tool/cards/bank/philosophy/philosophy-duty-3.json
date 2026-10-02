@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The formula says never merely as a means. A lying promise to repay a loan uses the lender in a way he could not possibly agree to, since he would refuse if he knew. Buying bread uses the baker too, but on terms he accepts: he is a means to breakfast, and rightly so.",
   "move": "Before quoting a rule, find the word that limits it.",
+  "ask": "Before I quote a rule, do I know the word that limits it?",
   "trap": "Remembering the slogan without its one qualifying word.",
   "keywords": [
     "kant",
@@ -35,6 +36,5 @@
   "source": "Kant, Groundwork of the Metaphysics of Morals, 1785",
   "source_kind": "book",
   "reference": "Kant, Groundwork of the Metaphysics of Morals, trans. Gregor, Cambridge University Press, 1998, 4:429-430",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

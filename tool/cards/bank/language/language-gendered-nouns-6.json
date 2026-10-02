@@ -9,6 +9,7 @@
   "question": "Swedish nouns take either en or ett. What became of the masculine and feminine genders Old Swedish had?",
   "answer": "They merged into one, the common gender. Old Swedish had three genders, like German; as endings wore down, masculine and feminine forms fell together, leaving en words and ett words, the old neuter. Danish and standard Dutch went much the same way. A Swede now says en man and en kvinna with a single article.",
   "move": "When two categories stop sounding different, they soon stop being different.",
+  "ask": "When two things I keep separate stop feeling different, should I stop keeping them separate?",
   "keywords": [
     "swedish",
     "common gender",
@@ -29,6 +30,5 @@
   "source": "Holmes & Hinchliffe, Swedish: A Comprehensive Grammar",
   "source_kind": "book",
   "reference": "Holmes & Hinchliffe, Swedish: A Comprehensive Grammar, 3rd edition, Routledge, 2013",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

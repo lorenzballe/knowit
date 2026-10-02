@@ -9,6 +9,7 @@
   "question": "Why can a black-and-white print sit in daylight for a century without darkening?",
   "answer": "Because the unexposed silver salts were washed out. In 1819 the astronomer John Herschel found that hyposulphite of soda, now sodium thiosulphate, dissolves them, and in 1839 he saw it could fix a camera image. Talbot's first prints were only soaked in strong salt, which slowed the darkening. Darkroom workers still call fixer hypo.",
   "move": "Making something is half the job; stopping it from changing is the other.",
+  "ask": "What have I made or started that will fade unless I also do the work of stopping it from changing?",
   "keywords": [
     "john herschel",
     "hypo",

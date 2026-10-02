@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. The Hubble rate has fallen throughout cosmic history and still falls, from about 67 km/s per megaparsec, or 3.26 million light-years, today towards about 56. Acceleration means each galaxy's recession speed grows, but its distance grows faster, so speed divided by distance shrinks. Then it settles, and distances double every 12 billion years.",
   "move": "A growing quantity can have a shrinking rate of growth.",
-  "ask": "What in my life is still growing, though the pace of growth is slowing?",
+  "ask": "What in my life is still growing, though more slowly than before?",
   "trap": "Reading faster expansion as a larger expansion rate.",
   "keywords": [
     "hubble rate",

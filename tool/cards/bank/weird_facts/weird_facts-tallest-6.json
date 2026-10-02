@@ -35,5 +35,6 @@
   "source": "TVP World, Warsaw radio mast collapse",
   "source_kind": "news_archive",
   "reference": "https://tvpworld.com/79715989/remembering-the-collapse-of-the-warsaw-radio-mast-the-worlds-tallest-manmade-structure",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

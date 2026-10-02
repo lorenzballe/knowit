@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. The boom microphone hangs above the actors, aimed at their mouths, so footfalls come out faint and muddy. Sets also lie: a marble palace floor is often painted plywood, and its real footsteps would sound hollow. A Foley artist re-walks each character later, in sync, on a matching surface.",
   "move": "Ask what the microphone was pointed at before trusting what it caught.",
-  "ask": "What did my source actually record, and what was added afterwards?",
+  "ask": "What did my source really record, and what was added afterwards?",
   "trap": "Assuming a sound was captured together with the picture it accompanies.",
   "keywords": [
     "footsteps",

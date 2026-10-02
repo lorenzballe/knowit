@@ -15,7 +15,7 @@
   "tolerance": 1,
   "answer": "1 - 27/64 = 37/64, about 57.8%.",
   "move": "Chances of at least one success never simply add; multiply the failures instead.",
-  "ask": "Where do I add chances of success that I should be multiplying the failures of?",
+  "ask": "Where do I add up chances when I should multiply the failures?",
   "trap": "Adding 25% three times and arriving at 75%.",
   "hint": "Work out the chance that every one of the siblings fails to match.",
   "steps": [

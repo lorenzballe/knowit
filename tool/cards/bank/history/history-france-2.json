@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "About 1%. 8% of 16,594 is about 1,300 people, and France had well over 100,000 nobles, though estimates range. Most of the condemned were commoners, peasants and workers above all, many of them sentenced for armed revolt, desertion or hoarding grain.",
   "move": "Always ask which total a percentage is taken from.",
-  "ask": "The next time I see a percentage, will I ask what total it is a share of?",
+  "ask": "Next time I see a percentage, will I ask what it is a percentage of?",
   "trap": "Reading the nobles' share of the victims as the victims' share of nobles.",
   "keywords": [
     "reign of terror",

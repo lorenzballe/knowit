@@ -12,6 +12,7 @@
   "tolerance": 2,
   "answer": "70,000 g x 0.00532 = 372 g more.",
   "move": "A scale measures a pull, and the pull depends on where you stand.",
+  "ask": "Do I realise that something I measure the same everywhere may change with where I stand?",
   "trap": "Assuming a scale weighs mass, so the reading cannot change.",
   "hint": "Work out how much stronger the pull is at the pole, as a percentage.",
   "steps": [
@@ -39,6 +40,5 @@
   "source": "WGS 84 normal gravity formula",
   "source_kind": "standard",
   "reference": "NIMA, Department of Defense World Geodetic System 1984, Technical Report TR8350.2, third edition, 2000",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

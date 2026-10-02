@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "The painting is the first version. A copyist sees the finished picture and reproduces it; only an artist still working out the composition changes course midway. Infrared reflectography sees through many paints to the carbon underdrawing, and such changes, called pentimenti, turn up far more often in first versions than in replicas.",
   "move": "Weigh a clue by how much likelier it is under one story than another.",
+  "ask": "When I read a clue, do I ask how much likelier it is under one story than under the other?",
   "trap": "Reading a correction as a mistake, and a mistake as a lesser hand.",
   "keywords": [
     "pentimenti",

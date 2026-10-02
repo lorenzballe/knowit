@@ -17,7 +17,7 @@
   "correct": 1,
   "answer": "False. The chart was drawn in 2014 by the blogger Marc Winn, who put the word ikigai on Andrés Zuzunaga's Venn diagram of purpose. In Japanese, ikigai is an ordinary word for whatever makes life worth living, a grandchild or a vegetable patch, with no requirement that it pay.",
   "move": "Ask who first drew the picture, not whose word labels it.",
-  "ask": "Which famous diagram or idea do I credit to a source I never checked?",
+  "ask": "Which famous idea do I credit to a source I never checked?",
   "trap": "A Japanese word on the chart makes the chart itself seem Japanese.",
   "keywords": [
     "ikigai",

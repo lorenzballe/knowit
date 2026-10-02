@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. All six Apollo sites lie on the near side, and several sit in or beside one odd region rich in thorium, which orbiters later showed covers a small part of the surface. Lunar meteorites, knocked off at random, are mostly thorium-poor highland rock. The first far-side sample came back only in 2024.",
   "move": "Before trusting a big haul, ask how many places it came from.",
-  "ask": "Which big pile of evidence in my life actually came from very few places?",
+  "ask": "Which big pile of evidence in my life really came from very few places?",
   "trap": "Assuming 382 kg of rock from six sites speaks for the whole Moon.",
   "keywords": [
     "apollo samples",

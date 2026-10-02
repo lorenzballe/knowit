@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Two minutes. From late 2019 Netflix counted any account that watched two minutes as having chosen a title, replacing a rule of 70% of a film or of a single episode. The company said the new count ran about 35% higher on average. A pressed play button became a viewer.",
   "move": "Before comparing two counts, check that both count the same thing.",
+  "ask": "Before comparing two numbers, do I know whether they count the same thing?",
   "trap": "Assuming a view means someone watched most of what they started.",
   "keywords": [
     "netflix",

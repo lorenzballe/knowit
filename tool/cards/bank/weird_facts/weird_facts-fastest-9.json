@@ -35,5 +35,6 @@
   "source": "Alstom, V150 record, April 2007",
   "source_kind": "primary_document",
   "reference": "Alstom, SNCF and RFF, V150 world rail speed record, press release, 3 April 2007",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

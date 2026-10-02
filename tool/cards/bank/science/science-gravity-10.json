@@ -9,7 +9,7 @@
   "question": "Why did the official uncertainty on Newton's constant G grow about twelvefold in 1998?",
   "answer": "Because one careful laboratory disagreed. In 1995 PTB, Germany's national standards institute, reported a G about 0.6% above the accepted value, far outside everyone's error bars. With no fault found in it, CODATA, which sets the recommended constants, widened its uncertainty from about 0.013% to 0.15%. Later measurements did not repeat the German value.",
   "move": "An honest error bar can grow even as the evidence improves.",
-  "ask": "Do I trust confident people more than honest ones who admit their uncertainty has grown?",
+  "ask": "Do I trust confident people more than honest ones who say they are less sure now?",
   "keywords": [
     "gravitational constant",
     "codata",

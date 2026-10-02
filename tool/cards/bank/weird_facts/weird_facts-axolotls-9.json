@@ -28,5 +28,6 @@
   "source": "Monaghan et al., Regeneration, 2014",
   "source_kind": "primary_document",
   "reference": "doi:10.1002/reg2.8",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

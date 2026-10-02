@@ -9,7 +9,7 @@
   "question": "How much evidence is there that Bach wrote the Goldberg Variations for a count who could not sleep?",
   "answer": "Very little. The story comes from Forkel's biography of 1802, sixty years later. The 1741 print carries no dedication to Count Keyserlingk, and Johann Gottlieb Goldberg, the harpsichordist said to have played them at night, was about 14. Bach issued them as the fourth part of his Clavier-Übung, a published keyboard series.",
   "move": "Date the anecdote, then date the thing it explains.",
-  "ask": "Which flattering story about someone's genius have I never dated or traced to its source?",
+  "ask": "Which flattering story about someone's genius have I never checked for when it was first told?",
   "keywords": [
     "goldberg variations",
     "forkel",

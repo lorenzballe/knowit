@@ -12,6 +12,7 @@
   "withinFactor": 3,
   "answer": "1,650 / 8 = about 200 million complete viewings.",
   "move": "Convert a total into units of the thing itself before being impressed.",
+  "ask": "When a big total impresses me, have I divided it into units that mean something?",
   "hint": "Find how long one full run of the season takes.",
   "steps": [
     "The season has 9 episodes of roughly 55 minutes each.",

@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "Comparing two water companies' customers. Their pipes ran down the same streets, but one drew sewage-laden Thames water and the other cleaner water upstream. Early in the epidemic Snow counted 315 deaths per 10,000 houses for the first and 37 for the second. The famous pump handle came off when Soho's outbreak was already fading.",
   "move": "An outbreak that has peaked will fall whatever is done next.",
-  "ask": "What improvement am I crediting to my action when the problem was already past its peak?",
+  "ask": "What improvement did I credit to my action when things were already past the worst?",
   "trap": "Crediting the pump handle, removed after the outbreak had already peaked.",
   "keywords": [
     "john snow",

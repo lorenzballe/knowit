@@ -29,5 +29,6 @@
   "source": "Ofcom, participant protection rules",
   "source_kind": "institution",
   "reference": "https://www.ofcom.org.uk/tv-radio-and-on-demand/broadcast-standards/new-protections-for-people-taking-part-in-tv-and-radio-shows",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Spin deflects more near the poles. Stommel showed in 1948 that if rotation's deflecting effect were the same everywhere, a wind-driven gyre would be symmetric. Because the effect grows poleward, the return flow is squeezed into a narrow, fast current on the western edge, while eastern sides get broad, slow drifts.",
   "move": "When a pattern is lopsided, look for what changes across it.",
+  "ask": "When something is lopsided in my life, what is different from one side to the other?",
   "trap": "Crediting the winds, which drive the gyre but not its lopsidedness.",
   "keywords": [
     "western intensification",
@@ -36,6 +37,5 @@
   "source": "Stommel, Transactions AGU, 1948",
   "source_kind": "paper",
   "reference": "Stommel, The westward intensification of wind-driven ocean currents, Transactions, American Geophysical Union, 1948",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

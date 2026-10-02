@@ -9,7 +9,7 @@
   "question": "Why can a Falcon 9 booster not simply hover while it lines up its landing?",
   "answer": "Because even one engine at its lowest setting pushes harder than the nearly empty booster weighs. A Merlin engine can only be throttled part of the way down, and at landing the stage is mostly empty tank. So the final burn is timed to reach zero speed exactly at the pad, with no second try.",
   "move": "A system that cannot pause must get its timing right the first time.",
-  "ask": "Where must I get the timing right the first time because I cannot pause?",
+  "ask": "Where must I get the timing right the first time because I can't pause?",
   "keywords": [
     "falcon 9",
     "booster landing",

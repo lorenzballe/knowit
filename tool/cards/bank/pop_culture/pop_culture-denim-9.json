@@ -38,5 +38,6 @@
   "source": "NIST, Guide for the Use of SI Units",
   "source_kind": "institution",
   "reference": "Thompson & Taylor, Guide for the Use of the International System of Units (SI), NIST Special Publication 811, 2008",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

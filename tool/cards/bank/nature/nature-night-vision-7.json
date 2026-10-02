@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "How high its eyes sit. Across 214 land species, Banks's team found vertical slits mostly in ambush predators with eyes near the ground, such as house cats and many snakes. A vertical slit sharpens the blur cues that judge distance, which pays most low down. Lions, eyes higher up, gain little.",
   "move": "When a trait tracks two things, find cases where they come apart.",
+  "ask": "When two things always go together in my life, have I looked for cases where they split?",
   "trap": "Crediting night hunting, though lions hunt by night as well.",
   "keywords": [
     "pupil shape",
@@ -35,6 +36,5 @@
   "source": "Banks et al., Science Advances, 2015",
   "source_kind": "paper",
   "reference": "Banks, Sprague, Schmoll, Parnell & Love, Why do animal eyes have pupils of different shapes?, Science Advances, 2015",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About 14. Each person now blocks three days of the calendar rather than one, so near-clashes pile up far faster than exact ones. Diaconis and Mosteller set out the general rule in 1989. Allow a week either side and seven people suffice: one dinner table.",
   "move": "Every nearly you allow multiplies the ways a coincidence can happen.",
+  "ask": "Which coincidence in my life would look ordinary if I counted every chance it had to happen?",
   "trap": "Reaching for 23, the famous figure for exactly shared birthdays.",
   "keywords": [
     "birthday problem",

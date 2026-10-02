@@ -9,7 +9,7 @@
   "question": "A famous 1965 study found a third of patients diagnosed with hysteria later proved to have physical disease. What did later studies find?",
   "answer": "Far fewer: about 4%. A 2005 review of 27 studies by Jon Stone and colleagues found that misdiagnosis of such functional symptoms, real but without structural damage, fell from 29% in the 1950s to about 4% from the 1970s on. That is no worse than for other neurological and psychiatric diagnoses.",
   "move": "An old error rate can outlive the conditions that produced it.",
-  "ask": "Which old error rate do I still quote when the conditions behind it have changed?",
+  "ask": "Which old error rate do I still quote even though the conditions have changed?",
   "keywords": [
     "functional disorders",
     "hysteria",

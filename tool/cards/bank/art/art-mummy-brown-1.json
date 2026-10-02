@@ -28,5 +28,6 @@
   "source": "Smithsonian Magazine, 2014",
   "source_kind": "news_archive",
   "reference": "https://www.smithsonianmag.com/smart-news/ground-mummies-were-once-ingredient-paint-180950350/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -9,7 +9,7 @@
   "question": "What was Schrödinger's cat originally meant to prove?",
   "answer": "That something had gone wrong. In 1935 Schrödinger set a cat beside poison triggered by one radioactive atom to show the absurdity of letting quantum indecision spread to everyday objects; he called it a quite ridiculous case. Einstein had written to him of a charge of gunpowder, both exploded and not.",
   "move": "Check whether a famous example was meant as a model or a mockery.",
-  "ask": "Which famous idea do I quote without knowing whether it was meant as a model or a mockery?",
+  "ask": "Which famous idea do I quote without knowing if it was meant seriously or as a joke?",
   "keywords": [
     "schrödinger's cat",
     "superposition",

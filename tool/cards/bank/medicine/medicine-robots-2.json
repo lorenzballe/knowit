@@ -9,7 +9,7 @@
   "question": "What did it take for a surgeon in New York to remove a gallbladder in Strasbourg in 2001?",
   "answer": "A private line under the Atlantic. Delay is the enemy of remote surgery, so France Telecom provided a dedicated fibre-optic connection that held the lag steady at about 155 milliseconds; ordinary internet delays jump about unpredictably. Jacques Marescaux worked a ZEUS robot's controls, and the 68-year-old patient went home 48 hours later.",
   "move": "When acting at a distance, the delay matters more than the kilometres.",
-  "ask": "Where is the delay, not the distance, the thing that decides whether my plan works?",
+  "ask": "Where is the delay, not the distance, what decides if my plan works?",
   "keywords": [
     "operation lindbergh",
     "telesurgery",

@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Prodigy screened its boards. In Cubby v. CompuServe, a service that did not review posts was treated like a bookshop, unaware of what it stocked; in Stratton Oakmont v. Prodigy, a service that policed content was treated as a publisher. Moderating raised the risk. Congress removed that penalty in 1996, in Section 230.",
   "move": "Check whether a rule punishes the people who try hardest to comply.",
+  "ask": "Which rule in my world punishes the people trying hardest to do right?",
   "trap": "Assuming the careful host must be the safer one in law.",
   "keywords": [
     "prodigy",

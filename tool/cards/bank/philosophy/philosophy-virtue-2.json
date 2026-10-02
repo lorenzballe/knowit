@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The sentence is Will Durant's, from The Story of Philosophy (1926), summing up Aristotle in modern words and then quoted as his ever since. Aristotle's point was that habit shapes only what nature leaves open: a stone thrown upwards ten thousand times never learns to rise.",
   "move": "A thousand copies of one mistake are still one source.",
+  "ask": "Which small thing do I repeat every day that is quietly shaping who I am?",
   "trap": "Trusting a line because it is attributed to him everywhere.",
   "keywords": [
     "will durant",
@@ -35,6 +36,5 @@
   "source": "Durant, The Story of Philosophy, 1926",
   "source_kind": "book",
   "reference": "Durant, The Story of Philosophy, Simon & Schuster, 1926, chapter 2; Aristotle, Nicomachean Ethics II.1, trans. D. P. Chase, Everyman's Library, 1911",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

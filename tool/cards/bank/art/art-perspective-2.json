@@ -9,6 +9,7 @@
   "question": "How did Brunelleschi test whether his painting of Florence's Baptistery matched the building itself?",
   "answer": "With a peephole and a mirror. He drilled a hole through the panel at the vanishing point; a viewer stood where he had painted from and looked through the back, at a mirror reflecting the picture. Painted and real Baptistery lined up. The sky was burnished silver, so real clouds drifted across it.",
   "move": "A claim about how things look should come with a way to check it.",
+  "ask": "For a claim about how things look or work, what simple test could I run to check it myself?",
   "keywords": [
     "filippo brunelleschi",
     "baptistery",

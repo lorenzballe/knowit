@@ -9,7 +9,7 @@
   "question": "Why can colour tell a 5,000 K star from a 10,000 K one, but not a 40,000 K star from a 100,000 K one?",
   "answer": "Because the eye sees only the tail of a very hot star's glow. Such stars pour most of their light out in the ultraviolet, and the visible slice keeps almost the same blend of colours whatever the temperature. All of them look the same pale blue; their spectral lines, not their colour, give the temperature.",
   "move": "A gauge near the end of its scale stops telling cases apart.",
-  "ask": "Which score or gauge do I rely on that stops telling cases apart at its extremes?",
+  "ask": "Which score or gauge do I rely on that can't tell cases apart at the extremes?",
   "keywords": [
     "hot stars",
     "colour temperature",

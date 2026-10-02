@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About 90%. Jakob Nielsen's 2006 summary of participation inequality found that in most communities about 90% only read, 9% contribute now and then, and 1% write most of what appears. A thread with a thousand replies may come from a few dozen regulars, watched by thousands who never type.",
   "move": "The loudest voices in a room are a sample, not a census.",
+  "ask": "Whose voice do I treat as the crowd when they are only the loudest?",
   "trap": "About 50%: the visible thread looks like everyone talking.",
   "keywords": [
     "participation inequality",

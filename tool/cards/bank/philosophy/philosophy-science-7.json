@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "A real but minute amount. 'All ravens are black' is logically equivalent to 'all non-black things are non-ravens', which a white shoe fits, as Hempel noted in 1945. But non-black things vastly outnumber ravens, so checking one of them risks almost nothing. A black raven could have come out white; the shoe never could.",
   "move": "Evidence counts for as much as the chance it had of going the other way.",
-  "ask": "Which of my pieces of evidence would look the same whether I am right or wrong?",
+  "ask": "Which of my evidence would look the same whether I am right or wrong?",
   "trap": "Weighing a shoe like a raven, forgetting how many non-black things exist.",
   "keywords": [
     "raven paradox",

@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Solar direct-drive fridges, prequalified by the WHO from the early 2010s, run their compressor only while the sun shines and freeze a bank of ice. That frozen store keeps the vaccine cold overnight and through cloudy days. Batteries were dropped because in hot clinics they wore out quickly and were costly to replace.",
   "move": "Store the thing you need, not the energy to make it later.",
+  "ask": "What do I keep paying for every day that I could store up once?",
   "trap": "Assuming solar power must be kept as electricity for the night.",
   "keywords": [
     "solar direct drive",
@@ -35,6 +36,5 @@
   "source": "McCarney et al., Vaccine, 2013",
   "source_kind": "paper",
   "reference": "McCarney, Robertson, Arnaud, Lorenson & Lloyd, Using solar-powered refrigeration for vaccine storage where other sources of reliable electricity are inadequate, Vaccine, 2013",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

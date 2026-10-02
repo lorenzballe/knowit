@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "Only males, Muslim and non-Muslim. It was taken to find conscripts for the new army and payers of the poll tax levied on non-Muslims, so women were left out entirely. Historians turning it into a population must multiply by an assumed ratio of women to men. Half the empire is a guess in that count.",
   "move": "Ask why a count was taken; the purpose decides who was left out.",
-  "ask": "Why was a number counted, and who did that purpose leave out?",
+  "ask": "When a number gets counted, do I ask why, and who was left out?",
   "trap": "Assuming a census counts everyone, as modern ones try to.",
   "keywords": [
     "ottoman census",

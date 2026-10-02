@@ -9,7 +9,7 @@
   "question": "Why is one gap in standard guitar tuning a major third when every other is a fourth?",
   "answer": "So the hand can reach the chords and the outer strings agree. Tuning E, A, D, G, B, E breaks the fourths once, between G and B; all fourths would end on F, clashing with the low E. The habit is older than the guitar: lutes and vihuelas tuned in fourths with one third too.",
   "move": "An exception inside a regular pattern usually pays for something elsewhere.",
-  "ask": "Which exception in my routines is quietly paying for something else, and would I notice if I removed it?",
+  "ask": "Which odd exception in my routine is quietly paying for something else?",
   "keywords": [
     "standard tuning",
     "major third",

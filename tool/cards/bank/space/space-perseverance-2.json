@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. In 2024 it sampled a mudstone nicknamed Cheyava Falls, with millimetre-wide leopard spots rimmed by iron minerals that on Earth often form where microbes feed on organic matter. Published in 2025 as a potential biosignature, it still has non-living explanations nobody has ruled out. Only the sample, in a lab on Earth, could decide.",
   "move": "Evidence that fits your idea is not yet evidence against the rival idea.",
-  "ask": "Which evidence that fits my belief would also fit a rival belief?",
+  "ask": "Which evidence that fits my belief would fit a rival belief just as well?",
   "trap": "Taking features that fit life as features only life can make.",
   "keywords": [
     "cheyava falls",

@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. The standard index averages how eight pale, pastel test colours look under the lamp, judged by a model of the human eye. Saturated reds are left out of that average, and camera sensors respond differently from eyes. In 2016 the film Academy presented a Spectral Similarity Index built for cameras instead.",
   "move": "Before trusting a score, ask which cases were averaged to make it.",
-  "ask": "Which score do I trust without asking which cases were averaged to produce it?",
+  "ask": "Which score do I trust without asking what was averaged to make it?",
   "trap": "Trusting a high score without asking what the test sampled.",
   "keywords": [
     "colour rendering index",

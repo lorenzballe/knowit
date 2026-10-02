@@ -9,6 +9,7 @@
   "question": "Why does a brioche dough rich in sugar rise more slowly than a plain one made with the same yeast?",
   "answer": "Sugar pulls water out of the yeast. A concentrated sugar solution draws water across the cell's membrane, so the cells shrink and slow down. Past about 5 to 10% sugar on flour weight, ordinary yeast lags. Suppliers sell osmotolerant strains for sweet doughs: cells that pile up glycerol inside to hold on to their water.",
   "move": "Past a point, more of the food can starve the eater of something else.",
+  "ask": "Where does more of a good thing start starving something else?",
   "keywords": [
     "brioche",
     "sugar",
@@ -29,6 +30,5 @@
   "source": "Cauvain & Young, Baked Products, 2006",
   "source_kind": "book",
   "reference": "Cauvain & Young, Baked Products: Science, Technology and Practice, Blackwell Publishing, 2006",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

@@ -9,6 +9,7 @@
   "question": "What does the yeast eat in a dough of only flour, water, salt and yeast?",
   "answer": "Sugar cut from starch by the flour's own enzymes. Milling cracks some starch granules, and amylases already in the grain snip them into maltose, which yeast then takes up. Millers measure this enzyme activity and often add malted flour to top it up. With too little, the dough rises sluggishly and the crust bakes pale.",
   "move": "Ask who prepares the food before crediting whoever eats it.",
+  "ask": "Who prepares the food before I credit whoever eats it?",
   "keywords": [
     "amylase",
     "maltose",
@@ -29,6 +30,5 @@
   "source": "Delcour & Hoseney, Principles of Cereal Science, 2010",
   "source_kind": "book",
   "reference": "Delcour & Hoseney, Principles of Cereal Science and Technology, 3rd edition, AACC International, 2010",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

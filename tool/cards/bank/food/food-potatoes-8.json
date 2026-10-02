@@ -15,7 +15,7 @@
   "correct": 1,
   "answer": "Almost not at all. Blight spores ride wind and rain for kilometres, so every plot in a townland met the same attack, and no potato grown in Europe then resisted it; the Lumper, the poor's main variety, rotted readily. Scattering guards against hail or flood, which strike one spot. Against blight, ten fields are one.",
   "move": "Spreading a bet helps only if the risks do not travel together.",
-  "ask": "Are my backups truly independent, or would one storm hit every one of them?",
+  "ask": "Are my backups really separate, or would one bad day hit them all?",
   "trap": "About half, as if each plot were a separate throw of the dice.",
   "keywords": [
     "lumper",

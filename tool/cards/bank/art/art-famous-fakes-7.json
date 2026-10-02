@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Their reference samples were forged too. Among the documents supplied as genuine Hitler writing was material from the same forger, Konrad Kujau. A match between two fakes by one hand proved only that one man wrote both. Stern had paid 9.3 million marks; within two weeks of publication, chemists found post-war whitener in the paper.",
   "move": "Two checks that drink from the same well are one check.",
+  "ask": "Which of my two confirmations are really one source I asked twice?",
   "trap": "Tracing, the forger's familiar trick for copying a signature.",
   "keywords": [
     "hitler diaries",

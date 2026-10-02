@@ -9,6 +9,7 @@
   "question": "Before sound films, how did a small-town pianist know what to play under a chase?",
   "answer": "From books sorted by mood. Studios sent cue sheets suggesting pieces scene by scene, and publishers sold anthologies such as Erno Rapée's Motion Picture Moods for Pianists and Organists, 1924, with ready music indexed under headings like chase, storm, love or mystery. The same few hurries and agitatos served thousands of films.",
   "move": "A shared vocabulary is what lets strangers improvise the same thing.",
+  "ask": "What shared habits let strangers around me work together without a plan?",
   "keywords": [
     "silent film accompaniment",
     "erno rapée",
@@ -28,6 +29,5 @@
   "source": "Rapée, Motion Picture Moods, 1924",
   "source_kind": "primary_document",
   "reference": "Rapée, Motion Picture Moods for Pianists and Organists, G. Schirmer, 1924",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

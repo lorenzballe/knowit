@@ -9,6 +9,7 @@
   "question": "How does cefiderocol, approved in 2019, get inside bacteria whose outer membrane keeps most antibiotics out?",
   "answer": "By posing as an iron carrier. One end of the molecule grips iron as the bacteria's own iron-scavenging molecules do, and bacteria starved of iron in the body pull it in through their iron-import channels. Soil bacteria got there first with albomycin. Mutations in those channels already let some strains resist it.",
   "move": "The easiest way through a guarded door is to look like a delivery.",
+  "ask": "What guarded door could I get through by looking like something it already lets in?",
   "keywords": [
     "cefiderocol",
     "siderophores",
@@ -29,6 +30,5 @@
   "source": "Zhanel et al., Drugs, 2019",
   "source_kind": "paper",
   "reference": "Zhanel et al., Cefiderocol: a siderophore cephalosporin with activity against carbapenem-resistant and multidrug-resistant Gram-negative bacilli, Drugs, 2019",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "By paying to have it sealed. Officials inspected forbidden garments, entered each in a register and marked it with an official seal once the owner paid a fee; unsealed gowns drew fines. The law raised money as well as restraining display, and its register survives as an inventory of Florentine wardrobes, gown by gown.",
   "move": "A ban you can pay your way out of is a tax.",
-  "ask": "Which rule I am bound by is really a price that those with money simply pay?",
+  "ask": "Which rule on me is really just a price that people with money pay?",
   "trap": "Assuming a ban must mean altering the gown, not paying for it.",
   "keywords": [
     "sumptuary law",

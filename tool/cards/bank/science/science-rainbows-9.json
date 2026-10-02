@@ -18,7 +18,7 @@
   "correct": 1,
   "answer": "A morning rainbow. A rainbow always lies opposite the Sun, so in the morning it hangs in the west: the shower is upwind, and weather there drifts east towards you. An evening rainbow sits in the east, where the rain has already passed. The old sailors' rhyme about morning warnings has geometry behind it.",
   "move": "Where a sign appears can tell you more than the sign itself.",
-  "ask": "Where a sign appears, not only that it appears, what is that telling me?",
+  "ask": "Where a sign shows up, not just that it shows up, what is that telling me?",
   "trap": "Neither, since weather rhymes sound like folklore.",
   "keywords": [
     "rainbow",

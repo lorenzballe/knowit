@@ -28,5 +28,6 @@
   "source": "Whitehead et al., Clin Neurophysiol, 2019",
   "source_kind": "statistics",
   "reference": "Whitehead et al., Event-related potentials following contraction of respiratory muscles in pre-term and full-term infants, Clinical Neurophysiology, 2019",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

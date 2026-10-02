@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. After a prime ending in 1, the next ends in 1 only 18.5% of the time, against 25% if the digits were independent; it ends in 3 or 7 about 30% of the time. Every final digit shows the same reluctance to repeat, a pattern explained in 2016 by a conjecture still unproved.",
   "move": "Random-looking is not the same as independent; check what follows what.",
-  "ask": "Where do I treat random-looking events as independent without checking what follows what?",
+  "ask": "Where do I treat things as unrelated without checking what comes after what?",
   "trap": "Primes look random, so one's final digit should say nothing about the next.",
   "keywords": [
     "prime numbers",

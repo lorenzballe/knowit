@@ -15,7 +15,7 @@
   "correct": 1,
   "answer": "Only luminous stars are seen that far. Close to the Sun a catalogue picks up faint and bright stars alike; far away, only the brightest clear the limit. Gunnar Malmquist described this bias in the 1920s. Assume a typical brightness for a distant star in such a catalogue and it lands too close.",
   "move": "Far away only the loudest are heard, so average them with care.",
-  "ask": "Which sample I rely on is made only of the loudest, most extreme members?",
+  "ask": "Is my sample made up only of the loudest and most extreme cases?",
   "trap": "Taking a pattern in the catalogue as a pattern in the sky.",
   "keywords": [
     "malmquist bias",

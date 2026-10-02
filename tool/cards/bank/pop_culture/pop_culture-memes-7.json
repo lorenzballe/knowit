@@ -28,5 +28,6 @@
   "source": "ITU-T Recommendation T.81, JPEG, 1992",
   "source_kind": "primary_document",
   "reference": "ITU-T Recommendation T.81, Digital compression and coding of continuous-tone still images, International Telecommunication Union, 1992",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -28,5 +28,6 @@
   "source": "Improbable Research, 2013",
   "source_kind": "news_archive",
   "reference": "https://improbable.com/2013/09/22/nominative-determinism/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

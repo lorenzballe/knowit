@@ -18,6 +18,7 @@
   "correct": 2,
   "answer": "The red dye also reflected ultraviolet. The collodion plates responded mainly to blue and ultraviolet, and the red filter let some ultraviolet through. Many red dyes reflect it, so the ribbon's red stripes registered on the red plate anyway. Ralph Evans worked this out in 1961. The demonstration worked for a reason Maxwell never intended.",
   "move": "A result that comes out right has not yet shown the method worked.",
+  "ask": "Which result of mine came out right, and have I checked it was not just luck?",
   "trap": "Assuming the right colour came through the channel built for it.",
   "keywords": [
     "james clerk maxwell",

@@ -11,7 +11,7 @@
   "unit": "euros",
   "answer": "1.25 x €8 = €10.",
   "move": "Divide back what was lost along the way; do not just add it on.",
-  "ask": "When I count the real cost of something, do I remember what is lost along the way?",
+  "ask": "When I count what something really costs, have I counted what gets lost along the way?",
   "trap": "Adding 20% to the price and landing on €9.60.",
   "hint": "Work out how much green coffee has to go into the roaster to get one roasted kilo out.",
   "steps": [

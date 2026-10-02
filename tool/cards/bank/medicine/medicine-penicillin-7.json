@@ -9,7 +9,7 @@
   "question": "Why did attempts to repeat Fleming's 1928 plate, by dropping mould spores onto bacteria, keep failing?",
   "answer": "Because penicillin kills only bacteria that are growing; established colonies shrug it off. Decades later Ronald Hare showed the mould had to get going first. A cool spell in London that summer let it spread while the staphylococci barely grew; warmer days then brought the bacteria up around a mould already making its drug.",
   "move": "When a lucky result will not repeat, ask what the conditions were that day.",
-  "ask": "When a lucky result of mine will not repeat, what were the conditions that day?",
+  "ask": "When a lucky result of mine will not repeat, what was special about that day?",
   "keywords": [
     "alexander fleming",
     "ronald hare",

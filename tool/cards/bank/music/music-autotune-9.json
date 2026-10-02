@@ -18,7 +18,7 @@
   "correct": 1,
   "answer": "About half the time. Among 1,000 vocals, 50 are natural and the detector calls 47 or 48 of them natural. It also wrongly calls 5% of the 950 corrected ones natural: another 47 or 48. Half its natural verdicts are false: each real find stands beside an impostor.",
   "move": "The rarer the thing you hunt, the more your alarms point at impostors.",
-  "ask": "When an alarm or test flags something rare, have I asked how many false alarms I should expect?",
+  "ask": "When a test says something rare is true, do I ask how often it is wrong?",
   "trap": "Reading 95% accuracy as a 95% chance that each verdict is right.",
   "keywords": [
     "pitch correction",

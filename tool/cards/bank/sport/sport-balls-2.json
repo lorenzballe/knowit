@@ -9,6 +9,7 @@
   "question": "How can an old, scuffed cricket ball bowled fast swing the opposite way to a new one?",
   "answer": "Because at high speed the air turns turbulent on both halves. A new ball swings towards where its seam points: there the seam trips the air into turbulence, which clings longer. With both halves turbulent, the seam-side layer thickens and lets go first, and the ball veers towards its shiny half.",
   "move": "An effect that works one way can flip once the conditions behind it change.",
+  "ask": "What worked for me once but flipped as the conditions around it changed?",
   "keywords": [
     "reverse swing",
     "cricket ball",
@@ -29,6 +30,5 @@
   "source": "Mehta, Sports Engineering, 2005",
   "source_kind": "paper",
   "reference": "Mehta, An overview of cricket ball swing, Sports Engineering, 2005",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

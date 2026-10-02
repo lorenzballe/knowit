@@ -9,7 +9,7 @@
   "question": "How can a health worker tell whether a normal-looking vial of tetanus vaccine was once frozen?",
   "answer": "By freezing another vial on purpose. In the shake test, a vial from the same batch is frozen solid, thawed and shaken beside the suspect one. Ice clumps the aluminium particles into heavy flakes that sink fast, leaving clear liquid above. A suspect vial that clears as fast as the control is thrown away.",
   "move": "When damage is invisible, make a known-damaged sample to compare against.",
-  "ask": "What do I trust without a known-bad example to compare it against?",
+  "ask": "What do I trust without a known-bad example to compare it with?",
   "keywords": [
     "shake test",
     "freeze damage",

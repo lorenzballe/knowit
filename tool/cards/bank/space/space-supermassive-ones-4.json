@@ -9,7 +9,7 @@
   "question": "How do astronomers know that giant black holes put on most of their weight while shining, not silently?",
   "answer": "By adding up old light. Count the energy all quasars have ever radiated, assume about a tenth of the mass falling in became light, and the mass implied matches what now sits, dark, in the centres of nearby galaxies. Andrzej Sołtan set out the sum in 1982. The quiet giants are the receipts.",
   "move": "Total the output, and it tells you what the input must have been.",
-  "ask": "What can I infer about what went in from the total of what comes out?",
+  "ask": "What can I tell about what went in from the total that comes out?",
   "keywords": [
     "sołtan argument",
     "quasars",

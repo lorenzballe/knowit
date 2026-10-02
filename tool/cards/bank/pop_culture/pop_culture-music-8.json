@@ -34,5 +34,6 @@
   "source": "Billboard, 1998 Hot 100 rule change",
   "source_kind": "news_archive",
   "reference": "https://billboard.com/articles/columns/chart-beat/8458527/hot-100-rule-change-1998-airplay-singles",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

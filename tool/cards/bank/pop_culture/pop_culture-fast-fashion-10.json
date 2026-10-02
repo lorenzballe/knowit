@@ -34,5 +34,6 @@
   "source": "Regulation (EU) 2024/1781, Article 25",
   "source_kind": "primary_document",
   "reference": "https://eur-lex.europa.eu/eli/reg/2024/1781/oj",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

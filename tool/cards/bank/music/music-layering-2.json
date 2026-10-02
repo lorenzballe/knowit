@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. Identical copies add in perfect step: the voice gets about 6 decibels louder, same character. A real double works because two takes differ by a few milliseconds and a few cents of pitch, and the ear reads the smear as two singers. Stacking copies of one take just pushes up a fader.",
   "move": "Copies of one source add volume, not evidence.",
-  "ask": "Which of my sources are only copies of one voice, adding volume without adding evidence?",
+  "ask": "Which of my sources are really copies of one voice, adding volume but no new evidence?",
   "trap": "True, since two tracks of the same voice should sound like two.",
   "keywords": [
     "double tracking",

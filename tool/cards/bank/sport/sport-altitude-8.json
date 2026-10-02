@@ -9,7 +9,7 @@
   "question": "Why does an athlete's haematocrit climb within days of arriving at altitude, long before new red cells are ready?",
   "answer": "Because the blood loses water. In the first days high up, plasma volume falls, partly through extra urine and moisture lost in faster breathing, so the same red cells sit in less fluid and the haematocrit, the share of blood made of cells, rises. New cells take weeks: the early climb is a shrinking denominator.",
   "move": "When a percentage rises, check whether the part grew or the whole shrank.",
-  "ask": "Which number I trust moved because the thing grew, and which because something else around it shrank?",
+  "ask": "When a number I follow goes up, did the thing grow or did something else shrink?",
   "keywords": [
     "haematocrit",
     "plasma volume",

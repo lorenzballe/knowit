@@ -29,5 +29,6 @@
   "source": "ABC News, Brisbane, 2019",
   "source_kind": "news_archive",
   "reference": "https://www.abc.net.au/news/2019-02-28/semi-identical-twins-brisbane-world-first-in-utero-discovery/10857398",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. In 1993 the International Agency for Research on Cancer put traditional Asian pickled vegetables in Group 2B, possibly carcinogenic to humans, chiefly on studies of stomach and oesophageal cancer in China, Japan and Korea. Heavy salt, nitrosamines and moulds are the suspects. The probiotic halo and the cancer list describe the same jars.",
   "move": "Test a food's good name against the evidence that could sink it.",
-  "ask": "What do I believe is good for me that I have never tested against evidence that could sink it?",
+  "ask": "What do I believe is good for me that I have never really questioned?",
   "trap": "Trusting the health halo that fermented foods carry.",
   "keywords": [
     "iarc",

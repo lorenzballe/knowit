@@ -18,6 +18,7 @@
   "correct": 2,
   "answer": "Out with the drained whey. Lactose dissolves in water, so when the curd is cut and drained, the whey carries most of it away. Starter bacteria ferment the small remainder into lactic acid within days or weeks, not months. Whey powder, sold by the tonne, is largely the milk sugar that cheese left behind.",
   "move": "Before crediting the slow process, check what the first quick step removed.",
+  "ask": "Before I credit the slow part of a process, what did the quick first step already remove?",
   "trap": "Crediting months of ageing and its bacteria with eating the milk sugar.",
   "keywords": [
     "lactose",
@@ -38,6 +39,5 @@
   "source": "Fox et al., Fundamentals of Cheese Science, 2017",
   "source_kind": "book",
   "reference": "Fox, Guinee, Cogan & McSweeney, Fundamentals of Cheese Science, 2nd edition, Springer, 2017",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

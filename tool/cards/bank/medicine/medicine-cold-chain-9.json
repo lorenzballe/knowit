@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. Two readings a day sample two moments; a swing out of range between them leaves no trace. When US federal inspectors put their own monitors in the vaccine fridges of 45 providers for two weeks, vaccine at about three quarters spent at least 5 hours outside 2 to 8 °C.",
   "move": "A check made at fixed times sees nothing that happens between them.",
-  "ask": "What do I check at fixed times that could be going wrong in between?",
+  "ask": "What do I only check at fixed times that could be going wrong in between?",
   "trap": "Treating a clean logbook as proof the fridge stayed in range.",
   "keywords": [
     "vaccine fridge",

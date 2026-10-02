@@ -9,7 +9,7 @@
   "question": "Why do hydrogen rocket engines deliberately burn with too little oxygen?",
   "answer": "Because light exhaust is fast exhaust. Burning hydrogen completely takes about 8 kg of oxygen per kilogram; the Shuttle's main engines used 6. The spare hydrogen leaves unburnt, and its tiny molecules lower the average weight of the exhaust, so the same heat drives it out faster. The engine wastes fuel to gain speed.",
   "move": "The efficient setting is not always the complete one.",
-  "ask": "Where is my efficient setting not the complete one, and am I pushing for completeness anyway?",
+  "ask": "Where am I pushing for the complete answer when the efficient one would serve better?",
   "keywords": [
     "liquid hydrogen",
     "mixture ratio",

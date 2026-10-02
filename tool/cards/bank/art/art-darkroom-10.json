@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Much longer, often several times as long. Film obeys the rule that half the light for twice the time gives the same result only over short exposures. In dim light each silver grain collects photons too slowly to hold a stable latent image, and some effect is lost. Night photographers carry correction tables.",
   "move": "A rule that holds in the usual range may fail at the extremes.",
+  "ask": "Which rule of thumb do I trust that might fail at the extremes where it matters most?",
   "trap": "Trusting the meter, which assumes light and time trade evenly.",
   "keywords": [
     "reciprocity failure",

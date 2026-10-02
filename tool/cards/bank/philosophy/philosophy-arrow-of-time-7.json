@@ -12,6 +12,7 @@
   "withinFactor": 3,
   "answer": "Energy out equals energy in, so about 23 photons leave for each one that arrives.",
   "move": "A living system runs on the quality of its energy, not just the quantity.",
+  "ask": "What in my life runs on good-quality energy, and not just on having a lot of it?",
   "trap": "Assuming energy in equals energy out means photons in equal photons out.",
   "hint": "The energy balances; ask how much each photon carries at each temperature.",
   "steps": [
@@ -38,6 +39,5 @@
   "source": "Penrose, Cycles of Time, 2010",
   "source_kind": "book",
   "reference": "Penrose, Cycles of Time: An Extraordinary New View of the Universe, Bodley Head, 2010",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

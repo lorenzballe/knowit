@@ -11,6 +11,7 @@
   "unit": "degrees",
   "answer": "The top is 20° below the horizon.",
   "move": "Know the geometry and you know when to stop looking.",
+  "ask": "Could knowing the rule behind something save me from looking in the wrong place?",
   "trap": "Measuring the 42° up from the horizon instead of the shadow point.",
   "hint": "Start by finding how far below the horizon the point opposite the Sun lies.",
   "steps": [
@@ -38,6 +39,5 @@
   "source": "Minnaert, Light and Colour in the Outdoors, 1993",
   "source_kind": "book",
   "reference": "Minnaert, Light and Colour in the Outdoors, trans. Seymour, Springer, 1993",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

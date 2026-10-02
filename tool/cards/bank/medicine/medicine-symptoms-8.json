@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. Among symptom-app users who were tested, 65% of positives reported loss of smell and taste, against 22% of negatives; it was the strongest single predictor, ahead of fever and persistent cough. Britain added it to the official symptom list only in May 2020, after weeks of telling people to watch for fever and cough.",
   "move": "The symptom everyone watches for is not always the one that sorts cases.",
-  "ask": "Which symptom is everyone watching for, and is it the one that really sorts cases?",
+  "ask": "Which symptom is everyone watching for, and is it really the one that sorts cases?",
   "trap": "False, because fever and cough were the famous signs of Covid.",
   "keywords": [
     "covid-19",

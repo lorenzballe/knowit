@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "About 42%, among the lowest in the league. Leicester conceded the ball, defended in two compact banks of four and broke fast into the space behind. Possession follows quality, and teams that are losing tend to hold more of it, so it says little about who wins. The champions spent the season watching others pass.",
   "move": "Ask what else raises a number before treating it as the goal.",
-  "ask": "Which number am I chasing as the goal when it may just be a side effect of something else?",
+  "ask": "Which number am I chasing that is really just a side effect of something else?",
   "trap": "Treating possession as the cause of winning rather than its companion.",
   "keywords": [
     "leicester city",

@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. He did record a sung plea to Governor O. K. Allen for the Lomaxes in 1934, and the legend grew from it. He was freed that August under a law cutting sentences for good behaviour. The story had been true once before: in 1925 Texas governor Pat Neff pardoned him after he sang.",
   "move": "Before crediting the plea, ask whether the door was opening anyway.",
-  "ask": "Which success story do I credit to one dramatic plea when the door may have been opening anyway?",
+  "ask": "Which success do I credit to one dramatic move when the door may have been opening anyway?",
   "trap": "The plea came first and the release followed, so it looks causal.",
   "keywords": [
     "lead belly",

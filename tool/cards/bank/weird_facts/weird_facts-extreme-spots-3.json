@@ -12,6 +12,7 @@
   "tolerance": 0.01,
   "answer": "About 0.19%.",
   "move": "Before calling something deep, divide it by the whole it belongs to.",
+  "ask": "What impressive number in my life shrinks when I divide it by the whole it belongs to?",
   "trap": "Guessing a few percent because 12 km sounds enormous.",
   "hint": "Divide the depth by Earth's radius, both in kilometres.",
   "steps": [

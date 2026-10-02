@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "A new rule counting YouTube plays. Billboard began adding YouTube data to the Hot 100 that very week, and plays of thousands of fan-made clips using the track's audio counted towards it. The dance videos did not merely advertise the song; they were its numbers.",
   "move": "When a record falls, check first whether the measuring changed.",
+  "ask": "When a record falls, have I checked whether the measuring changed first?",
   "trap": "Assuming the chart counted the same things as the week before.",
   "keywords": [
     "harlem shake",

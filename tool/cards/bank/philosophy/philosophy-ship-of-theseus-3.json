@@ -18,7 +18,7 @@
   "correct": 0,
   "answer": "Under half. Carbon-14 from Cold War bomb tests, locked into a cell's DNA when it forms, let Olaf Bergmann's team date human heart cells in 2009. About 1% were renewed each year at age 25, under 0.5% at 75. Most muscle cells beating in an old person's chest are as old as the person.",
   "move": "Renewal is rarely uniform; ask which parts are replaced and which never are.",
-  "ask": "Which parts of me or my work are renewed constantly, and which never are?",
+  "ask": "Which parts of me or my work keep getting renewed, and which never do?",
   "trap": "The body renews itself every seven years, so the heart must too.",
   "keywords": [
     "heart muscle cells",

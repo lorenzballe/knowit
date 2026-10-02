@@ -11,7 +11,7 @@
   "unit": "coins",
   "answer": "3/4 of 64 = 48 coins.",
   "move": "Divide by what could still happen, not by what already has.",
-  "ask": "When splitting what is owed or earned, do I divide by what has happened or by what could still happen?",
+  "ask": "When I split what is owed or earned, do I go by what happened or by what could still happen?",
   "trap": "Splitting 2 to 1 by rounds won, as a 1494 textbook did.",
   "hint": "Ask how the unfinished game could end, not how it stood.",
   "steps": [

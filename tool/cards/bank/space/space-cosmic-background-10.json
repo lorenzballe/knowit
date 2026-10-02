@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "Only one sky exists to sample. The largest patterns span a quarter of the sky or more, so there are only a handful: five at the very largest scale. Measured perfectly, they are still five draws from chance. Planck has reached that limit; an odd pattern there can never be retested on a fresh sky.",
   "move": "When the sample is everything there is, no instrument adds certainty.",
-  "ask": "Where am I demanding more certainty on a question that cannot give any?",
+  "ask": "Where am I asking for more certainty than this question can give?",
   "trap": "Blaming foreground dust, which better maps could in principle remove.",
   "keywords": [
     "cosmic variance",

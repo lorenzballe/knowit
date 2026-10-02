@@ -9,7 +9,7 @@
   "question": "Why did night-fighter crews in the Second World War wear red goggles indoors before flying?",
   "answer": "To start their night vision early. Rods, the cells that see in dim light, barely respond to deep red, so red light let cones read maps and faces while rods rebuilt their light-sensitive pigment, which takes about half an hour of darkness. Crews could walk from a bright briefing room straight into the night.",
   "move": "Protect the slow resource while the fast one does the work.",
-  "ask": "Which slow resource of mine should I protect early while the fast one does the work?",
+  "ask": "What slow-to-recover thing should I protect early while the fast one does the work?",
   "keywords": [
     "red goggles",
     "dark adaptation",

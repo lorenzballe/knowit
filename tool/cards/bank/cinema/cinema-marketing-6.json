@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "As a warning sign. CinemaScore surveys people leaving on opening night, the keenest fans, who chose to go first. Most wide releases score in the A range. For a franchise film, a B means even the most willing crowd was let down. Among its own fans, a B is a failing grade.",
   "move": "Grade a verdict by how friendly the jury was to begin with.",
-  "ask": "Before I read any verdict, did I ask how friendly the jury was to begin with?",
+  "ask": "Before I trust a verdict, how friendly was the jury to begin with?",
   "trap": "Calling it a solid pass, forgetting that only eager fans were polled.",
   "keywords": [
     "cinemascore",

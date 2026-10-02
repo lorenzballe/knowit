@@ -29,5 +29,6 @@
   "source": "Tiffany & Co., Tiffany Blue",
   "source_kind": "company",
   "reference": "https://press.tiffany.com/our-story/tiffany-blue/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

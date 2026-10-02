@@ -29,5 +29,6 @@
   "source": "EBSCO Research Starters, ValuJet Flight 592",
   "source_kind": "institution",
   "reference": "https://www.ebsco.com/research-starters/history/valujet-flight-592-crash",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

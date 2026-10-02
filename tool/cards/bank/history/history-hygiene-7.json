@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "Fouled it: sewers emptied into the Thames. They had been built for rainwater and ran straight to the river, and several water companies still drew their supply from the tidal Thames in town. Flushing toilets and the end of cesspools moved the city's excrement from under its houses into its water pipes.",
   "move": "Ask where the waste goes after it leaves the house.",
-  "ask": "Where does what I discard go after it leaves my sight, and who pays?",
+  "ask": "Where does what I throw out go once I stop seeing it, and who pays?",
   "trap": "Assuming a sanitary reform must have made the water cleaner.",
   "keywords": [
     "cesspools",

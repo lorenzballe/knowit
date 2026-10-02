@@ -11,6 +11,7 @@
   "unit": "per cent",
   "answer": "4 / 100 = 4 per cent.",
   "move": "A big count of complaints means little until you know the crowd.",
+  "ask": "When I hear complaints, do I know the size of the crowd behind them?",
   "trap": "Treating 20,000 as a revolt without asking out of how many.",
   "hint": "Divide the cancellations by the magazine's sales, then read it as a percentage.",
   "steps": [

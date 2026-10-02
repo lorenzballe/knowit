@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "About 300 MJ. The shot beat the light delivered to the target, the milestone called ignition, but the flash lamps powering NIF's lasers turn under 1% of their electricity into ultraviolet light on target. Counted from the wall socket, the shot returned about one joule for every hundred spent.",
   "move": "Ask where the boundary was drawn before accepting a claimed gain.",
-  "ask": "Before I accept a claimed gain, have I asked where the boundary of the accounting was drawn?",
+  "ask": "Before I believe a claimed gain, do I ask what was left out of the count?",
   "trap": "About 2 MJ, taking the laser energy as the whole bill.",
   "keywords": [
     "national ignition facility",
