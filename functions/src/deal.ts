@@ -143,7 +143,9 @@ export function dealOwn(bank: Bank, profile: Profile, weights: Record<string, nu
   const wanted = new Set(profile.topics);
   const onTopic = (c: Card) => wanted.size === 0 || wanted.has(c.topic);
   const strandOn = (s: string) => !profile.strandsOff.has(s) && !profile.genresOff.has(genreOf(s));
-  const onMix = (c: Card) => onTopic(c) && (strandsOf(c).length === 0 || strandsOf(c).some(strandOn));
+  // An angle turned off under a strand (`strand@hook`) puts that kind of card behind the rest.
+  const angleOn = (c: Card) => !c.strand || !c.hook || !profile.strandsOff.has(`${c.strand}@${c.hook}`);
+  const onMix = (c: Card) => onTopic(c) && angleOn(c) && (strandsOf(c).length === 0 || strandsOf(c).some(strandOn));
   const ready = (c: Card) => (c.builds_on ?? []).every((id) => o.exclude.has(id));
   const tierOf = (c: Card): number => {
     const read = o.exclude.has(c.id) ? 4 : 0;
@@ -258,7 +260,9 @@ export function dealRandom(bank: Bank, profile: Profile, o: RandomOptions): Card
   const wanted = profile.topics;
   const onTopic = (c: Card) => wanted.size === 0 || wanted.has(c.topic);
   const strandOn = (s: string) => !profile.strandsOff.has(s) && !profile.genresOff.has(genreOf(s));
-  const onMix = (c: Card) => onTopic(c) && (strandsOf(c).length === 0 || strandsOf(c).some(strandOn));
+  // An angle turned off under a strand (`strand@hook`) puts that kind of card behind the rest.
+  const angleOn = (c: Card) => !c.strand || !c.hook || !profile.strandsOff.has(`${c.strand}@${c.hook}`);
+  const onMix = (c: Card) => onTopic(c) && angleOn(c) && (strandsOf(c).length === 0 || strandsOf(c).some(strandOn));
   const ready = (c: Card) => (c.builds_on ?? []).every((id) => o.exclude.has(id));
   const tierOf = (c: Card): number => {
     const read = o.exclude.has(c.id) ? 4 : 0;

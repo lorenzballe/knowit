@@ -1870,4 +1870,70 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get themePlaceLine =>
       'Una parte del mondo diversa ogni volta che torna';
+
+  @override
+  String get themeTrueOrFalse => 'Vero o falso?';
+
+  @override
+  String get themeTrueOrFalseLine =>
+      'Decidi prima di girare. Quasi tutti sbagliano';
+
+  @override
+  String get themeReasoning => 'Solo ragionamento';
+
+  @override
+  String get themeReasoningLine =>
+      'Niente da sapere a memoria: solo un modo di pensarci';
+
+  @override
+  String get themeIdeas => 'Grandi idee';
+
+  @override
+  String get themeIdeasLine => 'La teoria dietro le cose, un\'idea alla volta';
+
+  @override
+  String get themeCurious => 'Solo curiosità';
+
+  @override
+  String get themeCuriousLine => 'Per il gusto di sapere il perché';
+
+  @override
+  String get themeMoving => 'In movimento';
+
+  @override
+  String get themeMovingLine =>
+      'Cose che stanno cambiando ora, e perché contano';
+
+  @override
+  String get themeHowItWorks => 'Come funziona davvero';
+
+  @override
+  String get themeHowItWorksLine =>
+      'Il meccanismo dietro qualcosa che vedi ogni giorno';
+
+  @override
+  String get themePuzzles => 'Rompicapi';
+
+  @override
+  String get themePuzzlesLine =>
+      'Enigmi da risolvere con una penna e un minuto';
+
+  @override
+  String get holdStrandHint =>
+      'Tieni premuto un filone per sceglierne gli angoli';
+
+  @override
+  String get anglesComing =>
+      'Gli angoli arrivano man mano che si scrivono le carte';
+
+  @override
+  String get weekRecapCaps => 'QUESTA SETTIMANA TI SEI CHIESTO';
+
+  @override
+  String get weekRecapLine => 'Le domande che le tue carte ti hanno lasciato';
+
+  @override
+  String weekRecapMore(int n) {
+    return 'Altre $n della tua settimana con Plus';
+  }
 }

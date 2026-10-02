@@ -1813,4 +1813,63 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get themePlaceLine => '돌아올 때마다 다른 지역';
+
+  @override
+  String get themeTrueOrFalse => '참일까 거짓일까?';
+
+  @override
+  String get themeTrueOrFalseLine => '뒤집기 전에 정하세요. 대부분 틀려요';
+
+  @override
+  String get themeReasoning => '오직 추론';
+
+  @override
+  String get themeReasoningLine => '외울 것 없이, 생각하는 방법만';
+
+  @override
+  String get themeIdeas => '큰 아이디어';
+
+  @override
+  String get themeIdeasLine => '사물 뒤의 이론, 한 번에 하나씩';
+
+  @override
+  String get themeCurious => '그냥 궁금해서';
+
+  @override
+  String get themeCuriousLine => '이유를 아는 즐거움으로';
+
+  @override
+  String get themeMoving => '움직이는 중';
+
+  @override
+  String get themeMovingLine => '지금 변하고 있는 것과 그 의미';
+
+  @override
+  String get themeHowItWorks => '진짜 작동 원리';
+
+  @override
+  String get themeHowItWorksLine => '매일 보는 것 뒤의 메커니즘';
+
+  @override
+  String get themePuzzles => '퍼즐';
+
+  @override
+  String get themePuzzlesLine => '펜 하나와 1분이면 푸는 수수께끼';
+
+  @override
+  String get holdStrandHint => '가닥을 길게 눌러 관점을 고르세요';
+
+  @override
+  String get anglesComing => '카드가 쓰이는 대로 관점이 추가돼요';
+
+  @override
+  String get weekRecapCaps => '이번 주 스스로에게 던진 질문';
+
+  @override
+  String get weekRecapLine => '카드가 남긴 질문들';
+
+  @override
+  String weekRecapMore(int n) {
+    return 'Plus로 이번 주 $n개 더 보기';
+  }
 }

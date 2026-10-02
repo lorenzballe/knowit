@@ -86,8 +86,13 @@ List<Pill> pillsForDate(
       !genresOff.contains(strand.substring(0, strand.lastIndexOf('.')));
   // On the mix through any strand it is about: a card on tides is the
   // Moon and also Gravity, and a reader who kept either keeps it.
+  // The third layer: an angle turned off under a strand, `strand@hook`.
+  bool angleOn(Pill p) =>
+      p.strand.isEmpty || !strandsOff.contains('${p.strand}@${p.hook}');
   bool onMix(Pill p) =>
-      onTopic(p) && (p.strands.isEmpty || p.strands.any(strandOn));
+      onTopic(p) &&
+      angleOn(p) &&
+      (p.strands.isEmpty || p.strands.any(strandOn));
   // A card that builds on others waits for them, where the day can spare
   // it: it goes behind the cards that stand alone, not out of the deck.
   bool ready(Pill p) => p.buildsOn.every(exclude.contains);
@@ -252,8 +257,13 @@ List<Pill> pillsAtRandom(
   bool strandOn(String strand) =>
       !strandsOff.contains(strand) &&
       !genresOff.contains(strand.substring(0, strand.lastIndexOf('.')));
+  // The third layer: an angle turned off under a strand, `strand@hook`.
+  bool angleOn(Pill p) =>
+      p.strand.isEmpty || !strandsOff.contains('${p.strand}@${p.hook}');
   bool onMix(Pill p) =>
-      onTopic(p) && (p.strands.isEmpty || p.strands.any(strandOn));
+      onTopic(p) &&
+      angleOn(p) &&
+      (p.strands.isEmpty || p.strands.any(strandOn));
   bool ready(Pill p) => p.buildsOn.every(exclude.contains);
 
   // The same tiers as the reader's own: unread before read, and inside

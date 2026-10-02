@@ -1801,4 +1801,63 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get themePlaceLine => '来るたびに違う地域';
+
+  @override
+  String get themeTrueOrFalse => '正しい？間違い？';
+
+  @override
+  String get themeTrueOrFalseLine => 'めくる前に決めて。ほとんどの人が間違えます';
+
+  @override
+  String get themeReasoning => '考えるだけ';
+
+  @override
+  String get themeReasoningLine => '覚えることはなし。考え方だけ';
+
+  @override
+  String get themeIdeas => '大きなアイデア';
+
+  @override
+  String get themeIdeasLine => '物事の背後にある理論を一つずつ';
+
+  @override
+  String get themeCurious => 'ただの好奇心';
+
+  @override
+  String get themeCuriousLine => '「なぜ」を知る楽しみのために';
+
+  @override
+  String get themeMoving => 'いま動いていること';
+
+  @override
+  String get themeMovingLine => 'いま変わりつつあることと、その意味';
+
+  @override
+  String get themeHowItWorks => '本当の仕組み';
+
+  @override
+  String get themeHowItWorksLine => '毎日見ているものの裏にある仕組み';
+
+  @override
+  String get themePuzzles => 'パズル';
+
+  @override
+  String get themePuzzlesLine => 'ペンと1分で解ける謎';
+
+  @override
+  String get holdStrandHint => 'ストランドを長押しして切り口を選ぶ';
+
+  @override
+  String get anglesComing => 'カードが増えると切り口も増えます';
+
+  @override
+  String get weekRecapCaps => '今週あなたが自分に問いかけたこと';
+
+  @override
+  String get weekRecapLine => 'カードが残してくれた問い';
+
+  @override
+  String weekRecapMore(int n) {
+    return 'Plusで今週のあと$n件';
+  }
 }

@@ -28,9 +28,12 @@ const _only = String.fromEnvironment('DIAGRAM_ONLY');
 const _fps = int.fromEnvironment('DIAGRAM_FPS');
 
 Map<String, Object?>? _bankCard(String id) {
-  for (final dir in Directory('tool/cards/bank').listSync().whereType<Directory>()) {
+  for (final dir in Directory(
+    'tool/cards/bank',
+  ).listSync().whereType<Directory>()) {
     final f = File('${dir.path}/$id.json');
-    if (f.existsSync()) return (jsonDecode(f.readAsStringSync()) as Map).cast<String, Object?>();
+    if (f.existsSync())
+      return (jsonDecode(f.readAsStringSync()) as Map).cast<String, Object?>();
   }
   return null;
 }
@@ -45,10 +48,13 @@ Iterable<Map<String, Object?>> _cards() sync* {
     }
     return;
   }
-  for (final dir in Directory('tool/cards/bank').listSync().whereType<Directory>()) {
+  for (final dir in Directory(
+    'tool/cards/bank',
+  ).listSync().whereType<Directory>()) {
     for (final f in dir.listSync().whereType<File>()) {
       if (!f.path.endsWith('.json')) continue;
-      final card = (jsonDecode(f.readAsStringSync()) as Map).cast<String, Object?>();
+      final card = (jsonDecode(f.readAsStringSync()) as Map)
+          .cast<String, Object?>();
       if (card['diagram'] != null) yield card;
     }
   }
@@ -56,7 +62,8 @@ Iterable<Map<String, Object?>> _cards() sync* {
 
 Future<void> _loadFonts() async {
   for (final family in ['Fraunces', 'Figtree']) {
-    final loader = FontLoader(family)..addFont(rootBundle.load('assets/fonts/$family.ttf'));
+    final loader = FontLoader(family)
+      ..addFont(rootBundle.load('assets/fonts/$family.ttf'));
     await loader.load();
   }
 }
@@ -93,14 +100,34 @@ void main() {
         final dir = Directory('$_out/$id')..createSync(recursive: true);
         final n = (diagramDuration(d).inMilliseconds * _fps / 1000).ceil();
         for (var f = 0; f <= n; f++) {
-          final img = await renderDiagramStill(d, pill.ink, width, at: f / n, ground: pill.color, margin: margin, pixelRatio: 3, caption: true);
+          final img = await renderDiagramStill(
+            d,
+            pill.ink,
+            width,
+            at: f / n,
+            ground: pill.color,
+            margin: margin,
+            pixelRatio: 3,
+            caption: true,
+          );
           final png = await img.toByteData(format: ui.ImageByteFormat.png);
-          File('${dir.path}/f_${f.toString().padLeft(4, '0')}.png').writeAsBytesSync(png!.buffer.asUint8List());
+          File('${dir.path}/f_${f.toString().padLeft(4, '0')}.png')
+              .writeAsBytesSync(png!.buffer.asUint8List());
         }
       }
       final frames = <ui.Image>[];
       for (final at in moments) {
-        frames.add(await renderDiagramStill(d, pill.ink, width, at: at, ground: pill.color, margin: margin, caption: true));
+        frames.add(
+          await renderDiagramStill(
+            d,
+            pill.ink,
+            width,
+            at: at,
+            ground: pill.color,
+            margin: margin,
+            caption: true,
+          ),
+        );
       }
       final fw = frames.first.width.toDouble();
       final fh = frames.first.height.toDouble();

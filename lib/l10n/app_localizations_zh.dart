@@ -1802,4 +1802,63 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get themePlaceLine => '每次回来都换一个地区';
+
+  @override
+  String get themeTrueOrFalse => '是真是假？';
+
+  @override
+  String get themeTrueOrFalseLine => '翻开前先决定。大多数人都会错';
+
+  @override
+  String get themeReasoning => '纯推理';
+
+  @override
+  String get themeReasoningLine => '无需记忆：只是一种思考方式';
+
+  @override
+  String get themeIdeas => '大观念';
+
+  @override
+  String get themeIdeasLine => '事物背后的理论，一次一个';
+
+  @override
+  String get themeCurious => '纯属好奇';
+
+  @override
+  String get themeCuriousLine => '为了知道为什么的乐趣';
+
+  @override
+  String get themeMoving => '正在变化';
+
+  @override
+  String get themeMovingLine => '此刻正在改变的事，以及它为何重要';
+
+  @override
+  String get themeHowItWorks => '它到底怎么运作';
+
+  @override
+  String get themeHowItWorksLine => '你每天看到的事物背后的机制';
+
+  @override
+  String get themePuzzles => '谜题';
+
+  @override
+  String get themePuzzlesLine => '一支笔一分钟就能解的谜';
+
+  @override
+  String get holdStrandHint => '长按一个分支来选择它的角度';
+
+  @override
+  String get anglesComing => '随着卡片写出，角度会陆续出现';
+
+  @override
+  String get weekRecapCaps => '这周你问过自己';
+
+  @override
+  String get weekRecapLine => '你的卡片留给你的问题';
+
+  @override
+  String weekRecapMore(int n) {
+    return '用 Plus 再看本周 $n 条';
+  }
 }

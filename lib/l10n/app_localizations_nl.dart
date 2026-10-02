@@ -1868,4 +1868,68 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get themePlaceLine => 'Elke keer een ander deel van de wereld';
+
+  @override
+  String get themeTrueOrFalse => 'Waar of niet waar?';
+
+  @override
+  String get themeTrueOrFalseLine =>
+      'Beslis voor je omdraait. De meesten zitten fout';
+
+  @override
+  String get themeReasoning => 'Alleen redeneren';
+
+  @override
+  String get themeReasoningLine =>
+      'Niets om te onthouden: alleen een manier om het te doordenken';
+
+  @override
+  String get themeIdeas => 'Grote ideeën';
+
+  @override
+  String get themeIdeasLine => 'De theorie achter dingen, één idee tegelijk';
+
+  @override
+  String get themeCurious => 'Gewoon nieuwsgierig';
+
+  @override
+  String get themeCuriousLine => 'Voor het plezier van het waarom';
+
+  @override
+  String get themeMoving => 'In beweging';
+
+  @override
+  String get themeMovingLine => 'Wat nu verandert, en waarom het ertoe doet';
+
+  @override
+  String get themeHowItWorks => 'Hoe het echt werkt';
+
+  @override
+  String get themeHowItWorksLine =>
+      'Het mechanisme achter iets wat je elke dag ziet';
+
+  @override
+  String get themePuzzles => 'Puzzels';
+
+  @override
+  String get themePuzzlesLine => 'Raadsels voor een pen en een minuut';
+
+  @override
+  String get holdStrandHint =>
+      'Houd een draad ingedrukt om de invalshoeken te kiezen';
+
+  @override
+  String get anglesComing =>
+      'Invalshoeken komen naarmate kaarten worden geschreven';
+
+  @override
+  String get weekRecapCaps => 'DEZE WEEK VROEG JE JEZELF AF';
+
+  @override
+  String get weekRecapLine => 'De vragen die je kaarten je meegaven';
+
+  @override
+  String weekRecapMore(int n) {
+    return 'Nog $n uit je week met Plus';
+  }
 }

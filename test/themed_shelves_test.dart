@@ -6,7 +6,7 @@ import 'package:astuto/data/themed_shelves.dart';
 void main() {
   final pool = PillBank.cards;
 
-  test('four themes a day, each a full shelf', () {
+  test('seven themes a day, each a full shelf', () {
     for (int day = 20000; day < 20030; day++) {
       final shelves = themedShelves(pool, day: day);
       expect(shelves, hasLength(kThemesPerDay), reason: '$day');
@@ -41,8 +41,10 @@ void main() {
       [for (final s in b) s.pills.map((p) => p.id).toList()],
     );
     final first = themedShelves(pool, day: 20100).first;
-    final again = themedShelves(pool, day: 20103)
-        .firstWhere((s) => s.theme == first.theme);
+    // The next day round the cycle the theme is up again.
+    final again = [
+      for (int d = 20101; d < 20110; d++) ...themedShelves(pool, day: d),
+    ].firstWhere((s) => s.theme == first.theme);
     expect(again.pills.map((p) => p.id), isNot(first.pills.map((p) => p.id)));
   });
 
