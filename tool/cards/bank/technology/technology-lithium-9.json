@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "About 30-fold. Each year kept 87% of the year before, and 0.87 multiplied by itself 24 times leaves about 3.5% of the starting price. Ziegler and Trancik, rebuilding the record from original sources, put the real fall since 1991 at about 97%. Twenty-four modest cuts left a cell at one-thirtieth of its price.",
   "move": "Small steady cuts, repeated for decades, remove almost everything.",
-  "ask": "Which small steady improvement could I repeat for years until it removes almost everything?",
+  "ask": "Which small steady improvement could I keep up for years until it adds up to a lot?",
   "trap": "Adding up small yearly cuts instead of multiplying them.",
   "keywords": [
     "battery prices",

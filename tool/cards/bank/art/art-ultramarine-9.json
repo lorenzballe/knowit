@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. In 1960 Klein lodged a sealed description with France's patent office in a Soleau envelope, which proves a date but grants no monopoly. What it described was a binder, a synthetic resin in solvents, not a new pigment. The blue was ordinary synthetic ultramarine, held so lightly it kept the velvet of dry powder.",
   "move": "Ask what exactly a registration protects before calling it ownership.",
-  "ask": "What does the thing I own or registered actually protect me from, and what not?",
+  "ask": "What does the thing I own or registered actually protect, and what not?",
   "trap": "Repeating the famous story that an artist once patented a colour.",
   "keywords": [
     "yves klein",

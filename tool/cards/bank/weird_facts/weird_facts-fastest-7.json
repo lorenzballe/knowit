@@ -18,7 +18,7 @@
   "correct": 2,
   "answer": "On an island off Western Australia. In 1996 Cyclone Olivia drove a 3-second gust of 408 km/h across Barrow Island's weather station; the WMO ratified it in 2010, displacing Mount Washington's 1934 record. Tornadoes blow faster, but those speeds come from radar: an anemometer caught inside a tornado rarely survives to report.",
   "move": "A record shows where instruments stood, not where the extremes happened.",
-  "ask": "Where am I mistaking where someone measured for where the thing really happens?",
+  "ask": "Am I confusing where someone measured with where the thing really happens?",
   "trap": "Picturing a tornado, where the fastest winds really do blow.",
   "keywords": [
     "wind gust record",

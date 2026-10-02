@@ -15,7 +15,7 @@
   "correct": 1,
   "answer": "More slowly. The frail die first, so each year the survivors are a more robust crowd, and the average risk climbs less steeply than anyone's own risk does. Vaupel and colleagues showed in 1979 that this sorting alone can bend the curve towards a plateau, even if no individual's risk ever stops doubling.",
   "move": "A group can change because of who leaves, while no member changes.",
-  "ask": "Where do I think a group has changed, when only who is in it did?",
+  "ask": "Do I think a group changed when really only who is in it did?",
   "trap": "Assuming a mix behaves like the groups it is made of.",
   "keywords": [
     "frailty",

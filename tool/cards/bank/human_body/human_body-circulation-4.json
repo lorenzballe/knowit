@@ -15,7 +15,7 @@
   "correct": 1,
   "answer": "About twice as much. For smooth flow through a tube, Poiseuille's law makes flow rise with the fourth power of the radius: 1.19 x 1.19 x 1.19 x 1.19 ≈ 2. So the body steers blood with its smallest arteries: narrowing them by a sixth halves an organ's supply.",
   "move": "When a size is multiplied by itself four times, small changes stop being small.",
-  "ask": "Which small change in my habits is multiplied several times over, so it is not small?",
+  "ask": "What small change in my habits could matter far more than it looks?",
   "trap": "Assuming flow grows in step with the width.",
   "keywords": [
     "poiseuille's law",

@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "All-or-nothing scoring. If a model must get all 5 digits of an answer right, and its accuracy per digit climbs steadily from 50% to 90%, its score leaps from 3% to 59%. Given partial credit, the same models improved smoothly. The jump was in the ruler, not in the model.",
   "move": "A score that needs every step right turns steady progress into a sudden leap.",
-  "ask": "Which sudden leap in my life was really steady progress behind a threshold?",
+  "ask": "Which sudden leap in my life was really steady progress hiding behind a threshold?",
   "trap": "Reading a sharp jump in scores as a sharp change in ability.",
   "keywords": [
     "emergent abilities",

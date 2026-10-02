@@ -11,6 +11,7 @@
   "unit": "jurors",
   "answer": "Against death: 500 - 360 = 140.",
   "move": "A second vote is a new count, not a rerun of the first.",
+  "ask": "When a second vote follows the first, do I count it fresh, or just assume it repeats?",
   "trap": "Answering 220, as if every acquitting juror voted against death again.",
   "hint": "Find the votes for death first, then take them from the whole jury.",
   "steps": [
@@ -40,6 +41,5 @@
   "source": "Diogenes Laertius, Lives II.42",
   "source_kind": "primary_document",
   "reference": "Diogenes Laertius, Lives of Eminent Philosophers II.42, trans. Hicks, Loeb Classical Library, Harvard University Press, 1925",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

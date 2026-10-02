@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. Olshansky, Carnes and Cassel calculated in 1990 that eliminating all cancer would add about 3 years to life expectancy at birth. Most cancer deaths come late in life, and the people spared still face a steeply rising risk of dying of something else within a few years.",
   "move": "Removing one cause of an outcome leaves the others waiting.",
-  "ask": "If I removed my biggest worry, which of the others would take its place?",
+  "ask": "If I solved my biggest worry, which one would take its place?",
   "trap": "Counting the lives saved without asking what those people die of next.",
   "keywords": [
     "cancer",

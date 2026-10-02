@@ -9,7 +9,7 @@
   "question": "Why does Tesla tell owners of its iron-phosphate battery cars to charge to 100% at least weekly?",
   "answer": "So the car can tell how full the battery is. Iron phosphate cells hold an almost flat voltage, about 3.2 to 3.3 volts, across most of their charge, so voltage says little about the level. Near full it climbs steeply, giving the gauge a fixed point. Without it, the range estimate drifts.",
   "move": "A gauge that reads the wrong quantity needs regular fixed points to reset.",
-  "ask": "Which of my gauges has drifted from reality, and when did I last check it against a fixed point?",
+  "ask": "Which of my gauges may have drifted, and when did I last check it against something fixed?",
   "keywords": [
     "lithium iron phosphate",
     "state of charge",

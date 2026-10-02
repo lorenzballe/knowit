@@ -12,6 +12,7 @@
   "tolerance": 0.1,
   "answer": "6,912 / 60 = 115.2 minutes.",
   "move": "A small change of rate, applied to everything, adds up to minutes.",
+  "ask": "What small change, applied to everything, adds up to a lot over time?",
   "trap": "Assuming the length stays the same because every frame is shown.",
   "hint": "Count the frames first: they do not change, only how fast they go by.",
   "steps": [
@@ -38,6 +39,5 @@
   "source": "Ascher & Pincus, The Filmmaker's Handbook, 2012",
   "source_kind": "book",
   "reference": "Ascher & Pincus, The Filmmaker's Handbook, 4th edition, Plume, 2012",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

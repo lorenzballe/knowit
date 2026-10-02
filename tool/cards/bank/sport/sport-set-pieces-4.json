@@ -9,6 +9,7 @@
   "question": "Since 2019, how close may attackers stand to a defensive wall of three or more at a free kick?",
   "answer": "No closer than 1 m. Attackers used to squeeze into the wall and peel away as the ball was struck, opening a gap or blocking the goalkeeper's view. The lawmakers called it time-wasting with no legitimate tactical purpose. An attacker within 1 m when the kick is taken now concedes an indirect free kick.",
   "move": "A tactic that lives in a rule's silence lasts until the rule speaks.",
+  "ask": "Which trick of mine only works because nobody has written a rule against it yet?",
   "keywords": [
     "free kick",
     "defensive wall",
@@ -29,6 +30,5 @@
   "source": "IFAB, Laws of the Game 2019/20",
   "source_kind": "standard",
   "reference": "The International Football Association Board, Laws of the Game 2019/20, 2019",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

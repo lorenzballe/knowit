@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. At its peak in July 1946, Hungarian prices doubled about every 15 hours; Zimbabwe's worst month, November 2008, doubled them about every 25 hours. Hungary's pengő needed notes of 100 quintillion, the largest face value ever issued. It was replaced by the forint in August 1946 and is little remembered outside Hungary.",
   "move": "The disaster you remember best is rarely the worst of its kind.",
+  "ask": "Which disaster do I rank as the worst only because it's the one I know?",
   "trap": "Picking Zimbabwe, whose trillion-dollar notes are recent and widely shown.",
   "keywords": [
     "hungary",

@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. Under the Hague-Visby Rules, used for much of the world's sea cargo, liability is capped at 666.67 special drawing rights, an IMF unit worth roughly $1.35, per package, or 2 per kilogram if higher, unless a value was declared. A container whose cartons are not listed counts as one package.",
   "move": "Read the cap before counting on the compensation.",
-  "ask": "Which compensation or guarantee have I counted on without reading its cap?",
+  "ask": "What compensation am I counting on without reading its limit?",
   "trap": "Assuming whoever loses the goods must pay their full value.",
   "keywords": [
     "hague-visby rules",

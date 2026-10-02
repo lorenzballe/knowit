@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. About 90% of the body's serotonin is made in the gut lining, but it cannot cross the barrier that screens the brain from the blood. Much of it is stored in platelets, which release it at wounds to help vessels narrow. The brain makes its own serotonin from tryptophan, behind that barrier.",
   "move": "The same molecule in two places can be two separate stories.",
-  "ask": "Where do I treat one name as one story when it is really two?",
+  "ask": "Where am I treating one word as one story when it is really two?",
   "trap": "Linking the gut's huge store of serotonin directly to mood.",
   "keywords": [
     "serotonin",

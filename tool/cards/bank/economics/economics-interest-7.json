@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. Paul Schmelzing's Bank of England working paper rebuilt real rates back to 1311 and found a yearly decline of roughly 0.6 to 1.6 basis points, hundredths of a percentage point, through wars and plagues. The fall since the 1980s sits near that old trend line: the latest stretch of a very long slope.",
   "move": "Before calling a trend new, look further back than your own lifetime.",
-  "ask": "Which trend do I call new because I only look as far back as my own lifetime?",
+  "ask": "Which trend do I call new because I only look back as far as my own life?",
   "trap": "Treating the fall since the 1980s as new because it is recent.",
   "keywords": [
     "real interest rates",

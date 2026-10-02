@@ -12,7 +12,7 @@
   "withinFactor": 3,
   "answer": "At about 0.25 kWh per kg of cells: 140 / 0.25 = about 560 kg.",
   "move": "Compare what reaches the goal, not what went in.",
-  "ask": "Do I compare the effort I put in, or what actually reaches the goal?",
+  "ask": "Do I compare what I put in, or what actually reaches the goal?",
   "trap": "Dividing the petrol's full energy by the battery's, forgetting the engine's waste.",
   "hint": "Compare the energy that reaches the wheels, not the energy in the tank.",
   "steps": [

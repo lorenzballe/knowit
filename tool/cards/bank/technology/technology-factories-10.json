@@ -17,7 +17,7 @@
   "correct": 1,
   "answer": "False. The records were thought lost until the economists Steven Levitt and John List found and analysed them in 2011. The famous pattern, output up whatever the lights did, was not there. They found only faint effects, such as slightly higher output on days of active experimenting. The legend had been retold for decades unchecked.",
   "move": "A result everyone cites is not the same as a result anyone checked.",
-  "ask": "Which result do I cite because everyone does, without ever having checked it?",
+  "ask": "Which result do I repeat because everyone does, without checking it myself?",
   "trap": "It is the textbook account, repeated so often it feels checked.",
   "keywords": [
     "hawthorne effect",

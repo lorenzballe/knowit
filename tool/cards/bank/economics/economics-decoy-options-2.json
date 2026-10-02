@@ -15,7 +15,7 @@
   "correct": 1,
   "answer": "It fell to about a fifth. In Simonson and Tversky's study the cheap Minolta dropped from 50% to 22% once a pricier model appeared; the middle camera rose from 50% to 57% and the newcomer took 21%. Once $170 became the extreme, it lost more than half its buyers.",
   "move": "Extremes make the middle look safe; ask who added the extreme.",
-  "ask": "When a seller adds an extreme option, am I choosing the middle because it feels safe?",
+  "ask": "When I pick the middle option, did a seller add the extreme to make it feel safe?",
   "trap": "Judging the cheap camera on its own, not against the new top price.",
   "keywords": [
     "compromise effect",

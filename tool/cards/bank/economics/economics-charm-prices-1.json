@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. Anderson and Simester mailed versions of a clothing catalogue in which the same items cost $34, $39 or $44. The $39 versions sold more than the cheaper $34 ones. A price ending in 9 reads as a keen price, and here that signal outweighed a real saving. Five dollars lost to a single digit.",
   "move": "A price is read as a message before it is paid as a cost.",
-  "ask": "What am I reading as quality or value when it's only a price telling me a story?",
+  "ask": "When something costs more, do I assume it must be better?",
   "trap": "Assuming a higher price can only mean fewer buyers.",
   "keywords": [
     "charm prices",

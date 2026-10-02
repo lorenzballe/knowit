@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. The Bureau of Labor Statistics counted about 1% of hourly-paid workers at or below $7.25 in 2023, fewer than a million people, many of them in tipped jobs. Thirty states and Washington DC set higher minimums, and employers elsewhere often pay above it. The federal figure is a headline more than a wage.",
   "move": "A number often quoted is not necessarily a number often paid.",
-  "ask": "Which statistic do I often hear that I have never checked against what people truly get?",
+  "ask": "Which number do I hear often that I've never checked against what people get?",
   "trap": "Assuming the famous federal figure is what many people earn.",
   "keywords": [
     "federal minimum wage",

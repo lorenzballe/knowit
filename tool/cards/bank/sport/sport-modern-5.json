@@ -9,6 +9,7 @@
   "question": "What medal did a winner at the first modern Olympics, Athens in 1896, receive?",
   "answer": "A silver one. Winners at Athens took a silver medal and an olive branch; runners-up received a copper medal and a laurel branch, and third places got nothing at the time. The order of gold, silver and bronze first appeared at St Louis in 1904.",
   "move": "Customs that feel ancient are often younger than the institution they decorate.",
+  "ask": "Which tradition do I treat as ancient when it is actually quite new?",
   "keywords": [
     "athens 1896",
     "olympic medals",
@@ -29,6 +30,5 @@
   "source": "Mallon & Widlund, The 1896 Olympic Games",
   "source_kind": "book",
   "reference": "Mallon & Widlund, The 1896 Olympic Games: Results for All Competitors in All Events, McFarland, 1998",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

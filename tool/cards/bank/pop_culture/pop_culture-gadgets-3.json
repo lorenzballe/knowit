@@ -14,6 +14,7 @@
   "unit": "characters",
   "answer": "1,120 / 7 = 160 characters.",
   "move": "A strange limit is often a round size divided by an odd unit.",
+  "ask": "What strange limit in my life is just an old technical choice nobody has revisited?",
   "hint": "Turn the bytes into bits before dividing.",
   "steps": [
     "140 bytes x 8 bits = 1,120 bits.",
@@ -40,6 +41,5 @@
   "source": "Hillebrand, GSM and UMTS, 2002",
   "source_kind": "book",
   "reference": "Friedhelm Hillebrand (ed.), GSM and UMTS: The Creation of Global Mobile Communication, Wiley, 2002",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "It stayed roughly the same. Cengiz, Dube, Lindner and Zipperer counted jobs by wage band against states without rises: over five years, the jobs lost below each new minimum were matched by extra jobs at or just above it. Most of the missing jobs had not gone; their pay had crossed the line.",
   "move": "Before counting what vanished below a line, count what appeared above it.",
-  "ask": "Before counting what vanished below a line, have I counted what appeared above it?",
+  "ask": "Before I count what vanished, have I counted what appeared?",
   "trap": "Counting the vanished low-paid jobs as losses without looking just above.",
   "keywords": [
     "minimum wage",

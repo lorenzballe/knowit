@@ -11,6 +11,7 @@
   "unit": "kbit/s",
   "answer": "24 calls × 64 kbit/s = 1,536 kbit/s.",
   "move": "Find the rate for one, then multiply by how many share the line.",
+  "ask": "Where could I find the cost for one, then multiply it by everyone sharing it?",
   "trap": "Multiplying 4,000 by 8 bits and forgetting to double the sampling rate.",
   "hint": "A signal must be sampled at least twice as often as its highest pitch.",
   "steps": [
@@ -37,6 +38,5 @@
   "source": "ITU-T Recommendation G.711",
   "source_kind": "standard",
   "reference": "ITU-T Recommendation G.711, Pulse code modulation (PCM) of voice frequencies, 1988",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

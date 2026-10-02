@@ -9,6 +9,7 @@
   "question": "Why does Auto-Tune ask whether it is hearing a soprano, an alto or tenor, or a low male voice?",
   "answer": "To narrow where it looks for the pitch. It compares the voice with delayed copies of itself; the delay that matches is one cycle. A two-cycle delay matches too, and a strong overtone can pass for the note, so a wide search slips an octave. A named voice type fences it in.",
   "move": "A tool that knows roughly where to look makes fewer wild mistakes.",
+  "ask": "When I need to find something, does knowing roughly where to look save me from wild mistakes?",
   "keywords": [
     "auto-tune",
     "pitch detection",
@@ -31,6 +32,5 @@
   "source": "Antares Auto-Tune Realtime Advanced manual",
   "source_kind": "company",
   "reference": "https://media.uaudio.com/support/manuals/dd/Auto-Tune%20Realtime%20Advanced%20Manual.pdf",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

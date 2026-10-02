@@ -9,6 +9,7 @@
   "question": "Why did English teams in the late 1920s start playing three defenders at the back instead of two?",
   "answer": "Because a new offside law flooded the game with goals. From 1925 an attacker needed only two opponents, not three, between himself and the goal line. Herbert Chapman at Arsenal pulled his centre-half back between the full-backs, turning the old 2-3-5 into the W-M shape that ruled English football for decades.",
   "move": "Change one rule and watch every shape built around it rearrange.",
+  "ask": "What rule changed around me lately that quietly reshaped how everyone works?",
   "keywords": [
     "w-m formation",
     "herbert chapman",
@@ -29,6 +30,5 @@
   "source": "Studd, Herbert Chapman, Football Emperor, 1981",
   "source_kind": "book",
   "reference": "Studd, Herbert Chapman, Football Emperor: A Study in the Origins of Modern Soccer, Peter Owen, 1981",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

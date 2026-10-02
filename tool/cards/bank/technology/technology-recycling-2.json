@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Lithium. A smelter burns off the graphite, plastic and electrolyte and melts the rest: cobalt, nickel and copper sink into an alloy worth refining, while lithium and aluminium float off in the slag, the glassy waste on top. Recovering lithium from slag costs extra. The metal on the label is the one left behind.",
   "move": "Check what a process keeps before assuming it keeps what matters most.",
+  "ask": "Before I trust a process, do I know what it keeps and what it throws away?",
   "trap": "Cobalt, the costliest metal, seems the likeliest to be lost.",
   "keywords": [
     "smelting",
@@ -36,6 +37,5 @@
   "source": "Harper et al., Nature, 2019",
   "source_kind": "paper",
   "reference": "Harper et al., Recycling lithium-ion batteries from electric vehicles, Nature, 2019",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

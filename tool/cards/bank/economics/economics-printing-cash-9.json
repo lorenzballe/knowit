@@ -15,7 +15,7 @@
   "correct": 1,
   "answer": "By about half. Base money went from under $1 trillion to about $4 trillion, but the new reserves mostly sat at the Fed, earning interest there. Broad money, mainly bank deposits, rose from about $7.7 trillion to $11.5 trillion, near its usual pace. Four times the base, half as much again in money.",
   "move": "Money created is not money spent until someone borrows it.",
-  "ask": "Which resource of mine is created but not spent until someone chooses to use it?",
+  "ask": "What have I got that is only worth something once someone puts it to use?",
   "trap": "Applying the textbook multiplier, so money grows in step with reserves.",
   "keywords": [
     "quantitative easing",

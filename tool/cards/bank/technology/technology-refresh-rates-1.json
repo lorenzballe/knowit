@@ -9,7 +9,7 @@
   "question": "Why does American television run at 59.94 fields a second instead of a round 60?",
   "answer": "Because of colour, in 1953. The colour signal rode on a second wave near 3.58 MHz, which clashed with the 4.5 MHz sound carrier to make visible patterns. Retuning the sound would have broken existing black-and-white sets, so engineers slowed the picture by 0.1%. Editing software still offers 29.97 frames a second.",
   "move": "Compatibility with what people already own usually beats elegance.",
-  "ask": "Where do I choose compatibility with what people already have over elegance, and is that right?",
+  "ask": "Where do I choose what people already have over what is elegant, and is that right?",
   "keywords": [
     "ntsc",
     "colour television",

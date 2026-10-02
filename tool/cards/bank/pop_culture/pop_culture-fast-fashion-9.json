@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Plastic drinks bottles, about 98% of it by Textile Exchange's figures. Bottles are clean, single-material and easy to collect; old clothes mix fibres, dyes and zips. The catch is that bottles could have become bottles again; spun into fleece, the plastic leaves that loop. A recycled jacket is usually a bottle's last stop.",
   "move": "Ask what a recycled product was before, and what it can become after.",
+  "ask": "When something says recycled, do I know what it was before and what it can become?",
   "trap": "Recycled clothing sounds like clothing made from old clothes.",
   "keywords": [
     "recycled polyester",
@@ -35,6 +36,5 @@
   "source": "Textile Exchange, Materials Market Report 2023",
   "source_kind": "statistics",
   "reference": "Textile Exchange, Materials Market Report, 2023",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

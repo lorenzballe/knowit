@@ -9,6 +9,7 @@
   "question": "What puzzle did Descartes use to show that certainty good enough to live by can fall short of proof?",
   "answer": "A coded letter. If shifting every letter one place along the alphabet turns a scramble into Latin words, nobody doubts the reading, though another key could hide another message. Descartes called this moral certainty, enough for the conduct of life, and claimed at least this for his physics: too much fitted to be chance.",
   "move": "The more one reading explains, the less room is left for a rival.",
+  "ask": "The more a story explains, the less I look for others. What story am I leaning on that way?",
   "keywords": [
     "descartes",
     "moral certainty",
@@ -28,6 +29,5 @@
   "source": "Descartes, Principles of Philosophy, IV.205",
   "source_kind": "book",
   "reference": "Descartes, Principles of Philosophy IV.205, in The Philosophical Writings of Descartes I, trans. Cottingham, Stoothoff & Murdoch, Cambridge University Press, 1985",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

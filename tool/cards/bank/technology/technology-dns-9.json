@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "Their own automatic safety check. A maintenance command accidentally cut every link in Facebook's backbone network. Its DNS servers were built to withdraw their route announcements whenever they lost touch with the data centres, and did so, leaving the internet no path to them while they kept running. Engineers had to reach routers in person.",
   "move": "When everything fails at once, look for the one thing they share.",
-  "ask": "When several things fail together, what single thing have they all been sharing?",
+  "ask": "When many things fail together, what one thing are they all sharing?",
   "trap": "DNS failed, so a DNS error looks like the cause.",
   "keywords": [
     "facebook outage",

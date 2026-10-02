@@ -12,7 +12,7 @@
   "tolerance": 1,
   "answer": "19 fakes / 68 flagged ≈ 28 percent.",
   "move": "When the thing sought is rare, most alarms are false.",
-  "ask": "When something I am looking for is rare, how many of my alarms are false ones?",
+  "ask": "When the thing I am looking for is rare, how many of my alarms are false?",
   "trap": "Answering 95%, the share of fakes the test catches.",
   "hint": "Picture 1,000 lots and count the flagged fakes and flagged genuine works separately.",
   "steps": [

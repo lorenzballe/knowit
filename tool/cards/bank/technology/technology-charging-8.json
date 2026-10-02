@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Nickel-cadmium cells in orbit were drained the same shallow amount on every pass through Earth's shadow, then recharged in sunlight, and came to give little below that depth. Such exact repetition is rare on the ground; much that users later blamed on memory was ordinary wear or overcharging. Lithium-ion shows only a faint trace.",
   "move": "A named effect gets blamed for whatever happens near it.",
+  "ask": "What do I blame on a famous named effect that has a plainer cause?",
   "trap": "Picturing consumer gadgets, where the effect's name became familiar.",
   "keywords": [
     "memory effect",
@@ -34,6 +35,5 @@
   "source": "Sasaki, Ukyo & Novák, Nature Materials, 2013",
   "source_kind": "paper",
   "reference": "Sasaki, Ukyo & Novák, Memory effect in a lithium-ion battery, Nature Materials, 2013",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

@@ -9,7 +9,6 @@
   "question": "Why did two decades-long studies of calorie-restricted monkeys reach opposite conclusions about lifespan?",
   "answer": "Their control monkeys ate differently. At Wisconsin the controls ate freely from a diet high in sugar, so restricted animals looked healthier and lived longer. At the US National Institute on Aging the controls got measured portions of a more natural diet and were already fairly lean. The restricted monkeys there did not outlive them.",
   "move": "Every effect is measured against a baseline; ask what the baseline was doing.",
-  "ask": "What baseline was a result measured against, and what was it doing?",
   "keywords": [
     "calorie restriction",
     "rhesus monkeys",

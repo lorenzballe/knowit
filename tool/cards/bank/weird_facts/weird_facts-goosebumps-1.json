@@ -9,6 +9,7 @@
   "question": "Besides raising hairs in the cold, what does the tiny muscle behind gooseflesh do for hair growth?",
   "answer": "It anchors a nerve that wakes hair stem cells. In mice, Ya-Chieh Hsu's team at Harvard found that the sympathetic nerve which makes the muscle contract also wraps the follicle's stem cells, and in prolonged cold its noradrenaline spurs them to grow new hair. A quick bristle and a slowly thickening coat share one wiring.",
   "move": "A part that looks useless may be holding something else in place.",
+  "ask": "What looks useless in my life but might be quietly holding something else up?",
   "keywords": [
     "arrector pili",
     "hair follicle stem cells",
@@ -29,6 +30,5 @@
   "source": "Shwartz et al., Cell, 2020",
   "source_kind": "primary_document",
   "reference": "Shwartz et al., Cell types promoting goosebumps form a niche to regulate hair follicle stem cells, Cell, 2020",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

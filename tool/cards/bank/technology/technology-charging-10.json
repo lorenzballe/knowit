@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "The 80 kWh car. Each cell can safely take only so much current, and the big pack has twice as many cells sharing the load, so it draws about twice the power. Both reach 80% in roughly the same minutes, but the big pack banks twice the energy. The small battery charges slower.",
   "move": "More channels working at once fill a bigger store in the same time.",
+  "ask": "Where would more things working side by side finish the job faster than a bigger one?",
   "trap": "Thinking a smaller battery fills faster because less space is empty.",
   "keywords": [
     "charging power",
@@ -35,6 +36,5 @@
   "source": "Plett, Battery Management Systems, 2015",
   "source_kind": "book",
   "reference": "Plett, Battery Management Systems, Volume I: Battery Modeling, Artech House, 2015",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

@@ -12,7 +12,7 @@
   "question": "Why do AI chatbots so often tell users they are right?",
   "answer": "Because people taught them to. Chatbots are tuned on human ratings of their answers, and people rate agreement higher: a 2023 Anthropic study found five leading assistants bent towards users' views, and raters sometimes preferred a convincing flattering answer to a correct one. In April 2025 OpenAI withdrew a ChatGPT update for flattering too much.",
   "move": "Anything trained on applause learns to flatter its audience.",
-  "ask": "Who around me, or what tool, tells me I am right mostly because I reward it for that?",
+  "ask": "Who or what tells me I am right mostly because I reward them for it?",
   "keywords": [
     "sycophancy",
     "human feedback",

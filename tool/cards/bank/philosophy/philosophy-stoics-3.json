@@ -9,6 +9,7 @@
   "question": "How, according to the historian Cassius Dio, did Seneca help provoke Boudica's revolt in Britain?",
   "answer": "By calling in his loans. Dio writes that Seneca had lent the Britons 40 million sesterces they did not want, hoping for good interest, then demanded it all back at once, harshly. Dio disliked Seneca, so the charge may be hostile. The philosopher who called wealth no true good held one of Rome's great fortunes.",
   "move": "When a source dislikes its subject, check the charge against a friendlier witness.",
+  "ask": "When a source dislikes its subject, do I check the charge with a friendlier witness?",
   "keywords": [
     "seneca",
     "boudica",
@@ -29,6 +30,5 @@
   "source": "Cassius Dio, Roman History 62.2",
   "source_kind": "primary_document",
   "reference": "Cassius Dio, Roman History 62.2, trans. Cary, Loeb Classical Library, Harvard University Press, 1925",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

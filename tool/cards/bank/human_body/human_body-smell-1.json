@@ -9,7 +9,6 @@
   "question": "How many different smells can a human nose tell apart?",
   "answer": "Nobody knows. A 2014 paper in Science put the figure above a trillion, extrapolating from 26 people sniffing mixtures drawn from 128 odorants. In 2015 two reanalyses showed the method was so sensitive to its assumptions that the same data could support estimates many orders of magnitude apart.",
   "move": "An extrapolation is only as solid as the model stretched across the gap.",
-  "ask": "Which big number about me is a stretched extrapolation from a thin model?",
   "keywords": [
     "olfaction",
     "odour mixtures",

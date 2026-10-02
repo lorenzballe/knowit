@@ -9,7 +9,7 @@
   "question": "Why are the software packages that coding chatbots invent a security risk, not just a nuisance?",
   "answer": "Because the invented names repeat. In a 2025 study of 16 code models, about a fifth of suggested packages did not exist, and 43% of those fake names came back every time the same prompt was rerun. An attacker can register a recurring name, fill it with malware and wait for someone to install it.",
   "move": "A mistake that repeats predictably is an opening someone else can use.",
-  "ask": "Which predictable mistake of mine could someone else turn into an opening?",
+  "ask": "Which mistake of mine is predictable enough that someone could use it against me?",
   "keywords": [
     "package hallucination",
     "software supply chain",

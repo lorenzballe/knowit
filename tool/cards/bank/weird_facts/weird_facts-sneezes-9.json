@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. More than five centuries earlier, Pliny the Elder asked in his Natural History why people wish good health to someone who sneezes, and noted that even the gloomy emperor Tiberius insisted on the greeting, in his carriage too. The plague story may explain one prayer, not the custom. Pliny already found its origin lost.",
   "move": "Every extra detail in an origin story is one more thing to check.",
-  "ask": "Which origin story do I repeat that grows more detailed with every telling?",
+  "ask": "Which story do I repeat that gets more detailed every time it is told?",
   "trap": "A story with a pope, a plague and a year sounds documented.",
   "keywords": [
     "bless you",

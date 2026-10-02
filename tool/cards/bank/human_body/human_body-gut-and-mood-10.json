@@ -9,7 +9,7 @@
   "question": "Which treatment for irritable bowel syndrome has beaten its comparison in trials with no drug, diet or procedure reaching the gut?",
   "answer": "Gut-directed hypnotherapy. Hypnotised patients are guided to imagine calming the bowel, such as a warm hand on the abdomen. It beat psychotherapy with placebo pills in a small Manchester trial in 1984. In a Dutch trial of 354 adults in 2019, 41% treated singly and 33% in groups got adequate relief, against 17% given education.",
   "move": "A symptom felt in one organ may be treated through another.",
-  "ask": "A symptom I feel in one place: have I tried treating it through another?",
+  "ask": "I feel this problem in one place: have I tried treating it from another?",
   "keywords": [
     "hypnotherapy",
     "irritable bowel syndrome",

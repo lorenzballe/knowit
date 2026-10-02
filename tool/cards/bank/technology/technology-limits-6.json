@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. Recht and colleagues rebuilt the test set by the original recipe, and every model dropped, but in step: rankings held, and gains on the old set carried over to the new. Overfitting would have hurt the most heavily tuned models most. The new images were simply a little harder.",
   "move": "Before blaming a cause, check whether everything untouched by it moved too.",
-  "ask": "Before I blame a cause, did I check whether things it never touched moved too?",
+  "ask": "Before I blame a cause, did things it never touched change too?",
   "trap": "Blaming the drop on years of models tuned against one public test.",
   "keywords": [
     "imagenet",

@@ -9,6 +9,7 @@
   "question": "Why did athletics have no official marathon world record until 2004?",
   "answer": "Because no two courses are alike. Hills, bends and weather differ from city to city, so fast times were listed only as world bests. From 1 January 2004 records were ratified, but only on courses measured with a calibrated bicycle, plus one extra metre per kilometre so that no approved course can turn out short.",
   "move": "A ranking means little until everyone has faced the same test.",
+  "ask": "Am I comparing results that were never run on the same course?",
   "keywords": [
     "marathon world record",
     "world best",
@@ -29,6 +30,5 @@
   "source": "IAAF/AIMS, The Measurement of Road Race Courses",
   "source_kind": "standard",
   "reference": "IAAF & AIMS, The Measurement of Road Race Courses, 2nd edition, 2004",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

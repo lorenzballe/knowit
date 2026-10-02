@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "Cut neither. In the 2014 SIGNIFY trial, ivabradine lowered resting pulses as intended, yet cardiovascular deaths and heart attacks were no fewer than on placebo, and patients with severe angina fared slightly worse. A slow pulse partly marks what produces it: fitness and a healthy heart. Slowing the needle did not change the engine.",
   "move": "Pushing a gauge to a good reading does not fix what it measures.",
-  "ask": "Which gauge am I pushing to a good reading while the thing it measures stays the same?",
+  "ask": "Which number am I pushing to look good while the thing behind it stays the same?",
   "trap": "If slow pulses mark long lives, slowing the pulse should help.",
   "keywords": [
     "resting heart rate",

@@ -9,6 +9,7 @@
   "question": "What colour is denim yarn at the moment it comes out of the indigo dye bath?",
   "answer": "Yellowish green. Indigo will not dissolve in water, so dyers chemically reduce it to leuco-indigo, a soluble pale yellow-green form that soaks into cotton. Lifted into the air, the yarn oxidises to blue within a minute or two, locking the dye in. Mills send it up over rollers between dips for air.",
   "move": "Some finished colours exist only after the air has had its turn.",
+  "ask": "What in my life only shows its true colour after some time has passed?",
   "keywords": [
     "indigo",
     "leuco-indigo",
@@ -29,6 +30,5 @@
   "source": "Balfour-Paul, Indigo, British Museum Press",
   "source_kind": "book",
   "reference": "Jenny Balfour-Paul, Indigo: Egyptian Mummies to Blue Jeans, British Museum Press, 2011",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

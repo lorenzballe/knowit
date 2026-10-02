@@ -12,7 +12,7 @@
   "tolerance": 0.05,
   "answer": "14 g / 28 g = 0.5 g of gold per gram of blue.",
   "move": "Test a proverbial comparison by putting both sides in one unit.",
-  "ask": "Which proverbial comparison have I never checked by putting both sides in one unit?",
+  "ask": "Which familiar comparison have I never checked by putting both sides in the same unit?",
   "trap": "Taking the saying worth its weight in gold literally.",
   "hint": "Turn the price of one ounce into grams of gold first.",
   "steps": [

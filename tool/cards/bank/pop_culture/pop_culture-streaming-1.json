@@ -9,7 +9,7 @@
   "question": "Why did Netflix never put the $1 million prize-winning recommendation algorithm into service?",
   "answer": "It was not worth the plumbing. The 2009 winner blended over a hundred models to predict DVD star ratings about 10% better. Netflix engineers judged the extra accuracy too small for the work of running it, and by then most members were streaming, where what people play says more than what they rate.",
   "move": "A contest fixes the question just before the question changes.",
-  "ask": "What am I optimising to a finish line that will have moved by the time I cross it?",
+  "ask": "What am I polishing so hard that the goal may change before I finish?",
   "keywords": [
     "netflix prize",
     "recommendation algorithms",

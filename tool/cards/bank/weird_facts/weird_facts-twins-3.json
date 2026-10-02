@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. Church baptism records for Cândido Godói from 1959 to 2008, 6,262 births in all, show no spurt in twins in 1964–1968, when the Nazi doctor was said to be at work. Twins were already common before then. The likelier cause is a founder effect: a town settled by a few related families.",
   "move": "Before blaming a newcomer, check whether things were already so before he came.",
-  "ask": "Am I blaming a newcomer for something that was already true before he came?",
+  "ask": "Am I blaming a newcomer for something that was already true before they came?",
   "trap": "Accepting the vivid Nazi story without looking at the earlier years.",
   "keywords": [
     "cândido godói",

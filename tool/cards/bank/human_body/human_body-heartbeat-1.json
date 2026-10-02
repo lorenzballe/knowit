@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "About 100 a minute. The heart's own pacemaker runs faster than a normal resting pulse: roughly 118 minus 0.57 times age, about 95 at 40. At rest the vagus nerve holds it back. Transplant recipients typically live with a quick resting pulse that rises only slowly in exercise, waiting for adrenaline in the blood.",
   "move": "Take away a brake and the true speed shows.",
-  "ask": "If I took away the brake, what is my true speed in my work or life?",
+  "ask": "If I took away my usual brakes, how fast would I really go?",
   "trap": "Assuming the heart's own pacemaker simply keeps the usual 70.",
   "keywords": [
     "heart transplant",

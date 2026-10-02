@@ -9,6 +9,7 @@
   "question": "Where does a sugar maple send water at night during a drought?",
   "answer": "Into the dry topsoil. After dark, with its leaves idle, water taken in by deep roots from moist soil leaks out of shallow ones into the parched upper layer: about 100 litres a night from a mature tree. Small plants beside the trunk drew up to 60% of their water from this night shift.",
   "move": "Connections run both ways once the pressure behind them flips.",
+  "ask": "Where do the connections I rely on carry help in both directions?",
   "keywords": [
     "hydraulic lift",
     "sugar maple",
@@ -29,6 +30,5 @@
   "source": "Dawson 1993; Emerman & Dawson 1996",
   "source_kind": "paper",
   "reference": "Dawson, Hydraulic lift and water use by plants: implications for water balance, performance and plant-plant interactions, Oecologia, 1993; Emerman & Dawson, Hydraulic lift and its influence on the water content of the rhizosphere: an example from sugar maple, Acer saccharum, Oecologia, 1996",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

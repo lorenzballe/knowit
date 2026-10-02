@@ -9,6 +9,7 @@
   "question": "In Hungary's 6–3 win at Wembley in 1953, how did centre-forward Nándor Hidegkuti confuse England's defence?",
   "answer": "By not staying up front. Wearing the number 9, he dropped into midfield, and England's centre-half, Harry Johnston, drilled to mark the centre-forward, could neither follow him nor leave him free. Hidegkuti scored a hat-trick. It was England's first home defeat by a side from outside the British Isles.",
   "move": "A system built to mark a position fails when the player leaves it.",
+  "ask": "Where does my system fail because someone stopped staying in the role it expected?",
   "keywords": [
     "hungary",
     "wembley 1953",
@@ -29,6 +30,5 @@
   "source": "Wilson, Inverting the Pyramid, 2008",
   "source_kind": "book",
   "reference": "Wilson, Inverting the Pyramid: The History of Football Tactics, Orion, 2008",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

@@ -9,6 +9,7 @@
   "question": "How was the way of growing the silicon crystals inside most chips first found?",
   "answer": "By accident, in 1916. Jan Czochralski, a Polish chemist working in Berlin, dipped his pen into a crucible of molten tin instead of his inkwell and drew out a thin thread of metal that proved to be a single crystal. Silicon for chips is still pulled that way, in ingots 300 mm across.",
   "move": "When an accident produces something strange, study it before cleaning it up.",
+  "ask": "When something odd happens by accident, do I look into it or just clean it up?",
   "keywords": [
     "czochralski method",
     "single crystal",
@@ -28,6 +29,5 @@
   "source": "Tomaszewski, Journal of Crystal Growth, 2002",
   "source_kind": "paper",
   "reference": "Tomaszewski, Jan Czochralski: father of the Czochralski method, Journal of Crystal Growth 236, 2002",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

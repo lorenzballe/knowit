@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. In Microsoft Research tests, people dragging on a 1 ms prototype noticed added lag of about 6 ms on average, and as little as 2 ms, while typical devices of 2012 lagged 50 to 200 ms. Under a moving finger, lag shows up as distance: the object trails behind the fingertip like a leash.",
   "move": "Delay is invisible in a reply and obvious in anything that follows you.",
+  "ask": "Where is a small delay invisible in a reply but obvious in anything that follows me?",
   "trap": "False, anchored on the tenth of a second usually called instant.",
   "keywords": [
     "touch latency",
@@ -34,6 +35,5 @@
   "source": "Ng et al., ACM UIST, 2012",
   "source_kind": "paper",
   "reference": "Ng, Lepinski, Wigdor, Sanders & Dietz, Designing for Low-Latency Direct-Touch Input, ACM UIST, 2012",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

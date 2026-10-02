@@ -11,7 +11,7 @@
   "unit": "% of subscribers",
   "answer": "0.664 x 0.815 = 0.54, so 54%.",
   "move": "Losses taken from what remains shrink as it shrinks, so never add them.",
-  "ask": "Which losses am I adding when they actually compound against what remains?",
+  "ask": "Where do I add up losses that actually shrink as the total shrinks?",
   "trap": "Subtracting twelve 5% losses from the start to get 40%.",
   "hint": "Each month keeps 0.95 of the month before; square your way up.",
   "steps": [

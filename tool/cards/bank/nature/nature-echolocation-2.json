@@ -9,6 +9,7 @@
   "question": "Why can an oilbird find its way by echo in caves but not hunt insects that way?",
   "answer": "Its clicks are too low-pitched. Oilbirds click at around 2 kHz, audible to people, and a sound wave at that pitch is about 17 cm long; much smaller objects barely echo. Most moth-hunting bats use 20 to 100 kHz: waves of 3 to 17 mm. The oilbird's sonar finds walls; it lives on fruit.",
   "move": "No probe can make out anything much smaller than the waves it sends.",
+  "ask": "What am I trying to see that is smaller than the tools I am using can pick up?",
   "keywords": [
     "oilbird",
     "echolocation",
@@ -29,6 +30,5 @@
   "source": "Konishi & Knudsen, Science, 1979",
   "source_kind": "paper",
   "reference": "Konishi & Knudsen, The oilbird: hearing and echolocation, Science, 1979",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

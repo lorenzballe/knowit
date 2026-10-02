@@ -12,7 +12,7 @@
   "tolerance": 0.05,
   "answer": "$19.80 x 0.6 = $11.88 per logged-in hour.",
   "move": "Before comparing a pay floor, ask which hours it counts.",
-  "ask": "Which hours does my pay actually count and which does it quietly leave out?",
+  "ask": "Which hours does my pay really count, and which does it leave out?",
   "trap": "Reading 120% of the minimum wage as pay for every hour online.",
   "hint": "Waiting for a request counts as logged in but not as engaged.",
   "steps": [

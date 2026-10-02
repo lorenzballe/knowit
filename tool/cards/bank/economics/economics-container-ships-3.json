@@ -9,7 +9,7 @@
   "question": "Roughly what share of the containers handled at the world's ports have nothing in them?",
   "answer": "About one in five. Trade is lopsided: East Asia ships out far more boxes of goods than it takes back, so lines must haul empties home to be filled again. Since the 1990s empties have made up around 20% of port handling. A box of shoes to Europe often returns carrying air.",
   "move": "Every one-way flow hides a return trip somebody pays for.",
-  "ask": "Which flow I depend on has a hidden return trip that someone pays for?",
+  "ask": "What do I rely on that has a hidden return trip someone pays for?",
   "keywords": [
     "empty containers",
     "trade imbalance",

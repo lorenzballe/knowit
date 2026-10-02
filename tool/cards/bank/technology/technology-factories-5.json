@@ -11,7 +11,7 @@
   "unit": "% of the first plane's hours",
   "answer": "About 11% of the first plane's hours.",
   "move": "Improvement per doubling compounds; count the doublings, not the units.",
-  "ask": "Where in my work does each repetition get cheaper, and am I counting doublings or just units?",
+  "ask": "Where does each repeat of my work get cheaper, and am I counting the doublings?",
   "trap": "Guessing about half, because a 20% cut per doubling sounds modest.",
   "hint": "Count how many doublings take you from plane 1 to plane 1,024.",
   "steps": [

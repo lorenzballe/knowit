@@ -9,6 +9,7 @@
   "question": "Why did treating wild wombats for mange need a drug that stays in the body for weeks?",
   "answer": "Because a wild wombat can rarely be dosed twice. Ivermectin and moxidectin are short-acting, so one dose often fails to kill every mite and weekly repeats are needed. Fluralaner, sold as a dog flea treatment, lingers for weeks; in a small trial one dose cleared mange in wild wombats within three to four weeks.",
   "move": "Choose the remedy that works on the only chance you will get.",
+  "ask": "When I only get one shot at fixing something, do I pick the fix that lasts?",
   "keywords": [
     "sarcoptic mange",
     "fluralaner",
@@ -28,6 +29,5 @@
   "source": "Wilkinson et al., Parasites & Vectors, 2021",
   "source_kind": "primary_document",
   "reference": "doi:10.1186/s13071-020-04500-9",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

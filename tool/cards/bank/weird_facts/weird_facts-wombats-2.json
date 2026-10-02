@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "Black-footed rock-wallabies. On Wedge Island in 2015 they were logged using burrows 1,795 times, against 1,674 for the wombats that dug them. Bettongs, skinks, dragons and little penguins came too. A warren is a public building: the owner is only one of many tenants coming in from the heat.",
   "move": "Ask who else uses a thing before crediting it to its builder.",
-  "ask": "Who else depends on what I built, though I credit it to myself alone?",
+  "ask": "Who else depends on what I built, though I take all the credit?",
   "trap": "People only see wombats at burrows, so wombats seem the main users.",
   "keywords": [
     "wombat burrows",

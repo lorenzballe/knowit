@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "Cutting 30 ms of delay. The researchers varied delay and refresh rate separately, which ordinary hardware rarely does, since faster screens usually also cut delay. Removing 30 ms improved aiming more than raising the refresh rate above 60 Hz. Much of the edge players credit to smoother motion may come from the screen answering sooner.",
   "move": "When two improvements always arrive together, test them apart before crediting either.",
-  "ask": "When two improvements always arrive together, which one am I crediting wrongly?",
+  "ask": "When two improvements always come together, which one am I crediting?",
   "trap": "Refresh rate, because smoother motion is what players can see.",
   "keywords": [
     "refresh rate",

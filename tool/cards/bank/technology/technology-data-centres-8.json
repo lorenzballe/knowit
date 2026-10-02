@@ -18,7 +18,7 @@
   "correct": 1,
   "answer": "About 63 in 100 searches. A search is fast only if all 100 servers are, and the chance of that is 0.99 to the power 100, about 37%. Google's Jeffrey Dean and Luiz Barroso used this to explain why big services resend slow requests. A rare delay per machine becomes the usual delay per user.",
   "move": "When everything must go right at once, small risks multiply fast.",
-  "ask": "Where in my plans does everything have to go right at once, and what does that do to my odds?",
+  "ask": "Where do my plans need everything to go right at once?",
   "trap": "Each server is fine 99% of the time, so the whole seems fine.",
   "keywords": [
     "tail latency",

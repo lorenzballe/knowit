@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. Holz and Baudisch found most of the error is systematic: each person, at each finger angle, lands a consistent distance off target, because the screen reads the centre of the contact patch, not the point being aimed at. Correcting for finger posture roughly doubled accuracy. The finger was steady; the screen's guess was off.",
   "move": "Errors that repeat the same way are a bias you can correct.",
-  "ask": "Which repeated error of mine is a bias I could simply correct?",
+  "ask": "Which mistake of mine repeats the same way, so that I could simply correct it?",
   "trap": "True, blaming fat fingers, the explanation everyone repeats.",
   "keywords": [
     "touch accuracy",

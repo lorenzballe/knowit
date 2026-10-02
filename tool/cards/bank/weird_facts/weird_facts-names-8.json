@@ -18,7 +18,7 @@
   "correct": 2,
   "answer": "Abraham de Moivre, in 1733. He derived it to approximate coin-toss odds, 76 years before Gauss used it for errors in astronomy. The statistician Stephen Stigler later stated the rule that no discovery is named after its first discoverer, and credited it to the sociologist Robert Merton. The law obeys itself.",
   "move": "A name on an idea records who made it famous, not who made it.",
-  "ask": "Whom do I credit for an idea because they were famous, not because they came first?",
+  "ask": "Whom do I give credit to because they were famous, not because they came first?",
   "trap": "Trusting that a discovery carries the name of whoever found it.",
   "keywords": [
     "normal distribution",

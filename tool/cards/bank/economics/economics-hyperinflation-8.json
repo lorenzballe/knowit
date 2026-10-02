@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. As money loses value faster, people spend it the moment they receive it, so each note changes hands faster and the real value of all cash in circulation shrinks. Costantino Bresciani-Turroni documented it in Germany: by late 1923 people complained of a shortage of cash while the presses ran day and night.",
   "move": "When people stop wanting to hold something, its price falls faster than its supply grows.",
-  "ask": "What do I hold that everyone is losing the wish to hold, and how fast does that move?",
+  "ask": "What do I hold that everyone is losing the wish to hold?",
   "trap": "Assuming prices can only rise as fast as money is printed.",
   "keywords": [
     "velocity of money",

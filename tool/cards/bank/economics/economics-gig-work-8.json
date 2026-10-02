@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. Following millions of bank accounts, the JPMorgan Chase Institute found that more than half of those who began earning on platforms had stopped within twelve months. Surveys of current drivers or couriers hear only from those who stayed, often the ones for whom the work paid. The quitters give their verdict by being absent.",
   "move": "Ask who left before trusting what those who stayed report.",
-  "ask": "Whose stories am I hearing about this opportunity, and who quietly left?",
+  "ask": "Whose stories am I hearing about this, and who quietly gave up?",
   "trap": "Judging platform work by the people still on it, who liked it.",
   "keywords": [
     "platform economy",

@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. England still used the Julian calendar and Spain the Gregorian, which ran 10 days ahead. Shakespeare's 23 April was 3 May in Spain, while Cervantes probably died on 22 April, Spanish records giving the burial date. The deaths were 11 days apart, yet UNESCO's World Book Day honours both on one date.",
   "move": "Before matching two dates, check that they come from the same calendar.",
-  "ask": "Which two things am I matching up without checking they were measured the same way?",
+  "ask": "Before I compare two things, have I checked they were measured the same way?",
   "trap": "Reading two identical written dates as one moment in time.",
   "keywords": [
     "shakespeare",

@@ -9,6 +9,7 @@
   "question": "Why is an embalmed Egyptian body called a mummy in the first place?",
   "answer": "Because of a drug that was not in it. The Persian mum meant wax, and mumiya was a natural bitumen prized as medicine. Seeing black resin on embalmed bodies, medieval writers took them for a source of that drug, and the name slid from the tar to the corpse. The paint called mummy inherited both.",
   "move": "A name can record a mistake long after the mistake is forgotten.",
+  "ask": "Which everyday word do I use that records a mistake nobody remembers?",
   "keywords": [
     "mumiya",
     "bitumen",
@@ -28,6 +29,5 @@
   "source": "Dannenfeldt, Sixteenth Century Journal, 1985",
   "source_kind": "paper",
   "reference": "Karl H. Dannenfeldt, Egyptian Mumia: The Sixteenth Century Experience and Debate, The Sixteenth Century Journal, 1985",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

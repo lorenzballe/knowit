@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. Mining family trees covering over 400 million people, a 2018 study found lifespans correlated between spouses and between siblings-in-law, who share no genes, because people marry partners like themselves in habits, wealth and place. Allowing for that pushed the heritability of lifespan below 7%, far under older estimates of 20% to 30%.",
   "move": "Resemblance within families is not all in the genes.",
-  "ask": "Which family resemblance of mine am I blaming on genes that may be home, habit or luck?",
+  "ask": "What do I blame on family genes that might come from home, habit or luck?",
   "trap": "Assuming only shared genes or a shared home can make lifespans alike.",
   "keywords": [
     "heritability",

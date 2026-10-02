@@ -9,6 +9,7 @@
   "question": "Before DNS, how did a computer on the early internet find another one by name?",
   "answer": "From a single text file. Staff at SRI in California kept HOSTS.TXT, listing every host and its address, and sites downloaded fresh copies. By the early 1980s the file changed faster than copies could spread, so in 1983 Paul Mockapetris proposed the Domain Name System: a directory split among its owners.",
   "move": "A central list works until it changes faster than it can be copied.",
+  "ask": "What list do I keep by hand that changes faster than I can update it?",
   "keywords": [
     "hosts.txt",
     "sri",
@@ -29,6 +30,5 @@
   "source": "Mockapetris, RFC 882, 1983",
   "source_kind": "standard",
   "reference": "Mockapetris, RFC 882: Domain Names, Concepts and Facilities, IETF, 1983",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

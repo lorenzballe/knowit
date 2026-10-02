@@ -9,7 +9,7 @@
   "question": "Where did the bank run of 2008 mostly happen, given that few depositors queued at bank counters?",
   "answer": "In the repo market, where banks borrowed overnight against bonds and lenders kept a margin, the haircut, by lending less than the collateral was worth. Gorton and Metrick found the average haircut on collateral other than Treasury bonds rose from about zero in early 2007 to nearly 50% in late 2008. Nobody queued.",
   "move": "A run can happen wherever short-term lenders can quietly lend less.",
-  "ask": "Where in my life could trouble be building quietly, out of sight of the place I'm watching?",
+  "ask": "Where could trouble be building quietly, away from the place I'm looking?",
   "keywords": [
     "repo market",
     "haircuts",

@@ -9,6 +9,7 @@
   "question": "Why have mayors of some French villages issued decrees forbidding residents to die?",
   "answer": "To force a decision on a full cemetery. Le Lavandou's mayor did it in 2000 and Sarpourenx's in 2008, when there was no room left to bury people and plans for new ground had been blocked in court. The decrees could never be enforced; they were protests dressed as bylaws.",
   "move": "When a rule is absurd on purpose, look for the audience it addresses.",
+  "ask": "When a rule sounds absurd, who is it really meant to be heard by?",
   "keywords": [
     "le lavandou",
     "sarpourenx",
@@ -28,6 +29,5 @@
   "source": "NPR, March 2008",
   "source_kind": "news_archive",
   "reference": "https://www.npr.org/2008/03/07/87974995/mayor-bans-death-in-french-town",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

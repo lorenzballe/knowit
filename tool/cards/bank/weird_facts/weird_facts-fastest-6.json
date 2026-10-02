@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "The Brazilian free-tailed bat. In 2016 McCracken's team followed radio-tagged bats from a light aircraft in Texas: one reached about 160 km/h, beyond any bird measured in level flight. The peregrine's famous 300-plus km/h is a dive, powered by gravity. These were ground speeds, so a tailwind may have helped: a record with an asterisk.",
   "move": "Check whether a famous record was set under the conditions you mean.",
-  "ask": "Am I comparing a record set under special conditions with my ordinary day?",
+  "ask": "Am I comparing someone's record day with my ordinary one?",
   "trap": "Recalling the peregrine's dive speed and applying it to level flight.",
   "keywords": [
     "brazilian free-tailed bat",

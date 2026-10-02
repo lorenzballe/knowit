@@ -11,7 +11,7 @@
   "unit": "£ billion a year",
   "answer": "£80 billion x 0.05 = £4 billion a year.",
   "move": "Money that pays its holder nothing pays its issuer something.",
-  "ask": "When something I hold pays me nothing, who is earning from it instead?",
+  "ask": "When something I hold pays me nothing, who is earning from it?",
   "trap": "Counting only face value minus printing cost as the issuer's gain.",
   "hint": "A banknote is a loan to the Bank that pays its lender no interest.",
   "steps": [

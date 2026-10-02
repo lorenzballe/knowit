@@ -9,7 +9,7 @@
   "question": "Why did the engineer who shaped the MP3 format test it again and again on one a cappella song?",
   "answer": "Because a lone voice has nowhere to hide. Karlheinz Brandenburg found that compression flaws, masked by drums and guitars in fuller music, sounded plainly in Suzanne Vega's unaccompanied Tom's Diner. He tuned the codec against it through hundreds of listenings. Her quiet 1987 track became the format's benchmark.",
   "move": "Test a method on the case where its flaws would show first.",
-  "ask": "Where do I test my idea only on easy cases, when the hardest case would expose it fastest?",
+  "ask": "What do I only test on easy cases when I should try the hardest one?",
   "keywords": [
     "mp3",
     "karlheinz brandenburg",

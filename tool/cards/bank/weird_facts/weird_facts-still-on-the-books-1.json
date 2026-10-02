@@ -9,6 +9,7 @@
   "question": "Whom is the English offence of handling salmon in suspicious circumstances aimed at?",
   "answer": "Buyers of poached fish. Section 32 of the Salmon Act 1986 makes it an offence to receive or dispose of salmon believed to be caught illegally. Like handling stolen goods, it follows the money: poaching pays only if someone buys. It targets the back door of a restaurant kitchen, not the riverbank.",
   "move": "To stop a theft, make the buyer as liable as the thief.",
+  "ask": "Do I go after the one who does the harm, or also the one who pays for it?",
   "keywords": [
     "salmon act 1986",
     "poaching",
@@ -28,6 +29,5 @@
   "source": "Salmon Act 1986, section 32",
   "source_kind": "primary_document",
   "reference": "Salmon Act 1986, c. 62, section 32, United Kingdom Parliament, 1986",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

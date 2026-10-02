@@ -11,6 +11,7 @@
   "unit": "gigabits per second",
   "answer": "2 × 50 = 100 gigabits a second.",
   "move": "Look for systems that answer a small question with a large reply.",
+  "ask": "Where does a small question of mine get a much bigger answer than I expected?",
   "trap": "Assuming an attacker can only send as much traffic as they own.",
   "hint": "Compare the size of what goes out with the size of what comes back.",
   "steps": [
@@ -38,6 +39,5 @@
   "source": "CISA Alert TA14-017A, 2014",
   "source_kind": "institution",
   "reference": "https://www.cisa.gov/news-events/alerts/2014/01/17/udp-based-amplification-attacks",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

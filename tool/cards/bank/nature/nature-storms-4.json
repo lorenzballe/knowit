@@ -9,6 +9,7 @@
   "question": "How much of the heat a hurricane releases ends up driving its winds?",
   "answer": "About a quarter of one percent. NOAA's hurricane researchers put the heat released by condensing rain at around 600 terawatts, some 200 times the world's electricity-generating capacity. Keeping the winds going takes about 1.5 terawatts. Most of the heat is carried aloft and radiated to space: a vast furnace turning a modest fan.",
   "move": "Judge an engine by what reaches the wheels, not by what it burns.",
+  "ask": "Do I judge my effort by what reaches the result, or by how much I burn?",
   "keywords": [
     "hurricane energy",
     "latent heat",
@@ -44,6 +45,5 @@
   "source": "NOAA Hurricane Research Division",
   "source_kind": "institution",
   "reference": "https://www.aoml.noaa.gov/hrd-faq/",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

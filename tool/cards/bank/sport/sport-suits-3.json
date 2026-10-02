@@ -9,6 +9,7 @@
   "question": "Why would a ski-jumping team secretly restitch the crotch seam of its athletes' suits?",
   "answer": "Because a jumping suit is partly a wing. Rules tie its cut closely to the athlete's body, since spare or shaped fabric catches air and adds lift. At the 2025 world championships in Trondheim, Norwegian staff were filmed adding an extra stitch there; two jumpers were disqualified and three staff later banned for 18 months.",
   "move": "Where a rule measures size, look for gains hidden in shape.",
+  "ask": "Where might someone be gaining an edge in a place the rule never thought to look?",
   "keywords": [
     "ski jumping",
     "jumping suit",
@@ -29,6 +30,5 @@
   "source": "The Conversation, 2025",
   "source_kind": "news_archive",
   "reference": "https://theconversation.com/the-ski-jumping-cheating-scandal-how-suits-were-illegally-altered-for-unfair-advantage-254854",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

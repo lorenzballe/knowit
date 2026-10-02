@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "About ten seconds. Dan Kaminsky showed that an attacker could ask a server about endless made-up names, like 1.example.com and 2.example.com, each opening a fresh race to guess the number. At thousands of tries a second, a 1-in-65,536 chance comes up fast. The 2008 fix added a second random number the reply must match.",
   "move": "Long odds shrink fast when someone can take as many tries as they like.",
-  "ask": "Where am I trusting long odds that vanish when someone can try as often as they like?",
+  "ask": "Where do I trust long odds that disappear if someone can try as often as they like?",
   "trap": "Years, because each forged reply has only a 1-in-65,536 chance.",
   "keywords": [
     "dns cache poisoning",

@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "They rose, including long-lost books. Chicago also wiped existing debts, and returns of overdue items jumped in the following months. Fines had kept many borrowers, often poorer ones, away from the library altogether, the book still on a shelf at home. The penalty meant to bring books back had been keeping them out.",
   "move": "Before crediting a penalty, ask what people would do without it.",
-  "ask": "Which penalty do I trust without asking what people would do if it were gone?",
+  "ask": "What punishment do I trust without asking what people would do if it were gone?",
   "trap": "Fines seem to be what makes borrowers bring books back at all.",
   "keywords": [
     "chicago public library",

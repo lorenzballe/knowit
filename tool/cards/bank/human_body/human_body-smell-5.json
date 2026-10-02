@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. In the 2011–2012 national health survey, 12.4% of adults aged 40 and over had measurable smell loss, and it climbed steeply with age, to more than a third of those aged 80 and over. The test was eight scratch-and-sniff odours, from chocolate to natural gas.",
   "move": "A loss that nobody can see is easy to count too low.",
-  "ask": "What loss of mine does no one see, so I count it too low?",
+  "ask": "What loss of mine can nobody see, so I count it too low?",
   "trap": "Assuming smell loss is rare because it is so seldom discussed.",
   "keywords": [
     "smell loss",

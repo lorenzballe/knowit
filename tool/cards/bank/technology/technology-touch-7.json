@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Four, two of them ghosts. Two rows and two columns register, and they cross at four places; the sensor cannot tell which diagonal pair is real. Such grids manage one reliable touch. Phones instead measure every crossing of a row and a column, a mutual-capacitance scan, so each finger appears where it is.",
   "move": "Totals for the rows and the columns do not fix what sits inside.",
+  "ask": "What do I think I know from totals alone, when what sits inside could differ?",
   "trap": "Two fingers seem to make two readings, one each.",
   "keywords": [
     "multi-touch",
@@ -36,6 +37,5 @@
   "source": "Walker, Journal of the SID, 2012",
   "source_kind": "paper",
   "reference": "Walker, A review of technologies for sensing contact location on the surface of a display, Journal of the Society for Information Display 20(8), 2012",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

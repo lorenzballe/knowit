@@ -17,7 +17,7 @@
   "correct": 1,
   "answer": "False. After death, the tiny muscles that raise hairs stiffen in rigor mortis like any other, and cold water adds its effect, so puckered skin follows many kinds of death. Pathologists read it as cold or rigor, useless for proving drowning. It shows where the body lay, not how death came.",
   "move": "A sign that turns up in every case proves none of them.",
-  "ask": "Which sign do I read as proof when it shows up in every case?",
+  "ask": "What do I treat as proof when it would show up either way?",
   "trap": "Taking a sign often seen in drownings as a sign of drowning.",
   "keywords": [
     "drowning",

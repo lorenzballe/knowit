@@ -9,7 +9,7 @@
   "question": "Why did the war in Ukraine threaten the lasers that print patterns onto chips?",
   "answer": "Because of neon. The deep-ultraviolet lasers used in chipmaking run on a gas that is mostly neon, and before 2022 two Ukrainian firms, in Mariupol and Odesa, purified about half the world's chip-grade supply. Their crude neon was skimmed from the oxygen plants of Soviet-era steel mills: steelmaking's leftovers, feeding chip fabs.",
   "move": "Trace a critical input back until you reach somebody else's waste.",
-  "ask": "What critical input of mine depends on someone else's byproduct, and what happens if they stop?",
+  "ask": "What important thing do I rely on that depends on someone else's leftovers?",
   "keywords": [
     "neon",
     "excimer lasers",

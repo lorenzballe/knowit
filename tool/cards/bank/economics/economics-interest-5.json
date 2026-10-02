@@ -11,7 +11,7 @@
   "unit": "days",
   "answer": "100 / 0.8 = 125 days.",
   "move": "Divide the limit by the rate to find when the limit arrives.",
-  "ask": "When a limit is set, how long until it actually bites on what I owe?",
+  "ask": "When a limit is set on what I owe, how long until it actually bites?",
   "trap": "Assuming a daily charge this small could never double a debt.",
   "hint": "Ask how many daily slices of 0.8% fit into 100%.",
   "steps": [

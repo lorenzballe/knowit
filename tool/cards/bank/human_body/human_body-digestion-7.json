@@ -12,7 +12,7 @@
   "tolerance": 0.05,
   "answer": "18 x 0.03 = 0.54 grams a day.",
   "move": "A small leak on a busy loop is charged again on every lap.",
-  "ask": "Which small leak in my time or money repeats on every lap and costs more than it looks?",
+  "ask": "What small leak in my time or money repeats every day and costs more than it looks?",
   "trap": "Taking 3% of the 3-gram pool and forgetting the six passes.",
   "hint": "Count how many grams pass through the gut in a day, not how many the body holds.",
   "steps": [

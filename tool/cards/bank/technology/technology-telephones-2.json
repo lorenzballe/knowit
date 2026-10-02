@@ -12,6 +12,7 @@
   "question": "How does a landline keep a man's voice deep when it cuts every sound below 300 hertz?",
   "answer": "The listener's brain puts it back. A man's voice has its lowest note, the fundamental, near 120 hertz, plus harmonics at whole multiples: 240, 360, 480 and up. The brain reads their spacing and hears the missing note. The deepest sound in the call never travels down the wire.",
   "move": "Sometimes the most important part of a signal is inferred, not sent.",
+  "ask": "What important thing does the other person work out for themselves, without my saying it?",
   "keywords": [
     "missing fundamental",
     "telephone bandwidth",
@@ -32,6 +33,5 @@
   "source": "Plack, The Sense of Hearing, 2018",
   "source_kind": "book",
   "reference": "Plack, The Sense of Hearing, 3rd edition, Routledge, 2018",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

@@ -9,6 +9,7 @@
   "question": "What does World Athletics actually measure to decide whether an elite racing shoe is legal?",
   "answer": "Mainly the thickness of the sole and the number of plates. A road shoe may be at most 40 mm thick under the foot and hold one rigid plate; sprint spikes are capped at 20 mm. The foam's chemistry is not limited. Thickness stands in for spring because a measurement can check it.",
   "move": "When the real cause is hard to police, rules cap something easy to measure.",
+  "ask": "When something is hard to police, do I settle for limiting what is easy to measure?",
   "keywords": [
     "world athletics",
     "stack height",
@@ -29,6 +30,5 @@
   "source": "World Athletics, Athletic Shoe Regulations",
   "source_kind": "standard",
   "reference": "https://worldathletics.org/download/download?filename=b723c6b6-7d1f-40ad-8b27-1d3f956c6c99.pdf&urlslug=C2.1A+%E2%80%93+Athletic+Shoe+Regulations+(effective+from+01+January+2022)",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

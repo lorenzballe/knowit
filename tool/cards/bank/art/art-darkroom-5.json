@@ -9,7 +9,7 @@
   "question": "How much did Ansel Adams's prints of Moonrise, Hernandez change over his lifetime?",
   "answer": "A great deal. The 1941 negative was thin and flat, and early prints show a grey sky with streaky clouds. In 1948 Adams chemically intensified the negative up to the horizon, and later prints darken the sky almost to black around a bright moon. A 1941 print and a 1975 one show different nights.",
   "move": "Ask which print you are looking at before saying what a photograph shows.",
-  "ask": "Which version of something am I looking at when I say what it shows, and is it the only one?",
+  "ask": "When I say what something shows, which version of it am I looking at?",
   "keywords": [
     "ansel adams",
     "moonrise hernandez",

@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. Pepsin starts the job but usually handles only about 10 to 20% of protein digestion. Most is done in the small intestine by pancreatic enzymes such as trypsin, and finished by enzymes on the gut lining. People whose whole stomach has been removed still digest most of their protein.",
   "move": "The most dramatic stage of a process is rarely where most work happens.",
-  "ask": "Which stage of my work looks dramatic but is not where most of the work happens?",
+  "ask": "Where in my work does the dramatic part get the credit while the quiet part does the job?",
   "trap": "The acid bath is the vivid picture of digestion, so it gets the credit.",
   "keywords": [
     "pepsin",

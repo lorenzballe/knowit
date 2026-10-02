@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "Mostly an artefact of the counting. The first study credited winners with the years they lived before winning, and nobody wins an Oscar after dying. Counting each actor as a winner only from the night of the win shrank the advantage to about 1 year, too small to tell from chance.",
   "move": "Ask what someone had to survive before they could be counted.",
-  "ask": "What did these people have to survive before they were counted among the winners?",
+  "ask": "When I compare winners with everyone else, did I ask what they had to get through to count?",
   "trap": "Crediting fame's perks, and missing that winners had to live to win.",
   "keywords": [
     "oscars",

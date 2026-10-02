@@ -9,6 +9,7 @@
   "question": "Where is the touch sensor in most recent phone screens, if not in a layer on top?",
   "answer": "Inside the display itself. Since the iPhone 5 in 2012, many LCD phones use in-cell touch: electrodes that set the pixels' voltage double as touch sensors, and the chip alternates drawing and sensing within every frame. OLED phones build the sensor straight onto the thin seal over the pixels, saving a sheet of glass.",
   "move": "When two jobs need the same part, take turns rather than duplicate it.",
+  "ask": "When two jobs need the same thing, could we take turns instead of buying another?",
   "keywords": [
     "in-cell touch",
     "capacitive sensing",
@@ -29,6 +30,5 @@
   "source": "Apple, iPhone 5 press release, 2012",
   "source_kind": "company",
   "reference": "Apple, Apple Introduces iPhone 5, press release, 12 September 2012",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

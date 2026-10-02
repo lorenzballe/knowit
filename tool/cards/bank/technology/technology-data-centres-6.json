@@ -12,6 +12,7 @@
   "question": "Why are the newest AI data centres piping water right up to the chips?",
   "answer": "Because air can no longer carry the heat away. A rack of Nvidia's GB200 NVL72 draws about 120 kilowatts, against under 10 for a typical server rack. Litre for litre, water holds about 3,500 times as much heat per degree as air, so cold plates on each chip do what no wall of fans could.",
   "move": "When a load grows tenfold, expect the method to change, not just the size.",
+  "ask": "When my load grows tenfold, do I change the method or just make it bigger?",
   "keywords": [
     "liquid cooling",
     "ai servers",
@@ -32,6 +33,5 @@
   "source": "NVIDIA, GB200 NVL72 specifications",
   "source_kind": "company",
   "reference": "https://www.nvidia.com/en-us/data-center/gb200-nvl72/",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

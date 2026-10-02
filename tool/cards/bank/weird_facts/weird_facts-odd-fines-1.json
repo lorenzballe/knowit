@@ -9,6 +9,7 @@
   "question": "What are the earliest surviving laws written in English mostly made of?",
   "answer": "A price list for injuries. The laws of King Æthelberht of Kent, from around 600, set payments for harms down to a front tooth, a fingernail or a toe, and scaled many by the victim's rank. Paying compensation replaced the feud: a broken tooth was settled in shillings rather than blood.",
   "move": "Putting a price on harm can be a way of stopping revenge.",
+  "ask": "Where could paying a fair price end a grudge I am still carrying?",
   "keywords": [
     "æthelberht of kent",
     "anglo-saxon law",
@@ -28,6 +29,5 @@
   "source": "Laws of Æthelberht, ed. Oliver, 2002",
   "source_kind": "primary_document",
   "reference": "Oliver, The Beginnings of English Law, University of Toronto Press, 2002",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

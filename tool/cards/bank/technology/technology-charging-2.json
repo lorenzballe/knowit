@@ -12,6 +12,7 @@
   "question": "Why must lithium-ion batteries shipped alone as air cargo travel at no more than 30% charge?",
   "answer": "Because the charge is also the fuel. A cell failing at low charge releases less heat, so its packed neighbours are less likely to ignite. Since April 2016, UN aviation rules have barred such cargo from passenger planes and capped it at 30% on freighters. Pallets of new cells fly less than a third full.",
   "move": "The cheapest safety measure is often just keeping less of the hazard.",
+  "ask": "Where could I cut a risk simply by keeping less of the dangerous thing around?",
   "keywords": [
     "air cargo",
     "state of charge",
@@ -32,6 +33,5 @@
   "source": "IATA, Lithium Battery Guidance Document, 2016",
   "source_kind": "institution",
   "reference": "International Air Transport Association, Lithium Battery Guidance Document, 2016",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

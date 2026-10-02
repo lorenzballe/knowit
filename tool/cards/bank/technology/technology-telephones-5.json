@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "It held. Economists comparing cities switched at different times between 1920 and 1940 found cutovers cut young women's operator jobs by 50 to 80%, yet later cohorts were no less likely to work: they moved into clerical and service jobs. The cost fell on operators already in post, more of whom ended in worse-paid work.",
   "move": "Count what people did next, not only the jobs that vanished.",
-  "ask": "When a change removes jobs, do I count what people did next as well as what vanished?",
+  "ask": "When a change removes jobs, do I count what people did next?",
   "trap": "It fell, since every lost operator job looks like a lost worker.",
   "keywords": [
     "telephone operators",

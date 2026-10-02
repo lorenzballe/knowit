@@ -9,6 +9,7 @@
   "question": "Where did the open standard for variable refresh on gaming monitors come from?",
   "answer": "From laptop power saving. Embedded DisplayPort, the link inside laptops, let a panel stretch the pause between frames to save energy. In 2014 AMD showed the trick could make a monitor wait for the graphics card rather than tick on a fixed clock; VESA made it Adaptive-Sync. Nvidia's G-Sync module had arrived months earlier.",
   "move": "Look for tomorrow's feature in yesterday's efficiency trick.",
+  "ask": "What useful new thing could be hiding in an old efficiency trick?",
   "keywords": [
     "adaptive-sync",
     "variable refresh rate",
@@ -29,6 +30,5 @@
   "source": "VESA, Adaptive-Sync announcement, 2014",
   "source_kind": "standard",
   "reference": "VESA, VESA Adds Adaptive-Sync to Popular DisplayPort Video Standard, press release, 12 May 2014",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

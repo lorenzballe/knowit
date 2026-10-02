@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. Watching packs in Botswana, Walker and colleagues found that a rally ended in departure once enough dogs had sneezed. The number needed depended on who started it: when a dominant dog began, a few sneezes could do; a junior one needed many more. A sound usually filed as a reflex works as a ballot.",
   "move": "Before dismissing a signal as noise, check whether anyone acts on it.",
-  "ask": "Which noise around me is actually a signal that someone is acting on?",
+  "ask": "What seems like noise around me but is a signal someone acts on?",
   "trap": "Assuming a sneeze is a reflex that cannot carry information.",
   "keywords": [
     "african wild dogs",

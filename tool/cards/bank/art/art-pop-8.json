@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. It was printed, credited to Warhol, in the catalogue of his 1968 retrospective at the Moderna Museet in Stockholm. Whether he ever said it is doubted: the curator Pontus Hultén is among those proposed as its real author, and Warhol later played with the line. His most quoted sentence may be exhibition copy.",
   "move": "Trace a famous saying to its first printing before assigning it.",
-  "ask": "Which famous saying do I repeat that I have never traced back to its first printing?",
+  "ask": "Which famous saying do I repeat that I have never traced back to its source?",
   "trap": "Picturing Warhol saying it to a camera, as he so often spoke.",
   "keywords": [
     "andy warhol",

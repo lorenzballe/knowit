@@ -12,6 +12,7 @@
   "withinFactor": 3,
   "answer": "876,000 / 2.7 ≈ 324 thousand homes.",
   "move": "Turn power into energy before comparing a machine with a household.",
+  "ask": "When I compare power with energy, do I use the same units on both sides?",
   "trap": "Setting megawatts against a home's kilowatts without counting the hours.",
   "hint": "Turn megawatts into megawatt-hours by counting the hours in a year.",
   "steps": [
@@ -39,6 +40,5 @@
   "source": "Ofgem, Typical Domestic Consumption Values, 2023",
   "source_kind": "institution",
   "reference": "Ofgem, Review of Typical Domestic Consumption Values 2023, Ofgem, 2023",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "About twenty cents. Studying supermarket scanner data, Strulov-Shlain estimated that shoppers react to the step from $4.99 to $5.00 roughly as if it were twenty times bigger. Retailers do use 99 endings, yet price as if the effect were far smaller, forgoing an estimated 1–4% of gross profits.",
   "move": "The first digit you read sets the size you feel.",
-  "ask": "Which first digit is making a change feel bigger or smaller than it truly is?",
+  "ask": "Which first digit makes a change feel bigger or smaller than it is?",
   "trap": "Assuming shoppers weigh a cent as a cent.",
   "keywords": [
     "left-digit bias",

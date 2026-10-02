@@ -11,6 +11,7 @@
   "unit": "times",
   "answer": "Pairs to compare grow with length squared: 8 × 8 = 64.",
   "move": "When everything is compared with everything, doubling the size quadruples the work.",
+  "ask": "What in my life gets four times the work each time it doubles?",
   "trap": "Scaling the work in step with the length: eight times.",
   "hint": "Count pairs, not items: each new word-piece meets all the others.",
   "steps": [
@@ -52,6 +53,5 @@
   "source": "Vaswani et al., NeurIPS, 2017",
   "source_kind": "paper",
   "reference": "Vaswani et al., Attention Is All You Need, Advances in Neural Information Processing Systems, 2017",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

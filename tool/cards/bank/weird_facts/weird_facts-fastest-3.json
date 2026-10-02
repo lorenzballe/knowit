@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. The famous figure of about 110 km/h traces to line stripped off a fishing reel, timed decades ago. From muscle contraction times and tail-beat length, Svendsen's team put the sailfish's top speed nearer 8 m/s, about 30 km/h. A reel's whine is not a speedometer.",
   "move": "Trace a famous figure to the instrument that first produced it.",
-  "ask": "Which famous figure do I rely on that traces back to one shaky measurement?",
+  "ask": "Which famous number do I trust that I could never trace back to a real measurement?",
   "trap": "The 110 km/h figure is repeated so often it seems measured.",
   "keywords": [
     "sailfish",

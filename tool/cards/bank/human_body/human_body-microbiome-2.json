@@ -9,7 +9,6 @@
   "question": "Why does the heart drug digoxin lose its effect in some patients but not in others?",
   "answer": "A gut bacterium disables it. Strains of Eggerthella lenta carrying a particular pair of genes convert digoxin to an inactive form before it can be absorbed. In 2013 researchers identified those genes and showed that the amino acid arginine, plentiful in dietary protein, suppressed them in mice and raised the drug's level in the blood.",
   "move": "A dose is only what reaches its target after others take their share.",
-  "ask": "What reaches my target after others take their share, and how much do I really get?",
   "keywords": [
     "digoxin",
     "eggerthella lenta",

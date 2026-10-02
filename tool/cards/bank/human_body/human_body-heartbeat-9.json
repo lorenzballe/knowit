@@ -15,7 +15,7 @@
   "correct": 0,
   "answer": "Their pacemaker cells fire more slowly. With nerves blocked, the heart runs at its own rate, and in athletes that rate is lower. D'Souza and colleagues found training cut rodents' HCN4 channels, which carry the current setting the pacemaker's tick. The big heart comes from the same training; it does not set the tempo.",
   "move": "Two changes caused by one habit need not cause each other.",
-  "ask": "Which two of my changes came from one habit, and which do I assume cause each other?",
+  "ask": "Which of my changes came from the same habit, rather than causing each other?",
   "trap": "Crediting the athlete's big heart, which training built alongside the slow rate.",
   "keywords": [
     "athlete's heart",

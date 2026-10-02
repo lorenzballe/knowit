@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. Total ridge count, summed over ten fingers, is among the most heritable human traits measured: Holt found correlations of about 0.95 between identical twins and about 0.5 between siblings, close to what genes alone would predict. The count is inherited; the exact print is not.",
   "move": "A trait can be inherited in its totals while its details are not.",
-  "ask": "Which trait of mine is inherited in its totals, while the details are mine to shape?",
+  "ask": "What about me is set by my genes only in rough terms, leaving the details to me?",
   "trap": "Knowing twins' prints differ and concluding ridges are not inherited.",
   "keywords": [
     "ridge count",

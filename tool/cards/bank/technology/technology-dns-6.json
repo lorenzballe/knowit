@@ -9,6 +9,7 @@
   "question": "How is the single key that vouches for the entire DNS put to use?",
   "answer": "In person, about four times a year. The root signing key, which anchors the signatures that let resolvers check DNS answers, sits in hardware vaults in Culpeper, Virginia and El Segundo, California. Three of a site's seven crypto officers must bring smartcards to unlock it; it then signs the keys for the next quarter.",
   "move": "The most important key should be the hardest one to use.",
+  "ask": "Is the most important thing I own also the hardest one to get at?",
   "keywords": [
     "dnssec",
     "root key ceremony",
@@ -29,6 +30,5 @@
   "source": "IANA, Root KSK Ceremonies",
   "source_kind": "institution",
   "reference": "https://www.iana.org/dnssec/ceremonies",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

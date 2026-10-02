@@ -14,7 +14,7 @@
   "correct": 1,
   "answer": "False. Their tissues respond readily: small doses of thyroxine, the hormone that drives amphibian metamorphosis, turn an axolotl into a land-dwelling adult within weeks. The block sits upstream, in weak signalling from the hypothalamus and pituitary to the thyroid gland. The machinery for adulthood is intact, waiting for an order that never comes.",
   "move": "When something never changes, ask whether the signal or the receiver failed.",
-  "ask": "Something in my life never changes: is the message not being sent, or not being received?",
+  "ask": "When something in my life never changes, is the message not sent, or not received?",
   "trap": "Assuming a missing response means the tissue cannot hear the signal.",
   "keywords": [
     "axolotl",

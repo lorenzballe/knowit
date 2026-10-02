@@ -18,7 +18,7 @@
   "correct": 2,
   "answer": "About 30%. Using shop scanner data, Taylor found the bans cut carry-out bag plastic by about 18,000 tonnes a year, while bin-bag purchases rose by about 5,400 tonnes, offsetting about 29%. Sales of the smallest bin bags jumped 120%. The free shopping bag had been doing a second job under the kitchen sink.",
   "move": "Ask what second job the banned thing was quietly doing.",
-  "ask": "What second job was the thing I just cut quietly doing?",
+  "ask": "What useful job was the thing I just cut quietly doing?",
   "trap": "Treating the old bags as used once, then thrown straight away.",
   "keywords": [
     "plastic bag bans",

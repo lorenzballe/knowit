@@ -9,6 +9,7 @@
   "question": "Why do the letters A to Z not have consecutive codes on IBM mainframes?",
   "answer": "Because they copy punched cards. A card marked each letter by a zone hole plus a digit hole from 1 to 9: A to I, J to R, then S to Z from 2. IBM's EBCDIC code kept those three runs, gaps included, so counting from A to Z hits codes that are not letters.",
   "move": "An odd gap in a system is often the outline of an older one.",
+  "ask": "What odd gap in my system is a trace of an older one?",
   "keywords": [
     "ebcdic",
     "punched cards",
@@ -28,6 +29,5 @@
   "source": "Mackenzie, Coded Character Sets, 1980",
   "source_kind": "book",
   "reference": "Mackenzie, Coded Character Sets: History and Development, Addison-Wesley, 1980",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

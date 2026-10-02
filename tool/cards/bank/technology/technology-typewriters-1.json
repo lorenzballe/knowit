@@ -12,6 +12,7 @@
   "question": "How did a Chinese typewriter cope with a script of thousands of characters?",
   "answer": "By choosing rather than pressing. A tray held a couple of thousand metal characters; the typist slid a selector over the grid and pressed a lever to strike the chosen one onto the page. From the 1950s typists arranged trays so characters used together sat side by side: predictive text in metal.",
   "move": "When choices outnumber buttons, put the likely ones closest.",
+  "ask": "When I have too many choices for the buttons I have, do I put the likely ones closest?",
   "keywords": [
     "chinese typewriter",
     "characters",
@@ -31,6 +32,5 @@
   "source": "Mullaney, The Chinese Typewriter, MIT Press, 2017",
   "source_kind": "book",
   "reference": "Mullaney, The Chinese Typewriter: A History, MIT Press, 2017",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

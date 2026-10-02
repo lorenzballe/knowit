@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. IBM has made each mainframe architecture a superset of the last, so programs built for the 1964 System/360 still execute on today's Z machines, and banks and insurers run code decades old. Some payroll runs today on instructions first defined when Lyndon Johnson was president.",
   "move": "Where rewriting is costly, the old code outlives every machine it ran on.",
-  "ask": "What old thing in my life or work survives only because replacing it is too costly?",
+  "ask": "What old thing do I keep going because replacing it costs too much?",
   "trap": "Judging all computers by phones and laptops that age out within years.",
   "keywords": [
     "system/360",

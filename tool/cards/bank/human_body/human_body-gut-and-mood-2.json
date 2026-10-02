@@ -9,7 +9,6 @@
   "question": "Why do the commonest antidepressants so often cause nausea in the first weeks?",
   "answer": "Because they act on the gut long before they lift mood. SSRIs block the recycling of serotonin everywhere, and the gut holds most of the body's serotonin. The extra serotonin stimulates 5-HT3 receptors on gut nerves that signal nausea to the brainstem: the same receptors the anti-sickness drug ondansetron blocks.",
   "move": "A drug goes everywhere its target is, not only where it is wanted.",
-  "ask": "What have I taken for one purpose that is also acting everywhere else in me?",
   "keywords": [
     "ssri",
     "antidepressants",

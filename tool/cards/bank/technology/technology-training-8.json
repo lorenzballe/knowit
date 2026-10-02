@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "About 2,000 times. Growth of 4.5 times a year compounds: 4.5 multiplied by itself five times is about 1,850. Epoch AI's range of 4 to 5 a year gives 1,000 to 3,000 times over five years. Five doublings would give 32; five quadruplings already give 1,024.",
   "move": "Multiply growth rates together; never multiply them by the years.",
-  "ask": "Where do I multiply growth rates together, and where do I wrongly multiply them by years?",
+  "ask": "Where do I multiply growth rates together, and where do I wrongly multiply by years?",
   "trap": "Multiplying the yearly rate by the number of years: five times five.",
   "keywords": [
     "training compute",

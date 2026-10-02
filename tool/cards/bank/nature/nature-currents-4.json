@@ -9,6 +9,7 @@
   "question": "How has the Gulf Stream's flow past Florida been measured almost daily since 1982?",
   "answer": "With a telephone cable. Seawater conducts electricity, so the current, pushed through the Earth's magnetic field, generates a voltage across the strait, like a dynamo. A cable between Florida and Grand Bahama reads that voltage, checked against ship surveys, and turns it into flow: on average about 32 million cubic metres a second.",
   "move": "Old infrastructure can become a new instrument once you know what it senses.",
+  "ask": "What old thing around me could become a useful tool if I knew what it senses?",
   "keywords": [
     "florida current",
     "gulf stream",
@@ -29,6 +30,5 @@
   "source": "Larsen & Sanford, Science, 1985",
   "source_kind": "paper",
   "reference": "Larsen & Sanford, Florida Current volume transports from voltage measurements, Science, 1985",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

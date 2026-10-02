@@ -9,6 +9,7 @@
   "question": "What would a recycler gain by keeping a worn cathode's crystal intact instead of dissolving it?",
   "answer": "The cost of making it again. Smelting and acid leaching reduce a cathode to metal salts, from which a factory must rebuild the precise layered crystal, baking it for hours above 600 °C. Direct recycling instead tops up the lithium the worn crystal lost and reuses it. The long bake is skipped.",
   "move": "Sometimes the value lies in the arrangement, not in the ingredients.",
+  "ask": "Where does the real value lie in how something is arranged, not what it is made of?",
   "keywords": [
     "direct recycling",
     "cathode",
@@ -28,6 +29,5 @@
   "source": "Gaines et al., Recycling, 2021",
   "source_kind": "paper",
   "reference": "Gaines et al., Direct Recycling R&D at the ReCell Center, Recycling, 2021",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

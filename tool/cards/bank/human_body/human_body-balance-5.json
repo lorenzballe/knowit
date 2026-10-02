@@ -14,7 +14,7 @@
   "correct": 0,
   "answer": "True. Motion sickness needs the inner ear: it arises when balance signals disagree with what the eyes and body expect. At sea in storms and in rotating rooms, people without working labyrinths stayed well while others vomited. Blind people, by contrast, still get seasick, so the eyes are not required.",
   "move": "To find what a symptom needs, study the people who never get it.",
-  "ask": "For a problem I keep fighting, have I studied the people who never get it?",
+  "ask": "For a problem I keep fighting, have I asked the people who never get it what they do?",
   "trap": "Blaming motion sickness on the stomach or on what the eyes see.",
   "keywords": [
     "motion sickness",

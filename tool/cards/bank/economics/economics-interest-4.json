@@ -15,7 +15,7 @@
   "correct": 1,
   "answer": "Nearly 10%. A flat rate charges interest on the full sum all term, but repayments shrink the debt; on average only about half is owed. Interest of 15% of the loan over three years is about 9.3% a year on the real balance, 9.7% as an APR. An APR exists to show that gap.",
   "move": "Ask what balance a rate is charged on, not just the rate.",
-  "ask": "What balance is the rate on my loan actually charged on?",
+  "ask": "What balance is the rate on my loan really charged on?",
   "trap": "Taking the quoted 5% at face value, as if the debt never shrank.",
   "keywords": [
     "flat rate",

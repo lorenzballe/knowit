@@ -12,7 +12,7 @@
   "tolerance": 1,
   "answer": "Human share of flags: 81 / (81 + 26) = 81 / 107 ≈ 75.7%.",
   "move": "A rare target makes most alarms point at the wrong thing.",
-  "ask": "When a rare thing triggers an alarm, how often is the alarm actually right?",
+  "ask": "When an alarm goes off for something rare, how often is it right?",
   "trap": "Answering 9%, the detector's error rate, not the share of flags.",
   "hint": "Picture 1,000 texts and count the flags coming from each group.",
   "steps": [

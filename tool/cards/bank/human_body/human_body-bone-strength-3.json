@@ -11,7 +11,7 @@
   "unit": "times",
   "answer": "Stress is load per area: 8 / 4 = 2 times.",
   "move": "When size grows, check whether the load or the support grows faster.",
-  "ask": "What in my life is growing in scale while its support stays the same size?",
+  "ask": "What in my life is getting bigger faster than what holds it up?",
   "trap": "Answering 8, the growth in weight, and forgetting the thicker bones.",
   "hint": "Weight follows volume, but a bone's strength follows the area of its cross-section.",
   "steps": [

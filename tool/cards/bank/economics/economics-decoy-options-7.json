@@ -15,7 +15,7 @@
   "correct": 2,
   "answer": "A's. Tversky called it the similarity effect: a near-copy competes for the same buyers, so it draws mostly from its twin, not evenly from all. A decoy helps its target only by being plainly worse. Put a red bus beside the blue one, and the buses split their riders while the car keeps its share.",
   "move": "A newcomer takes first from whatever it most resembles.",
-  "ask": "When a new option appears, which of my existing choices is it quietly stealing from?",
+  "ask": "When something new appears, which of my usual choices does it quietly take from?",
   "trap": "Treating any similar newcomer as a decoy that makes A shine.",
   "keywords": [
     "similarity effect",

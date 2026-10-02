@@ -13,7 +13,7 @@
   ],
   "answer": "Antibiotics strip the gut and open the door to diarrhoea and to Clostridioides difficile. Pooled trials find probiotics taken alongside antibiotics cut antibiotic-associated diarrhoea by roughly 40%, and a Cochrane review found fewer C. difficile infections. The capsules are cheap and serious harm in healthy adults is rare, so the odds favour taking them.",
   "move": "Whichever side you took, the person's baseline risk is what decides it.",
-  "ask": "Before doing something protective, what is my baseline risk without it?",
+  "ask": "Before doing something protective, what is my risk without it?",
   "counterpoint": "In a small 2018 study, people given a probiotic mix after antibiotics took months to rebuild their native gut microbes, while those given back their own stored stool recovered within days. Most of the benefit in trials comes from hospital patients at high risk, not healthy adults, and products differ strain by strain.",
   "keywords": [
     "probiotics",

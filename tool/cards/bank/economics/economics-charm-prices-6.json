@@ -18,6 +18,7 @@
   "correct": 1,
   "answer": "Neither side, to a fraction of a cent. Only the total is rounded, and sales tax and mixed baskets scatter its last digit almost evenly. In nearly 200,000 real convenience-store sales, Whaples found shoppers gained about a cent per 40 transactions; a 2025 Richmond Fed estimate put the national cost near $6 million a year.",
   "move": "Check which number actually gets rounded before counting who loses.",
+  "ask": "When a total gets rounded, do I check who ends up gaining?",
   "trap": "Rounding each 99-cent tag up, as if items were paid one by one.",
   "keywords": [
     "pennies",
@@ -38,6 +39,5 @@
   "source": "Wang and Wong, Richmond Fed, 2025",
   "source_kind": "institution",
   "reference": "https://www.richmondfed.org/publications/research/economic_brief/2025/eb_25-27",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

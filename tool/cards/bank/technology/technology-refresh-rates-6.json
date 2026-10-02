@@ -12,6 +12,7 @@
   "question": "How does a phone or watch screen manage to refresh just once a second when idle?",
   "answer": "By holding each pixel's charge with transistors that barely leak. Ordinary polysilicon transistors leak, so the image must be redrawn many times a second or it fades. LTPO panels mix in oxide transistors, whose leakage is tiny, so a frame can sit for a full second. Apple's first always-on watch, in 2019, relied on it.",
   "move": "To save effort, first make each result last longer between efforts.",
+  "ask": "How could I save effort by making each result last longer?",
   "keywords": [
     "ltpo",
     "oxide transistors",
@@ -32,6 +33,5 @@
   "source": "Apple Newsroom, Apple Watch Series 5, 2019",
   "source_kind": "company",
   "reference": "https://www.apple.com/newsroom/2019/09/apple-unveils-apple-watch-series-5/",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

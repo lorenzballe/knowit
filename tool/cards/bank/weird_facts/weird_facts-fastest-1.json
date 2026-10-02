@@ -9,6 +9,7 @@
   "question": "Why must a land speed record car cover its measured distance twice within an hour?",
   "answer": "To cancel the wind and the slope. Under the FIA rules the car covers the measured distance in opposite directions, both runs within one hour, and the record is the average of the two. Thrust SSC set the standing record this way in 1997, at about 1,228 km/h in Nevada.",
   "move": "A result that could be helped by conditions needs a run against them.",
+  "ask": "When my result had help from conditions, did I test it against them too?",
   "keywords": [
     "land speed record",
     "thrust ssc",
@@ -28,6 +29,5 @@
   "source": "FIA International Sporting Code, Appendix D",
   "source_kind": "primary_document",
   "reference": "FIA, International Sporting Code, Appendix D: Land Speed Record Attempts, 2023",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }
