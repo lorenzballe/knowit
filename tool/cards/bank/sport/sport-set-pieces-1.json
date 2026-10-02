@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Staying in the centre. Bar-Eli and colleagues found that keepers who stayed put stopped about a third of the kicks they faced, against about 13% for those who dived. Kickers aimed at the middle nearly a third of the time. A goal conceded while standing still looks like doing nothing, so keepers dive.",
   "move": "When doing nothing is the best option, it still has to be chosen.",
+  "ask": "Where is doing nothing my best option, and do I have the nerve to choose it?",
   "trap": "Diving looks like effort, and effort feels like the best chance.",
   "keywords": [
     "penalty kicks",
@@ -32,7 +33,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% of kicks saved",
+    "items": [
+      {
+        "label": "Keeper dives",
+        "value": 13
+      },
+      {
+        "label": "Keeper stays in the centre",
+        "value": 33,
+        "hi": true
+      }
+    ],
+    "caption": "Keepers dived 94% of the time, yet staying put saved over twice as often."
+  },
   "source": "Bar-Eli et al., J Economic Psychology, 2007",
   "source_kind": "paper",
   "reference": "Bar-Eli, Azar, Ritov, Keidar-Levin & Schein, Action bias among elite soccer goalkeepers: The case of penalty kicks, Journal of Economic Psychology, 2007",

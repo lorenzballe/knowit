@@ -12,6 +12,7 @@
   "tolerance": 0.1,
   "answer": "13 / 6 ≈ 2.2 side effects per good sleeper.",
   "move": "Put benefits and harms over the same number of people before choosing.",
+  "ask": "For my last treatment or choice, did I compare benefits and harms per hundred people?",
   "trap": "Counting the people helped and never setting the harmed beside them.",
   "hint": "Picture a group whose size divides by both 13 and 6, and count each outcome.",
   "steps": [

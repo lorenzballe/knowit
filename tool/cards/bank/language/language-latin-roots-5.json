@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The tale: dishonest sculptors filled cracks in marble with wax, so honest work was sold without it. No Latin text supports it. Sincerus meant clean, pure or unmixed, and its origin is uncertain; the wax story is a later folk etymology. It survives on detail: the crack, the wax softening in the sun.",
   "move": "Each vivid detail in a story is one more thing that must be true.",
+  "ask": "Which vivid story do I believe, when every detail would need to be true?",
   "trap": "The sculptor story is too specific to feel invented.",
   "keywords": [
     "sincere",

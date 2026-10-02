@@ -12,6 +12,7 @@
   "question": "Why were there almost no hyperinflations before the twentieth century, despite centuries of clipped and debased coins?",
   "answer": "Because metal cannot be diluted fast enough. Debasing coins pushed prices up over years, not weeks; prices doubling within a month needs paper that costs almost nothing to print. Peter Bernholz's catalogue finds one clear case before 1900, revolutionary France's assignats in 1795 and 1796. The rest arrived with paper money, total war and defeat.",
   "move": "Ask how fast a thing can be made before fearing a flood of it.",
+  "ask": "Which fear of mine ignores how fast the feared thing can really be made?",
   "keywords": [
     "debasement",
     "assignats",

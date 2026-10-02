@@ -9,6 +9,7 @@
   "question": "In Strasbourg in February 1349, what drove the killing of the city's Jews?",
   "answer": "Fear and debt, not plague deaths. Plague had not yet reached Strasbourg when a coup removed the council that protected the Jews. On 14 February they were killed, about 2,000 by one count; debts owed to them were cancelled and their cash shared out. The chronicler Königshofen wrote that money killed them.",
   "move": "When blame lands on a creditor, ask who gains if the debts vanish.",
+  "ask": "When blame lands on someone people owe, who gains if they are gone?",
   "keywords": [
     "strasbourg",
     "black death",

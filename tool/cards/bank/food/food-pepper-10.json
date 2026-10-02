@@ -14,7 +14,8 @@
   ],
   "correct": 1,
   "answer": "Noticeably less pungent. Piperine, the molecule that bites, has double bonds that light can twist into other shapes, isomers such as chavicine and isochavicine, which bite far less. A lid keeps out air and moisture, not light. Chemists tracked the twist in ground pepper in 2007: clear glass on a bright shelf slowly blunts it.",
-  "move": "Before trusting a seal, ask which enemy it actually shuts out.",
+  "move": "Ask which enemy a protection stops, and which it lets in.",
+  "ask": "What am I protecting against one danger while another slips in?",
   "trap": "Just as hot, because airtight storage is what keeps spices fresh.",
   "keywords": [
     "piperine",

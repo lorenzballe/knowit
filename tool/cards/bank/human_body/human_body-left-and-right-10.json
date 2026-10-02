@@ -35,5 +35,6 @@
   "source": "Geschwind & Levitsky, Science, 1968",
   "source_kind": "paper",
   "reference": "Geschwind & Levitsky, Human brain: left-right asymmetries in temporal speech region, Science, 1968",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

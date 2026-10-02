@@ -36,5 +36,6 @@
   "source": "Clemmensen et al., Science, 2013",
   "source_kind": "paper",
   "reference": "doi:10.1126/science.1231923",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

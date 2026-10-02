@@ -9,6 +9,7 @@
   "question": "Why did new high-strength steel rods on San Francisco's Bay Bridge crack soon after being tightened in 2013?",
   "answer": "Hydrogen embrittlement. Hydrogen atoms, small enough to slip between iron atoms, had got into the steel and, under high tension, gathered at the seams between its microscopic crystals until cracks opened. The stronger the steel, the likelier this is. Of 96 rods, 32 broke, and a $25 million steel saddle took over their job.",
   "move": "The strongest version of a material can carry the most delicate weakness.",
+  "ask": "Where is my strongest, most polished thing hiding a delicate weakness?",
   "keywords": [
     "hydrogen embrittlement",
     "bay bridge",

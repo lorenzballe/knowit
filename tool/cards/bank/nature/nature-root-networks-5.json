@@ -9,6 +9,7 @@
   "question": "How does oak wilt spread from a dying oak to its healthy neighbours?",
   "answer": "Mostly underground, through fused roots. Neighbouring oaks often graft root to root, joining their plumbing, and the wilt fungus travels through the joins, so dead trees appear in widening rings around the first. Crews stop it by ploughing a trench more than a metre deep between sick and healthy trees, cutting the grafts.",
   "move": "The link that lets help through lets harm through too.",
+  "ask": "Which connection that brings help to me also lets harm through?",
   "keywords": [
     "oak wilt",
     "root grafts",

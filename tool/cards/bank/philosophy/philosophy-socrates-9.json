@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Plato only. Plato names himself twice among those present, once as a guarantor of the fine Socrates offered. Xenophon was away in Asia with Greek mercenaries and credits his account to Hermogenes. Yet Plato's Phaedo says Plato was ill on the day Socrates died: the most famous death scene in philosophy is secondhand.",
   "move": "Before trusting a vivid account, ask where its author was standing.",
+  "ask": "Before I trust a vivid story, where was the teller standing?",
   "trap": "Both, since each wrote the speech as if from the courtroom.",
   "keywords": [
     "plato",

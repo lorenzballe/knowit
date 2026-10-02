@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. In 1564 Guy de la Fontaine, a royal physician, visited a mummy dealer in Alexandria who admitted his stock was recent corpses, of slaves and the unclaimed, filled with bitumen and dried. Demand had outrun the old tombs. The ancient Egyptian in the jar was sometimes a stranger dead a few seasons.",
   "move": "When demand outgrows a genuine source, suspect the supply of counterfeits.",
+  "ask": "When demand outgrows the real supply, which of my sources might be fake?",
   "trap": "Assuming Egypt's ancient tombs could meet all of Europe's demand.",
   "keywords": [
     "mumia",

@@ -17,6 +17,7 @@
   "correct": 0,
   "answer": "True. In the Australian PACE trial, median recovery took 17 days on regular paracetamol and 16 on dummy tablets. Most acute back pain settles within weeks whatever is taken, so the pill gets the credit for time. Guidelines that had recommended it first were revised within a few years.",
   "move": "Before crediting a remedy, ask how the untreated ones did.",
+  "ask": "What remedy do I credit without ever checking how people who skipped it did?",
   "trap": "Reading recovery after the tablets as recovery because of them.",
   "keywords": [
     "paracetamol",

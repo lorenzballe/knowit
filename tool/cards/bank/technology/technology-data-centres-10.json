@@ -12,6 +12,7 @@
   "withinFactor": 3,
   "answer": "876,000 / 2.7 ≈ 324 thousand homes.",
   "move": "Turn power into energy before comparing a machine with a household.",
+  "ask": "When I compare power with energy, do I use the same units on both sides?",
   "trap": "Setting megawatts against a home's kilowatts without counting the hours.",
   "hint": "Turn megawatts into megawatt-hours by counting the hours in a year.",
   "steps": [

@@ -9,6 +9,7 @@
   "question": "Can two ordinary sentences, each harmless on its own, become a liar paradox by accident?",
   "answer": "Yes. In Saul Kripke's 1975 example, Jones says most of Nixon's statements about Watergate are false; Nixon says everything Jones says about Watergate is true. If Nixon's other Watergate statements split evenly between true and false, the pair has no consistent truth values. Whether a sentence is a trap can depend on the news.",
   "move": "A statement can be safe or treacherous depending on facts nobody has checked.",
+  "ask": "Which claim of mine is safe only because nobody has checked the facts around it?",
   "keywords": [
     "saul kripke",
     "watergate",

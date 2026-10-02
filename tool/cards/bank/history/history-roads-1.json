@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 3%. The Itiner-e dataset, published in 2025, nearly doubled the previous count of 188,555 km, but only 2.7% of its length follows a precisely known course. Almost 90% is placed from texts, old maps and remote sensing, and 7.4% is hypothetical. Most of the network is an informed line on a modern map.",
   "move": "What survives in plain sight is rarely a fair sample of what existed.",
+  "ask": "What survives in front of me that I take as typical of everything that existed?",
   "trap": "About 90%, because the famous stretches still show on the ground.",
   "keywords": [
     "roman roads",
@@ -33,6 +34,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 1000,
+    "groups": [
+      {
+        "n": 27,
+        "label": "route known for certain",
+        "hi": true
+      }
+    ],
+    "caption": "Of every 1,000 km of mapped Roman road, only 27 follow a course known for certain."
+  },
   "source": "de Soto et al., Scientific Data, 2025",
   "source_kind": "paper",
   "reference": "https://www.nature.com/articles/s41597-025-06140-z",

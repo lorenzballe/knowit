@@ -9,6 +9,7 @@
   "question": "Long before psychologists named confirmation bias, who described it in detail, and with what example?",
   "answer": "Francis Bacon, in 1620. Once the mind adopts an opinion, he wrote, it draws all things to support it and neglects the rest. His example: a man shown temple paintings of sailors who prayed and survived shipwreck asked where those who prayed and drowned were painted. The negative instance, Bacon added, is the more forcible.",
   "move": "Before counting the hits, ask where the misses are kept.",
+  "ask": "When I count the hits in something I believe, where am I keeping the misses?",
   "keywords": [
     "francis bacon",
     "novum organum",

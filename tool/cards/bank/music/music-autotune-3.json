@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. In a 1999 Sound On Sound interview, producer Mark Taylor credited a DigiTech Talker vocoder pedal, apparently to guard a trade secret. The truth, admitted later, was Auto-Tune set to its fastest correction, so the voice jumped between notes instead of gliding. A tool built to hide tuning had been set to flaunt it.",
   "move": "A secret method is often described as a better-known one.",
+  "ask": "What famous explanation have I believed that came from the people selling it?",
   "trap": "True, since the effect is now simply called the Auto-Tune sound.",
   "keywords": [
     "cher",

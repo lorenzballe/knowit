@@ -35,5 +35,6 @@
   "source": "Simon et al., Astrophysical Journal, 2011",
   "source_kind": "paper",
   "reference": "Simon et al., A Complete Spectroscopic Survey of the Milky Way Satellite Segue 1: The Darkest Galaxy, The Astrophysical Journal 733, 46, 2011",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

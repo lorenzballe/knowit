@@ -9,6 +9,7 @@
   "question": "In a 1975 study of new hospital outpatients, what pointed doctors to the correct diagnosis most often?",
   "answer": "The patient's own account. In a British clinic, the referral letter and history alone gave the diagnosis finally accepted in 66 of 80 patients, about 83%. Physical examination added it in 7 more, laboratory tests in a further 7. The most powerful instrument in the clinic was a doctor asking questions and listening.",
   "move": "Ask the person who lived it before measuring anything.",
+  "ask": "Before I measure anything, have I asked the person who lived it?",
   "keywords": [
     "medical history",
     "diagnosis",

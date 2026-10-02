@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "No measurable improvement was found. Davis compared pollution just before and after the rule began, across pollutants, and saw no drop. Vehicle numbers rose instead, as households bought second cars, often older and dirtier, for the banned day. A rule meant to take a fifth of cars off the road each weekday added cars.",
   "move": "Before counting what a ban removes, ask what people buy to escape it.",
+  "ask": "When I forbid something, what will people do to get around it?",
   "trap": "Assuming a fifth fewer cars each day means a fifth less smog.",
   "keywords": [
     "hoy no circula",

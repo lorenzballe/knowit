@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "No outcome significantly. The ROLARR trial randomised 471 patients: conversion to open surgery was 8.1% with the robot and 12.2% without, a gap within chance, and no complication or function measure differed. Robots shine against open surgery, but the fair control is ordinary keyhole surgery. A larger Chinese trial in 2022 did report some gains.",
   "move": "Compare a new tool with the best old one, not the worst.",
+  "ask": "When I compare a new tool, is it against the best old way or the worst?",
   "trap": "Crediting the robot with gains that keyhole surgery alone already delivers.",
   "keywords": [
     "rolarr trial",

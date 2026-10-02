@@ -9,6 +9,7 @@
   "question": "How do most posts that reach huge audiences online actually get there?",
   "answer": "Mostly through one big broadcast, not long chains of friends. Goel, Anderson, Hofman and Watts studied about a billion diffusion events on Twitter and found popularity depended chiefly on the size of the largest single broadcast, and was only weakly tied to how chain-like the spread was. Most huge audiences trace back to one account.",
   "move": "When something spreads, look for the one big megaphone before the chain.",
+  "ask": "When something spreads, am I looking for the one big source behind it?",
   "keywords": [
     "structural virality",
     "twitter",

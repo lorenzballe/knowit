@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. From about 1650 to 1950 the carbon-14 in the air wobbled, with solar changes and then coal smoke diluting it, so the calibration curve that turns a measurement into a date runs nearly flat. One result fits dates across centuries. A canvas for a Watteau and one for a Monet can read the same.",
   "move": "A precise measurement can still point to many different answers.",
+  "ask": "Where do I treat a precise number as proof when it still fits many answers?",
   "trap": "Trusting the lab's quoted error of a few decades as the date's.",
   "keywords": [
     "radiocarbon dating",

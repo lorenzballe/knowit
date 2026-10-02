@@ -18,6 +18,7 @@
   "correct": 2,
   "answer": "A treaty drafted on a faulty map. The 1783 peace ran the border to the north-western point of the Lake of the Woods and due west to the Mississippi, which their map showed further north; its source lies far south. An 1818 treaty dropped a line from there to the 49th parallel, stranding the Angle.",
   "move": "Old boundary wording outlives the map it was written against.",
+  "ask": "What old wording or habit am I still living by that no longer fits the situation?",
   "trap": "Assuming an odd border must record a local deal, not a paper error.",
   "keywords": [
     "northwest angle",

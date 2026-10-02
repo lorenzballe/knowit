@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Black-and-white printing paper is made sensitive mainly to blue and green, so dim red or amber light cannot fog it. Most black-and-white film since the mid-twentieth century is panchromatic, sensitive to red as well, and must go into its developing tank in total darkness. The red-lit room of films is the printing stage.",
   "move": "Before copying a routine, check it was built for your material.",
+  "ask": "Which routine did I copy from someone without checking it suits my situation?",
   "trap": "Picturing the red darkroom glow of films as the whole process.",
   "keywords": [
     "safelight",

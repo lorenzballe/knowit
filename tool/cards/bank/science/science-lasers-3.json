@@ -9,6 +9,7 @@
   "question": "What was the first biological tissue IBM researchers carved with the ultraviolet laser now used to reshape eyes?",
   "answer": "Leftover Thanksgiving turkey. In November 1981 Rangaswamy Srinivasan took turkey cartilage into the lab and found a 193 nm ultraviolet laser carved it cleanly. Its photons break molecular bonds outright, so tissue vanishes in thin layers without scorching what is next to it. Eye surgeons adapted the method to sculpt the cornea.",
   "move": "A tool's best use often turns up far from the job it was built for.",
+  "ask": "What tool of mine might be most useful far from the job I bought it for?",
   "keywords": [
     "excimer laser",
     "lasik",

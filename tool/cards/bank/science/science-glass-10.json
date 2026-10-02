@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 85%, before any absorption. A double-glazed window has four glass surfaces, and light must pass them all: 0.96 × 0.96 × 0.96 × 0.96 is about 0.85. The 4% comes from glass's refractive index of 1.5: (0.5 ÷ 2.5)² = 0.04. At night, with the room lit, the pane shows faint doubled reflections.",
   "move": "When every stage takes a small cut, multiply the stages.",
+  "ask": "Where do lots of small losses add up in my day, and have I counted them together?",
   "trap": "About 96%, counting one reflection for the window as a whole.",
   "keywords": [
     "fresnel reflection",

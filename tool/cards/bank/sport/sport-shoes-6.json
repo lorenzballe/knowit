@@ -29,5 +29,6 @@
   "source": "Olympedia, John Carlos athlete profile",
   "source_kind": "reference_work",
   "reference": "https://www.olympedia.org/athletes/78197",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

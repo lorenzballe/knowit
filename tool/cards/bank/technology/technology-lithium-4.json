@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Graphite. The negative electrode stores lithium between layers of carbon, one lithium atom per six carbon atoms at most, so holding 1 gram of lithium takes about 10 grams of graphite. Cobalt is a minor part of the other electrode, and many new cells have none. Lithium is a few per cent of the weight.",
   "move": "A product is named for what it does, not for what it weighs.",
+  "ask": "Do I judge a thing by what it does, or by the biggest thing it is made of?",
   "trap": "Lithium, because the battery is named after it.",
   "keywords": [
     "graphite",

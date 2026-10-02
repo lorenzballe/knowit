@@ -9,6 +9,7 @@
   "question": "Why can a heart patient's daily low-dose aspirin stop protecting them if they take ibuprofen first?",
   "answer": "Because ibuprofen reaches the target first. Aspirin protects by permanently plugging an enzyme in platelets, COX-1; ibuprofen sits loosely in the same channel and blocks aspirin's way in. When ibuprofen lets go, the aspirin has left the blood. The FDA advised in 2006: ibuprofen at least 30 minutes after aspirin, or 8 hours before.",
   "move": "Two harmless habits can cancel each other when they compete for one door.",
+  "ask": "Which two harmless habits of mine could be cancelling each other out?",
   "keywords": [
     "aspirin",
     "ibuprofen",

@@ -11,6 +11,7 @@
   "unit": "times",
   "answer": "Pairs to compare grow with length squared: 8 × 8 = 64.",
   "move": "When everything is compared with everything, doubling the size quadruples the work.",
+  "ask": "What in my life gets four times the work each time it doubles?",
   "trap": "Scaling the work in step with the length: eight times.",
   "hint": "Count pairs, not items: each new word-piece meets all the others.",
   "steps": [
@@ -33,6 +34,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "area",
+    "unit": "million pairs",
+    "items": [
+      {
+        "label": "1,000 word-pieces",
+        "value": 1
+      },
+      {
+        "label": "8,000 word-pieces",
+        "value": 64,
+        "hi": true
+      }
+    ],
+    "caption": "Eight times the word-pieces, sixty-four times the pairs to compare."
+  },
   "source": "Vaswani et al., NeurIPS, 2017",
   "source_kind": "paper",
   "reference": "Vaswani et al., Attention Is All You Need, Advances in Neural Information Processing Systems, 2017",

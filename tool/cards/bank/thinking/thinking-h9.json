@@ -12,6 +12,7 @@
   "correct": 1,
   "answer": "False. Each win has to happen, so the chances multiply: 0.7 × 0.7 × 0.7 × 0.7 is about 0.24. A team that is favourite in every single match still has only about one chance in four of winning the lot.",
   "move": "Being favourite at every step is not being favourite for the journey.",
+  "ask": "Where am I assuming that being favourite at every step makes me favourite for the whole journey?",
   "trap": "Favourite in every match feels like favourite for the whole run.",
   "keywords": [
     "sport",

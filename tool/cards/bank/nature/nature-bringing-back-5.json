@@ -36,5 +36,6 @@
   "source": "Higuchi et al., Nature, 1984",
   "source_kind": "paper",
   "reference": "Higuchi, Bowman, Freiberger, Ryder & Wilson, DNA sequences from the quagga, an extinct member of the horse family, Nature, 1984",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

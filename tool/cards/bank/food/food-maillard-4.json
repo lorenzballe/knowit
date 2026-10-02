@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Surface water pins it near 100 °C. While water remains, the heat goes into boiling it off and the surface cannot climb higher. The Maillard reaction only becomes fast above about 140 °C, so the meat steams. Patting it dry, or salting it hours ahead, brings the crust minutes sooner.",
   "move": "Find what is soaking up the energy before adding more of it.",
+  "ask": "What am I putting energy into that something else is quietly soaking up?",
   "trap": "Assuming the water removes an ingredient rather than capping the heat.",
   "keywords": [
     "maillard reaction",

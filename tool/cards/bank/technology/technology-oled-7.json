@@ -9,6 +9,7 @@
   "question": "Why does an OLED phone screen throw away more than half of its own light?",
   "answer": "To stop it acting as a mirror. Behind every pixel lies a metal electrode that reflects room light and would wash out the blacks. A circular polarizer on top blocks it, and also over half the pixels' own light. Samsung's polarizer-free design, first used in the 2021 Galaxy Z Fold3, let through 33% more.",
   "move": "Every fix for one flaw charges its fee somewhere else.",
+  "ask": "What fix did I make that moved the problem somewhere else?",
   "keywords": [
     "circular polarizer",
     "oled phones",

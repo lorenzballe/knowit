@@ -17,6 +17,7 @@
   "correct": 0,
   "answer": "True. In neuromyelitis optica spectrum disorder, antibodies attack the area postrema, a brainstem patch that senses toxins and triggers vomiting. The 2015 diagnostic criteria list unexplained hiccups or vomiting as a core symptom, which can come before any attack on vision or the spinal cord. A stomach complaint can be a brain lesion's first sign.",
   "move": "A common symptom in an uncommon pairing deserves a second look.",
+  "ask": "What small, ordinary symptom or habit deserves a closer look because it keeps repeating?",
   "trap": "Filing lasting hiccups under stomach trouble, where they usually belong.",
   "keywords": [
     "neuromyelitis optica",

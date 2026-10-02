@@ -18,6 +18,7 @@
   "correct": 0,
   "answer": "About 2.5 times as wide. Light skimming the hole is bent so hard that rays aimed well outside the horizon are still swallowed: for a non-spinning hole, the dark patch has 2.6 times the horizon's radius. The picture shows the horizon's silhouette, magnified by the hole's own gravity acting as a lens.",
   "move": "Ask how much of what you see is the lens rather than the object.",
+  "ask": "How much of what I see in this person or situation comes from my own point of view?",
   "trap": "Taking the black disc in the picture for the horizon itself.",
   "keywords": [
     "event horizon telescope",

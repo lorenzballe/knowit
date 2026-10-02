@@ -18,6 +18,7 @@
   "correct": 0,
   "answer": "About 1 in 3. A 2015 review of over 3,000 pain-free people put disc degeneration at 37% at age 20, rising to 96% at 80; disc bulges ran from 30% to 84%. Such findings are often normal ageing. A report listing them can describe almost any spine, sore or not.",
   "move": "Before blaming a finding, ask how often it turns up in the healthy.",
+  "ask": "What finding do I blame without asking how often healthy people have it too?",
   "trap": "Assuming anything a scan reports as abnormal must be rare in healthy people.",
   "keywords": [
     "mri",

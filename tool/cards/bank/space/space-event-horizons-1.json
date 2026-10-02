@@ -18,6 +18,7 @@
   "correct": 1,
   "answer": "The one of 4 million solar masses. The stretch from head to toe at the horizon falls with the square of the mass. At 10 solar masses it passes 100 g some 1,700 km outside the horizon and reaches 20 million g at it; at 4 million, it is about a ten-thousandth of a g.",
   "move": "Find where a danger peaks before assuming it peaks at the famous line.",
+  "ask": "Where is the real danger in my situation, and is it somewhere other than the famous spot?",
   "trap": "Picturing the famous stretching into spaghetti as the fate at every horizon.",
   "keywords": [
     "tidal forces",
@@ -35,6 +36,26 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "g of stretch at horizon",
+    "items": [
+      {
+        "label": "4-million-sun hole",
+        "value": 0.0001
+      },
+      {
+        "label": "Earth's gravity",
+        "value": 1
+      },
+      {
+        "label": "10-sun hole",
+        "value": 20000000,
+        "hi": true
+      }
+    ],
+    "caption": "The small hole stretches her by 20 million g; the giant, by a ten-thousandth of one."
+  },
   "source": "Thorne, The Science of Interstellar, 2014",
   "source_kind": "book",
   "reference": "Thorne, The Science of Interstellar, W. W. Norton, 2014",

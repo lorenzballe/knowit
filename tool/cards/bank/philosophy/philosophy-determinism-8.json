@@ -14,6 +14,7 @@
   "unit": "million km",
   "answer": "150 million km: about the distance from Earth to the Sun.",
   "move": "An error that multiplies will outrun any error that merely adds.",
+  "ask": "What small error in my life keeps multiplying instead of just adding up?",
   "trap": "Guessing a few kilometres, as if the error grew by steady additions.",
   "hint": "Count how many tenfold steps fit into the time, then multiply.",
   "steps": [
@@ -42,6 +43,26 @@
     "philosophy-determinism-5"
   ],
   "figure": "doubling",
+  "diagram": {
+    "type": "scale",
+    "unit": "m",
+    "items": [
+      {
+        "label": "Error today",
+        "value": 15
+      },
+      {
+        "label": "After 50 million years",
+        "value": 1500000.0
+      },
+      {
+        "label": "After 100 million years",
+        "value": 150000000000.0,
+        "hi": true
+      }
+    ],
+    "caption": "Tenfold every 10 million years turns 15 metres into the distance to the Sun."
+  },
   "source": "Laskar, Is the Solar System Stable?, 2013",
   "source_kind": "paper",
   "reference": "https://arxiv.org/pdf/1209.5996",

@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About 30-fold. Each year kept 87% of the year before, and 0.87 multiplied by itself 24 times leaves about 3.5% of the starting price. Ziegler and Trancik, rebuilding the record from original sources, put the real fall since 1991 at about 97%. Twenty-four modest cuts left a cell at one-thirtieth of its price.",
   "move": "Small steady cuts, repeated for decades, remove almost everything.",
+  "ask": "Which small steady improvement could I keep up for years until it adds up to a lot?",
   "trap": "Adding up small yearly cuts instead of multiplying them.",
   "keywords": [
     "battery prices",
@@ -32,6 +33,87 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "year",
+      "min": 1992,
+      "max": 2016
+    },
+    "y": {
+      "label": "price, % of 1992",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "13% cheaper each year",
+        "hi": true,
+        "points": [
+          [
+            1992,
+            100
+          ],
+          [
+            1994,
+            75.7
+          ],
+          [
+            1996,
+            57.3
+          ],
+          [
+            1998,
+            43.4
+          ],
+          [
+            2000,
+            32.8
+          ],
+          [
+            2002,
+            24.8
+          ],
+          [
+            2004,
+            18.8
+          ],
+          [
+            2006,
+            14.2
+          ],
+          [
+            2008,
+            10.8
+          ],
+          [
+            2010,
+            8.2
+          ],
+          [
+            2012,
+            6.2
+          ],
+          [
+            2014,
+            4.7
+          ],
+          [
+            2016,
+            3.5
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 2016,
+        "y": 3.5,
+        "label": "3.5%: a thirtieth"
+      }
+    ],
+    "caption": "Twenty-four yearly cuts of 13% leave a cell at a thirtieth of its 1992 price."
+  },
   "source": "Ziegler & Trancik, Energy & Environmental Science, 2021",
   "source_kind": "paper",
   "reference": "doi:10.1039/d0ee02681f",

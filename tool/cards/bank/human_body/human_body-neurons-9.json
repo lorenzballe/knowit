@@ -35,5 +35,6 @@
   "source": "Kandel et al., Principles of Neural Science",
   "source_kind": "book",
   "reference": "Kandel, Schwartz, Jessell, Siegelbaum & Hudspeth, Principles of Neural Science, 5th edition, McGraw-Hill, 2013",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

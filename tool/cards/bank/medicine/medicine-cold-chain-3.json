@@ -29,5 +29,6 @@
   "source": "American Hospital Association News, May 2021",
   "source_kind": "news_archive",
   "reference": "https://www.aha.org/news/headline/2021-05-20-fda-authorizes-storing-thawed-pfizer-covid-19-vaccine-refrigerator-30-days",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -35,5 +35,6 @@
   "source": "IAAF, Berlin 2009 official results",
   "source_kind": "statistics",
   "reference": "IAAF, 12th World Championships in Athletics, Berlin 2009, official results, men's 100 m and 200 m finals",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

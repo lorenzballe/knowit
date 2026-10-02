@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Rerunning the Asch studies most cited as proof that warmth dominates impressions, researchers in 2014 found no primacy of warmth: how much it weighed depended on which other traits it came with. The textbook lesson does not readily follow even from Asch's own word lists.",
   "move": "Reread the original before repeating what everyone says it showed.",
+  "ask": "Which famous finding have I repeated without ever reading the original?",
   "trap": "Recalling the textbook lesson that warm or cold colours everything else.",
   "keywords": [
     "solomon asch",

@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Sound two frames early. Two frames last about 83 milliseconds. Broadcast tests behind ITU-R BT.1359 found viewers detect sound leading the picture from about 45 ms, but sound lagging only from about 125 ms. In the world light outruns sound, so late sound looks natural; early sound never happens.",
   "move": "The errors the world never makes are the ones people notice first.",
+  "ask": "Which small mistake in others do I notice because it feels unnatural?",
   "trap": "Assuming the ear judges timing the same way in both directions.",
   "keywords": [
     "foley",

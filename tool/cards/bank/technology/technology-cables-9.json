@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "The electrical power sent from shore. Seabed amplifiers run on current fed down the cable at up to about 15 kilovolts, and turn only a small share of it into light. So designers spread the power thinly: Google's Dunant cable of 2021 runs 12 fibre pairs, each below its own limit, sharing pump lasers.",
   "move": "Find the scarcest input; everything else gets rationed around it.",
+  "ask": "What is the one scarce thing that limits my plans, and am I rationing everything else around it?",
   "trap": "Glass seems the bottleneck, since light is what carries the data.",
   "keywords": [
     "dunant cable",

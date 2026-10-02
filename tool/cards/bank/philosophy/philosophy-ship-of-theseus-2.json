@@ -9,6 +9,7 @@
   "question": "What twist did Thomas Hobbes add to the old puzzle of a ship repaired plank by plank?",
   "answer": "A second ship. Suppose someone keeps each old plank as it comes out, then reassembles them in the same order. Two ships now claim to be the original: the repaired one that never stopped sailing, and the rebuilt one of the first wood. Two ships numerically the same, Hobbes wrote in 1655, is absurd.",
   "move": "When two things claim one identity, ask what the name was tracking.",
+  "ask": "When two things both claim to be 'the same one', what was the name tracking?",
   "keywords": [
     "thomas hobbes",
     "identity",

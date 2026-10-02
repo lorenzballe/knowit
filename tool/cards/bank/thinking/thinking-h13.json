@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "1 in 11. Of the 36 equally likely pairs, 11 contain at least one six, and only one of those is a double six. The yes ruled out the 25 pairs without a six, but it did not tell you which die showed it, so the other die is not a fresh roll.",
   "move": "Ask exactly what you were told, and which cases it rules out.",
+  "ask": "The last time I was told something partial, did I ask exactly which cases it ruled out?",
   "trap": "One die shows a six, so the other feels like a fresh roll.",
   "keywords": [
     "dice",
@@ -30,6 +31,33 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "tree",
+    "n": 36,
+    "label": "equally likely pairs",
+    "branches": [
+      {
+        "n": 11,
+        "label": "at least one six",
+        "branches": [
+          {
+            "n": 1,
+            "label": "double six",
+            "hi": true
+          },
+          {
+            "n": 10,
+            "label": "just one six"
+          }
+        ]
+      },
+      {
+        "n": 25,
+        "label": "no six, ruled out"
+      }
+    ],
+    "caption": "The yes leaves 11 pairs with a six, and only one of them is a double six."
+  },
   "source": "Conditional probability, counting outcomes",
   "source_kind": "arithmetic",
   "reference": "Feller, An Introduction to Probability Theory and Its Applications, Volume 1, Wiley, 1968",

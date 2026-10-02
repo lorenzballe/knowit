@@ -36,5 +36,6 @@
   "source": "Gray et al., PLOS One, 2018",
   "source_kind": "paper",
   "reference": "https://arxiv.org/pdf/1803.09745",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

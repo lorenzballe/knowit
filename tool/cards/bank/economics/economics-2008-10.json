@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "More than twice it. The guarantee covered about €400 billion of six banks' liabilities, deposits and most bonds alike, in an economy producing under €190 billion a year. Meant to stop a run, it turned bank losses into state debts: rescuing the banks cost about €64 billion, and in 2010 Ireland needed an EU-IMF bailout.",
   "move": "Measure a promise against the income of whoever has to keep it.",
+  "ask": "Which promise I rely on is bigger than what the person making it can really pay?",
   "trap": "Expecting a bailout to be a few per cent of output, as usual.",
   "keywords": [
     "ireland",
@@ -33,6 +34,22 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "€",
+    "items": [
+      {
+        "label": "Ireland's output a year, at most",
+        "value": 190000000000.0
+      },
+      {
+        "label": "Bank debts the state guaranteed",
+        "value": 400000000000.0,
+        "hi": true
+      }
+    ],
+    "caption": "About €400 billion guaranteed by an economy making under €190 billion a year."
+  },
   "source": "Oireachtas Banking Inquiry, 2016",
   "source_kind": "institution",
   "reference": "https://inquiries.oireachtas.ie/banking/volume-1-report/chapter-7/",

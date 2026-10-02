@@ -33,12 +33,10 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "builds_on": [
-    "cinema-miniatures-2"
-  ],
   "figure": "none",
   "source": "Brosnan, Movie Magic, 1974",
   "source_kind": "book",
   "reference": "Brosnan, Movie Magic: The Story of Special Effects in the Cinema, Little, Brown, 1974",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

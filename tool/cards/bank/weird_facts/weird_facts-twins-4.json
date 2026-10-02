@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Chance across many pairs and questions. The Minnesota study compared about 137 reared-apart pairs on tests and questionnaires with hundreds of items each, so a few uncanny matches were bound to turn up. Its claims about genes rest on correlations measured across all the pairs, not on the one pair whose wives shared names.",
   "move": "Count the chances a match had to happen before calling it uncanny.",
+  "ask": "How many chances did this uncanny match have to happen by accident?",
   "trap": "Reading a spectacular match as a genetic signal, not a lottery win.",
   "keywords": [
     "jim twins",

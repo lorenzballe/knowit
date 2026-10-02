@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Warnings that a staring face was urging children to hurt themselves swept Britain in February 2019, but the NSPCC, the Samaritans and internet-safety groups said they had seen no evidence of harm, and warned the publicity itself was the risk. The face was a Japanese artist's 2016 sculpture. The warnings did the spreading.",
   "move": "A warning shared a million times is evidence of the warning, not the danger.",
+  "ask": "Which widely shared warning am I mistaking for evidence of the danger?",
   "trap": "So many urgent warnings made the harm seem proven.",
   "keywords": [
     "momo challenge",

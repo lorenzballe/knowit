@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. It was printed in German in London in the same week the Paris crowds rose, in a small run for a small émigré league, and few in Paris could have read it. It reached a mass readership only from the 1870s. Both it and the revolution sprang from the same hungry, restless decade.",
   "move": "Two events at the same time may share a cause rather than cause each other.",
+  "ask": "What two things do I think are linked just because they happened together?",
   "trap": "Same month, famous text: it is natural to assume one caused the other.",
   "keywords": [
     "communist manifesto",

@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "They rise, peak, then fall. Printing taxes money holders: the take is inflation times the real cash people hold. Faster inflation makes people hold less, so past some rate the base shrinks faster than the rate rises. Cagan found governments in hyperinflation printing well beyond that peak, getting less for more.",
   "move": "A tax that shrinks what it taxes has a ceiling on what it raises.",
+  "ask": "What do I lean on that shrinks the thing it feeds on?",
   "trap": "Assuming more printing always buys the state more.",
   "keywords": [
     "seigniorage",

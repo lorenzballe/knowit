@@ -11,6 +11,7 @@
   "unit": "cases",
   "answer": "360 - 100 = 260 extra cases.",
   "move": "Subtract what would have happened anyway before crediting a cause.",
+  "ask": "What would have happened anyway, before I give credit to the cause I like?",
   "trap": "Blaming the outbreak for all 360 cases, ignoring the background rate.",
   "hint": "Some of those who fell ill would have developed the condition without any outbreak.",
   "steps": [
@@ -33,7 +34,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 10,
+        "label": "would have had IBS anyway"
+      },
+      {
+        "n": 26,
+        "label": "extra cases after the illness",
+        "hi": true
+      }
+    ],
+    "caption": "Of 100 who fell ill, 36 got IBS; 10 would have anyway, so 26 are extra."
+  },
   "source": "Marshall et al., Gastroenterology, 2006",
   "source_kind": "paper",
   "reference": "Marshall, Thabane, Garg et al., Incidence and epidemiology of irritable bowel syndrome after a large waterborne outbreak of bacterial dysentery, Gastroenterology, 2006",

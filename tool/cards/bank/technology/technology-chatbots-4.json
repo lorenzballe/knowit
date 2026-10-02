@@ -9,6 +9,7 @@
   "question": "What actually changes inside a chatbot as you talk to it?",
   "answer": "Nothing in the model: its billions of numbers are fixed once training ends. Each reply is computed afresh from the whole conversation, resent by the app every turn; memory features store notes and paste them in. Past a length limit, early text is cut or summarised, which is why long chats lose their beginnings.",
   "move": "Seeming to remember can just mean rereading the whole file each time.",
+  "ask": "When something seems to remember me, does it really, or is it just rereading everything?",
   "keywords": [
     "chatbots",
     "context window",

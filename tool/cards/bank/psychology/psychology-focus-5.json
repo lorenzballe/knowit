@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "They rose about fourfold. Wolfe, Horowitz and Kenner found observers missed about 7% of targets when half the bags held one, and about 30% when targets were rare. Searchers learned to answer no quickly and quit each bag sooner, so the rare knife was the one most likely to slip through.",
   "move": "The rarer the thing you search for, the sooner you stop looking.",
+  "ask": "What rare problem have I stopped looking for because it almost never shows up?",
   "trap": "Expecting a rare target to stand out, so vigilance sharpens.",
   "keywords": [
     "prevalence effect",

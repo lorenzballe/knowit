@@ -15,6 +15,7 @@
   "tolerance": 0.1,
   "answer": "8,766 hours / 400 days ≈ 21.9 hours.",
   "move": "When a ratio changes, check which side of it moved.",
+  "ask": "When a ratio changes, have I checked which side actually moved?",
   "trap": "Assuming the year, not the day, must have changed.",
   "hint": "The year's length in hours has barely changed; only the number of days that fill it.",
   "steps": [

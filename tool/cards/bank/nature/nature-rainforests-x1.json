@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The forest makes plenty of oxygen and uses almost all of it again: trees respire about half, and microbes rotting its leaves and wood take most of the rest. Its net contribution is close to zero. The oxygen in the air is a stock laid down over hundreds of millions of years.",
   "move": "Before crediting a producer, subtract what it uses up itself.",
+  "ask": "Before I credit a producer, have I subtracted what it uses itself?",
   "trap": "Counting the oxygen a forest makes and forgetting what it burns.",
   "keywords": [
     "amazon",

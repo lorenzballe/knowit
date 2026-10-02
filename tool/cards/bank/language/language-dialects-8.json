@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Comprehension tests between the neighbours find the gap runs one way. Spoken Danish has softened many consonants and runs its vowels together, so word boundaries are hard to catch by ear, while Swedish is spoken closer to its spelling. Norwegians, whose speech sits between the two, understand both neighbours best of all.",
   "move": "Check both directions before calling any relationship mutual.",
+  "ask": "Which relationship do I call mutual without checking how each side sees it?",
   "trap": "Assuming two close languages must be equally clear in both directions.",
   "keywords": [
     "danish",

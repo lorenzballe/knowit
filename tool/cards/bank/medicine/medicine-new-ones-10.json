@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. PhagoBurn, in French and Belgian burn units, assigned 27 patients to a cocktail of 12 viruses that kill Pseudomonas or to silver sulfadiazine cream. Bacteria fell more slowly under phages; the trial stopped early. The cocktail had lost most of its strength before use, so patients got a far weaker dose than planned.",
   "move": "Rescues get published; quiet failures of the same method rarely do.",
+  "ask": "Which success stories do I hear while the quiet failures of the same method stay hidden?",
   "trap": "Trusting the steady stream of case reports of patients rescued by phages.",
   "keywords": [
     "phage therapy",

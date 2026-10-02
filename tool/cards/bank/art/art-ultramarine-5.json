@@ -9,6 +9,7 @@
   "question": "What household job did cheap synthetic ultramarine take on in Victorian Britain?",
   "answer": "Making the washing look white. Laundry blue, such as Reckitt's from the 1850s, put synthetic ultramarine in the final rinse. Blue cancels the yellow that old cotton and soap leave, so the eye reads the cloth as whiter, though it reflects slightly less light. The painters' costliest blue ended in a cloth bag.",
   "move": "A colour cast is often cured by adding its opposite, not removing it.",
+  "ask": "What problem could I fix by adding the opposite instead of removing the cause?",
   "keywords": [
     "laundry blue",
     "reckitt's blue",

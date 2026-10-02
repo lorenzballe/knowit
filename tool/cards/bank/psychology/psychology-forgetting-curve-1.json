@@ -9,6 +9,7 @@
   "question": "How did Ebbinghaus measure a memory he could no longer recall at all?",
   "answer": "By timing how fast he relearned it. Lists of nonsense syllables that he could no longer recite a day later took about a third less effort to learn again; a month later, about a fifth less. Material that felt entirely gone still left a trace a stopwatch could find.",
   "move": "Being unable to recall something is not the same as having lost it.",
+  "ask": "What have I decided I forgot that would come back quickly if I relearned it?",
   "keywords": [
     "ebbinghaus",
     "method of savings",

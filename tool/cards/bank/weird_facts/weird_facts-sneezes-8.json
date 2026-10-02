@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Salt pulled from their blood. Grazing seaweed underwater, they swallow far more salt than their kidneys can clear, because reptile kidneys cannot make urine saltier than blood. Glands beside the nostrils concentrate it into brine, which a sharp snort sprays out. Schmidt-Nielsen and Fänge described the glands in 1958; the white crust is dried salt.",
   "move": "When a body throws something out, ask where it was made.",
+  "ask": "When my body or mind throws something out, do I ask where it came from?",
   "trap": "Picking trapped seawater, the obvious nuisance for an animal that dives.",
   "keywords": [
     "marine iguanas",

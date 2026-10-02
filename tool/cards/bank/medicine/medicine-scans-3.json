@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Between 1993 and 2011 diagnoses rose about fifteenfold, making it the country's most common cancer, yet the death rate from it stayed flat. Most tumours found were small papillary cancers that would never have harmed anyone. Nearly all were treated anyway, most by removing the thyroid, which means hormone pills for life.",
   "move": "Finding more of a disease is not the same as preventing its harm.",
+  "ask": "Where do I celebrate finding more of a problem without asking if it prevents any harm?",
   "trap": "Assuming that finding more cancers early must save more lives.",
   "keywords": [
     "thyroid cancer",

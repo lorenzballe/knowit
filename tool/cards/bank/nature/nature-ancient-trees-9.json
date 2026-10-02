@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Comparing ginkgos aged 15 to 667 years, Wang and colleagues found trees up to about 600 had similar leaf area, photosynthetic efficiency and seed germination, and their growing layer under the bark showed no programmed decline. Old trees do die, but mostly from outside: drought, fungi, storms and wounds piled up over centuries.",
   "move": "When something fails late, ask whether time wore it out or merely exposed it.",
+  "ask": "When something of mine fails late, do I ask whether age wore it out or only exposed a flaw?",
   "trap": "Reading death at great age as decline from within, not damage piling up.",
   "keywords": [
     "ginkgo",

@@ -39,5 +39,6 @@
   "source": "ITU-T Recommendation V.90, 1998",
   "source_kind": "institution",
   "reference": "International Telecommunication Union, ITU-T Recommendation V.90, Geneva, 1998",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

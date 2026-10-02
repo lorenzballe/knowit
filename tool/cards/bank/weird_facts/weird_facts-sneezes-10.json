@@ -38,5 +38,6 @@
   "source": "Guinness World Records",
   "source_kind": "reference_work",
   "reference": "https://www.guinnessworldrecords.com/world-records/67595-longest-sneezing-fit",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

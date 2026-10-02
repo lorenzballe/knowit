@@ -29,5 +29,6 @@
   "source": "Klunk et al., Nature, 2022",
   "source_kind": "paper",
   "reference": "Klunk et al., Evolution of immune genes is associated with the Black Death, Nature 611, 2022, 312-319",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Scrap paper was cut into clothes for the dead. Discarded government documents and contracts were sold on and made into paper shoes, belts and hats for burials, and the dry desert kept them. Archaeologists piece the texts back together from the garments. A seventh-century town's paperwork survives because someone needed cheap funeral clothes.",
   "move": "Ask why a record survived before trusting what it seems to show.",
+  "ask": "Why did the records I trust survive, and what might be missing?",
   "trap": "Assuming what survives was kept on purpose because it mattered.",
   "keywords": [
     "turfan",

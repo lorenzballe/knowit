@@ -9,6 +9,7 @@
   "question": "What happened when a volcano erupted beside the world's most remote inhabited settlement in 1961?",
   "answer": "The whole population left for England. Tristan da Cunha's islanders were taken off by ship and resettled near Southampton, and in 1963 most chose to return. More than 2,400 km from the nearest inhabited land, the island still has no airstrip; the way in is several days' sailing from Cape Town.",
   "move": "Ask what people are going back to before assuming a better place will hold them.",
+  "ask": "When I leave a place or a job, do I know what I would be going back to?",
   "keywords": [
     "tristan da cunha",
     "volcano",

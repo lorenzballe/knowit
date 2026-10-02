@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. They are mostly crystals of tyrosine, an amino acid freed as enzymes cut milk proteins apart over many months. Tyrosine dissolves poorly, so once enough builds up it comes out of solution as hard white clusters. X-ray analysis finds similar crystals in aged Gouda. Each crunch records months of protein breakdown.",
   "move": "The first substance that comes to mind is not the only one that can crystallise.",
+  "ask": "What do I assume is one thing that could really be something else?",
   "trap": "Salt is the crystal everyone knows, and hard cheese tastes salty.",
   "keywords": [
     "tyrosine",

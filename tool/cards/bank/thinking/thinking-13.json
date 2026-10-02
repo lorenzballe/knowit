@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "The first number becomes the reference the rest are measured from, even when you know it was chosen to impress. The effect persists when people are warned about it, and when the anchor is plainly arbitrary.",
   "move": "Whoever names the first number has already moved yours.",
+  "ask": "Whose number did I hear first in my last negotiation or purchase, and how far did it pull mine?",
   "trap": "Believing your sense of a fair price is your own.",
   "keywords": [
     "anchoring",

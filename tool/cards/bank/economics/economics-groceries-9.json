@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. DellaVigna and Gentzkow found chains set nearly identical prices across their stores, even where local incomes and competition differ widely, and that tailoring prices would raise profits by about 7%. Because poorer shoppers are more sensitive to price, one price leaves them paying more than local pricing would, and richer shoppers less.",
   "move": "Check whether a price is set for the place or for the whole chain.",
+  "ask": "Is the price I pay set for my area or for everyone, and does that matter?",
   "trap": "Picturing chains charging more wherever shoppers have fewer options.",
   "keywords": [
     "uniform pricing",

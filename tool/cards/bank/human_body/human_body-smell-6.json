@@ -9,6 +9,7 @@
   "question": "Why can the same smell register more strongly through one nostril than through the other?",
   "answer": "Because the nostrils take turns. Swelling of the nasal tissue shifts every few hours, so one nostril carries fast airflow and the other slow. Odours that dissolve quickly into the nasal lining are caught best in fast air; slow-dissolving ones need slow air. Each nostril samples a slightly different chemical world.",
   "move": "Two sensors running at different speeds can catch what one would miss.",
+  "ask": "What would I notice if I checked a second way?",
   "keywords": [
     "nasal cycle",
     "nostrils",

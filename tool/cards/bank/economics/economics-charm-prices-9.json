@@ -12,6 +12,7 @@
   "tolerance": 0.3,
   "answer": "0.19 / 2.30 = about 8.3%.",
   "move": "Convert both prices into one currency before judging a change.",
+  "ask": "When a price changes, do I compare both in the same terms?",
   "trap": "Seeing 2.49 below 4.50 and feeling the price has fallen.",
   "hint": "First turn the mark price into euros; 1.95583 is just under 2.",
   "steps": [

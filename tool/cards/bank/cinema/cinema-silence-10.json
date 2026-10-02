@@ -40,5 +40,6 @@
   "source": "SMPTE RP 200, cinema sound levels",
   "source_kind": "standard",
   "reference": "SMPTE RP 200:2012, Relative and Absolute Sound Pressure Levels for Motion-Picture Multichannel Sound Systems",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "No, the event's rarity outweighs him. Hume's 1748 rule: accept testimony only if its falsehood would be more miraculous than what it reports. A witness wrong once in a hundred is an everyday thing; a return from death has never been seen against countless deaths. Every grave that stayed shut testifies on the other side.",
   "move": "Weigh how often a witness errs against how often such things happen.",
+  "ask": "Before I believe an amazing story from an honest person, how common is a simple mistake compared to such a thing?",
   "trap": "Trusting the witness's 99% record and ignoring how rare the event is.",
   "keywords": [
     "david hume",

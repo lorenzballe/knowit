@@ -9,6 +9,7 @@
   "question": "Why is an MRI scanner's magnet left on even when nobody is being scanned?",
   "answer": "Because turning it off is slow and costly. Its superconducting coils sit in liquid helium, where current circulates for years unpowered. Shutting down in a hurry means a quench: the helium boils off through a vent. In 2001 a steel oxygen cylinder, pulled into a live scanner in New York, killed a 6-year-old boy.",
   "move": "A machine that is always on needs rules for when it looks off.",
+  "ask": "What in my life needs rules for when it looks off, because it is always on?",
   "keywords": [
     "mri",
     "superconducting magnet",

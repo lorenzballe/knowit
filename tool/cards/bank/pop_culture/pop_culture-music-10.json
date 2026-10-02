@@ -34,5 +34,6 @@
   "source": "Official Charts Company, Oasis chart history",
   "source_kind": "statistics",
   "reference": "Official Charts Company, Official Singles Chart archive, Oasis and Robson & Jerome, November 1995",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

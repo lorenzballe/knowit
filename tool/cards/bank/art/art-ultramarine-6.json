@@ -29,5 +29,6 @@
   "source": "National Gallery, London",
   "source_kind": "institution",
   "reference": "https://www.nationalgallery.org.uk/paintings/michelangelo-the-entombment-or-christ-being-carried-to-his-tomb",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. It surfaced in a 1984 guide to Australian mammals, credited to a zoologist who later said he did not recall anyone timing a wombat with a stopwatch. Only decades later did a biologist report his car's speedometer touching 40 km/h beside fleeing southern hairy-nosed wombats: the number first, a rough check afterwards.",
   "move": "A figure repeated in every book can still have no measurement underneath it.",
+  "ask": "What number do people repeat in my work that nobody ever measured?",
   "trap": "Assuming a number printed everywhere must have been measured once.",
   "keywords": [
     "wombat speed",

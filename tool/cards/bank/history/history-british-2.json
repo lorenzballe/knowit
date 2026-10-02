@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About 1,000. In 1901 the service had only about a thousand members, some of them always on leave. It could govern nearly 300 million people only through Indian clerks, police, soldiers and landholders, and through princes who ran their own states: roughly one covenanted officer for every 300,000 subjects.",
   "move": "Divide the governed by the governors before imagining an empire's machinery.",
+  "ask": "Do I know how few people actually run the things I assume are huge?",
   "trap": "About 300,000, scaling a vast bureaucracy to 300 million people.",
   "keywords": [
     "indian civil service",
@@ -32,6 +33,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "people",
+    "items": [
+      {
+        "label": "Indian Civil Service",
+        "value": 1000,
+        "hi": true
+      },
+      {
+        "label": "people it governed",
+        "value": 300000000
+      }
+    ],
+    "caption": "About 1,000 officers for nearly 300 million people: one for every 300,000."
+  },
   "source": "Gilmour, The Ruling Caste, 2005",
   "source_kind": "book",
   "reference": "Gilmour, The Ruling Caste: Imperial Lives in the Victorian Raj, John Murray, 2005",

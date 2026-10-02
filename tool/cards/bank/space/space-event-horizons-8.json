@@ -33,8 +33,29 @@
   "mature": false,
   "language": "en",
   "figure": "nested_circles",
+  "diagram": {
+    "type": "scale",
+    "unit": "Earth–Sun distances",
+    "items": [
+      {
+        "label": "Earth to Sun",
+        "value": 1
+      },
+      {
+        "label": "Neptune to Sun",
+        "value": 30
+      },
+      {
+        "label": "M87's horizon",
+        "value": 130,
+        "hi": true
+      }
+    ],
+    "caption": "M87's horizon alone reaches over four times as far out as Neptune's orbit."
+  },
   "source": "Event Horizon Telescope Collaboration, 2019",
   "source_kind": "paper",
   "reference": "Event Horizon Telescope Collaboration, First M87 Event Horizon Telescope Results. I. The Shadow of the Supermassive Black Hole, Astrophysical Journal Letters, 2019",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Trombonist Paul Tanner played an Electro-Theremin, built with Bob Whitsell: a pure-tone oscillator whose pitch followed a handle slid along a marked scale, so exact notes were easy to find, unlike the air-played original. It only imitated a theremin. Pop's most famous theremin part was played with a hand on a slider.",
   "move": "The famous name for a sound is not always the thing that made it.",
+  "ask": "Which famous name for something do I accept without checking what actually made it?",
   "trap": "The theremin is the one eerie electronic instrument everyone can name.",
   "keywords": [
     "electro-theremin",

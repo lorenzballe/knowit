@@ -15,6 +15,7 @@
   "tolerance": 0.4,
   "answer": "About 3.4 items, close to the 3 found.",
   "move": "Before counting hits, count how many times the net was cast.",
+  "ask": "When I spot a pattern, how many things did I check before it appeared?",
   "trap": "Three hits look like a pattern rather than expected noise.",
   "hint": "Treat each item as a separate lottery ticket with a 1 in 20 chance.",
   "steps": [

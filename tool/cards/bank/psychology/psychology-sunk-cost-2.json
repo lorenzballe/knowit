@@ -12,6 +12,7 @@
   "question": "Did NBA teams give high draft picks more playing time than their performance justified?",
   "answer": "Apparently yes, but less than first claimed. Staw and Hoang found that, performance held equal, earlier picks got more minutes and lasted longer in the league, as if teams were honouring the price of the pick. Camerer and Weber's reanalysis found a weaker effect. Coaches may also know things about talent that statistics miss.",
   "move": "Before blaming bias, rule out that the insiders simply know more.",
+  "ask": "Before I call someone biased, have I ruled out that they simply know more?",
   "keywords": [
     "nba draft",
     "playing time",

@@ -9,6 +9,7 @@
   "question": "What did most chemists of the early 1920s believe rubber and plastics were made of?",
   "answer": "Loose clusters of small molecules held by weak forces, like particles in a glue. From 1920 Hermann Staudinger argued they were giant molecules, chains of thousands of atoms joined by ordinary chemical bonds; many colleagues insisted no molecule could be so large. Measurements bore him out, and a Nobel Prize followed in 1953.",
   "move": "When a claim sounds too big to be true, check it against measurements.",
+  "ask": "Which claim did I wave off as too big to be true without checking the measurements?",
   "keywords": [
     "hermann staudinger",
     "macromolecules",

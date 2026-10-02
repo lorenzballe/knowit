@@ -28,5 +28,6 @@
   "source": "World Meteorological Organization, 2021",
   "source_kind": "institution",
   "reference": "World Meteorological Organization, Weather and Climate Extremes Archive: highest temperature north of the Arctic Circle, 2021",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

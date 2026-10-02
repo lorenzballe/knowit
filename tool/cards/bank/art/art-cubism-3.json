@@ -9,6 +9,7 @@
   "question": "What was odd about the real-world material Picasso glued into his first collage in 1912?",
   "answer": "It was itself a fake. Still Life with Chair Caning includes a piece of oilcloth printed to look like woven cane, on an oval canvas ringed with rope. The one scrap of everyday life he let into a painting was already a machine-printed imitation. Reality entered art as wipe-clean table covering.",
   "move": "Ask whether the real thing in front of you is itself a copy.",
+  "ask": "Is the real thing in front of me actually a copy of something else?",
   "keywords": [
     "picasso",
     "collage",

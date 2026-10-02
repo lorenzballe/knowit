@@ -12,6 +12,7 @@
   "withinFactor": 3,
   "answer": "Perhaps half of those were of fighting age: about 20,000.",
   "move": "Split a headcount into the people who can actually do the job.",
+  "ask": "When I hear a headcount, how many of those people can actually do the job?",
   "trap": "Treating all 80,000 as warriors, as if it were an army roll.",
   "hint": "Take out the women first, then the children and the old.",
   "steps": [

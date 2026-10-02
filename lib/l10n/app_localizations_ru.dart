@@ -968,7 +968,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tapToRevealLower => 'нажми, чтобы открыть';
 
   @override
-  String get barMoveCaps => 'ФРАЗА ДЛЯ РАЗГОВОРА';
+  String get barMoveCaps => 'ЧТО ЗАПОМНИТЬ';
 
   @override
   String get theBarMoveCaps => 'ФРАЗА ДЛЯ РАЗГОВОРА';
@@ -1022,8 +1022,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get perkArchiveTitle => 'Весь твой архив';
 
   @override
-  String get perkArchiveLine =>
-      'Каждый прочитанный день — навсегда. Бесплатно хранится неделя.';
+  String get perkArchiveLine => 'Каждый прочитанный день — навсегда.';
 
   @override
   String get plusIsActive => 'ASTUTE+ АКТИВЕН';
@@ -1669,8 +1668,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get insideGenre => 'Внутри';
 
   @override
-  String nOfSixOn(int n) {
-    return '$n из 6 включено';
+  String nOfSixOn(int n, int total) {
+    return '$n из $total включено';
   }
 
   @override
@@ -1847,4 +1846,93 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get exploreOffline =>
       'Вы офлайн. Это раздел «Обзор» в том виде, в каком он был прочитан в последний раз.';
+
+  @override
+  String get askYourselfCaps => 'СПРОСИ СЕБЯ';
+
+  @override
+  String get themeMyths => 'Развенчанные мифы';
+
+  @override
+  String get themeMythsLine => 'Во что верят почти все и почему это неверно';
+
+  @override
+  String get themeParadoxes => 'Парадоксы';
+
+  @override
+  String get themeParadoxesLine =>
+      'Две правды, которые не должны быть верны одновременно';
+
+  @override
+  String get themeNumbers => 'Удивительные числа';
+
+  @override
+  String get themeNumbersLine => 'Где поворот — это число';
+
+  @override
+  String get themePractical => 'Пригодится сегодня';
+
+  @override
+  String get themePracticalLine => 'Что попробовать до вечера';
+
+  @override
+  String get themeOrigins => 'Откуда это взялось';
+
+  @override
+  String get themeOriginsLine =>
+      'Истоки вещей, которыми вы пользуетесь каждый день';
+
+  @override
+  String get themeStories => 'Правдивые истории';
+
+  @override
+  String get themeStoriesLine => 'То, что случилось на самом деле';
+
+  @override
+  String get themeDebates => 'Выберите сторону';
+
+  @override
+  String get themeDebatesLine => 'Нет верного ответа, есть лишь лучший довод';
+
+  @override
+  String get themeWorkItOut => 'Посчитайте';
+
+  @override
+  String get themeWorkItOutLine => 'Число, которое найти в уме';
+
+  @override
+  String get themeSeen => 'Посмотреть';
+
+  @override
+  String get themeSeenLine => 'Карточки, которые рисуют свою мысль';
+
+  @override
+  String get themeSharpest => 'Для самых острых умов';
+
+  @override
+  String get themeSharpestLine => 'Самые трудные карточки';
+
+  @override
+  String get themePast0 => 'Древний мир';
+
+  @override
+  String get themePast1 => 'XVII–XIX века';
+
+  @override
+  String get themePast2 => 'Прошлый век';
+
+  @override
+  String get themePastLine => 'Каждый раз другая эпоха';
+
+  @override
+  String get themePlace0 => 'Азия и Ближний Восток';
+
+  @override
+  String get themePlace1 => 'Америка';
+
+  @override
+  String get themePlace2 => 'Европа';
+
+  @override
+  String get themePlaceLine => 'Каждый раз другая часть света';
 }

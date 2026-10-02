@@ -11,6 +11,7 @@
   "unit": "milliseconds",
   "answer": "1,200 − 620 = 580 ms.",
   "move": "Proving something is absent takes far longer than finding it.",
+  "ask": "When I claim something is not there, how long did I really look?",
   "trap": "600, taking an average 'present' to need exactly 15 checks.",
   "hint": "Ask at which position, on average, a randomly placed target turns up.",
   "steps": [

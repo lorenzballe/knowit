@@ -31,5 +31,6 @@
   "source": "Lorenz, The Essence of Chaos, 1993",
   "source_kind": "book",
   "reference": "Lorenz, The Essence of Chaos, University of Washington Press, 1993",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

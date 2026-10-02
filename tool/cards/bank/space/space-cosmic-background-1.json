@@ -9,6 +9,7 @@
   "question": "How was the temperature of the cosmic background measured in 1941, 24 years before its discovery?",
   "answer": "Through a molecule in space. In 1941 Andrew McKellar in Canada found cyanogen, a carbon-nitrogen molecule seen in starlight, slightly more excited than empty space should allow, as if bathed in radiation about 2 degrees above absolute zero. Nobody knew what was warming it until the cosmic background was found in 1965.",
   "move": "An unexplained number in an old paper may be tomorrow's discovery.",
+  "ask": "What odd, unexplained number in an old record of mine might be a discovery waiting?",
   "keywords": [
     "andrew mckellar",
     "cyanogen",

@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. In the standard task about one person in five names the rule at the first attempt. When Tweney and colleagues said each triple fitted either a rule called DAX or one called MED, about 60% did. Hunting for MED examples sent people outside their own guess, so disconfirming felt like confirming.",
   "move": "To test a belief, go looking for evidence of its rival.",
+  "ask": "What evidence would a rival of my favourite belief point to, and have I looked?",
   "trap": "Assuming a mere change of labels cannot change how people reason.",
   "keywords": [
     "2-4-6 task",

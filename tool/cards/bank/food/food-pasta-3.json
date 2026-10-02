@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. The dish is first named in print in La Stampa in 1950, as a Roman favourite of American officers after the liberation. Its first known recipe came in 1952 in Vittles and Vice, a guide to Chicago restaurants, with bacon and Parmesan. Italy's La Cucina Italiana printed one in 1954, with Gruyère and garlic.",
   "move": "The older a dish looks, the more worth checking its paper trail.",
+  "ask": "What do I call an old tradition that may be much newer than I think?",
   "trap": "Carbonara feels Roman and ancient, so its recipe must be Italian first.",
   "keywords": [
     "carbonara",

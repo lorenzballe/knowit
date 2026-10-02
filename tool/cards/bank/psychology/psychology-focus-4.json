@@ -9,6 +9,7 @@
   "question": "How soon does attention start to fail during a long watch for rare signals?",
   "answer": "Within the first half hour. At the RAF's request, Norman Mackworth had people watch a clock hand that jumped every second and report its rare double jumps. Misses rose within 30 minutes and kept rising over a two-hour watch. Nothing on the dial had changed except the time spent staring at it.",
   "move": "Schedule the relief before the watcher feels tired, not after.",
+  "ask": "When do I take a break from watching or checking: before my attention fades, or after?",
   "keywords": [
     "vigilance",
     "mackworth clock",

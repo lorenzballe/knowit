@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "In about an hour. Freeze-drying holds the live virus in a dry cake; water lets it fall apart. At 20 to 25 °C the mixed vaccine loses half its potency, so it sits on ice and is discarded hours after mixing. Powder that passed a week-long heat test can spoil in one morning clinic.",
   "move": "Ask what state a thing is in before trusting its tested limits.",
+  "ask": "Which limit do I trust that was tested in conditions different from mine today?",
   "trap": "Letting the powder's week of heat tolerance set the guess.",
   "keywords": [
     "measles vaccine",

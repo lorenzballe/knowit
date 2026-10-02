@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 30%. A 2013 study by the Council on Tall Buildings and Urban Habitat put the unusable top at 244 m, about 29% of the height. That stretch alone would be one of the taller skyscrapers in many European cities. The spire is there to win the height record.",
   "move": "Ask how much of a headline figure does any work.",
+  "ask": "How much of a number I admire is actually doing any work?",
   "trap": "A spire looks like a slim tip, so a few per cent seems right.",
   "keywords": [
     "burj khalifa",

@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Much faster. Bleach kills mainly as hypochlorous acid, which dominates below about pH 7.5; at pH 12 nearly all of it sits as hypochlorite ion, some 80 to 100 times less potent. Makers keep it alkaline for shelf life, because the acid form breaks down quickly, and acidified further it gives off chlorine gas.",
   "move": "The form that keeps on the shelf is not always the form that works.",
+  "ask": "What do I keep in a form that lasts but works less well?",
   "trap": "Much slower, since a milder, less caustic liquid seems weaker.",
   "keywords": [
     "bleach",

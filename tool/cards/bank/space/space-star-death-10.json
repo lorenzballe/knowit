@@ -38,5 +38,6 @@
   "source": "Schröder & Smith, MNRAS, 2008",
   "source_kind": "paper",
   "reference": "Schröder & Smith, Distant future of the Sun and Earth revisited, Monthly Notices of the Royal Astronomical Society 386, 155, 2008",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

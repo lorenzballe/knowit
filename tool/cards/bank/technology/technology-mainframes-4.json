@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "A tea-shop chain. J. Lyons & Co., which ran hundreds of teashops and bakeries on thin margins, built LEO I itself after studying early computers in America and Cambridge. From late 1951 it valued the bakeries' weekly output. Lyons went on to sell LEO computers to other firms.",
   "move": "The first users of a tool are those with the most tedious volume.",
+  "ask": "Who has the most boring, repetitive work, and could a new tool help them first?",
   "trap": "A bank, since banks had the most sums to do.",
   "keywords": [
     "leo i",

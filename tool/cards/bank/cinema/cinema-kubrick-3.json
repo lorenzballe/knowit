@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Kubrick withdrew it himself. The British censor had passed it uncut with an X certificate in 1971. After newspapers tied crimes to the film and his family received threats, Kubrick had Warner Bros. pull it from British distribution. It returned to British cinemas in 2000, the year after he died.",
   "move": "When something vanishes, ask who had the power and the reason to remove it.",
+  "ask": "When something vanishes, do I ask who had the power and reason to remove it?",
   "trap": "The censor banned it, because that is how films usually disappear.",
   "keywords": [
     "a clockwork orange",

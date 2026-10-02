@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Infant immune systems ignore bare sugars. Polysaccharides, long sugar chains, stimulate B cells without help from T cells, a route that barely works before about age two and leaves little memory. Bolting the sugar to a protein, often tetanus toxoid, recruits T-cell help. That conjugate design made Hib meningitis rare in vaccinated countries.",
   "move": "When a message is ignored, change the messenger rather than shouting louder.",
+  "ask": "Which message of mine gets ignored, and should I change who delivers it instead of repeating it louder?",
   "trap": "Blaming mothers' antibodies, which do blunt the measles vaccine in infancy.",
   "keywords": [
     "conjugate vaccines",

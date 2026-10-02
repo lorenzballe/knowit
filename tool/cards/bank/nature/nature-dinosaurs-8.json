@@ -39,5 +39,6 @@
   "source": "Collins et al., Meteoritics & Planetary Science, 2005",
   "source_kind": "paper",
   "reference": "Collins, Melosh & Marcus, Earth Impact Effects Program: A Web-based computer program for calculating the regional environmental consequences of a meteoroid impact on Earth, Meteoritics & Planetary Science, 2005",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

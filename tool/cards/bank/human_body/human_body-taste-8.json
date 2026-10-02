@@ -11,6 +11,7 @@
   "unit": "times",
   "answer": "10,000 / 8 = 1,250 times.",
   "move": "Compare how little of each thing it takes, not how strong each feels.",
+  "ask": "What do I judge by how strong it feels rather than by how little it takes?",
   "trap": "Reading the tiny decimal as a gap of tens, not thousands.",
   "hint": "Clear the decimal first: multiply both thresholds by 1,000.",
   "steps": [

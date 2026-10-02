@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "All-or-nothing scoring. If a model must get all 5 digits of an answer right, and its accuracy per digit climbs steadily from 50% to 90%, its score leaps from 3% to 59%. Given partial credit, the same models improved smoothly. The jump was in the ruler, not in the model.",
   "move": "A score that needs every step right turns steady progress into a sudden leap.",
+  "ask": "Which sudden leap in my life was really steady progress hiding behind a threshold?",
   "trap": "Reading a sharp jump in scores as a sharp change in ability.",
   "keywords": [
     "emergent abilities",
@@ -32,6 +33,117 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "% right per digit",
+      "min": 50,
+      "max": 90
+    },
+    "y": {
+      "label": "% score",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "partial credit",
+        "points": [
+          [
+            50,
+            50
+          ],
+          [
+            55,
+            55
+          ],
+          [
+            60,
+            60
+          ],
+          [
+            65,
+            65
+          ],
+          [
+            70,
+            70
+          ],
+          [
+            75,
+            75
+          ],
+          [
+            80,
+            80
+          ],
+          [
+            85,
+            85
+          ],
+          [
+            90,
+            90
+          ]
+        ]
+      },
+      {
+        "label": "all 5 digits or nothing",
+        "hi": true,
+        "points": [
+          [
+            50,
+            3.1
+          ],
+          [
+            55,
+            5.0
+          ],
+          [
+            60,
+            7.8
+          ],
+          [
+            65,
+            11.6
+          ],
+          [
+            70,
+            16.8
+          ],
+          [
+            75,
+            23.7
+          ],
+          [
+            80,
+            32.8
+          ],
+          [
+            85,
+            44.4
+          ],
+          [
+            90,
+            59.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 50,
+        "y": 3.1,
+        "label": "3%"
+      },
+      {
+        "x": 90,
+        "y": 59,
+        "label": "59%"
+      }
+    ],
+    "caption": "The same steady gains per digit look like a sudden leap when all five must be right."
+  },
   "source": "Schaeffer, Miranda & Koyejo, NeurIPS, 2023",
   "source_kind": "paper",
   "reference": "Schaeffer, Miranda & Koyejo, Are Emergent Abilities of Large Language Models a Mirage?, NeurIPS, 2023",

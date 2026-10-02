@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Less dry voice against the reverb. As a source moves away, its direct sound fades while the room's reverberation holds steady, so their ratio tracks distance. Tail length describes the room. A longer gap before the reverb does the opposite: the voice arrives well ahead of the room, as a close voice does.",
   "move": "When two cues usually arrive together, find out which one the judgement truly reads.",
+  "ask": "When two clues arrive together, which one is my judgement actually using?",
   "trap": "Big distant sounds are heard in big spaces, so length seems like distance.",
   "keywords": [
     "direct-to-reverberant ratio",

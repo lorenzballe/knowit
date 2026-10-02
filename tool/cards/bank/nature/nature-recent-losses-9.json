@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "More than a third. Fisher and Blomberg found that species written off after their habitat was cleared often reappeared in unsurveyed fragments, while those hit by introduced predators or disease rarely did. Few had been properly searched for. Many turned up once someone looked in the right patch of remaining forest.",
   "move": "No sightings means little until you know how hard anyone looked.",
+  "ask": "When I say something is gone, how hard did anyone actually look?",
   "trap": "Treating years without a sighting as proof that a species has gone.",
   "keywords": [
     "rediscovered species",

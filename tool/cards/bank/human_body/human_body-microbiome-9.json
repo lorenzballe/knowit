@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "A bias towards positive results. Reviewing them in 2020, Walter and colleagues judged a 95% transfer rate implausible for diseases with many causes. Most studies used faeces from few donors, then counted each mouse, often caged with others, as independent evidence, inflating certainty. The rodents received microbes; the causal claims were extrapolated.",
   "move": "Count the independent sources, not the number of measurements taken from them.",
+  "ask": "How many independent sources stand behind what I believe?",
   "trap": "Counting every sick mouse as a separate proof, though few donors were tested.",
   "keywords": [
     "germ-free mice",

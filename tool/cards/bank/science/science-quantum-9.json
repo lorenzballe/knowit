@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Electron spin, not yet proposed. The orbit theory forecast two beams for the wrong reason: silver's outer electron has no orbital motion to split. The split came from spin, first proposed in 1925. The silver traces were so faint that Stern's cigar breath, rich in sulphur, blackened them into view.",
   "move": "Matching the forecast does not prove the forecaster understood why.",
+  "ask": "Whose forecast do I trust because it came true, without asking whether they understood why?",
   "trap": "Proof of the orbits, since the result matched the prediction.",
   "keywords": [
     "stern-gerlach experiment",

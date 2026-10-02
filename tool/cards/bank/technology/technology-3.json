@@ -12,6 +12,7 @@
   "question": "Why can a helium shortage close a hospital?",
   "answer": "MRI scanners need liquid helium to keep their magnets superconducting. Helium cannot be manufactured — it is collected as a by-product of certain natural gas wells, and it escapes Earth's gravity once released. Shortages have delayed scans and shut machines down.",
   "move": "Helium is not made. It is found, used once, and lost to space.",
+  "ask": "What quiet thing do I depend on that would hurt a lot if it ran out?",
   "keywords": [
     "helium",
     "mri",

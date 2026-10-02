@@ -14,7 +14,7 @@ import 'scaled_text.dart';
 import 'subject_icon.dart';
 
 /// Full-bleed, one-colour-per-topic card — the "card is the screen" look,
-/// carrying a Bar move line and a source once flipped.
+/// carrying the line to keep and a source once flipped.
 class PillCard extends StatelessWidget {
   final Pill pill;
 

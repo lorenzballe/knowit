@@ -9,6 +9,7 @@
   "question": "In which stage of sleep does sleepwalking begin, and why does that matter?",
   "answer": "Deep non-REM sleep, mostly early in the night, not the dreaming stage. In REM the muscles are held slack; in slow-wave sleep they are not, so a brain whose motor regions stir while the rest stays asleep can walk, talk or eat. The walking comes from a brain partly awake, not a dream escaping paralysis.",
   "move": "Ask what state allows a behaviour before asking what story explains it.",
+  "ask": "Before I explain a strange behaviour with a story, what state of mind made it possible?",
   "keywords": [
     "sleepwalking",
     "slow-wave sleep",

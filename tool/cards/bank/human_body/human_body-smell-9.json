@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About three times the odds of death. Among 3,005 US adults aged 57 to 85, those who could not smell had 3.37 times the odds of dying, after allowing for age, health, cognition, mental health, smoking, alcohol and nutrition. The authors suggest the nose shows how well the body still renews itself.",
   "move": "Adjust for the obvious causes first, then look at what is left.",
+  "ask": "After the obvious causes are set aside, what is left that I should worry about?",
   "trap": "Assuming smell loss is only a stand-in for being old and ill.",
   "keywords": [
     "anosmia",

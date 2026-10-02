@@ -11,6 +11,7 @@
   "unit": "years",
   "answer": "9% / 1% a year = 9 years.",
   "move": "Check the time unit on a rate before calling it small.",
+  "ask": "What small, slow loss in my life would look big if I added it up over years?",
   "trap": "Hearing 1.5% as small without noticing it is per month.",
   "hint": "Work out the total lost in orbit, then divide by the yearly rate.",
   "steps": [

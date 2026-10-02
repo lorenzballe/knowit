@@ -11,6 +11,7 @@
   "unit": "smokers",
   "answer": "About 15 smokers.",
   "move": "Turn two rates into extra successes per hundred before judging a difference.",
+  "ask": "Next time I read a percentage gap in a health claim, will I convert it to people per hundred?",
   "trap": "Comparing the two rates as a ratio instead of a difference.",
   "hint": "Work out how many extra quitters per 100 smokers the abrupt route gives.",
   "steps": [

@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "The large majority. Brandon and colleagues followed quitters after treatment and found about nine in ten who lapsed returned to regular smoking. Whether the first cigarette causes the fall or marks someone already struggling is still argued. Either way, a slip is rarely an isolated event: it is usually the first of many.",
   "move": "Treat the first exception as the start of a pattern, not a one-off.",
+  "ask": "After my last slip, did I treat it as a one-off or as the start of a pattern?",
   "trap": "A small minority, since one cigarette seems a separate event from the rest.",
   "keywords": [
     "lapse",

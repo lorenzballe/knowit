@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "A day or more. Kidneys tolerate cold storage far better than hearts, commonly up to 24 to 36 hours, though each extra hour worsens results. A patient whose new kidney starts slowly can stay on dialysis meanwhile, a safety net no heart recipient has. The spare hours let kidneys be matched carefully and flown far.",
   "move": "Before applying one deadline to everything, ask what each item can tolerate.",
+  "ask": "Which one deadline am I applying to everything without asking what each part can take?",
   "trap": "Carrying the heart's few hours over to every organ.",
   "keywords": [
     "organ preservation",

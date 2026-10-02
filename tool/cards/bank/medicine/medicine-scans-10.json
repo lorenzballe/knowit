@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Twitching the patient's nerves. A magnetic field that changes quickly induces electric currents in the body, and past a threshold they fire peripheral nerves, felt as tingling or twitches. The IEC safety standard caps the rate of change well below levels that could stimulate the heart. Heating limits the scanner's radio pulses, not its gradients.",
   "move": "The limit on a machine is often the body it is pointed at.",
+  "ask": "Where is the limit on my tools really set by the person using them?",
   "trap": "Heating the tissue, the best-known safety limit of MRI.",
   "keywords": [
     "mri",

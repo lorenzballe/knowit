@@ -34,5 +34,6 @@
   "source": "Davis et al., Science Advances, 2019",
   "source_kind": "paper",
   "reference": "doi:10.1126/sciadv.aav3473",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

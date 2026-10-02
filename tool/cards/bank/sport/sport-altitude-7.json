@@ -9,6 +9,7 @@
   "question": "Why do altitude camps often begin with a blood test for iron rather than for red cells?",
   "answer": "Because thin air cannot build blood without iron. In 1992 Stray-Gundersen's group reported that runners who arrived at altitude with low iron stores, measured as serum ferritin, did not increase their red cell volume at all, while runners with adequate stores did. Camps now commonly screen ferritin weeks ahead and supplement anyone low.",
   "move": "Before pressing the accelerator, check there is fuel in the tank.",
+  "ask": "Before I push harder at something, is the basic fuel for it actually there?",
   "keywords": [
     "iron",
     "ferritin",

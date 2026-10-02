@@ -36,8 +36,99 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "metres of floor away",
+      "min": 0,
+      "max": 20
+    },
+    "y": {
+      "label": "cm below the horizon",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "drop = 150 ÷ distance",
+        "hi": true,
+        "points": [
+          [
+            1.5,
+            100.0
+          ],
+          [
+            2,
+            75.0
+          ],
+          [
+            2.5,
+            60.0
+          ],
+          [
+            3,
+            50.0
+          ],
+          [
+            4,
+            37.5
+          ],
+          [
+            5,
+            30.0
+          ],
+          [
+            6,
+            25.0
+          ],
+          [
+            7,
+            21.4
+          ],
+          [
+            8,
+            18.8
+          ],
+          [
+            10,
+            15.0
+          ],
+          [
+            12,
+            12.5
+          ],
+          [
+            15,
+            10.0
+          ],
+          [
+            17.5,
+            8.6
+          ],
+          [
+            20,
+            7.5
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 3,
+        "y": 50,
+        "label": "3 m away: 50 cm down"
+      },
+      {
+        "x": 15,
+        "y": 10,
+        "label": "15 m away: 10 cm down"
+      }
+    ],
+    "caption": "40 cm of picture holds 12 m of floor; the last 10 cm hold everything past 15 m."
+  },
   "source": "Field, The Invention of Infinity, 1997",
   "source_kind": "book",
   "reference": "J. V. Field, The Invention of Infinity: Mathematics and Art in the Renaissance, Oxford University Press, 1997",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

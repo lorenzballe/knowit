@@ -9,7 +9,8 @@
   "unit": "thousand hours",
   "withinFactor": 3,
   "answer": "That is more than a month of footage produced every minute.",
-  "move": "More video is uploaded each minute than one person could watch in a month.",
+  "move": "A number too big to picture becomes graspable once you split it into familiar pieces.",
+  "ask": "Next time a number feels too large to grasp, will I break it into pieces I can picture?",
   "hint": "You only need the order of magnitude, not the exact platform figures.",
   "steps": [
     "Reported uploads to the largest platform alone run to several hundred hours a minute.",

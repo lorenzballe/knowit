@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Hear bed, rest, awake, tired, dream and ten more, and sleep, never spoken, comes back. In Roediger and McDermott's second experiment it was recalled 55% of the time, against 62% for words actually on the lists, and people often said they remembered hearing it.",
   "move": "The more neatly a detail fits the story, the less its presence proves.",
+  "ask": "Which detail of a story do I trust just because it fits so neatly?",
   "trap": "Trusting memory to keep what was heard apart from what was inferred.",
   "keywords": [
     "word lists",

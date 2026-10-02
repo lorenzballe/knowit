@@ -38,5 +38,6 @@
   "source": "ISO 5-2, density measurements",
   "source_kind": "standard",
   "reference": "ISO 5-2:2009, Photography and graphic technology — Density measurements — Part 2: Geometric conditions for transmittance density, International Organization for Standardization, 2009",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

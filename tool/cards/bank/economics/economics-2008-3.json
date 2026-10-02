@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "More than four in five. The Financial Crisis Inquiry Commission found 83% were downgraded. The models treated mortgage defaults in different places as largely unconnected, so a pool of shaky loans looked safe. When house prices fell across the country at once, the loans failed together, and the top slices failed with them.",
   "move": "Spreading risk works only if the pieces cannot all fall at once.",
+  "ask": "Which of my backup plans would all fail together, for the same reason?",
   "trap": "Guessing few, as if loans in different states failed independently.",
   "keywords": [
     "credit ratings",
@@ -33,6 +34,18 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 83,
+        "label": "later downgraded",
+        "hi": true
+      }
+    ],
+    "caption": "Of every 100 mortgage securities Moody's rated AAA in 2006, 83 were later downgraded."
+  },
   "source": "Financial Crisis Inquiry Commission, 2011",
   "source_kind": "primary_document",
   "reference": "Financial Crisis Inquiry Commission, The Financial Crisis Inquiry Report, US Government Printing Office, 2011",

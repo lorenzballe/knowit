@@ -35,5 +35,6 @@
   "source": "IMF, El Salvador Extended Fund Facility, 2025",
   "source_kind": "institution",
   "reference": "International Monetary Fund, El Salvador: Request for an Extended Arrangement under the Extended Fund Facility, Country Report, 2025",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

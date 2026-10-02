@@ -107,7 +107,11 @@
  "magicUnlock": "Try {days} days free",
  "@magicUnlock": {
   "description": "The action on the card after the fifth for a reader the store will still give the free trial. {days} is the trial's length, as the store has it.",
-  "placeholders": {"days": {"type": "int"}}
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
  },
  "getPlus": "Get Astute+",
  "@getPlus": {
@@ -622,7 +626,11 @@
  "plusNameCaps": "ASTUTE+",
  "trialDaysFree": "{days} days free",
  "@trialDaysFree": {
-  "placeholders": {"days": {"type": "int"}}
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
  },
  "seeThePlans": "SEE THE PLANS",
  "recordStartsToday": "Your record starts today.",
@@ -830,7 +838,7 @@
  "termsLine": "By signing up you agree to our Terms of Service & Privacy Policy",
  "skip": "Skip",
  "tapToRevealLower": "tap to reveal",
- "barMoveCaps": "BAR MOVE",
+ "barMoveCaps": "WHAT TO KEEP",
  "theBarMoveCaps": "THE BAR MOVE",
  "widgetFootPlain": "Five cards, two minutes.",
  "@widgetFootPlain": {
@@ -884,12 +892,14 @@
   }
  },
  "perkArchiveTitle": "Your whole archive",
- "perkArchiveLine": "Every day you have read, kept for good. The free plan keeps a week.",
+ "perkArchiveLine": "Every day you have read, kept for good.",
  "plusIsActive": "ASTUTE+ IS ACTIVE",
  "tryFreeThen": "Try {days} days free, then {price}{suffix}",
  "@tryFreeThen": {
   "placeholders": {
-   "days": {"type": "int"},
+   "days": {
+    "type": "int"
+   },
    "price": {
     "type": "String"
    },
@@ -1451,10 +1461,13 @@
  "yourMix": "Your mix",
  "genresLine": "Tap a genre to skip it. Hold one and the three strands inside open right below.",
  "insideGenre": "Inside",
- "nOfSixOn": "{n} of 6 on",
+ "nOfSixOn": "{n} of {total} on",
  "@nOfSixOn": {
   "placeholders": {
    "n": {
+    "type": "int"
+   },
+   "total": {
     "type": "int"
    }
   }
@@ -1528,20 +1541,67 @@
  "topOfTheWeek": "Top of the week",
  "topOfTheMonth": "Top of the month",
  "topIn": "Top in {subject}",
- "@topIn": {"placeholders": {"subject": {"type": "String"}}},
+ "@topIn": {
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
  "topLineWeek": "Most liked, saved and said in the last 7 days",
  "topLineMonth": "Most liked, saved and said in the last 30 days",
  "topWeek": "Week",
  "topMonth": "Month",
  "topReaders": "{n, plural, =1{1 reader} other{{n} readers}}",
- "@topReaders": {"placeholders": {"n": {"type": "int"}}},
+ "@topReaders": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
  "topEmpty": "Nothing on the list yet. Every card you like, save or say counts.",
  "readMark": "Read",
  "lovedSinceTheStart": "Loved since the start",
  "lovedIn": "Loved in {subject}",
- "@lovedIn": {"placeholders": {"subject": {"type": "String"}}},
+ "@lovedIn": {
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
  "lovedLine": "What readers kept most, and you have not read yet",
  "forYouShelf": "For you",
  "forYouLine": "What your reading puts first",
- "exploreOffline": "You are offline. This is Explore as it was last read."
+ "exploreOffline": "You are offline. This is Explore as it was last read.",
+ "askYourselfCaps": "ASK YOURSELF",
+ "themeMyths": "Myths, busted",
+ "themeMythsLine": "What almost everyone believes, and why it is wrong",
+ "themeParadoxes": "Paradoxes",
+ "themeParadoxesLine": "Two true things that should not both be true",
+ "themeNumbers": "Numbers that surprise",
+ "themeNumbersLine": "Where the figure is the twist",
+ "themePractical": "Use it today",
+ "themePracticalLine": "Something to try before tonight",
+ "themeOrigins": "Where it came from",
+ "themeOriginsLine": "The beginnings of things you use every day",
+ "themeStories": "True stories",
+ "themeStoriesLine": "Things that really happened",
+ "themeDebates": "Pick a side",
+ "themeDebatesLine": "No right answer, only a better argument",
+ "themeWorkItOut": "Work it out",
+ "themeWorkItOutLine": "A number to reach in your head",
+ "themeSeen": "Seen, not read",
+ "themeSeenLine": "Cards that draw their point",
+ "themeSharpest": "For the sharpest",
+ "themeSharpestLine": "The hardest cards there are",
+ "themePast0": "The ancient world",
+ "themePast1": "The 1600s to the 1800s",
+ "themePast2": "The last century",
+ "themePastLine": "A different age every time it comes round",
+ "themePlace0": "Asia and the Middle East",
+ "themePlace1": "The Americas",
+ "themePlace2": "Europe",
+ "themePlaceLine": "A different part of the world every time it comes round"
 }

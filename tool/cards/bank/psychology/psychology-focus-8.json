@@ -35,5 +35,6 @@
   "source": "Lavie et al., JEP: General, 2004",
   "source_kind": "paper",
   "reference": "Lavie, Hirst, de Fockert & Viding, Load theory of selective attention and cognitive control, Journal of Experimental Psychology: General, 2004",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

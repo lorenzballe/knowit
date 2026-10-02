@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Benford's law, where about 30% of numbers start with 1, holds for figures spread over many orders of magnitude. Precincts are drawn to similar sizes, so their counts cluster, say between 200 and 800, and cannot follow it. Tested on real elections, even a subtler second-digit version flagged honest counts and missed known fraud.",
   "move": "A test works only on data shaped like the data it was built for.",
+  "ask": "Which test do I trust on data that looks different from what it was made for?",
   "trap": "True, because invented numbers do tend to break the law.",
   "keywords": [
     "benford's law",

@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Richard Williams worked on The Thief and the Cobbler for almost three decades. When he missed a deadline in 1992, Warner Bros. withdrew and the completion bond company, which had guaranteed delivery, fired him and his team. Its hired crew finished the film fast and cheap; Miramax later released it as Arabian Knight.",
   "move": "Whoever pays next weighs what is left to do, not what was done.",
+  "ask": "When I take over something half done, do I weigh what is left or what was done?",
   "trap": "Assuming nearly thirty years already invested would buy him time to finish.",
   "keywords": [
     "richard williams",

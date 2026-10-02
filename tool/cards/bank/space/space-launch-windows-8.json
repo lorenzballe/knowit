@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "More than 2.7%. Multiplying assumes each day's weather is separate, but weather comes in systems that sit over a coast for days: the stalled front that scrubs Monday is often still there on Tuesday. One scrub raises the odds of the next, so a run of three is likelier than the product.",
   "move": "Before multiplying chances, ask whether one outcome makes the next likelier.",
+  "ask": "Which risks do I treat as separate when one bad day makes the next one likelier?",
   "trap": "Multiplying the three chances as if each day's weather were separate.",
   "keywords": [
     "launch scrubs",

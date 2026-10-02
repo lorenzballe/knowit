@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Lactic bacteria multiply to hundreds of millions per gram as kimchi reaches its best, then the acid they have made starts to kill them. By the time it is sharply sour, their counts are falling. The acid records past growth, not the present population: the sourest jar is partly a graveyard.",
   "move": "A trace left behind measures past activity, not present numbers.",
+  "ask": "Do I judge someone by what they were, or by who they are now?",
   "trap": "Reading sourness as a count of how many bacteria are alive.",
   "keywords": [
     "lactic acid bacteria",

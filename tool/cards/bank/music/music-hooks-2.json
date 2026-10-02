@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 5 seconds. Hubert Léveillé Gauvin timed the intros of US top-ten singles from 1986 to 2015: over 20 seconds in the mid-1980s, about 5 by 2015, a fall of about 78%. Titles were sung sooner too. A hit now opens with the singer, before a thumb can reach the skip button.",
   "move": "When a starting figure is handed over, push the guess further than feels comfortable.",
+  "ask": "When someone gives me a starting number, do I push my guess far enough away from it?",
   "trap": "Halving the 1980s figure feels like a bold enough guess.",
   "keywords": [
     "song intros",

@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Capsaicin is made in glands on the placenta, the pale ribs that hold the seeds, and the seeds taste hot mainly because they sit pressed against it. Scraping out seeds and ribs together tames a chilli; scraping out seeds alone and leaving the ribs keeps most of the fire in the pan.",
   "move": "The thing that sits next to the cause often takes the blame.",
+  "ask": "What do I blame because it sits next to the real cause?",
   "trap": "Seeds come out with the heat, so they seem to be its source.",
   "keywords": [
     "capsaicin",

@@ -12,6 +12,7 @@
   "tolerance": 2,
   "answer": "At least one success: 1 − 0.54 = 0.46, about 46%.",
   "move": "A method that rarely works each time can still work eventually.",
+  "ask": "Which failed attempt at change am I about to call hopeless when repeated tries could work?",
   "trap": "About 4%, as if one try's odds were a lifetime's odds.",
   "hint": "Work out the chance that every single attempt fails.",
   "steps": [

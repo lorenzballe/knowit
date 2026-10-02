@@ -12,6 +12,7 @@
   "tolerance": 0.5,
   "answer": "$1.68 million x 12 = $20.16 million a year.",
   "move": "Multiply a tiny unit price by the real volume before calling it cheap.",
+  "ask": "Have I multiplied the small price by the real volume before calling it cheap?",
   "trap": "Skipping the per-thousand step and landing a thousand times too high.",
   "hint": "Count the blocks of a thousand calls first, then price a month, then a year.",
   "steps": [

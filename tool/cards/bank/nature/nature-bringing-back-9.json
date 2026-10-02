@@ -38,5 +38,6 @@
   "source": "Frankham et al., Introduction to Conservation Genetics",
   "source_kind": "book",
   "reference": "Frankham, Ballou & Briscoe, Introduction to Conservation Genetics, 2nd edition, Cambridge University Press, 2010",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

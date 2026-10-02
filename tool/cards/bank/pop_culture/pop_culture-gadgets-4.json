@@ -35,5 +35,6 @@
   "source": "The Washington Post, 13 January 1999",
   "source_kind": "news_archive",
   "reference": "https://www.washingtonpost.com/archive/politics/1999/01/13/a-toy-story-of-hairy-espionage/edb69b8a-1b41-47f8-8166-b8839cd637f3/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

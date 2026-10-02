@@ -38,5 +38,6 @@
   "source": "World Aquatics, Facilities Rules",
   "source_kind": "standard",
   "reference": "FINA, Facilities Rules 2017-2021, FR 2.2 pool dimensions and tolerances, 2017",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

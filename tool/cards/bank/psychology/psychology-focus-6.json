@@ -35,5 +35,6 @@
   "source": "Alvarez & Franconeri, Journal of Vision, 2007",
   "source_kind": "paper",
   "reference": "Alvarez & Franconeri, How many objects can you track? Evidence for a resource-limited attentive tracking mechanism, Journal of Vision, 2007",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

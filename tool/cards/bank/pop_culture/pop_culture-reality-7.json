@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About 500 kcal a day below expected. A team at the US National Institutes of Health followed 14 contestants: they had lost 58 kg on average and regained 41 kg, yet burned about 500 kcal a day less at rest than people of their size and build. The slowdown outlasted the weight loss.",
   "move": "The damage from an extreme can outlast the extreme itself.",
+  "ask": "What damage from an extreme habit of mine might outlast the habit?",
   "trap": "Assuming metabolism recovers once the weight has come back.",
   "keywords": [
     "the biggest loser",

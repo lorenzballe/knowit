@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "The €400m is gone whichever way you choose, so it cannot favour either. The only live question is whether the remaining €600m buys more than €600m of anything else. Counting the spent money is how projects that everyone knows are failing get finished.",
   "move": "The money already spent has no vote.",
+  "ask": "What am I still pursuing mainly because of what I have already put in, rather than what is ahead?",
   "trap": "The spent money feels like it would be wasted by stopping.",
   "keywords": [
     "sunk cost",

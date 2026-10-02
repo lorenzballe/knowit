@@ -32,5 +32,6 @@
   "source": "ISO 3166-1 country code standard",
   "source_kind": "standard",
   "reference": "ISO 3166-1:2020, Codes for the representation of names of countries and their subdivisions, Part 1: Country code, International Organization for Standardization, 2020",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

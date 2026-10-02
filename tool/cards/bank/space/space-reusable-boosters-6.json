@@ -9,6 +9,7 @@
   "question": "How did engineers hold physical evidence of damaged booster seals years before Challenger was lost in 1986?",
   "answer": "Because the boosters were fished out of the sea for reuse. Recovered casings showed the rubber O-rings in their joints scorched and eroded on flight after flight, from the second Shuttle mission in 1981, with the worst soot after a cold launch in January 1985. Each safe return was read as proof the margin held.",
   "move": "A near miss that keeps happening is a warning, not a record.",
+  "ask": "Which near miss that keeps happening am I filing as a record, not a warning?",
   "keywords": [
     "challenger",
     "o-rings",

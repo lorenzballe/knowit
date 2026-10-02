@@ -12,6 +12,7 @@
   "question": "Apollo 12 landed less than 200 m from the old Surveyor 3 probe. What did its landing do to the probe?",
   "answer": "Sandblasted it. The descent engine's exhaust drove fine grit low and fast across the surface. When the crew walked over and cut off parts to bring home, the side that had faced their lander was pitted and scoured, with sharp outlines where struts had shielded it. Every lunar landing is also a small dust storm.",
   "move": "Every arrival changes the place it arrives at.",
+  "ask": "What does my arrival change in the place or team I am joining?",
   "keywords": [
     "apollo 12",
     "surveyor 3",

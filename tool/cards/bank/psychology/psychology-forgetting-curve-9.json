@@ -9,6 +9,7 @@
   "question": "In a nine-year study of foreign vocabulary, what let half the review sessions do the work of twice as many?",
   "answer": "Wider gaps between them. Harry Bahrick and three family members relearned 300 word pairs over years. Five years after training ended, 13 sessions held 56 days apart had kept about as many words as 26 sessions held 14 days apart. Words had partly faded before each session, and relearning them then counted for more.",
   "move": "Let some of it fade before going over it again.",
+  "ask": "What am I reviewing too soon, before it has faded enough to need the effort?",
   "keywords": [
     "spacing effect",
     "foreign vocabulary",

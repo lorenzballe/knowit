@@ -9,6 +9,7 @@
   "question": "What flaw did Josef Loschmidt find in Boltzmann's proof that a gas's disorder must grow?",
   "answer": "That the laws it used run just as well backwards. Reverse every molecule's velocity in a spread-out gas and it gathers itself up again, obeying the same mechanics. So growing disorder cannot come from the laws alone; it needs a special start, what David Albert called the past hypothesis: a past of very low entropy.",
   "move": "If a rule works both ways, the direction must come from where things started.",
+  "ask": "When something can't be undone, is it how it works, or just where it started?",
   "keywords": [
     "reversibility objection",
     "josef loschmidt",

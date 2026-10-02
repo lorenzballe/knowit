@@ -923,7 +923,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tapToRevealLower => 'tap to reveal';
 
   @override
-  String get barMoveCaps => 'BAR MOVE';
+  String get barMoveCaps => 'WHAT TO KEEP';
 
   @override
   String get theBarMoveCaps => 'THE BAR MOVE';
@@ -974,8 +974,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get perkArchiveTitle => 'Your whole archive';
 
   @override
-  String get perkArchiveLine =>
-      'Every day you have read, kept for good. The free plan keeps a week.';
+  String get perkArchiveLine => 'Every day you have read, kept for good.';
 
   @override
   String get plusIsActive => 'ASTUTE+ IS ACTIVE';
@@ -1597,8 +1596,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get insideGenre => 'Inside';
 
   @override
-  String nOfSixOn(int n) {
-    return '$n of 6 on';
+  String nOfSixOn(int n, int total) {
+    return '$n of $total on';
   }
 
   @override
@@ -1771,4 +1770,94 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get exploreOffline =>
       'You are offline. This is Explore as it was last read.';
+
+  @override
+  String get askYourselfCaps => 'ASK YOURSELF';
+
+  @override
+  String get themeMyths => 'Myths, busted';
+
+  @override
+  String get themeMythsLine =>
+      'What almost everyone believes, and why it is wrong';
+
+  @override
+  String get themeParadoxes => 'Paradoxes';
+
+  @override
+  String get themeParadoxesLine =>
+      'Two true things that should not both be true';
+
+  @override
+  String get themeNumbers => 'Numbers that surprise';
+
+  @override
+  String get themeNumbersLine => 'Where the figure is the twist';
+
+  @override
+  String get themePractical => 'Use it today';
+
+  @override
+  String get themePracticalLine => 'Something to try before tonight';
+
+  @override
+  String get themeOrigins => 'Where it came from';
+
+  @override
+  String get themeOriginsLine => 'The beginnings of things you use every day';
+
+  @override
+  String get themeStories => 'True stories';
+
+  @override
+  String get themeStoriesLine => 'Things that really happened';
+
+  @override
+  String get themeDebates => 'Pick a side';
+
+  @override
+  String get themeDebatesLine => 'No right answer, only a better argument';
+
+  @override
+  String get themeWorkItOut => 'Work it out';
+
+  @override
+  String get themeWorkItOutLine => 'A number to reach in your head';
+
+  @override
+  String get themeSeen => 'Seen, not read';
+
+  @override
+  String get themeSeenLine => 'Cards that draw their point';
+
+  @override
+  String get themeSharpest => 'For the sharpest';
+
+  @override
+  String get themeSharpestLine => 'The hardest cards there are';
+
+  @override
+  String get themePast0 => 'The ancient world';
+
+  @override
+  String get themePast1 => 'The 1600s to the 1800s';
+
+  @override
+  String get themePast2 => 'The last century';
+
+  @override
+  String get themePastLine => 'A different age every time it comes round';
+
+  @override
+  String get themePlace0 => 'Asia and the Middle East';
+
+  @override
+  String get themePlace1 => 'The Americas';
+
+  @override
+  String get themePlace2 => 'Europe';
+
+  @override
+  String get themePlaceLine =>
+      'A different part of the world every time it comes round';
 }

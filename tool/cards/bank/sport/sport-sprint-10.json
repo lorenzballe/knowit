@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Hitting the ground with more force. Weyand's team found that runners with very different top speeds swung their legs through the air in about the same time. The faster ones pushed harder during briefer ground contacts, travelling farther with each step. Speed is made in the instant a shoe is on the track.",
   "move": "Look for the cause in the part that is hardest to see.",
+  "ask": "Am I looking for a cause where it's easy to see instead of where it really sits?",
   "trap": "Seeing a blur of legs and crediting how fast they swing.",
   "keywords": [
     "sprinting",

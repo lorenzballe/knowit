@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "More of them lost their jobs. Crépon and Kramarz compared them with similar workers already on 36 to 39 hours, whom the law left alone. Same monthly pay for fewer hours raised their hourly cost, above all near the minimum wage, and their job losses rose. The freed hour went to nobody.",
   "move": "Before sharing out work, check what each share now costs.",
+  "ask": "When I split work or cost, do I know what each share now costs?",
   "trap": "Assuming fewer hours per worker spreads the same work over more people.",
   "keywords": [
     "working hours",

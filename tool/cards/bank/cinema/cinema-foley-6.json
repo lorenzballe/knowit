@@ -12,6 +12,7 @@
   "question": "Why is a Foley stage built to sound like no room at all?",
   "answer": "So the mixer can choose the room later. Foley stages are heavily damped and the microphone sits close, so each sound comes out dry, with almost no echo of its own. The mixer then adds the reverberation of the scene's space: a cathedral, a car, a corridor. One pair of shoes can be placed anywhere.",
   "move": "Record things plain when you do not yet know where they will be used.",
+  "ask": "What could I keep plain now because I do not yet know where I will need it?",
   "keywords": [
     "foley stage",
     "reverberation",

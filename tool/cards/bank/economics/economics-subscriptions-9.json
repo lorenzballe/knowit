@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. From January 2022 the Financial Conduct Authority banned price walking, raising premiums year after year for customers who renew without shopping around. It had found about 6 million policyholders overpaying for their risk, by some £1.2 billion in 2018. A renewal quote may no longer exceed the price offered to an identical newcomer.",
   "move": "Where a contract renews itself, check who is paying for staying.",
+  "ask": "Which of my contracts renews itself, and do I pay more for staying?",
   "trap": "Assuming firms may always charge loyal customers whatever they accept.",
   "keywords": [
     "price walking",

@@ -12,6 +12,7 @@
   "question": "Why may a rocket not launch through a cloud that has produced no lightning at all?",
   "answer": "Because the rocket can make the lightning. A tall conductor trailing a long, ionised exhaust plume distorts the electric field in a charged cloud enough to trigger a strike. Apollo 12 was hit twice within its first minute in 1969, with no storm reported; in 1987 triggered lightning destroyed an Atlas-Centaur rocket.",
   "move": "Check whether your own action creates the danger you are watching for.",
+  "ask": "Could my own action be creating the danger I am watching out for?",
   "keywords": [
     "triggered lightning",
     "apollo 12",

@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Andrea Halpern and James Bartlett had people log each stuck tune in a diary as it happened: the large majority of episodes were not unpleasant, and many came from music the person liked and had heard recently. The maddening ones get reported. Mostly, the loop is a favourite song replaying itself.",
   "move": "Complaints sample the bad days, not the ordinary ones.",
+  "ask": "Which of my complaints only counts my bad days and forgets the ordinary ones?",
   "trap": "The maddening episodes are the ones remembered and talked about.",
   "keywords": [
     "earworms",

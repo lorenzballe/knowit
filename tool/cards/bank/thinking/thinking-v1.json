@@ -12,6 +12,7 @@
   "correct": 1,
   "answer": "Suicide, by about half as many again: roughly 700,000 deaths a year worldwide against about 460,000 homicides. One is covered constantly and the other rarely, and coverage is what makes a cause of death feel common.",
   "move": "What you can recall easily is a fact about the news, not about the world.",
+  "ask": "Which danger do I rate as big mostly because I can easily recall a news story about it?",
   "trap": "Reaching for the one that gets reported.",
   "keywords": [
     "availability",

@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Temnothorax workers taken by the raiding ant Protomognathus americanus tend their captors' brood, yet Achenbach and Foitzik found the captives killing many of the raiders' female pupae. The captives cannot escape or breed, but every pupa they kill is one fewer future raider attacking nearby nests, which are full of their relatives.",
   "move": "Where open revolt is impossible, look for quiet sabotage.",
+  "ask": "Where around me might people be resisting quietly because they cannot say it out loud?",
   "trap": "Assuming ants raised in a nest cannot tell it is foreign.",
   "keywords": [
     "slave-making ants",

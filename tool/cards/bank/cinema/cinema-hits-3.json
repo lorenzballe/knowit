@@ -34,5 +34,6 @@
   "source": "Box Office Mojo, weekend charts 2002",
   "source_kind": "statistics",
   "reference": "https://www.boxofficemojo.com/title/tt0259446/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

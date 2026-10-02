@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 62%. A game needs four points and a two-point margin, so a small edge on each point compounds: all the paths through 40-15 and deuce are tilted the same way. At 60% of points the figure is about 74%. Sets and matches magnify it again, which is how small edges become lopsided scorelines.",
   "move": "A small edge repeated through a winner-takes-all format becomes a large one.",
+  "ask": "What small edge of mine repeats often enough to become decisive?",
   "trap": "Expecting the share of games to mirror the share of points.",
   "keywords": [
     "tennis scoring",
@@ -32,6 +33,132 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "% of points won on serve",
+      "min": 0,
+      "max": 100
+    },
+    "y": {
+      "label": "% of service games won",
+      "min": 0,
+      "max": 110
+    },
+    "series": [
+      {
+        "label": "if a game were one point",
+        "points": [
+          [
+            0,
+            0
+          ],
+          [
+            100,
+            100
+          ]
+        ]
+      },
+      {
+        "label": "four points, two clear",
+        "hi": true,
+        "points": [
+          [
+            0,
+            0.0
+          ],
+          [
+            5,
+            0.0
+          ],
+          [
+            10,
+            0.1
+          ],
+          [
+            15,
+            0.7
+          ],
+          [
+            20,
+            2.2
+          ],
+          [
+            25,
+            5.1
+          ],
+          [
+            30,
+            9.9
+          ],
+          [
+            35,
+            17.0
+          ],
+          [
+            40,
+            26.4
+          ],
+          [
+            45,
+            37.7
+          ],
+          [
+            50,
+            50.0
+          ],
+          [
+            55,
+            62.3
+          ],
+          [
+            60,
+            73.6
+          ],
+          [
+            65,
+            83.0
+          ],
+          [
+            70,
+            90.1
+          ],
+          [
+            75,
+            94.9
+          ],
+          [
+            80,
+            97.8
+          ],
+          [
+            85,
+            99.3
+          ],
+          [
+            90,
+            99.9
+          ],
+          [
+            95,
+            100.0
+          ],
+          [
+            100,
+            100.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 55,
+        "y": 62.3,
+        "label": "55% of points: 62%"
+      }
+    ],
+    "caption": "Winning 55% of points holds 62% of service games; 60% of points holds about 74%."
+  },
   "source": "Newton & Keller, Studies in Applied Mathematics, 2005",
   "source_kind": "paper",
   "reference": "Newton & Keller, Probability of winning at tennis I. Theory and data, Studies in Applied Mathematics, 2005",

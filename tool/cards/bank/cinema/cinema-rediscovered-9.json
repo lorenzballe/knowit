@@ -35,5 +35,6 @@
   "source": "Kodak, identifying year of manufacture",
   "source_kind": "company",
   "reference": "https://www.kodak.com/content/products-brochures/Film/Guide-to-Identifying-Year-of-Manufacture-for-KODAK-Motion-Picture-Films.pdf",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

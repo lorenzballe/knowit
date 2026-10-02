@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About 7 in 10. 70% reported significant tonic immobility, an involuntary paralysis under extreme fear, and 48% an extreme degree of it. Those who froze were more likely to have post-traumatic stress disorder and severe depression months later. The body had chosen stillness before the mind could choose anything.",
   "move": "Before judging how someone reacted to danger, ask whether their body let them choose.",
+  "ask": "Before I judge how someone reacted in danger, do I know whether their body let them choose?",
   "trap": "Picturing fear as fight or flight, the version films show.",
   "keywords": [
     "tonic immobility",

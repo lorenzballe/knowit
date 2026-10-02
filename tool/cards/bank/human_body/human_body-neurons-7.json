@@ -29,5 +29,6 @@
   "source": "Hodgkin & Keynes, Journal of Physiology, 1955",
   "source_kind": "paper",
   "reference": "Hodgkin & Keynes, Active transport of cations in giant axons from Sepia and Loligo, Journal of Physiology, 1955",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Recovery happened in the wild, at Epping Forest in Queensland. The site became a national park, cattle competing for grass were removed, and a predator-proof fence went up against wild dogs in 2002. From about 35 animals in the early 1980s, numbers passed 400 by 2024.",
   "move": "Before crediting the rescue, ask what stopped the losses in the first place.",
+  "ask": "Before I credit a rescue, have I checked what actually stopped the losses?",
   "trap": "Species rescues are pictured as zoo nurseries, so captivity seems likely.",
   "keywords": [
     "northern hairy-nosed wombat",

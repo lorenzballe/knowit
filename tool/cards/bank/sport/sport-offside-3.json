@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Flagging attackers who were onside. About 26% of offside situations were judged wrongly, and most errors were raised flags. A forward in motion is seen slightly ahead of where he really is when the pass is struck, so level looks beyond. The attack that was wrongly stopped leaves nothing to replay.",
   "move": "The mistakes that end the story are the ones nobody sees on the replay.",
+  "ask": "Which of my mistakes stay hidden because nobody sees the replay?",
   "trap": "Recalling goals given from offside, which are replayed endlessly.",
   "keywords": [
     "assistant referees",

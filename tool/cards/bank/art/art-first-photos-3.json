@@ -12,6 +12,7 @@
   "tolerance": 1,
   "answer": "4.17 × 4.17 ≈ 17.4 times the light.",
   "move": "When a width changes, ask whether what matters is an area.",
+  "ask": "When a measure changes in width, is the thing that matters really an area?",
   "trap": "Dividing the f-numbers and answering four, forgetting the opening is an area.",
   "hint": "The f-number measures the width of the opening; light passes through an area.",
   "steps": [
@@ -36,6 +37,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "area",
+    "unit": "× the light",
+    "items": [
+      {
+        "label": "Daguerre's lens, f/15",
+        "value": 1
+      },
+      {
+        "label": "Petzval's lens, f/3.6",
+        "value": 17.4,
+        "hi": true
+      }
+    ],
+    "caption": "An opening 4.17 times wider lets in 17.4 times the light."
+  },
   "source": "Kingslake, A History of the Photographic Lens, 1989",
   "source_kind": "book",
   "reference": "Rudolf Kingslake, A History of the Photographic Lens, Academic Press, 1989",

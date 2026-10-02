@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "The cluster moved to January to March. Boys born just after 1 August had been overrepresented; afterwards those born just after 1 January took their place. Being oldest in the age group, not the season of birth, was doing the selecting. A few extra months of growth passed for talent.",
   "move": "Move the arbitrary line and see whether the advantage moves with it.",
+  "ask": "Where did I get a head start from an arbitrary line, and did I take it for talent?",
   "trap": "Keeping the old months, as if autumn births carried some advantage.",
   "keywords": [
     "relative age effect",

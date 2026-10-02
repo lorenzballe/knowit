@@ -9,6 +9,7 @@
   "question": "Why does a lithium-ion cell use copper foil on one electrode and aluminium foil on the other?",
   "answer": "Because each survives on only one side. At the negative electrode's low voltage, aluminium absorbs lithium and crumbles into alloy, so heavier, dearer copper goes there. At the positive side copper would dissolve, so aluminium goes there. Drain a cell to zero and the copper dissolves too, regrowing as metal spikes that can short it.",
   "move": "When a design uses two materials for one job, ask what each one cannot survive.",
+  "ask": "When a design needs two materials, what can each one not survive?",
   "keywords": [
     "current collectors",
     "copper foil",

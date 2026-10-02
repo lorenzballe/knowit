@@ -36,5 +36,6 @@
   "source": "Pliny, Natural History, Book 12",
   "source_kind": "primary_document",
   "reference": "Pliny the Elder, Natural History, Books 12–16, trans. H. Rackham, Loeb Classical Library, Harvard University Press, 1945",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Every uridine, one of the four letters, is replaced by N1-methylpseudouridine, a close chemical cousin. Unmodified mRNA trips the cell's virus alarms and is shut down before much protein is made. Karikó and Weissman's 2005 work on the swap won a Nobel Prize in 2023. Ribosomes still read the altered letter as the original.",
   "move": "A copy that works often had to differ from the original to get through.",
+  "ask": "What did I copy exactly when a small change would have helped it work?",
   "trap": "Assuming a vaccine copies the virus's message letter for letter.",
   "keywords": [
     "mrna vaccines",

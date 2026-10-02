@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. The LACC trial randomised 631 women to open or minimally invasive radical hysterectomy, one in six of the latter by robot. At three years 99.0% of the open group were alive, against 93.8%, and cancer returned more often. In 2019 the FDA warned that robots were unproven for such cancer operations.",
   "move": "A gentler way in can still be worse at the job itself.",
+  "ask": "Where am I assuming the gentler way works just as well on the job itself?",
   "trap": "Assuming smaller cuts can only mean smaller harm.",
   "keywords": [
     "cervical cancer",
@@ -31,7 +32,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% dead at three years",
+    "items": [
+      {
+        "label": "Open surgery",
+        "value": 1.0
+      },
+      {
+        "label": "Keyhole or robotic",
+        "value": 6.2,
+        "hi": true
+      }
+    ],
+    "caption": "99.0% against 93.8% alive looks close; the deaths differ sixfold."
+  },
   "source": "Ramirez et al., NEJM, 2018",
   "source_kind": "paper",
   "reference": "Ramirez et al., Minimally invasive versus abdominal radical hysterectomy for cervical cancer, New England Journal of Medicine, 2018",

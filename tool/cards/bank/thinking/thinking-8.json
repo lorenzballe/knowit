@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "If the firm grew fastest in its hardest cities, those now carry more weight in the total. Every city can improve while the overall average falls, because the average is over a different mix of deliveries than last year.",
   "move": "A total and its parts can honestly point opposite ways.",
+  "ask": "Which headline total about my work or life hides a mix change that tells the opposite story?",
   "trap": "Assuming the total has to move with its parts.",
   "simply": "Two classes both got better at spelling this year. But the big struggling class grew and the small strong class shrank. The school's average went down. Everybody improved and the school looks worse.",
   "keywords": [

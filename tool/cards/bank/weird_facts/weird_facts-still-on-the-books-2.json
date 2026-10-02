@@ -9,6 +9,7 @@
   "question": "What does the oldest statute still in force in England deal with?",
   "answer": "Seizing goods for debt, and tenants spoiling land. The Statute of Marlborough, passed in 1267 after a civil war, still has a few chapters in force. Most curb distress, taking a debtor's goods without a court's order; one forbids tenants to waste the land they farm. Its clauses have outlived the barons by 750 years.",
   "move": "Rules written to end a crisis tend to outlast the crisis by centuries.",
+  "ask": "Which rule do I follow that was written for a crisis long over?",
   "keywords": [
     "statute of marlborough",
     "henry iii",

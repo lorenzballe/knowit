@@ -12,6 +12,7 @@
   "question": "How could Breathless shoot at night on Paris streets in 1959 with almost no film lights?",
   "answer": "On film made for still cameras. Raoul Coutard loaded Ilford HPS, a fast stock sold to photographers in short lengths, spliced it into rolls long enough for a movie camera, and had the laboratory push the development to gain more speed. Street lamps and shop windows did the lighting.",
   "move": "When the proper supply is missing, look at what a neighbouring trade sells.",
+  "ask": "When I lack the proper supply, what does a neighbouring field sell?",
   "keywords": [
     "breathless",
     "raoul coutard",

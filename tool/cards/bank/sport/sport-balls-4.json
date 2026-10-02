@@ -9,6 +9,7 @@
   "question": "How do golf's rule-makers plan to shorten the longest drives from 2028 without changing a single club?",
   "answer": "By testing balls with a faster robot swing. Under the new test, a ball struck at a clubhead speed of about 201 km/h may not travel beyond about 290 m; the old test swung at about 193 km/h. Balls passing the harder test fly shorter; the longest hitters should lose around 12 to 14 m.",
   "move": "To change a limit without rewriting it, change the test that enforces it.",
+  "ask": "If I want to change a limit, could I change how it is checked instead of rewriting it?",
   "keywords": [
     "golf ball",
     "rollback",

@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Blanks that record Earthly contamination. They are opened to the rover's surroundings on Mars but never take in Martian material, so labs can later tell which organic traces rode along from Earth. Without them, a hint of life in a real sample could not be told apart from the builders' fingerprints.",
   "move": "Before trusting a detection, ask what an empty test would have shown.",
+  "ask": "Before I trust a result, did I ask what an empty test would have shown?",
   "trap": "Missions always carry spares, so the extras must be spares.",
   "keywords": [
     "witness tubes",

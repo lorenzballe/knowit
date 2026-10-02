@@ -9,6 +9,7 @@
   "question": "What did the WHO's ICD-11 change in 2019 about how chronic pain is classified?",
   "answer": "It made some chronic pain a disease in its own right. Before, chronic pain was coded mostly as a symptom of something else. ICD-11 added chronic primary pain: pain lasting over three months with distress or disability that no other condition explains, such as fibromyalgia. A patient with no lesion now leaves with a diagnosis.",
   "move": "A problem without a name gets counted as nothing.",
+  "ask": "What problem in my life gets ignored because nobody has a name for it?",
   "keywords": [
     "icd-11",
     "chronic primary pain",

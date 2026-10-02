@@ -37,5 +37,6 @@
   "source": "Fox et al., Space Science Reviews, 2016",
   "source_kind": "paper",
   "reference": "Fox et al., The Solar Probe Plus Mission: Humanity's First Visit to Our Star, Space Science Reviews 204, 7, 2016",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

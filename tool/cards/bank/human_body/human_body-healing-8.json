@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The callus, a collar of new bone around the break, briefly makes the site thicker, but over months and years remodelling carves it back to the original shape and strength. Unlike skin, bone heals by making true bone again rather than scar. A child's healed fracture can become hard to find on later X-rays.",
   "move": "A patch that looks bulky while healing is not the finished repair.",
+  "ask": "What am I judging while it is still messy, instead of when it is done?",
   "trap": "Mistaking the temporary thick collar of callus for lasting reinforcement.",
   "keywords": [
     "fracture healing",

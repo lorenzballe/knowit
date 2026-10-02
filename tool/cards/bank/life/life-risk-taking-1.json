@@ -1,0 +1,41 @@
+{
+  "id": "life-risk-taking-1",
+  "topic": "life",
+  "genre": "life.decisions",
+  "strand": "life.decisions.risk_taking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "After September 2001 Americans flew less and drove more. About how many extra road deaths did that avoidance cause in the following year?",
+  "options": [
+    "About 15",
+    "About 150",
+    "About 1,500"
+  ],
+  "correct": 2,
+  "answer": "About 1,500. Gigerenzer estimated that the fall in flying and rise in driving after September 2001 caused roughly 1,500 extra road deaths in the next twelve months, about half the 2,977 people killed in the attacks. Avoiding a vivid risk moved people onto a larger one.",
+  "move": "Count the risk of the alternative, not only the one that frightens.",
+  "ask": "Which risk am I avoiding by choosing an alternative that is quietly more dangerous?",
+  "trap": "A vivid catastrophe makes flying seem riskier than the road.",
+  "keywords": [
+    "september 2001",
+    "flying",
+    "road deaths",
+    "dread risk",
+    "gigerenzer"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gigerenzer, Risk Analysis, 2006",
+  "source_kind": "paper",
+  "reference": "Gigerenzer, Out of the Frying Pan into the Fire: Behavioral Reactions to Terrorist Attacks, Risk Analysis, 2006",
+  "written": "2026-09-29"
+}

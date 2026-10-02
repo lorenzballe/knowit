@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Hilma af Klint, from 1906, about five years before Kandinsky. She showed the work to almost no one and asked that it stay unseen for 20 years after her death in 1944. Histories of abstraction were written from what hung in Paris, Munich and Moscow; she entered them after a Los Angeles exhibition in 1986.",
   "move": "A history can only include what its historians were able to see.",
+  "ask": "Whose work is missing from the story I tell about how something began?",
   "trap": "Kandinsky is the name standard histories put first, so it comes first.",
   "keywords": [
     "hilma af klint",

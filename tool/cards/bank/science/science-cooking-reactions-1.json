@@ -39,5 +39,6 @@
   "source": "IUPAC standard atomic weights, 2021",
   "source_kind": "reference_work",
   "reference": "IUPAC Commission on Isotopic Abundances and Atomic Weights, Standard atomic weights of the elements, 2021",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

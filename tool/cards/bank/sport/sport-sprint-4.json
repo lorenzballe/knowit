@@ -9,6 +9,7 @@
   "question": "Why are sprint records from before 1977 not comparable with later ones, even to a tenth of a second?",
   "answer": "Because they were timed by hand. Timekeepers started their watches on seeing the gun's smoke, after a human reaction delay, and tended to stop them early as runners neared the line. Statisticians add 0.24 seconds to a hand-timed 100 m to compare it with electronic times. From 1977, records needed fully automatic timing.",
   "move": "Before comparing two figures, ask whether the same instrument produced both.",
+  "ask": "Before I compare two figures, did the same instrument produce both?",
   "keywords": [
     "hand timing",
     "fully automatic timing",

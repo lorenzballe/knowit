@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Mori's essay in the Japanese magazine Energy was a thought experiment: the curve dipping into a valley where near-human figures turn eerie was sketched, not measured. Computer-animated films such as The Polar Express, in 2004, made it famous. Experiments since have found the dip in some setups and not others.",
   "move": "Ask whether a famous curve was measured or simply drawn.",
+  "ask": "Which famous idea do I repeat without knowing whether anyone measured it?",
   "trap": "Taking a curve that vivid examples seem to confirm for measured data.",
   "keywords": [
     "uncanny valley",

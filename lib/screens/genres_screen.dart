@@ -282,6 +282,9 @@ class _Subject extends StatelessWidget {
     // question, so it is worth the pixels.
     final double planet = 26 + weight * 35;
     final int on = genres.where((g) => !genresOff.contains(g.id)).length;
+    // Every genre tapped off is the subject off: grey, and said so, rather
+    // than a lit planet over "0 of 6 on".
+    final bool dark = on == 0;
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -295,21 +298,23 @@ class _Subject extends StatelessWidget {
                 width: planet,
                 height: planet,
                 decoration: BoxDecoration(
-                  color: style.color,
+                  color: dark ? p.lineStrong : style.color,
                   shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: style.color.withValues(alpha: 0.6),
-                      blurRadius: 26,
-                      spreadRadius: -3,
-                    ),
-                  ],
+                  boxShadow: dark
+                      ? null
+                      : [
+                          BoxShadow(
+                            color: style.color.withValues(alpha: 0.6),
+                            blurRadius: 26,
+                            spreadRadius: -3,
+                          ),
+                        ],
                 ),
                 alignment: Alignment.center,
                 child: SubjectIcon(
                   subject: style.name,
                   size: planet * 0.5,
-                  ink: style.ink,
+                  ink: dark ? p.inkFaint : style.ink,
                 ),
               ),
             ),
@@ -331,13 +336,13 @@ class _Subject extends StatelessWidget {
                         size: 15,
                         weight: FontWeight.w600,
                         spacing: -0.2,
-                        color: p.ink,
+                        color: dark ? p.inkFaint : p.ink,
                       ),
                     ),
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    '${_level(l)} · ${l.nOfSixOn(on)}',
+                    dark ? l.offInYourMix : '${_level(l)} · ${l.nOfSixOn(on, genres.length)}',
                     style: AppText.body(size: 10.5, color: p.inkFaint),
                   ),
                 ],

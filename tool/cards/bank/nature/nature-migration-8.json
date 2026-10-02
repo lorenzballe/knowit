@@ -28,5 +28,6 @@
   "source": "Chapman et al., Science, 2010",
   "source_kind": "paper",
   "reference": "Chapman et al., Flight orientation behaviors promote optimal migration trajectories in high-flying insects, Science, 2010",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

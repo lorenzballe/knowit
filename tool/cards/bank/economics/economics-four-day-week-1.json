@@ -9,6 +9,7 @@
   "question": "What did British munitions factories of the First World War reveal about long working weeks?",
   "answer": "That extra hours stop paying. Re-analysing the records of the wartime Health of Munition Workers Committee, John Pencavel found output rose in step with hours up to about 49 a week, then ever more slowly. Output at 70 hours differed little from output at 56: fourteen extra hours bought almost nothing.",
   "move": "Find the point where extra hours stop adding output, then stop.",
+  "ask": "Where in my week do extra hours stop adding anything?",
   "keywords": [
     "working hours",
     "productivity",

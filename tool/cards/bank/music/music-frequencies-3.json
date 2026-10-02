@@ -37,5 +37,6 @@
   "source": "Standard piano tuning, A4 = 440 Hz",
   "source_kind": "standard",
   "reference": "ISO 16:1975, Acoustics: Standard tuning frequency (standard musical pitch)",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

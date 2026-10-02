@@ -12,6 +12,7 @@
   "tolerance": 0.1,
   "answer": "2,323 kg / 1,000 = about 2.3 tonnes.",
   "move": "Turn a sum of money into a physical pile before judging its size.",
+  "ask": "Before I judge whether a sum is big, have I turned it into something I can picture?",
   "trap": "Stopping at kilograms and reading 2,323 as the answer.",
   "hint": "Multiply florins by grams, then divide by a thousand twice.",
   "steps": [

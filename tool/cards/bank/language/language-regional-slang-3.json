@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Chav comes from Romani chavvi, child, a word used for generations in the south-east of England. The acronym explanations, council housed and violent and its variants, were invented after the word spread in the early 2000s. Every letter fits the story because every letter was chosen afterwards.",
   "move": "An explanation built to fit every detail is proved by none of them.",
+  "ask": "Which neat explanation do I believe only because it fits every detail?",
   "trap": "An acronym that accounts for each letter feels too exact to be invented.",
   "keywords": [
     "chav",

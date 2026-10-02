@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About a third. Most episodes brought no change in mood, and some left the crier feeling worse. Relief came more often when someone offered comfort, and less often for people who struggle to name their feelings. Asked about crying in general, people say it helps: the good cries are the ones memory keeps.",
   "move": "Ask whether the evidence was logged at the time or recalled later.",
+  "ask": "Which of my beliefs about how I feel rests on later recall rather than notes made at the time?",
   "trap": "Going by memory, where the relieving cries are the ones that stand out.",
   "keywords": [
     "crying diary",

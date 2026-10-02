@@ -12,6 +12,7 @@
   "question": "Who taught ChatGPT's safety filter what violent and abusive text looks like?",
   "answer": "Workers in Nairobi. To teach a filter to catch harmful text, OpenAI needed tens of thousands of examples labelled by hand; through an outsourcing firm, Sama, Kenyan staff read and tagged passages describing sexual abuse, torture and suicide. In 2023 TIME reported their take-home pay at about $1.32 to $2 an hour.",
   "move": "Ask who did the unpleasant work that makes a product feel clean.",
+  "ask": "Who did the unpleasant work that makes something I use feel clean?",
   "keywords": [
     "data labelling",
     "content moderation",

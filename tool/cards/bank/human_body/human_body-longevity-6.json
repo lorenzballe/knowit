@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About 8 years. With risk doubling every 8 years, halving it at every age gives each person the risk of someone 8 years younger, which shifts the whole adult curve 8 years later. Because the risk keeps doubling, the gain is soon used up: the treated die of the same rising risk, only later.",
   "move": "Against a risk that doubles, halving it buys one doubling time.",
+  "ask": "If I halved a risk in my life, how much would it really buy me?",
   "trap": "Reading half the risk of dying as roughly double the remaining life.",
   "keywords": [
     "gompertz law",

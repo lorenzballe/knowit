@@ -1,0 +1,41 @@
+{
+  "id": "life-learning-1",
+  "topic": "life",
+  "genre": "life.growth",
+  "strand": "life.growth.learning",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Students read a passage, then either re-read it or were tested on it. A week later, who recalled more?",
+  "options": [
+    "The tested students",
+    "The re-readers",
+    "Both about equally"
+  ],
+  "correct": 0,
+  "answer": "The tested students. In Roediger and Karpicke's experiment, students who took recall tests remembered more a week later than those who re-read the passage several times, though re-readers did better after five minutes and felt more confident about their learning.",
+  "move": "Trust what you can recall unaided over what merely looks familiar.",
+  "ask": "What am I rereading to feel prepared, when testing myself would show what I actually know?",
+  "trap": "Re-reading feels like progress because the text looks familiar.",
+  "keywords": [
+    "testing effect",
+    "retrieval practice",
+    "re-reading",
+    "memory",
+    "roediger"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Roediger and Karpicke, Psychological Science, 2006",
+  "source_kind": "paper",
+  "reference": "Roediger and Karpicke, Test-Enhanced Learning: Taking Memory Tests Improves Long-Term Retention, Psychological Science, 2006",
+  "written": "2026-09-29"
+}

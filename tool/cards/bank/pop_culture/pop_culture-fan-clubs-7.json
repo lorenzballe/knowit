@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "No. Entry was first come, first served, and registering reserved no seat, so a fake sign-up could not block a real supporter. What the pranks inflated was the campaign's forecast: it boasted of over a million requests, yet the fire department counted about 6,200 people inside a 19,000-seat arena. The empty seats had other causes.",
   "move": "Before crediting a cause, check it could have produced the effect.",
+  "ask": "Before I credit a cause, could it actually have produced that effect?",
   "trap": "Crediting the prank because it came just before the empty seats.",
   "keywords": [
     "k-pop fans",
@@ -32,6 +33,25 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "items": [
+      {
+        "label": "People inside",
+        "value": 6200
+      },
+      {
+        "label": "Seats in the arena",
+        "value": 19000
+      },
+      {
+        "label": "Ticket requests boasted",
+        "value": 1000000,
+        "hi": true
+      }
+    ],
+    "caption": "The campaign boasted over a million requests; about 6,200 people came, to 19,000 seats."
+  },
   "source": "The New York Times, 21 June 2020",
   "source_kind": "news_archive",
   "reference": "Taylor Lorenz, Kellen Browning and Sheera Frenkel, TikTok Teens and K-Pop Stans Say They Sank Trump Rally, The New York Times, 21 June 2020",

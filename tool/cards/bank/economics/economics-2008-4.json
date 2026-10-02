@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Under the Capital Purchase Programme the Treasury bought about $205 billion of shares in over 700 banks, and repayments, dividends and the sale of warrants brought back more than that. The losses in the bailouts fell elsewhere, on the car makers and on some small banks that never repaid.",
   "move": "A headline sum authorised is not a sum spent, still less one lost.",
+  "ask": "Which scary number have I mistaken for money actually lost?",
   "trap": "Recalling the $700 billion bailout headline as money spent and gone.",
   "keywords": [
     "tarp",

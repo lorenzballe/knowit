@@ -9,6 +9,7 @@
   "question": "Why has Delhi's iron pillar, set up about 1,600 years ago, barely rusted?",
   "answer": "Chemistry, not a lost secret. The wrought iron is unusually rich in phosphorus, and as Delhi's weather wets and dries it, a thin, tight film rich in iron phosphate builds up instead of flaking rust. Metallurgist R. Balasubramaniam set out the explanation in 2000; the pillar is armoured by its own first corrosion.",
   "move": "Before crediting a lost secret, check the ingredients and the weather.",
+  "ask": "Before I credit a lost secret, have I checked the ingredients and the weather?",
   "keywords": [
     "delhi iron pillar",
     "phosphorus",

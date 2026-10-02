@@ -12,6 +12,7 @@
   "question": "How did Metropolis put real actors inside skyscrapers that were only table-top models?",
   "answer": "With a mirror. In the Schüfftan process a mirror at 45 degrees before the lens reflected the model, and the silvering was scraped off wherever the actors should appear, so the camera saw the full-size set through clear glass there. Model and actors met inside the camera, in one exposure, with nothing added afterwards.",
   "move": "Before combining two things later, ask whether they can be combined at once.",
+  "ask": "Could two things I plan to combine later be done together from the start?",
   "keywords": [
     "schüfftan process",
     "metropolis",

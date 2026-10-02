@@ -9,6 +9,7 @@
   "question": "What change in 1840 let Talbot cut camera exposures from most of an hour to a minute or two?",
   "answer": "He stopped waiting for the picture to appear. His earlier paper had to darken visibly. With the calotype, a brief exposure left an invisible latent image, which gallic acid and silver nitrate then developed into a full negative. Chemistry took over most of the work of light, as in every film camera since.",
   "move": "When one stage is slow, find a later stage that can amplify its output.",
+  "ask": "Which slow step in my work could I speed up by boosting its result later?",
   "keywords": [
     "talbot",
     "calotype",

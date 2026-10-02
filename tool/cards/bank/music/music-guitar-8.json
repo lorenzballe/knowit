@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. A passive pickup is a coil with high inductance, and a cable adds capacitance, roughly 100 picofarads a metre. Together they make a filter with a bright peak; more capacitance pulls it lower, by well over a thousand hertz from a short lead to a long one. Tone lives partly in the lead.",
   "move": "Check whether the connection is part of the circuit before calling it neutral.",
+  "ask": "What do I treat as a neutral connection that may be quietly changing the result?",
   "trap": "A cable is just a wire, so its length cannot change the sound.",
   "keywords": [
     "guitar cable",

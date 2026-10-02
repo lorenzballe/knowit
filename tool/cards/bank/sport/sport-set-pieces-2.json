@@ -9,6 +9,7 @@
   "question": "Does the team that shoots first in a penalty shoot-out really win more often?",
   "answer": "Perhaps slightly; the evidence is contested. Apesteguia and Palacios-Huerta found first-shooting teams won 60% of 269 shoot-outs and blamed the pressure of chasing. Kocher, Lenz and Sutter, with twice as many shoot-outs, found no significant edge. Football's lawmakers trialled a tennis-style A-B-B-A order, then dropped it in 2018.",
   "move": "A striking result from one dataset is a question for the next.",
+  "ask": "Which striking result have I believed without seeing it hold up a second time?",
   "keywords": [
     "penalty shoot-out",
     "abba",

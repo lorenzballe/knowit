@@ -9,6 +9,7 @@
   "question": "Can repeated attempts to recall a list, with no restudy in between, make the total recalled rise?",
   "answer": "Yes. Each attempt loses some items and recovers others missed before; when recoveries outnumber losses, net recall climbs, an effect called hypermnesia. Payne's 1987 review found it most reliably with pictures and vivid images, less with plain word lists. A curve built from one test per delay never sees the items that come back.",
   "move": "Before recording a loss, try again later from another angle.",
+  "ask": "What have I written off as forgotten that another angle or a later try might recover?",
   "keywords": [
     "hypermnesia",
     "reminiscence",

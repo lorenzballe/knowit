@@ -9,6 +9,7 @@
   "question": "What did US forecasters strip out of the five hurricane categories in 2010?",
   "answer": "Storm surge and pressure. The old scale promised surge heights for each category, but surge depends on a storm's size and how the seabed shelves. Katrina, a Category 3 at landfall, drove about 8 m of surge into Mississippi; Ike, a Category 2, flooded Texas like a stronger storm. It now rates wind alone.",
   "move": "One number can rank only one of the ways a thing does harm.",
+  "ask": "Which single number am I using to rank a thing that does harm in several ways?",
   "keywords": [
     "saffir-simpson scale",
     "storm surge",

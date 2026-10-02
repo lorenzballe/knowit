@@ -905,7 +905,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tapToRevealLower => '탭하여 보기';
 
   @override
-  String get barMoveCaps => '대화용 한 문장';
+  String get barMoveCaps => '기억할 것';
 
   @override
   String get theBarMoveCaps => '대화용 한 문장';
@@ -956,7 +956,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get perkArchiveTitle => '당신의 모든 기록';
 
   @override
-  String get perkArchiveLine => '읽은 모든 날을 영원히. 무료는 일주일.';
+  String get perkArchiveLine => '읽은 모든 날을 영원히.';
 
   @override
   String get plusIsActive => 'ASTUTE+ 활성화됨';
@@ -1566,8 +1566,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String get insideGenre => '이 안에';
 
   @override
-  String nOfSixOn(int n) {
-    return '6개 중 $n개 켜짐';
+  String nOfSixOn(int n, int total) {
+    return '$total개 중 $n개 켜짐';
   }
 
   @override
@@ -1726,4 +1726,91 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get exploreOffline => '오프라인 상태예요. 마지막으로 불러온 탐색 화면이에요.';
+
+  @override
+  String get askYourselfCaps => '스스로에게 물어보기';
+
+  @override
+  String get themeMyths => '깨지는 통념';
+
+  @override
+  String get themeMythsLine => '거의 모두가 믿는 것, 그리고 그것이 틀린 이유';
+
+  @override
+  String get themeParadoxes => '역설';
+
+  @override
+  String get themeParadoxesLine => '둘 다 참일 수 없을 것 같은 두 가지 참';
+
+  @override
+  String get themeNumbers => '놀라운 숫자';
+
+  @override
+  String get themeNumbersLine => '숫자가 곧 반전인 카드';
+
+  @override
+  String get themePractical => '오늘 써먹기';
+
+  @override
+  String get themePracticalLine => '오늘 밤 전에 해 볼 것';
+
+  @override
+  String get themeOrigins => '어디서 왔을까';
+
+  @override
+  String get themeOriginsLine => '매일 쓰는 것들의 시작';
+
+  @override
+  String get themeStories => '실화';
+
+  @override
+  String get themeStoriesLine => '실제로 일어난 일';
+
+  @override
+  String get themeDebates => '편을 고르세요';
+
+  @override
+  String get themeDebatesLine => '정답은 없고 더 나은 논거만 있습니다';
+
+  @override
+  String get themeWorkItOut => '계산해 보기';
+
+  @override
+  String get themeWorkItOutLine => '머릿속으로 구할 숫자';
+
+  @override
+  String get themeSeen => '눈으로 보기';
+
+  @override
+  String get themeSeenLine => '요점을 그려 보이는 카드';
+
+  @override
+  String get themeSharpest => '가장 예리한 분께';
+
+  @override
+  String get themeSharpestLine => '가장 어려운 카드';
+
+  @override
+  String get themePast0 => '고대 세계';
+
+  @override
+  String get themePast1 => '17~19세기';
+
+  @override
+  String get themePast2 => '지난 세기';
+
+  @override
+  String get themePastLine => '돌아올 때마다 다른 시대';
+
+  @override
+  String get themePlace0 => '아시아와 중동';
+
+  @override
+  String get themePlace1 => '아메리카';
+
+  @override
+  String get themePlace2 => '유럽';
+
+  @override
+  String get themePlaceLine => '돌아올 때마다 다른 지역';
 }

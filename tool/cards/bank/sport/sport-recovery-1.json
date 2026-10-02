@@ -9,6 +9,7 @@
   "question": "If lactic acid is not to blame, what makes muscles ache a day or two after unusual exercise?",
   "answer": "Small-scale damage from lengthening contractions, and the inflammation that repairs it. Lactate returns to resting levels within about an hour of stopping, long before the ache begins. The worst soreness follows work where muscles brake under load, such as running downhill, which produces little lactate at all.",
   "move": "If the pain arrives after the suspect has left, look for another cause.",
+  "ask": "When trouble shows up late, which cause am I blaming just because it's the obvious suspect?",
   "keywords": [
     "muscle soreness",
     "lactate",

@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. FAO counts show the global stock of managed hives growing by nearly half between 1961 and 2007, and still rising since. Colonies do die in large numbers each winter, but beekeepers split the survivors to replace them. The bees in real decline are mostly wild ones: bumblebees and solitary bees that nobody restocks.",
   "move": "A loss that someone is paid to replace will not show in the count.",
+  "ask": "What loss am I missing because someone is paid to cover it and the totals look fine?",
   "trap": "Headlines about dying honeybees make their numbers seem to be falling.",
   "keywords": [
     "honeybees",

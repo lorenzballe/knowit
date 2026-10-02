@@ -9,6 +9,7 @@
   "question": "How does a theremin turn the distance of a hand into a musical pitch?",
   "answer": "By beating two radio signals together. Two oscillators run far above hearing; the player's hand, acting as one plate of a capacitor with the antenna, detunes one. The circuit outputs only their difference: pull them 440 cycles a second apart and an A sounds. Léon Theremin's player is part of the circuit.",
   "move": "A small difference between two large things can be the whole signal.",
+  "ask": "Where is the real signal in my life a small difference between two big things?",
   "keywords": [
     "theremin",
     "léon theremin",

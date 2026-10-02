@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Those towards the edges. Sight lines to a column far to one side meet the flat picture at a slant, so its outline is stretched sideways, like a torch beam striking a wall at an angle. Leonardo noticed the paradox: the columns farthest from the eye are drawn fattest. Painters quietly corrected them by eye.",
   "move": "An exact rule can still produce a result nobody would accept.",
+  "ask": "Where have I followed a rule so exactly that I got a result nobody would accept?",
   "trap": "Reasoning that columns at one depth must be drawn one width.",
   "keywords": [
     "marginal distortion",

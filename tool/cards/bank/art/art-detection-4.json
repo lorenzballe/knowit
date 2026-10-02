@@ -17,6 +17,7 @@
   "correct": 0,
   "answer": "True. Materials can prove a painting too young, never old enough. Old canvases, old panels and period pigments can all be bought: Han van Meegeren acquired minor seventeenth-century paintings, scraped them down and painted his Vermeers on the genuine canvas. A clean result from a materials test only means the forger made no mistake there.",
   "move": "A test that can only say no cannot say yes.",
+  "ask": "Which of my beliefs has only passed tests that could never have proved it wrong?",
   "trap": "Treating a passed test as proof, not as the absence of disproof.",
   "keywords": [
     "materials analysis",

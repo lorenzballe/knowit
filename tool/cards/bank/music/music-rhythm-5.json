@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. The lead is usually tens of milliseconds, larger in non-musicians, and tappers do not notice it. Bruno Repp's review of the tapping literature calls it negative mean asynchrony; one explanation is that the fingertip's touch reaches awareness later than the click's sound. The hand leaves early so both arrive together.",
   "move": "A body that seems to react may be predicting instead.",
+  "ask": "What do I think of as reacting that is really me predicting?",
   "trap": "False, because reacting to a sound should make taps land late.",
   "keywords": [
     "sensorimotor synchronisation",

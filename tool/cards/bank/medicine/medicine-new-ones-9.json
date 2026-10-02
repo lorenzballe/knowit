@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Most pass non-inferiority trials, showing only that the new drug is no worse than an old one beyond a set margin, often 10 percentage points. They mostly enrol patients whose bacteria the old drug still kills, as resistant cases are too scattered to recruit. Drugs meant for superbugs are proven on ordinary infections.",
   "move": "Ask who a trial enrolled before trusting what it says about others.",
+  "ask": "Who was left out of the evidence behind a claim that I apply to myself?",
   "trap": "Assuming the trial proved it better on the resistant infections it targets.",
   "keywords": [
     "non-inferiority trials",

@@ -28,5 +28,6 @@
   "source": "BIPM, The International System of Units, 2019",
   "source_kind": "standard",
   "reference": "Bureau International des Poids et Mesures, The International System of Units (SI Brochure), 9th edition, 2019",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

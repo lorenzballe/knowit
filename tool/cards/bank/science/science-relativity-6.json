@@ -35,5 +35,6 @@
   "source": "Hafele & Keating, Science, 1972",
   "source_kind": "paper",
   "reference": "Hafele & Keating, Around-the-World Atomic Clocks: Observed Relativistic Time Gains, Science 177, 168, 1972",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

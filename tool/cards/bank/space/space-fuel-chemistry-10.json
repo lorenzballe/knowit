@@ -35,5 +35,6 @@
   "source": "Karabeyoglu et al., AIAA, 2008",
   "source_kind": "paper",
   "reference": "Karabeyoglu, Dyer, Stevens & Cantwell, Modeling of N2O Decomposition Events, AIAA 2008-4933, 44th Joint Propulsion Conference, 2008",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

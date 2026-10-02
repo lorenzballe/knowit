@@ -12,6 +12,7 @@
   "question": "Why does correcting a vocal by a semitone not make the singer sound like a sped-up tape?",
   "answer": "Because the software moves the note and leaves the vowels alone. A voice is a buzz at the sung pitch, shaped by resonances of the throat and mouth, called formants, that make each vowel. Speeding up tape raises both, shrinking the singer's throat. Correction shifts the buzz and keeps the formants: same singer, new note.",
   "move": "Before changing one quality of a thing, check what else is tied to it.",
+  "ask": "When I change one thing about something, what else did I just change without noticing?",
   "keywords": [
     "formants",
     "pitch shifting",

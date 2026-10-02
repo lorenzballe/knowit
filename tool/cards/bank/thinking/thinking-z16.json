@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "Books in a house come with parents who read, time, income and quiet — any of which could do the work. Posting books tests whether the books mattered, and when it has been tried the effect is far smaller than the correlation suggested.",
   "move": "The object in the house is rarely the thing doing the work.",
+  "ask": "Which visible object in a success story am I giving credit to, when the home or habit behind it did the work?",
   "trap": "A visible thing standing in for everything invisible around it.",
   "keywords": [
     "confounding",

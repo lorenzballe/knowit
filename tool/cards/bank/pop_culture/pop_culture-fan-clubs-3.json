@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Voted No Award in five categories. Nominations came from a small, coordinated bloc who each listed the same few works, while the wider membership nominated scattered favourites. When everyone voted, the slate lost almost everywhere. The rules were then changed so a bloc could no longer fill a whole shortlist.",
   "move": "The people who choose the options are rarely the people who choose between them.",
+  "ask": "Who decided what choices I am given, and what is missing from the menu?",
   "trap": "A bloc that filled the shortlist looks like the majority of voters.",
   "keywords": [
     "hugo awards",

@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "In hot gas between the galaxies. At tens of millions of degrees it shines mainly in X-rays, so ordinary photographs miss it, yet in the richest clusters it outweighs the stars several times over. Even so, gas and stars together are a small fraction of a cluster's total mass; most is dark matter.",
   "move": "What shows up in the picture depends on the camera, not the world.",
+  "ask": "What am I missing because my usual way of looking only shows one kind of thing?",
   "trap": "Pictures of clusters show galaxies, so the stars seem to be the mass.",
   "keywords": [
     "galaxy clusters",

@@ -9,6 +9,7 @@
   "question": "How can a child who did not inherit a parent's faulty telomerase gene still show its effects?",
   "answer": "By inheriting the parent's short telomeres. Chromosomes arrive with the tips they already have, so a parent with a telomerase defect passes on shortened ones even when the child gets the healthy copy of the gene. In families with such mutations, lung scarring and bone-marrow failure tend to strike earlier with each generation.",
   "move": "An inheritance can include the state of things, not only the instructions.",
+  "ask": "What did I inherit that is a state of things, not just instructions?",
   "keywords": [
     "telomere syndromes",
     "anticipation",

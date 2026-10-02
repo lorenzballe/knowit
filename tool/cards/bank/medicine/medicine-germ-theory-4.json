@@ -9,6 +9,7 @@
   "question": "Why did boiled hay broth keep growing microbes long after Pasteur's flask experiments?",
   "answer": "Hay carries bacterial spores that survive boiling. In 1876 Ferdinand Cohn described these heat-proof resting forms; in 1877 John Tyndall showed that even hours of boiling could fail to sterilise such broths. His fix was to boil, wait for spores to sprout, and boil again. Life that seemed to arise from nothing had simply waited.",
   "move": "When a result contradicts a rule, look for a hardier version of the usual suspect.",
+  "ask": "When a result breaks a rule I trust, do I look for a tougher version of the usual cause?",
   "keywords": [
     "spontaneous generation",
     "endospores",

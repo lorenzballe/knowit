@@ -9,6 +9,7 @@
   "question": "Where did the story that Marco Polo brought pasta home from China come from?",
   "answer": "From an American trade magazine. In 1929 the Macaroni Journal, voice of the US pasta makers, ran a tale in which a sailor on Polo's voyage learns noodle-making in China. The sailor was named Spaghetti. Yet a Genoese inventory of 1279 already lists a basket of macaroni, sixteen years before Polo came home.",
   "move": "Trace a charming origin story to its first printing before repeating it.",
+  "ask": "What charming story do I repeat that I have never traced back to its start?",
   "keywords": [
     "marco polo",
     "macaroni journal",

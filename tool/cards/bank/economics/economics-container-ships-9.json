@@ -12,6 +12,7 @@
   "withinFactor": 3,
   "answer": "$1,500 / 6,900 = about 22 cents a pair.",
   "move": "Divide a big bill by everything it carries before calling it big.",
+  "ask": "Which big bill feels large until I divide it by everything it covers?",
   "trap": "Guessing dollars per pair because ocean freight sounds expensive.",
   "hint": "Start with how many shoeboxes fit in the box's usable space.",
   "steps": [

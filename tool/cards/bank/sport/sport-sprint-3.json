@@ -35,5 +35,6 @@
   "source": "Linthorne, Journal of Applied Biomechanics, 1994",
   "source_kind": "paper",
   "reference": "https://journals.humankinetics.com/view/journals/jab/10/2/article-p110.xml",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

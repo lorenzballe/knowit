@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "That form has an especially fast test. The Lucas–Lehmer test settles whether 2^p − 1 is prime in about p squarings. For an ordinary number with millions of digits, no proof anywhere near that fast exists. The record list maps where primes can be proved, not where they lie.",
   "move": "A list of discoveries maps where people could look, not what exists.",
+  "ask": "Does my list of examples show what is out there, or only where people could look?",
   "trap": "Most numbers of that form are prime: the record list seems to say so.",
   "keywords": [
     "mersenne primes",

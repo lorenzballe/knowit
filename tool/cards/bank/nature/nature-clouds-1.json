@@ -9,6 +9,7 @@
   "question": "Why does a cloud holding hundreds of tonnes of water not fall out of the sky?",
   "answer": "Its droplets do fall, too slowly to see. A droplet 0.02 mm across sinks about 1 cm a second, so the gentlest rising air holds it. The water is a tiny share: about half a gram per cubic metre, inside a kilogram of air. A cloud is air with a faint mist in it.",
   "move": "Before asking why something stays up, check how fast it is coming down.",
+  "ask": "What do I wonder why it is still up, without noticing how fast it is coming down?",
   "keywords": [
     "cloud droplets",
     "fall speed",

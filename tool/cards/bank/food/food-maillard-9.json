@@ -36,5 +36,6 @@
   "source": "Commission Regulation (EU) 2017/2158",
   "source_kind": "primary_document",
   "reference": "https://eur-lex.europa.eu/eli/reg/2017/2158/oj/eng",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

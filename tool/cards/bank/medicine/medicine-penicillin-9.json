@@ -12,6 +12,7 @@
   "tolerance": 0.3,
   "answer": "24 months / 8.3 doublings = about 2.9 months per doubling.",
   "move": "Turn a startling growth factor into doublings before judging its pace.",
+  "ask": "When I hear a startling growth figure, how many doublings is it really?",
   "trap": "Guessing about a year per doubling, the pace of ordinary factories.",
   "hint": "Find the overall growth factor, then ask how many doublings make it.",
   "steps": [

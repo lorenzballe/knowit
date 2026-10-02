@@ -9,6 +9,7 @@
   "question": "Does ordinary ice lose all its disorder as it is cooled towards absolute zero?",
   "answer": "No. The oxygen atoms line up in a neat lattice, but each hydrogen can sit nearer either end of its bond, and those choices freeze in at random. In 1935 Linus Pauling counted the arrangements and predicted the leftover disorder, or entropy: 3.4 joules per kelvin per mole, close to what heat measurements showed.",
   "move": "A neat frame can still hold choices that were never settled.",
+  "ask": "Where do I call something settled when some choices in it were never actually made?",
   "keywords": [
     "ice",
     "residual entropy",

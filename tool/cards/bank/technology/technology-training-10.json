@@ -9,6 +9,7 @@
   "question": "Why do AI labs delete near-identical passages from the text they train models on?",
   "answer": "Because repeated text gets memorised and recited. Lee and colleagues found one 61-word English sentence repeated over 60,000 times in C4, a widely used web dataset. Models trained after duplicates were removed emitted memorised text about ten times less often. The web's boilerplate is what a model learns by heart.",
   "move": "Whatever is repeated most is learned by rote, not understood.",
+  "ask": "What do I know by heart only because I heard it over and over?",
   "keywords": [
     "deduplication",
     "memorisation",

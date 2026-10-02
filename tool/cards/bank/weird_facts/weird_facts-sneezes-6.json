@@ -28,5 +28,6 @@
   "source": "Li et al., Cell, 2021",
   "source_kind": "statistics",
   "reference": "Li et al., Sneezing reflex is mediated by a peptidergic pathway from nose to brainstem, Cell, 2021",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -35,5 +35,6 @@
   "source": "Grossmann et al., Applied Optics, 2011",
   "source_kind": "paper",
   "reference": "Grossmann, Schmidt and Haussmann, Photographic evidence for the third-order rainbow, Applied Optics 50, F134, 2011",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

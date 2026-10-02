@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "The official prefix became ronna instead. Google's calculator and Wolfram Alpha played along and converted hella units, which made it look settled. But only the General Conference on Weights and Measures sets SI prefixes, and in 2022 it chose ronna for 10^27 and quetta for 10^30. Hella stayed where it started, on Bay Area streets.",
   "move": "Before treating something as approved, find out who has the power to approve it.",
+  "ask": "Before I treat something as approved, do I know who can approve it?",
   "trap": "Remembering hella working in Google's calculator and taking that as official.",
   "keywords": [
     "hella",

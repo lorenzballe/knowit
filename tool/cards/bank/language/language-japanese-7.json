@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. The Cabinet Office counts anyone who, for six months or more and not because of illness, leaves home only for hobbies or a nearby convenience store. On that definition its survey published in 2023 estimated about 1.46 million people aged 15 to 64. The total includes the shopper buying one rice ball at midnight.",
   "move": "Before quoting a count, read the definition that did the counting.",
+  "ask": "Before I quote a number, do I know how it was counted?",
   "trap": "Picturing the locked bedroom that made the word famous.",
   "keywords": [
     "hikikomori",

@@ -18,6 +18,7 @@
   "correct": 0,
   "answer": "About 2%. Glass conducts heat well. What slows the heat is the thin layer of still air clinging to each face: by the standard glazing calculation, the two films resist heat flow about 40 times more than 4 mm of glass does. Double the glass and the window loses barely less heat.",
   "move": "Before crediting the visible barrier, look for the invisible one.",
+  "ask": "What unseen thing is doing the real work that I credit to the thing I can see?",
   "trap": "About 90%: the glass is the only solid thing in the way.",
   "keywords": [
     "single glazing",

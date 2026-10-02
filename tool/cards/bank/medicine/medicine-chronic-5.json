@@ -9,6 +9,7 @@
   "question": "For what share of people with low back pain can a doctor name a specific cause?",
   "answer": "Only about one in ten. The remaining 90% or so is labelled non-specific: no fracture, infection, tumour or trapped nerve explains it. This is the condition that causes more years lived with disability worldwide than any other. Most of that burden rests on a diagnosis that says what the pain is not.",
   "move": "A common label can mean nobody knows yet.",
+  "ask": "Which confident label in my life really just means nobody knows the cause yet?",
   "keywords": [
     "low back pain",
     "non-specific pain",

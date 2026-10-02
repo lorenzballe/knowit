@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About an eighth fewer. The 2021 trial followed about 21,000 older villagers with past strokes or high blood pressure. Those given the 75:25 blend had 14% fewer strokes and 12% fewer deaths than those on ordinary salt, with no rise in dangerous potassium levels. Villagers kept cooking as before; the shaker did the work.",
   "move": "Change the default ingredient and a whole population's habit changes with it.",
+  "ask": "What small swap in my daily defaults could change my habits without effort?",
   "trap": "More deaths, since extra potassium can stop a weak heart.",
   "keywords": [
     "salt substitute",

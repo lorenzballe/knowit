@@ -9,6 +9,7 @@
   "question": "How common are numbers that, like π, solve no polynomial equation with whole-number coefficients?",
   "answer": "Almost every number is one. In 1874 Cantor showed that the numbers which do solve such equations can be listed one by one, while the real numbers cannot, so a number picked at random solves none. Yet proofs are hard: e was settled in 1873, π in 1882, and π + e remains open.",
   "move": "What is almost everywhere can still be almost impossible to point at.",
+  "ask": "What is everywhere around me yet nearly impossible to point at?",
   "keywords": [
     "transcendental numbers",
     "georg cantor",

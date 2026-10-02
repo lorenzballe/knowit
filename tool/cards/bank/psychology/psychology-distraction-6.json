@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Sanbonmatsu and colleagues found that those who multitasked most scored lower on a test of juggling tasks in mind, while rating their own ability higher. Frequent multitaskers also scored higher on impulsivity and sensation seeking. The habit tracks a temperament that finds single tasks dull, not a talent that makes several easy.",
   "move": "Ask what kind of person chooses a behaviour before crediting the behaviour with a skill.",
+  "ask": "Do I multitask because I am good at it, or am I just the kind of person who does?",
   "trap": "True, because practice at anything should make people better at it.",
   "keywords": [
     "multitasking",

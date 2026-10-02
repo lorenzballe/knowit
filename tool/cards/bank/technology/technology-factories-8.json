@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "It more than doubles. In a simple random queue, waiting scales with load divided by spare capacity: 0.8 / 0.2 is 4, while 0.9 / 0.1 is 9, so waits grow 2.25 times. At 95% busy the factor is 19. The plants run closest to full are the ones where orders sit longest.",
   "move": "The last few per cent of capacity cost the most waiting.",
+  "ask": "Where am I so close to full that every small delay becomes a long wait?",
   "trap": "Assuming ten more points of load add about ten per cent waiting.",
   "keywords": [
     "queueing",
@@ -33,6 +34,97 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "% of the time busy",
+      "min": 0,
+      "max": 100
+    },
+    "y": {
+      "label": "average wait, relative",
+      "min": 0,
+      "max": 20
+    },
+    "series": [
+      {
+        "label": "load ÷ spare capacity",
+        "hi": true,
+        "points": [
+          [
+            0,
+            0.0
+          ],
+          [
+            10,
+            0.11
+          ],
+          [
+            20,
+            0.25
+          ],
+          [
+            30,
+            0.43
+          ],
+          [
+            40,
+            0.67
+          ],
+          [
+            50,
+            1.0
+          ],
+          [
+            60,
+            1.5
+          ],
+          [
+            70,
+            2.33
+          ],
+          [
+            80,
+            4.0
+          ],
+          [
+            85,
+            5.67
+          ],
+          [
+            90,
+            9.0
+          ],
+          [
+            92.5,
+            12.33
+          ],
+          [
+            95,
+            19.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 80,
+        "y": 4,
+        "label": "80% busy: 4"
+      },
+      {
+        "x": 90,
+        "y": 9,
+        "label": "90% busy: 9"
+      },
+      {
+        "x": 95,
+        "y": 19,
+        "label": "95% busy: 19"
+      }
+    ],
+    "caption": "Ten more points of load, from 80% to 90% busy, more than double the wait."
+  },
   "source": "Hopp & Spearman, Factory Physics, 2008",
   "source_kind": "book",
   "reference": "Hopp & Spearman, Factory Physics, 3rd edition, McGraw-Hill, 2008",

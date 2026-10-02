@@ -12,6 +12,7 @@
   "question": "What do most clauses of Bavaria's 1516 beer decree, the famous purity law, actually regulate?",
   "answer": "The price. Most of the Ingolstadt decree sets what may be charged for beer: at most one pfennig a Mass in winter, two in summer. A single line allows only barley, hops and water; yeast, not yet understood, goes unmentioned. Historians often read the barley rule as keeping wheat and rye for bakers.",
   "move": "Read a famous law in full before quoting its most famous line.",
+  "ask": "Is there a rule or saying I quote often without ever having read the whole thing?",
   "keywords": [
     "reinheitsgebot",
     "bavaria",

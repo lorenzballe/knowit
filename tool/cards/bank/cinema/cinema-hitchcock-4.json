@@ -13,7 +13,8 @@
   ],
   "correct": 1,
   "answer": "False. Bill Krohn's study of the studio production files found Hitchcock changing plans on set, shooting extra coverage to choose from later, and reshaping scenes in the edit. The legend of a film finished on paper came mostly from Hitchcock's own interviews, where it made him sound in total command.",
-  "move": "When the only witness is the hero, look for the paperwork.",
+  "move": "A claim of total control deserves a check of what the records actually show.",
+  "ask": "When someone says they controlled everything, what do the records show?",
   "trap": "True, because Hitchcock said so himself, often and persuasively.",
   "keywords": [
     "storyboards",

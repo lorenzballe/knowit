@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Aulus Gellius watched a Stoic go white in a storm on a crossing to Brundisium and asked why. The philosopher produced a book of Epictetus: sudden terrors jolt even the wise before reason acts; the sage differs only in refusing to assent to them. The pallor was allowed; believing disaster had come was not.",
   "move": "Judge people by what they do after the first jolt, not by the jolt.",
+  "ask": "After a sudden shock, do I judge myself by the jolt or by what I do next?",
   "trap": "Picturing the Stoic ideal as a man who feels nothing at all.",
   "keywords": [
     "aulus gellius",

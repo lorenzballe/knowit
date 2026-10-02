@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Far likelier to be dominant. Levis and colleagues found species domesticated by pre-Columbian peoples, such as Brazil nut and cacao, about five times as likely as others to rank among the hyperdominant trees, and commonest near archaeological sites. Groves tended for millennia outlived their tenders. Parts of the wild Amazon are abandoned orchards.",
   "move": "Before crediting nature with a pattern, ask who lived there first.",
+  "ask": "Before I credit nature with a pattern, have I asked who lived here first?",
   "trap": "Assuming the forest's make-up reflects soil and climate alone.",
   "keywords": [
     "domestication",

@@ -9,6 +9,7 @@
   "question": "Who mailed American personnel managers a guide to dressing down for work in 1992, and why?",
   "answer": "Levi Strauss, maker of Dockers khakis. Its Guide to Casual Businesswear went to about 25,000 human-resources managers, with photographs and rules for looking relaxed but not sloppy. The trousers in the pictures did the selling. Casual Friday reached many offices as a trouser maker's dress code.",
   "move": "When a rule arrives looking neutral, ask who wrote the first draft.",
+  "ask": "Which neutral-looking rule at work was written by someone who gains from it?",
   "keywords": [
     "casual friday",
     "dockers",

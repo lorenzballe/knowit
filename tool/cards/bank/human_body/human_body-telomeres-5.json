@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Using gene variants that fix telomere length at conception, which lifestyle cannot confound, a 2017 analysis found longer telomeres raised the risk of several cancers, including melanoma, glioma and lung adenocarcinoma. Longer tips let a cell divide more times before it halts, including a cell on its way to a tumour.",
   "move": "What travels with good health is not always what produces it.",
+  "ask": "What good thing travels with my health that I assume causes it?",
   "trap": "Treating long telomeres as youth, and youth as protection from cancer.",
   "keywords": [
     "telomere length",

@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The choral works went quiet, but the keyboard music never did. Mozart arranged Bach fugues for Baron van Swieten's Sunday gatherings in 1782, the boy Beethoven was playing the Well-Tempered Clavier in Bonn by 1783, and the collection was printed in 1801. The 1829 concert revived a public, not a composer.",
   "move": "Before crediting the revival, check who never stopped using the thing.",
+  "ask": "What do I think was forgotten that someone was quietly using all along?",
   "trap": "A famous revival concert implies something had been lost before it.",
   "keywords": [
     "mendelssohn",

@@ -18,6 +18,7 @@
   "correct": 1,
   "answer": "About 63 in 100 searches. A search is fast only if all 100 servers are, and the chance of that is 0.99 to the power 100, about 37%. Google's Jeffrey Dean and Luiz Barroso used this to explain why big services resend slow requests. A rare delay per machine becomes the usual delay per user.",
   "move": "When everything must go right at once, small risks multiply fast.",
+  "ask": "Where do my plans need everything to go right at once?",
   "trap": "Each server is fine 99% of the time, so the whole seems fine.",
   "keywords": [
     "tail latency",
@@ -36,6 +37,123 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "servers each search waits for",
+      "min": 0,
+      "max": 100
+    },
+    "y": {
+      "label": "% of searches slow",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "each server slow 1 time in 100",
+        "hi": true,
+        "points": [
+          [
+            0,
+            0.0
+          ],
+          [
+            1,
+            1.0
+          ],
+          [
+            5,
+            4.9
+          ],
+          [
+            10,
+            9.6
+          ],
+          [
+            15,
+            14.0
+          ],
+          [
+            20,
+            18.2
+          ],
+          [
+            25,
+            22.2
+          ],
+          [
+            30,
+            26.0
+          ],
+          [
+            35,
+            29.7
+          ],
+          [
+            40,
+            33.1
+          ],
+          [
+            45,
+            36.4
+          ],
+          [
+            50,
+            39.5
+          ],
+          [
+            55,
+            42.5
+          ],
+          [
+            60,
+            45.3
+          ],
+          [
+            65,
+            48.0
+          ],
+          [
+            70,
+            50.5
+          ],
+          [
+            75,
+            52.9
+          ],
+          [
+            80,
+            55.2
+          ],
+          [
+            85,
+            57.4
+          ],
+          [
+            90,
+            59.5
+          ],
+          [
+            95,
+            61.5
+          ],
+          [
+            100,
+            63.4
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 100,
+        "y": 63.4,
+        "label": "100 servers: 63%"
+      }
+    ],
+    "caption": "Each server lags once in 100, yet a search across 100 of them lags 63 times in 100."
+  },
   "source": "Dean & Barroso, Communications of the ACM, 2013",
   "source_kind": "paper",
   "reference": "Dean & Barroso, The Tail at Scale, Communications of the ACM 56(2), 2013",

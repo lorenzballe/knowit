@@ -9,6 +9,7 @@
   "question": "Why do magnetic bacteria in northern ponds swim towards magnetic north?",
   "answer": "To go down. A chain of magnetite crystals inside each cell works as a compass needle, and in the northern hemisphere field lines dip into the ground, so swimming north along them leads into the low-oxygen mud they need. Southern strains swim south; at the magnetic equator, where lines lie flat, both kinds turn up.",
   "move": "Ask what a navigator is trying to reach, not just which way it points.",
+  "ask": "Do I know where I am trying to get, or only which way I am pointing?",
   "keywords": [
     "magnetotactic bacteria",
     "magnetite",

@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About 40%: 17/42. Each flip is fair, but picking flips that follow a head selects within a short run: once a head is picked, the flips left in that run hold one head fewer. The 1985 study that called basketball's hot hand a fallacy measured shooting this way; corrected, its data point the other way.",
   "move": "How you pick the cases can bias a count even when each case is fair.",
+  "ask": "How was my sample picked, and could that alone change what I think I see?",
   "trap": "About 50%: coins have no memory, so every flip is even.",
   "keywords": [
     "hot hand",

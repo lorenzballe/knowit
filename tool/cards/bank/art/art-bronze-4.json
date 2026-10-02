@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Rodin gave his works and his reproduction rights to the French state in 1916, and French law counts the first twelve casts of a sculpture, eight numbered and four artist's proofs, as originals. The Musée Rodin kept casting from his plasters for decades after he died in 1917, and sold them as originals.",
   "move": "Check who defines original before arguing about whether something is one.",
+  "ask": "Before I argue about what counts as the real thing, do we agree who decides?",
   "trap": "Assuming an original must be made in the artist's lifetime.",
   "keywords": [
     "rodin",

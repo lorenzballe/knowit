@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "Air pollution, by more than ten times. Road crashes kill about 20,000 people a year across the European Union; fine-particle pollution is estimated to cause well over 200,000 early deaths. A crash is an event with a name and a place. A pollution death is recorded as a stroke or a heart attack.",
   "move": "The risks you can photograph are rarely the ones doing the killing.",
+  "ask": "Which risk am I well-informed about only because it is photogenic, and which silent one am I ignoring?",
   "trap": "Crashes are named events; pollution deaths are filed under other causes.",
   "keywords": [
     "air pollution",

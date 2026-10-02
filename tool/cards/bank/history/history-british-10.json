@@ -40,5 +40,6 @@
   "source": "Census of India, 1921",
   "source_kind": "primary_document",
   "reference": "Marten, Census of India, 1921, Volume I: India, Part I, Report, Government of India, 1924",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

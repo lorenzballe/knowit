@@ -926,7 +926,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get tapToRevealLower => 'toca para revelar';
 
   @override
-  String get barMoveCaps => 'A FRASE DE BAR';
+  String get barMoveCaps => 'PARA LEVAR CONTIGO';
 
   @override
   String get theBarMoveCaps => 'A FRASE DE BAR';
@@ -978,8 +978,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get perkArchiveTitle => 'Todo o teu arquivo';
 
   @override
-  String get perkArchiveLine =>
-      'Cada dia que leste, para sempre. Grátis fica uma semana.';
+  String get perkArchiveLine => 'Cada dia que leste, para sempre.';
 
   @override
   String get plusIsActive => 'ASTUTE+ ESTÁ ATIVO';
@@ -1603,8 +1602,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get insideGenre => 'Dentro';
 
   @override
-  String nOfSixOn(int n) {
-    return '$n de 6 ativos';
+  String nOfSixOn(int n, int total) {
+    return '$n de $total ativos';
   }
 
   @override
@@ -1780,4 +1779,94 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get exploreOffline =>
       'Estás sem ligação. Este é o Explorar tal como foi lido da última vez.';
+
+  @override
+  String get askYourselfCaps => 'PERGUNTA-TE';
+
+  @override
+  String get themeMyths => 'Mitos desfeitos';
+
+  @override
+  String get themeMythsLine =>
+      'O que quase todos acreditam, e porque está errado';
+
+  @override
+  String get themeParadoxes => 'Paradoxos';
+
+  @override
+  String get themeParadoxesLine =>
+      'Duas coisas verdadeiras que não deviam sê-lo juntas';
+
+  @override
+  String get themeNumbers => 'Números que surpreendem';
+
+  @override
+  String get themeNumbersLine => 'Onde o número é a reviravolta';
+
+  @override
+  String get themePractical => 'Para usar hoje';
+
+  @override
+  String get themePracticalLine => 'Algo para experimentar antes da noite';
+
+  @override
+  String get themeOrigins => 'De onde vem';
+
+  @override
+  String get themeOriginsLine => 'A origem de coisas que usas todos os dias';
+
+  @override
+  String get themeStories => 'Histórias verdadeiras';
+
+  @override
+  String get themeStoriesLine => 'Coisas que aconteceram mesmo';
+
+  @override
+  String get themeDebates => 'Escolhe um lado';
+
+  @override
+  String get themeDebatesLine =>
+      'Não há resposta certa, só um argumento melhor';
+
+  @override
+  String get themeWorkItOut => 'Faz as contas';
+
+  @override
+  String get themeWorkItOutLine => 'Um número para chegar de cabeça';
+
+  @override
+  String get themeSeen => 'Para ver';
+
+  @override
+  String get themeSeenLine => 'Cartas que desenham a sua ideia';
+
+  @override
+  String get themeSharpest => 'Para os mais afiados';
+
+  @override
+  String get themeSharpestLine => 'As cartas mais difíceis que há';
+
+  @override
+  String get themePast0 => 'O mundo antigo';
+
+  @override
+  String get themePast1 => 'Dos séculos XVII ao XIX';
+
+  @override
+  String get themePast2 => 'O século passado';
+
+  @override
+  String get themePastLine => 'Uma época diferente de cada vez';
+
+  @override
+  String get themePlace0 => 'Ásia e Médio Oriente';
+
+  @override
+  String get themePlace1 => 'As Américas';
+
+  @override
+  String get themePlace2 => 'Europa';
+
+  @override
+  String get themePlaceLine => 'Uma parte do mundo diferente de cada vez';
 }

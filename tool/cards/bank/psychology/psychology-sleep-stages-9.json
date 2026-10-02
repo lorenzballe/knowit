@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Stage N2, a light but stable sleep marked by bursts of brainwaves called spindles, fills roughly half the night on its own. Deep sleep takes perhaps 15 to 20% in young adults and less later, and REM about a fifth to a quarter. The unglamorous middle stage is where most sleeping happens.",
   "move": "The stage everyone talks about is rarely the one taking up the time.",
+  "ask": "Which famous thing about my habits is rarely the one taking up my time?",
   "trap": "Picturing sleep through its two famous stages, REM and deep sleep.",
   "keywords": [
     "n2 sleep",

@@ -32,7 +32,12 @@ const Map<String, String> kSubjectIcons = {
   'Food': 'M6 3v7a2 2 0 0 0 4 0V3 M8 10v11 M17 3c-2 2-2 6 0 8v10',
   'History':
       'M7 3h10 M7 21h10 M7 3c0 4 5 5 5 9s-5 5-5 9 M17 3c0 4-5 5-5 9s5 5 5 9',
+  'Life': 'M12 21v-9 M12 12c0-4 3-6 7-6 0 4-3 6-7 6z M12 15c0-3-2.5-5-6-5 0 3 2.5 5 6 5z',
 };
+
+/// The subjects whose fill is pale, which carry dark ink rather than white:
+/// Life, which came after the saturated wheel was drawn.
+const Set<String> kPaleSubjects = {'Life'};
 
 /// The icon wrapped as a standalone SVG document, which is what the renderer
 /// takes. White, because it always sits on the subject's own fill.
@@ -40,6 +45,7 @@ String subjectIconSvg(String subject) {
   final path = kSubjectIcons[subject];
   if (path == null) return '';
   return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">'
-      '<path d="$path" fill="none" stroke="#ffffff" stroke-width="1.9" '
+      '<path d="$path" fill="none" '
+      'stroke="${kPaleSubjects.contains(subject) ? '#10100c' : '#ffffff'}" stroke-width="1.9" '
       'stroke-linecap="round" stroke-linejoin="round"/></svg>';
 }

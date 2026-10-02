@@ -9,6 +9,7 @@
   "question": "Why can two boxes both labelled kosher salt differ almost twofold in saltiness per spoonful?",
   "answer": "Crystal shape. Diamond Crystal grows hollow, flaky pyramids in open pans; Morton rolls dense cubes into flat flakes. A teaspoon of the first weighs about 3 g, of the second about 5, and both are nearly pure sodium chloride. A recipe tested with one and cooked with the other comes out oversalted or bland.",
   "move": "Measure by weight whenever the shape of the thing varies.",
+  "ask": "Where do I measure by looks or by spoon when weight would be more honest?",
   "keywords": [
     "kosher salt",
     "diamond crystal",

@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "They stayed roughly flat. Searching the FDA's adverse-event database, Alemzadeh and colleagues counted over 10,000 reports from 2000 to 2013, including 144 deaths, while robotic operations multiplied. Divided by procedures, injuries and deaths per operation held steady from 2007. Reporting is voluntary, so true counts are higher.",
   "move": "A rising count means nothing until it is divided by how often.",
+  "ask": "Which rising count do I worry about without dividing it by how often it happens?",
   "trap": "Reading more reports of harm as more danger in each operation.",
   "keywords": [
     "adverse events",

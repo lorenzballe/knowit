@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Dunlosky and colleagues rated the keyword mnemonic, tying a foreign word to a vivid image of a similar-sounding one, low utility. It suits word pairs, takes effort to build, and in some studies its edge faded after a delay. Only practice testing and spaced practice were rated high.",
   "move": "Judge a method by what is left a week later, not by how it feels.",
+  "ask": "Which study technique do I use because it feels good, not because it holds a week later?",
   "trap": "Trusting a technique because its images are so easy to picture.",
   "keywords": [
     "keyword mnemonic",

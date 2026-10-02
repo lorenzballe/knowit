@@ -9,6 +9,7 @@
   "unit": "journeys",
   "answer": "380 / 2 = 190.",
   "move": "Every \"how many pairs\" question is the same question wearing a costume.",
+  "ask": "What am I counting by hand that is really one simple pair-counting question in disguise?",
   "hint": "Every journey is just a pair of floors, and the lower one comes first.",
   "steps": [
     "Choose any two of the 20 floors: 20 x 19 = 380 ordered pairs.",

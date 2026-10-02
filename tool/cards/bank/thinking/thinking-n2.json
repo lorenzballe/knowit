@@ -9,6 +9,7 @@
   "unit": "matches",
   "answer": "Each pair plays twice: 66 x 2 = 132.",
   "move": "Rounds in a league grow with the square of the teams, not the teams.",
+  "ask": "Where in my life are the number of connections growing faster than the number of people involved?",
   "hint": "First count each pairing once, then remember they meet twice.",
   "steps": [
     "Pairings: 12 x 11 / 2 = 66.",

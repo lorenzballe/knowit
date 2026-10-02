@@ -32,5 +32,6 @@
   "source": "JIS X 0208:1997, Annex 7",
   "source_kind": "primary_document",
   "reference": "Japanese Standards Association, JIS X 0208:1997, 7-bit and 8-bit double byte coded Kanji sets for information interchange, Annex 7, 1997",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

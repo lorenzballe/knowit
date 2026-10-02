@@ -38,5 +38,6 @@
   "source": "Nelson & Cox, Lehninger Principles of Biochemistry",
   "source_kind": "book",
   "reference": "Nelson & Cox, Lehninger Principles of Biochemistry, 7th edition, W. H. Freeman, 2017",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

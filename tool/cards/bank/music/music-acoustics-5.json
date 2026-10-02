@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Lord Rayleigh showed that the sound creeps round the curved wall, reflected again and again at a grazing angle so it hugs the surface and spreads little. A whisper aimed along the wall carries about 30 metres across the gallery; one aimed at the middle of the dome is lost.",
   "move": "Before crediting the obvious shape, check which surface the signal travels along.",
+  "ask": "What explanation do I believe just because it looks right, without checking what is really going on?",
   "trap": "Picturing the dome as a mirror focusing sound onto one point.",
   "keywords": [
     "whispering gallery",

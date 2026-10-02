@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About five. An orbit reveals only the product; separating the mass needs G itself, measured in laboratories with masses small enough to lift, where gravity is feeble and hard to isolate. G is pinned to barely five figures, so Earth's mass stops at 5.9722 × 10²⁴ kg.",
   "move": "A result is only as sharp as the bluntest number it depends on.",
+  "ask": "Which result of mine is only as sharp as the vaguest number it relies on?",
   "trap": "Assuming the mass is known as precisely as its pull.",
   "keywords": [
     "gravitational constant",

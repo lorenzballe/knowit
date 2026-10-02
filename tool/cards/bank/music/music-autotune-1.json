@@ -9,6 +9,7 @@
   "question": "What was the inventor of Auto-Tune doing before he turned his maths on singers?",
   "answer": "Hunting for oil. Andy Hildebrand spent years at Exxon interpreting seismic data, the echoes of sound pulses fired into rock. The same tool, autocorrelation, which finds a repeating pattern by comparing a signal with a delayed copy of itself, lets software find a voice's pitch fast. Auto-Tune shipped in 1997, a grandchild of oil prospecting.",
   "move": "Methods travel further than the problems they were built for.",
+  "ask": "What skill from my old job or hobby could I carry over to solve a very different problem?",
   "keywords": [
     "andy hildebrand",
     "exxon",

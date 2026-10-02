@@ -9,6 +9,7 @@
   "question": "Why did Northern Rock's savers queue for their money in 2007 when their deposits were insured?",
   "answer": "Because the insurance left them holding part of the loss. Britain's scheme then covered all of the first £2,000 but only 90% of the next £33,000, and payouts could take months. For anyone with savings, running was rational. The queues stopped only when the Chancellor promised to guarantee every deposit, whole.",
   "move": "A guarantee with a gap in it invites people to race for the gap.",
+  "ask": "Where is there a gap in a promise I rely on that could make everyone run for it?",
   "keywords": [
     "northern rock",
     "bank run",

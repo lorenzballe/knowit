@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "They get harder-edged. Softness depends on how large the source looks from the face, not on its fabric. At four times the distance the box spans a quarter of the angle, so it acts more like a point. The sun, enormous but tiny in the sky, casts some of the hardest shadows there are.",
   "move": "Judge a source by how big it looks from where the subject stands.",
+  "ask": "Which advice do I judge by how big it looks from where I stand?",
   "trap": "Thinking distance spreads and diffuses light, the way fog does.",
   "keywords": [
     "softbox",

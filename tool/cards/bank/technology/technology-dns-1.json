@@ -9,6 +9,7 @@
   "question": "Why are there exactly 13 named root servers at the top of the internet's naming system?",
   "answer": "Because of a packet size set in 1987. The DNS standard capped a reply sent by UDP, its quick one-packet message, at 512 bytes, and a list of 13 server names with their addresses was what fitted. The 13 names survive, but each is now shared by many machines, well over a thousand in all.",
   "move": "Odd fixed numbers in a system are often a fossil of an old limit.",
+  "ask": "Which odd rule in my life is left over from a limit that no longer exists?",
   "keywords": [
     "root servers",
     "dns",

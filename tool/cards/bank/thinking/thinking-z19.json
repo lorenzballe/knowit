@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "At the usual threshold, roughly one measurement in twenty comes out significant by chance alone. Thirty measurements should produce about one or two even if nothing is happening. Reporting only those two turns noise into a finding.",
   "move": "Ask how many things were measured before you ask what was found.",
+  "ask": "How many things were measured behind the one result I was last told about?",
   "trap": "Reading a threshold designed for one question as if it survived thirty.",
   "keywords": [
     "multiple comparisons",

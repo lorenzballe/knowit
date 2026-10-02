@@ -9,6 +9,7 @@
   "question": "What would a black hole finishing its evaporation today have weighed when it formed in the early universe?",
   "answer": "About as much as a mountain: some 500 billion kilograms, packed into less than the width of a proton. Evaporation time grows with the cube of the mass, so anything much heavier is still here and anything lighter is long gone. Gamma-ray telescopes have watched for their final bursts. None has been seen.",
   "move": "Where lifetime climbs steeply with size, the ones ending today share one size.",
+  "ask": "Where does one steep trend mean the cases ending now all look alike?",
   "keywords": [
     "primordial black holes",
     "black hole evaporation",

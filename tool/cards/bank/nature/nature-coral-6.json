@@ -37,5 +37,6 @@
   "source": "Liu et al., Remote Sensing, 2014",
   "source_kind": "paper",
   "reference": "Liu et al., Reef-scale thermal stress monitoring of coral ecosystems: new 5-km global products from NOAA Coral Reef Watch, Remote Sensing, 2014",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -35,5 +35,6 @@
   "source": "Pierce, Library of Congress and CLIR, 2013",
   "source_kind": "institution",
   "reference": "https://www.loc.gov/static/programs/national-film-preservation-board/documents/pub158.final_version_sept_2013.pdf",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

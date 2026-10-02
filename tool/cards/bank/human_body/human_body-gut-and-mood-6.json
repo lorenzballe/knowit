@@ -28,5 +28,6 @@
   "source": "Kaelberer et al., Science, 2018",
   "source_kind": "paper",
   "reference": "Kaelberer, Buchanan, Klein et al., A gut-brain neural circuit for nutrient sensory transduction, Science, 2018",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

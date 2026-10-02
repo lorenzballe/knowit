@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Patients enrol at their worst, and many drift back towards their usual level whatever they take. Only a third group given nothing separates these. When a 2001 review pooled 130 trials with such a group, placebo effects were small, mostly on pain and other self-reported outcomes.",
   "move": "People seek help at their worst, so almost anything looks like it helped.",
+  "ask": "When I improved after asking for help, how much was just coming back from my worst?",
   "trap": "Crediting the dummy pill with every gain seen in its group.",
   "keywords": [
     "placebo group",

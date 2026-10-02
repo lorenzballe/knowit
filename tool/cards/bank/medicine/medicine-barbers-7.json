@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Among 77 patients, those bled in the first four days died more often than those bled later, yet Louis concluded bleeding helped a little: early-bled survivors recovered a few days sooner. He shrank its reputation, not its use. The count remembered as ending the lancet recommended it.",
   "move": "Read what a pioneer concluded, not only what later readers made of it.",
+  "ask": "Whose view do I only know from what other people say they thought?",
   "trap": "True, since his count is remembered as the end of bloodletting.",
   "keywords": [
     "pierre louis",

@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Tiny pure droplets freeze only near −38°C unless a speck of the right dust, pollen or bacterium starts the ice, and such specks are scarce. Once some ice appears, it grows by stealing vapour from the droplets around it. That is why rain in cool climates usually begins high up as snow.",
   "move": "A threshold measured in bulk can shift when the pieces get small.",
+  "ask": "What rule do I trust that might shift when the pieces get small?",
   "trap": "Water freezes at 0°C, so anything colder in the sky is ice.",
   "keywords": [
     "supercooled water",

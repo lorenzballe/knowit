@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Cool it, drawing deep water up. On a spinning planet, water pushed by the wind moves on average at right angles to it: to the right in the northern hemisphere, here out to sea. Cold, nutrient-rich water rises to replace it, feeding the coast's fisheries and chilling the air into San Francisco's summer fog.",
   "move": "A push does not always move things the way it points.",
+  "ask": "Where does the force I apply push results sideways rather than in the direction I aim?",
   "trap": "Barely change it, as if the water simply moved with the wind.",
   "keywords": [
     "ekman transport",

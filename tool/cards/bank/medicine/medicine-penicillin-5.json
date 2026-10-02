@@ -12,6 +12,7 @@
   "tolerance": 0.1,
   "answer": "1/64 = 0.0156, so about 1.6% remains.",
   "move": "When something halves on a schedule, count the halvings before guessing what is left.",
+  "ask": "When something halves again and again, how much do I think is really left?",
   "trap": "Guessing a quarter or more, underestimating how fast six halvings shrink a dose.",
   "hint": "Count how many half-lives fit into three hours.",
   "steps": [

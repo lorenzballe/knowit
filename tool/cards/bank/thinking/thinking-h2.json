@@ -13,6 +13,7 @@
   "correct": 2,
   "answer": "About 1,000 times. Each whole step on the magnitude scale is ten times the shaking recorded and about 32 times the energy, so two steps are roughly 32 × 32. A magnitude 8 releases in one event what a thousand magnitude 6 quakes would.",
   "move": "On a scale that counts powers, one step is never one step.",
+  "ask": "Where do I treat a scale as if each step were equal, when each one multiplies?",
   "trap": "Knowing each step is ten times, and stopping at the shaking.",
   "keywords": [
     "earthquakes",
@@ -30,6 +31,25 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "area",
+    "items": [
+      {
+        "label": "Magnitude 6",
+        "value": 1
+      },
+      {
+        "label": "Magnitude 7",
+        "value": 32
+      },
+      {
+        "label": "Magnitude 8",
+        "value": 1000,
+        "hi": true
+      }
+    ],
+    "caption": "Two steps up the scale, and the energy grows about a thousandfold: 32 × 32."
+  },
   "source": "Kanamori, Journal of Geophysical Research, 1977",
   "source_kind": "paper",
   "reference": "Kanamori, The energy release in great earthquakes, Journal of Geophysical Research, 1977",

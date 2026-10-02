@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "The publisher's and the label's. The song and the recording are separate copyrights: a synchronisation licence from the publisher covers the composition, a master-use licence from the label covers that particular recording. A new soundalike recording avoids the label but never the publisher, which is one reason films use cover versions.",
   "move": "A single object can carry two owners; ask who owns each layer.",
+  "ask": "Who else owns a layer of something I think is all mine?",
   "trap": "The record seems to be the thing used, so the label alone.",
   "keywords": [
     "synchronisation licence",

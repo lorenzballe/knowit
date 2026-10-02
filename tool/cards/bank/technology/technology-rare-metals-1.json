@@ -9,6 +9,7 @@
   "question": "Where does the hafnium in modern transistors come from?",
   "answer": "From the nuclear industry's leftovers. Reactor fuel cladding is zirconium, which always comes mixed with hafnium, and the hafnium must go because it absorbs neutrons hundreds of times more strongly. Hafnium is almost never mined for itself; it is what zirconium refiners set aside, and chipmakers turn it into the insulating film on transistor gates.",
   "move": "A supply that exists as someone's leftovers grows only when their business does.",
+  "ask": "What do I depend on that exists only as someone else's leftover?",
   "keywords": [
     "hafnium",
     "zirconium",

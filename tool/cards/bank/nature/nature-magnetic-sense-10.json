@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "No detectable magnetic effect. Bassetto, Mouritsen and colleagues repeated classic fly experiments with large numbers of flies, blinded scoring and careful control of heat and stray fields, and found nothing. Other labs still report effects, so the question is open. For years, positive results had piled up without anyone testing them this hard.",
   "move": "A pile of agreeing results is not a test until someone tries to break one.",
+  "ask": "Which belief of mine rests on many agreeing results nobody has seriously tried to break?",
   "trap": "Expecting the often-reported blue-light effect to survive blinded testing.",
   "keywords": [
     "fruit flies",

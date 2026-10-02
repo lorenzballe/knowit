@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Their low waves partly cancel. A kick is mostly a low, nearly pure thump; where one sample's wave rises while the other's falls, they subtract. Sliding one by a few milliseconds, or flipping its polarity, brings the weight back. Two heavy blows, badly timed, land like one soft one.",
   "move": "Two strengths can subtract when their timing is wrong.",
+  "ask": "Which two of my strengths cancel each other because their timing is off?",
   "trap": "The mix bus is clipping, since two loud sounds cause an overload.",
   "keywords": [
     "kick drum",

@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. A 1993 decree allows baker's yeast up to 0.2% of the flour's weight, added only at the final mixing. The bread must instead prove its sourness chemically: a pH no higher than 4.3 and at least 900 parts per million of acetic acid in the crumb. The label is a laboratory test.",
   "move": "Read how a label is defined in law before assuming what it excludes.",
+  "ask": "Do I know what a label allows, or only what I assume it rules out?",
   "trap": "Assuming a protected sourdough label must forbid added yeast entirely.",
   "keywords": [
     "pain au levain",

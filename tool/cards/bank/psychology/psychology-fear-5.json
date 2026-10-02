@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Exposure lays down a second memory, that the feared thing is now safe, which competes with the first instead of deleting it. The new memory is tied to where it was learned: in rats and in people, extinguished fear returns when tested elsewhere. A phobia beaten in the clinic can be waiting at home.",
   "move": "Suppressed is not deleted, so test the fix where it will be used.",
+  "ask": "Which fear have I merely suppressed, and would the fix hold in the place where I need it?",
   "trap": "The fear has gone, so the memory behind it must be gone.",
   "keywords": [
     "exposure therapy",

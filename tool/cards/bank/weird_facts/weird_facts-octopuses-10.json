@@ -28,5 +28,6 @@
   "source": "van Giesen et al., Cell, 2020",
   "source_kind": "primary_document",
   "reference": "van Giesen, Kilian, Allard & Bellono, Molecular Basis of Chemotactile Sensation in Octopus, Cell, 2020",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

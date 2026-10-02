@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Over half its workers live abroad. Liechtenstein has more jobs than its roughly 40,000 residents; more than half of employees commute in from Switzerland and Austria. Their work counts in output, but not in the population it is divided by. Every morning, output arrives by bus from people the statistic never counts.",
   "move": "Before comparing per-head figures, check who the heads are.",
+  "ask": "Which per-person number do I trust without asking who is being counted?",
   "trap": "Crediting the prince's wealth, the most famous fortune in the country.",
   "keywords": [
     "liechtenstein",

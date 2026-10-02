@@ -12,6 +12,7 @@
   "withinFactor": 3,
   "answer": "90 kg x 365 days = ~33,000 kg, about 33 tonnes.",
   "move": "Before judging how often people washed, weigh the water they had to carry.",
+  "ask": "Before I judge someone's habits, have I thought about what effort they cost them?",
   "trap": "Guessing a few tonnes because one bucket feels light.",
   "hint": "Count her trips to the well each day, then the weight of a full bucket.",
   "steps": [

@@ -1,0 +1,41 @@
+{
+  "id": "life-routines-2",
+  "topic": "life",
+  "genre": "life.habits",
+  "strand": "life.habits.routines",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Volunteers chose one daily action and logged it until it felt automatic. What was the median number of days that took?",
+  "options": [
+    "About 21 days",
+    "About 66 days",
+    "About 200 days"
+  ],
+  "correct": 1,
+  "answer": "About 66 days. In Lally's study, 96 volunteers were tracked for 12 weeks. The median time to reach a plateau of automaticity was 66 days, and individuals ranged from 18 to 254 days, depending on the person and the habit. Missing a single day did not derail the process.",
+  "move": "Plan for the slow version of change, and for missing a day.",
+  "ask": "What new habit am I giving up on too early, ignoring that real change is slow and missing a day is normal?",
+  "trap": "The figure of 21 days is repeated so widely it feels established.",
+  "keywords": [
+    "habit formation",
+    "automaticity",
+    "lally",
+    "daily behaviour",
+    "repetition"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lally and colleagues, Eur. J. Social Psychology, 2010",
+  "source_kind": "paper",
+  "reference": "Lally, van Jaarsveld, Potts and Wardle, How are habits formed: modelling habit formation in the real world, European Journal of Social Psychology, 2010",
+  "written": "2026-09-29"
+}

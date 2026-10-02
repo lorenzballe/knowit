@@ -28,5 +28,6 @@
   "source": "Galileo, Two New Sciences, 1638",
   "source_kind": "book",
   "reference": "Galileo, Dialogues Concerning Two New Sciences, trans. Crew & de Salvio, Macmillan, 1914",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

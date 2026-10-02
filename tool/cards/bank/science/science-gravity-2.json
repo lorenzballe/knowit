@@ -35,5 +35,6 @@
   "source": "Dziewonski & Anderson, PREM, 1981",
   "source_kind": "paper",
   "reference": "doi:10.1016/0031-9201(81)90046-7",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

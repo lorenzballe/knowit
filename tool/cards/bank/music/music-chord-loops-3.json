@@ -37,5 +37,6 @@
   "source": "Counting cyclic orderings",
   "source_kind": "arithmetic",
   "reference": "Brualdi, Introductory Combinatorics, Pearson, 2010",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

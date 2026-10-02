@@ -9,6 +9,7 @@
   "question": "Which earlier share price do takeover bids for a listed company tend to cluster at?",
   "answer": "The target's highest share price of the previous 52 weeks. Baker, Pan and Wurgler found that offers bunch at precisely that peak, and that targets become sharply likelier to accept once a bid clears it. A window drawn by the calendar helps price deals worth billions.",
   "move": "A price someone once paid is a memory, not a valuation.",
+  "ask": "What price did I see once that I still think is what something is worth?",
   "keywords": [
     "takeovers",
     "52-week high",

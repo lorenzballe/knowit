@@ -28,5 +28,6 @@
   "source": "Nayagam et al., Combustion and Flame, 2012",
   "source_kind": "paper",
   "reference": "Nayagam, Dietrich, Ferkul, Hicks & Williams, Can cool flames support quasi-steady alkane droplet burning?, Combustion and Flame, 2012",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

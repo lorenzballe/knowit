@@ -9,6 +9,7 @@
   "question": "Why did folding phones have to abandon the invisible conductor used in ordinary touchscreens?",
   "answer": "Because that conductor, indium tin oxide, is brittle. It is a ceramic that carries current yet lets light through, laid in patterned films a fraction of a micrometre thick, and bent over and over it cracks. Folding screens moved to meshes of metal lines too fine to see, or to silver nanowires.",
   "move": "A material chosen for one virtue brings its weaknesses along.",
+  "ask": "What did I choose for one strength that is quietly bringing its weaknesses along?",
   "keywords": [
     "indium tin oxide",
     "transparent conductors",

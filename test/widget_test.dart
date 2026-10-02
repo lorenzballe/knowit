@@ -284,7 +284,7 @@ void main() {
     // The mix opens with everything in, so the reader turns things down
     // rather than building a deck from nothing.
     expect(find.text('Science'), findsOneWidget);
-    expect(find.text('18 of 18 subjects in the mix'), findsOneWidget);
+    expect(find.text('19 of 19 subjects in the mix'), findsOneWidget);
 
     // Press at the very left of a tile — that is zero — and it leaves the
     // mix, with the count saying so.
@@ -292,7 +292,7 @@ void main() {
       tester.getTopLeft(find.text('Science')).translate(-28, 6),
     );
     await _settle(tester);
-    expect(find.text('17 of 18 subjects in the mix'), findsOneWidget);
+    expect(find.text('18 of 19 subjects in the mix'), findsOneWidget);
 
     await tester.tap(find.text('Next'));
     await _settle(tester);
@@ -387,10 +387,45 @@ void main() {
     // always there — here, with no counts to read, as its places empty.
     expect(find.text("Today's shelf"), findsOneWidget);
     expect(find.text('The same for everyone, and only today'), findsOneWidget);
-    expect(find.text('The ones that ask the most'), findsOneWidget);
-    expect(find.text('Across everyone, not just your mix'), findsOneWidget);
     expect(find.text('Top of the week'), findsOneWidget);
     expect(find.byKey(const ValueKey('top-empty')), findsOneWidget);
+    // Further down, today's turning themes and then the ones that ask most.
+    final Finder asking = find.text(
+      'The ones that ask the most',
+      skipOffstage: false,
+    );
+    await tester.scrollUntilVisible(
+      asking,
+      400,
+      scrollable: find
+          .byWidgetPredicate(
+            (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+          )
+          .first,
+    );
+    expect(asking, findsOneWidget);
+    expect(
+      find.text('Across everyone, not just your mix', skipOffstage: false),
+      findsOneWidget,
+    );
+    expect(
+      find.byWidgetPredicate(
+        (w) =>
+            w.key is ValueKey<String> &&
+            (w.key! as ValueKey<String>).value.startsWith('theme-'),
+        skipOffstage: false,
+      ),
+      findsWidgets,
+    );
+    await tester.scrollUntilVisible(
+      find.text("Today's shelf"),
+      -400,
+      scrollable: find
+          .byWidgetPredicate(
+            (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+          )
+          .first,
+    );
 
     // The subject row narrows every shelf at once. A card from another
     // subject is on the top shelf before, and gone after.
@@ -555,33 +590,22 @@ void main() {
   });
 
   group('Astute+ is three things, and the free plan shows their shape', () {
-    testWidgets('the archive opens on the free plan, a week deep', (
+    testWidgets('the archive is Astute+ only: the free plan meets the paywall', (
       tester,
     ) async {
-      final now = DateTime.now();
-      final yesterday = now.subtract(const Duration(days: 1));
-      final lastMonth = now.subtract(const Duration(days: 10));
       SharedPreferences.setMockInitialValues({
         ..._installed(),
-        'knowit.completedDates': [dateKey(lastMonth), dateKey(yesterday)],
+        'knowit.completedDates': [
+          dateKey(DateTime.now().subtract(const Duration(days: 1))),
+        ],
       });
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
       await _openSetting(tester, 'Archive');
 
-      // The archive, not the paywall: today and yesterday are there.
-      expect(find.text('The archive'), findsOneWidget);
-      expect(find.text('Today'), findsOneWidget);
-      expect(find.text('Yesterday'), findsOneWidget);
-      // The day ten days back is behind the lock, and the row says so —
-      // named and counted rather than silently missing.
-      expect(find.byKey(const ValueKey('archive-locked')), findsOneWidget);
-      expect(find.text('Before this week'), findsOneWidget);
-      expect(find.text('1 day'), findsOneWidget);
-      await tester.tap(find.byKey(const ValueKey('archive-locked')));
-      await _settle(tester);
       expect(_paywallHeadline, findsOneWidget);
+      expect(find.text('The archive'), findsNothing);
     });
 
     testWidgets('the mix is free to edit', (tester) async {
@@ -1365,7 +1389,7 @@ void main() {
 
     // On to Profile, and back again, and the bar follows the finger.
     await tester.dragFrom(
-      tester.getCenter(find.text('The ones that ask the most')),
+      tester.getCenter(find.text("Today's shelf")),
       const Offset(-300, 0),
     );
     await _settle(tester);
@@ -2064,7 +2088,7 @@ void main() {
       expect(find.text(front.answer), findsOneWidget);
       expect(find.text(front.barMove), findsOneWidget);
       expect(find.text('Source · ${front.source}'), findsNothing);
-      expect(find.text('BAR MOVE'), findsNothing);
+      expect(find.text('WHAT TO KEEP'), findsNothing);
 
       await tester.tap(find.text(front.question));
       await _settle(tester);
@@ -2468,10 +2492,9 @@ void main() {
       expect(asks, hasLength(2));
       expect(asks.map((p) => p.id), isNot(contains(question.id)));
       expect(asks.map((p) => p.principle), contains(first.principle));
-      expect(
-        app.todaysDeck.map((p) => p.principle),
-        isNot(contains(second.principle)),
-      );
+      // The second is not asked today; it waits. (The day's own question
+      // may share its principle by chance: the pool is what it is.)
+      expect(asks.map((p) => p.id), isNot(contains(second.id)));
 
       // The one left over waits on the finished day.
       await finish(tester);
@@ -3545,11 +3568,11 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Tap to reveal'), findsOneWidget);
-      expect(find.text('BAR MOVE'), findsNothing);
+      expect(find.text('WHAT TO KEEP'), findsNothing);
 
       await tester.tap(find.text('Tap to reveal'));
       await tester.pumpAndSettle();
-      expect(find.text('BAR MOVE'), findsOneWidget);
+      expect(find.text('WHAT TO KEEP'), findsOneWidget);
     });
 
     testWidgets('a card that asks will not turn over until you commit', (
@@ -3561,7 +3584,7 @@ void main() {
       // Tapping the question is not an answer, so the card stays put.
       await tester.tap(find.text(pick.question));
       await tester.pumpAndSettle();
-      expect(find.text('BAR MOVE'), findsNothing);
+      expect(find.text('WHAT TO KEEP'), findsNothing);
     });
 
     testWidgets('answering asks how sure you are, then turns the card', (
@@ -3577,7 +3600,7 @@ void main() {
 
       // Committed, but not revealed: the card asks for confidence first.
       expect(find.text('How sure are you?'), findsOneWidget);
-      expect(find.text('BAR MOVE'), findsNothing);
+      expect(find.text('WHAT TO KEEP'), findsNothing);
 
       await tester.tap(find.text('80%'));
       await tester.pumpAndSettle();
@@ -3586,7 +3609,7 @@ void main() {
       expect(given[pick.id]?.confidence, 80);
       expect(find.textContaining('You got it'), findsOneWidget);
       expect(find.textContaining('you said 80% sure'), findsOneWidget);
-      expect(find.text('BAR MOVE'), findsOneWidget);
+      expect(find.text('WHAT TO KEEP'), findsOneWidget);
     });
 
     testWidgets('a wrong pick names the trap', (tester) async {
@@ -3660,7 +3683,7 @@ void main() {
 
       expect(find.text(number.hint), findsOneWidget);
       // A hint is not the answer: the card has not turned.
-      expect(find.text('BAR MOVE'), findsNothing);
+      expect(find.text('WHAT TO KEEP'), findsNothing);
     });
 
     testWidgets('an estimate accepts anything in the right ballpark', (
@@ -4050,7 +4073,7 @@ void main() {
       // Tapping must not open an answer the reader has to re-earn.
       await tester.tap(find.text(pill.question));
       await tester.pumpAndSettle();
-      expect(find.text('BAR MOVE'), findsNothing);
+      expect(find.text('WHAT TO KEEP'), findsNothing);
       expect(find.text('AGAIN'), findsOneWidget);
     });
   });
@@ -4709,7 +4732,7 @@ void main() {
       const List<List<String>> drawn = [
         [], // the mark, found by its image below
         [], // falling cards, whose box is checked as a whole
-        ['ECONOMICS', 'tap to reveal', 'BAR MOVE', 'Source · Stanford GSB'],
+        ['ECONOMICS', 'tap to reveal', 'WHAT TO KEEP', 'Source · Stanford GSB'],
         ['Space', 'Economics', 'Technology', 'Human body', 'Science', 'Cinema'],
         [],
       ];

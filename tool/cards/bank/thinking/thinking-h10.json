@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "About €2,040. Each month's 2% is charged on the interest already added, so the debt multiplies by 1.02 thirty-six times, which is a little over 2. Simple interest would give €1,720: the gap is interest on interest, and it widens every month.",
   "move": "Turn a monthly rate into a yearly one before deciding it is small.",
+  "ask": "Which monthly rate on my debts or savings have I never converted to a yearly one?",
   "trap": "Adding 2% thirty-six times instead of multiplying by it.",
   "keywords": [
     "compound interest",

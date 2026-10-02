@@ -35,5 +35,6 @@
   "source": "Guzewich et al., Geophysical Research Letters, 2019",
   "source_kind": "paper",
   "reference": "Guzewich et al., Mars Science Laboratory Observations of the 2018/Mars Year 34 Global Dust Storm, Geophysical Research Letters, 2019",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

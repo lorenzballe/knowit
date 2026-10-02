@@ -35,5 +35,6 @@
   "source": "Worrell et al., Lawrence Berkeley National Laboratory, 2008",
   "source_kind": "institution",
   "reference": "https://eta-publications.lbl.gov/sites/default/files/glass_guidebook_en.pdf",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

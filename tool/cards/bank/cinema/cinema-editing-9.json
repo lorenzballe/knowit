@@ -12,6 +12,7 @@
   "tolerance": 5,
   "answer": "13,900 / 147 = about 94.5 minutes shot per minute used.",
   "move": "Count what was thrown away to learn what the finished thing really cost.",
+  "ask": "What did the things I admire cost in everything that was thrown away?",
   "trap": "Guessing about 10 to 1, as if most footage made the cut.",
   "hint": "Turn the footage into minutes first, then set it against the running time.",
   "steps": [

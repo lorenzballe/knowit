@@ -12,6 +12,7 @@
   "question": "Why does each key on a touch-tone phone sound two notes at once?",
   "answer": "So a voice cannot dial by accident. Single tones turn up in speech and music, so Bell Labs gave each key one note from a low group and one from a high group, none a harmonic of another: the 1 key is 697 plus 1,209 hertz. Speech rarely produces that exact pair.",
   "move": "Make a signal something the noise around it cannot imitate.",
+  "ask": "What signal do I send that noise could not easily copy?",
   "keywords": [
     "touch-tone",
     "dtmf",

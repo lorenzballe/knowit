@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Surveys of students across dozens of countries found women crying more than men almost everywhere, but the gap was larger in wealthier, more democratic countries. One reading: where feelings may be shown freely, differences between the sexes have room to appear, and in stricter places they stay hidden.",
   "move": "Freedom to express a difference can make the difference look bigger.",
+  "ask": "Does feeling free to show my feelings make my differences from others look bigger?",
   "trap": "Strict gender roles in poorer countries should silence men's tears most.",
   "keywords": [
     "crying",

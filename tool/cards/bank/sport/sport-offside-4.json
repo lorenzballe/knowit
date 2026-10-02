@@ -9,6 +9,7 @@
   "question": "Why can an assistant referee with perfect eyesight still misjudge offside from where he stands?",
   "answer": "Geometry. Unless the assistant is exactly level with the second-last defender, the offside line is seen at a slant, so players on the far side of the pitch appear shifted towards or away from goal. A study of 200 real decisions found 40 wrong, in the directions the viewing angle predicted.",
   "move": "Before trusting a judgement of level, check where the judge was standing.",
+  "ask": "Before I trust my own judgement of a situation, have I checked where I was standing?",
   "keywords": [
     "assistant referee",
     "viewing angle",

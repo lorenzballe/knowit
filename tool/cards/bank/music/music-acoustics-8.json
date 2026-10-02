@@ -11,6 +11,7 @@
   "unit": "Hz",
   "answer": "Frequency: 343 ÷ 6.86 = 50 Hz.",
   "move": "Measure the room before blaming the speaker for a boomy note.",
+  "ask": "When something sounds or feels off, have I checked the room it is in before blaming the thing itself?",
   "trap": "Fitting a whole wavelength in the room and answering 100 Hz.",
   "hint": "Ask how much of one wave fits between two hard walls at the lowest resonance.",
   "steps": [

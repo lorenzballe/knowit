@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 111 metres. Zeno's stages are 100 metres, then 10, then 1, then 0.1, and so on; they add up to 111.1 recurring, or 1,000/9. Quicker: Achilles gains 9 metres on every 10 he runs, so the 100-metre gap closes after 1,000/9 metres. By then the tortoise has crawled just over 11 metres.",
   "move": "Endless stages can sum to a finite total; add them before despairing.",
+  "ask": "Which endless chore of mine is really a finite total I never added up?",
   "trap": "Infinitely many stages feel as if they must take forever.",
   "keywords": [
     "achilles and the tortoise",

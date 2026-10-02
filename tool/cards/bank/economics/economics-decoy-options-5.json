@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "More swayed, since the decoy supplies a reason. In Simonson's experiments, decoy and compromise effects were stronger among people who expected to justify their decision to others. A clearly dominated option hands the chooser an easy argument: this one beats that one. Picking the decoy's target went with more elaborate, harder deliberation, not less.",
   "move": "A choice you can defend is not always the choice you should make.",
+  "ask": "Do I choose what I can explain to others, or what is best for me?",
   "trap": "Expecting accountability to make people more careful and less biased.",
   "keywords": [
     "decoy effect",

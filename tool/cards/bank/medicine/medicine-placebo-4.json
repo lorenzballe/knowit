@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 90%. The 2020 SAMSON trial gave 60 people twelve monthly bottles, four each of atorvastatin, placebo and nothing, and they scored symptoms daily. Empty months were easy; dummy months hurt almost as much as statin months. Shown their own charts, about half went back on statins.",
   "move": "Compare the bad months with the months you took nothing at all.",
+  "ask": "Which bad stretch do I blame on a cause without comparing it to a stretch with nothing?",
   "trap": "Believing aches that began with the drug must come from the drug.",
   "keywords": [
     "nocebo",

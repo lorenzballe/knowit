@@ -12,6 +12,7 @@
   "tolerance": 0.1,
   "answer": "1,145,500 × 10 years = 11,455,000, about 11.5 million dollars.",
   "move": "Count what it costs to keep a thing, not only to make it.",
+  "ask": "What have I made or bought without counting the yearly cost of keeping it?",
   "trap": "Assuming digital storage is cheap because disks keep getting cheaper.",
   "hint": "Find the extra cost of one title for one year first.",
   "steps": [

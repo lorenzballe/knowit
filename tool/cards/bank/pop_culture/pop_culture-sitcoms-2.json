@@ -35,5 +35,6 @@
   "source": "NBC News, 2005",
   "source_kind": "news_archive",
   "reference": "https://www.today.com/popculture/simpsons-rides-seoul-train-wbna7069645",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -34,5 +34,6 @@
   "source": "Navarini et al., Applied Thermal Engineering, 2009",
   "source_kind": "paper",
   "reference": "Navarini, Nobile, Pinto, Scheri & Suggi-Liverani, Experimental investigation of steam pressure coffee extraction in a stove-top coffee maker, Applied Thermal Engineering, 2009",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Ouellette and Wood's meta-analysis found that for frequent acts in stable settings, like buckling a seatbelt, past behaviour predicted future behaviour directly and intentions added little. For rare or shifting acts, like giving blood, intentions did most of the predicting. What someone did last Tuesday outranks what they meant to do.",
   "move": "To predict a routine, ask what was done yesterday, not what is planned.",
+  "ask": "Am I predicting my own week from my intentions or from what I actually did last week?",
   "trap": "Assuming people do what they intend, since that is how choosing feels.",
   "keywords": [
     "intentions",

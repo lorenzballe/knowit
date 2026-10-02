@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About one in 100,000. Optical density counts powers of ten: OD 1 passes a tenth, OD 2 a hundredth, OD 5 a hundred-thousandth. A 1-watt beam leaves 10 microwatts. The rating holds only at the colours printed on the frame; goggles dense for green laser light can be nearly clear to infrared.",
   "move": "On any scale that counts powers of ten, each step multiplies.",
+  "ask": "When a scale goes up in powers of ten, do I see how big each step really is?",
   "trap": "Reading OD 5 as five times weaker, like a simple scale.",
   "keywords": [
     "laser safety goggles",

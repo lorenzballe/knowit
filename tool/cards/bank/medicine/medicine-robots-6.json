@@ -9,6 +9,7 @@
   "question": "What could surgeons at the controls of the market-leading surgical robot not feel until 2024?",
   "answer": "How hard they were pushing or pulling. For over two decades the console sent motion but no force back, so surgeons judged tension by eye, watching tissue blanch and stretch and sutures bite. The da Vinci 5, cleared in the US in 2024, finally sent force back to the hands through some instruments.",
   "move": "When a sense is missing, people quietly rebuild it from another.",
+  "ask": "When I lose one sense or signal, which other one do I quietly lean on?",
   "keywords": [
     "haptic feedback",
     "da vinci",

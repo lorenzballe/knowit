@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Tokyo, with about 142,000 housing starts, against about 137,000 in England and 84,000 in California. Japan's zoning is set nationally, and most building that fits the zone needs no local approval. Tokyo's rents stayed broadly flat for years while London's and San Francisco's climbed. A city a quarter England's size outbuilt it.",
   "move": "Where prices rise, ask first who is allowed to build.",
+  "ask": "Where prices rise around me, who is not allowed to build?",
   "trap": "Picking England, which has about four times Tokyo's population.",
   "keywords": [
     "tokyo",

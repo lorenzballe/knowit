@@ -11,6 +11,7 @@
   "unit": "per cent",
   "answer": "0.04 x 100 = 4 per cent.",
   "move": "What you are shown is a choice from what was recorded.",
+  "ask": "What did I just see, and what portion of what was recorded did I never see?",
   "trap": "Assuming a documentary shows most of what the camera saw.",
   "hint": "Put the hours that aired over the hours that were shot.",
   "steps": [

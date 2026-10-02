@@ -40,5 +40,6 @@
   "source": "Hoffmann et al., DeepMind, 2022",
   "source_kind": "paper",
   "reference": "Hoffmann et al., Training Compute-Optimal Large Language Models, arXiv:2203.15556, 2022",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

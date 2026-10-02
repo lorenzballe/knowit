@@ -28,5 +28,6 @@
   "source": "UN Security Council Resolution 550, 1984",
   "source_kind": "primary_document",
   "reference": "United Nations Security Council, Resolution 550 (1984), adopted 11 May 1984",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

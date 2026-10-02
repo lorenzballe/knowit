@@ -9,6 +9,7 @@
   "question": "Why did Abbey Road engineers build a device in 1966 to fake a second vocal take?",
   "answer": "Because John Lennon hated singing the same part twice. Double-tracking, recording a line again over the first take, thickened a voice but ate studio time. Ken Townsend fed the vocal to a second tape machine whose speed could be varied, so the copy trailed by a few wobbling milliseconds. Artificial double tracking arrived on Revolver.",
   "move": "Automate the chore that someone talented refuses to repeat.",
+  "ask": "What chore that talented people hate repeating could I automate?",
   "keywords": [
     "artificial double tracking",
     "ken townsend",

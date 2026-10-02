@@ -35,5 +35,6 @@
   "source": "CIA World Factbook, Montserrat",
   "source_kind": "reference_work",
   "reference": "Central Intelligence Agency, The World Factbook: Montserrat, 2024",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

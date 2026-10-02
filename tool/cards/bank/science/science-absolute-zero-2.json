@@ -9,6 +9,7 @@
   "question": "Where does the helium-3 that the coldest refrigerators depend on come from?",
   "answer": "Mostly from nuclear weapons. Tritium, the radioactive hydrogen in warheads, decays into helium-3 with a half-life of about 12 years, and the gas is skimmed off when the tritium is purified. Dilution refrigerators, which hold quantum-computer chips near a hundredth of a kelvin, need it. After 2001, radiation detectors at ports ran the stockpile down.",
   "move": "Trace a scarce material back to whatever it is a by-product of.",
+  "ask": "When I depend on something scarce, do I know what it is a leftover from?",
   "keywords": [
     "helium-3",
     "tritium",

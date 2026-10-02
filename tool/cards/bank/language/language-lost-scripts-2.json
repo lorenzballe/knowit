@@ -9,6 +9,7 @@
   "question": "Which misunderstood Spanish document helped unlock Maya writing four centuries after it was written?",
   "answer": "Bishop Diego de Landa's account of Yucatán, from around 1566. He asked Maya informants for the sign for each Spanish letter, and they wrote the syllable of the letter's name, so b, said be, got the glyph for be. Long dismissed as nonsense, it let Yuri Knorozov show in 1952 that Maya glyphs spell syllables.",
   "move": "A failed translation can still record the answer to another question.",
+  "ask": "What failed attempt of mine might still hold the answer to another question?",
   "keywords": [
     "maya glyphs",
     "diego de landa",

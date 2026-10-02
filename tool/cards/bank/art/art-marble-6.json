@@ -9,6 +9,7 @@
   "question": "Why is Michelangelo's David so slender when seen from the side?",
   "answer": "Because the block had been cut into before him. Quarried at Carrara in the 1460s for a figure on Florence cathedral, the tall, narrow block was begun by Agostino di Duccio, then taken up and dropped by Antonio Rossellino. It lay unused until 1501. Michelangelo fitted David into a slab others had spoiled.",
   "move": "Before praising a design, ask what it was forced to fit inside.",
+  "ask": "Before I praise or blame a design, what limit was it forced to fit inside?",
   "keywords": [
     "michelangelo",
     "david",

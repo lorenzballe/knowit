@@ -32,8 +32,37 @@
   "mature": false,
   "language": "en",
   "figure": "map",
+  "diagram": {
+    "type": "timeline",
+    "from": 1250,
+    "to": 1290,
+    "events": [
+      {
+        "at": 1259,
+        "label": "Möngke dies"
+      },
+      {
+        "at": 1262,
+        "label": "Khanates at war"
+      },
+      {
+        "at": 1279,
+        "label": "Song falls: greatest extent",
+        "hi": true
+      }
+    ],
+    "spans": [
+      {
+        "from": 1260,
+        "to": 1264,
+        "label": "civil war"
+      }
+    ],
+    "caption": "The khanates were at war seventeen years before the empire reached its greatest extent."
+  },
   "source": "Morgan, The Mongols, 2007",
   "source_kind": "book",
   "reference": "Morgan, The Mongols, 2nd edition, Blackwell, 2007",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

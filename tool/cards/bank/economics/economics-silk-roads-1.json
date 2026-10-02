@@ -9,6 +9,7 @@
   "question": "Who named the Silk Road, and what was that person looking for in China?",
   "answer": "A German geologist, Ferdinand von Richthofen, in 1877, and he was looking for coal. His travels from 1868 began as a survey of coal reserves for the Bank of California. His volumes pointed Germany to Shandong's coalfields, and in 1897 it seized the harbour at Qingdao. The romantic name came wrapped in a mining report.",
   "move": "Ask what the person who named a thing wanted from it.",
+  "ask": "What did the person who named something want from it?",
   "keywords": [
     "ferdinand von richthofen",
     "silk road",

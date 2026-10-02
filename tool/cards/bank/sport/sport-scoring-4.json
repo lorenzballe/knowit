@@ -9,6 +9,7 @@
   "question": "Why did gymnastics give up the perfect 10 in 2006?",
   "answer": "A ceiling on the score was a ceiling on the sport. Under a maximum of 10, a harder routine performed slightly less cleanly could lose to a safe one done perfectly. The new code split marks into an open-ended difficulty score, built up from zero, and an execution score that starts at 10 and falls.",
   "move": "Cap the reward and people stop attempting the hard thing.",
+  "ask": "Where have I capped the reward so people stop trying the hard thing?",
   "keywords": [
     "perfect 10",
     "code of points",

@@ -36,5 +36,6 @@
   "source": "Heck et al., PNAS, 2020",
   "source_kind": "primary_document",
   "reference": "doi:10.1073/pnas.1904573117",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

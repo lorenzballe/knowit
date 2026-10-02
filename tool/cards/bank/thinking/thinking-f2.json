@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "The comparison assumes the two groups are alike, and they are not: hospitals concentrate the sickest people. Judging a treatment needs comparable groups, which is what a control group is for.",
   "move": "Any statistic comparing two groups invites one question: who ended up in each?",
+  "ask": "Which two groups am I comparing without asking how people ended up in each one?",
   "trap": "Treating a place where sick people are sent as a cause of their outcome.",
   "keywords": [
     "confounding",

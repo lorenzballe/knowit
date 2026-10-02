@@ -9,6 +9,7 @@
   "question": "How did the arabica coffee plant come to exist as a species?",
   "answer": "By an accidental cross. Coffea canephora, the robusta plant, and Coffea eugenioides mated in Ethiopian forests, and the offspring kept both parents' full sets of chromosomes, making a new species that pollinates itself. A 2024 genome study dates it to roughly 610,000 years ago. Self-pollination has kept arabica's genetic diversity narrow ever since.",
   "move": "A thing that looks like one original may be two others fused.",
+  "ask": "What do I treat as one original thing that is really two others joined?",
   "keywords": [
     "coffea arabica",
     "hybridisation",

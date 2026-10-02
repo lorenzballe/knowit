@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "The auditorium's own background noise. A 24-bit file can span about 144 decibels, far more than a cinema can use. The limit is the room: air handling, projector fans, the audience breathing and rustling. Mixers keep quiet passages above that floor, which is why a whisper on screen is louder than a real one.",
   "move": "The weakest link is often the room, not the machine.",
+  "ask": "Is the weakest link in my day the tool, or the room around it?",
   "trap": "Digital sound seems limited by its format, as tape once was.",
   "keywords": [
     "dynamic range",

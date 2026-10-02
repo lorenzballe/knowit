@@ -35,5 +35,6 @@
   "source": "Knecht et al., Brain, 2000",
   "source_kind": "paper",
   "reference": "doi:10.1093/brain/123.12.2512",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

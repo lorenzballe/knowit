@@ -35,5 +35,6 @@
   "source": "The Numbers, Titanic box office",
   "source_kind": "statistics",
   "reference": "https://www.the-numbers.com/movie/Titanic-(1997)",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -18,6 +18,7 @@
   "correct": 0,
   "answer": "His usual pitch, about 120 Hz. The line strips the fundamental but keeps the harmonics at 360, 480, 600 Hz and up, spaced 120 Hz apart, and the brain reads pitch from that spacing: the missing fundamental. The same trick lets a laptop speaker that cannot play 100 Hz still carry a bass line.",
   "move": "A pattern can reveal a missing piece that no single part contains.",
+  "ask": "What do I think is missing from something when the rest of it quietly fills the gap?",
   "trap": "Pitch seems to be the lowest frequency present, and that was cut.",
   "keywords": [
     "missing fundamental",

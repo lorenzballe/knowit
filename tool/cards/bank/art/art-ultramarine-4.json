@@ -9,6 +9,7 @@
   "question": "What put grains of ultramarine into the dental tartar of a woman buried at a German convent?",
   "answer": "Most likely, painting books. Researchers found lazurite grains in the hardened plaque of a woman buried at Dalheim around 1000 to 1200. The likeliest route is licking a brush to a point while painting with ultramarine, kept for the finest manuscripts. A craft usually credited to monks left its blue in a woman's teeth.",
   "move": "A name missing from the records is not a worker missing from the work.",
+  "ask": "Whose name is missing from the records of work I benefit from?",
   "keywords": [
     "dental calculus",
     "manuscript illumination",

@@ -12,6 +12,7 @@
   "question": "How does a Martian dust storm help the planet lose what remains of its water?",
   "answer": "By lifting water to where sunlight can break it. Dust absorbs sunlight and warms the middle atmosphere, so vapour that would normally freeze out low rises tens of kilometres higher. There ultraviolet light splits the molecules and the light hydrogen escapes. During the 2018 global storm, the water reaching those heights surged.",
   "move": "Weather can carry a thing to the place where it gets destroyed.",
+  "ask": "Could the thing carrying something away from me be what is destroying it?",
   "keywords": [
     "dust storms",
     "water vapour",

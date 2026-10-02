@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "They kept rising, as before. Japan stopped MMR over meningitis from its mumps strain, which made its removal a test. A study of every child born in Kohoku ward from 1988 to 1996 found cumulative autism incidence climbed across the cohorts with no dip. Cohorts never given MMR had the highest rates.",
   "move": "Take away the suspect and watch whether the trend even notices.",
+  "ask": "When I blame one thing for a trend, did the trend change when it was removed?",
   "trap": "Expecting removal of a suspected cause to at least slow the rise.",
   "keywords": [
     "mmr vaccine",

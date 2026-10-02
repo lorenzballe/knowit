@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Usually cheaper. Carlson and Frazão of the US Department of Agriculture priced foods three ways. Per calorie, vegetables and fruit look expensive, since they carry few calories. Per gram or per portion, they cost less than most meats and foods high in fat, sugar or salt. A carrot is cheap filling, dear fuel.",
   "move": "Ask what a price is divided by before comparing two of them.",
+  "ask": "What is this price divided by, and would another way change my mind?",
   "trap": "Recalling studies that ranked foods by price per calorie.",
   "keywords": [
     "healthy food",

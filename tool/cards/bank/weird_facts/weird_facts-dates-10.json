@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Clerks filling in an unknown birth date. Where births went unregistered, as in wartime Afghanistan, forms still demand a date, and 1 January is the default; US immigration files carry it for many refugees whose papers had no date. These birthdays mark a form being filled in, not a delivery.",
   "move": "Before explaining a pattern in records, ask how the records were filled in.",
+  "ask": "Which number I trust might say more about how it was written down than what really happened?",
   "trap": "Seeking a biological or seasonal cause for what is a filing habit.",
   "keywords": [
     "birthdays",

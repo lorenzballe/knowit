@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The Le Chapelier law of June 1791 banned associations of workers or employers, and strikes, as threats to individual liberty, three months after the guilds were abolished. Strikes stayed a crime in France until 1864 and trade unions until 1884, nearly a century after the Bastille fell.",
   "move": "Ask whose freedom a liberty law was written to protect.",
+  "ask": "Whose freedom was a rule I admire really written to protect?",
   "trap": "Assuming a revolution made in the people's name gave workers that right.",
   "keywords": [
     "le chapelier law",

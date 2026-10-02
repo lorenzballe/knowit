@@ -9,6 +9,7 @@
   "question": "Who supplied the carts and mules for Roman officials travelling on state business?",
   "answer": "The towns along the road. Under Tiberius, an edict at Sagalassos, in modern Turkey, made the town keep up to ten carts and ten mules for officials, at fixed fees in bronze coin: 10 asses a cart and 4 a mule per schoenus, a local measure of distance. Many had simply taken them unpaid.",
   "move": "When a service looks free, find out who was made to provide it.",
+  "ask": "Which service looks free to me, and who was made to supply it?",
   "keywords": [
     "sagalassos",
     "requisition",

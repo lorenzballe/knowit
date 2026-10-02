@@ -12,6 +12,7 @@
   "withinFactor": 3,
   "answer": "8 / 0.02 = 400 chest X-rays.",
   "move": "Put two risks in the same unit before calling them similar.",
+  "ask": "Which two risks do I call similar without putting them in the same units?",
   "trap": "Guessing a handful, picturing both as one quick picture.",
   "hint": "Put both doses in millisieverts, the unit of radiation dose, then divide.",
   "steps": [

@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "They were always going to be able to name a rejected candidate among the other two, whoever wins — so hearing one name tells you nothing about you. Your one-in-three stands, and the remaining finalist now carries two-thirds.",
   "move": "Information only moves the odds if it could have come out differently.",
+  "ask": "The last time someone gave me a hint about my chances, could it have gone the other way?",
   "trap": "Two candidates left, so it feels like a coin flip.",
   "keywords": [
     "conditional probability",

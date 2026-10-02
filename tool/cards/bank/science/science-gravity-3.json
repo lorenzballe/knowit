@@ -12,6 +12,7 @@
   "tolerance": 2,
   "answer": "70,000 g x 0.00532 = 372 g more.",
   "move": "A scale measures a pull, and the pull depends on where you stand.",
+  "ask": "Do I realise that something I measure the same everywhere may change with where I stand?",
   "trap": "Assuming a scale weighs mass, so the reading cannot change.",
   "hint": "Work out how much stronger the pull is at the pole, as a percentage.",
   "steps": [

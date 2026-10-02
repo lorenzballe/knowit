@@ -28,5 +28,6 @@
   "source": "Hawking, A Brief History of Time",
   "source_kind": "book",
   "reference": "Hawking, A Brief History of Time, Bantam, 1988, chapter 9",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

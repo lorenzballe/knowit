@@ -39,5 +39,6 @@
   "source": "Salgarella & Castellan, SigLA database",
   "source_kind": "institution",
   "reference": "https://sigla.phis.me/paper.html",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "More than 9 in 10: Heller and Bergman reported 94%. Everyday noise masks the faint sounds a healthy hearing system makes; strip it away and most people notice them. Subjects were told to listen, which may have raised the figure; later studies found smaller shares. Clinics see only those who hear it through daily noise.",
   "move": "Ask what the everyday noise was hiding before calling something rare.",
+  "ask": "What have I called rare that everyday noise was only hiding?",
   "trap": "Ringing in the ears sounds like a patient's complaint, so surely rare.",
   "keywords": [
     "tinnitus",

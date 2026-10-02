@@ -18,6 +18,7 @@
   "correct": 2,
   "answer": "About £45. Cleaned, restored and attributed to Leonardo himself, the same walnut panel sold at Christie's in New York in 2017 for $450 million. The panel was the same at both sales; the name on the label was not. That gap is the space every forger works in.",
   "move": "Ask how much of a price is the thing and how much the name.",
+  "ask": "How much of what I pay is for the thing and how much for the name on it?",
   "trap": "Letting the $450 million pull the guess into the thousands or millions.",
   "keywords": [
     "salvator mundi",

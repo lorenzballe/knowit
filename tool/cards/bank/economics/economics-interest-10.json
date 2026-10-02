@@ -35,5 +35,6 @@
   "source": "Swiss National Bank, policy decisions",
   "source_kind": "institution",
   "reference": "Swiss National Bank, Monetary policy assessment and press release of 15 January 2015, 2015",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

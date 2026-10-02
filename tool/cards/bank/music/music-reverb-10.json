@@ -42,5 +42,6 @@
   "source": "Gardner, JAES, 1995",
   "source_kind": "paper",
   "reference": "Gardner, Efficient Convolution without Input-Output Delay, Journal of the Audio Engineering Society, 1995",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

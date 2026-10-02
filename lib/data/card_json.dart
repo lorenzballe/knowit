@@ -65,6 +65,7 @@ Map<String, Object?> cardToJson(Pill p) {
   }
   out['answer'] = p.answer;
   out['move'] = p.barMove;
+  if (p.ask.isNotEmpty) out['ask'] = p.ask;
   if (p.hasTrap) out['trap'] = p.trap;
   if (p.hasHint) out['hint'] = p.hint;
   if (p.hasSteps) out['steps'] = p.steps;
@@ -87,6 +88,7 @@ Map<String, Object?> cardToJson(Pill p) {
   }
   if (p.buildsOn.isNotEmpty) out['builds_on'] = p.buildsOn;
   if (p.figure.isNotEmpty) out['figure'] = p.figure;
+  if (p.diagram != null) out['diagram'] = p.diagram!.raw;
   out['source'] = p.source;
   return out;
 }
@@ -177,6 +179,7 @@ Pill cardFromJson(Map<String, Object?> raw) {
     question: question,
     answer: text('answer'),
     barMove: text('move'),
+    ask: text('ask'),
     source: text('source'),
     challenge: challenge,
     hint: text('hint'),
@@ -201,5 +204,6 @@ Pill cardFromJson(Map<String, Object?> raw) {
     language: text('language', fallback: 'en'),
     buildsOn: list('builds_on'),
     figure: text('figure'),
+    diagram: Diagram.fromJson(raw['diagram'], id: id),
   );
 }

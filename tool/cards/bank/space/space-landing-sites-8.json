@@ -9,6 +9,7 @@
   "question": "Why did no spacecraft land on the Moon's far side until 2019?",
   "answer": "Because nothing there can talk to Earth directly. The far side always faces away, so a lander needs a relay. China first sent a satellite, Queqiao, to loop beyond the Moon near a balance point of Earth's and the Moon's gravity, in 2018; only then did Chang'e-4 set down in Von Kármán crater.",
   "move": "Where a signal cannot reach, the first thing to build is the messenger.",
+  "ask": "What can't I reach until I build the way to send a message there first?",
   "keywords": [
     "chang'e-4",
     "queqiao",

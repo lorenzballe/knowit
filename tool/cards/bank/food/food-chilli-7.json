@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Penn State researchers in 2019 gave volunteers capsaicin-spiked tomato juice, then one of seven drinks: whole and skimmed milk did equally well, and both beat water and seltzer. Fat dissolves capsaicin, which made it the obvious hero. The result points instead to milk's proteins, such as casein, pulling capsaicin off the tongue.",
   "move": "A mechanism that sounds right still has to beat its control.",
+  "ask": "What do I swear by only because it sounds right, and have I ever tried without it?",
   "trap": "True, because capsaicin dissolves in fat and whole milk has more.",
   "keywords": [
     "capsaicin",

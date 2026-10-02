@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Tallying deep dives since the 1950s, Bell's team put the seafloor below 200 m ever seen at about 0.001% of the total, some 4,000 km². Most of it lies off just three countries: the United States, Japan and New Zealand. Sonar has mapped about a quarter of the seabed; eyes have seen a speck.",
   "move": "Before trusting how much is known, ask what counted as seeing it.",
+  "ask": "What do I feel I know well that I have only glimpsed a tiny part of?",
   "trap": "Anchoring on the familiar mapping figures, which measure sonar, not sight.",
   "keywords": [
     "seafloor exploration",

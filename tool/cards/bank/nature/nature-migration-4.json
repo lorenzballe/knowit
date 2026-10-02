@@ -9,6 +9,7 @@
   "question": "How did scientists show that painted lady butterflies found in South America had flown across the Atlantic?",
   "answer": "From their pollen and the chemistry of their wings. Painted ladies found on a beach in French Guiana carried DNA from West African pollen, and isotopes in their wings pointed to birthplaces in Europe or Africa. Winds that week blew west off Africa: a crossing of at least 4,200 km with nowhere to land.",
   "move": "A traveller's baggage can tell you where it has been.",
+  "ask": "What does the trail someone leaves behind tell me about where they have been?",
   "keywords": [
     "painted lady",
     "atlantic crossing",

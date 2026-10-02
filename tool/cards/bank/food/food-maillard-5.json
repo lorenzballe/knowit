@@ -9,6 +9,7 @@
   "question": "What turns a white garlic bulb into soft, sweet black garlic over several weeks?",
   "answer": "The Maillard reaction, run slowly. Whole bulbs sit at about 60 to 80 °C in humid heat for weeks; the garlic's stored fructans break into sugars, which react with amino acids and brown the cloves through. No microbes take part, though it is often sold as fermented. The cloves end up like liquorice jelly.",
   "move": "A product's label can name a process that never happened to it.",
+  "ask": "What label do I trust that does not describe what really happened?",
   "keywords": [
     "black garlic",
     "maillard reaction",

@@ -12,6 +12,7 @@
   "question": "How did al-Ghazali use Saturn and the Sun to argue that the world cannot be eternal?",
   "answer": "By counting circuits. If the world had no beginning, Saturn, once in thirty years, and the Sun, yearly, have each made infinitely many; yet the Sun's total should be thirty times Saturn's, and each must be odd or even. Around 1095 he judged it absurd. Cantor's mathematics now calls both totals the same size.",
   "move": "When every answer to a question is absurd, suspect the question's assumption.",
+  "ask": "Which question am I stuck on because of an assumption I never looked at?",
   "keywords": [
     "al-ghazali",
     "eternity of the world",

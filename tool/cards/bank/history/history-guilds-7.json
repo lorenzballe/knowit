@@ -35,5 +35,6 @@
   "source": "Chaucer, Troilus and Criseyde, book 4",
   "source_kind": "primary_document",
   "reference": "Benson (ed.), The Riverside Chaucer, Houghton Mifflin, 1987",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

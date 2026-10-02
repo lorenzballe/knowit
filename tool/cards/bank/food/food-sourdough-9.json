@@ -35,8 +35,25 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "area",
+    "unit": "× hydrogen ions",
+    "items": [
+      {
+        "label": "Fresh dough, pH 6",
+        "value": 1
+      },
+      {
+        "label": "Sourdough, pH 4",
+        "value": 100,
+        "hi": true
+      }
+    ],
+    "caption": "pH 6 to pH 4 feels like a small step; it is a hundred times the hydrogen ions."
+  },
   "source": "De Vuyst & Neysens, Trends in Food Science",
   "source_kind": "paper",
   "reference": "De Vuyst & Neysens, The sourdough microflora: biodiversity and metabolic interactions, Trends in Food Science & Technology, 2005",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

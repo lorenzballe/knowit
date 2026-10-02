@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. JoNell Strough and colleagues gave younger and older adults scenarios pitting money already spent against a better option, such as a dull film already paid for. Older adults more often chose the better future. One proposed reason is that older people dwell less on past losses. Here experience outran the quicker minds.",
   "move": "Do not assume every mental skill declines on the same schedule.",
+  "ask": "Which mental skill of mine or of an older person am I assuming is in decline?",
   "trap": "Assuming decision-making simply gets worse as people age.",
   "keywords": [
     "ageing",

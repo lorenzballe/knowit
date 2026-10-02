@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Weak. Most new network series fail: US networks cancel roughly half in their first year, and fewer still survive a second. If two in three fail, three flops from three tries happens nearly one time in three. Julia Louis-Dreyfus then won a 2006 Emmy for The New Adventures of Old Christine.",
   "move": "Before explaining a run of failures, ask how often things fail anyway.",
+  "ask": "Before I blame a curse, how often does this fail anyway?",
   "trap": "Judging three failures rare without knowing how often new shows fail.",
   "keywords": [
     "seinfeld",

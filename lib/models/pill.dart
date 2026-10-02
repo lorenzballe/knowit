@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'diagram.dart';
+
+export 'diagram.dart';
+
 /// What a card asks of the reader before it will turn over.
 ///
 /// Modelled as a sealed hierarchy rather than a kind flag with a drawer of
@@ -333,6 +337,10 @@ class Pill {
   final String question;
   final String answer;
   final String barMove;
+
+  /// The question the reader takes away and asks of their own life: what
+  /// the card is for. Empty on a card not yet given one.
+  final String ask;
   final String source;
 
   /// What the card asks before it turns over.
@@ -411,6 +419,10 @@ class Pill {
   /// The picture that would help, if one would.
   final String figure;
 
+  /// The picture itself, as data the app draws and animates, when the card
+  /// has one (see [Diagram]).
+  final Diagram? diagram;
+
   const Pill({
     required this.id,
     required this.topic,
@@ -420,6 +432,7 @@ class Pill {
     required this.question,
     required this.answer,
     required this.barMove,
+    this.ask = '',
     required this.source,
     this.challenge = const NoChallenge(),
     this.hint = '',
@@ -444,6 +457,7 @@ class Pill {
     this.language = 'en',
     this.buildsOn = const [],
     this.figure = '',
+    this.diagram,
   });
 
   /// Whether the card carries its tags. Every card in the bank does; a card

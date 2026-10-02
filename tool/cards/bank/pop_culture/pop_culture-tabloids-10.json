@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "That it backed whoever was already ahead. It switched to Labour in March 1997, with Labour far ahead in the polls, and back to the Conservatives in 2009, before their return. Studies disagree on how far its readers moved in 1997; none finds enough to explain a landslide. A weathervane points where the wind blows.",
   "move": "When a predictor always matches the outcome, check which one moved first.",
+  "ask": "When something always predicts the result, did it lead or follow?",
   "trap": "Reading a perfect record of backing winners as a record of making them.",
   "keywords": [
     "the sun",

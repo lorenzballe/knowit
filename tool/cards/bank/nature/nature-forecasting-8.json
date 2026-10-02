@@ -38,5 +38,6 @@
   "source": "ECMWF, Integrated Forecasting System documentation",
   "source_kind": "institution",
   "reference": "ECMWF, IFS Documentation, Part III: Dynamics and Numerical Procedures, European Centre for Medium-Range Weather Forecasts, 2023",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -12,6 +12,7 @@
   "correct": 0,
   "answer": "Every person with a car and panels also has a car, so the second group sits entirely inside the first and cannot be larger. Adding a detail that fits the story makes a claim feel likelier while making it strictly less likely.",
   "move": "Adding detail makes a claim more convincing and less probable at the same time.",
+  "ask": "Which of my plans sounds convincing just because it is so detailed, and is every detail really likely?",
   "trap": "The second one fits the picture better, so it feels more probable.",
   "simply": "Every dog wearing a hat is a dog. So there can never be more dogs-in-hats than there are dogs. However well the hat fits the story.",
   "keywords": [

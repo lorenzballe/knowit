@@ -9,6 +9,7 @@
   "question": "Why can dough made with old or badly stored dried yeast turn slack and sticky, not merely slow?",
   "answer": "Dead yeast cells leak glutathione, a small sulphur-bearing molecule that cuts the sulphur bridges linking gluten proteins into a stretchy network, so the dough loosens and tears. Drying always kills some cells, and warmth, air and damp kill more in storage. Inactive yeast is sold on purpose to relax stiff pizza doughs.",
   "move": "A dead ingredient is not an absent one: it can still act.",
+  "ask": "What do I think is gone that is still quietly causing trouble?",
   "keywords": [
     "dried yeast",
     "glutathione",

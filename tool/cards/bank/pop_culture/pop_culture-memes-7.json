@@ -9,6 +9,7 @@
   "question": "Why do heavily reshared meme images turn blotchy even when nobody edits them?",
   "answer": "Because every save throws a little more away. JPEG compression splits a picture into 8-by-8 pixel blocks and discards detail the eye tends to miss; each screenshot or re-upload repeats the cut, and errors pile up as blocky edges and smeared colour. The grain on an old reaction image is its travel record.",
   "move": "A copy of a copy keeps the losses of every copy before it.",
+  "ask": "How much quality does my message lose each time it is copied and passed on?",
   "keywords": [
     "jpeg",
     "compression",

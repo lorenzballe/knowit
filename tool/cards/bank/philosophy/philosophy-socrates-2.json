@@ -11,6 +11,7 @@
   "unit": "jurors",
   "answer": "250 + 30 = 280.",
   "move": "A vote that changes sides counts twice: once lost, once gained.",
+  "ask": "When a vote flips, do I count the swing twice: once lost, once gained?",
   "trap": "Reading 30 switched votes as a 30-vote margin, not a 60-vote one.",
   "hint": "A switched vote leaves one pile and joins the other; in Athens a tie meant acquittal.",
   "steps": [

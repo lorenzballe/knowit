@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Its Vitaphone discs carried a full orchestral score and Al Jolson's songs, but synchronised speech lasts only a couple of minutes, much of it Jolson improvising between numbers. The plot's conversations are still printed on cards, in the silent manner. The talking picture arrived as a silent film with islands of speech.",
   "move": "A famous first is usually a small part of the thing it names.",
+  "ask": "Which famous first do I credit when it was a small part of the thing it names?",
   "trap": "Taking the label first talkie to mean a film full of talk.",
   "keywords": [
     "the jazz singer",

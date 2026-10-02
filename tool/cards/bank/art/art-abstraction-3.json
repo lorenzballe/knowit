@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Many scholars read it as a study for Composition VII of 1913 and suspect the earlier date was written on later, once being first had begun to matter. Apart from the inscription, little supports 1910. A key date in the story of abstract art rests on the artist's own pencil.",
   "move": "A date written by someone who gains from it is a claim, not a record.",
+  "ask": "Which date or claim do I trust that came from someone who gains if I believe it?",
   "trap": "Trusting the date on the sheet because the artist himself wrote it.",
   "keywords": [
     "kandinsky",

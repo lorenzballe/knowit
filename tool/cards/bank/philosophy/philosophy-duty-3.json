@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The formula says never merely as a means. A lying promise to repay a loan uses the lender in a way he could not possibly agree to, since he would refuse if he knew. Buying bread uses the baker too, but on terms he accepts: he is a means to breakfast, and rightly so.",
   "move": "Before quoting a rule, find the word that limits it.",
+  "ask": "Before I quote a rule, do I know the word that limits it?",
   "trap": "Remembering the slogan without its one qualifying word.",
   "keywords": [
     "kant",

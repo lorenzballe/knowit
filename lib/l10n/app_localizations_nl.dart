@@ -925,7 +925,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get tapToRevealLower => 'tik om te onthullen';
 
   @override
-  String get barMoveCaps => 'DE ZIN VOOR AAN DE BAR';
+  String get barMoveCaps => 'OM TE ONTHOUDEN';
 
   @override
   String get theBarMoveCaps => 'DE ZIN VOOR AAN DE BAR';
@@ -977,8 +977,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get perkArchiveTitle => 'Je hele archief';
 
   @override
-  String get perkArchiveLine =>
-      'Elke dag die je las, voorgoed bewaard. Gratis blijft een week.';
+  String get perkArchiveLine => 'Elke dag die je las, voorgoed bewaard.';
 
   @override
   String get plusIsActive => 'ASTUTE+ IS ACTIEF';
@@ -1601,8 +1600,8 @@ class AppLocalizationsNl extends AppLocalizations {
   String get insideGenre => 'Binnenin';
 
   @override
-  String nOfSixOn(int n) {
-    return '$n van 6 aan';
+  String nOfSixOn(int n, int total) {
+    return '$n van $total aan';
   }
 
   @override
@@ -1778,4 +1777,95 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get exploreOffline =>
       'Je bent offline. Dit is Verkennen zoals het het laatst gelezen is.';
+
+  @override
+  String get askYourselfCaps => 'VRAAG JEZELF';
+
+  @override
+  String get themeMyths => 'Mythes ontkracht';
+
+  @override
+  String get themeMythsLine =>
+      'Wat bijna iedereen gelooft, en waarom het niet klopt';
+
+  @override
+  String get themeParadoxes => 'Paradoxen';
+
+  @override
+  String get themeParadoxesLine =>
+      'Twee ware dingen die niet allebei waar zouden mogen zijn';
+
+  @override
+  String get themeNumbers => 'Verrassende getallen';
+
+  @override
+  String get themeNumbersLine => 'Waar het getal de twist is';
+
+  @override
+  String get themePractical => 'Vandaag te gebruiken';
+
+  @override
+  String get themePracticalLine => 'Iets om vóór vanavond te proberen';
+
+  @override
+  String get themeOrigins => 'Waar het vandaan komt';
+
+  @override
+  String get themeOriginsLine =>
+      'Het begin van dingen die je elke dag gebruikt';
+
+  @override
+  String get themeStories => 'Ware verhalen';
+
+  @override
+  String get themeStoriesLine => 'Dingen die echt gebeurd zijn';
+
+  @override
+  String get themeDebates => 'Kies een kant';
+
+  @override
+  String get themeDebatesLine =>
+      'Geen goed antwoord, alleen een beter argument';
+
+  @override
+  String get themeWorkItOut => 'Reken het uit';
+
+  @override
+  String get themeWorkItOutLine => 'Een getal om uit je hoofd te vinden';
+
+  @override
+  String get themeSeen => 'Om te zien';
+
+  @override
+  String get themeSeenLine => 'Kaarten die hun punt tekenen';
+
+  @override
+  String get themeSharpest => 'Voor de scherpsten';
+
+  @override
+  String get themeSharpestLine => 'De moeilijkste kaarten die er zijn';
+
+  @override
+  String get themePast0 => 'De oudheid';
+
+  @override
+  String get themePast1 => 'De 17e tot 19e eeuw';
+
+  @override
+  String get themePast2 => 'De vorige eeuw';
+
+  @override
+  String get themePastLine => 'Elke keer een ander tijdperk';
+
+  @override
+  String get themePlace0 => 'Azië en het Midden-Oosten';
+
+  @override
+  String get themePlace1 => 'Amerika';
+
+  @override
+  String get themePlace2 => 'Europa';
+
+  @override
+  String get themePlaceLine => 'Elke keer een ander deel van de wereld';
 }

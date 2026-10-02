@@ -11,6 +11,7 @@
   "unit": "jurors",
   "answer": "Against death: 500 - 360 = 140.",
   "move": "A second vote is a new count, not a rerun of the first.",
+  "ask": "When a second vote follows the first, do I count it fresh, or just assume it repeats?",
   "trap": "Answering 220, as if every acquitting juror voted against death again.",
   "hint": "Find the votes for death first, then take them from the whole jury.",
   "steps": [

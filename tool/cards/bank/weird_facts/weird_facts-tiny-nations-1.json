@@ -9,6 +9,7 @@
   "question": "Why can Vatican citizenship not be passed down through a family for generations?",
   "answer": "Because it comes with a job, not a birth. It goes to cardinals resident in Rome, the Holy See's diplomats and certain staff, and lapses when the post ends. Children of citizens keep it only until 18. The state's citizens are replaced by appointment, one office at a time.",
   "move": "Ask what a membership is attached to, and it tells you how it ends.",
+  "ask": "What is my belonging to a group attached to, and what would end it?",
   "keywords": [
     "vatican city",
     "citizenship",

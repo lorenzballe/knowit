@@ -13,6 +13,7 @@
   ],
   "answer": "Mechanical recycling, melting and remoulding, suits only clean, sorted waste of one polymer; films, layered packets and dirty mixtures get burned or buried. Chemical recycling breaks them into oil or building blocks that make plastic as good as new, food-grade included. Excluding it removes any reason to build plants for waste nothing else handles.",
   "move": "Whichever side you took, it turns on how much output truly becomes plastic again.",
+  "ask": "Which green claim do I accept without asking how much of it really gets reused?",
   "counterpoint": "Pyrolysis, the commonest method, turns much of its input into fuel that is simply burned, and plants need steady clean feedstock, heat and money. Counting their output as recycled rests on accounting that spreads recycled content on paper across a refinery's products. Targets exist to keep material in use; counting fuel lets companies claim circularity while burning plastic.",
   "keywords": [
     "chemical recycling",

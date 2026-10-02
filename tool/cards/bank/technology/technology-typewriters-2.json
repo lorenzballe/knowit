@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Every keystroke. Hidden in a metal bar running across each machine, sensors read the movements that selected each character and radioed the text out in short bursts. Some had been in place since 1976, capturing words before they could be encrypted. It was the first known electronic keylogger.",
   "move": "Guard the place where a secret is written, not only where it travels.",
+  "ask": "Where is my secret written down, not just where it travels?",
   "trap": "Room conversations, the job of a classic hidden microphone.",
   "keywords": [
     "gunman project",

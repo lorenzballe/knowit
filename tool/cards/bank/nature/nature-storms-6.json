@@ -35,5 +35,6 @@
   "source": "Wakimoto et al., Monthly Weather Review, 2016",
   "source_kind": "paper",
   "reference": "Wakimoto et al., Aerial Damage Survey of the 2013 El Reno Tornado Combined with Mobile Radar Data, Monthly Weather Review, 2016",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

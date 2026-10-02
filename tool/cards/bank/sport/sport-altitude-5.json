@@ -36,5 +36,6 @@
   "source": "West et al., Journal of Applied Physiology, 1983",
   "source_kind": "paper",
   "reference": "West et al., Barometric pressures at extreme altitudes on Mt. Everest: physiological significance, Journal of Applied Physiology, 1983",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

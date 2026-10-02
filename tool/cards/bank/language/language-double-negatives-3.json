@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. When Robert Lowth's grammar of 1762 declared that two negatives make an affirmative, multiple negation had already largely vanished from educated writing. Studies of personal letters date its decline to the 1500s and 1600s, generations before any grammar book. The grammarians wrote down a rule the literate had mostly adopted already.",
   "move": "Before crediting a rule with a change, check when the change began.",
+  "ask": "What am I crediting for a change that had already started?",
   "trap": "A rule in print looks like the cause of the change it describes.",
   "keywords": [
     "robert lowth",

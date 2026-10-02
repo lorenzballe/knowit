@@ -919,7 +919,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tapToRevealLower => 'görmek için dokun';
 
   @override
-  String get barMoveCaps => 'MASADA SÖYLENECEK SÖZ';
+  String get barMoveCaps => 'AKILDA KALAN';
 
   @override
   String get theBarMoveCaps => 'MASADA SÖYLENECEK SÖZ';
@@ -970,8 +970,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get perkArchiveTitle => 'Tüm arşivin';
 
   @override
-  String get perkArchiveLine =>
-      'Okuduğun her gün, kalıcı olarak. Ücretsizde bir hafta kalır.';
+  String get perkArchiveLine => 'Okuduğun her gün, kalıcı olarak.';
 
   @override
   String get plusIsActive => 'ASTUTE+ ETKİN';
@@ -1587,8 +1586,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get insideGenre => 'İçinde';
 
   @override
-  String nOfSixOn(int n) {
-    return '6 türden $n açık';
+  String nOfSixOn(int n, int total) {
+    return '$total türden $n açık';
   }
 
   @override
@@ -1763,4 +1762,94 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get exploreOffline =>
       'Çevrimdışısın. Bu, Keşfet\'in en son okunduğu hâli.';
+
+  @override
+  String get askYourselfCaps => 'KENDİNE SOR';
+
+  @override
+  String get themeMyths => 'Çürütülen mitler';
+
+  @override
+  String get themeMythsLine =>
+      'Neredeyse herkesin inandığı ve neden yanlış olduğu';
+
+  @override
+  String get themeParadoxes => 'Paradokslar';
+
+  @override
+  String get themeParadoxesLine =>
+      'İkisi birden doğru olmaması gereken iki doğru';
+
+  @override
+  String get themeNumbers => 'Şaşırtan sayılar';
+
+  @override
+  String get themeNumbersLine => 'Sürprizin sayıda olduğu yerler';
+
+  @override
+  String get themePractical => 'Bugün kullan';
+
+  @override
+  String get themePracticalLine => 'Bu akşamdan önce denenecek bir şey';
+
+  @override
+  String get themeOrigins => 'Nereden geldi';
+
+  @override
+  String get themeOriginsLine => 'Her gün kullandığın şeylerin başlangıcı';
+
+  @override
+  String get themeStories => 'Gerçek hikâyeler';
+
+  @override
+  String get themeStoriesLine => 'Gerçekten yaşanmış şeyler';
+
+  @override
+  String get themeDebates => 'Taraf seç';
+
+  @override
+  String get themeDebatesLine =>
+      'Doğru cevap yok, yalnızca daha iyi bir argüman';
+
+  @override
+  String get themeWorkItOut => 'Hesapla';
+
+  @override
+  String get themeWorkItOutLine => 'Kafandan bulunacak bir sayı';
+
+  @override
+  String get themeSeen => 'Görmek için';
+
+  @override
+  String get themeSeenLine => 'Fikrini çizen kartlar';
+
+  @override
+  String get themeSharpest => 'En keskinler için';
+
+  @override
+  String get themeSharpestLine => 'En zor kartlar';
+
+  @override
+  String get themePast0 => 'Antik dünya';
+
+  @override
+  String get themePast1 => '17. ile 19. yüzyıl';
+
+  @override
+  String get themePast2 => 'Geçen yüzyıl';
+
+  @override
+  String get themePastLine => 'Her döndüğünde başka bir çağ';
+
+  @override
+  String get themePlace0 => 'Asya ve Orta Doğu';
+
+  @override
+  String get themePlace1 => 'Amerika kıtası';
+
+  @override
+  String get themePlace2 => 'Avrupa';
+
+  @override
+  String get themePlaceLine => 'Her döndüğünde dünyanın başka bir yeri';
 }

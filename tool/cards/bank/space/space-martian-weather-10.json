@@ -9,6 +9,7 @@
   "question": "Why does the sky around the setting Sun on Mars turn blue, when the daytime sky is butterscotch?",
   "answer": "It is the size of the dust. Grains a few thousandths of a millimetre across absorb blue and scatter red widely, tinting the day sky, but they throw blue light forward, close to its original path. At sunset, looking towards the Sun through a long path of dust, the forward glow forms a blue halo.",
   "move": "The same particles can colour a scene differently from every angle of view.",
+  "ask": "Could the same thing look different to me depending on the angle I view it from?",
   "keywords": [
     "martian sunset",
     "dust scattering",

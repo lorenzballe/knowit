@@ -36,5 +36,6 @@
   "source": "Hensen et al., Nature, 2015",
   "source_kind": "paper",
   "reference": "Hensen et al., Loophole-free Bell inequality violation using electron spins separated by 1.3 kilometres, Nature 526, 682, 2015",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

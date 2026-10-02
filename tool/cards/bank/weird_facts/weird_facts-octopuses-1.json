@@ -38,5 +38,6 @@
   "source": "MBARI release via EurekAlert, 2014",
   "source_kind": "news_archive",
   "reference": "https://www.eurekalert.org/news-releases/727610",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

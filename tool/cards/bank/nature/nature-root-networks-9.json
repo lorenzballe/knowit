@@ -37,5 +37,6 @@
   "source": "Smith & Read, Mycorrhizal Symbiosis, 2008",
   "source_kind": "book",
   "reference": "Smith & Read, Mycorrhizal Symbiosis, 3rd edition, Academic Press, 2008",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

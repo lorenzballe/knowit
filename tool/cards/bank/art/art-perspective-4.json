@@ -9,6 +9,7 @@
   "question": "How did Piero della Francesca get a human head into exact perspective?",
   "answer": "Point by point. In his treatise on perspective for painters, from the 1470s, he draws a head in plan and in side view, marks numbered points on horizontal slices through it, and projects each point onto the picture separately. A painter of altarpieces was plotting a face the way software renders one.",
   "move": "Anything can be drawn exactly if you are willing to go point by point.",
+  "ask": "What looks impossible to get exact that I could do by going point by point?",
   "keywords": [
     "piero della francesca",
     "de prospectiva pingendi",

@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. On 12 September 2001, 54 Duke students wrote down how they heard the news and an ordinary recent event. Retested up to 32 weeks later, both accounts drifted by the same amount. What differed was confidence: vividness and belief in accuracy fell only for the ordinary memory.",
   "move": "How clear a memory feels says little about whether it is right.",
+  "ask": "Which vivid memory am I certain of mainly because it feels so clear?",
   "trap": "Taking a vivid, emotional memory for a well-recorded one.",
   "keywords": [
     "flashbulb memory",

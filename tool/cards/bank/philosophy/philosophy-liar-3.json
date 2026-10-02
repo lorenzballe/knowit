@@ -35,5 +35,6 @@
   "source": "Nagel & Newman, Gödel's Proof, 1958",
   "source_kind": "book",
   "reference": "Nagel & Newman, Gödel's Proof, New York University Press, 1958",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

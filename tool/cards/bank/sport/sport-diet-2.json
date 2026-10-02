@@ -9,6 +9,7 @@
   "question": "Up to what dose does caffeine keep improving endurance performance?",
   "answer": "About 3 to 6 mg per kg of body weight, taken roughly an hour before: for a 70 kg athlete, 210 to 420 mg, two to four strong coffees. Higher doses add side effects, such as jitters and poor sleep, rather than speed. Caffeine has not been a banned substance since 2004.",
   "move": "Find the dose where the benefit stops before buying the bigger one.",
+  "ask": "Where am I buying a bigger dose when the benefit stopped a long time ago?",
   "keywords": [
     "caffeine",
     "dose",

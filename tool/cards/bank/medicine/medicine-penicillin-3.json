@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Under 1%. Many labels date from a childhood rash blamed on the drug but caused by the infection it was treating. True allergy also fades: about 80% of people who have it lose the sensitivity within ten years. The label steers doctors to broader, costlier antibiotics that breed more resistance.",
   "move": "Something that happened after a pill was not necessarily caused by it.",
+  "ask": "What do I blame on something just because it happened after it?",
   "trap": "Taking the reported figure at face value, since the rash followed the drug.",
   "keywords": [
     "penicillin allergy",

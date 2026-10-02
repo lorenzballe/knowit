@@ -9,6 +9,7 @@
   "question": "Can a DNA test tell apart identical twins, whose genomes are supposed to match letter for letter?",
   "answer": "Sometimes. Sequencing 381 identical pairs, Jonsson and colleagues found they differ on average by 5.2 mutations that arose in the early embryo, and in about 15% of pairs one twin carries many that the other lacks. Sequenced deeply enough, a crime-scene sample need not point equally at both twins.",
   "move": "Identical describes where two things started, not everything that happened since.",
+  "ask": "Do I treat two things as identical because they started the same, forgetting what happened since?",
   "keywords": [
     "identical twins",
     "mutations",

@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About five to ten. Hecht, Shlaer and Pirenne found a reliably seen flash sent 54 to 148 photons into the eye, and only about 5 to 14 reached rods, each rod catching at most one. Rod pigment also fires by itself from heat, so a single event among millions of rods reads as noise.",
   "move": "Among many sensitive detectors, one alarm alone is more likely noise than signal.",
+  "ask": "When one alarm goes off among many, is it more likely a false alarm?",
   "trap": "Forgetting how often rods fire on their own, with no light at all.",
   "keywords": [
     "rods",

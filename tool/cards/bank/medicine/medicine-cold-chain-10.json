@@ -11,6 +11,7 @@
   "unit": "doses per child",
   "answer": "20 / 5 = 4 doses per child.",
   "move": "Count what is opened, not only what is used.",
+  "ask": "Where am I counting only what I used and ignoring what I opened and wasted?",
   "trap": "Thinking wastage means spoiled stock, not opened vials.",
   "hint": "Each session opens one vial, and whatever is left at the end is thrown away.",
   "steps": [

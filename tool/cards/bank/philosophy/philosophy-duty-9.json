@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Execute him before they disperse. In The Metaphysics of Morals (1797), Kant made punishment a duty owed to desert, not a tool for protection. With no society left to shield, the sentence still stands, so that each receives what his deeds are worth and the blood guilt does not cling to the people.",
   "move": "Ask whether a rule is justified by what it achieves or by what it answers.",
+  "ask": "Do I punish or reward because of what it achieves, or because of what the act deserves?",
   "trap": "Assuming punishment loses its point once nobody needs protecting.",
   "keywords": [
     "retributivism",

@@ -9,6 +9,7 @@
   "question": "Why did underground detectors register supernova 1987A hours before any telescope saw it?",
   "answer": "Because its light was trapped inside the star. The collapsing core released neutrinos, particles that cross matter almost unhindered; light had to wait for the shock wave to reach the surface. On 23 February 1987 three detectors caught about two dozen neutrinos in 13 seconds, two to three hours before the light.",
   "move": "The signal that arrives first is often the one nobody is watching for.",
+  "ask": "What early signal am I ignoring because nobody is watching for it?",
   "keywords": [
     "sn 1987a",
     "neutrinos",

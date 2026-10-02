@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. In matched foraging tasks, mice and rats queued for flavoured food and people for short videos; in all three species, the more time already sunk into a wait, the less likely they were to abandon it. The pull built up only after the decision to wait, not during the deliberation before it.",
   "move": "Decide how long to wait before starting, when the past cannot argue yet.",
+  "ask": "For the thing I am waiting on, how long did I decide to wait before I began?",
   "trap": "Honouring sunk costs seems a human quirk of pride or money.",
   "keywords": [
     "mice",

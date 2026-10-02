@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Storm surge from the sea. Counting every death over 50 years, Rappaport found water behind nearly nine in ten: surge 49%, rain floods 27%, surf and drownings offshore another 12%. Wind, the part a storm's category describes, killed 8%. The deadliest moment is a street filling quietly from the sea.",
   "move": "The part of a danger you can see is rarely the part that kills.",
+  "ask": "Which risk am I watching because it is loud, while a quieter one does the damage?",
   "trap": "Wind is what the category measures and what the cameras film.",
   "keywords": [
     "storm surge",

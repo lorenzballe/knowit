@@ -38,5 +38,6 @@
   "source": "Quirk et al., A Comprehensive Grammar, 1985",
   "source_kind": "book",
   "reference": "Quirk, Greenbaum, Leech & Svartvik, A Comprehensive Grammar of the English Language, Longman, 1985",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

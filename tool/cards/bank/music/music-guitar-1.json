@@ -9,6 +9,7 @@
   "question": "Why is the saddle on a guitar set at a slant instead of square to the strings?",
   "answer": "Because pressing a string onto a fret stretches it, and stretching raises its pitch. Thicker, stiffer strings go sharper, so their saddle point is set back a few millimetres to lengthen them. Without it, notes high on the neck drift sharp of the open strings. The slant corrects for the player's own fingers.",
   "move": "Correct for the error the user brings along, not only the tool's.",
+  "ask": "Where do I fix the tool's mistakes but forget the ones I bring myself?",
   "keywords": [
     "saddle compensation",
     "intonation",

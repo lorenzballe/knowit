@@ -9,6 +9,7 @@
   "question": "What did Alaric ask for in his last offer before sacking Rome in 410?",
   "answer": "Very little. After earlier demands for gold, grain, land and a Roman generalship were refused, Alaric asked only for Noricum, a poor, raided frontier province on the Danube, and a yearly grant of grain, with no gold and no office. The emperor's ministers still said no. Months later, in August 410, his Goths entered Rome.",
   "move": "Refusing a small demand can cost more than granting it.",
+  "ask": "What small request am I refusing that may cost me more than agreeing would?",
   "keywords": [
     "alaric",
     "sack of rome",

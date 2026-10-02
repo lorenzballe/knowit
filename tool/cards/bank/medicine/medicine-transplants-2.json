@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The donor kidney is usually placed low in the front of the abdomen, just above the groin, and joined to blood vessels running to the leg and to the bladder. The patient's own kidneys are normally left where they are. Someone who has had three transplants can be carrying five kidneys.",
   "move": "Replacing a part need not mean putting the new one in the same place.",
+  "ask": "What would work better if I added the new part without removing the old one?",
   "trap": "Assuming a transplant is a straight swap, like replacing a car part.",
   "keywords": [
     "kidney transplant",

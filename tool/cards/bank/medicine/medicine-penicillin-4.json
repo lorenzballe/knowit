@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Penicillin blocks the enzymes that stitch cross-links into the bacterial cell wall. A growing cell keeps cutting its wall open to expand, and without fresh stitching it bursts. A dormant cell is not building, so it survives. Joseph Bigger called them persisters in 1944: a few can restart an infection after the course ends.",
   "move": "A tool that attacks change can do nothing to what stays still.",
+  "ask": "What am I trying to change by force when it is simply standing still?",
   "trap": "Picturing an antibiotic as a poison that kills whatever it touches.",
   "keywords": [
     "penicillin",

@@ -1,0 +1,39 @@
+{
+  "id": "life-gratitude-2",
+  "topic": "life",
+  "genre": "life.meaning",
+  "strand": "life.meaning.gratitude",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is keeping a gratitude journal worth recommending to someone who feels low?",
+  "sides": [
+    "Yes, recommend it",
+    "No, not as a remedy"
+  ],
+  "answer": "It costs nothing, takes minutes and trials suggest a small lift in well-being. Davis and colleagues' meta-analysis of gratitude interventions found better outcomes than in control groups, and unlike many remedies there is no bill, no waiting list and no side effect. Cheap, harmless and sometimes helpful is a fair standard for a first step.",
+  "move": "Whichever side you took, the comparison group is the question that decides it.",
+  "ask": "Before I recommend a habit that helped me, compared with what would it have helped?",
+  "counterpoint": "Small is not treatment. Effects in these trials are modest and often measured against groups that did nothing, so the gain may owe as much to attention and expectation as to gratitude. Told to be thankful, someone in real distress can add guilt to low mood, and a cheap habit can delay the help that would change it.",
+  "keywords": [
+    "gratitude journal",
+    "well-being",
+    "meta-analysis",
+    "low mood",
+    "davis"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Davis and colleagues, Journal of Counseling Psychology, 2016",
+  "source_kind": "paper",
+  "reference": "Davis and colleagues, Thankful for the Little Things: A Meta-Analysis of Gratitude Interventions, Journal of Counseling Psychology, 2016",
+  "written": "2026-09-29"
+}

@@ -9,6 +9,7 @@
   "question": "On many typewriters, which key typed the number 1?",
   "answer": "The lowercase l. Many machines had no key for 1, because every key needed its own metal arm and a small l looked close enough. An exclamation mark was an apostrophe, a backspace and a full stop. The same thrift left one straight quotation mark for opening and closing, and computer keyboards kept it.",
   "move": "Where users can improvise a missing part, makers will leave it out.",
+  "ask": "What am I leaving out because people will improvise the missing part?",
   "keywords": [
     "typewriter keys",
     "number one",

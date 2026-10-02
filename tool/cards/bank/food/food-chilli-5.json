@@ -12,6 +12,7 @@
   "question": "What is the tongue's nerve reporting when a chilli burns?",
   "answer": "A scald. The receptor capsaicin binds, TRPV1, is a heat sensor that normally opens at about 43 °C, where hot water starts to hurt. Capsaicin opens it at mouth temperature, so the nerve fires as for a burn. David Julius's lab found the receptor in 1997. The tongue is reporting a scald that never happened.",
   "move": "A signal names the sensor that fired, not the thing that fired it.",
+  "ask": "When something hurts or worries me, what is that feeling really telling me?",
   "keywords": [
     "trpv1",
     "capsaicin",

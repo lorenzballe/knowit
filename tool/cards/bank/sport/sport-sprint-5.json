@@ -9,6 +9,7 @@
   "question": "What is odd about the wind reading for the women's 100 m world record, 10.49 seconds, set in 1988?",
   "answer": "It read exactly zero. The race was a quarter-final at the US Olympic trials in Indianapolis, and the anemometer on the triple jump runway nearby logged a tailwind of 4.3 m/s, more than twice the legal limit. The track gauge is widely thought to have failed, yet the record was ratified and stands.",
   "move": "A reading of exactly zero is worth checking before it is believed.",
+  "ask": "Which suspiciously perfect reading have I accepted without a second look?",
   "keywords": [
     "florence griffith-joyner",
     "wind gauge",

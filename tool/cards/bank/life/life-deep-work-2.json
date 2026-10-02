@@ -1,0 +1,41 @@
+{
+  "id": "life-deep-work-2",
+  "topic": "life",
+  "genre": "life.habits",
+  "strand": "life.habits.deep_work",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In an experiment, people interrupted mid-task were compared with uninterrupted people doing the same work. How did the interrupted ones finish?",
+  "options": [
+    "Slower, but with less stress",
+    "At the same pace and stress",
+    "Faster, but under more stress"
+  ],
+  "correct": 2,
+  "answer": "Faster, but under more stress. In Mark's experiments, interrupted people compensated by working faster, with no loss of quality, but reported more stress, frustration, time pressure and effort. The speed was bought with strain, so an interruption's cost shows up in the person, not on the clock.",
+  "move": "Count the cost of an interruption in strain, not only minutes.",
+  "ask": "What do my interruptions cost me in strain by evening, beyond the minutes they take?",
+  "trap": "Assuming an interruption must show up as lost time.",
+  "keywords": [
+    "interruptions",
+    "stress",
+    "gloria mark",
+    "knowledge work",
+    "workload"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mark, Gudith and Klocke, CHI, 2008",
+  "source_kind": "paper",
+  "reference": "Mark, Gudith and Klocke, The Cost of Interrupted Work: More Speed and Stress, Proceedings of CHI, 2008",
+  "written": "2026-09-29"
+}

@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Among GM's best within two years. NUMMI, the joint venture, rehired mostly the union workforce from the old plant, where absenteeism had run at 20% or more. Under Toyota's system, with small teams and a cord any worker could pull to stop the line, its quality came close to Toyota's plants in Japan.",
   "move": "Before blaming the people, ask what the setup made them do.",
+  "ask": "Before I blame a person, what did the setup make them do?",
   "trap": "Still among the worst, blaming the workers for what the system produced.",
   "keywords": [
     "nummi",

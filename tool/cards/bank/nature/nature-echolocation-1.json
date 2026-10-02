@@ -9,6 +9,7 @@
   "question": "Why do bats not deafen themselves with their own calls?",
   "answer": "They brace their ears for each shout. Some bats call at up to 140 decibels at 10 cm, a level that would injure human ears if people could hear it. A muscle in the middle ear tightens just before each call, damping the bones that carry sound, then relaxes in time for the faint echo.",
   "move": "To hear a whisper right after a shout, close the door while shouting.",
+  "ask": "When I need to listen well right after speaking up, what could I quiet first?",
   "keywords": [
     "bats",
     "echolocation",

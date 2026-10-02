@@ -18,6 +18,7 @@
   "correct": 2,
   "answer": "He treated each region as independent. Galton cut a print into 24 squares, gave each a one-in-two chance of being guessed, and multiplied, adding factors for pattern and ridge count. But neighbouring ridges share their flow, so one square predicts the next. Multiplying odds that lean on each other makes a coincidence look impossibly rare.",
   "move": "Multiply chances only when one tells you nothing about the other.",
+  "ask": "Where am I multiplying chances as if each were separate when they are really linked?",
   "trap": "Blaming a small sample, the usual weak point of old statistics.",
   "keywords": [
     "francis galton",

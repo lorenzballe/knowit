@@ -9,6 +9,7 @@
   "unit": "mg",
   "answer": "25 mg remain after a day.",
   "move": "What halves never reaches zero; count the halvings, not the amount lost.",
+  "ask": "What in my life shrinks by a fixed share each period and am I counting the periods?",
   "trap": "Taking off a fixed 100 mg every six hours, as if steady.",
   "hint": "Count how many six-hour halvings fit in a day.",
   "steps": [

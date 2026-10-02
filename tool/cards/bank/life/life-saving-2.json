@@ -1,0 +1,41 @@
+{
+  "id": "life-saving-2",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.saving",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Workers pledged to raise saving with each pay rise. Those who stayed in the plan for 40 months saved about what share of pay?",
+  "options": [
+    "About 6%",
+    "About 10%",
+    "About 14%"
+  ],
+  "correct": 2,
+  "answer": "About 14%. In Thaler and Benartzi's Save More Tomorrow plan, employees who stayed went from saving 3.5% to 13.6% of pay in 40 months. Each increase came out of a pay rise, so take-home pay never fell and no one felt a loss.",
+  "move": "Tie a new commitment to a future gain, before it is spent.",
+  "ask": "What commitment could I tie to a future raise or windfall before I get used to spending it?",
+  "trap": "Small increments seem to add up to a small total.",
+  "keywords": [
+    "save more tomorrow",
+    "pay rises",
+    "thaler",
+    "retirement saving",
+    "commitment"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thaler and Benartzi, Journal of Political Economy, 2004",
+  "source_kind": "paper",
+  "reference": "Thaler and Benartzi, Save More Tomorrow: Using Behavioral Economics to Increase Employee Saving, Journal of Political Economy, 2004",
+  "written": "2026-09-29"
+}

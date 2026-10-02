@@ -36,5 +36,6 @@
   "source": "USDA FAS, Coffee: World Markets and Trade",
   "source_kind": "statistics",
   "reference": "USDA Foreign Agricultural Service, Coffee: World Markets and Trade, June 2024",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

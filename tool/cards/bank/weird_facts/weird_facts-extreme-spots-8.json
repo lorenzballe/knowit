@@ -39,5 +39,6 @@
   "source": "Albrecht et al., BAMS, 2016",
   "source_kind": "statistics",
   "reference": "Albrecht et al., Where are the lightning hotspots on Earth?, Bulletin of the American Meteorological Society, 2016",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

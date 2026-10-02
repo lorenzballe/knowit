@@ -35,5 +35,6 @@
   "source": "Martini & Haddock, Scientific Reports, 2017",
   "source_kind": "paper",
   "reference": "Martini & Haddock, Quantification of bioluminescence from the surface to the deep sea demonstrates its predominance as an ecological trait, Scientific Reports, 2017",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

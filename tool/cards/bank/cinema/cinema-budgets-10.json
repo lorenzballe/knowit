@@ -38,5 +38,6 @@
   "source": "Singleton, Film Scheduling, 1991",
   "source_kind": "book",
   "reference": "Singleton, Film Scheduling: Or, How Long Will It Take to Shoot Your Movie?, 2nd edn, Lone Eagle, 1991",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

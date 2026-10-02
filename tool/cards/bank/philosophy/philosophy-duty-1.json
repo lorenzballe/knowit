@@ -9,6 +9,7 @@
   "question": "What did Kant say could happen if you lie to a murderer about where your friend is?",
   "answer": "The lie could get him killed. You say your friend is out; unknown to you, he has slipped away, and the murderer, leaving, meets him in the street. Kant argued in 1797 that the death is then yours to answer for, while the truth might have kept the killer searching until neighbours seized him.",
   "move": "When one option's dangers are spelt out, ask about the other option's dangers.",
+  "ask": "When I judge a rule by its dangers, have I counted the dangers of breaking it?",
   "keywords": [
     "kant",
     "lying",

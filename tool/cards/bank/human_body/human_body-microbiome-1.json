@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Feeding bacteria in the baby's gut. These oligosaccharides are the third-largest solid ingredient of human milk, after lactose and fat, yet reach the colon undigested. There Bifidobacterium infantis, which carries a cluster of genes for breaking them down, thrives and crowds out rivals. In breastfed infants, bifidobacteria often make up most of the gut's bacteria.",
   "move": "When a system makes something it cannot use, find who does.",
+  "ask": "What do I make that I cannot use myself, and who else gets the benefit?",
   "trap": "Assuming whatever a body cannot use must be surplus it sheds.",
   "keywords": [
     "human milk oligosaccharides",

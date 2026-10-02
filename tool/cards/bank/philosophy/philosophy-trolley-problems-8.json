@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. In a 2018 Ghent study, 84% of people who believed the shocks were real pressed the button to spare five mice by shocking one; only 66% of those given the same dilemma on paper said they would. The shocks were secretly harmless. The hand on the button was bolder than the pen.",
   "move": "What people say they would do is a separate measurement from what they do.",
+  "ask": "What do I say I would do that I have never done when it was real?",
   "trap": "Expecting real stakes to make people shrink from causing harm.",
   "keywords": [
     "real-life dilemma",

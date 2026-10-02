@@ -12,6 +12,7 @@
   "question": "Where did Adam Smith's famous pin factory, with its eighteen operations, most likely come from?",
   "answer": "Largely from French books. The eighteen operations Smith lists match the article on pins in Diderot's Encyclopédie of 1755, and the historian Jean-Louis Peaucelle traced his figures to French descriptions of the pin workshops of Normandy. Smith claimed only to have seen one small workshop, of ten men.",
   "move": "Trace a famous example to its first telling before building on it.",
+  "ask": "Which famous example am I leaning on without checking where it began?",
   "keywords": [
     "adam smith",
     "pin factory",

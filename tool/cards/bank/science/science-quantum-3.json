@@ -17,6 +17,7 @@
   "correct": 1,
   "answer": "False. The Higgs gives quarks their own masses, but in a 2018 supercomputer calculation those masses made up about 9% of a proton. The rest is the energy of quarks and gluons held by the strong force, weighed through E = mc². In a 70 kg body, that is over 60 kg.",
   "move": "When one cause gets all the credit, ask what share it carries.",
+  "ask": "What single cause do I credit with everything, and how much does it really explain?",
   "trap": "Hearing that the Higgs gives particles mass, and assuming it gives most.",
   "keywords": [
     "higgs field",

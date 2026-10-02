@@ -9,6 +9,7 @@
   "question": "Where does the widely quoted figure of 450 years for a plastic bottle to break down come from?",
   "answer": "From no experiment anyone can find. Collin Ward and Christopher Reddy traced it in 2020: about three quarters of the lifetimes quoted for a bottle were 450 years, repeated from infographics by NOAA and others, with no study behind them. Real rates depend on sunlight, heat and shape; no bottle has been watched that long.",
   "move": "Ask where a round number was measured before repeating it.",
+  "ask": "Which round number do I keep repeating without knowing where it came from?",
   "keywords": [
     "plastic bottles",
     "degradation",

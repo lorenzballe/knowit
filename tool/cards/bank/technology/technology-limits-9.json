@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. On a multiple-choice test, OpenAI found the raw pre-trained model well calibrated: how sure it was matched how often it was right. After training it into a helpful assistant, the two matched far less well, as OpenAI's own chart shows. The assistant people talk to knows less about its own reliability.",
   "move": "Improving how something performs can damage how well it knows itself.",
+  "ask": "Where have I got better at performing but worse at knowing what I do not know?",
   "trap": "Assuming the tuning that makes answers better improves every measure.",
   "keywords": [
     "calibration",

@@ -17,6 +17,7 @@
   "correct": 0,
   "answer": "True. Straight up, the Moon's tidal pull is about a ten-millionth of Earth's gravity: it lightens the water by a hair and lifts almost nothing. The sideways part of that pull is just as small, but nothing resists it. Over thousands of kilometres it herds water towards the points under and opposite the Moon.",
   "move": "A tiny force nobody resists can do more than a large one resisted.",
+  "ask": "Which small, unopposed influence shapes my days more than the big ones I fight?",
   "trap": "Picturing the Moon hoisting the sea straight up beneath it.",
   "keywords": [
     "tides",

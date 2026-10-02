@@ -9,6 +9,7 @@
   "question": "What did France do in 2019 to stop supermarkets using famous brands as loss leaders?",
   "answer": "It banned selling food below cost plus 10%. Under the Egalim law, from February 2019 a retailer paying €1 for a product must charge at least €1.10, and promotions were capped at 34% off. Nutella and Coca-Cola, long sold near cost as bait, went up. Whether farmers, the intended winners, gained is disputed.",
   "move": "A floor under one price shows up in someone else's basket.",
+  "ask": "When one price is capped, which other price in my basket creeps up?",
   "keywords": [
     "egalim law",
     "loss leaders",

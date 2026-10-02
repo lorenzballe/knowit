@@ -9,6 +9,7 @@
   "question": "Where does the money sitting in a Chinese Alipay or WeChat Pay balance actually live?",
   "answer": "At the central bank. Since January 2019 China has required payment firms to hold 100% of customer balances at the People's Bank of China, in accounts that pay no interest. Before, the platforms parked this float at commercial banks and kept the interest. A phone balance became, in effect, a claim on the central bank.",
   "move": "Ask who holds the money behind the number on your screen.",
+  "ask": "Who really holds the money behind the number on my screen?",
   "keywords": [
     "alipay",
     "wechat pay",

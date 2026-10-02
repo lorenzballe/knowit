@@ -9,6 +9,7 @@
   "question": "Where does the popular claim that refocusing after an interruption takes about 23 minutes come from?",
   "answer": "From timing something else. Gloria Mark's team shadowed office workers and found that an interrupted project was picked up again, on average, roughly 25 minutes later, after about two other tasks in between. That is how long the work sat waiting, not how long a mind takes to settle after a ping.",
   "move": "A duration means little until you know when the clock started and stopped.",
+  "ask": "Which productivity statistic do I repeat without knowing where it came from or what was measured?",
   "keywords": [
     "interruptions",
     "gloria mark",

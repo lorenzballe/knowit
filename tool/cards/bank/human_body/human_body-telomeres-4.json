@@ -36,5 +36,6 @@
   "source": "Hayflick & Moorhead, Exp Cell Res, 1961",
   "source_kind": "paper",
   "reference": "Hayflick & Moorhead, The serial cultivation of human diploid cell strains, Experimental Cell Research, 1961",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

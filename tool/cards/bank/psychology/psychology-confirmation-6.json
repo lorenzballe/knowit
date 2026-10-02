@@ -9,6 +9,7 @@
   "question": "In the classic 1979 study where mixed evidence drove death-penalty views apart, how was the widening measured?",
   "answer": "By asking people how far their views had shifted. Supporters and opponents read the same two studies, rated the one agreeing with them as better, and reported moving further apart. Later studies that measured attitudes directly, before and after, mostly found no widening. The biased rating held up; the polarisation lived largely in the self-report.",
   "move": "When people say they changed, check whether anyone measured the before.",
+  "ask": "Where did I last say I changed my mind without ever recording what I believed before?",
   "keywords": [
     "attitude polarisation",
     "death penalty",

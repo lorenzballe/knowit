@@ -12,6 +12,7 @@
   "question": "How can astronomers measure the spin of a black hole whose horizon they cannot see?",
   "answer": "By finding where its gas disc ends. Around a non-spinning hole no orbit is stable inside three horizon radii, so the disc stops there; around a fast spinner the edge closes in almost to the horizon. X-rays from iron in the innermost gas, smeared by gravity and speed, show how close it gets.",
   "move": "When the thing itself hides, measure where its surroundings stop behaving.",
+  "ask": "When I can't see a thing directly, what can I learn from how things around it behave?",
   "keywords": [
     "black hole spin",
     "accretion disc",

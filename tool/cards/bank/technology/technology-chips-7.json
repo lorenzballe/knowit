@@ -9,6 +9,7 @@
   "question": "Why can no single ordinary chip be much larger than about 26 by 33 millimetres?",
   "answer": "Because that is all a lithography scanner prints in one exposure. It projects the mask onto a field of 26 by 33 mm, then steps to the next. The largest graphics processors sit just under that 858 mm² ceiling, and the newest high-aperture EUV machines halve the field to 26 by 16.5 mm.",
   "move": "Before asking why something stops at a size, find the tool that made it.",
+  "ask": "When something stops at a certain size, have I asked what tool made it that way?",
   "keywords": [
     "reticle limit",
     "lithography scanner",

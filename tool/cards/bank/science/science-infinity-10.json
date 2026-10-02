@@ -39,5 +39,6 @@
   "source": "Mandelbrot, The Fractal Geometry of Nature",
   "source_kind": "book",
   "reference": "Mandelbrot, The Fractal Geometry of Nature, W. H. Freeman, 1982",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -9,6 +9,7 @@
   "question": "How can a solid insulate better than the still air it is mostly made of?",
   "answer": "By making its pores smaller than the distance an air molecule travels before hitting another, about 70 nanometres. Inside silica aerogel, molecules mostly strike pore walls instead of passing energy to each other, so the gas carries less heat. The best aerogels, over 90% air, conduct about half as much heat as still air.",
   "move": "Make a space small enough and different rules take over inside it.",
+  "ask": "Where would making the space smaller work better than adding more stuff?",
   "keywords": [
     "aerogel",
     "mean free path",

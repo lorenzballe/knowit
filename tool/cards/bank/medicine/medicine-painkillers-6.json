@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "The non-opioid group. The SPACE trial randomised 240 US veterans to opioids or to non-opioid drugs, mostly paracetamol and anti-inflammatories, raising doses as needed. After 12 months, function was no different and pain intensity was slightly lower without opioids, 3.5 against 4.0 out of 10. The opioid group reported more side effects.",
   "move": "The strongest drug for an afternoon is not the strongest over a year.",
+  "ask": "What helps me this afternoon but lets me down over a year?",
   "trap": "The opioid group, since a stronger drug should leave less pain.",
   "keywords": [
     "opioids",

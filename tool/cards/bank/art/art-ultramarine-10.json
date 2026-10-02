@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Christian Gmelin, a chemistry professor in Tübingen, made it independently that year and published his method, while Guimet kept his secret. Chemists had already noticed blue deposits in soda furnaces in the 1810s and matched them to ultramarine. The prize fixed the price, but the recipe was ripe for anyone to find.",
   "move": "Before crediting a reward, ask who was about to succeed without it.",
+  "ask": "Before I credit a reward for a breakthrough, who was already about to succeed without it?",
   "trap": "Crediting the prize alone, as if nobody else was close.",
   "keywords": [
     "guimet",

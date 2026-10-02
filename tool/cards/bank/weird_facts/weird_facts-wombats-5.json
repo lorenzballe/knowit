@@ -9,6 +9,7 @@
   "question": "How much does the temperature swing in a day deep inside a wombat warren?",
   "answer": "Less than 1 °C. On the surface above, the same day can swing by about 24 °C. Deep, interconnected tunnels in packed earth buffer both heat and cold, which is why many other animals shelter in them during fires and heatwaves. A hole in the ground works as a thermostat.",
   "move": "Depth in soil buys stability that no wall above ground can match.",
+  "ask": "What in my life steadies me when everything above ground shakes?",
   "keywords": [
     "wombat warren",
     "burrow temperature",

@@ -18,6 +18,7 @@
   "correct": 0,
   "answer": "About 20%. The days must all go well, so the chances multiply: 0.95 multiplied by itself 30 times is about 0.21. That is why budgets carry a contingency, often around a tenth of the total, and why outdoor schedules keep cover sets ready for a wet morning. A safe-looking day is a risky month.",
   "move": "Many small risks in a row add up to a likely failure.",
+  "ask": "Which plan of mine needs many small things to go right, and what are the real odds?",
   "trap": "About 95%, since every single day is very likely fine.",
   "keywords": [
     "contingency",
@@ -35,6 +36,103 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "outdoor days",
+      "min": 0,
+      "max": 30
+    },
+    "y": {
+      "label": "% chance no day is lost",
+      "min": 0,
+      "max": 100
+    },
+    "series": [
+      {
+        "label": "95% good weather each day",
+        "hi": true,
+        "points": [
+          [
+            0,
+            100.0
+          ],
+          [
+            2,
+            90.2
+          ],
+          [
+            4,
+            81.5
+          ],
+          [
+            6,
+            73.5
+          ],
+          [
+            8,
+            66.3
+          ],
+          [
+            10,
+            59.9
+          ],
+          [
+            12,
+            54.0
+          ],
+          [
+            14,
+            48.8
+          ],
+          [
+            16,
+            44.0
+          ],
+          [
+            18,
+            39.7
+          ],
+          [
+            20,
+            35.8
+          ],
+          [
+            22,
+            32.4
+          ],
+          [
+            24,
+            29.2
+          ],
+          [
+            26,
+            26.4
+          ],
+          [
+            28,
+            23.8
+          ],
+          [
+            30,
+            21.5
+          ],
+          [
+            30,
+            21.5
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 30,
+        "y": 21.5,
+        "label": "30 days: about 21%"
+      }
+    ],
+    "caption": "Each day is 95% safe; thirty in a row come off only about one time in five."
+  },
   "source": "Honthaner, The Complete Film Production Handbook",
   "source_kind": "book",
   "reference": "Honthaner, The Complete Film Production Handbook, 4th edn, Focal Press, 2010",

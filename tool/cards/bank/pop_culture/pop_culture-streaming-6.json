@@ -39,5 +39,6 @@
   "source": "Netflix, What We Watched report, 2023",
   "source_kind": "company",
   "reference": "http://about.netflix.com/en/news/what-we-watched-a-netflix-engagement-report",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

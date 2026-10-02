@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Iron-rich nerve endings in the beak had been published as the pigeon's magnetic sensor. In 2012 Treiber and colleagues mapped iron-rich cells across whole beaks and found they were macrophages, immune cells that recycle iron, and that their numbers varied hugely from bird to bird: nothing like the fixed layout of a sense organ.",
   "move": "Finding what you expected where you expected it is not yet proof.",
+  "ask": "Where have I stopped checking because I found what I expected where I expected it?",
   "trap": "False: they were widely reported as the pigeon's magnetic compass.",
   "keywords": [
     "homing pigeons",

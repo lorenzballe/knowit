@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About 4%. Economists at OpenAI, Harvard and Duke classified a sample of consumer conversations from 2024–25: practical guidance, seeking information and writing made up nearly 80%, and more than 70% of messages had nothing to do with work. The typical request is advice, not code.",
   "move": "What gets written about most is not what gets done most.",
+  "ask": "Do I think a thing is common because it is talked about a lot?",
   "trap": "About half, because coding is the use tech news covers most.",
   "keywords": [
     "chatgpt",

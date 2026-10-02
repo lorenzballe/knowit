@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "It drops less than gravity alone would make it. Backspin creates lift, but at any spin a pitcher can give it the lift stays below the ball's weight, so the pitch still falls, only less than the batter expects. The batter swings under a ball that never climbed.",
   "move": "Something falling less than expected is easily mistaken for something rising.",
+  "ask": "What do I think is rising that is really just falling less than I feared?",
   "trap": "Taking the batter's sense of a rise as a real upward climb.",
   "keywords": [
     "fastball",

@@ -9,6 +9,7 @@
   "question": "In real small-claims courts, did a baby-faced defendant always do better than a mature-faced one?",
   "answer": "No: it depended on the charge. Leslie Zebrowitz and Susan McDonald found baby-faced defendants more likely to win cases alleging intentional harm, and less likely to win cases alleging negligence. A face that looks innocent also looks naive and careless. The same round cheeks helped against one accusation and hurt against the other.",
   "move": "A good impression is specific; ask which quality it is vouching for.",
+  "ask": "When I like someone, which specific quality am I trusting them for?",
   "keywords": [
     "baby face",
     "small claims court",

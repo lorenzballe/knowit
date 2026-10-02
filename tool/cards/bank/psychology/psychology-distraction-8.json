@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Altmann, Trafton and Hambrick broke into a sequence of steps with a brief typing task: interruptions averaging 2.8 seconds roughly doubled errors on resuming, and about 4.4 seconds tripled them. The place in the sequence was lost, not time. A nurse glancing at a monitor mid-dose can lose the step.",
   "move": "Judge an interruption by what it knocks loose, not by how long it lasts.",
+  "ask": "What three-second interruption did I treat as harmless that actually cost me my place?",
   "trap": "False, because a pause that short leaves almost no time to forget.",
   "keywords": [
     "interruptions",

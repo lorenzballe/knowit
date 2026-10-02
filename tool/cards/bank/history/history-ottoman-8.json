@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Distance, rain and the approach of winter. The army left Istanbul in May and, slowed by rains that forced it to leave much of its heavy artillery behind, reached Vienna only in late September. With winter near and supplies thin, it withdrew in mid-October. The campaign season, more than the enemy, set the empire's reach.",
   "move": "Before crediting the enemy, check the calendar and the supply line.",
+  "ask": "Before I credit an opponent for stopping me, have I checked my own calendar and supplies?",
   "trap": "Recalling 1683, when a relieving army did break the siege.",
   "keywords": [
     "siege of vienna",

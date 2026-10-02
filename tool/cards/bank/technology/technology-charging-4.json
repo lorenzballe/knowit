@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. A USB-C charger offers a menu, and the phone orders from it. It supplies a safe 5 volts until the phone requests, by a handshake over the cable, a higher voltage it can take; the phone then draws only the current it wants. A 25-watt phone takes about 25 watts from a 100-watt brick.",
   "move": "A rating says the most on offer, not what gets taken.",
+  "ask": "Where do I treat a rating as what I will get, when it is only the most on offer?",
   "trap": "More watts on the label must mean more power forced in.",
   "keywords": [
     "usb-c",

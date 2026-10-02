@@ -29,5 +29,6 @@
   "source": "City of Flagstaff, Dark Sky History",
   "source_kind": "institution",
   "reference": "https://flagstaff.az.gov/3855/Dark-Sky-History-in-Flagstaff",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

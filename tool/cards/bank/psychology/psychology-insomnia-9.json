@@ -13,6 +13,7 @@
   ],
   "answer": "Yes. Trained therapists in cognitive behavioural therapy for insomnia are scarce, so most patients get pills or nothing. Digital versions have worked in large trials: in one with 3,755 university students, an online course reduced insomnia, and paranoia and hallucinations with it. Scale matters: a good treatment nobody can reach helps nobody.",
   "move": "Whichever side you took, it turns on who drops out and who is missed.",
+  "ask": "When someone offers me a cheap, scalable fix, who falls through the cracks?",
   "counterpoint": "No. The trials enrol motivated people who log on; in ordinary care many drop out after a session or two. Sleep restriction, the strongest ingredient, makes people sleepier for weeks, and without someone to adjust the schedule and catch warning signs, such as untreated apnoea or bipolar disorder, the difficult cases are the ones an app fails.",
   "keywords": [
     "digital therapy",

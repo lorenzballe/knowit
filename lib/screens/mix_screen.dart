@@ -46,6 +46,7 @@ const List<MixSubject> kMixSubjects = [
   MixSubject('medicine', 'Medicine', Color(0xFFFF3B30)),
   MixSubject('food', 'Food', Color(0xFFFF7A1A)),
   MixSubject('history', 'History', Color(0xFFFFB000)),
+  MixSubject('life', 'Life', Color(0xFFFFC49B)),
 ];
 
 /// Below this a subject is out of the mix rather than merely quiet.
@@ -116,11 +117,12 @@ class _MixScreenState extends State<MixScreen> {
       body: Padding(
         padding: EdgeInsets.fromLTRB(
           18,
-          // The canvas clears its own status bar with 54. A real notch is
-          // taller than the one it draws, so take whichever is bigger —
-          // never less, or the title runs under the clock. Skip takes no
-          // room here: it ends the heading's row.
-          safe.top > 54 ? safe.top : 54,
+          // Right under the notch, where the genres screen puts its heading
+          // too. The canvas's 54 was its own drawn status bar: added on a
+          // screen that has none (the web app, most Android phones) it left
+          // a band of nothing above the title. Skip takes no room here: it
+          // ends the heading's row.
+          safe.top > 14 ? safe.top : 14,
           18,
           // 22, as the canvas has it. The artboard is already a phone with a
           // home indicator and the designer put the button here; only a
@@ -364,9 +366,17 @@ class _MixTile extends StatelessWidget {
                                   weight: FontWeight.w700,
                                   height: 1.1,
                                   spacing: -0.3,
-                                  color: Colors.white.withValues(
-                                    alpha: live ? 0.95 : 0.3,
-                                  ),
+                                  // Dark on a pale fill, but only once the
+                                  // fill is under it; a dimmed tile's label
+                                  // sits on black either way.
+                                  color:
+                                      (live &&
+                                                  kPaleSubjects.contains(
+                                                    subject.name,
+                                                  )
+                                              ? const Color(0xFF10100C)
+                                              : Colors.white)
+                                          .withValues(alpha: live ? 0.95 : 0.3),
                                 ),
                               ),
                             ),

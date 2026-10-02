@@ -9,6 +9,7 @@
   "question": "Why does clear ouzo turn milky the moment water is poured in, with no emulsifier present?",
   "answer": "Because its anise oil, anethole, dissolves in strong alcohol but not in water. Diluting the spirit forces the oil out everywhere at once, as droplets about a micrometre across that scatter light. They hang there for hours with no stabiliser, a behaviour physicists named the ouzo effect in 2003. Pastis clouds the same way.",
   "move": "Change the solvent and something dissolved can reappear all at once.",
+  "ask": "What problem shows up only when I change the setting around it?",
   "keywords": [
     "ouzo effect",
     "anethole",

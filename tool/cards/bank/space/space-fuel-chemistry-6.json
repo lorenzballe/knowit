@@ -9,6 +9,7 @@
   "question": "How do many satellites fire their thrusters using a single propellant and no oxidiser at all?",
   "answer": "By tearing hydrazine apart rather than burning it. Passed over a bed of iridium-coated pellets, hydrazine decomposes into hot nitrogen, hydrogen and ammonia, with no spark and no oxygen, even starting at room temperature. It fires reliably for years. The cost is the fuel itself: toxic enough that technicians load it in sealed suits.",
   "move": "Energy can come from taking one thing apart, not only from joining two.",
+  "ask": "Could the energy I need come from taking something apart, not from adding more?",
   "keywords": [
     "hydrazine",
     "monopropellant",

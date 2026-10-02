@@ -9,6 +9,7 @@
   "question": "Did a 2015 study really lead 70% of students to remember committing a crime?",
   "answer": "Not by a stricter test. Shaw and Porter counted 70% after three suggestive interviews. Recoding the same transcripts, Wade, Garry and Pezdek separated believing the story from recalling it, and only 26 to 30% met the bar for a false memory. The larger figure included people who believed but pictured little.",
   "move": "Before quoting a rate, ask exactly what was counted as a case.",
+  "ask": "Before I repeat a striking percentage, do I know what was counted as a case?",
   "keywords": [
     "false memory of crime",
     "shaw and porter",

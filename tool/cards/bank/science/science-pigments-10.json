@@ -12,6 +12,7 @@
   "tolerance": 1,
   "answer": "0.49 x 0.49 x 0.49 ≈ 0.12, about 12 per cent.",
   "move": "Losses that stack multiply, so a few thin layers can swallow most light.",
+  "ask": "Where do small repeated losses add up so that a few steps eat most of the value?",
   "trap": "Subtracting 30% per glaze, as if losses simply added up.",
   "hint": "Count the crossings first, then multiply by 0.7 once for each.",
   "steps": [

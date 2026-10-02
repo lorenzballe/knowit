@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Wixted and Wells's 2017 review found that at a first, fair, double-blind lineup, high-confidence picks were highly accurate, often above 90% correct in laboratory studies, while low-confidence picks were often wrong. The weak link between confidence and accuracy comes from certainty measured later, after feedback and rehearsal, by the time of the trial.",
   "move": "Ask when a certainty was first measured, not how strong it sounds now.",
+  "ask": "When was my certainty about this first recorded, and how much has retelling polished it since?",
   "trap": "False, because witness confidence is known to predict accuracy only weakly.",
   "keywords": [
     "eyewitness confidence",

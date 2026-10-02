@@ -32,5 +32,6 @@
   "source": "Munk & Wunsch, Deep-Sea Research, 1998",
   "source_kind": "paper",
   "reference": "Munk & Wunsch, Abyssal recipes II: energetics of tidal and wind mixing, Deep-Sea Research I, 1998",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

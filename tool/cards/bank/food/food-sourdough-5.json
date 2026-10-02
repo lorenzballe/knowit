@@ -11,7 +11,8 @@
   "unit": "tonnes",
   "tolerance": 0.1,
   "answer": "That is about 5.9 tonnes.",
-  "move": "When something is multiplied each round, count the rounds before trusting a guess.",
+  "move": "Count the rounds of multiplication before trusting a gut guess.",
+  "ask": "What am I underestimating because it grows a little more each round?",
   "trap": "Adding 200 g a day and getting 2.1 kg instead of multiplying.",
   "hint": "Each feed adds twice the starter's weight, so work out what it is multiplied by each day.",
   "steps": [
@@ -36,6 +37,84 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "days of feeding",
+      "min": 0,
+      "max": 10
+    },
+    "y": {
+      "label": "kg of starter",
+      "min": 0,
+      "max": 6000
+    },
+    "series": [
+      {
+        "label": "tripling daily",
+        "hi": true,
+        "points": [
+          [
+            0,
+            0.1
+          ],
+          [
+            1,
+            0.3
+          ],
+          [
+            2,
+            0.9
+          ],
+          [
+            3,
+            2.7
+          ],
+          [
+            4,
+            8.1
+          ],
+          [
+            5,
+            24.3
+          ],
+          [
+            6,
+            72.9
+          ],
+          [
+            7,
+            218.7
+          ],
+          [
+            8,
+            656.1
+          ],
+          [
+            9,
+            1968.3
+          ],
+          [
+            10,
+            5904.9
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 7,
+        "y": 218.7,
+        "label": "day 7: 219 kg"
+      },
+      {
+        "x": 10,
+        "y": 5904.9,
+        "label": "day 10: 5.9 tonnes"
+      }
+    ],
+    "caption": "Tripling from 100 g: 219 kg after a week, then 5.9 tonnes three days later."
+  },
   "source": "Powers of three, 3^10",
   "source_kind": "arithmetic",
   "reference": "Hamelman, Bread: A Baker's Book of Techniques and Recipes, Wiley, 2004",

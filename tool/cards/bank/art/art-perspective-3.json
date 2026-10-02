@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The vanishing point sits at Christ's right temple, where a nail hole left by the construction lines still shows, well above any standing monk's eye. The ideal viewpoint lies high up and several metres back. Diners on the floor saw a room they could never stand in, and accepted it.",
   "move": "A rule's inventors often bent it the moment it got in the way.",
+  "ask": "Which rule I follow would its own inventors have bent when it got in the way?",
   "trap": "Assuming perspective always matches a real viewer's position in the room.",
   "keywords": [
     "leonardo da vinci",

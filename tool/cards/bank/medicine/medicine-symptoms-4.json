@@ -9,6 +9,7 @@
   "question": "When 23 online symptom checkers were tested on standard patient cases, how often did they name the right diagnosis first?",
   "answer": "About a third of the time. A 2015 Harvard audit fed them 45 written cases; the correct diagnosis came first in 34% and in the top 20 in 58%. Triage advice leaned cautious, sending people to doctors for problems safe to treat at home. A list of twenty guesses reads like an answer.",
   "move": "A long list of possibilities is not a diagnosis.",
+  "ask": "Which long list of possibilities have I mistaken for an answer?",
   "keywords": [
     "symptom checkers",
     "self-diagnosis",

@@ -34,5 +34,6 @@
   "source": "Scientific American, Friday the 13th",
   "source_kind": "news_archive",
   "reference": "https://www.scientificamerican.com/article/why-friday-the-13th-is-a-mathematical-inevitability/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -12,6 +12,7 @@
   "question": "How does one deep-sea dragonfish see its prey without being seen?",
   "answer": "With a red searchlight. Most deep-sea animals see only blue, the colour that travels furthest through seawater. Malacosteus shines far-red light from organs beneath its eyes and detects it with a pigment built from chlorophyll, probably taken from its food. To its prey, the beam is darkness.",
   "move": "The safest signal is one only you can read.",
+  "ask": "What signal could I use that only the people I trust can read?",
   "keywords": [
     "dragonfish",
     "malacosteus",

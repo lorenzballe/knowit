@@ -1,0 +1,41 @@
+{
+  "id": "life-screens-1",
+  "topic": "life",
+  "genre": "life.habits",
+  "strand": "life.habits.screens",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In datasets covering hundreds of thousands of teenagers, digital technology use explains at most what share of variation in well-being?",
+  "options": [
+    "About 0.4%",
+    "About 4%",
+    "About 14%"
+  ],
+  "correct": 0,
+  "answer": "About 0.4%. Orben and Przybylski analysed three large datasets and found the link between technology use and adolescent well-being was tiny, about the size of the link between eating potatoes and well-being in the same data. Small on average does not mean nothing for any one teenager.",
+  "move": "Ask how big an effect is, not only whether one exists.",
+  "ask": "Which worry about screens or a habit am I holding without asking how big the effect really is?",
+  "trap": "Loud public worry makes a large share feel likely.",
+  "keywords": [
+    "screen time",
+    "adolescents",
+    "well-being",
+    "effect size",
+    "orben"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Orben and Przybylski, Nature Human Behaviour, 2019",
+  "source_kind": "paper",
+  "reference": "Orben and Przybylski, The association between adolescent well-being and digital technology use, Nature Human Behaviour, 2019",
+  "written": "2026-09-29"
+}

@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Breathing in briefly quietens the vagus nerve, the heart's brake, so the pulse quickens; breathing out restores the brake and it slows. The swing, called respiratory sinus arrhythmia, is largest in the young and fit and shrinks with age and heart disease. A pulse as steady as a metronome is the worse sign.",
   "move": "Some wobble in a signal can be the sign that it is working.",
+  "ask": "What small wobble in my routine might be a sign that it is working?",
   "trap": "Picturing a healthy heart as a metronome, so any wobble means trouble.",
   "keywords": [
     "respiratory sinus arrhythmia",

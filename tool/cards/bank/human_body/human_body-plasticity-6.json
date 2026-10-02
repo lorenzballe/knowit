@@ -9,6 +9,7 @@
   "question": "After an arm is amputated, does the brain's map of the missing hand get taken over?",
   "answer": "Apparently not. Schone, Makin and colleagues scanned three adults before and up to five years after planned arm amputations. Moving their phantom fingers lit up the same hand map as moving real ones had before surgery, and the lip area had not spread into it. The map stayed ready for a hand that was gone.",
   "move": "Compare the same people before and after before announcing that something moved.",
+  "ask": "Before saying something moved, did I compare the same thing before and after?",
   "keywords": [
     "amputation",
     "phantom limb",

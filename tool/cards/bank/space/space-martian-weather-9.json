@@ -34,5 +34,6 @@
   "source": "Allison & McEwen, Planetary and Space Science, 2000",
   "source_kind": "paper",
   "reference": "Allison & McEwen, A post-Pathfinder evaluation of areocentric solar coordinates with improved timing recipes for Mars seasonal/diurnal climate studies, Planetary and Space Science, 2000",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

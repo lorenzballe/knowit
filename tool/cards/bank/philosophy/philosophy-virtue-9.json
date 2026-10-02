@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Virtuous people would never need his remedies. Robert Johnson argued in 2003 that the liar ought to watch himself and practise honesty in small things, which a virtuous person, having nothing to cure, would never do. Right action for someone depends on who they are now: a crutch is right only for a broken leg.",
   "move": "Advice for the finished version of you may be wrong for you now.",
+  "ask": "What advice for the finished version of me would be wrong for who I am today?",
   "trap": "Reaching for the standard worry that good people disagree.",
   "keywords": [
     "right action",

@@ -12,6 +12,7 @@
   "correct": 0,
   "answer": "True. A mark is part ability and part luck on the day, and the lowest marks collect the worst luck. On the next test the luck is drawn again, so the group drifts back towards its average — which is why extra lessons aimed at them look effective even when they are not.",
   "move": "Part of every score is luck, and luck is not repeated on demand.",
+  "ask": "Which bad result of mine am I overreading, when part of it was just a bad day?",
   "trap": "Low marks feel like low ability, which should not move by itself.",
   "keywords": [
     "exams",

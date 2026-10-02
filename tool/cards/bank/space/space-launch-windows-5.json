@@ -9,6 +9,7 @@
   "question": "Why do Mars probes leave Earth months before Mars makes its closest approach?",
   "answer": "Because they aim where Mars will be. The cheapest route is half an orbit around the Sun, seven to nine months, so probes leave with Mars some 44 degrees ahead and meet it after the close pass. The trip runs to about half a billion km, to a planet that can pass within 56 million.",
   "move": "Aim at where the target will be, not where it is.",
+  "ask": "Am I aiming at where my goal is now, or where it will be when I get there?",
   "keywords": [
     "mars",
     "hohmann transfer",

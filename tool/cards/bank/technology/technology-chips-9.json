@@ -35,5 +35,6 @@
   "source": "Dennard et al., IEEE JSSC, 1974",
   "source_kind": "paper",
   "reference": "Dennard, Gaensslen, Yu, Rideout, Bassous & LeBlanc, Design of ion-implanted MOSFET's with very small physical dimensions, IEEE Journal of Solid-State Circuits 9(5), 1974",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

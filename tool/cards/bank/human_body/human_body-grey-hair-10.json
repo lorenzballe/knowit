@@ -9,6 +9,7 @@
   "question": "Hair with no pigment is made of translucent keratin, so why does it look white rather than clear?",
   "answer": "Because it scatters light. A hair is full of internal boundaries, between cells and fibres and around air pockets in its core, and each reflects a little light of every colour. Many small reflections of all colours add up to white, as in snow. Grey is white hairs among dark ones.",
   "move": "Many clear surfaces together can make something opaque.",
+  "ask": "What looks like one solid thing to me but is really many clear things stacked up?",
   "keywords": [
     "keratin",
     "light scattering",

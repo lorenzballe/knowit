@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The $90 million was gone either way; only what came next could be weighed. Release meant more spending on effects and marketing against uncertain returns, while shelving let Warner Bros. Discovery take a tax write-down in 2022. A nearly finished superhero film was locked away unseen by arithmetic, not by quality.",
   "move": "Decide on what is still to be spent, not on what already went.",
+  "ask": "Which project am I continuing because of what I spent, not what is left to spend?",
   "trap": "Abandoning it feels like throwing away all the money already spent.",
   "keywords": [
     "batgirl",

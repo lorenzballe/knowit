@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Cooler temperatures that slow ripening. Arabica does best at mean temperatures of about 18 to 21 °C, and slow ripening lets beans build more sugars and acids. Near the equator that climate begins around 1,200 to 2,000 m. Kona, at about 19° north, finds it far lower: height was standing in for temperature.",
   "move": "Before crediting a factor, ask what else changes along with it.",
+  "ask": "When I credit one thing for a result, what else changed along with it?",
   "trap": "Crediting the height itself, as if thin air made the flavour.",
   "keywords": [
     "altitude",

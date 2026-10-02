@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About 1%. The 1992 question asked whether it seemed possible or impossible that the extermination never happened, a double negative many respondents misread. Roper reran it in 1994, asking whether it seemed possible it never happened or whether people felt certain it happened: 1% chose possible. The denial had lived in the grammar.",
   "move": "When a survey shocks, read the exact question before the result.",
+  "ask": "When a survey shocks me, did I read the exact question?",
   "trap": "Taking the first poll's figure as a measure of belief.",
   "keywords": [
     "holocaust poll",
@@ -32,6 +33,22 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "bars",
+    "unit": "%",
+    "items": [
+      {
+        "label": "1992, with a double negative",
+        "value": 22
+      },
+      {
+        "label": "1994, asked plainly",
+        "value": 1,
+        "hi": true
+      }
+    ],
+    "caption": "Remove the double negative and 22% doubting the Holocaust shrinks to 1%."
+  },
   "source": "Smith, Public Opinion Quarterly, 1995",
   "source_kind": "paper",
   "reference": "Smith, The Polls: A Review. The Holocaust Denial Controversy, Public Opinion Quarterly, 1995",

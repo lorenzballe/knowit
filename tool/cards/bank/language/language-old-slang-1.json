@@ -9,6 +9,7 @@
   "question": "Why did an Elizabethan magistrate compile one of the first glossaries of English slang?",
   "answer": "To expose vagrants. Thomas Harman's Caveat for Common Cursitors, first printed in 1566, set out the tricks of wandering beggars and listed their secret cant, such as bouse for drink and ken for a house. Later pamphleteers copied his list for decades, so much supposed Elizabethan underworld speech traces back to one Kent landowner's notes.",
   "move": "When every source agrees, check whether they all copied one.",
+  "ask": "When every source agrees, did they all copy one?",
   "keywords": [
     "thomas harman",
     "thieves cant",

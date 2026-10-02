@@ -13,6 +13,7 @@
   ],
   "answer": "Yes. Goals are rare, so a season's results carry a large share of luck; expected goals, which rate every shot by its chance of scoring, settle far sooner. A side that creates good chances and concedes poor ones is being coached well, and sacking its manager after bad luck only resets the work.",
   "move": "Whichever side you took, the hinge is how much of one season is luck.",
+  "ask": "Do I judge my decisions by how they turned out, or by how well I made them?",
   "counterpoint": "No. Expected-goals models rate shots as if taken by average finishers against average keepers, so they miss much of what coaching may add: sharper finishing, rehearsed set pieces, game management. Clubs are paid in points, not probabilities, and a side that keeps losing while playing well may have a flaw the model cannot see.",
   "keywords": [
     "expected goals",

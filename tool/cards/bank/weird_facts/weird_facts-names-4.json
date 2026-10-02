@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Surnames clustering by ethnicity and region. People tend to marry within their own community, and initials are not spread evenly across communities: Dutch-American surnames, for instance, often start with V. Simonsohn replicated the original pattern, then showed that such confounds could produce it without any pull of the name.",
   "move": "Before crediting attraction, ask what else the matching pairs already share.",
+  "ask": "Before I call a match fate, what did the two already have in common?",
   "trap": "Taking the textbook story of an unconscious pull towards one's own name.",
   "keywords": [
     "implicit egotism",

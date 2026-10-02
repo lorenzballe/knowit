@@ -9,6 +9,7 @@
   "question": "What did a study of some 2,000 films find stars do to a film's box-office risk?",
   "answer": "Almost nothing reliable. Arthur De Vany and David Walls found film revenues have such extreme tails that a few titles take most of the money and averages mislead. Star vehicles earned somewhat more on average, but flopped too; no name made a hit likely. Studios pay millions for odds that barely move.",
   "move": "When outcomes swing wildly, a good average can still hide ruin.",
+  "ask": "Where does a good average hide a risk of real ruin for me?",
   "keywords": [
     "star power",
     "box office risk",

@@ -9,6 +9,11 @@ than merely correct.
 Nothing here is wired into the app yet. The card generator will run on a
 server, call `render.py` with a spec, and store the SVG beside the card.
 
+The pictures a card does carry today are not drawn here: they are the
+animated `diagram` field, painted natively by the app
+(`lib/widgets/diagram_view.dart`, see the app README). What is below stays
+for static figures a server may one day produce.
+
 ## The rule everything follows
 
 The app draws a figure with

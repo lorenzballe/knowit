@@ -9,6 +9,7 @@
   "question": "Chronic pain patients show less grey matter in pain-processing brain regions. What happened to it once a hip replacement ended the pain?",
   "answer": "It came back. A 2009 German study scanned people with painful hip osteoarthritis, who showed the usual losses, then rescanned some after surgery had left them pain-free. Within months grey matter in those regions had partly returned. The shrinkage followed the pain rather than causing it: a brain reshaped by use, then reshaped by rest.",
   "move": "Before calling a change a cause, see whether it undoes itself when the cause stops.",
+  "ask": "Something I blame for a problem: does it go away when the problem does?",
   "keywords": [
     "grey matter",
     "brain imaging",

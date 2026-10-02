@@ -9,6 +9,7 @@
   "question": "Two players bet on a fair coin tossed every second for a year. How long is the luckier one usually ahead?",
   "answer": "Most of the year. In half of games the leader is ahead for more than 311 days; in one game in 20, for all but about 14 hours. Erasing a lead takes an equal run the other way, and such runs are slow, so one player often stays in front for months on end.",
   "move": "A long lead in a fair game is evidence of nothing but time.",
+  "ask": "Which long lead of mine am I calling skill when it may just be time?",
   "keywords": [
     "arcsine law",
     "coin tossing",

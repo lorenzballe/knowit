@@ -41,5 +41,6 @@
   "source": "Rayleigh, The Theory of Sound",
   "source_kind": "book",
   "reference": "Rayleigh, The Theory of Sound, vol. 2, Dover, 1945",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

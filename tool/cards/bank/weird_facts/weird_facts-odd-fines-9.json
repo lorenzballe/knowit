@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About 23%. The Justice Department's 2015 investigation found the share had nearly doubled from 12% in 2010, as city officials pressed police and the court to raise more. Missed payments brought arrest warrants and fresh fees. In a town of about 21,000 people, the municipal court had become a revenue office.",
   "move": "When a punishment funds its enforcer, expect more of it.",
+  "ask": "Who earns money from the punishing, and does that change how much of it happens?",
   "trap": "Assuming fines are a small side income for any town.",
   "keywords": [
     "ferguson",

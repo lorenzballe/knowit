@@ -29,5 +29,6 @@
   "source": "US Energy Information Administration",
   "source_kind": "institution",
   "reference": "US Energy Information Administration, World Oil Transit Chokepoints, 2017",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

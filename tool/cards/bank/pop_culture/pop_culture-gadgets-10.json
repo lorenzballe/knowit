@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "To protect staggered release dates. Films then opened in cinemas months apart around the world, and a disc sold in America could undercut a European premiere. The television explanation fails a test: Japan, which used NTSC like America, was put in region 2 with Europe. The codes followed the release calendar, not the wiring.",
   "move": "Find the case the popular explanation cannot fit, then look again.",
+  "ask": "When a rule seems pointless, who is it quietly protecting?",
   "trap": "Blaming PAL and NTSC, a real split the region map ignores.",
   "keywords": [
     "dvd",

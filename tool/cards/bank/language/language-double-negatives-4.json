@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Something milder than happy. Happy and unhappy are contraries, not contradictories: a person can be neither. Negating unhappy lands in that gap, which is why the phrase hedges. Orwell mocked the habit in 1946, proposing that writers memorise the sentence about a not unblack dog chasing a not unsmall rabbit across a not ungreen field.",
   "move": "Denying the opposite is not the same as asserting the thing.",
+  "ask": "When I say I'm not unhappy, am I really saying I'm happy?",
   "trap": "Two negatives cancel in logic, so they should cancel in speech.",
   "keywords": [
     "litotes",

@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "30 to 60 Hz. Frame time is one second divided by the rate: 30 Hz gives 33.3 ms and 60 Hz gives 16.7, a saving of 16.7 ms. Going from 60 to 360 Hz takes 16.7 ms down to 2.8, saving 13.9. Each doubling saves half what the last one did.",
   "move": "When a rate rises, compare the time it saves, not the rates.",
+  "ask": "Do I compare rates, when I should compare the time each change really saves?",
   "trap": "A sixfold jump in rate looks bigger than a mere doubling.",
   "keywords": [
     "refresh rate",

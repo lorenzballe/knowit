@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "If defects fell 15% everywhere that quarter, the new supplier did worse than doing nothing. A number with no comparison cannot support a claim about cause, however large it is.",
   "move": "\"Compared to what\" beats any figure quoted on its own.",
+  "ask": "What improvement am I proud of that has no comparison group to say it was my doing?",
   "trap": "Judging a change with nothing to compare it to.",
   "keywords": [
     "counterfactual",

@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. In 2008 the Phoenix lander's laser, pointed up at night, saw water-ice crystals falling in streaks from clouds about 4 km high. In the polar night, orbiters detect clouds of carbon dioxide that drop dry-ice snow. Rovers have not caught it: they land near the equator, and mostly work by day.",
   "move": "Where the cameras go decides what the pictures can show.",
+  "ask": "What do I think never happens only because I never look where it does?",
   "trap": "Rover photos show only dry red ground, so no snow.",
   "keywords": [
     "snow",

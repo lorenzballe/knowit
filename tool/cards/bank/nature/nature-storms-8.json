@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Satellites and aircraft now spot them. A storm that lived a day over open ocean in 1900 entered the record only if a ship happened to cross it. Landsea and colleagues found that storms lasting longer than two days show little rise over the same century. The brief ones blew and died unwatched.",
   "move": "Before trusting a rising count, ask whether the counting got better.",
+  "ask": "Before I trust a rising count, have I asked whether the counting got better?",
   "trap": "Reading a longer list as a warmer ocean rather than sharper eyes.",
   "keywords": [
     "tropical storms",

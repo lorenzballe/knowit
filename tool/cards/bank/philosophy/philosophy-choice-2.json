@@ -9,6 +9,7 @@
   "question": "What room for free will did Benjamin Libet keep after his own experiments seemed to rule it out?",
   "answer": "A veto. In Libet's 1983 study the brain's build-up began about 550 milliseconds before a flick of the wrist; people reported deciding only about 200 milliseconds before it. Libet argued that the conscious mind, too late to start the act, was still in time to cancel it in the final tenth of a second.",
   "move": "Where you cannot start something, look for the point where you can still stop it.",
+  "ask": "I can't control when an urge starts, but can I still choose whether to act on it?",
   "keywords": [
     "benjamin libet",
     "readiness potential",
@@ -25,6 +26,35 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "diagram": {
+    "type": "timeline",
+    "from": -600,
+    "to": 0,
+    "unit": "ms",
+    "events": [
+      {
+        "at": -550,
+        "label": "brain's build-up begins"
+      },
+      {
+        "at": -200,
+        "label": "felt decision"
+      },
+      {
+        "at": 0,
+        "label": "wrist flicks",
+        "hi": true
+      }
+    ],
+    "spans": [
+      {
+        "from": -100,
+        "to": 0,
+        "label": "veto window"
+      }
+    ],
+    "caption": "The brain starts 350 ms before the felt decision, leaving the mind only a late veto."
+  },
   "source": "Libet, Journal of Consciousness Studies, 1999",
   "source_kind": "paper",
   "reference": "Libet, Do We Have Free Will?, Journal of Consciousness Studies 6 (8-9), 1999",

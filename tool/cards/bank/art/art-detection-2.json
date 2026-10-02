@@ -41,5 +41,6 @@
   "source": "Keisch et al., Science, 1967",
   "source_kind": "paper",
   "reference": "doi:10.1126/science.155.3767.1238",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

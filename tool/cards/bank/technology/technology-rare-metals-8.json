@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Bankrupt within about four years. Prices rose several-fold in 2011, and Molycorp spent over a billion dollars rebuilding its Mountain Pass mine in California. Then Chinese exports recovered, manufacturers designed out some rare earths, and prices sank. Molycorp filed for bankruptcy in June 2015, owing about $1.7 billion.",
   "move": "Plan for the price after the panic, not the price during it.",
+  "ask": "Am I planning for the price in a panic, or the price after it?",
   "trap": "Treating record prices as the new level to plan around.",
   "keywords": [
     "molycorp",

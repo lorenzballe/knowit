@@ -9,6 +9,7 @@
   "question": "What is the heaviest object yet shown to spread across two paths at once, like a wave?",
   "answer": "A cluster of over 7,000 sodium atoms. In 2026 a Vienna team sent such clusters, 8 nm wide and heavier than most proteins, through gratings and saw them interfere like waves, each one spread over 133 nm. It took ultra-high vacuum, since one stray gas molecule would betray a cluster's path.",
   "move": "What looks like a limit of size may be a limit of isolation.",
+  "ask": "Which limit do I accept as size when it may just be a lack of quiet and isolation?",
   "keywords": [
     "matter waves",
     "superposition",

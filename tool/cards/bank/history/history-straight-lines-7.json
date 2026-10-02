@@ -35,5 +35,6 @@
   "source": "US Supreme Court, New Mexico v. Colorado, 1925",
   "source_kind": "primary_document",
   "reference": "New Mexico v. Colorado, 267 U.S. 30, 1925",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

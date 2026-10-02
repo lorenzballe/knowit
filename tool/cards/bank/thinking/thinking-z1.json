@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "In 40,000 claims, 100 are fraud and the flag catches most — say 80. But 2% of 40,000 is 800 flags. Eighty real against 800 raised: roughly one flagged claim in ten is fraud, and nine honest people get a letter.",
   "move": "A flag on a rare thing is mostly a flag on an ordinary one.",
+  "ask": "Which alert in my life, a warning or a flag, fires so often on ordinary things that I have stopped asking what it really means?",
   "trap": "The flag feels like an accusation, so it feels like evidence.",
   "keywords": [
     "base rate",

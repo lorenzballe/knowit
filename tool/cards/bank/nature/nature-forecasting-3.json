@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Some rain at any given spot. The US National Weather Service defines it as the chance that at least 0.25 mm falls at a point in the area during the period. Surveying five cities from New York to Athens, Gigerenzer and colleagues found the same number read as hours, area or days.",
   "move": "Before trusting a percentage, ask what it is a percentage of.",
+  "ask": "Before I trust a percentage someone quotes, do I know what it is a percentage of?",
   "trap": "Reading the figure as a share of the day's hours.",
   "keywords": [
     "probability of precipitation",

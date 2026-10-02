@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Unlike most cells, the stem cells that make sperm keep telomerase active, and sperm telomeres lengthen as men age. Each extra year of a father's age adds measurably to his child's telomere length, in several populations. The effect carries on: grandchildren whose paternal grandfathers were older fathers show it too.",
   "move": "Ageing wears most things down; check which parts it builds up.",
+  "ask": "What in my life gets stronger with age instead of wearing down?",
   "trap": "Old father, old cells: assuming age only shortens what is passed on.",
   "keywords": [
     "paternal age",

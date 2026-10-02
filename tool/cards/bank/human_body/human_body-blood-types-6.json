@@ -12,6 +12,7 @@
   "question": "Why does a person with group O blood carry antibodies against A and B cells they have never met?",
   "answer": "Because they have met look-alikes. Gut bacteria carry sugars shaped much like the A and B antigens, and the immune system answers them: newborns have almost none of these antibodies, which build up over the first months. In 1969 Springer and Horton had people swallow a bacterium bearing B-like sugars, and their anti-B rose.",
   "move": "When a defence exists before the threat, look for a rehearsal somewhere else.",
+  "ask": "What protection do I already have from a danger I have never met?",
   "keywords": [
     "blood groups",
     "antibodies",

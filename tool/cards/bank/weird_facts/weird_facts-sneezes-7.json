@@ -9,6 +9,7 @@
   "question": "How far can the droplets of an uncovered sneeze travel indoors, and why so far?",
   "answer": "Up to 7 or 8 metres. Filming with high-speed cameras, Lydia Bourouiba's laboratory at MIT showed that a sneeze is a turbulent puff of warm, moist gas carrying droplets of every size inside it, keeping them aloft long after their weight alone would have dropped them. The two-metre rule assumed each droplet flew alone.",
   "move": "Check whether a thing travels alone or rides inside something larger.",
+  "ask": "What do I treat as a small, contained thing that actually travels much farther than I think?",
   "keywords": [
     "sneeze",
     "droplets",

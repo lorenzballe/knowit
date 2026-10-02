@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "Not much more than 70%. Combining forecasts sharpens the odds only when their errors are independent. Two services reading the same satellites through similar models share their mistakes, so their agreement is close to one forecast repeated. The 91% would need them to be wrong for different reasons.",
   "move": "Agreement counts only as often as the sources could have disagreed.",
+  "ask": "When several sources agree with me, do they actually know different things, or all share one origin?",
   "trap": "Treating two agreeing sources as two separate pieces of evidence.",
   "keywords": [
     "weather forecasts",

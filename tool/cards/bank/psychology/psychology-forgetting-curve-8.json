@@ -12,6 +12,7 @@
   "tolerance": 1,
   "answer": "56 / 75 ≈ 75%.",
   "move": "Ask when the loss happened, not only how large it grew.",
+  "ask": "When did most of my loss happen: right at the start, or slowly over time?",
   "trap": "Comparing 44 with 25 and concluding most of the loss came later.",
   "hint": "Savings start near 100% at the moment the list is mastered.",
   "steps": [

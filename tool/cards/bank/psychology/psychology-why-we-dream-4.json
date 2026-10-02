@@ -17,6 +17,7 @@
   "correct": 1,
   "answer": "False. Since David Foulkes's studies in 1962, sleepers woken from non-REM sleep have regularly reported dreams, usually shorter, vaguer and more thought-like than REM dreams, but dreams all the same. Any theory that explains dreaming purely as REM machinery at work has to account for the dreams REM leaves out.",
   "move": "Where something happens most is not the only place it happens.",
+  "ask": "Where else might something happen that I only credit to its most famous place?",
   "trap": "Learning that REM is the dreaming stage, and reading it as the only one.",
   "keywords": [
     "non-rem sleep",

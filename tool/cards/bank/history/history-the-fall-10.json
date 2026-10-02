@@ -9,6 +9,7 @@
   "question": "When Odoacer's soldiers were given a third of Italy in 476, a third of what?",
   "answer": "Historians disagree. Procopius says the soldiers demanded a third of the land. In 1980 Walter Goffart argued that such settlements handed over a third of the tax due from estates, not the fields, which would explain why Italy's Roman landowners stayed rich. Critics reply that the texts speak of land. The ledger is still open.",
   "move": "When a source gives a share, ask what it is a share of.",
+  "ask": "When someone quotes me a share, do I ask what it is a share of?",
   "keywords": [
     "odoacer",
     "hospitalitas",

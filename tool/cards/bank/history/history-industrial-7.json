@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Military records show average height of native-born American men falling by a couple of centimetres across those cohorts, while income per head grew. John Komlos points to what income leaves out: dearer food as farm goods went to distant markets, and crowded towns full of infection. City children paid in stature.",
   "move": "When two measures of welfare part ways, ask what each one leaves out.",
+  "ask": "Which measure of how I am doing leaves out something that matters?",
   "trap": "Taking rising income per head as a measure of how well people lived.",
   "keywords": [
     "heights",

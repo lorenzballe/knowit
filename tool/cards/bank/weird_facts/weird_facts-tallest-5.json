@@ -39,5 +39,6 @@
   "source": "Hydrostatic pressure, density × g × height",
   "source_kind": "arithmetic",
   "reference": "Tyree & Zimmermann, Xylem Structure and the Ascent of Sap, Springer, 2002",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

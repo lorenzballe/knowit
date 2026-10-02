@@ -29,5 +29,6 @@
   "source": "Miller et al., NEJM, 1976",
   "source_kind": "paper",
   "reference": "Miller, Mason, Clyde & McGinniss, The resistance factor to Plasmodium vivax in blacks: the Duffy-blood-group genotype, FyFy, New England Journal of Medicine, 1976",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

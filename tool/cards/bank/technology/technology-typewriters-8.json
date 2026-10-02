@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Hand-set printing, above all in the 19th century, often put a wider space after a full stop than between words. Typing manuals copied that habit with the only unit a typewriter had, one fixed character width, so the wide gap became two keystrokes. The typewriter did not invent the gap; it made it countable.",
   "move": "Before accepting a tidy origin story, look at what came before it.",
+  "ask": "Which tidy origin story do I accept without looking at what came before it?",
   "trap": "Crediting fixed-width letters, a neat reason that nobody checks against print.",
   "keywords": [
     "sentence spacing",

@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. In 2017 Dundas and colleagues showed that the streaks, called recurring slope lineae, stop at the same angle at which dry sand stops sliding on Martian dunes, and appear only on slopes steep enough for dry grains to flow. Most researchers now read them as dry sand flows, with little or no water.",
   "move": "The claim you heard loudest is not always the claim still standing.",
+  "ask": "Which claim I heard loudest is no longer standing, and have I updated?",
   "trap": "Remembering the 2015 headlines, not the quieter 2017 correction.",
   "keywords": [
     "recurring slope lineae",

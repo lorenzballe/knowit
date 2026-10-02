@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Cellulose nitrate releases oxygen as it decomposes, so smothering does not stop it; once alight, a roll can burn even submerged, giving off toxic nitrous gases. That is why archives keep nitrate in small, fire-rated vault cells, so a fire in one cannot reach the others.",
   "move": "Before choosing how to put out a fire, ask what it is feeding on.",
+  "ask": "Before I try to fix a problem, do I know what is feeding it?",
   "trap": "Fire needs air, so water should always put it out.",
   "keywords": [
     "nitrate film",

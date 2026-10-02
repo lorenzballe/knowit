@@ -36,8 +36,25 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "m²",
+    "items": [
+      {
+        "label": "The oil as one drop",
+        "value": 0.00253
+      },
+      {
+        "label": "As 10 µm droplets",
+        "value": 7.2,
+        "hi": true
+      }
+    ],
+    "caption": "As one drop, 12 ml of oil has 25 cm² of surface; as 10 µm droplets, 7.2 m²."
+  },
   "source": "McClements, Food Emulsions, 2015",
   "source_kind": "book",
   "reference": "McClements, Food Emulsions: Principles, Practices, and Techniques, 3rd edition, CRC Press, 2015",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

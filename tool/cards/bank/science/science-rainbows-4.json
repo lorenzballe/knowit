@@ -9,6 +9,7 @@
   "question": "What do the faint pastel stripes just inside some rainbows reveal about light?",
   "answer": "That it travels as a wave. Rays taking different paths through a drop leave at the same angle and interfere, adding up in some directions and cancelling in others. Straight-line ray optics cannot make these bands; Thomas Young cited them in 1804 as evidence for waves. They need small drops of even size.",
   "move": "The faintest detail is often the one the old theory cannot explain.",
+  "ask": "What small detail does my usual explanation fail to cover?",
   "keywords": [
     "supernumerary bows",
     "thomas young",

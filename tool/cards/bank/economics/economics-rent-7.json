@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Asquith, Mast and Reed studied large new buildings in low-income areas of American cities and found nearby rents fell by about 6% against those slightly farther away. The new flats absorbed demand that would have bid up the old. Developers build where rents are already climbing, which is why the two look linked.",
   "move": "Check whether the thing blamed simply goes where the trouble already is.",
+  "ask": "Is the thing I blame simply showing up where trouble already was?",
   "trap": "Seeing cranes arrive where rents rise and reading it as cause.",
   "keywords": [
     "new construction",

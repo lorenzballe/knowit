@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Only a couple of decibels. Outdoors, sound falls about 6 dB per doubling of distance, but in a hall most of what reaches a seat is reverberation, sound bounced round the room, filling it evenly. A few metres from the stage, reflected sound already outweighs direct sound, so the level barely changes. Clarity does.",
   "move": "A rule measured in the open may not survive four walls.",
+  "ask": "Which rule of thumb that worked in one place am I using somewhere it may not fit?",
   "trap": "The textbook rule of 6 dB per doubling, made for open air.",
   "keywords": [
     "inverse square law",

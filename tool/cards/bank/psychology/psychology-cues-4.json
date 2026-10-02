@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 4 percentage points. In Milkman and colleagues' study, about 33% of employees who got only the reminder were vaccinated, against about 37% of those prompted to note a date and time. Tying the act to a moment on the calendar helped, but most of those 37% would have gone anyway.",
   "move": "Most of what follows a nudge would have happened without it.",
+  "ask": "Which good result am I crediting to a nudge that would have happened anyway?",
   "trap": "Crediting the plan with everyone who got the jab afterwards.",
   "keywords": [
     "implementation intentions",
@@ -31,7 +32,23 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 33,
+        "label": "would have gone anyway"
+      },
+      {
+        "n": 4,
+        "label": "added by writing a date",
+        "hi": true
+      }
+    ],
+    "caption": "Of 37 in 100 vaccinated, 33 would have gone anyway; writing a date added 4."
+  },
   "source": "Milkman et al., PNAS, 2011",
   "source_kind": "paper",
   "reference": "Milkman, Beshears, Choi, Laibson & Madrian, Using implementation intentions prompts to enhance influenza vaccination rates, Proceedings of the National Academy of Sciences, 2011",

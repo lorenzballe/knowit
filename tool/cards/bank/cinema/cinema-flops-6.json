@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True, on paper. A 2010 profit statement for the 2007 film showed it about $167 million in the red. Distribution fees, advertising and interest, much of it paid to Warner Bros. and its own affiliates, were deducted before any net profit. Anyone paid a share of net profits got nothing from a near-billion-dollar hit.",
   "move": "Ask who writes the costs before trusting the bottom line.",
+  "ask": "Before I trust a bottom line, do I know who decided what counts as a cost?",
   "trap": "Reading a near-billion-dollar gross as proof the books show a profit.",
   "keywords": [
     "hollywood accounting",

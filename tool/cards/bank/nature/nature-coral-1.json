@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About 97%, on average. Pooling measurements from reefs worldwide, Ferrario and colleagues found the reef crest alone, the shallow ridge where waves break, removes 86%; the flats behind it take most of the rest. A healthy crest is a breakwater that repairs itself; a dead one erodes and lets the sea through.",
   "move": "Before removing a natural barrier, price the wall you would need instead.",
+  "ask": "Which free protection around me would cost a fortune to replace if I removed it?",
   "trap": "About 30%, since a low, half-drowned reef looks too flimsy to matter.",
   "keywords": [
     "coral reefs",

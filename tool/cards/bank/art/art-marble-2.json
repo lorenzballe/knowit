@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Light enters the stone before scattering back. Calcite crystals are slightly translucent, so light travels a short way inside before it re-emerges, softening shadows as skin does. Plaster and opaque stones return it from the surface and look chalky. Computer graphics had to model the same effect before rendered faces stopped looking like plastic.",
   "move": "A surface often looks the way it does because of what lies just beneath.",
+  "ask": "Why does something look the way it does, and what lies just beneath the surface?",
   "trap": "Crediting the polish, the part of the finish the eye notices first.",
   "keywords": [
     "carrara marble",

@@ -9,6 +9,7 @@
   "question": "What missing ingredient made early computer animation look stuttering and fake beside live action?",
   "answer": "Motion blur. A film camera's shutter is open for about half of each frame, so anything moving smears slightly; early renderers drew every frame as a frozen, perfectly sharp instant. In 1984 Cook, Porter and Carpenter at Lucasfilm showed how to render blur by sampling across the exposure. The eye reads the smear as speed.",
   "move": "A copy looks false when it is more perfect than the original.",
+  "ask": "What in my life looks fake because it is too perfect?",
   "keywords": [
     "motion blur",
     "rendering",

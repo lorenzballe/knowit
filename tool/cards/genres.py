@@ -1,6 +1,6 @@
 """The genres and their strands, read off the app's own list.
 
-`lib/data/genres.dart` is the one place the tree lives: eighteen subjects,
+`lib/data/genres.dart` is the one place the tree lives: nineteen subjects,
 six genres each, three strands under every genre, the names a reader would
 give for what they want to read about. This reads that file rather than
 copying it, so a strand renamed in the app is renamed here in the same

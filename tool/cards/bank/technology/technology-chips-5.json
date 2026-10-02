@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. On TSMC's 3 nm process the gates sit about 45 to 48 nm apart, and no feature of the transistor layout measures 3 nm. Since the late 1990s the node name has been a generation label, shrunk by about 0.7 each step to signal twice the density, not a ruler.",
   "move": "A number in a product's name is marketing until a spec sheet confirms it.",
+  "ask": "Which number in a product's name am I treating as a measurement when it is just a label?",
   "trap": "Taking the number in the name as a measurement.",
   "keywords": [
     "process nodes",

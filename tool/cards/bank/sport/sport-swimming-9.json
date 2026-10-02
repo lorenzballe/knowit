@@ -35,8 +35,25 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "bars",
+    "unit": "points",
+    "items": [
+      {
+        "label": "At base time",
+        "value": 1000
+      },
+      {
+        "label": "10% slower",
+        "value": 751,
+        "hi": true
+      }
+    ],
+    "caption": "Cubing turns a 10% gap in time into a 25% gap in points."
+  },
   "source": "World Aquatics Points Table",
   "source_kind": "standard",
   "reference": "World Aquatics, Points Table: calculation of World Aquatics points, 2024",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

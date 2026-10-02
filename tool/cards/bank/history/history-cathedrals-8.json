@@ -18,6 +18,7 @@
   "correct": 2,
   "answer": "Abandoned in 1357, its walls left standing. The plague of 1348 had taken much of Siena's workforce and wealth, and the new work had shown structural faults. The city stopped, pulled down unsafe parts and kept its old cathedral. The unfinished façade wall, the facciatone, still stands beside it, open to the sky.",
   "move": "What is already built is not a reason to build the rest.",
+  "ask": "What am I finishing only because I have already started it?",
   "trap": "Assuming a city that had spent so much would finish the job.",
   "keywords": [
     "siena cathedral",

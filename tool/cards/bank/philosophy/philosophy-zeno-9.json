@@ -41,5 +41,6 @@
   "source": "Lee & Seshia, Introduction to Embedded Systems",
   "source_kind": "book",
   "reference": "Lee & Seshia, Introduction to Embedded Systems: A Cyber-Physical Systems Approach, 2nd ed., MIT Press, 2017",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

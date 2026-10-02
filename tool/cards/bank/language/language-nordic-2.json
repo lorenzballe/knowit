@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "A 1933 novel. In A Fugitive Crosses His Tracks, Aksel Sandemose invented Jante, a small town modelled on his birthplace, Nykøbing Mors, and gave it ten commandments, the first being that you are not to think you are anything. A satirist's list became the region's shorthand for its own conformity.",
   "move": "A saying that sounds like ancient law may be a novelist's joke.",
+  "ask": "Which ancient-sounding rule do I obey that might be only someone's joke?",
   "trap": "The word law suggests a statute, so a medieval code sounds right.",
   "keywords": [
     "law of jante",

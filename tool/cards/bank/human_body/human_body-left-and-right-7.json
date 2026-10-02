@@ -15,6 +15,7 @@
   "unit": "%",
   "answer": "0.81 + 0.01 = 0.82, so 82%.",
   "move": "Before admiring how often two things agree, work out how often strangers would.",
+  "ask": "Before I admire how often two things agree, how often would strangers agree?",
   "trap": "Reading 80% agreement between twins as strong evidence for genes.",
   "hint": "Add the chance both are right-handed to the chance both are left-handed.",
   "steps": [
@@ -39,6 +40,44 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "tree",
+    "n": 100,
+    "label": "pairs of strangers",
+    "branches": [
+      {
+        "n": 90,
+        "label": "first: right hand",
+        "branches": [
+          {
+            "n": 81,
+            "label": "both right",
+            "hi": true
+          },
+          {
+            "n": 9,
+            "label": "one of each"
+          }
+        ]
+      },
+      {
+        "n": 10,
+        "label": "first: left hand",
+        "branches": [
+          {
+            "n": 1,
+            "label": "both left",
+            "hi": true
+          },
+          {
+            "n": 9,
+            "label": "one of each"
+          }
+        ]
+      }
+    ],
+    "caption": "81 + 1 = 82 in 100 stranger pairs share handedness, more than identical twins' 80."
+  },
   "source": "Pfeifer et al., BMC Psychology, 2022",
   "source_kind": "paper",
   "reference": "doi:10.1186/s40359-021-00695-3",

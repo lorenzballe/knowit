@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "Experienced judges gave longer sentences after a high roll than a low one, knowing the number came from dice. Expertise does not remove the anchor; it makes people more certain they were not anchored.",
   "move": "Whoever names a figure first has already moved the room, expert or not.",
+  "ask": "Which figure floated before a decision of mine was irrelevant, and did it still move me?",
   "trap": "Assuming expertise protects against an irrelevant number.",
   "keywords": [
     "anchoring",

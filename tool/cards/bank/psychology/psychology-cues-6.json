@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Rats do it, and a 2009 human study reported it after three days of training. De Wit and colleagues then tried five times to induce it in people, with longer training and varied designs; none worked. Failures like these rarely reach print, so a lone success can stand for years.",
   "move": "Ask how many attempts failed quietly before trusting the one that worked.",
+  "ask": "How many quiet failures sit behind the one success story I am relying on?",
   "trap": "True, since the rat result and one human study seem to settle it.",
   "keywords": [
     "habit induction",

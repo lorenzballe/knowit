@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Thomas Sargent showed that the central bank's money kept rising steeply for months after prices steadied. What changed was belief: the Reichsbank stopped lending to the government and the budget was cut, so people trusted the new money and wanted to hold it again. Cash that had been spent instantly now sat in wallets.",
   "move": "A promise about tomorrow can matter more than the quantity today.",
+  "ask": "What do I expect about tomorrow that matters more than what I have today?",
   "trap": "Assuming inflation stops only when the presses stop.",
   "keywords": [
     "weimar germany",

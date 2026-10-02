@@ -36,5 +36,6 @@
   "source": "Backus et al., Western Joint Computer Conference, 1957",
   "source_kind": "paper",
   "reference": "Backus et al., The FORTRAN Automatic Coding System, Proceedings of the Western Joint Computer Conference, 1957",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

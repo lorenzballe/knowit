@@ -9,6 +9,7 @@
   "question": "How did researchers in Idaho in 2017 finally show that seeding clouds had made snow fall?",
   "answer": "By making the snow carry a signature. An aircraft laid silver iodide across winter clouds in lines back and forth across the wind, and radar then showed matching lines of snow drifting downwind, a pattern no natural storm draws. Seven decades of seeding trials had failed to separate seeded snow from ordinary snow.",
   "move": "When no control is possible, make the effect sign its own name.",
+  "ask": "When I cannot run a fair test, how else could I show that my change caused the effect?",
   "keywords": [
     "cloud seeding",
     "silver iodide",

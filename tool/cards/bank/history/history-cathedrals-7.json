@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Yes, if its proportions are kept. Doubling the size doubles the stress, but in a cathedral stress is a small fraction of what stone can bear, so crushing never decides. What decides is whether the line of thrust stays inside the masonry, which depends on shape alone. That is why medieval rules of proportion worked.",
   "move": "Ask whether size or shape decides failure before scaling anything up.",
+  "ask": "What works for me small that I assume will still work when I double it?",
   "trap": "Reasoning that bigger structures always fail under their own weight.",
   "keywords": [
     "masonry arches",

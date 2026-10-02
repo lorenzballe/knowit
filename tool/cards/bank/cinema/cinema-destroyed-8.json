@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "A brown, acrid powder. Nitrate decays in stages with no fire at all: the image fades and yellows, the emulsion turns sticky and blisters, the reel welds into one solid block, and at last it crumbles to dust. Warmth and damp speed every stage. Many lost films ended as powder in their cans.",
   "move": "The dramatic danger is rarely the one that does most of the damage.",
+  "ask": "Which quiet, slow danger am I ignoring while I watch the dramatic one?",
   "trap": "Treating fire as nitrate’s only danger, so an unburnt reel must be safe.",
   "keywords": [
     "nitrate decomposition",

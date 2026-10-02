@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Kelber, Balkenius and Warrant trained elephant hawkmoths to find sugar at blue or yellow targets, then dimmed the light: the moths still picked the right colour at starlight levels, where human eyes see only grey. Their eyes pool light from many facets onto each receptor, buying the sensitivity that colour vision needs.",
   "move": "Your own limits are a sample of one, not a law.",
+  "ask": "Which limit of mine am I assuming applies to everyone else too?",
   "trap": "False, assuming every eye goes grey in the dark, as ours do.",
   "keywords": [
     "elephant hawkmoth",

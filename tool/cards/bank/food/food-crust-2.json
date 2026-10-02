@@ -9,6 +9,7 @@
   "question": "Why do bakers flood the oven with steam during the first minutes of a bake?",
   "answer": "To keep the crust from forming too soon. Steam condenses on the cool dough, keeping its skin wet and stretchy so the loaf can expand fully. The wet surface starch also swells into a thin film that bakes glassy. Without steam, a loaf comes out dull, thick-skinned and torn at the sides.",
   "move": "Delay the step that locks everything in until the growth is done.",
+  "ask": "What am I locking in too early, before it has had time to grow?",
   "keywords": [
     "steam injection",
     "oven spring",

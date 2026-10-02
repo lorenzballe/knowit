@@ -11,6 +11,7 @@
   "unit": "doublings",
   "answer": "Four more: 1 million x 16 = 16 million, so 24 doublings in all.",
   "move": "Doubling needs far fewer steps than intuition expects.",
+  "ask": "Where could doubling something small a few times change my life more than I expect?",
   "trap": "Guessing hundreds of generations, far more than 1,000 years allow.",
   "hint": "The lineage is linked to Genghis Khan's family. Count the doublings to a thousand, then to a million.",
   "steps": [

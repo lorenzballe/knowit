@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About 1.3 million. The Global Research on Antimicrobial Resistance study estimated 1.27 million deaths directly attributable to resistance in 2019, and 4.95 million in which a resistant infection played a part. The much-quoted 10 million is a 2014 projection for 2050, not a count. Even so, resistance already killed more people than HIV or malaria.",
   "move": "Before repeating a big number, check whether it is a count or a forecast.",
+  "ask": "Before I repeat a big number, do I know if it is a count or a forecast?",
   "trap": "Recalling the famous 10 million, a forecast for 2050, as today's toll.",
   "keywords": [
     "antimicrobial resistance",

@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The figure compared sales per employee in August 2019, the trial month, with August 2018. No group stayed on five days, so a whole year of other changes sits inside the comparison. One month against the same month a year earlier measures a year, not a policy.",
   "move": "Ask what a change was compared with before believing its size.",
+  "ask": "What was a big number I quoted last compared with?",
   "trap": "Assuming a headline productivity figure came from a controlled comparison.",
   "keywords": [
     "microsoft japan",

@@ -18,6 +18,7 @@
   "correct": 0,
   "answer": "It fell, as piece rates were cut. More shirts per hour meant more shirts on the market and more women able to make them, so merchants lowered the rate for each. Outworkers often bought their machines on instalments, carrying the debt themselves. By the 1880s London's clothing outwork was Parliament's model case of sweated labour.",
   "move": "A faster tool pays whoever controls the price of the work.",
+  "ask": "When a tool makes my work faster, who ends up keeping the saving?",
   "trap": "Assuming the gain from a faster tool goes to its user.",
   "keywords": [
     "sewing machine",

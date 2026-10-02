@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "More than half: about 57%, by Textile Exchange's count, against roughly a fifth for cotton. Polyester is cheap, strong and made from oil at any scale, and its share has climbed for decades. Most fleece, sportswear and stretch blends depend on it. A wardrobe that looks like cotton is often mostly plastic.",
   "move": "Check the label before trusting the fibre your hand expects.",
+  "ask": "Do I know what my clothes are really made of, and where that comes from?",
   "trap": "Cotton is the fibre everyone pictures, so it seems to dominate.",
   "keywords": [
     "polyester",
@@ -32,6 +33,26 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Polyester",
+        "value": 57,
+        "hi": true
+      },
+      {
+        "label": "Cotton",
+        "value": 20
+      },
+      {
+        "label": "Everything else",
+        "value": 23
+      }
+    ],
+    "caption": "In 2023 the world made nearly three times as much new polyester as cotton."
+  },
   "source": "Textile Exchange, Materials Market Report 2024",
   "source_kind": "statistics",
   "reference": "Textile Exchange, Materials Market Report, 2024",

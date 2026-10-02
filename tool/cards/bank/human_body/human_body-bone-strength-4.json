@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Studies put the share of fractures in women whose scans fall short of the osteoporosis threshold at between about half and four in five. Far more women have moderately low density than very low, so even at lower individual risk the larger group produces most breaks: the many with modest risk outnumber the few.",
   "move": "Count how many people are in each group before blaming the riskiest.",
+  "ask": "Am I worrying about the scariest group when most cases are in the ordinary one?",
   "trap": "Assuming the highest-risk group must supply most of the cases.",
   "keywords": [
     "osteoporosis",

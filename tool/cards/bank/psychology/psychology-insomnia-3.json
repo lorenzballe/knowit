@@ -9,6 +9,7 @@
   "question": "When people with insomnia sleep in a laboratory, how does the recording compare with their own account?",
   "answer": "It usually shows more sleep than they report. Many people with insomnia overestimate how long they took to fall asleep and how long they lay awake, and underestimate their total sleep, compared with brain recordings. The gap is part of the disorder: a night that felt sleepless can show hours of recorded sleep.",
   "move": "Measure before trusting a feeling about how much of something happened.",
+  "ask": "Which of my feelings about how much I do or sleep have I never actually measured?",
   "keywords": [
     "sleep misperception",
     "paradoxical insomnia",

@@ -34,5 +34,6 @@
   "source": "Siegman, Lasers, 1986",
   "source_kind": "book",
   "reference": "Siegman, Lasers, University Science Books, 1986",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

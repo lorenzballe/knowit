@@ -36,5 +36,6 @@
   "source": "Swimming World Magazine",
   "source_kind": "news_archive",
   "reference": "https://www.swimmingworldmagazine.com/news/eight-years-later-the-super-suit-era-still-plagues-the-record-books/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

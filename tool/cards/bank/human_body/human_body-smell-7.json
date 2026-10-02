@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Israeli researchers found two left-handed women whose scans showed no bulbs, yet who scored normally on every smell test; a public brain-scan database held more, about 4% of its left-handed women. Missing bulbs had seemed to mean anosmia because the people whose bulbs get scanned are those who cannot smell.",
   "move": "If you only look where things go wrong, everything you find looks broken.",
+  "ask": "If I only look where things go wrong, do I assume everything is broken?",
   "trap": "Every known case without bulbs had lost the sense of smell.",
   "keywords": [
     "olfactory bulb",

@@ -11,6 +11,7 @@
   "unit": "per cent",
   "answer": "80 / (80 + 45) = 64%.",
   "move": "Finding what is there is not the same as what is found being there.",
+  "ask": "Which 'positive result' in my life do I trust without asking how rare the real thing is?",
   "trap": "Reading the 80% detection rate as a finding's chance of being true.",
   "hint": "Imagine 1,000 hypotheses and count the true and the false among the positives.",
   "steps": [
@@ -35,6 +36,44 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "tree",
+    "n": 1000,
+    "label": "hypotheses tested",
+    "branches": [
+      {
+        "n": 100,
+        "label": "true",
+        "branches": [
+          {
+            "n": 80,
+            "label": "found",
+            "hi": true
+          },
+          {
+            "n": 20,
+            "label": "missed"
+          }
+        ]
+      },
+      {
+        "n": 900,
+        "label": "false",
+        "branches": [
+          {
+            "n": 45,
+            "label": "false alarms",
+            "hi": true
+          },
+          {
+            "n": 855,
+            "label": "rejected"
+          }
+        ]
+      }
+    ],
+    "caption": "Of 125 positive findings, 45 are false alarms: only 64% are true."
+  },
   "source": "Ioannidis, PLoS Medicine, 2005",
   "source_kind": "paper",
   "reference": "doi:10.1371/journal.pmed.0020124",

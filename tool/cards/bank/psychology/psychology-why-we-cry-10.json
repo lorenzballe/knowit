@@ -12,6 +12,7 @@
   "withinFactor": 3,
   "answer": "84 + 53 ≈ 140 hours.",
   "move": "A small daily amount, multiplied by weeks, becomes a burden nobody pictured.",
+  "ask": "What small daily burden of mine adds up to weeks that nobody pictured?",
   "trap": "Counting only the loud episodes and forgetting the long stretches of fussing.",
   "hint": "Take a daily figure for the early weeks and a lower one for the later weeks.",
   "steps": [

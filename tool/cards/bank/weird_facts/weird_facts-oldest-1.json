@@ -9,6 +9,7 @@
   "question": "How did researchers learn that a clam dredged off Iceland was the oldest individual animal ever precisely aged?",
   "answer": "By sectioning its shell and counting growth lines, which only works on a dead clam. The ocean quahog, dredged in 2006, had been frozen on board as routine. A first count of the hinge said about 405 years; a recount in 2013 said 507. It hatched before Henry VIII took the throne.",
   "move": "Some measurements can only be taken once, so decide what is worth it.",
+  "ask": "What can I only measure once, and is it worth the price?",
   "keywords": [
     "ocean quahog",
     "arctica islandica",

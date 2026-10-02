@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About twice as much. For smooth flow through a tube, Poiseuille's law makes flow rise with the fourth power of the radius: 1.19 x 1.19 x 1.19 x 1.19 ≈ 2. So the body steers blood with its smallest arteries: narrowing them by a sixth halves an organ's supply.",
   "move": "When a size is multiplied by itself four times, small changes stop being small.",
+  "ask": "What small change in my habits could matter far more than it looks?",
   "trap": "Assuming flow grows in step with the width.",
   "keywords": [
     "poiseuille's law",
@@ -32,6 +33,125 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "change in radius, %",
+      "min": -17,
+      "max": 19
+    },
+    "y": {
+      "label": "flow, % of before",
+      "min": 0,
+      "max": 210
+    },
+    "series": [
+      {
+        "label": "if flow followed the radius",
+        "points": [
+          [
+            -16.7,
+            83.3
+          ],
+          [
+            -12,
+            88
+          ],
+          [
+            -8,
+            92
+          ],
+          [
+            -4,
+            96
+          ],
+          [
+            0,
+            100
+          ],
+          [
+            4,
+            104
+          ],
+          [
+            8,
+            108
+          ],
+          [
+            12,
+            112
+          ],
+          [
+            16,
+            116
+          ],
+          [
+            19,
+            119
+          ]
+        ]
+      },
+      {
+        "label": "radius to the fourth power",
+        "hi": true,
+        "points": [
+          [
+            -16.7,
+            48.1
+          ],
+          [
+            -12,
+            60.0
+          ],
+          [
+            -8,
+            71.6
+          ],
+          [
+            -4,
+            84.9
+          ],
+          [
+            0,
+            100.0
+          ],
+          [
+            4,
+            117.0
+          ],
+          [
+            8,
+            136.0
+          ],
+          [
+            12,
+            157.4
+          ],
+          [
+            16,
+            181.1
+          ],
+          [
+            19,
+            200.5
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 19,
+        "y": 200.5,
+        "label": "19% wider: twice the flow"
+      },
+      {
+        "x": -16.7,
+        "y": 48.1,
+        "label": "a sixth narrower: half"
+      }
+    ],
+    "caption": "Flow goes with the radius to the fourth power: 19% wider doubles it, a sixth narrower halves it."
+  },
   "source": "Klabunde, Cardiovascular Physiology Concepts, 2011",
   "source_kind": "book",
   "reference": "Klabunde, Cardiovascular Physiology Concepts, 2nd edition, Lippincott Williams & Wilkins, 2011",

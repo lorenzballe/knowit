@@ -9,6 +9,7 @@
   "question": "Does a placebo still work when the patient is told plainly that it is a sugar pill?",
   "answer": "In some trials, yes. In a 2010 Harvard study, 80 people with irritable bowel syndrome got nothing, or pills from a bottle labelled placebo. After three weeks, 59% of pill-takers reported adequate relief against 35% of the others. The twice-daily ritual did work once credited to deception.",
   "move": "Test whether the secret part of a ritual is the part that works.",
+  "ask": "Which ritual of mine has a secret part I could test to see whether it is what works?",
   "keywords": [
     "open-label placebo",
     "irritable bowel syndrome",

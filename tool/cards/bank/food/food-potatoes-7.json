@@ -9,6 +9,7 @@
   "question": "How did Andean people eat wild potatoes too bitter and toxic to eat plain?",
   "answer": "With a dip of clay. Wild potatoes carry far more glycoalkaloids, the bitter toxins of green potato skins, than modern ones. Aymara cooks served them with a slurry of edible clay, and Timothy Johns showed in the lab that such clays bind the toxins. Dinner came with its own antidote.",
   "move": "An odd custom that has lasted for centuries may be doing a hidden job.",
+  "ask": "What odd custom around me might be doing a hidden job?",
   "keywords": [
     "glycoalkaloids",
     "wild potatoes",

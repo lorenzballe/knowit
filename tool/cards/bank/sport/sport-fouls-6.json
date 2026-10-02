@@ -12,6 +12,7 @@
   "tolerance": 0.05,
   "answer": "Saving: 1.1 - 0.9 = 0.2 points per trip.",
   "move": "Price a deliberate sacrifice against the ordinary outcome it replaces.",
+  "ask": "When I accept a deliberate cost, have I compared it with what would happen otherwise?",
   "trap": "Reading 45% as nearly nothing and expecting a huge saving.",
   "hint": "Work out what two free throws are worth on average first.",
   "steps": [

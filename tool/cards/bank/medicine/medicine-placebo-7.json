@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Tuttle and colleagues found the rise only in US trials, where placebo groups improved steadily while drug groups stayed flat, shrinking the drugs' advantage. Trials elsewhere showed no such rise. US trials had grown larger and longer over those years, which points to how trials were run, not to more suggestible patients.",
   "move": "When a result drifts over time, check what changed in how it was measured.",
+  "ask": "When a result drifts over time, what changed in how it is measured?",
   "trap": "True, treating the placebo response as a fixed property of a pill.",
   "keywords": [
     "placebo response",

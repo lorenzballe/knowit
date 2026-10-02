@@ -11,6 +11,7 @@
   "unit": "milliseconds",
   "answer": "Round trip: 28 x 2 = 56 ms.",
   "move": "Distance sets a floor on delay that no upgrade can remove.",
+  "ask": "Which delay am I trying to speed up when a hard limit makes it impossible?",
   "trap": "Using light's speed in a vacuum and forgetting glass slows it.",
   "hint": "Work out the one-way time first, then add the time for the reply to come back.",
   "steps": [

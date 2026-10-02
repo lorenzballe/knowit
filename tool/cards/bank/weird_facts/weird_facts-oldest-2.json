@@ -9,6 +9,7 @@
   "question": "How old is the oldest seed ever to sprout into a living plant?",
   "answer": "About 2,000 years. A date palm seed from the excavations at Masada, radiocarbon-dated to between about 155 BC and 64 AD, was planted in 2005 and grew into a tree nicknamed Methuselah. Older plants have been regrown from frozen tissue in laboratories, but none sprouted from a seed on its own.",
   "move": "Read how a record was defined before comparing it with another.",
+  "ask": "Before I compare two records, did they use the same definition?",
   "keywords": [
     "judean date palm",
     "masada",

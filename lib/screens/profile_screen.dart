@@ -480,15 +480,20 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
           ),
-          // The archive: a week of it on the free plan, and the lock on
-          // everything before that, inside.
+          // The archive is Astute+ only: on the free plan it opens the
+          // paywall.
           _LinkRow(
             label: context.l10n.archive,
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (routeContext) => ArchiveScreen(
-                  app: app,
-                  onBack: () => Navigator.of(routeContext).pop(),
+            onTap: () => requirePlus(
+              context,
+              app,
+              source: 'archive',
+              () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (routeContext) => ArchiveScreen(
+                    app: app,
+                    onBack: () => Navigator.of(routeContext).pop(),
+                  ),
                 ),
               ),
             ),

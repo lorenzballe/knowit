@@ -18,6 +18,7 @@
   "correct": 2,
   "answer": "About two weeks. The atmosphere is chaotic: errors in the starting state far too small to measure grow exponentially, spreading from small scales to large until they swamp the forecast. Simulations by Fuqing Zhang's team in 2019 put the ceiling for mid-latitude weather near two weeks. Today's forecasts reach about ten days.",
   "move": "Exact rules give no forecast when small errors grow faster than knowledge.",
+  "ask": "Where am I trying to predict something that small errors make impossible to predict?",
   "trap": "Assuming exact laws mean better data buys an endless forecast.",
   "keywords": [
     "chaos",

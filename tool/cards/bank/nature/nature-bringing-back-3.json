@@ -9,6 +9,7 @@
   "question": "Why did US wildlife officials clone a black-footed ferret from cells frozen in 1988?",
   "answer": "To recover lost genes. Every black-footed ferret alive descends from seven animals bred after the species was found clinging on in Wyoming in the 1980s. Willa, a female whose cells were frozen, left no descendants; her clone Elizabeth Ann, born in 2020, carries variation missing from every living ferret. A freezer became a founder.",
   "move": "Before a population shrinks further, save what its survivors have lost.",
+  "ask": "What have I lost along the way that I should save before more slips away?",
   "keywords": [
     "black-footed ferret",
     "cloning",

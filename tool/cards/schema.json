@@ -13,7 +13,7 @@
       "description": "Topic key, a dash, then anything unique. Never reused, even for a retired card."
     },
     "topic": {
-      "enum": ["thinking", "space", "technology", "language", "nature", "economics", "pop_culture", "science", "history", "psychology", "weird_facts", "human_body", "philosophy", "sport", "cinema", "music", "art", "medicine", "food"]
+      "enum": ["thinking", "space", "technology", "language", "nature", "economics", "pop_culture", "science", "history", "psychology", "weird_facts", "human_body", "philosophy", "sport", "cinema", "music", "art", "medicine", "food", "life"]
     },
     "kind": {
       "enum": ["read", "pickOne", "number", "estimate", "debate"],
@@ -27,6 +27,7 @@
     "question": { "type": "string", "minLength": 1 },
     "answer": { "type": "string", "description": "The reveal. On a number or estimate card it is the last line of the steps." },
     "move": { "type": "string", "minLength": 1, "description": "The one line that survives the card." },
+    "ask": { "type": "string", "description": "The question the reader takes into their own day: the card turned on their life. One sentence ending in a question mark." },
     "trap": { "type": "string", "description": "The wrong answer most people reach for first, and why it feels right." },
     "hint": { "type": "string", "description": "A way in, without the number." },
     "steps": { "type": "array", "items": { "type": "string", "minLength": 1 }, "description": "The worked solution, one move per line." },
@@ -105,6 +106,11 @@
     "figure": {
       "enum": ["none", "dots", "nested_circles", "doubling", "bars", "timeline", "map"],
       "description": "The picture that would help, if one would, in the vocabulary tool/illustrations can draw."
+    },
+    "diagram": {
+      "type": "object",
+      "required": ["type"],
+      "description": "The picture itself, as data the app draws and animates in the card's colour: dots, bars, scale, area, split, line or timeline. Every number in it is one the card states or its steps work out. tool/cards/diagrams.py holds the rules for each kind."
     },
     "also": {
       "type": "array",

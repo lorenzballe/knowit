@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. About 70% of it is liquid oxygen. A car or a jet takes its oxygen from the air; a rocket must carry all of it, and kerosene engines burn about 2.3 to 2.7 kg of oxygen for every kilogram of fuel. The tank of kerosene is the smaller one.",
   "move": "Count what a machine must carry that others get for free.",
+  "ask": "What do I have to carry toward my goal that other people get for free?",
   "trap": "A car carries only fuel, so a rocket's tanks seem mostly fuel too.",
   "keywords": [
     "kerosene",

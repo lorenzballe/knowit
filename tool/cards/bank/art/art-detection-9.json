@@ -12,6 +12,7 @@
   "tolerance": 1,
   "answer": "19 fakes / 68 flagged ≈ 28 percent.",
   "move": "When the thing sought is rare, most alarms are false.",
+  "ask": "When the thing I am looking for is rare, how many of my alarms are false?",
   "trap": "Answering 95%, the share of fakes the test catches.",
   "hint": "Picture 1,000 lots and count the flagged fakes and flagged genuine works separately.",
   "steps": [
@@ -36,6 +37,44 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "tree",
+    "n": 1000,
+    "label": "lots at auction",
+    "branches": [
+      {
+        "n": 20,
+        "label": "fake",
+        "branches": [
+          {
+            "n": 19,
+            "label": "flagged",
+            "hi": true
+          },
+          {
+            "n": 1,
+            "label": "missed"
+          }
+        ]
+      },
+      {
+        "n": 980,
+        "label": "genuine",
+        "branches": [
+          {
+            "n": 49,
+            "label": "flagged anyway",
+            "hi": true
+          },
+          {
+            "n": 931,
+            "label": "cleared"
+          }
+        ]
+      }
+    ],
+    "caption": "Of 68 lots flagged, only 19 are fake: about 28 per cent."
+  },
   "source": "Gigerenzer & Hoffrage, Psychological Review, 1995",
   "source_kind": "paper",
   "reference": "Gerd Gigerenzer & Ulrich Hoffrage, How to improve Bayesian reasoning without instruction: frequency formats, Psychological Review, 1995",

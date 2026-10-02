@@ -9,6 +9,7 @@
   "question": "Why do the eyes of Arctic reindeer change colour between summer and winter?",
   "answer": "To gather more light in the polar night. The mirror behind the retina shines gold in summer and deep blue in winter: pupils held wide for months probably raise pressure in the eye, squeezing the mirror's collagen fibres closer, so it reflects bluer light and scatters more through the retina. Sensitivity rises; sharpness falls.",
   "move": "A trade-off can be reset by season rather than fixed for life.",
+  "ask": "Which of my trade-offs should change with the season instead of staying fixed?",
   "keywords": [
     "reindeer",
     "tapetum lucidum",

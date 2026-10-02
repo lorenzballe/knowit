@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "A small random sample would be fine. This one is not random: it excludes everyone who has stopped opening your email, which is exactly the unhappy. The size is not the problem — who is missing is.",
   "move": "The people who did not answer are the finding.",
+  "ask": "Whose opinion am I missing because they did not bother to reply, and what would they say?",
   "trap": "Reading a low response rate as merely a small sample.",
   "keywords": [
     "sampling",

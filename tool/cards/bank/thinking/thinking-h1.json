@@ -9,6 +9,7 @@
   "unit": "km/h",
   "answer": "12 km in 0.8 hours is 15 km/h.",
   "move": "Average the times, not the speeds, when the distance is fixed.",
+  "ask": "Which average in my life hides that I spent unequal time at each speed, price or rate?",
   "trap": "Averaging 10 and 30, because both legs cover the same distance.",
   "hint": "Work out how long each half takes, not how fast it is.",
   "steps": [

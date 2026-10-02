@@ -29,5 +29,6 @@
   "source": "Miyake et al., Nature, 2012",
   "source_kind": "paper",
   "reference": "doi:10.1038/nature11123",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

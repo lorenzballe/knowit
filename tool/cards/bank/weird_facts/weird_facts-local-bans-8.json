@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The town's small cemetery stopped taking new burials decades ago because bodies barely decay in permafrost; in 1998 scientists exhumed miners killed by the 1918 flu to search for the virus. The seriously ill are usually sent to mainland Norway for care. The famous ban is a headline about a cemetery.",
   "move": "A strange rule reported everywhere may be a practice nobody wrote down.",
+  "ask": "Which strange story have I passed on without checking it was ever true?",
   "trap": "Remembering the widely shared story of a town that outlawed death.",
   "keywords": [
     "longyearbyen",

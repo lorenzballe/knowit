@@ -36,5 +36,6 @@
   "source": "Burrows et al., Reviews of Modern Physics, 2001",
   "source_kind": "paper",
   "reference": "Burrows, Hubbard, Lunine & Liebert, The theory of brown dwarfs and extrasolar giant planets, Reviews of Modern Physics 73, 719, 2001",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "In a Norwegian psychiatric hospital. Dreyer's cut was thought lost to fire soon after its 1928 release, and the versions shown for decades were patched together from alternate takes. Then a cupboard at Dikemark Hospital, near Oslo, yielded a print with Danish intertitles, shipped there around 1928 and never returned.",
   "move": "Look for the lost thing where it was last sent, not where it belongs.",
+  "ask": "When I lose something, do I look where it was last sent or where it belongs?",
   "trap": "A film archive is where a missing film ought to be.",
   "keywords": [
     "carl theodor dreyer",

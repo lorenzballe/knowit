@@ -9,6 +9,7 @@
   "question": "Is a photo a record of what was there?",
   "answer": "Partly a reconstruction. Each pixel on a camera sensor measures only one colour, behind a red, green or blue filter. The other two values are interpolated from the neighbours. Every ordinary digital photograph is roughly two-thirds informed guesswork, done well enough that nobody notices.",
   "move": "Two of every three colour values in your photos were guessed.",
+  "ask": "What do I treat as a true record when much of it was filled in by a guess?",
   "keywords": [
     "camera sensors",
     "bayer filter",

@@ -9,6 +9,7 @@
   "question": "Why was every Apollo landing timed for early morning, by the Moon's own clock?",
   "answer": "For shadows. With the Sun roughly 5° to 15° above the horizon, every boulder and crater cast a long shadow; under a high Sun the grey ground looks flat and slopes cannot be judged. A lunar day lasts about 29.5 Earth days, so each site offered one good morning a month.",
   "move": "The best time to look at rough ground is when the light is low.",
+  "ask": "What would look clearer if I viewed it when the light is low and every bump shows?",
   "keywords": [
     "apollo landings",
     "sun angle",

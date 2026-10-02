@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 35 per km². Density fell to about 100 by 2008 and kept falling, a drop of more than 99% in 16 years. Polluted canals, introduced carp and tilapia, and the loss of the chinampas, the old farm islands, did it. The world's best-studied salamander is nearly gone from its only home.",
   "move": "Let a starting number set the scale, never the size of the change.",
+  "ask": "When I hear a big change, do I ask what it started from, not just how big it sounds?",
   "trap": "Halving or a tenfold fall already feels drastic from 6,000.",
   "keywords": [
     "xochimilco",
@@ -33,6 +34,46 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "survey year",
+      "min": 1998,
+      "max": 2014
+    },
+    "y": {
+      "label": "axolotls per km²",
+      "min": 0,
+      "max": 6000
+    },
+    "series": [
+      {
+        "hi": true,
+        "points": [
+          [
+            1998,
+            6000
+          ],
+          [
+            2008,
+            100
+          ],
+          [
+            2014,
+            35
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 2014,
+        "y": 35,
+        "label": "2014: about 35"
+      }
+    ],
+    "caption": "From about 6,000 axolotls per km² to 35 in 16 years: over 99% gone."
+  },
   "source": "Scientific American, 2015",
   "source_kind": "news_archive",
   "reference": "https://www.scientificamerican.com/article/biologys-beloved-amphibian-the-axolotl-is-racing-toward-extinction1/",

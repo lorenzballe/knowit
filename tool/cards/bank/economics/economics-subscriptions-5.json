@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Under the Fair Consumer Contracts Act, contracts made from March 2022 may still bind for two years at first, but then renew only open-ended, cancellable at a month's notice. Since July 2022, contracts sold online must also carry a cancellation button. A forgotten gym contract now costs one month, not twelve.",
   "move": "When a cost comes from forgetting, the default decides who pays.",
+  "ask": "Which of my costs exists only because I forget, and who gains from it?",
   "trap": "Assuming yearly rollovers are standard everywhere, as in many other countries.",
   "keywords": [
     "germany",

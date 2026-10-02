@@ -9,6 +9,7 @@
   "question": "What kept Michelangelo from carving for most of 1518 to 1520?",
   "answer": "Building a road. Pope Leo X wanted the marble for the façade of San Lorenzo in Florence to come from Seravezza, on Florentine territory, rather than from Carrara. So Michelangelo opened quarries and drove a road through the mountains to the sea. In March 1520 the contract was cancelled. The façade is still bare brick.",
   "move": "Behind every material is a supply route that someone had to build.",
+  "ask": "What hidden supply or logistics does my best work quietly depend on?",
   "keywords": [
     "michelangelo",
     "seravezza",

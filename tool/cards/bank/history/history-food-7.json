@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Counting all deaths above the pre-war level. The memorandum compared each war year's civilian deaths with peacetime and credited the whole excess to the blockade, including extra deaths from tuberculosis and the influenza of 1918. Hunger made both deadlier, yet influenza also killed the well fed.",
   "move": "An excess over a baseline counts everything that changed, not only the cause named.",
+  "ask": "When one cause gets the blame for a big number, what else is hiding in it?",
   "trap": "Taking an official death toll as a count of named cases.",
   "keywords": [
     "allied blockade",

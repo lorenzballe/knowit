@@ -12,6 +12,7 @@
   "question": "Which kind of cut do viewers fail to notice most often, even when told to look for cuts?",
   "answer": "A cut on movement. Eye-tracking studies by Tim Smith and John Henderson found viewers miss a large share of edits, and miss most often those that match an action across the join: a hand reaching in one shot, closing in the next. Attention rides the motion, and the camera change slips past like a blink.",
   "move": "Hide a change inside something that is already moving.",
+  "ask": "Where could I hide a change inside something that is already moving?",
   "keywords": [
     "edit blindness",
     "match on action",

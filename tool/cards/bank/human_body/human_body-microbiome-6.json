@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About 200 grams. A 2016 recount put the bacteria in a 70 kg man at about 38 trillion, nearly all in the colon, close to his 30 trillion human cells. Being tiny, they weigh about 0.2 kg, near 0.3% of the body. One bowel movement empties a quarter to a third of them.",
   "move": "Before repeating a striking figure, ask when someone last measured it.",
+  "ask": "What striking figure did I repeat without asking when someone last measured it?",
   "trap": "The figure of one to two kilograms, repeated for decades.",
   "keywords": [
     "gut bacteria",

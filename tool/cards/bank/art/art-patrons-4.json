@@ -9,6 +9,7 @@
   "question": "How much freedom did Isabella d'Este give Perugino when she ordered a painting from him in 1503?",
   "answer": "Almost none. Her written programme fixed the subject, a battle of Love and Chastity, named the figures, their actions and their places, and allowed him to leave things out but not to add anything of his own. Perugino's finished picture, now in the Louvre, is a patron's plan executed by a star.",
   "move": "Ask who wrote the brief before crediting the author with the idea.",
+  "ask": "Who wrote the brief for the idea I admire, and who got the credit?",
   "keywords": [
     "isabella d'este",
     "perugino",

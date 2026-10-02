@@ -9,6 +9,7 @@
   "question": "Refused permission to film at the United Nations, how did North by Northwest show Cary Grant arriving there?",
   "answer": "With a hidden camera. Hitchcock's crew filmed from hiding across the street as Grant walked up to the real building, and passers-by had no idea a film was being made. The lobby and the delegates' lounge inside were rebuilt on a soundstage at MGM. Only the walk to the door is real.",
   "move": "When the front door is closed, see what can be filmed from the street.",
+  "ask": "When the front door is closed, what could I try from the street?",
   "keywords": [
     "north by northwest",
     "united nations",

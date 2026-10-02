@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "The leaders differed between worlds. Salganik, Dodds and Watts had 14,341 people choose among the songs; a ninth world, with counts hidden, served as the control. Visible counts made success more unequal and less predictable. The best songs rarely flopped and the worst rarely won, but in between, an early lead often decided the order.",
   "move": "To judge whether the winner deserved it, rerun history and see who wins again.",
+  "ask": "If luck ran again, would my winner still win?",
   "trap": "Assuming quality alone decides a hit, so every world agrees.",
   "keywords": [
     "musiclab",

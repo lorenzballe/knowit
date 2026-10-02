@@ -11,6 +11,7 @@
   "unit": "million dollars",
   "answer": "30 / 0.6 = 50 million dollars.",
   "move": "When each step keeps a fixed share, the first step is most of the total.",
+  "ask": "Where in my life does the first step matter more than all the later ones?",
   "trap": "Expecting a long tail that keeps adding, when each weekend shrinks.",
   "hint": "A total that keeps a fixed fraction each time adds up to the first term divided by what is lost.",
   "steps": [
@@ -34,6 +35,109 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "weekend",
+      "min": 1,
+      "max": 8
+    },
+    "y": {
+      "label": "million dollars",
+      "min": 0,
+      "max": 60
+    },
+    "series": [
+      {
+        "label": "each weekend",
+        "points": [
+          [
+            1,
+            30.0
+          ],
+          [
+            2,
+            12.0
+          ],
+          [
+            3,
+            4.8
+          ],
+          [
+            4,
+            1.9
+          ],
+          [
+            5,
+            0.8
+          ],
+          [
+            6,
+            0.3
+          ],
+          [
+            7,
+            0.1
+          ],
+          [
+            8,
+            0.0
+          ]
+        ]
+      },
+      {
+        "label": "running total",
+        "hi": true,
+        "points": [
+          [
+            1,
+            30
+          ],
+          [
+            2,
+            42.0
+          ],
+          [
+            3,
+            46.8
+          ],
+          [
+            4,
+            48.7
+          ],
+          [
+            5,
+            49.5
+          ],
+          [
+            6,
+            49.8
+          ],
+          [
+            7,
+            49.9
+          ],
+          [
+            8,
+            50.0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 1,
+        "y": 30,
+        "label": "opening: 30"
+      },
+      {
+        "x": 8,
+        "y": 50.0,
+        "label": "total: 50"
+      }
+    ],
+    "caption": "The opening weekend alone brings in 30 of the 50 million the film will ever take."
+  },
   "source": "Vogel, Entertainment Industry Economics",
   "source_kind": "book",
   "reference": "Vogel, Entertainment Industry Economics: A Guide for Financial Analysis, 9th edition, Cambridge University Press, 2015",

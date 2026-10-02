@@ -11,6 +11,7 @@
   "unit": "times",
   "answer": "Area is stretched 2 × 2 = 4 times.",
   "move": "A stretch applied in two directions multiplies, so square it before judging.",
+  "ask": "Where am I looking at a stretch in two directions and judging it as if it were only one?",
   "trap": "Answering 2, as if only the east–west stretch counted.",
   "hint": "Mercator stretches north–south exactly as much as east–west, and the east–west stretch is set by how short a parallel is.",
   "steps": [

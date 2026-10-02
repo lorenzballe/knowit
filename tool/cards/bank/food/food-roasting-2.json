@@ -9,6 +9,7 @@
   "question": "Why do bags of freshly roasted coffee beans carry a small one-way valve?",
   "answer": "Because the beans keep exhaling. Roasting traps carbon dioxide in the bean, which seeps out for days and would swell a sealed bag. Leaving beans open to degas lets in the oxygen that stales them. The valve, introduced by the Italian packager Goglio in the 1960s, lets gas out and no air in.",
   "move": "When a product must breathe out, stop it breathing in.",
+  "ask": "What do I seal up completely that actually needs a way to breathe out?",
   "keywords": [
     "degassing valve",
     "carbon dioxide",

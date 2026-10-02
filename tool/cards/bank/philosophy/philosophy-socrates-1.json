@@ -9,6 +9,7 @@
   "question": "What is the only complete surviving work about Socrates written while he was still alive?",
   "answer": "A comedy. In Aristophanes' Clouds, staged in 423 BC, Socrates runs a thinking-shop, teaches students to make the weaker argument beat the stronger, and first appears hanging in a basket to study the sky. Plato and Xenophon wrote after his death in 399. In Plato's Apology, Socrates blames the play for the jury's prejudice.",
   "move": "Check when a portrait was drawn, and by whom, before trusting it.",
+  "ask": "Before I trust a portrait of someone, do I know when it was drawn, and by whom?",
   "keywords": [
     "aristophanes",
     "clouds",

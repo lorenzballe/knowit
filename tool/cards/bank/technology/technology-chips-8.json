@@ -18,6 +18,7 @@
   "correct": 1,
   "answer": "About 37%. Random defects clump by chance: some chips catch two or three, leaving others clean. With an average of one per chip, the Poisson rule gives e to the minus one, about 0.37, defect-free. Halve the chip to 250 mm² and about 61% survive, one reason large processors are now built from chiplets.",
   "move": "An average of one per box still leaves plenty of boxes empty.",
+  "ask": "Where do I trust an average and forget how many cases still turn out badly?",
   "trap": "An average of one defect per chip sounds like every chip is hit.",
   "keywords": [
     "chip yield",

@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "Everyone hired comes from that university, so every good hire confirms the rule and no rejected candidate ever gets to disprove it. The belief is not surviving tests; it is preventing them.",
   "move": "Ask what result would have changed your mind. If none could, nothing is being tested.",
+  "ask": "What result would change my mind about my favourite belief, and have I ever looked where it could appear?",
   "trap": "A belief that keeps being confirmed feels like a belief that keeps being tested.",
   "keywords": [
     "confirmation bias",

@@ -35,8 +35,147 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "metres",
+      "min": 0,
+      "max": 6
+    },
+    "y": {
+      "label": "height, m",
+      "min": 0,
+      "max": 1.5
+    },
+    "series": [
+      {
+        "label": "Earth, 9.8 m/s²",
+        "points": [
+          [
+            0.0,
+            0
+          ],
+          [
+            0.08,
+            0.07
+          ],
+          [
+            0.15,
+            0.128
+          ],
+          [
+            0.23,
+            0.172
+          ],
+          [
+            0.31,
+            0.204
+          ],
+          [
+            0.38,
+            0.223
+          ],
+          [
+            0.46,
+            0.23
+          ],
+          [
+            0.54,
+            0.223
+          ],
+          [
+            0.61,
+            0.204
+          ],
+          [
+            0.69,
+            0.172
+          ],
+          [
+            0.77,
+            0.128
+          ],
+          [
+            0.84,
+            0.07
+          ],
+          [
+            0.92,
+            0
+          ]
+        ]
+      },
+      {
+        "label": "Moon, 1.6 m/s²",
+        "hi": true,
+        "points": [
+          [
+            0.0,
+            0
+          ],
+          [
+            0.47,
+            0.43
+          ],
+          [
+            0.94,
+            0.781
+          ],
+          [
+            1.41,
+            1.055
+          ],
+          [
+            1.87,
+            1.25
+          ],
+          [
+            2.34,
+            1.367
+          ],
+          [
+            2.81,
+            1.406
+          ],
+          [
+            3.28,
+            1.367
+          ],
+          [
+            3.75,
+            1.25
+          ],
+          [
+            4.22,
+            1.055
+          ],
+          [
+            4.69,
+            0.781
+          ],
+          [
+            5.16,
+            0.43
+          ],
+          [
+            5.62,
+            0
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 5.62,
+        "y": 0,
+        "label": "5.6 m"
+      }
+    ],
+    "caption": "The same flick of dust: under a metre on Earth, 5.6 m on the Moon."
+  },
   "source": "Halliday, Resnick & Walker, Fundamentals of Physics",
   "source_kind": "book",
   "reference": "Halliday, Resnick & Walker, Fundamentals of Physics, Wiley, 2013",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

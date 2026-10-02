@@ -12,6 +12,7 @@
   "question": "Why did electrifying factories barely raise their productivity until the 1920s?",
   "answer": "Because owners first kept the old layout. Early factories swapped the steam engine for one big motor still turning the same shafts and belts, in the same multi-storey buildings. The gains came when each machine got its own motor and plants were rebuilt as single-storey lines arranged around the work, not the driveshaft.",
   "move": "A new tool pays off only after the work is rearranged around it.",
+  "ask": "Which new tool am I using without having rearranged my work around it?",
   "keywords": [
     "electrification",
     "productivity paradox",

@@ -11,6 +11,7 @@
   "unit": "ingots",
   "answer": "After 10 years: 32 x 32 = 1,024 ingots.",
   "move": "Ask whether a debt adds or multiplies before agreeing to its terms.",
+  "ask": "Before I agree to any debt, do I know whether it adds or multiplies?",
   "trap": "Adding one ingot a year and answering about 11.",
   "hint": "Work out five years first; ten years is five years done twice.",
   "steps": [
@@ -35,6 +36,84 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "diagram": {
+    "type": "line",
+    "x": {
+      "label": "years unpaid",
+      "min": 0,
+      "max": 10
+    },
+    "y": {
+      "label": "ingots owed",
+      "min": 0,
+      "max": 1100
+    },
+    "series": [
+      {
+        "label": "doubling every year",
+        "hi": true,
+        "points": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            3,
+            8
+          ],
+          [
+            4,
+            16
+          ],
+          [
+            5,
+            32
+          ],
+          [
+            6,
+            64
+          ],
+          [
+            7,
+            128
+          ],
+          [
+            8,
+            256
+          ],
+          [
+            9,
+            512
+          ],
+          [
+            10,
+            1024
+          ]
+        ]
+      }
+    ],
+    "marks": [
+      {
+        "x": 5,
+        "y": 32,
+        "label": "5 years: 32"
+      },
+      {
+        "x": 10,
+        "y": 1024,
+        "label": "10 years: 1,024"
+      }
+    ],
+    "caption": "After five years the debt is 32 ingots; the next five add almost a thousand."
+  },
   "source": "Allsen, Asia Major, 1989",
   "source_kind": "paper",
   "reference": "Allsen, Mongolian Princes and Their Merchant Partners, 1200-1260, Asia Major, third series, 2, 1989, 83-126",

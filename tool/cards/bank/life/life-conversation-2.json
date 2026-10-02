@@ -1,0 +1,40 @@
+{
+  "id": "life-conversation-2",
+  "topic": "life",
+  "genre": "life.people",
+  "strand": "life.people.conversation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: after a first conversation, strangers usually like you less than you think they do?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Boothby and colleagues found a liking gap: after conversations in the laboratory, at workshops and among new housemates, people underestimated how much their partners liked them. The gap appeared in the first minutes and lasted for months among housemates.",
+  "move": "Assume the conversation went better than it felt to you.",
+  "ask": "After my last conversation with someone new, am I judging it by how I felt or by how they did?",
+  "trap": "Dwelling on our own slips, we assume the other person noticed them.",
+  "keywords": [
+    "liking gap",
+    "first impressions",
+    "strangers",
+    "boothby",
+    "conversation"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Boothby and colleagues, Psychological Science, 2018",
+  "source_kind": "paper",
+  "reference": "Boothby, Cooney, Sandstrom and Clark, The Liking Gap in Conversations: Do People Like Us More Than We Think? Psychological Science, 2018",
+  "written": "2026-09-29"
+}

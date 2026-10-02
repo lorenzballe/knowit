@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Under 2 women to 1 man. The 1990 criteria required pain at 11 of 18 pressed points, and women on average feel pressure as pain at lower force, so many men with the same pain fell short. Symptom scoring narrowed the gap sharply. The diagnosis had partly sorted patients by the pressure of a thumb.",
   "move": "Ask whether the test used to find a group decided who was found.",
+  "ask": "Did the way a group was found decide who ended up in it, in something I believe?",
   "trap": "Still about 9 to 1, taking the sex ratio as fixed biology.",
   "keywords": [
     "fibromyalgia",

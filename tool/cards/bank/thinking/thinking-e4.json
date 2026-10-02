@@ -10,6 +10,7 @@
   "withinFactor": 3,
   "answer": "A bus serves 12 to 15 years: ~1.7 million boardings.",
   "move": "One bus moves more people in its life than live in Milan.",
+  "ask": "What ordinary thing around me adds up to something huge once I multiply it over a lifetime?",
   "hint": "Journeys per day, times days per year, times years of service.",
   "steps": [
     "A busy city bus carries roughly 400 boardings a day.",
@@ -34,5 +35,6 @@
   "figure": "none",
   "source": "Urban transit fleet statistics",
   "source_kind": "arithmetic",
-  "reference": "Department for Transport, Annual bus statistics: England, 2019"
+  "reference": "Department for Transport, Annual bus statistics: England, 2019",
+  "disabled": true
 }

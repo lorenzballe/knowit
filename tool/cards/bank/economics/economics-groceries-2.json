@@ -9,6 +9,7 @@
   "question": "Of each dollar Americans spend on food, roughly how much reaches the farm?",
   "answer": "About 15 cents. The US Department of Agriculture's food dollar series finds that the biggest slice goes to restaurants and food service, and most of the rest to processing, packaging, transport and retailing. So farm prices move shop prices less than expected: the wheat in a supermarket loaf is a small part of its price.",
   "move": "Before blaming the raw material, price everything done to it afterwards.",
+  "ask": "Before I blame the raw ingredient, have I priced what happens to it afterwards?",
   "keywords": [
     "food dollar",
     "farm share",

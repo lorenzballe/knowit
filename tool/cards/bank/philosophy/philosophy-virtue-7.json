@@ -34,5 +34,6 @@
   "source": "Aristotle, Nicomachean Ethics VI.13",
   "source_kind": "book",
   "reference": "Aristotle, Nicomachean Ethics, trans. Irwin, 2nd edition, Hackett, 1999, 1144b1-1145a2",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

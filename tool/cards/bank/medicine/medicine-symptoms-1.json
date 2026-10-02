@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 2 in 5. In over 1.1 million heart-attack patients from 1994 to 2006, 42% of women and 31% of men arrived without chest pain, reporting breathlessness, nausea, sweating or fatigue instead. Those without chest pain waited longer for care and died more often in hospital, especially younger women.",
   "move": "The famous version of a warning is not the usual version.",
+  "ask": "Which warning do I expect to look like the famous one when it is usually quieter?",
   "trap": "Picturing the film heart attack, a man clutching his chest.",
   "keywords": [
     "heart attack",

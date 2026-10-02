@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About once every 50 years. Estimates put collapsing-star explosions alone at about 1.6 a century, with white dwarf explosions on top. Most go unseen because dust in the galaxy's disc hides them from the eye. The youngest known remnant, G1.9+0.3, exploded around 1900 near the galactic centre, and nobody noticed.",
   "move": "Before judging how rare something is, ask how much of it you could see.",
+  "ask": "Before I call something rare, how much of it could I ever have seen?",
   "trap": "Four centuries without a sighting make them seem that rare.",
   "keywords": [
     "supernova rate",

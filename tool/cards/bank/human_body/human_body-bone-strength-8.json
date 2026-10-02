@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About a quarter. A slender strut buckles at a load that falls with the square of its free length, Euler's rule, so doubling the length leaves a quarter. So losing a few horizontal struts cuts strength far more than the small drop in density suggests. Vertebrae, mostly spongy bone, crumble under loads they once carried.",
   "move": "When a length enters squared, doubling it quarters the result.",
+  "ask": "What small change in my life could quietly make something much bigger or weaker?",
   "trap": "Assuming strength falls in step with length, so half remains.",
   "keywords": [
     "trabecular bone",

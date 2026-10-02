@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Etruscan was written in an alphabet adapted from Greek, so its sounds are known. But the language is unrelated to Latin, Greek or any living tongue, and most of its roughly 13,000 inscriptions are short epitaphs and dedications. The longest text survived as linen strips wrapped round an Egyptian mummy, now in Zagreb.",
   "move": "Sounding out a message and understanding it are separate problems.",
+  "ask": "Where can I say the words without really understanding them?",
   "trap": "Being able to read a script feels like understanding it.",
   "keywords": [
     "etruscan",

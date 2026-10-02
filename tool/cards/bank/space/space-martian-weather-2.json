@@ -9,6 +9,7 @@
   "question": "Why do the dust storms that wrap all of Mars start in the southern hemisphere's spring or summer?",
   "answer": "Because Mars is then closest to the Sun. Its orbit is stretched enough that sunlight at the nearest point is about 45% stronger than at the farthest, and the nearest point falls in late southern spring. Extra heat drives stronger winds, which lift dust, which soaks up more sunlight: a storm that feeds itself.",
   "move": "An uneven input can make one season far wilder than its mirror.",
+  "ask": "Do I expect two sides of my life to behave the same when one gets more input?",
   "keywords": [
     "dust storms",
     "perihelion",

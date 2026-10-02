@@ -35,5 +35,6 @@
   "source": "IFAB, Laws of the Game, Law 11",
   "source_kind": "primary_document",
   "reference": "https://www.theifab.com/laws/latest/offside/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -9,6 +9,7 @@
   "unit": "minutes",
   "answer": "The least common multiple takes the highest power of each: 2 x 2 x 3 x 3 = 36.",
   "move": "Coincidences repeat on the least common multiple, never sooner.",
+  "ask": "Which two recurring things in my life line up only rarely, and when is the next time?",
   "hint": "You want the first time that is a whole number of both intervals.",
   "steps": [
     "12 = 2 x 2 x 3 and 18 = 2 x 3 x 3.",

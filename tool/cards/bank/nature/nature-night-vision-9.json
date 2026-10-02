@@ -37,8 +37,25 @@
     "nature-night-vision-5"
   ],
   "figure": "none",
+  "diagram": {
+    "type": "area",
+    "unit": "mm²",
+    "items": [
+      {
+        "label": "Pupil 2 mm across",
+        "value": 3.14
+      },
+      {
+        "label": "Pupil 8 mm across",
+        "value": 50.3,
+        "hi": true
+      }
+    ],
+    "caption": "Four times the width lets in sixteen times the light."
+  },
   "source": "Wyszecki & Stiles, Color Science, 1982",
   "source_kind": "book",
   "reference": "Wyszecki & Stiles, Color Science: Concepts and Methods, Quantitative Data and Formulae, 2nd edition, Wiley, 1982",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

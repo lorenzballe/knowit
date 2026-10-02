@@ -12,6 +12,7 @@
   "question": "Why does that shirt match indoors and clash outside?",
   "answer": "Because colour vision takes only three samples of a continuous spectrum. Two objects reflecting quite different light can produce identical signals — a metameric match — under one light and separate under another. The colours did not change. The sampling did.",
   "move": "Two colours can be the same colour, until you carry them to a window.",
+  "ask": "What looks like a perfect match in one setting that I should check somewhere else?",
   "keywords": [
     "colour vision",
     "metamerism",

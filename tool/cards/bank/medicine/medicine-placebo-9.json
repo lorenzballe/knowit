@@ -11,6 +11,7 @@
   "unit": "percent",
   "answer": "(40 - 30) / 40 = 25%.",
   "move": "Subtract what the dummy achieved before praising what the real thing did.",
+  "ask": "Before I praise what I did, what would have happened with a dummy?",
   "trap": "Answering 100%, crediting the drug with every patient who got better.",
   "hint": "Ask how many of the drug group would have responded to a dummy pill.",
   "steps": [
@@ -34,6 +35,33 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "tree",
+    "n": 100,
+    "label": "patients on the drug",
+    "branches": [
+      {
+        "n": 40,
+        "label": "relieved",
+        "branches": [
+          {
+            "n": 30,
+            "label": "would ease anyway"
+          },
+          {
+            "n": 10,
+            "label": "owe it to the drug",
+            "hi": true
+          }
+        ]
+      },
+      {
+        "n": 60,
+        "label": "not relieved"
+      }
+    ],
+    "caption": "Of 40 relieved, 30 would have eased on a dummy anyway: only 10 owe it to the drug."
+  },
   "source": "Laupacis, Sackett & Roberts, NEJM, 1988",
   "source_kind": "arithmetic",
   "reference": "Laupacis, Sackett & Roberts, An assessment of clinically useful measures of the consequences of treatment, New England Journal of Medicine, 1988",

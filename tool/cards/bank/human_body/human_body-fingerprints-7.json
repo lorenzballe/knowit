@@ -29,5 +29,6 @@
   "source": "Buchanan et al., Oak Ridge National Laboratory",
   "source_kind": "institution",
   "reference": "https://impact.ornl.gov/en/publications/chemical-characterization-of-fingerprints-from-adults-and-childre/",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

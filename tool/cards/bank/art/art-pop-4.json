@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. It came out of the Independent Group at London's Institute of Contemporary Arts in the mid-1950s and is usually credited to the British critic Lawrence Alloway. Richard Hamilton's 1956 collage for the show This Is Tomorrow already has a bodybuilder holding a giant lollipop marked POP. The label was British before the soup cans.",
   "move": "The most famous practitioner is rarely the one who named the thing.",
+  "ask": "Who actually named the thing I credit its most famous person with?",
   "trap": "Warhol and New York dominate the story, so the name seems American.",
   "keywords": [
     "lawrence alloway",

@@ -13,6 +13,7 @@
   "correct": 0,
   "answer": "Homicide is reported and diabetes is not, so people overestimate the first and underestimate the second by large factors. What is dangerous and what is memorable are almost unrelated.",
   "move": "The quiet causes are the big ones. That is why they are quiet.",
+  "ask": "Which quiet, slow risk to my health or money am I underrating because nobody reports it?",
   "trap": "Causes that make the news are the ones the mind reaches first.",
   "keywords": [
     "availability",

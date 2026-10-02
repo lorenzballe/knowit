@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Kahane and colleagues found in 2015 that approving the sacrifice went with higher scores on psychopathy and no greater readiness to give to people far away or to weigh everyone's welfare equally. Critics dispute how far this generalises. A shrug at harm and a love of the greater number can produce the same answer.",
   "move": "Two people can give the same answer for opposite reasons; ask for the reason.",
+  "ask": "When someone agrees with me, do I know their reason, or only their answer?",
   "trap": "Reading willingness to sacrifice one as care for the many.",
   "keywords": [
     "sacrificial dilemmas",

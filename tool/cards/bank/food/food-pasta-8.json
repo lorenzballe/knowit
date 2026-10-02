@@ -35,5 +35,6 @@
   "source": "IAEA Mutation Breeding Review, 1993",
   "source_kind": "institution",
   "reference": "Scarascia-Mugnozza, Bagnara, Bozzini et al., Mutation breeding for durum wheat improvement in Italy, Mutation Breeding Review No. 10, IAEA, 1993",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

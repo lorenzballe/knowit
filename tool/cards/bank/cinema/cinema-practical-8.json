@@ -12,6 +12,7 @@
   "question": "Why did The Mandalorian film its chrome-armoured hero among giant LED screens rather than in front of green?",
   "answer": "For the reflections. Green screen would have mirrored green in every curve of the polished armour. ILM's LED stage, first used on the 2019 series, displayed the digital landscape around the actors, so it lit their faces and shone in the metal. Rear projection returned, driven by a game engine.",
   "move": "Choose a method by what the shiniest thing in the scene will reflect.",
+  "ask": "Before choosing a method, have I thought about the hardest case it will face?",
   "keywords": [
     "the mandalorian",
     "led volume",

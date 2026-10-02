@@ -11,6 +11,7 @@
   "unit": "percent",
   "answer": "18 / 100 = 18 percent.",
   "move": "Before a rate reassures or alarms you, ask what it is a share of.",
+  "ask": "When I read a rate that scares or reassures me, what is it a share of?",
   "trap": "Answering 6, the disorder's share of all adults, not of the symptomatic.",
   "hint": "Picture 300 adults and count who falls in each group.",
   "steps": [
@@ -34,6 +35,33 @@
   "mature": false,
   "language": "en",
   "figure": "dots",
+  "diagram": {
+    "type": "tree",
+    "n": 300,
+    "label": "adults",
+    "branches": [
+      {
+        "n": 100,
+        "label": "report symptoms",
+        "branches": [
+          {
+            "n": 18,
+            "label": "meet the criteria",
+            "hi": true
+          },
+          {
+            "n": 82,
+            "label": "symptoms only"
+          }
+        ]
+      },
+      {
+        "n": 200,
+        "label": "no symptoms"
+      }
+    ],
+    "caption": "The 18 with the disorder are 6% of all adults but 18% of the symptomatic."
+  },
   "source": "Ohayon, Sleep Medicine Reviews, 2002",
   "source_kind": "paper",
   "reference": "Ohayon, Epidemiology of insomnia: what we know and what we still need to learn, Sleep Medicine Reviews, 2002",

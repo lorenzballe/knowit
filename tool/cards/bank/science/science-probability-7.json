@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Under 1%: about 0.45%. The house's small edge compounds bet after bet: the odds against doubling come to 19/18, losing chances over winning ones, to the 100th power, about 223 to 1. One £100 bet on red wins 18 times in 37. That bold bet is over a hundred times likelier to double the money.",
   "move": "When the odds lean slightly against you, play as few rounds as possible.",
+  "ask": "When the odds lean slightly against me, how many rounds am I choosing to play?",
   "trap": "About 49%, since each bet is nearly a coin toss.",
   "keywords": [
     "gambler's ruin",
@@ -32,6 +33,22 @@
   "mature": true,
   "language": "en",
   "figure": "none",
+  "diagram": {
+    "type": "scale",
+    "unit": "% chance of £200",
+    "items": [
+      {
+        "label": "£1 at a time",
+        "value": 0.45,
+        "hi": true
+      },
+      {
+        "label": "One £100 bet on red",
+        "value": 48.6
+      }
+    ],
+    "caption": "Betting £1 at a time reaches £200 just 0.45% of the time; one £100 bet, 48.6%."
+  },
   "source": "Dubins & Savage, bold play, 1965",
   "source_kind": "book",
   "reference": "Dubins & Savage, How to Gamble If You Must: Inequalities for Stochastic Processes, McGraw-Hill, 1965",

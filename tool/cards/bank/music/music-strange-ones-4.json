@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Lip-buzzed, like a tuba. It has a cup mouthpiece and finger holes; the player's lips do the vibrating, so it belongs with brass despite its wood. Said to have been devised in France around 1590 to support church chant, it later marched in military bands. The saxophone is the mirror case: brass body, cane reed.",
   "move": "Classify a thing by how it works, not by what it is made of.",
+  "ask": "Do I sort things by what they are made of, or by how they work?",
   "trap": "Reed-blown, because it is made of wood like a bassoon.",
   "keywords": [
     "serpent",

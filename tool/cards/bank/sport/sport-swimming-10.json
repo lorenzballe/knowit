@@ -29,5 +29,6 @@
   "source": "Swiss Timing, OBL2 Pro backstroke ledge",
   "source_kind": "company",
   "reference": "https://www.swisstiming.com/fileadmin/Resources/Data/Datasheets/DOCM_AQ_OBL2_Pro_1015_EN.pdf",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

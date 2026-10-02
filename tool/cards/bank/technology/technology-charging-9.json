@@ -11,6 +11,7 @@
   "unit": "times",
   "answer": "Heat in a cable grows with current squared: (500 / 250)² = 4.",
   "move": "Where losses grow with the square, halving the cause quarters the cost.",
+  "ask": "Where would cutting the cause in half cut my cost to a quarter?",
   "trap": "Halving the current and expecting the heat to halve too.",
   "hint": "Find the current each way; a wire's heat goes with the current squared.",
   "steps": [

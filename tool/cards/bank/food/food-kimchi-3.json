@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Lactic acid bacteria. The first to take over, Leuconostoc mesenteroides, is heterofermentative: from each sugar it makes lactic acid plus carbon dioxide. It thrives in the cold early days, when kimchi is most sparkling. Later and warmer, acid-tolerant Lactobacillus plantarum takes over, making acid without gas, and the fizz fades as sourness rises.",
   "move": "Before naming the usual suspect, check who else can do the same job.",
+  "ask": "Before I blame the usual suspect, who else could be doing the same job?",
   "trap": "Crediting yeast, because bubbles in bread and beer come from yeast.",
   "keywords": [
     "leuconostoc",

@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "A test that never misses makes a negative decisive: if you had it, the test would have said so. The same test's positives are weak, because false positives are the only kind of error it makes. One test, two very different kinds of answer.",
   "move": "Ask which way the test can be wrong. It changes what each result means.",
+  "ask": "When I get a reassuring result, do I know in which way the test can be wrong?",
   "trap": "Treating positive and negative results as equally informative.",
   "keywords": [
     "conditional probability",

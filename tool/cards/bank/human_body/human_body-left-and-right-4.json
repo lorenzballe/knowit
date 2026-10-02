@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Fewer left-handers among the old. Children born early in the century were often made to write with the right hand, so few elderly people called themselves left-handed, and the left-handers who died were mostly younger. Mean age at death compared generations, not risks; studies following living people forward found little or no gap.",
   "move": "Compare the dead only after asking when each group was born.",
+  "ask": "Before comparing two groups, have I asked when each one was born?",
   "trap": "Right-handed tools and cars make an accident story feel obvious.",
   "keywords": [
     "left-handedness",

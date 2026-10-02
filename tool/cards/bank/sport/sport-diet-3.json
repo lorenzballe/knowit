@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Muscle built more, for longer. After whole-body resistance exercise, 100 g of milk protein raised muscle protein building more than 25 g did, and kept it raised through all 12 hours measured. Earlier trials had used smaller doses and watched for only a few hours, so a slower, longer response looked like a ceiling.",
   "move": "A limit found by looking briefly may only be a limit of the looking.",
+  "ask": "Which limit do I accept as fixed when it was only measured briefly?",
   "trap": "Holding to the familiar 20 g ceiling and expecting the rest wasted.",
   "keywords": [
     "protein",

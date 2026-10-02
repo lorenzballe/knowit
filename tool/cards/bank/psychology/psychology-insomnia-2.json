@@ -9,6 +9,7 @@
   "question": "Can treating insomnia in older adults prevent depression?",
   "answer": "In one trial it roughly halved new cases. Of 291 adults over 60 with insomnia but no depression, those given two months of cognitive behavioural therapy for insomnia developed major depression over three years at 12.2%, against 25.9% with sleep education alone. Those whose insomnia stayed in remission fared best.",
   "move": "A symptom can also be a cause; treat it and watch what follows.",
+  "ask": "Which problem of mine might be a cause of another, rather than only a symptom?",
   "keywords": [
     "cbt-i",
     "depression prevention",

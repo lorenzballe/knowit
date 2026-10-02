@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Monazite carries thorium, typically several per cent by weight as oxide, and some uranium; separating out the rare earths leaves them concentrated in the residue. Lynas's plant in Malaysia, fed with ore from Western Australia, faced years of protest and licence conditions over where its thorium-bearing residue would be kept.",
   "move": "Every ore arrives with passengers; ask who keeps them.",
+  "ask": "What comes bundled with the thing I want, and who deals with the rest?",
   "trap": "Radioactive waste brings reactors and uranium mines to mind, not magnets.",
   "keywords": [
     "monazite",

@@ -36,5 +36,6 @@
   "source": "Gaius, in Justinian's Digest 8.3.8",
   "source_kind": "primary_document",
   "reference": "The Digest of Justinian, vol. 1, ed. Mommsen, Krueger and Watson, University of Pennsylvania Press, 1985",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

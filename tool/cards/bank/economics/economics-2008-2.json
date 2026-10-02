@@ -9,6 +9,7 @@
   "question": "How did Lehman Brothers make its borrowing look smaller each time its quarterly accounts closed in 2008?",
   "answer": "By booking borrowing as sales. In deals called Repo 105, it handed over bonds for cash before the books closed, recorded them as sold, and paid down debt with the cash; days later it bought them back. About $50 billion left the balance sheet in mid-2008. The debts came back once the photograph was taken.",
   "move": "Ask what the numbers looked like the week after the report.",
+  "ask": "What would the numbers I'm shown look like a week after the report?",
   "keywords": [
     "lehman brothers",
     "repo 105",

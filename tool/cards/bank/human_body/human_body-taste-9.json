@@ -35,5 +35,6 @@
   "source": "Meyerhof et al., Chemical Senses, 2010",
   "source_kind": "paper",
   "reference": "Meyerhof, Batram, Kuhn et al., The molecular receptive ranges of human TAS2R bitter taste receptors, Chemical Senses, 2010",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

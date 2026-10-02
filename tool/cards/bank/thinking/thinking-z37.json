@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "The second covers every river and every defence, and the first is one city. Adding detail makes a forecast more believable and less likely at the same time — which is why detailed predictions win arguments and lose money.",
   "move": "The more specific a forecast, the more convincing and the less likely.",
+  "ask": "Which very specific forecast did I find more convincing precisely because it was specific?",
   "trap": "A story with a mechanism in it feels more probable than a bare claim.",
   "keywords": [
     "conjunction fallacy",

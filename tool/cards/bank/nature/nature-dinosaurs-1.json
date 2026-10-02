@@ -9,6 +9,7 @@
   "question": "What were Luis and Walter Alvarez trying to measure when they found the iridium spike?",
   "answer": "How long a thin clay layer at Gubbio, Italy, took to settle. Iridium is scarce in Earth's crust but arrives steadily in space dust, so they hoped to use it as a clock. The clay held about 30 times the usual level: one huge delivery, not a drizzle. The clock became the crime scene.",
   "move": "An instrument built to answer one question can overturn a bigger one.",
+  "ask": "What question am I measuring that might hide a much bigger one in my data?",
   "keywords": [
     "iridium",
     "alvarez",

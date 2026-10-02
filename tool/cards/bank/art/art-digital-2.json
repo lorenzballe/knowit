@@ -39,5 +39,6 @@
   "source": "Forbes, pixel binning explained, 2022",
   "source_kind": "news_archive",
   "reference": "https://www.forbes.com/sites/paulmonckton/2022/02/28/what-is-pixel-binning-quad-bayer-nonacell/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

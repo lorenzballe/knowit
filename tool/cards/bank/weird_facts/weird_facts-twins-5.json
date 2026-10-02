@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About 1 in 42. Each twin delivery produces two babies, so 1,000 deliveries give 988 single babies and 24 twins: 24 out of 1,012. The global rate has risen by a third since the 1980s, with fertility treatment and later motherhood, to about 1.6 million twin pairs a year.",
   "move": "Check whether the count is of events or of the people in them.",
+  "ask": "Am I counting events, or the people inside them?",
   "trap": "Dividing 1,000 by 12 and forgetting each delivery brings two babies.",
   "keywords": [
     "twinning rate",

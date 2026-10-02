@@ -13,6 +13,7 @@
   ],
   "answer": "A rocket's first stage is most of its cost, and a Falcon 9 booster flies again and again, so that cost is spread across many flights. Reuse also makes a launch every few days possible: building a fresh booster each time would cap the pace and keep prices where the old expendable rockets left them.",
   "move": "Whichever side you took, ask who kept the money that reuse saved.",
+  "ask": "When something got cheaper in my life, who actually kept the savings?",
   "counterpoint": "Falcon 9 undercut its rivals before any booster flew twice: in 2016, with every stage still new, its list price was about $62 million, far below other American rockets. Since reuse became routine, that price has risen, to about $67 million by 2022. In-house manufacturing, simpler design and fixed-price contracts did the cutting; reuse fattened the margins.",
   "keywords": [
     "reusable rockets",

@@ -9,6 +9,7 @@
   "question": "In a rapid stream of letters, why is a second target often missed when it follows the first closely?",
   "answer": "Attention is still busy with the first. At about ten items a second, a second target arriving 200 to 500 milliseconds after the first is often missed, while one arriving immediately after is usually caught. Raymond, Shapiro and Arnell named this gap the attentional blink: the eyes stay open while the mind looks away.",
   "move": "Right after catching one thing is the worst moment to catch another.",
+  "ask": "After I catch one important thing, how likely am I to miss the next one?",
   "keywords": [
     "attentional blink",
     "rapid serial presentation",

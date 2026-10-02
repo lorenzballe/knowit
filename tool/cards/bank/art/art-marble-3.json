@@ -12,6 +12,7 @@
   "withinFactor": 3,
   "answer": "Marble weighs about 2.7 tonnes per m³: 1.9 × 2.7 ≈ 5 tonnes, close to the usual 5.6.",
   "move": "Triple every dimension of a thing and its weight rises twenty-seven times.",
+  "ask": "When I picture something twice as big, do I remember it weighs far more than twice as much?",
   "trap": "Scaling the weight by three, as the height is, instead of by twenty-seven.",
   "hint": "Start from the weight of a man, then scale him up in all three directions.",
   "steps": [

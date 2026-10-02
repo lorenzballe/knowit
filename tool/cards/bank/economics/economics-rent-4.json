@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "It shrank by about 15%. Comparing covered buildings with similar ones built just after the 1980 cut-off, Diamond, McQuade and Qian found landlords sold flats off as condominiums or rebuilt. Covered tenants stayed longer, but the lost supply raised rents citywide by about 5%, paid by the next arrivals.",
   "move": "Judge a protection by the people who arrive after it, too.",
+  "ask": "Who arrives after a protection I like, and what does it do to them?",
   "trap": "Assuming buildings cannot leave the rental market, so supply stays put.",
   "keywords": [
     "rent control",

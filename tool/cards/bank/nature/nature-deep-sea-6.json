@@ -9,6 +9,7 @@
   "question": "Why did oxygen rise inside sealed chambers on the Pacific seabed, 4 km down in total darkness?",
   "answer": "Nobody agrees yet. Sweetman's team expected seabed life to use the oxygen up; instead it climbed. They proposed that metal-rich nodules carry small voltages which, added together, might split seawater. Critics, some funded by a mining company, blame air trapped in the instruments. Whether the abyss makes oxygen without light is unsettled.",
   "move": "A reading that defies expectation is a discovery or a fault; find out which.",
+  "ask": "When a result surprises me, do I investigate or just file it as an error?",
   "keywords": [
     "dark oxygen",
     "polymetallic nodules",

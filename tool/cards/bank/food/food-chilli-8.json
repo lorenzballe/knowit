@@ -29,5 +29,6 @@
   "source": "American Chemical Society, National Historic Landmark",
   "source_kind": "institution",
   "reference": "https://www.acs.org/education/whatischemistry/landmarks/szentgyorgyi.html",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

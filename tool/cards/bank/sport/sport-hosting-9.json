@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Too low, on average. Each honest forecast errs both ways, but picking the lowest selects the one whose errors ran furthest in its favour. This is the winner's curse, first described in auctions for oil leases; Andreff applied it to sporting mega-events. Selection alone builds an overrun into the winning bid before anyone lies.",
   "move": "The pick of many noisy guesses is usually the luckiest error.",
+  "ask": "When I pick the best-looking of many estimates, am I just picking the luckiest mistake?",
   "trap": "Assuming honest errors cancel out, so the winning bid is unbiased.",
   "keywords": [
     "winner's curse",

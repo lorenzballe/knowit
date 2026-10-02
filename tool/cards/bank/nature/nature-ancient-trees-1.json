@@ -9,6 +9,7 @@
   "question": "What did counting rings in bristlecone pines do to the dates of European prehistory?",
   "answer": "Pushed them back by centuries. Radiocarbon dating assumed the air's carbon-14 never varied; Hans Suess measured it in bristlecone rings of known age and found early dates came out too young. Corrected, Europe's megalithic tombs moved back before the eastern tombs they were supposed to copy.",
   "move": "Check the instrument before arguing about what it measured.",
+  "ask": "Before arguing about a result, have I checked that the tool measuring it is working properly?",
   "keywords": [
     "radiocarbon dating",
     "bristlecone pine",

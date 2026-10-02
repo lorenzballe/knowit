@@ -36,5 +36,6 @@
   "source": "Strabo, Geography 5.3.7",
   "source_kind": "primary_document",
   "reference": "Strabo, Geography, vol. 2, trans. H. L. Jones, Loeb Classical Library, Harvard University Press, 1923",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

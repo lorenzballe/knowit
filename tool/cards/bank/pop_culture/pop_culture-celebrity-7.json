@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Star B. The US research firm Marketing Evaluations computes a Q Score as the share naming someone a favourite divided by the share who know them. Star A scores 10 / 90, about 11; star B scores 10 / 20, or 50. It measures how well recognition turns into affection, not how famous someone is.",
   "move": "Ask what a rate is divided by before comparing two of them.",
+  "ask": "Before comparing two rates, do I know what each is divided by?",
   "trap": "Counting only the fans and ignoring who had heard of each.",
   "keywords": [
     "q score",

@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "He may not turn it. In 2008 Thomson reversed her verdict. Suppose he could also send the trolley onto himself: if he would not pay that price to save the five, he cannot make the lone worker pay it. So the old puzzle, why he may turn it when a surgeon may not kill, vanished.",
   "move": "Before making a stranger pay a price, ask whether you would pay it.",
+  "ask": "Before I ask someone else to pay a price, would I pay it myself?",
   "trap": "Assuming the case's champion kept the verdict almost everyone gives.",
   "keywords": [
     "judith jarvis thomson",

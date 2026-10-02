@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The drinking-horn tale is modern folklore. Lagom comes from lag, law or custom, in an old dative plural: roughly by the rules, as is fitting. Etymologists trace it through ordinary legal and everyday usage, with no feast in sight. The horn was added to the word later, not found underneath it.",
   "move": "A story that explains every detail still needs a document behind it.",
+  "ask": "Which story do I believe because it explains every detail, though nobody shows me proof?",
   "trap": "The Viking scene accounts for every syllable, so it feels documented.",
   "keywords": [
     "lagom",

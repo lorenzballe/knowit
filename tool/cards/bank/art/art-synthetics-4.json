@@ -9,6 +9,7 @@
   "question": "How did an iron factory vessel in Scotland give painters one of their strongest modern blues?",
   "answer": "By contaminating a batch. In 1928 chemists at Scottish Dyes in Grangemouth found a stable blue-green impurity in phthalimide made in an iron vessel. The iron had joined the reaction. The compound, named phthalocyanine, was launched by ICI in 1935 as Monastral Blue. A reject batch became a staple of every artists' paint range.",
   "move": "Before throwing out a contaminated batch, ask what the contamination made.",
+  "ask": "When a batch goes wrong, do I ask what the mistake accidentally made?",
   "keywords": [
     "phthalocyanine blue",
     "grangemouth",

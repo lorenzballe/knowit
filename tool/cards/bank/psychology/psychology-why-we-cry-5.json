@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. The flushing idea comes from biochemist William Frey, who found stress-linked hormones such as prolactin in tears and proposed that crying excretes them. But a long cry yields a few millilitres at most, against about five litres of blood. Whatever relief crying brings, it is not a drain on the bloodstream.",
   "move": "Before accepting a mechanism, check whether the quantities involved could possibly do it.",
+  "ask": "Which explanation do I accept without checking whether the quantities could possibly do the job?",
   "trap": "Relief after crying feels like something harmful has left the body.",
   "keywords": [
     "tears",

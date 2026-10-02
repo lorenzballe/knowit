@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About 46 quadrillion. Two dice give 11 totals, 2 to 12, and each total points to a bar, so the choices multiply: 11 to the 16th power, about 4.6 × 10^16. Some tables repeat a bar, so distinct minuets are fewer, but played one a minute they would outlast the universe so far.",
   "move": "When choices chain, multiply them; adding is how intuition fails.",
+  "ask": "Where do I add up my choices when I should multiply them?",
   "trap": "Adding 11 choices for each of 16 bars gives 176.",
   "keywords": [
     "dice game",

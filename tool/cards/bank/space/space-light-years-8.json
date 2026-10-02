@@ -35,5 +35,6 @@
   "source": "Bailer-Jones et al., Astronomy & Astrophysics, 2018",
   "source_kind": "paper",
   "reference": "Bailer-Jones, Rybizki, Andrae & Fouesneau, New stellar encounters discovered in the second Gaia data release, Astronomy & Astrophysics 616, A37, 2018",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

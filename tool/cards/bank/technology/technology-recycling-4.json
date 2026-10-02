@@ -12,6 +12,7 @@
   "question": "Why is the cheapest kind of electric-car battery the least rewarding to recycle?",
   "answer": "Because its positive electrode holds nothing valuable but the lithium. Lithium iron phosphate cells, now in a large share of new electric cars, swap the nickel and cobalt whose resale paid for most recycling for iron and phosphate. Once the lithium is out, what remains of that electrode is the stuff of rust and fertiliser.",
   "move": "Follow the resale value to predict what actually gets saved.",
+  "ask": "What do I only save when it has resale value, and what do I let go?",
   "keywords": [
     "lithium iron phosphate",
     "battery recycling",

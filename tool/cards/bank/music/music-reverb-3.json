@@ -9,6 +9,7 @@
   "question": "How can software make a vocal sound as if sung inside a cathedral it never visited?",
   "answer": "By recording how the cathedral answers a single click. Engineers fire an impulse or a slow sine sweep there and record the reply; convolution then treats every instant of the vocal as a click and sums the echoes. Angelo Farina's 2000 sweep method made this clean. A building's acoustics now travel as a small file.",
   "move": "Know how a system answers one knock, and its answer to anything follows.",
+  "ask": "Do I know how something answers one simple test before I predict what it does to everything?",
   "keywords": [
     "convolution reverb",
     "impulse response",

@@ -9,6 +9,7 @@
   "question": "Why did sulphonamide resistance in British E. coli fail to fall when prescriptions dropped by 97%?",
   "answer": "Because the resistance gene was not travelling alone. UK prescribing fell through the 1990s, yet resistant E. coli from London patients rose from about 40% in 1991 to 46% in 1999. The gene sits on plasmids, mobile loops of DNA, beside genes for drugs still in use, which kept selecting the whole package.",
   "move": "Stopping one cause changes little if the result is bundled with another.",
+  "ask": "What cause did I remove that changed nothing because the result came bundled with another?",
   "keywords": [
     "sulphonamides",
     "e. coli",

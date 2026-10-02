@@ -9,6 +9,7 @@
   "question": "How many machine failures did Google expect in a new server cluster's first year?",
   "answer": "About a thousand, plus thousands of failed hard drives. Jeff Dean's 2009 list for a typical new cluster also counted about 20 whole racks failing, a power unit dropping hundreds of machines at once, and a chance of overheating. At that scale something breaks every few hours, and the software simply routes around the gap.",
   "move": "At large enough scale, rare failures become a schedule to plan for.",
+  "ask": "What rare failure becomes certain at my scale, so that I should plan for it?",
   "keywords": [
     "google",
     "server failures",

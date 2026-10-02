@@ -12,6 +12,7 @@
   "question": "In the opening of 2001: A Space Odyssey, why do the leopard's eyes glow?",
   "answer": "Front projection. The African landscapes were large photographs projected onto a screen of Scotchlite, a material that bounces light straight back towards its source. A half-silvered mirror put the projector on the camera's axis, so the actors hid their own shadows. The leopard's eyes, reflective like the screen, caught the projector beam and shone back.",
   "move": "A flaw in the picture is often the clearest view of how it was made.",
+  "ask": "What flaw have I used to understand how something was made?",
   "keywords": [
     "front projection",
     "scotchlite",

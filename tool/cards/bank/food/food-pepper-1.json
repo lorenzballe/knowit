@@ -9,6 +9,7 @@
   "question": "Which molecule gives both black pepper and some Syrah wines their peppery smell?",
   "answer": "Rotundone, a sesquiterpene that Australian wine researchers identified as a potent aroma in 2008. Peppercorns hold about 10,000 times more of it than a peppery Shiraz. One taster in five on their panel could not smell it even at the highest dose: the same glass is spiced for some and plain for others.",
   "move": "Before arguing about a smell, check that both noses can detect it.",
+  "ask": "Before I argue about something, can we both actually sense the same thing?",
   "keywords": [
     "rotundone",
     "black pepper",
