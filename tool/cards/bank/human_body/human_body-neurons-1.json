@@ -9,6 +9,7 @@
   "question": "What made Golgi's 1873 silver stain able to show a single neuron whole?",
   "answer": "Its unreliability. His black reaction darkens only a few cells in every hundred, seemingly at random, but each one entirely; stain every cell and the slice would be solid black. Why it picks those cells is still unknown. Cajal used it to show neurons are separate cells; Golgi denied it in his 1906 Nobel lecture.",
   "move": "Show everything at once and nothing can be seen.",
+  "ask": "Where am I looking at everything at once and so seeing nothing clearly?",
   "keywords": [
     "golgi stain",
     "camillo golgi",

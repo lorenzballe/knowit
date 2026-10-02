@@ -13,6 +13,7 @@
   ],
   "answer": "The alternative to the algorithm is not neutrality, it is a tired judge before lunch. A score is at least consistent, auditable and testable — you can measure whether it is biased, which is more than anyone has ever been able to do to a bench.",
   "move": "Auditable and fair are different properties. A model can be perfectly consistent about the wrong thing.",
+  "ask": "When I rely on a consistent rule or score, have I checked that it is fair and not just steady?",
   "counterpoint": "A model trained on past arrests learns where police went, not where crime was, and then hands that pattern back wearing the authority of arithmetic. And the judge who follows it is answerable to nobody: the defendant cannot cross-examine a score, and the vendor will not release the weights.",
   "keywords": [
     "bail",

@@ -1252,7 +1252,7 @@ class _SceneCard extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'BAR MOVE',
+                      'WHAT TO KEEP',
                       style: AppText.label(
                         size: 9.5,
                         spacing: 1.4,

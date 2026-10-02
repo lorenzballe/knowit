@@ -9,6 +9,7 @@
   "question": "What happened when a drug made fragile spines about 35% denser?",
   "answer": "Bones broke more, not less. In a four-year trial of 202 women, reported in 1990, sodium fluoride raised spine density by 35% yet did not significantly reduce spinal fractures, while fractures elsewhere roughly tripled. The new bone was dense but fragile, and the cortical shell of the forearm thinned by 4%.",
   "move": "Adding more material does not make a structure stronger if it is badly built.",
+  "ask": "Where am I adding more, hoping to get stronger, when how it is built matters more?",
   "keywords": [
     "sodium fluoride",
     "bone density",

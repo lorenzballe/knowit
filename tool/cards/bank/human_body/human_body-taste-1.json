@@ -12,6 +12,7 @@
   "question": "Why does a pinch of salt taste pleasant while a mouthful of brine tastes repellent?",
   "answer": "Because two different sets of cells answer. Low salt enters dedicated taste cells through a sodium channel, ENaC, and reads as pleasant. At high concentrations salt also fires the cells that sense bitter and sour, which drive rejection. Mice lacking those two cell types stopped avoiding strongly salted water.",
   "move": "When a little pleases and a lot repels, look for a second sensor.",
+  "ask": "What do I enjoy in small amounts that turns unpleasant when I have too much?",
   "keywords": [
     "salt taste",
     "sodium channel",

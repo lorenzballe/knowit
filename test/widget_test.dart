@@ -1967,7 +1967,7 @@ void main() {
       expect(find.text(front.answer), findsOneWidget);
       expect(find.text(front.barMove), findsOneWidget);
       expect(find.text('Source · ${front.source}'), findsNothing);
-      expect(find.text('BAR MOVE'), findsNothing);
+      expect(find.text('WHAT TO KEEP'), findsNothing);
 
       await tester.tap(find.text(front.question));
       await _settle(tester);
@@ -2371,10 +2371,9 @@ void main() {
       expect(asks, hasLength(2));
       expect(asks.map((p) => p.id), isNot(contains(question.id)));
       expect(asks.map((p) => p.principle), contains(first.principle));
-      expect(
-        app.todaysDeck.map((p) => p.principle),
-        isNot(contains(second.principle)),
-      );
+      // The second is not asked today; it waits. (The day's own question
+      // may share its principle by chance: the pool is what it is.)
+      expect(asks.map((p) => p.id), isNot(contains(second.id)));
 
       // The one left over waits on the finished day.
       await finish(tester);
@@ -3415,11 +3414,11 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('Tap to reveal'), findsOneWidget);
-      expect(find.text('BAR MOVE'), findsNothing);
+      expect(find.text('WHAT TO KEEP'), findsNothing);
 
       await tester.tap(find.text('Tap to reveal'));
       await tester.pumpAndSettle();
-      expect(find.text('BAR MOVE'), findsOneWidget);
+      expect(find.text('WHAT TO KEEP'), findsOneWidget);
     });
 
     testWidgets('a card that asks will not turn over until you commit', (
@@ -3431,7 +3430,7 @@ void main() {
       // Tapping the question is not an answer, so the card stays put.
       await tester.tap(find.text(pick.question));
       await tester.pumpAndSettle();
-      expect(find.text('BAR MOVE'), findsNothing);
+      expect(find.text('WHAT TO KEEP'), findsNothing);
     });
 
     testWidgets('answering asks how sure you are, then turns the card', (
@@ -3447,7 +3446,7 @@ void main() {
 
       // Committed, but not revealed: the card asks for confidence first.
       expect(find.text('How sure are you?'), findsOneWidget);
-      expect(find.text('BAR MOVE'), findsNothing);
+      expect(find.text('WHAT TO KEEP'), findsNothing);
 
       await tester.tap(find.text('80%'));
       await tester.pumpAndSettle();
@@ -3456,7 +3455,7 @@ void main() {
       expect(given[pick.id]?.confidence, 80);
       expect(find.textContaining('You got it'), findsOneWidget);
       expect(find.textContaining('you said 80% sure'), findsOneWidget);
-      expect(find.text('BAR MOVE'), findsOneWidget);
+      expect(find.text('WHAT TO KEEP'), findsOneWidget);
     });
 
     testWidgets('a wrong pick names the trap', (tester) async {
@@ -3530,7 +3529,7 @@ void main() {
 
       expect(find.text(number.hint), findsOneWidget);
       // A hint is not the answer: the card has not turned.
-      expect(find.text('BAR MOVE'), findsNothing);
+      expect(find.text('WHAT TO KEEP'), findsNothing);
     });
 
     testWidgets('an estimate accepts anything in the right ballpark', (
@@ -3920,7 +3919,7 @@ void main() {
       // Tapping must not open an answer the reader has to re-earn.
       await tester.tap(find.text(pill.question));
       await tester.pumpAndSettle();
-      expect(find.text('BAR MOVE'), findsNothing);
+      expect(find.text('WHAT TO KEEP'), findsNothing);
       expect(find.text('AGAIN'), findsOneWidget);
     });
   });
@@ -4579,7 +4578,7 @@ void main() {
       const List<List<String>> drawn = [
         [], // the mark, found by its image below
         [], // falling cards, whose box is checked as a whole
-        ['ECONOMICS', 'tap to reveal', 'BAR MOVE', 'Source · Stanford GSB'],
+        ['ECONOMICS', 'tap to reveal', 'WHAT TO KEEP', 'Source · Stanford GSB'],
         ['Space', 'Economics', 'Technology', 'Human body', 'Science', 'Cinema'],
         [],
       ];

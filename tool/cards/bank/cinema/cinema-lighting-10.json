@@ -34,9 +34,6 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "builds_on": [
-    "cinema-lighting-5"
-  ],
   "figure": "none",
   "source": "Brown, Motion Picture and Video Lighting",
   "source_kind": "book",

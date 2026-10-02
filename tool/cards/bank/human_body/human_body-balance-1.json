@@ -9,6 +9,7 @@
   "question": "What makes the room spin when someone with the commonest kind of vertigo rolls over in bed?",
   "answer": "Loose crystals. Grains of calcium carbonate, the otoconia, normally rest on the inner ear's gravity sensors. When some break free and drift into a semicircular canal, the part that senses rotation, they slosh with each tilt and fake a spin. A sequence of head turns from John Epley, 1992, rolls them back out.",
   "move": "A sensor fed the wrong input will report it faithfully.",
+  "ask": "When something feels off, could the signal be wrong while the part reporting it is fine?",
   "keywords": [
     "vertigo",
     "otoconia",

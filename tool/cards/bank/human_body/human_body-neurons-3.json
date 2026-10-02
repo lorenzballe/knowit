@@ -9,6 +9,7 @@
   "question": "What limits how many neurons in the cortex can fire at the same moment?",
   "answer": "Energy. Each spike is paid for by pumping back the ions that crossed the membrane. Dividing the cortex's power supply by the cost of a spike, Lennie estimated that possibly fewer than 1% of cortical neurons can be strongly active at once. Blood is steered to the busiest areas, and brain scanners watch that surge.",
   "move": "Before asking why a system does so little, ask what it can afford.",
+  "ask": "Before I ask why I do so little at once, have I asked what I can really afford?",
   "keywords": [
     "action potentials",
     "energy budget",
