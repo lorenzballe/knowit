@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About a fifth as much. Pooling hundreds of field counts from every continent but Antarctica, Schultheiss and colleagues estimated 20 quadrillion ants holding about 12 million tonnes of carbon, roughly a fifth of humanity's. The old claim of equal weight had never been measured. It still comes to some 2.5 million ants per person.",
   "move": "A figure repeated often enough starts to sound measured; ask who measured it.",
+  "ask": "Which number do I quote because it has been repeated often, without knowing who counted it?",
   "trap": "The famous claim that ants match humans by weight comes to mind.",
   "keywords": [
     "ants",

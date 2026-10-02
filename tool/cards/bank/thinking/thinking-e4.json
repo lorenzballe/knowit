@@ -34,5 +34,6 @@
   "figure": "none",
   "source": "Urban transit fleet statistics",
   "source_kind": "arithmetic",
-  "reference": "Department for Transport, Annual bus statistics: England, 2019"
+  "reference": "Department for Transport, Annual bus statistics: England, 2019",
+  "disabled": true
 }

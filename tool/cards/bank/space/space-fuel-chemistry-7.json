@@ -28,5 +28,6 @@
   "source": "NASA, NSTS News Reference Manual, 1988",
   "source_kind": "institution",
   "reference": "NASA, National Space Transportation System Reference, NSTS 1988 News Reference Manual, 1988",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

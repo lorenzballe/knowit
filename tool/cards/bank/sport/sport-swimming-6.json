@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The block and wall sensors do not fire at the exact instant of the events they record, so the rules allow a reading of up to 0.03 seconds before the touch. A swimmer shown leaving 0.02 early may still have been on the block when the hand hit the wall.",
   "move": "Before judging by an instrument, learn which way it errs.",
+  "ask": "Before I judge by an instrument, do I know which way it tends to err?",
   "trap": "Taking the sensor reading as the exact moment the swimmer left.",
   "keywords": [
     "relay takeover",

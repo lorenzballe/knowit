@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Rock shattered and welded by impacts. The smooth Cayley plains looked like lava, and the site was chosen partly to sample volcanism in the highlands. Nearly every rock the crew brought back was breccia: older rock broken and fused by impacts. The plains are now read as debris thrown from distant basins.",
   "move": "A resemblance seen from far away is a hypothesis, not a finding.",
+  "ask": "Which impression formed from far away am I treating as a finding?",
   "trap": "Trusting that ground which looked like lava from orbit was lava.",
   "keywords": [
     "apollo 16",

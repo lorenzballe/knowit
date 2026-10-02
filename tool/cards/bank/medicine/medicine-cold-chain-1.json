@@ -9,6 +9,7 @@
   "question": "How can a nurse with no thermometer tell whether a vial of vaccine has been spoiled by heat?",
   "answer": "From a sticker that keeps a running total of heat. A vaccine vial monitor is a square inside a circle; the square darkens faster the warmer it gets, and never lightens. Once it matches the circle, the vial is discarded. First used on oral polio vaccine in 1996, billions have been printed since.",
   "move": "Measure the total dose, not the reading at the moment you look.",
+  "ask": "What am I judging by a snapshot when only the total exposure over time matters?",
   "keywords": [
     "vaccine vial monitor",
     "heat exposure",

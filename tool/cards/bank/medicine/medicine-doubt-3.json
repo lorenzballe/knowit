@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. RotaShield, a rotavirus vaccine licensed in 1998, was pulled in 1999 after reports of intussusception, a telescoping of the bowel, reached a national reporting system. The excess risk was on the order of 1 in 10,000 infants. Trials of about 10,000 children could not reliably see so rare an event; mass use could.",
   "move": "A study cannot see an event much rarer than one in its sample size.",
+  "ask": "What event am I declaring safe from a sample too small to ever have seen it?",
   "trap": "Assuming a licensed vaccine's trials would have caught any serious harm.",
   "keywords": [
     "rotashield",

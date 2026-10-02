@@ -11,6 +11,7 @@
   "unit": "percent",
   "answer": "About 64%.",
   "move": "Run enough checks on anything and something will look wrong.",
+  "ask": "How many things am I checking in my life, and how many false alarms should that guarantee?",
   "trap": "Guessing 5%, the rate for one test, for the whole panel.",
   "hint": "Work out the chance that every result lands inside its range, then subtract.",
   "steps": [

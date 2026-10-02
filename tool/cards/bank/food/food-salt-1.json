@@ -14,7 +14,8 @@
   "unit": "°C",
   "tolerance": 0.02,
   "answer": "0.342 x 0.512 = about 0.18 °C.",
-  "move": "Before crediting an ingredient with an effect, size the effect.",
+  "move": "Before crediting a small ingredient with a big effect, work out how big the effect really is.",
+  "ask": "Before I credit a tiny ingredient with a big effect, have I sized the effect?",
   "trap": "Believing salted water boils hotter enough to cook pasta faster.",
   "hint": "Salt weighs 58.4 g per mole and splits in two; count particles, then use water's boiling constant, 0.512 °C per mole per kg.",
   "steps": [

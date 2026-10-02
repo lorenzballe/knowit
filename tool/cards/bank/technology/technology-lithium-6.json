@@ -29,5 +29,6 @@
   "source": "Degradation in lithium ion battery current collectors, 2021",
   "source_kind": "paper",
   "reference": "doi:10.1088/2515-7655/ac0c04",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

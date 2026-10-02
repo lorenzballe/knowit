@@ -34,5 +34,6 @@
   "source": "Braun et al., Science, 2013",
   "source_kind": "paper",
   "reference": "Braun, Ronzheimer, Schreiber, Hodgman, Rom, Bloch & Schneider, Negative Absolute Temperature for Motional Degrees of Freedom, Science, 2013",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "Phoning in costs time and requires a reason, so the line collects people with a strong view — usually against something. Ten thousand callers chosen by their own motivation tell you less than a thousand chosen at random.",
   "move": "Anyone who selected themselves is not a sample of anybody else.",
+  "ask": "Which loud opinion did I take as the view of everyone, when it came from people who chose to speak?",
   "trap": "A large number of responses feels like a large sample.",
   "keywords": [
     "sampling",

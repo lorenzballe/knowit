@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Feeding weakens a bee, but the mite's worse harm is the viruses it injects, above all deformed wing virus. When varroa reached Hawaii, Martin and colleagues found that virus's prevalence in bees rose from about 10% to 100%, with a millionfold higher load. Workers emerge with crumpled wings that cannot fly.",
   "move": "Look past the visible attacker to whatever it brings in with it.",
+  "ask": "Which problem am I blaming on the visible culprit while overlooking what it brings along with it?",
   "trap": "The mite can be seen on the bee; the virus cannot.",
   "keywords": [
     "varroa mite",

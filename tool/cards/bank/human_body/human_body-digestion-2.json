@@ -9,6 +9,7 @@
   "question": "Why does the pancreas not digest itself with the protein-cutting enzymes it makes?",
   "answer": "It makes them switched off. Trypsin leaves as inactive trypsinogen; its normal key, an enzyme called enteropeptidase, sits on the lining of the small intestine; freed trypsin then activates the rest in a cascade. A single mutation that stops trypsin being shut down causes a hereditary pancreatitis, in which the gland digests itself.",
   "move": "Ship the dangerous tool unarmed, and keep the trigger somewhere else.",
+  "ask": "What dangerous thing in my work or life do I keep armed when it should be switched off until needed?",
   "keywords": [
     "pancreas",
     "trypsinogen",

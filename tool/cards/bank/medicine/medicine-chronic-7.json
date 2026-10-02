@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Pain reprocessing therapy teaches patients to treat their pain as a false alarm from the brain, not damage. 33 of 50 reached 0 or 1 out of 10, against 10 of 51 given a saline injection and 5 of 50 on usual care. Critics note the controls got far less attention.",
   "move": "An alarm that keeps ringing may be faulty rather than warning of fire.",
+  "ask": "Which alarm in my life keeps ringing without a fire, and what would I do if I trusted it less?",
   "trap": "Assuming pain that lasts years must come from damaged tissue.",
   "keywords": [
     "pain reprocessing therapy",

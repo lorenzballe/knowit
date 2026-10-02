@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. The circulation is two loops in series: every drop the right ventricle pumps must cross the lungs before the left ventricle can send it anywhere else. So the lungs take the heart's whole output, about 5 litres a minute, while brain, gut, kidneys and muscles share the equal flow on the other side.",
   "move": "In a chain, every link carries the full load.",
+  "ask": "Which link in my chain carries the full load, and am I treating it as minor?",
   "trap": "Sizing an organ's blood supply by its weight, as for other organs.",
   "keywords": [
     "pulmonary circulation",

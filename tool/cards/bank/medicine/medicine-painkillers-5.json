@@ -11,6 +11,7 @@
   "unit": "patients",
   "answer": "48 - 10 = 38 more patients.",
   "move": "Turn a treatment ratio into people before comparing two options.",
+  "ask": "Which two options could I compare better by turning ratios into real people?",
   "trap": "Assuming the prescription opioid must beat an over-the-counter pill.",
   "hint": "Divide the patients by each NNT, then compare the two results.",
   "steps": [

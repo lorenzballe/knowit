@@ -28,5 +28,6 @@
   "source": "Farley et al., Space Science Reviews, 2020",
   "source_kind": "paper",
   "reference": "Farley et al., Mars 2020 Mission Overview, Space Science Reviews, 2020",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

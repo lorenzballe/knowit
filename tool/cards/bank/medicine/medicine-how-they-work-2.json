@@ -9,6 +9,7 @@
   "question": "Why does someone who survives tetanus still need the tetanus vaccine afterwards?",
   "answer": "Because the disease leaves no immunity. Tetanus toxin is so potent that the amount which locks the muscles is far too small to provoke an antibody response. The vaccine delivers a larger dose of toxin made harmless, a toxoid, which the immune system can see. Survivors leave hospital with a course of injections.",
   "move": "Surviving a threat and learning to recognise it are two different events.",
+  "ask": "Which hard experience have I survived without actually learning to recognise it next time?",
   "keywords": [
     "tetanus",
     "toxoid",

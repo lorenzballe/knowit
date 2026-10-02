@@ -35,5 +35,6 @@
   "source": "SwimSwam, oldest long-course world records",
   "source_kind": "news_archive",
   "reference": "https://swimswam.com/with-biedermanns-400-free-mark-broken-what-are-the-oldest-remaining-lcm-world-records/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

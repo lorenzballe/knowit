@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Shorter than 6 seconds. Shot lengths are lopsided: most shots are brief, and a few long takes drag the average up. Barry Salt's counts, begun in the 1970s, show this long tail film after film. One two-minute take adds as much running time as twenty 6-second shots.",
   "move": "When a few giants sit in the data, the average describes almost nobody.",
+  "ask": "Which average am I trusting when a few extreme cases are skewing it?",
   "trap": "Treating the average shot as the typical one, as if lengths were symmetrical.",
   "keywords": [
     "average shot length",

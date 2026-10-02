@@ -17,6 +17,7 @@
   "correct": 0,
   "answer": "True. In Neil Stewart's experiment, people shown a minimum repaid less than people shown no minimum at all, and later studies in Britain and the United States found the same pull. A floor meant to guarantee some repayment becomes the number people start from. Real card accounts show payments bunched at the printed minimum.",
   "move": "Written minimums turn into targets; pick your number before reading theirs.",
+  "ask": "Before I read what they suggest I pay or do, have I chosen my own number?",
   "trap": "Assuming a minimum can only push payments upward.",
   "keywords": [
     "credit cards",

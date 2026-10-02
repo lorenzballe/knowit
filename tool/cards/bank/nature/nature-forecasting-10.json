@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. In the 1980s southern forecasts lagged well behind. From the 1990s, models learned to take in satellite measurements directly, and satellites see both hemispheres alike. By the early 2000s the gap had nearly closed, as Simmons and Hollingsworth showed. Over the empty Southern Ocean, most of the observing network is now in orbit.",
   "move": "Check that an old handicap still binds before explaining anything with it.",
+  "ask": "Which old excuse for my results do I keep repeating after it stopped being true?",
   "trap": "Reasoning from the station map, which still favours the north.",
   "keywords": [
     "southern hemisphere",

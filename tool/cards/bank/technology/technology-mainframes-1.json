@@ -9,6 +9,7 @@
   "question": "Why does a byte hold eight bits, rather than six or ten?",
   "answer": "Because IBM chose eight for its System/360 in 1964. Its earlier machines used six-bit characters; eight bits allowed 256 symbols, lower-case included, or two decimal digits of four bits each, suiting both text and business sums. The 360 sold so widely that its byte became everyone's. Every file size is still counted in it.",
   "move": "Many standards are one successful product's choice that everyone copied.",
+  "ask": "Which standard I follow is merely one early product's choice that everyone copied?",
   "keywords": [
     "byte",
     "system/360",

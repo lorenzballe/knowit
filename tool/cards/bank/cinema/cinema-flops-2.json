@@ -11,6 +11,7 @@
   "unit": "million dollars",
   "answer": "30 / 0.6 = 50 million dollars.",
   "move": "When each step keeps a fixed share, the first step is most of the total.",
+  "ask": "In which of my results does the first step matter far more than all the later ones?",
   "trap": "Expecting a long tail that keeps adding, when each weekend shrinks.",
   "hint": "A total that keeps a fixed fraction each time adds up to the first term divided by what is lost.",
   "steps": [

@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. In imagery rehearsal therapy, patients write a changed version of the nightmare and rehearse it for minutes a day. In a 2001 trial with 168 sexual assault survivors, nightmares fell markedly against a waiting-list group given nothing yet. The waking mind edited the script, and the sleeping mind often used the new version.",
   "move": "Rehearse the version you want, and the old one gets less airtime.",
+  "ask": "Which recurring bad scene could I rehearse in my head the way I want it to end?",
   "trap": "Assuming nothing done by day can reach what happens in dreams.",
   "keywords": [
     "nightmares",

@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Incomes on track; hours far off. Real income per head in Britain and the United States has risen roughly five- to eightfold since 1930, inside Keynes's range: growth of 2% a year compounds to about sevenfold in a century. Weekly hours fell only modestly. The riches arrived; the leisure mostly did not.",
   "move": "Before calling a century forecast wild, compound the growth rate yourself.",
+  "ask": "Which long-range forecast did I dismiss without compounding the growth rate myself?",
   "trap": "Assuming an eightfold rise in a century must be fantasy.",
   "keywords": [
     "keynes",

@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Rimonabant. In Benedetti's tourniquet-pain experiments, naloxone blocked a placebo that followed morphine but not one that followed ketorolac, which is not an opioid. In 2011 the cannabinoid blocker switched that one off instead. The brain had learnt to echo the drug it had been given, by a different chemical route each time.",
   "move": "A learnt response can copy the path of whatever taught it.",
+  "ask": "Which of my responses is a learnt reflex copying the path of something that once taught it?",
   "trap": "Naloxone, because placebo pain relief is known to run on opioids.",
   "keywords": [
     "placebo analgesia",

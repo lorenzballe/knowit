@@ -9,6 +9,7 @@
   "question": "Why did chemists take 44 years to notice that one rare-earth 'element' was really two?",
   "answer": "Because the rare earths are chemical near-copies. Carl Mosander named didymium, the twin, in 1841; only in 1885 did Carl Auer von Welsbach split it into praseodymium and neodymium, by crystallising its salts over and over. Refiners still face the same sameness: separation plants run the liquid through hundreds of extraction tanks in series.",
   "move": "When two things behave identically, expect them to be counted as one.",
+  "ask": "What do I count as one thing that is really two, because they behave alike?",
   "keywords": [
     "didymium",
     "neodymium",

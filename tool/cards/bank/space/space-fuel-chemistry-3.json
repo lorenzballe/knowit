@@ -11,6 +11,7 @@
   "unit": "per cent",
   "answer": "19 ÷ 20 = 95% propellant.",
   "move": "Anything that must carry its own fuel pays compound interest on it.",
+  "ask": "Where does the cost of carrying my own supplies compound faster than I admit?",
   "trap": "Guessing about 75%, as if three times the speed needed three times the fuel.",
   "hint": "Each 3 km/s of speed multiplies the starting mass by e, about 2.7.",
   "steps": [

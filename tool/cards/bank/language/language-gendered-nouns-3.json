@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "A little under half. In the World Atlas of Language Structures, 112 of the 257 languages sampled have gender and 145 have none. Finnish, Turkish and Japanese manage without it. French, German, Spanish, Russian and Hindi all have it because they descend from one family, Indo-European, whose ancestor did.",
   "move": "Before generalising, ask whether your examples are cousins.",
+  "ask": "Before I generalise from my examples, are they all just cousins of one another?",
   "trap": "Judging the world by the European languages one happens to have studied.",
   "keywords": [
     "grammatical gender",

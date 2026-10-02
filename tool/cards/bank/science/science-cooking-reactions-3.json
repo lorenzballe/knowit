@@ -9,6 +9,7 @@
   "question": "What turns a cut onion's chemistry into tear gas?",
   "answer": "A second enzyme, found only in 2002. Cutting lets the enzyme alliinase break down sulphur compounds, and the tear gas was assumed to be a by-product. Japanese researchers found lachrymatory-factor synthase, which builds it on purpose. Suppress that gene, they suggested, and an onion could keep its flavour without the tears.",
   "move": "When a harmful result looks accidental, check whether something is built to make it.",
+  "ask": "Which harm I treat as an accident might actually be a defence or feature built in on purpose?",
   "keywords": [
     "onions",
     "tears",

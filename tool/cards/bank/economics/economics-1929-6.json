@@ -9,6 +9,7 @@
   "question": "Why do two standard series disagree by about seven points on American unemployment in 1936?",
   "answer": "Because of how relief workers are counted. Stanley Lebergott's series treats people on federal work programmes such as the WPA as unemployed and gives about 17%; Michael Darby counted them as employed and got about 10%. Private jobs are identical in both. Whether the New Deal recovery looks fast or slow turns on one column.",
   "move": "Before comparing two figures, check who each one counts as what.",
+  "ask": "Before I compare two numbers this week, do I know who each one counts and who it leaves out?",
   "keywords": [
     "unemployment",
     "works progress administration",

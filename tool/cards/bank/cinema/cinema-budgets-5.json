@@ -18,6 +18,7 @@
   "correct": 0,
   "answer": "About 20%. The days must all go well, so the chances multiply: 0.95 multiplied by itself 30 times is about 0.21. That is why budgets carry a contingency, often around a tenth of the total, and why outdoor schedules keep cover sets ready for a wet morning. A safe-looking day is a risky month.",
   "move": "Many small risks in a row add up to a likely failure.",
+  "ask": "Which plan of mine needs many small things to go right, and what are the real odds?",
   "trap": "About 95%, since every single day is very likely fine.",
   "keywords": [
     "contingency",

@@ -9,6 +9,7 @@
   "question": "Why did an ancient Greek lawgiver punish crimes committed drunk more harshly, not less?",
   "answer": "Because getting drunk was the first step. Aristotle reports that Pittacus of Mytilene doubled the penalty for offences done in drink: the drunk man acts in ignorance, but had the power not to get drunk. Whoever causes his own ignorance, Aristotle argued, answers for what follows from it. The blame begins at the first cup.",
   "move": "When someone could not help it, ask whether they could have helped getting there.",
+  "ask": "When I say I could not help it, could I have helped getting there?",
   "keywords": [
     "pittacus",
     "aristotle",

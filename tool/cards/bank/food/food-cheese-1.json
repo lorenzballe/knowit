@@ -29,5 +29,6 @@
   "source": "US FDA, 21 CFR 184.1685",
   "source_kind": "primary_document",
   "reference": "US Food and Drug Administration, Chymosin enzyme preparation, affirmation of GRAS status, Federal Register, 23 March 1990",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

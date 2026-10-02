@@ -40,5 +40,6 @@
   "source": "Levine, JACC, 1997",
   "source_kind": "paper",
   "reference": "Levine, Rest heart rate and life expectancy, Journal of the American College of Cardiology, 1997",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -29,5 +29,6 @@
   "source": "Merrill et al., JAMA, 1956",
   "source_kind": "paper",
   "reference": "Merrill, Murray, Harrison & Guild, Successful homotransplantation of the human kidney between identical twins, Journal of the American Medical Association, 1956",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

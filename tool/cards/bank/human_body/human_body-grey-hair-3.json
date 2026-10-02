@@ -9,6 +9,7 @@
   "question": "What goes wrong with the pigment stem cells in a follicle as hair greys?",
   "answer": "They get stranded. In mice, these stem cells normally shuttle between two compartments of the follicle, maturing in one and reverting in the other. Over many cycles of shedding and regrowth, more lodge in the compartment where they cannot receive the signal to make pigment cells. They are still there, in the wrong room.",
   "move": "Before concluding something has run out, check whether it has only moved.",
+  "ask": "Before concluding that something in me has run out, have I checked whether it has only moved?",
   "keywords": [
     "melanocyte stem cells",
     "hair follicle",

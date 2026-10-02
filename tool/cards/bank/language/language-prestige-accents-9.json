@@ -18,6 +18,7 @@
   "correct": 2,
   "answer": "Lower than the English one. Each speaker recorded both versions, so any gap had to come from the language, not the voice. French-Canadian listeners rated the English guises better-looking, more intelligent and more dependable, and on some traits marked the French guises down further than English-Canadian listeners did.",
   "move": "A group can absorb the very ranking that places it lower.",
+  "ask": "Which low ranking have I absorbed from the group that gave it to me?",
   "trap": "Expecting listeners to favour speakers of their own language.",
   "keywords": [
     "matched guise",

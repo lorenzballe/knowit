@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Under 1 in 10. Each sign appears in only a minority of patients, and all three together mostly in advanced disease. Most kidney cancers are now found by chance, on scans done for something else, before any symptom at all. The textbook triad describes the late case that doctors of an earlier era saw most.",
   "move": "Every extra detail in a classic picture makes fewer real cases fit it.",
+  "ask": "Which classic picture of a problem do I hold, and how few real cases fit every detail?",
   "trap": "About half, since each of the three is the classic sign.",
   "keywords": [
     "kidney cancer",

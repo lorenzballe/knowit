@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The split follows the field of view, not the eye: everything left of centre, seen by either eye, goes to the right hemisphere. At the optic chiasm only fibres from the inner half of each retina cross, so each optic nerve divides roughly in two. Close one eye and both hemispheres still see.",
   "move": "Know what is being sorted before guessing where it will go.",
+  "ask": "Do I know what is being sorted before I guess where it ends up?",
   "trap": "Assuming the eyes cross over just as the limbs do.",
   "keywords": [
     "optic chiasm",

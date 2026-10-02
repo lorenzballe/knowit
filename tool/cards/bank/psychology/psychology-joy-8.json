@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Following thousands of Germans for 15 years, Lucas and colleagues found life satisfaction fell sharply with unemployment and, on average, did not climb back to its earlier level even after re-employment. The set point, the level people supposedly drift back to, had itself moved. The job came back; the old satisfaction did not.",
   "move": "Recovery from a blow is a claim to check, not a law to assume.",
+  "ask": "After a blow in my life, am I assuming full recovery without checking?",
   "trap": "Assuming everyone drifts back to a fixed personal level of happiness.",
   "keywords": [
     "unemployment",

@@ -29,5 +29,6 @@
   "source": "Villanueva et al., Science, 2015",
   "source_kind": "paper",
   "reference": "doi:10.1126/science.aaa3630",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

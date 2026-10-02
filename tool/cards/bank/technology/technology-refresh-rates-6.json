@@ -32,5 +32,6 @@
   "source": "Apple Newsroom, Apple Watch Series 5, 2019",
   "source_kind": "company",
   "reference": "https://www.apple.com/newsroom/2019/09/apple-unveils-apple-watch-series-5/",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

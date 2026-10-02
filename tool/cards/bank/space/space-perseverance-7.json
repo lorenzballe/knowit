@@ -35,5 +35,6 @@
   "source": "NASA JPL accident investigation, 2024",
   "source_kind": "institution",
   "reference": "https://www.jpl.nasa.gov/news/nasa-performs-first-aircraft-accident-investigation-on-another-world/",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

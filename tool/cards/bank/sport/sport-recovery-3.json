@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. In a 12-week trial, men who sat in cold water after each strength session gained less muscle and strength than men who did an active cool-down instead. Cold damps the inflammation and blood flow that signal muscles to adapt. It can help an athlete feel fresher for tomorrow's match.",
   "move": "Feeling better and getting better are different results; check which one was measured.",
+  "ask": "Am I confusing feeling better with getting better in something I do regularly?",
   "trap": "Taking less soreness the next day as proof of better recovery.",
   "keywords": [
     "ice baths",

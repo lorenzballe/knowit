@@ -9,6 +9,7 @@
   "question": "How can a camera pan across a miniature hung close to the lens without the illusion breaking?",
   "answer": "By turning around the lens's nodal point, the spot inside it where the light rays cross. Pivoted there, near and far objects keep their alignment, so a model castle hung a metre from the camera stays perched on a real hill kilometres away. Pivot anywhere else and the model slides across the landscape.",
   "move": "Find the one point from which near and far never shift against each other.",
+  "ask": "What point of view would make a hard problem stop shifting in front of me?",
   "keywords": [
     "hanging miniature",
     "nodal point",

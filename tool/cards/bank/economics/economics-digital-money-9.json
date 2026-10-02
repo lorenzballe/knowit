@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Nothing, by government rule. Since January 2020 banks and apps may not charge merchants for ordinary UPI payments; the government pays them a small subsidy instead. With no cost at either end, UPI passed ten billion payments a month in 2023. A street vendor's printed code takes payments as free as a department store's.",
   "move": "When a service is free at both ends, look for who pays in between.",
+  "ask": "When something is free to me at both ends, who pays in the middle?",
   "trap": "Expecting card-like fees, since someone must pay to run the system.",
   "keywords": [
     "upi",

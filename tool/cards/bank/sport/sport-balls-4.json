@@ -29,5 +29,6 @@
   "source": "CBS Sports, golf ball rollback, 2023",
   "source_kind": "news_archive",
   "reference": "https://www.cbssports.com/golf/news/usga-r-a-announce-universal-golf-ball-rollback-to-limit-distance-with-implementation-set-for-2028",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

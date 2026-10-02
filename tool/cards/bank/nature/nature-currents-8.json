@@ -35,5 +35,6 @@
   "source": "Bower et al., Nature, 2009",
   "source_kind": "paper",
   "reference": "Bower et al., Interior pathways of the North Atlantic meridional overturning circulation, Nature, 2009",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "A few per cent of national income. Fogel measured railways against the next best option, canals, rivers and wagons, not against nothing, and put the saving on moving farm goods below 5% of 1890 output. The exact figure is still argued over, but the method stuck: an invention is worth its lead over the alternative.",
   "move": "Value any invention by its lead over the next best option.",
+  "ask": "When I value something new, do I compare it with nothing or with my next best option?",
   "trap": "Comparing railways with no transport at all rather than with canals.",
   "keywords": [
     "railways",

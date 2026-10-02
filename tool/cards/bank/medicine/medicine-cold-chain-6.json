@@ -9,6 +9,7 @@
   "question": "Why does a vaccine carried outside the cold chain need a second heat sticker besides the vial monitor?",
   "answer": "Because the vial monitor sums heat over days and barely registers a short spike. The controlled temperature chain, first licensed in 2012 for a meningitis A vaccine at up to 40 °C for four days, adds a peak threshold indicator that changes once 40 °C is passed. Benin's first such campaign reached about 150,000 people.",
   "move": "A running total and a hard ceiling guard against different failures.",
+  "ask": "Am I guarding against only a running total, or a hard limit too, in something that matters?",
   "keywords": [
     "controlled temperature chain",
     "menafrivac",

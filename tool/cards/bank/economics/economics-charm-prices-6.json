@@ -38,5 +38,6 @@
   "source": "Wang and Wong, Richmond Fed, 2025",
   "source_kind": "institution",
   "reference": "https://www.richmondfed.org/publications/research/economic_brief/2025/eb_25-27",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

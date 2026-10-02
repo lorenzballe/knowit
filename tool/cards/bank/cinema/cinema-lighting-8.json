@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Slightly redder. Moonlight is sunlight bounced off grey-brown lunar rock, which reflects red a little better than blue. The blue is added by the eye: in dim light the rod cells take over, and they are most sensitive to blue-green, so night looks cool. Cinema copies the perception, not the physics.",
   "move": "Ask whether a colour belongs to the thing or to the eye that sees it.",
+  "ask": "Which quality do I attribute to a thing when it really belongs to my eyes?",
   "trap": "Picturing cool moonlight because cinema has always painted night blue.",
   "keywords": [
     "moonlight",

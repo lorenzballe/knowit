@@ -12,6 +12,7 @@
   "question": "Why can a cargo owner whose goods arrive undamaged still get a bill after a container ship's accident?",
   "answer": "Because of general average, a maritime rule older than insurance: when a ship spends or sacrifices something to save the voyage, every cargo owner aboard shares the cost in proportion to value. Ever Given's owner declared it after the 2021 Suez grounding. Intact goods are released only once their owners post security.",
   "move": "Sharing a risk means paying for other people's bad luck too.",
+  "ask": "Which shared arrangement of mine makes me pay for other people's bad luck?",
   "keywords": [
     "general average",
     "ever given",

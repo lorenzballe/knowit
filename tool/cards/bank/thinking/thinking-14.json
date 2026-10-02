@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "Road travel kills far more people per kilometre than flying. Measured after the 2001 attacks, the shift from planes to cars in the following months was estimated to have cost more American lives than were lost aboard the aircraft.",
   "move": "The safest place after a plane crash is on a plane.",
+  "ask": "Which fear of mine was set by a vivid news story, and what does the quieter risk next to it look like?",
   "trap": "Fear tracks how vivid a risk is, not how large.",
   "keywords": [
     "availability",

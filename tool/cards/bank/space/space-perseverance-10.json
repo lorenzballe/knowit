@@ -9,6 +9,7 @@
   "question": "Why does Perseverance carry a slice of a Martian meteorite that was found in Oman?",
   "answer": "To check its own eyes. The slice, of Sayh al Uhaymir 008, sits on the calibration target of SHERLOC, an instrument that reads minerals and organic traces with an ultraviolet laser. A known Martian rock lets the team tell a drifting instrument from a real novelty. Beside it, spacesuit fabric and visor samples weather.",
   "move": "To trust a measurement of the unknown, carry something already known.",
+  "ask": "What known reference do I use to check a measurement of something unknown?",
   "keywords": [
     "sherloc",
     "martian meteorite",

@@ -56,5 +56,6 @@
   "source": "Event Horizon Telescope Collaboration, 2019",
   "source_kind": "paper",
   "reference": "Event Horizon Telescope Collaboration, First M87 Event Horizon Telescope Results. I. The Shadow of the Supermassive Black Hole, Astrophysical Journal Letters, 2019",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

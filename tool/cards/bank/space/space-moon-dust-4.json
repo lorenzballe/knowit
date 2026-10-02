@@ -35,5 +35,6 @@
   "source": "Speyerer et al., Nature, 2016",
   "source_kind": "paper",
   "reference": "Speyerer, Povilaitis, Robinson, Thomas & Wagner, Quantifying crater production and regolith overturn on the Moon with temporal imaging, Nature, 2016",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

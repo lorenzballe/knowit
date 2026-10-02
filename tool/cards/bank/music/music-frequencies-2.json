@@ -9,6 +9,7 @@
   "question": "Why does a clarinet jump a twelfth, not an octave, when the player opens its register key?",
   "answer": "Because its bore is a cylinder closed at the reed end, and such a pipe resonates mainly at odd multiples of its lowest frequency: 1, 3, 5 times. The next resonance up is three times the fundamental, an octave plus a fifth. The same physics leaves its low notes hollow, weak in the even harmonics.",
   "move": "The shape of the container picks which notes it can hold.",
+  "ask": "Which of my limits is really a property of the container I am working in, not of me?",
   "keywords": [
     "clarinet",
     "harmonics",

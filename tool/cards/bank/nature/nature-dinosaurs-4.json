@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Fossils are rare, so the last one found almost always sits below the true last day; older rock has had more chances to yield one. In 2011 Lyson and colleagues found a horned dinosaur's fossil just 13 cm below the boundary in Montana. The gap was in the finds, not in the dinosaurs.",
   "move": "Where nobody has found something is not where it stopped existing.",
+  "ask": "Where do I call something finished because I have not found it lately, rather than because it ended?",
   "trap": "An empty stretch of rock looks like evidence that they had gone.",
   "keywords": [
     "fossil record",

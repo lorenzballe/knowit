@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "With n orders there are about n squared over two pairs that could clash, and a clash beats even odds once that count nears a million — around 1,200 orders. Collisions come from pairs, and pairs grow far faster than the list does.",
   "move": "Coincidence needs far fewer people than anyone expects.",
+  "ask": "What coincidence did I last read meaning into, and how many chances did it have to happen?",
   "trap": "Thinking about your code, rather than every pair of codes.",
   "keywords": [
     "birthday paradox",

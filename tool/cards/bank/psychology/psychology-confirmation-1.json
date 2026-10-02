@@ -29,5 +29,6 @@
   "source": "Bacon, Novum Organum, 1620",
   "source_kind": "book",
   "reference": "Bacon, The New Organon, ed. Jardine & Silverthorne, Cambridge University Press, 2000",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

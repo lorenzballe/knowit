@@ -15,6 +15,7 @@
   "unit": "%",
   "answer": "0.81 + 0.01 = 0.82, so 82%.",
   "move": "Before admiring how often two things agree, work out how often strangers would.",
+  "ask": "Before I admire how often two things agree, how often would strangers agree?",
   "trap": "Reading 80% agreement between twins as strong evidence for genes.",
   "hint": "Add the chance both are right-handed to the chance both are left-handed.",
   "steps": [

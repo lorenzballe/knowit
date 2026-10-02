@@ -37,5 +37,6 @@
   "source": "Forschungszentrum Deutscher Sprachatlas, Marburg",
   "source_kind": "institution",
   "reference": "https://regionalsprache.de/en/contents-wenker-questionnaires.aspx",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -9,6 +9,7 @@
   "question": "How long were aluminium salts used to boost vaccines before anyone could say how they worked?",
   "answer": "About eight decades, and it is still argued over. In 1926 Alexander Glenny found that diphtheria toxoid precipitated with alum raised far more antibody in guinea pigs. A 2008 paper tied it to an inflammation sensor in immune cells; other labs found alum worked without it. Billions of doses rested on an empirical result.",
   "move": "A remedy can be trusted for decades before anyone can explain it.",
+  "ask": "What do I trust because it works, though I cannot explain why?",
   "keywords": [
     "alum",
     "adjuvants",

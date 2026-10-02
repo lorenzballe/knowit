@@ -12,6 +12,7 @@
   "question": "Is dopamine the brain's pleasure chemical?",
   "answer": "Not quite: it drives wanting more than liking. Rats stripped of nearly all their dopamine will not seek out or eat food on their own, yet sugar on the tongue still brings the lip-licking face of pleasure, and bitter still brings the face of disgust. Craving a thing and enjoying it run on different wiring.",
   "move": "Wanting something and enjoying it are separate dials; check which one moved.",
+  "ask": "Which thing do I chase, wanting it more than I actually enjoy it?",
   "keywords": [
     "dopamine",
     "wanting and liking",

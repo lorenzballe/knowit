@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. In 2017 Ward and colleagues reported that a phone on the desk, even silent and face-down, lowered working-memory scores compared with one left in another room. When Ruiz Pardo and Minda repeated the design in 2022, they found no reliable effect. The phone on the desk turned out to weigh less than the headline.",
   "move": "Expect the first dramatic result on any question to shrink when repeated.",
+  "ask": "Which striking study have I repeated without checking whether it held up a second time?",
   "trap": "Taking a striking first result as the true size of the effect.",
   "keywords": [
     "smartphones",

@@ -31,5 +31,6 @@
   "source": "JPL Mission Design Handbook, 1983",
   "source_kind": "institution",
   "reference": "Sergeyevsky, Snyder & Cunniff, Interplanetary Mission Design Handbook, Volume I, Part 2: Earth to Mars Ballistic Mission Opportunities, 1990–2005, JPL Publication 82-43, 1983",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

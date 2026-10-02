@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The range first appeared on James Rennell's map of 1798, drawn from hearsay to fit his theory of the Niger, and map after map copied it for nearly a century. In 1888 the French officer Louis-Gustave Binger reached Kong and found no mountains. Dozens of agreeing maps were one guess, repeated.",
   "move": "Ten copies of one source are still one source.",
+  "ask": "How many of my supposedly independent sources are really one source repeated?",
   "trap": "Taking many maps that agree as many separate confirmations.",
   "keywords": [
     "mountains of kong",

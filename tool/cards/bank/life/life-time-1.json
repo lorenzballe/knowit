@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 30%. In Buehler, Griffin and Ross's study, the average prediction was 33.9 days and the average actual time 55.5 days. Even when asked for a worst case, students guessed 48.6 days on average, still short of what the work took.",
   "move": "Estimate from how long similar tasks took, not from the plan.",
+  "ask": "How long did my last three similar tasks really take, compared with my plan for this one?",
   "trap": "A plan that pictures every step going right feels reliable.",
   "keywords": [
     "planning fallacy",

@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "Sixty million people each having a one-in-a-million day produces about sixty such days, today, and again tomorrow. Extraordinary coincidences are not evidence of anything: at scale they are compulsory.",
   "move": "At a country's scale, the impossible happens daily and gets reported.",
+  "ask": "Which freak event in the news did I treat as a sign, when at that scale it happens daily?",
   "trap": "One in a million sounds like a synonym for never.",
   "keywords": [
     "coincidence",

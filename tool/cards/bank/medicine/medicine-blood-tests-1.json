@@ -9,6 +9,7 @@
   "question": "How much can two successive drops from the same finger prick disagree on haemoglobin?",
   "answer": "By more than 2 grams per decilitre in some people, enough to swing a verdict on anaemia. Rice University researchers drew six drops in a row from each of 11 donors; haemoglobin, platelets and white cells all varied significantly between drops. A single drop is a sample of a sample.",
   "move": "Before trusting one small sample, see how much the next one differs.",
+  "ask": "Which number about my health or money do I trust from a single reading?",
   "keywords": [
     "fingerprick",
     "capillary blood",

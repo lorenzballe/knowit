@@ -35,5 +35,6 @@
   "source": "Eyre et al., Science, 2018",
   "source_kind": "paper",
   "reference": "Eyre et al., Coral reefs will transition to net dissolving before end of century, Science, 2018; Eyre, Andersson & Cyronak, Benthic coral reef calcium carbonate dissolution in an acidifying ocean, Nature Climate Change, 2014",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

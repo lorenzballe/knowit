@@ -9,6 +9,7 @@
   "question": "How did US agents get back most of the bitcoin ransom paid after the 2021 Colonial Pipeline attack?",
   "answer": "By following it. Every bitcoin transfer is on a public ledger; investigators traced the 75 coins Colonial paid through a chain of addresses to one whose key the FBI held, and seized 63.7 of them. Bitcoin hides names, not movements. The price had fallen: those coins were worth $2.3 million of the $4.4 million paid.",
   "move": "A record anyone can read stays private only until one entry is linked.",
+  "ask": "Which things I assume are private are one link away from being exposed?",
   "keywords": [
     "bitcoin",
     "ransomware",

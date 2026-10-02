@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "Blackspots are picked in their worst year, and an unusually bad year is usually followed by a less bad one whatever you do. Some of the improvement is real and some is the site returning to its normal rate — separating them needs comparison sites, not before-and-after.",
   "move": "A blackspot picked in its worst year would have eased on its own.",
+  "ask": "What did I act on at its worst point, and how much would it have eased alone?",
   "trap": "A site is chosen because it had an unusually bad year.",
   "keywords": [
     "regression to the mean",

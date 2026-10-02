@@ -12,6 +12,7 @@
   "question": "Why did Hawking at first reject the idea that a black hole has a temperature?",
   "answer": "Because anything with a temperature must glow, and nothing escapes a black hole. A graduate student, Jacob Bekenstein, argued that a horizon's area measures entropy; Hawking and colleagues replied in 1973 that the likeness was only formal. His own quantum calculation, in 1974, found that black holes do glow, and fixed Bekenstein's rule exactly.",
   "move": "A calculation meant to refute an idea is also the best test of it.",
+  "ask": "What test of my own idea am I avoiding because it might disprove it?",
   "keywords": [
     "jacob bekenstein",
     "black hole entropy",

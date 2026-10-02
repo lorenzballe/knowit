@@ -11,6 +11,7 @@
   "unit": "months",
   "answer": "1 / 0.04 = 25 months.",
   "move": "Halfway gone and gone on average are different moments; ask which is meant.",
+  "ask": "When I say something is 'half gone', do I mean the middle moment or the average?",
   "trap": "Giving the 17 months after which half have gone, not the average.",
   "hint": "If the chance of leaving never changes, think of how long an average wait for a 1-in-25 event lasts.",
   "steps": [

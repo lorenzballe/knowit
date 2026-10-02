@@ -12,6 +12,7 @@
   "tolerance": 0.5,
   "answer": "$1,000 / $1,199 = about 83.4%.",
   "move": "Early payments on a long loan mostly pay rent on the money.",
+  "ask": "How much of my early payments on a long loan is just rent on the money?",
   "trap": "Assuming each payment splits roughly evenly between interest and debt.",
   "hint": "Each month's interest is charged on the whole balance still owed.",
   "steps": [

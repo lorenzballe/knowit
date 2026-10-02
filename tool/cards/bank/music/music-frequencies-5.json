@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Hearing is keenest between about 2,000 and 5,000 Hz, where the ear canal resonates like a short pipe, and far duller in the bass. At quiet levels a 100 Hz tone needs at least 20 dB more, a hundredfold the power, to match. So bass thins out when music is turned down.",
   "move": "An instrument and an ear can disagree; decide which one you serve.",
+  "ask": "Where do I serve the measuring instrument when I should be serving the person who experiences the result?",
   "trap": "Assuming equal energy sounds equally loud at every pitch.",
   "keywords": [
     "equal-loudness contours",

@@ -37,5 +37,6 @@
   "source": "ITU-T Recommendation G.711",
   "source_kind": "standard",
   "reference": "ITU-T Recommendation G.711, Pulse code modulation (PCM) of voice frequencies, 1988",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

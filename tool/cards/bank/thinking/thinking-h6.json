@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "Yes, easily. A circle's circumference is 2π times its radius, so adding 1 m to the rope lifts it by 1 ÷ 2π, about 16 cm, all the way round — whatever the size of the circle. The same extra metre around a football would lift it by the same 16 cm.",
   "move": "When the intuition comes from size, check whether size appears in the formula.",
+  "ask": "Which of my intuitions comes from the sheer size of something that does not enter the formula?",
   "trap": "One metre spread over 40,000 km feels like nothing at all.",
   "keywords": [
     "circumference",

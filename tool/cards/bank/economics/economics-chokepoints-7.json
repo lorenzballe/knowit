@@ -18,6 +18,7 @@
   "correct": 1,
   "answer": "About $100 million. Hummels and Schaur, from what firms pay to fly goods rather than ship them, value each day in transit at 0.6% to 2.1% of the goods' value: $60 million to $200 million on $9.6 billion. Interest alone would be nearer $1 million. The headline measured the flow, not the damage.",
   "move": "Separate what a delay touches from what it destroys.",
+  "ask": "When something is delayed, do I separate what is merely held up from what is truly lost?",
   "trap": "Treating the value of goods delayed as the value lost.",
   "keywords": [
     "ever given",

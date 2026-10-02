@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 1,500. Gigerenzer estimated that the fall in flying and rise in driving after September 2001 caused roughly 1,500 extra road deaths in the next twelve months, about half the 2,977 people killed in the attacks. Avoiding a vivid risk moved people onto a larger one.",
   "move": "Count the risk of the alternative, not only the one that frightens.",
+  "ask": "Which risk am I avoiding by choosing an alternative that is quietly more dangerous?",
   "trap": "A vivid catastrophe makes flying seem riskier than the road.",
   "keywords": [
     "september 2001",

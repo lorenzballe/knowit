@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Promising, but practice could explain it. The Stanford study had no comparison group: the same players were training through their season, so some gain would have come anyway. Sleep was tracked with wrist monitors, and the result fits wider sleep research. It is a lead, not a measured effect.",
   "move": "Ask what would have happened to the same people doing nothing different.",
+  "ask": "What improvement am I proud of that I never compared with doing nothing different?",
   "trap": "Crediting all of the improvement to the one change that was announced.",
   "keywords": [
     "sleep extension",

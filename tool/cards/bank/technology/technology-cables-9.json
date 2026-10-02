@@ -39,5 +39,6 @@
   "source": "SubCom, Dunant ready-for-service release, 2021",
   "source_kind": "company",
   "reference": "https://www.subcom.com/documents/2021/Dunant_RFS_Final_3FEBRUARY2021.pdf",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

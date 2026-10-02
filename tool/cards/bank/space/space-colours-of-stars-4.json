@@ -29,5 +29,6 @@
   "source": "Payne, Stellar Atmospheres, 1925",
   "source_kind": "book",
   "reference": "Payne, Stellar Atmospheres: A Contribution to the Observational Study of High Temperature in the Reversing Layers of Stars, Harvard Observatory Monographs No. 1, 1925",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

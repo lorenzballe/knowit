@@ -34,5 +34,6 @@
   "source": "General Register Office, Census 1951 Housing Report",
   "source_kind": "primary_document",
   "reference": "General Register Office, Census 1951 England and Wales: Housing Report, HMSO, 1956",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

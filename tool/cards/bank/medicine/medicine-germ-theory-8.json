@@ -11,6 +11,7 @@
   "unit": "deaths",
   "answer": "18 - 6 = 12 fewer deaths.",
   "move": "Compare rates, not counts, whenever the two groups differ in size.",
+  "ask": "Which comparison in my life uses counts when the groups differ in size?",
   "trap": "Answering 10, by subtracting the raw death counts 16 and 6.",
   "hint": "Scale the old death rate up to 40 patients first.",
   "steps": [

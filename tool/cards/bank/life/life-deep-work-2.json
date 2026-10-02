@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Faster, but under more stress. In Mark's experiments, interrupted people compensated by working faster, with no loss of quality, but reported more stress, frustration, time pressure and effort. The speed was bought with strain, so an interruption's cost shows up in the person, not on the clock.",
   "move": "Count the cost of an interruption in strain, not only minutes.",
+  "ask": "What do my interruptions cost me in strain by evening, beyond the minutes they take?",
   "trap": "Assuming an interruption must show up as lost time.",
   "keywords": [
     "interruptions",

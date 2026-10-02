@@ -16,6 +16,7 @@
   ],
   "answer": "The results are already in. Google DeepMind's GraphCast beat Europe's flagship physics model on 90% of 1,380 test measures, producing a ten-day forecast in under a minute on one chip instead of hours on a supercomputer. That speed buys bigger ensembles, more runs a day, and good forecasts for countries that cannot afford supercomputers.",
   "move": "Whichever side you took, it turns on weather nobody has seen before.",
+  "ask": "When I choose between old and new methods, do I ask what happens in cases nobody has seen?",
   "counterpoint": "The learned models were trained on decades of reanalysis, the past weather reconstructed by physics models, and they still start each forecast from an analysis those models produce. They lean on what they would replace. They are also weakest at unprecedented extremes, outside anything in their training, where they tend to smooth the peaks that matter most.",
   "keywords": [
     "graphcast",

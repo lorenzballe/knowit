@@ -29,5 +29,6 @@
   "source": "The New York Times, 13 October 2024",
   "source_kind": "news_archive",
   "reference": "Chang, SpaceX Catches Returning Rocket in Mechanical Arms, The New York Times, 13 October 2024",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

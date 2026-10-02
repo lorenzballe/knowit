@@ -29,5 +29,6 @@
   "source": "Wood et al., J. Agric. Food Chem., 2008",
   "source_kind": "paper",
   "reference": "doi:10.1021/jf800183k",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

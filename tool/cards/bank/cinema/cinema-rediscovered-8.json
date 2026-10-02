@@ -34,5 +34,6 @@
   "source": "BFI news, 2014",
   "source_kind": "news_archive",
   "reference": "https://www.bfi.org.uk/news/cinematheque-francaise-discovers-1916-sherlock-holmes-film",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

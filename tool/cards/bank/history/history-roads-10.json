@@ -12,6 +12,7 @@
   "tolerance": 0.5,
   "answer": "296 / 24 = about 12.3 km/h.",
   "move": "Speed over a whole day is set by the stops, not the pace.",
+  "ask": "Where does my own day lose its speed to stops rather than pace?",
   "trap": "Picturing a gallop, when the feat was never stopping for a day.",
   "hint": "Turn the Roman miles into kilometres first, then share them over the hours.",
   "steps": [

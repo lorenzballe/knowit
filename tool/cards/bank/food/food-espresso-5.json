@@ -9,6 +9,7 @@
   "question": "Why does an espresso pulled too short and fast taste sour rather than weak?",
   "answer": "Because coffee does not dissolve evenly. Acids wash out first, sugars and heavier browned compounds later, the most bitter ones last. A shot stopped early captures mostly the acids, with too little sweetness to balance them. Running longer adds sweetness, then bitterness, so baristas adjust the grind until the cup lands between sour and harsh.",
   "move": "When parts arrive in order, the moment of stopping decides the mix.",
+  "ask": "What do I stop too early because the first taste of results is sour, not weak?",
   "keywords": [
     "under-extraction",
     "acidity",

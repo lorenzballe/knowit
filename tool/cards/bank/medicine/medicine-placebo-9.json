@@ -11,6 +11,7 @@
   "unit": "percent",
   "answer": "(40 - 30) / 40 = 25%.",
   "move": "Subtract what the dummy achieved before praising what the real thing did.",
+  "ask": "Before I praise what I did, what did the dummy do on its own?",
   "trap": "Answering 100%, crediting the drug with every patient who got better.",
   "hint": "Ask how many of the drug group would have responded to a dummy pill.",
   "steps": [

@@ -36,5 +36,6 @@
   "source": "Friberg & Sundström, Music Perception, 2002",
   "source_kind": "paper",
   "reference": "https://online.ucpress.edu/mp/article-abstract/19/3/333/61900/Swing-Ratios-and-Ensemble-Timing-in-Jazz",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -165,5 +165,6 @@
   "source": "Bañados et al., Nature, 2018",
   "source_kind": "paper",
   "reference": "Bañados et al., An 800-million-solar-mass black hole in a significantly neutral Universe at a redshift of 7.5, Nature, 2018",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

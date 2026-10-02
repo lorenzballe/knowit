@@ -9,6 +9,7 @@
   "question": "How does a shingles vaccine made of a single viral protein beat the live-virus vaccine in people over 70?",
   "answer": "Through its adjuvant. Shingrix pairs one protein, glycoprotein E, with AS01, which combines a detoxified fragment of bacterial membrane and QS-21, a saponin from the bark of a Chilean soapbark tree. It rouses ageing T cells. In trials it cut shingles by about 90% in people over 70; the live vaccine had managed about 38%.",
   "move": "The helper added to a message can matter more than the message.",
+  "ask": "What helper or context around a message of mine matters more than the message itself?",
   "keywords": [
     "shingles",
     "shingrix",

@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About half. In 27 of the 53 trials the sham, often an incision or a scope with nothing done inside, worked as well as the procedure; patients improved after the sham in 39 of them. Where surgery did win, the margin was usually small. Several of the operations tested had been routine for years.",
   "move": "A procedure's record of success means little until someone has faked it.",
+  "ask": "Which procedure am I trusting that nobody has ever tried faking?",
   "trap": "About 1 in 10, since cutting and repairing seems too physical to fake.",
   "keywords": [
     "sham surgery",

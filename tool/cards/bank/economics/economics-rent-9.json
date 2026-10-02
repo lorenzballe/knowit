@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "The official index covers all sitting tenants. Most leases run a year, so the average rent paid moves only as leases come up for renewal. Adams and colleagues, government and Federal Reserve economists, found new-tenant rent inflation leads the official measure by about four quarters. The official figure was reporting last year's market.",
   "move": "Ask when the people in a statistic last had a chance to change.",
+  "ask": "Which statistic I trust is lagging behind because its people rarely change?",
   "trap": "Suspecting a flaw in the arithmetic rather than in the timing.",
   "keywords": [
     "consumer price index",

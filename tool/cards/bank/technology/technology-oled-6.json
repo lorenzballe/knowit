@@ -9,6 +9,7 @@
   "question": "How does an OLED television hide the wear on its most-used pixels?",
   "answer": "By measuring the wear and driving tired pixels harder. When the set goes to standby, the panel runs a compensation cycle that senses each subpixel's electrical drift and raises its drive to match, so a worn channel logo fades back into its neighbours. The trick spends spare brightness; burn-in shows once that reserve runs out.",
   "move": "A repair that borrows from reserve works until the reserve is gone.",
+  "ask": "What am I quietly borrowing from a reserve that will eventually run out?",
   "keywords": [
     "oled television",
     "burn-in",

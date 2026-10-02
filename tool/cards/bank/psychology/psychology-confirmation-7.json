@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "A and 2, the ones named, which here is correct. Jonathan Evans showed in 1973 that people mostly turn the cards a rule mentions, whatever the logic. With the plain rule that habit looks like seeking confirmation; with the negated rule it looks like flawless falsification. The famous error was largely attention to named things.",
   "move": "Change the question slightly and see whether the mistake follows the logic or the wording.",
+  "ask": "Which of my reasoning mistakes comes from the wording of a problem rather than its logic?",
   "trap": "Expecting people to seek the cards that would confirm the rule.",
   "keywords": [
     "selection task",

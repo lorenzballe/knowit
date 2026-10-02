@@ -38,5 +38,6 @@
   "source": "Lowest common multiple of 10 and 16",
   "source_kind": "arithmetic",
   "reference": "Hardy & Wright, An Introduction to the Theory of Numbers, Oxford University Press, 2008",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

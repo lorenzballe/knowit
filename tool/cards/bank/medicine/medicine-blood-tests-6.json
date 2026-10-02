@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "One judged unlikely to have one. D-dimer, a fragment released as clots break down, rises with nearly every clot, and with infection, cancer, pregnancy and age. In a low-suspicion patient a normal result settles it. In a high-suspicion patient its rare misses become too likely, so NICE sends them straight to a scan.",
   "move": "A clean result is only as reassuring as the doubt you started with.",
+  "ask": "When a test comes back clean, how likely did I think the problem was beforehand?",
   "trap": "Any patient, since the test catches almost every clot.",
   "keywords": [
     "d-dimer",

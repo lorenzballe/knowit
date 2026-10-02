@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Drew, Võ and Wolfe inserted a gorilla 48 times the size of a typical nodule into a chest CT, and 20 of 24 radiologists missed it. Eye tracking showed that most of those who missed it had looked straight at it. Hunting for small round nodules, they did not register an ape.",
   "move": "Expertise sharpens what you look for and blinds you to the rest.",
+  "ask": "What am I so expertly looking for that I am missing everything else?",
   "trap": "Expecting trained experts, looking carefully, to see anything that large.",
   "keywords": [
     "radiologists",

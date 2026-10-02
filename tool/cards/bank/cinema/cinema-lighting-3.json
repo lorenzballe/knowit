@@ -17,6 +17,7 @@
   "correct": 0,
   "answer": "True. Orthochromatic stock responded to blue and green light but hardly at all to red, so red came out dark and blue skies bleached to white. Make-up was designed around it, with pale bases and lip colours chosen for how they read in grey. Panchromatic stock, sensitive to red, took over in the later 1920s.",
   "move": "A recording shows what the instrument could sense, not what was there.",
+  "ask": "Which picture of reality do I hold that only shows what my instrument could sense?",
   "trap": "Assuming film sees each colour as bright as the eye does.",
   "keywords": [
     "orthochromatic film",

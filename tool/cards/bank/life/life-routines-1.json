@@ -9,6 +9,7 @@
   "question": "What share of everyday actions did a diary study find people performed as habits, often while thinking of something else?",
   "answer": "About 43%. Wood, Quinn and Kashy prompted students at intervals to record what they were doing. Close to half of the actions were habits: repeated almost daily, in the same place, and often carried out while the mind was on something else. Most of a day is run by what was decided long ago.",
   "move": "Ask which of today's actions you chose, and which merely happened again.",
+  "ask": "Of today's actions, which did I actually choose, and which just happened again?",
   "keywords": [
     "habits",
     "diary study",

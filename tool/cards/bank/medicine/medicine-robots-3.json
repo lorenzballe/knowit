@@ -35,5 +35,6 @@
   "source": "Saeidi et al., Science Robotics, 2022",
   "source_kind": "paper",
   "reference": "Saeidi et al., Autonomous robotic laparoscopic surgery for intestinal anastomosis, Science Robotics, 2022",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

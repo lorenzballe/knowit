@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Alcohol kills by unravelling a microbe's proteins, and that happens faster with water present; pure alcohol mainly dries things out. US federal guidance for hospitals puts the best range at 60–90% alcohol in water, with strength falling off sharply below 50%. A bottle of absolute ethanol is the weaker disinfectant.",
   "move": "More of the active ingredient is not the same as more effect.",
+  "ask": "Where do I assume that more of a good ingredient, effort or dose gives a better result?",
   "trap": "Assuming the purer the alcohol, the stronger the disinfectant.",
   "keywords": [
     "hand sanitiser",

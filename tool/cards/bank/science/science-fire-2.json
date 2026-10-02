@@ -29,5 +29,6 @@
   "source": "Drysdale, An Introduction to Fire Dynamics, 2011",
   "source_kind": "book",
   "reference": "Drysdale, An Introduction to Fire Dynamics, 3rd edition, Wiley, 2011",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

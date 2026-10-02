@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. In 1962 George Winter gave young pigs shallow wounds and covered some with polythene film: those kept moist grew new skin across about twice as fast as those left open. A scab is dried, dead tissue, and new skin cells must tunnel beneath it instead of gliding over a moist bed.",
   "move": "What looks like protection can be the obstacle.",
+  "ask": "What protection am I wrapping around a problem that is actually the obstacle?",
   "trap": "Treating the scab as the body's own bandage.",
   "keywords": [
     "moist wound healing",

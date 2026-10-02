@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. A nucleus does not wear out: a radon-222 atom a month old has the same 50% chance of decaying in the next 3.8 days as one just formed. A sample shrinks because atoms leave it, not because survivors age. Uranium atoms older than the Earth decay at the rate they did when forged.",
   "move": "Ask whether a thing can wear out before calling it overdue.",
+  "ask": "Which thing am I calling overdue when it cannot actually wear out?",
   "trap": "Treating an old atom like an old machine, near the end.",
   "keywords": [
     "radon",

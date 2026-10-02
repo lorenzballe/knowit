@@ -54,5 +54,6 @@
   "source": "World Aquatics Points Table",
   "source_kind": "standard",
   "reference": "World Aquatics, Points Table: calculation of World Aquatics points, 2024",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

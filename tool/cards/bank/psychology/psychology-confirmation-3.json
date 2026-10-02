@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "They test only triples their guess allows. The rule was simply any three rising numbers, so a guess like even numbers going up by two keeps earning yeses. Only a triple the guess forbids, such as 1-2-3, could expose it. Seeking yeses often works; it fails when the truth is broader than the guess.",
   "move": "When every test says yes, ask whether a broader rule would say yes too.",
+  "ask": "What belief of mine have I only ever tested with examples that would say yes?",
   "trap": "Assuming people fail because the hidden rule must be complicated.",
   "keywords": [
     "wason 2-4-6 task",

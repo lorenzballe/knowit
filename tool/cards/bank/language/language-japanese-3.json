@@ -9,6 +9,7 @@
   "question": "Who turned mono no aware, the pathos of passing things, into the key to Japanese literature?",
   "answer": "Motoori Norinaga, an 18th-century scholar who worked as a doctor. In his commentaries on The Tale of Genji, completed in the 1790s, he argued the novel meant not to teach morals but to make readers feel the sadness of transient things. A phrase from Heian poetry became a national aesthetic on one reader's desk.",
   "move": "A tradition's defining idea often turns out to have one later editor.",
+  "ask": "Which tradition do I treat as ancient when its defining idea comes from one later editor?",
   "keywords": [
     "mono no aware",
     "motoori norinaga",

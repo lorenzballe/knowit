@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 3,400. Between the two storms Bangladesh built a warning network, with volunteers carrying alerts village to village, and some 2,000 raised concrete shelters. About 2 million people were moved out of Sidr's path before it landed. The sea rose much as before; this time families watched it from the upper floors of shelters.",
   "move": "When the hazard stays the same, look at what changed on the ground.",
+  "ask": "When the hazard is constant but outcomes differ, have I looked at what changed on the ground?",
   "trap": "Anchoring on the 1991 toll because the two storms were alike.",
   "keywords": [
     "cyclone sidr",

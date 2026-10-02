@@ -9,6 +9,7 @@
   "question": "What splits a single rainbow into two arcs that branch from the same base?",
   "answer": "Raindrops of two different sizes. Large drops fall fast enough for the air to squash them into flattened buns, and each size of flattened drop bends light to a slightly different angle. A shower mixing two populations draws two overlapping primary bows. Computer simulations published in 2012 were the first to reproduce such twinned rainbows.",
   "move": "When one pattern splits in two, look for two populations mixed together.",
+  "ask": "When one pattern splits in two, have I checked whether two groups are mixed together?",
   "keywords": [
     "twinned rainbow",
     "raindrop shape",

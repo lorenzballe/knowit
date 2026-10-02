@@ -9,6 +9,7 @@
   "question": "What do the Cuban tresillo rhythm and a particle accelerator's timing system have in common?",
   "answer": "The same algorithm. Spreading 3 beats as evenly as possible over 8 pulses gives 3+3+2, the tresillo under the habanera and countless pop grooves. Godfried Toussaint showed in 2005 that this rule, used by Eric Bjorklund to space pulses at a neutron source, generates dozens of traditional rhythms. Five over eight gives the Cuban cinquillo.",
   "move": "When a pattern feels natural, look for the simple rule that makes it.",
+  "ask": "Which pattern in my life feels natural and is actually the result of one simple rule?",
   "keywords": [
     "tresillo",
     "euclidean rhythms",

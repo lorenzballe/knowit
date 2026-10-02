@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About 8 months: 254 days. Lally and colleagues followed 96 volunteers repeating an eating, drinking or exercise habit daily. The median, 66 days, is the figure now quoted everywhere, but estimates ran from 18 to 254 days, and the slowest were projected well past the 84 days the study lasted.",
   "move": "Ask how far the slowest cases sit from the quoted average.",
+  "ask": "For the habit I am building, am I planning on the average timeline or the slowest one?",
   "trap": "Recalling the widely quoted 66 days, which was only the middle case.",
   "keywords": [
     "habit formation",

@@ -29,5 +29,6 @@
   "source": "Larsen & Sanford, Science, 1985",
   "source_kind": "paper",
   "reference": "Larsen & Sanford, Florida Current volume transports from voltage measurements, Science, 1985",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

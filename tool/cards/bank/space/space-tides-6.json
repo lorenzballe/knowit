@@ -31,5 +31,6 @@
   "source": "Hicks, Understanding Tides, NOAA, 2006",
   "source_kind": "institution",
   "reference": "Hicks, Understanding Tides, NOAA National Ocean Service, 2006",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

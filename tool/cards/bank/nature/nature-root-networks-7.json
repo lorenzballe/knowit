@@ -36,5 +36,6 @@
   "source": "Högberg et al., Nature, 2001",
   "source_kind": "paper",
   "reference": "doi:10.1038/35081058",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

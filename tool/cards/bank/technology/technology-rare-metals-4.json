@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Neodymium makes up about 41 parts per million of the crust and lead about 14, so there is roughly three times as much neodymium. The name dates from the late 1700s, when these oxides were novelties from a Swedish mine. Even thulium, the scarcest stable rare earth, is seven times as common as silver.",
   "move": "A name tells you what someone thought when they named it.",
+  "ask": "Which name am I taking as a fact when it only records what someone once thought?",
   "trap": "Trusting the word rare in the group's name.",
   "keywords": [
     "neodymium",

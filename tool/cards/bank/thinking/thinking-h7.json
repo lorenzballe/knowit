@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "About 60%. Every step must succeed, so the chances multiply: 0.9 × 0.9 × 0.9 × 0.9 × 0.9 is 0.59. Each step looks safe on its own, and the plan still fails two times in five. Ten such steps would fail more often than they succeed.",
   "move": "Multiply the odds of every step a plan needs before trusting it.",
+  "ask": "Which plan of mine needs five things to go right, and what are the real odds of all five?",
   "trap": "Each step is safe, so the whole plan feels safe.",
   "keywords": [
     "project planning",

@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Maguire's team compared the two because both drive all day in city traffic; only taxi drivers must hold the street plan in mind. Taxi drivers had more grey matter at the back of the hippocampus, less at the front, and were worse at recalling a new complex figure. Bus drivers showed neither.",
   "move": "Find a group that shares everything except the thing you suspect.",
+  "ask": "What group shares everything with me except the thing I suspect?",
   "trap": "Crediting the change to long hours of driving rather than navigating.",
   "keywords": [
     "taxi drivers",

@@ -12,6 +12,7 @@
   "withinFactor": 3,
   "answer": "858 / 9.16 ≈ 94 million tickets.",
   "move": "Divide money by price before comparing crowds across years.",
+  "ask": "Which comparison across years am I making in money, not in actual people?",
   "hint": "Divide the takings by what an average ticket cost that year.",
   "steps": [
     "Its North American gross was about $858 million.",

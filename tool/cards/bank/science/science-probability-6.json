@@ -9,6 +9,7 @@
   "question": "A chord is drawn at random across a circle. What is the chance it is longer than a side of the inscribed equilateral triangle?",
   "answer": "That depends on what random means, as Joseph Bertrand showed in 1889. Join two random points on the rim and the chance is 1/3. Cut a random radius at a random distance and it is 1/2. Drop the chord's midpoint anywhere inside the circle and it is 1/4. Three sensible methods, three answers.",
   "move": "Before computing a chance, say exactly how the thing was chosen.",
+  "ask": "Before I trust a chance someone quotes, do I know exactly how the case was chosen?",
   "keywords": [
     "bertrand paradox",
     "random chords",

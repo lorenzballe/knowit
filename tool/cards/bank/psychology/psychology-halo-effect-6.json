@@ -9,6 +9,7 @@
   "question": "What happened when performance raters were trained to stop giving people matching scores across different traits?",
   "answer": "Their ratings became less accurate. John Bernardin and Elaine Pence found that training raters to avoid halo, scoring each trait separately, spread the numbers out but moved them further from the truth. Real strengths often do cluster: a diligent worker is frequently an accurate one too. Some of what looked like error was signal.",
   "move": "Before removing a pattern as bias, check whether the world contains it too.",
+  "ask": "Before I call a pattern in my judgement a bias, could the world really be that way?",
   "keywords": [
     "rater training",
     "performance ratings",

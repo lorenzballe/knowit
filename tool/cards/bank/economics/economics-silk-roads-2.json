@@ -9,6 +9,7 @@
   "question": "Under the Tang dynasty, what kept the oasis towns of the Silk Road busy?",
   "answer": "The army's payroll. The Tang state shipped huge quantities of silk bolts to its garrisons in the northwest, because cloth was lighter than coin, and soldiers spent it locally. When rebellion in 755 pulled the troops back east, the money stopped and the oasis economies shrank. The trade followed the paymaster.",
   "move": "Before crediting the merchants, find out who was paying the customers.",
+  "ask": "Before I credit the merchants, who was paying the customers?",
   "keywords": [
     "tang dynasty",
     "bolts of silk",

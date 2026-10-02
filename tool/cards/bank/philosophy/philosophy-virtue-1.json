@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "An amount fitted to that athlete. Aristotle's mean is relative to the person, not the midpoint of two numbers, and it holds for courage or generosity as much as for food. His own example: six measures would be too little for Milo, the legendary wrestler, and too much for a beginner.",
   "move": "Before splitting the difference, ask whose difference it is.",
+  "ask": "Where I split the difference, whose difference is it, mine or the person's in front of me?",
   "trap": "Taking the two numbers given and splitting the difference.",
   "keywords": [
     "doctrine of the mean",

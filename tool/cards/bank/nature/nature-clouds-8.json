@@ -37,5 +37,6 @@
   "source": "Ahrens, Meteorology Today",
   "source_kind": "book",
   "reference": "Ahrens, Meteorology Today: An Introduction to Weather, Climate, and the Environment, 9th edition, Brooks/Cole, 2009",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

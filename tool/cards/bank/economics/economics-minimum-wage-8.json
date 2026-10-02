@@ -28,5 +28,6 @@
   "source": "US GAO, American Samoa minimum wage",
   "source_kind": "institution",
   "reference": "US Government Accountability Office, American Samoa and Commonwealth of the Northern Mariana Islands: Employment, Earnings, and Status of Key Industries Since Minimum Wage Increases Began, GAO-11-427, 2011",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

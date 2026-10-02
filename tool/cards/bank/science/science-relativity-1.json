@@ -39,5 +39,6 @@
   "source": "Einstein, Annalen der Physik, 1905",
   "source_kind": "paper",
   "reference": "Einstein, Ist die Trägheit eines Körpers von seinem Energieinhalt abhängig?, Annalen der Physik 18, 639, 1905",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

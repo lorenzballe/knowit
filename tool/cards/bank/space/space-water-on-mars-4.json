@@ -35,5 +35,6 @@
   "source": "Smith et al., Science, 2009",
   "source_kind": "paper",
   "reference": "Smith et al., H2O at the Phoenix Landing Site, Science 325, 2009",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

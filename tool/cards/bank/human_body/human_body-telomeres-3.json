@@ -36,5 +36,6 @@
   "source": "Blasco et al., Cell, 1997",
   "source_kind": "paper",
   "reference": "Blasco, Lee, Hande et al., Telomere shortening and tumor formation by mouse cells lacking telomerase RNA, Cell, 1997",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

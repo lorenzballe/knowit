@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "They recovered about as much. Studying the Dutch top flight from 1986 to 2004, ter Weel compared clubs that sacked their manager with clubs that hit a similar run of results and kept him. Both bounced back. A slump is partly bad luck, and luck evens out whoever sits on the bench.",
   "move": "Judge a fix made at the lowest point against what would have happened anyway.",
+  "ask": "Which fix am I proud of that was applied at my lowest point and might have recovered anyway?",
   "trap": "The new manager arrived just before the recovery, so he gets the credit.",
   "keywords": [
     "manager sackings",

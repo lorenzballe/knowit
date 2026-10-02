@@ -39,5 +39,6 @@
   "source": "de Araujo et al., Neuron, 2008",
   "source_kind": "paper",
   "reference": "de Araujo, Oliveira-Maia, Sotnikova et al., Food reward in the absence of taste receptor signaling, Neuron, 2008",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

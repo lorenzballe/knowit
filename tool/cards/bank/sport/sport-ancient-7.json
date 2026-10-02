@@ -9,6 +9,7 @@
   "question": "What did Egyptian wise men tell envoys from Elis about the fairness of the Olympic Games?",
   "answer": "That the Games could not be fair while Eleans competed. Herodotus says the Eleans boasted of their rules to King Psammis; his sages asked whether men of Elis took part, and hearing yes, warned that judges from the host city would favour their own. Elis kept both roles: its citizens judged and competed.",
   "move": "Before trusting a verdict, ask whether the judge has a stake in it.",
+  "ask": "Whose verdict am I trusting this week without asking what the judge stands to gain?",
   "keywords": [
     "elis",
     "herodotus",

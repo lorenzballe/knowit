@@ -12,6 +12,7 @@
   "withinFactor": 3,
   "answer": "£5,200 x 0.2 = about £1,040.",
   "move": "A small share of a weekly habit is a large sum over a year.",
+  "ask": "Which small weekly waste of mine adds up to a large sum across the year?",
   "trap": "Picturing the odd mouldy leftover, not a fifth of the shopping.",
   "hint": "Start from the weekly food shop, then ask what fraction goes in the bin.",
   "steps": [

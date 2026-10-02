@@ -29,5 +29,6 @@
   "source": "IANA, Root KSK Ceremonies",
   "source_kind": "institution",
   "reference": "https://www.iana.org/dnssec/ceremonies",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

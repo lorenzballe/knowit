@@ -9,6 +9,7 @@
   "question": "Which instrument did two Soviet physicists name in 1964 as the one able to detect the Big Bang's afterglow?",
   "answer": "Bell Labs' horn antenna in New Jersey. Doroshkevich and Novikov calculated that the afterglow should dominate the radio sky at short wavelengths and cited measurements made with that antenna. A year later Penzias and Wilson, on that horn and unaware of the paper, found a hiss of about 3.5 K they could not remove.",
   "move": "A prediction nobody reads is as good as one never made.",
+  "ask": "What useful idea of mine have I never put where the people who could use it would read it?",
   "keywords": [
     "doroshkevich",
     "novikov",

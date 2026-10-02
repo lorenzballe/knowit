@@ -11,6 +11,7 @@
   "unit": "percent",
   "answer": "18 / 100 = 18 percent.",
   "move": "Before a rate reassures or alarms you, ask what it is a share of.",
+  "ask": "When I read a rate that scares or reassures me, what is it a share of?",
   "trap": "Answering 6, the disorder's share of all adults, not of the symptomatic.",
   "hint": "Picture 300 adults and count who falls in each group.",
   "steps": [

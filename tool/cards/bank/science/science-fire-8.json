@@ -11,6 +11,7 @@
   "unit": "grams per cubic metre",
   "answer": "Spread through 4 m of height: 500 / 4 = 125 grams per cubic metre.",
   "move": "Before calling a layer harmless, ask what it becomes once airborne.",
+  "ask": "What do I call harmless because it is thin or still, without asking what it becomes when disturbed?",
   "trap": "Judging a film thin enough to write a name in too slight to matter.",
   "hint": "Work per square metre of floor: weigh the dust, then find the air it spreads into.",
   "steps": [

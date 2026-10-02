@@ -35,5 +35,6 @@
   "source": "Pavlis et al., EGM2008, JGR, 2012",
   "source_kind": "paper",
   "reference": "Pavlis, Holmes, Kenyon & Factor, The development and evaluation of the Earth Gravitational Model 2008 (EGM2008), Journal of Geophysical Research: Solid Earth, 2012",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

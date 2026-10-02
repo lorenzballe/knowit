@@ -9,6 +9,7 @@
   "question": "When the US Federal Reserve began losing money in 2022, where did the losses go?",
   "answer": "Into a 'deferred asset', in effect an IOU to itself. The Fed pays interest on banks' reserves; once that bill exceeded its bond income, it stopped sending profits to the Treasury and booked the shortfall against future profits. The balance passed $200 billion by 2025. The Treasury is paid again only after it is cleared.",
   "move": "Ask where a loss is recorded before deciding who bears it.",
+  "ask": "Where is a loss recorded, and does that decide who really bears it?",
   "keywords": [
     "federal reserve",
     "deferred asset",

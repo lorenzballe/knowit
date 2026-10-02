@@ -32,5 +32,6 @@
   "source": "The Leibniz-Clarke Correspondence, 1715-1716",
   "source_kind": "primary_document",
   "reference": "Alexander (ed.), The Leibniz-Clarke Correspondence, Manchester University Press, 1956; Newton, Opticks, Query 31, Dover, 1952",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

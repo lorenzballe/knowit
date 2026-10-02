@@ -29,5 +29,6 @@
   "source": "Pauling, Journal of the American Chemical Society, 1935",
   "source_kind": "paper",
   "reference": "Pauling, The Structure and Entropy of Ice and of Other Crystals with Some Randomness of Atomic Arrangement, Journal of the American Chemical Society, 1935",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "The Sun, about twice as hard. Divide 333,000 by 390 squared, about 152,000, and the Sun wins by 2.2 to 1. The Moon stays with Earth because the Sun pulls both almost equally, so only the small difference counts. Traced from above, the Moon's path round the Sun never loops; it always bends sunward.",
   "move": "Before naming the strongest influence, ask what acts equally on everything nearby.",
+  "ask": "Before I name the strongest influence on my life, have I asked what pulls on everything around me equally?",
   "trap": "Earth, by far, because the Moon is visibly circling Earth.",
   "keywords": [
     "moon",

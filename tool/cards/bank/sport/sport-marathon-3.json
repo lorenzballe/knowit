@@ -12,6 +12,7 @@
   "question": "What physically runs out when a marathon runner hits the wall around 30 km?",
   "answer": "Stored carbohydrate. Muscles and liver hold glycogen worth roughly 2,000 kcal, while running costs about 1 kcal per kg per km: close to 3,000 kcal over the distance for a 70 kg runner. Fat can cover the gap, but it releases energy more slowly, so the pace sags when glycogen is spent.",
   "move": "Find which store empties first; that sets the limit, not the average.",
+  "ask": "What store in my life empties first and sets my real limit, whatever my average looks like?",
   "keywords": [
     "glycogen",
     "hitting the wall",

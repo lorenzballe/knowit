@@ -9,6 +9,7 @@
   "question": "How is Britain's National Living Wage now pinned down, and what makes it unusual among rich countries?",
   "answer": "By a target tied to typical pay. The government told the Low Pay Commission to raise it to two-thirds of median hourly earnings by 2024, and it got there, one of the OECD's highest ratios. The remit since has been to hold that ratio, so the floor moves with ordinary pay.",
   "move": "A floor measured against the middle rises whenever the middle does.",
+  "ask": "Which of my benchmarks moves automatically with the middle, and do I notice?",
   "keywords": [
     "national living wage",
     "low pay commission",

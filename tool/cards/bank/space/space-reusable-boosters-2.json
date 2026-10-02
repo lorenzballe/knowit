@@ -29,5 +29,6 @@
   "source": "NASA, press release, 1 May 2020",
   "source_kind": "institution",
   "reference": "NASA, NASA Commits to Future Artemis Missions With More SLS Rocket Engines, press release, 1 May 2020",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

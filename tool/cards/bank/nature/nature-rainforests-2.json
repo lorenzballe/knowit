@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "19, all of one species. In Panama, Erwin fogged the crowns of 19 Luehea seemannii trees with insecticide, counted about 1,200 beetle species, then multiplied through guesses: the share tied to that tree, 50,000 tropical tree species, beetles as 40% of arthropods. Later estimates put insects nearer 5.5 million species.",
   "move": "Ask how big the sample was before believing how big the claim is.",
+  "ask": "Before believing a big claim, have I asked how small the sample was behind it?",
   "trap": "About 2,000 trees, because a global figure seems to need one.",
   "keywords": [
     "terry erwin",

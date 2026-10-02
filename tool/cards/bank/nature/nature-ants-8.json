@@ -12,6 +12,7 @@
   "tolerance": 0.01,
   "answer": "20 × 10,000 ÷ 1,000,000 = 0.2 times its own weight.",
   "move": "Scale anything up and ask which parts grow as area and which as volume.",
+  "ask": "What am I planning to scale up without asking which parts will not scale with it?",
   "trap": "Assuming the ant keeps its twenty-to-one ratio at any size.",
   "hint": "Strength grows with a muscle's cross-section; weight grows with its volume.",
   "steps": [

@@ -9,6 +9,7 @@
   "question": "Across years of gym check-ins, what best predicted whether a member would turn up on a given day?",
   "answer": "How recently they had last been. Buyalskaya and colleagues fed check-in records from tens of thousands of gym members into machine-learning models: days since the previous visit outweighed other predictors, and habitual members kept to the same weekdays. The gym habit took months to settle, far longer than hand-washing among hospital staff.",
   "move": "The best forecast of tomorrow's routine is how long since it last ran.",
+  "ask": "How long has it been since my routine last ran, and what does that predict?",
   "keywords": [
     "gym attendance",
     "machine learning",

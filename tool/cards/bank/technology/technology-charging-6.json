@@ -29,5 +29,6 @@
   "source": "Petzl et al., Journal of Power Sources, 2015",
   "source_kind": "paper",
   "reference": "Petzl, Kasper & Danzer, Lithium plating in a commercial lithium-ion battery: A low-temperature aging study, Journal of Power Sources, 2015",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

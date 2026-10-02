@@ -12,6 +12,7 @@
   "question": "How did London's Royal Festival Hall, judged too dry, get a longer bass reverberation in the 1960s?",
   "answer": "With microphones and loudspeakers. P. H. Parkin and K. Morgan's assisted resonance used many channels, each tuned to prolong one narrow frequency: a microphone heard the hall, an amplifier fed it back. Empty, the 125-hertz band rose from about 1.4 to 2.5 seconds. A concert hall ran on a reverb unit.",
   "move": "When the structure cannot change, check whether a signal can stand in for it.",
+  "ask": "When I cannot change a structure, can a signal or a workaround stand in for it?",
   "keywords": [
     "royal festival hall",
     "assisted resonance",

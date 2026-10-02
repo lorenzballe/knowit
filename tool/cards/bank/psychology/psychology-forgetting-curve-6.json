@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Suppose each person forgets exponentially, losing a fixed share per hour, but people differ in their rate. The group average then sags into a power curve: steep at first, then a long flat tail. Murre and Chessa proved it mathematically in 2011. A law found in the average may describe nobody in the room.",
   "move": "Check a pattern in the individuals before crediting the average with it.",
+  "ask": "Which average am I trusting when the individuals behind it may look nothing like it?",
   "trap": "False: an average of similar curves should look like each of them.",
   "keywords": [
     "forgetting curve",

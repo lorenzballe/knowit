@@ -12,6 +12,7 @@
   "tolerance": 1.5,
   "answer": "0.215 is about 21.5%.",
   "move": "Nearly reliable, repeated many times, is nearly certain to slip once.",
+  "ask": "Which almost-always habit of mine is nearly certain to slip over a long enough run?",
   "trap": "Around 80 or 90%, since 95% a day sounds almost perfect.",
   "hint": "Find how many days it takes for the survival odds to halve.",
   "steps": [

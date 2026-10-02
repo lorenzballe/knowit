@@ -29,5 +29,6 @@
   "source": "Levinson, Principles of Lithography, SPIE Press",
   "source_kind": "book",
   "reference": "Levinson, Principles of Lithography, 4th edition, SPIE Press, 2019",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

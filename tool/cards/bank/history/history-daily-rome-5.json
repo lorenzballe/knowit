@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Cheap grain was a citizen's right, rich or poor. When Gaius Gracchus's grain law passed in 123 BC, Piso Frugi, an ex-consul who had fought it, turned up to collect his ration. Cicero reports his reply: if Gracchus meant to share out Piso's goods among everyone, Piso would claim his share.",
   "move": "Check who is on the list before calling a benefit charity.",
+  "ask": "Which benefit I call charity is really handed out by something other than need?",
   "trap": "True, because a food handout must have targeted the needy.",
   "keywords": [
     "grain dole",

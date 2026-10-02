@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Dark hairs falling out. A hair shaft is dead, so pigment already in it cannot be withdrawn. In a sudden bout of alopecia areata, an immune attack on follicles, pigmented hairs are mostly shed and white ones spared. A partly grey head then turns white in days, because only the grey hairs are left.",
   "move": "When a crowd changes colour overnight, ask who left.",
+  "ask": "When something seems to change overnight in a crowd, do I ask who left?",
   "trap": "Picturing fright draining the colour from hairs already grown.",
   "keywords": [
     "alopecia areata",

@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Bound into minerals in the crust. Reacting with rock, water was locked into clays and other minerals, taking up, by the model's range, 30% to 99% of the early water. Escape alone cannot match both the amount lost and the heavy hydrogen left behind. Much of the ocean may sit in the rocks.",
   "move": "Before saying something escaped, check whether it was absorbed where it stood.",
+  "ask": "Before I say something escaped, have I checked whether it was absorbed where it stood?",
   "trap": "Pointing to the polar ice, the water everyone has seen in pictures.",
   "keywords": [
     "hydrated minerals",

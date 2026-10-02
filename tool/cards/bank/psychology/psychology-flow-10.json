@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. In Moneta's 2004 study of students in Hong Kong, intrinsic motivation peaked when skill exceeded challenge, a comfortable state the flow model calls relaxation, not in the matched high zone that American samples favoured. A model built on one population had been read as a law of minds.",
   "move": "Before calling a finding universal, ask who was in the room.",
+  "ask": "Which finding about human nature do I quote without asking who was studied?",
   "trap": "True, because a model of optimal experience sounds like a human universal.",
   "keywords": [
     "flow model",

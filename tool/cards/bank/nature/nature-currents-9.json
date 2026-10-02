@@ -39,5 +39,6 @@
   "source": "Dai & Trenberth, Journal of Hydrometeorology, 2002",
   "source_kind": "paper",
   "reference": "Dai & Trenberth, Estimates of freshwater discharge from continents: latitudinal and seasonal variations, Journal of Hydrometeorology, 2002",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

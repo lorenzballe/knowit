@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About 0.04%. Of about 18,200 vaccinated volunteers, 8 caught symptomatic Covid in the trial's first months, against 162 of about 18,300 on placebo. Efficacy compares the two groups: 8 against 162 is a 95% cut. It says nothing about how many would have fallen ill anyway, and under 1% of the placebo group did.",
   "move": "A percentage cut means little until you know what it was cut from.",
+  "ask": "Which percentage did I accept without asking what it was a percentage of?",
   "trap": "Reading 95% efficacy as 5% of vaccinated people still falling ill.",
   "keywords": [
     "covid vaccine",

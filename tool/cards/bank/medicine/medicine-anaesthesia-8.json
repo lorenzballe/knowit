@@ -18,6 +18,7 @@
   "correct": 0,
   "answer": "Into the patient's own arms and legs. Awake, the body keeps warm blood in its core by narrowing vessels in the limbs. Anaesthetics switch that reflex off, so core heat floods outwards, a redistribution behind most of the first hour's fall. Loss to the room dominates later. Warming patients before induction blunts the drop.",
   "move": "Before blaming a loss on leakage, check whether it simply moved inside.",
+  "ask": "When something I feared losing vanished, did I check whether it simply moved somewhere I could not see?",
   "trap": "Blaming the open wound, the obvious place for heat to escape.",
   "keywords": [
     "perioperative hypothermia",

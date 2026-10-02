@@ -9,6 +9,7 @@
   "question": "How large must the possible win in an even coin toss be before most people accept a possible loss?",
   "answer": "About twice as large. In Tversky and Kahneman's median estimate, losses weigh about 2.25 times as much as equal gains, so someone risking 100 on a coin toss typically wants a possible win near 225. Later estimates vary by person and setting.",
   "move": "Check whether fear of losing is pricing a bet, not its odds.",
+  "ask": "When I decline a fair bet, is it the odds I am pricing or my fear of losing?",
   "keywords": [
     "loss aversion",
     "prospect theory",

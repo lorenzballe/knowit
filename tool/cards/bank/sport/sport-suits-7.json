@@ -36,5 +36,6 @@
   "source": "FIE, Material Rules",
   "source_kind": "standard",
   "reference": "Fédération Internationale d'Escrime, Material Rules, 2023",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

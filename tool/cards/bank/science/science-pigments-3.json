@@ -29,5 +29,6 @@
   "source": "Lekner and Dorf, Applied Optics, 1988",
   "source_kind": "paper",
   "reference": "Lekner and Dorf, Why some things are darker when wet, Applied Optics 27, 1278, 1988",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

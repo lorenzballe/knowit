@@ -9,6 +9,7 @@
   "question": "Why did chroniclers call the plague's return in 1361 the mortality of children?",
   "answer": "Because it fell hardest on the young. Chroniclers in England and France recorded that the second outbreak took children and youths above all. One explanation: most adults alive in 1361 had come through 1348, while those born since had never met it. The dead of 1361 were the generation meant to refill the villages.",
   "move": "Ask what the survivors of the last disaster share before predicting the next.",
+  "ask": "What do survivors of my last crisis share, and does that make us exposed to the next?",
   "keywords": [
     "second pestilence",
     "children",

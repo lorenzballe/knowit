@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "Three to the ninth is about 20,000. The first days look like nothing at all, which is exactly why anything spreading this way is always noticed too late to be stopped early.",
   "move": "Nine days from one person to a whole town, and the first six look like nothing.",
+  "ask": "What small thing that spreads or compounds am I ignoring because the first stretch looks like nothing?",
   "trap": "Repeated multiplication feels like repeated addition.",
   "keywords": [
     "exponential growth",

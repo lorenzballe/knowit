@@ -35,5 +35,6 @@
   "source": "Royal Museums Greenwich, The Surgeon's Mate",
   "source_kind": "institution",
   "reference": "https://www.rmg.co.uk/stories/maritime-history/library-archive/surgeons-mate-john-woodall",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -9,6 +9,7 @@
   "question": "Do people with long commutes gain enough elsewhere, in pay or housing, to make up for the journey?",
   "answer": "No. Stutzer and Frey, using German panel data, found that people with longer commutes reported lower satisfaction with life, and their extra pay or better housing did not make up for it. They called it the commuting paradox, since standard theory says people would be compensated.",
   "move": "A cheaper home further out has a price paid daily in minutes.",
+  "ask": "What is my commute or cheap home really costing me in minutes each day?",
   "keywords": [
     "commuting",
     "life satisfaction",

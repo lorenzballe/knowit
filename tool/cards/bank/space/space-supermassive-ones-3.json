@@ -29,5 +29,6 @@
   "source": "Koposov et al., MNRAS, 2020",
   "source_kind": "paper",
   "reference": "Koposov et al., Discovery of a nearby 1700 km/s star ejected from the Milky Way by Sgr A*, Monthly Notices of the Royal Astronomical Society, 2020",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

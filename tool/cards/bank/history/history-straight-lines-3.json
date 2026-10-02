@@ -29,5 +29,6 @@
   "source": "BLM, Manual of Surveying Instructions, 2009",
   "source_kind": "primary_document",
   "reference": "Bureau of Land Management, Manual of Surveying Instructions for the Survey of the Public Lands of the United States, 2009",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

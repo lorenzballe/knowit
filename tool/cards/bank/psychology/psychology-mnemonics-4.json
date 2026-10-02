@@ -35,5 +35,6 @@
   "source": "Maguire et al., Nature Neuroscience, 2003",
   "source_kind": "paper",
   "reference": "Maguire, Valentine, Wilding & Kapur, Routes to remembering: the brains behind superior memory, Nature Neuroscience, 2003",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

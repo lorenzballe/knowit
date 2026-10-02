@@ -9,6 +9,7 @@
   "question": "How much did strong social relationships raise the odds of survival, in a pooling of 148 studies?",
   "answer": "By about 50%. Holt-Lunstad's meta-analysis of 148 studies with 308,849 participants found people with stronger social relationships had 50% greater odds of survival over an average of 7.5 years, comparable with quitting smoking. The studies are observational, so the link is not proof of cause.",
   "move": "Schedule the people you would miss before the work you would not.",
+  "ask": "Which person would I miss most, and when did I last put time with them ahead of work?",
   "keywords": [
     "social relationships",
     "survival",

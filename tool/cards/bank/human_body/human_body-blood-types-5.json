@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Red cells carry the A and B antigens, so group O cells suit anyone; plasma carries the antibodies, and only AB plasma has neither anti-A nor anti-B. So AB plasma can go to any patient, while O plasma, full of both, suits only group O. Just 3 to 4% of people are AB.",
   "move": "When the thing being given changes, check whether the rule flips.",
+  "ask": "Which rule I rely on might flip when the thing it applies to changes?",
   "trap": "Carrying over the red-cell rule that makes O the universal donor.",
   "keywords": [
     "plasma",

@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. McDonnell Douglas's DC-X, a 12-metre test vehicle, first flew at White Sands, New Mexico, in August 1993, and made a dozen flights in all, none higher than a few kilometres. In 1996 a landing leg failed to extend; it toppled and burned. Funding ended, and the idea waited two decades for a sponsor.",
   "move": "Inventions that died leave no fleet to remind anyone of them.",
+  "ask": "Which old idea did I dismiss because nothing visible remains of its earlier attempts?",
   "trap": "Dating vertical landing from the programmes that survived to fly today.",
   "keywords": [
     "dc-x",

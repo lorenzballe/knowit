@@ -40,5 +40,6 @@
   "source": "Page, Physical Review D 13, 1976",
   "source_kind": "paper",
   "reference": "Page, Particle emission rates from a black hole: Massless particles from an uncharged, nonrotating hole, Physical Review D, 1976",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "A browser's random test names. Chromium-based browsers looked up strings like 'wjqfpmyh' at start-up, to detect networks that fake answers for missing names. Real lookups rarely reach the root, because resolvers remember the answers for .com and other endings for days; what gets through is mostly names that do not exist.",
   "move": "A checkpoint sees only what got past the ones before it.",
+  "ask": "Which of my filters shows me only what survived earlier ones, and what am I missing?",
   "trap": "Ordinary lookups, because every lookup is pictured starting at the root.",
   "keywords": [
     "root servers",

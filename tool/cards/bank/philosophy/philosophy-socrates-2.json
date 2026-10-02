@@ -37,5 +37,6 @@
   "source": "Plato, Apology 36a",
   "source_kind": "primary_document",
   "reference": "Plato, Apology 36a, trans. Grube, in Plato: Complete Works, ed. Cooper, Hackett, 1997",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

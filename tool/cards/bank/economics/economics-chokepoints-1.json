@@ -9,6 +9,7 @@
   "question": "If the Strait of Hormuz closed, how much Gulf oil could go round it by pipeline?",
   "answer": "Only a few million barrels a day, out of about 20 million that pass through. Saudi Arabia's East-West pipeline to the Red Sea and the UAE's line to Fujairah are the only big bypasses, and much of their capacity is already in use. Kuwait, Qatar and southern Iraq have no way out but the strait.",
   "move": "Check the size of the backup before calling a risk diversified.",
+  "ask": "Which risk do I call diversified when the backup could carry only a small fraction?",
   "keywords": [
     "strait of hormuz",
     "oil pipelines",

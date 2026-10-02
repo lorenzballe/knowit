@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "In the middle. Liu and colleagues found accuracy highest when the key document came first or last and lowest in between, a U-shaped curve; in some tests a model did worse with the answer mid-pile than with no documents. People recall lists in a similar curve. A long window is not an evenly read one.",
   "move": "Having something in front of you is not the same as attending to it.",
+  "ask": "What do I have in front of me that I am not truly attending to?",
   "trap": "Assuming the earliest text, furthest back, is the most forgotten.",
   "keywords": [
     "long context",

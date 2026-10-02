@@ -9,6 +9,7 @@
   "question": "Why do most stars look white to the eye, though photographs show them orange, yellow and blue?",
   "answer": "Because their light is too faint for colour vision. The eye's colour sensors, the cones, need much more light than the rods, which see in grey. Most stars are too dim to stir the cones enough to judge colour, so they look white; only the brightest, like orange Arcturus or red Antares, show a tint.",
   "move": "A sensor below its threshold reports the default, not the truth.",
+  "ask": "Where do I call something plain or absent just because my own senses are too weak to register it?",
   "keywords": [
     "star colours",
     "cones",

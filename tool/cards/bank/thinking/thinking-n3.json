@@ -34,5 +34,6 @@
   "figure": "none",
   "source": "Net-progress problems",
   "source_kind": "arithmetic",
-  "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988"
+  "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988",
+  "disabled": true
 }

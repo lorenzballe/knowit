@@ -9,6 +9,7 @@
   "question": "Why did the stomach bacterium behind most ulcers refuse to grow in the lab until Easter 1982?",
   "answer": "Because the plates were thrown away too soon. Robin Warren had seen curved bacteria in stomach biopsies, but Barry Marshall's cultures in Perth were discarded after two days, the routine for throat swabs. Over the long Easter weekend one batch sat for five days, and colonies of Helicobacter pylori appeared. It simply grew slowly.",
   "move": "A search that stops too early reports that nothing is there.",
+  "ask": "What did I conclude was absent simply because I stopped searching too early?",
   "keywords": [
     "helicobacter pylori",
     "stomach ulcers",

@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Beedie and colleagues gave trained cyclists placebo capsules before 10 km time trials. Told they had taken none, they produced 1.4% less power than baseline; told 4.5 mg per kg, 1.3% more; told 9 mg per kg, 3.1% more. Belief alone traced a dose-response curve, from an empty capsule.",
   "move": "Without a dummy version to compare against, a result also measures hope.",
+  "ask": "What do I credit to a treatment or tool that might mainly be my own expectation?",
   "trap": "Assuming a capsule with nothing in it can do nothing.",
   "keywords": [
     "caffeine",

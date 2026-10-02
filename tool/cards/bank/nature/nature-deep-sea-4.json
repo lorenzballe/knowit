@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Crowds of jelly-like animals. Jellyfish, comb jellies and their long colonial cousins turned out to be among the most abundant predators of the deep midwater. Nets had shredded their soft bodies into unrecognisable slime, so the catch held mostly sturdy fish and crustaceans. Only cameras could see who had been there.",
   "move": "Ask what your sampling method destroys before counting what it keeps.",
+  "ask": "What does the way I gather evidence destroy before I count what it keeps?",
   "trap": "Even more fish, as if the nets had simply been too small.",
   "keywords": [
     "gelatinous animals",

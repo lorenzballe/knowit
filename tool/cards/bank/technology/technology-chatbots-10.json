@@ -13,6 +13,7 @@
   ],
   "answer": "People now tell chatbots about symptoms, debts and marriages in the tone they would use with a doctor or lawyer. Without protection those words can be demanded in court: in 2025 a US judge ordered OpenAI to keep users' ChatGPT logs, deleted ones included, for a copyright case. Candour needs a shield.",
   "move": "The hinge is whether privilege follows the listener's duties or the speaker's trust.",
+  "ask": "When I tell something in confidence, do I know whose duties protect it, and whose do not?",
   "counterpoint": "Privilege exists because doctors and lawyers are licensed, owe duties and can lose their careers for betraying a client; a chatbot company owes nothing like that. Blanket protection would hide evidence of fraud, stalking and planned violence, and let firms shelter their own records. Better to limit what is stored than to seal it.",
   "keywords": [
     "privacy",

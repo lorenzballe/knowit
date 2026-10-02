@@ -36,5 +36,6 @@
   "source": "Harper et al., Nature, 2019",
   "source_kind": "paper",
   "reference": "Harper et al., Recycling lithium-ion batteries from electric vehicles, Nature, 2019",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

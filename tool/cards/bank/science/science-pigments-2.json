@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Their yellow has faded. Painters often mixed greens from a stable blue and a yellow lake, a dye fixed onto a chalky base, and those yellows fade in light. The blue survived and the yellow did not, so leaves painted green now read as blue-grey.",
   "move": "What looks like the original taste may be only what lasted.",
+  "ask": "What do I think of as original that might just be what survived?",
   "trap": "Taking the colours that survived for the colours that were painted.",
   "keywords": [
     "yellow lake",

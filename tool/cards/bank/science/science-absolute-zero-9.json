@@ -11,6 +11,7 @@
   "unit": "joules",
   "answer": "Only 1 joule came from the cold side, so work = 100 − 1 = 99 joules.",
   "move": "The colder the target, the dearer each last step of progress becomes.",
+  "ask": "Where am I chasing the last few percent at a cost that grows faster than the gain?",
   "trap": "Expecting about 1 joule, as if cooling merely moved heat along.",
   "hint": "Heat divided by temperature is entropy, and a perfect machine never creates or destroys any.",
   "steps": [

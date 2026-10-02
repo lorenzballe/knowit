@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Rival schools quoting them to refute them. The Carvaka or Lokayata texts, including a sutra ascribed to Brihaspati, are lost; scholars rebuild them from fragments in Buddhist, Jain and Hindu works written to defeat them. One sceptical treatise from the eighth century AD survives. The school stands trial with only the prosecution's papers.",
   "move": "When only opponents kept the record, read it as a case for the prosecution.",
+  "ask": "Whose account of my opponents am I trusting, and did they write it themselves?",
   "trap": "Assuming a school's own founding text survived, as scriptures of rival schools did.",
   "keywords": [
     "carvaka",

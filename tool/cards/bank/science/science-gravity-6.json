@@ -9,6 +9,7 @@
   "question": "Why is Earth's gravity in metres per second squared, 9.81, so close to π squared, 9.87?",
   "answer": "Because the metre nearly was a pendulum. A pendulum whose single swing takes one second is g/π² metres long, and in 1791 the French Academy weighed it as the new unit. It chose instead a ten-millionth of the pole-to-equator arc, since gravity varies with latitude; that arc landed within 0.6% of the pendulum.",
   "move": "When two numbers match too well, look for a shared history before calling it luck.",
+  "ask": "When two things match too neatly, do I look for a shared history before calling it luck?",
   "keywords": [
     "metre",
     "seconds pendulum",

@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "France's. The 1916 map drew zones of influence, not borders, and put Mosul in the French area reaching out from Syria. In December 1918 Clemenceau agreed to let Britain have it, and in 1925 the League of Nations kept Mosul in British-run Iraq against Turkey's claim. Today's Syria–Iraq border came from those later bargains.",
   "move": "Before crediting a famous plan, check it against what was finally built.",
+  "ask": "Before I credit a famous plan, have I checked it against what was actually built?",
   "trap": "Reading today's Iraqi Mosul back into the 1916 plan.",
   "keywords": [
     "sykes-picot",

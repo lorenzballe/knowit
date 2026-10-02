@@ -29,5 +29,6 @@
   "source": "Tabula Heracleensis, Caesar's municipal law",
   "source_kind": "primary_document",
   "reference": "https://avalon.law.yale.edu/ancient/law_of_caesar.asp",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

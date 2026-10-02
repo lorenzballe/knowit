@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The main workers are low-density lipoproteins, tiny balls of protein and phospholipid in the yolk. At the oil surface they burst open and spread their proteins and phospholipids together into a film tougher than either alone. Lecithin, the textbook molecule, is one member of the team.",
   "move": "A single named cause is often a team with one famous member.",
+  "ask": "Which result do I credit to one famous cause when a whole team of causes is behind it?",
   "trap": "True, because lecithin is the emulsifier every label and textbook names.",
   "keywords": [
     "egg yolk",

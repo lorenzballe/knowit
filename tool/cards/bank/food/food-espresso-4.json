@@ -35,5 +35,6 @@
   "source": "Istituto Espresso Italiano",
   "source_kind": "standard",
   "reference": "https://iei.coffee/en/espresso-italiano-certificato/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

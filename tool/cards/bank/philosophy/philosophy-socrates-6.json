@@ -9,6 +9,7 @@
   "question": "According to Xenophon, why did Socrates make so little effort to win his acquittal?",
   "answer": "He thought it a good time to die. In Xenophon's Apology, Socrates tells his friend Hermogenes that death now would spare him old age: failing sight and hearing, slower learning, faster forgetting. Plato's Socrates argues for his life as a public duty; Xenophon's treats the verdict almost as a mercy. Two pupils, two different deaths.",
   "move": "When two witnesses explain the same act, ask what each needed it to mean.",
+  "ask": "When two people explain the same act, what did each need it to mean?",
   "keywords": [
     "xenophon",
     "trial of socrates",

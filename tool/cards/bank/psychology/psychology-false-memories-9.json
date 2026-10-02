@@ -13,6 +13,7 @@
   ],
   "answer": "Many crimes have one witness and no forensic trace; a corroboration rule would leave them unprosecutable, often assaults on the most vulnerable. A quick, confident first identification from a fair double-blind lineup is strong evidence. Courts should judge how the identification was obtained, not throw out a whole class of testimony.",
   "move": "Whichever side you took, the hinge is how the identification was first collected.",
+  "ask": "Whose confident identification of someone have I trusted without asking how it was first collected?",
   "counterpoint": "Mistaken identification played a part in about 69% of the more than 375 DNA exonerations the Innocence Project counted in the United States from 1989 to 2020, more than any other factor. Those witnesses were sincere and jurors believed them. Evidence the defence cannot test after the fact should not convict on its own.",
   "keywords": [
     "eyewitness identification",

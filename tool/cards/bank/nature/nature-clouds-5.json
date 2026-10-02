@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Its contrail clouds. Lee and colleagues put contrail cirrus at about 57 milliwatts of warming per square metre, against about 34 for all aviation's carbon dioxide since 1940, though far less certain. Contrails vanish within hours; carbon dioxide stays for centuries. Some flights warm the planet mostly through a white line.",
   "move": "Rank causes by their effect today and by their effect in a century.",
+  "ask": "Which problem do I rank by today's size, forgetting the one that will be bigger in a decade?",
   "trap": "Carbon dioxide is the famous greenhouse gas, so it must dominate.",
   "keywords": [
     "contrails",

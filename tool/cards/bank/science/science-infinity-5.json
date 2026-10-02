@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "A 44-digit number: roughly 15 followed by 42 zeros. The total grows like a logarithm: each extra 1 needs about 2.7 times as many terms as the one before. A billion terms reach only about 21; a computer adding a billion terms a second since the Big Bang would be near 62.",
   "move": "Growing forever is not the same as growing large.",
+  "ask": "Which thing in my life keeps growing forever while I mistake it for growing large?",
   "trap": "About a trillion: a number that big feels like it must be enough.",
   "keywords": [
     "harmonic series",

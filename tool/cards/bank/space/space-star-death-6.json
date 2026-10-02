@@ -29,5 +29,6 @@
   "source": "Wallner et al., Nature, 2016",
   "source_kind": "paper",
   "reference": "Wallner et al., Recent near-Earth supernovae probed by global deposition of interstellar radioactive 60Fe, Nature 532, 69, 2016",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

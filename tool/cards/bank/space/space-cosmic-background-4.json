@@ -12,6 +12,7 @@
   "question": "Why did NASA's WMAP team point out Stephen Hawking's initials in their map of the cosmic background?",
   "answer": "As a warning. The letters S and H stand out clearly in the map; the odds of those exact shapes arising by chance are tiny, but so are the odds of any particular pattern. The team's 2011 review of claimed anomalies argued that oddities spotted after looking cannot be scored as if predicted.",
   "move": "Decide what counts as strange before you look, not after.",
+  "ask": "Before I look at my data this week, have I decided what would count as surprising?",
   "keywords": [
     "wmap",
     "cosmic microwave background",

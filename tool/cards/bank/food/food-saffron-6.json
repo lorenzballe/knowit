@@ -35,5 +35,6 @@
   "source": "Foods, 2021, saffron dehydration study",
   "source_kind": "paper",
   "reference": "https://www.mdpi.com/2304-8158/10/2/404",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

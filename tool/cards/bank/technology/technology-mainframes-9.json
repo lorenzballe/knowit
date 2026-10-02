@@ -28,5 +28,6 @@
   "source": "Forrester, Journal of Applied Physics, 1951",
   "source_kind": "paper",
   "reference": "Forrester, Digital Information Storage in Three Dimensions Using Magnetic Cores, Journal of Applied Physics, 1951",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

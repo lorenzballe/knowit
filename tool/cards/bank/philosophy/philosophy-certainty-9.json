@@ -9,6 +9,7 @@
   "question": "If someone truly knows a fact, why may they not simply ignore all later evidence against it?",
   "answer": "Because the evidence can take the knowledge away. Saul Kripke's puzzle: if I know it, all counter-evidence is misleading, so I may disregard it. Gilbert Harman replied in 1973 that meeting the counter-evidence can leave you no longer knowing, and the argument's first premise is gone. A verdict stands only until the appeal.",
   "move": "Being right today is no licence to stop listening tomorrow.",
+  "ask": "Which fact have I stopped listening for new evidence on because I decided I already knew it?",
   "keywords": [
     "dogmatism paradox",
     "saul kripke",

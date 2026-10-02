@@ -9,6 +9,7 @@
   "question": "Who first called honouring sunk costs the Concorde fallacy, and about what?",
   "answer": "Two biologists, writing about animal parents deserting a mate. In 1976 Richard Dawkins and Tamsin Carlisle argued that a parent does not stay with a brood because of what it has already put in; only future costs and benefits should count. They named the opposite error after the jet Britain and France kept funding.",
   "move": "Behind a choice that seems to honour the past, look for a future reason.",
+  "ask": "Which choice am I defending as honouring the past when a future reason would serve better?",
   "keywords": [
     "concorde fallacy",
     "parental investment",

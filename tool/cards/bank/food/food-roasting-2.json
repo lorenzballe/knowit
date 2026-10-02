@@ -29,5 +29,6 @@
   "source": "Global Coffee Report",
   "source_kind": "news_archive",
   "reference": "https://www.gcrmag.com/goglio-leads-the-pack-a-history-of-innovation-in-coffee-packaging/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

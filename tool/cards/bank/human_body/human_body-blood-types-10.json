@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "No link to infection or severity. Anderson and colleagues followed everyone tested in a Utah health system: blood group made no difference to testing positive, hospital admission or intensive care. Early, smaller studies are the likeliest to report striking effects, which shrink as numbers grow; genetic studies still find at most a small effect.",
   "move": "Expect a striking first result to shrink when a bigger study checks it.",
+  "ask": "Which striking first result have I repeated lately that a larger study may have shrunk?",
   "trap": "Expecting an effect reported by several early studies to hold at full strength.",
   "keywords": [
     "covid-19",

@@ -9,6 +9,7 @@
   "question": "Among more than 40,000 Japanese adults followed for seven years, what happened to those who reported no ikigai?",
   "answer": "They died at about one and a half times the rate. In the Ohsaki cohort of adults aged 40 to 79, those who said they had no ikigai, a sense of life worth living, had higher mortality over seven years. Reports of purpose and health may partly feed each other.",
   "move": "Name one thing you would be sorry to lose, and tend it.",
+  "ask": "What is the one thing I would be sorry to lose, and when did I last tend it?",
   "keywords": [
     "ikigai",
     "ohsaki cohort",

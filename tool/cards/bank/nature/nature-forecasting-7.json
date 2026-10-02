@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 7 in 10. Tornadoes are rare at any one spot, while radar shows many rotating storms that never put one down. To cover six tornadoes in ten, forecasters must warn on far more storms than will produce one. Brooks and Correia tracked it over three decades: most warned towns see only rain and hail.",
   "move": "A net wide enough to catch a rare thing catches plenty besides.",
+  "ask": "Where do I catch a rare thing with a wide net and drown in false alarms?",
   "trap": "Assuming a warning that catches most tornadoes must rarely be wrong.",
   "keywords": [
     "tornado warnings",

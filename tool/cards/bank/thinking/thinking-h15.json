@@ -12,6 +12,7 @@
   "correct": 0,
   "answer": "True. It happened in the United States between 1974 and 1978: the average rate fell within every income bracket, yet the overall rate rose, because inflation pushed more of the country's income into the higher brackets, where rates were steepest. The mix moved faster than the rates.",
   "move": "A shift in the mix can outrun a change in every part.",
+  "ask": "Which overall figure am I reading as if each part had moved the same way?",
   "trap": "If every part goes down, the whole must go down too.",
   "keywords": [
     "income tax",

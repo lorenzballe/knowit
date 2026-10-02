@@ -36,5 +36,6 @@
   "source": "Izdebski et al., Nature Ecology & Evolution, 2022",
   "source_kind": "paper",
   "reference": "doi:10.1038/s41559-021-01652-4",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

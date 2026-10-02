@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. The feathers insulate so well that little body heat reaches their outer surface, while that surface keeps radiating heat to the sky. Thermal cameras at an Antarctic colony found most of the plumage below air temperature, so the birds were gaining a little heat from the air around them, not losing it.",
   "move": "A cold surface can mean the insulation is working, not failing.",
+  "ask": "Where do I read a visible sign as failure when it may mean something is working?",
   "trap": "A warm-blooded body should warm the surface that wraps it.",
   "keywords": [
     "emperor penguins",

@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The original footage is lost, and the evidence is Kuleshov's and Pudovkin's own later accounts, which even disagree on the shots used. The first controlled recreation, in 1992, found viewers mostly read the face as neutral whatever it was cut with. A 2016 study with a better design found only a modest effect.",
   "move": "Before citing a classic demonstration, ask who counted the results, and how.",
+  "ask": "Which classic study do I quote without knowing who counted what, and how?",
   "trap": "Assuming a textbook effect rests on a textbook experiment.",
   "keywords": [
     "kuleshov effect",

@@ -9,6 +9,7 @@
   "question": "Where does the textbook four-layer cross-section of a Roman road come from?",
   "answer": "From a recipe for floors. In 1622 Nicolas Bergier took Vitruvius's instructions for laying house pavements, layer names and all, and applied them to roads. Later writers hardened his sections near Reims into a fixed four-layer rule, though excavated Roman roads vary with the ground and the local stone. The diagram outlived the evidence.",
   "move": "A diagram repeated for centuries can rest on a single borrowed source.",
+  "ask": "Which diagram or fact I repeat rests on a single borrowed source?",
   "keywords": [
     "roman roads",
     "nicolas bergier",

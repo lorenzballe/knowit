@@ -28,5 +28,6 @@
   "source": "Descartes, Principles of Philosophy, IV.205",
   "source_kind": "book",
   "reference": "Descartes, Principles of Philosophy IV.205, in The Philosophical Writings of Descartes I, trans. Cottingham, Stoothoff & Murdoch, Cambridge University Press, 1985",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "It stayed at hours. Monsters University took about 29 hours to render each frame, on a farm of some 24,000 cores, because artists spent every gain on more hair, light bounces and detail. Graphics people call this Blinn's law: render time holds steady as machines speed up. The picture improves; the wait does not shrink.",
   "move": "Faster tools save time only if the ambitions stay where they were.",
+  "ask": "When a tool makes my work faster, do I use the time saved or just raise my ambitions?",
   "trap": "Expecting faster machines to shorten the wait, as if the job stayed fixed.",
   "keywords": [
     "render farm",

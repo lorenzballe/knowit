@@ -9,6 +9,7 @@
   "question": "How old was Mozart when he wrote his variations on the tune now sung as Twinkle, Twinkle?",
   "answer": "About 25, not a child. The twelve variations K. 265, on the French song Ah, vous dirai-je, maman, were long dated to his Paris stay of 1778; study of the paper and handwriting puts them in Vienna around 1781 or 1782. The English words, Jane Taylor's poem of 1806, came to the tune later.",
   "move": "A childish tune says nothing about the age of the person using it.",
+  "ask": "Which assumption about someone, based on a simple tune they use, ignores their actual age or skill?",
   "keywords": [
     "twinkle twinkle",
     "ah vous dirai-je maman",

@@ -34,5 +34,6 @@
   "source": "Schroeder & Gibson, USENIX FAST, 2007",
   "source_kind": "paper",
   "reference": "Schroeder & Gibson, Disk failures in the real world: What does an MTTF of 1,000,000 hours mean to you?, USENIX FAST, 2007",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

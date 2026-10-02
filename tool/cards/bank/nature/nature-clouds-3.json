@@ -35,5 +35,6 @@
   "source": "Rogers & Yau, Cloud Physics, 1989",
   "source_kind": "book",
   "reference": "Rogers & Yau, A Short Course in Cloud Physics, 3rd edition, Pergamon Press, 1989",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

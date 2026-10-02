@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "The other team. Studying several NHL seasons, Abrevaya and McCulloch found the next penalty went to the opposite side far more often than chance would give, even after allowing for score, time and home ice. The side with fewer penalties so far tends to receive the next: the referees are keeping a running tally.",
   "move": "Judges who keep count of their own calls are not judging each call alone.",
+  "ask": "Whose judgement of me is shaped by balancing their own earlier calls, not by what I just did?",
   "trap": "Treating each call as judged on its merits, apart from the last.",
   "keywords": [
     "nhl",

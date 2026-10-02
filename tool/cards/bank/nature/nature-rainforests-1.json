@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About 230. From plots across the basin, ter Steege's team found that 227 species, dubbed hyperdominant, account for half of an estimated 390 billion trees, while thousands of the rarest species together make up a sliver of a per cent. A forest of 16,000 species is mostly a few common trees, sprinkled with rarities.",
   "move": "In most big collections, a handful of members make up the bulk.",
+  "ask": "In my work, which handful of things account for most of the result?",
   "trap": "Halving the 16,000 to match half the trees.",
   "keywords": [
     "amazon",

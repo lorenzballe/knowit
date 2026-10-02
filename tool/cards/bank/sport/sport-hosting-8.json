@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 5% lower, by the Office for National Statistics' count. Olympic visitors came, but ordinary tourists and business travellers stayed away from the expected crowds, closures and prices. Those who did come spent more per head. The Games filled London's hotels partly with people who had replaced someone else.",
   "move": "An event's crowd is net of the crowd it scares away.",
+  "ask": "What crowd or benefit am I counting without subtracting the people it quietly pushes away?",
   "trap": "Counting the Olympic visitors without asking who stayed away because of them.",
   "keywords": [
     "london 2012",

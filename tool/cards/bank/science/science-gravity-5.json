@@ -9,6 +9,7 @@
   "question": "What did Henry Cavendish's famous 1798 experiment with lead balls set out to measure?",
   "answer": "The density of the Earth. He reported 5.48 times that of water; an arithmetic slip, spotted decades later, hid the 5.45 his data gave, against 5.51 today. Physicists began quoting a value of G only in the 1870s, and textbooks later recast his experiment as its measurement.",
   "move": "Ask what the original author thought they were measuring.",
+  "ask": "Before I quote a famous result, do I know what its author was actually trying to measure?",
   "keywords": [
     "henry cavendish",
     "density of the earth",

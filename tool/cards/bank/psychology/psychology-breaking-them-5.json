@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. When Hofmann and colleagues beeped 205 adults at random for a week, those high in self-control reported weaker desires, less conflict and fewer bouts of resisting. Their edge seemed to lie upstream, in lives arranged so the fight came up less often: no biscuits in the cupboard, the gym bag packed by the door.",
   "move": "The easiest temptation to beat is the one arranged out of reach.",
+  "ask": "Which temptation could I remove from my reach rather than fight with willpower?",
   "trap": "Crediting their good record to winning more fights with temptation.",
   "keywords": [
     "self-control",

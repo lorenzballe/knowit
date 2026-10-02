@@ -36,5 +36,6 @@
   "source": "Wacom, EMR method support note",
   "source_kind": "company",
   "reference": "https://support.wacom.com/hc/en-us/articles/1500006270401-What-is-the-EMR-Electro-Magnetic-Resonance-method-incorporated-in-a-pen-tablet",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

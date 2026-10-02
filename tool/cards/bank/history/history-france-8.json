@@ -18,6 +18,7 @@
   "correct": 1,
   "answer": "The same as paying for ever. A lump sum lent at 5% earns a twentieth of itself each year, exactly the due it replaces. Few peasants had that capital, so most dues went on being paid, or refused, until the Convention abolished the rest without compensation in July 1793.",
   "move": "Price any endless payment by dividing it by the interest rate.",
+  "ask": "What payment with no end am I carrying, and what is it really worth?",
   "trap": "Twenty years of payments looks smaller than payments without end.",
   "keywords": [
     "seigneurial dues",

@@ -12,6 +12,7 @@
   "tolerance": 0.5,
   "answer": "p = 10 / 11 = about 90.9%.",
   "move": "Put a price on each kind of mistake before choosing how sure to be.",
+  "ask": "In a decision I face, which mistake costs more, and have I set my threshold accordingly?",
   "trap": "Turning ten to one into 90% instead of ten in eleven.",
   "hint": "Weigh each mistake by its cost: at the tipping point, the two expected costs are equal.",
   "steps": [

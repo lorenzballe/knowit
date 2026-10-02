@@ -13,6 +13,7 @@
   ],
   "answer": "In 2018 the MARSIS radar on Mars Express found a patch about 20 km wide, 1.5 km under the ice, echoing more strongly than the ice surface itself. On Earth, echoes that bright under ice sheets come from subglacial lakes. Salts such as perchlorates can keep brine liquid far below 0 °C.",
   "move": "Whichever side you took, the heat under the ice decides it.",
+  "ask": "What hidden factor decides a question I thought was settled by the headline?",
   "counterpoint": "Keeping even salty water liquid there needs more heat than the region is known to have. Frozen smectite clays, common on Mars, give equally bright echoes, as Smith and colleagues showed in 2021, and similar bright spots turn up where the ice base is far too cold for brine. A solid explanation fits without special pleading.",
   "keywords": [
     "marsis",

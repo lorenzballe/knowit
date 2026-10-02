@@ -35,5 +35,6 @@
   "source": "ISO 10456, tabulated thermal values of materials",
   "source_kind": "standard",
   "reference": "ISO 10456:2007, Building materials and products — Hygrothermal properties — Tabulated design values and procedures for determining declared and design thermal values",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

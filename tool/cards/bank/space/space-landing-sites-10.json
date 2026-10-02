@@ -29,5 +29,6 @@
   "source": "Mazarico et al., Icarus, 2011",
   "source_kind": "paper",
   "reference": "Mazarico, Neumann, Smith, Zuber & Torrence, Illumination conditions of the lunar polar regions using LOLA topography, Icarus, 2011",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -12,6 +12,7 @@
   "tolerance": 0.05,
   "answer": "$7.25 / 1.50 = about $4.83 in 2009 dollars.",
   "move": "Deflate by dividing, never by subtracting the percentage.",
+  "ask": "Where do I subtract a percentage when I should divide by it?",
   "trap": "Taking 50% off $7.25 and getting $3.63.",
   "hint": "Ask what $1.50 today buys in 2009 goods.",
   "steps": [

@@ -28,5 +28,6 @@
   "source": "Välimäki et al., IEEE Transactions, 2012",
   "source_kind": "paper",
   "reference": "Välimäki, Parker, Savioja, Smith & Abel, Fifty Years of Artificial Reverberation, IEEE Transactions on Audio, Speech, and Language Processing, 2012",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

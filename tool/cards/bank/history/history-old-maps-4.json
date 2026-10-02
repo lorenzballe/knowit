@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Coordinates for about 8,000 places. The Geography is a set of instructions: how to draw a projection, then tables of latitude and longitude from Ireland to China. No map from Ptolemy's own hand survives. The oldest maps in its manuscripts were redrawn from the tables in Constantinople around 1300, over a thousand years later.",
   "move": "Before trusting an old picture, ask who drew the copy you are holding.",
+  "ask": "Whose copy of an old story or picture am I trusting, and who made it?",
   "trap": "Taking the maps in the surviving manuscripts for Ptolemy's own originals.",
   "keywords": [
     "ptolemy",

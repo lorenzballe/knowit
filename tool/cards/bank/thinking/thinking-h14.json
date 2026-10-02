@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "Yes. Close shots go in far more often than long ones. If most of Bea's attempts are close and most of Ana's are long, Bea's total is weighted towards easy shots and beats Ana's, although Ana is better at each kind. The total measures the shot mix as much as the shooter.",
   "move": "A total is a weighted average; ask who chose the weights.",
+  "ask": "Which percentage I am proud of may depend on which easy cases I chose to count?",
   "trap": "Assuming someone better at every part must be better overall.",
   "keywords": [
     "shooting percentage",

@@ -11,6 +11,7 @@
   "unit": "thousand pounds",
   "answer": "£90,000 = 90 thousand pounds.",
   "move": "A small percentage that follows someone every year becomes a large sum.",
+  "ask": "Which small, repeated bias in how I treat people adds up to a big gap over years?",
   "hint": "Find one year's gap first, then stretch it across a career.",
   "steps": [
     "7.5% of £30,000 = £2,250 a year.",

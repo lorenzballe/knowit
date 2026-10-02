@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. In his 1976 autobiography Unended Quest, Popper called Darwinism a metaphysical research programme: useful for guiding research, but not testable. Two years later, in a lecture printed in Dialectica, he publicly recanted, saying he had changed his mind about the testability of natural selection. The strictest gatekeeper had first shut out biology's central theory.",
   "move": "A test for real science should be tried on the science everyone accepts.",
+  "ask": "Is the test I use to dismiss ideas one that the ideas I accept would pass?",
   "trap": "Assuming the great falsifier never doubted biology's best-supported theory.",
   "keywords": [
     "karl popper",

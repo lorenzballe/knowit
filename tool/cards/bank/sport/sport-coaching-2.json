@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False: too rarely. David Romer valued each option using thousands of plays and found teams punted or kicked in many situations where going for it would, on average, have won more games. A failed gamble is replayed and blamed; a timid punt is soon forgotten. Teams have grown bolder since.",
   "move": "Count the cost of playing safe as carefully as the cost of risk.",
+  "ask": "What am I protecting myself from by playing safe, and have I counted what safety costs me?",
   "trap": "Failed fourth-down gambles are vivid, so coaches seem reckless.",
   "keywords": [
     "fourth down",

@@ -14,7 +14,8 @@
   ],
   "correct": 1,
   "answer": "The cooler, longer bake. Crust is the layer that has dried out, and the drying front creeps inward with time. A hot oven browns the surface quickly, but the bake ends before much depth has dried. Long, moderate bakes give the thick, chewy crust of country loaves; hot, short ones a thin, crackling shell.",
-  "move": "Colour records how hot it got; depth records how long it lasted.",
+  "move": "Judge by how long something lasted, not only by how it looks on the surface.",
+  "ask": "Do I judge my effort by how it looks on the surface or by how deep and lasting it goes?",
   "trap": "Equating a darker, hotter surface with a deeper crust.",
   "keywords": [
     "crust thickness",

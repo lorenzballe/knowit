@@ -36,5 +36,6 @@
   "source": "Libkind et al., PNAS, 2011",
   "source_kind": "paper",
   "reference": "Libkind, Hittinger, Valério et al., Microbe domestication and the identification of the wild genetic stock of lager-brewing yeast, Proceedings of the National Academy of Sciences, 2011",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

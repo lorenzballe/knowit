@@ -29,5 +29,6 @@
   "source": "Pedalino et al., Nature, 2026",
   "source_kind": "paper",
   "reference": "doi:10.1038/s41586-025-09917-9",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

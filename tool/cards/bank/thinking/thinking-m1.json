@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "With 15 tests, a false winner at the 5% threshold is more likely than not. The number means something only for a test decided in advance, so the finding has to survive being the only thing you are looking at.",
   "move": "The winner of a search is not the same as the winner of a test.",
+  "ask": "Which winner in my work came from trying many versions and should be tested again before I trust it?",
   "trap": "Treating the winner of many tests like the winner of one.",
   "keywords": [
     "multiple comparisons",

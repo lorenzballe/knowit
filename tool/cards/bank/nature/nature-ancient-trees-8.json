@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "The hollow one. Yew heartwood rots out after some centuries, so the rings missing from a hollow tree are exactly its oldest ones; 500 is a floor, not an age. Hollowing itself comes with great age. That is why Britain's oldest yews have no ring-counted age at all, only estimates that differ by centuries.",
   "move": "The records that vanish first are often the oldest ones.",
+  "ask": "Which of my oldest strengths has left the least evidence, so I wrongly judge it the youngest?",
   "trap": "Comparing ring counts as if both trees had kept every ring.",
   "keywords": [
     "yew",

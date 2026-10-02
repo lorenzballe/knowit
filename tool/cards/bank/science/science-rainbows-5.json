@@ -9,6 +9,7 @@
   "question": "Why does a rainbow in fog come out almost white?",
   "answer": "Because fog droplets are tiny, under about 0.05 mm across. Light passing drops that small spreads out, an effect called diffraction, which smears each colour's bow so wide that the bands overlap and mix back to white. What remains is a broad, pale arc, sometimes with a faint red outer edge.",
   "move": "Shrink anything far enough and the rules that sorted it stop working.",
+  "ask": "Which rule do I use at one scale that quietly stops working when things get very small?",
   "keywords": [
     "fogbow",
     "fog droplets",

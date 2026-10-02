@@ -35,5 +35,6 @@
   "source": "IAEA Safety Reports Series No. 68",
   "source_kind": "institution",
   "reference": "IAEA, Radiation Protection and NORM Residue Management in the Production of Rare Earths from Thorium Containing Minerals, Safety Reports Series No. 68, 2011",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

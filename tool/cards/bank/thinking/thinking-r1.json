@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "A region is picked because it had an unusually bad quarter, and unusual results are partly luck. The next quarter drifts back toward that region's own average whatever anyone does. Without a comparable region left alone, you cannot tell the treatment from the drift.",
   "move": "Anything chosen for being extreme will look improved next time.",
+  "ask": "What did I recently fix at its worst moment, and how much would it have recovered by itself?",
   "trap": "Crediting the intervention with the whole improvement.",
   "keywords": [
     "regression to the mean",

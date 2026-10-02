@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Freezing. Their aluminium adjuvant clumps when ice forms, the damage is permanent, and the vials look normal. A 2007 review found that 14% to 35% of fridges or shipments exposed vaccine to freezing temperatures. The cold chain's commonest fault is being too cold.",
   "move": "Guard against the failure your precautions create, not only the one they prevent.",
+  "ask": "What new risk has my own precaution created that I am ignoring?",
   "trap": "Picturing heat as the enemy, since the whole system is called cold.",
   "keywords": [
     "freezing",

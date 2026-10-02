@@ -28,5 +28,6 @@
   "source": "Dyson & Lenard, J. Math. Phys., 1967",
   "source_kind": "paper",
   "reference": "Dyson & Lenard, Stability of Matter. I, Journal of Mathematical Physics 8, 423, 1967",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

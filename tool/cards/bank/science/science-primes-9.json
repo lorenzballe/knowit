@@ -38,5 +38,6 @@
   "source": "Apostol, Introduction to Analytic Number Theory",
   "source_kind": "book",
   "reference": "Apostol, Introduction to Analytic Number Theory, Springer, 1976",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

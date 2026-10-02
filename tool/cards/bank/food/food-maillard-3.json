@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The idea comes from the chemist Justus von Liebig in the 1840s, and it went untested for nearly a century. Seared steaks lose as much moisture as others, often more, since the hot surface drives water out. The loud sizzle in the pan is juice escaping as steam.",
   "move": "A step that looks protective still needs a comparison without it.",
+  "ask": "Which step in my routine feels protective, though I have never compared it with skipping it?",
   "trap": "A crisp brown crust looks like a barrier, so it feels like one.",
   "keywords": [
     "searing",

@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Yes, about 7% more. Studying over a million US Uber drivers, Cook and colleagues traced the whole gap to three things: men had more experience on the app, drove in more lucrative places, and drove faster, fitting more trips into an hour. No discrimination was needed. A formula blind to sex still paid by speed.",
   "move": "A rule that ignores a trait can still pay by what travels with it.",
+  "ask": "Where am I paid by a trait that travels with something a rule says it ignores?",
   "trap": "Assuming a formula that ignores sex must pay the sexes equally.",
   "keywords": [
     "uber",

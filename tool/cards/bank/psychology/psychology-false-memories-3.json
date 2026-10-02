@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About one in eight. In Loftus and Palmer's 1974 study, 16 of 50 people in the smashed group reported glass, against 7 of 50 asked about cars hitting and 6 of 50 asked nothing. The loaded verb doubled false reports, but the crash alone already led some viewers to supply the glass.",
   "move": "Before crediting the push, count what happens with no push at all.",
+  "ask": "What would my memory of that event look like if nobody had ever suggested anything?",
   "trap": "Assuming false details appear only when someone plants them.",
   "keywords": [
     "loftus and palmer",

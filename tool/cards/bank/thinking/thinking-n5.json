@@ -9,6 +9,7 @@
   "unit": "days",
   "answer": "2^20 = 1,048,576, so day 21 passes it.",
   "move": "Three weeks of doubling turns one euro into a million.",
+  "ask": "What small daily habit, doubled or compounded, would look like nothing for three weeks and then transform?",
   "hint": "Doubling ten times multiplies by about a thousand.",
   "steps": [
     "Day 1 is €1, so on day n you have 2^(n-1).",

@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About 170%, in real terms. Flyvbjerg, Budzier and Lunn found that every Games since 1960 with usable data overran, by 172% on average, the worst record of any kind of megaproject they studied. A fixed opening date and no way to shrink the event leave cost as the only thing that can give.",
   "move": "A deadline that cannot move turns every problem into a cost.",
+  "ask": "What deadline of mine cannot move, so that every surprise just turns into extra cost?",
   "trap": "Starting from the bid budget, a fifth over already sounds like a scandal.",
   "keywords": [
     "cost overruns",

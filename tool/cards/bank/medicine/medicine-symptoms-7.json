@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. It is about ten times smaller. Using UK GP records of 3,505 brain tumour patients and 17,173 controls, Hamilton and Kernick put it at 0.09%, about 1 in 1,100. Headache is common and brain tumours rare, so tumour headaches sit among thousands of ordinary ones. New neurological signs shift the odds far more.",
   "move": "A sign common in a rare disease can still say almost nothing alone.",
+  "ask": "Which sign am I fearing that is common in a rare problem and says almost nothing alone?",
   "trap": "True, because headache is the textbook first sign of a tumour.",
   "keywords": [
     "headache",

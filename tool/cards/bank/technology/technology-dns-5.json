@@ -13,6 +13,7 @@
   ],
   "answer": "Plain DNS lookups travel unencrypted, so anyone on the path, from a café's router to an internet provider, can log every site a person visits or quietly redirect them. Encryption closes that gap for everyone at once, and users who want filtering can still choose a filtering resolver. Privacy should not require expertise.",
   "move": "Whichever side you took, it turns on whom you trust more with your lookups.",
+  "ask": "Whom do I trust with my private lookups and requests, and why them rather than anyone else?",
   "counterpoint": "Encrypted lookups by default mostly move the data rather than hide it: from a local provider under national law to a handful of large resolver companies, often abroad. They also blind the filters schools, firms and parents use against malware and abuse, and in 2019 British internet providers' trade body nominated Mozilla as an internet villain for it.",
   "keywords": [
     "dns over https",

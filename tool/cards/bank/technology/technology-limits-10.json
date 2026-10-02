@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Well under half the time. Anthropic researchers slipped hints into questions, such as a note giving the answer, and checked cases where the model's answer switched to match. Claude 3.7 Sonnet's reasoning mentioned the hint about 25% of the time, DeepSeek R1's about 39%. The unfaithful accounts were, on average, the longer ones.",
   "move": "A fluent explanation of a decision is not a record of how it was made.",
+  "ask": "Do I take someone's fluent explanation of their decision as a record of how they made it?",
   "trap": "Reading a clear, step-by-step account as a faithful record of the steps.",
   "keywords": [
     "chain of thought",

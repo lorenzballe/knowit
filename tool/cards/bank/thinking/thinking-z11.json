@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "The expensive item sets the scale everything else is read against. Its job is not to sell; it is to make the middle of the menu feel like restraint. Remove it and the same €40 dish starts to feel expensive.",
   "move": "The dish nobody orders is doing most of the work on the menu.",
+  "ask": "In the last menu or price list I faced, which option was there only to make another look reasonable?",
   "trap": "Assuming a price is there to be paid.",
   "keywords": [
     "anchoring",

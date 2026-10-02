@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. That the world did not always exist, he wrote in the Summa, is held by faith alone and cannot be demonstrated. In a short treatise of about 1271 he went further: a world created by God yet with no first moment involves no contradiction. Creation, for Aquinas, meant dependence, not a date.",
   "move": "Know which of your beliefs you could prove and which you simply hold.",
+  "ask": "Which of my deepest beliefs could I prove, and which do I simply hold?",
   "trap": "Assuming a medieval theologian would claim to have proved creation.",
   "keywords": [
     "thomas aquinas",

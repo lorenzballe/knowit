@@ -52,5 +52,6 @@
   "source": "Vaswani et al., NeurIPS, 2017",
   "source_kind": "paper",
   "reference": "Vaswani et al., Attention Is All You Need, Advances in Neural Information Processing Systems, 2017",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

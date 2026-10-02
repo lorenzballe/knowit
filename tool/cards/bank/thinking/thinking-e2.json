@@ -9,7 +9,8 @@
   "unit": "thousand bricks",
   "withinFactor": 3,
   "answer": "2,500 x 60 = ~150,000. With party walls and returns, a few hundred thousand.",
-  "move": "The building you live in is a quarter of a million bricks somebody laid by hand.",
+  "move": "Unknown quantities become answerable when you multiply a few things you can roughly guess.",
+  "ask": "What question I call unknowable could I break into parts and roughly answer in two minutes?",
   "hint": "Work out the wall area, then bricks per square metre.",
   "steps": [
     "A brick face is about 21 x 6 cm with mortar, so ~60 bricks per square metre per leaf.",

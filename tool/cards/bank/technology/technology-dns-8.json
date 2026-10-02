@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Up to a day. Resolvers, the servers that look names up for users, that fetched the record just before the change keep it for its old one-day lifetime; the new 5-minute rule reaches them only when they ask again. Careful operators cut the cache time a day ahead, wait out the old value, then move.",
   "move": "A new rule reaches only those who ask again after it changes.",
+  "ask": "Which change have I announced that only reaches people when they next check?",
   "trap": "Assuming the new 5-minute setting applies the moment it is saved.",
   "keywords": [
     "time to live",

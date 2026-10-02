@@ -35,5 +35,6 @@
   "source": "Bakshi, EUV Lithography, SPIE Press, 2018",
   "source_kind": "book",
   "reference": "Bakshi (ed.), EUV Lithography, 2nd edition, SPIE Press, 2018",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. SLIM landed about 55 m from its aim point, far closer than earlier robotic landers, by matching craters below against a map on board. But one of its two main engines lost a nozzle some 50 m up, and the lander tipped onto its nose, its solar cells facing west.",
   "move": "Hitting the target and landing well are two separate tests.",
+  "ask": "Am I judging a result by whether it hit the target or by whether it truly worked?",
   "trap": "Assuming a lander that tipped over must have missed its mark.",
   "keywords": [
     "slim",

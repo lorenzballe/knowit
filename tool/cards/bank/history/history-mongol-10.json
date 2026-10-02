@@ -11,6 +11,7 @@
   "unit": "ingots",
   "answer": "After 10 years: 32 x 32 = 1,024 ingots.",
   "move": "Ask whether a debt adds or multiplies before agreeing to its terms.",
+  "ask": "Before I agree to any debt, do I know whether it adds or multiplies?",
   "trap": "Adding one ingot a year and answering about 11.",
   "hint": "Work out five years first; ten years is five years done twice.",
   "steps": [

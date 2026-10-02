@@ -11,6 +11,7 @@
   "unit": "species",
   "answer": "40,000 x 0.0002 = 8 species.",
   "move": "A count means little until you know what normal would produce.",
+  "ask": "Before I call a number alarming, do I know what normal would have produced?",
   "trap": "Assuming a few hundred losses is roughly what nature always does.",
   "hint": "Turn the background rate into a fraction lost per century first.",
   "steps": [

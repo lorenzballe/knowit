@@ -37,5 +37,6 @@
   "source": "Lohmann et al., Journal of Experimental Biology, 2007",
   "source_kind": "paper",
   "reference": "Lohmann, Lohmann & Putman, Magnetic maps in animals: nature's GPS, Journal of Experimental Biology, 2007",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

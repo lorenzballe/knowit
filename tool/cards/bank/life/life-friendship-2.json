@@ -9,6 +9,7 @@
   "question": "About how many hours together does it take for an acquaintance to become a friend?",
   "answer": "About 50 hours to become a casual friend, about 90 to become a friend, and over 200 for a close friend. Hall surveyed adults who had recently moved and tracked students. Time together predicted closeness, and the time counted most when spent joking, catching up and talking about things that mattered.",
   "move": "Count friendship in hours spent, and spend them on purpose.",
+  "ask": "How many hours have I actually spent with the acquaintance I say I want as a friend?",
   "keywords": [
     "friendship",
     "time together",

@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "A 5% threshold means one false positive in twenty tests on average. Run twenty tests and finding one \"result\" is what should happen if nothing is going on. The fix is to say up front what you are testing.",
   "move": "Ask how many things they measured before you believe the one they report.",
+  "ask": "Which finding I recently believed came from a search where many other things were tried and not mentioned?",
   "trap": "Reading a single p-value without asking how many tests were run.",
   "keywords": [
     "multiple comparisons",

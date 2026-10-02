@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. It rested on one seismometer, on NASA's InSight lander in Elysium Planitia. Marsquake waves travelled beneath it at speeds that fit rock with water-filled cracks; extrapolated planet-wide, that would be enough for an ocean 1 to 2 km deep. The reading is contested. One instrument, one spot, a claim about a planet.",
   "move": "Ask how many places were measured before accepting a claim about everywhere.",
+  "ask": "How many places were really measured before I accepted a claim about everywhere?",
   "trap": "Assuming a planet-wide claim must stand on planet-wide measurements.",
   "keywords": [
     "insight lander",

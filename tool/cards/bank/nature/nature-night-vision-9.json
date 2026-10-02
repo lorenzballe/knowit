@@ -56,5 +56,6 @@
   "source": "Wyszecki & Stiles, Color Science, 1982",
   "source_kind": "book",
   "reference": "Wyszecki & Stiles, Color Science: Concepts and Methods, Quantitative Data and Formulae, 2nd edition, Wiley, 1982",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

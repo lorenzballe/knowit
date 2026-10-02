@@ -13,6 +13,7 @@
   ],
   "answer": "Clean water was the sharpest single blow to death. In major US cities from 1900 to 1936, filtration and chlorination explain nearly half the fall in total mortality, three-quarters of the fall in infant deaths and nearly two-thirds of the fall in child deaths. Cities that cleaned their water saw typhoid collapse within years.",
   "move": "Whichever side you took, the order in which deaths fell is what decides it.",
+  "ask": "When I credit one cause for improvement, have I checked what changed first?",
   "counterpoint": "Deaths were falling before the pipes arrived. In England and Wales, tuberculosis, spread through the air, killed fewer people decade after decade from the mid-1800s, long before any drug or sewer could touch it; better-fed bodies resisted it. And a re-analysis of the same US cities found filtration explained much less of the decline.",
   "keywords": [
     "public health",

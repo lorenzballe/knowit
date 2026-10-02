@@ -9,6 +9,7 @@
   "question": "How soon after its opening can a studio book a film as a flop?",
   "answer": "Within days. A wide release's weekly takings fall in a fairly predictable pattern, so the opening weekend lets studios project the whole run. John Carter opened on 9 March 2012; about ten days later Disney told investors to expect an operating loss of roughly $200 million on it, while it was still in cinemas.",
   "move": "When the pattern is known, the first data point settles the ending.",
+  "ask": "Where am I writing off something after one early data point?",
   "keywords": [
     "john carter",
     "disney",

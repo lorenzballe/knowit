@@ -63,5 +63,6 @@
   "source": "Martin et al., Deep-Sea Research, 1987",
   "source_kind": "paper",
   "reference": "Martin, Knauer, Karl & Broenkow, VERTEX: carbon cycling in the northeast Pacific, Deep-Sea Research, 1987",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "That some did, or might. Rules are written against things people do. The Paris Book of Trades of about 1268 bans night work in craft after craft, often because poor light spoiled work and hid shoddy goods. A ban shows a temptation existed; how often it won needs other records, such as the fines.",
   "move": "A ban is evidence that someone was tempted.",
+  "ask": "What rule around me exists because someone was tempted to break it?",
   "trap": "Reading a rule as a description of how people behaved.",
   "keywords": [
     "night work",

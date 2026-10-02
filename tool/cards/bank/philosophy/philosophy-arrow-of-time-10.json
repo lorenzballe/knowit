@@ -34,5 +34,6 @@
   "source": "Wang et al., Physical Review Letters, 2002",
   "source_kind": "paper",
   "reference": "Wang, Sevick, Mittag, Searles & Evans, Experimental Demonstration of Violations of the Second Law of Thermodynamics for Small Systems and Short Time Scales, Physical Review Letters 89, 050601, 2002",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

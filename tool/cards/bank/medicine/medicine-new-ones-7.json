@@ -29,5 +29,6 @@
   "source": "Zhanel et al., Drugs, 2019",
   "source_kind": "paper",
   "reference": "Zhanel et al., Cefiderocol: a siderophore cephalosporin with activity against carbapenem-resistant and multidrug-resistant Gram-negative bacilli, Drugs, 2019",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

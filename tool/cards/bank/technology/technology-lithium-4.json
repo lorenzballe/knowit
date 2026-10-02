@@ -36,5 +36,6 @@
   "source": "IEA, critical minerals report, 2021",
   "source_kind": "institution",
   "reference": "International Energy Agency, The Role of Critical Minerals in Clean Energy Transitions, 2021",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

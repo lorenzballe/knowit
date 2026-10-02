@@ -29,5 +29,6 @@
   "source": "Tsutsui et al., PNAS, 2000",
   "source_kind": "paper",
   "reference": "Tsutsui, Suarez, Holway & Case, Reduced genetic variation and the success of an invasive species, Proceedings of the National Academy of Sciences, 2000",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

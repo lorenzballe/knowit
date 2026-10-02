@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "A weak link, inconsistent across studies. The ratio came from mice and from a dozen dieting volunteers in 2006. When Walters and colleagues in 2014, and Sze and Schloss in 2016, pooled larger human data sets, the ratio did not reliably separate lean from obese people. Microbial diversity gave a small, steadier signal.",
   "move": "The first measurement of an effect tends to be its biggest.",
+  "ask": "Which first, big result do I still believe that later studies have shrunk?",
   "trap": "Trusting the first vivid result, from small studies, as the settled size.",
   "keywords": [
     "firmicutes",

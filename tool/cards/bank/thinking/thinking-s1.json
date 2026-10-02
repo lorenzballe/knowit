@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "Every era built badly and well. Only the well-built survive to be admired, so any century looks like a golden age from far enough away. The comparison you want is against everything built then, most of which is gone.",
   "move": "Every past era looks well made, because the bad parts are not there to see.",
+  "ask": "What do I call better made in the past, when I only see the survivors?",
   "trap": "Judging a period by what is left of it.",
   "keywords": [
     "survivorship bias",

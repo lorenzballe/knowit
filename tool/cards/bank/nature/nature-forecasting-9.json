@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Above 20%. Covering costs €1,000 every time; not covering costs €5,000 times the chance of frost. The two break even when that chance is 1,000 ÷ 5,000, one in five. By this cost–loss ratio, a 30% forecast is decisive for this grower. The covers go on under a sky that will probably stay clear.",
   "move": "Whether to act depends on the odds and on what each mistake costs.",
+  "ask": "Before I act on a risk, did I compare the odds with what each wrong choice would cost me?",
   "trap": "Waiting until frost is more likely than not before acting.",
   "keywords": [
     "cost-loss ratio",

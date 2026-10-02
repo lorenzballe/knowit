@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. In AD 6 Augustus formed seven cohorts of vigiles, each covering two of the city's fourteen regions, fighting fires and patrolling at night. Early recruits were mostly freedmen, and a law of AD 24 gave informally freed slaves full citizenship after six years' service. Rome's night watch was a ladder out of second-class freedom.",
   "move": "Look at who was given a dangerous job, and what they were paid in.",
+  "ask": "Who does the dangerous work around me, and what are they paid in?",
   "trap": "Assuming the capital's guards would be citizen soldiers.",
   "keywords": [
     "vigiles",

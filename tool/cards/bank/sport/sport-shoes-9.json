@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Franz, Wierzbinski and Kram taped weights to bare feet to match shoes of about 150 g. Mass for mass, shod running cost about 3 to 4% less energy than running barefoot. Studies favouring bare feet had let the shoes' weight count against them. Mass aside, foam spares the legs some cushioning work.",
   "move": "Before comparing two options, make them equal in everything but one.",
+  "ask": "When I compare two options, have I made them equal in everything but the one thing I am testing?",
   "trap": "Crediting bare feet with a saving that came from carrying less weight.",
   "keywords": [
     "barefoot running",

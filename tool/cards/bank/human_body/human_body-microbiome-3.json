@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Conventionally raised mice carried about 42% more body fat than germ-free ones while eating less. Given gut microbes from normal mice, germ-free mice grew markedly fatter within two weeks without eating more. Bacteria ferment fibre the mouse cannot digest into fatty acids it can absorb, and they nudge the host towards storing fat.",
   "move": "Count what is absorbed, not what is served.",
+  "ask": "Am I counting what is served or what is absorbed in my own days?",
   "trap": "Assuming the calories a body gets equal the calories it eats.",
   "keywords": [
     "germ-free mice",

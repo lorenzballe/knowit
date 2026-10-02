@@ -28,5 +28,6 @@
   "source": "Rhetorica ad Herennium, Book III",
   "source_kind": "book",
   "reference": "[Cicero], Rhetorica ad Herennium, trans. Caplan, Loeb Classical Library, Harvard University Press, 1954",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

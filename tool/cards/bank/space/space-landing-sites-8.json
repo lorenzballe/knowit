@@ -29,5 +29,6 @@
   "source": "Jia et al., Planetary and Space Science, 2018",
   "source_kind": "paper",
   "reference": "Jia et al., The scientific objectives and payloads of Chang'E-4 mission, Planetary and Space Science, 2018",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

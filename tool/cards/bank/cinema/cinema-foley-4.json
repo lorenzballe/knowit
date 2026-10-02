@@ -9,6 +9,7 @@
   "question": "Why does a film need Foley even for scenes whose production sound was perfect?",
   "answer": "For the foreign versions. Dubbing replaces the dialogue track, and every footstep, rustle and clinking cup caught by the same microphone goes out with it. Distributors therefore demand a music-and-effects track with no voices at all, and Foley rebuilds those small noises so an Italian or Japanese dub still sounds inhabited.",
   "move": "When one part must be swapped out, check what else it carries.",
+  "ask": "When I swap out one part of a system, what else was it quietly carrying?",
   "keywords": [
     "music and effects track",
     "dubbing",

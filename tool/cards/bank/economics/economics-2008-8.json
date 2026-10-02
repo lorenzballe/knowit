@@ -12,6 +12,7 @@
   "tolerance": 0.1,
   "answer": "0.032 x 100 = 3.2%.",
   "move": "The more a firm borrows, the smaller the loss that ends it.",
+  "ask": "How small a setback would wipe me out given how much I have borrowed against what I own?",
   "trap": "Assuming a bank can only fail after a fall of a third or more.",
   "hint": "Equity is the slice of assets the owners would lose first.",
   "steps": [

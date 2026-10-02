@@ -29,5 +29,6 @@
   "source": "Ladd et al., AAPG Bulletin, 1953",
   "source_kind": "paper",
   "reference": "Ladd, Ingerson, Towson, Russell & Stephenson, Drilling on Eniwetok Atoll, Marshall Islands, Bulletin of the American Association of Petroleum Geologists, 1953",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

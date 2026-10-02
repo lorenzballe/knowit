@@ -9,6 +9,7 @@
   "question": "Why did the same blood creatinine result start reading as worse kidney function for Black Americans from 2021?",
   "answer": "Because a race multiplier was dropped. The standard equation turned blood creatinine into an estimate of kidney function and multiplied it by 1.159 for Black patients, assuming more muscle. The same blood looked healthier on paper, delaying specialist referral and transplant listing. A 2021 equation from the same research group removed race altogether.",
   "move": "Ask what assumption sits inside a formula before trusting the number it prints.",
+  "ask": "Which formula or score that judges me carries an assumption nobody told me about?",
   "keywords": [
     "egfr",
     "creatinine",

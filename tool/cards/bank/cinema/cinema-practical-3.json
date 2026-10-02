@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The facade was a real timber frame weighing around two tonnes by most accounts, and an open attic window was placed to pass around Keaton with only a few centimetres to spare. A light prop would have flexed and floated as it fell. Keaton stood on a marked spot and did not move.",
   "move": "When something looks too dangerous to be real, ask what faking it would cost.",
+  "ask": "When something looks too dangerous to be real, what would faking it cost?",
   "trap": "True, because no studio would drop a real wall on its star.",
   "keywords": [
     "buster keaton",

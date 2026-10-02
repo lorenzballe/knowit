@@ -38,5 +38,6 @@
   "source": "Library of Congress newsroom, 2024",
   "source_kind": "institution",
   "reference": "https://newsroom.loc.gov/news/footage-from-jerry-lewis--film--the-day-the-clown-cried--opens-for-research-at-library-of-congress/s/73d6a4a2-2e21-4b63-aa03-aa8f0a778e64",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

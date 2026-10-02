@@ -9,6 +9,7 @@
   "question": "Why does a wound in the skin of a foetus, early in pregnancy, heal without a scar?",
   "answer": "The skin itself heals differently, not the womb around it. Until roughly 24 weeks of pregnancy, foetal wounds refill with collagen in its normal woven pattern, with hair follicles and glands, and little of the inflammation that drives adult scarring. When adult sheep skin was grafted onto foetal lambs and then wounded, it scarred anyway.",
   "move": "To tell the tissue from its setting, swap one and keep the other.",
+  "ask": "Is my problem the tissue or its setting, and what would swapping one tell me?",
   "keywords": [
     "foetal skin",
     "scarless healing",

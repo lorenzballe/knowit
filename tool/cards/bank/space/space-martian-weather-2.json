@@ -29,5 +29,6 @@
   "source": "Zurek and Martin, Journal of Geophysical Research, 1993",
   "source_kind": "paper",
   "reference": "Zurek and Martin, Interannual variability of planet-encircling dust storms on Mars, Journal of Geophysical Research: Planets 98(E2), 1993",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -40,5 +40,6 @@
   "source": "Clifford & Willson, Coffee: Botany, 1985",
   "source_kind": "book",
   "reference": "Clifford & Willson (eds), Coffee: Botany, Biochemistry and Production of Beans and Beverage, Croom Helm, 1985",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About as many. In a 2017 German study of 14 used sponges, those regularly heated held no significantly fewer bacteria, and more of the kinds linked to bad smells. Heat kills most cells, but survivors regrow within days in warm, wet, food-fed foam. The authors advised replacing sponges weekly instead.",
   "move": "Judge a fix by the state a week later, not the moment after.",
+  "ask": "Which fix of mine looks good for a day and has never been checked a week later?",
   "trap": "Far fewer, because boiling and microwaving kill bacteria.",
   "keywords": [
     "kitchen sponge",

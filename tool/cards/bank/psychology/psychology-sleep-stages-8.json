@@ -12,6 +12,7 @@
   "tolerance": 1,
   "answer": "0.82 = about 82 percent.",
   "move": "A fall in percentage points and a fall in percent are different numbers.",
+  "ask": "When someone quotes a drop, do I know if it is in points or in percent?",
   "trap": "Answering 15.5, the change in points rather than the relative fall.",
   "hint": "Subtract first, then divide by where it started, not where it ended.",
   "steps": [

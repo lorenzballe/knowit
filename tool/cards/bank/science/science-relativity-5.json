@@ -29,5 +29,6 @@
   "source": "Hornof et al., Communications Physics, 2025",
   "source_kind": "paper",
   "reference": "doi:10.1038/s42005-025-02003-6",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

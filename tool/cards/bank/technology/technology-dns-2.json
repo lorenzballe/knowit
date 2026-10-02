@@ -29,5 +29,6 @@
   "source": "Mockapetris, RFC 882, 1983",
   "source_kind": "standard",
   "reference": "Mockapetris, RFC 882: Domain Names, Concepts and Facilities, IETF, 1983",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

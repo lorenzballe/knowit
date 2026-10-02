@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "The ratio grows at about 2% a year, and 1.02 to the thirtieth is roughly 1.8. Two points a year is not a small difference in the end; it is nearly double.",
   "move": "Two percentage points, compounded for a career, is a doubling.",
+  "ask": "Which cost in my life grows a little faster than my income, and where does that lead in thirty years?",
   "trap": "Reading a two-point gap as a small permanent difference.",
   "keywords": [
     "exponential growth",

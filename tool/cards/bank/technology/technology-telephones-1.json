@@ -32,5 +32,6 @@
   "source": "Schenker, Bell System Technical Journal, 1960",
   "source_kind": "paper",
   "reference": "Schenker, Pushbutton Calling with a Two-Group Voice-Frequency Code, Bell System Technical Journal, 1960",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

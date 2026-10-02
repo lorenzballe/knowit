@@ -9,6 +9,7 @@
   "question": "How were the scenes of York's medieval mystery plays shared out?",
   "answer": "By trade. Each craft guild staged one pageant on a wagon, often a scene that suited its work: the shipwrights built Noah's Ark, the fishers and mariners staged the Flood, the goldsmiths brought the Magi's gifts and the bakers served the Last Supper. The cycle ran on Corpus Christi from the 1370s until 1569.",
   "move": "Give each group the piece of the job it already knows.",
+  "ask": "When I share out a task, do I give each person the part they already know?",
   "keywords": [
     "york mystery plays",
     "craft guilds",

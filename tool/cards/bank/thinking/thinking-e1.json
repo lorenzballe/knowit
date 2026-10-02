@@ -9,7 +9,8 @@
   "unit": "thousand tonnes",
   "withinFactor": 3,
   "answer": "x 365 = ~300,000 tonnes. The reported figure is around 370,000.",
-  "move": "Two espressos a day, times a country, is a third of a million tonnes.",
+  "move": "Break an unknowable number into pieces you can guess, and the product lands close.",
+  "ask": "Which big number I am unsure of could I estimate by multiplying three things I can guess?",
   "hint": "Start from cups per person per day and the grams in a cup.",
   "steps": [
     "About 59 million people, and roughly 2 servings a day on average across everyone.",

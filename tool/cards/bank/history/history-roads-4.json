@@ -9,6 +9,7 @@
   "question": "Why do Roman roads still predict prosperity in Europe but not in North Africa?",
   "answer": "Because the wheel left North Africa and the Middle East. In late antiquity camel caravans replaced carts there, so the roads fell out of use and were not rebuilt. In Europe carts kept them busy, and denser Roman roads still line up with brighter night-time lights seen from satellites.",
   "move": "Infrastructure lasts only as long as something keeps using it.",
+  "ask": "What have I built that will only last as long as something keeps using it?",
   "keywords": [
     "roman roads",
     "camel",

@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. After the 2004 Madrid train bombings, an FBI database search put an Oregon lawyer, Brandon Mayfield, among its closest candidates; three FBI examiners and a court-appointed expert called the match certain. Spanish police traced the print to an Algerian man. Searching tens of millions of prints makes a convincing look-alike far more likely.",
   "move": "Search a big enough haystack and something will look like a needle.",
+  "ask": "Where have I searched a big enough haystack that a match proves nothing?",
   "trap": "Fingerprints are unique, so a careful expert cannot confuse two.",
   "keywords": [
     "brandon mayfield",

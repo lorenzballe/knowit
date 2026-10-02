@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Purdue researchers measured 3 to 9% savings at 30 to 50% brightness, rising to 39 to 47% only at full brightness. Screen power climbs steeply with brightness, so dimmed pixels cost little either way, and the processor and radios keep drawing their share. Dark mode pays off mainly in sunlight.",
   "move": "A saving measured at the extreme may vanish at ordinary settings.",
+  "ask": "Which saving or benefit have I only measured at an extreme?",
   "trap": "False, since black OLED pixels are switched off entirely.",
   "keywords": [
     "dark mode",

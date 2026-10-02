@@ -158,5 +158,6 @@
   "source": "Stevens, JASA, 1955",
   "source_kind": "paper",
   "reference": "Stevens, The Measurement of Loudness, Journal of the Acoustical Society of America, 1955",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

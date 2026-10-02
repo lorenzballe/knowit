@@ -38,5 +38,6 @@
   "source": "CRC Handbook of Chemistry and Physics, 2016",
   "source_kind": "reference_work",
   "reference": "Haynes (ed.), CRC Handbook of Chemistry and Physics, 97th edition, CRC Press, 2016",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

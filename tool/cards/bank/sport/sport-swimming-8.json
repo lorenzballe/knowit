@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Got about 0.6% slower. Cornett, Brammer and Stager also found 1,500 m splits differing by direction of travel, the signature of a slow current along the Barcelona pool. Seeding is symmetrical across the two halves, so the lanes, not the swimmers' form, were shifting results by more than the gaps between medals.",
   "move": "When everyone who moves one way gains, suspect the ground they moved to.",
+  "ask": "When everyone who changes position gains, what about the new position should I suspect first?",
   "trap": "Crediting later-round improvement to the swimmers rather than their lanes.",
   "keywords": [
     "lane bias",

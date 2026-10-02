@@ -36,5 +36,6 @@
   "source": "Scheidel, ORBIS working paper, Stanford",
   "source_kind": "paper",
   "reference": "https://orbis.stanford.edu/assets/Scheidel_59.pdf",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

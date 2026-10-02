@@ -35,5 +35,6 @@
   "source": "Plett, Battery Management Systems, 2015",
   "source_kind": "book",
   "reference": "Plett, Battery Management Systems, Volume I: Battery Modeling, Artech House, 2015",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

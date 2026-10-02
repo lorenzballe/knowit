@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Most are compounds of two parts: one hints at the meaning, the other at the sound. 河, river, joins the water sign to 可, which once sounded close to it; dozens more pair water with other sound parts. Pictographs such as 日, sun, are a small minority.",
   "move": "The examples chosen to teach a system are rarely typical of it.",
+  "ask": "Which examples taught me how something works, and are they actually typical of it?",
   "trap": "Textbook pictographs like sun, tree and mountain are the ones everyone sees.",
   "keywords": [
     "chinese characters",

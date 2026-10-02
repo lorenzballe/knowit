@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Workers can lay unfertilised eggs that would hatch as males, but in a colony with a queen almost none survive: other workers find and eat them, usually within a day. A worker is more closely related to the queen's sons than to a half-sister's. The hive polices its own nursery.",
   "move": "Where interests differ even slightly, expect members to watch one another.",
+  "ask": "Where do small differences of interest mean people are watching each other, even when all seems harmonious?",
   "trap": "Assuming workers in one hive never act against each other.",
   "keywords": [
     "worker policing",

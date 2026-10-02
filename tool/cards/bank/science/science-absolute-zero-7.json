@@ -34,5 +34,6 @@
   "source": "Kittel, Introduction to Solid State Physics",
   "source_kind": "book",
   "reference": "Kittel, Introduction to Solid State Physics, 8th edition, Wiley, 2005",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

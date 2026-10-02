@@ -39,5 +39,6 @@
   "source": "Leenhardt et al., J. Agric. Food Chem., 2005",
   "source_kind": "paper",
   "reference": "doi:10.1021/jf049193q",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

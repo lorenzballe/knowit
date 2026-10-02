@@ -9,6 +9,7 @@
   "question": "In a Belgian study of 3,890 children seen by family doctors, which clue to serious infection stood out as unusually powerful?",
   "answer": "The doctor's gut feeling that something was wrong, even when the clinical assessment said the illness was not severe. That feeling was about 25 times as common in seriously ill children as in the rest, though the margin of error was wide. It was often set off by parents saying this illness felt different.",
   "move": "An unease you cannot yet explain is still evidence worth writing down.",
+  "ask": "What unease do I dismiss because I cannot yet explain it, and should I write it down?",
   "keywords": [
     "gut feeling",
     "serious infection",

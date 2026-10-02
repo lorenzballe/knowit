@@ -9,6 +9,7 @@
   "question": "A student trained his digit span from seven to about eighty. What happened when he was tested on letters?",
   "answer": "His span fell back to about six. SF, a keen runner, had learned to recode digits as race times, so 3492 became 3 minutes 49.2 seconds for a mile, and to group those chunks into larger blocks. The skill lived in that code, not in any general capacity to hold things in mind.",
   "move": "Before calling a skill general, test it where its tricks do not apply.",
+  "ask": "Which skill I am proud of would vanish if I changed the material it works on?",
   "keywords": [
     "digit span",
     "chunking",

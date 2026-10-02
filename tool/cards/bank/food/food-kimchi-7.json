@@ -9,6 +9,7 @@
   "question": "What does ISO 24220, the 2020 pickle standard some Chinese media hailed as a kimchi standard, say about kimchi?",
   "answer": "That it does not apply to kimchi. The standard covers pao cai, Sichuan's salted fermented vegetables, and says so in its scope. Headlines calling it a global benchmark for kimchi set off an online row between the two countries, and in 2021 Seoul issued guidance to write kimchi as xinqi in Chinese, not paocai.",
   "move": "A headline about a document is not the document.",
+  "ask": "What claim have I repeated because of a headline, without reading the document behind it?",
   "keywords": [
     "iso 24220",
     "pao cai",

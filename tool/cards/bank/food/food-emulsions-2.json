@@ -9,6 +9,7 @@
   "question": "How does homogenisation stop cream from rising to the top of a bottle of milk?",
   "answer": "By shrinking the fat droplets. Forcing milk through a narrow gap at high pressure breaks globules of about 4 micrometres into ones under 1. Rising speed goes with the square of the radius, so a quarter of the size rises sixteen times slower: too slow to reach the top before the milk is drunk.",
   "move": "When speed scales with a square, a modest shrink is a huge slowdown.",
+  "ask": "What problem do I attack with brute force when making the pieces smaller would work far better?",
   "keywords": [
     "homogenisation",
     "milk fat",

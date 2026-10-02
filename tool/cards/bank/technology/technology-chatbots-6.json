@@ -36,5 +36,6 @@
   "source": "Kobak et al., Science Advances, 2025",
   "source_kind": "paper",
   "reference": "Kobak, González-Márquez, Horvát & Lause, Delving into LLM-assisted writing in biomedical publications through excess vocabulary, Science Advances, 2025",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

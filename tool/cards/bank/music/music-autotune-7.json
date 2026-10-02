@@ -31,5 +31,6 @@
   "source": "Antares Auto-Tune Realtime Advanced manual",
   "source_kind": "company",
   "reference": "https://media.uaudio.com/support/manuals/dd/Auto-Tune%20Realtime%20Advanced%20Manual.pdf",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

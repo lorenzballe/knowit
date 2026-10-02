@@ -18,6 +18,7 @@
   "correct": 2,
   "answer": "Soil darkened by boots and rover wheels. Trampling disturbed the pale top layer and exposed darker grains, which absorb more sunlight. Orbital images show the dark paths, and models fit a surface warming of a few degrees once the probes went in, seeping downwards for years. The experiment was recording its own footprints.",
   "move": "Before reading a trend, ask what the act of measuring changed.",
+  "ask": "What trend am I reading that my own act of measuring may have changed?",
   "trap": "Suspecting the instruments, the usual culprit when a probe reads warm.",
   "keywords": [
     "apollo heat flow experiment",

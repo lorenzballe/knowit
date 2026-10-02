@@ -10,7 +10,8 @@
   "value": 19,
   "unit": "%",
   "answer": "100% − 81% = 19% crust.",
-  "move": "When a thin skin wraps something round, its share is bigger than it looks.",
+  "move": "A thin outer layer can hold a surprisingly large share of the whole.",
+  "ask": "What looks like a thin, minor layer in my life but is actually a larger share than I think?",
   "trap": "Taking 3 mm of a 30 mm radius as a tenth.",
   "hint": "Compare the cross-section of the whole loaf with that of the crumb inside it.",
   "steps": [

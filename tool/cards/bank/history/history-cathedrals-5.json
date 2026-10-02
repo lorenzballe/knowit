@@ -35,5 +35,6 @@
   "source": "UNESCO World Heritage Centre, Chartres Cathedral",
   "source_kind": "institution",
   "reference": "https://whc.unesco.org/en/list/81/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

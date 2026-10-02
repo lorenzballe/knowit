@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About 1 in 30. Hogan and colleagues found 3.6% across 34 hospital trusts, mostly among frail, elderly patients with little life left. With so few, a hospital's overall death rate mainly reflects who arrives how sick: its standardised mortality ratio showed no significant link to the avoidable deaths found in its own notes.",
   "move": "Before ranking places by deaths, ask how many of them anyone could prevent.",
+  "ask": "Before I rank by a bad outcome, how many of those outcomes could anyone have prevented?",
   "trap": "About 1 in 3, recalling scandals where hospitals killed through neglect.",
   "keywords": [
     "avoidable deaths",

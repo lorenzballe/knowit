@@ -9,6 +9,7 @@
   "question": "In a study, adults spent $40 on either a time-saving purchase or a material one. Which lifted their mood more?",
   "answer": "The time-saving purchase. In Whillans and colleagues' field experiment, spending $40 on saving time left people less pressed and in a better mood than spending it on a thing. In a survey of about 6,000 people in four countries, those who paid to save time reported more life satisfaction.",
   "move": "Price a purchase in hours returned, not only in what it holds.",
+  "ask": "What is the next thing I might buy, and how many hours of my life would it give back?",
   "keywords": [
     "buying time",
     "time stress",

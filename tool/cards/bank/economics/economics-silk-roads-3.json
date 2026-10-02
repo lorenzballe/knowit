@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Goods moved in relays: most traders worked a stretch of a few hundred kilometres between oases, and wares changed hands many times. Documents from Niya and Turfan show mostly small, local exchanges, often by barter. A bolt of silk reaching Syria had crossed Asia without any one trader carrying it all the way.",
   "move": "A route on a map says nothing about who walked all of it.",
+  "ask": "Which route or chain do I picture as one journey when many hands carried it in pieces?",
   "trap": "Picturing a single caravan, the image every map and travel tale gives.",
   "keywords": [
     "relay trade",

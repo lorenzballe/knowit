@@ -29,5 +29,6 @@
   "source": "Abraham & Chain, Nature, 1940",
   "source_kind": "paper",
   "reference": "Abraham & Chain, An enzyme from bacteria able to destroy penicillin, Nature, 1940",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

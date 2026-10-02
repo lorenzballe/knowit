@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About a month later. In a study of more than 1,350 people, the best gap between study and review grew with the wait until the test: 20 to 40% of a one-week wait, but only 5 to 10% of a year. For a test a year away, that is three to five weeks.",
   "move": "Space the practice to match how long the result has to last.",
+  "ask": "How long does what I am learning need to last, and have I timed my review to that?",
   "trap": "Reviewing the next day, while the material still feels fresh.",
   "keywords": [
     "spacing effect",

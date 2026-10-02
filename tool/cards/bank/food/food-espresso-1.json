@@ -28,5 +28,6 @@
   "source": "Gaggia company history",
   "source_kind": "company",
   "reference": "https://www.gaggia.com/85-years-of-heritage-1938-1947/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

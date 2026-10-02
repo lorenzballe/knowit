@@ -38,5 +38,6 @@
   "source": "World Athletics records, men's 4 × 100 m",
   "source_kind": "statistics",
   "reference": "World Athletics, official world records list, men's 4 x 100 m relay, Jamaica 36.84, London 2012",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

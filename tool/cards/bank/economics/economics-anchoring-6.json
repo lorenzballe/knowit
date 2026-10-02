@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "€80, its lowest price in 30 days. Since May 2022 EU law has required any announced price cut to cite the lowest price charged in the previous 30 days, and in 2024 the EU Court of Justice ruled the percentage must be counted from it. A '30% off' tag of €70 is 12.5% off.",
   "move": "Before trusting a discount, ask what the price was a month ago.",
+  "ask": "What was this item's price a month ago, before the discount made it feel cheap?",
   "trap": "Taking the price just before the sale as the natural reference.",
   "keywords": [
     "price reductions",

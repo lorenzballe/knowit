@@ -9,6 +9,7 @@
   "question": "Why can't a cup of pure water stay liquid on most of the Martian surface, even on a warm afternoon?",
   "answer": "The air is too thin to hold it. Average surface pressure is about 6 millibars, close to the 6.1 below which water cannot be liquid at all. Ice turns straight to vapour; liquid boils barely above 0 °C. Only deep basins such as Hellas, at twice the pressure, open a window of about ten degrees.",
   "move": "Warmth alone does not make a liquid; the pressure has to allow it.",
+  "ask": "What condition besides the obvious one decides whether my plan can work at all?",
   "keywords": [
     "triple point",
     "air pressure",

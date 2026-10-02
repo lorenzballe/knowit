@@ -12,6 +12,7 @@
   "tolerance": 1.5,
   "answer": "25.63 x 5.06 = about 129.7 times.",
   "move": "Growth rates multiply; adding them is the mistake that comes first.",
+  "ask": "Where am I adding growth rates when they multiply?",
   "trap": "Adding twelve 50% rises to get 600%, about seven times.",
   "hint": "Each month multiplies prices by 1.5; square your way up.",
   "steps": [

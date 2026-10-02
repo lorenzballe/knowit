@@ -39,5 +39,6 @@
   "source": "Bitcoin Core source code, chainparams.cpp",
   "source_kind": "primary_document",
   "reference": "https://github.com/bitcoin/bitcoin/blob/master/src/kernel/chainparams.cpp",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

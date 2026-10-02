@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. A 2017 estimate put about 73% of global antimicrobial sales into animals raised for food, often in low daily doses to speed growth or to prevent disease in crowded herds. Low, steady doses favour resistant bacteria. Much of it is mixed into feed or drinking water, dosing a whole barn at once.",
   "move": "Find the biggest user before blaming the most visible one.",
+  "ask": "Which large user am I ignoring while I blame the most visible one?",
   "trap": "Picturing prescriptions for people, the use everyone has seen.",
   "keywords": [
     "livestock",

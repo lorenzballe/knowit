@@ -12,6 +12,7 @@
   "withinFactor": 3,
   "answer": "78 / 1,640 ≈ 5 percent.",
   "move": "What memory keeps is a thin sample of what happened.",
+  "ask": "How thin a sample of my days does my memory actually keep?",
   "trap": "Assuming the dreams recalled are most of the dreams had.",
   "hint": "Count the chances to dream in a year, then the dreams people report.",
   "steps": [

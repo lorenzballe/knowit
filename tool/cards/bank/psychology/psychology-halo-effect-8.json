@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Silent video only. In Chia-Jung Tsay's experiments, novices and trained musicians picked winners above chance from silent clips, and at or below chance, one in three, with sound. Juries who believe they reward sound seem to reward visible passion. A 2018 replication confirmed it, but found it depends on which clips are chosen.",
   "move": "Take away the channel you think you are judging, and see if verdicts change.",
+  "ask": "If I removed the channel I think I am judging, would my verdict change?",
   "trap": "Assuming music is judged by ear, so sound must carry the verdict.",
   "keywords": [
     "music competitions",

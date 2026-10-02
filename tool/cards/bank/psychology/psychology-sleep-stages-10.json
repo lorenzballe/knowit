@@ -36,5 +36,6 @@
   "source": "Rechtschaffen et al., Perceptual and Motor Skills, 1966",
   "source_kind": "paper",
   "reference": "Rechtschaffen, Hauri & Zeitlin, Auditory awakening thresholds in REM and NREM sleep stages, Perceptual and Motor Skills, 1966",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

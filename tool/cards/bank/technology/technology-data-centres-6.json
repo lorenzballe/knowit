@@ -32,5 +32,6 @@
   "source": "NVIDIA, GB200 NVL72 specifications",
   "source_kind": "company",
   "reference": "https://www.nvidia.com/en-us/data-center/gb200-nvl72/",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -9,6 +9,7 @@
   "question": "Which company invented the OLED, the glowing-molecule display in most flagship phones?",
   "answer": "Kodak. In 1987 Ching Tang and Steven Van Slyke, chemists at its Rochester labs, reported a thin stack of organic films that glowed when current passed through it. Kodak licensed the patents, made a few small screens, and in 2009 sold its OLED business to LG, now the leading maker of OLED television panels.",
   "move": "Invention and profit rarely happen in the same building.",
+  "ask": "Where did someone else profit from what I helped invent or build?",
   "keywords": [
     "kodak",
     "ching tang",

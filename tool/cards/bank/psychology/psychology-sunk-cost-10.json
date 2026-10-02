@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About one in six. In Hal Arkes and Catherine Blumer's scenario, the last $1 million bought the same inferior plane either way. With the $9 million behind them, most people chose to complete it, while those starting from nothing mostly declined. The rival's better plane was on the market in both versions.",
   "move": "Ask whether you would start this today, knowing what you now know.",
+  "ask": "Knowing what I know now, would I start this today?",
   "trap": "Expecting the same choice, since the future on offer is identical.",
   "keywords": [
     "sunk cost",

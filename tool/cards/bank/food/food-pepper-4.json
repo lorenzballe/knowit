@@ -29,5 +29,6 @@
   "source": "World History Encyclopedia, Pepper",
   "source_kind": "reference_work",
   "reference": "https://www.worldhistory.org/Pepper/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

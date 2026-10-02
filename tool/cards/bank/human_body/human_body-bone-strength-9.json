@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Fractures of the spine's vertebrae are commoner, and only about a third of them come to medical attention: a vertebra slowly crushes, and the sign is a stooped back or lost height rather than a fall and an ambulance. Hip fractures are rarer, but vivid, costly and often deadly, so they dominate the story.",
   "move": "The injury that makes the news is rarely the commonest one.",
+  "ask": "Which risk do I fear because it makes the news, while a commoner one goes unwatched?",
   "trap": "Picturing the dramatic fall and ambulance that a hip fracture brings.",
   "keywords": [
     "osteoporosis",

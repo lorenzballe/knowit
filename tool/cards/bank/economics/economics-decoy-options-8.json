@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Researchers call it a phantom decoy: an attractive option that turns out to be unavailable. In Highhouse's hiring experiments, a strong phantom candidate pushed choices towards the remaining candidate most like it. The best option on display sets the standard even when nobody can take it: a sold-out label still works the shelf.",
   "move": "The option you cannot have still sets the standard for those you can.",
+  "ask": "Which option I cannot have is still setting my standard for the ones I can?",
   "trap": "Assuming an option nobody can pick cannot sway the choice.",
   "keywords": [
     "phantom decoys",

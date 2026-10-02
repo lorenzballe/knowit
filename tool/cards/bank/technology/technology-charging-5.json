@@ -11,6 +11,7 @@
   "unit": "watt-hours",
   "answer": "0.1 watts × 8,760 hours = 876 watt-hours.",
   "move": "Multiply any constant draw by the 8,760 hours in a year.",
+  "ask": "What small constant drain in my life, in money or attention, adds up over a full year?",
   "hint": "Start from the number of hours in a year.",
   "steps": [
     "Hours in a year: 24 × 365 = 8,760.",

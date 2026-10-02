@@ -28,5 +28,6 @@
   "source": "Lemmon et al., Science, 2004",
   "source_kind": "paper",
   "reference": "Lemmon et al., Atmospheric imaging results from the Mars Exploration Rovers: Spirit and Opportunity, Science, 2004",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

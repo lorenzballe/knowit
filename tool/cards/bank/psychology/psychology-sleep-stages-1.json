@@ -29,5 +29,6 @@
   "source": "Aserinsky & Kleitman, Science, 1953",
   "source_kind": "paper",
   "reference": "Aserinsky & Kleitman, Regularly occurring periods of eye motility, and concomitant phenomena, during sleep, Science, 1953",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "They are sized for independent callers. Since A. K. Erlang's work in 1917, engineers have provided lines for the chance that unrelated calls overlap: a small share of subscribers at once. A disaster makes everyone call in the same minutes. On 7 July 2005, London's mobile networks were swamped within minutes of the bombs.",
   "move": "Capacity built for separate chances fails when one event moves everyone together.",
+  "ask": "Where have I planned for separate chances when one event will move everyone together?",
   "trap": "Blaming priority for emergency calls rather than everyone calling at once.",
   "keywords": [
     "network congestion",

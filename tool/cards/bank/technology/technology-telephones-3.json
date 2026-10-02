@@ -9,6 +9,7 @@
   "question": "Why did an old landline phone keep working when a power cut blacked out the house?",
   "answer": "Its power came down the line. Exchanges fed every line from their own battery rooms at about 48 volts, kept negative to slow corrosion of the copper. Digital lines run on household electricity, so as Britain retires its copper network, providers must offer vulnerable customers at least an hour of backup for emergency calls.",
   "move": "When a service moves to new wiring, check what the old wiring quietly supplied.",
+  "ask": "Which service did I move to something new without checking what the old one quietly supplied?",
   "keywords": [
     "landlines",
     "telephone exchange",

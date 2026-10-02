@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "You need shops that were also having a bad quarter and did not change manager. Without them, the ordinary bounce from a bad quarter and the effect of the new manager are the same number and cannot be told apart.",
   "move": "The comparison you need is the one that did nothing.",
+  "ask": "What fix did I introduce at a low point, and what would the do-nothing comparison have shown?",
   "trap": "The manager arrived precisely because the quarter was bad.",
   "keywords": [
     "regression to the mean",

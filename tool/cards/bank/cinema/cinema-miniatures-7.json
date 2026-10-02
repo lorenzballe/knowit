@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. ILM's Dykstraflex, a computer-controlled camera rig, tracked, panned and tilted past models fixed on poles before a blue screen, and could repeat the same move exactly for each separate element. That let many ships, engine glows and lasers be layered into one shot. The dogfights were flown by the camera.",
   "move": "Motion on a screen does not say which of two things moved.",
+  "ask": "When I feel I am moving, how do I know whether I or the world has moved?",
   "trap": "Picturing models flown on wires past a fixed camera, as in older films.",
   "keywords": [
     "star wars",

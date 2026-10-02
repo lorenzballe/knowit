@@ -9,6 +9,7 @@
   "question": "Why is the blue subpixel usually the largest on an OLED screen?",
   "answer": "Because blue emitters age fastest. Red and green use phosphorescent molecules that turn nearly every injected charge into light, but a long-lived phosphorescent blue has long proved elusive, so blue uses less efficient ones. A bigger blue area runs at lower current density, which slows its ageing and stops whites drifting yellow.",
   "move": "The weakest part sets the design; everything else is sized around it.",
+  "ask": "Which weak part sets the limits of my whole setup, and have I designed around it?",
   "keywords": [
     "blue subpixels",
     "phosphorescent emitters",

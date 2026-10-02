@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Digitised newspapers show the whole nine yards in an Indiana paper in 1908, and a variant, the whole six yards, in Kentucky in 1912. That rules out wartime origins, such as a fighter's 8-metre ammunition belt. With six and nine both in use, no fixed length fits. Nobody knows which yards were meant.",
   "move": "A story with more details is not a story with more evidence.",
+  "ask": "Do I trust the story with more detail, or the one with more evidence?",
   "trap": "The wartime tale of ammunition belts feels too specific to be invented.",
   "keywords": [
     "whole nine yards",

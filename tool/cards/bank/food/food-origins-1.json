@@ -29,5 +29,6 @@
   "source": "Salojärvi et al., Nature Genetics, 2024",
   "source_kind": "paper",
   "reference": "https://www.nature.com/articles/s41588-024-01695-w",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

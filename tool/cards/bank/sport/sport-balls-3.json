@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Scientists reporting to Major League Baseball in 2018 found that balls hit the same way were carrying farther, because the balls had less air drag. They could not tie the lower drag to any property they measured, and drag varied more from one ball to the next than from year to year.",
   "move": "When two things change at once, measure each before crediting the famous one.",
+  "ask": "When two things changed at once, which one am I crediting just because it is the famous one?",
   "trap": "The swing-angle fashion was the visible change, so it gets the credit.",
   "keywords": [
     "baseball",

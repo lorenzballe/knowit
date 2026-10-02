@@ -32,5 +32,6 @@
   "source": "Calvo et al., Angewandte Chemie, 2013",
   "source_kind": "paper",
   "reference": "doi:10.1002/anie.201302742",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

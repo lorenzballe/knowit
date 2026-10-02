@@ -28,5 +28,6 @@
   "source": "Gilmore, Spacecraft Thermal Control Handbook, 2002",
   "source_kind": "book",
   "reference": "Gilmore (ed.), Spacecraft Thermal Control Handbook, Volume 1: Fundamental Technologies, 2nd edition, The Aerospace Press, 2002",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

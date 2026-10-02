@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Palace fires baked them hard. The tablets were unfired clay, working records meant to last a season before being softened and reused. When the palaces at Knossos and Pylos burned, the heat turned that year's paperwork into pottery. What survives is the administration of a palace's final months, not an archive anyone chose to keep.",
   "move": "Ask what preserved your evidence before asking what it represents.",
+  "ask": "Before I trust my evidence, have I asked what happened to preserve it, and what did not survive?",
   "trap": "Assuming that what lasted was made to last.",
   "keywords": [
     "linear b",

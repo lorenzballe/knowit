@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Light scatters off countless grain surfaces. Each boundary between silica and air bends and reflects a little light, and after thousands of them nothing passes straight through. Crystals are not the reason: a single quartz crystal is clear. Crush a clear pane and the heap turns white too, as clear ice turns into white snow.",
   "move": "When two things differ in several ways, test each difference separately.",
+  "ask": "When two things differ in several ways, do I test each difference before explaining the gap?",
   "trap": "Crystal versus glass is the famous difference, so it must be the cause.",
   "keywords": [
     "light scattering",

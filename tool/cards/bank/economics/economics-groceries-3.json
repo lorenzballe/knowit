@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. The Office for National Statistics tracks price per gram or millilitre, so a smaller pack at the same price registers as a rise. In 2017 it reported 2,529 products shrinking over five years, and 614 growing. A bar cut by a tenth at an unchanged price enters the index as an 11% rise.",
   "move": "Before calling a change hidden, find out how it is counted.",
+  "ask": "Which change do I call hidden without knowing how it is actually counted?",
   "trap": "Assuming statisticians record only the shelf price, so shrinking hides.",
   "keywords": [
     "shrinkflation",

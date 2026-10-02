@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Dust in the Milky Way. Grains aligned by the galaxy's magnetic field glow with polarised light that makes the same swirls. BICEP2 had leaned on early, uncertain estimates of the dust; in 2015 a joint analysis with Planck's dust maps found the signal consistent with dust alone. The primordial waves are still undetected.",
   "move": "When the result is exactly what you hoped for, check the dust first.",
+  "ask": "Which result did I accept quickly only because it was exactly what I hoped for?",
   "trap": "The pattern matched what the team had built the telescope to find.",
   "keywords": [
     "bicep2",

@@ -13,6 +13,7 @@
   ],
   "answer": "Of all the wakings the experiment produces, two in three follow tails. Betting at every waking, even odds on heads would lose money over many runs, while odds of one in three would break even. Each waking is one of three moments she cannot tell apart, and only one comes after heads.",
   "move": "Whichever side you took, it turns on whether waking up counts as evidence.",
+  "ask": "On what question do I disagree with someone because we count different things as evidence?",
   "counterpoint": "She knew the coin was fair, and waking tells her nothing new: she was certain to wake either way. Belief should move only with new information, so it stays at one half. Counting wakings changes the payoff of a bet, not the chance of the coin. Philosophers remain split: Adam Elga argued a third, David Lewis a half.",
   "keywords": [
     "sleeping beauty problem",

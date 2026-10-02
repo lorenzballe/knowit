@@ -28,5 +28,6 @@
   "source": "Johnson, Electronics Letters, 1965",
   "source_kind": "paper",
   "reference": "Johnson, Touch display: a novel input/output device for computers, Electronics Letters 1(8), 1965",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

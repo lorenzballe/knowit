@@ -28,5 +28,6 @@
   "source": "Posner & Cohen, Attention and Performance X, 1984",
   "source_kind": "book",
   "reference": "Posner & Cohen, Components of visual orienting, in Bouma & Bouwhuis (eds), Attention and Performance X, Erlbaum, 1984",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

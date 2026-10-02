@@ -13,6 +13,7 @@
   ],
   "answer": "Three independent kinds of data point the same way. DESI's map of millions of galaxies, combined with the cosmic background and supernova distances, prefers a dark energy that fades with time, by 2.8 to 4.2 standard deviations depending on the supernova set. A constant dark energy, fixed forever, fits worse as the data grow.",
   "move": "Whichever side you took, the supernova calibration is what decides it.",
+  "ask": "Which belief of mine rests on one calibration step I have never examined?",
   "counterpoint": "The signal's strength depends heavily on which supernova catalogue is used, and supernova calibrations have shifted before. Below five standard deviations, physics has watched many three-sigma hints fade. The best fit also has dark energy behaving in a physically awkward way in the past, a hint that a simple formula may be fitting noise.",
   "keywords": [
     "desi",

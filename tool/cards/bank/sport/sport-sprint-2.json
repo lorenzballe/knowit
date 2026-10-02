@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Sensors in the blocks disqualify anyone who pushes within 0.100 seconds of the gun, on the view that nobody reacts that fast. Devon Allen was thrown out of the 2022 world championship hurdles final for a reaction of 0.099. Laboratory studies of trained sprinters have recorded genuine reactions quicker than the limit.",
   "move": "A fixed threshold catches the cheats and the unusually fast alike.",
+  "ask": "Where do I apply a fixed threshold that punishes the unusually good along with the cheats?",
   "trap": "Assuming a false start means moving before the gun fires.",
   "keywords": [
     "false start",

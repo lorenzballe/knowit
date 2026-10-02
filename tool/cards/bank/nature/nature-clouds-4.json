@@ -37,5 +37,6 @@
   "source": "Pruppacher & Klett, Microphysics of Clouds, 1997",
   "source_kind": "book",
   "reference": "Pruppacher & Klett, Microphysics of Clouds and Precipitation, Kluwer, 1997",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

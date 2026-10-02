@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "The best of twelve is the best partly because it caught a good sample. Running it alone against the original is what separates a real effect from the luckiest draw — and often it comes back to the middle.",
   "move": "The winner of a big search has to win again to count.",
+  "ask": "What big win after a wide search have I not yet tried to repeat?",
   "trap": "The winner of a wide search is partly a winner by luck.",
   "keywords": [
     "multiple comparisons",

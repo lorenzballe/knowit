@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Sweet. The blocker, lactisole, holds the sweet receptor below its normal resting activity. Water rinses the blocker away, the receptor rebounds above that resting level, and the brain reads the rebound as sweetness. The same kind of release may explain why water tastes sweet after a mouthful of artichoke.",
   "move": "A signal that swings back past zero can feel like a new cause.",
+  "ask": "When a signal swings back past zero, do I mistake it for a new cause?",
   "trap": "Water carries nothing sweet, so nothing sweet can be tasted.",
   "keywords": [
     "lactisole",

@@ -39,5 +39,6 @@
   "source": "US Mint, 2024 Annual Report",
   "source_kind": "institution",
   "reference": "United States Mint, Annual Report 2024",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

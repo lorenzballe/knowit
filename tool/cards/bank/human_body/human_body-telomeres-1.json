@@ -9,6 +9,7 @@
   "question": "Why does a chromosome lose a little of its tip each time a cell divides?",
   "answer": "The copying machinery cannot reach the end. DNA polymerase extends a strand only from a short primer laid ahead of it, and at a linear chromosome's tip there is no room for the last one. Alexei Olovnikov in 1971 and James Watson in 1972 each saw this. Bacteria, with circular chromosomes, have no tips.",
   "move": "A process that cannot reach its own edge will wear that edge down.",
+  "ask": "What process in my life cannot reach its own edge and so wears that edge down?",
   "keywords": [
     "end-replication problem",
     "dna polymerase",

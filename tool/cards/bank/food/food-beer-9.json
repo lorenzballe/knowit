@@ -36,5 +36,6 @@
   "source": "Sarlin et al., J. Inst. Brew., 2005",
   "source_kind": "paper",
   "reference": "Sarlin, Nakari-Setälä, Linder, Penttilä & Haikara, Fungal hydrophobins as predictors of the gushing activity of malt, Journal of the Institute of Brewing, 2005",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

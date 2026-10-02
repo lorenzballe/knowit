@@ -36,5 +36,6 @@
   "source": "Chatterji et al., NBER Working Paper 34255, 2025",
   "source_kind": "paper",
   "reference": "Chatterji, Cunningham, Deming, Hitzig, Ong, Shan & Wadman, How People Use ChatGPT, NBER Working Paper 34255, 2025",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

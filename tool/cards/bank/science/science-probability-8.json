@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Italy lower in every age group. Its confirmed cases were far older than China's, and older patients die far more often, so the mix of who was infected pushed Italy's total up while each age band fared better. Two totals built from different mixes of people compared the mixes, not the care.",
   "move": "Before comparing two totals, check that they are made of the same mix.",
+  "ask": "Before comparing two totals, have I checked that they are made of the same mix?",
   "trap": "Italy higher in every group, as a total usually reflects its parts.",
   "keywords": [
     "simpson's paradox",

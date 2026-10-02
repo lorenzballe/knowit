@@ -9,6 +9,7 @@
   "question": "Pooling eight studies that planted invented childhood events, how often did people come to remember the event?",
   "answer": "About three times in ten. Scoboria and colleagues recoded 423 cases from eight studies with one scheme: 30.4% counted as false memories, and another 23% accepted the event without recalling it. Where the suggestion carried personal details and an instruction to imagine, with no photograph, the rate reached 46%.",
   "move": "Ask whether a memory could have been assembled from what others told you.",
+  "ask": "Which vivid memory of mine might have been assembled from what other people told me?",
   "keywords": [
     "implanted memories",
     "childhood events",

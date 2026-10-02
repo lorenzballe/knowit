@@ -11,6 +11,7 @@
   "unit": "cm",
   "answer": "1,000 / 50 = 20 cm.",
   "move": "A measurement is only as fine as the gap between its samples.",
+  "ask": "How precise is the measure I rely on, and how much can change between its samples?",
   "trap": "Treating a line drawn on one frame as the exact moment.",
   "hint": "Work out how far the players move in one fiftieth of a second.",
   "steps": [

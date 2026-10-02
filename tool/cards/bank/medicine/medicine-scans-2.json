@@ -29,5 +29,6 @@
   "source": "CBS News, 2001",
   "source_kind": "news_archive",
   "reference": "https://www.cbsnews.com/news/boy-killed-in-freak-mri-accident/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

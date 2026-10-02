@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Across five experiments with more than 10,100 people and 52 politically charged claims, corrections moved beliefs towards the facts, even among partisans who disliked them; none produced a backfire. The famous digging-in effect came from far smaller studies. The relative who never concedes at dinner is memorable, not typical.",
   "move": "Judge persuasion by the average listener, not the loudest holdout.",
+  "ask": "Do I give up on persuading people because of the loudest holdout rather than the quiet majority?",
   "trap": "Remembering arguments where someone dug in, and taking them as the rule.",
   "keywords": [
     "backfire effect",

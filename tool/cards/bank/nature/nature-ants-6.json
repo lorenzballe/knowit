@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About two in five. Charbonneau and Dornhaus followed individually marked ants and found a large, consistent group that rarely worked. Later removal experiments suggest they are partly a reserve: take away the busiest workers and some idle ones step in. The ants on a trail are the busy ones; the idle wait in the dark.",
   "move": "The members seen working were chosen, in part, by being seen.",
+  "ask": "Whose work do I judge by the busy people I see, while ignoring those I never see?",
   "trap": "Judging a colony by its foragers, the only ants anyone watches.",
   "keywords": [
     "temnothorax",

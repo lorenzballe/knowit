@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "The neutral moments are not stored, so the pile can only grow one way. The test that would tell you something is looking for the times they went out of their way for you — and noticing whether you had been discounting them.",
   "move": "A theory that only ever gains evidence is not being tested.",
+  "ask": "What am I convinced is true about someone, and what would I notice if I were wrong?",
   "trap": "Treating a growing pile of confirming moments as proof.",
   "keywords": [
     "confirmation bias",

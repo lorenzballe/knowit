@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Spend less time in bed. Sleep restriction, introduced by Arthur Spielman in 1987, first limits time in bed to roughly the time spent asleep, then extends it as sleep becomes efficient. Hours lying awake teach the brain that bed is a place for waking; a shorter window builds sleep pressure and knits sleep together.",
   "move": "Sometimes the cure is less of what seems to be missing.",
+  "ask": "What is my cure for a problem: more of something, or perhaps less?",
   "trap": "Going to bed earlier seems the obvious way to recover lost sleep.",
   "keywords": [
     "sleep restriction",

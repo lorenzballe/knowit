@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "You cannot see the dozen that opened and shut on the same street. A street where restaurants fail fast and a street where they thrive both end up showing you only the ones still trading.",
   "move": "Ask what used to be in the empty unit.",
+  "ask": "What success am I admiring on a street, a team or a list, without asking who closed?",
   "trap": "Only the survivors are still standing there to be counted.",
   "keywords": [
     "survivorship bias",

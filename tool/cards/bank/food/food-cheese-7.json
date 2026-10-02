@@ -9,6 +9,7 @@
   "question": "Why do the rules for Comté forbid feeding the cows silage, the fermented grass many dairies rely on?",
   "answer": "To keep out spores that burst cheeses. Silage carries Clostridium bacteria whose spores survive the cow's gut, reach the milk on specks of dung and outlast cheesemaking. Months later, in the ripening cellar, they wake, turn lactate into butyric acid and gas, and split wheels with rancid cracks. The ban protects the long ageing.",
   "move": "A rule that looks like it is about taste may be about hidden risk.",
+  "ask": "Which rule around me looks like fussiness, and what hidden risk might it be there to prevent?",
   "keywords": [
     "comté",
     "silage",

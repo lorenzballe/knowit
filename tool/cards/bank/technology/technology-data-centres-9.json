@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The study of Google's servers found errors far commoner than lab tests suggested, with more than 8% of memory modules hit each year, and dominated by hard errors: faults in the chips themselves, which recur. A module that had erred once was far likelier to err again. Swapping repeat offenders beat blaming the sky.",
   "move": "If failures keep striking the same place, stop calling them bad luck.",
+  "ask": "What keeps going wrong in the same place that I keep calling bad luck?",
   "trap": "Cosmic rays are the famous cause, and they strike at random.",
   "keywords": [
     "memory errors",

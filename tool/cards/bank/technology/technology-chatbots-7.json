@@ -29,5 +29,6 @@
   "source": "He, Thinking Machines Lab, 2025",
   "source_kind": "company",
   "reference": "He & Thinking Machines Lab, Defeating Nondeterminism in LLM Inference, Connectionism, 2025",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

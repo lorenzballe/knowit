@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. About $7,000 paid for Robert Rodriguez's shoot on 16 mm film, some of it earned as a paid volunteer in a drug trial. Columbia then spent many times that sum on sound, a blow-up to 35 mm and prints before release. The legendary figure bought the raw footage, not the film audiences saw.",
   "move": "Ask which stage a famous price tag covers before comparing it with others.",
+  "ask": "Which impressive number in my life am I comparing without knowing what it includes?",
   "trap": "True, because the $7,000 figure is quoted as the film's cost.",
   "keywords": [
     "el mariachi",

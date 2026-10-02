@@ -29,5 +29,6 @@
   "source": "Dawson 1993; Emerman & Dawson 1996",
   "source_kind": "paper",
   "reference": "Dawson, Hydraulic lift and water use by plants: implications for water balance, performance and plant-plant interactions, Oecologia, 1993; Emerman & Dawson, Hydraulic lift and its influence on the water content of the rhizosphere: an example from sugar maple, Acer saccharum, Oecologia, 1996",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

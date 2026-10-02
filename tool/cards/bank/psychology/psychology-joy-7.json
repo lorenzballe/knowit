@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "It holds only for an unhappy minority. Kahneman and Killingsworth, whose studies disagreed, reanalysed jointly with Barbara Mellers as arbiter. For most people well-being kept rising with income; only in the least happy fifth or so did it level off, near $100,000. The 2010 measures had mostly registered unhappiness, and saw where misery stops shrinking.",
   "move": "An average curve can describe the unhappiest few and almost nobody else.",
+  "ask": "Is the average telling me about me, or about a small group at the edges?",
   "trap": "Reading a famous threshold as a ceiling that applies to everyone.",
   "keywords": [
     "income",

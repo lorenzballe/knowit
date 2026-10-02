@@ -40,5 +40,6 @@
   "source": "Pressure times area, 58 mm basket",
   "source_kind": "arithmetic",
   "reference": "Hoffmann, The World Atlas of Coffee, 2nd edition, Mitchell Beazley, 2018",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

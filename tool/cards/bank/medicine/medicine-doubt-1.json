@@ -9,6 +9,7 @@
   "question": "What happened in Britain after a 1974 report linked the whooping cough vaccine to brain damage?",
   "answer": "Uptake fell from about 80% to about 30% by 1978, and the disease came back. Between 1977 and 1979 more than 100,000 cases and 36 deaths were reported in large epidemics. Parliament answered with the Vaccine Damage Payments Act of 1979, a no-fault compensation scheme that still pays out today.",
   "move": "When a protection is dropped, count what it was quietly holding back.",
+  "ask": "What did I drop that was quietly holding something back, and have I counted what returned?",
   "keywords": [
     "whooping cough",
     "pertussis vaccine",

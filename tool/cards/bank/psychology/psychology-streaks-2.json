@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. In Lally and colleagues' 12-week study, a single missed opportunity had no measurable effect on the rise in automaticity: the curve picked up where it left off. What undid habits was drifting away over many days, not one gap. An app that resets the counter to zero is stricter than the brain.",
   "move": "Judge a routine by its run over weeks, not by its worst day.",
+  "ask": "After I miss a day, do I judge the habit by that day or by the weeks?",
   "trap": "Believing one missed day resets a habit, as a streak counter does.",
   "keywords": [
     "missed days",

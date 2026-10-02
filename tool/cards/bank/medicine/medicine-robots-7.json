@@ -36,5 +36,6 @@
   "source": "Intuitive Surgical, Form 10-K annual report",
   "source_kind": "company",
   "reference": "Intuitive Surgical, Inc., Annual Report on Form 10-K for fiscal year 2023, US Securities and Exchange Commission, 2024",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

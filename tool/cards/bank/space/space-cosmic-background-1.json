@@ -29,5 +29,6 @@
   "source": "McKellar, Publications of the Dominion Astrophysical Observatory, 1941",
   "source_kind": "paper",
   "reference": "McKellar, Molecular Lines from the Lowest States of Diatomic Molecules Composed of Atoms Probably Present in Interstellar Space, Publications of the Dominion Astrophysical Observatory 7, 251, 1941",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

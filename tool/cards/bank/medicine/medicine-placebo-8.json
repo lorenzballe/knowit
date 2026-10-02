@@ -9,6 +9,7 @@
   "question": "Why does the same painkiller dose relieve less pain when a hidden machine delivers it than when a doctor gives it openly?",
   "answer": "Because part of any drug's effect is knowing it has arrived. In studies by Fabrizio Benedetti's group in Turin, surgical patients whose painkiller came by a hidden, pre-programmed infusion needed larger doses for the same relief as those who watched it given. Every open dose carries a placebo inside it; hidden dosing strips it out.",
   "move": "Every visible treatment is two treatments: the substance and the scene around it.",
+  "ask": "Which part of my results comes from the substance, and which from the scene around it?",
   "keywords": [
     "hidden administration",
     "open treatment",

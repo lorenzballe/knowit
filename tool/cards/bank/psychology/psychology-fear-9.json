@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. How far fear falls within a session predicts the outcome months later poorly; patients still frightened at the end can improve as much. Michelle Craske's team argues that what counts is learning that the feared outcome did not come. The lesson is that the dog did not bite, not that the heart slowed.",
   "move": "Judge a treatment by what lasts, not by how the session felt.",
+  "ask": "Do I judge a fix by how the session felt or by what lasts afterwards?",
   "trap": "Taking calm at the end of a session as the sign of cure.",
   "keywords": [
     "exposure therapy",

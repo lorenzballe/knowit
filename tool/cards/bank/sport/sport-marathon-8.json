@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Zouhal and colleagues weighed runners before and after the race: the more weight a runner had lost, the faster they had tended to finish, though the link was loose. Faster runners sweat more and spend less time drinking. The weight loss was a mark of the effort, and it did not cause the speed.",
   "move": "A cost that rises with effort will look like a cause of success.",
+  "ask": "Which cost of effort am I mistaking for the cause of success?",
   "trap": "Knowing dehydration slows runners and assuming the thirstiest finish last.",
   "keywords": [
     "dehydration",

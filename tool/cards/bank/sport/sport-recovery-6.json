@@ -29,5 +29,6 @@
   "source": "Meeusen et al., ECSS and ACSM consensus, 2013",
   "source_kind": "paper",
   "reference": "Meeusen et al., Prevention, diagnosis, and treatment of the overtraining syndrome: joint consensus statement of the ECSS and the ACSM, Medicine & Science in Sports & Exercise, 2013",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

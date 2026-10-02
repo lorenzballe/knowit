@@ -9,6 +9,7 @@
   "question": "How were patients bedded in Paris's great hospital, the Hôtel-Dieu, in the 18th century?",
   "answer": "Several to a bed. Most of its roughly 1,200 beds were large ones shared by four or more, and patients far outnumbered beds. The surgeon Jacques Tenon's 1788 survey put its death rate above one in five, higher than the city's smaller hospitals. The fevered, the dying and the recovering shared one mattress.",
   "move": "Before blaming a place's patients, count how many share each bed.",
+  "ask": "Before I blame a place's people, what crowded conditions are they living in?",
   "keywords": [
     "hôtel-dieu",
     "paris",

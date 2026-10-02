@@ -12,6 +12,7 @@
   "question": "Besides income and local prices, what shapes how much rent a newcomer to a city chooses to pay?",
   "answer": "The rents of the city they left. Simonsohn and Loewenstein found that movers arriving from pricier cities rent more expensive homes than equally paid movers from cheaper ones. The gap fades when they move again within their new city: the old price list stays in the head until the next lease.",
   "move": "The last prices you lived with are still shopping for you.",
+  "ask": "Which old prices am I still shopping with, long after I moved on from them?",
   "keywords": [
     "rent",
     "movers",

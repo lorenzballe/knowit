@@ -34,5 +34,6 @@
   "source": "Bayer & Diaconis, Annals of Applied Probability, 1992",
   "source_kind": "paper",
   "reference": "Bayer & Diaconis, Trailing the Dovetail Shuffle to Its Lair, Annals of Applied Probability, 1992",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

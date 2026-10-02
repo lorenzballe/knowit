@@ -12,6 +12,7 @@
   "tolerance": 1,
   "answer": "93.3 / 0.97 = about 96%.",
   "move": "A target for the protected must be divided by how often protection takes.",
+  "ask": "Which target have I set without dividing by how often the plan actually takes?",
   "trap": "Stopping at 93%, forgetting that some vaccinated children stay unprotected.",
   "hint": "Ask what share can stay unprotected if each case must infect fewer than one.",
   "steps": [

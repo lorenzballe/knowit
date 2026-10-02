@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The GAS trial randomised over 700 infants having hernia repairs to under an hour of general anaesthesia or to awake regional anaesthesia, and found equivalent IQ at five. Earlier alarm came from observational studies, in which children who need surgery differ from those who do not. Long or repeated exposures are less studied.",
   "move": "Before blaming a treatment, ask what sent people to receive it.",
+  "ask": "Before I blame the treatment, the habit or the job, what sent me to it in the first place?",
   "trap": "Trusting studies that linked childhood surgery to later learning problems.",
   "keywords": [
     "gas trial",

@@ -32,5 +32,6 @@
   "figure": "none",
   "source": "Permutations without repetition",
   "source_kind": "arithmetic",
-  "reference": "Graham, Knuth & Patashnik, Concrete Mathematics, Addison-Wesley, 1994"
+  "reference": "Graham, Knuth & Patashnik, Concrete Mathematics, Addison-Wesley, 1994",
+  "disabled": true
 }

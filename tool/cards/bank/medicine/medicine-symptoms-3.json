@@ -9,6 +9,7 @@
   "question": "Why does appendicitis pain usually start around the navel before settling low on the right?",
   "answer": "Because two nerve systems report it in turn. Early swelling stretches the appendix, whose gut nerves enter the spinal cord at the same level as the skin around the navel, so the brain places the pain vaguely there. Later it irritates the lining of the abdominal wall, which has precise nerves, and the pain moves.",
   "move": "Where it hurts and where the trouble is are two separate questions.",
+  "ask": "Where it hurts and where the problem sits: which have I confused lately?",
   "keywords": [
     "appendicitis",
     "referred pain",

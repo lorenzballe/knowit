@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "When it left gold. Eichengreen and Sachs found that countries which cut the link early, like Britain in 1931, could lower interest rates and let prices rise, and recovered sooner. France and the rest of the gold bloc held on until 1936 and were still sliding. The exit date sorted the league table.",
   "move": "Look for the constraint a country chose to keep, not the shock it suffered.",
+  "ask": "What constraint am I clinging to that is worse than the shock I'm blaming?",
   "trap": "Picking the market crash, the most vivid image of the Depression.",
   "keywords": [
     "gold standard",

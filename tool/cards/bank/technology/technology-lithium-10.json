@@ -37,5 +37,6 @@
   "source": "Wood, Li & An, Joule, 2019",
   "source_kind": "paper",
   "reference": "doi:10.1016/j.joule.2019.11.002",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

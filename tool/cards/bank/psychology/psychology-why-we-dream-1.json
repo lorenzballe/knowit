@@ -29,5 +29,6 @@
   "source": "Stickgold et al., Science, 2000",
   "source_kind": "paper",
   "reference": "doi:10.1126/science.290.5490.350",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

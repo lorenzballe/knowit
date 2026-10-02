@@ -9,6 +9,7 @@
   "question": "Why do tomato growers buy boxed colonies of bumblebees rather than renting honeybee hives?",
   "answer": "Tomato flowers keep their pollen locked in tubes that release it only when shaken. A bumblebee grips the flower and vibrates its flight muscles without flapping, and the pollen pours out; honeybees do not do this. Before bumblebees were reared commercially from the late 1980s, greenhouse workers shook each flower cluster with electric wands.",
   "move": "Check that a helper can do the specific job before paying for it.",
+  "ask": "Before I pay for help, have I checked it can do the specific job I need?",
   "keywords": [
     "bumblebees",
     "buzz pollination",

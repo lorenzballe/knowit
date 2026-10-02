@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Estimates of installed power give water wheels roughly three times the horsepower of steam engines in 1800, and the two were level only around 1830. Early cotton mills clustered on Pennine streams; steam's great advantage came later, when it freed factories to move into towns beside their workers and coal.",
   "move": "The famous machine of an age is rarely the one doing most of the work.",
+  "ask": "What famous thing in my work is far less important than the quiet thing really doing the job?",
   "trap": "The steam engine is the icon, so it must have powered the mills.",
   "keywords": [
     "water wheels",

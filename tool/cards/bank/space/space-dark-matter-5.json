@@ -29,5 +29,6 @@
   "source": "XENON Collaboration, Physical Review Letters, 2024",
   "source_kind": "paper",
   "reference": "XENON Collaboration, First Indication of Solar 8B Neutrinos via Coherent Elastic Neutrino-Nucleus Scattering, Physical Review Letters, 2024",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

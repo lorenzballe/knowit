@@ -35,5 +35,6 @@
   "source": "IEC 60601-2-33 MRI safety standard",
   "source_kind": "standard",
   "reference": "International Electrotechnical Commission, IEC 60601-2-33: Particular requirements for the basic safety and essential performance of magnetic resonance equipment for medical diagnosis, 2010",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

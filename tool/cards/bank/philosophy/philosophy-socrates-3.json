@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Looked for someone wiser to prove it wrong. Socrates questioned politicians, poets and craftsmen, expecting to carry a counterexample back to the god. Each believed he knew things he did not. Socrates concluded he was wiser only in not thinking he knew what he did not. He tested a compliment by hunting for its refutation.",
   "move": "To test a flattering claim, go looking for the case that breaks it.",
+  "ask": "What flattering thing about me would I do well to test by searching for the case that breaks it?",
   "trap": "Assuming a man told he is wisest takes it as a mission.",
   "keywords": [
     "delphic oracle",

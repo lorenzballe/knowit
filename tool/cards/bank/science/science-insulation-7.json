@@ -18,6 +18,7 @@
   "correct": 1,
   "answer": "By infrared radiation. Plain glass absorbs and re-emits infrared almost like a black surface, so in a typical gap about two thirds of the heat crosses as radiation. A metal coating thinner than a wavelength of light reflects that infrared back, cutting the heat crossing the gap by more than half.",
   "move": "Block the path that carries the most, not the one easiest to picture.",
+  "ask": "Am I fixing the problem I can picture or the path that carries most of the loss?",
   "trap": "Picturing the trapped air as the barrier the heat must conduct through.",
   "keywords": [
     "double glazing",

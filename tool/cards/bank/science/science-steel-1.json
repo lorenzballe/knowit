@@ -9,6 +9,7 @@
   "question": "Why did some welded wartime ships break in two while sitting in calm water?",
   "answer": "Cold made their steel brittle. Constance Tipper showed that the plate, tough when warm, cracked like glass below a transition temperature that cold seas reached. Welding made each hull one continuous piece, so a crack from a square hatch corner could run round it. The tanker Schenectady split in two at its dock in 1943.",
   "move": "Test materials at the worst conditions they will meet, not the average.",
+  "ask": "Which plan have I tested in average conditions rather than the worst ones it will face?",
   "keywords": [
     "liberty ships",
     "brittle fracture",

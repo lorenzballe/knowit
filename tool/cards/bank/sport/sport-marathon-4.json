@@ -29,5 +29,6 @@
   "source": "IAAF/AIMS, The Measurement of Road Race Courses",
   "source_kind": "standard",
   "reference": "IAAF & AIMS, The Measurement of Road Race Courses, 2nd edition, 2004",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

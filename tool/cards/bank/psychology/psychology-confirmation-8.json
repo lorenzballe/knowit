@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "One. Itiel Dror and colleagues gave the experts prints they had themselves identified, with the story that these were a famous wrongful match by the FBI. Three now declared the prints did not match and one could not decide. Same ridges, same examiners, different verdicts, steered by what they expected to find.",
   "move": "Hide the story from whoever checks the evidence until the checking is done.",
+  "ask": "When I check someone's work, how much of the story am I already carrying into the checking?",
   "trap": "Trusting experts to read their own verified work the same way twice.",
   "keywords": [
     "fingerprints",

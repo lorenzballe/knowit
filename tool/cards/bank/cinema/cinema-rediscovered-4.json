@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. A worn 16mm duplicate in Buenos Aires restored about 25 minutes cut after the Berlin premiere, and the 2010 restoration put them back. But a few short scenes are still missing and are bridged by explanatory titles, and the recovered footage stays scratched and slightly cropped, easy to spot beside the rest.",
   "move": "Recovered is not the same claim as complete; check which one is made.",
+  "ask": "When someone says something is recovered, have I asked if they also claim it is complete?",
   "trap": "The headlines said the complete film had been found.",
   "keywords": [
     "metropolis",

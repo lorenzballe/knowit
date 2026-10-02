@@ -29,5 +29,6 @@
   "source": "Bank of England, Scottish and Northern Ireland banknotes",
   "source_kind": "institution",
   "reference": "Bank of England, Scottish and Northern Ireland banknotes: backing assets, giants and titans, 2024",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

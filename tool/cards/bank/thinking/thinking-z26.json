@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "That most rowers swam says nothing about how many swimmers row. If swimming is very common, almost every activity will be full of former swimmers without swimming leading anywhere in particular.",
   "move": "\"Most A are B\" and \"most B are A\" are different sentences with different answers.",
+  "ask": "Which statement of mine about causes is just a statement about how many in one group are in another?",
   "trap": "Reading the share one way round as if it read the other.",
   "keywords": [
     "conditional probability",

@@ -29,5 +29,6 @@
   "source": "Tsujimura, OLED Display Fundamentals and Applications, 2017",
   "source_kind": "book",
   "reference": "Tsujimura, OLED Display Fundamentals and Applications, 2nd edition, Wiley, 2017",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

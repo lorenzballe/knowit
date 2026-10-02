@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About 1. Pearce and colleagues followed about 180,000 young people scanned in Britain from 1985 to 2002. A brain dose of about 60 mGy, two or three scans, roughly tripled the risk; but brain tumours in children are so rare that this adds about one case per 10,000 head scans within ten years.",
   "move": "A tripled risk means little until you know how small it started.",
+  "ask": "A risk that tripled: what number was it before it tripled?",
   "trap": "About 300, because a tripled risk sounds like a large share.",
   "keywords": [
     "ct scans",

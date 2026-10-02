@@ -9,6 +9,7 @@
   "question": "How did Aristotle answer Zeno's claim that nobody can cross infinitely many half-distances in a finite time?",
   "answer": "First by dividing the time too: if the track splits endlessly, so do the seconds, so endless shrinking stretches fit into a finite run. Later he called that reply fine for the questioner but not for the truth: the halfway points are only potential. A runner who never stops at them never makes them real.",
   "move": "When a problem seems impossible, check you divided both sides, not just one.",
+  "ask": "When a problem seems impossible, did I divide both sides or only one?",
   "keywords": [
     "aristotle",
     "physics",

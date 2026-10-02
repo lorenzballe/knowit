@@ -38,5 +38,6 @@
   "source": "World Athletics, marathon records",
   "source_kind": "statistics",
   "reference": "World Athletics, official world records list, men's marathon, Kiptum 2:00:35, ratified 2024",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

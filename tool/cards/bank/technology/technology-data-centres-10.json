@@ -39,5 +39,6 @@
   "source": "Ofgem, Typical Domestic Consumption Values, 2023",
   "source_kind": "institution",
   "reference": "Ofgem, Review of Typical Domestic Consumption Values 2023, Ofgem, 2023",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

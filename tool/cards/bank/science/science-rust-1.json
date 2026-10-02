@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Salt speeds rust by letting electric current flow through the water between patches of metal, but rust also needs dissolved oxygen, and the saltier the water, the less oxygen it holds. The rate peaks at a few per cent salt, about seawater's strength, and falls in a saturated brine of 26%.",
   "move": "When more of a cause stops working, something else has run short.",
+  "ask": "When more of a cause stops working, what else in my situation has run short?",
   "trap": "Assuming that the saltier the water, the faster the rust.",
   "keywords": [
     "rust",

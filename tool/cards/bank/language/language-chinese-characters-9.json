@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Here 机 means a hinge point, the moment when things turn; its older form 機 named a mechanism such as a crossbow trigger. It carries opportunity only inside words like jīhuì. The sinologist Victor Mair has documented how danger plus opportunity spread through English speeches from 1959 on.",
   "move": "Check what a part means in this whole, not in another one.",
+  "ask": "What phrase do I read by its parts instead of by what the whole actually means?",
   "trap": "Spotting jī in jīhuì, opportunity, and looking no further.",
   "keywords": [
     "weiji",

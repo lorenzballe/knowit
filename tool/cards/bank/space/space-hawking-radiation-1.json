@@ -18,6 +18,7 @@
   "correct": 0,
   "answer": "True. It glows at about 60 billionths of a kelvin, while the cosmic background it bathes in is 2.7 K, so it absorbs more than it radiates. Only a hole under about 60% of the Moon's mass is hotter than the sky around it. Known black holes will grow until the universe cools below them.",
   "move": "Ask what the surroundings give back before declaring something in decline.",
+  "ask": "Which thing am I calling a decline without checking what its surroundings give back?",
   "trap": "Assuming Hawking radiation means every black hole is shrinking now.",
   "keywords": [
     "hawking temperature",

@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Pay rose; many moved to bigger firms. Dustmann and colleagues found the minimum raised low wages without cutting overall employment, as low-paid workers shifted from small firms to larger, more productive ones, which explains part of their wage gain. Other studies found losses in mini-jobs, part-time posts paying a few hundred euros a month.",
   "move": "Count where people move, not just who loses the old place.",
+  "ask": "When a rule is blamed for losses, have I counted where people moved to?",
   "trap": "Expecting a wage floor to price the low-paid out of work.",
   "keywords": [
     "minimum wage",

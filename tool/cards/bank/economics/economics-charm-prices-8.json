@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Olenski and colleagues compared patients admitted within two weeks either side of turning 80, alike at baseline. About 7% of those still 79 had bypass surgery, against 5.3% of the new 80-year-olds. A few weeks of age changed nothing in their hearts; it changed the first digit on the chart.",
   "move": "A threshold in the head is not a threshold in the body.",
+  "ask": "Which threshold am I treating as real in my head when my body or situation shows none?",
   "trap": "Assuming doctors weigh the patient's health, not the digit in front.",
   "keywords": [
     "left-digit bias",

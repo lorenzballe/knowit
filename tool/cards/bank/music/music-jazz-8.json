@@ -35,5 +35,6 @@
   "source": "Los Angeles Times, 2 April 1912",
   "source_kind": "news_archive",
   "reference": "Los Angeles Times, Ben's Jazz Curve, 2 April 1912",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

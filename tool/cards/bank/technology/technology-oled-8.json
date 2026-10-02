@@ -35,5 +35,6 @@
   "source": "IEEE Std 1789-2015 on modulated light",
   "source_kind": "standard",
   "reference": "IEEE Std 1789-2015, Recommended Practices for Modulating Current in High-Brightness LEDs for Mitigating Health Risks to Viewers, IEEE, 2015",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

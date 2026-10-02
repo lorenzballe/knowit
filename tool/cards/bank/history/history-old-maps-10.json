@@ -39,5 +39,6 @@
   "source": "Longitude Act, 1714",
   "source_kind": "primary_document",
   "reference": "An Act for Providing a Publick Reward for such Person or Persons as shall Discover the Longitude at Sea, 1714; text in Andrewes (ed.), The Quest for Longitude, Harvard University, 1996",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

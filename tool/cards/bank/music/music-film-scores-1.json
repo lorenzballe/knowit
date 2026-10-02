@@ -29,5 +29,6 @@
   "source": "Academy Awards database, 1973 and 1975",
   "source_kind": "institution",
   "reference": "Academy of Motion Picture Arts and Sciences, Official Academy Awards Database, 45th (1973) and 47th (1975) Awards",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

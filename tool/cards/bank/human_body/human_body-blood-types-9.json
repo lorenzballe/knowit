@@ -12,6 +12,7 @@
   "tolerance": 0.5,
   "answer": "0.16 x 0.6 = 0.096, about 9.6%.",
   "move": "A parent showing a trait is not the same as passing it on.",
+  "ask": "Which trait am I assuming someone will pass on, just because they show it?",
   "trap": "Multiplying 16% by 84% Rh-positive fathers, as if each passes it on.",
   "hint": "Not every Rh-positive father passes the gene on; start from how common the gene is.",
   "steps": [

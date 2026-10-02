@@ -32,5 +32,6 @@
   "source": "Louder, 2022",
   "source_kind": "news_archive",
   "reference": "https://www.loudersound.com/features/breaking-down-the-beatles-giles-martin-and-the-miracle-of-the-revolver-de-mix",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -35,5 +35,6 @@
   "source": "Lewis & Weaver, IEEE JSTQE, 2004",
   "source_kind": "paper",
   "reference": "Lewis & Weaver, Thin-film permeation-barrier technology for flexible organic light-emitting devices, IEEE Journal of Selected Topics in Quantum Electronics 10(1), 2004",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

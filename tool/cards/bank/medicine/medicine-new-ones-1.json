@@ -9,6 +9,7 @@
   "question": "How was teixobactin, an antibiotic announced in 2015, found in soil that had been searched for decades?",
   "answer": "By growing bacteria that refuse to grow in a laboratory. Most soil microbes never form colonies on a dish, so earlier hunts had sampled only a small minority. A team led by Kim Lewis sealed soil bacteria in a device buried back in the soil, the iChip. A newly cultured species, Eleftheria terrae, made teixobactin.",
   "move": "When a well-searched place runs dry, question the method of searching.",
+  "ask": "Where have I given up on a well-searched place when the method of searching was the problem?",
   "keywords": [
     "teixobactin",
     "ichip",

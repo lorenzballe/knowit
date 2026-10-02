@@ -12,6 +12,7 @@
   "question": "Does Hawking radiation really come from particle pairs splitting right at the edge of a black hole?",
   "answer": "Not in any literal sense. Its typical wavelength is roughly 16 times the horizon's radius, so it cannot be pinned to the horizon, still less to a pair split on it; Hawking himself called that picture heuristic. For a hole of one solar mass, its photons are radio waves some 50 km long.",
   "move": "A picture that helps you remember a result may not be how it happens.",
+  "ask": "Which memorable picture do I rely on that may not be how things actually happen?",
   "keywords": [
     "hawking radiation",
     "virtual particles",

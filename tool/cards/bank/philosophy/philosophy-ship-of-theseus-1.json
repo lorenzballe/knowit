@@ -32,5 +32,6 @@
   "source": "Plato, Phaedo 58a-c; Plutarch, Theseus 23",
   "source_kind": "primary_document",
   "reference": "Plato, Phaedo 58a-c, trans. Gallop, Clarendon Press, 1975; Plutarch, Life of Theseus 23, trans. Perrin, Loeb Classical Library, Harvard University Press, 1914",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

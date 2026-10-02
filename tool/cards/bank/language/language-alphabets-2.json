@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Cyril and his brother Methodius devised Glagolitic, a script of new, looped letters, for their mission to the Slavs in the 860s. Cyrillic was assembled later, probably by their disciples in Bulgaria around 900, largely from Greek capitals, and named in Cyril's honour. Croatian priests went on writing Glagolitic for centuries.",
   "move": "A name on a thing honours someone; it does not prove who made it.",
+  "ask": "What name on something in my life am I treating as proof of who really made or decided it?",
   "trap": "The alphabet carries his name, so he must have made it.",
   "keywords": [
     "cyrillic",

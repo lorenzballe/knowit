@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Oral polio vaccine is a live, weakened virus that passes between children. Where too few are immunised it circulates for months and can regain the power to paralyse. In 2021 there were 6 wild cases and about 700 vaccine-derived ones, mostly type 2, a strain whose wild form was declared eradicated in 2015.",
   "move": "A fix that spreads by itself also spreads where nobody is watching.",
+  "ask": "What fix of mine spreads on its own into places nobody is watching?",
   "trap": "Wild polio makes the news, so it seems the main cause.",
   "keywords": [
     "polio",

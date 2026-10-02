@@ -9,6 +9,7 @@
   "question": "What finally stopped Maxwell's demon from breaking the second law of thermodynamics?",
   "answer": "Its need to forget. The demon sorts fast molecules from slow by watching them; Charles Bennett showed in 1982 that watching can in principle be free, but wiping its memory to make room must release heat, as Rolf Landauer had argued in 1961. A 2012 experiment in Lyon measured that heat for one erased bit.",
   "move": "Knowing can be free; it is forgetting that costs.",
+  "ask": "What am I paying to forget, and what do I keep knowing for free?",
   "keywords": [
     "maxwell's demon",
     "landauer's principle",

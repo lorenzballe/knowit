@@ -38,5 +38,6 @@
   "source": "Kafi et al., Saffron, 2006",
   "source_kind": "book",
   "reference": "Kafi, Koocheki, Rashed & Nassiri (eds), Saffron (Crocus sativus): Production and Processing, Science Publishers, 2006",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -29,5 +29,6 @@
   "source": "Ségurel et al., PNAS, 2012",
   "source_kind": "paper",
   "reference": "doi:10.1073/pnas.1210603109",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -9,6 +9,7 @@
   "question": "What were engineers copying when they designed the first mass-market kimchi refrigerator, launched in Korea in 1995?",
   "answer": "A clay crock buried in winter ground. Soil cools a jar directly and holds it at a steady temperature and humidity, while an ordinary fridge blows dry air that pulls moisture from food. Dimchae was a chest opened from the top, like reaching into a jar. By 2011 about 81% of households owned one.",
   "move": "Before building a machine, measure what the old method got right.",
+  "ask": "Before replacing an old way of doing things with a new one, have I measured what the old way got right?",
   "keywords": [
     "kimchi refrigerator",
     "dimchae",

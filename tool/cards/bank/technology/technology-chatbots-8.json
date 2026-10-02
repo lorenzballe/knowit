@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. In five-minute three-way chats, each interrogator messaged a person and a machine at once, then picked the human. GPT-4.5, told to play a shy young adult fond of slang, was picked 73% of the time, so the real person only 27%. ELIZA, a 1966 program, was picked 23% of the time.",
   "move": "Past clumsiness is a poor guide to how easy a thing is to spot today.",
+  "ask": "What do I assume is easy to spot because it used to be clumsy?",
   "trap": "Recalling clumsy chatbots and assuming a person is easy to tell apart.",
   "keywords": [
     "turing test",

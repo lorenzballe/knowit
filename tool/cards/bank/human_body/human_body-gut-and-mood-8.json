@@ -11,6 +11,7 @@
   "unit": "cases",
   "answer": "360 - 100 = 260 extra cases.",
   "move": "Subtract what would have happened anyway before crediting a cause.",
+  "ask": "What would have happened anyway, before I credit the cause I like?",
   "trap": "Blaming the outbreak for all 360 cases, ignoring the background rate.",
   "hint": "Some of those who fell ill would have developed the condition without any outbreak.",
   "steps": [

@@ -12,6 +12,7 @@
   "withinFactor": 3,
   "answer": "10 x 510 = about 5,100 trillion tonnes.",
   "move": "Multiply a small load by the area it covers before calling it light.",
+  "ask": "Which small, constant load in my life have I called light without multiplying by its reach?",
   "trap": "Guessing small, because air feels as if it weighs nothing.",
   "hint": "Start from how many tonnes of air press on one square metre.",
   "steps": [

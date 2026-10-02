@@ -29,5 +29,6 @@
   "source": "VESA, Adaptive-Sync announcement, 2014",
   "source_kind": "standard",
   "reference": "VESA, VESA Adds Adaptive-Sync to Popular DisplayPort Video Standard, press release, 12 May 2014",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

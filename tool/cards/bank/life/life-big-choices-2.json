@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Near zero on average. Scheibehenne's meta-analysis found a mean effect of about zero, with wide variation: more choice hurt in some studies and helped in others. In the original study, 3% of shoppers bought from the 24-jar table and 30% from the six-jar table.",
   "move": "Before trusting a famous experiment, ask what the pile of later ones says.",
+  "ask": "Which striking finding do I repeat that I have never checked against the later and bigger studies?",
   "trap": "The retold jam story agrees with how choosing feels.",
   "keywords": [
     "choice overload",

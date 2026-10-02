@@ -9,6 +9,7 @@
   "question": "In 1986, what did a leading British mathematician apologise for on behalf of his whole field?",
   "answer": "For a false promise. Sir James Lighthill told the Royal Society that experts in mechanics had misled the educated public into equating Newton's determinism with predictability. Work on chaos after 1960 showed that many Newtonian systems are fully determined yet impossible to forecast. A whole discipline said sorry for its most famous boast.",
   "move": "An expert's confident promise can outlive the evidence that once supported it.",
+  "ask": "Which expert's confident promise do I still rely on after the evidence for it has gone?",
   "keywords": [
     "james lighthill",
     "predictability",

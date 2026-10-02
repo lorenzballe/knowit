@@ -39,5 +39,6 @@
   "source": "WGS 84 normal gravity formula",
   "source_kind": "standard",
   "reference": "NIMA, Department of Defense World Geodetic System 1984, Technical Report TR8350.2, third edition, 2000",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

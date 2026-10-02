@@ -9,6 +9,7 @@
   "question": "Is there a size of infinity between the whole numbers and the real numbers?",
   "answer": "The standard axioms, the starting rules of mathematics, cannot say. Cantor guessed there is none, and the question headed Hilbert's list of great problems in 1900. Kurt Gödel showed in 1940 that the axioms cannot refute the guess; Paul Cohen showed in 1963 that they cannot prove it. Mathematicians may assume either answer without contradiction.",
   "move": "Before hunting for an answer, check the rules can deliver one.",
+  "ask": "Which question am I stuck on because I never checked whether the rules can deliver an answer?",
   "keywords": [
     "continuum hypothesis",
     "georg cantor",

@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "Four children in 2,000 have it and the screen finds three or four of them. But 5% of the other 1,996 — about 100 children — are flagged too. Roughly 3 real cases against 100 false ones: under one flagged child in twenty actually has it.",
   "move": "How rare the thing is matters more than how good the test is.",
+  "ask": "Which result about me or someone close, a test or a score, am I trusting without asking how rare the thing really is?",
   "trap": "Reading 90% as the chance the flag is right.",
   "simply": "Picture a village of 2,000. Four people are ill. The machine points at those four — and at about a hundred healthy people as well. When it points at you, look around: you are standing in a crowd of roughly a hundred, and four of you are ill.",
   "keywords": [

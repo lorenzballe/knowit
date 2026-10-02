@@ -29,5 +29,6 @@
   "source": "Beyer et al., American Journal of Physiology, 1951",
   "source_kind": "paper",
   "reference": "Beyer, Russo, Tillson, Miller, Verwey & Gass, 'Benemid', p-(di-n-propylsulfamyl)-benzoic acid: its renal affinity and its elimination, American Journal of Physiology, 1951",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

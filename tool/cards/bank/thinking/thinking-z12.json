@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "The opening number becomes the reference the real answer is judged against, and people asked the big question first give more. It works even when the first figure is obviously beyond what anyone would give.",
   "move": "Whoever speaks first has already moved your number.",
+  "ask": "Which question did someone ask me in an extreme way first, to move what I would answer next?",
   "trap": "Believing your own figure came from your own budget.",
   "keywords": [
     "anchoring",

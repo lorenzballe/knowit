@@ -9,6 +9,7 @@
   "question": "What did Edo Japan's rich merchants do when the law barred them from showy silks?",
   "answer": "They made restraint the luxury. Sumptuary edicts barred townsmen from the most splendid fabrics, so merchants and kabuki actors set a new taste, iki, prizing subtlety. The display moved inward: sober colours and fine stripes outside, lavish silk linings within.",
   "move": "Ban a display and the display moves somewhere the ban cannot reach.",
+  "ask": "When a rule blocks something I want, where does the want go instead?",
   "keywords": [
     "edo japan",
     "sumptuary laws",

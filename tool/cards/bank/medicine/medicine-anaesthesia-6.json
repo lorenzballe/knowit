@@ -29,5 +29,6 @@
   "source": "Dickinson et al., Anesthesiology, 2007",
   "source_kind": "paper",
   "reference": "Dickinson et al., Competitive inhibition at the glycine site of the N-methyl-D-aspartate receptor by the anesthetics xenon and isoflurane: evidence from molecular modeling and electrophysiology, Anesthesiology, 2007",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

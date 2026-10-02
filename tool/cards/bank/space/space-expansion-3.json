@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "About 2 billion years. Hubble's rate was about seven times today's value, because his distances were far too small. Run backwards, that made the universe younger than the Earth's rocks as geologists were dating them. The clash eased only in the 1950s, when Walter Baade recalibrated the distance scale.",
   "move": "A measurement is only as good as the ruler behind it.",
+  "ask": "Which of my conclusions is only as good as the ruler I measured it with?",
   "trap": "The well-known modern age of 13.8 billion years comes to mind first.",
   "keywords": [
     "edwin hubble",

@@ -35,5 +35,6 @@
   "source": "IERS Conventions 2010, numerical standards",
   "source_kind": "standard",
   "reference": "Petit and Luzum (eds.), IERS Conventions (2010), IERS Technical Note 36, 2010",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

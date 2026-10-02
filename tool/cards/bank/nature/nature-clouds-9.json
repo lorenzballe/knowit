@@ -35,5 +35,6 @@
   "source": "WMO, International Cloud Atlas, 2017",
   "source_kind": "reference_work",
   "reference": "World Meteorological Organization, International Cloud Atlas: Manual on the Observation of Clouds and Other Meteors, WMO-No. 407, 2017",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

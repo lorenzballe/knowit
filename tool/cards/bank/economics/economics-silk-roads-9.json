@@ -11,6 +11,7 @@
   "unit": "middlemen",
   "answer": "A seventh: 64 x 2 = 128, so 7 middlemen are enough.",
   "move": "A few ordinary markups in a row multiply into an extraordinary one.",
+  "ask": "How many ordinary markups stand between the cost of something and what I pay?",
   "trap": "Dividing 100 by 2 and picturing about fifty middlemen.",
   "hint": "Keep doubling from 1 until you pass 100.",
   "steps": [

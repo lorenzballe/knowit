@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. A cooler patch on its surface let gas the star had puffed out condense into dust, which hid part of its face. Most models give Betelgeuse something like 100,000 years before it explodes, so the chance of that in any one year is around 1 in 100,000. Dust was always the likelier story.",
   "move": "Before reading an omen, ask how often the rare thing happens at all.",
+  "ask": "Which omen am I reading without asking how often the rare thing actually happens?",
   "trap": "Reading a dramatic change as the long-predicted explosion arriving.",
   "keywords": [
     "betelgeuse",

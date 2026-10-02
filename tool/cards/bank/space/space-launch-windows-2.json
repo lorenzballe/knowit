@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About 3.5 years. The route relies on a Mars flyby, and planets do not wait: the 2022 plan would have reached the asteroid in January 2026, while the 2023 launch had to loop the Sun until Mars came round again in 2026, and arrives in August 2029.",
   "move": "A small delay in a fixed schedule can cost a whole cycle.",
+  "ask": "Where could one small delay in my fixed schedule cost me a whole cycle?",
   "trap": "Assuming a 14-month launch slip simply shifts arrival by 14 months.",
   "keywords": [
     "psyche mission",

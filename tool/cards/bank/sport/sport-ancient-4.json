@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. No law in the Theodosian Code names the Games. The year 393 rests on a Byzantine chronicle written some seven centuries later. Evidence from Olympia suggests the festival went on into the fifth century, fading with its funding and cult; Remijsen places the last Games under Theodosius II, who reigned from 408.",
   "move": "Ask what document a neat date rests on before repeating it.",
+  "ask": "Which neat fact do I repeat as settled without knowing what evidence it rests on?",
   "trap": "One late chronicle survived, so its tidy date became the story.",
   "keywords": [
     "theodosius",

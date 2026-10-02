@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The Dunedin study, following about a thousand people from birth, found no link between early falls and fear of heights at 11 or 18. The falls happened mostly to children without the fear, and those who feared heights at 18 had climbed least as children. The fear was there before any lesson.",
   "move": "Before tracing a fear to a bad experience, check the people who never had one.",
+  "ask": "Which fear do I blame on one bad experience, forgetting people who had it and are fine?",
   "trap": "Assuming a painful fall is how a fear of heights is learned.",
   "keywords": [
     "fear of heights",

@@ -35,5 +35,6 @@
   "source": "Bardy et al., Journal of Physics D, 2005",
   "source_kind": "paper",
   "reference": "doi:10.1088/0022-3727/38/20/009",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

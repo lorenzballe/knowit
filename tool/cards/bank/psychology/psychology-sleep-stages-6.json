@@ -9,6 +9,7 @@
   "question": "When thousands of trained scorers staged the same sleep recordings, how often did they agree?",
   "answer": "About 83% of the time overall, and only about 63% for N1, the lightest stage. In the American Academy of Sleep Medicine's own agreement programme, REM was scored most consistently, N1 and deep N3 least. Sleep stages are rules applied by eye to 30-second pages of brainwaves. One scorer's light sleep is another's wakefulness.",
   "move": "When a category needs a judge, ask how often two judges agree.",
+  "ask": "Where do I rely on a category that needs a judge, without asking how often judges agree?",
   "keywords": [
     "sleep scoring",
     "inter-rater agreement",

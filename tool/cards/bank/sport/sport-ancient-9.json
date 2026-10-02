@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. The truce protected Elis, the festival and people travelling to and from it; wars elsewhere went on. Where it applied, it had teeth: Thucydides records that in 420 BC Elis fined Sparta 2,000 minae, two for each of 1,000 soldiers sent in during the truce, and barred Spartans from the Games.",
   "move": "Check the scope of a famous promise before crediting it with more.",
+  "ask": "Which famous promise do I credit with more reach than it ever actually claimed?",
   "trap": "Reading the modern peace-for-all ideal back into the ancient rule.",
   "keywords": [
     "olympic truce",

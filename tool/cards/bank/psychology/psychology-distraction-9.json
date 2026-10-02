@@ -12,6 +12,7 @@
   "withinFactor": 3,
   "answer": "25,200 / 47 ≈ 536 switches.",
   "move": "A small number repeated all day is a large number by evening.",
+  "ask": "How many times today did I switch screens, and what did each switch cost me?",
   "trap": "Assuming people stay on one screen for several minutes at a time.",
   "hint": "Work out the seconds in the day, then guess how long one screen holds attention.",
   "steps": [

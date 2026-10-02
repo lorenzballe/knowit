@@ -34,5 +34,6 @@
   "source": "The King's Fund, NHS bed numbers, 2020",
   "source_kind": "institution",
   "reference": "The King's Fund, NHS hospital bed numbers: past, present, future, 2020",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

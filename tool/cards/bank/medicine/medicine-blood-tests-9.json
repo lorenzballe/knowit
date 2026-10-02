@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "Lower. Any single reading is a person's usual level plus day-to-day variation and lab error. Choosing people for one high reading picks many caught on a high day, and their next result drifts back. Barnett and colleagues show that drift can pass for a treatment effect in any study that recruits on one measurement.",
   "move": "Anyone picked for an extreme will look more ordinary the next time.",
+  "ask": "When something I picked for being extreme looked better next time, did I credit my fix or chance?",
   "trap": "About the same, since nothing was done to change it.",
   "keywords": [
     "regression to the mean",

@@ -12,6 +12,7 @@
   "correct": 0,
   "answer": "Surviving three years. Every café that wins an award and survives is also a café that survives, so the second can never be the likelier. The award supplies a reason, and a reason makes a story feel probable while cutting down the number of ways it can come true.",
   "move": "Each added reason is one more thing that has to be true.",
+  "ask": "Which detailed story about my future feels likely because each added reason makes it sound better?",
   "trap": "The award explains the survival, so the story feels more likely.",
   "keywords": [
     "small business",

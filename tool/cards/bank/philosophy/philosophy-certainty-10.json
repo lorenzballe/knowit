@@ -35,5 +35,6 @@
   "source": "Heath, Euclid's Elements, 1908",
   "source_kind": "book",
   "reference": "Heath, The Thirteen Books of Euclid's Elements, vol. 1, Cambridge University Press, 1908, notes on Proposition I.1",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

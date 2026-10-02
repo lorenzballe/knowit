@@ -18,6 +18,7 @@
   "correct": 2,
   "answer": "Group O. An O kidney is compatible with patients of every group, but an O patient can accept only an O kidney. Left alone, other groups drain the O supply, so allocation schemes now reserve O kidneys mostly for O patients. AB patients can take any group and wait least.",
   "move": "Whoever can give to everyone may be the one left waiting.",
+  "ask": "Who in my life can give to everyone and is the one left waiting?",
   "trap": "Picking AB, reasoning that the rarest group is hardest to match.",
   "keywords": [
     "blood groups",

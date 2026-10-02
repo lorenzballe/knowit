@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "About 43 arcseconds, under 1%. Some 5,026 come from Earth's own slowly wobbling axis, which shifts the sky's reference grid, and about 532 from the pulls of other planets; Newton's physics explained all that. Relativity's triumph is the small residue, first flagged by Le Verrier in 1859, that nothing else could account for.",
   "move": "Subtract what would have happened anyway before crediting the famous cause.",
+  "ask": "Before crediting the famous cause, have I subtracted what would have happened anyway?",
   "trap": "Nearly all of it, since the orbit is relativity's famous proof.",
   "keywords": [
     "mercury",

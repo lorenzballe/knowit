@@ -11,6 +11,7 @@
   "unit": "thousand codes",
   "answer": "10,000 codes is 10 thousand.",
   "move": "Each extra position multiplies the possibilities rather than adding to them.",
+  "ask": "Where am I adding options when they actually multiply, and so underestimating the complexity?",
   "trap": "Adding the choices, 4 x 10, instead of multiplying them.",
   "hint": "Work out how many codes two digits give, then combine two such pairs.",
   "steps": [

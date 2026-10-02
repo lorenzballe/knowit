@@ -9,6 +9,7 @@
   "question": "Why could a 60 Hz tube television show motion more sharply than a 60 Hz flat screen?",
   "answer": "Because the tube flashed and the flat screen holds. A tube's phosphor glowed for a millisecond or two, then went dark; an LCD or OLED keeps each frame lit for the full 16.7 ms. Eyes tracking a moving object slide across that held image, smearing it. Makers now insert black frames to imitate the flash.",
   "move": "What stays still while you move smears; brief glimpses stay sharp.",
+  "ask": "What in my life is smearing because I keep it moving when brief glimpses would be sharper?",
   "keywords": [
     "sample and hold",
     "motion blur",

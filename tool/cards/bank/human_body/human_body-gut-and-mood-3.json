@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "No measurable effect. In 2011, Lactobacillus rhamnosus JB-1 reduced anxious behaviour and stress hormones in mice, and cutting the vagus nerve abolished the effect. In 2017 the same strain, given to 29 healthy men for eight weeks against a placebo, changed neither their stress response nor their scores on mood and thinking tests.",
   "move": "A finding travels only as far as the subjects it was tested on.",
+  "ask": "Which finding am I applying to myself when it was only tested on someone unlike me?",
   "trap": "Expecting a clean result in mice to carry over to people.",
   "keywords": [
     "psychobiotics",

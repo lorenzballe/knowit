@@ -11,6 +11,7 @@
   "unit": "years",
   "answer": "3,000 / 30 = 100 years.",
   "move": "Where someone starts can matter more than how fast they travel.",
+  "ask": "Does where I started matter more than how fast I am going?",
   "trap": "Assuming decades of lifestyle must outweigh a difference present at birth.",
   "hint": "Divide the gap between the babies by what an adult loses in a year.",
   "steps": [

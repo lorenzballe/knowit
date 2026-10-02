@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Most green pointers make their colour in steps: a diode's infrared pumps a crystal that emits longer infrared, and a second crystal halves its wavelength to green. A filter should stop leftovers. In 2010 US government testers found some cheap pointers leaking infrared past safe limits: invisible light that triggers no blink.",
   "move": "Check what a process leaves behind, not only what it was built to make.",
+  "ask": "What does my favourite tool or habit leave behind that I never check for?",
   "trap": "Assuming a green beam contains nothing but the green you see.",
   "keywords": [
     "green laser pointers",

@@ -44,5 +44,6 @@
   "source": "NOAA Hurricane Research Division",
   "source_kind": "institution",
   "reference": "https://www.aoml.noaa.gov/hrd-faq/",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

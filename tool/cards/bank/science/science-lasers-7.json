@@ -36,5 +36,6 @@
   "source": "Blu-ray Disc Association, BD-ROM white paper",
   "source_kind": "standard",
   "reference": "Blu-ray Disc Association, White Paper Blu-ray Disc Format: 1.C Physical Format Specifications for BD-ROM, 2010",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

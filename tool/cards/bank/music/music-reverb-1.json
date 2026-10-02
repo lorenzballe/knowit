@@ -28,5 +28,6 @@
   "source": "Universal Audio, Capitol Chambers",
   "source_kind": "company",
   "reference": "https://www.uaudio.com/products/capitol-chambers",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Boothby and colleagues found a liking gap: after conversations in the laboratory, at workshops and among new housemates, people underestimated how much their partners liked them. The gap appeared in the first minutes and lasted for months among housemates.",
   "move": "Assume the conversation went better than it felt to you.",
+  "ask": "After my last conversation with someone new, am I judging it by how I felt or by how they did?",
   "trap": "Dwelling on our own slips, we assume the other person noticed them.",
   "keywords": [
     "liking gap",

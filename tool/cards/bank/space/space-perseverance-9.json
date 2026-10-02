@@ -17,6 +17,7 @@
   "correct": 1,
   "answer": "False. Jezero was chosen for its lake and river delta, and its floor was widely expected to be lake mud. Instead the first cores, in 2021, were igneous rock, one built from olivine crystals that settled in a thick body of melt. Water had later altered them and left salts in their pores.",
   "move": "What a place is famous for may not be what its ground is made of.",
+  "ask": "What is a place or person famous for that I assume is true of all of it?",
   "trap": "Assuming a former lake's floor must be made of lake sediment.",
   "keywords": [
     "jezero crater",

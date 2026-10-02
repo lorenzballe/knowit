@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "The pitch. Properly, tremolo is a wobble in volume and vibrato a wobble in pitch, and Leo Fender swapped them: the 1954 Stratocaster's synchronized tremolo bends pitch, while Fender amplifiers labelled vibrato pulse the volume. Guitarists inherited both errors. The whammy bar is a vibrato arm still wearing the wrong name tag.",
   "move": "Check what a control does before trusting what it is called.",
+  "ask": "Which label in my life do I trust without checking what the thing actually does?",
   "trap": "The volume, because that is what the word tremolo means.",
   "keywords": [
     "stratocaster",

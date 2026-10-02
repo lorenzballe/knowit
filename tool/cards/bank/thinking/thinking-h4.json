@@ -13,6 +13,7 @@
   "correct": 2,
   "answer": "About 1,000. The pill halves the risk, but the risk was 2 in 1,000 to begin with, so it removes one case per 1,000 people a year. Doctors call this the number needed to treat. The same halving on a 1-in-2 risk would spare one person in four.",
   "move": "Ask what a halving is a halving of before you are impressed.",
+  "ask": "What dramatic percentage change did I last accept without asking what it was a percentage of?",
   "trap": "Hearing that the pill halves the risk and picturing half the patients saved.",
   "keywords": [
     "relative risk",

@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. John Boyd Orr's Food, Health and Income found that a diet fully adequate for health was reached only at incomes above those of half the population. The poorest tenth, about 4.5 million people, fell short on every count he measured. What they lacked was less bread than milk, eggs, fruit and vegetables.",
   "move": "Before arguing over how many went without, agree on what enough means.",
+  "ask": "In my disagreements, have we first agreed what counts as enough?",
   "trap": "Picturing 1930s hunger as a small unemployed minority, not half the country.",
   "keywords": [
     "john boyd orr",

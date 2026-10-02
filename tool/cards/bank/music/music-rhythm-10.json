@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Renaud Brochard and colleagues recorded brain waves during a steady train of identical tones, now and then making one quieter: the brain reacted more strongly to that change on odd-numbered tones, as if they were accented. The listener imposes the grouping. The tick-tock of a clock is written by the brain, not the clock.",
   "move": "Before crediting a pattern to the source, check whether the observer supplies it.",
+  "ask": "Which pattern do I see in the world that my own mind is supplying?",
   "trap": "Identical sounds should produce identical responses, so no accent can exist.",
   "keywords": [
     "subjective rhythm",

@@ -55,5 +55,6 @@
   "source": "Pro Football Reference, kicking statistics",
   "source_kind": "statistics",
   "reference": "Pro-Football-Reference, NFL Kicking statistics, 2014 and 2015 seasons, 2015",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

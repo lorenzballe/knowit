@@ -29,5 +29,6 @@
   "source": "Feinstein et al., Nature Neuroscience, 2013",
   "source_kind": "paper",
   "reference": "doi:10.1038/nn.3323",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

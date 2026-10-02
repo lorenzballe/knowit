@@ -54,5 +54,6 @@
   "source": "Isi et al., Physical Review Letters, 2021",
   "source_kind": "paper",
   "reference": "Isi, Farr, Giesler, Scheel & Teukolsky, Testing the Black-Hole Area Law with GW150914, Physical Review Letters, 2021",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -9,6 +9,7 @@
   "question": "People tracking white shapes miss an unexpected cross. What property of the cross decides whether they see it?",
   "answer": "How closely it resembles what they are tracking. Most and colleagues had people follow white shapes and ignore black ones. An unexpected white cross was usually noticed; a black one, matching the ignored set, was mostly missed, and grey fell between. Attention filters by feature, and the filter hides whatever matches the rejected pile.",
   "move": "What gets missed is whatever looks like the things being ignored.",
+  "ask": "What do I overlook because it looks like all the things I have learned to ignore?",
   "keywords": [
     "inattentional blindness",
     "attentional set",

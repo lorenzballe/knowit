@@ -9,6 +9,7 @@
   "question": "Scientists who narrowly missed a first major NIH grant: how did their next ten years compare with narrow winners?",
   "answer": "Those who stayed in science did better. Wang, Jones and Wang compared applicants who narrowly missed an NIH R01 grant with narrow winners; over ten years the near-misses who kept going produced more highly cited work. But more of them dropped out, so part of the gain is a filter on survivors.",
   "move": "Ask what happened to those who quit before praising those who continued.",
+  "ask": "Whose success story do I admire, and what happened to the equally talented people who quit?",
   "keywords": [
     "nih grants",
     "near miss",

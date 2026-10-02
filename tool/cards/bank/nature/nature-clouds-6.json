@@ -36,5 +36,6 @@
   "source": "Ramanathan et al., Science, 1989",
   "source_kind": "paper",
   "reference": "Ramanathan et al., Cloud-Radiative Forcing and Climate: Results from the Earth Radiation Budget Experiment, Science, 1989",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

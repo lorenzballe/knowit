@@ -11,6 +11,7 @@
   "unit": "times faster",
   "answer": "2 x 2 = 4 times faster.",
   "move": "When a rate compounds, count the steps, not the size of the numbers.",
+  "ask": "Where is a small change repeating many times, so that the steps matter more than their size?",
   "trap": "About 20% faster, comparing 120 with 100.",
   "hint": "Count the ten-degree steps, then double once for each.",
   "steps": [

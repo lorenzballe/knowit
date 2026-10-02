@@ -14,6 +14,7 @@
   "correct": 1,
   "answer": "False. Kickers' choices looked like fair coin tosses: where they aimed last time did not predict where they aimed next. Scoring rates were also statistically equal whichever way they went, as game theory predicts when both sides mix their choices well. A keeper studying a kicker's recent penalties learns nothing he can use.",
   "move": "Against a sharp opponent, the best plan may be to be unpredictable.",
+  "ask": "Where in my life am I so predictable that someone sharp could exploit me?",
   "trap": "Expecting humans to fall into habits that a sharp keeper can read.",
   "keywords": [
     "penalty kicks",

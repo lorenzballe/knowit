@@ -17,6 +17,7 @@
   "correct": 1,
   "answer": "False. Strong, heavily hopped October beers brewed for keeping existed in England long before, and George Hodgson's pale ale, shipped to India from the late 1700s, was one of them, not an invention. Brewing historians find India ales no stronger than many sold at home. The name India pale ale appears only around 1830.",
   "move": "Each added detail in a story is one more thing that must be true.",
+  "ask": "Which story I repeat is so tidy and detailed that I never checked a single piece of it?",
   "trap": "Accepting the whole story because each detail makes it more vivid.",
   "keywords": [
     "india pale ale",

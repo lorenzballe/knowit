@@ -9,6 +9,7 @@
   "question": "Why is Amazon's platform for small online tasks named after an eighteenth-century chess machine?",
   "answer": "Because that machine, the Mechanical Turk, hid a human chess player inside, and the platform does much the same: people do tasks sold as computation. Hara and colleagues tracked 2,676 of its workers and found median pay of about $2 an hour; only 4% earned over $7.25, partly because searching for tasks went unpaid.",
   "move": "When software seems to think, ask whose hands are inside it.",
+  "ask": "When software seems to think for me, whose hands are inside it?",
   "keywords": [
     "mechanical turk",
     "crowd work",

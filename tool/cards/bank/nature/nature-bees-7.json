@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Under a tenth. Three quarters of leading crop types benefit from animal pollination, but the staples that make most of the tonnage, wheat, rice and maize, are wind- or self-pollinated. Aizen and colleagues put the direct loss at 3 to 8% of output. Fruit, nuts and coffee would suffer; bread would not.",
   "move": "Before crediting a helper with everything, ask what happens without it.",
+  "ask": "Which helper or cause do I credit with everything without asking what happens if it vanishes?",
   "trap": "Treating every crop that bees help as a crop that needs them.",
   "keywords": [
     "pollination",

@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Falls to about 64%. Per hour, 0.8 cubed is 0.51, but the slower ship spends 1.25 times as long at sea, so per voyage the saving follows the square: 0.8 squared is 0.64. A line keeping a weekly service must also add ships to the loop, which eats part of the gain.",
   "move": "When a rate falls, check whether the time it runs for grows.",
+  "ask": "Which saving per hour of mine disappears once I count how many hours it runs?",
   "trap": "Applying the cube to the whole voyage and forgetting the extra hours.",
   "keywords": [
     "slow steaming",

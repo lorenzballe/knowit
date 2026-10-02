@@ -13,6 +13,7 @@
   ],
   "answer": "Patients admitted on Saturdays and Sundays are more likely to die within 30 days, a pattern found across England's millions of admissions. Illness does not keep office hours, yet scans, specialists and senior decisions thin out at weekends. Equal care every day of the week is a basic promise a hospital should keep.",
   "move": "Whichever side you took, how sick weekend patients were on arrival decides it.",
+  "ask": "Which gap between groups am I blaming on service when the people may differ on arrival?",
   "counterpoint": "Weekend admissions are fewer and sicker: with clinics and surgeries shut, only the urgent come in, and records capture severity poorly. Studies that adjust better find much of the gap shrinks. Consultants are scarce, so weekend rotas pull them from weekday work, and no study has shown extra weekend staffing saves the lives claimed.",
   "keywords": [
     "weekend effect",

@@ -35,5 +35,6 @@
   "source": "SpaceX, Falcon 9 capabilities, 2023",
   "source_kind": "institution",
   "reference": "SpaceX, Falcon 9 vehicle page, payload to geosynchronous transfer orbit, expendable and reusable, spacex.com/vehicles/falcon-9, 2023",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

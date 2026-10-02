@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Article 115 of the Law of the Sea convention has states make cable owners repay a ship that sacrifices an anchor, net or other gear to avoid damaging a cable, provided it took reasonable care beforehand. The rule dates from an 1884 treaty: a net costs less than a cable repair.",
   "move": "If you want people to protect something, pay them for what it costs.",
+  "ask": "If I want someone to protect something for me, who is paying for the cost of doing so?",
   "trap": "False, because the law surely punishes whoever threatens the cable.",
   "keywords": [
     "unclos",

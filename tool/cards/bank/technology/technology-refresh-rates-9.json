@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "It fell well short of them. Counters such as FRAPS logged frames as the game handed them over, but with two cards taking turns many frames reached the screen as runts, slivers a few pixel rows tall, or not at all. PC Perspective's capture method discarded those, and AMD shipped a frame-pacing fix that summer.",
   "move": "Measure where the result is used, not where it is produced.",
+  "ask": "Where do I measure a result where it is produced and not where it is used?",
   "trap": "Trusting the counter, since it counts every frame the game made.",
   "keywords": [
     "frame rate",

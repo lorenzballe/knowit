@@ -15,6 +15,7 @@
   "correct": 0,
   "answer": "To the 10.2-second sprinter. The table awards 25.4347 × (18 − time)^1.81 points; an exponent above 1 makes the curve steepen as times fall, so 0.1 seconds is worth about 24 points at 10.2 but about 22 at 11.2. Every event's table bends this way: strong events pay more than weak ones repaired.",
   "move": "Before fixing a weakness, check whether the scoring pays more for strengths.",
+  "ask": "Am I fixing my weakness where the scoring pays most, or where it just feels necessary?",
   "trap": "Assuming diminishing returns, as if the faster man sits near a ceiling.",
   "keywords": [
     "decathlon",

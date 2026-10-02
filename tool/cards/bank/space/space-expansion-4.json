@@ -12,6 +12,7 @@
   "question": "Could astronomers living 100 billion years from now discover that the universe is expanding?",
   "answer": "Probably not. Accelerating expansion will have carried every galaxy beyond our merged home group out of sight, so there will be nothing receding to measure. The cosmic background will be stretched too thin to detect. Krauss and Scherrer argued that such astronomers would conclude, as people did before 1920, that the universe is static.",
   "move": "Some evidence exists only for a while, so gather it while it lasts.",
+  "ask": "What evidence in my life exists only for a while, and am I gathering it now?",
   "keywords": [
     "accelerating expansion",
     "far future",

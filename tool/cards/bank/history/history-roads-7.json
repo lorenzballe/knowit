@@ -35,5 +35,6 @@
   "source": "Livy, History of Rome, book 10",
   "source_kind": "primary_document",
   "reference": "Livy, History of Rome, Books 8-10, trans. B. O. Foster, Loeb Classical Library, Harvard University Press, 1926",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

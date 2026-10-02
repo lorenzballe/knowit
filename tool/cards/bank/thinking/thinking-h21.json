@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "How a similar group without the app slept. People install a sleep app in a bad patch, and bad patches mostly pass; the attention alone can help too. Only a comparison group shows how much of the 70% the app itself did, and it may be very little.",
   "move": "An improvement needs a twin who got nothing before it counts as an effect.",
+  "ask": "What improvement have I claimed without knowing what would have happened if I did nothing?",
   "trap": "A before-and-after with nobody who went without.",
   "keywords": [
     "sleep apps",

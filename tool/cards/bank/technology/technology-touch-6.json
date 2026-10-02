@@ -29,5 +29,6 @@
   "source": "Apple, iPhone 5 press release, 2012",
   "source_kind": "company",
   "reference": "Apple, Apple Introduces iPhone 5, press release, 12 September 2012",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

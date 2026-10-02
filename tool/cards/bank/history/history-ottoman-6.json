@@ -9,6 +9,7 @@
   "question": "How did the Ottoman treasury borrow from its own subjects before it ever borrowed abroad?",
   "answer": "By selling slices of tax revenue. From 1775 the state sold esham: shares in the income of a tax source, such as a customs house, bought for a lump sum and paying a fixed annual amount for life. Holders could resell them. The first foreign loan came only in 1854, during the Crimean War.",
   "move": "A state that cannot borrow openly will find another name for debt.",
+  "ask": "What debt am I carrying that has simply been given a different name?",
   "keywords": [
     "esham",
     "public debt",

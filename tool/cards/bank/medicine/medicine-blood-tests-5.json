@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. Many lab tests, including some for the heart-damage marker troponin, use biotin as a molecular hook, which excess biotin jams. Daily need is about 0.03 mg; hair and nail pills often hold 5 or 10 mg. In 2017 the FDA warned after a patient on high-dose biotin died following a falsely low troponin result.",
   "move": "A harmless ingredient can still fool the instrument that reads you.",
+  "ask": "What harmless thing in my routine could be distorting a result I take seriously?",
   "trap": "Assuming a vitamin cannot interfere with how a test works.",
   "keywords": [
     "biotin",

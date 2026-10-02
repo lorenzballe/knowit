@@ -38,5 +38,6 @@
   "source": "Palmer, How to Brew",
   "source_kind": "book",
   "reference": "Palmer, How to Brew, 4th edition, Brewers Publications, 2017",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

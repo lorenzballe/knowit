@@ -9,6 +9,7 @@
   "question": "How strong is healed skin compared with the skin it replaced?",
   "answer": "Weaker, for good. A cut has about a tenth of normal strength after a week, and by three months levels off at roughly 70 to 80% of unwounded skin, rarely improving much after. Scar collagen lies in dense parallel bundles, without the woven pattern, hair follicles or sweat glands of the surrounding skin.",
   "move": "Something repaired is not the same as something restored.",
+  "ask": "What have I repaired but not restored, and do I know the difference?",
   "keywords": [
     "scar tissue",
     "wound strength",

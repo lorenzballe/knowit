@@ -9,6 +9,7 @@
   "question": "How could a Danish bank offer home loans at a negative interest rate in 2019?",
   "answer": "Because each Danish mortgage is funded by a matching bond sold to investors, a system running since 1797. In 2019 investors were paying to hold safe Danish bonds, so Jyske Bank could offer a ten-year fixed loan at minus 0.5%. Before fees, the debt shrank each month by more than the homeowner paid.",
   "move": "Every loan rate is someone's return; ask who is accepting it.",
+  "ask": "For every rate I'm offered, who is accepting the other side of it?",
   "keywords": [
     "negative interest rates",
     "mortgages",

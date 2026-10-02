@@ -36,5 +36,6 @@
   "source": "Franz, Wierzbinski & Kram, 2012",
   "source_kind": "paper",
   "reference": "https://pubmed.ncbi.nlm.nih.gov/22367745/",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

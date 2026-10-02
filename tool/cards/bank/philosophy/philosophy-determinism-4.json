@@ -29,5 +29,6 @@
   "source": "Lucretius, On the Nature of Things, book 2",
   "source_kind": "book",
   "reference": "Lucretius, On the Nature of Things II.216-293, trans. Rouse, rev. Smith, Loeb Classical Library, Harvard University Press, 1992",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

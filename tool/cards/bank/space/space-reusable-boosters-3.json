@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About $1.5 billion. The $450 million was roughly the running cost of one more flight; it left out design, building the orbiters, the pads and a standing army of staff. Pielke and Byerly divided the programme's lifetime cost, in 2010 dollars, by its 135 flights.",
   "move": "Ask whether a price is for one more, or for the whole thing.",
+  "ask": "Is the price I'm quoting for one more unit, or for the whole thing?",
   "trap": "Taking the quoted per-flight figure as the whole cost of a flight.",
   "keywords": [
     "space shuttle",

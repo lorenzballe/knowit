@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Well over half. In the Gaia-era census within 32 light-years, 61% of all stars and brown dwarfs are red dwarfs. Yet not one is easy to see without a telescope: the brightest, AX Microscopii, sits at the very limit of perfect skies. The night sky is a catalogue of the rare, bright few.",
   "move": "The easiest members to see are rarely the typical ones.",
+  "ask": "Which group do I judge by its most visible members, while the typical ones go unseen?",
   "trap": "The naked-eye sky has almost no red dwarfs, so they seem rare.",
   "keywords": [
     "red dwarfs",

@@ -35,5 +35,6 @@
   "source": "Heger & Woosley, Astrophysical Journal, 2002",
   "source_kind": "paper",
   "reference": "Heger & Woosley, The Nucleosynthetic Signature of Population III, The Astrophysical Journal 567, 532, 2002",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

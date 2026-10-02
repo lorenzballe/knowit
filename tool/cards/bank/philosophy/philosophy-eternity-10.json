@@ -28,5 +28,6 @@
   "source": "Wittgenstein, Tractatus, 6.4311",
   "source_kind": "book",
   "reference": "Wittgenstein, Tractatus Logico-Philosophicus, trans. Pears & McGuinness, Routledge & Kegan Paul, 1961, 6.4311",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

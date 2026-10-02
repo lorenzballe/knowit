@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "Mild cases mostly recover anyway, so the treatment appears to work every time. The belief is not surviving a test, it is choosing patients who cannot disconfirm it — and the more it is confirmed the more confident it gets.",
   "move": "Ask which patients would have proved you wrong, and whether you gave it to them.",
+  "ask": "Which choice of mine have I made only for people who were likely to prove me right?",
   "trap": "Getting the result you expect feels like evidence for the belief.",
   "keywords": [
     "confirmation bias",

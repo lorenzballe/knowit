@@ -9,6 +9,7 @@
   "question": "Why does almost all of the world's primary gallium come from China?",
   "answer": "Because gallium is a by-product of alumina refining, and China refines more than half the world's alumina. Bauxite holds tens of grams of gallium per tonne; recovering it needs an extra circuit at the refinery, which China built and subsidised while Western plants shut theirs as prices fell. In 2024 China made 99%.",
   "move": "Map where the host material is processed, not where the ore is dug.",
+  "ask": "Where is the real bottleneck of something I depend on, in the digging or the processing?",
   "keywords": [
     "gallium",
     "alumina refining",

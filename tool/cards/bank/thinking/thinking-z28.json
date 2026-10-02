@@ -13,6 +13,7 @@
   "correct": 1,
   "answer": "Diversification comes from holdings that fall for different reasons. Thirty companies exposed to the same rates, the same customers and the same supply chain behave in a crisis like a smaller number of positions.",
   "move": "Count the reasons things could fall, not the number of things.",
+  "ask": "Where am I spread across many things in my life that would all fall for the same reason?",
   "trap": "Counting holdings rather than the things that could sink them.",
   "keywords": [
     "diversification",

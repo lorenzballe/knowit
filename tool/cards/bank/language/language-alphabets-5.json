@@ -12,6 +12,7 @@
   "tolerance": 0.1,
   "answer": "11,172 syllables is about 11.2 thousand.",
   "move": "When counting combinations, count leaving a slot empty as one more choice.",
+  "ask": "When I count my options this week, have I remembered that doing nothing is also one of them?",
   "trap": "Forgetting that having no final consonant is also an option.",
   "hint": "Multiply the choices at each position, and count no final as a choice.",
   "steps": [

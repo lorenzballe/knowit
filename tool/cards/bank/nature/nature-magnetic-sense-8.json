@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "No detectable alignment. Hert and colleagues analysed a fresh set of herds and found cattle facing every way. The original authors replied that many of those images were unusable, with slopes, power lines or unclear animals, and that proper filtering restores the pattern. The dispute is over which pictures belong in the sample.",
   "move": "When two teams disagree, first compare which cases each one let in.",
+  "ask": "When two sides disagree with me, have I compared which cases each one counted?",
   "trap": "Assuming a striking pattern across thousands of images must be robust.",
   "keywords": [
     "cattle",

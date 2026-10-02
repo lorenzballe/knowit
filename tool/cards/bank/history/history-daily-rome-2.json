@@ -9,6 +9,7 @@
   "question": "What was wrong with Rome's first public sundial?",
   "answer": "It was made for another city. Taken from Catania, Sicily, in 263 BC and set in the Forum, it was drawn for a latitude four degrees further south, so its lines disagreed with Rome's hours. Romans followed it anyway for 99 years, until the censor Quintus Marcius Philippus put a corrected dial beside it.",
   "move": "Borrowed tools carry the assumptions of the place they were made.",
+  "ask": "What tool or method am I using whose built-in assumptions came from somewhere else?",
   "keywords": [
     "sundial",
     "catania",

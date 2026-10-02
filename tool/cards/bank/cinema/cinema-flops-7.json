@@ -11,6 +11,7 @@
   "unit": "million dollars",
   "answer": "300 / 0.5 = 600 million dollars.",
   "move": "Before comparing sales with costs, find out how much of each sale is yours.",
+  "ask": "When I compare my income with my costs, how much of each sale truly reaches me?",
   "trap": "Stopping at 300, as if the studio kept the whole ticket price.",
   "hint": "Work out what the studio must receive, then how much must be sold to hand it that.",
   "steps": [

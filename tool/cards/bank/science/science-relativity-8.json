@@ -28,5 +28,6 @@
   "source": "Purcell, Electricity and Magnetism, 1965",
   "source_kind": "book",
   "reference": "Purcell, Electricity and Magnetism, Berkeley Physics Course vol. 2, McGraw-Hill, 1965",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

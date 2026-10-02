@@ -28,5 +28,6 @@
   "source": "Schroeder, JAES, 1962",
   "source_kind": "paper",
   "reference": "Schroeder, 'Natural' Sounding Artificial Reverberation, Journal of the Audio Engineering Society, 1962",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

@@ -39,5 +39,6 @@
   "source": "Horn et al., Clinical Infectious Diseases, 1998",
   "source_kind": "paper",
   "reference": "Horn, Zabriskie et al., Why have group A streptococci remained susceptible to penicillin? Report on a symposium, Clinical Infectious Diseases, 1998",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

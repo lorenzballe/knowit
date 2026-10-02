@@ -29,5 +29,6 @@
   "source": "Laplace, Philosophical Essay on Probabilities, 1814",
   "source_kind": "book",
   "reference": "Laplace, A Philosophical Essay on Probabilities, trans. Truscott & Emory, Dover, 1951",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "disabled": true
 }

@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "About three-quarters. Money compounding at 4.5% grows almost sixfold in 40 years, so £100 due then is worth about £17 today. The tiny coupons add about £9. The price falls from £100 to roughly £26. Britain's 0.5% gilt due 2061, sold near £97 in 2020, traded near £22 in 2026.",
   "move": "The longer the wait for money, the harder a rate change reprices it.",
+  "ask": "Which long-dated commitment of mine would be hit hardest if rates moved?",
   "trap": "Guessing a tenth, as if four points of rate cost four percent.",
   "keywords": [
     "bonds",

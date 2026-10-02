@@ -12,6 +12,7 @@
   "question": "Why did the same film lamps flicker on a 24-frame shoot in Europe but not in America?",
   "answer": "Mains frequency. On magnetic ballasts, discharge lamps such as HMIs pulse twice per cycle: 120 times a second on America's 60 Hz supply, 100 on Europe's 50 Hz. At 24 frames a second, 120 gives exactly 5 pulses a frame; 100 gives 4.17, so brightness drifts from frame to frame. Crews shot at 25 instead.",
   "move": "When two rhythms meet, check whether one divides the other.",
+  "ask": "Which two rhythms in my life clash because neither divides the other?",
   "keywords": [
     "hmi lamps",
     "flicker",

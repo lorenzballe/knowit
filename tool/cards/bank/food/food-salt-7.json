@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Sick people eat less, salt included. Frail, ill and dieting people eat less of everything, so a low salt reading can mark illness rather than cause it. Many cohorts also judged intake from one urine sample, which swings day to day. The low end of the curve fills with the unwell.",
   "move": "When the sick do less of something, doing less of it looks deadly.",
+  "ask": "When I see a risky-looking habit among sick people, do I check whether illness came first?",
   "trap": "Harm to the heart directly, the reading the curve seems to show.",
   "keywords": [
     "sodium intake",

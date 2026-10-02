@@ -11,6 +11,7 @@
   "unit": "thousand dollars",
   "answer": "150,000 x 0.0065 = 975 thousand dollars.",
   "move": "Price a small percentage against the full value it is charged on.",
+  "ask": "Which small percentage am I dismissing without checking the large value it applies to?",
   "trap": "Counting the whole 0.7% as new and forgetting the old premium.",
   "hint": "Work out the rise in percentage points before touching the ship's value.",
   "steps": [

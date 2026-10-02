@@ -12,6 +12,7 @@
   "question": "Why can one subscription to thousands of titles earn more than selling each title separately?",
   "answer": "Because tastes average out. A buyer values single songs or articles very unevenly, so any price per item loses buyers or leaves money unclaimed. Summed over thousands of items, what each buyer will pay becomes predictable, and one price captures most of it. Bakos and Brynjolfsson showed this in 1999 for goods free to copy.",
   "move": "Sell the average when individual tastes are too scattered to price.",
+  "ask": "Which of my subscriptions only makes sense because others use less than I do?",
   "keywords": [
     "bundling",
     "information goods",

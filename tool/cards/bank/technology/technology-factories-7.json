@@ -11,6 +11,7 @@
   "unit": "engines",
   "answer": "600 − 200 = 400 engines.",
   "move": "To shorten a wait without working faster, let fewer things in.",
+  "ask": "What am I waiting on that would move faster if I let fewer things in?",
   "trap": "Reaching for faster machines when the queue itself is the delay.",
   "hint": "Stock, output and time inside are tied: stock equals output times time inside.",
   "steps": [

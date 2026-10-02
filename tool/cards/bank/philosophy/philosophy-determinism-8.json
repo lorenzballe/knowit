@@ -65,5 +65,6 @@
   "source": "Laskar, Is the Solar System Stable?, 2013",
   "source_kind": "paper",
   "reference": "https://arxiv.org/pdf/1209.5996",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "disabled": true
 }

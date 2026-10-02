@@ -12,6 +12,7 @@
   "correct": 1,
   "answer": "False. Most crashes happen near home because most driving happens near home. The share of crashes in a place says where people drive, not how dangerous each kilometre there is. To compare risk, divide the crashes by the kilometres driven in each place.",
   "move": "Where most accidents happen is mostly where most people are.",
+  "ask": "Which risk do I rate by where it happens most, forgetting how much time I spend there?",
   "trap": "Reading the share of crashes as the danger of the place.",
   "keywords": [
     "road safety",

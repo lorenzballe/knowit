@@ -9,6 +9,7 @@
   "question": "After America's click-to-cancel rule was struck down, how did regulators still make Amazon pay over Prime cancellations?",
   "answer": "Under an older law. The Restore Online Shoppers' Confidence Act of 2010 already required clear terms and a simple way to stop recurring charges. The Federal Trade Commission sued in 2023; in September 2025, days into trial, Amazon settled for $2.5 billion, including $1.5 billion in refunds. Internally, the cancellation maze was nicknamed the Iliad.",
   "move": "When a new rule falls, look for the old one that already covered it.",
+  "ask": "When a new rule falls, which old one already covered the same thing?",
   "keywords": [
     "amazon prime",
     "federal trade commission",
