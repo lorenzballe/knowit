@@ -101,6 +101,52 @@ void main() {
     await tester.drag(find.byType(Scrollable).first, const Offset(0, -520));
     await settle(tester);
     await shoot(tester, 'genres-2');
+
+    // Hold a genre for its strands, then a strand for its angles.
+    await tester.pumpWidget(const SizedBox());
+    await tester.runAsync(
+      () => app.setTopicMix({'economics': 0.9, 'life': 0.3}),
+    );
+    await tester.pumpWidget(
+      onboarding(GenresScreen(app: app, onDone: (_, _) {}, onSkip: () {})),
+    );
+    await settle(tester);
+    await tester.longPress(find.text('Think in incentives'));
+    await settle(tester);
+    await shoot(tester, 'reasoning-genre');
+    await tester.longPress(find.text('Think in incentives'));
+    await tester.longPress(find.text('Pricing tricks'));
+    await settle(tester);
+    await tester.longPress(find.text('Anchoring'));
+    await settle(tester);
+    await shoot(tester, 'angles');
+  });
+
+  testWidgets('the week told back', (tester) async {
+    final now = DateTime.now();
+    String key(DateTime d) =>
+        '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+    const ids = [
+      'life-big-choices-1',
+      'life-conversation-1',
+      'life-deep-work-1',
+      'life-failure-1',
+      'life-friendship-1',
+    ];
+    // ignore: invalid_use_of_visible_for_testing_member
+    SharedPreferences.setMockInitialValues({
+      'knowit.onboarded': true,
+      'knowit.seenIds': ids,
+      'knowit.deckHistory':
+          '{"${key(now.subtract(const Duration(days: 1)))}": ["${ids.join('","')}"]}',
+    });
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+    await tester.tap(find.byKey(const ValueKey('tab-Profile')));
+    await settle(tester);
+    await tester.ensureVisible(find.byKey(const ValueKey('week-recap')));
+    await settle(tester);
+    await shoot(tester, 'week-recap');
   });
 
   testWidgets('Explore, for the new subject', (tester) async {

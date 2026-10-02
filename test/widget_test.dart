@@ -590,23 +590,24 @@ void main() {
   });
 
   group('Astute+ is three things, and the free plan shows their shape', () {
-    testWidgets('the archive is Astute+ only: the free plan meets the paywall', (
-      tester,
-    ) async {
-      SharedPreferences.setMockInitialValues({
-        ..._installed(),
-        'knowit.completedDates': [
-          dateKey(DateTime.now().subtract(const Duration(days: 1))),
-        ],
-      });
-      await tester.pumpWidget(const AstutoApp());
-      await _settle(tester);
+    testWidgets(
+      'the archive is Astute+ only: the free plan meets the paywall',
+      (tester) async {
+        SharedPreferences.setMockInitialValues({
+          ..._installed(),
+          'knowit.completedDates': [
+            dateKey(DateTime.now().subtract(const Duration(days: 1))),
+          ],
+        });
+        await tester.pumpWidget(const AstutoApp());
+        await _settle(tester);
 
-      await _openSetting(tester, 'Archive');
+        await _openSetting(tester, 'Archive');
 
-      expect(_paywallHeadline, findsOneWidget);
-      expect(find.text('The archive'), findsNothing);
-    });
+        expect(_paywallHeadline, findsOneWidget);
+        expect(find.text('The archive'), findsNothing);
+      },
+    );
 
     testWidgets('the mix is free to edit', (tester) async {
       SharedPreferences.setMockInitialValues(_installed());

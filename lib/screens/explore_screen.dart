@@ -269,10 +269,6 @@ class ExploreScreenState extends State<ExploreScreen> {
             .take(8)
             .toList();
 
-    final List<Pill> forYou = served == null
-        ? const []
-        : _only(served.forYou).where(unread).take(8).toList();
-
     // The canvas ranks this shelf by what everyone saved. Saves are counted
     // now, and they rank the top list above it; this shelf stays ranked by
     // what the cards ask, which is a different question and the order it
@@ -371,9 +367,7 @@ class ExploreScreenState extends State<ExploreScreen> {
     // The themes that turn over: four a day round a fixed cycle, the same
     // for everybody, never a card already read and never one already on a
     // shelf above.
-    final Set<String> shown = {
-      for (final p in [...forYou, ...fresh]) p.id,
-    };
+    final Set<String> shown = {for (final p in fresh) p.id};
     final List<ThemedShelf> themes = themedShelves(
       _only(PillBank.cards)
           .where((p) => unread(p) && !shown.contains(p.id))
@@ -420,19 +414,6 @@ class ExploreScreenState extends State<ExploreScreen> {
                   style: AppText.body(size: 12.5, color: context.p.inkMuted),
                 ),
               ),
-            if (forYou.isNotEmpty) ...[
-              _Shelf(
-                title: context.l10n.forYouShelf,
-                line: context.l10n.forYouLine,
-                child: _SmallRow(
-                  pills: forYou,
-                  isRead: read,
-                  onOpen: _open,
-                  onShown: (p) => _seen('foryou', p),
-                ),
-              ),
-              const SizedBox(height: 24),
-            ],
             if (fresh.isNotEmpty)
               _Shelf(
                 title: context.l10n.todaysShelf,
@@ -683,6 +664,13 @@ String _themeTitle(BuildContext context, ThemedShelf t) {
     ShelfTheme.workItOut => l.themeWorkItOut,
     ShelfTheme.seen => l.themeSeen,
     ShelfTheme.sharpest => l.themeSharpest,
+    ShelfTheme.puzzles => l.themePuzzles,
+    ShelfTheme.howItWorks => l.themeHowItWorks,
+    ShelfTheme.moving => l.themeMoving,
+    ShelfTheme.curious => l.themeCurious,
+    ShelfTheme.ideas => l.themeIdeas,
+    ShelfTheme.reasoning => l.themeReasoning,
+    ShelfTheme.trueOrFalse => l.themeTrueOrFalse,
     ShelfTheme.past => [l.themePast0, l.themePast1, l.themePast2][t.variant],
     ShelfTheme.place => [
       l.themePlace0,
@@ -705,6 +693,13 @@ String _themeLine(BuildContext context, ThemedShelf t) {
     ShelfTheme.workItOut => l.themeWorkItOutLine,
     ShelfTheme.seen => l.themeSeenLine,
     ShelfTheme.sharpest => l.themeSharpestLine,
+    ShelfTheme.puzzles => l.themePuzzlesLine,
+    ShelfTheme.howItWorks => l.themeHowItWorksLine,
+    ShelfTheme.moving => l.themeMovingLine,
+    ShelfTheme.curious => l.themeCuriousLine,
+    ShelfTheme.ideas => l.themeIdeasLine,
+    ShelfTheme.reasoning => l.themeReasoningLine,
+    ShelfTheme.trueOrFalse => l.themeTrueOrFalseLine,
     ShelfTheme.past => l.themePastLine,
     ShelfTheme.place => l.themePlaceLine,
   };

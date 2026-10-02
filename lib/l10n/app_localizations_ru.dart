@@ -1935,4 +1935,65 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get themePlaceLine => 'Каждый раз другая часть света';
+
+  @override
+  String get themeTrueOrFalse => 'Правда или ложь?';
+
+  @override
+  String get themeTrueOrFalseLine =>
+      'Реши, прежде чем перевернуть. Почти все ошибаются';
+
+  @override
+  String get themeReasoning => 'Только рассуждение';
+
+  @override
+  String get themeReasoningLine =>
+      'Ничего не нужно запоминать: только способ подумать';
+
+  @override
+  String get themeIdeas => 'Большие идеи';
+
+  @override
+  String get themeIdeasLine => 'Теория, стоящая за вещами, по одной идее';
+
+  @override
+  String get themeCurious => 'Просто любопытно';
+
+  @override
+  String get themeCuriousLine => 'Ради удовольствия узнать почему';
+
+  @override
+  String get themeMoving => 'В движении';
+
+  @override
+  String get themeMovingLine => 'То, что меняется сейчас, и почему это важно';
+
+  @override
+  String get themeHowItWorks => 'Как это устроено на самом деле';
+
+  @override
+  String get themeHowItWorksLine => 'Механизм того, что ты видишь каждый день';
+
+  @override
+  String get themePuzzles => 'Головоломки';
+
+  @override
+  String get themePuzzlesLine => 'Задачки на ручку и минуту';
+
+  @override
+  String get holdStrandHint => 'Удерживай нить, чтобы выбрать её ракурсы';
+
+  @override
+  String get anglesComing => 'Ракурсы появятся по мере новых карточек';
+
+  @override
+  String get weekRecapCaps => 'НА ЭТОЙ НЕДЕЛЕ ТЫ СПРАШИВАЛ СЕБЯ';
+
+  @override
+  String get weekRecapLine => 'Вопросы, которые оставили тебе карточки';
+
+  @override
+  String weekRecapMore(int n) {
+    return 'Ещё $n за неделю с Plus';
+  }
 }

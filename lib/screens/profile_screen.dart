@@ -5,7 +5,9 @@ import '../l10n/l10n.dart';
 
 import 'package:flutter/services.dart';
 
+import '../data/pills_repository.dart';
 import '../data/topics.dart';
+import '../models/pill.dart';
 import 'mix_screen.dart';
 import '../analytics.dart';
 import '../cloud.dart';
@@ -266,6 +268,7 @@ class ProfileScreen extends StatelessWidget {
           _RecordLine(app: app),
           const SizedBox(height: 18),
           _Path(app: app),
+          _WeekRecap(app: app),
           // Under the reader's own record and above everything else: the
           // offer is about the record, so it reads as the next thing to say
           // rather than as the loudest thing on the screen. It is also the
@@ -1705,6 +1708,111 @@ class _RecordLine extends StatelessWidget {
     return Text(
       parts.join('  ·  '),
       style: AppText.body(size: 13, color: context.p.inkMuted),
+    );
+  }
+}
+
+/// The week, told back as the questions it left the reader with.
+///
+/// Every card ends on one question to carry into the day. Seven days of
+/// them, laid side by side, are the record of what the reader has been
+/// thinking about rather than how much they read — the part of a habit a
+/// person would recognise as their own. Free readers see the first; the
+/// rest of the week is Plus.
+class _WeekRecap extends StatelessWidget {
+  final AppState app;
+
+  const _WeekRecap({required this.app});
+
+  /// The asks of the cards read in the last seven days, newest first.
+  static List<Pill> weekAsks(AppState app, DateTime now) {
+    final out = <Pill>[];
+    for (int back = 0; back < 7; back++) {
+      final day = now.subtract(Duration(days: back));
+      for (final id in app.deckHistory[dateKey(day)] ?? const <String>[]) {
+        final Pill? p = pillById(id);
+        if (p != null &&
+            p.ask.isNotEmpty &&
+            app.seenIds.contains(id) &&
+            !out.contains(p)) {
+          out.add(p);
+        }
+      }
+    }
+    return out;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final List<Pill> asks = weekAsks(app, DateTime.now());
+    if (asks.isEmpty) return const SizedBox.shrink();
+    final Palette p = context.p;
+    final List<Pill> shown = app.isPlus ? asks.take(7).toList() : [asks.first];
+    final int locked = asks.length - shown.length;
+    return Padding(
+      key: const ValueKey('week-recap'),
+      padding: const EdgeInsets.only(top: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Eyebrow(context.l10n.weekRecapCaps),
+          const SizedBox(height: 6),
+          Text(
+            context.l10n.weekRecapLine,
+            style: AppText.body(size: 12.5, color: p.inkMuted),
+          ),
+          const SizedBox(height: 12),
+          for (final pill in shown)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 3,
+                    height: 38,
+                    margin: const EdgeInsets.only(right: 12, top: 2),
+                    decoration: BoxDecoration(
+                      color: pill.color,
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      pill.ask,
+                      style: AppText.display(size: 15.5, color: p.ink),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          if (locked > 0)
+            GestureDetector(
+              key: const ValueKey('week-recap-more'),
+              behavior: HitTestBehavior.opaque,
+              onTap: () => requirePlus(context, app, () {}, source: 'recap'),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 2),
+                child: Row(
+                  children: [
+                    Icon(Icons.lock_outline, size: 15, color: p.link),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        context.l10n.weekRecapMore(locked),
+                        style: AppText.body(
+                          size: 13,
+                          weight: FontWeight.w600,
+                          color: p.link,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

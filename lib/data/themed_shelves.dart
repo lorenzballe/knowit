@@ -26,6 +26,13 @@ enum ShelfTheme {
   workItOut,
   origins,
   sharpest,
+  trueOrFalse,
+  reasoning,
+  ideas,
+  curious,
+  moving,
+  howItWorks,
+  puzzles,
 }
 
 /// One theme as it stands today: which, and in what form when the theme
@@ -61,10 +68,17 @@ const List<ShelfTheme> kThemeCycle = [
   ShelfTheme.workItOut,
   ShelfTheme.origins,
   ShelfTheme.sharpest,
+  ShelfTheme.trueOrFalse,
+  ShelfTheme.ideas,
+  ShelfTheme.moving,
+  ShelfTheme.reasoning,
+  ShelfTheme.curious,
+  ShelfTheme.puzzles,
+  ShelfTheme.howItWorks,
 ];
 
 /// How many themed shelves a day shows, and how many cards each holds.
-const int kThemesPerDay = 4;
+const int kThemesPerDay = 7;
 const int kThemeCards = 8;
 
 /// A shelf with fewer unread cards than this is not worth a row.
@@ -100,6 +114,26 @@ bool _fits(ShelfTheme theme, int variant, Pill p) {
       return p.diagram != null;
     case ShelfTheme.sharpest:
       return p.difficulty == Difficulty.hard;
+    case ShelfTheme.trueOrFalse:
+      final c = p.challenge;
+      return c is PickOne &&
+          c.options.length == 2 &&
+          c.options.map((o) => o.toLowerCase()).toSet().containsAll(const {
+            'true',
+            'false',
+          });
+    case ShelfTheme.reasoning:
+      return p.topic == 'Thinking' || p.principle != Principle.none;
+    case ShelfTheme.ideas:
+      return p.abstraction == 'abstract';
+    case ShelfTheme.curious:
+      return p.mood == 'wonder' && p.hook != 'misconception';
+    case ShelfTheme.moving:
+      return p.shelfLife == 'years' || p.shelfLife == 'months';
+    case ShelfTheme.howItWorks:
+      return p.hook == 'mechanism';
+    case ShelfTheme.puzzles:
+      return p.hook == 'puzzle';
     case ShelfTheme.past:
       return switch (variant) {
         0 => p.era == 'ancient' || p.era == 'medieval',

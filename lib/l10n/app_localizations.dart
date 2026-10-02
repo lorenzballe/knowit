@@ -2765,6 +2765,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A different part of the world every time it comes round'**
   String get themePlaceLine;
+
+  /// No description provided for @themeTrueOrFalse.
+  ///
+  /// In en, this message translates to:
+  /// **'True or false?'**
+  String get themeTrueOrFalse;
+
+  /// No description provided for @themeTrueOrFalseLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Decide before you flip. Most people get these wrong'**
+  String get themeTrueOrFalseLine;
+
+  /// No description provided for @themeReasoning.
+  ///
+  /// In en, this message translates to:
+  /// **'Just reasoning'**
+  String get themeReasoning;
+
+  /// No description provided for @themeReasoningLine.
+  ///
+  /// In en, this message translates to:
+  /// **'No facts to know: only a way to think it through'**
+  String get themeReasoningLine;
+
+  /// No description provided for @themeIdeas.
+  ///
+  /// In en, this message translates to:
+  /// **'Big ideas'**
+  String get themeIdeas;
+
+  /// No description provided for @themeIdeasLine.
+  ///
+  /// In en, this message translates to:
+  /// **'The theory behind things, one idea at a time'**
+  String get themeIdeasLine;
+
+  /// No description provided for @themeCurious.
+  ///
+  /// In en, this message translates to:
+  /// **'Just curious'**
+  String get themeCurious;
+
+  /// No description provided for @themeCuriousLine.
+  ///
+  /// In en, this message translates to:
+  /// **'For the pleasure of knowing why'**
+  String get themeCuriousLine;
+
+  /// No description provided for @themeMoving.
+  ///
+  /// In en, this message translates to:
+  /// **'Still moving'**
+  String get themeMoving;
+
+  /// No description provided for @themeMovingLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Things that are changing now, and why they matter'**
+  String get themeMovingLine;
+
+  /// No description provided for @themeHowItWorks.
+  ///
+  /// In en, this message translates to:
+  /// **'How it really works'**
+  String get themeHowItWorks;
+
+  /// No description provided for @themeHowItWorksLine.
+  ///
+  /// In en, this message translates to:
+  /// **'The mechanism behind something you see every day'**
+  String get themeHowItWorksLine;
+
+  /// No description provided for @themePuzzles.
+  ///
+  /// In en, this message translates to:
+  /// **'Work it out'**
+  String get themePuzzles;
+
+  /// No description provided for @themePuzzlesLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Puzzles you can solve with a pen and a minute'**
+  String get themePuzzlesLine;
+
+  /// No description provided for @holdStrandHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Hold a strand to choose its angles'**
+  String get holdStrandHint;
+
+  /// No description provided for @anglesComing.
+  ///
+  /// In en, this message translates to:
+  /// **'Angles arrive as cards are written'**
+  String get anglesComing;
+
+  /// No description provided for @weekRecapCaps.
+  ///
+  /// In en, this message translates to:
+  /// **'THIS WEEK YOU ASKED YOURSELF'**
+  String get weekRecapCaps;
+
+  /// No description provided for @weekRecapLine.
+  ///
+  /// In en, this message translates to:
+  /// **'The questions your cards left you with'**
+  String get weekRecapLine;
+
+  /// No description provided for @weekRecapMore.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} more from your week with Plus'**
+  String weekRecapMore(int n);
 }
 
 class _AppLocalizationsDelegate

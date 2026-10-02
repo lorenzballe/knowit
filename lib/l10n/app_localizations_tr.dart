@@ -1852,4 +1852,67 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get themePlaceLine => 'Her döndüğünde dünyanın başka bir yeri';
+
+  @override
+  String get themeTrueOrFalse => 'Doğru mu yanlış mı?';
+
+  @override
+  String get themeTrueOrFalseLine =>
+      'Çevirmeden önce karar ver. Çoğu kişi yanılır';
+
+  @override
+  String get themeReasoning => 'Sadece akıl yürütme';
+
+  @override
+  String get themeReasoningLine =>
+      'Ezberlenecek bir şey yok: sadece düşünme yolu';
+
+  @override
+  String get themeIdeas => 'Büyük fikirler';
+
+  @override
+  String get themeIdeasLine =>
+      'Şeylerin ardındaki teori, her seferinde bir fikir';
+
+  @override
+  String get themeCurious => 'Sadece merak';
+
+  @override
+  String get themeCuriousLine => 'Nedenini bilmenin keyfi için';
+
+  @override
+  String get themeMoving => 'Hareket halinde';
+
+  @override
+  String get themeMovingLine => 'Şu an değişenler ve neden önemli oldukları';
+
+  @override
+  String get themeHowItWorks => 'Gerçekte nasıl çalışır';
+
+  @override
+  String get themeHowItWorksLine =>
+      'Her gün gördüğün bir şeyin ardındaki mekanizma';
+
+  @override
+  String get themePuzzles => 'Bulmacalar';
+
+  @override
+  String get themePuzzlesLine => 'Bir kalem ve bir dakikalık bilmeceler';
+
+  @override
+  String get holdStrandHint => 'Açılarını seçmek için bir dala basılı tut';
+
+  @override
+  String get anglesComing => 'Kartlar yazıldıkça açılar gelecek';
+
+  @override
+  String get weekRecapCaps => 'BU HAFTA KENDİNE SORDUN';
+
+  @override
+  String get weekRecapLine => 'Kartlarının sana bıraktığı sorular';
+
+  @override
+  String weekRecapMore(int n) {
+    return 'Plus ile haftandan $n tane daha';
+  }
 }

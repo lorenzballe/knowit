@@ -154,7 +154,9 @@ class TreeNode {
     this.children = const [],
   });
 
-  int get depth => children.isEmpty ? 0 : 1 + children.map((c) => c.depth).reduce((a, b) => a > b ? a : b);
+  int get depth => children.isEmpty
+      ? 0
+      : 1 + children.map((c) => c.depth).reduce((a, b) => a > b ? a : b);
 }
 
 /// One labelled amount: a bar, a point on a scale, a circle, a slice.
@@ -381,7 +383,10 @@ class _Reader {
     if (v is! List || v.isEmpty) _bad('$key is not a list');
     return [
       for (final e in v)
-        if (e is Map) e.cast<String, Object?>() else _bad('$key holds a non-object'),
+        if (e is Map)
+          e.cast<String, Object?>()
+        else
+          _bad('$key holds a non-object'),
     ];
   }
 
@@ -412,7 +417,8 @@ class _Reader {
     label: text('label'),
     highlight: flag('hi'),
     children: [
-      for (final b in objects('branches', optional: true)) _Reader(b, id).node(),
+      for (final b in objects('branches', optional: true))
+        _Reader(b, id).node(),
     ],
   );
 
