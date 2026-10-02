@@ -455,8 +455,6 @@
   "themeHowItWorksLine": "你每天看到的事物背后的机制",
   "themePuzzles": "谜题",
   "themePuzzlesLine": "一支笔一分钟就能解的谜",
-  "holdStrandHint": "长按一个分支来选择它的角度",
-  "anglesComing": "随着卡片写出，角度会陆续出现",
   "weekRecapCaps": "这周你问过自己",
   "weekRecapLine": "你的卡片留给你的问题",
   "weekRecapMore": "用 Plus 再看本周 {n} 条"

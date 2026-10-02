@@ -455,8 +455,6 @@
   "themeHowItWorksLine": "毎日見ているものの裏にある仕組み",
   "themePuzzles": "パズル",
   "themePuzzlesLine": "ペンと1分で解ける謎",
-  "holdStrandHint": "ストランドを長押しして切り口を選ぶ",
-  "anglesComing": "カードが増えると切り口も増えます",
   "weekRecapCaps": "今週あなたが自分に問いかけたこと",
   "weekRecapLine": "カードが残してくれた問い",
   "weekRecapMore": "Plusで今週のあと{n}件"

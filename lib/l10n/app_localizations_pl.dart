@@ -1979,12 +1979,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get themePuzzlesLine => 'Zagadki na długopis i minutę';
 
   @override
-  String get holdStrandHint => 'Przytrzymaj wątek, by wybrać jego ujęcia';
-
-  @override
-  String get anglesComing => 'Ujęcia pojawią się wraz z nowymi kartami';
-
-  @override
   String get weekRecapCaps => 'W TYM TYGODNIU ZAPYTAŁEŚ SIEBIE';
 
   @override

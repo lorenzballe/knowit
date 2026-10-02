@@ -1916,14 +1916,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get themePuzzlesLine => 'Rätsel für einen Stift und eine Minute';
 
   @override
-  String get holdStrandHint =>
-      'Halte einen Strang gedrückt, um seine Blickwinkel zu wählen';
-
-  @override
-  String get anglesComing =>
-      'Blickwinkel kommen, sobald Karten geschrieben sind';
-
-  @override
   String get weekRecapCaps => 'DIESE WOCHE HAST DU DICH GEFRAGT';
 
   @override

@@ -1845,12 +1845,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get themePuzzlesLine => 'ペンと1分で解ける謎';
 
   @override
-  String get holdStrandHint => 'ストランドを長押しして切り口を選ぶ';
-
-  @override
-  String get anglesComing => 'カードが増えると切り口も増えます';
-
-  @override
   String get weekRecapCaps => '今週あなたが自分に問いかけたこと';
 
   @override

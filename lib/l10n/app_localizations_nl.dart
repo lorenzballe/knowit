@@ -1915,14 +1915,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get themePuzzlesLine => 'Raadsels voor een pen en een minuut';
 
   @override
-  String get holdStrandHint =>
-      'Houd een draad ingedrukt om de invalshoeken te kiezen';
-
-  @override
-  String get anglesComing =>
-      'Invalshoeken komen naarmate kaarten worden geschreven';
-
-  @override
   String get weekRecapCaps => 'DEZE WEEK VROEG JE JEZELF AF';
 
   @override

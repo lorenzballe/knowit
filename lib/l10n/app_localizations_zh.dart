@@ -1846,12 +1846,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get themePuzzlesLine => '一支笔一分钟就能解的谜';
 
   @override
-  String get holdStrandHint => '长按一个分支来选择它的角度';
-
-  @override
-  String get anglesComing => '随着卡片写出，角度会陆续出现';
-
-  @override
   String get weekRecapCaps => '这周你问过自己';
 
   @override
