@@ -9,6 +9,7 @@
   "question": "What put radioactive iron-60 into seabed crusts across the world's oceans about two million years ago?",
   "answer": "Supernovae a few hundred light-years away. Iron-60 has a half-life of 2.6 million years, so none survives from Earth's formation; any found must be recent. Wallner's team found it in crusts and sediments from three oceans, mostly laid down 3 to 1.5 million years ago: stardust settling while early humans walked in Africa.",
   "move": "A clock that runs out tells you the thing is recent.",
+  "ask": "What trace tells me that something happened more recently than I thought?",
   "keywords": [
     "iron-60",
     "supernovae",
@@ -29,6 +30,5 @@
   "source": "Wallner et al., Nature, 2016",
   "source_kind": "paper",
   "reference": "Wallner et al., Recent near-Earth supernovae probed by global deposition of interstellar radioactive 60Fe, Nature 532, 69, 2016",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

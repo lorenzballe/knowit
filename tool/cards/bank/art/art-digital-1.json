@@ -12,6 +12,7 @@
   "question": "Why was the first photograph scanned into a computer, in 1957, so small and coarse?",
   "answer": "Because the machine could hold no more. At the US National Bureau of Standards, Russell Kirsch fed a photograph of his three-month-old son into a drum scanner linked to SEAC, an early stored-program computer. The image it could store was 176 pixels on a side, about 31,000 dots in all: enough for one small face.",
   "move": "Early versions of a technology are shaped by what the machine could hold.",
+  "ask": "What limits in my tools are shaping how my first attempts look?",
   "keywords": [
     "russell kirsch",
     "seac",
@@ -32,6 +33,5 @@
   "source": "NIST, First Digital Image",
   "source_kind": "institution",
   "reference": "https://www.nist.gov/mathematics-statistics/first-digital-image",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

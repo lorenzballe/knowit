@@ -9,6 +9,7 @@
   "question": "How did Perseverance land in a crater that earlier Mars missions would have ruled too dangerous?",
   "answer": "It picked its own spot. Hanging under its parachute, the lander photographed the ground, matched the pictures to a map on board, worked out where it was to within tens of metres, then steered for the safest patch in reach. Cliffs, boulder fields and dunes were scattered across the landing zone; it missed them all.",
   "move": "Knowing exactly where you are turns a hazard map into a route.",
+  "ask": "What risk looks too big until I know exactly where I stand?",
   "keywords": [
     "terrain-relative navigation",
     "jezero crater",
@@ -28,6 +29,5 @@
   "source": "Farley et al., Space Science Reviews, 2020",
   "source_kind": "paper",
   "reference": "Farley et al., Mars 2020 Mission Overview, Space Science Reviews, 2020",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

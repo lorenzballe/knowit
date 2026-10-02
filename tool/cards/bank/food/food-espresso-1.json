@@ -9,6 +9,7 @@
   "question": "When did espresso bars start serving coffee topped with a layer of fine foam?",
   "answer": "After the Second World War. Earlier bar machines pushed water through with steam at 1.5 to 2 bar, giving a thin, often scorched cup. Achille Gaggia's spring-lever machines, sold from 1948, reached 8 to 10 bar, forcing coffee oils and carbon dioxide into a fine foam. Gaggia sold it as crema naturale: natural coffee cream.",
   "move": "A new side effect sells better once someone gives it a flattering name.",
+  "ask": "What side effect have I seen sold as a feature because someone gave it a nice name?",
   "keywords": [
     "achille gaggia",
     "crema",
@@ -28,6 +29,5 @@
   "source": "Gaggia company history",
   "source_kind": "company",
   "reference": "https://www.gaggia.com/85-years-of-heritage-1938-1947/",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

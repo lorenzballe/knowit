@@ -9,6 +9,7 @@
   "question": "What does a vocoder need, besides a voice, to produce its robot sound?",
   "answer": "A second sound to shape. Homer Dudley's vocoder, built at Bell Labs in the 1930s to compress speech, splits the voice into frequency bands and uses their loudness to sculpt a carrier, often a keyboard chord. The notes come from the keyboard, not the singer. Auto-Tune needs only the voice, snapped to the nearest note.",
   "move": "Two things that sound alike can be built on opposite ideas.",
+  "ask": "Which two things in my life look alike but are built on opposite ideas?",
   "keywords": [
     "vocoder",
     "homer dudley",
@@ -29,6 +30,5 @@
   "source": "Tompkins, How to Wreck a Nice Beach, 2010",
   "source_kind": "book",
   "reference": "Tompkins, How to Wreck a Nice Beach: The Vocoder from World War II to Hip-Hop, Melville House, 2010",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

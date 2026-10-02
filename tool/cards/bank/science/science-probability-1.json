@@ -9,6 +9,7 @@
   "question": "In 1901 a mathematician estimated π by dropping a needle on ruled lines 3,408 times. What was wrong with his result?",
   "answer": "It was too good. Mario Lazzarini's 1,808 crossings gave 355/113, π to six places, when honest runs that long miss by about 0.05. And with his needle length, 355/113 can only come out if the drops number a multiple of 213. He made 3,408: exactly 16 × 213, as if he stopped when it matched.",
   "move": "When a result is better than the method allows, ask how it stopped.",
+  "ask": "When a result looks better than the method allows, do I ask how it stopped?",
   "keywords": [
     "buffon's needle",
     "mario lazzarini",
@@ -29,6 +30,5 @@
   "source": "Badger, Mathematics Magazine, 1994",
   "source_kind": "paper",
   "reference": "Badger, Lazzarini's Lucky Approximation of π, Mathematics Magazine, 1994",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

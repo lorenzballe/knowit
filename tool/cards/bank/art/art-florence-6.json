@@ -9,6 +9,7 @@
   "question": "How did Masaccio's Trinity, a showpiece of early perspective, get through the late sixteenth century unharmed?",
   "answer": "Hidden behind an altar. Around 1570 Giorgio Vasari, who praised Masaccio in print, set a new stone altar and altarpiece in front of it in Santa Maria Novella. The fresco was uncovered about 1860, cut from the wall and moved, then returned in 1952 to its painted skeleton below. Being covered up preserved it.",
   "move": "Sometimes what saves a thing is being put out of sight.",
+  "ask": "What in my life was saved simply by being put out of sight?",
   "keywords": [
     "masaccio",
     "trinity",
@@ -29,6 +30,5 @@
   "source": "Goffen, Masaccio's Trinity, 1998",
   "source_kind": "book",
   "reference": "Rona Goffen (ed.), Masaccio's Trinity, Cambridge University Press, 1998",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

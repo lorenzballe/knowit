@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Bland sand its camera could not track. Ingenuity judged its speed by following features on the ground; over smooth ripples it found too few, came down too fast and tilted, and all four rotor blades snapped. It had flown 72 times, against a plan of five, until the ground gave it nothing to hold.",
   "move": "A system that steers by what it sees fails where there is nothing to see.",
+  "ask": "Where could my system fail because it relies on something that isn't there?",
   "trap": "Blaming dust on the panels, the famous end of other Mars craft.",
   "keywords": [
     "ingenuity",
@@ -35,6 +36,5 @@
   "source": "NASA JPL accident investigation, 2024",
   "source_kind": "institution",
   "reference": "https://www.jpl.nasa.gov/news/nasa-performs-first-aircraft-accident-investigation-on-another-world/",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

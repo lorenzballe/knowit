@@ -9,6 +9,7 @@
   "question": "What did the world's most sensitive dark matter detectors finally catch in 2024?",
   "answer": "Neutrinos from the Sun, near-massless particles that pass through almost anything. XENONnT in Italy and PandaX-4T in China each saw first hints of them bumping xenon nuclei, the same tiny recoil a dark matter particle would leave. It marks the start of the neutrino fog, a background no shielding can block.",
   "move": "A detector sensitive enough to find something also finds everything like it.",
+  "ask": "When I finally get a sharp enough tool, what else will it start picking up too?",
   "keywords": [
     "neutrino fog",
     "xenonnt",
@@ -29,6 +30,5 @@
   "source": "XENON Collaboration, Physical Review Letters, 2024",
   "source_kind": "paper",
   "reference": "XENON Collaboration, First Indication of Solar 8B Neutrinos via Coherent Elastic Neutrino-Nucleus Scattering, Physical Review Letters, 2024",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

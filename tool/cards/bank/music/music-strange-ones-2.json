@@ -9,6 +9,7 @@
   "question": "What did Benjamin Franklin change about making music with rubbed glasses?",
   "answer": "He set the glasses spinning. Franklin's 1761 armonica nested graded glass bowls on one rod turned by a treadle, so wet fingers could touch several at once and play chords. Rows of water-tuned wine glasses allowed a note or two at a time. His bowls were tuned by grinding, not by filling.",
   "move": "Rearranging the same parts can open moves the old layout forbade.",
+  "ask": "Could simply rearranging the parts I already have open moves my old layout never allowed?",
   "keywords": [
     "glass armonica",
     "benjamin franklin",
@@ -28,6 +29,5 @@
   "source": "Franklin, letter to Beccaria, 1762",
   "source_kind": "primary_document",
   "reference": "Franklin, letter to Giambatista Beccaria, 13 July 1762, in The Papers of Benjamin Franklin, vol. 10, Yale University Press, 1966",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

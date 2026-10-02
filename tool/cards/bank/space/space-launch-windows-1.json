@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "Mars. A window returns each time one planet laps the other, and Earth gains on Mars slowest of all: every 780 days, 26 months. Neptune barely moves, so Earth realigns with it every 367 days; Venus returns every 19 months. Mars, the neighbour, is the one that makes missions wait longest.",
   "move": "How often two things meet depends on their difference, not their distance.",
+  "ask": "How often do two things in my life meet, and is that set by the gap between them?",
   "trap": "Neptune, the farthest planet, seems the hardest to line up with.",
   "keywords": [
     "launch windows",
@@ -36,6 +37,5 @@
   "source": "Curtis, Orbital Mechanics for Engineering Students, 2020",
   "source_kind": "book",
   "reference": "Curtis, Orbital Mechanics for Engineering Students, 4th ed., Butterworth-Heinemann, 2020",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

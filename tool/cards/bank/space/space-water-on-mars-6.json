@@ -9,6 +9,7 @@
   "question": "What did Curiosity find in 2023 that points to seasons of wet and dry on ancient Mars?",
   "answer": "Hexagonal cracks. Mud dried once splits in T-shaped cracks; only when it is wetted and dried again and again do the junctions relax into Y-shapes and the pattern into hexagons, as on dry lake beds on Earth. Ancient rocks in Gale crater show just that: a climate that cycled, not one flood.",
   "move": "The shape of a crack can count how often something happened.",
+  "ask": "What pattern in my life could count how often something has happened?",
   "keywords": [
     "mudcracks",
     "curiosity",
@@ -28,6 +29,5 @@
   "source": "Rapin et al., Nature, 2023",
   "source_kind": "paper",
   "reference": "Rapin et al., Sustained wet–dry cycling on early Mars, Nature, 2023",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

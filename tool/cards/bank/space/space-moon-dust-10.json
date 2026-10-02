@@ -9,6 +9,7 @@
   "question": "Why are grains of Moon dust jagged like broken glass, when desert sand is rounded?",
   "answer": "Because nothing on the Moon has ever tumbled them. Sand is rounded by wind and water grinding grains together for ages. Lunar dust is made by impacts that shatter rock and splash melt, which freezes into glass shards and clumps with hooked edges. The grains snagged in suit fabric and scratched the Apollo crews' visors.",
   "move": "The shape of a grain records what it has been through.",
+  "ask": "What does the shape of someone's habits say about what they have been through?",
   "keywords": [
     "lunar regolith",
     "agglutinates",
@@ -28,6 +29,5 @@
   "source": "Heiken, Vaniman & French, Lunar Sourcebook, 1991",
   "source_kind": "book",
   "reference": "Heiken, Vaniman & French (eds), Lunar Sourcebook: A User's Guide to the Moon, Cambridge University Press, 1991",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

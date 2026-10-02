@@ -9,6 +9,7 @@
   "question": "How did a hanging sheet of steel become the sound of countless 1960s and 1970s vocals?",
   "answer": "By being shaken. The EMT 140, sold from 1957, hung a thin steel plate about 2 metres long in a frame; a driver shook it and pickups caught the shimmer. Moving a felt damper nearer or farther changed the decay time. A studio's cathedral fitted in a long wooden box against the wall.",
   "move": "When space is scarce, imitate its behaviour rather than its size.",
+  "ask": "When I lack space or money, can I imitate how something behaves instead of copying its size?",
   "keywords": [
     "plate reverb",
     "emt 140",
@@ -28,6 +29,5 @@
   "source": "Välimäki et al., IEEE Transactions, 2012",
   "source_kind": "paper",
   "reference": "Välimäki, Parker, Savioja, Smith & Abel, Fifty Years of Artificial Reverberation, IEEE Transactions on Audio, Speech, and Language Processing, 2012",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

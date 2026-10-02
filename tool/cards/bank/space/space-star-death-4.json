@@ -9,6 +9,7 @@
   "question": "Why have some white dwarfs, the cooling cores left by dead stars, stopped cooling?",
   "answer": "Their cores are freezing, and the crystals float. In some white dwarfs the solid that forms is lighter than the surrounding liquid, so it rises and pushes heavier liquid down, releasing gravitational energy. Bédard and colleagues showed in 2024 that this holds some steady for billions of years, so they look younger than they are.",
   "move": "When something refuses to cool, look for a hidden source of heat.",
+  "ask": "When something refuses to cool down, what hidden source of heat is behind it?",
   "keywords": [
     "white dwarfs",
     "crystallisation",
@@ -28,6 +29,5 @@
   "source": "Bédard, Blouin & Cheng, Nature, 2024",
   "source_kind": "paper",
   "reference": "doi:10.1038/s41586-024-07102-y",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

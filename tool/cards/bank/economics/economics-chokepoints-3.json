@@ -14,6 +14,7 @@
   "correct": 0,
   "answer": "True. The locks are filled by gravity from Gatun Lake, a rain-fed reservoir, and each crossing lets roughly 200 million litres run out to the sea. In the 2023 drought the canal authority cut daily crossings and the depth ships could load to. One of the world's busiest trade routes depends on the rainy season.",
   "move": "Find out what a system spends each time it runs.",
+  "ask": "What does a system I rely on quietly use up every time it runs?",
   "trap": "Assuming a canal between two oceans simply uses the sea.",
   "keywords": [
     "panama canal",
@@ -35,6 +36,5 @@
   "source": "Panama Canal Authority, Annual Report, 2023",
   "source_kind": "institution",
   "reference": "Panama Canal Authority, Annual Report, fiscal year 2023, 2023",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

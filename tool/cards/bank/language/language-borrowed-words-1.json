@@ -9,6 +9,7 @@
   "question": "What did French bougette, a small leather bag, become after a round trip through English?",
   "answer": "The budget. English borrowed bougette as budget, a pouch or wallet. By the eighteenth century a Chancellor of the Exchequer was said to open the budget when presenting the year's accounts, and the financial sense took over. French then borrowed budget back, meaning a state's accounts. The bag came home as a spreadsheet.",
   "move": "A word that travels abroad can come home unrecognised.",
+  "ask": "What idea of mine left home, changed, and came back that I no longer recognise?",
   "keywords": [
     "budget",
     "bougette",
@@ -28,6 +29,5 @@
   "source": "Hoad, Concise Oxford English Etymology, 1986",
   "source_kind": "reference_work",
   "reference": "Hoad, The Concise Oxford Dictionary of English Etymology, Oxford University Press, 1986",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

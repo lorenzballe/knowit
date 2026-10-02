@@ -9,6 +9,7 @@
   "question": "What happened when Italy's law requiring durum-wheat pasta collided with the European single market?",
   "answer": "Italy lost at the border and kept the rule at home. A 1967 law let Italian dried pasta be made only from durum semolina. In 1988 the European Court of Justice ruled it could not bar soft-wheat pasta from other member states. Italian factories stayed bound; foreign packets beside theirs did not.",
   "move": "A rule that stops at a border can end up binding only the home side.",
+  "ask": "Is a rule of mine only binding on me, while others slip past it?",
   "keywords": [
     "durum wheat",
     "european court of justice",
@@ -29,6 +30,5 @@
   "source": "European Court of Justice, Case 407/85",
   "source_kind": "primary_document",
   "reference": "Case 407/85, Drei Glocken GmbH and Kritzinger v USL Centro-Sud, European Court of Justice, judgment of 14 July 1988",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

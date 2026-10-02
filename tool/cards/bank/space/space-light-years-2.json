@@ -12,6 +12,7 @@
   "question": "How did astronomers take a spectrum of Tycho Brahe's 1572 supernova in 2008?",
   "answer": "By catching light that took a detour. Some of the 1572 flash struck dust clouds and bounced towards Earth by a longer route, arriving more than four centuries after the direct light. Spread into its colours, that echo showed a normal white dwarf explosion. Tycho saw the first copy; the second was still travelling.",
   "move": "Look for the echo when the original is gone.",
+  "ask": "The original is gone. Is there an echo I could still learn from?",
   "keywords": [
     "tycho's supernova",
     "light echo",
@@ -32,6 +33,5 @@
   "source": "Krause et al., Nature, 2008",
   "source_kind": "paper",
   "reference": "doi:10.1038/nature07608",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

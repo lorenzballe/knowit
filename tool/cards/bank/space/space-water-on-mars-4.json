@@ -15,6 +15,7 @@
   "correct": 2,
   "answer": "Water ice. Salt cannot vanish, and dry ice could not survive in summer soil tens of degrees too warm for it. Water ice, once exposed to the dry air, turns straight to vapour over days. The team took the disappearance as the proof: a vanishing act served as the chemistry test.",
   "move": "How a thing disappears can tell you what it was.",
+  "ask": "What does the way something disappears tell me about what it was?",
   "trap": "Bright white crumbs in dry soil look like desert salt.",
   "keywords": [
     "phoenix lander",
@@ -35,6 +36,5 @@
   "source": "Smith et al., Science, 2009",
   "source_kind": "paper",
   "reference": "Smith et al., H2O at the Phoenix Landing Site, Science 325, 2009",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

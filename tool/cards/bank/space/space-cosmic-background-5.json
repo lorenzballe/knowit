@@ -12,6 +12,7 @@
   "question": "What colour was the cosmic background radiation when it was released, 380,000 years after the Big Bang?",
   "answer": "Orange-white, like a lamp filament: the gas was about 2,700 °C when it turned transparent. Expansion has since stretched that light about 1,100 times, into microwaves. For a few million years the sky kept glowing, dimming through red into infrared; then the universe went dark until the first stars lit.",
   "move": "Ask what a signal looked like before the journey changed it.",
+  "ask": "What does this look like before time and distance changed it?",
   "keywords": [
     "cosmic microwave background",
     "recombination",
@@ -32,6 +33,5 @@
   "source": "Loeb, Princeton University Press, 2010",
   "source_kind": "book",
   "reference": "Loeb, How Did the First Stars and Galaxies Form?, Princeton University Press, 2010",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

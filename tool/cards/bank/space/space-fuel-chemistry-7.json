@@ -9,6 +9,7 @@
   "question": "What was the main fuel burned in the Space Shuttle's solid rocket boosters?",
   "answer": "Aluminium powder. By mass the propellant was about 70% ammonium perchlorate, which supplies the oxygen, 16% aluminium and 12% rubbery binder, which also burns. The metal raises the flame temperature and so the thrust. Each launch left aluminium oxide and hydrochloric acid in the white column that hung over Florida.",
   "move": "The ingredient named on the label is not always the one doing the work.",
+  "ask": "Is the ingredient I give credit to really the one doing the work?",
   "keywords": [
     "solid rocket boosters",
     "aluminium powder",
@@ -28,6 +29,5 @@
   "source": "NASA, NSTS News Reference Manual, 1988",
   "source_kind": "institution",
   "reference": "NASA, National Space Transportation System Reference, NSTS 1988 News Reference Manual, 1988",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

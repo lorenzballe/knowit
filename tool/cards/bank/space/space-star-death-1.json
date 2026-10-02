@@ -15,6 +15,7 @@
   "correct": 1,
   "answer": "A white dwarf blowing itself apart. A collapsing giant keeps its iron core, crushed into a neutron star or black hole, and throws out only a little new iron. Each exploding white dwarf forges about half a Sun's mass of it; most estimates credit them with more than half of the Solar System's supply.",
   "move": "Where something is made matters less than whether it gets out.",
+  "ask": "Is something good made in my life, but never reaching the people who could use it?",
   "trap": "Giants end their lives with iron cores, so they seem the obvious source.",
   "keywords": [
     "iron",
@@ -36,6 +37,5 @@
   "source": "Johnson, Science, 2019",
   "source_kind": "paper",
   "reference": "doi:10.1126/science.aau9540",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

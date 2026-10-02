@@ -9,6 +9,7 @@
   "question": "How many negatives did Chaucer stack up to say that his knight was never rude?",
   "answer": "Four. The General Prologue of The Canterbury Tales, from the 1380s, says the knight never yet no villainy did not say, in all his life, to no kind of person. Stacked negatives were emphasis in the English of a royal official and poet, and no listener took it to mean the knight was foul-mouthed.",
   "move": "Grammar that looks illogical now was once the careful speaker's style.",
+  "ask": "What looks sloppy to me now that was once careful style?",
   "keywords": [
     "geoffrey chaucer",
     "canterbury tales",
@@ -28,6 +29,5 @@
   "source": "Benson, The Riverside Chaucer, 1987",
   "source_kind": "book",
   "reference": "Benson (ed.), The Riverside Chaucer, Houghton Mifflin, 1987",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

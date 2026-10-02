@@ -9,6 +9,7 @@
   "question": "What made a thin line of light glow along the Moon's horizon after sunset, as three Surveyor landers saw?",
   "answer": "Dust hovering just above the ground. Sunlight and the solar wind charge the surface, and along the sharp edge between sunlit and shadowed ground the electric field grows strong enough to lift grains about a hundredth of a millimetre across. Floating 3 to 30 cm up, they scattered the last sunlight into a bright thread.",
   "move": "When nothing seems able to move a thing, look for a quieter force.",
+  "ask": "When nothing seems able to move something, is a quiet force at work?",
   "keywords": [
     "horizon glow",
     "surveyor",
@@ -28,6 +29,5 @@
   "source": "Rennilson & Criswell, The Moon, 1974",
   "source_kind": "paper",
   "reference": "Rennilson & Criswell, Surveyor observations of lunar horizon-glow, The Moon, 1974",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-09-27"
 }

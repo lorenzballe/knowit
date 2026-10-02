@@ -9,6 +9,7 @@
   "question": "In German-speaking Switzerland, what decides whether people use dialect or Standard German?",
   "answer": "The situation, not class. Swiss of every background speak dialect at home and at work, and use Standard German, learned at school, for writing, news and speeches. In 1959 Charles Ferguson made it a defining case of diglossia: two varieties with separate jobs. A Zurich banker and a Zurich plumber chat in the same dialect.",
   "move": "Sometimes the setting, not the speaker, chooses the way of speaking.",
+  "ask": "What setting, rather than who I am, decides how I act?",
   "keywords": [
     "swiss german",
     "diglossia",
@@ -29,6 +30,5 @@
   "source": "Ferguson, Diglossia, Word, 1959",
   "source_kind": "paper",
   "reference": "Ferguson, Diglossia, Word 15, 1959",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }

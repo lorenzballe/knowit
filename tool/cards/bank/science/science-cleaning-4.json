@@ -9,6 +9,7 @@
   "question": "What did the first enzyme washing powders do to the people who made them?",
   "answer": "Gave many of them asthma. In the 1960s, stain-digesting enzymes from bacteria went into detergents as a fine powder; factory workers breathed the dust and became allergic, and the first cases were reported in 1969. The fix was mainly physical: each enzyme dose sealed inside a dust-free granule, like a seed in a husk.",
   "move": "When a product is safe to use, ask about the people who make it.",
+  "ask": "When I enjoy a product, do I ever ask who pays the price of making it?",
   "keywords": [
     "enzyme detergents",
     "occupational asthma",
@@ -29,6 +30,5 @@
   "source": "Journal of Occupational and Environmental Hygiene, 2015",
   "source_kind": "paper",
   "reference": "doi:10.1080/15459624.2015.1011741",
-  "written": "2026-09-26",
-  "disabled": true
+  "written": "2026-09-26"
 }
