@@ -78,6 +78,33 @@ class TheGenres(unittest.TestCase):
         self.assertEqual(genres.describe("space.black_holes.event_horizons"), "Black holes · Event horizons")
         self.assertEqual(genres.strands_of("thinking"), [])
 
+    def test_a_label_is_read_whole_or_not_at_all(self):
+        # A Dart string to its closing quote, escapes and all. Cut at an
+        # escaped apostrophe, a strand used to fall out of the tree without
+        # a word, and the gate turned away every card written under it.
+        with tempfile.TemporaryDirectory() as tmp:
+            dart = Path(tmp) / "genres.dart"
+            dart.write_text(
+                "const kGenres = {\n"
+                "  'medicine': [\n"
+                "    Genre('medicine.myths', 'Myths', [\n"
+                "      Strand('medicine.myths.tales', 'Old wives\\' tales'),\n"
+                "      Strand('medicine.myths.detox', \"Detox, 'cleanses'\"),\n"
+                "      Strand('medicine.myths.online', 'Online'),\n"
+                "    ]),\n"
+                "  ],\n"
+                "};\n",
+                encoding="utf-8",
+            )
+            (genre,) = genres.load(dart)
+            self.assertEqual([s.label for s in genre.strands], ["Old wives' tales", "Detox, 'cleanses'", "Online"])
+            # One it cannot read stops the gate rather than shrinking the tree.
+            # Another file, because the tree is read once per path.
+            bad = Path(tmp) / "unreadable.dart"
+            bad.write_text(dart.read_text(encoding="utf-8").replace("'Online'", "kOnline"), encoding="utf-8")
+            with self.assertRaises(ValueError):
+                genres.load(bad)
+
 
 class TheGate(unittest.TestCase):
     def setUp(self):
