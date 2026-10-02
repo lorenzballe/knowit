@@ -747,6 +747,10 @@
      "label": "Bubbles"
     },
     {
+     "id": "economics.markets_and_hype.experts_forecasts",
+     "label": "Forecasts by experts"
+    },
+    {
      "id": "economics.markets_and_hype.survivor_stories",
      "label": "Survivor stories"
     },
@@ -2614,6 +2618,10 @@
    "id": "medicine.medical_myths",
    "label": "Medical myths",
    "strands": [
+    {
+     "id": "medicine.medical_myths.folk_remedies",
+     "label": "Folk remedies"
+    },
     {
      "id": "medicine.medical_myths.online_diagnosis",
      "label": "Online diagnosis"
