@@ -306,7 +306,7 @@ const Map<String, List<Genre>> kGenres = {
       Strand('economics.markets_and_hype.bubbles', 'Bubbles'),
       Strand(
         'economics.markets_and_hype.experts_forecasts',
-        'Experts\' forecasts',
+        'Forecasts by experts',
       ),
       Strand('economics.markets_and_hype.survivor_stories', 'Survivor stories'),
       Strand('economics.markets_and_hype.get_rich_quick', 'Get rich quick'),
@@ -903,7 +903,7 @@ const Map<String, List<Genre>> kGenres = {
       Strand('medicine.judge_a_treatment.screening', 'Screening'),
     ]),
     Genre('medicine.medical_myths', 'Medical myths', [
-      Strand('medicine.medical_myths.old_wives_tales', 'Old wives\' tales'),
+      Strand('medicine.medical_myths.folk_remedies', 'Folk remedies'),
       Strand('medicine.medical_myths.online_diagnosis', 'Online diagnosis'),
       Strand('medicine.medical_myths.detox', 'Detox'),
     ]),
