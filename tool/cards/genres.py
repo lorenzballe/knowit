@@ -55,7 +55,9 @@ _STR = r"""(?:'((?:[^'\\]|\\.)*)'|"((?:[^"\\]|\\.)*)")"""
 
 
 def _text(single: str | None, double: str | None) -> str:
-    return re.sub(r"\\(.)", r"\1", single if single is not None else double)
+    # The quote the string was not written in comes back as None from a
+    # match and as '' from findall: either way it is the other one.
+    return re.sub(r"\\(.)", r"\1", single or double or "")
 
 
 def _closing_bracket(text: str, start: int) -> int:
