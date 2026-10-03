@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "medium",
   "principle": "computation",
-  "question": "Pulse rises about 8.5 beats a minute for each °C of fever. Resting at 66, what will it be at 39 °C rather than 37 °C?",
+  "question": "Pulse rises about 8.5 beats a minute per °C of fever. Resting at 66, what is it at 39 °C instead of 37 °C?",
   "value": 83,
   "unit": "beats a minute",
   "answer": "66 + 17 = 83 beats a minute",

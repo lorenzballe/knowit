@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "medium",
   "principle": "coincidence",
-  "question": "Each newborn carries about 60 new DNA changes among 3 billion letters. Across 8 billion people, how many times has each letter mutated?",
+  "question": "Each newborn carries about 60 new DNA changes among 3 billion letters. Across 8 billion people, how many times has each letter mutated, on average?",
   "value": 160,
   "unit": "times",
   "answer": "About 160 times each.",

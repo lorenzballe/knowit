@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. The Louvre covered it in 2019, the Met dropped it from seven spaces in 2021, and the British Museum followed in 2023, after protests linking the family's fortune to OxyContin, a painkiller at the centre of America's opioid crisis. A name on a wall is an advertisement bought with a gift, and it can be taken down.",
+  "answer": "True. The Louvre covered it in 2019, the Met dropped it from seven spaces in 2021, and the British Museum followed in 2023, after protests linking the family's fortune to OxyContin, a painkiller at the centre of America's opioid crisis. A donor's name can come down as well as go up.",
   "move": "A name on a building was bought; ask what paid for it.",
   "ask": "Whose names do I see on the things I trust, and what were those names bought with?",
   "trap": "False, because museums rarely turn on their richest donors.",

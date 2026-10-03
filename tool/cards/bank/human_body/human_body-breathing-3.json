@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "computation",
-  "question": "Panting: 30 breaths a minute of 200 ml each, with 150 ml of each stuck in the airways. Fresh air reaching the lungs per minute, in litres?",
+  "question": "Panting: 30 breaths a minute of 200 ml, 150 ml of each stuck in the airways. Litres of fresh air reaching the lungs per minute?",
   "value": 1.5,
   "unit": "litres",
   "tolerance": 0.1,
