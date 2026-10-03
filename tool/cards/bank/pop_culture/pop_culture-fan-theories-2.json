@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-fan-theories-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.why_stories_grip_us",
+  "strand": "pop_culture.why_stories_grip_us.fan_theories",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "Which is more probable: a character is secretly the villain, or is secretly the villain and planned so from the first season?",
+  "options": [
+    "Secretly the villain",
+    "Secretly the villain, planned from the start"
+  ],
+  "correct": 0,
+  "answer": "Secretly the villain. Every extra detail is another thing that must also be true, so the fuller theory can never be more likely than the bare one. Tversky and Kahneman showed people rate the detailed story as likelier because it hangs together better. The more satisfying a fan theory feels, the more conditions it quietly stacks up.",
+  "move": "Each extra detail makes a story more convincing and less likely.",
+  "ask": "Which story about a friend's motives have I built up with details I cannot actually know?",
+  "trap": "The planned version explains the clues, so it feels more convincing.",
+  "keywords": [
+    "conjunction fallacy",
+    "fan theories",
+    "probability",
+    "plot twists"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tversky and Kahneman, Psychological Review, 1983",
+  "source_kind": "paper",
+  "reference": "Amos Tversky and Daniel Kahneman, Extensional Versus Intuitive Reasoning: The Conjunction Fallacy in Probability Judgment, Psychological Review, 1983",
+  "written": "2026-09-26"
+}

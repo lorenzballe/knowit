@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-algorithms-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.algorithms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Facebook and Instagram users were switched to a plain time-ordered feed for three months in 2020. What happened?",
+  "options": [
+    "Their political views shifted sharply",
+    "They used the apps less",
+    "Nothing measurable changed"
+  ],
+  "correct": 1,
+  "answer": "They used the apps less. In Guess and colleagues' experiment with Meta, the time-ordered feed cut time on the platforms and showed people more political and untrustworthy content, yet their political attitudes and polarisation barely moved over three months. The ranking system shaped attention far more clearly than it shaped opinions.",
+  "move": "Test a blamed cause by removing it before believing the blame.",
+  "ask": "What am I blaming for a problem in my life that I have never tried removing?",
+  "trap": "If the algorithm drives polarisation, removing it should calm views.",
+  "keywords": [
+    "feed algorithms",
+    "facebook",
+    "instagram",
+    "polarisation"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Guess et al., Science, 2023",
+  "source_kind": "paper",
+  "reference": "Andrew M. Guess et al., How do social media feed algorithms affect attitudes and behavior in an election campaign?, Science, 2023",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-fear-of-missing-out-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.fear_of_missing_out",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Asked to compare their social lives with their peers', how do most people rate their own?",
+  "options": [
+    "Less active than others'",
+    "About the same",
+    "More active than others'"
+  ],
+  "correct": 0,
+  "answer": "Less active than others'. In a series of studies, Deri, Davidai and Gilovich found people believed others went to more parties, ate out more and had more friends. They compared themselves with the most social people who sprang to mind, not the typical one, so nearly everyone felt left out of a party mostly happening elsewhere.",
+  "move": "Compare with the typical person, not the one who comes to mind.",
+  "ask": "When I feel left out, am I comparing myself with a typical friend or the busiest one?",
+  "trap": "People flatter themselves, so most should rate their lives above average.",
+  "keywords": [
+    "social life",
+    "comparison",
+    "fear of missing out",
+    "parties"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Deri, Davidai and Gilovich, JPSP, 2017",
+  "source_kind": "paper",
+  "reference": "Sebastian Deri, Shai Davidai and Thomas Gilovich, Home Alone: Why People Believe Others' Social Lives Are Richer Than Their Own, Journal of Personality and Social Psychology, 2017",
+  "written": "2026-09-26"
+}

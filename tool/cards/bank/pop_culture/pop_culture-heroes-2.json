@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-heroes-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.why_stories_grip_us",
+  "strand": "pop_culture.why_stories_grip_us.heroes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do screenwriters often have the hero do a small kindness in the very first minutes?",
+  "answer": "So the audience decides to be on their side. Blake Snyder named it the save-the-cat scene: an early act, like rescuing a pet or sharing food, that wins sympathy before the hero does anything difficult or dubious. Viewers then forgive later flaws, because a first impression of character sets how every later scene is read.",
+  "move": "Early small acts set how everything later is judged.",
+  "ask": "What small first impression am I giving people that will colour how they judge me later?",
+  "keywords": [
+    "save the cat",
+    "screenwriting",
+    "sympathy",
+    "first impressions"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Snyder, Save the Cat!, 2005",
+  "source_kind": "book",
+  "reference": "Blake Snyder, Save the Cat! The Last Book on Screenwriting You'll Ever Need, Michael Wiese Productions, 2005",
+  "written": "2026-09-26"
+}

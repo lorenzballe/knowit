@@ -1,0 +1,43 @@
+{
+  "id": "pop_culture-going-viral-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.going_viral",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "Each person who shares a post leads on average to 0.8 more sharers. Starting from one share, how many shares in total, eventually?",
+  "value": 5,
+  "unit": "shares",
+  "answer": "About 5 shares in all: below one onward sharer each, a cascade fizzles fast.",
+  "move": "Below one onward copy each, nothing spreads far, however good it is.",
+  "ask": "When I hope something I made will spread, do I know how many people each viewer passes it to?",
+  "trap": "0.8 is close to 1, so the post should still spread widely.",
+  "hint": "Add the first share, the 0.8 it causes, the 0.64 those cause, and so on.",
+  "steps": [
+    "Shares form a chain: 1 + 0.8 + 0.64 + 0.51 + …",
+    "A chain shrinking by 0.8 each step sums to 1 ÷ (1 − 0.8)",
+    "1 ÷ 0.2 = 5",
+    "About 5 shares in all: below one onward sharer each, a cascade fizzles fast."
+  ],
+  "keywords": [
+    "reproduction number",
+    "cascades",
+    "sharing",
+    "contagion"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kucharski, The Rules of Contagion, 2020",
+  "source_kind": "book",
+  "reference": "Adam Kucharski, The Rules of Contagion: Why Things Spread, and Why They Stop, Profile Books, 2020",
+  "written": "2026-09-26"
+}

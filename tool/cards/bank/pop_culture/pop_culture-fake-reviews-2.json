@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-fake-reviews-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.fake_reviews",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "An online clothes shop's product pages showed almost only four- and five-star reviews. What had it been doing?",
+  "options": [
+    "Writing fake five-star reviews",
+    "Holding back the poor reviews",
+    "Paying buyers for praise"
+  ],
+  "correct": 1,
+  "answer": "Holding back the poor reviews. In 2022 the US Federal Trade Commission found Fashion Nova had, for about four years, left hundreds of thousands of reviews under four stars unpublished; the firm paid $4.2 million. Every review shown was genuine, and the picture they made together was still false.",
+  "move": "A collection of true parts can still tell a false story.",
+  "ask": "Is there a story I tell about my life, or my work, using only the good reviews?",
+  "trap": "Fake reviews are the familiar fraud, so the shop must have written them.",
+  "keywords": [
+    "fashion nova",
+    "federal trade commission",
+    "review suppression",
+    "online shopping"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Federal Trade Commission, Fashion Nova case, 2022",
+  "source_kind": "primary_document",
+  "reference": "Federal Trade Commission, press release on the Fashion Nova review suppression settlement, 25 January 2022",
+  "written": "2026-09-26"
+}

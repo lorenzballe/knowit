@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-algorithms-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.algorithms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did posts that made people angry spread further on Facebook from 2017 onwards?",
+  "answer": "Because the ranking system scored an angry reaction as worth five likes. From 2017 Facebook's feed counted each emoji reaction, angry included, as five times a like, on the theory that strong reactions meant engagement. Internal documents later showed staff warning that this favoured outrage; by 2020 the angry reaction's weight had been cut to zero.",
+  "move": "What a system counts as success is what it will serve more of.",
+  "ask": "What do I reward with my attention online that I would not want more of?",
+  "keywords": [
+    "facebook",
+    "emoji reactions",
+    "news feed ranking",
+    "anger"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Washington Post, 26 October 2021",
+  "source_kind": "news_archive",
+  "reference": "Jeremy B. Merrill and Will Oremus, Five points for anger, one for a 'like': How Facebook's formula fostered rage and misinformation, The Washington Post, 26 October 2021",
+  "written": "2026-09-26"
+}

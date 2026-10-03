@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-cliffhangers-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.why_stories_grip_us",
+  "strand": "pop_culture.why_stories_grip_us.cliffhangers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do network television dramas build a small cliffhanger roughly every ten to fifteen minutes?",
+  "answer": "Because each act ends at an advert break. A network hour is cut into several acts, and writers end every one on a question so viewers stay through the adverts instead of changing channel. Series written for streaming, with no breaks, often drop these regular mini-cliffhangers and save one large hook for the end.",
+  "move": "Look at where the pauses fall to see who the story serves.",
+  "ask": "Where in my day do I get hooked into staying longer than I planned?",
+  "keywords": [
+    "act breaks",
+    "advertising",
+    "television drama",
+    "cliffhangers"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Douglas, Writing the TV Drama Series, 2005",
+  "source_kind": "book",
+  "reference": "Pamela Douglas, Writing the TV Drama Series, Michael Wiese Productions, 2005",
+  "written": "2026-09-26"
+}

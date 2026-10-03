@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-spoilers-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.why_stories_grip_us",
+  "strand": "pop_culture.why_stories_grip_us.spoilers",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Does knowing how a story ends make it less enjoyable to read or watch?",
+  "sides": [
+    "No, it can help",
+    "Yes, it spoils it"
+  ],
+  "answer": "No. In Leavitt and Christenfeld's 2011 experiments, readers told the ending of a short story in advance liked it slightly more than readers who went in blind. Knowing the outcome frees attention for how it happens: the craft, the irony, the hints. People reread favourite novels and rewatch films knowing every twist, and enjoy them again.",
+  "move": "Whichever side you took, whether the story depends on its surprise decides it.",
+  "ask": "Do I enjoy things more by not knowing what comes, or by savouring how it unfolds?",
+  "counterpoint": "Yes. Later studies with longer, more absorbing stories, such as Johnson and Rosenbaum's in 2015, found spoiled readers enjoyed them less, and suspense was the very thing lost. A short story read in a laboratory is not a series followed for months. The shock of a twist can be felt only once, and a spoiler takes it.",
+  "keywords": [
+    "spoilers",
+    "enjoyment",
+    "suspense",
+    "short stories"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Leavitt and Christenfeld, Psychological Science, 2011",
+  "source_kind": "paper",
+  "reference": "Jonathan D. Leavitt and Nicholas J. S. Christenfeld, Story Spoilers Don't Spoil Stories, Psychological Science, 2011",
+  "written": "2026-09-26"
+}

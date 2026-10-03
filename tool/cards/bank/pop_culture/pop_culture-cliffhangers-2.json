@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-cliffhangers-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.why_stories_grip_us",
+  "strand": "pop_culture.why_stories_grip_us.cliffhangers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why were so many Victorian novels, from Dickens onwards, built to end each monthly part on a hook?",
+  "answer": "Because readers paid by the instalment. Dickens's publishers sold The Pickwick Papers in monthly parts at a shilling each, so families who could never afford a whole novel could follow one, and by the end tens of thousands bought each part. Every part had to make buyers come back for the next. The price shaped the plot.",
+  "move": "How people pay for something shapes what gets made for them.",
+  "ask": "How does the way I am paid shape the work I actually do?",
+  "keywords": [
+    "charles dickens",
+    "serial novels",
+    "pickwick papers",
+    "monthly parts"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Patten, Charles Dickens and His Publishers, 1978",
+  "source_kind": "book",
+  "reference": "Robert L. Patten, Charles Dickens and His Publishers, Clarendon Press, 1978",
+  "written": "2026-09-26"
+}

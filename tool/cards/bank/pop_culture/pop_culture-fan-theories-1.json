@@ -1,0 +1,42 @@
+{
+  "id": "pop_culture-fan-theories-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.why_stories_grip_us",
+  "strand": "pop_culture.why_stories_grip_us.fan_theories",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "10,000 fans each post a theory with a 1-in-1,000 chance of matching the twist. On average, how many fans will look like geniuses?",
+  "value": 10,
+  "unit": "fans",
+  "answer": "About 10 fans: right by luck, they will look as if they decoded the show.",
+  "move": "When many people guess, someone will be right, and look brilliant.",
+  "ask": "Whose impressive prediction do I admire without counting how many others guessed wrong?",
+  "trap": "A theory that called the twist must have spotted real clues.",
+  "hint": "Multiply the number of theories by each one's chance.",
+  "steps": [
+    "Each theory has a 1 ÷ 1,000 chance",
+    "10,000 × 1 ÷ 1,000 = 10",
+    "About 10 fans: right by luck, they will look as if they decoded the show."
+  ],
+  "keywords": [
+    "fan theories",
+    "coincidence",
+    "predictions",
+    "large numbers"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hand, The Improbability Principle, 2014",
+  "source_kind": "book",
+  "reference": "David J. Hand, The Improbability Principle, Farrar, Straus and Giroux, 2014",
+  "written": "2026-09-26"
+}

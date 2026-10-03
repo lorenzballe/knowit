@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-spoilers-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.why_stories_grip_us",
+  "strand": "pop_culture.why_stories_grip_us.spoilers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does Romeo and Juliet announce, in its opening fourteen lines, that the two lovers will die?",
+  "answer": "To move the suspense from what to how. The prologue tells of a pair of star-crossed lovers who take their own lives; from then on every hopeful scene is watched with knowledge the characters lack. That gap, called dramatic irony, makes each near miss and each undelivered message hard to bear.",
+  "move": "Telling the ending can make every step towards it heavier.",
+  "ask": "When I already know how something will end, do I notice the moments along the way more?",
+  "keywords": [
+    "romeo and juliet",
+    "prologue",
+    "dramatic irony",
+    "shakespeare"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shakespeare, Romeo and Juliet, Arden edition, 2012",
+  "source_kind": "book",
+  "reference": "William Shakespeare, Romeo and Juliet, ed. René Weis, Arden Shakespeare Third Series, 2012",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-algorithms-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.algorithms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What changed on YouTube in 2012 when it began ranking videos by time watched instead of clicks?",
+  "answer": "Videos had to hold people, not just hook them. Under click-based ranking, a misleading thumbnail won even if viewers left within seconds; YouTube announced it would favour videos that kept people watching. Clickbait lost ground, and longer videos, and channels built to carry viewers from one video to the next, began to rise.",
+  "move": "Change what is measured and the things being measured change shape.",
+  "ask": "If my week were judged only by how I spent my hours, what would I change?",
+  "keywords": [
+    "youtube",
+    "watch time",
+    "clickbait",
+    "recommendations"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "YouTube Creator Blog, October 2012",
+  "source_kind": "company",
+  "reference": "YouTube Creator Blog, announcement that search and discovery would favour time watched, October 2012",
+  "written": "2026-09-26"
+}

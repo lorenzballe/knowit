@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 0,
-  "answer": "True. Spotify stopped paying on tracks with under 1,000 streams in the previous twelve months, saying those payments came to pennies a year and were often swallowed by bank fees before reaching anyone. The money stays in the pool and goes to tracks above the line. A per-play rate sounds universal until someone draws a threshold under it.",
+  "answer": "True. Spotify stopped paying on tracks with under 1,000 streams in the previous twelve months, saying those payments came to pennies a year, often swallowed by bank fees. The money stays in the pool and goes to tracks above the line. A per-play rate sounds universal until someone draws a threshold under it.",
   "move": "Look for the threshold before trusting that every unit counts.",
   "ask": "Where is there a minimum I have not noticed, below which my small efforts count for nothing?",
   "trap": "Assuming every play earns its fraction of a cent, however small.",

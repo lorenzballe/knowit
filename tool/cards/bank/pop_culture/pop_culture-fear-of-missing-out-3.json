@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-fear-of-missing-out-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.fear_of_missing_out",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should apps used by children be barred from streaks and other rewards for opening them every day?",
+  "sides": [
+    "Yes, bar them for children",
+    "No, let families decide"
+  ],
+  "answer": "Yes. A streak turns a free app into a daily duty: miss one evening and the counter resets, so children log in for fear of losing it, not because they want to. Britain's children's code already warns online services against design that keeps children engaged against their interests. Daily-use rewards are that design in its purest form.",
+  "move": "Whichever side you took, whether a streak builds a habit or a compulsion decides it.",
+  "ask": "Which app do I open every day because I want to, and which because I fear losing something?",
+  "counterpoint": "No. Streaks also keep children practising things worth doing, from language lessons to reading, and the reward that hooks one child motivates another. Parents can switch off notifications and set limits, and a blanket ban removes a tool many families choose. Better to require an easy way to pause a streak than to outlaw it.",
+  "keywords": [
+    "streaks",
+    "children",
+    "age appropriate design code",
+    "apps"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ICO, Age Appropriate Design Code, 2020",
+  "source_kind": "primary_document",
+  "reference": "Information Commissioner's Office, Age appropriate design: a code of practice for online services, 2020",
+  "written": "2026-09-26"
+}

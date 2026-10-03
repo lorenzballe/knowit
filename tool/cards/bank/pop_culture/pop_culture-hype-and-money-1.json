@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-hype-and-money-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.hype_and_money",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "True or false: US firms that floated on the stock market in the 1970s and 1980s then beat similar established firms over three years?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Jay Ritter tracked more than 1,500 stock market debuts from 1975 to 1984 and found that, three years on, their shares had returned only a little over half as much as matched established companies. Firms tend to sell shares when enthusiasm for their industry runs hottest, so buyers pay for excitement that then cools.",
+  "move": "Buying at the peak of excitement means paying for the excitement.",
+  "ask": "Is there something I want to buy mainly because everyone is excited about it right now?",
+  "trap": "A company confident enough to list must be on the way up.",
+  "keywords": [
+    "initial public offerings",
+    "stock market",
+    "jay ritter",
+    "hype"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ritter, Journal of Finance, 1991",
+  "source_kind": "paper",
+  "reference": "Jay R. Ritter, The Long-Run Performance of Initial Public Offerings, Journal of Finance, 1991",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-villains-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.why_stories_grip_us",
+  "strand": "pop_culture.why_stories_grip_us.villains",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the 2012 remake of Red Dawn digitally change its invading army from Chinese to North Korean?",
+  "answer": "To protect sales in China. The film had already been shot with Chinese invaders, but its backers worried about releasing it in one of the world's largest cinema markets, so flags and insignia were altered after filming. North Korea, which buys almost no Hollywood tickets, became the villain at almost no commercial cost.",
+  "move": "Ask who pays for a story before trusting who it casts as the villain.",
+  "ask": "Who gets cast as the villain in the stories I hear, and who would object if they were?",
+  "keywords": [
+    "red dawn",
+    "china",
+    "north korea",
+    "film market"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Los Angeles Times, March 2011",
+  "source_kind": "news_archive",
+  "reference": "Los Angeles Times, report on the digital changes to the Red Dawn remake, March 2011",
+  "written": "2026-09-26"
+}

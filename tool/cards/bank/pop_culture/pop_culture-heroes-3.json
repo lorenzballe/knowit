@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-heroes-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.why_stories_grip_us",
+  "strand": "pop_culture.why_stories_grip_us.heroes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Across millions of research papers since the 1950s, which more often became highly cited: solo work or team work?",
+  "options": [
+    "Papers by lone authors",
+    "Papers by teams",
+    "Neither, about equal"
+  ],
+  "correct": 1,
+  "answer": "Papers by teams. Wuchty, Jones and Uzzi analysed nearly 20 million papers and 2 million patents over five decades: teams came to dominate, and team papers were more likely to become very highly cited, an edge that grew over time. The lone genius makes the better story; the group in the lab does most of the work.",
+  "move": "A story needs one hero; real results usually need a team.",
+  "ask": "Whose quiet help is missing from the story I tell about my own successes?",
+  "trap": "Breakthrough stories feature a lone genius, so solo papers should stand out.",
+  "keywords": [
+    "lone genius",
+    "teamwork",
+    "citations",
+    "science"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wuchty, Jones and Uzzi, Science, 2007",
+  "source_kind": "paper",
+  "reference": "Stefan Wuchty, Benjamin F. Jones and Brian Uzzi, The Increasing Dominance of Teams in Production of Knowledge, Science, 2007",
+  "written": "2026-09-26"
+}

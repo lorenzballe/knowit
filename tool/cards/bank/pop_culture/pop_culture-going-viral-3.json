@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-going-viral-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.going_viral",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Facebook's average viewing time for videos left out every view shorter than 3 seconds. What did that do to the figure?",
+  "options": [
+    "Barely changed it",
+    "Inflated it by 60 to 80%",
+    "Made it look lower"
+  ],
+  "correct": 1,
+  "answer": "Inflated it by 60 to 80%. Facebook told advertisers in 2016 that for two years its average-duration figure had counted only views of 3 seconds or more, dropping the many people who scrolled straight past. Leaving out the shortest views lifted the average. Advertisers had been sold a reach the numbers flattered.",
+  "move": "Ask what was left out of an average before admiring it.",
+  "ask": "Which average do I quote about my own work that quietly leaves out the bad days?",
+  "trap": "Views under 3 seconds are tiny, so dropping them hardly matters.",
+  "keywords": [
+    "facebook",
+    "video views",
+    "advertising metrics",
+    "averages"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Wall Street Journal, 22 September 2016",
+  "source_kind": "news_archive",
+  "reference": "Suzanne Vranica and Jack Marshall, Facebook Overestimated Key Video Metric for Two Years, The Wall Street Journal, 22 September 2016",
+  "written": "2026-09-26"
+}

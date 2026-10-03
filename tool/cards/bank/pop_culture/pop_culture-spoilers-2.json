@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-spoilers-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.why_stories_grip_us",
+  "strand": "pop_culture.why_stories_grip_us.spoilers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Readers knew George Washington became the first US president. After a passage casting doubt on it, what happened?",
+  "options": [
+    "They confirmed the fact more slowly",
+    "They felt no suspense at all",
+    "They confirmed it faster than before"
+  ],
+  "correct": 0,
+  "answer": "They confirmed the fact more slowly. Richard Gerrig found that a story raising doubts about Washington's election made readers hesitate before verifying a fact they knew perfectly well. While absorbed, the mind sets its knowledge aside and lives inside the story's uncertainty, which is why a known ending can still grip.",
+  "move": "Knowing how it ends does not stop the mind living through it.",
+  "ask": "Which worry do I keep reliving even though I already know how it turned out?",
+  "trap": "Knowing the outcome should leave nothing to feel suspense about.",
+  "keywords": [
+    "suspense",
+    "george washington",
+    "known outcomes",
+    "reading"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gerrig, Journal of Memory and Language, 1989",
+  "source_kind": "paper",
+  "reference": "Richard J. Gerrig, Suspense in the Absence of Uncertainty, Journal of Memory and Language, 1989",
+  "written": "2026-09-26"
+}
