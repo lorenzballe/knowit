@@ -1,0 +1,39 @@
+{
+  "id": "space-dark-energy-3",
+  "topic": "space",
+  "genre": "space.questions_with_no_answer_yet",
+  "strand": "space.questions_with_no_answer_yet.dark_energy",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the teams that discovered the universe's expansion speeding up had set out to measure it slowing down?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In the 1990s two rival teams timed distant exploding stars to measure how hard gravity was braking the expansion. Both found those stars fainter than braking allowed: the expansion was speeding up. Neither team expected it, and each held back until the other's data agreed.",
+  "move": "Measure honestly, and the answer may overturn the question you asked.",
+  "ask": "Am I measuring things in my life in a way that could actually prove me wrong?",
+  "trap": "False, because a discovery that big must have been the target.",
+  "keywords": [
+    "accelerating expansion",
+    "type ia supernovae",
+    "dark energy",
+    "1998 discovery"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Riess et al., Astronomical Journal, 1998",
+  "source_kind": "paper",
+  "reference": "doi:10.1086/300499",
+  "written": "2026-10-03"
+}

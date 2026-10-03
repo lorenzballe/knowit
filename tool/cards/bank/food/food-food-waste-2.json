@@ -1,0 +1,33 @@
+{
+  "id": "food-food-waste-2",
+  "topic": "food",
+  "genre": "food.food_and_the_planet",
+  "strand": "food.food_and_the_planet.food_waste",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do poorer countries lose most of their wasted food before it reaches a shop, while richer ones waste it at home?",
+  "answer": "Because what is scarce differs. Where cold stores, good roads and packaging are lacking, crops rot in fields, sacks and lorries; the FAO estimates about 14% of the world's food is lost between harvest and the shop. Where food is cheap next to income and time, people overbuy and bin it.",
+  "move": "Things get wasted wherever they are cheaper than the effort to save them.",
+  "ask": "What do I waste simply because it costs less than the time it would take to save it?",
+  "keywords": [
+    "food loss",
+    "cold chain",
+    "fao",
+    "storage"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FAO, State of Food and Agriculture 2019",
+  "source_kind": "institution",
+  "reference": "FAO, The State of Food and Agriculture 2019: Moving forward on food loss and waste reduction, Rome, 2019",
+  "written": "2026-10-03"
+}

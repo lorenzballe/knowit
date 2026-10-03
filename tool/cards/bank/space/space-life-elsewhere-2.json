@@ -1,0 +1,39 @@
+{
+  "id": "space-life-elsewhere-2",
+  "topic": "space",
+  "genre": "space.questions_with_no_answer_yet",
+  "strand": "space.questions_with_no_answer_yet.life_elsewhere",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: microbes on Earth have been found living several kilometres down inside solid rock?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Drilling has found microbes in rock and water kilometres down, living on chemical energy with no sunlight. A 2018 estimate put about 70% of Earth's bacteria and archaea, the two kinds of single cells without a nucleus, underground. For microbes, the surface may be the exception, not the rule.",
+  "move": "Where you have not looked is not where things cannot be.",
+  "ask": "Have I written off a place, person or idea only because I never looked closely?",
+  "trap": "False, since life needs sunlight and lives on the surface.",
+  "keywords": [
+    "deep biosphere",
+    "subsurface microbes",
+    "archaea",
+    "extremophiles"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Magnabosco et al., Nature Geoscience, 2018",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/s41561-018-0221-6",
+  "written": "2026-10-03"
+}

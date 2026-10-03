@@ -1,0 +1,40 @@
+{
+  "id": "space-dark-energy-1",
+  "topic": "space",
+  "genre": "space.questions_with_no_answer_yet",
+  "strand": "space.questions_with_no_answer_yet.dark_energy",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Cosmologists say about 68% of the universe is dark energy. How was that share worked out?",
+  "options": [
+    "By detecting dark energy directly",
+    "From what is left after matter is counted",
+    "By counting distant galaxies"
+  ],
+  "correct": 1,
+  "answer": "From what is left over. The cosmic background shows space is almost exactly flat, which fixes the universe's total density. Matter of every kind, seen and dark, makes up only about 31% of it. Dark energy is the name for the remaining two-thirds: a measured gap whose cause nobody knows.",
+  "move": "A precise number can measure a gap rather than a thing.",
+  "ask": "Which confident label I use is really just a name for what is left over?",
+  "trap": "Detected directly, since it is quoted so precisely.",
+  "keywords": [
+    "dark energy",
+    "planck satellite",
+    "cosmic inventory",
+    "flat universe"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Planck Collaboration, Astronomy & Astrophysics, 2020",
+  "source_kind": "paper",
+  "reference": "doi:10.1051/0004-6361/201833910",
+  "written": "2026-10-03"
+}

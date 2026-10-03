@@ -1,0 +1,60 @@
+{
+  "id": "food-food-waste-1",
+  "topic": "food",
+  "genre": "food.food_and_the_planet",
+  "strand": "food.food_and_the_planet.food_waste",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Of all the food thrown away by shops, restaurants and homes worldwide, where is most of it wasted?",
+  "options": [
+    "In homes",
+    "In supermarkets",
+    "In restaurants and canteens"
+  ],
+  "correct": 0,
+  "answer": "In homes. The UN Environment Programme's 2021 Food Waste Index estimated 931 million tonnes wasted in 2019: 61% in households, 26% in food service and 13% in retail. That is about 74 kg per person a year at home. Supermarket skips make the news; the back of the fridge does the bulk of it.",
+  "move": "The waste nobody photographs is usually the biggest.",
+  "ask": "What am I quietly throwing away each week that I would never notice in a photo?",
+  "trap": "Supermarkets, whose overflowing skips are the familiar picture of waste.",
+  "keywords": [
+    "food waste",
+    "households",
+    "unep",
+    "supermarkets"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Households",
+        "value": 61,
+        "hi": true
+      },
+      {
+        "label": "Food service",
+        "value": 26
+      },
+      {
+        "label": "Retail",
+        "value": 13
+      }
+    ],
+    "caption": "Of 931 million tonnes wasted in 2019, households threw away 61%."
+  },
+  "source": "UNEP, Food Waste Index Report 2021",
+  "source_kind": "statistics",
+  "reference": "https://www.unep.org/resources/report/unep-food-waste-index-report-2021",
+  "written": "2026-10-03"
+}

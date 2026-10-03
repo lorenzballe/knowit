@@ -1,0 +1,40 @@
+{
+  "id": "food-eat-smarter-sugar-1",
+  "topic": "food",
+  "genre": "food.eat_smarter",
+  "strand": "food.eat_smarter.sugar",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In three large US cohorts, eating whole fruit went with less type 2 diabetes. What went with drinking fruit juice?",
+  "options": [
+    "Less diabetes, like whole fruit",
+    "No link either way",
+    "Slightly more diabetes"
+  ],
+  "correct": 2,
+  "answer": "Slightly more diabetes. Following about 187,000 health professionals for decades, Muraki and colleagues linked blueberries, grapes and apples to lower risk, but fruit juice to a modestly higher one. Juicing frees the sugar from the cell walls and fibre that slowed it, and one glass holds several fruits, drunk in a minute.",
+  "move": "The same thing behaves differently once freed from what held it.",
+  "ask": "Which of my habits takes something good and strips out the part that slowed me down?",
+  "trap": "Less diabetes, since juice seems to be just fruit in a glass.",
+  "keywords": [
+    "fruit juice",
+    "whole fruit",
+    "type 2 diabetes",
+    "cohort studies"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Muraki et al., BMJ, 2013",
+  "source_kind": "paper",
+  "reference": "Muraki, Imamura, Manson, Hu, Willett, van Dam & Sun, Fruit consumption and risk of type 2 diabetes: results from three prospective longitudinal cohort studies, BMJ, 2013",
+  "written": "2026-10-03"
+}

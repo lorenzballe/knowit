@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "exponential",
-  "question": "€10,000 grows at 6% a year for 30 years; a 1% yearly fee cuts that to 5%. What share of the final pot is lost, in percent?",
+  "question": "€10,000 grows at 6% a year for 30 years; a 1% yearly fee cuts growth to 5%. Share of the pot lost, in percent?",
   "value": 25,
   "unit": "percent",
   "tolerance": 1,

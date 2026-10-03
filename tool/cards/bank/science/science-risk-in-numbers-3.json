@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "hard",
   "principle": "independence",
-  "question": "A house sits where a flood has a 1-in-100 chance each year. Over a 30-year mortgage, what is the chance of at least one, in per cent?",
+  "question": "A house faces a 1-in-100 chance of flooding each year. Over a 30-year mortgage, what is the chance of at least one, in per cent?",
   "value": 26,
   "unit": "%",
   "tolerance": 1,

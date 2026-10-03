@@ -1,0 +1,40 @@
+{
+  "id": "food-water-use-2",
+  "topic": "food",
+  "genre": "food.food_and_the_planet",
+  "strand": "food.food_and_the_planet.water_use",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Of the fresh water people pump from rivers and aquifers worldwide, what share goes to farming?",
+  "options": [
+    "About 10%",
+    "About 40%",
+    "About 70%"
+  ],
+  "correct": 2,
+  "answer": "About 70%. The FAO's AQUASTAT database puts agriculture at about 70% of global freshwater withdrawals, industry at about 19% and towns and homes at about 12%. In many dry countries farming takes over 90%. A shorter shower helps, but a city's taps are a small share next to the fields around it.",
+  "move": "The use you see every day is rarely the biggest one.",
+  "ask": "Where does most of my money, time or water really go, beyond what I see each day?",
+  "trap": "About 10%, since taps and showers are the water use people see.",
+  "keywords": [
+    "water withdrawals",
+    "irrigation",
+    "aquastat",
+    "agriculture"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FAO AQUASTAT, water withdrawal by sector",
+  "source_kind": "statistics",
+  "reference": "FAO, AQUASTAT Main Database, water withdrawal by sector, 2021",
+  "written": "2026-10-03"
+}

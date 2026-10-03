@@ -1,0 +1,38 @@
+{
+  "id": "food-meat-3",
+  "topic": "food",
+  "genre": "food.food_and_the_planet",
+  "strand": "food.food_and_the_planet.meat",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should governments add a climate tax to the price of meat?",
+  "sides": [
+    "Yes, tax it",
+    "No, don't tax it"
+  ],
+  "answer": "Meat's climate damage is a cost nobody at the till pays. Modelling by Springmann and colleagues at Oxford found that pricing food's emissions could cut agricultural greenhouse gases by about a billion tonnes a year, with health gains from eating less red meat. Denmark has agreed to tax livestock emissions from 2030.",
+  "move": "It turns on where the money goes once the tax is collected.",
+  "ask": "When a price rises to change my behaviour, what would I actually change?",
+  "counterpoint": "Food takes a far bigger share of poorer families' budgets, so a meat tax lands hardest on those with least. Farmers can move production abroad, shifting emissions rather than cutting them. And a tax that feels unfair can turn voters against climate policy as a whole, as France's fuel-tax protests showed in 2018.",
+  "keywords": [
+    "meat tax",
+    "climate policy",
+    "denmark",
+    "emissions pricing"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Springmann et al., Nature Climate Change, 2017",
+  "source_kind": "paper",
+  "reference": "Springmann, Mason-D'Croz, Robinson et al., Mitigation potential and global health impacts from emissions pricing of food commodities, Nature Climate Change, 2017",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "space-before-the-big-bang-2",
+  "topic": "space",
+  "genre": "space.questions_with_no_answer_yet",
+  "strand": "space.questions_with_no_answer_yet.before_the_big_bang",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What does the Big Bang theory actually describe and test?",
+  "options": [
+    "The universe's very first instant",
+    "Where all the matter came from",
+    "How a hot, dense universe expanded and cooled"
+  ],
+  "correct": 2,
+  "answer": "How a hot, dense universe expanded and cooled. The theory runs the film back to a tiny fraction of a second after the start and is well tested from there, by the afterglow, the helium and the galaxies. The instant itself, where today's physics breaks down, lies outside it.",
+  "move": "Ask what a theory explains, not what its name promises.",
+  "ask": "Which thing do I think I understand just because I know its name?",
+  "trap": "The first instant, since the name points to a single moment.",
+  "keywords": [
+    "big bang theory",
+    "early universe",
+    "cosmology",
+    "singularity"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Weinberg, The First Three Minutes, 1977",
+  "source_kind": "book",
+  "reference": "Weinberg, The First Three Minutes: A Modern View of the Origin of the Universe, Basic Books, 1977",
+  "written": "2026-10-03"
+}

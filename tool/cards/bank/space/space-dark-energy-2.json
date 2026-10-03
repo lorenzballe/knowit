@@ -1,0 +1,36 @@
+{
+  "id": "space-dark-energy-2",
+  "topic": "space",
+  "genre": "space.questions_with_no_answer_yet",
+  "strand": "space.questions_with_no_answer_yet.dark_energy",
+  "also": [
+    "science.physics.quantum"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the energy of empty space called the worst prediction in the history of physics?",
+  "answer": "Because the obvious calculation misses by up to 120 powers of ten, depending on assumptions. Quantum theory says empty space seethes with energy, and adding it up gives a value that would have blown the universe apart before any atom formed. The dark energy actually measured is tiny by comparison. Nobody knows what cancels the rest.",
+  "move": "When a theory misses by that much, question a basic assumption.",
+  "ask": "When my estimate is wildly off, do I tweak the numbers or question where I started?",
+  "keywords": [
+    "cosmological constant",
+    "vacuum energy",
+    "quantum theory",
+    "steven weinberg"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Weinberg, Reviews of Modern Physics, 1989",
+  "source_kind": "paper",
+  "reference": "doi:10.1103/RevModPhys.61.1",
+  "written": "2026-10-03"
+}

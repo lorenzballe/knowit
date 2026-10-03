@@ -1,0 +1,40 @@
+{
+  "id": "food-eat-smarter-sugar-3",
+  "topic": "food",
+  "genre": "food.eat_smarter",
+  "strand": "food.eat_smarter.sugar",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the World Health Organization counts the sugars naturally present in honey as free sugars, like added table sugar?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. WHO's definition of free sugars covers those added by makers, cooks or diners, plus the sugars naturally in honey, syrups and fruit juices. Honey is mostly fructose and glucose, the two halves of table sugar. A spoon of honey in tea counts like a spoon of sugar.",
+  "move": "Where a thing comes from does not change what it does inside you.",
+  "ask": "Which of my treats do I excuse because it sounds natural?",
+  "trap": "Honey is natural, so it seems to belong in a healthier category.",
+  "keywords": [
+    "honey",
+    "free sugars",
+    "fructose",
+    "glucose",
+    "world health organization"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "WHO Guideline: Sugars intake, 2015",
+  "source_kind": "institution",
+  "reference": "World Health Organization, Guideline: Sugars intake for adults and children, Geneva, 2015",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "music-earworms-1",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.earworms",
+  "also": [
+    "psychology.sleep_and_dreams.insomnia"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in a 2021 sleep study, sung versions of pop songs caused more night-time earworms than instrumental versions?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Michael Scullin's team at Baylor played people either the original or the instrumental versions of catchy hits before bed. The instrumentals produced more earworms in the night and worse sleep. Without words to follow, the tune may stay unfinished business for the brain. A lullaby with no lyrics can still keep the mind singing.",
+  "move": "Test the obvious culprit before blaming it; the quiet one may be worse.",
+  "ask": "What do I do before bed that I assume is harmless but have never really tested?",
+  "trap": "Thinking it is the words that loop, so instrumentals are safer.",
+  "keywords": [
+    "earworms",
+    "sleep",
+    "instrumental music",
+    "bedtime"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Scullin, Gao & Fillmore, Psychological Science, 2021",
+  "source_kind": "paper",
+  "reference": "Scullin, Gao & Fillmore, Bedtime music, involuntary musical imagery, and sleep, Psychological Science, 2021",
+  "written": "2026-10-03"
+}

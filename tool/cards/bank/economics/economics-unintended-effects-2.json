@@ -6,24 +6,24 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "counterfactual",
-  "question": "From 1989, Mexico City banned each car from driving on one weekday, by number plate. What happened to air pollution?",
+  "question": "In 2009 the US paid owners up to $4,500 to trade old cars for new ones. Within a year, what happened to the sales boost?",
   "options": [
-    "It fell by about a fifth",
-    "No measurable improvement",
-    "It fell, then kept falling"
+    "It lasted and grew",
+    "It was almost wholly reversed",
+    "It held steady for years"
   ],
   "correct": 1,
-  "answer": "No measurable improvement. Lucas Davis found no fall in any pollutant he tracked. Many households bought a second car to drive on banned days, often an older, dirtier one, and the number of cars in the city rose. A ban on one plate a day became a reason to own two plates.",
-  "move": "Expect people to route around a rule, and ask how.",
-  "ask": "When I set a rule for myself, how might I quietly work around it?",
-  "trap": "Assuming a fifth fewer cars each day means a fifth less smog.",
+  "answer": "It was almost wholly reversed. Mian and Sufi compared cities with many old cars against cities with few: buyers there brought forward purchases they would have made anyway, and by early 2010 the extra sales had been cancelled by a slump. The scheme moved car buying by a few months.",
+  "move": "Before crediting a boost, ask what would have happened a few months later anyway.",
+  "ask": "Did I really buy more because of that sale, or just buy sooner?",
+  "trap": "Counting the summer spike as new sales that would not otherwise exist.",
   "keywords": [
-    "driving restrictions",
-    "mexico city",
-    "air pollution",
-    "hoy no circula"
+    "cash for clunkers",
+    "car sales",
+    "stimulus",
+    "mian and sufi"
   ],
-  "era": "twentieth",
+  "era": "recent",
   "region": "americas",
   "hook": "story",
   "mood": "sober",
@@ -33,8 +33,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Davis, Journal of Political Economy, 2008",
+  "source": "Mian and Sufi, Quarterly Journal of Economics, 2012",
   "source_kind": "paper",
-  "reference": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1860169",
+  "reference": "Mian & Sufi, The Effects of Fiscal Stimulus: Evidence from the 2009 Cash for Clunkers Program, Quarterly Journal of Economics, 2012",
   "written": "2026-10-03"
 }

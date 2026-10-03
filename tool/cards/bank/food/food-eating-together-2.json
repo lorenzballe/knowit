@@ -1,0 +1,53 @@
+{
+  "id": "food-eating-together-2",
+  "topic": "food",
+  "genre": "food.eat_smarter",
+  "strand": "food.eat_smarter.eating_together",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does the number of people at the table change how much each diner eats?",
+  "answer": "The more company, the more each eats. In de Castro's food diaries, meals shared with one other person were about 33% larger than meals eaten alone, and meals with seven or more companions about 96% larger. Company stretches a meal, and each diner keeps pace with the table. A big party nearly doubles a plate.",
+  "move": "Pace yourself by your own hunger, not by the table.",
+  "ask": "When I eat with others, am I following my hunger or the speed of the table?",
+  "keywords": [
+    "social facilitation",
+    "food diaries",
+    "group meals",
+    "eating behaviour"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% larger than alone",
+    "items": [
+      {
+        "label": "Eating alone",
+        "value": 0
+      },
+      {
+        "label": "With one other person",
+        "value": 33
+      },
+      {
+        "label": "With seven or more",
+        "value": 96,
+        "hi": true
+      }
+    ],
+    "caption": "Meals with seven or more companions ran about 96% larger than meals alone."
+  },
+  "source": "de Castro & Brewer, Physiology & Behavior, 1992",
+  "source_kind": "paper",
+  "reference": "de Castro & Brewer, The amount eaten in meals by humans is a power function of the number of people present, Physiology & Behavior, 1992",
+  "written": "2026-10-03"
+}

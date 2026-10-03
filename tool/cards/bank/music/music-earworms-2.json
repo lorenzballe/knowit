@@ -1,0 +1,40 @@
+{
+  "id": "music-earworms-2",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.earworms",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "During which kind of activity do earworms most often start, according to studies of people's own reports?",
+  "options": [
+    "Routine chores like walking or washing",
+    "A hard, absorbing mental task",
+    "A lively conversation with friends"
+  ],
+  "correct": 0,
+  "answer": "Routine chores. Victoria Williamson and colleagues classified hundreds of reports and found earworms usually start after a song was heard recently or repeatedly, and while attention is idle: walking, showering, housework. A busy mind has no spare channel for the loop. The washing-up is where the chorus gets its encore.",
+  "move": "An idle mind does not stay empty; it replays whatever was loaded last.",
+  "ask": "What gets replayed in my head when my hands are busy and my mind is free?",
+  "trap": "Recalling earworms that broke into focus, because those were the annoying ones.",
+  "keywords": [
+    "earworms",
+    "mind wandering",
+    "attention",
+    "chores"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Williamson et al., Psychology of Music, 2012",
+  "source_kind": "paper",
+  "reference": "Williamson et al., How do earworms start? Classifying the everyday circumstances of involuntary musical imagery, Psychology of Music, 2012",
+  "written": "2026-10-03"
+}
