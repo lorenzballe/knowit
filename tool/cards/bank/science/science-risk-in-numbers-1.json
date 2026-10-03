@@ -1,0 +1,33 @@
+{
+  "id": "science-risk-in-numbers-1",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.risk_in_numbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does a one-in-a-million chance of dying look like in ordinary life?",
+  "answer": "About one micromort, the unit the decision scientist Ronald Howard coined for it. In Britain, driving about 400 km carries one; a skydive about eight; a general anaesthetic around ten. Putting every risk in one unit lets the frightening sit beside the everyday, and the frightening often looks smaller.",
+  "move": "Put risks in the same unit before deciding which to fear.",
+  "ask": "Which risk do I avoid out of fear while taking a bigger one daily without a thought?",
+  "keywords": [
+    "micromorts",
+    "risk",
+    "driving",
+    "skydiving"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Blastland & Spiegelhalter, The Norm Chronicles, 2013",
+  "source_kind": "book",
+  "reference": "Blastland & Spiegelhalter, The Norm Chronicles: Stories and Numbers About Danger, Profile Books, 2013",
+  "written": "2026-09-26"
+}

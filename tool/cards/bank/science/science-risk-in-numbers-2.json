@@ -1,0 +1,40 @@
+{
+  "id": "science-risk-in-numbers-2",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.risk_in_numbers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "After 9/11, many Americans drove instead of flying. In the following year, roughly how many extra road deaths followed?",
+  "options": [
+    "About 15",
+    "About 150",
+    "About 1,500"
+  ],
+  "correct": 2,
+  "answer": "About 1,500. Gerd Gigerenzer compared US road deaths in the twelve months after the attacks with earlier years and estimated roughly 1,500 more, about six times the number of people killed aboard the four planes. Fear of a vivid risk pushed people towards a familiar one that was far deadlier per kilometre.",
+  "move": "When fear changes behaviour, count the risk of the new behaviour.",
+  "ask": "What have I switched to out of fear, without checking whether the new choice is safer?",
+  "trap": "About 15, since driving felt like the safe choice then.",
+  "keywords": [
+    "september 11",
+    "road deaths",
+    "dread risk",
+    "flying"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gigerenzer, Risk Analysis, 2006",
+  "source_kind": "paper",
+  "reference": "Gigerenzer, Out of the frying pan into the fire: behavioral reactions to terrorist attacks, Risk Analysis 26:347–351, 2006",
+  "written": "2026-09-26"
+}

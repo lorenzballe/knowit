@@ -1,0 +1,43 @@
+{
+  "id": "science-risk-in-numbers-3",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.risk_in_numbers",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "independence",
+  "question": "A house sits where a flood has a 1-in-100 chance each year. Over a 30-year mortgage, what is the chance of at least one, in per cent?",
+  "value": 26,
+  "unit": "%",
+  "tolerance": 1,
+  "answer": "Chance of at least one: 1 − 0.74 = 0.26, about 26%.",
+  "move": "Small yearly risks add up over every year of exposure.",
+  "ask": "Which small yearly risk am I living with that adds up over the decades I'll face it?",
+  "trap": "Reading a 100-year flood as one that comes once a century.",
+  "hint": "Work out the chance of escaping every single year, then subtract it from one.",
+  "steps": [
+    "Chance of no flood in one year: 0.99.",
+    "No flood in 30 years: 0.99 multiplied by itself 30 times ≈ 0.74.",
+    "Chance of at least one: 1 − 0.74 = 0.26, about 26%."
+  ],
+  "keywords": [
+    "100-year flood",
+    "mortgages",
+    "probability",
+    "floods"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Geological Survey, The 100-Year Flood",
+  "source_kind": "institution",
+  "reference": "https://www.usgs.gov/special-topics/water-science-school/science/100-year-flood",
+  "written": "2026-09-26"
+}

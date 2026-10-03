@@ -1,0 +1,40 @@
+{
+  "id": "science-estimating-2",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.estimating",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "Guess a quantity, then guess it again three weeks later and average the two. How does that average usually compare?",
+  "options": [
+    "Better than the first guess",
+    "No better than the first guess",
+    "Worse than the first guess"
+  ],
+  "correct": 0,
+  "answer": "Better than the first guess. Vul and Pashler found in 2008 that averaging two guesses from the same person beat either one alone, and that a three-week gap helped more than guessing twice at once. Each guess carries its own random error, and averaging cancels part of it: a crowd of one, but a crowd.",
+  "move": "Sleep on an estimate, then average the two answers.",
+  "ask": "Before my next big estimate, of cost or time, could I guess twice and take the middle?",
+  "trap": "No better, since both guesses come from the same head.",
+  "keywords": [
+    "wisdom of crowds",
+    "guessing",
+    "averaging",
+    "estimates"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vul & Pashler, Psychological Science, 2008",
+  "source_kind": "paper",
+  "reference": "Vul & Pashler, Measuring the crowd within: probabilistic representations within individuals, Psychological Science 19:645–647, 2008",
+  "written": "2026-09-26"
+}

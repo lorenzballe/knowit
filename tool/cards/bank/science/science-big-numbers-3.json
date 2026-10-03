@@ -1,0 +1,33 @@
+{
+  "id": "science-big-numbers-3",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.big_numbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Asked to place one million on a line running from one thousand to one billion, where do many people put it?",
+  "answer": "Near the middle. In Landy and colleagues' 2013 study, many adults placed a million roughly halfway, as if thousand, million and billion came in equal steps. In fact a million sits a thousandth of the way along, almost touching the start. Two words that differ by one letter hide a thousandfold gap.",
+  "move": "Put big numbers on one scale before judging how far apart they are.",
+  "ask": "When two numbers sound alike, have I checked how far apart they really are?",
+  "keywords": [
+    "number line",
+    "million",
+    "billion",
+    "number sense"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Landy, Silbert & Goldin, Cognitive Science, 2013",
+  "source_kind": "paper",
+  "reference": "Landy, Silbert & Goldin, Estimating large numbers, Cognitive Science 37:775–799, 2013",
+  "written": "2026-09-26"
+}
