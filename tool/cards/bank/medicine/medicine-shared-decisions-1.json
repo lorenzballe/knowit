@@ -1,0 +1,33 @@
+{
+  "id": "medicine-shared-decisions-1",
+  "topic": "medicine",
+  "genre": "medicine.talk_to_your_doctor",
+  "strand": "medicine.talk_to_your_doctor.shared_decisions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When patients facing planned surgery use decision aids that set out the options and odds, what happens to surgery rates?",
+  "answer": "They fall a little. A Cochrane review of 105 trials found that patients using decision aids knew more, expected outcomes more accurately, and chose major elective surgery somewhat less often, in favour of gentler options. Patients given the full picture turned out more cautious than the system had assumed for them.",
+  "move": "People given the full picture often choose less, not more.",
+  "ask": "Before I agree to something big, have I seen all the options, including doing less?",
+  "keywords": [
+    "decision aids",
+    "elective surgery",
+    "cochrane review",
+    "patient choice"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stacey et al., Cochrane Review, 2017",
+  "source_kind": "paper",
+  "reference": "Stacey et al., Decision aids for people facing health treatment or screening decisions, Cochrane Database of Systematic Reviews, 2017",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "medicine-questions-to-ask-2",
+  "topic": "medicine",
+  "genre": "medicine.talk_to_your_doctor",
+  "strand": "medicine.talk_to_your_doctor.questions_to_ask",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In recorded US consultations where doctors asked about the patient's concerns, how long did patients speak before an interruption?",
+  "options": [
+    "About 11 seconds",
+    "About 45 seconds",
+    "About 2 minutes"
+  ],
+  "correct": 0,
+  "answer": "About 11 seconds, as a median. Doctors invited the patient's agenda in only about a third of visits, and then usually cut in to focus on one problem. Patients left uninterrupted mostly finished within seconds anyway. The practical lesson for patients is to say the most important worry first.",
+  "move": "Lead with what matters most; there may be no second chance.",
+  "ask": "In my next important conversation, will I say the thing I most need to say in the first sentence?",
+  "trap": "About 2 minutes, since a consultation exists for the patient to explain.",
+  "keywords": [
+    "consultation",
+    "interruption",
+    "patient agenda",
+    "doctor-patient communication"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Singh Ospina et al., JGIM, 2019",
+  "source_kind": "paper",
+  "reference": "Singh Ospina et al., Eliciting the patient's agenda: secondary analysis of recorded clinical encounters, Journal of General Internal Medicine, 2019",
+  "written": "2026-10-03"
+}

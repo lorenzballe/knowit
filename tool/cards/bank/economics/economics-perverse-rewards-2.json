@@ -1,0 +1,33 @@
+{
+  "id": "economics-perverse-rewards-2",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.perverse_rewards",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Wells Fargo staff open up to 3.5 million accounts that customers never asked for?",
+  "answer": "Because they were judged on how many products each customer held. Branches chased steep daily sales targets, and staff who missed them feared for their jobs, so many opened accounts and cards in customers' names without consent. In 2016 regulators fined the bank $185 million. The count of accounts rose; the customers got fees.",
+  "move": "Whatever you count, people will produce, whether or not it is real.",
+  "ask": "Which number am I judged by that I could raise without doing better work?",
+  "keywords": [
+    "wells fargo",
+    "sales targets",
+    "fake accounts",
+    "cross-selling"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wells Fargo, SEC filing, August 2017",
+  "source_kind": "company",
+  "reference": "https://www.sec.gov/Archives/edgar/data/0000072971/000007297117000428/wfcexhibit99108312017.htm",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "psychology-social-proof-3",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.social_proof",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: when listeners could see download counts, the same songs ranked very differently from one online world to another?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. About 14,000 people chose among 48 unknown songs in separate online worlds. Where download counts were visible, early leads snowballed, so hits grew bigger and which songs became hits varied from world to world. The best songs rarely flopped and the worst rarely topped, but in between, luck in the first clicks decided.",
+  "move": "A crowd that watches itself is not a crowd of independent judges.",
+  "ask": "When I pick something because it is popular, am I adding a judgement or just an echo?",
+  "trap": "False: good songs should rise to the top wherever they start.",
+  "keywords": [
+    "social influence",
+    "music",
+    "popularity",
+    "cumulative advantage"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Salganik, Dodds & Watts, Science, 2006",
+  "source_kind": "paper",
+  "reference": "Salganik, Dodds & Watts, Experimental study of inequality and unpredictability in an artificial cultural market, Science, 2006",
+  "written": "2026-10-03"
+}

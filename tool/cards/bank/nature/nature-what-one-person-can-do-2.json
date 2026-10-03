@@ -1,0 +1,33 @@
+{
+  "id": "nature-what-one-person-can-do-2",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.what_one_person_can_do",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does one household installing solar panels make its neighbours more likely to do the same?",
+  "answer": "Because people copy what they can see nearby. Bollinger and Gillingham studied Californian solar installations and found each extra system in a postcode raised the chance of another there by about 0.78 percentage points. Neighbours see the panels, ask about bills, borrow courage. One roof is a small saving and a loud advertisement.",
+  "move": "A visible act counts twice: once for what it does, once for who copies.",
+  "ask": "Which visible choice of mine could quietly give a friend or neighbour permission to try it?",
+  "keywords": [
+    "solar panels",
+    "peer effects",
+    "california",
+    "social contagion"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bollinger & Gillingham, Marketing Science, 2012",
+  "source_kind": "paper",
+  "reference": "Bollinger & Gillingham, Peer effects in the diffusion of solar photovoltaic panels, Marketing Science, 2012",
+  "written": "2026-10-03"
+}

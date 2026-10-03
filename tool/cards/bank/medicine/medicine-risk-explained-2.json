@@ -1,0 +1,43 @@
+{
+  "id": "medicine-risk-explained-2",
+  "topic": "medicine",
+  "genre": "medicine.talk_to_your_doctor",
+  "strand": "medicine.talk_to_your_doctor.risk_explained",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Risk A is 1 in 112; risk B is 1 in 384. Per 1,000 people, how many more cases does A give, to one decimal?",
+  "value": 6.3,
+  "unit": "cases per 1,000",
+  "tolerance": 0.1,
+  "answer": "8.9 − 2.6 = 6.3 more cases per 1,000",
+  "move": "Put risks over the same number of people before you compare them.",
+  "ask": "When two risks are given as 1 in something, do I convert them to the same scale before choosing?",
+  "trap": "Thinking 1 in 384 is the bigger risk, because 384 is bigger.",
+  "hint": "Turn each into cases per 1,000 by dividing 1,000 by the second number.",
+  "steps": [
+    "1,000 ÷ 112 = 8.9 cases per 1,000",
+    "1,000 ÷ 384 = 2.6 cases per 1,000",
+    "8.9 − 2.6 = 6.3 more cases per 1,000"
+  ],
+  "keywords": [
+    "1 in x",
+    "risk comparison",
+    "risk communication",
+    "genetic counselling"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Grimes & Snively, Obstet Gynecol, 1999",
+  "source_kind": "paper",
+  "reference": "Grimes & Snively, Patients' understanding of medical risks: implications for genetic counseling, Obstetrics & Gynecology, 1999",
+  "written": "2026-10-03"
+}

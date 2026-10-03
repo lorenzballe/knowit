@@ -1,0 +1,40 @@
+{
+  "id": "economics-too-good-to-be-true-3",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.too_good_to_be_true",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Why are so many scam emails wildly implausible, full of strange stories and obvious errors?",
+  "options": [
+    "Their senders write poor English",
+    "To filter out sceptical readers",
+    "To slip past spam filters"
+  ],
+  "correct": 1,
+  "answer": "To filter out sceptical readers. Every reply costs the scammer time, and a doubter who quits late wastes it. Cormac Herley, a Microsoft researcher, showed that an absurd story repels almost everyone, so the few who answer are the likeliest to pay. The errors are a sieve, not a slip.",
+  "move": "Ask who an offer is designed to attract, and who it is designed to repel.",
+  "ask": "When an offer feels made just for me, what kind of person was it built to find?",
+  "trap": "Assuming obvious mistakes mean careless or unskilled senders.",
+  "keywords": [
+    "scam emails",
+    "advance-fee fraud",
+    "self-selection",
+    "cormac herley"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Herley, Microsoft Research, WEIS 2012",
+  "source_kind": "paper",
+  "reference": "Cormac Herley, Why do Nigerian Scammers Say They are From Nigeria?, Workshop on the Economics of Information Security, 2012",
+  "written": "2026-10-03"
+}

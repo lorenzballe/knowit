@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-punishment-3",
+  "topic": "philosophy",
+  "genre": "philosophy.justice",
+  "strand": "philosophy.justice.punishment",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Jeremy Bentham call every punishment, even a fully deserved one, an evil in itself?",
+  "answer": "Because it inflicts pain, and pain is bad whoever feels it. Bentham held that punishment is justified only when it prevents a greater harm, and never where it would be groundless, ineffective, too costly or needless. A sentence that deters and reforms no one is, on his count, a second harm.",
+  "move": "Count the cost of a penalty as carefully as the cost of the offence.",
+  "ask": "When I punish someone, even with silence, what greater harm am I actually preventing?",
+  "keywords": [
+    "jeremy bentham",
+    "punishment",
+    "utilitarianism",
+    "deterrence"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bentham, Principles of Morals and Legislation, ch. 13",
+  "source_kind": "book",
+  "reference": "Bentham, An Introduction to the Principles of Morals and Legislation, ed. Burns & Hart, Clarendon Press, 1996, chapter 13",
+  "written": "2026-10-03"
+}

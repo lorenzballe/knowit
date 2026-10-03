@@ -1,0 +1,40 @@
+{
+  "id": "space-ufo-claims-3",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.ufo_claims",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 2021 US intelligence reviewed 144 military reports of unidentified objects from 2004 onwards. How many could it explain with confidence?",
+  "options": [
+    "One",
+    "About half",
+    "Nearly all"
+  ],
+  "correct": 0,
+  "answer": "One: a large, deflating balloon. For nearly all the rest the report said the data were too thin to decide, often a few seconds of sensor footage. Unidentified described how little had been recorded, not what the objects were.",
+  "move": "Unexplained usually means too little was recorded, not that nothing could explain it.",
+  "ask": "When something in my life seems mysterious, do I have enough information to call it a mystery?",
+  "trap": "Nearly all, since most sightings end up having ordinary causes.",
+  "keywords": [
+    "uap",
+    "intelligence report",
+    "balloons",
+    "sensor data"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ODNI, Preliminary Assessment: UAP, 2021",
+  "source_kind": "institution",
+  "reference": "Office of the Director of National Intelligence, Preliminary Assessment: Unidentified Aerial Phenomena, 2021",
+  "written": "2026-10-03"
+}

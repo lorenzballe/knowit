@@ -1,0 +1,43 @@
+{
+  "id": "language-spin-2",
+  "topic": "language",
+  "genre": "language.words_that_persuade",
+  "strand": "language.words_that_persuade.spin",
+  "also": [
+    "medicine.judge_a_treatment.risk_numbers"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "baseRate",
+  "question": "In 1995 a UK warning said some contraceptive pills doubled the risk of a blood clot. What was the extra risk per woman?",
+  "options": [
+    "About 1 in 7,000",
+    "About 1 in 70",
+    "About 1 in 2"
+  ],
+  "correct": 0,
+  "answer": "About 1 in 7,000. The risk rose from roughly 1 in 7,000 women to 2 in 7,000, which headlines called 100% higher. Many women stopped the pill in alarm, and an estimated 13,000 extra abortions followed in England and Wales the next year. A doubling of almost nothing is still almost nothing.",
+  "move": "Ask what a percentage is a percentage of before feeling alarmed.",
+  "ask": "Which scary percentage have I reacted to without asking for the number underneath?",
+  "trap": "About 1 in 2, hearing doubled as a large share of women.",
+  "keywords": [
+    "relative risk",
+    "pill scare",
+    "blood clots",
+    "headlines"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gigerenzer, Risk Savvy, 2014",
+  "source_kind": "book",
+  "reference": "Gigerenzer, Risk Savvy: How to Make Good Decisions, Allen Lane, 2014",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,46 @@
+{
+  "id": "language-jargon-1",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.jargon",
+  "also": [
+    "psychology.know_your_own_mind.blind_spots"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Tappers drummed 120 well-known songs and listeners named 3. Tappers had expected half. How many times over did they overrate success?",
+  "value": 20,
+  "unit": "times",
+  "answer": "Tappers overrated their success 20 times over",
+  "move": "What you already know makes your message seem clearer than it is.",
+  "ask": "Where am I sure I explained something well, when the other person only heard tapping?",
+  "trap": "Guessing a small gap, because the tune felt obvious to the tapper.",
+  "hint": "Turn the tappers' half into a number of songs first.",
+  "steps": [
+    "Expected: half of 120 = 60 songs",
+    "Actual: 3 songs",
+    "60 ÷ 3 = 20",
+    "Tappers overrated their success 20 times over"
+  ],
+  "keywords": [
+    "curse of knowledge",
+    "tapping study",
+    "elizabeth newton",
+    "communication"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Newton, Stanford University dissertation, 1990",
+  "source_kind": "paper",
+  "reference": "Newton, The Rocky Road from Actions to Intentions, PhD dissertation, Stanford University, 1990",
+  "written": "2026-10-03"
+}

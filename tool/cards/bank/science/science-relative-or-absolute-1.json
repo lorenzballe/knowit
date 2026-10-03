@@ -4,33 +4,33 @@
   "genre": "science.read_a_study",
   "strand": "science.read_a_study.relative_or_absolute",
   "also": [
-    "medicine.judge_a_treatment.risk_numbers"
+    "psychology.resist_persuasion.framing"
   ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What did a 1995 warning that some contraceptive pills doubled the risk of blood clots lead to in Britain?",
-  "answer": "Many women stopped taking the pill, and thousands more abortions followed the next year. The doubling was real but tiny in absolute terms: from about one woman in 7,000 a year to two. Pregnancy itself carries a higher clot risk than either pill. A frightening 100% described one extra case per 7,000.",
-  "move": "Ask one in how many before reacting to a doubled risk.",
-  "ask": "When I hear a risk has doubled, do I ask what it doubled from?",
+  "question": "Do doctors judge a treatment differently when the same result is given as a relative cut rather than an absolute one?",
+  "answer": "Yes, markedly. In 1992 Naylor and colleagues showed doctors one trial's results in different forms; they rated the treatment more effective as a relative cut than as the absolute difference or the number needed to treat. The same pills sound bigger as a third fewer heart attacks than as one or two fewer per hundred.",
+  "move": "Ask for the same result in people per hundred before judging it.",
+  "ask": "When a deal or a treatment sounds impressive, have I asked to see it in plain counts?",
   "keywords": [
-    "contraceptive pill",
-    "blood clots",
     "relative risk",
-    "pill scare"
+    "absolute risk",
+    "doctors",
+    "framing"
   ],
   "era": "twentieth",
-  "region": "europe",
-  "hook": "story",
+  "region": "americas",
+  "hook": "misconception",
   "mood": "sober",
-  "numeracy": 2,
-  "abstraction": "concrete",
+  "numeracy": 1,
+  "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Furedi, Human Reproduction Update, 1999",
+  "source": "Naylor, Chen & Strauss, Annals of Internal Medicine, 1992",
   "source_kind": "paper",
-  "reference": "Furedi, The public health implications of the 1995 'pill scare', Human Reproduction Update 5:621–626, 1999",
+  "reference": "Naylor, Chen & Strauss, Measured enthusiasm: does the method of reporting trial results alter perceptions of therapeutic effectiveness?, Annals of Internal Medicine 117:916–921, 1992",
   "written": "2026-09-26"
 }

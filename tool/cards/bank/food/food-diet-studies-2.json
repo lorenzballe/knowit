@@ -1,0 +1,41 @@
+{
+  "id": "food-diet-studies-2",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.diet_studies",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "People who ate more beta-carotene had less lung cancer. What did a trial giving it to 29,000 smokers find?",
+  "options": [
+    "Fewer lung cancers",
+    "No difference at all",
+    "More lung cancers"
+  ],
+  "correct": 2,
+  "answer": "More lung cancers. In the Finnish ATBC trial, published in 1994, male smokers given beta-carotene pills for five to eight years had about 18% more lung cancer than those given none. People who eat plenty of carrots and greens differ in many ways from those who do not; a pill copies only one of them.",
+  "move": "People who choose a thing differ from people handed that thing.",
+  "ask": "Am I copying a habit of healthy people that is a sign of their health, not its cause?",
+  "trap": "Fewer lung cancers, since the eating studies pointed clearly that way.",
+  "keywords": [
+    "beta-carotene",
+    "lung cancer",
+    "supplements",
+    "randomised trial",
+    "smokers"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ATBC Study Group, NEJM, 1994",
+  "source_kind": "paper",
+  "reference": "Alpha-Tocopherol, Beta Carotene Cancer Prevention Study Group, The effect of vitamin E and beta carotene on the incidence of lung cancer and other cancers in male smokers, New England Journal of Medicine, 1994",
+  "written": "2026-10-03"
+}

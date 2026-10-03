@@ -6,13 +6,13 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "True or false: a wrong answer you were very sure of is harder to correct than one you only guessed?",
+  "question": "True or false: a wrong answer you were very sure of is easier to correct than one you only guessed?",
   "options": [
     "True",
     "False"
   ],
-  "correct": 1,
-  "answer": "False. Butterfield and Metcalfe found that errors made with high confidence were the most likely to be corrected once people were shown the right answer. The jolt of being confidently wrong seems to grab attention, so the correction sticks. The firmest mistakes are the easiest to fix, once they are exposed.",
+  "correct": 0,
+  "answer": "True. Butterfield and Metcalfe found that errors made with high confidence were the most likely to be corrected once people were shown the right answer. The jolt of being confidently wrong seems to grab attention, so the correction sticks. The firmest mistakes are the easiest to fix, once they are exposed.",
   "move": "Check your surest answers first; being shown wrong there teaches most.",
   "ask": "What am I completely sure of that I have never once checked?",
   "trap": "A firmly held belief seems more deeply rooted, so harder to shift.",

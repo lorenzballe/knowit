@@ -1,0 +1,40 @@
+{
+  "id": "psychology-willpower-myths-3",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.willpower_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Smokers trying to quit rated their own self-control. Four months on, how had the most confident fared?",
+  "options": [
+    "They relapsed less often",
+    "No different from the rest",
+    "They relapsed more often"
+  ],
+  "correct": 2,
+  "answer": "They had relapsed more often. Nordgren and colleagues found that people who believed their impulse control was strong exposed themselves to more temptation, keeping cigarettes to hand and spending time around smokers. Confidence moved them closer to the trigger. Those less sure of themselves kept their distance and did better.",
+  "move": "Faith in your own restraint tempts you to stand closer to the edge.",
+  "ask": "Where am I putting myself near a temptation because I am sure I can resist it?",
+  "trap": "Expecting confidence in one's willpower to predict success at quitting.",
+  "keywords": [
+    "restraint bias",
+    "smoking",
+    "relapse",
+    "temptation"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nordgren, van Harreveld & van der Pligt, Psychological Science, 2009",
+  "source_kind": "paper",
+  "reference": "Nordgren, van Harreveld & van der Pligt, The restraint bias: how the illusion of self-restraint promotes impulsive behavior, Psychological Science, 2009",
+  "written": "2026-10-03"
+}

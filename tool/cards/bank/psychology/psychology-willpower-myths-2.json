@@ -1,0 +1,39 @@
+{
+  "id": "psychology-willpower-myths-2",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.willpower_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: weeks of practising small acts of self-control, like using the other hand, build willpower for everything else?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Friese and colleagues pooled dozens of self-control training studies. The raw effect was small, and after correcting for small studies that were published mainly when positive, it shrank towards nothing. Getting better at the drill was easy; carrying the gain to unrelated temptations was what failed to show. Self-control is not a bicep.",
+  "move": "A feeling of progress needs a comparison group before it counts as progress.",
+  "ask": "Which self-improvement routine do I keep because it feels like progress, without checking that anything changed?",
+  "trap": "Taking the muscle comparison literally, so any exercise makes it stronger.",
+  "keywords": [
+    "self-control training",
+    "willpower",
+    "meta-analysis",
+    "publication bias"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Friese et al., Perspectives on Psychological Science, 2017",
+  "source_kind": "paper",
+  "reference": "Friese, Frankenbach, Job & Loschelder, Does self-control training improve self-control? A meta-analysis, Perspectives on Psychological Science, 2017",
+  "written": "2026-10-03"
+}

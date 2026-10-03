@@ -1,0 +1,33 @@
+{
+  "id": "food-marketing-to-kids-3",
+  "topic": "food",
+  "genre": "food.eat_smarter",
+  "strand": "food.eat_smarter.marketing_to_kids",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Until roughly what age do most children fail to see that an advert is trying to sell them something?",
+  "answer": "About seven or eight. A 2004 American Psychological Association task force found that from about five, children can tell adverts from programmes by their look, but take them as information, not persuasion. Only later do most grasp that someone paid to change their minds. Until then, an advert is a friendly voice.",
+  "move": "Persuasion works best on those who mistake it for information.",
+  "ask": "Which messages in my day am I taking as advice when they are really selling?",
+  "keywords": [
+    "children",
+    "advertising",
+    "persuasive intent",
+    "child development"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "APA Task Force on Advertising and Children, 2004",
+  "source_kind": "institution",
+  "reference": "Kunkel, Wilcox, Cantor, Palmer, Linn & Dowrick, Report of the APA Task Force on Advertising and Children, American Psychological Association, 2004",
+  "written": "2026-10-03"
+}

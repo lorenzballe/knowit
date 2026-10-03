@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-fairness-1",
+  "topic": "philosophy",
+  "genre": "philosophy.justice",
+  "strand": "philosophy.justice.fairness",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In one-off games where rejecting an offer leaves both players with nothing, how often are offers of 20% or less rejected?",
+  "options": [
+    "About half the time",
+    "Almost never",
+    "Almost always"
+  ],
+  "correct": 0,
+  "answer": "About half the time. Colin Camerer's 2003 review of ultimatum games, where one player proposes a split and the other can veto both shares, found low offers turned down roughly half the time. People pay real money to punish unfairness, even from strangers they will never meet again. Many failed negotiations are this game.",
+  "move": "People will pay to refuse an insult, so price fairness into every offer.",
+  "ask": "When I offer someone a deal, would it look fair from their side of the table?",
+  "trap": "Almost never, since any money beats no money.",
+  "keywords": [
+    "ultimatum game",
+    "colin camerer",
+    "fairness",
+    "bargaining",
+    "punishment"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Camerer, Behavioral Game Theory, 2003",
+  "source_kind": "book",
+  "reference": "Camerer, Behavioral Game Theory: Experiments in Strategic Interaction, Princeton University Press, 2003",
+  "written": "2026-10-03"
+}

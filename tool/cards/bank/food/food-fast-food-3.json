@@ -1,0 +1,39 @@
+{
+  "id": "food-fast-food-3",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.fast_food",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should councils stop new fast-food outlets opening within a few hundred metres of schools?",
+  "sides": [
+    "Yes, keep them away",
+    "No, leave it open"
+  ],
+  "answer": "Using California school records, Currie and colleagues found that a fast-food restaurant within about 160 metres of a school raised obesity among ninth-graders by about 5%. Teenagers buy on impulse and on foot, so distance is a real barrier. Many English councils refuse new takeaways near schools: a cheap rule that reshapes the walk home.",
+  "move": "It turns on whether distance or desire decides what pupils buy.",
+  "ask": "How much of what I eat comes down to what happens to be nearest?",
+  "counterpoint": "The same study found no effect at a quarter or half a mile, so the link is narrow and fragile. Pupils still pass shops, supermarkets and vans selling the same food, and a ban shields existing outlets from new rivals. Evidence that exclusion zones change children's weight is still thin, while they cost jobs on high streets.",
+  "keywords": [
+    "fast food",
+    "schools",
+    "obesity",
+    "planning rules",
+    "takeaways"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Currie et al., AEJ: Economic Policy, 2010",
+  "source_kind": "paper",
+  "reference": "Currie, DellaVigna, Moretti & Pathania, The effect of fast food restaurants on obesity and weight gain, American Economic Journal: Economic Policy, 2010",
+  "written": "2026-10-03"
+}

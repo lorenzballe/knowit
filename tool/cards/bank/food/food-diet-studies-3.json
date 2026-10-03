@@ -1,0 +1,40 @@
+{
+  "id": "food-diet-studies-3",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.diet_studies",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: the landmark Spanish trial of the Mediterranean diet was retracted and republished because of flawed randomisation?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. PREDIMED had reported about 30% fewer heart attacks, strokes and cardiovascular deaths with extra olive oil or nuts. In 2018 its authors withdrew the 2013 paper: about 1,600 of 7,447 participants had not been randomly assigned, as some sites enrolled whole households or clinics together. Reanalysed, the benefit held, with weaker certainty.",
+  "move": "A comparison is fair only when chance, not people, picks the groups.",
+  "ask": "When I compare what works for me, am I really comparing like with like?",
+  "trap": "A famous trial in a top journal seems too solid to be redone.",
+  "keywords": [
+    "predimed",
+    "mediterranean diet",
+    "randomisation",
+    "retraction",
+    "olive oil"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Estruch et al., NEJM, 2018",
+  "source_kind": "paper",
+  "reference": "Estruch, Ros, Salas-Salvadó et al., Primary prevention of cardiovascular disease with a Mediterranean diet supplemented with extra-virgin olive oil or nuts, New England Journal of Medicine, 2018",
+  "written": "2026-10-03"
+}

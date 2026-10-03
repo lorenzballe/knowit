@@ -1,0 +1,40 @@
+{
+  "id": "nature-coevolution-2",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.coevolution",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "New Zealand lake snails can breed with or without males. Where did Lively find males most common?",
+  "options": [
+    "Where parasites were most common",
+    "Where food was most plentiful",
+    "Where the water was coldest"
+  ],
+  "correct": 0,
+  "answer": "Where parasites were most common. Parasitic worms evolve to target the commonest snail types; sex shuffles genes, so offspring become moving targets. Lively found the share of males rose with infection rates across lakes. Clones that skip sex are efficient but identical, and an identical crowd is a parasite's ideal meal.",
+  "move": "When enemies adapt to you, being predictable becomes the real cost.",
+  "ask": "Where has being too predictable made me easy to exploit, at work or with money?",
+  "trap": "Sex seems a luxury, affordable only where life is easy.",
+  "keywords": [
+    "mud snails",
+    "parasites",
+    "sexual reproduction",
+    "new zealand"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lively, Nature, 1987",
+  "source_kind": "paper",
+  "reference": "Lively, Evidence from a New Zealand snail for the maintenance of sex by parasitism, Nature, 1987",
+  "written": "2026-10-03"
+}

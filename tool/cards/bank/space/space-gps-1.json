@@ -1,0 +1,33 @@
+{
+  "id": "space-gps-1",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.gps",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a phone need signals from four GPS satellites to find itself, when three distances should pin down a point?",
+  "answer": "Because its own clock is cheap and wrong. Each satellite broadcasts the time and its position; the phone turns how late each signal arrives into a distance, which needs the exact time. A fourth signal gives a fourth equation, so the phone solves for its clock error as well as its place. It never transmits.",
+  "move": "When your own clock is unreliable, add one more reference to cancel it.",
+  "ask": "When I can't trust my own sense of something, what extra reference could I check it against?",
+  "keywords": [
+    "gps",
+    "satellite navigation",
+    "clock error",
+    "trilateration"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Misra & Enge, Global Positioning System, 2006",
+  "source_kind": "book",
+  "reference": "Misra & Enge, Global Positioning System: Signals, Measurements, and Performance, 2nd edition, Ganga-Jamuna Press, 2006",
+  "written": "2026-10-03"
+}

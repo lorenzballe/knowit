@@ -1,0 +1,40 @@
+{
+  "id": "music-hearing-2",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.hearing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: once the ringing and muffled hearing fully clear after a loud night, the ears are undamaged?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False, at least in animals. Sharon Kujawa and Charles Liberman exposed mice to noise that dulled their hearing for a few days. Standard thresholds then recovered fully, yet up to about half the nerve connections from the inner hair cells were permanently gone. Whether people suffer the same hidden loss is still studied.",
+  "move": "A test that passes may only be measuring the parts that survived.",
+  "ask": "Where do I say I am fine now, without having checked anything beyond feeling fine?",
+  "trap": "Trusting a normal hearing test to show that nothing was lost.",
+  "keywords": [
+    "hidden hearing loss",
+    "cochlear synapses",
+    "noise exposure",
+    "tinnitus",
+    "hair cells"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kujawa & Liberman, Journal of Neuroscience, 2009",
+  "source_kind": "paper",
+  "reference": "Kujawa & Liberman, Adding insult to injury: cochlear nerve degeneration after temporary noise-induced hearing loss, Journal of Neuroscience, 2009",
+  "written": "2026-10-03"
+}

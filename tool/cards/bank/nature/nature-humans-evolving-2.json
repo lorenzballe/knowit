@@ -1,0 +1,40 @@
+{
+  "id": "nature-humans-evolving-2",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.humans_evolving",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "The Bajau sea nomads of South-East Asia spend hours a day diving. What did researchers find in their bodies?",
+  "options": [
+    "Lungs about twice the usual size",
+    "Spleens about half as large again",
+    "No difference from their neighbours"
+  ],
+  "correct": 1,
+  "answer": "Spleens about half as large again. The spleen stores oxygen-rich red blood cells and squeezes them out during a dive. Ilardo and colleagues found Bajau spleens about 50% larger than those of nearby farmers, even in people who did not dive, linked to a gene variant. Generations at sea reshaped an organ few think about.",
+  "move": "The real adaptation often sits in the part nobody thinks to check.",
+  "ask": "What quiet strength of mine, not the obvious one, really gets me through hard days?",
+  "trap": "Divers hold their breath, so bigger lungs seem the obvious change.",
+  "keywords": [
+    "bajau",
+    "spleen",
+    "free diving",
+    "sea nomads"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ilardo et al., Cell, 2018",
+  "source_kind": "paper",
+  "reference": "Ilardo et al., Physiological and genetic adaptations to diving in sea nomads, Cell, 2018",
+  "written": "2026-10-03"
+}

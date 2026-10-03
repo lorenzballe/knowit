@@ -1,0 +1,39 @@
+{
+  "id": "economics-free-is-not-free-3",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.free_is_not_free",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a free app be allowed to make users pay if they refuse to be tracked for advertising?",
+  "sides": [
+    "Yes, pay or consent",
+    "No, keep a free option"
+  ],
+  "answer": "Running a service costs money, and personalised advertising is how most free apps pay for it. Asking users to choose between tracking and a subscription is honest: it puts a price on what was hidden. Nobody is forced to use the app, and anyone who values privacy can buy it.",
+  "move": "Whichever side you took, how easily people can leave the service decides it.",
+  "ask": "Which free service would I actually pay for, and what does that say it costs me now?",
+  "counterpoint": "When an app is where your friends, work and news already are, leaving is not a real choice, so the fee works as a fine for privacy. In 2025 the European Commission fined Meta €200 million, finding its pay-or-consent offer gave users no genuine option of a version using less personal data. Privacy should not be a premium.",
+  "keywords": [
+    "online tracking",
+    "advertising",
+    "privacy",
+    "digital markets act",
+    "meta"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "European Commission, DMA decision on Meta, 2025",
+  "source_kind": "institution",
+  "reference": "https://digital-strategy.ec.europa.eu/en/news/commission-finds-apple-and-meta-breach-digital-markets-act",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "psychology-authority-3",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.authority",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In a street experiment, which outfit got a stranger obeyed most often when he gave passers-by small orders?",
+  "answer": "A guard's uniform. People did what he asked, such as picking up a bag or putting a coin in someone else's parking meter, far more often than when he dressed as a milkman or in ordinary clothes, although a guard had no power over the street. The uniform borrowed an authority it did not have.",
+  "move": "Ask what power a symbol holds here, not what it holds elsewhere.",
+  "ask": "Whose instructions do I follow because of their title or uniform, rather than what they know?",
+  "keywords": [
+    "uniforms",
+    "obedience",
+    "authority symbols",
+    "compliance"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bickman, Journal of Applied Social Psychology, 1974",
+  "source_kind": "paper",
+  "reference": "Bickman, The social power of a uniform, Journal of Applied Social Psychology, 1974",
+  "written": "2026-10-03"
+}

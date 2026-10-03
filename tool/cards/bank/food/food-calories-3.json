@@ -1,0 +1,39 @@
+{
+  "id": "food-calories-3",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.calories",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: measured in a lab, US restaurant dishes on average held about the calories their menus stated?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A 2011 study measured 269 dishes from 42 restaurants and found the stated figures off by only about 10 kcal on average. The average hid a wide spread: about one dish in five held at least 100 kcal more than stated, and dishes listed as lower in calories tended to carry more than claimed.",
+  "move": "An accurate average can hide a lot of large errors.",
+  "ask": "Where am I trusting an average that might be hiding big misses in my own case?",
+  "trap": "Expecting large hidden calories, the familiar story about eating out.",
+  "keywords": [
+    "restaurant menus",
+    "calorie labelling",
+    "measurement",
+    "averages"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Urban et al., JAMA, 2011",
+  "source_kind": "paper",
+  "reference": "Urban, McCrory, Dallal et al., Accuracy of stated energy contents of restaurant foods, JAMA, 2011",
+  "written": "2026-10-03"
+}

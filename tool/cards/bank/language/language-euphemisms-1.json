@@ -1,0 +1,33 @@
+{
+  "id": "language-euphemisms-1",
+  "topic": "language",
+  "genre": "language.words_that_persuade",
+  "strand": "language.words_that_persuade.euphemisms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do polite words for the toilet keep wearing out and needing replacement?",
+  "answer": "Because each new word catches the old stigma. Water closet gave way to toilet, toilet to bathroom, bathroom to restroom, each at first a delicate way round the thing itself. Once everyone knows what the polite word refers to, it carries the same discomfort. Steven Pinker called this the euphemism treadmill.",
+  "move": "Renaming a thing changes little until feelings about the thing change.",
+  "ask": "What am I trying to fix with a new name when the trouble is the thing itself?",
+  "keywords": [
+    "euphemism treadmill",
+    "toilet",
+    "steven pinker",
+    "taboo"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pinker, The Blank Slate, 2002",
+  "source_kind": "book",
+  "reference": "Pinker, The Blank Slate: The Modern Denial of Human Nature, Viking, 2002",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "human_body-anti-ageing-claims-2",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.anti_ageing_claims",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a prescription cream has repaired sun-wrinkled skin better than a dummy cream in blinded trials?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Tretinoin, a vitamin A derivative, beat an identical-looking cream without the drug in a 1988 double-blind trial and in many since, softening fine wrinkles from sun damage over months. It works because it changes how skin cells behave. Most shop creams have never faced such a test.",
+  "move": "Scepticism works claim by claim, not by throwing out a whole shelf.",
+  "ask": "Where have I dismissed a whole category when one item in it actually has evidence?",
+  "trap": "All anti-wrinkle creams are hype, so none could pass a trial.",
+  "keywords": [
+    "tretinoin",
+    "wrinkles",
+    "sun damage",
+    "retinoids",
+    "clinical trial"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Weiss et al., JAMA, 1988",
+  "source_kind": "paper",
+  "reference": "Weiss JS, Ellis CN, Headington JT et al., Topical tretinoin improves photoaged skin: a double-blind vehicle-controlled study, JAMA, 1988",
+  "written": "2026-09-26"
+}

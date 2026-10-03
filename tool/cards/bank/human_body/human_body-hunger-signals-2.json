@@ -1,0 +1,39 @@
+{
+  "id": "human_body-hunger-signals-2",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.hunger_signals",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: someone who has eaten their fill of one food will still eat more when a different food appears?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Barbara Rolls showed that the pleasure of a food falls as it is eaten while other foods stay appealing, an effect called sensory-specific satiety. Volunteers full of one dish ate more when a different one was offered. It is why dessert finds room after a big main course, and why buffets defeat good intentions.",
+  "move": "Variety resets appetite, so limit the choices rather than test the willpower.",
+  "ask": "When I keep eating, is it hunger, or just something new on the table?",
+  "trap": "Fullness means a full stomach, whatever food comes next.",
+  "keywords": [
+    "sensory-specific satiety",
+    "appetite",
+    "dessert",
+    "variety"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rolls et al., Physiology & Behavior, 1981",
+  "source_kind": "paper",
+  "reference": "Rolls BJ, Rolls ET, Rowe EA, Sweeney K, Sensory specific satiety in man, Physiology & Behavior, 1981",
+  "written": "2026-09-26"
+}

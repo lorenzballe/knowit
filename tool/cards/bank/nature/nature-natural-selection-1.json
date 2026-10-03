@@ -1,0 +1,33 @@
+{
+  "id": "nature-natural-selection-1",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.natural_selection",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How fast can natural selection change a bird's beak, measured in the wild?",
+  "answer": "Within a single drought. On Daphne Major in the Galápagos, the 1977 drought killed most medium ground finches; the small, soft seeds ran out and only large, hard ones were left. Boag and Grant found the survivors had deeper beaks, and their offspring inherited them. Evolution was caught in the act, on one small island.",
+  "move": "Under pressure, change can come in a season, not an age.",
+  "ask": "What hard season in my life has quietly reshaped the habits I carry now?",
+  "keywords": [
+    "galapagos finches",
+    "beak size",
+    "drought",
+    "daphne major"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Boag & Grant, Science, 1981",
+  "source_kind": "paper",
+  "reference": "Boag & Grant, Intense natural selection in a population of Darwin's finches (Geospizinae) in the Galápagos, Science, 1981",
+  "written": "2026-10-03"
+}

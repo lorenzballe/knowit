@@ -1,0 +1,33 @@
+{
+  "id": "psychology-conformity-2",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.conformity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When people answer privately instead of aloud before a group, what happens to their conformity?",
+  "answer": "It drops sharply. Deutsch and Gerard found that people who recorded answers anonymously went along with a wrong majority far less than those who answered face to face. Much conformity is public compliance: people still see the truth, but say what the group says. A secret ballot is a conformity test in reverse.",
+  "move": "Collect views privately first, or you hear only what the room wants said.",
+  "ask": "When I ask people for their opinions, do they answer before or after they know what I think?",
+  "keywords": [
+    "conformity",
+    "anonymity",
+    "social pressure",
+    "public compliance"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Deutsch & Gerard, J Abnormal and Social Psychology, 1955",
+  "source_kind": "paper",
+  "reference": "Deutsch & Gerard, A study of normative and informational social influences upon individual judgment, Journal of Abnormal and Social Psychology, 1955",
+  "written": "2026-10-03"
+}

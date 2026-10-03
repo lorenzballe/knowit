@@ -1,0 +1,33 @@
+{
+  "id": "language-who-invents-words-1",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.who_invents_words",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which speakers tend to lead a new change in how a language sounds, often by about a generation?",
+  "answer": "Young women. Reviewing decades of studies of changing vowels in cities across the English-speaking world, William Labov found women ahead of men in most changes in progress, often by around a generation. The habits mocked in teenage girls, from new vowels to new slang, are frequently the ordinary speech of their grandchildren.",
+  "move": "Before mocking how the young talk, ask whose speech it will become.",
+  "ask": "Which new habit in young people do I mock that I may be using myself in ten years?",
+  "keywords": [
+    "sound change",
+    "william labov",
+    "young women",
+    "vowels"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Labov, Principles of Linguistic Change, Vol. 2, 2001",
+  "source_kind": "book",
+  "reference": "Labov, Principles of Linguistic Change, Volume 2: Social Factors, Blackwell, 2001",
+  "written": "2026-10-03"
+}

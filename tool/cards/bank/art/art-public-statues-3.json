@@ -1,0 +1,33 @@
+{
+  "id": "art-public-statues-3",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.public_statues",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why has nobody scrubbed the green off the Statue of Liberty, which arrived in New York shiny copper-brown?",
+  "answer": "Because the green is armour. Copper in wet, salty air grows a thin crust of copper salts, the patina, within a few decades, and that crust seals the metal against further corrosion. The skin is only about 2.4 mm thick, so scrubbing it bright would eat a layer with little to spare.",
+  "move": "Some apparent damage is protection; ask what it does before removing it.",
+  "ask": "Is there a rough edge in my life that is actually protecting something I care about?",
+  "keywords": [
+    "statue of liberty",
+    "patina",
+    "copper",
+    "corrosion"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baboian et al., Statue of Liberty Restoration, 1990",
+  "source_kind": "book",
+  "reference": "Robert Baboian, E. L. Bellante & E. Blaine Cliver (eds), The Statue of Liberty Restoration, National Association of Corrosion Engineers, 1990",
+  "written": "2026-10-03"
+}

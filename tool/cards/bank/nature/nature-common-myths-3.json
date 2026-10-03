@@ -1,0 +1,33 @@
+{
+  "id": "nature-common-myths-3",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.common_myths",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is a bacterium alive today exactly as evolved as a human being?",
+  "answer": "Because both lines have been evolving for exactly as long. Every living thing descends from the same early cells, more than 3.5 billion years ago, and no lineage paused. Bacteria have run through far more generations. Gould argued the ladder with humans on top is an illusion: life always was, and still is, mostly bacterial.",
+  "move": "Different is not behind; every survivor has run the same length of race.",
+  "ask": "Whom do I treat as behind me when they have simply gone a different way?",
+  "keywords": [
+    "bacteria",
+    "evolutionary ladder",
+    "common ancestor",
+    "stephen jay gould"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gould, Full House, 1996",
+  "source_kind": "book",
+  "reference": "Gould, Full House: The Spread of Excellence from Plato to Darwin, Harmony Books, 1996",
+  "written": "2026-10-03"
+}

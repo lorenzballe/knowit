@@ -1,0 +1,44 @@
+{
+  "id": "sport-choking-3",
+  "topic": "sport",
+  "genre": "sport.the_mind_in_sport",
+  "strand": "sport.the_mind_in_sport.choking",
+  "also": [
+    "sport.tactics.home_advantage"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Over four decades of German top-flight football, when were penalty takers likelier to miss the target?",
+  "options": [
+    "When playing at home",
+    "When playing away",
+    "No difference at all"
+  ],
+  "correct": 0,
+  "answer": "When playing at home. Dohmen analysed Bundesliga penalties from 1963 to 2004 and found home players failed more often, mostly by missing the goal rather than being saved. A supportive crowd raises the cost of letting it down. The visiting taker escapes the weight of being expected to score.",
+  "move": "Support can weigh on a person as much as it lifts them.",
+  "ask": "Do the people cheering for me add to my pressure, and could I tell them what actually helps?",
+  "trap": "Assuming home support can only help a player under pressure.",
+  "keywords": [
+    "penalty kicks",
+    "home crowd",
+    "choking",
+    "bundesliga",
+    "social pressure"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dohmen, J Econ Behav Organ, 2008",
+  "source_kind": "paper",
+  "reference": "Thomas J. Dohmen, Do professionals choke under pressure?, Journal of Economic Behavior & Organization, 2008",
+  "written": "2026-10-03"
+}

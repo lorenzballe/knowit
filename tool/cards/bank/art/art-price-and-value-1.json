@@ -1,0 +1,33 @@
+{
+  "id": "art-price-and-value-1",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.price_and_value",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In an 1878 court case, Whistler was asked how he could charge 200 guineas for two days' work. What did he answer?",
+  "answer": "That he was charging for a lifetime. Whistler had sued the critic John Ruskin, who had accused him of flinging a pot of paint in the public's face. He said he asked it not for two days' labour but for the knowledge of a lifetime. He won the case, and damages of one farthing.",
+  "move": "Price work by what it took to be able to do it quickly.",
+  "ask": "Am I charging for the hours a job takes me, or for the years it took to make it quick?",
+  "keywords": [
+    "james mcneill whistler",
+    "john ruskin",
+    "libel trial",
+    "price of art"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Whistler, The Gentle Art of Making Enemies",
+  "source_kind": "primary_document",
+  "reference": "James McNeill Whistler, The Gentle Art of Making Enemies, 1890; Dover reprint, 1967",
+  "written": "2026-10-03"
+}

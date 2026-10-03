@@ -1,0 +1,33 @@
+{
+  "id": "science-coincidences-1",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.coincidences",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a truly random playlist so often play two songs by the same artist back to back?",
+  "answer": "Because real randomness clumps. Shuffle 100 songs by 10 artists and each next song has about a one-in-ten chance of sharing the artist, so roughly nine back-to-back pairs are expected. Listeners hear a pattern and suspect the machine. Spotify changed its shuffle in 2014 to spread artists out: less random, so it felt more random.",
+  "move": "Expect chance to clump; evenly spread results are the suspicious ones.",
+  "ask": "Which streak of bad luck in my life did I read as a pattern when it was just chance clumping?",
+  "keywords": [
+    "randomness",
+    "shuffle",
+    "clustering",
+    "playlists"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Falk & Konold, Psychological Review, 1997",
+  "source_kind": "paper",
+  "reference": "Falk & Konold, Making sense of randomness: implicit encoding as a basis for judgment, Psychological Review 104:301–318, 1997",
+  "written": "2026-09-26"
+}

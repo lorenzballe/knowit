@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-freedom-3",
+  "topic": "philosophy",
+  "genre": "philosophy.justice",
+  "strand": "philosophy.justice.freedom",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: averaged across 50 experiments, offering more options made almost no difference to whether people chose?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Benjamin Scheibehenne and colleagues' 2010 review of 50 experiments found the average effect of more options on choosing was close to zero; some studies showed overload, others the reverse. Whether options paralyse depends on how hard they are to compare. The famous 24 jams on a Californian shop table did not settle it.",
+  "move": "A single famous study is a question raised, not a question settled.",
+  "ask": "When I feel stuck between options, is it how many there are, or that I cannot compare them?",
+  "trap": "False, recalling the jam study retold in countless talks.",
+  "keywords": [
+    "choice overload",
+    "jam study",
+    "benjamin scheibehenne",
+    "meta-analysis",
+    "freedom of choice"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Scheibehenne et al., J. Consumer Research, 2010",
+  "source_kind": "paper",
+  "reference": "Scheibehenne, Greifeneder & Todd, Can There Ever Be Too Many Options? A Meta-Analytic Review of Choice Overload, Journal of Consumer Research 37 (3), 2010",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "nature-carbon-footprint-1",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.carbon_footprint",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Across the world's food, what share of greenhouse emissions comes from transporting it?",
+  "options": [
+    "About a twentieth",
+    "About half",
+    "About three quarters"
+  ],
+  "correct": 0,
+  "answer": "About a twentieth. Poore and Nemecek's survey of some 38,700 farms found transport made up about 6% of food emissions; clearing land, cattle burps, fertiliser and manure dominate. Beef shipped across a road emits far more on the farm than on the truck. What is eaten matters far more than how far it came.",
+  "move": "Find the biggest term in the sum before polishing the small one.",
+  "ask": "Am I working hard on a small part of a problem while ignoring its biggest piece?",
+  "trap": "Food miles are vivid, so shipping seems the biggest cost.",
+  "keywords": [
+    "food miles",
+    "food emissions",
+    "beef",
+    "transport"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Poore & Nemecek, Science, 2018",
+  "source_kind": "paper",
+  "reference": "Poore & Nemecek, Reducing food's environmental impacts through producers and consumers, Science, 2018",
+  "written": "2026-10-03"
+}

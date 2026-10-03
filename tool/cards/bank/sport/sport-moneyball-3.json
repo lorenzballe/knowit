@@ -1,0 +1,40 @@
+{
+  "id": "sport-moneyball-3",
+  "topic": "sport",
+  "genre": "sport.sport_and_numbers",
+  "strand": "sport.sport_and_numbers.moneyball",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: the Oakland Athletics of the Moneyball era won at least one World Series?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Oakland reached the playoffs four years running, 2000 to 2003, and went out in the first round each time, every time in a deciding fifth game. A 162-game season lets skill show; a best-of-five series is a handful of games that luck can swing. The method won seasons, not short series.",
+  "move": "A short series measures luck more than the method behind it.",
+  "ask": "Am I judging a good method by a few results too small to show anything?",
+  "trap": "Assuming a famous winning method must have brought a title.",
+  "keywords": [
+    "oakland athletics",
+    "playoffs",
+    "world series",
+    "small samples",
+    "moneyball"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sports Reference, Oakland Athletics history",
+  "source_kind": "reference_work",
+  "reference": "Sports Reference, Baseball-Reference.com, Oakland Athletics team history and postseason results, 2024",
+  "written": "2026-10-03"
+}

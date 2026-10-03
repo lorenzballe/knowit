@@ -1,0 +1,40 @@
+{
+  "id": "medicine-cold-and-flu-myths-1",
+  "topic": "medicine",
+  "genre": "medicine.medical_myths",
+  "strand": "medicine.medical_myths.cold_and_flu_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "In trials, which group halved its chance of catching a cold by taking vitamin C every day?",
+  "options": [
+    "Office workers in winter",
+    "Marathon runners and soldiers",
+    "Children at nursery"
+  ],
+  "correct": 1,
+  "answer": "Marathon runners, skiers and soldiers under heavy physical stress. In the general population, daily vitamin C did not cut how many colds people caught; it shortened them slightly, by about 8% in adults. A result found in one hard-pushed group was sold to everyone queuing at the chemist.",
+  "move": "A result holds for the people it was tested on, not automatically for you.",
+  "ask": "Which advice am I following that was really proven on people quite unlike me?",
+  "trap": "Office workers in winter, the people who take it most.",
+  "keywords": [
+    "vitamin c",
+    "common cold",
+    "marathon runners",
+    "cochrane review"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hemilä & Chalker, Cochrane Review, 2013",
+  "source_kind": "paper",
+  "reference": "Hemilä & Chalker, Vitamin C for preventing and treating the common cold, Cochrane Database of Systematic Reviews, 2013",
+  "written": "2026-10-03"
+}

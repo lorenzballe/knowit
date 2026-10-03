@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-freedom-2",
+  "topic": "philosophy",
+  "genre": "philosophy.justice",
+  "strand": "philosophy.justice.freedom",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "John Stuart Mill imagined a man stepping onto a bridge known to be unsafe. What did he say a bystander may do?",
+  "options": [
+    "Nothing: his life, his choice",
+    "Stop him by force in any case",
+    "Seize him, if there is no time"
+  ],
+  "correct": 2,
+  "answer": "Seize him, if there is no time to warn him. Mill reasoned in On Liberty that freedom is doing what you want, and nobody wants to fall into a river. Where there is only a risk, he must be warned, not stopped: only he can judge whether the crossing is worth it.",
+  "move": "Warn people of risks; stop them only when they do not know.",
+  "ask": "When I worry about someone's choice, have I given them the facts, or am I deciding for them?",
+  "trap": "Nothing, picturing Mill as liberty's absolute champion.",
+  "keywords": [
+    "john stuart mill",
+    "on liberty",
+    "harm principle",
+    "paternalism",
+    "bridge"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mill, On Liberty, chapter 5",
+  "source_kind": "book",
+  "reference": "Mill, On Liberty, ed. Rapaport, Hackett, 1978, chapter 5",
+  "written": "2026-10-03"
+}

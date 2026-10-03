@@ -1,0 +1,39 @@
+{
+  "id": "psychology-conformity-1",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.conformity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Facing a unanimous group giving a plainly wrong answer, what cut people's conformity more?",
+  "options": [
+    "Shrinking the group from 15 to 3",
+    "One other person breaking ranks"
+  ],
+  "correct": 1,
+  "answer": "One other person breaking ranks. In Asch's line-judging studies, conformity rose as the majority grew to about three, then barely climbed, so 15 pressed little harder than 3. A single ally who broke the unanimity cut yielding sharply, even an ally who gave a different wrong answer. The pressure comes from being alone, not outnumbered.",
+  "move": "One voice of dissent frees everyone else in the room to speak.",
+  "ask": "In my next meeting, could I be the one person who says what others may be thinking?",
+  "trap": "Assuming a bigger crowd presses harder than a smaller one.",
+  "keywords": [
+    "solomon asch",
+    "conformity",
+    "dissent",
+    "majority size"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Asch, Psychological Monographs, 1956",
+  "source_kind": "paper",
+  "reference": "Asch, Studies of independence and conformity: I. A minority of one against a unanimous majority, Psychological Monographs, 1956",
+  "written": "2026-10-03"
+}

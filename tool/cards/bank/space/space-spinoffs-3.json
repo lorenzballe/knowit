@@ -1,0 +1,43 @@
+{
+  "id": "space-spinoffs-3",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.spinoffs",
+  "also": [
+    "economics.your_money_decisions.opportunity_cost"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "A speaker lists inventions from space research as proof that the space budget paid for itself. What is the argument missing?",
+  "options": [
+    "A longer list of inventions",
+    "What the money would have produced elsewhere",
+    "The cost of each launch"
+  ],
+  "correct": 1,
+  "answer": "What the money would have produced elsewhere. Spinoffs show space research yielded useful things, not it yielded more than the same billions spent directly on medicine or engineering. That other path is invisible, so the list always looks impressive. Frédéric Bastiat called it the difference between what is seen and what is not seen.",
+  "move": "Credit an outcome only after asking what the alternative would have bought.",
+  "ask": "When I justify a past choice by its good results, do I ask what the other path would have given?",
+  "trap": "A longer list, since more examples would seem to prove more.",
+  "keywords": [
+    "spinoffs",
+    "opportunity cost",
+    "frederic bastiat",
+    "space budgets"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bastiat, That Which Is Seen and That Which Is Not Seen",
+  "source_kind": "book",
+  "reference": "Bastiat, That Which Is Seen, and That Which Is Not Seen (1850), in Selected Essays on Political Economy, Foundation for Economic Education, 1995",
+  "written": "2026-10-03"
+}

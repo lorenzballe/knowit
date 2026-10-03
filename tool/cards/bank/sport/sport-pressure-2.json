@@ -9,10 +9,10 @@
   "question": "PGA Tour pros face two putts of equal length, one for birdie and one for par. Which do they hole more often?",
   "options": [
     "The birdie putt",
-    "The par putt",
-    "Both equally often"
+    "Both equally often",
+    "The par putt"
   ],
-  "correct": 1,
+  "correct": 2,
   "answer": "The par putt. Pope and Schweitzer analysed millions of laser-measured putts and found par putts holed a few percentage points more often than birdie putts from the same distance. Missing par feels like losing a stroke; missing birdie, like failing to gain one. So birdie putts are struck more timidly and stop short.",
   "move": "A loss looms larger than an equal gain, so check your caution.",
   "ask": "Am I playing safer when chasing a gain than when avoiding a loss of the same size?",

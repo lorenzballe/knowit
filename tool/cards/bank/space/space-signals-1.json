@@ -1,0 +1,38 @@
+{
+  "id": "space-signals-1",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.signals",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should humanity beam powerful, deliberate messages at nearby stars, rather than only listen?",
+  "sides": [
+    "Yes, transmit",
+    "No, only listen"
+  ],
+  "answer": "Earth already leaks radio and radar into space, and anyone able to harm us could probably spot our oxygen-rich air anyway, so silence protects little. A deliberate, well-designed message is how contact could begin. If every species only listens, nobody ever hears anything.",
+  "move": "Whichever side you took, the hinge is who has the right to decide for everyone.",
+  "ask": "Which decision am I about to make that affects people who were never asked?",
+  "counterpoint": "Our leaked signals are far fainter than a beam focused on one star, so transmitting does change what others can hear. Contact cannot be undone, and its risks are unknown. A handful of scientists should not decide for eight billion people, and meetings between unequal civilisations on Earth give good reason for caution.",
+  "keywords": [
+    "meti",
+    "interstellar messages",
+    "seti",
+    "contact"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Haqq-Misra et al., Space Policy, 2013",
+  "source_kind": "paper",
+  "reference": "Haqq-Misra, Busch, Som & Baum, The benefits and harm of transmitting into space, Space Policy, 2013",
+  "written": "2026-10-03"
+}

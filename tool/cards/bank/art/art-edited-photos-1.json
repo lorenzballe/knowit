@@ -1,0 +1,40 @@
+{
+  "id": "art-edited-photos-1",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.edited_photos",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Researchers added 'this image has been retouched' labels to fashion adverts. What happened to young women's body dissatisfaction?",
+  "options": [
+    "It barely changed at all",
+    "It fell by about half",
+    "It rose sharply"
+  ],
+  "correct": 0,
+  "answer": "It barely changed. In Tiggemann and colleagues' experiments, women who saw adverts carrying retouching warnings felt as bad about their bodies as those who saw them unlabelled. Knowing an image is altered does not stop the comparison the eye makes on its own. The label informs the mind; the picture still works on the feeling.",
+  "move": "Knowing a picture is false does not stop it working on you.",
+  "ask": "Which feeds do I scroll knowing they are edited, and how do I feel afterwards?",
+  "trap": "It fell, because knowing the trick should break its spell.",
+  "keywords": [
+    "retouching",
+    "disclaimer labels",
+    "body image",
+    "fashion adverts"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tiggemann et al., Body Image, 2013",
+  "source_kind": "paper",
+  "reference": "Marika Tiggemann et al., Disclaimer labels on fashion magazine advertisements: effects on social comparison and body dissatisfaction, Body Image, 2013",
+  "written": "2026-10-03"
+}

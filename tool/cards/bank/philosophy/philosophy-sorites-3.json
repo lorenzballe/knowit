@@ -8,11 +8,11 @@
   "principle": "reflection",
   "question": "In 2017 US guidelines lowered the line for high blood pressure from 140/90 to 130/80. What happened to the share of adults with it?",
   "options": [
-    "Barely changed",
     "Rose from a third to nearly half",
+    "Barely changed",
     "Rose by about one point"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "It rose from about a third to nearly half: 31.9% to 45.6%, by Paul Muntner and colleagues' count. Blood pressure runs on a smooth scale with no natural break, so any line is a choice; where people crowd near it, a small move sweeps up millions overnight.",
   "move": "Where people cluster near a line, a small move redraws the whole picture.",
   "ask": "Which label do I carry, like healthy or behind, that depends mostly on where someone drew a line?",

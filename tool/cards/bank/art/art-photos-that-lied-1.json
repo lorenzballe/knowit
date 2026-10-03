@@ -1,0 +1,39 @@
+{
+  "id": "art-photos-that-lied-1",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.photos_that_lied",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 1855 Roger Fenton photographed one Crimean road twice, once with cannonballs strewn on it and once without. Which was taken first?",
+  "options": [
+    "The one with the road bare",
+    "The one with balls on the road"
+  ],
+  "correct": 0,
+  "answer": "The bare road. Errol Morris and his helpers compared small rocks visible in both pictures and found they had shifted downhill, as if kicked while balls were carried onto the road. So the dramatic version, the famous one, was arranged. Soldiers really did gather shot to reuse; here the rocks pointed the other way.",
+  "move": "When two versions exist, small details show which one was arranged.",
+  "ask": "When I hear two versions of the same event, which small detail could show which came first?",
+  "trap": "Balls first, then cleared away by soldiers collecting them.",
+  "keywords": [
+    "roger fenton",
+    "crimean war",
+    "errol morris",
+    "staging"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Morris, Believing Is Seeing, 2011",
+  "source_kind": "book",
+  "reference": "Errol Morris, Believing Is Seeing: Observations on the Mysteries of Photography, Penguin Press, 2011",
+  "written": "2026-10-03"
+}

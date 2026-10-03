@@ -1,0 +1,40 @@
+{
+  "id": "medicine-food-as-medicine-3",
+  "topic": "medicine",
+  "genre": "medicine.medical_myths",
+  "strand": "medicine.medical_myths.food_as_medicine",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: in a five-year trial of 25,871 healthy US adults, vitamin D pills cut cancer and heart disease?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In the VITAL trial, people given vitamin D had about the same rates of invasive cancer and major heart events as those on placebo. Low vitamin D goes with illness partly because sick people go out less, weigh more and eat worse. Topping up the number did not undo the reasons it was low.",
+  "move": "Fixing a warning light does not fix what switched it on.",
+  "ask": "Am I trying to fix a sign of a problem, when the problem itself needs the attention?",
+  "trap": "True, since people low in vitamin D get these diseases more.",
+  "keywords": [
+    "vitamin d",
+    "vital trial",
+    "cancer",
+    "heart disease",
+    "supplements"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Manson et al., NEJM, 2019",
+  "source_kind": "paper",
+  "reference": "Manson et al., Vitamin D supplements and prevention of cancer and cardiovascular disease, New England Journal of Medicine, 2019",
+  "written": "2026-10-03"
+}

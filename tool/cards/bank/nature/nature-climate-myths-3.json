@@ -1,0 +1,33 @@
+{
+  "id": "nature-climate-myths-3",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.climate_myths",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Climate has always changed. Why does that make today's warming more worrying, not less?",
+  "answer": "Because past changes show how strongly climate answers a push. Ice ages came and went on small wobbles in Earth's orbit, amplified by carbon dioxide. The IPCC found temperature has risen faster since 1970 than in any 50-year period for at least 2,000 years. A planet that swung on a nudge is now being shoved.",
+  "move": "Past swings measure how sensitive a system is, not how safe.",
+  "ask": "When I say it has always been like this, am I learning from the past or excusing the present?",
+  "keywords": [
+    "climate change",
+    "ice ages",
+    "ipcc",
+    "climate sensitivity"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IPCC AR6 Working Group I, 2021",
+  "source_kind": "institution",
+  "reference": "IPCC, Climate Change 2021: The Physical Science Basis, Summary for Policymakers, statement A.2.2, Cambridge University Press, 2021",
+  "written": "2026-10-03"
+}

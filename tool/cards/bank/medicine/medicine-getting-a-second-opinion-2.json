@@ -1,0 +1,33 @@
+{
+  "id": "medicine-getting-a-second-opinion-2",
+  "topic": "medicine",
+  "genre": "medicine.talk_to_your_doctor",
+  "strand": "medicine.talk_to_your_doctor.getting_a_second_opinion",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When 115 pathologists read the same breast biopsies, where did they agree least with an expert panel?",
+  "answer": "On the borderline cases. Overall they matched the experts on about 75% of readings, but on atypia, abnormal cells that are not yet cancer, agreement fell to about 48%. Clear cancers and clearly harmless tissue were judged consistently. The middle, where treatment choices are hardest, is where a second reading is worth most.",
+  "move": "Seek a second opinion where the call is closest, not where it is clear.",
+  "ask": "Which of my decisions sits in a grey zone where another person's view would be worth asking for?",
+  "keywords": [
+    "pathologists",
+    "breast biopsy",
+    "atypia",
+    "diagnostic agreement"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Elmore et al., JAMA, 2015",
+  "source_kind": "paper",
+  "reference": "Elmore et al., Diagnostic concordance among pathologists interpreting breast biopsy specimens, JAMA, 2015",
+  "written": "2026-10-03"
+}

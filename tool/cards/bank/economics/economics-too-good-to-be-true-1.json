@@ -1,0 +1,33 @@
+{
+  "id": "economics-too-good-to-be-true-1",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.too_good_to_be_true",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What convinced one analyst, years before 2008, that Bernard Madoff's fund was a fraud?",
+  "answer": "Its returns were too smooth. Real strategies lose some months; Madoff reported steady gains of about 1% a month almost every month, whatever markets did. Harry Markopolos also worked out that the options trades Madoff claimed needed more contracts than existed. He warned the SEC from 2000 onward, and it did not act.",
+  "move": "Distrust steady gains with no bad months; real risk shows up as losses.",
+  "ask": "Which offer in my life looks safe precisely because it has never had a bad month?",
+  "keywords": [
+    "bernard madoff",
+    "ponzi scheme",
+    "harry markopolos",
+    "sec"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "SEC Inspector General, Madoff report, 2009",
+  "source_kind": "primary_document",
+  "reference": "SEC Office of Inspector General, Investigation of Failure of the SEC to Uncover Bernard Madoff's Ponzi Scheme, Report No. OIG-509, 2009",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "psychology-procrastination-3",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.procrastination",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: perfectionists are the people most likely to procrastinate?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Pooling hundreds of studies, Steel found the link between perfectionism and delay was close to zero. The strong links were with impulsiveness, distractibility and how unpleasant the task feels. Perfectionism is a flattering story to tell about delay; being pulled towards whatever is more pleasant right now is the common one.",
+  "move": "Distrust the explanation for a flaw that also sounds like a compliment.",
+  "ask": "When I say I delay because I want it perfect, is it really that I want something easier right now?",
+  "trap": "Accepting the flattering, often-heard story that delay comes from high standards.",
+  "keywords": [
+    "perfectionism",
+    "impulsiveness",
+    "procrastination",
+    "meta-analysis"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Steel, Psychological Bulletin, 2007",
+  "source_kind": "paper",
+  "reference": "Steel, The nature of procrastination: a meta-analytic and theoretical review of quintessential self-regulatory failure, Psychological Bulletin, 2007",
+  "written": "2026-10-03"
+}

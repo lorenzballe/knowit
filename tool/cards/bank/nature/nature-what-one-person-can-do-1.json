@@ -1,0 +1,40 @@
+{
+  "id": "nature-what-one-person-can-do-1",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.what_one_person_can_do",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Which of these saves the most greenhouse gas for one person?",
+  "options": [
+    "Skipping one transatlantic return flight",
+    "A full year of thorough recycling",
+    "A year of hang-drying laundry"
+  ],
+  "correct": 0,
+  "answer": "Skipping one transatlantic return flight. Wynes and Nicholas compared personal actions: that one flight is about 1.6 tonnes of carbon dioxide equivalent, while a year of recycling saves about 0.2. Recycling is worth doing, but one trip outweighs eight years of it. The ranking rarely matches how virtuous an action feels.",
+  "move": "Rank efforts by their size, not by how often you perform them.",
+  "ask": "Which one big choice this year would outweigh all my small daily efforts?",
+  "trap": "Recycling is the daily green habit, so it feels the bigger effort.",
+  "keywords": [
+    "personal emissions",
+    "flights",
+    "recycling",
+    "climate action"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wynes & Nicholas, Environmental Research Letters, 2017",
+  "source_kind": "paper",
+  "reference": "Wynes & Nicholas, The climate mitigation gap: education and government recommendations miss the most effective individual actions, Environmental Research Letters, 2017",
+  "written": "2026-10-03"
+}

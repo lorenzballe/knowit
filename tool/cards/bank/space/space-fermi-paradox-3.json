@@ -1,0 +1,39 @@
+{
+  "id": "space-fermi-paradox-3",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.fermi_paradox",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "conditional",
+  "question": "By the reasoning called the Great Filter, would finding life that began on its own on Mars be good or bad news for humanity?",
+  "options": [
+    "Good news",
+    "Bad news"
+  ],
+  "correct": 1,
+  "answer": "Bad news. The galaxy looks empty, so some step from dead rock to star-faring species must be very hard. If life starts easily even next door, that hard step is less likely to be behind us and more likely to lie ahead. Nick Bostrom wrote in 2008 that he hoped Mars would prove dead.",
+  "move": "Ask what each piece of good news implies about the hard step still ahead.",
+  "ask": "If many people start where I am, where do most of them stop, and is that step behind me or ahead?",
+  "trap": "Good news, because company in the universe feels hopeful.",
+  "keywords": [
+    "great filter",
+    "fermi paradox",
+    "life on mars",
+    "nick bostrom"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bostrom, MIT Technology Review, 2008",
+  "source_kind": "news_archive",
+  "reference": "Bostrom, Where Are They? Why I Hope the Search for Extraterrestrial Life Finds Nothing, MIT Technology Review, 2008",
+  "written": "2026-10-03"
+}

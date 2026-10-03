@@ -1,0 +1,43 @@
+{
+  "id": "language-euphemisms-3",
+  "topic": "language",
+  "genre": "language.words_that_persuade",
+  "strand": "language.words_that_persuade.euphemisms",
+  "also": [
+    "medicine.talk_to_your_doctor.shared_decisions"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "People read the same end-of-life order, labelled either do not resuscitate or allow natural death. Which label won more approval?",
+  "options": [
+    "Do not resuscitate",
+    "Allow natural death",
+    "Neither: approval was the same"
+  ],
+  "correct": 1,
+  "answer": "Allow natural death. In a 2008 study, participants were more likely to endorse the order under that name, though the instruction was identical: no attempt to restart the heart when it stops. One label names what is withheld; the other names what is allowed to happen. Families meet the choice under the label a hospital uses.",
+  "move": "Name what is allowed, not only what is refused, and the choice sounds different.",
+  "ask": "In a hard choice I face, which name am I using for it, and is there a truer one?",
+  "trap": "Neither, because the instruction behind both labels is identical.",
+  "keywords": [
+    "do not resuscitate",
+    "allow natural death",
+    "end of life",
+    "labels"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Venneman et al., Journal of Medical Ethics, 2008",
+  "source_kind": "paper",
+  "reference": "Venneman, Narnor-Harris, Perish & Hamilton, Allow natural death versus do not resuscitate: three words that can change a life, Journal of Medical Ethics 34(1), 2008",
+  "written": "2026-10-03"
+}

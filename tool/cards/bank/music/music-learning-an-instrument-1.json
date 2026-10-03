@@ -1,0 +1,43 @@
+{
+  "id": "music-learning-an-instrument-1",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.learning_an_instrument",
+  "also": [
+    "human_body.the_brain.brain_myths"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: well-controlled trials show that music lessons make children better at maths and reading?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Children who take lessons do score higher, but families who pay for lessons differ in many other ways. Giovanni Sala and Fernand Gobet pooled 54 studies: once trials assigned children at random and gave the comparison group another activity, the benefit fell to about zero. The violin teaches the violin.",
+  "move": "Before crediting the activity, ask who chose to do it.",
+  "ask": "Which good result in my life am I crediting to a habit, when it may come from my circumstances?",
+  "trap": "Lesson-takers score higher, so the lessons must be raising the scores.",
+  "keywords": [
+    "music lessons",
+    "children",
+    "iq",
+    "meta-analysis",
+    "transfer"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sala & Gobet, Memory & Cognition, 2020",
+  "source_kind": "paper",
+  "reference": "Sala & Gobet, Cognitive and academic benefits of music training with children: A multilevel meta-analysis, Memory & Cognition, 2020",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "sport-corruption-3",
+  "topic": "sport",
+  "genre": "sport.sport_and_society",
+  "strand": "sport.sport_and_society.corruption",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Does legal, regulated sports betting make match-fixing harder to get away with?",
+  "sides": [
+    "Yes, it helps",
+    "No, it feeds it"
+  ],
+  "answer": "Yes. Licensed bookmakers record who bets what, and their monitoring systems flag unusual money on a match within minutes, giving investigators evidence. Cash markets underground leave no such trail. Many fixing cases in Europe were exposed precisely because regulated firms reported suspicious betting patterns to sports bodies.",
+  "move": "Whichever side you took, the hinge is whether each bet traces to a person.",
+  "ask": "When something is made legal or open, does that make bad behaviour easier to see or easier to do?",
+  "counterpoint": "No. Legal betting multiplies the markets, down to the next corner or a single serve, and every small market is cheap to fix. More betting volume means more money to be made from inside information, and offshore operators sit beyond any regulator. The 2018 tennis review found the sale of live data helped spread fixing to minor matches.",
+  "keywords": [
+    "match-fixing",
+    "sports betting",
+    "regulation",
+    "integrity monitoring"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "source": "Council of Europe, Macolin Convention, 2014",
+  "source_kind": "primary_document",
+  "reference": "Council of Europe, Convention on the Manipulation of Sports Competitions (Macolin Convention), 2014",
+  "written": "2026-10-03"
+}

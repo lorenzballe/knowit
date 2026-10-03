@@ -1,0 +1,43 @@
+{
+  "id": "space-evidence-and-hope-1",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.evidence_and_hope",
+  "also": [
+    "science.how_science_knows.replication"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "In 2020 a team reported phosphine, a gas linked to life, in the clouds of Venus. What happened next?",
+  "options": [
+    "Reanalyses shrank or questioned it",
+    "Later observations confirmed it",
+    "It was traced to volcanoes"
+  ],
+  "correct": 0,
+  "answer": "Reanalyses shrank or questioned it. Other teams reprocessing the radio data found the signal much weaker or absent, and some argued it could be sulphur dioxide or an artefact of processing. The original team revised its figure down from about 20 parts per billion. The question is still open.",
+  "move": "Expect a headline result to shrink when others measure it again.",
+  "ask": "Which exciting first result am I counting on before anyone has checked it a second time?",
+  "trap": "Later observations confirmed it, as big announcements usually hold up.",
+  "keywords": [
+    "phosphine",
+    "venus",
+    "biosignatures",
+    "reanalysis"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Snellen et al., Astronomy & Astrophysics, 2020",
+  "source_kind": "paper",
+  "reference": "Snellen et al., Re-analysis of the 267 GHz ALMA observations of Venus, Astronomy & Astrophysics, 2020",
+  "written": "2026-10-03"
+}

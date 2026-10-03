@@ -1,0 +1,40 @@
+{
+  "id": "psychology-reciprocity-1",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.reciprocity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "A fellow volunteer bought someone an unasked-for soft drink, then later asked them to buy raffle tickets. What did the drink do?",
+  "options": [
+    "Raised sales only if they liked him",
+    "Made no measurable difference",
+    "Roughly doubled the tickets bought"
+  ],
+  "correct": 2,
+  "answer": "Roughly doubled the tickets bought. People who received the drink bought about twice as many tickets as those who got nothing, and the favour worked even on those who disliked the man who gave it. The debt it created did not depend on liking. A small unasked gift bought a larger return.",
+  "move": "Notice when an unrequested gift is quietly opening an account.",
+  "ask": "Is there a free gift or favour I accepted lately that is now steering what I agree to?",
+  "trap": "Raised sales only if they liked him, as favours seem to work through liking.",
+  "keywords": [
+    "reciprocity",
+    "favours",
+    "compliance",
+    "raffle tickets"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Regan, JESP, 1971",
+  "source_kind": "paper",
+  "reference": "Regan, Effects of a favor and liking on compliance, Journal of Experimental Social Psychology, 1971",
+  "written": "2026-10-03"
+}

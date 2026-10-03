@@ -1,0 +1,42 @@
+{
+  "id": "food-portion-sizes-2",
+  "topic": "food",
+  "genre": "food.eat_smarter",
+  "strand": "food.eat_smarter.portion_sizes",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A restaurant swaps 25 cm plates for 30 cm ones. To cover the same share of each plate, by what percentage must portions grow?",
+  "value": 44,
+  "unit": "%",
+  "answer": "1.2 × 1.2 = 1.44, so portions must grow by 44%",
+  "move": "Widen a thing by a fifth and it holds almost half as much again.",
+  "ask": "When something gets a little bigger, do I notice how much more it holds?",
+  "trap": "Saying 20%, because the new plate is only 20% wider.",
+  "hint": "Compare the plates' areas, not their widths.",
+  "steps": [
+    "A plate's area grows with the square of its width",
+    "30 ÷ 25 = 1.2",
+    "1.2 × 1.2 = 1.44, so portions must grow by 44%"
+  ],
+  "keywords": [
+    "plate size",
+    "area",
+    "portions",
+    "geometry"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Euclid, Elements, Book XII, Proposition 2",
+  "source_kind": "arithmetic",
+  "reference": "Euclid, Elements, Book XII, Proposition 2, trans. Heath, Cambridge University Press, 1908",
+  "written": "2026-10-03"
+}

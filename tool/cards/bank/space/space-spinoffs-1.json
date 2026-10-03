@@ -1,0 +1,39 @@
+{
+  "id": "space-spinoffs-1",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.spinoffs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the non-stick coating on frying pans was invented by NASA for the space programme?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Roy Plunkett, a DuPont chemist, found the slippery plastic by accident in 1938, twenty years before NASA existed; non-stick pans followed in the 1950s. Velcro and the drink Tang also came before NASA used them. The space programme made them famous, not real.",
+  "move": "Check the dates: a cause cannot come after what it caused.",
+  "ask": "Which story about who started something have I repeated without checking the dates?",
+  "trap": "True, because it has been called a space-age material for decades.",
+  "keywords": [
+    "teflon",
+    "roy plunkett",
+    "nasa spinoffs",
+    "myths"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Science History Institute, Roy J. Plunkett",
+  "source_kind": "institution",
+  "reference": "https://www.sciencehistory.org/education/scientific-biographies/roy-j-plunkett/",
+  "written": "2026-10-03"
+}

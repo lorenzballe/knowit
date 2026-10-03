@@ -1,0 +1,39 @@
+{
+  "id": "sport-confidence-3",
+  "topic": "sport",
+  "genre": "sport.the_mind_in_sport",
+  "strand": "sport.the_mind_in_sport.confidence",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: across dozens of studies, athletes' confidence before an event tracked their performance more closely than their worry did?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Woodman and Hardy's meta-analysis of 48 studies found self-confidence correlated with performance at about 0.24 and worry at about minus 0.10. Both links are modest, and confidence partly reflects past form rather than causing good form. Nerves hurt less than their reputation; belief helps a little more.",
+  "move": "Feeling nervous predicts less than it feels like it does.",
+  "ask": "Am I treating my nerves as a forecast, when they say little about how it will go?",
+  "trap": "Assuming nerves matter more than belief, since nerves feel so loud.",
+  "keywords": [
+    "self-confidence",
+    "anxiety",
+    "meta-analysis",
+    "performance"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Woodman & Hardy, Journal of Sports Sciences, 2003",
+  "source_kind": "paper",
+  "reference": "Tim Woodman & Lew Hardy, The relative impact of cognitive anxiety and self-confidence upon sport performance: a meta-analysis, Journal of Sports Sciences, 2003",
+  "written": "2026-10-03"
+}

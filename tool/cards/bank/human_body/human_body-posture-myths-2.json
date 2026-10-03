@@ -1,0 +1,33 @@
+{
+  "id": "human_body-posture-myths-2",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.posture_myths",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does the claim that looking down at a phone puts 27 kg on the neck come from?",
+  "answer": "From a 2014 computer model, not a measurement of harm. It calculated the force on the neck when the head tilts 60 degrees forward, and neck muscles and discs routinely handle such loads. When researchers in Brazil examined 150 young adults, they found no link between their texting posture and neck pain.",
+  "move": "A big force on paper is not the same as damage in a body.",
+  "ask": "Which scary number have I repeated without checking whether it ever hurt anyone?",
+  "keywords": [
+    "text neck",
+    "smartphones",
+    "neck pain",
+    "posture"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "origin",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Damasceno et al., European Spine Journal, 2018",
+  "source_kind": "paper",
+  "reference": "Damasceno GM, Ferreira AS, Nogueira LAC et al., Text neck and neck pain in 18-21-year-old young adults, European Spine Journal, 2018",
+  "written": "2026-09-26"
+}

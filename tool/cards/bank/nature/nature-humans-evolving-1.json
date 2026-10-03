@@ -1,0 +1,33 @@
+{
+  "id": "nature-humans-evolving-1",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.humans_evolving",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did the gene version that helps Tibetans thrive at high altitude come from?",
+  "answer": "From Denisovans, an extinct group of ancient humans. Huerta-Sánchez and colleagues found the Tibetan version of the EPAS1 gene, which keeps blood from thickening dangerously in thin air, almost identical to one in a Denisovan genome. It entered modern humans through interbreeding tens of thousands of years ago, then spread on the plateau.",
+  "move": "Some of your best assets were borrowed long ago from someone else.",
+  "ask": "Which strength of mine did I inherit or borrow from someone I rarely credit?",
+  "keywords": [
+    "tibetans",
+    "epas1",
+    "denisovans",
+    "high altitude"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Huerta-Sánchez et al., Nature, 2014",
+  "source_kind": "paper",
+  "reference": "Huerta-Sánchez et al., Altitude adaptation in Tibetans caused by introgression of Denisovan-like DNA, Nature, 2014",
+  "written": "2026-10-03"
+}

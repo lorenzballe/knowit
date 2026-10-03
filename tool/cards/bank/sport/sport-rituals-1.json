@@ -1,0 +1,40 @@
+{
+  "id": "sport-rituals-1",
+  "topic": "sport",
+  "genre": "sport.the_mind_in_sport",
+  "strand": "sport.the_mind_in_sport.rituals",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: telling golfers that their ball is lucky reliably improves their putting?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A 2010 study reported that golfers putting with a ball described as lucky holed more putts, and the result spread widely. Calin-Jageman and Caldwell repeated it with larger samples in 2014 and found no effect. Small studies with striking results are often the ones that do not survive a second try.",
+  "move": "Wait for a surprising result to be repeated before relying on it.",
+  "ask": "Which advice do I follow because of one striking story that nobody ever checked again?",
+  "trap": "Trusting a striking published result before anyone repeated it.",
+  "keywords": [
+    "superstition",
+    "lucky charms",
+    "golf",
+    "replication",
+    "rituals"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Calin-Jageman & Caldwell, Social Psychology, 2014",
+  "source_kind": "paper",
+  "reference": "Robert J. Calin-Jageman & Tracy L. Caldwell, Replication of the Superstition and Performance Study by Damisch, Stoberock, and Mussweiler (2010), Social Psychology, 2014",
+  "written": "2026-10-03"
+}

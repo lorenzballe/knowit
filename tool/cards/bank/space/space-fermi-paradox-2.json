@@ -1,0 +1,40 @@
+{
+  "id": "space-fermi-paradox-2",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.fermi_paradox",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "After decades of listening for alien radio signals, how much of the possible search space has been covered?",
+  "options": [
+    "About a tenth of the sky",
+    "Most of the nearby stars",
+    "A hot tub out of the oceans"
+  ],
+  "correct": 2,
+  "answer": "A hot tub out of the oceans. Wright and colleagues added up every search by sky area, frequency, sensitivity and time, and set it against every place and way a signal could hide. What has been examined compares to a hot tub of water against all of Earth's seas. No fish in it says little.",
+  "move": "Before calling a search empty, ask how much ground it covered.",
+  "ask": "Where have I given up after looking in only a few places?",
+  "trap": "Most nearby stars, since the search has run for decades.",
+  "keywords": [
+    "seti",
+    "radio searches",
+    "cosmic haystack",
+    "jason wright"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wright, Kanodia & Lubar, Astronomical Journal, 2018",
+  "source_kind": "paper",
+  "reference": "Wright, Kanodia & Lubar, How Much SETI Has Been Done? Finding Needles in the n-dimensional Cosmic Haystack, Astronomical Journal, 2018",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "economics-tragedy-of-the-commons-3",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.tragedy_of_the_commons",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: fisheries where each owner holds a fixed share of the total catch collapse about as often as open ones?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Studying over 11,000 fisheries, Costello and colleagues found nearly a third of open-access fisheries had collapsed, against about half that rate under catch shares. When a share of a fixed total is yours, a bigger fish stock next year is your gain, so the race to catch first slows.",
+  "move": "Give people a share of tomorrow, and they stop racing for today.",
+  "ask": "What would I look after better if a share of its future were mine?",
+  "trap": "Assuming fishers grab all they can under any rules.",
+  "keywords": [
+    "fisheries",
+    "catch shares",
+    "overfishing",
+    "property rights"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Costello, Gaines and Lynham, Science, 2008",
+  "source_kind": "paper",
+  "reference": "Costello, Gaines & Lynham, Can Catch Shares Prevent Fisheries Collapse?, Science, 2008",
+  "written": "2026-10-03"
+}

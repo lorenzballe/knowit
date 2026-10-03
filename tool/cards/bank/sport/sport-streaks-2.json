@@ -9,10 +9,10 @@
   "question": "A team's 82 games are each a pure coin flip. How long is its longest losing run in a typical season?",
   "options": [
     "About 2 games",
-    "About 5 games",
-    "About 15 games"
+    "About 15 games",
+    "About 5 games"
   ],
-  "correct": 1,
+  "correct": 2,
   "answer": "About 5 games. The longest run of one side in a series of tosses is typically near log2 of half the tosses: here log2 of 41, a little over 5. People asked to invent coin sequences rarely include runs that long. A five-game slump in such a season needs no explanation at all.",
   "move": "Long runs are what chance looks like, so do not explain every one.",
   "ask": "Am I hunting for a reason behind a bad run that chance alone would happily produce?",

@@ -1,0 +1,43 @@
+{
+  "id": "music-hip-hop-3",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.hip_hop",
+  "also": [
+    "music.the_music_business.charts"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: in 2017, rock was still the most consumed genre of music in the United States?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Nielsen's 2017 figures put R&B and hip hop ahead for the first time, at about a quarter of all consumption. The lead came from streaming, where young listeners play rap most; rock still sold more albums. Count discs on shelves and rock wins. Count plays in pockets and it does not.",
+  "move": "Ask what is being counted before accepting who is winning.",
+  "ask": "Which measure am I using to judge my progress, and would another one tell a different story?",
+  "trap": "Picturing rock's long reign in album sales and radio as still current.",
+  "keywords": [
+    "hip hop",
+    "rock",
+    "nielsen",
+    "streaming",
+    "genre share"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nielsen Music, 2017 U.S. Year-End Report",
+  "source_kind": "statistics",
+  "reference": "Nielsen Music, 2017 U.S. Music Year-End Report, January 2018",
+  "written": "2026-10-03"
+}

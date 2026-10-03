@@ -1,0 +1,40 @@
+{
+  "id": "human_body-before-and-after-2",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.before_and_after",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "Patients join an eczema trial during a bad flare. Over the next weeks, what usually happens to those given a dummy cream?",
+  "options": [
+    "Their skin gets steadily worse",
+    "Their skin improves noticeably",
+    "Their skin stays the same"
+  ],
+  "correct": 1,
+  "answer": "Their skin improves noticeably. Eczema, pain and blood pressure fluctuate, and people enrol at a peak, so the next measurement tends to be better whatever is done. Morton and Torgerson warned that this regression to the mean makes useless treatments look good. A before photo taken on the worst day flatters any product.",
+  "move": "Anything picked at its worst will usually look better next time.",
+  "ask": "Which change did I credit to something I did, when it was just a bad stretch ending?",
+  "trap": "Without real treatment, a bad flare should stay bad or worsen.",
+  "keywords": [
+    "regression to the mean",
+    "clinical trials",
+    "eczema",
+    "before and after"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Morton and Torgerson, BMJ, 2003",
+  "source_kind": "paper",
+  "reference": "Morton V, Torgerson DJ, Effect of regression to the mean on decision making in health care, BMJ, 2003",
+  "written": "2026-09-26"
+}

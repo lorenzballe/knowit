@@ -1,0 +1,39 @@
+{
+  "id": "food-cooking-myths-1",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.cooking_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: a spoonful of oil in the pasta water stops the pasta sticking together?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Oil floats on the water while the pasta cooks below it, so little reaches the strands as they boil. Sticking happens in the first minutes, as starch on the surface turns gluey; stirring then is what keeps them apart. Oil helps only afterwards, when drained pasta is tossed in it.",
+  "move": "A ritual that never fails may simply have nothing to do.",
+  "ask": "Which of my routines would I keep if I tested skipping it just once?",
+  "trap": "The pasta never stuck after adding oil, so the oil seems to work.",
+  "keywords": [
+    "pasta",
+    "cooking oil",
+    "starch",
+    "kitchen myths"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McGee, On Food and Cooking, 2004",
+  "source_kind": "book",
+  "reference": "McGee, On Food and Cooking: The Science and Lore of the Kitchen, Scribner, 2004",
+  "written": "2026-10-03"
+}

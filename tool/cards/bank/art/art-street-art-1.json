@@ -1,0 +1,56 @@
+{
+  "id": "art-street-art-1",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.street_art",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 2018 a Banksy painting shredded itself moments after selling at auction for £1.04 million. What then happened to its price?",
+  "options": [
+    "It fell to almost nothing",
+    "It rose about eighteenfold",
+    "It stayed roughly the same"
+  ],
+  "correct": 1,
+  "answer": "It rose about eighteenfold. The buyer kept the half-shredded canvas, renamed Love is in the Bin, and in 2021 it sold again at Sotheby's for £18.6 million. The stunt made it the most talked-about painting of the year. What was destroyed was a picture; what was created was a story the whole world had watched.",
+  "move": "A price often follows the story told about a thing, not the thing.",
+  "ask": "What am I paying extra for this month because of the story around it, not the thing itself?",
+  "trap": "It fell, because a damaged painting is worth less.",
+  "keywords": [
+    "banksy",
+    "sotheby's",
+    "auction",
+    "shredding"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "£ million",
+    "items": [
+      {
+        "label": "Sold in 2018, before shredding",
+        "value": 1.04
+      },
+      {
+        "label": "Resold in 2021, half shredded",
+        "value": 18.6,
+        "hi": true
+      }
+    ],
+    "caption": "From £1.04 million to £18.6 million in three years, after a public shredding."
+  },
+  "source": "Sotheby's London, October 2021 sale",
+  "source_kind": "company",
+  "reference": "Sotheby's London, Contemporary Art Evening Auction, 14 October 2021, Banksy, Love is in the Bin",
+  "written": "2026-10-03"
+}

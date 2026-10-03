@@ -1,0 +1,33 @@
+{
+  "id": "psychology-rewards-2",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.rewards",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Pupils collected charity donations door to door. Who collected the most: the unpaid ones or those on commission?",
+  "answer": "The unpaid ones. Gneezy and Rustichini offered some Israeli pupils 1% of what they raised and others 10%. The 1% group collected far less than the unpaid, and the 10% group did not catch up with them. Once paid, the outing was judged as a job, and as a job it paid badly.",
+  "move": "Pay properly or not at all; a token fee is judged as a poor wage.",
+  "ask": "Where am I offering someone a token payment for something they might happily have done for free?",
+  "keywords": [
+    "incentives",
+    "volunteering",
+    "charity",
+    "commission"
+  ],
+  "era": "twentieth",
+  "region": "middle_east",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gneezy & Rustichini, Quarterly Journal of Economics, 2000",
+  "source_kind": "paper",
+  "reference": "Gneezy & Rustichini, Pay enough or don't pay at all, Quarterly Journal of Economics, 2000",
+  "written": "2026-10-03"
+}

@@ -8,10 +8,10 @@
   "principle": "reflection",
   "question": "Waking in hospital, you either had ten hours of painful surgery yesterday, now forgotten, or face one hour today. Which did Derek Parfit prefer?",
   "options": [
-    "One hour today",
-    "Ten hours yesterday"
+    "Ten hours yesterday",
+    "One hour today"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Ten hours yesterday. In Reasons and Persons, Parfit admits he would choose the longer pain, as long as it is over. People care far more about what is to come than about what is past. The same bias may explain why the endless time before birth troubles nobody, while the time after death troubles most.",
   "move": "Notice how differently you weigh the same thing before and after it happens.",
   "ask": "Which past hardship do I now shrug off that, still ahead of me, would fill me with dread?",

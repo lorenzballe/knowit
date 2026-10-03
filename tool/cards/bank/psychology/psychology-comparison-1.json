@@ -1,0 +1,33 @@
+{
+  "id": "psychology-comparison-1",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.comparison",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When University of California staff could look up colleagues' pay online, who became less satisfied, and who happier?",
+  "answer": "Only those paid below their unit's median changed: they grew less satisfied and likelier to look for work. Those above it gained no happiness at all. Card, Mas, Moretti and Saez told a random group about a newspaper site listing every salary. Earning less than the next desk stings; earning more barely registers.",
+  "move": "Upward comparisons cost more than downward ones pay; ration them.",
+  "ask": "Whose salary, house or holiday do I keep checking, and does it ever leave me feeling better?",
+  "keywords": [
+    "pay transparency",
+    "salaries",
+    "job satisfaction",
+    "university of california"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Card, Mas, Moretti & Saez, American Economic Review, 2012",
+  "source_kind": "paper",
+  "reference": "Card, Mas, Moretti & Saez, Inequality at work: the effect of peer salaries on job satisfaction, American Economic Review, 2012",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "economics-averages-that-mislead-3",
+  "topic": "economics",
+  "genre": "economics.read_money_news",
+  "strand": "economics.read_money_news.averages_that_mislead",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A fund gains 50% one year and loses 50% the next. Its average yearly return is 0%. What is €100 now worth, in euros?",
+  "value": 75,
+  "unit": "euros",
+  "answer": "€75, despite an average return of 0%",
+  "move": "Gains and losses multiply, so an average of yearly returns can flatter.",
+  "ask": "When someone quotes me an average return, do I know what the money did year by year?",
+  "trap": "Trusting the 0% average and expecting to still have €100.",
+  "hint": "Apply each year's change to the money there is at that point.",
+  "steps": [
+    "After the gain: 100 × 1.5 = €150",
+    "After the loss: 150 × 0.5 = €75",
+    "€75, despite an average return of 0%"
+  ],
+  "keywords": [
+    "average returns",
+    "volatility",
+    "investment losses",
+    "compounding"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arithmetic of gains and losses",
+  "source_kind": "arithmetic",
+  "reference": "Arithmetic versus compound average returns, worked arithmetic, 2026",
+  "written": "2026-10-03"
+}

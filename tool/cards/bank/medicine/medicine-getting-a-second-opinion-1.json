@@ -1,0 +1,40 @@
+{
+  "id": "medicine-getting-a-second-opinion-1",
+  "topic": "medicine",
+  "genre": "medicine.talk_to_your_doctor",
+  "strand": "medicine.talk_to_your_doctor.getting_a_second_opinion",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "At a major US clinic, 286 patients came for a second opinion. How often was the first diagnosis confirmed unchanged?",
+  "options": [
+    "About 1 in 8",
+    "About half",
+    "About 9 in 10"
+  ],
+  "correct": 0,
+  "answer": "About 1 in 8, or 12%. For 21% the diagnosis changed completely, and for most of the rest it was refined. These were hard cases sent on for a reason, which overstates errors in ordinary care. Still, for a complex problem, a second look changed the picture far more often than it confirmed it.",
+  "move": "A serious, puzzling problem deserves a second set of eyes.",
+  "ask": "Is there a problem in my life complex enough that one expert's view should not be the last word?",
+  "trap": "About 9 in 10, since most first diagnoses must be right.",
+  "keywords": [
+    "second opinion",
+    "diagnosis",
+    "mayo clinic",
+    "referrals"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Van Such et al., JECP, 2017",
+  "source_kind": "paper",
+  "reference": "Van Such et al., Extent of diagnostic agreement among medical referrals, Journal of Evaluation in Clinical Practice, 2017",
+  "written": "2026-10-03"
+}

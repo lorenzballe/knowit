@@ -6,16 +6,16 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "True or false: Seneca's essay On the Shortness of Life argues that a human life is too short?",
+  "question": "True or false: Seneca's essay On the Shortness of Life argues that a life is long enough, if it is used well?",
   "options": [
     "True",
     "False"
   ],
-  "correct": 1,
-  "answer": "False. Seneca argues the opposite: life is long enough if it is used well. What shortens it is postponement; he calls expectation the greatest obstacle to living, because it loses today waiting for tomorrow. People guard their money, he notes, and hand their hours to anyone who asks.",
+  "correct": 0,
+  "answer": "True. Seneca turns the title's complaint around: life is long enough if it is used well. What shortens it is postponement; he calls expectation the greatest obstacle to living, because it loses today waiting for tomorrow. People guard their money, he notes, and hand their hours to anyone who asks.",
   "move": "A title can state the complaint an author sets out to refute.",
   "ask": "Whose requests am I giving hours to that I would never give money to?",
-  "trap": "True, taking the title for the thesis it argues against.",
+  "trap": "False, taking the title for the thesis it argues against.",
   "keywords": [
     "seneca",
     "shortness of life",

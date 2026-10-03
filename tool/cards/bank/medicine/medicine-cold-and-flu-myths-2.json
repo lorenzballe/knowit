@@ -1,0 +1,39 @@
+{
+  "id": "medicine-cold-and-flu-myths-2",
+  "topic": "medicine",
+  "genre": "medicine.medical_myths",
+  "strand": "medicine.medical_myths.cold_and_flu_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in a Cardiff study, people who sat with their feet in cold water for 20 minutes reported more colds afterwards?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Of 180 volunteers, more than twice as many in the chilled group reported cold symptoms in the following days as in the group that kept warm. Chilling does not create a virus. It narrows blood vessels in the nose, which may let a virus already there take hold.",
+  "move": "A debunked saying can hide a mechanism nobody had looked for.",
+  "ask": "Which old saying have I laughed off that might have a real reason behind it?",
+  "trap": "False, because colds come from viruses, not from being cold.",
+  "keywords": [
+    "common cold",
+    "chilling",
+    "cold feet",
+    "nasal blood flow"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Johnson & Eccles, Family Practice, 2005",
+  "source_kind": "paper",
+  "reference": "Johnson & Eccles, Acute cooling of the feet and the onset of common cold symptoms, Family Practice, 2005",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "art-public-statues-1",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.public_statues",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: on a statue of a rider, the number of raised hooves tells how the rider died?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The rule (one hoof up, wounded; two, killed in battle) fits some statues and fails countless others. Marcus Aurelius on Rome's Capitoline Hill lifts a foreleg, yet he died of illness in camp. Sculptors chose poses for balance, drama and cost: a rearing horse puts its whole weight on two thin bronze legs.",
+  "move": "A rule that fits the examples you were shown may fail on the rest.",
+  "ask": "Which neat rule of thumb do I believe because I only ever heard the examples that fit?",
+  "trap": "True, because the rule fits the examples people usually quote.",
+  "keywords": [
+    "equestrian statues",
+    "raised hooves",
+    "marcus aurelius",
+    "folklore"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Haskell & Penny, Taste and the Antique, 1981",
+  "source_kind": "book",
+  "reference": "Francis Haskell & Nicholas Penny, Taste and the Antique: The Lure of Classical Sculpture 1500–1900, Yale University Press, 1981",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "medicine-pandemics-3",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.pandemics",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "In a severe pandemic, should schools be among the first places closed?",
+  "sides": [
+    "Yes, close early",
+    "No, keep them open"
+  ],
+  "answer": "Yes. Children mix closely and carry respiratory viruses home, and in a severe pandemic every week of slower spread buys time for hospitals, treatments and vaccines. In 1918, US cities that closed schools early alongside other measures had lower death peaks. Closing briefly and early can cost less than closing late and long.",
+  "move": "Whichever side you took, the hinge is how much the particular virus spreads through children.",
+  "ask": "When I protect people I care about, have I counted what the protection itself costs them?",
+  "counterpoint": "For Covid, a 2020 review found modelling suggested school closures alone would prevent only 2 to 4% of deaths, far less than other measures. The costs were large and fell on poorer children: lost learning, meals, safety and contact. Closing schools should be a last lever pulled, not the first.",
+  "keywords": [
+    "school closures",
+    "pandemic",
+    "covid-19",
+    "children",
+    "education"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Viner et al., Lancet Child Adolesc Health, 2020",
+  "source_kind": "paper",
+  "reference": "Viner et al., School closure and management practices during coronavirus outbreaks including COVID-19: a rapid systematic review, Lancet Child & Adolescent Health, 2020",
+  "written": "2026-10-03"
+}

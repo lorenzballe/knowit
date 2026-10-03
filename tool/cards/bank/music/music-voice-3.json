@@ -1,0 +1,43 @@
+{
+  "id": "music-voice-3",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.voice",
+  "kind": "estimate",
+  "difficulty": "medium",
+  "principle": "estimation",
+  "question": "A teacher talks for about two hours a day at around 200 vibrations a second. Roughly how many vocal-fold collisions a day, in millions?",
+  "value": 1.44,
+  "unit": "million collisions",
+  "withinFactor": 3,
+  "answer": "About 1.4 million collisions a day, five days a week",
+  "move": "Small stresses repeated millions of times are how sturdy things wear out.",
+  "ask": "What small strain do I repeat all day without noticing how it adds up?",
+  "trap": "Picturing talking as effortless air, with nothing in it that wears.",
+  "hint": "Turn the two hours into seconds, then multiply by the rate.",
+  "steps": [
+    "One hour of voicing: 200 × 3,600 = 720,000 collisions",
+    "Two hours: 720,000 × 2 = 1,440,000",
+    "About 1.4 million collisions a day, five days a week"
+  ],
+  "keywords": [
+    "vocal folds",
+    "teachers",
+    "voice strain",
+    "vocal dose"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Titze, Švec & Popolo, JSLHR, 2003",
+  "source_kind": "paper",
+  "reference": "Titze, Švec & Popolo, Vocal dose measures: quantifying accumulated vibration exposure in vocal fold tissues, Journal of Speech, Language, and Hearing Research, 2003",
+  "written": "2026-10-03"
+}

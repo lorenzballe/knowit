@@ -1,0 +1,33 @@
+{
+  "id": "art-public-statues-2",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.public_statues",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does London's Cenotaph, Britain's national war memorial, carry no soldier, no cross and no names?",
+  "answer": "So that anyone could see their own dead in it. Cenotaph means empty tomb. Lutyens designed it in 1919 as a temporary wood-and-plaster structure for a victory parade; mourners buried it in flowers, and it was rebuilt in stone in 1920. Even its sides lean in, imperceptibly, towards a point high above the street.",
+  "move": "Leaving a space empty can let each person bring their own meaning.",
+  "ask": "Where could I say less, and let people bring their own meaning to it?",
+  "keywords": [
+    "cenotaph",
+    "edwin lutyens",
+    "war memorial",
+    "whitehall"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Winter, Sites of Memory, Sites of Mourning, 1995",
+  "source_kind": "book",
+  "reference": "Jay Winter, Sites of Memory, Sites of Mourning: The Great War in European Cultural History, Cambridge University Press, 1995",
+  "written": "2026-10-03"
+}

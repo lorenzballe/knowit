@@ -1,0 +1,43 @@
+{
+  "id": "sport-betting-odds-1",
+  "topic": "sport",
+  "genre": "sport.sport_and_numbers",
+  "strand": "sport.sport_and_numbers.betting_odds",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A bookmaker offers odds of 1.90 on both sides of an even match. Someone bets £100 on each side. Pounds lost?",
+  "value": 10,
+  "unit": "pounds",
+  "answer": "£10 lost, whichever side wins",
+  "move": "Add up every price on offer to see what the seller keeps.",
+  "ask": "When I am offered a choice of deals, have I checked what the seller keeps whichever I pick?",
+  "trap": "Taking odds of 1.90 on each side as a fair price.",
+  "hint": "Compare the total staked with what the winning bet pays back.",
+  "steps": [
+    "Total staked: £100 + £100 = £200",
+    "One bet wins: £100 × 1.90 = £190 returned",
+    "£200 − £190 = £10",
+    "£10 lost, whichever side wins"
+  ],
+  "keywords": [
+    "betting odds",
+    "bookmaker margin",
+    "overround",
+    "decimal odds"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "source": "Sauer, Journal of Economic Literature, 1998",
+  "source_kind": "arithmetic",
+  "reference": "Raymond D. Sauer, The Economics of Wagering Markets, Journal of Economic Literature, 1998",
+  "written": "2026-10-03"
+}

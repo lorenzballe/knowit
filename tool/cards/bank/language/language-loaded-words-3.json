@@ -1,0 +1,43 @@
+{
+  "id": "language-loaded-words-3",
+  "topic": "language",
+  "genre": "language.words_that_persuade",
+  "strand": "language.words_that_persuade.loaded_words",
+  "also": [
+    "psychology.memory.false_memories"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "People watched one car-crash film. Asked how fast the cars smashed, or contacted, each other, how far apart were their average estimates?",
+  "options": [
+    "Under 2 km/h",
+    "About 15 km/h",
+    "About 60 km/h"
+  ],
+  "correct": 1,
+  "answer": "About 15 km/h. In Loftus and Palmer's 1974 study, smashed drew an average of 40.8 mph and contacted 31.8 mph, a gap of 9 mph. A week later, the smashed group was also likelier to recall broken glass that the film never showed. One verb set the speed before memory did.",
+  "move": "The words of a question can write the answer before anyone gives it.",
+  "ask": "When I describe a quarrel to a friend, which of my words already decides who was at fault?",
+  "trap": "Under 2 km/h, since everyone watched the identical film.",
+  "keywords": [
+    "leading questions",
+    "eyewitness memory",
+    "elizabeth loftus",
+    "verbs"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Loftus & Palmer, Journal of Verbal Learning and Verbal Behavior, 1974",
+  "source_kind": "paper",
+  "reference": "Loftus & Palmer, Reconstruction of automobile destruction: an example of the interaction between language and memory, Journal of Verbal Learning and Verbal Behavior 13(5), 1974",
+  "written": "2026-10-03"
+}

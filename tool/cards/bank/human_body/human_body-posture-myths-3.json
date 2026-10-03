@@ -1,0 +1,40 @@
+{
+  "id": "human_body-posture-myths-3",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.posture_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Workers are trained to lift with bent knees and a straight back. In trials, what happened to their back pain?",
+  "options": [
+    "About half as much back pain",
+    "More pain from the awkward lift",
+    "No less than untrained workers"
+  ],
+  "correct": 2,
+  "answer": "No less than untrained workers. A Cochrane review of trials in warehouses, hospitals and postal services found that lifting training and advice did not prevent back pain compared with no training. The rule sounds proven because it is repeated everywhere. For decades nobody had compared it with doing nothing.",
+  "move": "Ask whether advice was ever compared with doing nothing at all.",
+  "ask": "Which safety rule do I follow because everyone does, not because it was ever tested?",
+  "trap": "Safe-lifting rules are everywhere, so they must have been proved.",
+  "keywords": [
+    "lifting technique",
+    "back pain",
+    "workplace training",
+    "cochrane review"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Verbeek et al., Cochrane Review, 2011",
+  "source_kind": "paper",
+  "reference": "Verbeek JH, Martimo KP, Karppinen J et al., Manual material handling advice and assistive devices for preventing and treating back pain in workers, Cochrane Database of Systematic Reviews, 2011",
+  "written": "2026-09-26"
+}

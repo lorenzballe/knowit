@@ -1,0 +1,40 @@
+{
+  "id": "food-cooking-myths-2",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.cooking_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Wine goes into a stew that then simmers for an hour. Roughly how much of its alcohol is still there?",
+  "options": [
+    "None of it",
+    "About a quarter",
+    "About nine tenths"
+  ],
+  "correct": 1,
+  "answer": "About a quarter. US Department of Agriculture tests found about 40% of the alcohol left after 15 minutes of baking or simmering, 25% after an hour and still 5% after two and a half hours. Alcohol leaves with the steam, a little at a time, and each hour removes less than the one before.",
+  "move": "Leaving fast at first does not mean it all leaves.",
+  "ask": "What am I treating as completely gone just because most of it left early?",
+  "trap": "None of it, since alcohol boils at a lower temperature than water.",
+  "keywords": [
+    "alcohol retention",
+    "cooking with wine",
+    "evaporation",
+    "usda"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "USDA, Nutrient Retention Factors, Release 6, 2007",
+  "source_kind": "statistics",
+  "reference": "US Department of Agriculture, USDA Table of Nutrient Retention Factors, Release 6, 2007",
+  "written": "2026-10-03"
+}

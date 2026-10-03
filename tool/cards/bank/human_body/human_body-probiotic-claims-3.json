@@ -1,0 +1,46 @@
+{
+  "id": "human_body-probiotic-claims-3",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.probiotic_claims",
+  "also": [
+    "science.read_a_study.relative_or_absolute"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Children on antibiotics got diarrhoea 19% of the time without probiotics, 8% with them. How many must take probiotics to spare one case?",
+  "value": 9,
+  "unit": "children",
+  "answer": "About 9 children take probiotics for one to be spared",
+  "move": "Ask how many people must take something for one to benefit.",
+  "ask": "For the things I take to prevent illness, how many people like me does it take to help one?",
+  "trap": "Thinking every child who took them was spared diarrhoea.",
+  "hint": "Find how many cases 100 children avoid, then divide.",
+  "steps": [
+    "19% − 8% = 11 fewer cases per 100 children",
+    "100 ÷ 11 ≈ 9",
+    "About 9 children take probiotics for one to be spared"
+  ],
+  "keywords": [
+    "probiotics",
+    "antibiotics",
+    "diarrhoea",
+    "number needed to treat",
+    "children"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Guo et al., Cochrane Review, 2019",
+  "source_kind": "paper",
+  "reference": "Guo Q, Goldenberg JZ, Humphrey C, El Dib R, Johnston BC, Probiotics for the prevention of pediatric antibiotic-associated diarrhea, Cochrane Database of Systematic Reviews, 2019",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "human_body-senses-fooled-2",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.senses_fooled",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in a survey of hospital staff, most reported feeling their phone or pager buzz when it had not?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Rothberg's survey found that 68% of staff at a US hospital had felt phantom vibrations, more often among those carrying a device for long hours. A brain waiting for a signal lowers its bar, so a twitch of muscle or the brush of a shirt is read as the call.",
+  "move": "A mind waiting for a signal will find one in the noise.",
+  "ask": "What am I so ready to hear, a criticism, a call, a problem, that I hear it when it is not there?",
+  "trap": "Phantom buzzes sound like a quirk of a few anxious people.",
+  "keywords": [
+    "phantom vibration",
+    "mobile phone",
+    "false alarms",
+    "hospital staff"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rothberg et al., BMJ, 2010",
+  "source_kind": "paper",
+  "reference": "Rothberg MB, Arora A, Hermann J et al., Phantom vibration syndrome among medical staff: a cross sectional survey, BMJ, 2010",
+  "written": "2026-09-26"
+}

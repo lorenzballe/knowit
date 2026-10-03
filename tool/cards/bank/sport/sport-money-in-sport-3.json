@@ -1,0 +1,39 @@
+{
+  "id": "sport-money-in-sport-3",
+  "topic": "sport",
+  "genre": "sport.sport_and_society",
+  "strand": "sport.sport_and_society.money_in_sport",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should European football leagues cap how much each club may spend on wages?",
+  "sides": [
+    "Yes, cap wages",
+    "No, let clubs spend"
+  ],
+  "answer": "Yes. Wage bills predict league tables so closely that the richest clubs win almost every year, and smaller clubs gamble themselves into debt trying to keep up. America's NFL caps spending and spreads the talent, so weak teams can rise within a few seasons. A cap protects both the contest and the clubs.",
+  "move": "Whichever side you took, the hinge is whether a cap can be enforced across borders.",
+  "ask": "Where would a simple spending limit protect me from keeping up with people richer than me?",
+  "counterpoint": "No. A cap would freeze today's order, stop ambitious owners investing, and push stars to leagues without one; Europe has promotion and relegation, which an American closed league does not need to protect. UEFA's rules already tie spending to revenue. Caps also tend to be dodged through image rights and side deals.",
+  "keywords": [
+    "salary cap",
+    "wages",
+    "competitive balance",
+    "european football",
+    "nfl"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "UEFA, Financial Sustainability Regulations, 2022",
+  "source_kind": "primary_document",
+  "reference": "UEFA, Club Licensing and Financial Sustainability Regulations, 2022 edition",
+  "written": "2026-10-03"
+}

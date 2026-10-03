@@ -1,0 +1,33 @@
+{
+  "id": "space-evidence-and-hope-2",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.evidence_and_hope",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the 1996 claim of fossil microbes in a Martian meteorite fade, without ever being flatly disproved?",
+  "answer": "Because each clue found a lifeless explanation. A NASA team listed four: carbonate grains, organic molecules, magnetic crystals and worm-like shapes. Over the following years chemists made such grains and crystals without life, the organics could come from non-living chemistry or contamination, and the shapes proved smaller than any known cell.",
+  "move": "Several weak clues do not add up to one strong one.",
+  "ask": "Am I stacking several maybes and calling the pile a yes?",
+  "keywords": [
+    "alh84001",
+    "martian meteorite",
+    "microfossils",
+    "david mckay"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McKay et al., Science, 1996",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/science.273.5277.924",
+  "written": "2026-10-03"
+}

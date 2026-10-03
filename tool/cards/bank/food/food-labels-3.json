@@ -1,0 +1,42 @@
+{
+  "id": "food-labels-3",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.labels",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A cereal bar claims 30% less sugar than the brand's original and contains 14 g. How many grams did the original contain?",
+  "value": 20,
+  "unit": "grams",
+  "answer": "Original = 14 ÷ 0.70 = 20 g",
+  "move": "A percentage counts from where it started, not from where you stand.",
+  "ask": "When I hear more or less by a percentage, do I ask: compared with what?",
+  "trap": "Adding 30% to 14 g, which gives 18.2 g from the wrong base.",
+  "hint": "Write the bar's sugar as a share of the original's, then undo it.",
+  "steps": [
+    "30% less means the bar keeps 70% of the original's sugar",
+    "14 g = 0.70 × the original",
+    "Original = 14 ÷ 0.70 = 20 g"
+  ],
+  "keywords": [
+    "reduced sugar",
+    "nutrition claims",
+    "percentages",
+    "cereal bars"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "EU Regulation 1924/2006, Annex",
+  "source_kind": "primary_document",
+  "reference": "Regulation (EC) No 1924/2006 of the European Parliament and of the Council on nutrition and health claims made on foods, Annex, 2006",
+  "written": "2026-10-03"
+}

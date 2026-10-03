@@ -1,0 +1,40 @@
+{
+  "id": "economics-unintended-effects-2",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.unintended_effects",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "From 1989, Mexico City banned each car from driving on one weekday, by number plate. What happened to air pollution?",
+  "options": [
+    "It fell by about a fifth",
+    "No measurable improvement",
+    "It fell, then kept falling"
+  ],
+  "correct": 1,
+  "answer": "No measurable improvement. Lucas Davis found no fall in any pollutant he tracked. Many households bought a second car to drive on banned days, often an older, dirtier one, and the number of cars in the city rose. A ban on one plate a day became a reason to own two plates.",
+  "move": "Expect people to route around a rule, and ask how.",
+  "ask": "When I set a rule for myself, how might I quietly work around it?",
+  "trap": "Assuming a fifth fewer cars each day means a fifth less smog.",
+  "keywords": [
+    "driving restrictions",
+    "mexico city",
+    "air pollution",
+    "hoy no circula"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Davis, Journal of Political Economy, 2008",
+  "source_kind": "paper",
+  "reference": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1860169",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "sport-confidence-2",
+  "topic": "sport",
+  "genre": "sport.the_mind_in_sport",
+  "strand": "sport.the_mind_in_sport.confidence",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "When professional tennis players challenge a line call with Hawk-Eye, roughly how often are they proved right?",
+  "options": [
+    "About four times in five",
+    "About two times in five",
+    "About once in twenty"
+  ],
+  "correct": 1,
+  "answer": "About two times in five. Mather examined about 1,500 challenges from 2006 and 2007: nearly all involved balls within 10 cm of the line, and the line judges were upheld about 60% of the time. Players challenged because they felt sure they had seen it, and they were wrong more often than right.",
+  "move": "Feeling sure is not evidence, least of all on close calls.",
+  "ask": "On a close call this week, how sure am I really, and what would I bet on it?",
+  "trap": "Assuming players challenge only when they clearly saw it out.",
+  "keywords": [
+    "hawk-eye",
+    "line calls",
+    "tennis",
+    "overconfidence",
+    "perception"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mather, Proceedings of the Royal Society B, 2008",
+  "source_kind": "paper",
+  "reference": "George Mather, Perceptual uncertainty and line-call challenges in professional tennis, Proceedings of the Royal Society B, 2008",
+  "written": "2026-10-03"
+}

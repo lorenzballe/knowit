@@ -1,0 +1,43 @@
+{
+  "id": "space-satellites-3",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.satellites",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A call goes up to a satellite 35,786 km high and back down. At 300,000 km/s, how many milliseconds does that hop take?",
+  "value": 239,
+  "unit": "milliseconds",
+  "tolerance": 2,
+  "answer": "About 239 milliseconds, before the other person has even heard a word.",
+  "move": "Some delays are set by distance, and no upgrade can remove them.",
+  "ask": "Which delay in my life am I trying to fix with effort, when it is built into the setup?",
+  "trap": "Radio is light-fast, so any delay must be the equipment's fault.",
+  "hint": "Count the distance both ways, then divide by the speed.",
+  "steps": [
+    "Up and down: 2 × 35,786 = 71,572 km.",
+    "71,572 ÷ 300,000 ≈ 0.239 s.",
+    "About 239 milliseconds, before the other person has even heard a word."
+  ],
+  "keywords": [
+    "satellite phones",
+    "latency",
+    "geostationary orbit",
+    "speed of light"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pratt, Bostian & Allnutt, Satellite Communications, 2003",
+  "source_kind": "book",
+  "reference": "Pratt, Bostian & Allnutt, Satellite Communications, 2nd edition, Wiley, 2003",
+  "written": "2026-10-03"
+}

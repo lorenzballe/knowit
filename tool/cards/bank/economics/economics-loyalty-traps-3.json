@@ -1,0 +1,40 @@
+{
+  "id": "economics-loyalty-traps-3",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.loyalty_traps",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A car wash handed out loyalty cards: 8 stamps needed, none filled, or 10 needed with 2 already filled. Which got completed more?",
+  "options": [
+    "The 8-stamp card",
+    "The 10-stamp card",
+    "Both about equally"
+  ],
+  "correct": 1,
+  "answer": "The 10-stamp card: 34% of its holders finished, against 19% with the 8-stamp card. Both needed exactly eight washes. Starting a fifth of the way along made the goal feel already under way, and people hurried to finish. Two free stamps on a piece of card bought many extra washes.",
+  "move": "Notice when a head start was handed to you to keep you going.",
+  "ask": "Which loyalty card or streak keeps me buying because I'm already partway there?",
+  "trap": "Reasoning that eight washes needed is eight washes, so equal.",
+  "keywords": [
+    "loyalty cards",
+    "endowed progress",
+    "car wash",
+    "goal gradient"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nunes and Drèze, Journal of Consumer Research, 2006",
+  "source_kind": "paper",
+  "reference": "Nunes & Drèze, The Endowed Progress Effect: How Artificial Advancement Increases Effort, Journal of Consumer Research, 2006",
+  "written": "2026-10-03"
+}

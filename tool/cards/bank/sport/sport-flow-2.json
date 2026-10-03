@@ -1,0 +1,41 @@
+{
+  "id": "sport-flow-2",
+  "topic": "sport",
+  "genre": "sport.the_mind_in_sport",
+  "strand": "sport.the_mind_in_sport.flow",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Workers were paged at random moments for a week to rate what they felt. Where did they report flow more often?",
+  "options": [
+    "In their free time",
+    "At work",
+    "Equally in both"
+  ],
+  "correct": 1,
+  "answer": "At work. Csikszentmihalyi and LeFevre found that moments of high challenge matched by high skill came far more often on the job, while much free time, spent watching television, was passive and flat. People still said they wished to be elsewhere while working. Active leisure, such as sport or playing music, was the exception.",
+  "move": "Absorption comes from challenge, not from being off duty.",
+  "ask": "Is my free time restful and absorbing, or just passive, and what active pastime could change that?",
+  "trap": "Assuming free time is when people feel most absorbed and alive.",
+  "keywords": [
+    "flow",
+    "experience sampling",
+    "work",
+    "leisure",
+    "television"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Csikszentmihalyi & LeFevre, J Pers Soc Psychol, 1989",
+  "source_kind": "paper",
+  "reference": "Mihaly Csikszentmihalyi & Judith LeFevre, Optimal experience in work and leisure, Journal of Personality and Social Psychology, 1989",
+  "written": "2026-10-03"
+}

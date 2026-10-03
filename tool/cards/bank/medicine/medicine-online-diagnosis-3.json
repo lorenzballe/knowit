@@ -1,0 +1,38 @@
+{
+  "id": "medicine-online-diagnosis-3",
+  "topic": "medicine",
+  "genre": "medicine.medical_myths",
+  "strand": "medicine.medical_myths.online_diagnosis",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should people with new symptoms ask an AI chatbot before deciding whether to see a doctor?",
+  "sides": [
+    "Yes, use it first",
+    "No, not yet"
+  ],
+  "answer": "Yes. Large language models pass medical licensing exams and answer at 3 a.m. when no doctor is free. Used well, they help people describe symptoms, prepare questions and spot warning signs that need urgent care. Doctors' time is scarce, and a good first sorting step could shorten the queue for everyone.",
+  "move": "Whichever side you took, the hinge is the user describing the problem, not the model.",
+  "ask": "When I ask for advice, do I give the full picture, or only the parts that feel important to me?",
+  "counterpoint": "In a 2025 Oxford study of about 1,300 people, chatbots alone named relevant conditions in most test cases, but members of the public using them did so in about a third, no better than people left to their own searches. Users left out key details and misread advice. Passing an exam is not holding a consultation.",
+  "keywords": [
+    "ai chatbots",
+    "large language models",
+    "symptom checking",
+    "triage"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "months",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bean et al., Oxford Internet Institute, 2025",
+  "source_kind": "paper",
+  "reference": "Bean et al., Clinical knowledge in LLMs does not translate to human interactions, arXiv:2504.18919, 2025",
+  "written": "2026-10-03"
+}

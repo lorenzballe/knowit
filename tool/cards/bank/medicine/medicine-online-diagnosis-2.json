@@ -1,0 +1,40 @@
+{
+  "id": "medicine-online-diagnosis-2",
+  "topic": "medicine",
+  "genre": "medicine.medical_myths",
+  "strand": "medicine.medical_myths.online_diagnosis",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Doctors typed key symptoms from 26 hard published cases into Google. How often did the right diagnosis come up?",
+  "options": [
+    "About 1 case in 10",
+    "Just over half the cases",
+    "Nearly every case"
+  ],
+  "correct": 1,
+  "answer": "In 15 of the 26, just over half. But the searchers were doctors, who knew which symptoms mattered, which terms to type, and how to spot the right answer. The search engine supplied candidates; training supplied the question and the judgement. The same box in a frightened patient's hands returns a different list.",
+  "move": "A tool's success depends on who is holding it.",
+  "ask": "When a tool works well for experts, have I asked whether it would work the same for me?",
+  "trap": "About 1 case in 10, since searches mostly return noise.",
+  "keywords": [
+    "google",
+    "diagnosis",
+    "search engines",
+    "case records"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tang & Ng, BMJ, 2006",
+  "source_kind": "paper",
+  "reference": "Tang & Ng, Googling for a diagnosis: use of Google as a diagnostic aid, BMJ, 2006",
+  "written": "2026-10-03"
+}

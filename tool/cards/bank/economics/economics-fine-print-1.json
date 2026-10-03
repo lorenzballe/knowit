@@ -1,0 +1,40 @@
+{
+  "id": "economics-fine-print-1",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.fine_print",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Students joining a new social network had to accept its terms. What share missed a clause handing over their first-born child?",
+  "options": [
+    "About 98%",
+    "About half",
+    "About 10%"
+  ],
+  "correct": 0,
+  "answer": "About 98%. The network was fake, set up by researchers. Its terms ran to about 7,900 words, yet participants spent about 51 seconds on them on average, and nearly everyone clicked agree, first-born child included. The clause sat in plain text, waiting for a reader who never came.",
+  "move": "Read the parts of an agreement that say what you give, not what you get.",
+  "ask": "What have I clicked agree on this month without knowing what I gave away?",
+  "trap": "Trusting that careful students would spot something so absurd.",
+  "keywords": [
+    "terms of service",
+    "consent",
+    "privacy policies",
+    "fine print"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Obar and Oeldorf-Hirsch, Information, Communication & Society, 2020",
+  "source_kind": "paper",
+  "reference": "doi:10.2139/ssrn.2757465",
+  "written": "2026-10-03"
+}

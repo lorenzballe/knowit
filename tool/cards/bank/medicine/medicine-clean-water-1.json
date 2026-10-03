@@ -1,0 +1,41 @@
+{
+  "id": "medicine-clean-water-1",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.clean_water",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In major US cities from 1900 to 1936, how much of the fall in deaths did researchers credit to filtered, chlorinated water?",
+  "options": [
+    "Nearly half",
+    "About a tenth",
+    "Almost all"
+  ],
+  "correct": 0,
+  "answer": "Nearly half of the total fall, with about three-quarters of the drop in infant deaths and nearly two-thirds of the drop in child deaths. Typhoid and diarrhoea had been everyday killers. Few people know who chlorinated their city's water; the treatment plant just sits by the river, saving lives nobody counts.",
+  "move": "The biggest savers of lives are often the dullest-looking machines.",
+  "ask": "Which unglamorous routine in my life protects me more than anything I would think to boast about?",
+  "trap": "About a tenth, since doctors and medicines did most of the work.",
+  "keywords": [
+    "chlorination",
+    "water filtration",
+    "infant mortality",
+    "typhoid",
+    "us cities"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cutler & Miller, Demography, 2005",
+  "source_kind": "paper",
+  "reference": "Cutler & Miller, The role of public health improvements in health advances: the twentieth-century United States, Demography, 2005",
+  "written": "2026-10-03"
+}

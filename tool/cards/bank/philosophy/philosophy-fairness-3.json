@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-fairness-3",
+  "topic": "philosophy",
+  "genre": "philosophy.justice",
+  "strand": "philosophy.justice.fairness",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Diners who knew they would split the bill evenly ordered how, compared with diners paying for their own food?",
+  "options": [
+    "About the same",
+    "Less, out of courtesy",
+    "More"
+  ],
+  "correct": 2,
+  "answer": "More. In Uri Gneezy, Ernan Haruvy and Hadas Yafe's 2004 restaurant experiment, groups splitting the bill ate and spent noticeably more than groups paying individually, and diners eating free ordered most of all. Each extra dish cost the splitter only a fraction of its price. A long table of friends quietly becomes a small commons.",
+  "move": "When costs are shared, expect each person to take a little more.",
+  "ask": "Where in my shared life, at home or work, do I take more because the cost is split?",
+  "trap": "About the same, since friends order what they want either way.",
+  "keywords": [
+    "splitting the bill",
+    "uri gneezy",
+    "free riding",
+    "restaurants",
+    "commons"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "practical",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gneezy, Haruvy & Yafe, Economic Journal, 2004",
+  "source_kind": "paper",
+  "reference": "Gneezy, Haruvy & Yafe, The Inefficiency of Splitting the Bill, Economic Journal 114 (495), 2004",
+  "written": "2026-10-03"
+}

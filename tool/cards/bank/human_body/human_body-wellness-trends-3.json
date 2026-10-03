@@ -1,0 +1,40 @@
+{
+  "id": "human_body-wellness-trends-3",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.wellness_trends",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Across 17 trials, what did glasses that filter blue light do for eye strain from computer screens?",
+  "options": [
+    "Probably made no difference",
+    "Cut it by about half",
+    "Made it slightly worse"
+  ],
+  "correct": 0,
+  "answer": "Probably made no difference. A 2023 Cochrane review of 17 trials found blue-filtering lenses no better than ordinary ones for screen eye strain, and their effect on sleep was unclear. A screen gives off about a thousandth of the blue light of daylight. Strain comes from staring and blinking less, which no tint fixes.",
+  "move": "Fix the cause that does the harm, not the feature easiest to blame.",
+  "ask": "Which problem am I solving with a gadget when a simple change of habit would do?",
+  "trap": "Screens glow blue and tire eyes, so blocking blue must help.",
+  "keywords": [
+    "blue light",
+    "glasses",
+    "eye strain",
+    "screens"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cochrane, blue-light filtering spectacles review, 2023",
+  "source_kind": "institution",
+  "reference": "https://www.cochrane.org/about-us/news/blue-light-filtering-spectacles-probably-make-no-difference-eye-strain-eye-health-or-sleep",
+  "written": "2026-09-26"
+}

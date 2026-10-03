@@ -1,0 +1,39 @@
+{
+  "id": "art-seeing-for-yourself-3",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.seeing_for_yourself",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: people who photograph objects on a museum tour remember those objects better the next day?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In Linda Henkel's experiments, visitors remembered fewer objects, and fewer details of them, when they had photographed them rather than only looked. Taking the picture seems to hand the job of remembering to the camera. One exception: zooming in on a detail kept the memory intact, because it forced closer looking.",
+  "move": "Recording a moment can replace attending to it; choose which you want.",
+  "ask": "Which moments do I photograph instead of really looking at?",
+  "trap": "True, since a photo is a reminder of what you saw.",
+  "keywords": [
+    "photo-taking",
+    "memory",
+    "museum tour",
+    "attention"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Henkel, Psychological Science, 2014",
+  "source_kind": "paper",
+  "reference": "Linda A. Henkel, Point-and-shoot memories: the influence of taking photos on memory for a museum tour, Psychological Science, 2014",
+  "written": "2026-10-03"
+}

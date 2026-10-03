@@ -1,0 +1,41 @@
+{
+  "id": "human_body-exercise-and-the-brain-1",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.exercise_and_the_brain",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Older adults walked briskly three times a week for a year. What happened to the hippocampus, a memory centre of the brain?",
+  "options": [
+    "It shrank about 1.4%",
+    "It grew about 2%",
+    "It did not change"
+  ],
+  "correct": 1,
+  "answer": "It grew about 2%. In Erickson's trial of 120 older adults, the walking group's hippocampus grew by about 2%, while a stretching group's shrank by about 1.4%, roughly a year of normal ageing. Memory improved alongside. A year of brisk walks turned the brain's calendar back by one to two years.",
+  "move": "Decline that looks fixed may still be reversed by steady effort.",
+  "ask": "What could a year of small, steady effort change in me that I think is already settled?",
+  "trap": "The ageing brain only shrinks, and exercise cannot reverse that.",
+  "keywords": [
+    "hippocampus",
+    "aerobic exercise",
+    "walking",
+    "memory",
+    "ageing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Erickson et al., PNAS, 2011",
+  "source_kind": "paper",
+  "reference": "Erickson KI, Voss MW, Prakash RS et al., Exercise training increases size of hippocampus and improves memory, Proceedings of the National Academy of Sciences, 2011",
+  "written": "2026-09-26"
+}

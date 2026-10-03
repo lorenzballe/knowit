@@ -1,0 +1,33 @@
+{
+  "id": "sport-moneyball-1",
+  "topic": "sport",
+  "genre": "sport.sport_and_numbers",
+  "strand": "sport.sport_and_numbers.moneyball",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened to the salaries of patient, walk-drawing hitters after Moneyball became a bestseller in 2003?",
+  "answer": "They rose. Hakes and Sauer found that before 2004 clubs paid little for on-base percentage, though it drove wins more than the hitting power they paid for. In 2004, the season after the book, the market price of getting on base jumped and most of the bargain vanished. A known edge is a priced edge.",
+  "move": "Once everyone knows the bargain, it stops being one.",
+  "ask": "Is the clever shortcut I rely on still an edge, or has everyone else caught on?",
+  "keywords": [
+    "moneyball",
+    "on-base percentage",
+    "baseball salaries",
+    "market efficiency"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hakes & Sauer, Journal of Economic Perspectives, 2006",
+  "source_kind": "paper",
+  "reference": "Jahn K. Hakes & Raymond D. Sauer, An Economic Evaluation of the Moneyball Hypothesis, Journal of Economic Perspectives, 2006",
+  "written": "2026-10-03"
+}

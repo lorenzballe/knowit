@@ -1,0 +1,40 @@
+{
+  "id": "economics-hidden-incentives-2",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.hidden_incentives",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "As US birth rates fell about 13% between 1970 and 1982, how did obstetricians' practice change?",
+  "options": [
+    "More caesarean deliveries",
+    "Less of everything, in step",
+    "More free check-ups"
+  ],
+  "correct": 0,
+  "answer": "More caesarean deliveries. With fewer babies to deliver, income fell, and a caesarean paid better than a normal birth. Gruber and Owings found that states where births fell most saw caesarean rates rise most. No one needed to be dishonest: in borderline cases, the better-paid choice simply won more often.",
+  "move": "Ask how the person recommending something is paid for each option.",
+  "ask": "When an expert recommends something to me, do I know how they are paid for it?",
+  "trap": "Expecting fewer births to mean less of every procedure.",
+  "keywords": [
+    "caesarean sections",
+    "obstetricians",
+    "fee for service",
+    "birth rates"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gruber and Owings, RAND Journal of Economics, 1996",
+  "source_kind": "paper",
+  "reference": "Gruber & Owings, Physician Financial Incentives and Cesarean Section Delivery, RAND Journal of Economics, 1996",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "art-faces-3",
+  "topic": "art",
+  "genre": "art.look_closer",
+  "strand": "art.look_closer.faces",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do people in Victorian photographs so rarely smile, even once exposures had dropped to a second or two?",
+  "answer": "Convention. Portrait photographs followed painting, where a broad open smile belonged to drunks, fools and peasants in comic scenes; dignity meant a closed mouth. Smiling for the camera spread in the twentieth century with cheap snapshot cameras and advertising full of happy families. The stiff Victorian face was a choice about how to be remembered.",
+  "move": "When everyone does the same odd thing, look for the rule behind it.",
+  "ask": "Which of my habits is only a convention I have never questioned?",
+  "keywords": [
+    "victorian photographs",
+    "smiling",
+    "portraiture",
+    "snapshot cameras"
+  ],
+  "era": "nineteenth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kotchemidova, Critical Studies in Media Communication, 2005",
+  "source_kind": "paper",
+  "reference": "Christina Kotchemidova, Why we say cheese: producing the smile in snapshot photography, Critical Studies in Media Communication, 2005",
+  "written": "2026-10-03"
+}

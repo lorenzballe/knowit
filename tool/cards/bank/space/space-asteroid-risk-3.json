@@ -1,0 +1,39 @@
+{
+  "id": "space-asteroid-risk-3",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.asteroid_risk",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: most near-Earth asteroids big enough to destroy a city, 140 m or more across, have already been found?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Surveys have found nearly all the kilometre-wide ones that could cause global damage, but well under half of the estimated 25,000 of 140 m or more. Smaller, darker rocks are hard to spot against the sky, which is why NASA is building a dedicated infrared telescope to hunt them.",
+  "move": "A list of known dangers is not a list of all dangers.",
+  "ask": "Which risk in my plans is missing from my list just because nobody has spotted it yet?",
+  "trap": "True, since agencies seem to track every rock that makes the news.",
+  "keywords": [
+    "near-earth asteroids",
+    "planetary defence",
+    "sky surveys",
+    "neo surveyor"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NASA Center for Near Earth Object Studies",
+  "source_kind": "statistics",
+  "reference": "https://cneos.jpl.nasa.gov/stats/totals.html",
+  "written": "2026-10-03"
+}

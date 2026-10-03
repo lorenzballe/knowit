@@ -1,0 +1,40 @@
+{
+  "id": "art-light-2",
+  "topic": "art",
+  "genre": "art.look_closer",
+  "strand": "art.look_closer.light",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "On Edward Adelson's checkerboard, square A sits in light and square B in a cylinder's shadow. Which is darker on screen?",
+  "options": [
+    "Square A",
+    "Square B",
+    "Neither: they match"
+  ],
+  "correct": 2,
+  "answer": "Neither: they are the same grey. The visual system discounts the shadow to work out each square's real surface, so B, in shade, is seen as a light square and A as a dark one. That is good for recognising objects and bad for painting them. Painters squint, or look through a hole in a card, to see tone as it is.",
+  "move": "What you see is your brain's best guess, corrected for the light.",
+  "ask": "Where do I judge something by its surroundings rather than by what it is?",
+  "trap": "Square A, which looks clearly darker than B.",
+  "keywords": [
+    "checker shadow illusion",
+    "edward adelson",
+    "lightness",
+    "tone"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Adelson, Checker Shadow Illusion, MIT, 1995",
+  "source_kind": "institution",
+  "reference": "http://persci.mit.edu/gallery/checkershadow",
+  "written": "2026-10-03"
+}

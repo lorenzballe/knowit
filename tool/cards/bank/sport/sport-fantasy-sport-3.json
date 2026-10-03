@@ -1,0 +1,38 @@
+{
+  "id": "sport-fantasy-sport-3",
+  "topic": "sport",
+  "genre": "sport.sport_and_numbers",
+  "strand": "sport.sport_and_numbers.fantasy_sport",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is daily fantasy sport mainly a game of skill rather than a form of gambling?",
+  "sides": [
+    "Yes, mainly skill",
+    "No, it is gambling"
+  ],
+  "answer": "Yes. The same players finish near the top season after season, which pure chance cannot produce, and their edge comes from research, modelling and lineup building. Analyses of real entries find a small group of skilled players winning steadily. Calling it gambling ignores that results respond to effort and knowledge.",
+  "move": "Whichever side you took, the hinge is whether the typical player can win.",
+  "ask": "When I call something skill, would the typical person doing it actually come out ahead?",
+  "counterpoint": "No. Each contest pays out on events no entrant controls, a stake is won or lost on them, and the operator takes its cut whatever happens. Poker involves skill too, and it is still gambling. Most entrants lose, and the edge sits with a few professionals running software, which is how a gambling market works.",
+  "keywords": [
+    "daily fantasy sports",
+    "gambling law",
+    "skill",
+    "chance"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "source": "New York Attorney General, notices to DraftKings and FanDuel, 2015",
+  "source_kind": "primary_document",
+  "reference": "Office of the New York State Attorney General, cease-and-desist notices to DraftKings and FanDuel, November 2015",
+  "written": "2026-10-03"
+}

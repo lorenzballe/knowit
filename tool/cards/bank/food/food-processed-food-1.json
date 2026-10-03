@@ -1,0 +1,33 @@
+{
+  "id": "food-processed-food-1",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.processed_food",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When volunteers could eat freely from two matched menus, what did ultra-processed food change?",
+  "answer": "How much they ate. In a 2019 US National Institutes of Health trial, 20 adults spent four weeks on a ward: two on ultra-processed meals, two on unprocessed, matched for calories, sugar, fat, salt and fibre. On processed food they ate about 500 kcal a day more, ate faster and gained about 0.9 kg.",
+  "move": "Change how fast something goes down and you change how much goes down.",
+  "ask": "What do I eat fastest, and could that be deciding how much I eat?",
+  "keywords": [
+    "ultra-processed food",
+    "eating rate",
+    "calorie intake",
+    "clinical trial"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hall et al., Cell Metabolism, 2019",
+  "source_kind": "paper",
+  "reference": "Hall, Ayuketah, Brychta et al., Ultra-processed diets cause excess calorie intake and weight gain: an inpatient randomized controlled trial of ad libitum food intake, Cell Metabolism, 2019",
+  "written": "2026-10-03"
+}

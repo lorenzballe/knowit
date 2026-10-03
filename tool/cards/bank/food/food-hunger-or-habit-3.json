@@ -1,0 +1,33 @@
+{
+  "id": "food-hunger-or-habit-3",
+  "topic": "food",
+  "genre": "food.eat_smarter",
+  "strand": "food.eat_smarter.hunger_or_habit",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can lunchtime bring hunger even after a big, late breakfast?",
+  "answer": "Because the body keeps a timetable. Ghrelin, a hormone from the stomach that stirs hunger, climbs before habitual mealtimes and falls after eating. In a 2001 study of people on a fixed meal schedule, levels rose before every meal, whatever had been eaten earlier. A rumble at noon may be the clock talking.",
+  "move": "A signal that arrives on schedule may be reporting the time, not the need.",
+  "ask": "Am I hungry right now, or is it just the time I usually eat?",
+  "keywords": [
+    "ghrelin",
+    "hunger",
+    "meal timing",
+    "hormones"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cummings et al., Diabetes, 2001",
+  "source_kind": "paper",
+  "reference": "Cummings, Purnell, Frayo, Schmidova, Wisse & Weigle, A preprandial rise in plasma ghrelin levels suggests a role in meal initiation in humans, Diabetes, 2001",
+  "written": "2026-10-03"
+}

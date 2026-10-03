@@ -1,0 +1,44 @@
+{
+  "id": "space-extraordinary-claims-2",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.extraordinary_claims",
+  "also": [
+    "science.numbers_and_chance.base_rates"
+  ],
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "baseRate",
+  "question": "A detector wrongly flags 1 in 1,000 noise signals, missing nothing real. One signal in a million is alien. It sounds: chance it's alien?",
+  "options": [
+    "About 99.9%",
+    "About 50%",
+    "About 0.1%"
+  ],
+  "correct": 2,
+  "answer": "About 0.1%. A million noise signals give about 1,000 false alerts, and the real one adds a single true alert, so one alert in about 1,001 is alien. In 2020 Breakthrough Listen's most promising candidate yet, BLC1, turned out to be interference from equipment on Earth.",
+  "move": "When the real thing is rare, most alarms are false, however good the alarm.",
+  "ask": "When a rare worry sets off an alarm in my head, how often has that alarm been false before?",
+  "trap": "99.9%, reading the detector's reliability as the chance it is right.",
+  "keywords": [
+    "seti",
+    "false alarms",
+    "breakthrough listen",
+    "blc1",
+    "base rates"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sheikh et al., Nature Astronomy, 2021",
+  "source_kind": "paper",
+  "reference": "Sheikh et al., Analysis of the Breakthrough Listen signal of interest blc1 with a technosignature verification framework, Nature Astronomy, 2021",
+  "written": "2026-10-03"
+}

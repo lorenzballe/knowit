@@ -1,0 +1,57 @@
+{
+  "id": "economics-averages-that-mislead-2",
+  "topic": "economics",
+  "genre": "economics.read_money_news",
+  "strand": "economics.read_money_news.averages_that_mislead",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "American households' average net worth in 2022 was about $1.06 million. What did the typical household, in the middle, own?",
+  "options": [
+    "About $190,000",
+    "About $1 million",
+    "About $50,000"
+  ],
+  "correct": 0,
+  "answer": "About $190,000. The Federal Reserve's survey put the median at $192,900 and the mean at $1,063,700. A small number of very rich households lift the mean far above what most people have. When wealth is lopsided, the household in the middle owns less than a fifth of the average.",
+  "move": "With lopsided money, ask for the middle figure, not the average.",
+  "ask": "When I compare myself with an average, is it one a few giants are pulling up?",
+  "trap": "Taking the average as what a typical household owns.",
+  "keywords": [
+    "net worth",
+    "median",
+    "mean",
+    "survey of consumer finances",
+    "wealth"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "$",
+    "items": [
+      {
+        "label": "Average (mean) household",
+        "value": 1063700
+      },
+      {
+        "label": "Middle (median) household",
+        "value": 192900,
+        "hi": true
+      }
+    ],
+    "caption": "Mean net worth was $1,063,700; the household in the middle had $192,900."
+  },
+  "source": "Federal Reserve, Survey of Consumer Finances, 2022",
+  "source_kind": "statistics",
+  "reference": "Board of Governors of the Federal Reserve System, Changes in U.S. Family Finances from 2019 to 2022: Evidence from the Survey of Consumer Finances, Federal Reserve Bulletin, October 2023",
+  "written": "2026-10-03"
+}

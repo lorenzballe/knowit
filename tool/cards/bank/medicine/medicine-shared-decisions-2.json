@@ -1,0 +1,38 @@
+{
+  "id": "medicine-shared-decisions-2",
+  "topic": "medicine",
+  "genre": "medicine.talk_to_your_doctor",
+  "strand": "medicine.talk_to_your_doctor.shared_decisions",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "For low-risk prostate cancer, should doctors steer men towards active monitoring rather than surgery or radiotherapy?",
+  "sides": [
+    "Yes, monitor first",
+    "No, treat it"
+  ],
+  "answer": "Yes. In the ProtecT trial of 1,643 men, about 1% died of prostate cancer over ten years whether they were monitored, operated on or irradiated. Surgery left many with leakage and impotence; monitoring spared most men those harms, and those who needed treatment later could still have it.",
+  "move": "Whichever side you took, the hinge is how each man weighs side effects against spread.",
+  "ask": "In a hard choice, have I named what I care about most, rather than letting someone assume it?",
+  "counterpoint": "Monitoring has a price. In the same trial, cancer spread to other organs about twice as often in monitored men, and over half had been treated within ten years anyway. Living with an untreated cancer weighs on some men every day. A man who values certainty over side effects is choosing rationally.",
+  "keywords": [
+    "prostate cancer",
+    "active monitoring",
+    "protect trial",
+    "shared decision making"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hamdy et al., NEJM, 2016",
+  "source_kind": "paper",
+  "reference": "Hamdy et al., 10-year outcomes after monitoring, surgery, or radiotherapy for localized prostate cancer, New England Journal of Medicine, 2016",
+  "written": "2026-10-03"
+}

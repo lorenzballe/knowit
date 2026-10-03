@@ -1,0 +1,40 @@
+{
+  "id": "science-who-funded-it-2",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.who_funded_it",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Reviews of sugary drinks and weight gain were sorted by funding. How did industry-linked ones compare at finding no link?",
+  "options": [
+    "About as likely",
+    "About five times as likely",
+    "Less likely"
+  ],
+  "correct": 1,
+  "answer": "About five times as likely. In 2013 Bes-Rastrollo and colleagues found that about 83% of reviews with industry ties concluded the evidence of harm was insufficient, while the same share of independent reviews found a link to weight gain. Nobody need lie: choosing the question, the studies and the wording is enough.",
+  "move": "Funding steers which questions get asked and how answers are worded.",
+  "ask": "When I research a purchase, how much of what I read was paid for by someone selling it?",
+  "trap": "About as likely, since reviews draw on the same published evidence.",
+  "keywords": [
+    "sugary drinks",
+    "conflicts of interest",
+    "systematic reviews",
+    "weight gain"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bes-Rastrollo et al., PLOS Medicine, 2013",
+  "source_kind": "paper",
+  "reference": "Bes-Rastrollo et al., Financial conflicts of interest and reporting bias regarding the association between sugar-sweetened beverages and weight gain, PLOS Medicine 10:e1001578, 2013",
+  "written": "2026-09-26"
+}

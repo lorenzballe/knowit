@@ -1,0 +1,33 @@
+{
+  "id": "space-signals-2",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.signals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "With no way to agree in advance, how did the first searches for alien signals pick which radio frequency to tune to?",
+  "answer": "By guessing what both sides would find obvious. In 1959 Cocconi and Morrison proposed 1,420 MHz, the frequency at which hydrogen, the most common atom, naturally broadcasts. Any radio astronomer anywhere would know it. It works like meeting a stranger in a city with no plan: each heads for the most famous landmark.",
+  "move": "With no way to agree, choose what the other side would find obvious.",
+  "ask": "When I can't reach someone to agree on a plan, what choice would we both find most obvious?",
+  "keywords": [
+    "hydrogen line",
+    "seti",
+    "cocconi and morrison",
+    "radio astronomy"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cocconi & Morrison, Nature, 1959",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/184844a0",
+  "written": "2026-10-03"
+}

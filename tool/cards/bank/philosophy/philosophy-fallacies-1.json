@@ -5,14 +5,14 @@
   "strand": "philosophy.arguments.fallacies",
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "reflection",
+  "principle": "confounding",
   "question": "A doctor who smokes warns a patient that smoking will shorten his life. What does her smoking show about the warning?",
   "options": [
-    "That the risk must be exaggerated",
-    "Nothing about whether it is true"
+    "Nothing about whether it is true",
+    "That the risk must be exaggerated"
   ],
-  "correct": 1,
-  "answer": "Nothing about whether it is true. Pointing at the speaker's conduct is the ad hominem known as tu quoque, you too: it tests her consistency, not her claim. The lungs respond to tobacco the same way whoever describes them. A hypocrite can be right, and often knows the cost best.",
+  "correct": 0,
+  "answer": "Nothing about whether it is true. Pointing at the speaker's conduct is the ad hominem known as tu quoque, you too: it tests her consistency, not her claim. Addiction, not doubt, may be what keeps her smoking. A hypocrite can be right, and often knows the cost best.",
   "move": "Separate who is speaking from what is being claimed.",
   "ask": "Whose good advice have I dismissed because the person giving it does not follow it?",
   "trap": "That the risk is exaggerated, or she would surely have quit.",

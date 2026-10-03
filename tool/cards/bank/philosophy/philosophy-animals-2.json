@@ -8,11 +8,11 @@
   "principle": "availability",
   "question": "Of the land animals killed for meat each year, roughly what share are chickens?",
   "options": [
-    "About a third",
     "About 90%",
+    "About a third",
     "About half"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "About 90%. Of more than 80 billion land animals slaughtered for meat a year, roughly 75 billion are chickens. A beef animal yields hundreds of kilos of meat, a chicken under two. So a switch from beef to chicken, often made for health or climate, multiplies the number of animals killed per meal.",
   "move": "Count the cost of a choice per life affected, not only per kilo.",
   "ask": "When I weigh the cost of a habit, am I counting what I can see, or everything it touches?",

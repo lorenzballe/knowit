@@ -6,7 +6,7 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "anchoring",
-  "question": "One US buyer borrowed at 9% in 1975, with 9% inflation; another at 4% in 2019, with 2%. Who paid more, really?",
+  "question": "One US buyer borrowed at 9% in 1975, with 9% inflation; another at 4% in 2019, with 2%. Whose loan cost more in real terms?",
   "options": [
     "The 1975 borrower",
     "Both about the same",

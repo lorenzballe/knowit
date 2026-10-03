@@ -1,0 +1,40 @@
+{
+  "id": "economics-who-pays-1",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.who_pays",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: when Chile slashed the payroll tax charged to employers in the 1980s, firms kept most of the saving?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. As the tax on employers fell from about 30% of pay to 5%, wages rose by roughly the same amount, and the number of jobs barely changed. Workers had been carrying the tax all along, through lower pay. The money moved from the firm's tax bill to the worker's payslip.",
+  "move": "Ask who would be paid more if the tax vanished.",
+  "ask": "Which taxes and charges do I pay without ever seeing them on a bill?",
+  "trap": "Trusting the law's label: a tax on firms is paid by firms.",
+  "keywords": [
+    "payroll tax",
+    "tax incidence",
+    "chile",
+    "wages",
+    "employers"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gruber, Journal of Labor Economics, 1997",
+  "source_kind": "paper",
+  "reference": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=225832",
+  "written": "2026-10-03"
+}

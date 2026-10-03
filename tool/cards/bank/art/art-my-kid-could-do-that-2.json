@@ -1,0 +1,33 @@
+{
+  "id": "art-my-kid-could-do-that-2",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.my_kid_could_do_that",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened to the original urinal Marcel Duchamp entered as a work of art in 1917?",
+  "answer": "It was lost soon after Alfred Stieglitz photographed it. The exhibition that refused it had promised to hang anything by anyone who paid the fee. The Fountains in museums today are replicas Duchamp approved decades later, mostly from 1964. The object could be replaced from a plumber's shop; the idea could not.",
+  "move": "When the object can be replaced, the idea was the real work.",
+  "ask": "If the thing I made this year were lost, what idea in it would still be worth something?",
+  "keywords": [
+    "marcel duchamp",
+    "fountain",
+    "readymade",
+    "replicas"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tomkins, Duchamp: A Biography, 1996",
+  "source_kind": "book",
+  "reference": "Calvin Tomkins, Duchamp: A Biography, Henry Holt, 1996",
+  "written": "2026-10-03"
+}

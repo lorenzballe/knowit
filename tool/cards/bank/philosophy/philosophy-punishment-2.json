@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-punishment-2",
+  "topic": "philosophy",
+  "genre": "philosophy.justice",
+  "strand": "philosophy.justice.punishment",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: offenders who meet their victims face to face go on to reoffend no less than those simply sentenced?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A 2013 Campbell Collaboration review by Heather Strang and colleagues of ten randomised trials found that face-to-face restorative justice conferences modestly cut repeat offending, and victims who took part reported less anger and fear afterwards. Hearing the harm from the person harmed reaches what a fine does not.",
+  "move": "Ask what a response to wrongdoing repairs, not only what it inflicts.",
+  "ask": "When someone wrongs me, what would actually repair it, and have I ever asked for that?",
+  "trap": "True, assuming a conversation is too soft to change behaviour.",
+  "keywords": [
+    "restorative justice",
+    "heather strang",
+    "reoffending",
+    "victims",
+    "campbell collaboration"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Strang et al., Campbell Systematic Reviews, 2013",
+  "source_kind": "paper",
+  "reference": "Strang, Sherman, Mayo-Wilson, Woods & Ariel, Restorative Justice Conferencing Using Face-to-Face Meetings of Offenders and Victims, Campbell Systematic Reviews 9 (1), 2013",
+  "written": "2026-10-03"
+}

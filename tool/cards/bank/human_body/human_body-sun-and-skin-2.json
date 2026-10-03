@@ -1,0 +1,40 @@
+{
+  "id": "human_body-sun-and-skin-2",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.sun_and_skin",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a car's side windows block the sun's skin-ageing UVA rays about as well as its windscreen?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Measuring 29 cars, Boxer Wachler found windscreens blocked on average 96% of UVA, the longer-wave rays that age skin, but side windows only 71%, and some far less. Windscreens are laminated with a plastic layer; side windows usually are not. The driver's face and arm nearest the window take the extra dose.",
+  "move": "Check which part of a protection was tested before assuming it covers everything.",
+  "ask": "Where do I assume I am protected just because something sits between me and the risk?",
+  "trap": "Glass is glass, so all car windows must filter alike.",
+  "keywords": [
+    "uva",
+    "car windows",
+    "windscreen",
+    "skin ageing",
+    "laminated glass"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Boxer Wachler, JAMA Ophthalmology, 2016",
+  "source_kind": "paper",
+  "reference": "Boxer Wachler BS, Assessment of levels of ultraviolet A light protection in automobile windshields and side windows, JAMA Ophthalmology, 2016",
+  "written": "2026-09-26"
+}

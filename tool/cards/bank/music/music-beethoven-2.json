@@ -1,0 +1,41 @@
+{
+  "id": "music-beethoven-2",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.beethoven",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Beethoven's metronome marks are faster than almost any conductor plays. What did a 2020 study of recorded tempos point to?",
+  "options": [
+    "His metronome was randomly broken",
+    "Players then were far faster",
+    "He misread the metronome's scale"
+  ],
+  "correct": 2,
+  "answer": "A misreading. Almudena Martín-Castro and Iñaki Ucar compared Beethoven's marks with tempos in dozens of recorded symphonies. Conductors were slower by a fairly steady margin, about 12 beats a minute, which fits reading the scale on the wrong side of the sliding weight. A broken device scatters errors; this one leaned one way.",
+  "move": "Random faults scatter errors; a steady error points to a habit.",
+  "ask": "When I keep being off in the same direction, what habit of mine could explain it?",
+  "trap": "Assuming the device broke, since its marks feel impossibly fast.",
+  "keywords": [
+    "beethoven",
+    "metronome",
+    "tempo",
+    "symphonies",
+    "measurement error"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Martín-Castro & Ucar, PLOS ONE, 2020",
+  "source_kind": "paper",
+  "reference": "Martín-Castro & Ucar, Conductors' tempo choices shed light over Beethoven's metronome, PLOS ONE, 2020",
+  "written": "2026-10-03"
+}

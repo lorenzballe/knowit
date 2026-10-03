@@ -1,0 +1,33 @@
+{
+  "id": "medicine-questions-to-ask-1",
+  "topic": "medicine",
+  "genre": "medicine.talk_to_your_doctor",
+  "strand": "medicine.talk_to_your_doctor.questions_to_ask",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which three short questions, tested in an Australian trial, got doctors to explain treatment choices more fully?",
+  "answer": "What are my options? What are the possible benefits and harms of each? How likely are they to happen to me? When trained patients asked these in family doctors' surgeries, doctors gave better information about options, odds and harms, and involved patients more in the choice. Each question takes seconds to ask.",
+  "move": "The quality of an answer depends on the question you bring.",
+  "ask": "Before my next appointment or big purchase, which three questions will I write down and actually ask?",
+  "keywords": [
+    "shared decision making",
+    "patient questions",
+    "consultation",
+    "australia"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shepherd et al., Patient Educ Couns, 2011",
+  "source_kind": "paper",
+  "reference": "Shepherd et al., Three questions that patients can ask to improve the quality of information physicians give about treatment options: a cross-over trial, Patient Education and Counseling, 2011",
+  "written": "2026-10-03"
+}

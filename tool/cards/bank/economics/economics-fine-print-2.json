@@ -1,0 +1,33 @@
+{
+  "id": "economics-fine-print-2",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.fine_print",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did British banks pay back about £38 billion for an insurance they had sold alongside loans?",
+  "answer": "Because much of it could never pay out. Payment protection insurance, meant to cover repayments after illness or job loss, was often sold to self-employed people or those already ill, whom its own small print excluded. Sold on commission, it was often added without being asked for. Over 32 million complaints followed.",
+  "move": "Before buying cover, find the clause that says when it pays nothing.",
+  "ask": "Which insurance do I pay for without knowing what would stop it paying out?",
+  "keywords": [
+    "payment protection insurance",
+    "mis-selling",
+    "banks",
+    "compensation"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FCA, PPI complaints deadline report, 2020",
+  "source_kind": "institution",
+  "reference": "https://www.fca.org.uk/publication/ppi/payment-protection-insurance-complaints-deadline-final-report.pdf",
+  "written": "2026-10-03"
+}

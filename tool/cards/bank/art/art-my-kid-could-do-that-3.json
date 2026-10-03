@@ -1,0 +1,38 @@
+{
+  "id": "art-my-kid-could-do-that-3",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.my_kid_could_do_that",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should public galleries spend taxpayers' money on famous modern works that much of the public dismisses?",
+  "sides": [
+    "Yes, buy them",
+    "No, buy what people value"
+  ],
+  "answer": "Yes. Australia's National Gallery paid A$1.3 million for Pollock's Blue Poles in 1973, a record then, and was mocked nationwide. It is now the gallery's best-known painting, worth many times the price. Public collections exist to keep what the moment cannot yet see.",
+  "move": "Whichever side you took, it turns on whose judgement a public collection should follow.",
+  "ask": "When I spend shared money, at work or at home, whose taste am I really serving?",
+  "counterpoint": "No. Public money is spent on behalf of people who are not curators, and a gallery that ignores them loses their trust and their visits. Blue Poles is the lucky survivor; nobody counts the bold purchases that stayed unloved. The same money could buy dozens of works by living local artists, or keep a regional gallery open.",
+  "keywords": [
+    "blue poles",
+    "jackson pollock",
+    "national gallery of australia",
+    "public money"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barrett, The Prime Minister's Christmas Card, 2001",
+  "source_kind": "book",
+  "reference": "Lindsay Barrett, The Prime Minister's Christmas Card: Blue Poles and Cultural Politics in the Whitlam Era, Power Publications, 2001",
+  "written": "2026-10-03"
+}

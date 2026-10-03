@@ -1,0 +1,42 @@
+{
+  "id": "human_body-before-and-after-3",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.before_and_after",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "The body stores about 500 g of glycogen, each gram held with about 3 g of water. Emptied, how much weight is lost, in kg?",
+  "value": 2,
+  "unit": "kg",
+  "answer": "2,000 g = 2 kg lost, almost none of it fat",
+  "move": "Ask what a quick change is made of before celebrating it.",
+  "ask": "Which quick win of mine was mostly water, an easy first kilo that was never the real thing?",
+  "trap": "Counting the glycogen but forgetting the water bound to it.",
+  "hint": "Add the water stored with the glycogen to the glycogen itself.",
+  "steps": [
+    "500 g × 3 = 1,500 g of water",
+    "500 g + 1,500 g = 2,000 g",
+    "2,000 g = 2 kg lost, almost none of it fat"
+  ],
+  "keywords": [
+    "glycogen",
+    "water weight",
+    "diets",
+    "weight loss"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kreitzman et al., Am J Clin Nutr, 1992",
+  "source_kind": "paper",
+  "reference": "Kreitzman SN, Coxon AY, Szaz KF, Glycogen storage: illusions of easy weight loss, excessive weight regain, and distortions in estimates of body composition, American Journal of Clinical Nutrition, 1992",
+  "written": "2026-09-26"
+}

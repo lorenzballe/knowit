@@ -1,0 +1,33 @@
+{
+  "id": "art-museums-2",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.museums",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do museum visitors look carefully at the first rooms and drift past the last ones?",
+  "answer": "Museum fatigue, named in 1916 by Benjamin Ives Gilman of Boston's Museum of Fine Arts. He photographed a visitor stooping and craning at badly placed cases, and blamed the effort, not boredom. Later studies found visitors stop at fewer exhibits the further they go. The last rooms get the tired eyes.",
+  "move": "Choose a few things to do well and leave the rest for another day.",
+  "ask": "Am I trying to see everything, when seeing three things well would leave me with more?",
+  "keywords": [
+    "museum fatigue",
+    "benjamin ives gilman",
+    "museum visitors",
+    "attention"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gilman, The Scientific Monthly, 1916",
+  "source_kind": "paper",
+  "reference": "Benjamin Ives Gilman, Museum fatigue, The Scientific Monthly, 1916",
+  "written": "2026-10-03"
+}

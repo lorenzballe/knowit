@@ -1,0 +1,33 @@
+{
+  "id": "human_body-food-and-mood-1",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.food_and_mood",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did a small trial find when depressed adults were coached to eat a Mediterranean-style diet?",
+  "answer": "More of them recovered. In the 12-week SMILES trial, about 32% of the diet group reached remission against 8% of a group given social support instead. It was small, 67 people, and participants knew which group they were in, so it needs repeating. It is a promising door, not yet a proven road.",
+  "move": "Weigh a hopeful result by its size and whether anyone repeated it.",
+  "ask": "Which change to what I eat could I test on my own mood for a month?",
+  "keywords": [
+    "mediterranean diet",
+    "depression",
+    "smiles trial",
+    "nutrition"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jacka et al., BMC Medicine, 2017",
+  "source_kind": "paper",
+  "reference": "Jacka FN, O'Neil A, Opie R et al., A randomised controlled trial of dietary improvement for adults with major depression (the SMILES trial), BMC Medicine, 2017",
+  "written": "2026-09-26"
+}

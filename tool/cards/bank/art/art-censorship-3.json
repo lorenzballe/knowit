@@ -1,0 +1,40 @@
+{
+  "id": "art-censorship-3",
+  "topic": "art",
+  "genre": "art.art_and_power",
+  "strand": "art.art_and_power.censorship",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 1937 Munich, a Nazi show mocking modern 'degenerate' art opened beside a show of approved art. Which drew more visitors?",
+  "options": [
+    "The approved art show",
+    "About the same numbers",
+    "The mocked modern art"
+  ],
+  "correct": 2,
+  "answer": "The mocked modern art, by far: more than two million visits in four months, several times the crowd at the approved show. Works by Klee, Kirchner and Chagall hung crooked beside insulting slogans, and people came in their thousands, some to sneer, some for a last look. Mocking something in public also means showing it.",
+  "move": "Attacking something in public can spread it further than praise.",
+  "ask": "When I loudly criticise something, am I giving it free publicity?",
+  "trap": "The approved show, backed by the full weight of the state.",
+  "keywords": [
+    "degenerate art",
+    "entartete kunst",
+    "nazi germany",
+    "munich"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barron, Degenerate Art, 1991",
+  "source_kind": "book",
+  "reference": "Stephanie Barron (ed.), Degenerate Art: The Fate of the Avant-Garde in Nazi Germany, Los Angeles County Museum of Art, 1991",
+  "written": "2026-10-03"
+}

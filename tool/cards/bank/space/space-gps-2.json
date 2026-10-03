@@ -1,0 +1,42 @@
+{
+  "id": "space-gps-2",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.gps",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Radio travels 300,000 km a second. If a GPS timing is off by one millionth of a second, how many metres is the position off?",
+  "value": 300,
+  "unit": "metres",
+  "answer": "300 m: the reason GPS satellites carry atomic clocks.",
+  "move": "When a signal moves fast, tiny timing errors become big distance errors.",
+  "ask": "Where does a small slip in my timing early in the day turn into a big miss later?",
+  "trap": "A millionth of a second is far too small to matter.",
+  "hint": "Turn the speed into metres per second, then multiply by the error.",
+  "steps": [
+    "300,000 km/s = 300,000,000 m/s.",
+    "300,000,000 × 0.000001 = 300.",
+    "300 m: the reason GPS satellites carry atomic clocks."
+  ],
+  "keywords": [
+    "gps",
+    "atomic clocks",
+    "timing error",
+    "speed of light"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Parkinson & Spilker, Global Positioning System, 1996",
+  "source_kind": "book",
+  "reference": "Parkinson & Spilker, Global Positioning System: Theory and Applications, AIAA, 1996",
+  "written": "2026-10-03"
+}

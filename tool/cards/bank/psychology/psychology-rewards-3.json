@@ -1,0 +1,39 @@
+{
+  "id": "psychology-rewards-3",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.rewards",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: paying pupils cash for higher test scores and grades reliably raised their results?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In Fryer's randomised trials in US cities, paying for grades or test scores did almost nothing: pupils wanted the money but did not know how to raise a score. Paying $2 per book read, in Dallas, did better. A reward works only on actions people can see how to take.",
+  "move": "Reward the steps people can control, not results they cannot steer.",
+  "ask": "Am I rewarding myself or others for results, when it is the daily steps that need the push?",
+  "trap": "Paying for the result wanted seems the most direct incentive.",
+  "keywords": [
+    "financial incentives",
+    "schools",
+    "randomised trials",
+    "test scores"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fryer, Quarterly Journal of Economics, 2011",
+  "source_kind": "paper",
+  "reference": "Fryer, Financial incentives and student achievement: evidence from randomized trials, Quarterly Journal of Economics, 2011",
+  "written": "2026-10-03"
+}

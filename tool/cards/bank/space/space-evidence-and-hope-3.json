@@ -1,0 +1,39 @@
+{
+  "id": "space-evidence-and-hope-3",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.evidence_and_hope",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a spacecraft has already sampled water from an ocean hidden under the ice of one of Saturn's moons?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Enceladus sprays its buried ocean out of cracks near its south pole, and Cassini flew through the plumes. It tasted salt, silica grains and hydrogen gas, signs of hot water reacting with rock on the seafloor, the kind of chemistry some Earth microbes live on. Nobody needed to drill.",
+  "move": "Look for where the hidden thing leaks out, instead of digging for it.",
+  "ask": "What do people let slip that shows me what's inside, without my having to dig?",
+  "trap": "False, because reaching a buried ocean means drilling through the ice.",
+  "keywords": [
+    "enceladus",
+    "cassini",
+    "ocean worlds",
+    "hydrothermal vents"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Waite et al., Science, 2017",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/science.aai8703",
+  "written": "2026-10-03"
+}

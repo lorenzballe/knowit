@@ -1,0 +1,33 @@
+{
+  "id": "language-great-speeches-3",
+  "topic": "language",
+  "genre": "language.words_that_persuade",
+  "strand": "language.words_that_persuade.great_speeches",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which part of Martin Luther King's 1963 speech in Washington was missing from his prepared text?",
+  "answer": "The dream. The written speech ended without it. Near the close, after the gospel singer Mahalia Jackson called out for him to tell them about the dream, King set his notes aside and spoke the refrain from memory, having used it in earlier speeches. The most quoted words of the day were the unscripted ones.",
+  "move": "Prepare thoroughly, then leave room to say what you mean.",
+  "ask": "When did I last put my notes aside and simply say what I believe?",
+  "keywords": [
+    "martin luther king",
+    "march on washington",
+    "mahalia jackson",
+    "improvisation"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jones & Connelly, Behind the Dream, 2011",
+  "source_kind": "book",
+  "reference": "Jones & Connelly, Behind the Dream: The Making of the Speech that Transformed a Nation, Palgrave Macmillan, 2011",
+  "written": "2026-10-03"
+}

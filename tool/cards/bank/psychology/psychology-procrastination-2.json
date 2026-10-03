@@ -1,0 +1,40 @@
+{
+  "id": "psychology-procrastination-2",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.procrastination",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Paid proofreaders had three long texts to correct over three weeks. Which deadline set-up got the best work?",
+  "options": [
+    "Deadlines they chose themselves",
+    "Three evenly spaced, set for them",
+    "All three due on the last day"
+  ],
+  "correct": 1,
+  "answer": "Three evenly spaced deadlines, set for them. Ariely and Wertenbroch found that people allowed to choose did set some early deadlines, so they knew they needed them, but spaced them poorly. Those with everything due at the end found the fewest errors and handed in latest. Knowing a weakness helps; outside structure helps more.",
+  "move": "Knowing your weakness is not the same as guarding against it well.",
+  "ask": "Who could set me a firm, evenly spaced deadline for the project I keep sliding?",
+  "trap": "Trusting self-chosen deadlines, since people know their own habits best.",
+  "keywords": [
+    "deadlines",
+    "precommitment",
+    "self-control",
+    "proofreading"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ariely & Wertenbroch, Psychological Science, 2002",
+  "source_kind": "paper",
+  "reference": "Ariely & Wertenbroch, Procrastination, deadlines, and performance: self-control by precommitment, Psychological Science, 2002",
+  "written": "2026-10-03"
+}

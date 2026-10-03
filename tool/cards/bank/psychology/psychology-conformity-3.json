@@ -1,0 +1,40 @@
+{
+  "id": "psychology-conformity-3",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.conformity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Princeton students rated their own comfort with campus drinking, and the typical student's. What did most report?",
+  "options": [
+    "Others less at ease than themselves",
+    "Others about as at ease",
+    "Others more at ease than themselves"
+  ],
+  "correct": 2,
+  "answer": "Others more at ease than themselves. Prentice and Miller found most students privately uneasy with heavy drinking, yet each believed the typical student was comfortable with it. Everyone saw others' cheerful public drinking, never their private doubts. A whole campus could conform to a norm that few of its members held.",
+  "move": "What people do in public is a poor sample of what they think.",
+  "ask": "Which habit around me do I go along with, assuming everyone else likes it more than I do?",
+  "trap": "Expecting people to assume others share their own private feelings.",
+  "keywords": [
+    "pluralistic ignorance",
+    "alcohol",
+    "social norms",
+    "students"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Prentice & Miller, JPSP, 1993",
+  "source_kind": "paper",
+  "reference": "Prentice & Miller, Pluralistic ignorance and alcohol use on campus: some consequences of misperceiving the social norm, Journal of Personality and Social Psychology, 1993",
+  "written": "2026-10-03"
+}

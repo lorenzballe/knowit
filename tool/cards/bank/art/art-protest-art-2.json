@@ -1,0 +1,43 @@
+{
+  "id": "art-protest-art-2",
+  "topic": "art",
+  "genre": "art.art_and_power",
+  "strand": "art.art_and_power.protest_art",
+  "also": [
+    "art.art_and_power.who_gets_in_museums"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What made the Guerrilla Girls' 1989 poster about the Metropolitan Museum so hard to dismiss?",
+  "options": [
+    "Famous artists signed it",
+    "It rested on a simple count",
+    "It was hung inside the Met"
+  ],
+  "correct": 1,
+  "answer": "A count. The anonymous artists, in gorilla masks, tallied the Met's modern sections: fewer than 5% of the artists were women, but 85% of the nudes were female. A public art fund turned the poster down, so they paid to run it as an advert on New York buses. Anger can be waved away; a number has to be answered.",
+  "move": "Count before you complain; a number is harder to dismiss than anger.",
+  "ask": "Where could I count something instead of only feeling that it is unfair?",
+  "trap": "Famous signatures, since big names usually give a protest weight.",
+  "keywords": [
+    "guerrilla girls",
+    "metropolitan museum",
+    "women artists",
+    "posters"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Guerrilla Girls, Confessions of the Guerrilla Girls, 1995",
+  "source_kind": "book",
+  "reference": "Guerrilla Girls, Confessions of the Guerrilla Girls, HarperPerennial, 1995",
+  "written": "2026-10-03"
+}

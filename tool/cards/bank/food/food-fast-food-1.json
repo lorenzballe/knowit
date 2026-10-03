@@ -1,0 +1,41 @@
+{
+  "id": "food-fast-food-1",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.fast_food",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "In 1990 McDonald's stopped frying in beef fat to ease fears about heart disease. What replaced it?",
+  "options": [
+    "Olive oil",
+    "Vegetable oil high in trans fats",
+    "Unprocessed sunflower oil"
+  ],
+  "correct": 1,
+  "answer": "Vegetable oil high in trans fats. To keep it stable in the fryers, the oil was partially hydrogenated, a process that creates trans fats. Later research found these raise heart risk more, gram for gram, than the saturated fat they replaced. The chain moved its US fryers to trans-fat-free oil only in the 2000s.",
+  "move": "Before cheering a ban, ask what takes the banned thing's place.",
+  "ask": "When I give something up, what quietly takes its place?",
+  "trap": "A healthy oil like olive, since health was the reason to switch.",
+  "keywords": [
+    "mcdonald's",
+    "beef tallow",
+    "trans fats",
+    "french fries",
+    "hydrogenated oil"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mozaffarian et al., NEJM, 2006",
+  "source_kind": "paper",
+  "reference": "Mozaffarian, Katan, Ascherio, Stampfer & Willett, Trans fatty acids and cardiovascular disease, New England Journal of Medicine, 2006",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "art-experts-fooled-2",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.experts_fooled",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: The Man with the Golden Helmet, long Berlin's most loved Rembrandt, is no longer credited to Rembrandt?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 1985 researchers studying the brushwork gave it to someone in Rembrandt's circle. Generations of visitors and critics had praised it as the essence of his genius. The painting did not change in 1985; only the label did, and much of the praise went with it.",
+  "move": "Notice how much of your admiration came from the name on the label.",
+  "ask": "Would I still like this so much if I did not know who made it?",
+  "trap": "False, because a great museum would not misjudge its treasure.",
+  "keywords": [
+    "golden helmet",
+    "rembrandt",
+    "attribution",
+    "gemäldegalerie berlin"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gemäldegalerie Berlin, Golden Helmet dossier, 1986",
+  "source_kind": "institution",
+  "reference": "Gemäldegalerie, Staatliche Museen zu Berlin, Der Mann mit dem Goldhelm: eine Dokumentation, exhibition catalogue, 1986",
+  "written": "2026-10-03"
+}

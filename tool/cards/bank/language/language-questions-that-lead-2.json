@@ -1,0 +1,43 @@
+{
+  "id": "language-questions-that-lead-2",
+  "topic": "language",
+  "genre": "language.words_that_persuade",
+  "strand": "language.words_that_persuade.questions_that_lead",
+  "also": [
+    "psychology.bias.anchoring_bias"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "One group was asked if Gandhi died before or after age 140; another, age 9. How far apart were their average guesses?",
+  "options": [
+    "Under 2 years",
+    "About 17 years",
+    "About 60 years"
+  ],
+  "correct": 1,
+  "answer": "About 17 years. In a 1997 experiment, those given 140 guessed on average that he died at 67; those given 9 guessed 50. Both numbers were absurd and everyone knew it, yet the question had already set where the search for an answer began. He died at 78.",
+  "move": "A number inside a question pulls the answer, even when it is absurd.",
+  "ask": "Which figure was mentioned first in my last negotiation, and how far did it pull me?",
+  "trap": "Under 2 years, since an absurd number cannot move a sensible guess.",
+  "keywords": [
+    "anchoring",
+    "gandhi",
+    "estimates",
+    "leading questions"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Strack & Mussweiler, JPSP, 1997",
+  "source_kind": "paper",
+  "reference": "Strack & Mussweiler, Explaining the enigmatic anchoring effect: mechanisms of selective accessibility, Journal of Personality and Social Psychology 73(3), 1997",
+  "written": "2026-10-03"
+}

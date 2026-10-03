@@ -1,0 +1,39 @@
+{
+  "id": "economics-unintended-effects-3",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.unintended_effects",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: protecting a rare woodpecker's habitat in the US led some landowners to cut their trees sooner?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The red-cockaded woodpecker nests in old pine forest, and land it settles on faces strict logging limits. In North Carolina, owners near known colonies cut their timber younger, before it could become habitat. The law made a passing bird a liability, so forests came down to keep it away.",
+  "move": "If a rule punishes owning something, people will avoid owning it.",
+  "ask": "Which rule at work or at home punishes people for admitting a problem?",
+  "trap": "Assuming owners simply comply once a protection law exists.",
+  "keywords": [
+    "endangered species act",
+    "red-cockaded woodpecker",
+    "logging",
+    "landowners"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lueck and Michael, Journal of Law and Economics, 2003",
+  "source_kind": "paper",
+  "reference": "Lueck & Michael, Preemptive Habitat Destruction under the Endangered Species Act, Journal of Law and Economics, 2003",
+  "written": "2026-10-03"
+}

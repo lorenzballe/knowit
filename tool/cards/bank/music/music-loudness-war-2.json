@@ -1,0 +1,43 @@
+{
+  "id": "music-loudness-war-2",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.loudness_war",
+  "also": [
+    "psychology.bias.halo_effect"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: of two identical speakers, the one played slightly louder is usually judged to sound better?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A small rise in level makes bass and treble seem fuller, because the ear's sensitivity to those extremes grows with loudness, and listeners hear that as quality. Floyd Toole, who led loudspeaker research at Harman, made level matching to a fraction of a decibel the first rule of any fair listening comparison.",
+  "move": "Before comparing two things, equalise whatever unfairly flatters one of them.",
+  "ask": "When a product dazzles me in the shop, is it better, or just set up brighter and louder?",
+  "trap": "Trusting the ear to tell better apart from merely louder.",
+  "keywords": [
+    "loudness",
+    "listening tests",
+    "level matching",
+    "loudspeakers",
+    "equal-loudness"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Toole, Sound Reproduction, 2008",
+  "source_kind": "book",
+  "reference": "Toole, Sound Reproduction: The Acoustics and Psychoacoustics of Loudspeakers and Rooms, Focal Press, 2008",
+  "written": "2026-10-03"
+}

@@ -9,10 +9,10 @@
   "question": "Philip Tetlock scored about 28,000 forecasts by political experts. Which experts did worst?",
   "options": [
     "Those forecasting outside their field",
-    "Those who knew one big idea",
-    "Those with the fewest years' experience"
+    "Those with the fewest years' experience",
+    "Those who knew one big idea"
   ],
-  "correct": 1,
+  "correct": 2,
   "answer": "Those who knew one big idea. Tetlock's hedgehogs, who forced events into a single theory, lost to foxes, who drew on many small ideas and changed their minds. Experts forecasting outside their own field did about as well as inside it. The confident single story also made the best television.",
   "move": "Trust the expert who can say what would change their mind.",
   "ask": "Which commentator do I trust because they sound sure, rather than because they have been right?",

@@ -1,0 +1,39 @@
+{
+  "id": "human_body-studies-on-mice-3",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.studies_on_mice",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: in neuroscience studies on animals around 2009, males outnumbered females by more than five to one?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Beery and Zucker found a male-to-female ratio of about 5.5 to 1 in neuroscience, and a male bias in most fields, often because researchers feared female hormone cycles would add noise. Findings were then applied to women regardless. In 2016 the US National Institutes of Health began requiring sex to be considered.",
+  "move": "Ask who was left out of the evidence before applying it to them.",
+  "ask": "When I read that something works, do I check whether people like me were studied?",
+  "trap": "Science would surely test both sexes as a matter of course.",
+  "keywords": [
+    "sex bias",
+    "animal research",
+    "female mice",
+    "neuroscience"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Beery and Zucker, Neurosci Biobehav Rev, 2011",
+  "source_kind": "paper",
+  "reference": "Beery AK, Zucker I, Sex bias in neuroscience and biomedical research, Neuroscience and Biobehavioral Reviews, 2011",
+  "written": "2026-09-26"
+}

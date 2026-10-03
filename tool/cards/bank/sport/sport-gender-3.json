@@ -1,0 +1,40 @@
+{
+  "id": "sport-gender-3",
+  "topic": "sport",
+  "genre": "sport.sport_and_society",
+  "strand": "sport.sport_and_society.gender",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: in 2019, women's sport took about a quarter of the airtime on US television sports news and highlights?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Cooky, Messner and colleagues, who have measured this since 1989, found women's sport got 5.4% of airtime in 2019, and only 3.5% without that year's Women's World Cup. Fans cannot follow athletes they never see, so the coverage gap feeds the audience gap it is blamed on.",
+  "move": "Ask whether an audience is missing because it was never shown anything.",
+  "ask": "Is there something I assume nobody wants, when really nobody has been shown it?",
+  "trap": "Recalling a few famous stars and guessing their coverage is large.",
+  "keywords": [
+    "women's sport",
+    "television coverage",
+    "sportscenter",
+    "media",
+    "audiences"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cooky et al., Communication & Sport, 2021",
+  "source_kind": "paper",
+  "reference": "Cooky, Council, Mears & Messner, One and Done: The Long Eclipse of Women's Televised Sports, 1989–2019, Communication & Sport, 2021",
+  "written": "2026-10-03"
+}

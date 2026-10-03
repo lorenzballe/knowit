@@ -1,0 +1,37 @@
+{
+  "id": "music-sampling-2",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.sampling",
+  "also": [
+    "music.genres.hip_hop"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did hip hop albums built from dozens of samples, like the Beastie Boys' Paul's Boutique, almost vanish after 1991?",
+  "answer": "Because a court put a price on every sample. In Grand Upright v Warner, 1991, a judge ruled that Biz Markie's unlicensed use of Gilbert O'Sullivan's Alone Again (Naturally) was theft and referred the case for criminal prosecution. Labels began clearing every sample, and a collage of dozens became dozens of negotiations.",
+  "move": "When each ingredient needs its own permission, the recipe changes, not just the price.",
+  "ask": "What would I make differently if one permission I need became easier, or harder, to get?",
+  "keywords": [
+    "grand upright",
+    "biz markie",
+    "sample clearance",
+    "beastie boys",
+    "gilbert o'sullivan"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McLeod & DiCola, Creative License, 2011",
+  "source_kind": "book",
+  "reference": "McLeod & DiCola, Creative License: The Law and Culture of Digital Sampling, Duke University Press, 2011",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "psychology-authority-2",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.authority",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 37 US airline accidents blamed partly on the crew, what failure turned up in most of them?",
+  "answer": "A pilot not challenging the other's mistake. In 31 of the 37 accidents, reviewed by federal safety investigators, monitoring or challenging failed, most often a first officer not questioning the captain, who had usually made the first error. Two pilots are only safer than one if the second will speak.",
+  "move": "A second pair of eyes is worth nothing without permission to speak.",
+  "ask": "In my team, is there anyone who sees my mistakes but might not feel able to say so?",
+  "keywords": [
+    "aviation safety",
+    "cockpit hierarchy",
+    "first officers",
+    "crew errors"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NTSB Safety Study SS-94/01, 1994",
+  "source_kind": "institution",
+  "reference": "National Transportation Safety Board, A Review of Flightcrew-Involved, Major Accidents of U.S. Air Carriers, 1978 Through 1990, Safety Study NTSB/SS-94/01, 1994",
+  "written": "2026-10-03"
+}

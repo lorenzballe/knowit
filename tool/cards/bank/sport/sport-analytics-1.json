@@ -1,0 +1,37 @@
+{
+  "id": "sport-analytics-1",
+  "topic": "sport",
+  "genre": "sport.sport_and_numbers",
+  "strand": "sport.sport_and_numbers.analytics",
+  "also": [
+    "sport.rules_and_why.rule_changes"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did baseball ban extreme defensive shifts in 2023, when teams were using them to save runs?",
+  "answer": "Because each team's smart move made the game worse for everyone. Data showed where each hitter's balls went, so teams stacked fielders there; ground-ball hits dried up and games grew duller. From 2023 two infielders must stand on each side of second base. The league chose a livelier game.",
+  "move": "What is smart for each player can be bad for the whole game.",
+  "ask": "Is something I do because it works for me making things worse for everyone around me?",
+  "keywords": [
+    "defensive shift",
+    "baseball",
+    "rule change",
+    "data analytics",
+    "mlb"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Major League Baseball, Official Rules, 2023",
+  "source_kind": "primary_document",
+  "reference": "Major League Baseball, Official Baseball Rules, 2023 edition, Rule 5.02(c)",
+  "written": "2026-10-03"
+}

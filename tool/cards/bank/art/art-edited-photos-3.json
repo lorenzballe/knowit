@@ -1,0 +1,39 @@
+{
+  "id": "art-edited-photos-3",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.edited_photos",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: a well-known Civil War photograph of General Grant on horseback was assembled from three separate photographs?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Library of Congress staff found Grant's head set on the body of another general, Alexander McCook, on McCook's horse, in front of a background of Confederate prisoners at Fisher's Hill. It gave buyers the heroic picture no camera had taken. Photographs were cut and pasted long before computers; only the tools have changed.",
+  "move": "Assume any picture may be edited, however old, until shown otherwise.",
+  "ask": "Which old photos or documents do I trust just because they look old and official?",
+  "trap": "False, because faking photos sounds like a computer-age problem.",
+  "keywords": [
+    "ulysses s. grant",
+    "composite photograph",
+    "civil war",
+    "library of congress"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fineman, Faking It, Metropolitan Museum, 2012",
+  "source_kind": "book",
+  "reference": "Mia Fineman, Faking It: Manipulated Photography Before Photoshop, Metropolitan Museum of Art, 2012",
+  "written": "2026-10-03"
+}

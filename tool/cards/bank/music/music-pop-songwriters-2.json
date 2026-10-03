@@ -1,0 +1,42 @@
+{
+  "id": "music-pop-songwriters-2",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.pop_songwriters",
+  "also": [
+    "economics.your_money_decisions.opportunity_cost"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Dolly Parton turned down the chance to have Elvis Presley record her song I Will Always Love You?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Elvis's manager, Colonel Tom Parker, demanded half the publishing rights on songs Elvis recorded. Parton owned her own publishing and refused, so Elvis never cut it. In 1992 Whitney Houston's version became one of the best-selling singles ever, and both the writer's and the publisher's shares went to Parton.",
+  "move": "Before trading ownership for exposure, price what the thing could earn later.",
+  "ask": "What would I be giving away for a quick boost that I might wish I still owned later?",
+  "trap": "Nobody starting out turns down Elvis; the exposure seems priceless.",
+  "keywords": [
+    "dolly parton",
+    "elvis presley",
+    "publishing rights",
+    "whitney houston"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Parton, Songteller: My Life in Lyrics, 2020",
+  "source_kind": "book",
+  "reference": "Parton & Oermann, Songteller: My Life in Lyrics, Chronicle Books, 2020",
+  "written": "2026-10-03"
+}

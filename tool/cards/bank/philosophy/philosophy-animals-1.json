@@ -5,7 +5,7 @@
   "strand": "philosophy.ethics.animals",
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "reflection",
+  "principle": "anchoring",
   "question": "True or false: UK law formally recognises crabs, lobsters and octopuses as sentient beings?",
   "options": [
     "True",

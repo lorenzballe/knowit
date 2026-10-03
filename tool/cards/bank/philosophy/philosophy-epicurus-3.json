@@ -5,7 +5,7 @@
   "strand": "philosophy.ancient_thinkers.epicurus",
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "reflection",
+  "principle": "availability",
   "question": "True or false: Epicurus advised looking for someone to eat with before looking for something to eat?",
   "options": [
     "True",

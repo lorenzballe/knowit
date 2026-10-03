@@ -1,0 +1,40 @@
+{
+  "id": "psychology-rewards-1",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.rewards",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Nursery children who loved drawing got a certificate for it. Which group later drew less in free time?",
+  "options": [
+    "Those surprised with it afterwards",
+    "Both groups, equally",
+    "Those promised it in advance"
+  ],
+  "correct": 2,
+  "answer": "Those promised it in advance. In Lepper, Greene and Nisbett's study, children who drew to earn an expected award later chose drawing less than before; children given the same award as a surprise did not. A reward announced beforehand turns play into a job. Pooled studies by Deci and colleagues found the same pattern.",
+  "move": "A reward announced in advance changes why a person does the task.",
+  "ask": "When I offer someone a reward, am I adding to their reasons or replacing them?",
+  "trap": "Thinking any reward, expected or not, spoils the pleasure.",
+  "keywords": [
+    "intrinsic motivation",
+    "rewards",
+    "children",
+    "drawing"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lepper, Greene & Nisbett, JPSP, 1973",
+  "source_kind": "paper",
+  "reference": "Lepper, Greene & Nisbett, Undermining children's intrinsic interest with extrinsic reward: a test of the overjustification hypothesis, Journal of Personality and Social Psychology, 1973",
+  "written": "2026-10-03"
+}

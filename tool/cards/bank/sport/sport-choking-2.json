@@ -1,0 +1,40 @@
+{
+  "id": "sport-choking-2",
+  "topic": "sport",
+  "genre": "sport.the_mind_in_sport",
+  "strand": "sport.the_mind_in_sport.choking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: NBA players shoot free throws noticeably worse in the final seconds of very close games?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Cao, Price and Stone studied eight NBA seasons of free throws: in the dying seconds of very close games, players shot 5 to 10 percentage points below their usual rate. The drop was biggest for weaker shooters and on a second attempt after missing the first. The basket does not move; the stakes do.",
+  "move": "Practise a routine under the conditions in which it will count.",
+  "ask": "Where do I practise only when nothing is at stake, then expect the same result under pressure?",
+  "trap": "Assuming professionals are immune to pressure on a routine shot.",
+  "keywords": [
+    "choking",
+    "free throws",
+    "nba",
+    "pressure",
+    "clutch"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cao, Price & Stone, Journal of Sports Economics, 2011",
+  "source_kind": "paper",
+  "reference": "Zheng Cao, Joseph Price & Daniel F. Stone, Performance Under Pressure in the NBA, Journal of Sports Economics, 2011",
+  "written": "2026-10-03"
+}

@@ -5,7 +5,7 @@
   "strand": "philosophy.arguments.hidden_premises",
   "kind": "pickOne",
   "difficulty": "medium",
-  "principle": "reflection",
+  "principle": "confirmation",
   "question": "True or false: smoking shortens life, therefore you ought not to smoke is a valid argument as it stands?",
   "options": [
     "True",

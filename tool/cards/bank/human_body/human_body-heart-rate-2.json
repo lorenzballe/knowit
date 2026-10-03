@@ -1,0 +1,33 @@
+{
+  "id": "human_body-heart-rate-2",
+  "topic": "human_body",
+  "genre": "human_body.your_body_in_numbers",
+  "strand": "human_body.your_body_in_numbers.heart_rate",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What could a smartwatch notice, days before people with COVID-19 felt ill?",
+  "answer": "A rise in resting heart rate. Mishra's team analysed smartwatch data and found an unusual climb in resting pulse in most infected wearers, at or before the first symptoms; an alert system could have flagged 63% of cases in advance, a few by over a week. The body fights an infection before it tells its owner.",
+  "move": "A rise against a person's own baseline says more than any population average.",
+  "ask": "Do I know my own normal well enough to notice when something starts to drift?",
+  "keywords": [
+    "smartwatch",
+    "resting heart rate",
+    "infection",
+    "covid-19"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mishra et al., Nature Biomedical Engineering, 2020",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/s41551-020-00640-6",
+  "written": "2026-09-26"
+}

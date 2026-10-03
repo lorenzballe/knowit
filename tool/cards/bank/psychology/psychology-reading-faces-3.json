@@ -1,0 +1,39 @@
+{
+  "id": "psychology-reading-faces-3",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.reading_faces",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: from the face alone, people can tell a tennis player who just won a big point from one who lost?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Aviezer, Trope and Todorov showed photos of players at the moment of winning or losing. With the face alone, people guessed at chance; with the body alone, they did well. A winning face pasted on a losing body read as despair. At peak intensity, joy and agony contort the face the same way.",
+  "move": "When feelings run high, read the body and the moment, not just the face.",
+  "ask": "When I judge how someone is taking news, am I reading only their face?",
+  "trap": "Assuming intense emotion shows most clearly on the face.",
+  "keywords": [
+    "facial expressions",
+    "body language",
+    "tennis",
+    "intense emotion"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Aviezer, Trope & Todorov, Science, 2012",
+  "source_kind": "paper",
+  "reference": "Aviezer, Trope & Todorov, Body cues, not facial expressions, discriminate between intense positive and negative emotions, Science, 2012",
+  "written": "2026-10-03"
+}

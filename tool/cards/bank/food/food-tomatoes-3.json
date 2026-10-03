@@ -1,0 +1,40 @@
+{
+  "id": "food-tomatoes-3",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.tomatoes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: ripe tomatoes kept a week in the fridge lose aroma that days back at room temperature do not fully restore?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In a 2016 University of Florida study, ripe tomatoes held at 5 °C for a week lost many of the volatile compounds that carry their aroma. After three days back at 20 °C, several had not returned. The cold switches off genes that make those compounds, and not all switch back on.",
+  "move": "Storage that preserves one quality can quietly destroy another.",
+  "ask": "Is there something I protect in a way that keeps it safe but spoils what I love about it?",
+  "trap": "Cold keeps everything fresh, so the fridge must keep it at its best.",
+  "keywords": [
+    "tomatoes",
+    "refrigeration",
+    "aroma",
+    "volatiles",
+    "storage"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zhang et al., PNAS, 2016",
+  "source_kind": "paper",
+  "reference": "Zhang, Wang, Tieman et al., Chilling-induced tomato flavor loss is associated with altered volatile synthesis and transient changes in DNA methylation, PNAS, 2016",
+  "written": "2026-10-03"
+}

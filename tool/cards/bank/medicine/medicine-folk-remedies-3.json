@@ -1,0 +1,33 @@
+{
+  "id": "medicine-folk-remedies-3",
+  "topic": "medicine",
+  "genre": "medicine.medical_myths",
+  "strand": "medicine.medical_myths.folk_remedies",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do surgeons still sometimes put live leeches on a reattached finger or ear?",
+  "answer": "To drain blood the tiny veins cannot yet carry away. Surgeons can reconnect a small artery more easily than its veins, so blood flows in but pools, and the tissue swells and dies. A leech draws it off, and its saliva keeps the wound oozing for hours. The ancient cure survived in one narrow job.",
+  "move": "A discredited tool may still be the best one for a narrow job.",
+  "ask": "Which tool or habit did I throw out entirely that might still be perfect for one small job?",
+  "keywords": [
+    "medicinal leeches",
+    "hirudin",
+    "replantation",
+    "microsurgery"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Whitaker et al., Br J Oral Surg, 2004",
+  "source_kind": "paper",
+  "reference": "Whitaker et al., Hirudo medicinalis: ancient origins of, and trends in the use of medicinal leeches throughout history, British Journal of Oral and Maxillofacial Surgery, 2004",
+  "written": "2026-10-03"
+}

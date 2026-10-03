@@ -1,0 +1,40 @@
+{
+  "id": "sport-betting-odds-2",
+  "topic": "sport",
+  "genre": "sport.sport_and_numbers",
+  "strand": "sport.sport_and_numbers.betting_odds",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Across millions of horse-race bets, which bets lost punters the most per pound staked?",
+  "options": [
+    "Bets on the favourites",
+    "Bets on mid-priced horses",
+    "Bets on long shots"
+  ],
+  "correct": 2,
+  "answer": "Bets on long shots. Snowberg and Wolfers found the average return falls steadily as the odds lengthen: favourites lose a few pence per pound, while horses at 100 to 1 return only a fraction of what is staked on them. Bettors overrate small chances, so the long shot is priced worse than it is.",
+  "move": "Small chances of a big prize are routinely overpriced by hopeful buyers.",
+  "ask": "Where am I paying too much for a small chance of something big?",
+  "trap": "Assuming low-paying favourites must be the worst deal.",
+  "keywords": [
+    "horse racing",
+    "long shots",
+    "favourite-longshot bias",
+    "betting"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "source": "Snowberg & Wolfers, Journal of Political Economy, 2010",
+  "source_kind": "paper",
+  "reference": "Erik Snowberg & Justin Wolfers, Explaining the Favorite–Long Shot Bias: Is it Risk-Love or Misperceptions?, Journal of Political Economy, 2010",
+  "written": "2026-10-03"
+}

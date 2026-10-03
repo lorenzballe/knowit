@@ -1,0 +1,33 @@
+{
+  "id": "science-base-rates-1",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.base_rates",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are the great majority of burglar alarm calls to the police false alarms?",
+  "answer": "Because burglaries are rare and alarms are many. A home alarm stands guard for thousands of hours for every real break-in, so even a small daily chance of a false trigger, from pets, wind or a fumbled code, outnumbers genuine alerts. A US police guide put false alarms at 94 to 98% of calls.",
+  "move": "Count the quiet hours an alarm watches before trusting its rings.",
+  "ask": "Which alarm in my life, a worry or a warning sign, goes off far more often than the real thing happens?",
+  "keywords": [
+    "burglar alarms",
+    "false alarms",
+    "police",
+    "base rates"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sampson, False Burglar Alarms, US DOJ, 2011",
+  "source_kind": "institution",
+  "reference": "Sampson, False Burglar Alarms, 2nd ed., Problem-Oriented Guides for Police No. 5, US Department of Justice, 2011",
+  "written": "2026-09-26"
+}

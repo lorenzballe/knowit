@@ -1,0 +1,40 @@
+{
+  "id": "art-street-art-2",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.street_art",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: if a street artist paints on your building without asking, the painting belongs to you, not the artist?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True, in Britain and the United States: the wall and whatever is on it are the owner's property, though the artist may keep copyright. That is how Banksy's Slave Labour could be cut from a shop wall in north London in 2013 and sold at auction. Someone else owned the paint.",
+  "move": "Owning an object and owning the rights to it are different things.",
+  "ask": "For the things I buy, especially digital ones, do I own the thing or only a right to use it?",
+  "trap": "False, because whoever made a work surely owns it.",
+  "keywords": [
+    "street art",
+    "property",
+    "copyright",
+    "banksy",
+    "slave labour"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bonadio, Copyright in Street Art and Graffiti, 2019",
+  "source_kind": "book",
+  "reference": "Enrico Bonadio (ed.), The Cambridge Handbook of Copyright in Street Art and Graffiti, Cambridge University Press, 2019",
+  "written": "2026-10-03"
+}

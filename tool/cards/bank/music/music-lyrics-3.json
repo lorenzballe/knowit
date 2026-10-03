@@ -1,0 +1,39 @@
+{
+  "id": "music-lyrics-3",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.lyrics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: across fifty years of US hit songs, the lyrics have grown more cheerful in their emotion words?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Charlotte Brand, Alberto Acerbi and Alex Mesoudi scored the lyrics of US hits from 1965 to 2015: words of anger, fear and sadness rose, and words of joy and love fell. Bright production hides it. Plenty of recent hits set a breakup or loneliness to a dance beat.",
+  "move": "Judge a message by its words, not by the mood of its delivery.",
+  "ask": "Whose cheerful tone stops me from hearing what they are really telling me?",
+  "trap": "Hearing bright, upbeat production and assuming the words match it.",
+  "keywords": [
+    "song lyrics",
+    "emotion words",
+    "billboard hits",
+    "cultural evolution"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brand, Acerbi & Mesoudi, Evolutionary Human Sciences, 2019",
+  "source_kind": "paper",
+  "reference": "Brand, Acerbi & Mesoudi, Cultural evolution of emotional expression in 50 years of song lyrics, Evolutionary Human Sciences, 2019",
+  "written": "2026-10-03"
+}

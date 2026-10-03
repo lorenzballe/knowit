@@ -1,0 +1,47 @@
+{
+  "id": "music-hearing-1",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.hearing",
+  "also": [
+    "music.sound_itself.noise_and_health"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "NIOSH allows 8 hours a day at 85 decibels and halves the time for every extra 3 decibels. How many minutes at 100 decibels?",
+  "value": 15,
+  "unit": "minutes",
+  "answer": "15 minutes, about four songs at a loud concert",
+  "move": "When each step halves the margin, a few steps leave almost nothing.",
+  "ask": "Which risk I take often grows much faster than it seems, step by step?",
+  "trap": "Seeing 100 as only a little above 85, so most of a day.",
+  "hint": "Count how many 3-decibel steps lie between 85 and 100.",
+  "steps": [
+    "Extra level: 100 − 85 = 15 decibels",
+    "Halvings: 15 ÷ 3 = 5",
+    "Time: 480 minutes ÷ 2⁵ = 480 ÷ 32",
+    "15 minutes, about four songs at a loud concert"
+  ],
+  "keywords": [
+    "noise exposure",
+    "niosh",
+    "decibels",
+    "hearing loss",
+    "concerts"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "NIOSH, Occupational Noise Exposure criteria, 1998",
+  "source_kind": "institution",
+  "reference": "NIOSH, Criteria for a Recommended Standard: Occupational Noise Exposure, Revised Criteria 1998, DHHS (NIOSH) Publication No. 98-126",
+  "written": "2026-10-03"
+}

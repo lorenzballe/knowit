@@ -6,16 +6,16 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "anchoring",
-  "question": "True or false: day-to-day happiness stops rising once yearly income passes about $75,000?",
+  "question": "True or false: for most people, day-to-day happiness keeps rising with income well beyond $75,000 a year?",
   "options": [
     "True",
     "False"
   ],
-  "correct": 1,
-  "answer": "False, for most people. In 2023 Matthew Killingsworth, Daniel Kahneman and Barbara Mellers re-examined the data behind the famous plateau and found happiness kept rising with income for most; only the unhappiest fifth levelled off, around $100,000. The gains track doublings: each doubling of income buys roughly the same small step.",
+  "correct": 0,
+  "answer": "True, for most people. In 2023 Matthew Killingsworth, Daniel Kahneman and Barbara Mellers re-examined the data behind the famous plateau and found happiness kept rising with income for most; only the unhappiest fifth levelled off, around $100,000. The gains track doublings: each doubling of income buys roughly the same small step.",
   "move": "A famous finding can be overturned; check who has looked again since.",
   "ask": "Which pay rise am I chasing, and would it change my ordinary days as much as I imagine?",
-  "trap": "True, recalling the widely reported $75,000 ceiling from 2010.",
+  "trap": "False, recalling the widely reported $75,000 ceiling from 2010.",
   "keywords": [
     "income",
     "happiness",

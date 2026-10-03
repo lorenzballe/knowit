@@ -1,0 +1,40 @@
+{
+  "id": "psychology-stress-and-choices-2",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.stress_and_choices",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "People learned, stressed or calm, to press keys for chocolate milk or orange juice, then drank one to the full. What did the stressed do?",
+  "options": [
+    "Kept pressing for the drink already drunk",
+    "Pressed less for it than the calm",
+    "Stopped pressing for either drink"
+  ],
+  "correct": 0,
+  "answer": "Kept pressing for the drink already drunk. Calm people pressed less for what they had just had their fill of; stressed people kept responding much as before, out of habit rather than for the goal. Stress tips control from choice towards routine. Under pressure, the hand reaches for what it has always reached for.",
+  "move": "Under pressure, expect old routines, not fresh judgement, to take the wheel.",
+  "ask": "Which old habit do I fall back on when I am stressed, and is it still serving me?",
+  "trap": "Pressed less, since stress should make people more alert to their needs.",
+  "keywords": [
+    "stress",
+    "habits",
+    "goal-directed behaviour",
+    "food reward"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schwabe & Wolf, Journal of Neuroscience, 2009",
+  "source_kind": "paper",
+  "reference": "Schwabe & Wolf, Stress prompts habit behavior in humans, Journal of Neuroscience, 2009",
+  "written": "2026-10-03"
+}

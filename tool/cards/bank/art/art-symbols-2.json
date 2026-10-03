@@ -1,0 +1,33 @@
+{
+  "id": "art-symbols-2",
+  "topic": "art",
+  "genre": "art.look_closer",
+  "strand": "art.look_closer.symbols",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Dutch vanitas still lifes warned against wealth with skulls and guttering candles. Who bought them?",
+  "answer": "The wealthy. Merchants paid well for pictures that lingered over the things they owned: silver cups, Chinese porcelain, peeled lemons, shells from the far side of the world. The skull let them enjoy the luxury and the sermon in one canvas. The historian Simon Schama calls this a society embarrassed by its own riches.",
+  "move": "A warning against something can also be a way of showing it off.",
+  "ask": "Where do I show something off while seeming to criticise it?",
+  "keywords": [
+    "vanitas",
+    "still life",
+    "dutch golden age",
+    "luxury"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schama, The Embarrassment of Riches, 1987",
+  "source_kind": "book",
+  "reference": "Simon Schama, The Embarrassment of Riches: An Interpretation of Dutch Culture in the Golden Age, Knopf, 1987",
+  "written": "2026-10-03"
+}

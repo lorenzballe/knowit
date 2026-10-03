@@ -1,0 +1,39 @@
+{
+  "id": "music-noise-and-health-2",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.noise_and_health",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: in Europe, noise is ranked the second most harmful environmental stressor to health, after only air pollution?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The European Environment Agency ranks noise behind only air pollution for its effect on health in Europe. Its 2020 report estimated that long-term exposure to environmental noise contributes to about 12,000 premature deaths a year and disturbs the sleep of millions. Noise leaves no residue, smell or stain to photograph.",
+  "move": "A harm that leaves nothing to photograph is the easiest to underrate.",
+  "ask": "What quiet, invisible drain on my health am I ignoring because I cannot see it?",
+  "trap": "Ranking visible pollution, like chemicals or litter, above an invisible one.",
+  "keywords": [
+    "environmental noise",
+    "air pollution",
+    "european environment agency",
+    "premature deaths"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "European Environment Agency, Environmental noise in Europe 2020",
+  "source_kind": "institution",
+  "reference": "European Environment Agency, Environmental noise in Europe 2020, EEA Report No 22/2019, 2020",
+  "written": "2026-10-03"
+}

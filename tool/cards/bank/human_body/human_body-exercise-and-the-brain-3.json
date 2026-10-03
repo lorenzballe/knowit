@@ -1,0 +1,38 @@
+{
+  "id": "human_body-exercise-and-the-brain-3",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.exercise_and_the_brain",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should doctors offer exercise as a first treatment for mild depression, before antidepressants?",
+  "sides": [
+    "Yes, offer it first",
+    "No, not as the default"
+  ],
+  "answer": "Yes. England's NICE guideline of 2022 lists group exercise among first-line options for less severe depression. Trials show meaningful improvements, it has few side effects, and it helps the heart, sleep and weight that depression often harms. Starting with movement respects patients who want to avoid medication, while keeping drugs ready if it fails.",
+  "move": "The hinge is whether patients can sustain the effort when depression saps motivation.",
+  "ask": "When I feel low, what small movement could I manage today, even if it is only a walk?",
+  "counterpoint": "No. Exercise trials cannot be blinded, and a Cochrane review found the benefit shrank considerably when only the most rigorous trials were counted. Depression saps motivation, so many patients never do the sessions they are prescribed. Offering exercise first can delay a treatment that works, and leave patients feeling they failed at getting well.",
+  "keywords": [
+    "depression",
+    "exercise",
+    "antidepressants",
+    "nice guideline"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NICE guideline NG222, 2022",
+  "source_kind": "institution",
+  "reference": "National Institute for Health and Care Excellence, Depression in adults: treatment and management, NG222, 2022",
+  "written": "2026-09-26"
+}

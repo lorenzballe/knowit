@@ -1,0 +1,39 @@
+{
+  "id": "space-ufo-claims-2",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.ufo_claims",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: after reviewing US government records back to 1945, the Pentagon's UFO office found no evidence of alien technology?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The All-domain Anomaly Resolution Office reported in 2024 that it found no verified evidence of extraterrestrial technology, and that many sightings were balloons, drones, satellites or secret aircraft. Hearings and leaked videos made headlines around the world; the report's conclusion made far fewer.",
+  "move": "A loud hearing is not a finding; read what the report concludes.",
+  "ask": "Do I know what the report actually says, or only what the headlines said about it?",
+  "trap": "False, since years of hearings and leaks suggest something was found.",
+  "keywords": [
+    "aaro",
+    "pentagon",
+    "unidentified anomalous phenomena",
+    "government reports"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "AARO, Historical Record Report, Volume 1, 2024",
+  "source_kind": "institution",
+  "reference": "All-domain Anomaly Resolution Office, Report on the Historical Record of U.S. Government Involvement with Unidentified Anomalous Phenomena, Volume 1, 2024",
+  "written": "2026-10-03"
+}

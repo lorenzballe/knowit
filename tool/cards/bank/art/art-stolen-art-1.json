@@ -1,0 +1,38 @@
+{
+  "id": "art-stolen-art-1",
+  "topic": "art",
+  "genre": "art.art_and_power",
+  "strand": "art.art_and_power.stolen_art",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should museums return objects their countries took in colonial wars, such as the Benin Bronzes?",
+  "sides": [
+    "Yes, return them",
+    "No, not unconditionally"
+  ],
+  "answer": "Yes. The Benin Bronzes were seized by British troops who sacked Benin City in 1897; nobody sold them. A 2018 report for France's president estimated that 90 to 95% of sub-Saharan Africa's cultural heritage is held outside the continent. A people cannot study and teach its own past when nearly all of it sits abroad.",
+  "move": "Whichever side you took, it turns on who exactly the object returns to.",
+  "ask": "When I give back something I borrowed or took, do I know who should really get it?",
+  "counterpoint": "Not without conditions. Return to whom matters: in 2023 a Nigerian presidential decree gave ownership of returned Benin Bronzes to the Oba, Benin's traditional king, rather than to a public museum, and some lenders paused. Great museums let millions see objects side by side. Transfers should follow agreements on care and public access, case by case.",
+  "keywords": [
+    "benin bronzes",
+    "restitution",
+    "sarr-savoy report",
+    "colonial looting"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sarr & Savoy, Restitution report, 2018",
+  "source_kind": "institution",
+  "reference": "Felwine Sarr & Bénédicte Savoy, The Restitution of African Cultural Heritage: Toward a New Relational Ethics, report to the French President, 2018",
+  "written": "2026-10-03"
+}

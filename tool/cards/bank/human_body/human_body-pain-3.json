@@ -1,0 +1,39 @@
+{
+  "id": "human_body-pain-3",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.pain",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: across more than 11 million US doctor visits, visits for joint and back pain rose on rainy days?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Jena's team matched about 11 million Medicare visits to local rainfall and found no link between rain and visits for joint or back pain. The belief persists because a rainy day with sore knees is memorable, while a sunny day with sore knees, or a rainy day without, leaves no trace.",
+  "move": "Count the times a pattern failed, not only the times it held.",
+  "ask": "Which pattern in my life do I believe because I only remember the times it came true?",
+  "trap": "So many people swear their joints predict rain that it must show.",
+  "keywords": [
+    "rain",
+    "joint pain",
+    "back pain",
+    "weather"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jena et al., BMJ, 2017",
+  "source_kind": "paper",
+  "reference": "Jena AB, Olenski AR, Molitor D, Miller N, Association between rainfall and diagnoses of joint or back pain: retrospective claims analysis, BMJ, 2017",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "language-spin-1",
+  "topic": "language",
+  "genre": "language.words_that_persuade",
+  "strand": "language.words_that_persuade.spin",
+  "also": [
+    "psychology.resist_persuasion.framing"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "People chose a lung-cancer treatment, surgery or radiation, from the same figures given as survival or as deaths. What changed?",
+  "options": [
+    "Same choices in both versions",
+    "Fewer chose surgery hearing death rates",
+    "More chose surgery hearing death rates"
+  ],
+  "correct": 1,
+  "answer": "Fewer chose surgery hearing death rates. In a 1982 study, radiation was chosen by 18% when outcomes were framed as survival and by 44% when the same numbers were framed as deaths. Surgery's early risk sounds worse as 10% die than as 90% survive. Doctors in the study swung as much as anyone.",
+  "move": "Turn every figure around and see whether your choice survives.",
+  "ask": "Which decision of mine would change if I heard the same numbers the other way round?",
+  "trap": "Same choices, since the figures underneath were identical.",
+  "keywords": [
+    "framing",
+    "lung cancer",
+    "surgery",
+    "survival rates"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McNeil et al., New England Journal of Medicine, 1982",
+  "source_kind": "paper",
+  "reference": "McNeil, Pauker, Sox & Tversky, On the elicitation of preferences for alternative therapies, New England Journal of Medicine 306(21), 1982",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "music-noise-and-health-3",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.noise_and_health",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "A town halves the traffic on a busy road. How much quieter does the road sound to the people living along it?",
+  "options": [
+    "Only slightly quieter",
+    "About half as loud",
+    "About a tenth as loud"
+  ],
+  "correct": 0,
+  "answer": "Only slightly quieter. Halving the cars halves the sound energy, a drop of 3 decibels, about the smallest change people notice outdoors. To sound half as loud, the level must fall by about 10 decibels, which means cutting the traffic to a tenth. Nine cars in every ten would have to go.",
+  "move": "Some dials need nine-tenths removed before anyone feels a difference.",
+  "ask": "Where am I expecting a half-measure to bring a half-result, when it may barely show?",
+  "trap": "Expecting half the cars to make half the noise.",
+  "keywords": [
+    "traffic noise",
+    "decibels",
+    "loudness",
+    "road traffic"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "UK Department of Transport, CRTN, 1988",
+  "source_kind": "institution",
+  "reference": "Department of Transport and Welsh Office, Calculation of Road Traffic Noise, HMSO, 1988",
+  "written": "2026-10-03"
+}

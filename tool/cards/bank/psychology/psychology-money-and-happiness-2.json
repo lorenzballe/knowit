@@ -1,0 +1,38 @@
+{
+  "id": "psychology-money-and-happiness-2",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.money_and_happiness",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "As a country grows richer over decades, do its people become happier?",
+  "sides": [
+    "Yes, growth lifts happiness",
+    "No, not in the long run"
+  ],
+  "answer": "Yes. Across countries and within them, richer means more satisfied. Stevenson and Wolfers, like Deaton, found life satisfaction rising steadily with the logarithm of income, with no point where it stops: each doubling buys a similar step up, in poor and rich nations alike. Growth that doubles incomes should register, and over time it does.",
+  "move": "Whichever side you took, the hinge is the time span over which happiness is measured.",
+  "ask": "When my income last rose, how long did the extra happiness last before it felt normal?",
+  "counterpoint": "Over the long run, the link vanishes. Easterlin tracked countries for decades: once short booms and busts are set aside, happiness trends did not follow growth. China's consumption per person roughly quadrupled over two decades while life satisfaction ended about where it began. People compare with their neighbours and adapt to gains, so the treadmill keeps running.",
+  "keywords": [
+    "easterlin paradox",
+    "economic growth",
+    "life satisfaction",
+    "china"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Easterlin et al., PNAS, 2010",
+  "source_kind": "paper",
+  "reference": "Easterlin, McVey, Switek, Sawangfa & Zweig, The happiness-income paradox revisited, PNAS, 2010",
+  "written": "2026-10-03"
+}

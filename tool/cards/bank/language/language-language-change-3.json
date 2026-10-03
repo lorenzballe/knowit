@@ -1,0 +1,40 @@
+{
+  "id": "language-language-change-3",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.language_change",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "A new way of saying something is used 1% of the time, and its share doubles each decade. When does it become the majority?",
+  "options": [
+    "In about 6 decades",
+    "In about 25 decades",
+    "In about 50 decades"
+  ],
+  "correct": 0,
+  "answer": "In about 6 decades. Doubling from 1% runs 2, 4, 8, 16, 32 and 64%, passing half on the sixth step. Real changes trace an S-shaped curve, slowing near the top, so for most of its life a change looks like nothing, then seems to arrive all at once.",
+  "move": "Something doubling quietly looks like nothing until it is suddenly everywhere.",
+  "ask": "What small habit in my life is doubling quietly, for better or worse?",
+  "trap": "About 50 decades, picturing it gaining one percent at a time.",
+  "keywords": [
+    "s-curve",
+    "language change",
+    "doubling",
+    "grammar"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Kroch, Language Variation and Change, 1989",
+  "source_kind": "paper",
+  "reference": "Kroch, Reflexes of grammar in patterns of language change, Language Variation and Change 1(3), 1989",
+  "written": "2026-10-03"
+}

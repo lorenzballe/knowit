@@ -1,0 +1,33 @@
+{
+  "id": "psychology-group-thinking-2",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.group_thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do groups often miss the best option when each member holds a different piece of the evidence?",
+  "answer": "Because talk drifts to what everyone already knows. Stasser and Titus gave members shared facts plus private ones that, pooled, pointed to the best candidate. Talk dwelt on shared facts, which favoured a weaker one; private ones rarely surfaced. The group chose a candidate it would have rejected with every fact on the table.",
+  "move": "Before a group decides, ask each person what only they know.",
+  "ask": "In my next group decision, could I ask each person for one thing only they know?",
+  "keywords": [
+    "hidden profiles",
+    "group decisions",
+    "information sharing",
+    "meetings"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stasser & Titus, JPSP, 1985",
+  "source_kind": "paper",
+  "reference": "Stasser & Titus, Pooling of unshared information in group decision making: biased information sampling during discussion, Journal of Personality and Social Psychology, 1985",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "music-song-length-2",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.song_length",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A play counts as a stream after 30 seconds. In one hour of listening, how many more streams do 2.5-minute songs earn than 4-minute ones?",
+  "value": 9,
+  "unit": "streams",
+  "answer": "24 − 15 = 9 more streams: 60% more pay for the same hour",
+  "move": "Whatever unit people are paid by, the work bends towards producing more units.",
+  "ask": "What am I paid or praised for by the piece, and how has that shaped what I do?",
+  "trap": "Thinking pay follows listening time, so song length cannot matter.",
+  "hint": "Divide the hour by each song's length, then compare.",
+  "steps": [
+    "4-minute songs in an hour: 60 ÷ 4 = 15 streams",
+    "2.5-minute songs in an hour: 60 ÷ 2.5 = 24 streams",
+    "24 − 15 = 9 more streams: 60% more pay for the same hour"
+  ],
+  "keywords": [
+    "streaming",
+    "song length",
+    "royalties",
+    "30-second rule"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Spotify for Artists, Royalties Guide",
+  "source_kind": "company",
+  "reference": "https://artists.spotify.com/royalties-guide",
+  "written": "2026-10-03"
+}

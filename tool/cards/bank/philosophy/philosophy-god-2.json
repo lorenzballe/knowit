@@ -9,10 +9,10 @@
   "question": "Is cruelty wrong because God forbids it, or forbidden because it is wrong? What follows from the first answer?",
   "options": [
     "Morality becomes more secure",
-    "Morality becomes arbitrary command",
-    "God becomes unnecessary"
+    "God becomes unnecessary",
+    "Morality becomes arbitrary command"
   ],
-  "correct": 1,
+  "correct": 2,
   "answer": "Morality becomes arbitrary command. If wrongness simply is being forbidden, a different command would have made cruelty right, and calling God good would only say God obeys himself. The other horn has its own cost: goodness then stands apart from God. Plato set the dilemma in the Euthyphro, and believers still debate it.",
   "move": "Ask whether a rule is good because commanded, or commanded because good.",
   "ask": "Is something I treat as right only right because someone with authority said so?",

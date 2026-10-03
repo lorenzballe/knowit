@@ -1,0 +1,43 @@
+{
+  "id": "human_body-hunger-signals-3",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.hunger_signals",
+  "also": [
+    "food.eat_smarter.hunger_or_habit"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Two diets offered equal sugar, fat, fibre and salt, and volunteers ate freely. How many extra daily calories did the ultra-processed one bring?",
+  "options": [
+    "None, the nutrients matched",
+    "About 50 kcal",
+    "About 500 kcal"
+  ],
+  "correct": 2,
+  "answer": "About 500 kcal. In Kevin Hall's ward study, 20 adults ate about 500 kcal a day more on the ultra-processed diet and gained close to a kilogram in two weeks. They also ate faster, which may outrun the gut's fullness signals. Soft food that needs little chewing slips past the brakes.",
+  "move": "How fast something is consumed can matter as much as what it contains.",
+  "ask": "What do I eat so quickly that my body never gets the chance to say enough?",
+  "trap": "Matched nutrients on the plate should mean matched amounts eaten.",
+  "keywords": [
+    "ultra-processed food",
+    "calorie intake",
+    "eating speed",
+    "satiety"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hall et al., Cell Metabolism, 2019",
+  "source_kind": "paper",
+  "reference": "Hall KD, Ayuketah A, Brychta R et al., Ultra-processed diets cause excess calorie intake and weight gain: an inpatient randomized controlled trial of ad libitum food intake, Cell Metabolism, 2019",
+  "written": "2026-09-26"
+}

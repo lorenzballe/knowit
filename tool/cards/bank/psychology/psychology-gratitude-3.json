@@ -1,0 +1,40 @@
+{
+  "id": "psychology-gratitude-3",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.gratitude",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "University fundraisers got a short visit from a director thanking them for their work. How did their calls change the next week?",
+  "options": [
+    "They rose by about half",
+    "They stayed about the same",
+    "They fell slightly"
+  ],
+  "correct": 0,
+  "answer": "They rose by about half. Grant and Gino found fundraisers thanked in person made more than 50% more calls the next week, while an unthanked group stayed flat. In the lab, people thanked for their help were about twice as likely to help again. Thanks told them their effort had been noticed.",
+  "move": "Thanking someone tells them their effort counts, not just that you are polite.",
+  "ask": "Whose steady work have I been taking for granted, and when could I thank them this week?",
+  "trap": "Thinking thanks is pleasant but too cheap to change behaviour.",
+  "keywords": [
+    "gratitude",
+    "fundraising",
+    "motivation",
+    "thanks"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Grant & Gino, JPSP, 2010",
+  "source_kind": "paper",
+  "reference": "Grant & Gino, A little thanks goes a long way: explaining why gratitude expressions motivate prosocial behavior, Journal of Personality and Social Psychology, 2010",
+  "written": "2026-10-03"
+}

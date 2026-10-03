@@ -1,0 +1,40 @@
+{
+  "id": "sport-fans-2",
+  "topic": "sport",
+  "genre": "sport.sport_and_society",
+  "strand": "sport.sport_and_society.fans",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: police reports of men's violence against partners rose after American football teams lost games they were expected to win?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Card and Dahl matched betting odds for NFL games with local police records: an upset loss by the local team raised reported violence by men against partners by about 10%, mostly in the hours around the end of the game. Expected losses brought no such rise. Disappointment, not defeat itself, did the damage.",
+  "move": "Watch the gap between what was expected and what happened.",
+  "ask": "When something disappoints me, who at home pays for my mood, and what could I do before reacting?",
+  "trap": "Assuming a game moves fans' moods but never their behaviour at home.",
+  "keywords": [
+    "domestic violence",
+    "nfl",
+    "upset losses",
+    "emotions",
+    "fans"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "source": "Card & Dahl, Quarterly Journal of Economics, 2011",
+  "source_kind": "paper",
+  "reference": "David Card & Gordon B. Dahl, Family Violence and Football: The Effect of Unexpected Emotional Cues on Violent Behavior, Quarterly Journal of Economics, 2011",
+  "written": "2026-10-03"
+}

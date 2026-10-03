@@ -1,0 +1,36 @@
+{
+  "id": "music-pop-songwriters-1",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.pop_songwriters",
+  "also": [
+    "music.the_music_business.streaming_pay"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do songwriters get a much smaller slice of each stream than the companies that own the recording?",
+  "answer": "Because their price is set by a government panel, and the recording's is not. In the US the Copyright Royalty Board fixes the songwriters' share of streaming revenue: 10.5% until a 2018 ruling ordered a rise in steps to 15.1%. Labels negotiate their own share in private, and it is several times larger.",
+  "move": "Whoever is allowed to negotiate usually ends up with the bigger share.",
+  "ask": "Where is my price set by habit or rules, when I could actually negotiate it?",
+  "keywords": [
+    "songwriters",
+    "copyright royalty board",
+    "streaming royalties",
+    "record labels"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Copyright Royalty Board, Phonorecords III, 2018",
+  "source_kind": "primary_document",
+  "reference": "Copyright Royalty Board, Determination of Royalty Rates and Terms for Making and Distributing Phonorecords (Phonorecords III), 2018",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "psychology-comparison-2",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.comparison",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Holding a person's own income fixed, what happens to their happiness when their neighbours' earnings rise?",
+  "options": [
+    "It rises",
+    "It falls",
+    "It does not change"
+  ],
+  "correct": 1,
+  "answer": "It falls. Using US survey data, Luttmer found that higher average earnings in a person's local area went with lower reported happiness, roughly as much as an equal fall in their own pay would cause. The effect was strongest among those who socialised locally. A raise down the street works like a cut at home.",
+  "move": "Notice whose life you use as the yardstick for your own.",
+  "ask": "Whose life down the street, or online, am I quietly using to judge whether mine is going well?",
+  "trap": "Expecting a neighbour's good fortune to leave one's own life untouched.",
+  "keywords": [
+    "relative income",
+    "neighbours",
+    "happiness",
+    "envy"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Luttmer, Quarterly Journal of Economics, 2005",
+  "source_kind": "paper",
+  "reference": "Luttmer, Neighbors as negatives: relative earnings and well-being, Quarterly Journal of Economics, 2005",
+  "written": "2026-10-03"
+}

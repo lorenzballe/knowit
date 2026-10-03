@@ -1,0 +1,40 @@
+{
+  "id": "food-heat-and-the-brain-2",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.heat_and_the_brain",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the coolness of a mint and the cold of an ice cube are reported by the same nerve sensor?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Menthol opens TRPM8, a channel in nerve endings that normally opens when skin or mouth cools below about 25 °C. The brain receives the same signal either way and reports cold, though the mint has not lowered the temperature at all. Chilli plays the same trick on the nerves' heat sensor.",
+  "move": "A sensor reports what sets it off, not necessarily what is there.",
+  "ask": "Which strong feeling of mine might be a false alarm from a sensitive sensor?",
+  "trap": "Assuming a cold feeling needs something actually cold to cause it.",
+  "keywords": [
+    "menthol",
+    "trpm8",
+    "cold receptor",
+    "nerves",
+    "mint"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McKemy, Neuhausser & Julius, Nature, 2002",
+  "source_kind": "paper",
+  "reference": "McKemy, Neuhausser & Julius, Identification of a cold receptor reveals a general role for TRP channels in thermosensation, Nature, 2002",
+  "written": "2026-10-03"
+}

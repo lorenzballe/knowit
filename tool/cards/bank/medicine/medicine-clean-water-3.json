@@ -1,0 +1,41 @@
+{
+  "id": "medicine-clean-water-3",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.clean_water",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 2014, Flint, Michigan, switched its water source and lead rose in homes. What let the lead in?",
+  "options": [
+    "Lead in the river water itself",
+    "Old pipes corroding without treatment",
+    "A chemical spill upstream"
+  ],
+  "correct": 1,
+  "answer": "Old pipes corroding without treatment. The new river water was more corrosive, and the city did not add the routine chemical that coats the inside of pipes. Lead from old service lines dissolved into kitchen taps. The share of Flint children with high blood lead roughly doubled, from 2.4% to 4.9%.",
+  "move": "When something changes, check what the old arrangement was quietly protecting.",
+  "ask": "Before I change a routine to save money or time, what is it quietly protecting me from?",
+  "trap": "Lead in the river water itself, the dirty source seems the obvious culprit.",
+  "keywords": [
+    "flint",
+    "lead",
+    "water pipes",
+    "corrosion control",
+    "children"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hanna-Attisha et al., AJPH, 2016",
+  "source_kind": "paper",
+  "reference": "Hanna-Attisha et al., Elevated blood lead levels in children associated with the Flint drinking water crisis, American Journal of Public Health, 2016",
+  "written": "2026-10-03"
+}

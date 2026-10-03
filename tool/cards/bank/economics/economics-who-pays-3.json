@@ -1,0 +1,43 @@
+{
+  "id": "economics-who-pays-3",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.who_pays",
+  "also": [
+    "economics.spot_a_bad_deal.free_is_not_free"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A shopper earns 1% cashback on a rewards credit card. Who mainly pays for that cashback?",
+  "options": [
+    "The bank that issues the card",
+    "All shoppers, including cash payers",
+    "The card network, as advertising"
+  ],
+  "correct": 1,
+  "answer": "All shoppers, including cash payers. Shops pay card fees and build them into prices that everyone pays. A Boston Fed study estimated that each US household paying cash handed about $149 a year to card users, while each card household gained about $1,133. The rewards flow mostly to richer households.",
+  "move": "When a perk seems to cost nobody, find who pays without knowing.",
+  "ask": "Which perk I enjoy is being paid for by people who never use it?",
+  "trap": "Thinking the bank pays rewards out of its own profits.",
+  "keywords": [
+    "credit card rewards",
+    "cashback",
+    "merchant fees",
+    "cash users"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schuh, Shy and Stavins, Boston Fed, 2010",
+  "source_kind": "institution",
+  "reference": "https://www.bostonfed.org/-/media/Documents/Workingpapers/PDF/ppdp1003.pdf",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "music-beethoven-1",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.beethoven",
+  "also": [
+    "history.learn_from_the_past.who_wrote_it"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Beethoven, deaf, conversed through notebooks. Why can historians not trust everything those books seem to record?",
+  "answer": "Because his secretary tampered with them. The books hold mostly what visitors wrote, since Beethoven usually answered aloud. After his death Anton Schindler kept them, destroyed many, and added entries of his own that flattered himself. Researchers exposed the forgeries in 1977. Some of the best-loved Beethoven stories rest on Schindler alone.",
+  "move": "Ask who held the archive before trusting the story it tells.",
+  "ask": "Whose version of events do I rely on, and what did they gain from telling it that way?",
+  "keywords": [
+    "beethoven",
+    "conversation books",
+    "anton schindler",
+    "forgery",
+    "deafness"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Solomon, Beethoven, 1998",
+  "source_kind": "book",
+  "reference": "Solomon, Beethoven, 2nd revised edition, Schirmer Books, 1998",
+  "written": "2026-10-03"
+}

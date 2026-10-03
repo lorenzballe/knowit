@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-rights-3",
+  "topic": "philosophy",
+  "genre": "philosophy.justice",
+  "strand": "philosophy.justice.rights",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "New Zealand made the Whanganui River a legal person in 2017. Who speaks for the river in law?",
+  "options": [
+    "Any citizen who wishes",
+    "Two guardians, iwi and Crown",
+    "The New Zealand government alone"
+  ],
+  "correct": 1,
+  "answer": "Two guardians, one named by the Whanganui iwi and one by the Crown. The 2017 Te Awa Tupua Act gave the river rights, but a river cannot sue or sign, so the office of Te Pou Tupua acts in its name. Every right needs a voice; for this river, the voice is two people.",
+  "move": "A right is only as strong as whoever can stand up to claim it.",
+  "ask": "Who speaks up for the people in my life who cannot easily speak for themselves?",
+  "trap": "Any citizen, assuming nature's rights belong to everyone at once.",
+  "keywords": [
+    "whanganui river",
+    "legal personhood",
+    "rights of nature",
+    "te awa tupua",
+    "maori"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Te Awa Tupua Act 2017",
+  "source_kind": "primary_document",
+  "reference": "Te Awa Tupua (Whanganui River Claims Settlement) Act 2017, New Zealand Parliament, 2017",
+  "written": "2026-10-03"
+}

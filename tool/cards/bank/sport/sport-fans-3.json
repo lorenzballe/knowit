@@ -1,0 +1,41 @@
+{
+  "id": "sport-fans-3",
+  "topic": "sport",
+  "genre": "sport.sport_and_society",
+  "strand": "sport.sport_and_society.fans",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "NFL fans picked their favourite team's game every week of a season and were paid for accuracy. What happened to their optimism?",
+  "options": [
+    "It faded as losses piled up",
+    "It turned into pessimism",
+    "It stayed high all season"
+  ],
+  "correct": 2,
+  "answer": "It stayed high all season. Massey, Simmons and Armor found fans kept overrating their own team's chances week after week, despite feedback on every result and money for being right. Wanting an outcome shaped the forecast, and a whole season of evidence barely moved it.",
+  "move": "Forecasts about what you love need a second opinion from someone who does not.",
+  "ask": "Where do my hopes shape my forecasts, and who could give me a cooler second view?",
+  "trap": "Assuming a season of feedback and money would correct the bias.",
+  "keywords": [
+    "optimism",
+    "fans",
+    "predictions",
+    "wishful thinking",
+    "nfl"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Massey, Simmons & Armor, Psychological Science, 2011",
+  "source_kind": "paper",
+  "reference": "Cade Massey, Joseph P. Simmons & David A. Armor, Hope over experience: desirability and the persistence of optimism, Psychological Science, 2011",
+  "written": "2026-10-03"
+}

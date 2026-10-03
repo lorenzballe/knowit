@@ -1,0 +1,33 @@
+{
+  "id": "food-hunger-or-habit-1",
+  "topic": "food",
+  "genre": "food.eat_smarter",
+  "strand": "food.eat_smarter.hunger_or_habit",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened when men who could not form new memories were offered a second lunch soon after the first?",
+  "answer": "They ate it, and often started on a third. In a 1998 study, two men with severe amnesia were served lunch, then another 10 to 30 minutes later; they ate the second readily and sometimes began a third, while rating themselves barely less hungry. Feeling full depends partly on remembering having eaten.",
+  "move": "Fullness is partly a memory of having eaten.",
+  "ask": "Do I notice my meals enough to remember them an hour later?",
+  "keywords": [
+    "amnesia",
+    "satiety",
+    "memory",
+    "meals"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rozin et al., Psychological Science, 1998",
+  "source_kind": "paper",
+  "reference": "Rozin, Dow, Moscovitch & Rajaram, What causes humans to begin and end a meal? A role for memory for what has been eaten, as evidenced by a study of multiple meal eating in amnesic patients, Psychological Science, 1998",
+  "written": "2026-10-03"
+}

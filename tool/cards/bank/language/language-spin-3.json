@@ -1,0 +1,36 @@
+{
+  "id": "language-spin-3",
+  "topic": "language",
+  "genre": "language.words_that_persuade",
+  "strand": "language.words_that_persuade.spin",
+  "also": [
+    "philosophy.ethics.lying"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Is misleading someone with only true statements judged kinder than telling them a lie?",
+  "answer": "By the person doing it, yes; by the person misled, barely. In 2017 experiments, negotiators who steered others with true but misleading statements rated their own conduct as more ethical than lying. Once their targets found out, they judged it nearly as harshly as a lie and trusted the speaker less. Psychologists call it paltering.",
+  "move": "Judge a statement by the belief it leaves, not by its facts.",
+  "ask": "When did I last say only true things to leave someone believing something false?",
+  "keywords": [
+    "paltering",
+    "deception",
+    "negotiation",
+    "trust"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rogers et al., Journal of Personality and Social Psychology, 2017",
+  "source_kind": "paper",
+  "reference": "Rogers, Zeckhauser, Gino, Norton & Schweitzer, Artful paltering: the risks and rewards of using truthful statements to mislead others, Journal of Personality and Social Psychology 112(3), 2017",
+  "written": "2026-10-03"
+}

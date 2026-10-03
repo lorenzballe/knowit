@@ -1,0 +1,40 @@
+{
+  "id": "sport-money-in-sport-1",
+  "topic": "sport",
+  "genre": "sport.sport_and_society",
+  "strand": "sport.sport_and_society.money_in_sport",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Over two decades of English league football, how much of the spread in clubs' final positions did their wage bills explain?",
+  "options": [
+    "About a fifth",
+    "About half",
+    "About nine tenths"
+  ],
+  "correct": 2,
+  "answer": "About nine tenths. Szymanski and Kuypers found that clubs' average wage spending from 1978 to 1997 explained about 92% of the variation in their average league position; transfer spending explained far less. Wages buy the players the market rates highest, and over a season the market is mostly right.",
+  "move": "Look at what was spent before crediting the people who spent it.",
+  "ask": "When I admire someone's success, have I checked what resources they started with?",
+  "trap": "Leaving half to managers and tactics, the parts most talked about.",
+  "keywords": [
+    "wages",
+    "league position",
+    "english football",
+    "transfer spending"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Szymanski & Kuypers, Winners and Losers, 1999",
+  "source_kind": "book",
+  "reference": "Stefan Szymanski & Tim Kuypers, Winners and Losers: The Business Strategy of Football, Viking, 1999",
+  "written": "2026-10-03"
+}

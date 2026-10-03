@@ -6,16 +6,16 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "True or false: people solve the candle-on-the-wall puzzle more easily when the drawing pins come inside their box?",
+  "question": "True or false: people solve the candle-on-the-wall puzzle more easily when the drawing pins come outside their box?",
   "options": [
     "True",
     "False"
   ],
-  "correct": 1,
-  "answer": "False. In Duncker's puzzle a candle must be fixed to a wall using matches and a box of drawing pins; the answer is to pin the empty box up as a shelf. With the pins inside, people saw the box as a container and took longer. Handed over empty, it looked like material.",
+  "correct": 0,
+  "answer": "True. In Duncker's puzzle a candle must be fixed to a wall using matches and a box of drawing pins; the answer is to pin the empty box up as a shelf. With the pins inside, people saw the box as a container and took longer. Handed over empty, it looked like material.",
   "move": "Describe each thing by what it is made of, not what it is for.",
   "ask": "What tool, skill or contact do I own that I only ever see in its usual role?",
-  "trap": "Having the box in plain view seems enough to suggest using it.",
+  "trap": "The box is in plain view either way, so packing seems not to matter.",
   "keywords": [
     "candle problem",
     "functional fixedness",

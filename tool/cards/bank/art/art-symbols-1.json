@@ -1,0 +1,39 @@
+{
+  "id": "art-symbols-1",
+  "topic": "art",
+  "genre": "art.look_closer",
+  "strand": "art.look_closer.symbols",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: the woman in Jan van Eyck's Arnolfini Portrait of 1434 is shown pregnant?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False, according to the National Gallery in London, which owns it. She is holding up the heavy folds of a fashionable gown, and the rounded shape was the ideal female silhouette of the time; virgin saints of the period look just as round. Read with modern eyes, an ordinary dress becomes a hidden announcement.",
+  "move": "Before reading a hidden meaning, check what was simply normal then.",
+  "ask": "What am I reading as a hidden message that may just be how things are usually done?",
+  "trap": "True, because the rounded belly looks unmistakable today.",
+  "keywords": [
+    "arnolfini portrait",
+    "jan van eyck",
+    "fashion",
+    "national gallery"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Campbell, National Gallery Catalogues, 1998",
+  "source_kind": "reference_work",
+  "reference": "Lorne Campbell, The Fifteenth Century Netherlandish Schools, National Gallery Catalogues, 1998",
+  "written": "2026-10-03"
+}

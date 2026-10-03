@@ -1,0 +1,39 @@
+{
+  "id": "space-earth-from-above-2",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.earth_from_above",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: satellite records show the world's total tree cover grew between 1982 and 2016?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Song and colleagues found tree canopy up by about 2.24 million km², some 7%, as forests spread in temperate and northern regions and plantations grew. Over the same years the tropics lost tree cover. The global total rose while the richest forests shrank.",
+  "move": "A total can rise while the part you care about most falls.",
+  "ask": "Which overall number I feel good about hides a part that is getting worse?",
+  "trap": "False, because news of forests being cleared is so constant.",
+  "keywords": [
+    "tree cover",
+    "deforestation",
+    "landsat",
+    "forests"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Song et al., Nature, 2018",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/s41586-018-0411-9",
+  "written": "2026-10-03"
+}

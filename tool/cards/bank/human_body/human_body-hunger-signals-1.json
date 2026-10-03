@@ -1,0 +1,33 @@
+{
+  "id": "human_body-hunger-signals-1",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.hunger_signals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does hunger strike at noon, on schedule, even after a late and large breakfast?",
+  "answer": "Because the body learns mealtimes. Ghrelin, a hormone that drives hunger, rises before a habitual meal and falls after eating; Cummings found it climbing before each usual meal in people on a fixed schedule. Hunger is partly a timetable kept by the gut, like a dog waiting by its bowl at six.",
+  "move": "A strong urge may be a habit's clock rather than a real need.",
+  "ask": "Is my hunger at certain hours a need, or an appointment my body has learned to keep?",
+  "keywords": [
+    "ghrelin",
+    "hunger",
+    "mealtimes",
+    "hormones"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cummings et al., Diabetes, 2001",
+  "source_kind": "paper",
+  "reference": "Cummings DE, Purnell JQ, Frayo RS et al., A preprandial rise in plasma ghrelin levels suggests a role in meal initiation in humans, Diabetes, 2001",
+  "written": "2026-09-26"
+}

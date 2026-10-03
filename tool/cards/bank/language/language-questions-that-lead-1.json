@@ -1,0 +1,43 @@
+{
+  "id": "language-questions-that-lead-1",
+  "topic": "language",
+  "genre": "language.words_that_persuade",
+  "strand": "language.words_that_persuade.questions_that_lead",
+  "also": [
+    "medicine.talk_to_your_doctor.questions_to_ask"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A doctor ends a visit asking about anything else or about something else. Which wording leaves fewer worries unspoken?",
+  "options": [
+    "Something else",
+    "Anything else",
+    "Neither: they work the same"
+  ],
+  "correct": 0,
+  "answer": "Something else. In a 2007 trial with American family doctors, asking is there something else you want to address cut patients' unmet concerns by about 78% against no extra question; any made little difference. Any invites a no, as in any questions; some assumes there is more and makes room for it.",
+  "move": "Ask as if the answer exists, and people feel freer to give it.",
+  "ask": "When I ask whether anything is wrong, am I quietly inviting a no?",
+  "trap": "Neither, because one small word cannot change what a patient says.",
+  "keywords": [
+    "doctor visits",
+    "question wording",
+    "patients",
+    "unmet concerns"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Heritage et al., Journal of General Internal Medicine, 2007",
+  "source_kind": "paper",
+  "reference": "Heritage, Robinson, Elliott, Beckett & Wilkes, Reducing patients' unmet concerns in primary care: the difference one word can make, Journal of General Internal Medicine 22(10), 2007",
+  "written": "2026-10-03"
+}

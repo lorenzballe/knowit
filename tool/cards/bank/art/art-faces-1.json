@@ -1,0 +1,39 @@
+{
+  "id": "art-faces-1",
+  "topic": "art",
+  "genre": "art.look_closer",
+  "strand": "art.look_closer.faces",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: in a controlled test, viewers judged the Mona Lisa's eyes to be looking straight at them?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In a 2019 study by Horstmann and Loth, viewers judged her gaze to fall to their right, about 15 degrees off. The effect named after her is real: a face painted looking straight out seems to follow you round the room, because a flat picture does not change as you walk. She just is not an example of it.",
+  "move": "The famous example of an effect may not show the effect.",
+  "ask": "Which well-known example do I repeat without ever having checked it myself?",
+  "trap": "True, because the effect is named after her.",
+  "keywords": [
+    "mona lisa",
+    "gaze",
+    "mona lisa effect",
+    "perception"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Horstmann & Loth, i-Perception, 2019",
+  "source_kind": "paper",
+  "reference": "Gernot Horstmann & Sebastian Loth, The Mona Lisa illusion: scientists see her looking at them though she isn't, i-Perception, 2019",
+  "written": "2026-10-03"
+}

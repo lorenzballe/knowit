@@ -1,0 +1,40 @@
+{
+  "id": "food-hunger-or-habit-2",
+  "topic": "food",
+  "genre": "food.eat_smarter",
+  "strand": "food.eat_smarter.hunger_or_habit",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Some volunteers ate lunch in front of the television, others with no screen. What happened at the afternoon snack?",
+  "options": [
+    "Both groups ate the same",
+    "The screen group ate more",
+    "The screen group ate less"
+  ],
+  "correct": 1,
+  "answer": "The screen group ate more. A 2013 review of 24 studies found that distraction during a meal raised how much people ate at it, and raised what they ate later even more. A meal eaten half-noticed leaves a weak memory of having eaten, so the next craving meets little resistance.",
+  "move": "Attention at a meal is part of what fills you.",
+  "ask": "Do I eat my meals, or just get through them while doing something else?",
+  "trap": "Both the same, since the screen did not change the lunch.",
+  "keywords": [
+    "distracted eating",
+    "television",
+    "snacking",
+    "attention"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Robinson et al., Am. J. Clin. Nutr., 2013",
+  "source_kind": "paper",
+  "reference": "Robinson, Aveyard, Daley, Jolly, Lewis, Lycett & Higgs, Eating attentively: a systematic review and meta-analysis of the effect of food intake memory and awareness on eating, American Journal of Clinical Nutrition, 2013",
+  "written": "2026-10-03"
+}

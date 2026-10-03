@@ -1,0 +1,33 @@
+{
+  "id": "nature-adaptation-1",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.adaptation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the Netherlands, after near floods in 1993 and 1995, start lowering land beside rivers instead of raising dikes?",
+  "answer": "Because higher dikes only raise the stakes behind them. In 1995 about 250,000 people were evacuated. The Room for the River programme, over 30 projects costing about €2.3 billion, dug side channels, moved dikes back and lowered floodplains so high water spreads out. A river given space needs no taller wall.",
+  "move": "Give a pressure room to spread before building a taller wall.",
+  "ask": "Where in my life am I building higher walls when I could give the pressure somewhere to go?",
+  "keywords": [
+    "room for the river",
+    "netherlands",
+    "floods",
+    "dikes"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rijke et al., River Basin Management, 2012",
+  "source_kind": "paper",
+  "reference": "Rijke, van Herk, Zevenbergen & Ashley, Room for the River: delivering integrated river basin management in the Netherlands, International Journal of River Basin Management, 2012",
+  "written": "2026-10-03"
+}

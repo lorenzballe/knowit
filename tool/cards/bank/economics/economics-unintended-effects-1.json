@@ -1,0 +1,33 @@
+{
+  "id": "economics-unintended-effects-1",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.unintended_effects",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "After California towns banned thin plastic shopping bags, what happened to sales of plastic bin liners?",
+  "answer": "They rose sharply. Shoppers had been reusing free carrier bags for rubbish; without them, they bought bin bags, which are thicker. Rebecca Taylor estimated that the extra bin liners cancelled out about 28.5% of the plastic the bans saved. The old carrier bag had a second job nobody had counted.",
+  "move": "Before removing something, ask what second job it was quietly doing.",
+  "ask": "What thing in my routine, if I dropped it, would quietly force me to buy a replacement?",
+  "keywords": [
+    "plastic bags",
+    "bag bans",
+    "bin liners",
+    "california"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Taylor, J. Environmental Economics and Management, 2019",
+  "source_kind": "paper",
+  "reference": "Taylor, Bag Leakage: The Effect of Disposable Carryout Bag Regulations on Unregulated Bags, Journal of Environmental Economics and Management, 2019",
+  "written": "2026-10-03"
+}

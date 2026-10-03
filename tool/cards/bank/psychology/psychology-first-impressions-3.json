@@ -1,0 +1,39 @@
+{
+  "id": "psychology-first-impressions-3",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.first_impressions",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: the faces that most people agree look trustworthy belong to people who behave more honestly?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. People agree strongly about which faces look trustworthy, but in Todorov's review the link between those impressions and actual honesty is weak to nil. Agreement comes from shared rules of thumb, such as a slight smile, not shared knowledge. A thousand people making the same guess is still a guess.",
+  "move": "When everyone agrees on a snap judgement, check what the agreement rests on.",
+  "ask": "Whom have I trusted, or doubted, mostly because of how their face looked?",
+  "trap": "Taking strong agreement about a face as proof the impression is right.",
+  "keywords": [
+    "faces",
+    "trustworthiness",
+    "consensus",
+    "honesty"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Todorov, Face Value, 2017",
+  "source_kind": "book",
+  "reference": "Todorov, Face Value: The Irresistible Influence of First Impressions, Princeton University Press, 2017",
+  "written": "2026-10-03"
+}

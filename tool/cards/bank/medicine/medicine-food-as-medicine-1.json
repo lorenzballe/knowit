@@ -1,0 +1,41 @@
+{
+  "id": "medicine-food-as-medicine-1",
+  "topic": "medicine",
+  "genre": "medicine.medical_myths",
+  "strand": "medicine.medical_myths.food_as_medicine",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Smokers who ate more carotene-rich vegetables had less lung cancer. What did beta-carotene pills do for smokers in trials?",
+  "options": [
+    "Cut lung cancer by a third",
+    "Made no difference either way",
+    "Raised lung cancer"
+  ],
+  "correct": 2,
+  "answer": "Raised lung cancer. In a Finnish trial of 29,000 male smokers, those given beta-carotene had about 18% more lung cancer, and a US trial was stopped early for similar harm. The vegetables came with a whole diet and way of life; the pill isolated one molecule, in doses no plate supplies.",
+  "move": "A nutrient that marks a healthy diet is not the reason the diet is healthy.",
+  "ask": "Am I buying in a pill one piece of something whose benefit came from the whole?",
+  "trap": "Cut lung cancer by a third, as vegetable eaters had less of it.",
+  "keywords": [
+    "beta-carotene",
+    "lung cancer",
+    "smokers",
+    "supplements",
+    "atbc trial"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ATBC Study Group, NEJM, 1994",
+  "source_kind": "paper",
+  "reference": "Alpha-Tocopherol, Beta Carotene Cancer Prevention Study Group, The effect of vitamin E and beta carotene on the incidence of lung cancer and other cancers in male smokers, New England Journal of Medicine, 1994",
+  "written": "2026-10-03"
+}

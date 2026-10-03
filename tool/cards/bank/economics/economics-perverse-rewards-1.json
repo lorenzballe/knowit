@@ -1,0 +1,40 @@
+{
+  "id": "economics-perverse-rewards-1",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.perverse_rewards",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 1902 Hanoi paid one cent for every rat tail handed in, to fight rats spreading plague. What did officials soon find?",
+  "options": [
+    "Rats nearly gone from the city",
+    "Live rats running about without tails",
+    "Too few tails handed in"
+  ],
+  "correct": 1,
+  "answer": "Live rats running about without tails. Catchers cut off the tails and let the rats go, to breed more bounty. Others brought tails in from the countryside, and some farmed rats. The city paid for tails, so it got tails, while the rats kept breeding in the sewers.",
+  "move": "Pay for the result itself, never for a proof that is easy to fake.",
+  "ask": "What do I reward, in others or in myself, that is easier to fake than to do?",
+  "trap": "Expecting a bounty on dead rats to mean fewer live ones.",
+  "keywords": [
+    "hanoi",
+    "rat bounty",
+    "perverse incentives",
+    "plague"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vann, French Colonial History, 2003",
+  "source_kind": "paper",
+  "reference": "Michael G. Vann, Of Rats, Rice, and Race: The Great Hanoi Rat Massacre, an Episode in French Colonial History, French Colonial History, 2003",
+  "written": "2026-10-03"
+}

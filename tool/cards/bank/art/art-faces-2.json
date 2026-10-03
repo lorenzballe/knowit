@@ -1,0 +1,40 @@
+{
+  "id": "art-faces-2",
+  "topic": "art",
+  "genre": "art.look_closer",
+  "strand": "art.look_closer.faces",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Blend photographs of 32 faces into one average face. How do people rate its attractiveness against the originals?",
+  "options": [
+    "Duller than most of them",
+    "About in the middle",
+    "Higher than most of them"
+  ],
+  "correct": 2,
+  "answer": "Higher than most. Langlois and Roggman found composites of many faces were rated more attractive than nearly all the faces that went into them. Averaging smooths blemishes, evens out asymmetry and makes something that looks familiar. An ancient story makes the same move: the painter Zeuxis was said to have painted Helen from the best features of five women.",
+  "move": "Familiar and smooth can feel like beautiful; ask which you are judging.",
+  "ask": "Do I like this face, song or idea because it is good, or because it feels familiar?",
+  "trap": "Duller, because an average face should look bland.",
+  "keywords": [
+    "averageness",
+    "attractiveness",
+    "composite faces",
+    "zeuxis"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Langlois & Roggman, Psychological Science, 1990",
+  "source_kind": "paper",
+  "reference": "Judith H. Langlois & Lori A. Roggman, Attractive faces are only average, Psychological Science, 1990",
+  "written": "2026-10-03"
+}

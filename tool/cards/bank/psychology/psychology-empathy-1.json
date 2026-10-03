@@ -1,0 +1,40 @@
+{
+  "id": "psychology-empathy-1",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.empathy",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "A charity appeal shows one hungry girl. What does adding statistics about millions of others in need do to donations?",
+  "options": [
+    "It lowers them",
+    "It raises them",
+    "It leaves them unchanged"
+  ],
+  "correct": 0,
+  "answer": "It lowers them. Small, Loewenstein and Slovic found people gave most to an appeal about a single named child, far less to statistics alone, and less to the child once the statistics were added. The numbers put people in a calculating frame, and the girl became one drop in a very large sea.",
+  "move": "Feelings answer faces; big problems need reasons to care that do not.",
+  "ask": "Which cause do I support because of one story, and which bigger one have I ignored because it came as numbers?",
+  "trap": "Expecting the scale of a problem to move people to give more.",
+  "keywords": [
+    "charity",
+    "identifiable victim",
+    "donations",
+    "statistics"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Small, Loewenstein & Slovic, OBHDP, 2007",
+  "source_kind": "paper",
+  "reference": "Small, Loewenstein & Slovic, Sympathy and callousness: the impact of deliberative thought on donations to identifiable and statistical victims, Organizational Behavior and Human Decision Processes, 2007",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "food-organic-3",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.organic",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A 2012 Stanford review compared organic and conventional foods across 240 studies. Which difference did it clearly find?",
+  "options": [
+    "More vitamins in organic food",
+    "Fewer pesticide residues on organic",
+    "Better health in organic eaters"
+  ],
+  "correct": 1,
+  "answer": "Fewer pesticide residues on organic. Organic produce was about 30% less likely to carry detectable residues, though conventional levels mostly sat within safety limits. Vitamins and minerals showed no consistent difference, and studies of people eating each diet were too few to show health effects. The clear gap was the one the rules target.",
+  "move": "Expect a rule to change what it regulates, and little else.",
+  "ask": "Am I expecting a choice to give me benefits it was never designed to give?",
+  "trap": "More vitamins, the benefit organic food is most often sold on.",
+  "keywords": [
+    "organic food",
+    "pesticide residues",
+    "nutrients",
+    "systematic review"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smith-Spangler et al., Annals of Internal Medicine, 2012",
+  "source_kind": "paper",
+  "reference": "Smith-Spangler, Brandeau, Hunter et al., Are organic foods safer or healthier than conventional alternatives? A systematic review, Annals of Internal Medicine, 2012",
+  "written": "2026-10-03"
+}

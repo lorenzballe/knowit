@@ -1,0 +1,33 @@
+{
+  "id": "psychology-empathy-2",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.empathy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Asked how lost hikers would suffer, what did people who had just exercised think hurt the hikers most?",
+  "answer": "Thirst. Van Boven and Loewenstein asked gym-goers, before or after a workout, to imagine hikers lost without food or water. Those fresh from exercise, hot and thirsty themselves, more often judged thirst the hikers' worst torment. Imagining another's state starts from one's own body and then adjusts too little.",
+  "move": "Before judging what someone else feels, subtract what you are feeling now.",
+  "ask": "When I imagine how someone else feels, how much of it is just how I feel right now?",
+  "keywords": [
+    "empathy gap",
+    "projection",
+    "thirst",
+    "hikers"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Van Boven & Loewenstein, PSPB, 2003",
+  "source_kind": "paper",
+  "reference": "Van Boven & Loewenstein, Social projection of transient drive states, Personality and Social Psychology Bulletin, 2003",
+  "written": "2026-10-03"
+}

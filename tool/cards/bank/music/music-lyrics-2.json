@@ -1,0 +1,37 @@
+{
+  "id": "music-lyrics-2",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.lyrics",
+  "also": [
+    "psychology.resist_persuasion.framing"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Born in the U.S.A. tells of a jobless, bitter Vietnam veteran. Why is it so often played as a patriotic anthem?",
+  "answer": "Because listeners keep the chorus and drop the verses. The title is shouted again and again over a towering drum beat, while the story of a veteran without work or prospects sits in the quieter verses. Campaigning in New Jersey in September 1984, Ronald Reagan praised the message of hope in Springsteen's songs.",
+  "move": "The line repeated loudest is the one people walk away believing.",
+  "ask": "When I repeat my main point, is it the one I actually want people to remember?",
+  "keywords": [
+    "born in the usa",
+    "bruce springsteen",
+    "ronald reagan",
+    "chorus",
+    "vietnam veterans"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Reagan, remarks in Hammonton, New Jersey, 1984",
+  "source_kind": "primary_document",
+  "reference": "Reagan, Remarks at a Reagan-Bush Rally in Hammonton, New Jersey, 19 September 1984, Public Papers of the Presidents of the United States",
+  "written": "2026-10-03"
+}

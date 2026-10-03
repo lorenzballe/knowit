@@ -1,0 +1,33 @@
+{
+  "id": "art-power-patrons-3",
+  "topic": "art",
+  "genre": "art.art_and_power",
+  "strand": "art.art_and_power.patrons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When the Brooklyn Museum showed the Sensation exhibition of young British artists in 1999, who owned all the works?",
+  "answer": "One collector, Charles Saatchi, who also helped pay for the show, alongside the auction house Christie's. A museum exhibition raises the reputation, and the price, of the works it shows. Critics asked whether a public museum was polishing a private collection; Saatchi later sold many of the works. Being chosen for the wall is worth money.",
+  "move": "Ask who gains when something is put on show.",
+  "ask": "When something is recommended to me, who gains if I take the recommendation?",
+  "keywords": [
+    "sensation exhibition",
+    "charles saatchi",
+    "brooklyn museum",
+    "conflict of interest"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rothfield, Unsettling Sensation, 2001",
+  "source_kind": "book",
+  "reference": "Lawrence Rothfield (ed.), Unsettling Sensation: Arts-Policy Lessons from the Brooklyn Museum of Art Controversy, Rutgers University Press, 2001",
+  "written": "2026-10-03"
+}

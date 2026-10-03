@@ -1,0 +1,33 @@
+{
+  "id": "human_body-anti-ageing-claims-1",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.anti_ageing_claims",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can collagen in a face cream not top up the collagen in the skin?",
+  "answer": "Because the molecule is far too big to get in. The skin's outer layer lets through almost nothing heavier than about 500 daltons, a unit of molecular weight, and collagen weighs around 300,000. Bos and Meinardi set out this 500-dalton rule. Collagen cream stays on the surface: a moisturiser with a grand name.",
+  "move": "Ask how an ingredient would reach the place it is meant to work.",
+  "ask": "Which product do I pay for without asking how it could reach where it is meant to work?",
+  "keywords": [
+    "collagen",
+    "skin cream",
+    "skin barrier",
+    "molecular size"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bos and Meinardi, Experimental Dermatology, 2000",
+  "source_kind": "paper",
+  "reference": "Bos JD, Meinardi MM, The 500 Dalton rule for the skin penetration of chemical compounds and drugs, Experimental Dermatology, 2000",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "psychology-reading-faces-1",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.reading_faces",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How often do people scowl when they are angry, according to a large review of the evidence?",
+  "answer": "Only about 30% of the time. Barrett and colleagues reviewed more than 1,000 studies and found people often feel angry without scowling, and scowl when concentrating, confused or squinting in sunlight. Faces vary with person, culture and situation. A scowl is a clue to weigh with its context, not a readout of the mind.",
+  "move": "Treat any single expression as a clue to check, never a verdict.",
+  "ask": "Whose frown or silence did I take as a verdict on me, when it may have meant something else?",
+  "keywords": [
+    "facial expressions",
+    "anger",
+    "scowling",
+    "lisa feldman barrett"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barrett et al., Psychological Science in the Public Interest, 2019",
+  "source_kind": "paper",
+  "reference": "Barrett, Adolphs, Marsella, Martinez & Pollak, Emotional expressions reconsidered: challenges to inferring emotion from human facial movements, Psychological Science in the Public Interest, 2019",
+  "written": "2026-10-03"
+}

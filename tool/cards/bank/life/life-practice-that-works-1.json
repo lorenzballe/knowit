@@ -6,16 +6,16 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "True or false: children tested at a target 90 cm away did best if they had practised only at 90 cm?",
+  "question": "True or false: children tested at a 90 cm target threw better if they had practised at 60 and 120 cm, never at 90?",
   "options": [
     "True",
     "False"
   ],
-  "correct": 1,
-  "answer": "False. In Kerr and Booth's study, children who practised throwing beanbags only at the test distance did worse on it than children who had practised at 60 and 120 cm and never at 90. Varied practice taught the arm to adjust its force, not to repeat one movement, so their throws landed closer.",
+  "correct": 0,
+  "answer": "True. In Kerr and Booth's study, children who had thrown beanbags at 60 and 120 cm, never at 90, did better at the 90 cm test than children who had practised only at 90 cm. Varied practice taught the arm to adjust its force, not to repeat one movement, so their throws landed closer.",
   "move": "Practise around the target, not only at it, to learn the adjustment.",
   "ask": "Which skill am I drilling in one fixed form when I will need it in many?",
-  "trap": "Practising the exact test seems the shortest road to passing it.",
+  "trap": "Practising the exact test distance seems the shortest road to accuracy.",
   "keywords": [
     "varied practice",
     "motor learning",

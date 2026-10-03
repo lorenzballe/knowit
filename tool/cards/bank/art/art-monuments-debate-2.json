@@ -1,0 +1,38 @@
+{
+  "id": "art-monuments-debate-2",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.monuments_debate",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should statues of people now judged harshly be taken down, rather than left standing with a new plaque?",
+  "sides": [
+    "Yes, take them down",
+    "No, keep and explain"
+  ],
+  "answer": "Yes. A statue is an honour, not a lesson: it puts a person on a pedestal. Bristol's Edward Colston, a leader of a slave-trading company, was raised in 1895, 174 years after his death, by Victorians choosing a hero. Removing him corrects their choice; a museum now tells his story better.",
+  "move": "Whichever side you took, it turns on whether a statue honours or teaches.",
+  "ask": "Is there something I still keep on display in my life that I would never choose to honour today?",
+  "counterpoint": "No. Statues left in place, with honest plaques, make people meet the past where they live, not only in museums few visit. Removal tends to follow whoever is loudest in a given year, and the next generation may judge differently. A pedestal with an explanation teaches more than an empty plinth, which teaches nothing at all.",
+  "keywords": [
+    "edward colston",
+    "bristol",
+    "statues",
+    "slave trade"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dresser, Slavery Obscured, 2001",
+  "source_kind": "book",
+  "reference": "Madge Dresser, Slavery Obscured: The Social History of the Slave Trade in an English Provincial Port, Continuum, 2001",
+  "written": "2026-10-03"
+}

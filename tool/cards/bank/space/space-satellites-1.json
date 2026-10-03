@@ -1,0 +1,33 @@
+{
+  "id": "space-satellites-1",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.satellites",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do all the satellite TV dishes on a street point at the same fixed spot in the sky?",
+  "answer": "Because only one height lets a satellite hang still. At 35,786 km above the equator, an orbit takes exactly one day, so the satellite keeps pace with the turning Earth and never moves across the sky. That single ring is crowded, and its slots are shared out by international agreement.",
+  "move": "When only one spot works, the spot itself becomes the scarce thing.",
+  "ask": "Which scarce spot, a time slot or a role, am I competing for without noticing its value?",
+  "keywords": [
+    "geostationary orbit",
+    "satellite tv",
+    "arthur c clarke",
+    "orbital slots"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Clarke, Wireless World, 1945",
+  "source_kind": "paper",
+  "reference": "Clarke, Extra-Terrestrial Relays: Can Rocket Stations Give World-wide Radio Coverage?, Wireless World, 1945",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "science-who-funded-it-1",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.who_funded_it",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who paid for the 1967 Harvard review that steered blame for heart disease away from sugar and onto fat?",
+  "answer": "The sugar industry. Documents found by Cristin Kearns and colleagues show the Sugar Research Foundation paid about $6,500, set the review's aims and saw drafts, and the funding was never disclosed in the New England Journal of Medicine. Dietary advice focused on fat for decades, while sugar's role drew less scrutiny.",
+  "move": "Ask who paid, and who set the question, before weighing a conclusion.",
+  "ask": "Whose advice do I follow without asking who benefits if I follow it?",
+  "keywords": [
+    "sugar industry",
+    "heart disease",
+    "research funding",
+    "conflicts of interest"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kearns, Schmidt & Glantz, JAMA Internal Medicine, 2016",
+  "source_kind": "paper",
+  "reference": "Kearns, Schmidt & Glantz, Sugar industry and coronary heart disease research: a historical analysis of internal industry documents, JAMA Internal Medicine 176:1680–1685, 2016",
+  "written": "2026-09-26"
+}

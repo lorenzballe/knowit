@@ -1,0 +1,40 @@
+{
+  "id": "human_body-small-daily-habits-2",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.small_daily_habits",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Mia permanently cuts one 100 kcal biscuit from her day. Eventually, how much lighter will she be?",
+  "options": [
+    "About 5 kg more every year",
+    "About 4.5 kg, then it levels off",
+    "Under half a kilo"
+  ],
+  "correct": 1,
+  "answer": "About 4.5 kg, then it levels off. Kevin Hall's model shows that as weight falls, the body burns less, so a fixed daily cut stops adding up. His rule of thumb: each 10 kcal a day moves weight by about 0.45 kg in the end, half of it within a year. The old rule assumes a body that never adapts.",
+  "move": "A system that pushes back turns a steady change into a plateau.",
+  "ask": "Where did I expect a small daily change to keep paying forever, then feel cheated when it stalled?",
+  "trap": "At 7,700 kcal a kilo, 100 kcal daily is 5 kg yearly.",
+  "keywords": [
+    "calories",
+    "weight loss",
+    "energy balance",
+    "metabolic adaptation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hall et al., The Lancet, 2011",
+  "source_kind": "paper",
+  "reference": "Hall KD, Sacks G, Chandramohan D et al., Quantification of the effect of energy imbalance on bodyweight, The Lancet, 2011",
+  "written": "2026-09-26"
+}

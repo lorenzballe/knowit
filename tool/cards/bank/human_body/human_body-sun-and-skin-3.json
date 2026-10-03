@@ -1,0 +1,40 @@
+{
+  "id": "human_body-sun-and-skin-3",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.sun_and_skin",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Moving from SPF 30 to SPF 50, how much less burning UV reaches the skin, applied as tested?",
+  "options": [
+    "About 40% less",
+    "About 2% less",
+    "About 20% less"
+  ],
+  "correct": 0,
+  "answer": "About 40% less. SPF 30 lets through one-thirtieth of burning UV, about 3.3%; SPF 50 lets through one-fiftieth, 2%. Read as blocked, 97% against 98% looks like a rounding error. Read as what gets through, 3.3% falling to 2% is a cut of about two-fifths.",
+  "move": "When protection is near total, compare what still gets through.",
+  "ask": "Where do I compare what is stopped, when the leftover is what actually reaches me?",
+  "trap": "97% blocked against 98% looks like a gain of one point.",
+  "keywords": [
+    "spf",
+    "sunscreen",
+    "uvb",
+    "percentages"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US FDA sunscreen final rule, 2011",
+  "source_kind": "institution",
+  "reference": "US Food and Drug Administration, Labeling and effectiveness testing; sunscreen drug products for over-the-counter human use, final rule, Federal Register, 2011",
+  "written": "2026-09-26"
+}
