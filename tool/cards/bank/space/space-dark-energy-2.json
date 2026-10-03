@@ -10,7 +10,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why is the energy of empty space called the worst prediction in the history of physics?",
-  "answer": "Because the obvious calculation misses by up to 120 powers of ten, depending on assumptions. Quantum theory says empty space seethes with energy, and adding it up gives a value that would have blown the universe apart before any atom formed. The dark energy actually measured is tiny by comparison. Nobody knows what cancels the rest.",
+  "answer": "Because the obvious calculation misses by up to 120 powers of ten, depending on assumptions. Quantum theory says empty space seethes with energy, and adding it up gives a value that would have blown the universe apart before any atom formed. The measured value is tiny by comparison. Nobody knows what cancels the rest.",
   "move": "When a theory misses by that much, question a basic assumption.",
   "ask": "When my estimate is wildly off, do I tweak the numbers or question where I started?",
   "keywords": [

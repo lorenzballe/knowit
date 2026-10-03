@@ -6,7 +6,7 @@
   "kind": "estimate",
   "difficulty": "hard",
   "principle": "estimation",
-  "question": "Europa's ocean sits about 1,500 km from the moon's centre and is about 100 km deep. Estimate its volume as a multiple of Earth's oceans, 1.3 billion km³.",
+  "question": "Europa's ocean lies about 1,500 km from its centre and is 100 km deep. Estimate its volume in multiples of Earth's oceans, 1.3 billion km³.",
   "value": 2.2,
   "unit": "times Earth's oceans",
   "withinFactor": 3,
