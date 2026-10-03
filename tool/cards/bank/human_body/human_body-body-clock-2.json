@@ -1,0 +1,33 @@
+{
+  "id": "human_body-body-clock-2",
+  "topic": "human_body",
+  "genre": "human_body.your_body_in_numbers",
+  "strand": "human_body.your_body_in_numbers.body_clock",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the same meal raise blood sugar more at 8 pm than at 8 am?",
+  "answer": "Because the body handles sugar worse in the evening. As night approaches, the body clock lowers the muscles' response to insulin and the amount the pancreas releases, as Van Cauter's work showed. An identical plate of pasta leaves sugar higher for longer after dark. A late dinner meets a body already closing the shop.",
+  "move": "The same input can have a different effect depending on the hour.",
+  "ask": "Which of my habits might work better simply by moving it to another time of day?",
+  "keywords": [
+    "blood sugar",
+    "insulin",
+    "evening meals",
+    "circadian rhythm"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Van Cauter, Polonsky and Scheen, Endocrine Reviews, 1997",
+  "source_kind": "paper",
+  "reference": "Van Cauter E, Polonsky KS, Scheen AJ, Roles of circadian rhythmicity and sleep in human glucose regulation, Endocrine Reviews, 1997",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "science-too-good-to-be-true-1",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.too_good_to_be_true",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What warning sign about Theranos's one-drop blood tests was visible years before the company collapsed?",
+  "answer": "It had published almost no peer-reviewed evidence that its tests worked. In 2015 John Ioannidis pointed out that a firm valued in billions had put next to nothing before independent scientists. Bold claims, famous backers and secrecy stood in for data. Within a few years its founder was convicted of fraud.",
+  "move": "Ask to see evidence that outsiders have checked, whoever is vouching.",
+  "ask": "Which exciting promise am I trusting because of who backs it, not because I've seen it work?",
+  "keywords": [
+    "theranos",
+    "blood tests",
+    "peer review",
+    "fraud"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ioannidis, JAMA, 2015",
+  "source_kind": "paper",
+  "reference": "Ioannidis, Stealth research: is biomedical innovation happening outside the peer-reviewed literature?, JAMA 313:663–664, 2015",
+  "written": "2026-09-26"
+}

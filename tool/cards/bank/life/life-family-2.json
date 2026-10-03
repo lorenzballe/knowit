@@ -1,0 +1,40 @@
+{
+  "id": "life-family-2",
+  "topic": "life",
+  "genre": "life.relationships",
+  "strand": "life.relationships.family",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Teenagers who eat family dinners most nights drink less and do better at school. What explains much of that link?",
+  "options": [
+    "The kind of family that manages dinners",
+    "The dinners themselves",
+    "Better food at home"
+  ],
+  "correct": 0,
+  "answer": "The kind of family that manages dinners. Musick and Meier found that once family resources, relationships and routines were accounted for, many of the links shrank sharply. Some held, notably with fewer depressive symptoms. Families with time to eat together differ in many other ways; the dinner is partly a sign of them.",
+  "move": "Ask what kind of household does the thing before crediting the thing.",
+  "ask": "Which family habit am I crediting for something that may come from what makes the habit possible?",
+  "trap": "The meal seems to be what does the work.",
+  "keywords": [
+    "family dinners",
+    "teenagers",
+    "correlation",
+    "well-being"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Musick and Meier, J. Marriage and Family, 2012",
+  "source_kind": "paper",
+  "reference": "Musick and Meier, Assessing causality and persistence in associations between family dinners and adolescent well-being, Journal of Marriage and Family, 2012",
+  "written": "2026-10-03"
+}

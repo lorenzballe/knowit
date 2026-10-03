@@ -1,0 +1,33 @@
+{
+  "id": "life-boundaries-1",
+  "topic": "life",
+  "genre": "life.relationships",
+  "strand": "life.relationships.boundaries",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do people say yes to requests they do not want, more often than the people asking expect?",
+  "answer": "Because refusing face to face feels awkward. Bohns reviews studies in which people asked strangers for favours, from lending a phone to writing a word in a library book; askers kept underestimating how many would comply. They pictured the cost of the favour, not the discomfort of saying no.",
+  "move": "A yes given face to face may be politeness, not agreement.",
+  "ask": "Who might be saying yes to me because saying no feels too awkward?",
+  "keywords": [
+    "compliance",
+    "requests",
+    "saying no",
+    "social pressure"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bohns, Current Directions in Psychological Science, 2016",
+  "source_kind": "paper",
+  "reference": "Bohns, (Mis)Understanding our influence over others: A review of the underestimation-of-compliance effect, Current Directions in Psychological Science, 2016",
+  "written": "2026-10-03"
+}

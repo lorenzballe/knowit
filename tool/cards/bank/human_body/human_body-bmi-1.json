@@ -1,0 +1,33 @@
+{
+  "id": "human_body-bmi-1",
+  "topic": "human_body",
+  "genre": "human_body.your_body_in_numbers",
+  "strand": "human_body.your_body_in_numbers.bmi",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did England's health guidance add a tape measure to BMI in 2022?",
+  "answer": "Because BMI cannot see where fat sits. Fat packed around the belly's organs carries more risk of diabetes and heart disease than fat elsewhere. NICE now advises adults to keep their waist below half their height: for a 170 cm person, under 85 cm. A piece of string folded in half does the job.",
+  "move": "A single total can hide where the trouble is concentrated.",
+  "ask": "Which single number do I judge myself by that hides where the real problem sits?",
+  "keywords": [
+    "waist-to-height ratio",
+    "bmi",
+    "belly fat",
+    "nice guidance"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NICE obesity guideline, 2022 update",
+  "source_kind": "institution",
+  "reference": "National Institute for Health and Care Excellence, Obesity: identification, assessment and management, CG189, updated 2022",
+  "written": "2026-09-26"
+}

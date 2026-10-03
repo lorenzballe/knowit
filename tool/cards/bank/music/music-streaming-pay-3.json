@@ -1,0 +1,38 @@
+{
+  "id": "music-streaming-pay-3",
+  "topic": "music",
+  "genre": "music.the_music_business",
+  "strand": "music.the_music_business.streaming_pay",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should each subscriber's monthly fee go only to the artists that subscriber actually plays?",
+  "sides": [
+    "Yes, pay by listener",
+    "No, keep the shared pool"
+  ],
+  "answer": "It is the honest version of a subscription. Under the shared pool, a fan of one folk singer pays mostly for hits that others stream all day. Paying from each listener's own fee follows the money people believe they are spending. Fraud would pay less too, since a bot farm could only redirect its own fees.",
+  "move": "Whichever side you took, check who would actually gain once the money moved.",
+  "ask": "When I pay for a subscription, whose work am I actually paying for?",
+  "counterpoint": "The change moves less than it promises. A 2021 study for France's Centre national de la musique found a user-centric system would shift only a small share of money, mostly from genres young heavy streamers favour, such as rap, to those older light listeners prefer, and would not lift most small artists.",
+  "keywords": [
+    "user-centric payment",
+    "streaming royalties",
+    "subscription pool",
+    "fraud"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Centre national de la musique, UCPS study, 2021",
+  "source_kind": "institution",
+  "reference": "Centre national de la musique and Deloitte, Étude sur l'impact du User-Centric Payment System, January 2021",
+  "written": "2026-10-03"
+}

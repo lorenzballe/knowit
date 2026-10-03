@@ -9,10 +9,10 @@
   "question": "Of all the plant species brought into Britain, roughly how many go on to become damaging pests?",
   "options": [
     "About 1 in 10",
-    "About 1 in 1,000",
-    "About half"
+    "About half",
+    "About 1 in 1,000"
   ],
-  "correct": 1,
+  "correct": 2,
   "answer": "About 1 in 1,000. This is Williamson and Fitter's tens rule: roughly one in ten imports escapes into the wild, one in ten of those establishes, and one in ten of those becomes a pest. Japanese knotweed and rhododendron are famous because they are the rare winners of a very long lottery.",
   "move": "The infamous cases survived a long filter; count the many that failed.",
   "ask": "Which fear of mine is built on a few dramatic cases rather than the ordinary many?",

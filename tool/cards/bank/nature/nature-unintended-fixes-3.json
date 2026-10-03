@@ -6,13 +6,13 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "counterfactual",
-  "question": "True or false: decades of putting out every wildfire have made many dry western US forests likelier to burn severely?",
+  "question": "True or false: decades of putting out every wildfire have made dry western US forests less likely to burn severely?",
   "options": [
     "True",
     "False"
   ],
-  "correct": 0,
-  "answer": "True. Many dry pine forests once burned lightly every few years, clearing brush and saplings. Snuffing out almost every fire let that fuel pile up, so the fires that escape now burn hotter and kill the big trees. Calkin and colleagues describe how each success makes the next fire harder to stop.",
+  "correct": 1,
+  "answer": "False. Many dry pine forests once burned lightly every few years, clearing brush and saplings. Snuffing out almost every fire let that fuel pile up, so the fires that escape now burn hotter and kill the big trees. Calkin and colleagues describe how each success makes the next fire harder to stop.",
   "move": "Suppressing every small trouble can store up a large one.",
   "ask": "Which small conflicts am I always smothering that might be building into a bigger one?",
   "trap": "Every fire put out looks like damage prevented, nothing more.",

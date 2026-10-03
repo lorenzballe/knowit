@@ -1,0 +1,40 @@
+{
+  "id": "music-perfect-pitch-1",
+  "topic": "music",
+  "genre": "music.music_and_the_brain",
+  "strand": "music.music_and_the_brain.perfect_pitch",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Music students who began lessons at age 4 or 5 were tested for perfect pitch. Where was it far more common?",
+  "options": [
+    "At a conservatory in Beijing",
+    "At a conservatory in New York State",
+    "Equally common in both places"
+  ],
+  "correct": 0,
+  "answer": "Beijing. Diana Deutsch's team found that about 60% of early starters at Beijing's Central Conservatory had perfect pitch, against about 14% at Eastman in New York State. Speakers of Mandarin, a tone language, learn from infancy that pitch changes meaning. A rare gift in one sample is a common skill in another.",
+  "move": "A trait called rare may only be rare where it was counted.",
+  "ask": "Which ability do I think I simply lack, when I may never have had the right early practice?",
+  "trap": "Treating perfect pitch as a rare inborn gift, the same everywhere.",
+  "keywords": [
+    "perfect pitch",
+    "tone languages",
+    "mandarin",
+    "conservatory students"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Deutsch et al., JASA, 2006",
+  "source_kind": "paper",
+  "reference": "Deutsch, Henthorn, Marvin & Xu, Absolute pitch among American and Chinese conservatory students, Journal of the Acoustical Society of America, 2006",
+  "written": "2026-10-03"
+}

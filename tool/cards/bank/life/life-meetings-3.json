@@ -1,0 +1,43 @@
+{
+  "id": "life-meetings-3",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.meetings",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Eight people meet for an hour each week; each costs their employer £40 an hour. Cost over 48 weeks, in thousands of pounds?",
+  "value": 15.36,
+  "unit": "thousand pounds",
+  "tolerance": 0.1,
+  "answer": "£15,360 is 15.36 thousand pounds",
+  "move": "Price a recurring habit by the year, not by the hour.",
+  "ask": "Which recurring meeting in my week would I cancel if I saw its yearly cost?",
+  "trap": "A single hour seems too short to cost much.",
+  "hint": "Price one meeting first, then multiply by the weeks.",
+  "steps": [
+    "8 people × £40 = £320 per meeting",
+    "£320 × 48 weeks = £15,360",
+    "£15,360 is 15.36 thousand pounds"
+  ],
+  "keywords": [
+    "meetings",
+    "cost",
+    "time",
+    "employers"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cost of a weekly meeting",
+  "source_kind": "arithmetic",
+  "reference": "Rogelberg, The Surprising Science of Meetings, Oxford University Press, 2019",
+  "written": "2026-10-03"
+}

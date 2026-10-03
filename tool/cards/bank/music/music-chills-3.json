@@ -1,0 +1,39 @@
+{
+  "id": "music-chills-3",
+  "topic": "music",
+  "genre": "music.music_and_the_brain",
+  "strand": "music.music_and_the_brain.chills",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in Jaak Panksepp's 1995 study, happy, upbeat songs gave listeners more chills than sad ones?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Sad and bittersweet songs produced more chills than happy ones. Panksepp proposed that the chill echoes the distress of separation: a lone, high, lost-sounding line resembles a call for a missing companion, and the body answers with a shiver, as if left out in the cold. A chill can be loneliness in disguise.",
+  "move": "A strong feeling can borrow its body language from a different emotion.",
+  "ask": "When something moves me deeply, what is it really reminding me of?",
+  "trap": "Linking chills to excitement and joy, like a thrilling ride.",
+  "keywords": [
+    "chills",
+    "sad music",
+    "separation distress",
+    "jaak panksepp"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Panksepp, Music Perception, 1995",
+  "source_kind": "paper",
+  "reference": "Panksepp, The emotional sources of chills induced by music, Music Perception, 1995",
+  "written": "2026-10-03"
+}

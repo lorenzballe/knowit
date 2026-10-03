@@ -1,0 +1,42 @@
+{
+  "id": "music-streaming-pay-1",
+  "topic": "music",
+  "genre": "music.the_music_business",
+  "strand": "music.the_music_business.streaming_pay",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Two fans pay €10 each. One plays jazz 100 times, the other pop 900 times. Pooled by plays, what does jazz get, in euros?",
+  "value": 2,
+  "unit": "euros",
+  "answer": "Jazz gets 10% of €20 = €2, though its only fan paid €10",
+  "move": "In a shared pot, the heaviest users decide where everyone's money goes.",
+  "ask": "Where does my money go into a shared pot that mostly pays for what other people use?",
+  "trap": "Assuming each fan's €10 goes to the artists that fan plays.",
+  "hint": "Put all the money in one pot, then share it out by plays.",
+  "steps": [
+    "Pool: €10 + €10 = €20",
+    "Jazz share of all plays: 100 ÷ 1,000 = 10%",
+    "Jazz gets 10% of €20 = €2, though its only fan paid €10"
+  ],
+  "keywords": [
+    "pro-rata payment",
+    "streaming royalties",
+    "subscriptions",
+    "jazz"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Spotify, Loud & Clear",
+  "source_kind": "company",
+  "reference": "https://loudandclear.byspotify.com/",
+  "written": "2026-10-03"
+}

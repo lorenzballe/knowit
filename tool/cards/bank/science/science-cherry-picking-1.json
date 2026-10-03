@@ -1,0 +1,33 @@
+{
+  "id": "science-cherry-picking-1",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.cherry_picking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did global temperature charts starting in 1998 seem to show that warming had stopped?",
+  "answer": "Because 1998 was a freak hot year. A powerful El Niño, a periodic warming of the Pacific, had pushed it far above the trend, so a line drawn from it looked flat for a decade. Start a year earlier or later and the rise reappears; every year since 2015 has been hotter than 1998.",
+  "move": "Ask why a chart starts where it does before reading its trend.",
+  "ask": "When someone shows me a trend, have I asked what it looks like from a different starting point?",
+  "keywords": [
+    "global warming",
+    "el niño",
+    "start points",
+    "temperature records"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lewandowsky, Risbey & Oreskes, BAMS, 2016",
+  "source_kind": "paper",
+  "reference": "Lewandowsky, Risbey & Oreskes, The 'pause' in global warming: turning a routine fluctuation into a problem for science, Bulletin of the American Meteorological Society 97:723–733, 2016",
+  "written": "2026-09-26"
+}

@@ -6,16 +6,16 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "counterfactual",
-  "question": "True or false: across 133 studies of tropical forest restoration, simply letting forests regrow beat planting trees?",
+  "question": "True or false: across 133 studies of tropical forest restoration, planting trees beat simply letting forests regrow?",
   "options": [
     "True",
     "False"
   ],
-  "correct": 0,
-  "answer": "True. Crouzeilles and colleagues pooled over 1,700 comparisons and found natural regrowth recovered plants, animals and forest structure better than planting. Seeds blown in or dropped by birds bring local species suited to the spot. The regrowing sites may have been easier ones, and planting still helps where no forest is near to send seed.",
+  "correct": 1,
+  "answer": "False. Crouzeilles and colleagues pooled over 1,700 comparisons and found natural regrowth recovered plants, animals and forest structure better than planting. Seeds blown in or dropped by birds bring local species suited to the spot. The regrowing sites may have been easier ones, and planting still helps where no forest is near to send seed.",
   "move": "Compare any effort with what would have happened if you had simply waited.",
   "ask": "Where in my life would doing less, and letting things recover, work better than my next effort?",
-  "trap": "Planting must beat doing nothing, since effort usually beats waiting.",
+  "trap": "Planting is effort, and effort usually beats leaving things alone.",
   "keywords": [
     "natural regeneration",
     "forest restoration",

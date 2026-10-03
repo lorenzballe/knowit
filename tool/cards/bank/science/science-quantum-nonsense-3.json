@@ -1,0 +1,43 @@
+{
+  "id": "science-quantum-nonsense-3",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.quantum_nonsense",
+  "also": [
+    "science.physics.quantum"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Two entangled particles are light-years apart. What can be sent between them instantly by measuring one?",
+  "options": [
+    "Any message, faster than light",
+    "Only a single yes or no",
+    "No usable message at all"
+  ],
+  "correct": 2,
+  "answer": "No usable message at all. Measuring one particle gives a random result; its partner's result matches, but neither side can choose what comes out, so nothing can be encoded. The match only shows when the two compare notes by ordinary signal. Ghirardi and colleagues proved in 1980 that no measurement trick gets round this.",
+  "move": "Ask whether anyone can control a connection before calling it communication.",
+  "ask": "When two things seem instantly linked, can anyone actually use the link?",
+  "trap": "Only a single yes or no, since the link seems instant.",
+  "keywords": [
+    "entanglement",
+    "faster than light",
+    "no-communication theorem",
+    "quantum physics"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ghirardi, Rimini & Weber, Lettere al Nuovo Cimento, 1980",
+  "source_kind": "paper",
+  "reference": "Ghirardi, Rimini & Weber, A general argument against superluminal transmission through the quantum mechanical measurement process, Lettere al Nuovo Cimento 27:293–298, 1980",
+  "written": "2026-09-26"
+}

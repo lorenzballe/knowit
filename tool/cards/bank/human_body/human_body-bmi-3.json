@@ -1,0 +1,39 @@
+{
+  "id": "human_body-bmi-3",
+  "topic": "human_body",
+  "genre": "human_body.your_body_in_numbers",
+  "strand": "human_body.your_body_in_numbers.bmi",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: WHO experts proposed lower BMI thresholds for health risk in Asian populations than in European ones?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A 2004 WHO expert consultation found that many Asian populations face raised diabetes and heart risk at lower BMIs, partly because they carry more body fat at the same weight. It proposed extra action points at 23 and 27.5. The familiar cut-offs of 25 and 30 came mainly from people of European descent.",
+  "move": "A cut-off fits the people it was drawn from, and may not fit others.",
+  "ask": "Which standard am I measuring myself against that was built from people quite unlike me?",
+  "trap": "One formula of weight and height should mean the same everywhere.",
+  "keywords": [
+    "bmi thresholds",
+    "asian populations",
+    "diabetes risk",
+    "body fat"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "WHO Expert Consultation, The Lancet, 2004",
+  "source_kind": "paper",
+  "reference": "WHO Expert Consultation, Appropriate body-mass index for Asian populations and its implications for policy and intervention strategies, The Lancet, 2004",
+  "written": "2026-09-26"
+}

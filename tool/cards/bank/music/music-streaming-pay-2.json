@@ -1,0 +1,39 @@
+{
+  "id": "music-streaming-pay-2",
+  "topic": "music",
+  "genre": "music.the_music_business",
+  "strand": "music.the_music_business.streaming_pay",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: since 2024, a Spotify track with fewer than 1,000 plays in a year earns its owner nothing?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Spotify stopped paying on tracks with under 1,000 streams in the previous twelve months, saying those payments came to pennies a year and were often swallowed by bank fees before reaching anyone. The money stays in the pool and goes to tracks above the line. A per-play rate sounds universal until someone draws a threshold under it.",
+  "move": "Look for the threshold before trusting that every unit counts.",
+  "ask": "Where is there a minimum I have not noticed, below which my small efforts count for nothing?",
+  "trap": "Assuming every play earns its fraction of a cent, however small.",
+  "keywords": [
+    "spotify",
+    "streaming royalties",
+    "stream threshold",
+    "small artists"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Spotify for Artists, royalty changes, 2023",
+  "source_kind": "company",
+  "reference": "Spotify for Artists, Modernizing Our Royalty System to Drive an Additional $1 Billion toward Emerging and Professional Artists, November 2023",
+  "written": "2026-10-03"
+}

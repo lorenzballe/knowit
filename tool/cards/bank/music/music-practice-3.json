@@ -1,0 +1,36 @@
+{
+  "id": "music-practice-3",
+  "topic": "music",
+  "genre": "music.music_and_the_brain",
+  "strand": "music.music_and_the_brain.practice",
+  "also": [
+    "human_body.the_brain.plasticity"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can practising a piano exercise only in one's head change the brain the way real practice does?",
+  "answer": "Partly. In 1995 Alvaro Pascual-Leone had volunteers rehearse a five-finger exercise for five days, some at the keyboard, some only imagining it. Brain maps for the fingers changed much alike in both groups, though the imaginers played less well. After one session of real practice they largely caught up. The rehearsal had been happening backstage.",
+  "move": "Rehearsing in the mind prepares the ground; a little real practice harvests it.",
+  "ask": "What could I rehearse in my head on the bus before trying it for real?",
+  "keywords": [
+    "mental practice",
+    "piano",
+    "motor cortex",
+    "imagery"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pascual-Leone et al., J Neurophysiology, 1995",
+  "source_kind": "paper",
+  "reference": "Pascual-Leone et al., Modulation of muscle responses evoked by transcranial magnetic stimulation during the acquisition of new fine motor skills, Journal of Neurophysiology, 1995",
+  "written": "2026-10-03"
+}

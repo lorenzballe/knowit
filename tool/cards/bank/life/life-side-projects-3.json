@@ -1,0 +1,42 @@
+{
+  "id": "life-side-projects-3",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.side_projects",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Someone spends one hour each weekday on a side project for a year. How many 40-hour working weeks is that?",
+  "value": 6.5,
+  "unit": "working weeks",
+  "tolerance": 0.1,
+  "answer": "260 ÷ 40 = 6.5 working weeks",
+  "move": "Measure a small daily effort by its yearly total.",
+  "ask": "What could one hour a day, kept up for a year, build for me?",
+  "trap": "An hour a day feels too small to add up to much.",
+  "hint": "Count the hours in a year first, then divide by a working week.",
+  "steps": [
+    "5 hours a week × 52 weeks = 260 hours",
+    "260 ÷ 40 = 6.5 working weeks"
+  ],
+  "keywords": [
+    "side projects",
+    "daily habits",
+    "time",
+    "working weeks"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hours in a year of weekdays",
+  "source_kind": "arithmetic",
+  "reference": "Newport, Deep Work: Rules for Focused Success in a Distracted World, Grand Central Publishing, 2016",
+  "written": "2026-10-03"
+}

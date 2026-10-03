@@ -1,0 +1,42 @@
+{
+  "id": "music-rhythm-in-the-body-3",
+  "topic": "music",
+  "genre": "music.music_and_the_brain",
+  "strand": "music.music_and_the_brain.rhythm_in_the_body",
+  "also": [
+    "life.people.friendship"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: across dozens of experiments, moving in time with strangers made people more willing to help them?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Ragnhild Mogan and colleagues pooled experiments in which people tapped, walked, sang or rocked either in sync or out of sync. Synchrony reliably raised cooperation and helping, though by a modest amount. Armies, choirs and football crowds have used it for centuries. Drill sergeants kept teaching marching in step long after it stopped mattering in battle.",
+  "move": "Doing something in time together builds trust faster than talking about it.",
+  "ask": "What could I do in rhythm with others, like walking, cooking or singing, to feel closer to them?",
+  "trap": "Seeing moving in step as mere drill, with no effect on feeling.",
+  "keywords": [
+    "synchrony",
+    "cooperation",
+    "marching",
+    "meta-analysis"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mogan, Fischer & Bulbulia, JESP, 2017",
+  "source_kind": "paper",
+  "reference": "Mogan, Fischer & Bulbulia, To be in synchrony or not? A meta-analysis of synchrony's effects on behavior, perception, cognition and affect, Journal of Experimental Social Psychology, 2017",
+  "written": "2026-10-03"
+}

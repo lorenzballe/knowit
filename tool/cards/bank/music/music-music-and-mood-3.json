@@ -1,0 +1,38 @@
+{
+  "id": "music-music-and-mood-3",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.music_and_mood",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "When someone is feeling low, is listening to sad songs good for them?",
+  "sides": [
+    "Yes, sad songs help",
+    "No, change the mood"
+  ],
+  "answer": "Sad music offers company. Van den Tol and Edwards found that people choosing sad songs while sad wanted to feel understood, to reflect and to be comforted, and most felt better. Pressing cheerful music on a grieving person can feel like being told to cheer up. Meeting the mood first is how moods move.",
+  "move": "Whichever side you took, the hinge is whether the listener reflects or ruminates.",
+  "ask": "When I am low and reach for sad songs, do I come away lighter or more stuck?",
+  "counterpoint": "For some people the same habit deepens the low. Sandra Garrido and Emery Schubert found that listeners prone to rumination, replaying their worries over and over, were drawn to sad music and came away feeling more depressed, even while saying it helped. What feels soothing can be a loop. For those listeners, deliberately changing the music works better.",
+  "keywords": [
+    "sad music",
+    "depression",
+    "rumination",
+    "comfort"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Garrido & Schubert, Music Perception, 2015",
+  "source_kind": "paper",
+  "reference": "Garrido & Schubert, Music and people with tendencies to depression, Music Perception, 2015; van den Tol & Edwards, Exploring a rationale for choosing to listen to sad music when feeling sad, Psychology of Music, 2013",
+  "written": "2026-10-03"
+}

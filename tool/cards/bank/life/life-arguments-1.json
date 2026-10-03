@@ -1,0 +1,33 @@
+{
+  "id": "life-arguments-1",
+  "topic": "life",
+  "genre": "life.relationships",
+  "strand": "life.relationships.arguments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Couples wrote three times a year about their fights as a neutral outsider would see them. What happened to their marriages?",
+  "answer": "They stopped declining. Finkel and colleagues followed 120 couples for two years, and in the first year marriage quality fell for all. In the second, half wrote for seven minutes, three times, about their latest disagreement from the view of a neutral party who wished them well. Their satisfaction held; the others' kept falling.",
+  "move": "In a fight, picture how a fair outsider would describe it.",
+  "ask": "In my last argument, how would a fair friend of both of us have told the story?",
+  "keywords": [
+    "marriage",
+    "conflict reappraisal",
+    "outsider perspective",
+    "couples"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Finkel and colleagues, Psychological Science, 2013",
+  "source_kind": "paper",
+  "reference": "Finkel, Slotter, Luchies, Walton and Gross, A brief intervention to promote conflict reappraisal preserves marital quality over time, Psychological Science, 2013",
+  "written": "2026-10-03"
+}

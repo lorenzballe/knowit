@@ -1,0 +1,40 @@
+{
+  "id": "human_body-bmi-2",
+  "topic": "human_body",
+  "genre": "human_body.your_body_in_numbers",
+  "strand": "human_body.your_body_in_numbers.bmi",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Some studies found overweight people outlived those of normal weight. Which correction shrank that advantage the most?",
+  "options": [
+    "Separating muscle from fat",
+    "Excluding smokers and the already ill",
+    "Adding more very old people"
+  ],
+  "correct": 1,
+  "answer": "Excluding smokers and the already ill. Smoking and hidden disease make people thinner and kill them sooner, dragging down the survival of the normal-weight group. Pooling millions of never-smokers without known disease, the Global BMI Mortality Collaboration found the lowest death rates at a BMI of 20 to 25. Thinness can be a symptom.",
+  "move": "When the thin die sooner, ask what made them thin.",
+  "ask": "When a surprising finding flatters my habits, have I asked what else could explain it?",
+  "trap": "BMI counts muscle as fat, so separating them seems the fix.",
+  "keywords": [
+    "bmi",
+    "obesity paradox",
+    "smoking",
+    "mortality"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Global BMI Mortality Collaboration, The Lancet, 2016",
+  "source_kind": "paper",
+  "reference": "The Global BMI Mortality Collaboration, Body-mass index and all-cause mortality: individual-participant-data meta-analysis of 239 prospective studies in four continents, The Lancet, 2016",
+  "written": "2026-09-26"
+}

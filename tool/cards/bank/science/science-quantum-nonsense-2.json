@@ -1,0 +1,39 @@
+{
+  "id": "science-quantum-nonsense-2",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.quantum_nonsense",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a lifeless detector can observe a quantum particle just as fully as a watching person can?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In quantum physics, observation means any interaction that leaves a record: a photon striking a detector, a stray air molecule bumping the particle. No mind is needed. Physicists chose an unlucky word, later sold as proof that consciousness shapes reality. A Geiger counter in an empty room measures perfectly well.",
+  "move": "When a technical word sounds human, check what it means to experts.",
+  "ask": "Which impressive-sounding word have I taken at its everyday meaning, when experts mean something else?",
+  "trap": "False, because observing sounds like someone looking.",
+  "keywords": [
+    "observer effect",
+    "measurement",
+    "consciousness",
+    "decoherence"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zurek, Reviews of Modern Physics, 2003",
+  "source_kind": "paper",
+  "reference": "Zurek, Decoherence, einselection, and the quantum origins of the classical, Reviews of Modern Physics 75:715–775, 2003",
+  "written": "2026-09-26"
+}

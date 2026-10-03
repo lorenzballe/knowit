@@ -6,16 +6,16 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "reflection",
-  "question": "True or false: in Canada's fur-trade records, lynx numbers peaked a year or two after the snowshoe hares they hunt?",
+  "question": "True or false: in Canada's fur-trade records, lynx and snowshoe hare numbers peaked in the same years?",
   "options": [
     "True",
     "False"
   ],
-  "correct": 0,
-  "answer": "True. Elton and Nicholson traced about a century of Hudson's Bay Company pelt counts and found a cycle of roughly ten years, with lynx peaks trailing hare peaks. More hares feed more lynx; more lynx and dwindling food cut the hares; hungry lynx then crash. The delay keeps the swing going.",
+  "correct": 1,
+  "answer": "False. Elton and Nicholson traced about a century of Hudson's Bay Company pelt counts and found a cycle of roughly ten years, with lynx peaks trailing hare peaks. More hares feed more lynx; more lynx and dwindling food cut the hares; hungry lynx then crash. The delay keeps the swing going.",
   "move": "A delay in a balancing loop turns steadiness into swings.",
   "ask": "Where am I overreacting because I judge results before my last change has had time to work?",
-  "trap": "Predators should rise and fall in step with their prey.",
+  "trap": "Predators and prey seem bound to rise and fall in step.",
   "keywords": [
     "lynx",
     "snowshoe hare",

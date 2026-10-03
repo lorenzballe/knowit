@@ -1,0 +1,39 @@
+{
+  "id": "life-arguments-3",
+  "topic": "life",
+  "genre": "life.relationships",
+  "strand": "life.relationships.arguments",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: hitting a punching bag while thinking about someone who angered you lowers aggression towards them afterwards?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Bushman had participants' essays harshly criticised, then had some hit a punching bag while thinking of the critic. They ended up angrier and more aggressive towards that person than those who sat quietly for a few minutes. Venting rehearsed the anger instead of draining it.",
+  "move": "Let anger cool by waiting, not by rehearsing it.",
+  "ask": "After my last flash of anger, did venting calm me, or did it keep the story running?",
+  "trap": "Letting anger out feels like opening a pressure valve.",
+  "keywords": [
+    "venting",
+    "anger",
+    "catharsis",
+    "aggression"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bushman, PSPB, 2002",
+  "source_kind": "paper",
+  "reference": "Bushman, Does venting anger feed or extinguish the flame? Catharsis, rumination, distraction, anger, and aggressive responding, Personality and Social Psychology Bulletin, 2002",
+  "written": "2026-10-03"
+}

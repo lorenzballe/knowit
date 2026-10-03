@@ -9,10 +9,10 @@
   "question": "In the cold northern forests of Canada, Scandinavia and Siberia, where is most of the carbon stored?",
   "options": [
     "In the living trees",
-    "In the soil and peat",
-    "In fallen dead wood"
+    "In fallen dead wood",
+    "In the soil and peat"
   ],
-  "correct": 1,
+  "correct": 2,
   "answer": "In the soil and peat. Cold slows the microbes that rot fallen needles and roots, so dead matter piles up for thousands of years. Pan and colleagues put roughly three fifths of boreal forest carbon in the soil. Logging or fire that dries and warms that ground can release more than the trunks ever held.",
   "move": "The biggest store is often the one under your feet, not the one in view.",
   "ask": "What do I value by what I can see, while the bigger store sits out of sight?",

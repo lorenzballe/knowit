@@ -8,11 +8,11 @@
   "principle": "reflection",
   "question": "After civil-war poachers killed most of Gorongosa's elephants for ivory, why were so many young females born tuskless?",
   "options": [
-    "Tuskless survivors passed the trait on",
     "Stress made adults shed their tusks",
-    "Mothers taught calves to break tusks"
+    "Mothers taught calves to break tusks",
+    "Tuskless survivors passed the trait on"
   ],
-  "correct": 0,
+  "correct": 2,
   "answer": "Tuskless survivors passed the trait on. Poachers ignored elephants with no ivory, so those lived and bred. Campbell-Staton and colleagues found tuskless females rose from about 18% to about 51% and traced the trait to genes on the X chromosome. Nobody chose tusklessness; guns kept choosing against its opposite.",
   "move": "Ask who was removed from a group before explaining how it changed.",
   "ask": "Which habits around me spread simply because the alternatives kept being removed?",

@@ -1,0 +1,38 @@
+{
+  "id": "life-saying-no-3",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.saying_no",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "At work, should you turn down most requests for help to protect your own time?",
+  "sides": [
+    "Yes, default to no",
+    "No, default to yes"
+  ],
+  "answer": "Yes. Cross, Rebele and Grant found that in many organisations a fifth to a third of the collaborations that add value come from only 3% to 5% of employees. Those generous few become bottlenecks and burn out, while their own work waits for the evening. A default no, with exceptions chosen on purpose, spreads the load more fairly.",
+  "move": "Whichever side you took, the hinge is who chooses which requests get a yes.",
+  "ask": "Of the requests I said yes to last week, which did I choose, and which did I just absorb?",
+  "counterpoint": "No. Helping builds the trust and reputation that careers run on, and Grant's research on givers found them both at the bottom and at the top of measures of success. The difference was not how often they said yes but how: those at the top helped in focused blocks and protected their own goals. Refusing by default throws that away.",
+  "keywords": [
+    "collaborative overload",
+    "helping",
+    "requests",
+    "adam grant"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cross, Rebele and Grant, Harvard Business Review, 2016",
+  "source_kind": "paper",
+  "reference": "Cross, Rebele and Grant, Collaborative Overload, Harvard Business Review, January-February 2016",
+  "written": "2026-10-03"
+}

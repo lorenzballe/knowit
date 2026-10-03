@@ -1,0 +1,42 @@
+{
+  "id": "music-charts-3",
+  "topic": "music",
+  "genre": "music.the_music_business",
+  "strand": "music.the_music_business.charts",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "From 2014 the UK chart counted 100 streams as one sale. A song: 4 million streams, 15,000 downloads. Chart sales, in thousands?",
+  "value": 55,
+  "unit": "thousand sales",
+  "answer": "55 thousand sales, almost three-quarters of them from streams",
+  "move": "Whoever sets the exchange rate between different things decides who wins.",
+  "ask": "When I compare two very different things, what exchange rate am I quietly using?",
+  "trap": "Treating every stream as a sale, which gives over 4 million.",
+  "hint": "Turn the streams into sales first, then add the downloads.",
+  "steps": [
+    "Streams as sales: 4,000,000 ÷ 100 = 40,000",
+    "Add downloads: 40,000 + 15,000 = 55,000",
+    "55 thousand sales, almost three-quarters of them from streams"
+  ],
+  "keywords": [
+    "singles chart",
+    "streaming",
+    "chart rules",
+    "downloads"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Official Charts Company, streaming rules, 2014",
+  "source_kind": "company",
+  "reference": "Official Charts Company, Streaming to count towards the Official Singles Chart, June 2014",
+  "written": "2026-10-03"
+}

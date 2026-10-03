@@ -1,0 +1,33 @@
+{
+  "id": "human_body-recovery-2",
+  "topic": "human_body",
+  "genre": "human_body.stress_and_the_body",
+  "strand": "human_body.stress_and_the_body.recovery",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does checking work messages in the evening tire people even when nothing needs doing?",
+  "answer": "Because recovery needs the mind to leave work, not just the body. Sonnentag's research on psychological detachment shows that people who stop thinking about work after hours report less exhaustion and better wellbeing the next day. A glance at the inbox restarts the work clock in the head: the office follows them onto the sofa.",
+  "move": "Rest counts only when the mind leaves the task as well.",
+  "ask": "When do I last think about work each evening, and could I move that moment earlier?",
+  "keywords": [
+    "psychological detachment",
+    "recovery",
+    "work email",
+    "exhaustion"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sonnentag and Fritz, J Organizational Behavior, 2015",
+  "source_kind": "paper",
+  "reference": "Sonnentag S, Fritz C, Recovery from job stress: the stressor-detachment model as an integrative framework, Journal of Organizational Behavior, 2015",
+  "written": "2026-09-26"
+}

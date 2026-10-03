@@ -8,11 +8,11 @@
   "principle": "reflection",
   "question": "Luria and Delbrück exposed many bacterial cultures to a virus. What did the wildly uneven survivor counts show?",
   "options": [
-    "Resistance arose by chance before exposure",
     "The virus triggered resistance in some cells",
-    "Survivors had simply dodged the virus"
+    "Survivors had simply dodged the virus",
+    "Resistance arose by chance before exposure"
   ],
-  "correct": 0,
+  "correct": 2,
   "answer": "Resistance arose by chance before exposure. Had the virus induced resistance, every culture would have held a similar small number of survivors. Instead most had none and a few had hundreds, as expected if a random mutation struck early in some cultures and then multiplied. Mutations do not arrive because they are needed.",
   "move": "Variation comes first; a challenge only reveals who already had the answer.",
   "ask": "When the next crisis hits, which of the skills I am building now will turn out to matter?",

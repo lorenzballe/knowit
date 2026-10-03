@@ -1,0 +1,39 @@
+{
+  "id": "life-choosing-work-3",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.choosing_work",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: across many studies, people in better-paid jobs are much more satisfied with their work?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Judge and colleagues pooled studies of thousands of employees and found the correlation between pay level and job satisfaction was about 0.15: pay accounted for roughly 2% of the differences in how much people liked their jobs. A well-paid job and a satisfying job were close to separate questions.",
+  "move": "Ask what you will do all day, not only what it pays.",
+  "ask": "If my pay stayed the same, which parts of my work would I keep and which would I change?",
+  "trap": "Pay seems the main thing a job gives, so it should drive liking.",
+  "keywords": [
+    "pay",
+    "job satisfaction",
+    "meta-analysis",
+    "careers"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Judge and colleagues, J. Vocational Behavior, 2010",
+  "source_kind": "paper",
+  "reference": "Judge, Piccolo, Podsakoff, Shaw and Rich, The relationship between pay and job satisfaction: A meta-analysis of the literature, Journal of Vocational Behavior, 2010",
+  "written": "2026-10-03"
+}

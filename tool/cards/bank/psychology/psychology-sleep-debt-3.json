@@ -11,7 +11,7 @@
     "Yes, start later",
     "No, leave it local"
   ],
-  "answer": "Teenagers' body clocks shift later at puberty, so early starts cut sleep rather than moving bedtime earlier. When Seattle moved high-school start times nearly an hour later, students slept a median 34 minutes more a night, grades rose 4.5% and attendance improved. Few measures buy that much sleep for a whole age group at once.",
+  "answer": "Teenagers' body clocks shift later at puberty, so early starts cut sleep rather than moving bedtime earlier. American paediatricians concluded that most teenagers get far less than the 8.5 to 9.5 hours they need, and recommended starts of 8:30 or later. Moving the bell is one of few changes reaching a whole age group.",
   "move": "Whichever side you took, the hinge is who bears the cost of the sleep gained.",
   "ask": "What fixed time in my household's morning is costing someone sleep they need?",
   "counterpoint": "Later starts cost real money and time: bus routes rebuilt, after-school jobs and sports squeezed, working parents rearranged. The evidence comes mostly from single districts before and after a change, not randomised trials, and gains vary. A national rule ignores rural travel and local trade-offs that schools and families understand better.",
@@ -19,10 +19,10 @@
     "school start times",
     "teenagers",
     "body clock",
-    "seattle"
+    "sleep need"
   ],
   "era": "recent",
-  "region": "americas",
+  "region": "world",
   "hook": "practical",
   "mood": "sober",
   "numeracy": 1,
@@ -31,8 +31,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Dunster et al., Science Advances, 2018",
-  "source_kind": "paper",
-  "reference": "doi:10.1126/sciadv.aau6200",
+  "source": "American Academy of Pediatrics, Pediatrics, 2014",
+  "source_kind": "institution",
+  "reference": "Adolescent Sleep Working Group, Committee on Adolescence and Council on School Health, School start times for adolescents, Pediatrics, 2014",
   "written": "2026-10-03"
 }

@@ -1,0 +1,33 @@
+{
+  "id": "human_body-breath-1",
+  "topic": "human_body",
+  "genre": "human_body.stress_and_the_body",
+  "strand": "human_body.stress_and_the_body.breath",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which five-minute breathing pattern lifted mood more than mindfulness meditation in a month-long 2023 study?",
+  "answer": "Cyclic sighing: a double inhale through the nose, then a long, slow exhale. Balban's team randomly assigned about a hundred volunteers to daily breathing drills or mindfulness, and the sighing group gained most in positive mood. It was one study and needs repeating. The long exhale is the part that slows the heart.",
+  "move": "Lengthen the exhale when the body needs to come down.",
+  "ask": "Before my next hard conversation, could I take two slow sighs and notice what changes?",
+  "keywords": [
+    "cyclic sighing",
+    "breathwork",
+    "mood",
+    "mindfulness"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Balban et al., Cell Reports Medicine, 2023",
+  "source_kind": "paper",
+  "reference": "Balban MY, Neri E, Kogon MM et al., Brief structured respiration practices enhance mood and reduce physiological arousal, Cell Reports Medicine, 2023",
+  "written": "2026-09-26"
+}

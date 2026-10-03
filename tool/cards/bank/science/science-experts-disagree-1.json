@@ -1,0 +1,33 @@
+{
+  "id": "science-experts-disagree-1",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.experts_disagree",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did giving both sides equal space in US newspapers distort the climate debate between 1988 and 2002?",
+  "answer": "It made a lopsided question look evenly split. Jules and Maxwell Boykoff found that more than half of 636 articles in four leading papers gave roughly equal attention to human-caused warming and to doubts about it, while scientific opinion was already firm. Balance between two people misreported the balance among thousands.",
+  "move": "Ask how many experts stand behind each side, not just who is talking.",
+  "ask": "When I watch two experts debate, do I know how many others stand behind each one?",
+  "keywords": [
+    "false balance",
+    "climate change",
+    "newspapers",
+    "consensus"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Boykoff & Boykoff, Global Environmental Change, 2004",
+  "source_kind": "paper",
+  "reference": "Boykoff & Boykoff, Balance as bias: global warming and the US prestige press, Global Environmental Change 14:125–136, 2004",
+  "written": "2026-09-26"
+}

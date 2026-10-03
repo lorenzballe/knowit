@@ -1,0 +1,36 @@
+{
+  "id": "music-music-therapy-1",
+  "topic": "music",
+  "genre": "music.music_and_the_brain",
+  "strand": "music.music_and_the_brain.music_therapy",
+  "also": [
+    "human_body.the_brain.plasticity"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can some stroke patients who cannot speak a sentence still sing its words?",
+  "answer": "Because singing draws more on the brain's right side, while fluent speech leans on the left, often the side the stroke damaged. Melodic intonation therapy, described by Martin Albert and colleagues in 1973, starts from sung, tapped phrases and slowly fades the melody into speech. Trials show gains for some patients, though how much remains debated.",
+  "move": "When the main road is blocked, a skill may travel by a side road.",
+  "ask": "When one way of doing something fails me, what other route have I not tried yet?",
+  "keywords": [
+    "aphasia",
+    "stroke",
+    "melodic intonation therapy",
+    "singing"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Albert, Sparks & Helm, Archives of Neurology, 1973",
+  "source_kind": "paper",
+  "reference": "Albert, Sparks & Helm, Melodic intonation therapy for aphasia, Archives of Neurology, 1973",
+  "written": "2026-10-03"
+}

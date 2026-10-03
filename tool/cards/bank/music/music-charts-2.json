@@ -1,0 +1,40 @@
+{
+  "id": "music-charts-2",
+  "topic": "music",
+  "genre": "music.the_music_business",
+  "strand": "music.the_music_business.charts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In 2009, what put a 17-year-old protest song at UK Christmas number one, ahead of that year's TV talent winner?",
+  "options": [
+    "Its use in a TV advert",
+    "A Facebook campaign to buy it",
+    "Heavy radio play that December"
+  ],
+  "correct": 1,
+  "answer": "A Facebook campaign. Jon and Tracy Morter urged people to buy Rage Against the Machine's Killing in the Name to stop another X Factor winner taking Christmas. It sold about 500,000 downloads that week, beating Joe McElderry. The chart counted purchases, and a purchase can be a protest vote.",
+  "move": "A count of purchases cannot say why anyone bought.",
+  "ask": "When I see a number go up, do I know why people actually did it?",
+  "trap": "Reaching for the usual revival route: an old song used in an advert.",
+  "keywords": [
+    "christmas number one",
+    "rage against the machine",
+    "x factor",
+    "facebook campaign"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "BBC News, 20 December 2009",
+  "source_kind": "news_archive",
+  "reference": "BBC News, Rage Against the Machine beat X Factor act to Christmas number one, 20 December 2009",
+  "written": "2026-10-03"
+}

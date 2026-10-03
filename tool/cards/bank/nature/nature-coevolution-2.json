@@ -8,11 +8,11 @@
   "principle": "reflection",
   "question": "New Zealand lake snails can breed with or without males. Where did Lively find males most common?",
   "options": [
-    "Where parasites were most common",
     "Where food was most plentiful",
-    "Where the water was coldest"
+    "Where the water was coldest",
+    "Where parasites were most common"
   ],
-  "correct": 0,
+  "correct": 2,
   "answer": "Where parasites were most common. Parasitic worms evolve to target the commonest snail types; sex shuffles genes, so offspring become moving targets. Lively found the share of males rose with infection rates across lakes. Clones that skip sex are efficient but identical, and an identical crowd is a parasite's ideal meal.",
   "move": "When enemies adapt to you, being predictable becomes the real cost.",
   "ask": "Where has being too predictable made me easy to exploit, at work or with money?",

@@ -1,0 +1,33 @@
+{
+  "id": "life-boredom-2",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.boredom",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a task that is far too hard bore you as much as one that is far too easy?",
+  "answer": "Because boredom signals attention that cannot engage, not a lack of things to do. Westgate and Wilson's model says it arises when mental demands and resources are mismatched in either direction, or when an activity feels meaningless. A lecture pitched far above a student bores as surely as one pitched far below.",
+  "move": "When bored, adjust the challenge or the meaning, not just the activity.",
+  "ask": "Is the thing that bores me too easy, too hard, or simply pointless to me?",
+  "keywords": [
+    "boredom",
+    "attention",
+    "challenge",
+    "meaning"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Westgate and Wilson, Psychological Review, 2018",
+  "source_kind": "paper",
+  "reference": "Westgate and Wilson, Boring thoughts and bored minds: The MAC model of boredom and cognitive engagement, Psychological Review, 2018",
+  "written": "2026-10-03"
+}

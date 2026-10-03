@@ -1,0 +1,33 @@
+{
+  "id": "life-love-2",
+  "topic": "life",
+  "genre": "life.relationships",
+  "strand": "life.relationships.love",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Across 43 studies of couples, what predicted relationship satisfaction better: personalities, or how partners saw the relationship?",
+  "answer": "How they saw the relationship. Joel and colleagues pooled data on more than 11,000 couples using machine learning. The strongest predictors were one's own sense of the partner's commitment, of being appreciated, and of sexual satisfaction. The partner's own reports added little beyond that, and personality traits mattered less.",
+  "move": "Look at what happens between two people before judging either one.",
+  "ask": "Do I show the people I love the appreciation and commitment I hope they see?",
+  "keywords": [
+    "relationship satisfaction",
+    "couples",
+    "machine learning",
+    "commitment"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Joel and colleagues, PNAS, 2020",
+  "source_kind": "paper",
+  "reference": "Joel and colleagues, Machine learning uncovers the most robust self-report predictors of relationship quality across 43 longitudinal couples studies, Proceedings of the National Academy of Sciences, 2020",
+  "written": "2026-10-03"
+}

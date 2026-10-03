@@ -1,0 +1,41 @@
+{
+  "id": "life-boredom-3",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.boredom",
+  "also": [
+    "life.relationships.family"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should parents sometimes leave children bored, rather than filling every free hour for them?",
+  "sides": [
+    "Yes, leave them bored",
+    "No, fill the hours"
+  ],
+  "answer": "Yes. Boredom is a signal that the current activity has stopped engaging, and children learn to answer it only by meeting it: inventing a game, picking up a book, finding a friend. Researchers who model boredom describe it as a prompt to change what one is doing. A child who never meets it never practises acting on it.",
+  "move": "Whichever side you took, the hinge is what fills the gap when nobody does.",
+  "ask": "When did I last let myself be bored without reaching for a screen, and what came of it?",
+  "counterpoint": "No. Unstructured hours are not equal for every child. Mahoney and Cairns found that at-risk pupils who took part in school activities dropped out less often, and children left without structure may fill the time with screens rather than invention. Organised activities give skills, adults to look up to and friends that a bored afternoon may not.",
+  "keywords": [
+    "children",
+    "boredom",
+    "free time",
+    "extracurricular activities"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mahoney and Cairns, Developmental Psychology, 1997",
+  "source_kind": "paper",
+  "reference": "Mahoney and Cairns, Do extracurricular activities protect against early school dropout?, Developmental Psychology, 1997",
+  "written": "2026-10-03"
+}

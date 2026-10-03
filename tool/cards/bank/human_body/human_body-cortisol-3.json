@@ -1,0 +1,40 @@
+{
+  "id": "human_body-cortisol-3",
+  "topic": "human_body",
+  "genre": "human_body.stress_and_the_body",
+  "strand": "human_body.stress_and_the_body.cortisol",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "A healthy person gives a cortisol sample at 8 am and another at 11 pm. How do the two compare?",
+  "options": [
+    "The 8 am level is several times higher",
+    "They are roughly the same",
+    "The 11 pm level is higher"
+  ],
+  "correct": 0,
+  "answer": "The 8 am level is several times higher. Cortisol peaks in the early morning and falls to its lowest around midnight. A reading means little without its time: doctors test for excess late at night, for shortage in the morning. A home test that ignores the clock measures the hour, not the person.",
+  "move": "Ask when a measurement was taken before comparing it with anything.",
+  "ask": "When I compare myself with someone else, are we being caught at the same moment of the day, or of life?",
+  "trap": "A hormone level is a fixed trait, like height or eye colour.",
+  "keywords": [
+    "cortisol",
+    "daily rhythm",
+    "hormone tests",
+    "saliva"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gardner and Shoback, Greenspan's Endocrinology, 2017",
+  "source_kind": "book",
+  "reference": "Gardner DG, Shoback D, Greenspan's Basic and Clinical Endocrinology, 10th edition, McGraw-Hill, 2017",
+  "written": "2026-09-26"
+}

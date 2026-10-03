@@ -9,10 +9,10 @@
   "question": "Earlier models blamed about 20 big rivers for most river plastic reaching the sea. What did a 2021 model find?",
   "options": [
     "About ten rivers carry 90%",
-    "Over 1,000 rivers carry 80%",
-    "Rivers carry under a twentieth"
+    "Rivers carry under a twentieth",
+    "Over 1,000 rivers carry 80%"
   ],
-  "correct": 1,
+  "correct": 2,
   "answer": "Over 1,000 rivers carry 80%. Meijer and colleagues found that what matters most is how close waste is dumped to a river and how close that river runs to the sea. Many are short streams through crowded coastal cities, such as Manila's. Cleaning a few giant rivers would leave most of the flow untouched.",
   "move": "A problem spread across thousands of small sources has no single switch.",
   "ask": "Is the drain on my time or money one big thing, or many small leaks I keep ignoring?",

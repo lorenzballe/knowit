@@ -1,0 +1,40 @@
+{
+  "id": "life-burnout-3",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.burnout",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Compared with 35 to 40 hours a week, working 55 or more raised the risk of stroke by about how much?",
+  "options": [
+    "About 35%",
+    "About 300%",
+    "About 3%"
+  ],
+  "correct": 0,
+  "answer": "About 35%. A WHO and ILO analysis by Pega and colleagues estimated that working 55 hours or more a week carried a 35% higher risk of stroke and a 17% higher risk of dying from heart disease than a standard week. Across the world, long hours were linked to about 745,000 deaths in 2016.",
+  "move": "Count long hours as a health risk, not only as tiredness.",
+  "ask": "How many hours did I really work last week, and for how many weeks in a row?",
+  "trap": "Long hours feel tiring, but hardly a danger to the body.",
+  "keywords": [
+    "long working hours",
+    "stroke",
+    "heart disease",
+    "overwork"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pega and colleagues, Environment International, 2021",
+  "source_kind": "paper",
+  "reference": "Pega, Náfrádi, Momen and colleagues, Global, regional, and national burdens of ischemic heart disease and stroke attributable to exposure to long working hours for 194 countries, 2000-2016, Environment International, 2021",
+  "written": "2026-10-03"
+}

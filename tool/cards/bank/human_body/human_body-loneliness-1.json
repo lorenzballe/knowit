@@ -1,0 +1,33 @@
+{
+  "id": "human_body-loneliness-1",
+  "topic": "human_body",
+  "genre": "human_body.stress_and_the_body",
+  "strand": "human_body.stress_and_the_body.loneliness",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can someone surrounded by people feel lonelier than someone who lives alone?",
+  "answer": "Because loneliness is the gap between the connection a person wants and the connection they feel they have, not a head count. Cacioppo's research separated this felt state from being physically alone, and found the felt state does the damage to sleep, stress and health. A crowded office can be emptier than a quiet flat.",
+  "move": "Measure a need by how well it is met, not by what surrounds it.",
+  "ask": "Who in my life do I see often but never really talk to?",
+  "keywords": [
+    "loneliness",
+    "social isolation",
+    "connection",
+    "wellbeing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cacioppo and Patrick, Loneliness, Norton, 2008",
+  "source_kind": "book",
+  "reference": "Cacioppo JT, Patrick W, Loneliness: Human Nature and the Need for Social Connection, W. W. Norton, 2008",
+  "written": "2026-09-26"
+}

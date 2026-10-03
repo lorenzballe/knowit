@@ -1,0 +1,41 @@
+{
+  "id": "music-chills-2",
+  "topic": "music",
+  "genre": "music.music_and_the_brain",
+  "strand": "music.music_and_the_brain.chills",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Listeners marked passages that reliably gave them shivers. What did John Sloboda find those passages had in common?",
+  "options": [
+    "The loudest, fullest climaxes",
+    "The slowest, quietest moments",
+    "A sudden departure from expectation"
+  ],
+  "correct": 2,
+  "answer": "A departure from expectation. Sloboda's 1991 survey traced shivers mostly to new or unexpected harmonies and sudden changes, and tears to appoggiaturas, melody notes that clash before they resolve. A chill needs a firm expectation first, then a step to one side of it. Sheer volume rarely does it alone.",
+  "move": "What stirs people is rarely the biggest moment but the unexpected turn.",
+  "ask": "Do I try to impress people with size, when a small surprise would move them more?",
+  "trap": "Crediting the biggest, loudest moment of the piece.",
+  "keywords": [
+    "chills",
+    "harmony",
+    "expectation",
+    "appoggiatura",
+    "john sloboda"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sloboda, Psychology of Music, 1991",
+  "source_kind": "paper",
+  "reference": "Sloboda, Music structure and emotional response: some empirical findings, Psychology of Music, 1991",
+  "written": "2026-10-03"
+}

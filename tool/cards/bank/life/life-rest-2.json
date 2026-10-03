@@ -1,0 +1,40 @@
+{
+  "id": "life-rest-2",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.rest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "People slept six hours a night for two weeks. By the end, how did their attention compare with someone who missed a whole night?",
+  "options": [
+    "Back to normal, having adapted",
+    "About as bad",
+    "Only slightly worse than rested"
+  ],
+  "correct": 1,
+  "answer": "About as bad. Van Dongen and colleagues found that after two weeks of six-hour nights, lapses of attention matched those after a night, and on some measures two nights, without sleep. Yet people rated themselves only a little sleepy. The debt kept growing while the feeling of it levelled off.",
+  "move": "Judge tiredness by performance, not by how tired you feel.",
+  "ask": "How many hours did I really sleep last week, and am I trusting my feeling over my results?",
+  "trap": "Feeling only slightly sleepy, people assume they have adapted.",
+  "keywords": [
+    "sleep restriction",
+    "attention lapses",
+    "sleep debt",
+    "tiredness"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Van Dongen and colleagues, Sleep, 2003",
+  "source_kind": "paper",
+  "reference": "Van Dongen, Maislin, Mullington and Dinges, The cumulative cost of additional wakefulness: Dose-response effects on neurobehavioral functions and sleep physiology from chronic sleep restriction and total sleep deprivation, Sleep, 2003",
+  "written": "2026-10-03"
+}

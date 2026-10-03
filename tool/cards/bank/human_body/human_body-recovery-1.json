@@ -1,0 +1,39 @@
+{
+  "id": "human_body-recovery-1",
+  "topic": "human_body",
+  "genre": "human_body.stress_and_the_body",
+  "strand": "human_body.stress_and_the_body.recovery",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "True or false: the boost to health and wellbeing from a holiday usually lasts more than three months back at work?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A meta-analysis by de Bloom and colleagues found that holidays do improve health and wellbeing, but the gains fade within a few weeks of returning to work. A yearly fortnight cannot balance fifty weeks of strain. Recovery works better as a daily and weekly habit: evenings and weekends that genuinely switch off.",
+  "move": "Spread recovery through the routine rather than saving it for one break.",
+  "ask": "What small daily break could I protect, instead of waiting for my next holiday?",
+  "trap": "A big break should leave a big, lasting reserve.",
+  "keywords": [
+    "holidays",
+    "recovery",
+    "wellbeing",
+    "work stress"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "de Bloom et al., Journal of Occupational Health, 2009",
+  "source_kind": "paper",
+  "reference": "de Bloom J, Kompier M, Geurts S et al., Do we recover from vacation? Meta-analysis of vacation effects on health and well-being, Journal of Occupational Health, 2009",
+  "written": "2026-09-26"
+}

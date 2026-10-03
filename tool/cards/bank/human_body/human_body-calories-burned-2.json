@@ -1,0 +1,40 @@
+{
+  "id": "human_body-calories-burned-2",
+  "topic": "human_body",
+  "genre": "human_body.your_body_in_numbers",
+  "strand": "human_body.your_body_in_numbers.calories_burned",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Seven popular wrist trackers were tested on calories burned. How far off was the most accurate one, typically?",
+  "options": [
+    "Within about 2%",
+    "About 27% off",
+    "About 5% off"
+  ],
+  "correct": 1,
+  "answer": "About 27% off. Shcherbina's Stanford team found heart rate was measured fairly well, but calorie estimates erred by a median of 27% for the best device and 93% for the worst. A display reading 412 kcal suggests a precision the sensor does not have. The digits after the first are decoration.",
+  "move": "A number's precision on a screen says nothing about its accuracy.",
+  "ask": "Which precise-looking number do I plan my day around without knowing how rough it is?",
+  "trap": "A precise number on the screen implies a precise measurement.",
+  "keywords": [
+    "fitness trackers",
+    "calories",
+    "wearables",
+    "accuracy"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shcherbina et al., J Personalized Medicine, 2017",
+  "source_kind": "paper",
+  "reference": "https://www.mdpi.com/2075-4426/7/2/3",
+  "written": "2026-09-26"
+}

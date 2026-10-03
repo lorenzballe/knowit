@@ -1,0 +1,33 @@
+{
+  "id": "life-saying-no-1",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.saying_no",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do you agree to things next month that you would refuse if they were next week?",
+  "answer": "Because future time looks emptier than it will be. Zauberman and Lynch found people expect to have more spare time in the future than now, an error stronger for time than for money, because next month's demands are not yet visible. The calendar is blank only because it has not been filled yet.",
+  "move": "Before saying yes to later, ask whether you would say yes tomorrow.",
+  "ask": "Which commitment next month would I turn down if it were happening this week?",
+  "keywords": [
+    "time slack",
+    "overcommitment",
+    "future time",
+    "planning"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zauberman and Lynch, JEP: General, 2005",
+  "source_kind": "paper",
+  "reference": "Zauberman and Lynch, Resource slack and propensity to discount delayed investments of time versus money, Journal of Experimental Psychology: General, 2005",
+  "written": "2026-10-03"
+}
