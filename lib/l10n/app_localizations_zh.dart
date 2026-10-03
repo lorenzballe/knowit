@@ -1855,4 +1855,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String weekRecapMore(int n) {
     return '用 Plus 再看本周 $n 条';
   }
+
+  @override
+  String get plusInTheApp =>
+      'Astute+ 在应用中提供：在 iPhone 或 Android 上下载 Astute，开始免费试用。';
 }

@@ -216,15 +216,23 @@ class _PaywallScreenState extends State<PaywallScreen> {
       'has_package': package != null,
     });
 
-    // No store to buy from. On the web preview, and while developing, unlock
-    // locally so the gated screens can be seen, and say so rather than let
-    // it look like a purchase. In a store build it means the store did not
-    // answer, and buying nothing must not open Astute+.
-    if (package == null && !kIsWeb && !kDebugMode) {
+    // No store to buy from. While developing, unlock locally so the gated
+    // screens can be seen, and say so rather than let it look like a
+    // purchase. Anywhere else — a store build whose store did not answer, or
+    // the web app, which has none — buying nothing must not open Astute+.
+    if (package == null && !kDebugMode) {
       Analytics.capture('purchase unavailable', {'source': widget.source});
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(context.l10n.thatDidNotGoThrough)));
+      // The web app has no store: Astute+ is bought in the app, and never
+      // opened here for nothing.
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            kIsWeb
+                ? context.l10n.plusInTheApp
+                : context.l10n.thatDidNotGoThrough,
+          ),
+        ),
+      );
       return;
     }
     if (package == null) {

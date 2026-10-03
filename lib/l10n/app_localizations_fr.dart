@@ -1932,4 +1932,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String weekRecapMore(int n) {
     return '$n de plus de ta semaine avec Plus';
   }
+
+  @override
+  String get plusInTheApp =>
+      'Astute+ est dans l\'app : télécharge Astute sur iPhone ou Android pour commencer ton essai gratuit.';
 }

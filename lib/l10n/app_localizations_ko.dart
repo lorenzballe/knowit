@@ -1866,4 +1866,8 @@ class AppLocalizationsKo extends AppLocalizations {
   String weekRecapMore(int n) {
     return 'Plus로 이번 주 $n개 더 보기';
   }
+
+  @override
+  String get plusInTheApp =>
+      'Astute+는 앱에서 이용할 수 있어요. iPhone이나 Android에 Astute를 받아 무료 체험을 시작하세요.';
 }

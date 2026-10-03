@@ -1990,4 +1990,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String weekRecapMore(int n) {
     return 'Ещё $n за неделю с Plus';
   }
+
+  @override
+  String get plusInTheApp =>
+      'Astute+ — в приложении: скачай Astute на iPhone или Android, чтобы начать бесплатный период.';
 }
