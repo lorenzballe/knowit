@@ -462,7 +462,6 @@ class ExploreScreenState extends State<ExploreScreen> {
                       },
                     ),
             ),
-            ...themed(themes),
             if (loved.isNotEmpty) ...[
               const SizedBox(height: 24),
               _Shelf(
@@ -510,6 +509,10 @@ class ExploreScreenState extends State<ExploreScreen> {
                 ),
               ),
             ],
+            // The turning themes go under everything that was always here:
+            // the top of the screen stays as it was, and the further down
+            // the reader scrolls, the more there is.
+            ...themed(themes),
           ],
         ),
         // The shelves run under the tab bar rather than stopping short of
