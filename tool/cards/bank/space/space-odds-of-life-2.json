@@ -1,0 +1,40 @@
+{
+  "id": "space-odds-of-life-2",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.odds_of_life",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Life appeared on Earth soon after the planet cooled. What does that tell us about how common life is elsewhere?",
+  "options": [
+    "That life must start easily",
+    "Very little, from one case",
+    "That life must be rare"
+  ],
+  "correct": 1,
+  "answer": "Very little. Anyone able to ask needed life to start early enough to evolve brains before the Sun grows too hot; a late start would have left nobody to notice. A 2012 analysis showed that, with one example, an early start fits a universe where life is common and one where it is rare.",
+  "move": "If you could only exist in the lucky case, your luck proves little.",
+  "ask": "Am I treating my own good luck as proof that the path is easy for everyone?",
+  "trap": "That life starts easily, since it began here so fast.",
+  "keywords": [
+    "origin of life",
+    "anthropic reasoning",
+    "astrobiology",
+    "bayesian inference"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Spiegel & Turner, PNAS, 2012",
+  "source_kind": "paper",
+  "reference": "doi:10.1073/pnas.1111694108",
+  "written": "2026-10-03"
+}

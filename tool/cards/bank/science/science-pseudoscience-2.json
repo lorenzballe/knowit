@@ -1,0 +1,40 @@
+{
+  "id": "science-pseudoscience-2",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.pseudoscience",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "In 1948 students rated a personal profile, secretly the same for all, for accuracy out of 5. What was the average?",
+  "options": [
+    "About 4.3",
+    "About 2.5",
+    "About 1.5"
+  ],
+  "correct": 0,
+  "answer": "About 4.3. Bertram Forer gave each student what looked like a reading of a test they had taken; everyone got the same lines, many lifted from a newsstand astrology book. Phrases such as you have a great need for other people to like and admire you fit nearly everyone, and each reader felt seen.",
+  "move": "Before feeling described, ask whether the words would fit anyone.",
+  "ask": "When a reading, a quiz or an advert seems to know me, would it fit my friends just as well?",
+  "trap": "About 2.5, since a generic profile should fit only so-so.",
+  "keywords": [
+    "forer effect",
+    "personality readings",
+    "astrology",
+    "validation"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Forer, Journal of Abnormal and Social Psychology, 1949",
+  "source_kind": "paper",
+  "reference": "Forer, The fallacy of personal validation: a classroom demonstration of gullibility, Journal of Abnormal and Social Psychology 44:118–123, 1949",
+  "written": "2026-09-26"
+}

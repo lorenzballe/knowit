@@ -1,0 +1,39 @@
+{
+  "id": "art-what-artists-hide-1",
+  "topic": "art",
+  "genre": "art.look_closer",
+  "strand": "art.look_closer.what_artists_hide",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Did old masters such as Vermeer secretly work from images projected through lenses and mirrors?",
+  "sides": [
+    "Yes, optics helped",
+    "No, it was skill"
+  ],
+  "answer": "Yes, probably. Vermeer's paintings show blurred highlights like those of an out-of-focus lens, and Philip Steadman found the geometry of several of his rooms fits a projection onto a back wall. David Hockney traced a sudden jump in lifelike detail to the arrival of optics. A tool is nothing shameful; it explains the uncanny precision.",
+  "move": "Whichever side you took, it turns on whether possible is the same as proven.",
+  "ask": "When I explain someone's success by a secret tool, do I have evidence, or only that it was possible?",
+  "counterpoint": "No, or not proven. No letter, inventory or contract puts a lens in Vermeer's studio, and he left no drawings at all. Blurred highlights can be painted by eye, and showing that a method was possible is not showing it was used. Artists trained for years to see this precisely; crediting the lens takes that work away.",
+  "keywords": [
+    "vermeer",
+    "camera obscura",
+    "david hockney",
+    "philip steadman",
+    "optics"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Steadman, Vermeer's Camera, 2001",
+  "source_kind": "book",
+  "reference": "Philip Steadman, Vermeer's Camera: Uncovering the Truth Behind the Masterpieces, Oxford University Press, 2001",
+  "written": "2026-10-03"
+}

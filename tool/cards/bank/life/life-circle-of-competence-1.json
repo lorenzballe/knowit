@@ -1,0 +1,33 @@
+{
+  "id": "life-circle-of-competence-1",
+  "topic": "life",
+  "genre": "life.clear_thinking",
+  "strand": "life.clear_thinking.circle_of_competence",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In his 1996 letter, what did Warren Buffett say mattered more about an investor's circle of competence than its size?",
+  "answer": "Knowing exactly where it ends. Buffett wrote that an investor needs to judge only a few businesses well, those within the circle, and that its size matters little while knowing its boundaries is vital. A small circle with a sharp edge does less damage than a large one with a blurred edge.",
+  "move": "Mark where your knowledge stops before deciding how far to trust it.",
+  "ask": "Where is the edge of what I really understand, and have I made a decision beyond it lately?",
+  "keywords": [
+    "circle of competence",
+    "warren buffett",
+    "investing",
+    "berkshire hathaway"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Buffett, Berkshire Hathaway shareholder letter, 1996",
+  "source_kind": "company",
+  "reference": "Buffett, Chairman's Letter to Shareholders, Berkshire Hathaway Annual Report, 1996",
+  "written": "2026-10-03"
+}

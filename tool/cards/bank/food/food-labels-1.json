@@ -1,0 +1,44 @@
+{
+  "id": "food-labels-1",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.labels",
+  "also": [
+    "food.food_and_the_planet.food_waste"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A sealed jar of jam is two months past its best-before date. What is that date telling you?",
+  "options": [
+    "It has become unsafe to eat",
+    "Its quality may have slipped",
+    "Its sugar has started fermenting"
+  ],
+  "correct": 1,
+  "answer": "Its quality may have slipped. A best-before date is the maker's promise about taste and texture, not safety, and UK shops may legally sell food past it. The safety date is use-by, printed on foods like fresh meat and fish, which should not be eaten after it. Sealed jam stays safe long after its best-before.",
+  "move": "Ask whether a deadline protects your safety or someone's reputation.",
+  "ask": "Which deadlines in my life are about safety, and which are just someone's preference?",
+  "trap": "Unsafe, because any printed date feels like an expiry deadline.",
+  "keywords": [
+    "best before",
+    "use by",
+    "date labels",
+    "food waste",
+    "jam"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "UK Food Standards Agency, date labels guidance",
+  "source_kind": "institution",
+  "reference": "https://www.food.gov.uk/safety-hygiene/best-before-and-use-by-dates",
+  "written": "2026-10-03"
+}

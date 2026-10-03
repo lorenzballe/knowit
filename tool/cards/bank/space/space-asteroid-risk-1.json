@@ -1,0 +1,33 @@
+{
+  "id": "space-asteroid-risk-1",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.asteroid_risk",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "NASA's DART spacecraft rammed a small asteroid in 2022. How much did that change its orbit, and why is that enough?",
+  "answer": "It cut Dimorphos's 11 hour 55 minute orbit around its partner by about 32 minutes. That sounds small, but a tiny change in speed made years ahead grows into a large change in position. The earlier the push, the gentler it can be and still make a dangerous rock miss Earth.",
+  "move": "Act early, and a small push does what a huge one later cannot.",
+  "ask": "Which small nudge now would save me a huge effort a year from today?",
+  "keywords": [
+    "dart mission",
+    "dimorphos",
+    "planetary defence",
+    "asteroid deflection"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thomas et al., Nature, 2023",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/s41586-023-05805-2",
+  "written": "2026-10-03"
+}

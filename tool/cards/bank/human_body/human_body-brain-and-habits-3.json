@@ -1,0 +1,39 @@
+{
+  "id": "human_body-brain-and-habits-3",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.brain_and_habits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: under stress, people keep repeating a practised action even after its reward has stopped appealing?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Schwabe and Wolf stressed volunteers with a hand in ice water, then had them earn foods by choosing actions. After one food was eaten to fullness, unstressed people switched away from it; stressed people kept choosing the old action. Stress hands control from deliberate choice to habit.",
+  "move": "Expect old habits to return on hard days, and plan for those days.",
+  "ask": "Which old habit comes back when I am stressed, and what could I set up in advance?",
+  "trap": "Stress makes people more alert, so they would notice and adjust.",
+  "keywords": [
+    "stress",
+    "habits",
+    "decision making",
+    "cold water"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schwabe and Wolf, Journal of Neuroscience, 2009",
+  "source_kind": "paper",
+  "reference": "Schwabe L, Wolf OT, Stress prompts habit behavior in humans, Journal of Neuroscience, 2009",
+  "written": "2026-09-26"
+}

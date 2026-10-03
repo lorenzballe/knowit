@@ -1,0 +1,38 @@
+{
+  "id": "philosophy-newcomb-3",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.newcomb",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "A predictor with a near-perfect record has already filled the boxes. Should you take only the opaque box?",
+  "sides": [
+    "Yes, take one box",
+    "No, take both"
+  ],
+  "answer": "Yes. Rational choice is what wins, and the record is plain: one-boxers walk away millionaires, two-boxers with a thousand. A theory of rationality that predictably leaves its followers poorer has a problem. If your choice and the prediction share a cause, your decision is real evidence about what the box holds.",
+  "move": "It turns on whether a choice should cause good outcomes or merely signal them.",
+  "ask": "Do I act to cause the outcome I want, or to become the kind of person who gets it?",
+  "counterpoint": "The money is already there or it is not, and nothing done now can change it. Whatever the box holds, taking both adds a thousand. David Lewis argued in 1981 that one-boxers are rich because the predictor rewards irrational dispositions, not because their choice was wise. The game pays for being a certain person, not for choosing well.",
+  "keywords": [
+    "newcomb's problem",
+    "david lewis",
+    "causal decision theory",
+    "evidential decision theory"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lewis, Why Ain'cha Rich?, Noûs, 1981",
+  "source_kind": "paper",
+  "reference": "Lewis, Why Ain'cha Rich?, Noûs 15 (3), 1981",
+  "written": "2026-10-03"
+}

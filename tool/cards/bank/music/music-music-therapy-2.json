@@ -1,0 +1,43 @@
+{
+  "id": "music-music-therapy-2",
+  "topic": "music",
+  "genre": "music.music_and_the_brain",
+  "strand": "music.music_and_the_brain.music_therapy",
+  "also": [
+    "medicine.surgery.anaesthesia"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in trials, music played to patients under general anaesthesia still reduced their pain afterwards?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Jenny Hole and colleagues pooled 73 randomised trials of music around surgery: it cut pain, anxiety and painkiller use, and it helped even when played during general anaesthesia, though less than when patients were awake. The unconscious brain still takes in some sound. A pair of headphones joined the theatre kit.",
+  "move": "Do not assume a cheap, simple remedy is too simple to work.",
+  "ask": "What small, cheap comfort could I add before a stressful moment, instead of just bracing for it?",
+  "trap": "Assuming an unconscious patient cannot benefit from anything heard.",
+  "keywords": [
+    "music",
+    "surgery",
+    "anaesthesia",
+    "postoperative pain",
+    "meta-analysis"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hole et al., The Lancet, 2015",
+  "source_kind": "paper",
+  "reference": "Hole, Hirsch, Ball & Meads, Music as an aid for postoperative recovery in adults: a systematic review and meta-analysis, The Lancet, 2015",
+  "written": "2026-09-26"
+}

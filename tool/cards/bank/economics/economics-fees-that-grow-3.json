@@ -1,0 +1,39 @@
+{
+  "id": "economics-fees-that-grow-3",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.fees_that_grow",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "True or false: Morningstar found its own star ratings predicted funds' future returns more reliably than their fees did?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Russel Kinnel at Morningstar found that in every asset class and period tested, the cheapest fifth of funds beat the most expensive fifth. Star ratings, built on past performance, worked most of the time but not always. A fee is taken every year, whatever the market does; a hot streak fades.",
+  "move": "Prefer the cost you can be sure of over a past that may not repeat.",
+  "ask": "When I choose an investment, do I look at last year's winners or at what it costs me each year?",
+  "trap": "Trusting ratings built on past winners over a dull cost figure.",
+  "keywords": [
+    "fund fees",
+    "morningstar",
+    "star ratings",
+    "expense ratios"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kinnel, Morningstar, 2010",
+  "source_kind": "company",
+  "reference": "https://www.morningstar.com/articles/347327/how-expense-ratios-and-star-ratings-predict-succes.html",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "psychology-gut-feelings-1",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.gut_feelings",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "When students change an answer on a multiple-choice exam, which kind of change is most common?",
+  "options": [
+    "Right to wrong",
+    "Wrong to right",
+    "Wrong to another wrong"
+  ],
+  "correct": 1,
+  "answer": "Wrong to right. Kruger, Wirtz and Miller found about half of changes went from wrong to right and about a quarter from right to wrong, yet students believed sticking with a first instinct was safer. A right answer abandoned stings and is remembered; a lucky correction is quickly forgotten.",
+  "move": "Count the times second thoughts saved you, not just the times they cost you.",
+  "ask": "Which first instinct do I defend mainly because I remember the one time I ignored it and regretted it?",
+  "trap": "Remembering the painful times a changed answer turned out to be wrong.",
+  "keywords": [
+    "first instinct",
+    "exams",
+    "answer changing",
+    "regret"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kruger, Wirtz & Miller, JPSP, 2005",
+  "source_kind": "paper",
+  "reference": "Kruger, Wirtz & Miller, Counterfactual thinking and the first instinct fallacy, Journal of Personality and Social Psychology, 2005",
+  "written": "2026-10-03"
+}

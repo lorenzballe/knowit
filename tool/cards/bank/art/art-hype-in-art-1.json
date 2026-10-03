@@ -1,0 +1,33 @@
+{
+  "id": "art-hype-in-art-1",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.hype_in_art",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Van Gogh died in 1890 almost unknown. Who did the most to make him world-famous, and how?",
+  "answer": "His sister-in-law, Jo van Gogh-Bonger. Widowed in 1891, she inherited hundreds of his works and spent three decades lending them to exhibitions, selling a few at a time, and in 1914 publishing his letters to her husband Theo. The letters gave the public a story to love; the paintings came with it.",
+  "move": "Fame usually needs someone patient to tell the story, not only the work.",
+  "ask": "Whose good work around me deserves someone to tell its story, and could that be me?",
+  "keywords": [
+    "jo van gogh-bonger",
+    "vincent van gogh",
+    "letters",
+    "reputation"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Luijten, Jo van Gogh-Bonger, 2022",
+  "source_kind": "book",
+  "reference": "Hans Luijten, Jo van Gogh-Bonger: The Woman Who Made Vincent Famous, Bloomsbury, 2022",
+  "written": "2026-10-03"
+}

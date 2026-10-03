@@ -1,0 +1,40 @@
+{
+  "id": "human_body-breathing-2",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.breathing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A healthy person at rest takes ten slow, deep breaths. What happens to the oxygen saturation of their blood?",
+  "options": [
+    "Rises from about 80% to 95%",
+    "Rises by about a quarter",
+    "Barely moves from about 98%"
+  ],
+  "correct": 2,
+  "answer": "Barely moves from about 98%. At rest, blood leaving healthy lungs is already almost fully loaded with oxygen, so extra breaths have little to add; what deep breathing mainly changes is carbon dioxide. Calming breaths work through the nerves and the pace of the heart, not by topping up oxygen.",
+  "move": "Find the real lever before pushing harder on the obvious one.",
+  "ask": "When I try to calm down, do I know which part of me I am actually changing?",
+  "trap": "More air in must mean more oxygen in the blood.",
+  "keywords": [
+    "oxygen saturation",
+    "deep breathing",
+    "haemoglobin",
+    "lungs"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lumb, Nunn's Applied Respiratory Physiology, 2017",
+  "source_kind": "book",
+  "reference": "Lumb AB, Nunn's Applied Respiratory Physiology, 8th edition, Elsevier, 2017",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "economics-present-bias-2",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.present_bias",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: most US payday loans are repaid without another loan being taken within two weeks?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The Consumer Financial Protection Bureau found that more than four in five payday loans were rolled over or followed by another within 14 days. Borrowers plan a two-week bridge; the repayment lands on a future self who is just as short of cash. The fee meant to be paid once returns month after month.",
+  "move": "A plan that needs a richer future self usually meets the same self.",
+  "ask": "When I borrow from next month, what makes me think next month's me will have more?",
+  "trap": "True, since each loan is sold as a one-off two-week bridge.",
+  "keywords": [
+    "payday loans",
+    "rollovers",
+    "borrowing",
+    "consumer financial protection bureau"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CFPB Data Point: Payday Lending, 2014",
+  "source_kind": "statistics",
+  "reference": "Consumer Financial Protection Bureau, CFPB Data Point: Payday Lending, March 2014",
+  "written": "2026-10-03"
+}

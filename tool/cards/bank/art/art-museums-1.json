@@ -1,0 +1,52 @@
+{
+  "id": "art-museums-1",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.museums",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "The British Museum holds about 8 million objects. Roughly what share of them is on display at any one time?",
+  "options": [
+    "About half",
+    "About a quarter",
+    "About 1 per cent"
+  ],
+  "correct": 2,
+  "answer": "About 1 per cent, some 80,000 objects. The rest sit in stores, studied by researchers and lent out, because walls are limited and fragile things need rest from light. Every gallery is a curator's choice, and the story it tells is built from that small selection. Most of the museum is a storeroom.",
+  "move": "What you are shown is a selection; ask what stayed in the storeroom.",
+  "ask": "Whose highlights, a CV, a feed or a brochure, am I mistaking for the whole collection?",
+  "trap": "About a quarter, because the galleries feel endless.",
+  "keywords": [
+    "british museum",
+    "museum storage",
+    "curation",
+    "collections"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 1,
+        "label": "on display, about 80,000 objects",
+        "hi": true
+      }
+    ],
+    "caption": "Of every 100 objects the museum holds, about 1 is on show."
+  },
+  "source": "British Museum, collection overview",
+  "source_kind": "institution",
+  "reference": "https://www.britishmuseum.org/collection",
+  "written": "2026-10-03"
+}

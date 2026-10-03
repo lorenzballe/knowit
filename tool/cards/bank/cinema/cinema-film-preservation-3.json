@@ -1,0 +1,33 @@
+{
+  "id": "cinema-film-preservation-3",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.film_preservation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a vault in an Arctic mine store computer data as images on reels of film?",
+  "answer": "Because film needs no particular machine to read. In Svalbard's Arctic World Archive, data is printed as dense patterns on photographic film, with instructions in plain text and pictures at the start. Any future reader with light and a lens can recover it. Cold, dry permafrost slows the film's own decay.",
+  "move": "The longest-lasting format is the one that needs the least to read it.",
+  "ask": "If I wanted something to be readable by my grandchildren, what would I store it on?",
+  "keywords": [
+    "arctic world archive",
+    "svalbard",
+    "film storage",
+    "digital preservation"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Piql, Arctic World Archive",
+  "source_kind": "company",
+  "reference": "Piql AS, Arctic World Archive, Svalbard: technical description of the piqlFilm medium, 2020",
+  "written": "2026-10-03"
+}

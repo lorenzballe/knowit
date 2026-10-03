@@ -1,0 +1,41 @@
+{
+  "id": "life-trust-2",
+  "topic": "life",
+  "genre": "life.people",
+  "strand": "life.people.trust",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "In a money game, players decided whether to trust a stranger who could repay or keep the cash. What share actually repaid?",
+  "options": [
+    "About 20%",
+    "About 50%",
+    "About 80%"
+  ],
+  "correct": 2,
+  "answer": "About 80%. Fetchenhauer and Dunning found players guessed only about half would repay. They traced the gap to lopsided feedback: when you trust and are cheated you learn it, but when you refuse to trust you never learn that the person would have paid you back.",
+  "move": "Distrust hides its own mistakes, so test it now and then.",
+  "ask": "Who have I never trusted, and how would I ever find out if I was wrong about them?",
+  "trap": "Judging from betrayals remembered, never from trust that was withheld.",
+  "keywords": [
+    "trust",
+    "trust game",
+    "cynicism",
+    "feedback",
+    "strangers"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fetchenhauer and Dunning, Psychological Science, 2010",
+  "source_kind": "paper",
+  "reference": "doi:10.1177/0956797609358586",
+  "written": "2026-10-03"
+}

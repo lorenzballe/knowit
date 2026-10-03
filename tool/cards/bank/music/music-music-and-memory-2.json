@@ -1,0 +1,36 @@
+{
+  "id": "music-music-and-memory-2",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.music_and_memory",
+  "also": [
+    "music.music_and_the_brain.music_therapy"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can people with advanced Alzheimer's disease still recognise songs they knew well, after faces have gone?",
+  "answer": "Because long-known music seems stored in brain regions the disease reaches late. Jörn-Henrik Jacobsen and colleagues located where familiar music is encoded, in areas near the front of the brain's midline, and found them among the least shrunken and least starved of energy in patients. A song can outlast a grandchild's name.",
+  "move": "The oldest, most rehearsed memories are often the last to go.",
+  "ask": "Which songs would bring my life back to me, and have I told anyone what they are?",
+  "keywords": [
+    "alzheimer's disease",
+    "musical memory",
+    "dementia",
+    "brain atrophy"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jacobsen et al., Brain, 2015",
+  "source_kind": "paper",
+  "reference": "Jacobsen et al., Why musical memory can be preserved in advanced Alzheimer's disease, Brain, 2015",
+  "written": "2026-09-26"
+}

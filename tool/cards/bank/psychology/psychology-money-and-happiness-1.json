@@ -1,0 +1,33 @@
+{
+  "id": "psychology-money-and-happiness-1",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.money_and_happiness",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do experiences like a trip tend to keep paying off in happiness longer than objects do?",
+  "answer": "Because they improve in memory and resist comparison. Van Boven and Gilovich found people happier with experiential purchases than material ones. A rainy holiday is recalled for its best moments and becomes part of who someone is; a new phone is soon compared with a newer one. The trip keeps being retold.",
+  "move": "Spend where the memory will grow, not where the comparison will start.",
+  "ask": "Is my next big purchase something I will compare, or something I will remember and retell?",
+  "keywords": [
+    "experiences",
+    "material purchases",
+    "spending",
+    "memory"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Van Boven & Gilovich, JPSP, 2003",
+  "source_kind": "paper",
+  "reference": "Van Boven & Gilovich, To do or to have? That is the question, Journal of Personality and Social Psychology, 2003",
+  "written": "2026-10-03"
+}

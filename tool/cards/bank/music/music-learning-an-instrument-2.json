@@ -1,0 +1,46 @@
+{
+  "id": "music-learning-an-instrument-2",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.learning_an_instrument",
+  "also": [
+    "music.sound_itself.frequencies"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A violin string vibrates over 328 mm. A semitone up means stopping it 5.6% shorter. How far, in mm, is a tenth of a semitone?",
+  "value": 1.84,
+  "unit": "mm",
+  "tolerance": 0.1,
+  "answer": "About 1.84 mm: thinner than a coin, and a trained ear hears it",
+  "move": "When the margin for error is tiny, build a way to hear your mistakes.",
+  "ask": "In the skill I am learning, how do I find out quickly when I am slightly off?",
+  "trap": "Picturing a semitone as a finger's width, so small slips seem harmless.",
+  "hint": "Find the length of one semitone first, then take a tenth of it.",
+  "steps": [
+    "One semitone: 328 × 0.056 = 18.4 mm",
+    "A tenth of that: 18.4 ÷ 10 = 1.84 mm",
+    "About 1.84 mm: thinner than a coin, and a trained ear hears it"
+  ],
+  "keywords": [
+    "violin",
+    "intonation",
+    "semitone",
+    "string length"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fletcher & Rossing, Physics of Musical Instruments, 1998",
+  "source_kind": "book",
+  "reference": "Fletcher & Rossing, The Physics of Musical Instruments, 2nd edition, Springer, 1998",
+  "written": "2026-09-26"
+}

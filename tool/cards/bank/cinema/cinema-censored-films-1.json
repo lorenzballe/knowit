@@ -1,0 +1,33 @@
+{
+  "id": "cinema-censored-films-1",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.censored_films",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did nearly every Hollywood screen criminal of the 1940s end up dead or behind bars?",
+  "answer": "Because a rulebook said so. The Production Code of 1930, enforced from 1934, required that audience sympathy never fall on the side of crime, wrongdoing or sin. Studios bolted punishment onto endings to win approval. A generation grew up on stories where crime never paid, unlike the newspapers outside.",
+  "move": "When every story ends the same way, look for the rule behind it.",
+  "ask": "Which stories I grew up with were shaped by a rule I never knew existed?",
+  "keywords": [
+    "production code",
+    "hays code",
+    "film censorship",
+    "crime films"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Motion Picture Production Code of 1930",
+  "source_kind": "primary_document",
+  "reference": "Motion Picture Producers and Distributors of America, A Code to Govern the Making of Motion and Talking Pictures, 1930",
+  "written": "2026-10-03"
+}

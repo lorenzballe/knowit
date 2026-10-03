@@ -1,0 +1,40 @@
+{
+  "id": "food-tomatoes-1",
+  "topic": "food",
+  "genre": "food.food_history",
+  "strand": "food.food_history.tomatoes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: Europeans shunned tomatoes as poisonous for two centuries after they arrived from the Americas?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The doubt was real in England and parts of the north, and English sources are the ones most often retold. But in 1544 the Italian herbalist Mattioli already described tomatoes fried in oil with salt and pepper, and a Naples cookbook of 1692 gave a tomato sauce. The south was cooking them for generations.",
+  "move": "Before trusting the general story, ask which country's records it came from.",
+  "ask": "Which story about the past do I know only from one side's telling?",
+  "trap": "The poison story is told so often in English that it seems universal.",
+  "keywords": [
+    "tomatoes",
+    "mattioli",
+    "italian cooking",
+    "naples",
+    "herbals"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gentilcore, A History of the Tomato in Italy, 2010",
+  "source_kind": "book",
+  "reference": "Gentilcore, Pomodoro! A History of the Tomato in Italy, Columbia University Press, 2010",
+  "written": "2026-10-03"
+}

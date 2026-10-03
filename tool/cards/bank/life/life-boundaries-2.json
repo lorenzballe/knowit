@@ -1,0 +1,33 @@
+{
+  "id": "life-boundaries-2",
+  "topic": "life",
+  "genre": "life.relationships",
+  "strand": "life.relationships.boundaries",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In a laboratory game where someone had to take an unrewarded task, why did women end up doing it more often?",
+  "answer": "Because everyone expected them to. Babcock and colleagues found that in mixed groups women volunteered more and were asked more often, by men and women alike. In single-sex groups the difference vanished: women volunteered no more than men did. The thankless task went to whoever the group assumed would say yes.",
+  "move": "Notice who gets asked for the thankless jobs, and why.",
+  "ask": "Which unrewarded jobs keep landing on me because people expect me to say yes?",
+  "keywords": [
+    "non-promotable tasks",
+    "volunteering",
+    "gender",
+    "workplace"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Babcock and colleagues, American Economic Review, 2017",
+  "source_kind": "paper",
+  "reference": "Babcock, Recalde, Vesterlund and Weingart, Gender Differences in Accepting and Receiving Requests for Tasks with Low Promotability, American Economic Review, 2017",
+  "written": "2026-10-03"
+}

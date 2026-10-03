@@ -1,0 +1,33 @@
+{
+  "id": "space-what-we-can-see-1",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.what_we_can_see",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did astronomers weigh the black hole at the centre of the Milky Way without ever seeing it?",
+  "answer": "By timing the stars around it. One star, S2, loops round an empty point every 16 years, passing within about 120 times the Earth–Sun distance at some 7,650 km/s. Only about four million suns' worth of mass, packed into a dark speck, can swing a star that hard.",
+  "move": "When the thing itself hides, measure what it does to its neighbours.",
+  "ask": "Whose influence in my life can I only see in how the people around them behave?",
+  "keywords": [
+    "milky way centre",
+    "star s2",
+    "black hole mass",
+    "stellar orbits"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "GRAVITY Collaboration, Astronomy & Astrophysics, 2018",
+  "source_kind": "paper",
+  "reference": "doi:10.1051/0004-6361/201833718",
+  "written": "2026-10-03"
+}

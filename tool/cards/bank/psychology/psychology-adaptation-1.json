@@ -1,0 +1,33 @@
+{
+  "id": "psychology-adaptation-1",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.adaptation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "After a wedding, how long does the average boost in life satisfaction last?",
+  "answer": "About two years. Following Germans for 15 years, Lucas and colleagues saw satisfaction climb around the wedding and then drift back to where it had been before. Averages hide spread: some ended happier than they began, some less happy. The new normal is still a marriage, simply no longer a new one.",
+  "move": "Expect the glow of any big change to fade; plan for the ordinary days after.",
+  "ask": "Which change am I counting on to make me lastingly happier, and what will it feel like after two years?",
+  "keywords": [
+    "marriage",
+    "hedonic adaptation",
+    "life satisfaction",
+    "german panel"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lucas et al., JPSP, 2003",
+  "source_kind": "paper",
+  "reference": "Lucas, Clark, Georgellis & Diener, Reexamining adaptation and the set point model of happiness: reactions to changes in marital status, Journal of Personality and Social Psychology, 2003",
+  "written": "2026-10-03"
+}

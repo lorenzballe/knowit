@@ -1,0 +1,40 @@
+{
+  "id": "life-values-3",
+  "topic": "life",
+  "genre": "life.meaning",
+  "strand": "life.meaning.values",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: across more than 250 studies, people who prize money and possessions report lower well-being?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Dittmar and colleagues pooled 259 samples and found a consistent link between materialistic values and lower well-being, including more anxiety and less satisfaction with life. The studies are mostly correlational, so causes run both ways. Wanting more of what can be counted left less room for what counts.",
+  "move": "Notice what you chase, since it quietly becomes what you value.",
+  "ask": "If I looked at where my money and time went this month, what would it say I value?",
+  "trap": "Money buys comfort, so prizing it seems to bring well-being.",
+  "keywords": [
+    "materialism",
+    "well-being",
+    "money",
+    "possessions",
+    "tim kasser"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dittmar and colleagues, JPSP, 2014",
+  "source_kind": "paper",
+  "reference": "Dittmar, Bond, Hurst and Kasser, The relationship between materialism and personal well-being: A meta-analysis, Journal of Personality and Social Psychology, 2014",
+  "written": "2026-10-03"
+}

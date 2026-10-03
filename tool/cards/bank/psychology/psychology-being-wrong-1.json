@@ -1,0 +1,40 @@
+{
+  "id": "psychology-being-wrong-1",
+  "topic": "psychology",
+  "genre": "psychology.change_your_mind",
+  "strand": "psychology.change_your_mind.being_wrong",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "When stock markets fall, how often do investors log in to look at their own retirement accounts?",
+  "options": [
+    "Less often than usual",
+    "More often than usual",
+    "About as often as usual"
+  ],
+  "correct": 0,
+  "answer": "Less often than usual. Studying logins at a large US pension provider, Sicherman, Loewenstein, Seppi and Utkus found people looked more after rises and less after falls. Bad news about one's own choices hurts, so it gets avoided. Unread statements pile up exactly when a decision might be needed.",
+  "move": "The information you avoid looking at is often the information you need.",
+  "ask": "Which statement, test result or email am I not opening because I suspect it says I was wrong?",
+  "trap": "Assuming worry makes people check more when things go wrong.",
+  "keywords": [
+    "investors",
+    "ostrich effect",
+    "retirement accounts",
+    "bad news"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sicherman et al., Review of Financial Studies, 2016",
+  "source_kind": "paper",
+  "reference": "Sicherman, Loewenstein, Seppi & Utkus, Financial attention, Review of Financial Studies, 2016",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "nature-common-myths-1",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.common_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a cave fish whose eyes shrink in the dark passes smaller eyes on to its young?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. What a body goes through in its lifetime does not rewrite the genes in its eggs. Mexican cave fish lost their eyes over many generations because fish with genes for smaller eyes did better, perhaps by saving the energy eyes cost. Jeffery found their embryos still start building eyes, which then wither.",
+  "move": "Habits change a body; children inherit genes, not the parent's habits.",
+  "ask": "Which good habit do I hope others will pick up from me, and am I actually showing it?",
+  "trap": "Use it or lose it sounds like how bodies change across generations.",
+  "keywords": [
+    "cave fish",
+    "blind fish",
+    "inheritance",
+    "mexico"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jeffery, Annual Review of Genetics, 2009",
+  "source_kind": "paper",
+  "reference": "Jeffery, Regressive evolution in Astyanax cavefish, Annual Review of Genetics, 2009",
+  "written": "2026-10-03"
+}

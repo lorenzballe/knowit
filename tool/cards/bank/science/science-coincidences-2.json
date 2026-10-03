@@ -1,0 +1,42 @@
+{
+  "id": "science-coincidences-2",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.coincidences",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "Among 60 million people, each has a 1-in-10,000 nightly chance of a dream that seems to come true. How many per night?",
+  "value": 6000,
+  "unit": "dreams",
+  "answer": "About 6,000 seemingly prophetic dreams every night.",
+  "move": "Multiply a tiny chance by everyone it could happen to.",
+  "ask": "When something eerie happens to me, how many people that day had the same chance of it?",
+  "trap": "Treating a one-in-10,000 event as too rare to happen by chance.",
+  "hint": "Multiply the number of dreamers by each one's chance.",
+  "steps": [
+    "Expected number = people × chance per person.",
+    "60,000,000 ÷ 10,000 = 6,000.",
+    "About 6,000 seemingly prophetic dreams every night."
+  ],
+  "keywords": [
+    "coincidences",
+    "prophetic dreams",
+    "large numbers",
+    "probability"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hand, The Improbability Principle, 2014",
+  "source_kind": "book",
+  "reference": "Hand, The Improbability Principle: Why Coincidences, Miracles, and Rare Events Happen Every Day, Farrar, Straus and Giroux, 2014",
+  "written": "2026-09-26"
+}

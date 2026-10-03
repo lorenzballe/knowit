@@ -1,0 +1,40 @@
+{
+  "id": "economics-risk-and-reward-1",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.risk_and_reward",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "From 1968 to 2008, what became of $1 put in the most volatile fifth of US shares?",
+  "options": [
+    "Shrank to about 58 cents",
+    "Grew to about $60",
+    "Grew to about $20"
+  ],
+  "correct": 0,
+  "answer": "Shrank to about 58 cents. Baker, Bradley and Wurgler sorted US shares by how wildly they swung. A dollar in the calmest fifth grew to about $59.55 over those 41 years; in the wildest fifth it ended at 58 cents, before inflation. Risk means a wider range of outcomes, not a bigger reward.",
+  "move": "Risk is the chance of a bad result, not a fee for a good one.",
+  "ask": "When I take a bigger risk with money, what tells me I will actually be paid for it?",
+  "trap": "Grew to about $60, since more risk should earn more.",
+  "keywords": [
+    "volatility",
+    "low-risk shares",
+    "risk premium",
+    "stock returns"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baker, Bradley and Wurgler, Financial Analysts Journal, 2011",
+  "source_kind": "paper",
+  "reference": "Baker, Bradley & Wurgler, Benchmarks as Limits to Arbitrage: Understanding the Low-Volatility Anomaly, Financial Analysts Journal, 2011",
+  "written": "2026-10-03"
+}

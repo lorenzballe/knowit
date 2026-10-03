@@ -1,0 +1,36 @@
+{
+  "id": "economics-inflation-2",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.inflation",
+  "also": [
+    "economics.read_money_news.real_or_nominal"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do central banks aim for inflation of about 2% a year rather than for prices that never rise?",
+  "answer": "Partly because pay is rarely cut. Employers find it very hard to lower wages in cash terms, so with zero inflation a struggling firm sheds jobs instead. A little inflation lets pay adjust quietly: a 1% raise in a year of 2% inflation is a 1% cut that nobody has to announce.",
+  "move": "Change that arrives disguised is often easier to accept than change announced.",
+  "ask": "If my pay rose less than prices this year, did I notice the cut?",
+  "keywords": [
+    "inflation target",
+    "central banks",
+    "wage cuts",
+    "real wages"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Akerlof, Dickens and Perry, Brookings Papers, 1996",
+  "source_kind": "paper",
+  "reference": "Akerlof, Dickens & Perry, The Macroeconomics of Low Inflation, Brookings Papers on Economic Activity, 1996",
+  "written": "2026-10-03"
+}

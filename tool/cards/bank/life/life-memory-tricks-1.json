@@ -1,0 +1,40 @@
+{
+  "id": "life-memory-tricks-1",
+  "topic": "life",
+  "genre": "life.learn_anything",
+  "strand": "life.learn_anything.memory_tricks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "People learned twelve lists of ten nouns; some linked each list into a story. Story-makers later recalled about 90%. The others?",
+  "options": [
+    "About 50%",
+    "About 13%",
+    "About 80%"
+  ],
+  "correct": 1,
+  "answer": "About 13%. In Bower and Clark's experiment both groups had the same time per list, and both recalled each list right after learning it. But tested on all 120 words at the end, those who had woven stories recalled 93% and the others 13%. The story gave every word a place to be found again.",
+  "move": "Tie loose items into a story and each one pulls the next.",
+  "ask": "What list I keep forgetting, of tasks, names or steps, could I turn into a short story?",
+  "trap": "About 80%, since both groups seemed to learn each list fine.",
+  "keywords": [
+    "narrative chaining",
+    "mnemonics",
+    "word lists",
+    "memory"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bower and Clark, Psychonomic Science, 1969",
+  "source_kind": "paper",
+  "reference": "Bower and Clark, Narrative stories as mediators for serial learning, Psychonomic Science, 1969",
+  "written": "2026-10-03"
+}

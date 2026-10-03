@@ -1,0 +1,44 @@
+{
+  "id": "sport-regression-1",
+  "topic": "sport",
+  "genre": "sport.luck_or_skill",
+  "strand": "sport.luck_or_skill.regression",
+  "also": [
+    "sport.sport_and_numbers.analytics"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "A team scores 12 goals in six games from chances worth 5 expected goals. Over the next six, what is likeliest?",
+  "options": [
+    "Keep scoring far above its chances",
+    "Scoring close to its chances' worth",
+    "Scoring far below its chances"
+  ],
+  "correct": 1,
+  "answer": "Scoring close to its chances' worth. Expected goals rates each shot by how often similar shots go in, and finishing far above it rarely lasts. Bréchot and Flepp showed expected goals predict a club's later results better than its actual goals do. The lucky run drifts back toward the quality of the chances made.",
+  "move": "Bet on the process that made the results, not on the results.",
+  "ask": "In my own work, am I judging a good month by its results or by what produced them?",
+  "trap": "Reading a hot run of finishing as a lasting new level.",
+  "keywords": [
+    "expected goals",
+    "finishing",
+    "football",
+    "luck",
+    "prediction"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bréchot & Flepp, Journal of Sports Economics, 2020",
+  "source_kind": "paper",
+  "reference": "Bréchot & Flepp, Dealing With Randomness in Match Outcomes: How to Rethink Performance Evaluation in European Club Football Using Expected Goals, Journal of Sports Economics, 2020",
+  "written": "2026-09-26"
+}

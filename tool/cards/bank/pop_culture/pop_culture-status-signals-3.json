@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-status-signals-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.status_signals",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: when a Canadian wins a large lottery prize, their close neighbours become more likely to go bankrupt?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Agarwal, Mikhed and Scholnick linked lottery wins to bankruptcy records in Canada: the bigger the prize, the more often very close neighbours later went bankrupt. The neighbours also borrowed more and spent more on visible goods such as cars. A windfall next door raised the bar for keeping up, and credit paid for it.",
+  "move": "The people next door can set your spending more than your income does.",
+  "ask": "Which of my recent purchases was really about keeping up with someone I know?",
+  "trap": "Someone else's luck cannot change your own finances.",
+  "keywords": [
+    "lottery",
+    "bankruptcy",
+    "neighbours",
+    "conspicuous consumption",
+    "canada"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Agarwal et al., Review of Financial Studies, 2020",
+  "source_kind": "paper",
+  "reference": "Sumit Agarwal, Vyacheslav Mikhed and Barry Scholnick, Does Inequality Cause Financial Distress? Evidence from Lottery Winners and Neighboring Bankruptcies, Review of Financial Studies, 2020",
+  "written": "2026-09-26"
+}

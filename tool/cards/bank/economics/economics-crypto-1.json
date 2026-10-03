@@ -1,0 +1,42 @@
+{
+  "id": "economics-crypto-1",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.crypto",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Bitcoin fell from about $68,000 in November 2021 to about $17,000 a year later. What rise, in per cent, gets it back?",
+  "value": 300,
+  "unit": "per cent",
+  "answer": "As a percentage: 3 × 100 = 300%",
+  "move": "A fall needs a much larger rise to undo it.",
+  "ask": "When something I own drops sharply, do I know how far it must climb just to get back?",
+  "trap": "About 75%, the size of the fall, as if gains mirrored losses.",
+  "hint": "Divide the old price by the new one.",
+  "steps": [
+    "Ratio needed: 68,000 ÷ 17,000 = 4",
+    "Rise needed: 4 − 1 = 3 times the low price",
+    "As a percentage: 3 × 100 = 300%"
+  ],
+  "keywords": [
+    "bitcoin",
+    "crash",
+    "losses",
+    "recovery"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CoinMarketCap, Bitcoin historical data",
+  "source_kind": "statistics",
+  "reference": "https://coinmarketcap.com/currencies/bitcoin/historical-data/",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "economics-cherry-picked-charts-3",
+  "topic": "economics",
+  "genre": "economics.read_money_news",
+  "strand": "economics.read_money_news.cherry_picked_charts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a line showing a firm's total sales since launch can rise every quarter while its sales shrink?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A running total adds each quarter's sales to all the earlier ones, so it can only climb or stay flat. Quarterly sales of 10, 8, 6 and 4 million give totals of 10, 18, 24 and 28 million: a line climbing steadily while sales drop by a fifth or more each quarter.",
+  "move": "A running total only goes up; ask for each period on its own.",
+  "ask": "When a company shows me a line that always rises, do I ask to see each year on its own?",
+  "trap": "False, because a rising line on a chart means a growing business.",
+  "keywords": [
+    "cumulative charts",
+    "sales",
+    "running total",
+    "investor presentations"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Huff, How to Lie with Statistics",
+  "source_kind": "arithmetic",
+  "reference": "Huff, How to Lie with Statistics, W. W. Norton, 1954",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "language-correct-or-not-3",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.correct_or_not",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "The rule that it should be fewer, not less, for things you can count first appeared how?",
+  "options": [
+    "As a rule taken from Latin grammar",
+    "As one writer's stated preference in 1770",
+    "As a law of Old English grammar"
+  ],
+  "correct": 1,
+  "answer": "As one writer's stated preference in 1770. Robert Baker wrote that fewer would, he thought, sound better than less with numbers, and admitted less was the common usage. English had used less with countable things since King Alfred, around 888. A supermarket sign saying ten items or less follows a thousand years of habit.",
+  "move": "Ask how old a rule is before treating a break as ignorance.",
+  "ask": "Whose speech do I quietly judge by a rule younger than I assumed?",
+  "trap": "Latin grammar, the source of so many English school rules.",
+  "keywords": [
+    "less and fewer",
+    "robert baker",
+    "usage rules",
+    "count nouns"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baker, Reflections on the English Language, 1770",
+  "source_kind": "primary_document",
+  "reference": "Baker, Reflections on the English Language, London, 1770, as discussed in Merriam-Webster's Dictionary of English Usage, 1989",
+  "written": "2026-10-03"
+}

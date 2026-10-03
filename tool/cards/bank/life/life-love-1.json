@@ -1,0 +1,39 @@
+{
+  "id": "life-love-1",
+  "topic": "life",
+  "genre": "life.relationships",
+  "strand": "life.relationships.love",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Which predicted a couple's future better: how partners responded to each other's bad news, or to their good news?",
+  "options": [
+    "Responses to bad news",
+    "Responses to good news"
+  ],
+  "correct": 1,
+  "answer": "Responses to good news. Gable, Gonzaga and Strachman found that how a partner reacted to the other's good news, with real interest or with indifference, was more closely tied to the relationship's quality, and to whether it lasted, than reactions to bad news. Celebrating well is a skill, and many people never practise it.",
+  "move": "Meet someone's good news with questions, not just congratulations.",
+  "ask": "When someone close to me shares good news, do I ask about it, or say well done and move on?",
+  "trap": "Dramatic hard times seem the real test of love.",
+  "keywords": [
+    "capitalisation",
+    "good news",
+    "couples",
+    "responsiveness"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gable, Gonzaga and Strachman, JPSP, 2006",
+  "source_kind": "paper",
+  "reference": "Gable, Gonzaga and Strachman, Will you be there for me when things go right? Supportive responses to positive event disclosures, Journal of Personality and Social Psychology, 2006",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "nature-forests-and-climate-2",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.forests_and_climate",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In the cold northern forests of Canada, Scandinavia and Siberia, where is most of the carbon stored?",
+  "options": [
+    "In the living trees",
+    "In fallen dead wood",
+    "In the soil and peat"
+  ],
+  "correct": 2,
+  "answer": "In the soil and peat. Cold slows the microbes that rot fallen needles and roots, so dead matter piles up for thousands of years. Pan and colleagues put roughly three fifths of boreal forest carbon in the soil. Logging or fire that dries and warms that ground can release more than the trunks ever held.",
+  "move": "The biggest store is often the one under your feet, not the one in view.",
+  "ask": "What do I value by what I can see, while the bigger store sits out of sight?",
+  "trap": "The trunks are the visible part, so they seem to hold the carbon.",
+  "keywords": [
+    "boreal forest",
+    "soil carbon",
+    "peat",
+    "carbon stock"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pan et al., Science, 2011",
+  "source_kind": "paper",
+  "reference": "Pan et al., A large and persistent carbon sink in the world's forests, Science, 2011",
+  "written": "2026-10-03"
+}

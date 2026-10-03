@@ -1,0 +1,43 @@
+{
+  "id": "science-energy-2",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A litre of petrol holds about 10 kWh. A fit cyclist pedals out 100 watts. How many hours to match one litre?",
+  "value": 100,
+  "unit": "hours",
+  "answer": "10,000 ÷ 100 = 100 hours of pedalling.",
+  "move": "Price any fuel in hours of human work before calling it cheap.",
+  "ask": "Which machine in my day does work I could never do by hand, and do I ever notice it?",
+  "trap": "Guessing an hour or two, because a litre looks so small.",
+  "hint": "Turn kilowatt-hours into watt-hours, then divide by the cyclist's watts.",
+  "steps": [
+    "One litre of petrol: about 10 kWh = 10,000 watt-hours.",
+    "The cyclist delivers 100 watt-hours in each hour.",
+    "10,000 ÷ 100 = 100 hours of pedalling."
+  ],
+  "keywords": [
+    "petrol",
+    "human power",
+    "cycling",
+    "kilowatt-hours",
+    "fuel"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "MacKay, Sustainable Energy Without the Hot Air",
+  "source_kind": "book",
+  "reference": "MacKay, Sustainable Energy – Without the Hot Air, UIT Cambridge, 2009",
+  "written": "2026-09-26"
+}

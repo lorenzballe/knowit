@@ -1,0 +1,40 @@
+{
+  "id": "economics-geography-2",
+  "topic": "economics",
+  "genre": "economics.how_countries_get_rich",
+  "strand": "economics.how_countries_get_rich.geography",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Among lands colonised by Europeans, which tend to be richest today?",
+  "options": [
+    "Those poorest in 1500",
+    "Those richest in 1500",
+    "No link with 1500"
+  ],
+  "correct": 0,
+  "answer": "Those poorest in 1500. Using city sizes and population density, Acemoglu, Johnson and Robinson showed that the most prosperous places of 1500, such as the Aztec and Inca lands or Mughal India, are poorer today than once-empty North America or Australia. The soil and climate stayed; the rules colonisers built there changed.",
+  "move": "If the land stayed the same and fortunes flipped, look at the rules.",
+  "ask": "When I blame where I started for how things turned out, what rules could I change instead?",
+  "trap": "Those richest in 1500, since their soil and climate stayed the same.",
+  "keywords": [
+    "reversal of fortune",
+    "colonialism",
+    "geography",
+    "institutions"
+  ],
+  "era": "early_modern",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Acemoglu, Johnson and Robinson, QJE, 2002",
+  "source_kind": "paper",
+  "reference": "Acemoglu, Johnson & Robinson, Reversal of Fortune: Geography and Institutions in the Making of the Modern World Income Distribution, Quarterly Journal of Economics, 2002",
+  "written": "2026-10-03"
+}

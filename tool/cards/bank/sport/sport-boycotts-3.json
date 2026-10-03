@@ -1,0 +1,40 @@
+{
+  "id": "sport-boycotts-3",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.boycotts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: with the Soviet bloc absent, the United States won fewer than a fifth of the gold medals at Los Angeles 1984?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. It won 83 golds from about 220 events, more than a third, and 174 medals in all. The two countries that had topped the table in 1976, the Soviet Union and East Germany, stayed home, so many American wins came against a field missing its strongest rivals.",
+  "move": "Before celebrating a win, ask who was not in the race.",
+  "ask": "Which of my wins came partly because the strongest rivals simply did not show up?",
+  "trap": "Guessing a normal share, forgetting how many top rivals stayed home.",
+  "keywords": [
+    "los angeles 1984",
+    "medal table",
+    "boycott",
+    "gold medals",
+    "east germany"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "LA84, Official Report of the 1984 Games",
+  "source_kind": "primary_document",
+  "reference": "Los Angeles Olympic Organizing Committee, Official Report of the Games of the XXIIIrd Olympiad Los Angeles, 1984, LA84 Foundation, 1985",
+  "written": "2026-09-26"
+}

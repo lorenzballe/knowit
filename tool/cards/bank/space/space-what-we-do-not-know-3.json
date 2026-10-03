@@ -1,0 +1,33 @@
+{
+  "id": "space-what-we-do-not-know-3",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.what_we_do_not_know",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How big is the universe beyond the part that telescopes can ever see?",
+  "answer": "Nobody knows, but there is a floor. Measurements show space is extremely close to flat, the way a car park looks flat on a round Earth. That flatness means the whole must be far larger than the visible part: one 2011 analysis put it at 251 times the volume or more. It may be infinite.",
+  "move": "Flat where you stand only proves the whole is very big.",
+  "ask": "Where am I assuming the world ends at the edge of what I can see?",
+  "keywords": [
+    "observable universe",
+    "curvature",
+    "size of the universe",
+    "flatness"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vardanyan, Trotta & Silk, MNRAS Letters, 2011",
+  "source_kind": "paper",
+  "reference": "Vardanyan, Trotta & Silk, Applications of Bayesian model averaging to the curvature and size of the Universe, Monthly Notices of the Royal Astronomical Society Letters, 2011",
+  "written": "2026-10-03"
+}

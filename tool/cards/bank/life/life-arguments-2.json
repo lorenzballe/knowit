@@ -1,0 +1,33 @@
+{
+  "id": "life-arguments-2",
+  "topic": "life",
+  "genre": "life.relationships",
+  "strand": "life.relationships.arguments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What share of a couple's recurring conflicts did Gottman find were never resolved, even in happy marriages?",
+  "answer": "About 69%. In Gottman's long-term studies of couples, most conflicts were perpetual problems rooted in lasting differences of personality or needs. Happy couples did not solve them; they kept talking about them with humour and without contempt. The same argument about tidiness can run, gently, for thirty years.",
+  "move": "Learn to live with a lasting difference rather than trying to win it.",
+  "ask": "Which argument at home is a lasting difference I could stop trying to win?",
+  "keywords": [
+    "perpetual problems",
+    "marriage",
+    "conflict",
+    "john gottman"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gottman and Silver, Seven Principles, 1999",
+  "source_kind": "book",
+  "reference": "Gottman and Silver, The Seven Principles for Making Marriage Work, Crown, 1999",
+  "written": "2026-10-03"
+}

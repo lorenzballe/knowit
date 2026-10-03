@@ -1,0 +1,40 @@
+{
+  "id": "food-taste-and-smell-3",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.taste_and_smell",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: whether coriander leaves taste of soap to someone depends partly on their genes?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A 2012 study of over 25,000 people of European ancestry found a genetic variant near a cluster of smell-receptor genes, including OR6A2, linked to finding coriander soapy. That receptor responds to aldehydes, molecules found both in coriander and in soaps. The variant explains only a small part; habit and exposure matter too.",
+  "move": "Before calling a disagreement a choice, check whether the senses differ.",
+  "ask": "Whose tastes have I judged as fussy when they may simply experience things differently?",
+  "trap": "Assuming others taste what I taste, so dislike must be fussiness.",
+  "keywords": [
+    "coriander",
+    "cilantro",
+    "or6a2",
+    "genetics",
+    "aldehydes"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Eriksson et al., Flavour, 2012",
+  "source_kind": "paper",
+  "reference": "Eriksson, Wu, Do, Henderson, Kiefer, Tung, Mountain & Francke, A genetic variant near olfactory receptor genes influences cilantro preference, Flavour, 2012",
+  "written": "2026-10-03"
+}

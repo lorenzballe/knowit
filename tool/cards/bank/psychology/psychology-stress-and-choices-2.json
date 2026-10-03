@@ -1,0 +1,40 @@
+{
+  "id": "psychology-stress-and-choices-2",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.stress_and_choices",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Students solved problems with several possible answers, some under threat of electric shocks. How did the threatened ones choose?",
+  "options": [
+    "Took longer but chose better",
+    "Answered before checking every option",
+    "Chose exactly as the calm did"
+  ],
+  "correct": 1,
+  "answer": "Answered before checking every option. Under threat, people more often settled on an answer before considering all the alternatives, and scanned the options in a jumbled, unsystematic order. The shocks never had to be delivered; the fear of them narrowed the search. Under pressure, the first acceptable option tends to win.",
+  "move": "Under pressure, list the options before picking the first that will do.",
+  "ask": "When I am rushed or anxious, do I stop at the first answer that seems good enough?",
+  "trap": "Took longer but chose better, since danger seems to focus the mind.",
+  "keywords": [
+    "stress",
+    "decision making",
+    "premature closure",
+    "threat"
+  ],
+  "era": "twentieth",
+  "region": "middle_east",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Keinan, JPSP, 1987",
+  "source_kind": "paper",
+  "reference": "Keinan, Decision making under stress: Scanning of alternatives under controllable and uncontrollable threats, Journal of Personality and Social Psychology, 1987",
+  "written": "2026-10-03"
+}

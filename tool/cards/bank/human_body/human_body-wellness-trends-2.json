@@ -1,0 +1,39 @@
+{
+  "id": "human_body-wellness-trends-2",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.wellness_trends",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: eating alkaline foods or drinking alkaline water makes the blood measurably less acidic?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The lungs and kidneys hold blood pH in a narrow band, about 7.35 to 7.45, whatever is eaten; straying outside it is a medical emergency. Diet changes the acidity of urine, which is how the body dumps the excess. A systematic review found no good evidence that alkaline diets prevent or treat cancer.",
+  "move": "Check whether the body is already built to hold something steady.",
+  "ask": "Which thing am I trying to change that my body already keeps steady by itself?",
+  "trap": "Food becomes blood, so acidic food must make acidic blood.",
+  "keywords": [
+    "alkaline diet",
+    "blood ph",
+    "kidneys",
+    "alkaline water"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fenton and Huang, BMJ Open, 2016",
+  "source_kind": "paper",
+  "reference": "Fenton TR, Huang T, Systematic review of the association between dietary acid load, alkaline water and cancer, BMJ Open, 2016",
+  "written": "2026-09-26"
+}

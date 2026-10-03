@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-what-is-real-2",
+  "topic": "philosophy",
+  "genre": "philosophy.big_questions",
+  "strand": "philosophy.big_questions.what_is_real",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Nick Bostrom's 2003 simulation argument concludes that people are probably living in a computer simulation?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Bostrom argued that at least one of three is true: almost no civilisations reach the power to run such simulations; almost none that could would choose to; or we are almost certainly in one. He did not say which. Headlines kept only the third, the version that fits on a mug.",
+  "move": "Before quoting a startling conclusion, check what else the argument allowed.",
+  "ask": "Which shocking claim have I repeated from a headline without reading what the original said?",
+  "trap": "True, recalling the headline version rather than the three-way argument.",
+  "keywords": [
+    "nick bostrom",
+    "simulation argument",
+    "trilemma",
+    "reality"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bostrom, Philosophical Quarterly, 2003",
+  "source_kind": "paper",
+  "reference": "Bostrom, Are You Living in a Computer Simulation?, Philosophical Quarterly 53 (211), 2003",
+  "written": "2026-10-03"
+}

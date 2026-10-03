@@ -1,0 +1,33 @@
+{
+  "id": "art-leonardo-3",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.leonardo",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When Leonardo wrote to Milan's ruler asking for work around 1482, what skill did he put first?",
+  "answer": "War engineering. Portable bridges, ways to drain moats, cannon, covered armoured cars and tunnels fill most of the surviving draft. Painting and sculpture come only near the end, under times of peace. Milan feared its neighbours; Leonardo offered what its ruler lay awake about, and kept the paintbrush for last.",
+  "move": "Lead with what the other person needs, not with what you love most.",
+  "ask": "In my next pitch or interview, am I opening with what they need or with what I am proudest of?",
+  "keywords": [
+    "leonardo da vinci",
+    "ludovico sforza",
+    "job letter",
+    "military engineering"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Richter, The Notebooks of Leonardo da Vinci",
+  "source_kind": "primary_document",
+  "reference": "Jean Paul Richter (ed.), The Literary Works of Leonardo da Vinci, 1883; reprinted as The Notebooks of Leonardo da Vinci, Dover, 1970",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "psychology-scarcity-tricks-1",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.scarcity_tricks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Identical cookies came from a jar of ten, a jar of two, or a jar cut from ten to two. Which was rated most desirable?",
+  "options": [
+    "The jar of ten",
+    "The jar of two",
+    "The jar cut from ten to two"
+  ],
+  "correct": 2,
+  "answer": "The jar cut from ten to two, especially when told the cookies had gone because others wanted them. A jar that always held two beat the jar of ten, but sudden scarcity beat both. Losing plenty stings, and others' demand reads as proof of quality. Same cookies, three verdicts.",
+  "move": "Ask why something became scarce before letting scarcity set its value.",
+  "ask": "What did I want more the moment it started running out, and would I want it otherwise?",
+  "trap": "The jar of two, simply because fewer feels more precious.",
+  "keywords": [
+    "scarcity",
+    "cookies",
+    "desirability",
+    "demand"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Worchel, Lee & Adewole, JPSP, 1975",
+  "source_kind": "paper",
+  "reference": "Worchel, Lee & Adewole, Effects of supply and demand on ratings of object value, Journal of Personality and Social Psychology, 1975",
+  "written": "2026-10-03"
+}

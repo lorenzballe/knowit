@@ -1,0 +1,41 @@
+{
+  "id": "medicine-health-and-wealth-2",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.health_and_wealth",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Life expectancy rose worldwide between the 1930s and the 1960s. How much did Samuel Preston credit to higher incomes?",
+  "options": [
+    "Most of it",
+    "About a tenth to a quarter",
+    "None at all"
+  ],
+  "correct": 1,
+  "answer": "About a tenth to a quarter. At the same income, countries in the 1960s lived far longer than countries had in the 1930s. The rest came from things money alone did not buy: vaccines, antibiotics, clean water and knowing how disease spreads. Rich countries live longer, but wealth is not the whole recipe.",
+  "move": "Two things rising together can both be riding a third.",
+  "ask": "Which good thing in my life do I credit to money, when something cheaper may be doing the work?",
+  "trap": "Most of it, since richer countries clearly live longer.",
+  "keywords": [
+    "preston curve",
+    "life expectancy",
+    "income",
+    "samuel preston",
+    "public health"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Preston, Population Studies, 1975",
+  "source_kind": "paper",
+  "reference": "Preston, The changing relation between mortality and level of economic development, Population Studies, 1975",
+  "written": "2026-10-03"
+}

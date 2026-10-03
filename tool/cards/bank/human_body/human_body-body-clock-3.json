@@ -1,0 +1,39 @@
+{
+  "id": "human_body-body-clock-3",
+  "topic": "human_body",
+  "genre": "human_body.your_body_in_numbers",
+  "strand": "human_body.your_body_in_numbers.body_clock",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: a week of camping with only natural light shifted volunteers' internal clocks about two hours earlier?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Wright's team measured the evening rise of melatonin, the hormone that signals night, before and after a summer week of camping in Colorado. It came about two hours earlier, and the gap between early birds and night owls shrank. Much of being a night owl is the electric light of the evening.",
+  "move": "Before calling a trait innate, change the surroundings and watch it.",
+  "ask": "Which trait of mine do I call my nature that my surroundings might be shaping?",
+  "trap": "Night owls are born that way, so camping would change little.",
+  "keywords": [
+    "melatonin",
+    "camping",
+    "natural light",
+    "night owls"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wright et al., Current Biology, 2013",
+  "source_kind": "paper",
+  "reference": "Wright KP, McHill AW, Birks BR et al., Entrainment of the human circadian clock to the natural light-dark cycle, Current Biology, 2013",
+  "written": "2026-09-26"
+}

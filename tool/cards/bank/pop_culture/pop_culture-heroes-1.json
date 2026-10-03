@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-heroes-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.why_stories_grip_us",
+  "strand": "pop_culture.why_stories_grip_us.heroes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a 1949 book comparing the world's myths become a template for Hollywood scripts?",
+  "answer": "Through a seven-page office memo. In 1985 Christopher Vogler, a story analyst at Disney, boiled Joseph Campbell's The Hero with a Thousand Faces down to a sequence of stages, from the call to adventure to the return. Copies spread through the studios, and he expanded it into The Writer's Journey; countless films follow it.",
+  "move": "A template that works spreads until everything looks the same.",
+  "ask": "Which story about my own life am I telling in a shape borrowed from films?",
+  "keywords": [
+    "hero's journey",
+    "joseph campbell",
+    "christopher vogler",
+    "screenwriting"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vogler, The Writer's Journey, 1992",
+  "source_kind": "book",
+  "reference": "Christopher Vogler, The Writer's Journey: Mythic Structure for Writers, Michael Wiese Productions, 1992",
+  "written": "2026-09-26"
+}

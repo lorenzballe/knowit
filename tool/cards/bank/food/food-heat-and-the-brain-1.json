@@ -1,0 +1,33 @@
+{
+  "id": "food-heat-and-the-brain-1",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.heat_and_the_brain",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do people learn to love chilli, a food whose burn their body treats as an alarm?",
+  "answer": "Because the alarm is false, and the mind knows it. The psychologist Paul Rozin called it benign masochism: enjoying a threat the body signals while knowing no harm will come, as on a rollercoaster. In his studies, chilli lovers often chose heat just below their pain limit. The thrill lives between alarm and safety.",
+  "move": "Some pleasures come from a fear the mind knows is safe.",
+  "ask": "Which small, safe discomfort could I learn to enjoy instead of avoiding?",
+  "keywords": [
+    "benign masochism",
+    "paul rozin",
+    "capsaicin",
+    "acquired taste"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rozin et al., Judgment and Decision Making, 2013",
+  "source_kind": "paper",
+  "reference": "Rozin, Guillot, Fincher, Rozin & Tsukayama, Glad to be sad, and other examples of benign masochism, Judgment and Decision Making, 2013",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "economics-percent-or-points-3",
+  "topic": "economics",
+  "genre": "economics.read_money_news",
+  "strand": "economics.read_money_news.percent_or_points",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A bank boasts that its savings rate, once 0.5%, is up 100%. What does that add to €5,000 saved?",
+  "answer": "About €25 a year. Doubling 0.5% gives 1%, half a percentage point more. On €5,000 that is €50 of interest instead of €25. A percentage rise looks huge when the starting number is tiny, because 100% of almost nothing is still almost nothing: here, the price of two cinema tickets.",
+  "move": "A big percentage of a small number is still a small number.",
+  "ask": "When an offer quotes a big percentage, do I check what it is a percentage of?",
+  "keywords": [
+    "savings rates",
+    "advertising",
+    "relative change",
+    "interest"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Relative against absolute change",
+  "source_kind": "arithmetic",
+  "reference": "Gigerenzer, Risk Savvy: How to Make Good Decisions, Viking, 2014",
+  "written": "2026-10-03"
+}

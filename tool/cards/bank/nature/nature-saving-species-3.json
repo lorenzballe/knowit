@@ -1,0 +1,38 @@
+{
+  "id": "nature-saving-species-3",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.saving_species",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should conservationists openly give up on species that cost too much to save, to save more of the others?",
+  "sides": [
+    "Yes, choose openly",
+    "No, try for all"
+  ],
+  "answer": "Yes. Money is limited, so every budget already leaves some species behind; choosing openly just makes the trade visible. Bottrill and colleagues argue that ranking projects by cost, benefit and chance of success saves more species for the same money. A fortune spent on a hopeless case quietly starves several winnable ones.",
+  "move": "Whichever side you took, whether the budget is truly fixed decides it.",
+  "ask": "When I tell myself there is not enough to go round, have I checked whether the pot could grow?",
+  "counterpoint": "Declaring a species not worth saving becomes self-fulfilling and invites governments to shrink budgets to fit. Cost estimates are guesses, and species written off have recovered, like the black robin down to one breeding pair. Triage treats the budget as fixed, when public support, often raised by exactly those desperate cases, can grow it.",
+  "keywords": [
+    "conservation triage",
+    "prioritisation",
+    "conservation funding",
+    "endangered species"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bottrill et al., Trends Ecol. Evol., 2008",
+  "source_kind": "paper",
+  "reference": "Bottrill et al., Is conservation triage just smart decision making?, Trends in Ecology & Evolution, 2008",
+  "written": "2026-10-03"
+}

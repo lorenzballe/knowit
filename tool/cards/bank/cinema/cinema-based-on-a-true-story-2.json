@@ -1,0 +1,40 @@
+{
+  "id": "cinema-based-on-a-true-story-2",
+  "topic": "cinema",
+  "genre": "cinema.how_films_persuade",
+  "strand": "cinema.how_films_persuade.based_on_a_true_story",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "Two films show the same real 1912 meeting: one sums it up, one gives every word spoken. Which is more probably accurate?",
+  "options": [
+    "The brief summary",
+    "The word-for-word version",
+    "Both are equally likely"
+  ],
+  "correct": 0,
+  "answer": "The brief summary. Every added detail is one more thing that must be right, so the chance the whole account is true can only fall as detail grows. Tversky and Kahneman showed people judge the richer story as likelier all the same, because detail feels like research. Exact dialogue is usually the writer's.",
+  "move": "The more vivid the detail, the more claims there are that could be wrong.",
+  "ask": "Which detailed story have I believed more because of its vivid detail?",
+  "trap": "The word-for-word version, since such detail suggests careful research.",
+  "keywords": [
+    "conjunction fallacy",
+    "historical films",
+    "dialogue",
+    "accuracy"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tversky and Kahneman, Psychological Review, 1983",
+  "source_kind": "paper",
+  "reference": "Tversky and Kahneman, Extensional Versus Intuitive Reasoning: The Conjunction Fallacy in Probability Judgment, Psychological Review, 90(4), 1983",
+  "written": "2026-10-03"
+}

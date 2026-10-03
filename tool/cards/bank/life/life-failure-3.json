@@ -1,0 +1,41 @@
+{
+  "id": "life-failure-3",
+  "topic": "life",
+  "genre": "life.growth",
+  "strand": "life.growth.failure",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Heart surgeons were tracked through years of a new operation. Whose failed operations most improved their later results?",
+  "options": [
+    "Their own failures",
+    "Colleagues' failures",
+    "Neither, only successes"
+  ],
+  "correct": 1,
+  "answer": "Colleagues' failures. KC, Staats and Gino found surgeons improved after their own successes and after colleagues' failures, but not after their own failures. A failure of one's own was easier to blame on bad luck or a hard patient; someone else's was looked at plainly.",
+  "move": "Study your own failures as coldly as you would study someone else's.",
+  "ask": "Which of my own mistakes have I explained away that I would call a lesson if a friend had made it?",
+  "trap": "A painful mistake of one's own seems the best teacher.",
+  "keywords": [
+    "failure",
+    "surgeons",
+    "learning",
+    "blame",
+    "francesca gino"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "KC, Staats and Gino, Management Science, 2013",
+  "source_kind": "paper",
+  "reference": "KC, Staats and Gino, Learning from My Success and from Others' Failure: Evidence from Minimally Invasive Cardiac Surgery, Management Science, 2013",
+  "written": "2026-10-03"
+}

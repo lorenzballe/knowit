@@ -1,0 +1,41 @@
+{
+  "id": "economics-dynamic-pricing-2",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.dynamic_pricing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "On New Year's Eve, Uber's surge pricing in New York broke for 26 minutes. What happened to people trying to get a ride?",
+  "options": [
+    "More got rides, at normal fares",
+    "Most requests went unfilled",
+    "Nothing changed noticeably"
+  ],
+  "correct": 1,
+  "answer": "Most requests went unfilled. With fares stuck at normal levels, requests jumped while no extra drivers were drawn onto the roads, so only about a quarter of requests were completed and waiting times soared. When surge pricing was working, almost every request found a car. A capped fare meant, for most, no ride at all.",
+  "move": "Before cheering a capped price, ask who will now go without.",
+  "ask": "When something I want is cheap but always sold out, what am I paying instead?",
+  "trap": "Expecting normal fares to help riders, since nobody paid extra.",
+  "keywords": [
+    "uber",
+    "surge pricing",
+    "new year's eve",
+    "ride hailing",
+    "shortages"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hall, Kendrick and Nosko, Uber case study, 2015",
+  "source_kind": "company",
+  "reference": "Hall, Kendrick & Nosko, The Effects of Uber's Surge Pricing: A Case Study, University of Chicago Booth School of Business, 2015",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "medicine-getting-a-second-opinion-3",
+  "topic": "medicine",
+  "genre": "medicine.talk_to_your_doctor",
+  "strand": "medicine.talk_to_your_doctor.getting_a_second_opinion",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should the doctor giving a second opinion see the first doctor's conclusion before forming a view?",
+  "sides": [
+    "Yes, share it all",
+    "No, keep it blind"
+  ],
+  "answer": "Yes. The first doctor's notes, scans and reasoning save the patient repeated tests and give the second doctor context a blank slate lacks. Many errors are caught precisely by questioning a stated conclusion. Withholding records slows care, and patients with serious illness rarely have time to spare.",
+  "move": "Whichever side you took, the hinge is whether context informs judgement or anchors it.",
+  "ask": "When I ask a friend for a second opinion, do I tell them my answer first and so steer theirs?",
+  "counterpoint": "Once a conclusion is read, it anchors the reader, and a second opinion drifts into a confirmation. That is why European guidelines for breast screening have two readers look at the same images independently, each blind to the other's verdict. Share the raw tests, but let the second doctor reach a view before reading the first.",
+  "keywords": [
+    "second opinion",
+    "anchoring",
+    "double reading",
+    "medical records"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Perry et al., European Guidelines, 2006",
+  "source_kind": "standard",
+  "reference": "Perry et al., European guidelines for quality assurance in breast cancer screening and diagnosis, 4th edition, European Commission, 2006",
+  "written": "2026-10-03"
+}

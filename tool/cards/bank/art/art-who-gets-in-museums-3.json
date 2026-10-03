@@ -1,0 +1,38 @@
+{
+  "id": "art-who-gets-in-museums-3",
+  "topic": "art",
+  "genre": "art.art_and_power",
+  "strand": "art.art_and_power.who_gets_in_museums",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should art museums set targets to buy more work by the groups their collections have long left out?",
+  "sides": [
+    "Yes, set targets",
+    "No, judge each work"
+  ],
+  "answer": "Yes. Collections built over centuries will not rebalance by chance; left alone, curators keep buying from the same networks. In 2020 the Baltimore Museum of Art bought only works by women for a year and had no trouble filling it with strong art. A target forces a search that habit never makes.",
+  "move": "Whichever side you took, it turns on where the gap is best fixed.",
+  "ask": "Where in my own choices would a simple target make me look beyond my usual circle?",
+  "counterpoint": "No. Targets turn artists into categories and can make every purchase look like a quota, which hurts the artists they mean to help. Museums competing for the same few names also inflate their prices. The imbalance was made in schools, galleries and markets long ago; museums should fix it there, by funding training and shows.",
+  "keywords": [
+    "baltimore museum of art",
+    "acquisitions",
+    "women artists",
+    "diversity targets"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baltimore Museum of Art, 2020 Vision, 2019",
+  "source_kind": "institution",
+  "reference": "Baltimore Museum of Art, announcement of the 2020 Vision acquisitions initiative, November 2019",
+  "written": "2026-10-03"
+}

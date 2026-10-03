@@ -1,0 +1,41 @@
+{
+  "id": "life-rest-3",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.rest",
+  "also": [
+    "life.work_and_career.burnout"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should employers be barred from sending work messages to staff after working hours?",
+  "sides": [
+    "Yes, protect the evening",
+    "No, keep it flexible"
+  ],
+  "answer": "Yes. An evening message is never just a message: Becker, Belkin and Tuskey found that merely expecting to monitor work email after hours raised anxiety, for employees and their partners, even when little time went on it. France's 2016 labour law made larger firms negotiate a right to disconnect. Rest needs a boundary the employer respects too.",
+  "move": "Whichever side you took, the hinge is who controls when the work arrives.",
+  "ask": "Who can reach me about work after hours, and did I ever decide that?",
+  "counterpoint": "No. People differ: some like to keep work and home apart, others to blend them, and research on these preferences finds well-being depends on the fit between person and policy. A parent who leaves at four to collect the children may need the evening to catch up. A blanket ban can push work into longer, more rigid days.",
+  "keywords": [
+    "right to disconnect",
+    "after-hours email",
+    "work-life boundaries",
+    "france"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Becker, Belkin and Tuskey, Academy of Management, 2018",
+  "source_kind": "paper",
+  "reference": "Becker, Belkin and Tuskey, Killing me softly: Electronic communications monitoring and employee and spouse well-being, Academy of Management Proceedings, 2018",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-stoic-tools-3",
+  "topic": "philosophy",
+  "genre": "philosophy.living_well",
+  "strand": "philosophy.living_well.stoic_tools",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "People with chronic anxiety logged their worries for ten days, then checked which came true. Roughly what share did not?",
+  "options": [
+    "About one in five",
+    "About half",
+    "About nine in ten"
+  ],
+  "correct": 2,
+  "answer": "About nine in ten. In Lucas LaFreniere and Michelle Newman's 2020 study, about 91% of worry predictions did not come true, and many that did went better than feared. Seneca had written that we suffer more often in imagination than in reality. The worry about the meeting cost a night; the meeting took ten minutes.",
+  "move": "Before suffering over a fear, check how often your fears have come true.",
+  "ask": "Which worry this week could I write down now and check against what actually happens?",
+  "trap": "About half, because each worry feels like a real coin toss.",
+  "keywords": [
+    "worry",
+    "anxiety",
+    "seneca",
+    "prediction",
+    "imagination"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "LaFreniere & Newman, Behavior Therapy, 2020",
+  "source_kind": "paper",
+  "reference": "LaFreniere & Newman, Exposing Worry's Deceit: Percentage of Untrue Worries in Generalized Anxiety Disorder Treatment, Behavior Therapy 51 (3), 2020",
+  "written": "2026-10-03"
+}

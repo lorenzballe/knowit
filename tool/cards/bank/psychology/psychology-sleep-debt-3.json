@@ -1,0 +1,38 @@
+{
+  "id": "psychology-sleep-debt-3",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.sleep_debt",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should secondary schools be required to start no earlier than about 8:30 in the morning?",
+  "sides": [
+    "Yes, start later",
+    "No, leave it local"
+  ],
+  "answer": "Teenagers' body clocks shift later at puberty, so early starts cut sleep rather than moving bedtime earlier. American paediatricians concluded that most teenagers get far less than the 8.5 to 9.5 hours they need, and recommended starts of 8:30 or later. Moving the bell is one of few changes reaching a whole age group.",
+  "move": "Whichever side you took, the hinge is who bears the cost of the sleep gained.",
+  "ask": "What fixed time in my household's morning is costing someone sleep they need?",
+  "counterpoint": "Later starts cost real money and time: bus routes rebuilt, after-school jobs and sports squeezed, working parents rearranged. The evidence comes mostly from single districts before and after a change, not randomised trials, and gains vary. A national rule ignores rural travel and local trade-offs that schools and families understand better.",
+  "keywords": [
+    "school start times",
+    "teenagers",
+    "body clock",
+    "sleep need"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "American Academy of Pediatrics, Pediatrics, 2014",
+  "source_kind": "institution",
+  "reference": "Adolescent Sleep Working Group, Committee on Adolescence and Council on School Health, School start times for adolescents, Pediatrics, 2014",
+  "written": "2026-10-03"
+}

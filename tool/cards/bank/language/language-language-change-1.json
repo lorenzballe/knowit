@@ -1,0 +1,40 @@
+{
+  "id": "language-language-change-1",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.language_change",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: they used for one person of unknown sex is older than the rule against using it that way?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Singular they appears in English by about 1375 and was used by Chaucer, Shakespeare and Jane Austen. The rule that he should cover everyone was pushed by 18th-century grammarians, notably Ann Fisher in 1745. The objection is the newcomer; the usage is the old habit.",
+  "move": "A fight that feels new may be about something very old.",
+  "ask": "What do I call a modern mistake that might just be an old habit I never noticed?",
+  "trap": "False, because the argument about it feels so recent.",
+  "keywords": [
+    "singular they",
+    "pronouns",
+    "ann fisher",
+    "chaucer",
+    "jane austen"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baron, What's Your Pronoun?, 2020",
+  "source_kind": "book",
+  "reference": "Baron, What's Your Pronoun? Beyond He and She, Liveright, 2020",
+  "written": "2026-10-03"
+}

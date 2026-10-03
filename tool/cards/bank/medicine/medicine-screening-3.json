@@ -1,0 +1,33 @@
+{
+  "id": "medicine-screening-3",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.screening",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a screening programme that finds many harmless cancers become more popular, not less?",
+  "answer": "Because everyone overdiagnosed believes they were saved. A person treated for a tumour that would never have harmed them goes home grateful and tells friends screening saved their life. Angela Raffle and Muir Gray call it the popularity paradox: the more harmless disease found, the more grateful survivors there are.",
+  "move": "Gratitude from those helped cannot tell you whether they needed help.",
+  "ask": "Who thanks me for help they never needed, and does their thanks make me do more of it?",
+  "keywords": [
+    "overdiagnosis",
+    "popularity paradox",
+    "screening",
+    "cancer"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Raffle & Gray, Screening: Evidence and Practice, 2007",
+  "source_kind": "book",
+  "reference": "Raffle & Gray, Screening: Evidence and Practice, Oxford University Press, 2007",
+  "written": "2026-10-03"
+}

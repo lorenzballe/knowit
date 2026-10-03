@@ -1,0 +1,41 @@
+{
+  "id": "science-kitchen-myths-3",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.kitchen_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Rinsing raw chicken under the tap before cooking it mainly does what?",
+  "options": [
+    "Removes most of its bacteria",
+    "Spreads bacteria round the sink",
+    "Nothing, good or bad"
+  ],
+  "correct": 1,
+  "answer": "It spreads bacteria round the sink. Water cannot rinse off the Campylobacter clinging to the skin, but it splashes droplets onto taps, worktops and nearby food; cooking through kills the bacteria anyway. In a 2019 US Department of Agriculture study, about a quarter of people who washed poultry got its bacteria onto their salad.",
+  "move": "Ask where a cleaning step sends the dirt, not only what it removes.",
+  "ask": "When I clean up a problem, do I check where the mess actually ends up?",
+  "trap": "Removes most of its bacteria, as washing does for hands.",
+  "keywords": [
+    "raw chicken",
+    "campylobacter",
+    "food safety",
+    "cross-contamination",
+    "washing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "USDA Food Safety and Inspection Service, 2019",
+  "source_kind": "institution",
+  "reference": "US Department of Agriculture, Food Safety Consumer Research Project: Meal Preparation Experiment Related to Poultry Washing, 2019",
+  "written": "2026-09-26"
+}

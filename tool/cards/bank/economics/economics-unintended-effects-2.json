@@ -1,0 +1,40 @@
+{
+  "id": "economics-unintended-effects-2",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.unintended_effects",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "In 2009 the US paid owners up to $4,500 to trade old cars for new ones. Within a year, what happened to the sales boost?",
+  "options": [
+    "It lasted and grew",
+    "It was almost wholly reversed",
+    "It held steady for years"
+  ],
+  "correct": 1,
+  "answer": "It was almost wholly reversed. Mian and Sufi compared cities with many old cars against cities with few: buyers there brought forward purchases they would have made anyway, and by early 2010 the extra sales had been cancelled by a slump. The scheme moved car buying by a few months.",
+  "move": "Before crediting a boost, ask what would have happened a few months later anyway.",
+  "ask": "Did I really buy more because of that sale, or just buy sooner?",
+  "trap": "Counting the summer spike as new sales that would not otherwise exist.",
+  "keywords": [
+    "cash for clunkers",
+    "car sales",
+    "stimulus",
+    "mian and sufi"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mian and Sufi, Quarterly Journal of Economics, 2012",
+  "source_kind": "paper",
+  "reference": "Mian & Sufi, The Effects of Fiscal Stimulus: Evidence from the 2009 Cash for Clunkers Program, Quarterly Journal of Economics, 2012",
+  "written": "2026-10-03"
+}

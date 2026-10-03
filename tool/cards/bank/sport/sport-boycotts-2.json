@@ -1,0 +1,41 @@
+{
+  "id": "sport-boycotts-2",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.boycotts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "More than 60 nations stayed away from Moscow 1980 to press the Soviet Union over Afghanistan. When did Soviet troops leave?",
+  "options": [
+    "Before the Games had ended",
+    "Within the following year",
+    "Nine years later"
+  ],
+  "correct": 2,
+  "answer": "Nine years later, in 1989. The boycott cost athletes their Games and cost Moscow prestige, but it did not move the army; withdrawal came under Gorbachev, for reasons of its own. Four years after Moscow, the Soviet bloc answered in kind by staying away from Los Angeles.",
+  "move": "Judge a protest by its stated goal, not by its size.",
+  "ask": "Which of my protests made plenty of noise without changing the thing I wanted changed?",
+  "trap": "Assuming a protest this large must have forced the change.",
+  "keywords": [
+    "moscow 1980",
+    "boycott",
+    "afghanistan",
+    "soviet union",
+    "cold war"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sarantakes, Dropping the Torch, 2011",
+  "source_kind": "book",
+  "reference": "Nicholas Evan Sarantakes, Dropping the Torch: Jimmy Carter, the Olympic Boycott, and the Cold War, Cambridge University Press, 2011",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "psychology-panic-3",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.panic",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: a standard therapy for panic attacks deliberately brings on dizziness and a pounding heart?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In interoceptive exposure, part of cognitive behavioural therapy for panic disorder, people spin in a chair, breathe through a thin straw or run on the spot. Avoiding these sensations keeps the fear untested. Meeting them on purpose, and seeing that no heart attack or fainting follows, lets the belief finally fail.",
+  "move": "A fear that is always avoided never gets the chance to be proved wrong.",
+  "ask": "Which feeling am I avoiding so carefully that I have never checked whether it is really dangerous?",
+  "trap": "Assuming treatment must shield people from the sensations they dread.",
+  "keywords": [
+    "interoceptive exposure",
+    "panic disorder",
+    "cognitive behavioural therapy",
+    "avoidance"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Craske & Barlow, Mastery of Your Anxiety and Panic, 2006",
+  "source_kind": "book",
+  "reference": "Craske & Barlow, Mastery of Your Anxiety and Panic: Workbook, 4th edition, Oxford University Press, 2006",
+  "written": "2026-10-03"
+}

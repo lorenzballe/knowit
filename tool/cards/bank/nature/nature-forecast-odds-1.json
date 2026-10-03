@@ -1,0 +1,33 @@
+{
+  "id": "nature-forecast-odds-1",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.forecast_odds",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A forecaster says 70% chance of rain and the day stays dry. How can anyone tell if she was right?",
+  "answer": "Only over many forecasts. Gather every day she said 70%: if it rained on about 70% of them, she is well calibrated, and that dry day was one of the expected 30%. Murphy and Winkler ran this check on US rain forecasts in the 1970s and found them close to their stated odds.",
+  "move": "Judge anyone who speaks in odds on many calls, never on one.",
+  "ask": "Whose judgement have I written off because of one call that went the other way?",
+  "keywords": [
+    "probability forecasts",
+    "calibration",
+    "rain forecasts",
+    "national weather service"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Murphy & Winkler, Applied Statistics, 1977",
+  "source_kind": "paper",
+  "reference": "Murphy & Winkler, Reliability of subjective probability forecasts of precipitation and temperature, Journal of the Royal Statistical Society Series C (Applied Statistics), 1977",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "sport-visualisation-1",
+  "topic": "sport",
+  "genre": "sport.the_mind_in_sport",
+  "strand": "sport.the_mind_in_sport.visualisation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Across dozens of experiments, how did mentally rehearsing a skill compare with physically practising it, or doing nothing?",
+  "options": [
+    "As good as real practice",
+    "No better than doing nothing",
+    "Better than nothing, below practice"
+  ],
+  "correct": 2,
+  "answer": "Better than nothing, below real practice. Driskell, Copper and Moran's meta-analysis found mental practice had a real, moderate effect, larger for tasks with a strong thinking part, such as planning a routine, and weaker as the delay before performing grew. It adds to practice; it does not replace it.",
+  "move": "Rehearse in your head to add to practice, never to replace it.",
+  "ask": "What could I rehearse in my head on the way there, to add to my real practice?",
+  "trap": "Dismissing imagination as wishful thinking that cannot change performance.",
+  "keywords": [
+    "mental practice",
+    "imagery",
+    "meta-analysis",
+    "skill learning",
+    "visualisation"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Driskell, Copper & Moran, J Appl Psychol, 1994",
+  "source_kind": "paper",
+  "reference": "Driskell, Copper & Moran, Does mental practice enhance performance?, Journal of Applied Psychology, 1994",
+  "written": "2026-09-26"
+}

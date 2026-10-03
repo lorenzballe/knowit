@@ -1,0 +1,41 @@
+{
+  "id": "life-routines-3",
+  "topic": "life",
+  "genre": "life.habits",
+  "strand": "life.habits.routines",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Regular cinema popcorn eaters were handed week-old stale popcorn during a film. How much did they eat, compared with fresh?",
+  "options": [
+    "Far less of it",
+    "About the same",
+    "None at all"
+  ],
+  "correct": 1,
+  "answer": "About the same. In Neal and Wood's study, people with a strong cinema-popcorn habit ate stale popcorn as readily as fresh, though they said they disliked it. Given the same popcorn in a meeting room, they ate less of the stale. The dark room and the screen were doing the eating.",
+  "move": "To change a habit, change the place before you rely on willpower.",
+  "ask": "Which habit of mine runs on a place or a time, and could I change the setting instead of fighting it?",
+  "trap": "Taste seems to decide eating, so stale popcorn should be left.",
+  "keywords": [
+    "habits",
+    "popcorn",
+    "context cues",
+    "wendy wood",
+    "cinema"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Neal, Wood and colleagues, PSPB, 2011",
+  "source_kind": "paper",
+  "reference": "Neal, Wood, Wu and Kurlander, The Pull of the Past: When Do Habits Persist Despite Conflict With Motives?, Personality and Social Psychology Bulletin, 2011",
+  "written": "2026-10-03"
+}

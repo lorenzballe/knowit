@@ -1,0 +1,40 @@
+{
+  "id": "human_body-recovery-3",
+  "topic": "human_body",
+  "genre": "human_body.stress_and_the_body",
+  "strand": "human_body.stress_and_the_body.recovery",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "People who spend two hours a week in nature report better health. What should a careful reader ask first?",
+  "options": [
+    "Whether two hours is too little",
+    "Whether healthier people get out more",
+    "Whether the parks were green enough"
+  ],
+  "correct": 1,
+  "answer": "Whether healthier people get out more. In White's survey of nearly 20,000 English adults, those spending at least 120 minutes a week in nature reported better health and wellbeing. Ill or disabled people may simply go out less. The link held among people with long-term illness, which helps, but only a trial can settle cause.",
+  "move": "Ask whether health causes the habit before crediting the habit with health.",
+  "ask": "Is there a habit I credit for my good days that my good days might be causing?",
+  "trap": "Asking about the dose, as if the effect were already proven.",
+  "keywords": [
+    "nature",
+    "green space",
+    "wellbeing",
+    "reverse causation"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "White et al., Scientific Reports, 2019",
+  "source_kind": "paper",
+  "reference": "White MP, Alcock I, Grellier J et al., Spending at least 120 minutes a week in nature is associated with good health and wellbeing, Scientific Reports, 2019",
+  "written": "2026-09-26"
+}

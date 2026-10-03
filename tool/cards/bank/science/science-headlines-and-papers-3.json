@@ -1,0 +1,39 @@
+{
+  "id": "science-headlines-and-papers-3",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.headlines_and_papers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "True or false: of the ADHD studies newspapers covered most in the 1990s, most were later weakened or overturned?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Gonon and colleagues traced the ten ADHD studies most echoed in newspapers: seven were first findings, and six of those were later refuted or much weakened. The follow-up studies got a fraction of the coverage. Papers favour the new and striking, which is just what most often fails to last.",
+  "move": "Treat news of a first finding as a draft that may be rewritten.",
+  "ask": "Which health story from years ago do I still believe without knowing how it turned out?",
+  "trap": "False, since newspapers mostly cover studies that are well established.",
+  "keywords": [
+    "adhd",
+    "newspapers",
+    "first findings",
+    "science news"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gonon et al., PLOS ONE, 2012",
+  "source_kind": "paper",
+  "reference": "Gonon, Konsman, Cohen & Boraud, Why most biomedical findings echoed by newspapers turn out to be false: the case of attention deficit hyperactivity disorder, PLOS ONE 7:e44275, 2012",
+  "written": "2026-09-26"
+}

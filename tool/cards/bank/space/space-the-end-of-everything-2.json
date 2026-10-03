@@ -1,0 +1,40 @@
+{
+  "id": "space-the-end-of-everything-2",
+  "topic": "space",
+  "genre": "space.questions_with_no_answer_yet",
+  "strand": "space.questions_with_no_answer_yet.the_end_of_everything",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Roughly how long will new stars keep being born in the universe?",
+  "options": [
+    "About 5 billion more years",
+    "About 100 trillion years",
+    "Forever, with no end"
+  ],
+  "correct": 1,
+  "answer": "About 100 trillion years. The Sun will die in about 5 billion years, but small red dwarfs burn their fuel so slowly that they last trillions of years, and gas keeps forming new stars until it runs out. Fred Adams and Greg Laughlin put the end of star birth near 100 trillion years.",
+  "move": "Do not let the one case you know set the clock for all.",
+  "ask": "Am I judging my whole future by the timeline of the one example I happen to know?",
+  "trap": "5 billion years, the figure always quoted for the Sun's end.",
+  "keywords": [
+    "star formation",
+    "red dwarfs",
+    "far future",
+    "fred adams"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Adams & Laughlin, Reviews of Modern Physics, 1997",
+  "source_kind": "paper",
+  "reference": "doi:10.1103/RevModPhys.69.337",
+  "written": "2026-10-03"
+}

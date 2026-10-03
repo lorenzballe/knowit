@@ -1,0 +1,40 @@
+{
+  "id": "life-failing-forward-3",
+  "topic": "life",
+  "genre": "life.handle_setbacks",
+  "strand": "life.handle_setbacks.failing_forward",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Executives guessed that only 2% to 5% of failures at work are truly blameworthy. What share did they say get treated that way?",
+  "options": [
+    "About 30%",
+    "About 70% to 90%",
+    "About 5%"
+  ],
+  "correct": 1,
+  "answer": "About 70% to 90%. Edmondson asked executives to place failures on a spectrum from deliberate wrongdoing to thoughtful experiments. They judged only a few per cent truly blameworthy, yet said most were treated as if they were. Where every failure is punished, people stop reporting the ones that teach.",
+  "move": "Sort a failure by its cause before deciding whether it deserves blame.",
+  "ask": "When something goes wrong at home or at work, do I ask what caused it before asking who?",
+  "trap": "The true 5% seems a fair guess for the share blamed too.",
+  "keywords": [
+    "blame",
+    "failure",
+    "workplace culture",
+    "amy edmondson"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Edmondson, Harvard Business Review, 2011",
+  "source_kind": "paper",
+  "reference": "Edmondson, Strategies for Learning from Failure, Harvard Business Review, April 2011",
+  "written": "2026-10-03"
+}

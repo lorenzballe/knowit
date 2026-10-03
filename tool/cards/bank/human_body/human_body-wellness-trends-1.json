@@ -1,0 +1,33 @@
+{
+  "id": "human_body-wellness-trends-1",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.wellness_trends",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When researchers reviewed commercial detox diets, what evidence did they find that any toxin was removed?",
+  "answer": "None worth the name. Klein and Kiat's review found no randomised trial showing that a detox diet removed any named toxin, and most products never say which toxin they target. The liver and kidneys clear waste around the clock. A cleanse that cannot name its target cannot show it hit it.",
+  "move": "Ask a cure to name exactly what it removes or fixes.",
+  "ask": "When something promises to cleanse or reset me, can it say exactly what it removes?",
+  "keywords": [
+    "detox diets",
+    "toxins",
+    "liver",
+    "kidneys"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Klein and Kiat, J Hum Nutr Diet, 2015",
+  "source_kind": "paper",
+  "reference": "Klein AV, Kiat H, Detox diets for toxin elimination and weight management: a critical review of the evidence, Journal of Human Nutrition and Dietetics, 2015",
+  "written": "2026-09-26"
+}

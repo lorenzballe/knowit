@@ -1,0 +1,33 @@
+{
+  "id": "human_body-studies-on-mice-1",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.studies_on_mice",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why might mice kept at a comfortable 22 °C laboratory temperature mislead cancer researchers?",
+  "answer": "Because 22 °C is cold for a mouse. Mice are comfortable at about 30 °C, so lab mice live under constant mild cold stress. Kokolus's team found tumours grew faster and spread more at the standard temperature, with weaker immune control, than in warmer cages. Drugs tested on chilly mice may behave differently in people.",
+  "move": "Ask whether the test conditions changed the very thing being tested.",
+  "ask": "When I try something new, are the conditions of my test anything like real life?",
+  "keywords": [
+    "lab mice",
+    "housing temperature",
+    "tumours",
+    "immune system"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kokolus et al., PNAS, 2013",
+  "source_kind": "paper",
+  "reference": "doi:10.1073/pnas.1304291110",
+  "written": "2026-09-26"
+}

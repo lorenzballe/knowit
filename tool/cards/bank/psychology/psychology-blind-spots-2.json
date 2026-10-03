@@ -1,0 +1,33 @@
+{
+  "id": "psychology-blind-spots-2",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.blind_spots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Are people who score higher on reasoning tests any better at seeing their own biases?",
+  "answer": "No. Among hundreds of students tested on classic biases, those with higher cognitive ability were just as likely, and on some measures more likely, to rate others as more biased than themselves. Brainpower helped on some problems but not at spotting one's own slant. A sharp mind is a good lawyer for its own conclusions.",
+  "move": "Being clever makes a better advocate, not a fairer judge, of one's views.",
+  "ask": "Which of my opinions do I defend most cleverly, and have I ever argued the other side?",
+  "keywords": [
+    "bias blind spot",
+    "intelligence",
+    "cognitive ability",
+    "self-assessment"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "West, Meserve & Stanovich, JPSP, 2012",
+  "source_kind": "paper",
+  "reference": "West, Meserve & Stanovich, Cognitive sophistication does not attenuate the bias blind spot, Journal of Personality and Social Psychology, 2012",
+  "written": "2026-10-03"
+}

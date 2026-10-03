@@ -1,0 +1,40 @@
+{
+  "id": "medicine-screening-2",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.screening",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: screening babies' urine for neuroblastoma, a childhood cancer, cut deaths from it in Germany and Quebec?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In both large programmes, screening roughly doubled the number of tumours found, yet deaths did not fall. Many tumours found in infancy would have shrunk away on their own, while the deadly ones grew too fast to be caught. Japan, which screened all babies from the 1980s, stopped in 2004.",
+  "move": "Finding more of a disease is not the same as saving more people.",
+  "ask": "Where am I counting how many problems I find instead of how many I actually solve?",
+  "trap": "True, since finding more cancer earlier should save more children.",
+  "keywords": [
+    "neuroblastoma",
+    "childhood cancer",
+    "overdiagnosis",
+    "germany",
+    "quebec"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schilling et al., NEJM, 2002",
+  "source_kind": "paper",
+  "reference": "Schilling et al., Neuroblastoma screening at one year of age, New England Journal of Medicine, 2002",
+  "written": "2026-10-03"
+}

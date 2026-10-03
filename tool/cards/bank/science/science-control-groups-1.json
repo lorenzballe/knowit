@@ -1,0 +1,33 @@
+{
+  "id": "science-control-groups-1",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.control_groups",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did taking teenage offenders on frightening prison visits look, for years, like it worked?",
+  "answer": "Because teenagers caught at their worst usually calm down anyway, and early programmes measured them only before and after. When randomised trials compared them with similar teenagers left alone, the visited group offended more, not less: a 2013 review of nine trials found the visits raised the odds of offending by about two thirds.",
+  "move": "Compare with people left alone before crediting any intervention.",
+  "ask": "What did I try at my lowest point that only looked like it worked because things improved anyway?",
+  "keywords": [
+    "scared straight",
+    "juvenile crime",
+    "randomised trials",
+    "control groups"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Petrosino et al., Campbell Systematic Reviews, 2013",
+  "source_kind": "paper",
+  "reference": "Petrosino, Turpin-Petrosino, Hollis-Peel & Lavenberg, 'Scared Straight' and other juvenile awareness programs for preventing juvenile delinquency, Campbell Systematic Reviews 9(5), 2013",
+  "written": "2026-09-26"
+}

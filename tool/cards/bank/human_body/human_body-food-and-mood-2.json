@@ -1,0 +1,39 @@
+{
+  "id": "human_body-food-and-mood-2",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.food_and_mood",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: in pooled trials, a sugary drink lifted adults' mood and alertness within the following hour?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Mantantzis's meta-analysis found carbohydrates, mostly sugar, had no positive effect on mood at any point, and within an hour people felt more tired and less alert than those given a placebo drink. The lift people remember is the pleasure of the taste in the first minute, not a boost to the brain.",
+  "move": "Judge a quick lift by how things feel an hour later.",
+  "ask": "What do I reach for to feel better that leaves me flatter an hour later?",
+  "trap": "A sweet treat feels like a lift, so it must give one.",
+  "keywords": [
+    "sugar",
+    "mood",
+    "alertness",
+    "fatigue"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mantantzis et al., Neurosci Biobehav Rev, 2019",
+  "source_kind": "paper",
+  "reference": "Mantantzis K, Schlaghecken F, Sünram-Lea SI, Maylor EA, Sugar rush or sugar crash? A meta-analysis of carbohydrate effects on mood, Neuroscience and Biobehavioral Reviews, 2019",
+  "written": "2026-09-26"
+}

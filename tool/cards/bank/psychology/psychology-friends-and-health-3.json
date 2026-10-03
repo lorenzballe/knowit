@@ -1,0 +1,39 @@
+{
+  "id": "psychology-friends-and-health-3",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.friends_and_health",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: coffee-shop customers told to chat with the cashier left in a better mood than those told to be efficient?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Sandstrom and Dunn sent people into a busy coffee shop with one instruction or another: have a genuine exchange with the cashier, or get in and out quickly. The chatters reported better moods and more belonging. A minute of small talk with a stranger returns more than the minute it costs.",
+  "move": "Small exchanges with strangers are part of a social life, not interruptions to it.",
+  "ask": "Could I turn one quick transaction tomorrow into a real thirty-second exchange?",
+  "trap": "Treating small talk with strangers as a cost to be cut.",
+  "keywords": [
+    "small talk",
+    "strangers",
+    "belonging",
+    "coffee shops"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sandstrom & Dunn, Social Psychological and Personality Science, 2014",
+  "source_kind": "paper",
+  "reference": "Sandstrom & Dunn, Is efficiency overrated? Minimal social interactions lead to belonging and positive affect, Social Psychological and Personality Science, 2014",
+  "written": "2026-10-03"
+}

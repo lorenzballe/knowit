@@ -1,0 +1,33 @@
+{
+  "id": "nature-coevolution-1",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.coevolution",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do some garter snakes in Oregon move sluggishly for hours after eating a newt?",
+  "answer": "Because they are surviving a poison that would kill almost any other predator. Rough-skinned newts carry tetrodotoxin, the nerve poison of pufferfish, and local snakes have evolved resistant nerve channels. Brodie and colleagues found newt toxicity and snake resistance rising together in hotspots. Resistance slows the snake; neither side can stop escalating.",
+  "move": "In an arms race, each side's gain becomes the other's new baseline.",
+  "ask": "Which contest in my life keeps escalating because each side answers the other's last move?",
+  "keywords": [
+    "garter snakes",
+    "rough-skinned newts",
+    "tetrodotoxin",
+    "arms race"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brodie et al., Evolution, 2002",
+  "source_kind": "paper",
+  "reference": "Brodie, Ridenhour & Brodie, The evolutionary response of predators to dangerous prey: hotspots and coldspots in the geographic mosaic of coevolution between garter snakes and newts, Evolution, 2002",
+  "written": "2026-10-03"
+}

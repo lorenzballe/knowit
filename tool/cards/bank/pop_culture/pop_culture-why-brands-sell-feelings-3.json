@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-why-brands-sell-feelings-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.why_brands_sell_feelings",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: told a wine cost $90 rather than $10, drinkers' brains registered more pleasure from the same wine?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In Plassmann's 2008 study at Caltech, the same wine was served under different prices; people rated the dearer label as tastier, and a brain area that tracks pleasantness was more active. The price did not just change what they said; it changed the experience they were reporting.",
+  "move": "What a thing costs can change how good it feels to use.",
+  "ask": "Would I enjoy my favourite expensive thing as much if I believed it was cheap?",
+  "trap": "They only claimed to like it more so as not to look cheap.",
+  "keywords": [
+    "wine",
+    "price",
+    "pleasure",
+    "brain imaging"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Plassmann et al., PNAS, 2008",
+  "source_kind": "paper",
+  "reference": "Hilke Plassmann et al., Marketing actions can modulate neural representations of experienced pleasantness, PNAS, 2008",
+  "written": "2026-09-26"
+}

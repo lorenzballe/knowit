@@ -1,0 +1,33 @@
+{
+  "id": "cinema-dialogue-1",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.dialogue",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do so many viewers reach for subtitles or the remote when watching new films at home?",
+  "answer": "Because the mix was built for a cinema. Theatres can play a whisper and then a deafening explosion, with dialogue anchored in a centre speaker. Squeeze that range into thin television speakers, often blending the centre channel into stereo, and the voices sink beneath the music and effects.",
+  "move": "Ask where something was designed to be used before blaming the user.",
+  "ask": "What do I struggle with because it was designed for a different place than where I use it?",
+  "keywords": [
+    "dialogue intelligibility",
+    "dynamic range",
+    "centre channel",
+    "subtitles"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Holman, Sound for Film and Television",
+  "source_kind": "book",
+  "reference": "Tomlinson Holman, Sound for Film and Television, 3rd edn, Focal Press, 2010",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "sport-nationalism-2",
+  "topic": "sport",
+  "genre": "sport.sport_and_society",
+  "strand": "sport.sport_and_society.nationalism",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Africans surveyed just after their national team's big victories identified less strongly with their ethnic group?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Depetris-Chauvin, Durante and Campante compared people interviewed just before and just after key matches: after a win they were 37% less likely to put their ethnic group first and 30% more likely to trust other groups. Countries that narrowly qualified for the Africa Cup of Nations saw less ethnic conflict afterwards.",
+  "move": "Shared wins can loosen the lines between groups.",
+  "ask": "What shared win could bring together people around me who usually keep apart?",
+  "trap": "Expecting sport to deepen divisions, since rivalries make the news.",
+  "keywords": [
+    "national identity",
+    "ethnic identity",
+    "african football",
+    "trust",
+    "afrobarometer"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Depetris-Chauvin et al., American Economic Review, 2020",
+  "source_kind": "paper",
+  "reference": "Depetris-Chauvin, Durante & Campante, Building Nations through Shared Experiences: Evidence from African Football, American Economic Review, 2020",
+  "written": "2026-09-26"
+}

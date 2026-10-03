@@ -1,0 +1,38 @@
+{
+  "id": "cinema-based-on-a-true-story-3",
+  "topic": "cinema",
+  "genre": "cinema.how_films_persuade",
+  "strand": "cinema.how_films_persuade.based_on_a_true_story",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should films sold as based on a true story list, in the credits, what they invented?",
+  "sides": [
+    "Yes, list the inventions",
+    "No, it is art"
+  ],
+  "answer": "The label is a promise, and audiences act on it: they repeat the scenes as fact and judge real people by them. A short list of composite characters, invented scenes and moved dates costs a studio nothing and lets viewers keep the drama while knowing its limits. Food carries an ingredients label; why not history?",
+  "move": "Whichever side you took, it turns on whether the label is a promise.",
+  "ask": "When I tell a true story, how much do I add without saying so?",
+  "counterpoint": "Every history, on page or screen, selects, compresses and imagines; there is no clean line between shaping and inventing. A list would be either endless or misleading, and it would treat films as textbooks when they are arguments. Robert Rosenstone argues a film's truth lies in its larger sense of the past, not in footnotes.",
+  "keywords": [
+    "true stories",
+    "biopics",
+    "historical films",
+    "robert rosenstone"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rosenstone, History on Film, Film on History",
+  "source_kind": "book",
+  "reference": "Robert A. Rosenstone, History on Film/Film on History, 3rd edn, Routledge, 2018",
+  "written": "2026-10-03"
+}

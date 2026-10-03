@@ -1,0 +1,33 @@
+{
+  "id": "medicine-back-pain-3",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.back_pain",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did spinal fusion surgery achieve over an intensive exercise course for long-term back pain, in a UK trial?",
+  "answer": "Barely more. In the MRC trial of 349 patients, disability scores two years on differed by about 4 points on a 100-point scale, only just beyond chance. Surgery cost more and brought its own complications. Welding vertebrae together competed with three weeks that taught people to move without fear, and hardly won.",
+  "move": "A repair to the structure is not automatically better than retraining its use.",
+  "ask": "Am I reaching for a big fix to the thing itself, when changing how I use it might do as much?",
+  "keywords": [
+    "spinal fusion",
+    "chronic back pain",
+    "rehabilitation",
+    "randomised trial"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fairbank et al., BMJ, 2005",
+  "source_kind": "paper",
+  "reference": "Fairbank et al., Randomised controlled trial to compare surgical stabilisation of the lumbar spine with an intensive rehabilitation programme, BMJ, 2005",
+  "written": "2026-10-03"
+}

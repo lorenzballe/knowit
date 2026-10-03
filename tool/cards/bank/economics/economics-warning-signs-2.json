@@ -1,0 +1,40 @@
+{
+  "id": "economics-warning-signs-2",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.warning_signs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Over 140 years of data from 14 rich countries, which best warned that a financial crisis was coming?",
+  "options": [
+    "A large government deficit",
+    "A rise in unemployment",
+    "A fast rise in bank lending"
+  ],
+  "correct": 2,
+  "answer": "A fast rise in bank lending. Schularick and Taylor found that years of rapid credit growth were the most reliable warning: borrowing piles up against rising house and share prices until a fall leaves loans worth more than what backs them. Their later work found public debt a poor predictor of banking crises.",
+  "move": "Watch the quiet borrowing that feels like prosperity, not the noisy kind.",
+  "ask": "Is my own borrowing growing faster than my income while everything feels fine?",
+  "trap": "Blaming government debt, the borrowing that makes the loudest headlines.",
+  "keywords": [
+    "credit booms",
+    "financial crises",
+    "bank lending",
+    "schularick and taylor"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schularick and Taylor, AER, 2012",
+  "source_kind": "paper",
+  "reference": "Schularick & Taylor, Credit Booms Gone Bust: Monetary Policy, Leverage Cycles, and Financial Crises, 1870-2008, American Economic Review, 2012",
+  "written": "2026-10-03"
+}

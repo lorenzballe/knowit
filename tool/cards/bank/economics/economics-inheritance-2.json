@@ -1,0 +1,39 @@
+{
+  "id": "economics-inheritance-2",
+  "topic": "economics",
+  "genre": "economics.inequality",
+  "strand": "economics.inequality.inheritance",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in Swedish data, inheritances lowered the standard measure of wealth inequality?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A study of Sweden's population registers found inheritances cut the wealth Gini, the usual inequality score, by 5–10%. Rich heirs get bigger sums, but poorer heirs get more compared with what they already had: €50,000 doubles a modest estate and barely dents a fortune. The gap in euros still widens.",
+  "move": "Ask whether a gap is measured in shares or in absolute amounts.",
+  "ask": "When I hear that a gap grew or shrank, do I know whether it is counted in money or in proportion?",
+  "trap": "False, because rich heirs inherit far bigger sums.",
+  "keywords": [
+    "inheritance",
+    "wealth inequality",
+    "sweden",
+    "gini coefficient"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Elinder, Erixson and Waldenström, 2018",
+  "source_kind": "paper",
+  "reference": "Elinder, Erixson & Waldenström, Inheritance and Wealth Inequality: Evidence from Population Registers, Journal of Public Economics, 2018",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "medicine-side-effects-1",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.side_effects",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Men starting a prostate drug were either told or not told it may cause sexual problems. How did reported problems compare?",
+  "options": [
+    "About the same in both groups",
+    "Nearly three times as common when told",
+    "Less common when told"
+  ],
+  "correct": 1,
+  "answer": "Nearly three times as common when told: 44% against 15%, on the same drug. Warned men watched for the problem, noticed ordinary lapses and blamed the pill, and worry itself can cause the effect. Honest consent has a cost, so how a side effect is described matters.",
+  "move": "Whatever you are told to watch for, you will find more of.",
+  "ask": "What am I noticing more often lately simply because someone told me to look out for it?",
+  "trap": "About the same in both groups, since the drug acts the same way.",
+  "keywords": [
+    "nocebo",
+    "finasteride",
+    "informed consent",
+    "side effects"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mondaini et al., J Sex Med, 2007",
+  "source_kind": "paper",
+  "reference": "Mondaini et al., Finasteride 5 mg and sexual side effects: how many of these are related to a nocebo phenomenon?, Journal of Sexual Medicine, 2007",
+  "written": "2026-10-03"
+}

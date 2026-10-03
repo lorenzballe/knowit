@@ -1,0 +1,33 @@
+{
+  "id": "space-before-the-big-bang-3",
+  "topic": "space",
+  "genre": "space.questions_with_no_answer_yet",
+  "strand": "space.questions_with_no_answer_yet.before_the_big_bang",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Could the universe have been expanding forever into the past, with no beginning at all?",
+  "answer": "Not under broad conditions, says a 2003 theorem. Borde, Guth and Vilenkin showed that any universe that has, on average, been expanding must have a boundary in its past. But the proof uses classical physics, and a quantum theory of gravity might escape it. It rules out one kind of endless past, not every kind.",
+  "move": "A proof is only as strong as the conditions written into it.",
+  "ask": "Which rule I live by holds only under conditions I have stopped checking?",
+  "keywords": [
+    "borde-guth-vilenkin theorem",
+    "inflation",
+    "beginning of the universe",
+    "quantum gravity"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Borde, Guth & Vilenkin, Physical Review Letters, 2003",
+  "source_kind": "paper",
+  "reference": "doi:10.1103/PhysRevLett.90.151301",
+  "written": "2026-10-03"
+}

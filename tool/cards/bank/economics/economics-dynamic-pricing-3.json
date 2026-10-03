@@ -1,0 +1,39 @@
+{
+  "id": "economics-dynamic-pricing-3",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.dynamic_pricing",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should ticket sellers be allowed to raise prices while fans are still waiting in the online queue?",
+  "sides": [
+    "Yes, let prices move",
+    "No, fix them in advance"
+  ],
+  "answer": "A hit show's tickets are worth far more than face value, and someone captures the difference. With fixed prices, touts buy early and resell at several times the price. Prices that rise with demand let the fans who value a seat most get one, and send the money to those who made the show.",
+  "move": "Whichever side you took, whether buyers see the price before committing decides it.",
+  "ask": "When I commit to buying before I know the final price, who holds the power?",
+  "counterpoint": "A queue is not a market: fans cannot see the price until they reach the front, after hours of waiting. In the 2024 Oasis sale, standing tickets jumped from £148 to £355 once a cheaper batch ran out, and Britain's competition authority then made Ticketmaster show the range of prices up front. Fairness is part of what fans pay for.",
+  "keywords": [
+    "concert tickets",
+    "dynamic pricing",
+    "ticketmaster",
+    "oasis",
+    "touts"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Competition and Markets Authority, Ticketmaster case, 2025",
+  "source_kind": "institution",
+  "reference": "Competition and Markets Authority, Ticketmaster undertakings following the Oasis ticket sale investigation, September 2025",
+  "written": "2026-10-03"
+}

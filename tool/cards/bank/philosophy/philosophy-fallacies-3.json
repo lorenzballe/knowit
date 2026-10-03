@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-fallacies-3",
+  "topic": "philosophy",
+  "genre": "philosophy.arguments",
+  "strand": "philosophy.arguments.fallacies",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is a slippery-slope argument, that one step will lead to worse ones, ever good reasoning?",
+  "sides": [
+    "Yes, sometimes it is",
+    "No, it is a fallacy"
+  ],
+  "answer": "Yes. Slopes are real when each step makes the next easier: precedent, shifting norms, institutions building on what came before. Eugene Volokh traced in 2003 how one legal change can be cited to justify the next. Ulrike Hahn and Mike Oaksford showed slope arguments are strong or weak by degree, not fallacies by form.",
+  "move": "It turns on how likely each step is, multiplied along the chain.",
+  "ask": "When I warn that one change will lead to disaster, could I say how likely each step really is?",
+  "counterpoint": "Almost any change could lead somewhere bad, so the argument lets anyone block anything by imagining the end of a chain. Probabilities multiply: five steps each 80% likely leave about a one-in-three chance of the last. Laws, courts and votes exist precisely to stop slides, and most feared slopes never arrive.",
+  "keywords": [
+    "slippery slope",
+    "eugene volokh",
+    "fallacy",
+    "precedent",
+    "probability"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Volokh, Harvard Law Review, 2003",
+  "source_kind": "paper",
+  "reference": "Volokh, The Mechanisms of the Slippery Slope, Harvard Law Review 116 (4), 2003; Hahn & Oaksford, The Rationality of Informal Argumentation, Psychological Review 114 (3), 2007",
+  "written": "2026-10-03"
+}

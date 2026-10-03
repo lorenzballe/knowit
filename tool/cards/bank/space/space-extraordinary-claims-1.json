@@ -1,0 +1,37 @@
+{
+  "id": "space-extraordinary-claims-1",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.extraordinary_claims",
+  "also": [
+    "science.spot_bad_science.too_good_to_be_true"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 2011 an experiment timed particles beating light by 60 billionths of a second. How did the story end?",
+  "answer": "With a loose cable. The OPERA team in Italy timed neutrinos sent from CERN arriving early. Rather than claim a revolution, they published and asked others to find the flaw. In 2012 a badly connected fibre-optic cable in the timing system turned up, and repeat runs matched the speed of light.",
+  "move": "When a result overturns everything, hunt first for the loose cable.",
+  "ask": "When a surprising result lands in front of me, what boring error should I rule out first?",
+  "keywords": [
+    "opera experiment",
+    "neutrinos",
+    "faster than light",
+    "cern",
+    "measurement error"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "OPERA Collaboration, Journal of High Energy Physics, 2012",
+  "source_kind": "paper",
+  "reference": "OPERA Collaboration, Measurement of the neutrino velocity with the OPERA detector in the CNGS beam, Journal of High Energy Physics, 2012",
+  "written": "2026-10-03"
+}

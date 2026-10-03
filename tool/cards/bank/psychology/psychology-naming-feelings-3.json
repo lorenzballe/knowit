@@ -1,0 +1,39 @@
+{
+  "id": "psychology-naming-feelings-3",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.naming_feelings",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: people tend to underestimate how much putting a bad feeling into words will ease it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Asked in advance, people expected that naming their feelings about upsetting pictures would do little, or even make things worse. In the experiment, describing the feeling in words eased their distress by about as much as deliberately rethinking the picture. The tool works, and few reach for it, because it feels too simple.",
+  "move": "A remedy that looks too simple to work deserves one honest try.",
+  "ask": "When I feel upset, what would happen if I simply said to myself what I am feeling?",
+  "trap": "False: dwelling on a feeling by naming it seems to sharpen it.",
+  "keywords": [
+    "affect labelling",
+    "emotion regulation",
+    "reappraisal",
+    "expectations"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lieberman et al., Emotion, 2011",
+  "source_kind": "paper",
+  "reference": "Lieberman, Inagaki, Tabibnia & Crockett, Subjective responses to emotional stimuli during labeling, reappraisal, and distraction, Emotion, 2011",
+  "written": "2026-10-03"
+}

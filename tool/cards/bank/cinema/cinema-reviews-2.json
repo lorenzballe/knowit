@@ -1,0 +1,39 @@
+{
+  "id": "cinema-reviews-2",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.reviews",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a Hollywood studio once ran newspaper ads quoting a film critic who did not exist?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 2001 Sony ads for A Knight's Tale and other films quoted David Manning of a small Connecticut paper; he had been invented inside the studio. Newsweek exposed it, and in 2005 Sony agreed to a $1.5 million settlement offering refunds of $5 to ticket buyers. Few claimed.",
+  "move": "A named source in an advert is still part of the advert.",
+  "ask": "When a recommendation sways me, have I checked who the recommender is?",
+  "trap": "False, because a printed name with a newspaper seems checkable.",
+  "keywords": [
+    "david manning",
+    "fake reviews",
+    "sony pictures",
+    "film advertising"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Variety, Sony settles fake critic suit, 2005",
+  "source_kind": "news_archive",
+  "reference": "https://variety.com/2005/film/markets-festivals/sony-settles-real-suit-over-fake-critic-1117926951/",
+  "written": "2026-10-03"
+}

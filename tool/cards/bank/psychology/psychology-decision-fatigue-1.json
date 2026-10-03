@@ -1,0 +1,33 @@
+{
+  "id": "psychology-decision-fatigue-1",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.decision_fatigue",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Did Israeli parole judges really grant fewer paroles as their next meal break approached?",
+  "answer": "Contested. A 2011 study found favourable rulings fell from about 65% to near zero across each session, then jumped after a break. Critics showed the order was not random: prisoners without lawyers tended to come last, and short cases were squeezed in before breaks. The hungry judges may have been tidy scheduling.",
+  "move": "Before blaming tiredness for a pattern, check how the queue was ordered.",
+  "ask": "When I see a pattern in my own bad days, have I checked what else was different about them?",
+  "keywords": [
+    "parole hearings",
+    "judges",
+    "case order",
+    "meal breaks"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Weinshall-Margel & Shapard, PNAS, 2011",
+  "source_kind": "paper",
+  "reference": "Weinshall-Margel & Shapard, Overlooked factors in the analysis of parole decisions, PNAS, 2011",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "music-voice-1",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.voice",
+  "also": [
+    "music.sound_itself.frequencies"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: breathing helium makes the vocal folds vibrate faster, which is why the voice goes squeaky?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The folds vibrate at almost the same rate, so the pitch barely changes. Sound travels nearly three times faster in helium than in air, which pushes up the resonances of the throat and mouth. Those resonances, not the pitch, give a voice its colour. The same note comes out of a smaller-sounding instrument.",
+  "move": "When something sounds different, ask whether the source changed or only the filter.",
+  "ask": "When someone seems different lately, is it them, or the setting I am seeing them through?",
+  "trap": "The voice sounds higher, so its pitch must have risen.",
+  "keywords": [
+    "helium voice",
+    "vocal folds",
+    "formants",
+    "speed of sound",
+    "pitch"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rossing et al., The Science of Sound, 2002",
+  "source_kind": "book",
+  "reference": "Rossing, Moore & Wheeler, The Science of Sound, 3rd edition, Addison-Wesley, 2002",
+  "written": "2026-09-26"
+}

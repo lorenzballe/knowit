@@ -1,0 +1,39 @@
+{
+  "id": "nature-unintended-fixes-3",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.unintended_fixes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: decades of putting out every wildfire have made dry western US forests less likely to burn severely?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Many dry pine forests once burned lightly every few years, clearing brush and saplings. Snuffing out almost every fire let that fuel pile up, so the fires that escape now burn hotter and kill the big trees. Calkin and colleagues describe how each success makes the next fire harder to stop.",
+  "move": "Suppressing every small trouble can store up a large one.",
+  "ask": "Which small conflicts am I always smothering that might be building into a bigger one?",
+  "trap": "Every fire put out looks like damage prevented, nothing more.",
+  "keywords": [
+    "wildfire",
+    "fire suppression",
+    "fuel",
+    "western forests"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Calkin et al., Forest Ecosystems, 2015",
+  "source_kind": "paper",
+  "reference": "Calkin, Thompson & Finney, Negative consequences of positive feedbacks in US wildfire management, Forest Ecosystems, 2015",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "life-teaching-it-back-3",
+  "topic": "life",
+  "genre": "life.learn_anything",
+  "strand": "life.learn_anything.teaching_it_back",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Pupils read a text on the heart and blood; some were prompted to explain each line to themselves. What happened?",
+  "options": [
+    "They learned less, being slowed down",
+    "No measurable difference",
+    "They understood it better"
+  ],
+  "correct": 2,
+  "answer": "They understood it better. Chi and colleagues asked eighth-graders to read a biology text on the circulatory system, half of them prompted to explain each line to themselves. The self-explainers built more correct models of how blood circulates, and those who explained the most learned the most. Explaining showed them where their picture had holes.",
+  "move": "Explain each step to yourself as if a sceptic were listening.",
+  "ask": "When I read something hard, do I stop to explain each step to myself, or just keep going?",
+  "trap": "Stopping at every line seems to slow learning down.",
+  "keywords": [
+    "self-explanation",
+    "circulatory system",
+    "comprehension",
+    "pupils"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chi and colleagues, Cognitive Science, 1994",
+  "source_kind": "paper",
+  "reference": "Chi, de Leeuw, Chiu and LaVancher, Eliciting self-explanations improves understanding, Cognitive Science, 1994",
+  "written": "2026-10-03"
+}

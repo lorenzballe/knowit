@@ -1,0 +1,40 @@
+{
+  "id": "psychology-blind-spots-3",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.blind_spots",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Shoppers judged four identical pairs of stockings laid out in a row. Which pair did they most often pick as best?",
+  "options": [
+    "The pair on the far right",
+    "The pair on the far left",
+    "No pair more than another"
+  ],
+  "correct": 0,
+  "answer": "The pair on the far right, chosen almost four times as often as the far left. Asked why, shoppers cited knit, sheerness or elasticity; nobody mentioned position, and almost all denied it could matter when asked. People report plausible reasons, not the real ones. The shelf decided; the shopper wrote the explanation.",
+  "move": "Being able to give a reason does not mean it was the reason.",
+  "ask": "For a recent choice I explained confidently, could something I never noticed have decided it?",
+  "trap": "No pair: with identical stockings, nothing else should sway the choice.",
+  "keywords": [
+    "introspection",
+    "choice",
+    "position effect",
+    "self-knowledge"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nisbett & Wilson, Psychological Review, 1977",
+  "source_kind": "paper",
+  "reference": "Nisbett & Wilson, Telling more than we can know: Verbal reports on mental processes, Psychological Review, 1977",
+  "written": "2026-10-03"
+}

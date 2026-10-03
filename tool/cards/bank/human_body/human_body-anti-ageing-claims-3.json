@@ -1,0 +1,38 @@
+{
+  "id": "human_body-anti-ageing-claims-3",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.anti_ageing_claims",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should healthy middle-aged people take the diabetes drug metformin to slow their ageing?",
+  "sides": [
+    "Yes, it is worth it",
+    "No, not on current evidence"
+  ],
+  "answer": "Yes. Metformin is cheap, decades old and generally safe. In a large British study, people with diabetes taking it lived at least as long as matched people without diabetes, despite their disease. It acts on pathways linked to ageing in animals. Waiting decades for perfect trials means a generation ages without it.",
+  "move": "The hinge is whether hopeful observations justify treating healthy people before a trial.",
+  "ask": "Before I take something every day for years, what evidence would I want to see first?",
+  "counterpoint": "No. Later analyses with better comparison groups did not find that survival advantage. Metformin can upset the gut and lower vitamin B12, and in trials it blunted the gains older adults made from exercise. No trial in healthy people has shown it slows ageing. Exercise has the evidence; metformin, for now, has a hypothesis.",
+  "keywords": [
+    "metformin",
+    "ageing",
+    "longevity",
+    "drug trials"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bannister et al., Diabetes Obes Metab, 2014",
+  "source_kind": "paper",
+  "reference": "Bannister CA, Holden SE, Jenkins-Jones S et al., Can people with type 2 diabetes live longer than those without? A comparison of mortality in people initiated with metformin or sulphonylurea monotherapy and matched, non-diabetic controls, Diabetes, Obesity and Metabolism, 2014",
+  "written": "2026-09-26"
+}

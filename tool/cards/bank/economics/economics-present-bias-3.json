@@ -1,0 +1,43 @@
+{
+  "id": "economics-present-bias-3",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.present_bias",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "Taking €100 today instead of €110 in one month implies what yearly interest rate, compounded monthly, in per cent?",
+  "value": 214,
+  "unit": "per cent a year",
+  "tolerance": 2,
+  "answer": "Yearly rate: 3.14 − 1 ≈ 214%",
+  "move": "Refusing a short wait can mean paying a huge price for now.",
+  "ask": "When I can't wait for something, what yearly rate am I really paying to have it today?",
+  "trap": "About 120%, multiplying 10% by twelve months.",
+  "hint": "Find the monthly rate, then let it compound for twelve months.",
+  "steps": [
+    "Monthly rate: 110 ÷ 100 = 1.10, so 10% a month",
+    "Over twelve months: 1.10^12 ≈ 3.14",
+    "Yearly rate: 3.14 − 1 ≈ 214%"
+  ],
+  "keywords": [
+    "impatience",
+    "discount rate",
+    "compounding",
+    "waiting"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thaler, Economics Letters, 1981",
+  "source_kind": "paper",
+  "reference": "Thaler, Some Empirical Evidence on Dynamic Inconsistency, Economics Letters, 1981",
+  "written": "2026-10-03"
+}

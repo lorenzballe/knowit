@@ -1,0 +1,33 @@
+{
+  "id": "science-quantum-nonsense-1",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.quantum_nonsense",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can't the brain run on delicate quantum effects, the way quantum healing books suggest?",
+  "answer": "Because the warm, wet brain destroys them at once. Max Tegmark calculated in 2000 that quantum states spread across neurons would fall apart within about a ten-trillionth of a second, while a neuron takes around a thousandth of a second to fire. Jostling molecules settle the quantum blur long before any thought could use it.",
+  "move": "When tiny effects are claimed in big warm systems, ask what destroys them.",
+  "ask": "When a product borrows the word quantum, do I ask what it would have to do?",
+  "keywords": [
+    "decoherence",
+    "quantum mind",
+    "brain",
+    "quantum healing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tegmark, Physical Review E, 2000",
+  "source_kind": "paper",
+  "reference": "Tegmark, Importance of quantum decoherence in brain processes, Physical Review E 61:4194–4206, 2000",
+  "written": "2026-09-26"
+}

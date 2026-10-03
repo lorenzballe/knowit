@@ -1,0 +1,38 @@
+{
+  "id": "food-processed-food-3",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.processed_food",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should official diet advice tell people to avoid ultra-processed foods as a category?",
+  "sides": [
+    "Yes, name the category",
+    "No, judge each food"
+  ],
+  "answer": "In a controlled trial, ultra-processed diets led people to eat about 500 kcal a day more, and a 2024 BMJ review of cohort studies tied them to higher risk of dozens of outcomes, from heart disease to depression. A simple category is easy to use in a shop. Brazil's guidelines have said so since 2014.",
+  "move": "It turns on whether processing itself harms, or what it usually adds.",
+  "ask": "Do I avoid things for what they are, or for what they usually come with?",
+  "counterpoint": "The category sweeps in wholemeal sliced bread, baked beans and baby formula alongside sweets and fizzy drinks. Britain's scientific advisers concluded in 2023 that the evidence was concerning but too uncertain to act on: the cohorts are observational, and these foods track income, stress and lifestyle. Advice on salt, sugar, fat and fibre already captures the harm.",
+  "keywords": [
+    "ultra-processed food",
+    "dietary guidelines",
+    "brazil",
+    "nutrition policy"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "SACN, Statement on processed foods and health, 2023",
+  "source_kind": "institution",
+  "reference": "Scientific Advisory Committee on Nutrition, SACN statement on processed foods and health, 2023",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-going-viral-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.going_viral",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 2020 Twitter began asking users who shared an unopened article whether they wanted to read it first. What changed?",
+  "options": [
+    "People opened articles 40% more",
+    "Nothing; users clicked straight past",
+    "Sharing almost stopped entirely"
+  ],
+  "correct": 0,
+  "answer": "People opened articles 40% more. Twitter reported that users opened articles 40% more often after seeing the prompt, and some then chose not to share at all. One question, asked at the moment of the tap, slowed posts that would otherwise have travelled on their headlines alone.",
+  "move": "A small pause before acting catches what speed lets through.",
+  "ask": "What do I forward or share quickly that I would think twice about after a one-second pause?",
+  "trap": "Users are on autopilot, so a pop-up gets dismissed without thought.",
+  "keywords": [
+    "twitter",
+    "read prompt",
+    "friction",
+    "sharing"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Twitter, product update, September 2020",
+  "source_kind": "company",
+  "reference": "Twitter Support, update on the prompt to read articles before retweeting, 24 September 2020",
+  "written": "2026-09-26"
+}

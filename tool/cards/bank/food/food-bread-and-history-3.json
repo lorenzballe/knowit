@@ -1,0 +1,42 @@
+{
+  "id": "food-bread-and-history-3",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.bread_and_history",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A mill turns 1,000 tonnes of wheat into white flour at 70% extraction. At wartime Britain's 85%, how many more tonnes of flour?",
+  "value": 150,
+  "unit": "tonnes",
+  "answer": "850 − 700 = 150 tonnes more flour, about a fifth more bread from the same wheat",
+  "move": "The cheapest new supply is often the waste you stop making.",
+  "ask": "What do I throw away out of habit that could cover something I am about to buy?",
+  "hint": "Work out each flour yield from the same 1,000 tonnes of wheat.",
+  "steps": [
+    "White flour: 1,000 × 0.70 = 700 tonnes",
+    "National flour: 1,000 × 0.85 = 850 tonnes",
+    "850 − 700 = 150 tonnes more flour, about a fifth more bread from the same wheat"
+  ],
+  "keywords": [
+    "national loaf",
+    "extraction rate",
+    "flour",
+    "second world war",
+    "shipping"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Collingham, The Taste of War, 2011",
+  "source_kind": "book",
+  "reference": "Collingham, The Taste of War: World War II and the Battle for Food, Allen Lane, 2011",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "science-mixing-cleaners-2",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.mixing_cleaners",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: mixing bleach with rubbing alcohol makes a stronger disinfectant than either alone?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The hypochlorite in bleach attacks the alcohol instead of the germs, and the reaction makes chloroform and other chlorinated compounds that irritate the lungs and can harm the liver and nerves. Each product works at its own strength alone; together they use each other up, and the fumes are the main thing left.",
+  "move": "Two good things combined can cancel each other and leave only the harm.",
+  "ask": "Where am I doubling up on remedies, assuming more must be better?",
+  "trap": "True, because two germ-killers should add up to more.",
+  "keywords": [
+    "bleach",
+    "rubbing alcohol",
+    "chloroform",
+    "haloform reaction",
+    "disinfectants"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Clayden et al., Organic Chemistry, 2012",
+  "source_kind": "book",
+  "reference": "Clayden, Greeves & Warren, Organic Chemistry, 2nd ed., Oxford University Press, 2012",
+  "written": "2026-09-26"
+}

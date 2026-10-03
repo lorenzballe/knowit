@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-fake-reviews-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.fake_reviews",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "On Yelp, which restaurants were most likely to post fake glowing reviews of themselves?",
+  "options": [
+    "Big chain branches",
+    "Independents whose ratings had slipped",
+    "Restaurants already rated highly"
+  ],
+  "correct": 1,
+  "answer": "Independents whose ratings had slipped. Luca and Zervas found about 16% of Yelp's Boston restaurant reviews were filtered as suspicious, and fraud rose when a restaurant's reputation weakened or competition stiffened; chains, with a brand to protect, cheated less. The reviews most worth faking belong to whoever has most to gain.",
+  "move": "Ask who gains most from a lie before guessing who told it.",
+  "ask": "When I see a glowing review, do I ask who most needed it to be written?",
+  "trap": "Big chains have the budgets and marketing teams to game reviews.",
+  "keywords": [
+    "yelp",
+    "review fraud",
+    "restaurants",
+    "boston"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Luca and Zervas, Management Science, 2016",
+  "source_kind": "paper",
+  "reference": "Michael Luca and Georgios Zervas, Fake It Till You Make It: Reputation, Competition, and Yelp Review Fraud, Management Science, 2016",
+  "written": "2026-09-26"
+}

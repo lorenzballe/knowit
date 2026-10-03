@@ -1,0 +1,40 @@
+{
+  "id": "music-taste-and-status-2",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.taste_and_status",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Between 1982 and 1992, how did the musical tastes of high-status Americans change, according to national surveys?",
+  "options": [
+    "They narrowed towards opera and classical",
+    "They hardly changed across the decade",
+    "They widened to take in more genres"
+  ],
+  "correct": 2,
+  "answer": "They widened. Richard Peterson and Roger Kern compared national arts surveys and found people with highbrow tastes increasingly also liked country, blues and rock. Status was moving from snobbery to omnivorousness, knowing a little of everything. The badge of rank became range, not refusal, and liking everything turned into a new way to stand out.",
+  "move": "When a status marker changes form, the ranking underneath usually survives.",
+  "ask": "What do I show off without realising it, through how wide my tastes appear?",
+  "trap": "Picturing the elite as snobs who scorn anything but classical.",
+  "keywords": [
+    "cultural omnivores",
+    "highbrow taste",
+    "status",
+    "arts surveys"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Peterson & Kern, American Sociological Review, 1996",
+  "source_kind": "paper",
+  "reference": "Peterson & Kern, Changing highbrow taste: from snob to omnivore, American Sociological Review, 1996",
+  "written": "2026-09-26"
+}

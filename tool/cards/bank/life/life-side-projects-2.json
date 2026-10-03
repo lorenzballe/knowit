@@ -1,0 +1,41 @@
+{
+  "id": "life-side-projects-2",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.side_projects",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Nobel-winning scientists are far more likely than other scientists to have serious arts hobbies. What does that link show by itself?",
+  "options": [
+    "That the two go together, cause unknown",
+    "That art sharpens scientific minds",
+    "That hobbies hold lesser scientists back"
+  ],
+  "correct": 0,
+  "answer": "That the two go together, cause unknown. Root-Bernstein and colleagues found Nobel laureates in science were much more likely than typical scientists to paint, play music, write or make crafts. The hobby may feed the science, or the same curiosity and energy may drive both. The survey alone cannot tell which way it runs.",
+  "move": "When a habit goes with success, ask what kind of person has both.",
+  "ask": "Which habit do I credit for someone's success that might simply come with the same kind of person?",
+  "trap": "A striking pattern among winners reads like a recipe for winning.",
+  "keywords": [
+    "nobel laureates",
+    "hobbies",
+    "arts",
+    "scientists",
+    "correlation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Root-Bernstein and colleagues, 2008",
+  "source_kind": "paper",
+  "reference": "Root-Bernstein and colleagues, Arts Foster Scientific Success: Avocations of Nobel, National Academy, Royal Society, and Sigma Xi Members, Journal of Psychology of Science and Technology, 2008",
+  "written": "2026-10-03"
+}

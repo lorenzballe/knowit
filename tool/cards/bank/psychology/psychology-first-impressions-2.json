@@ -1,0 +1,33 @@
+{
+  "id": "psychology-first-impressions-2",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.first_impressions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How does an interviewer's impression from a CV change the way the interview itself is run?",
+  "answer": "It steers it. Dougherty, Turban and Callender recorded real recruiters' interviews. Candidates who looked good on paper met a warmer manner, more selling of the job and less probing for information. The interview, meant to test the first impression, was run so as to confirm it. Strong CVs were met with a sales pitch.",
+  "move": "Check whether your test of an impression is really built to confirm it.",
+  "ask": "When I meet someone I already like on paper, do I ask them harder questions or just easier ones?",
+  "keywords": [
+    "job interviews",
+    "recruiters",
+    "cvs",
+    "self-fulfilling impressions"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dougherty, Turban & Callender, J Applied Psychology, 1994",
+  "source_kind": "paper",
+  "reference": "Dougherty, Turban & Callender, Confirming first impressions in the employment interview: a field study of interviewer behavior, Journal of Applied Psychology, 1994",
+  "written": "2026-10-03"
+}

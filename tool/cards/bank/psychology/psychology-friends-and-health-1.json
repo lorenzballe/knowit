@@ -1,0 +1,33 @@
+{
+  "id": "psychology-friends-and-health-1",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.friends_and_health",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When teenagers left home for university, which of their close relationships faded unless they kept in touch?",
+  "answer": "Friendships, not family. Roberts and Dunbar followed students for 18 months after they moved. Emotional closeness to friends fell when contact dropped, while closeness to relatives held up even with little contact. Friendship is kept alive by time and attention; kinship survives neglect. A friend unseen for a year is often a friend no longer.",
+  "move": "Friendship runs on regular contact; schedule it as you would anything vital.",
+  "ask": "Which friend have I not contacted in months, simply because I assumed the friendship would wait?",
+  "keywords": [
+    "friendship",
+    "family",
+    "relationship decay",
+    "robin dunbar"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Roberts & Dunbar, Evolution and Human Behavior, 2011",
+  "source_kind": "paper",
+  "reference": "Roberts & Dunbar, The costs of family and friends: an 18-month longitudinal study of relationship maintenance and decay, Evolution and Human Behavior, 2011",
+  "written": "2026-10-03"
+}

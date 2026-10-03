@@ -1,0 +1,40 @@
+{
+  "id": "life-comfort-zone-2",
+  "topic": "life",
+  "genre": "life.growth",
+  "strand": "life.growth.comfort_zone",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Sam dreads speaking up, so he skips every meeting where he might have to. What does that do to the fear?",
+  "options": [
+    "It fades with time",
+    "It is kept alive"
+  ],
+  "correct": 1,
+  "answer": "It keeps it alive. Each skipped meeting brings relief, which rewards the avoidance, and it also means Sam never learns that speaking would have gone fine. Craske and colleagues describe fear fading only when the feared moment is met and the expected disaster fails to arrive.",
+  "move": "A fear you never test can only ever be confirmed.",
+  "ask": "What do I keep avoiding, and when did I last test whether the thing I fear actually happens?",
+  "trap": "Staying away from the fear seems to give it time to fade.",
+  "keywords": [
+    "avoidance",
+    "fear",
+    "anxiety",
+    "public speaking",
+    "michelle craske"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Craske and colleagues, Behaviour Research and Therapy, 2014",
+  "source_kind": "paper",
+  "reference": "Craske, Treanor, Conway, Zbozinek and Vervliet, Maximizing exposure therapy: An inhibitory learning approach, Behaviour Research and Therapy, 2014",
+  "written": "2026-10-03"
+}

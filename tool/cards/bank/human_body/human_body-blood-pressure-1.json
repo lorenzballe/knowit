@@ -1,0 +1,33 @@
+{
+  "id": "human_body-blood-pressure-1",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.blood_pressure",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do UK guidelines want readings taken at home or over a whole day before diagnosing high blood pressure?",
+  "answer": "Because a single clinic reading often runs high. The visit itself raises pressure in many people, the white-coat effect, and pressure swings through the day. NICE asks for a cuff worn for a day, or a week of home readings, to confirm. A diagnosis for life should not rest on one nervous minute.",
+  "move": "One reading taken under stress measures the stress as much as the person.",
+  "ask": "Which judgement about myself rests on one bad day rather than many ordinary ones?",
+  "keywords": [
+    "blood pressure",
+    "white-coat effect",
+    "home monitoring",
+    "diagnosis"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NICE guideline NG136, 2019",
+  "source_kind": "institution",
+  "reference": "National Institute for Health and Care Excellence, Hypertension in adults: diagnosis and management, NG136, 2019",
+  "written": "2026-09-26"
+}

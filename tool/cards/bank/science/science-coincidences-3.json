@@ -1,0 +1,39 @@
+{
+  "id": "science-coincidences-3",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.coincidences",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "True or false: most cancer clusters investigated by US health agencies turned out to have an environmental cause?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A 2012 review of 428 US investigations over two decades confirmed a real excess of cancer in 72, and almost never found a cause. With thousands of towns and dozens of cancer types, some neighbourhoods will show a cluster by chance alone, and those are the ones people notice and report.",
+  "move": "Ask how many places could have produced the pattern before suspecting this one.",
+  "ask": "When bad things bunch up around me, have I asked how often such a bunch happens by chance?",
+  "trap": "True, since a cluster feels too striking to be chance.",
+  "keywords": [
+    "cancer clusters",
+    "coincidences",
+    "public health",
+    "investigations"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goodman et al., Critical Reviews in Toxicology, 2012",
+  "source_kind": "paper",
+  "reference": "Goodman, Naiman, Goodman & LaKind, Cancer clusters in the USA: what do the last twenty years of state and federal investigations tell us?, Critical Reviews in Toxicology 42:474–490, 2012",
+  "written": "2026-09-26"
+}

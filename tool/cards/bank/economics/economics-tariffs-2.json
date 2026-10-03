@@ -1,0 +1,43 @@
+{
+  "id": "economics-tariffs-2",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.tariffs",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A car sells for €10,000; its imported parts cost €6,000, untaxed. A 10% tariff on finished cars raises the assembler's margin by what percent?",
+  "value": 25,
+  "unit": "percent",
+  "answer": "Margin rise: 1,000 ÷ 4,000 = 25%",
+  "move": "Measure a tax against the margin it touches, not the sticker price.",
+  "ask": "When a rule changes the price of what I sell, how much does it change what I keep?",
+  "trap": "Taking a 10% tariff as 10% of protection for the local maker.",
+  "hint": "Work out what assembly earns per car before and after the tariff.",
+  "steps": [
+    "Without the tariff, assembly earns 10,000 − 6,000 = €4,000 per car",
+    "The tariff lets the local price rise to €11,000",
+    "Assembly now earns 11,000 − 6,000 = €5,000",
+    "Margin rise: 1,000 ÷ 4,000 = 25%"
+  ],
+  "keywords": [
+    "tariffs",
+    "effective protection",
+    "car assembly",
+    "imported parts"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Corden, Journal of Political Economy, 1966",
+  "source_kind": "paper",
+  "reference": "Corden, The Structure of a Tariff System and the Effective Protective Rate, Journal of Political Economy, 1966",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "food-caffeine-3",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.caffeine",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "At a big coffee chain, which holds more caffeine: a single espresso or a large cup of filter coffee?",
+  "options": [
+    "The single espresso",
+    "About the same",
+    "The large filter coffee"
+  ],
+  "correct": 2,
+  "answer": "The large filter coffee, by about four times. Starbucks lists about 75 mg for a solo espresso and over 300 mg for a 473 ml grande of filter roast. Espresso is stronger per sip, but the big cup holds about 15 times the liquid. A tiny cup tastes strong; a big mug carries the dose.",
+  "move": "Strength per sip and total amount are two separate questions.",
+  "ask": "Where am I judging how much I take by how strong it feels, not by the size?",
+  "trap": "The espresso, because it tastes the strongest and most intense.",
+  "keywords": [
+    "espresso",
+    "filter coffee",
+    "caffeine content",
+    "serving size"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Starbucks, beverage nutrition information, 2024",
+  "source_kind": "company",
+  "reference": "Starbucks Coffee Company, Nutrition information for espresso and brewed coffee beverages, 2024",
+  "written": "2026-10-03"
+}

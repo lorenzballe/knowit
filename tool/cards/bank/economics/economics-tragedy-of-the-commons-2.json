@@ -1,0 +1,42 @@
+{
+  "id": "economics-tragedy-of-the-commons-2",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.tragedy_of_the_commons",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Ten herders share a field. An extra cow earns its owner €100 but costs each herder €20 in grass. Village's loss, in euros?",
+  "value": 100,
+  "unit": "euros",
+  "answer": "The village ends 180 − 80 = €100 poorer",
+  "move": "Gains you keep and costs you share push everyone past the limit.",
+  "ask": "Where do I take a little more of something shared because the cost is spread over everyone?",
+  "trap": "Seeing the owner's €80 profit and calling the cow worthwhile.",
+  "hint": "Work out the owner's gain first, then everyone else's loss.",
+  "steps": [
+    "The owner gains 100 − 20 = €80",
+    "The other nine lose 9 × 20 = €180",
+    "The village ends 180 − 80 = €100 poorer"
+  ],
+  "keywords": [
+    "tragedy of the commons",
+    "overgrazing",
+    "shared resources",
+    "herders"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hardin, Science, 1968",
+  "source_kind": "arithmetic",
+  "reference": "Garrett Hardin, The Tragedy of the Commons, Science, 1968",
+  "written": "2026-10-03"
+}

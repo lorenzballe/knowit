@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-burden-of-proof-2",
+  "topic": "philosophy",
+  "genre": "philosophy.arguments",
+  "strand": "philosophy.arguments.burden_of_proof",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "A thorough inspection finds no termites in a house. Is that absence of evidence evidence that none are there?",
+  "options": [
+    "Yes, if the search would likely find them",
+    "No, absence of evidence proves nothing",
+    "Only if the house is new"
+  ],
+  "correct": 0,
+  "answer": "Yes, if the search would probably have found them. A null result counts as much as the search was likely to succeed: a trained inspector with a probe tells a lot, a glance under the sink very little. The famous slogan is only half true. A silent smoke alarm is saying something.",
+  "move": "Weigh a search that found nothing by how hard it really looked.",
+  "ask": "When I say I found no sign of a problem, how hard did I actually look?",
+  "trap": "No, repeating the slogan that absence of evidence is not evidence.",
+  "keywords": [
+    "argument from ignorance",
+    "absence of evidence",
+    "bayesian reasoning",
+    "search",
+    "inspection"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hahn & Oaksford, Psychological Review, 2007",
+  "source_kind": "paper",
+  "reference": "Hahn & Oaksford, The Rationality of Informal Argumentation: A Bayesian Approach to Reasoning Fallacies, Psychological Review 114 (3), 2007",
+  "written": "2026-10-03"
+}

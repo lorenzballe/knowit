@@ -1,0 +1,39 @@
+{
+  "id": "life-comparison-1",
+  "topic": "life",
+  "genre": "life.handle_setbacks",
+  "strand": "life.handle_setbacks.comparison",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: judged from television footage, Olympic silver medallists looked happier than bronze medallists?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Medvec, Madey and Gilovich had viewers rate athletes' faces at the 1992 Barcelona Games, and bronze medallists looked happier than silver. Silver winners compared themselves with the gold they had just missed; bronze winners compared themselves with finishing outside the medals. The happier face belonged to the worse result.",
+  "move": "Ask what you are comparing yourself with before judging how you did.",
+  "ask": "In what part of my life am I a silver medallist, staring at the gold I missed?",
+  "trap": "Silver is the better result, so it should feel better.",
+  "keywords": [
+    "olympic medallists",
+    "counterfactual thinking",
+    "satisfaction",
+    "comparison"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Medvec, Madey and Gilovich, JPSP, 1995",
+  "source_kind": "paper",
+  "reference": "Medvec, Madey and Gilovich, When less is more: Counterfactual thinking and satisfaction among Olympic medalists, Journal of Personality and Social Psychology, 1995",
+  "written": "2026-10-03"
+}

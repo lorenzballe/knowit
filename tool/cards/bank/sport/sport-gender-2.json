@@ -1,0 +1,39 @@
+{
+  "id": "sport-gender-2",
+  "topic": "sport",
+  "genre": "sport.sport_and_society",
+  "strand": "sport.sport_and_society.gender",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should women's national football teams be paid the same as men's when the men's matches bring in more money?",
+  "sides": [
+    "Yes, equal pay",
+    "No, pay by revenue"
+  ],
+  "answer": "Yes. Both teams represent the same country in the same shirt, and the revenue gap reflects decades of bans, such as England's from 1921 to 1971, and thin promotion, not the quality of the work. In 2022 the US federation agreed equal pay for both national teams, pooling World Cup prize money.",
+  "move": "Whichever side you took, the hinge is whether pay rewards the role or the revenue.",
+  "ask": "Is my own pay set by the work I do or the money it brings in, and is that fair?",
+  "counterpoint": "No. Players are paid from what their games earn, and the men's World Cup generates far more broadcast and sponsorship money than the women's; prize money follows it. Equal pay funded from the men's revenue is a subsidy, which may be right, but should be argued as one. Growing women's revenue, as recent record crowds show, is the lasting route.",
+  "keywords": [
+    "equal pay",
+    "women's football",
+    "national teams",
+    "prize money",
+    "us soccer"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "U.S. Soccer, collective bargaining agreements, 2022",
+  "source_kind": "primary_document",
+  "reference": "U.S. Soccer Federation, collective bargaining agreements with the USWNT and USMNT players associations, May 2022",
+  "written": "2026-09-26"
+}

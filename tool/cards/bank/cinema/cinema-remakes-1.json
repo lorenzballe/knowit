@@ -1,0 +1,39 @@
+{
+  "id": "cinema-remakes-1",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.remakes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: the 1941 Maltese Falcon with Humphrey Bogart was Hollywood's first film of Hammett's novel?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Warner Bros. had filmed it in 1931 and again, loosely, as Satan Met a Lady in 1936. John Huston's version was the studio's third go at the same book. The one that worked is remembered as the original, while the first attempts sit forgotten in the vaults.",
+  "move": "The version that lasted is often the third try, not the first.",
+  "ask": "What classic I admire might be someone's third attempt, and what am I giving up after one?",
+  "trap": "True, because a classic is assumed to be the first telling.",
+  "keywords": [
+    "the maltese falcon",
+    "john huston",
+    "remakes",
+    "dashiell hammett"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Verevis, Film Remakes",
+  "source_kind": "book",
+  "reference": "Constantine Verevis, Film Remakes, Edinburgh University Press, 2006",
+  "written": "2026-10-03"
+}

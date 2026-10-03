@@ -1,0 +1,33 @@
+{
+  "id": "human_body-exercise-and-the-brain-2",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.exercise_and_the_brain",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do ideas tend to come more easily while walking, even on a treadmill facing a blank wall?",
+  "answer": "Because the walking itself, not the scenery, loosens idea generation. In Oppezzo and Schwartz's experiments, most people produced more creative uses for everyday objects while walking than while sitting, even indoors facing a wall, and the boost lingered briefly after they sat down. Problems with one right answer did not improve.",
+  "move": "Match the setting to the task: move to widen, sit to narrow.",
+  "ask": "Which problem could I take for a walk this week instead of staring at it at my desk?",
+  "keywords": [
+    "walking",
+    "creativity",
+    "brainstorming",
+    "divergent thinking"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Oppezzo and Schwartz, J Exp Psychol LMC, 2014",
+  "source_kind": "paper",
+  "reference": "Oppezzo M, Schwartz DL, Give your ideas some legs: the positive effect of walking on creative thinking, Journal of Experimental Psychology: Learning, Memory, and Cognition, 2014",
+  "written": "2026-09-26"
+}

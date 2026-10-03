@@ -1909,4 +1909,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String weekRecapMore(int n) {
     return 'Plus ile haftandan $n tane daha';
   }
+
+  @override
+  String get plusInTheApp =>
+      'Astute+ uygulamada: ücretsiz denemeni başlatmak için Astute\'u iPhone veya Android\'e indir.';
 }

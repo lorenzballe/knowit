@@ -1,0 +1,33 @@
+{
+  "id": "sport-pressure-1",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.pressure",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do football analysts put a single number on how fiercely a team presses its opponents?",
+  "answer": "By counting passes allowed per defensive action. In the part of the pitch where the opponent builds up, divide the passes they make by the tackles, interceptions and fouls made against them. A team that lets 7 passes go before acting presses hard; one that allows 15 waits. A style becomes a ratio.",
+  "move": "Turn a vague style into a ratio you can count every week.",
+  "ask": "Which vague quality in my work could I turn into a simple count, so I can see it clearly?",
+  "keywords": [
+    "pressing",
+    "ppda",
+    "football analytics",
+    "defensive actions"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Trainor, StatsBomb, 2014",
+  "source_kind": "company",
+  "reference": "Colin Trainor, Passes Allowed per Defensive Action (PPDA), StatsBomb, 2014",
+  "written": "2026-09-26"
+}

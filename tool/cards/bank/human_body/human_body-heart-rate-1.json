@@ -1,0 +1,33 @@
+{
+  "id": "human_body-heart-rate-1",
+  "topic": "human_body",
+  "genre": "human_body.your_body_in_numbers",
+  "strand": "human_body.your_body_in_numbers.heart_rate",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which minute of a treadmill test says more about survival than the hardest minute of effort?",
+  "answer": "The minute after stopping. Cole's team followed about 2,400 adults after exercise tests and found that a heart rate falling by 12 beats or fewer in the first minute of recovery went with about four times the death rate over six years. A quick fall shows the nerves that brake the heart are working well.",
+  "move": "How fast something recovers can say more than how hard it performs.",
+  "ask": "After a stressful day, how quickly do I settle back down, and what helps me do it?",
+  "keywords": [
+    "heart rate recovery",
+    "exercise test",
+    "vagus nerve",
+    "mortality"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cole et al., NEJM, 1999",
+  "source_kind": "paper",
+  "reference": "Cole CR, Blackstone EH, Pashkow FJ, Snader CE, Lauer MS, Heart-rate recovery immediately after exercise as a predictor of mortality, New England Journal of Medicine, 1999",
+  "written": "2026-09-26"
+}

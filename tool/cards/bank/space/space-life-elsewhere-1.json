@@ -1,0 +1,33 @@
+{
+  "id": "space-life-elsewhere-1",
+  "topic": "space",
+  "genre": "space.questions_with_no_answer_yet",
+  "strand": "space.questions_with_no_answer_yet.life_elsewhere",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why would finding oxygen in an alien planet's air not prove that anything lives there?",
+  "answer": "Because light can make it too. Ultraviolet starlight splits water high in the air, and if the hydrogen escapes to space, oxygen piles up on a lifeless world. Oxygen together with methane is stronger evidence: the two destroy each other, so finding both means something keeps replacing them.",
+  "move": "One sign proves little; look for signs that should not exist together.",
+  "ask": "Which single clue am I treating as proof, when I should look for a second that confirms it?",
+  "keywords": [
+    "biosignatures",
+    "oxygen",
+    "methane",
+    "exoplanet atmospheres"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Meadows et al., Astrobiology, 2018",
+  "source_kind": "paper",
+  "reference": "Meadows et al., Exoplanet Biosignatures: Understanding Oxygen as a Biosignature in the Context of Its Environment, Astrobiology, 2018",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "sport-visualisation-3",
+  "topic": "sport",
+  "genre": "sport.the_mind_in_sport",
+  "strand": "sport.the_mind_in_sport.visualisation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: people who only imagined straining a finger muscle, daily for four weeks, gained no measurable strength?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In Yue and Cole's experiment, imagined maximal contractions of a little-finger muscle raised its strength by 22%, against about 30% for real contractions and under 4% for people who did neither. The muscle did not grow; the gain came from the nervous system learning to drive it harder.",
+  "move": "Part of any skill lives in the signal, not the muscle.",
+  "ask": "Which of my skills could I keep training in my head when I cannot practise for real?",
+  "trap": "Assuming strength can only come from muscles doing real work.",
+  "keywords": [
+    "motor imagery",
+    "strength",
+    "nervous system",
+    "mental training"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Yue & Cole, Journal of Neurophysiology, 1992",
+  "source_kind": "paper",
+  "reference": "Guang Yue & Kelly J. Cole, Strength increases from the motor program: comparison of training with maximal voluntary and imagined muscle contractions, Journal of Neurophysiology, 1992",
+  "written": "2026-09-26"
+}

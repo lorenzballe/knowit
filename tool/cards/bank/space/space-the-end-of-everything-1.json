@@ -1,0 +1,33 @@
+{
+  "id": "space-the-end-of-everything-1",
+  "topic": "space",
+  "genre": "space.questions_with_no_answer_yet",
+  "strand": "space.questions_with_no_answer_yet.the_end_of_everything",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When does Earth stop being a home for complex life: when the Sun dies, or long before?",
+  "answer": "Long before. The Sun brightens by roughly 10% every billion years as it ages. In about a billion years that extra heat will start driving the oceans off into space, while the swollen red giant phase is some 5 billion years away. The quiet brightening, not the dramatic death, sets the deadline.",
+  "move": "The slow change often ends things before the dramatic one arrives.",
+  "ask": "Which slow, steady change in my life matters more than the dramatic event I worry about?",
+  "keywords": [
+    "sun",
+    "red giant",
+    "habitability",
+    "future of earth"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schröder & Connon Smith, MNRAS, 2008",
+  "source_kind": "paper",
+  "reference": "Schröder & Connon Smith, Distant future of the Sun and Earth revisited, Monthly Notices of the Royal Astronomical Society, 2008",
+  "written": "2026-10-03"
+}

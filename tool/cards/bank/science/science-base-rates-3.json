@@ -1,0 +1,39 @@
+{
+  "id": "science-base-rates-3",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.base_rates",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "True or false: in Britain, most people killed on the roads die in crashes where no driver was over the drink-drive limit?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Crashes involving a driver over the limit account for roughly one road death in six in Great Britain. That does not make sober driving the danger: far more journeys are sober, so they supply most deaths even though each drunk mile is far riskier. Compare deaths per mile instead.",
+  "move": "Divide by how common something is before calling it the main danger.",
+  "ask": "When I hear most accidents happen somewhere, do I ask how much time people spend there?",
+  "trap": "False, because drink-driving is famously the big killer on roads.",
+  "keywords": [
+    "drink-driving",
+    "road deaths",
+    "base rates",
+    "risk"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "UK Department for Transport, road casualty statistics",
+  "source_kind": "institution",
+  "reference": "Department for Transport, Reported Road Casualties in Great Britain: Estimates for Accidents Involving Illegal Alcohol Levels, 2022",
+  "written": "2026-09-26"
+}

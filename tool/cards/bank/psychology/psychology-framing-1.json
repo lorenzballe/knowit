@@ -1,0 +1,40 @@
+{
+  "id": "psychology-framing-1",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.framing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "People tasted the same minced beef labelled either 75% lean or 25% fat. How did the label affect ratings after eating?",
+  "options": [
+    "Rated better when labelled 75% lean",
+    "No difference once they had tasted it",
+    "Rated better when labelled 25% fat"
+  ],
+  "correct": 0,
+  "answer": "Rated better when labelled 75% lean. It was judged leaner, higher in quality and less greasy, and the effect shrank but did not vanish after tasting. Both labels state the same fact; one draws the eye to the meat, the other to the fat. The tongue followed the label.",
+  "move": "Restate any figure in its opposite terms before judging it.",
+  "ask": "What claim did I accept recently that would have felt different stated the other way round?",
+  "trap": "No difference once tasted: the mouth should overrule a label.",
+  "keywords": [
+    "framing",
+    "food labels",
+    "minced beef",
+    "attribute framing"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Levin & Gaeth, Journal of Consumer Research, 1988",
+  "source_kind": "paper",
+  "reference": "Levin & Gaeth, How consumers are affected by the framing of attribute information before and after consuming the product, Journal of Consumer Research, 1988",
+  "written": "2026-10-03"
+}

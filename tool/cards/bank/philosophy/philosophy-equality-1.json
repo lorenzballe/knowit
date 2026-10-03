@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-equality-1",
+  "topic": "philosophy",
+  "genre": "philosophy.justice",
+  "strand": "philosophy.justice.equality",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Derek Parfit say that blinding everyone with sight would be better in one way, for some believers in equality?",
+  "answer": "Because it would make people more equal. Parfit's levelling-down objection says that if equality matters in itself, taking sight from the sighted improves things in one respect, though it helps nobody. Many drew the lesson that what matters is helping the worse off, not shrinking the gap. Priority survives where pure equality stumbles.",
+  "move": "Ask whether closing a gap helps anyone, or only shrinks the gap.",
+  "ask": "When I want things to be equal, do I want the worse-off helped, or the better-off brought down?",
+  "keywords": [
+    "derek parfit",
+    "levelling down",
+    "equality",
+    "prioritarianism"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Parfit, Equality or Priority?, 1995",
+  "source_kind": "book",
+  "reference": "Parfit, Equality or Priority?, Lindley Lecture, University of Kansas, 1995",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "art-composition-2",
+  "topic": "art",
+  "genre": "art.look_closer",
+  "strand": "art.look_closer.composition",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Do people's eyes follow the same path over a painting when they look at it with different questions in mind?",
+  "answer": "No. Alfred Yarbus tracked eyes over Ilya Repin's painting of an exile returning home. Asked to judge the family's wealth, eyes roamed furniture and clothes; asked their ages, they jumped from face to face; asked how long he had been away, they shuttled between faces. One canvas, several paintings seen.",
+  "move": "The question you bring decides what you will notice.",
+  "ask": "What question am I bringing into this situation that decides what I will notice?",
+  "keywords": [
+    "alfred yarbus",
+    "eye movements",
+    "ilya repin",
+    "viewing"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Yarbus, Eye Movements and Vision, 1967",
+  "source_kind": "book",
+  "reference": "Alfred L. Yarbus, Eye Movements and Vision, Plenum Press, 1967",
+  "written": "2026-10-03"
+}

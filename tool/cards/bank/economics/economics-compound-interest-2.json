@@ -1,0 +1,33 @@
+{
+  "id": "economics-compound-interest-2",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.compound_interest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can someone pay a loan every single month and still owe more each year?",
+  "answer": "When the payments are smaller than the interest. A €20,000 loan at 6% adds €1,200 of interest a year; paying €80 a month covers only €960, so the balance grows by €240, and next year's interest is charged on the larger sum. Compounding works on debts too: the borrower pays faithfully while the balance climbs.",
+  "move": "Check that a payment beats the interest before calling it progress.",
+  "ask": "Do my monthly payments on what I owe actually cover more than the interest?",
+  "keywords": [
+    "loans",
+    "compound interest",
+    "repayments",
+    "debt"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Loan amortisation arithmetic",
+  "source_kind": "arithmetic",
+  "reference": "Brealey, Myers & Allen, Principles of Corporate Finance, 13th edition, McGraw-Hill, 2020",
+  "written": "2026-10-03"
+}

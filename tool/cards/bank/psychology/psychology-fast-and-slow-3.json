@@ -1,0 +1,40 @@
+{
+  "id": "psychology-fast-and-slow-3",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.fast_and_slow",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Offered $3,400 this month or $3,800 next month, who more often waits: people good or bad at trick puzzles?",
+  "options": [
+    "People good at the puzzles",
+    "People bad at the puzzles",
+    "Neither group, equally"
+  ],
+  "correct": 0,
+  "answer": "People good at the puzzles. Frederick found that those who resisted the quick wrong answers on his three-question test more often took the larger, later sum, a return of about 12% in one month. Checking a first impulse looks like one habit, whether the impulse is an answer to a riddle or cash in hand.",
+  "move": "The pause that catches a wrong answer also guards the wallet.",
+  "ask": "When an offer says now or never, do I pause long enough to check what waiting would earn me?",
+  "trap": "Assuming puzzle skill has nothing to do with patience over money.",
+  "keywords": [
+    "cognitive reflection test",
+    "patience",
+    "delayed rewards",
+    "impulsiveness"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frederick, Journal of Economic Perspectives, 2005",
+  "source_kind": "paper",
+  "reference": "Frederick, Cognitive reflection and decision making, Journal of Economic Perspectives, 2005",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "human_body-heart-rate-3",
+  "topic": "human_body",
+  "genre": "human_body.your_body_in_numbers",
+  "strand": "human_body.your_body_in_numbers.heart_rate",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Pulse rises about 8.5 beats a minute per °C of fever. Resting at 66, what is it at 39 °C instead of 37 °C?",
+  "value": 83,
+  "unit": "beats a minute",
+  "answer": "66 + 17 = 83 beats a minute",
+  "move": "Before worrying about a changed number, ask what ordinary cause would predict it.",
+  "ask": "When a number about my health jumps, do I first look for the ordinary explanation?",
+  "trap": "Reading a racing pulse in a fever as a separate heart problem.",
+  "hint": "Find how many degrees of fever there are, then add the beats each one brings.",
+  "steps": [
+    "39 − 37 = 2 °C of fever",
+    "2 × 8.5 = 17 extra beats",
+    "66 + 17 = 83 beats a minute"
+  ],
+  "keywords": [
+    "fever",
+    "heart rate",
+    "body temperature",
+    "pulse"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Karjalainen and Viitasalo, Arch Intern Med, 1986",
+  "source_kind": "paper",
+  "reference": "Karjalainen J, Viitasalo M, Fever and cardiac rhythm, Archives of Internal Medicine, 1986",
+  "written": "2026-09-26"
+}

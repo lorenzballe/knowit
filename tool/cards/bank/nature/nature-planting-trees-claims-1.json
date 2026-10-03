@@ -1,0 +1,33 @@
+{
+  "id": "nature-planting-trees-claims-1",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.planting_trees_claims",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do some ecologists oppose planting trees on open grasslands and savannas, even to fight climate change?",
+  "answer": "Because those lands were never forests. Many grasslands and savannas are ancient ecosystems kept open by fire, grazing and drought, with much of their carbon locked in deep roots and soil. Trees planted there shade out native plants, can dry up streams and feed hotter fires. A living prairie becomes a plantation.",
+  "move": "Before restoring something, check what was there before you assumed it was missing.",
+  "ask": "Before I fix something in my life, have I checked that it was ever broken?",
+  "keywords": [
+    "tree planting",
+    "grasslands",
+    "savannas",
+    "afforestation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Veldman et al., BioScience, 2015",
+  "source_kind": "paper",
+  "reference": "Veldman et al., Where tree planting and forest expansion are bad for biodiversity and ecosystem services, BioScience, 2015",
+  "written": "2026-10-03"
+}

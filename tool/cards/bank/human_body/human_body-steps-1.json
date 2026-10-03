@@ -1,0 +1,33 @@
+{
+  "id": "human_body-steps-1",
+  "topic": "human_body",
+  "genre": "human_body.your_body_in_numbers",
+  "strand": "human_body.your_body_in_numbers.steps",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Past how many daily steps did extra walking stop lowering the risk of death, in pooled data from 15 studies?",
+  "answer": "About 6,000 to 8,000 for people over 60, and 8,000 to 10,000 for younger adults. Paluch's meta-analysis of 15 cohorts found risk fell steeply from the lowest counts, then flattened. The biggest gain belongs to the least active. The first extra thousand steps off the sofa is worth more than the twelfth.",
+  "move": "Gains are biggest where the starting point is lowest.",
+  "ask": "Where would a small first step help me far more than polishing what I already do well?",
+  "keywords": [
+    "daily steps",
+    "mortality",
+    "walking",
+    "physical activity"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Paluch et al., Lancet Public Health, 2022",
+  "source_kind": "paper",
+  "reference": "https://www.thelancet.com/journals/lanpub/article/PIIS2468-2667(21)00302-9/fulltext",
+  "written": "2026-09-26"
+}

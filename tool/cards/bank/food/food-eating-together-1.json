@@ -1,0 +1,40 @@
+{
+  "id": "food-eating-together-1",
+  "topic": "food",
+  "genre": "food.eat_smarter",
+  "strand": "food.eat_smarter.eating_together",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Teens who eat family dinners do better at school and drink less. Followed over years, how much of that link held?",
+  "options": [
+    "Most of it faded",
+    "It grew stronger",
+    "All of it held"
+  ],
+  "correct": 0,
+  "answer": "Most of it faded. Musick and Meier followed thousands of US teenagers into young adulthood and took account of family income, parents' time and closeness. Most of the dinners' apparent benefits shrank or vanished; a modest link with fewer depressive symptoms remained. Families who manage regular dinners differ in many other ways.",
+  "move": "A good habit can be a sign of a good situation, not its cause.",
+  "ask": "What good thing in my family might be a sign of something deeper, rather than the cause?",
+  "trap": "All of it held, since shared meals look so clearly like the cause.",
+  "keywords": [
+    "family dinners",
+    "adolescents",
+    "wellbeing",
+    "causality"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Musick & Meier, Journal of Marriage and Family, 2012",
+  "source_kind": "paper",
+  "reference": "Musick & Meier, Assessing causality and persistence in associations between family dinners and adolescent well-being, Journal of Marriage and Family, 2012",
+  "written": "2026-10-03"
+}

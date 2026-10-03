@@ -1,0 +1,33 @@
+{
+  "id": "life-curiosity-1",
+  "topic": "life",
+  "genre": "life.ask_better_questions",
+  "strand": "life.ask_better_questions.curiosity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does knowing a little about a subject make you more curious about it than knowing nothing at all?",
+  "answer": "Because curiosity needs a visible gap. Loewenstein argued that it is triggered when attention falls on a gap between what one knows and what one wants to know. Knowing nothing, there is no gap to notice; knowing some, the missing piece stands out. A crossword with three clues left nags more than a blank one.",
+  "move": "To feel curious, learn just enough to see what is missing.",
+  "ask": "Which subject do I find dull only because I know too little about it to see the gaps?",
+  "keywords": [
+    "curiosity",
+    "information gap",
+    "george loewenstein",
+    "knowledge"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Loewenstein, Psychological Bulletin, 1994",
+  "source_kind": "paper",
+  "reference": "Loewenstein, The psychology of curiosity: A review and reinterpretation, Psychological Bulletin, 1994",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "music-perfect-pitch-2",
+  "topic": "music",
+  "genre": "music.music_and_the_brain",
+  "strand": "music.music_and_the_brain.perfect_pitch",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: musicians with perfect pitch can be worse than others at naming intervals in an unusual key?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Ken'ichi Miyazaki had musicians name intervals, the distance between two notes, set in C or in out-of-tune keys. Those with perfect pitch did well in C but slipped badly in the odd keys, while listeners who judged by relative pitch stayed steady. They had been reading note names, not hearing distances.",
+  "move": "A strong shortcut can starve the slower skill it replaces.",
+  "ask": "Which shortcut of mine works so well that I have stopped building the skill underneath?",
+  "trap": "Assuming a rarer, stronger pitch skill wins at every pitch task.",
+  "keywords": [
+    "perfect pitch",
+    "intervals",
+    "relative pitch",
+    "ken'ichi miyazaki"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Miyazaki, Music Perception, 1993",
+  "source_kind": "paper",
+  "reference": "Miyazaki, Absolute pitch as an inability: identification of musical intervals in a tonal context, Music Perception, 1993",
+  "written": "2026-09-26"
+}

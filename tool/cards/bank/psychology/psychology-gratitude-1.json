@@ -1,0 +1,33 @@
+{
+  "id": "psychology-gratitude-1",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.gratitude",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When new sorority members received gifts during a welcome week, what made them most grateful?",
+  "answer": "How thoughtful the giver seemed, more than what the gifts were worth. Algoe, Haidt and Gable followed gift-giving among American sorority sisters: gratitude tracked the sense that the giver understood and cared, and predicted closeness a month later. A cheap present that shows attention beats a costly one that shows a budget.",
+  "move": "A gift's weight lies in the attention it shows, not its price.",
+  "ask": "Who could I thank with something small that shows I noticed what they care about?",
+  "keywords": [
+    "gratitude",
+    "gifts",
+    "relationships",
+    "thoughtfulness"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Algoe, Haidt & Gable, Emotion, 2008",
+  "source_kind": "paper",
+  "reference": "Algoe, Haidt & Gable, Beyond reciprocity: gratitude and relationships in everyday life, Emotion, 2008",
+  "written": "2026-10-03"
+}

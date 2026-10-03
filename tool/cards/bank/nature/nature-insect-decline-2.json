@@ -1,0 +1,33 @@
+{
+  "id": "nature-insect-decline-2",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.insect_decline",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did German meadows lose more insects when surrounded by farmland, even if the meadow itself was untouched?",
+  "answer": "Because insects live across a landscape, not in one field. Seibold and colleagues sampled German grasslands every year from 2008 to 2017 and found insect and spider biomass down 67%, species down about a third. Losses were steepest where more of the surrounding land was ploughed. Insects fly, drift and breed beyond the meadow's hedge.",
+  "move": "Look past the fence: what surrounds a thing shapes what happens inside.",
+  "ask": "What around my home or work is shaping my days more than the place itself?",
+  "keywords": [
+    "arthropod decline",
+    "grasslands",
+    "germany",
+    "farmland"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Seibold et al., Nature, 2019",
+  "source_kind": "paper",
+  "reference": "https://www.nature.com/articles/s41586-019-1684-3",
+  "written": "2026-10-03"
+}

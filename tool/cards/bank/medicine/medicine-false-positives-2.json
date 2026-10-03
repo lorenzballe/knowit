@@ -1,0 +1,40 @@
+{
+  "id": "medicine-false-positives-2",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.false_positives",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "A urine screen flags opiates in a woman who ate a poppy-seed bagel. Rerun, the same screen flags again. What does that add?",
+  "options": [
+    "Little: same test, same blind spot",
+    "A lot: two positives confirm it"
+  ],
+  "correct": 0,
+  "answer": "Little. Poppy seeds carry real traces of morphine and codeine, and the screening test reads them the same way every time. Confirmation needs a different method, such as mass spectrometry, and a cut-off set above what seeds give. US federal workplace testing raised its morphine cut-off from 300 to 2,000 nanograms per millilitre in 1998.",
+  "move": "A second check only counts if it could fail in a different way.",
+  "ask": "When I double-check something, am I using a different route, or just asking the same source twice?",
+  "trap": "A lot: two positives confirm it, as two votes beat one.",
+  "keywords": [
+    "drug testing",
+    "poppy seeds",
+    "morphine",
+    "confirmation test",
+    "immunoassay"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Moeller et al., Mayo Clinic Proceedings, 2008",
+  "source_kind": "paper",
+  "reference": "Moeller, Lee & Kissack, Urine drug screening: practical guide for clinicians, Mayo Clinic Proceedings, 2008",
+  "written": "2026-10-03"
+}

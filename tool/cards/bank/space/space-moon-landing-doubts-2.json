@@ -1,0 +1,39 @@
+{
+  "id": "space-moon-landing-doubts-2",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.moon_landing_doubts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: observatories outside the United States still bounce laser pulses off mirrors that Apollo crews set on the Moon?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The Apollo 11, 14 and 15 crews left panels of glass corner prisms, 100 on the first and 300 on the last. Stations such as Grasse in France fire pulses at them and time the faint echo, measuring the Moon's distance to within centimetres. Anyone with the right telescope can check.",
+  "move": "Ask whether a claim can be checked by people who have no stake in it.",
+  "ask": "Which belief of mine have I never tested against someone with no reason to agree with me?",
+  "trap": "False, because the only evidence is NASA's own word and pictures.",
+  "keywords": [
+    "lunar laser ranging",
+    "retroreflectors",
+    "apollo 15",
+    "grasse observatory"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Murphy, Reports on Progress in Physics, 2013",
+  "source_kind": "paper",
+  "reference": "Murphy, Lunar laser ranging: the millimeter challenge, Reports on Progress in Physics, 2013",
+  "written": "2026-10-03"
+}

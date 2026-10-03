@@ -1,0 +1,40 @@
+{
+  "id": "life-questions-to-yourself-3",
+  "topic": "life",
+  "genre": "life.ask_better_questions",
+  "strand": "life.ask_better_questions.questions_to_yourself",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: telling people to be fair and unbiased reduced their bias as much as asking them to consider the opposite?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Lord, Lepper and Preston found the instruction to be unbiased did little, while asking 'would I rate this the same if it had found the opposite?' clearly reduced bias in judging evidence. Wanting to be fair is not a method; a specific question is.",
+  "move": "Ask whether you would judge it the same if it said the opposite.",
+  "ask": "Which belief of mine would I judge differently if the evidence for it pointed the other way?",
+  "trap": "Sincere effort to be fair seems enough to correct bias.",
+  "keywords": [
+    "bias",
+    "consider the opposite",
+    "evidence",
+    "charles lord",
+    "judgement"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lord, Lepper and Preston, JPSP, 1984",
+  "source_kind": "paper",
+  "reference": "Lord, Lepper and Preston, Considering the Opposite: A Corrective Strategy for Social Judgment, Journal of Personality and Social Psychology, 1984",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "economics-bundles-1",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.bundles",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A phone on contract costs €45 a month for 24 months. SIM-only is €15 a month; the phone alone €600. Overpayment, in euros?",
+  "value": 120,
+  "unit": "euros",
+  "answer": "Overpayment: 720 − 600 = €120",
+  "move": "Split a bundle into parts you can price, then compare each part.",
+  "ask": "Which bundle do I pay for every month that I have never priced piece by piece?",
+  "trap": "Comparing €45 a month with €600 and calling the monthly price small.",
+  "hint": "Price the SIM part on its own first, then see what is left for the phone.",
+  "steps": [
+    "Contract total: 45 × 24 = €1,080",
+    "SIM-only for the same months: 15 × 24 = €360",
+    "The phone inside the bundle: 1,080 − 360 = €720",
+    "Overpayment: 720 − 600 = €120"
+  ],
+  "keywords": [
+    "phone contracts",
+    "bundles",
+    "sim only plans",
+    "monthly payments"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arithmetic of a phone contract",
+  "source_kind": "arithmetic",
+  "reference": "Unbundling a handset contract, worked arithmetic, 2026",
+  "written": "2026-10-03"
+}

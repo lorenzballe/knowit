@@ -1,0 +1,39 @@
+{
+  "id": "sport-tech-doping-3",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.tech_doping",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a sport ban equipment that boosts performance even when every competitor can buy it?",
+  "sides": [
+    "Yes, ban it",
+    "No, allow it"
+  ],
+  "answer": "Yes. A sport is a test of the athlete, and when kit does part of the work, results stop meaning what they used to. Swimming's polyurethane suits produced dozens of world records in 2009 that later swimmers struggled to touch. Available to all is also a fiction: rich federations get prototypes, fittings and data first.",
+  "move": "Whichever side you took, the hinge is what the sport says it is testing.",
+  "ask": "In my own field, what is really being tested, and which tools blur it?",
+  "counterpoint": "No. Every sport already runs on technology: fibreglass poles, clap skates, carbon bikes, synthetic tracks. Freezing kit at an arbitrary year is no purer, and banning gains everyone can buy protects incumbents, not fairness. Regulators should set clear limits, as athletics did with shoe sole heights, and let innovation make sport safer and faster.",
+  "keywords": [
+    "technology doping",
+    "equipment rules",
+    "swimsuits",
+    "fairness",
+    "innovation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Loland, Fair Play in Sport, 2002",
+  "source_kind": "book",
+  "reference": "Sigmund Loland, Fair Play in Sport: A Moral Norm System, Routledge, 2002",
+  "written": "2026-09-26"
+}

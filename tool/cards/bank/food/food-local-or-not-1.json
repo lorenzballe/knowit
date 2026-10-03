@@ -1,0 +1,40 @@
+{
+  "id": "food-local-or-not-1",
+  "topic": "food",
+  "genre": "food.food_and_the_planet",
+  "strand": "food.food_and_the_planet.local_or_not",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "For a kilo of beef, what share of its climate footprint comes from transporting it?",
+  "options": [
+    "About half",
+    "About a quarter",
+    "Under 1%"
+  ],
+  "correct": 2,
+  "answer": "Under 1%. Our World in Data, drawing on a study of about 38,000 farms, finds transport is under 1% of beef's greenhouse emissions and around 6% of food emissions overall. Land clearing, feed and the methane cattle belch dominate. Beef raised next door still carries almost all of its footprint.",
+  "move": "Fix the biggest part of a cost before the most visible one.",
+  "ask": "Which of my green habits targets the visible part of a problem rather than the big part?",
+  "trap": "About half, since food miles are the most discussed footprint.",
+  "keywords": [
+    "food miles",
+    "beef",
+    "transport emissions",
+    "eating local"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ritchie, Our World in Data, 2020",
+  "source_kind": "statistics",
+  "reference": "https://ourworldindata.org/food-choice-vs-eating-local",
+  "written": "2026-10-03"
+}

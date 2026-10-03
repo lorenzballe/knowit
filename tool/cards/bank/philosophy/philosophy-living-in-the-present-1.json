@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-living-in-the-present-1",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.living_in_the_present",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Phones pinged 2,250 adults at random moments to ask what their minds were on. How often were they elsewhere?",
+  "options": [
+    "About one moment in ten",
+    "Nearly all the time",
+    "Almost half the time"
+  ],
+  "correct": 2,
+  "answer": "Almost half the time: 46.9% of the samples. In Matthew Killingsworth and Daniel Gilbert's 2010 study, minds wandered during every kind of activity, and people were less happy while wandering, no happier even when drifting to pleasant thoughts than when staying put. The commute happened; the person was somewhere else.",
+  "move": "Check where your attention is, not only where your body is.",
+  "ask": "During the part of my day I enjoy most, where is my mind actually?",
+  "trap": "One moment in ten, since drifting off is noticed only rarely.",
+  "keywords": [
+    "mind-wandering",
+    "attention",
+    "experience sampling",
+    "matthew killingsworth",
+    "happiness"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Killingsworth & Gilbert, Science, 2010",
+  "source_kind": "paper",
+  "reference": "Killingsworth & Gilbert, A Wandering Mind Is an Unhappy Mind, Science 330 (6006), 2010",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "psychology-availability-1",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.availability",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Some people listed 6 times they had acted assertively; others listed 12. Which group then rated themselves as more assertive?",
+  "options": [
+    "Those who listed 6",
+    "Those who listed 12",
+    "Neither: the ratings matched"
+  ],
+  "correct": 0,
+  "answer": "Those who listed 6. Six examples come easily; the last few of twelve are a struggle, and people read the struggle as a sign they are not so assertive. The feeling of ease counted for more than the number of examples. Asking someone for too many reasons can talk them out of a view.",
+  "move": "How hard examples are to find is not how many exist.",
+  "ask": "When I struggle to think of examples of something, do I conclude it rarely happens?",
+  "trap": "Those who listed 12, since more examples should be more evidence.",
+  "keywords": [
+    "ease of retrieval",
+    "self-judgement",
+    "assertiveness",
+    "memory"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schwarz et al., JPSP, 1991",
+  "source_kind": "paper",
+  "reference": "Schwarz, Bless, Strack, Klumpp, Rittenauer-Schatka & Simons, Ease of retrieval as information: Another look at the availability heuristic, Journal of Personality and Social Psychology, 1991",
+  "written": "2026-10-03"
+}

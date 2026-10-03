@@ -1,0 +1,39 @@
+{
+  "id": "psychology-adaptation-2",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.adaptation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: on average, people who become severely disabled do not return to their earlier life satisfaction, even years later?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Tracking Germans and Britons before and after disability began, Lucas found a lasting drop, larger with greater severity. Belief in near-complete adaptation leaned on a famous 1978 study of 29 accident victims, interviewed once, with no before. Following the same people shows a dent that adaptation softens but does not erase.",
+  "move": "Prefer studies that followed the same people over time to one-off snapshots.",
+  "ask": "Do I assume people bounce back from anything, and does that stop me offering help that lasts?",
+  "trap": "Trusting the famous finding that people adapt to almost anything.",
+  "keywords": [
+    "disability",
+    "adaptation",
+    "longitudinal studies",
+    "set point"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lucas, JPSP, 2007",
+  "source_kind": "paper",
+  "reference": "Lucas, Long-term disability is associated with lasting changes in subjective well-being: evidence from two nationally representative longitudinal studies, Journal of Personality and Social Psychology, 2007",
+  "written": "2026-10-03"
+}

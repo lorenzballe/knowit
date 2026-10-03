@@ -1,0 +1,41 @@
+{
+  "id": "science-averages-3",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.averages",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "In 1950 the US Air Force measured 4,063 pilots on ten body sizes. How many were average on all ten?",
+  "options": [
+    "About a quarter",
+    "About one in twenty",
+    "Not a single one"
+  ],
+  "correct": 2,
+  "answer": "Not a single one. Gilbert Daniels counted a pilot as average if he fell in the middle of a measure's range. Fewer than 3.5% were average on just three measures, and each extra one cut the group again. Cockpits built for the average pilot fitted no one, so seats and pedals became adjustable.",
+  "move": "Require more traits at once and fewer real people qualify.",
+  "ask": "Am I planning, buying or judging for an average person who doesn't really exist?",
+  "trap": "About a quarter, since being average seems the commonest thing.",
+  "keywords": [
+    "average man",
+    "pilots",
+    "cockpit design",
+    "air force",
+    "body measurements"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Daniels, The Average Man?, USAF, 1952",
+  "source_kind": "paper",
+  "reference": "Daniels, The 'Average Man'?, Technical Note WCRD 53-7, Wright Air Development Center, US Air Force, 1952",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-manufactured-fame-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.manufactured_fame",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: until 2020, an album sold bundled with a T-shirt could count as an album sale on Billboard's chart?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Artists sold albums packaged with merchandise and concert tickets, and each bundle counted towards the Billboard 200, so a hit album could be partly a T-shirt sale. In 2020 Billboard ruled that the album had to be a separate, optional purchase for it to count. A chart position measures whatever its rules count.",
+  "move": "Before trusting a ranking, read the rules for what it counts.",
+  "ask": "Which ranking or rating do I trust without knowing what it actually counts?",
+  "trap": "Charts sound like plain counts of records that buyers chose.",
+  "keywords": [
+    "billboard 200",
+    "album bundles",
+    "merchandise",
+    "chart rules"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Billboard, chart rules update, July 2020",
+  "source_kind": "news_archive",
+  "reference": "Billboard, chart rules update on merchandise and ticket bundles, July 2020",
+  "written": "2026-09-26"
+}

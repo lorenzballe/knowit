@@ -1,0 +1,41 @@
+{
+  "id": "nature-natural-selection-2",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.natural_selection",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "After civil-war poachers killed most of Gorongosa's elephants for ivory, why were so many young females born tuskless?",
+  "options": [
+    "Stress made adults shed their tusks",
+    "Mothers taught calves to break tusks",
+    "Tuskless survivors passed the trait on"
+  ],
+  "correct": 2,
+  "answer": "Tuskless survivors passed the trait on. Poachers ignored elephants with no ivory, so those lived and bred. Campbell-Staton and colleagues found tuskless females rose from about 18% to about 51% and traced the trait to genes on the X chromosome. Nobody chose tusklessness; guns kept choosing against its opposite.",
+  "move": "Ask who was removed from a group before explaining how it changed.",
+  "ask": "Which habits around me spread simply because the alternatives kept being removed?",
+  "trap": "Hardship seems to change bodies directly, and the young then inherit it.",
+  "keywords": [
+    "elephants",
+    "tusklessness",
+    "poaching",
+    "gorongosa",
+    "mozambique"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Campbell-Staton et al., Science, 2021",
+  "source_kind": "paper",
+  "reference": "Campbell-Staton et al., Ivory poaching and the rapid evolution of tusklessness in African elephants, Science, 2021",
+  "written": "2026-10-03"
+}

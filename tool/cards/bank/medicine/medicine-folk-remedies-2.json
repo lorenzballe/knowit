@@ -1,0 +1,40 @@
+{
+  "id": "medicine-folk-remedies-2",
+  "topic": "medicine",
+  "genre": "medicine.medical_myths",
+  "strand": "medicine.medical_myths.folk_remedies",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: in trials, a spoonful of honey eased children's night-time coughs better than no treatment?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A Cochrane review found honey probably relieves children's cough better than no treatment, a dummy, or the antihistamine diphenhydramine, though the trials were small and the effect modest. It is never given before age one, because of the risk of botulism. The kitchen cupboard held a small, real remedy.",
+  "move": "Debunking everything old is as lazy as believing everything old.",
+  "ask": "Which piece of family wisdom do I wave away without ever having checked it?",
+  "trap": "False, since folk remedies are comforting stories rather than medicine.",
+  "keywords": [
+    "honey",
+    "cough",
+    "children",
+    "cochrane review",
+    "folk remedy"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Oduwole et al., Cochrane Review, 2018",
+  "source_kind": "paper",
+  "reference": "Oduwole et al., Honey for acute cough in children, Cochrane Database of Systematic Reviews, 2018",
+  "written": "2026-10-03"
+}

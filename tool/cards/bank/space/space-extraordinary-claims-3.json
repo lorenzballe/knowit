@@ -1,0 +1,38 @@
+{
+  "id": "space-extraordinary-claims-3",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.extraordinary_claims",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should scientists keep alien technology on the list of explanations for 'Oumuamua, the interstellar object that passed in 2017?",
+  "sides": [
+    "Yes, keep it on the list",
+    "No, natural is enough"
+  ],
+  "answer": "'Oumuamua sped up as it left the Sun, as comets do when gas jets push them, yet no gas or dust was seen. Its shape was also unusually flat or long. Science should not drop a hypothesis for being unfashionable; keeping it on the list costs nothing and keeps observers looking.",
+  "move": "Whichever side you took, the hinge is how much evidence a hypothesis must earn.",
+  "ask": "Which explanation am I keeping alive only because nobody can rule it out?",
+  "counterpoint": "Every odd object would otherwise earn the same treatment, and natural answers exist. A 2023 study showed that hydrogen, made in ice by cosmic rays and released as the Sun warmed it, could give the push without any visible gas. The bar for alien technology is evidence only it explains, and here there is none.",
+  "keywords": [
+    "oumuamua",
+    "interstellar objects",
+    "alien technology",
+    "comets"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bergner & Seligman, Nature, 2023",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/s41586-022-05687-w",
+  "written": "2026-10-03"
+}

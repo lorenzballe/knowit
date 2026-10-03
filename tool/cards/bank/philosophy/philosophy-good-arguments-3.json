@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-good-arguments-3",
+  "topic": "philosophy",
+  "genre": "philosophy.arguments",
+  "strand": "philosophy.arguments.good_arguments",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "All flowers need water. Roses need water. So roses are flowers. Is this argument valid?",
+  "options": [
+    "Valid",
+    "Invalid"
+  ],
+  "correct": 1,
+  "answer": "Invalid. The premises allow that cacti, dogs and people need water too; needing water does not make anything a flower. The conclusion happens to be true, which is why the argument looks fine. Evans, Barston and Pollard showed in 1983 that people pass invalid arguments far more often when they believe the conclusion.",
+  "move": "Test a piece of reasoning by swapping in a conclusion you would reject.",
+  "ask": "Do I accept arguments more easily when they end where I already wanted to go?",
+  "trap": "Valid, because roses are in fact flowers.",
+  "keywords": [
+    "belief bias",
+    "validity",
+    "syllogism",
+    "jonathan evans",
+    "reasoning"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Evans, Barston & Pollard, Memory & Cognition, 1983",
+  "source_kind": "paper",
+  "reference": "Evans, Barston & Pollard, On the Conflict Between Logic and Belief in Syllogistic Reasoning, Memory & Cognition 11 (3), 1983",
+  "written": "2026-10-03"
+}

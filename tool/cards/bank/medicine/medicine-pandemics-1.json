@@ -1,0 +1,42 @@
+{
+  "id": "medicine-pandemics-1",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.pandemics",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "Cases of a new virus double every 3 days. Starting from 100 cases today, about how many days until 100,000?",
+  "value": 30,
+  "unit": "days",
+  "answer": "10 doublings × 3 days = 30 days",
+  "move": "With doubling, the last thousandfold takes no longer than the first.",
+  "ask": "What in my life is quietly doubling, like a debt or a habit, that I still treat as small?",
+  "trap": "Picturing hundreds of days, as if cases rose by a steady amount.",
+  "hint": "Count how many doublings turn 100 into 100,000.",
+  "steps": [
+    "100,000 ÷ 100 = 1,000 times more cases",
+    "2^10 = 1,024, so about 10 doublings",
+    "10 doublings × 3 days = 30 days"
+  ],
+  "keywords": [
+    "doubling time",
+    "epidemic growth",
+    "exponential growth",
+    "pandemic"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Doubling arithmetic",
+  "source_kind": "arithmetic",
+  "reference": "Bartlett, The Essential Exponential for the Future of Our Planet, University of Nebraska, 2004",
+  "written": "2026-10-03"
+}

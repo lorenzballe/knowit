@@ -1,0 +1,39 @@
+{
+  "id": "nature-cute-and-dangerous-3",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.cute_and_dangerous",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a male platypus can inject venom so painful that morphine barely eases it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Male platypuses carry a hollow spur on each hind leg, fed by a venom gland that swells in the breeding season. Fenner and colleagues described a man spurred while handling one, whose pain lasted weeks, barely touched by morphine. The venom is not deadly to people; it acts on pain nerves directly.",
+  "move": "Do not read the danger of anything from how friendly it looks.",
+  "ask": "Who or what do I trust on looks alone, without knowing what it can do?",
+  "trap": "Mammals do not make venom, and a duck-billed animal looks harmless.",
+  "keywords": [
+    "platypus",
+    "venom",
+    "spur",
+    "pain"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fenner et al., Medical Journal of Australia, 1992",
+  "source_kind": "paper",
+  "reference": "Fenner, Williamson & Myers, Platypus envenomation: a painful learning experience, Medical Journal of Australia, 1992",
+  "written": "2026-10-03"
+}

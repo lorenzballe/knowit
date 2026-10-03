@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-manufactured-fame-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.manufactured_fame",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did some of Spotify's calmest mood playlists fill up with artists who had no fans, no gigs and no faces?",
+  "answer": "Because they cost Spotify less. The journalist Liz Pelly found a programme, called Perfect Fit Content inside the company, that sourced cheap background tracks from production firms under invented artist names and placed them on playlists for sleep, study and relaxing. Listeners who press play without looking cannot tell who they are not hearing.",
+  "move": "When you do not choose, someone else chooses for their own margin.",
+  "ask": "Where in my day am I letting a default choose for me, and who profits from it?",
+  "keywords": [
+    "spotify",
+    "playlists",
+    "ghost artists",
+    "perfect fit content"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pelly, Mood Machine, 2025",
+  "source_kind": "book",
+  "reference": "Liz Pelly, Mood Machine: The Rise of Spotify and the Costs of the Perfect Playlist, Atria/One Signal, 2025",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "life-reframing-1",
+  "topic": "life",
+  "genre": "life.handle_setbacks",
+  "strand": "life.handle_setbacks.reframing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Viewing distressing images, one group hides its feelings while another reframes what it sees. Who remembers the images better?",
+  "options": [
+    "Those who hid their feelings",
+    "Those who reframed",
+    "Both groups about equally"
+  ],
+  "correct": 1,
+  "answer": "Those who reframed. Richards and Gross found that keeping a straight face while upset impaired memory for what was shown and said, while reappraisal, thinking about the scene in a way that changes its meaning, left memory intact. Suppression is work the mind keeps doing in the background.",
+  "move": "Change what a moment means rather than hiding what it makes you feel.",
+  "ask": "What feeling am I hiding behind a calm face that I could look at differently instead?",
+  "trap": "Keeping a straight face seems to keep the mind clear too.",
+  "keywords": [
+    "emotion regulation",
+    "suppression",
+    "reappraisal",
+    "memory"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Richards and Gross, JPSP, 2000",
+  "source_kind": "paper",
+  "reference": "Richards and Gross, Emotion regulation and memory: The cognitive costs of keeping one's cool, Journal of Personality and Social Psychology, 2000",
+  "written": "2026-10-03"
+}

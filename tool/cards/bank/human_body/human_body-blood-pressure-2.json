@@ -1,0 +1,42 @@
+{
+  "id": "human_body-blood-pressure-2",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.blood_pressure",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "From 115 mmHg, each extra 20 mmHg of systolic pressure roughly doubles the risk of heart-disease death. At 175, how many times the risk?",
+  "value": 8,
+  "unit": "times the risk",
+  "answer": "2 × 2 × 2 = 8 times the risk",
+  "move": "Risk that multiplies punishes the last few steps the most.",
+  "ask": "Where in my life does one more small step double the danger, rather than add a little?",
+  "trap": "Adding risk in equal steps gives three times, not eight.",
+  "hint": "Count how many steps of 20 fit between the two pressures.",
+  "steps": [
+    "175 − 115 = 60 mmHg above the baseline",
+    "60 ÷ 20 = 3 doublings",
+    "2 × 2 × 2 = 8 times the risk"
+  ],
+  "keywords": [
+    "blood pressure",
+    "systolic pressure",
+    "heart disease",
+    "doubling"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Prospective Studies Collaboration, The Lancet, 2002",
+  "source_kind": "paper",
+  "reference": "Lewington S, Clarke R, Qizilbash N, Peto R, Collins R, Age-specific relevance of usual blood pressure to vascular mortality, The Lancet, 2002",
+  "written": "2026-09-26"
+}

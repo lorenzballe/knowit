@@ -1,0 +1,40 @@
+{
+  "id": "life-meetings-1",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.meetings",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Each member of a selection panel holds different facts that, pooled, point to the best candidate. What do such groups mostly discuss?",
+  "options": [
+    "Each member's unique facts",
+    "Facts everyone already shares",
+    "Both kinds about equally"
+  ],
+  "correct": 1,
+  "answer": "Facts everyone already shares. Stasser and Titus gave group members partly different information about candidates; pooled, it pointed clearly to the best one. But discussion dwelt on what all members already knew, so groups usually backed the candidate the shared facts favoured. The meeting repeated what it knew and missed what it was for.",
+  "move": "Ask each person, before the talk, for what only they know.",
+  "ask": "In my next meeting, what do I know that nobody else does, and will I say it?",
+  "trap": "Pooling unique facts seems the whole point of meeting.",
+  "keywords": [
+    "hidden profiles",
+    "group decisions",
+    "shared information",
+    "meetings"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stasser and Titus, JPSP, 1985",
+  "source_kind": "paper",
+  "reference": "Stasser and Titus, Pooling of unshared information in group decision making: Biased information sampling during discussion, Journal of Personality and Social Psychology, 1985",
+  "written": "2026-10-03"
+}

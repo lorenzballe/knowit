@@ -1,0 +1,33 @@
+{
+  "id": "psychology-sleep-debt-2",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.sleep_debt",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Can sleeping in at the weekend pay back a working week of five-hour nights?",
+  "answer": "Not fully. In a lab study, people kept to five hours on weeknights but allowed unlimited sleep at the weekend still ate extra and gained weight, much like those who never caught up. Once short nights resumed, their insulin sensitivity, a gauge of blood sugar control, fell further. The lie-in refunded hours, not health.",
+  "move": "Paying a debt late does not undo what the delay already cost.",
+  "ask": "Am I counting on the weekend to make up for a week of short nights?",
+  "keywords": [
+    "sleep debt",
+    "weekend lie-in",
+    "insulin sensitivity",
+    "weight gain"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Depner et al., Current Biology, 2019",
+  "source_kind": "paper",
+  "reference": "Depner et al., Ad libitum weekend recovery sleep fails to prevent metabolic dysregulation during a repeating pattern of insufficient sleep and weekend recovery sleep, Current Biology, 2019",
+  "written": "2026-10-03"
+}

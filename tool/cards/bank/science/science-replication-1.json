@@ -1,0 +1,40 @@
+{
+  "id": "science-replication-1",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.replication",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "In 2015, 270 researchers repeated 100 published psychology experiments. How many gave a significant result again?",
+  "options": [
+    "About a third",
+    "About two thirds",
+    "Nearly all"
+  ],
+  "correct": 0,
+  "answer": "About a third: 36%, against 97% in the originals, and the repeated effects averaged about half their original size. Journals had favoured striking, positive results, so the published record held the lucky draws along with the real ones. A single published finding is a promising lead, not a settled fact.",
+  "move": "Treat a first result as a lead until someone repeats it.",
+  "ask": "Which belief of mine rests on a single striking result I've never seen repeated?",
+  "trap": "Nearly all, since they had passed peer review and publication.",
+  "keywords": [
+    "replication crisis",
+    "psychology",
+    "reproducibility",
+    "publication bias"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Open Science Collaboration, Science, 2015",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/science.aac4716",
+  "written": "2026-09-26"
+}

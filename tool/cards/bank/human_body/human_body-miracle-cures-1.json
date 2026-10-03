@@ -1,0 +1,36 @@
+{
+  "id": "human_body-miracle-cures-1",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.miracle_cures",
+  "also": [
+    "medicine.judge_a_treatment.placebo_or_real"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does almost any cold remedy seem to work for the person who took it?",
+  "answer": "Because colds end on their own, usually within a week to ten days. People reach for a remedy when they feel worst, close to the peak, and improvement follows whatever they took. The remedy gets credit owed to time. Without a comparison, a zinc lozenge and a lucky sock look equally effective.",
+  "move": "Credit a remedy only after asking how long the trouble lasts untreated.",
+  "ask": "What fix do I swear by that I only ever tried when things were about to improve anyway?",
+  "keywords": [
+    "common cold",
+    "remedies",
+    "natural recovery",
+    "self-limiting illness"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Heikkinen and Järvinen, The Lancet, 2003",
+  "source_kind": "paper",
+  "reference": "Heikkinen T, Järvinen A, The common cold, The Lancet, 2003",
+  "written": "2026-09-26"
+}

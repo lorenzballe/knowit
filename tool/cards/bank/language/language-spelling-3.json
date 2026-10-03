@@ -1,0 +1,39 @@
+{
+  "id": "language-spelling-3",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.spelling",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should English spelling be reformed so that words are written the way they sound?",
+  "sides": [
+    "Yes, reform it",
+    "No, keep it"
+  ],
+  "answer": "Children pay for the mess. In a 2003 comparison across Europe, English-speaking children at the end of their first school year read about a third of familiar words, while children learning regular spellings such as Finnish or Greek read over 90%. Every extra year of drilling is a year not spent reading for meaning.",
+  "move": "Whichever side you took, the hinge is whose accent the spelling would follow.",
+  "ask": "Is a messy system I rely on costing newcomers more than changing it would cost me?",
+  "counterpoint": "Whose pronunciation would the new spelling follow? Bath is said differently in Leeds, London and Texas, and any phonetic system would crown one accent. Present spelling also keeps related words visibly related: sign and signature, medicine and medical. And reform would make five centuries of print look foreign to every child who learned the new way.",
+  "keywords": [
+    "spelling reform",
+    "reading",
+    "orthography",
+    "finnish",
+    "children"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Seymour et al., British Journal of Psychology, 2003",
+  "source_kind": "paper",
+  "reference": "Seymour, Aro & Erskine, Foundation literacy acquisition in European orthographies, British Journal of Psychology 94(2), 2003",
+  "written": "2026-10-03"
+}

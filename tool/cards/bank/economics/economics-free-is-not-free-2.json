@@ -1,0 +1,33 @@
+{
+  "id": "economics-free-is-not-free-2",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.free_is_not_free",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a share-trading app that charged no commission end up costing its customers money?",
+  "answer": "It sold their orders. Trading firms paid Robinhood to send them its customers' trades, and filled those orders at worse prices than other brokers got. The US Securities and Exchange Commission found customers lost $34.1 million even after the commissions they saved, and fined Robinhood $65 million in 2020.",
+  "move": "If you cannot see the fee, look for it in the price you get.",
+  "ask": "For the free apps I use, do I know who pays them, and for what?",
+  "keywords": [
+    "robinhood",
+    "payment for order flow",
+    "zero commission",
+    "sec"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "SEC, Robinhood order, December 2020",
+  "source_kind": "primary_document",
+  "reference": "https://www.sec.gov/newsroom/press-releases/2020-321",
+  "written": "2026-10-03"
+}

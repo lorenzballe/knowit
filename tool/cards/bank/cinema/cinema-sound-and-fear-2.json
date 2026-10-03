@@ -1,0 +1,40 @@
+{
+  "id": "cinema-sound-and-fear-2",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.sound_and_fear",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "A sound designer wants a scream that cannot be ignored. Which property makes a human scream so alarming?",
+  "options": [
+    "Its very high pitch",
+    "Its sheer loudness",
+    "Its fast flutter in loudness"
+  ],
+  "correct": 2,
+  "answer": "Its fast flutter in loudness. Arnal and colleagues found screams carry roughness: loudness rising and falling 30 to 150 times a second, a range ordinary speech leaves empty. The brain's fear circuits answer it quickly, and car alarms and smoke alarms use the same flutter. Pitch alone is shared with singing.",
+  "move": "What makes a signal urgent is often its texture, not its volume.",
+  "ask": "Which alarms, pings or voices in my life are designed to cut through, and do they deserve my attention?",
+  "trap": "Its very high pitch, the scream every horror film made familiar.",
+  "keywords": [
+    "screams",
+    "roughness",
+    "alarm sounds",
+    "fear"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arnal et al., Current Biology, 2015",
+  "source_kind": "paper",
+  "reference": "Arnal, Flinker, Kleinschmidt, Giraud and Poeppel, Human Screams Occupy a Privileged Niche in the Communication Soundscape, Current Biology, 25(15), 2015",
+  "written": "2026-10-03"
+}

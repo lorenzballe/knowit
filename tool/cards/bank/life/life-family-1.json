@@ -1,0 +1,39 @@
+{
+  "id": "life-family-1",
+  "topic": "life",
+  "genre": "life.relationships",
+  "strand": "life.relationships.family",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: firstborns are measurably more conscientious and less agreeable than their younger siblings?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Rohrer, Egloff and Schmukle analysed more than 20,000 people in three national samples and found no meaningful birth-order effect on extraversion, emotional stability, agreeableness, conscientiousness or imagination. The one consistent difference was a slight edge in measured intellect for elder siblings. The bossy-eldest story survives on the cases families remember.",
+  "move": "Count the cases that do not fit before trusting a family story.",
+  "ask": "What label did my family give me, or did I give my children, that the evidence may not support?",
+  "trap": "Family stories of bossy eldest children feel like strong evidence.",
+  "keywords": [
+    "birth order",
+    "siblings",
+    "personality",
+    "firstborns"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rohrer, Egloff and Schmukle, PNAS, 2015",
+  "source_kind": "paper",
+  "reference": "Rohrer, Egloff and Schmukle, Examining the effects of birth order on personality, Proceedings of the National Academy of Sciences, 2015",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-likes-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.likes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "After testing hidden like counts for two years, why did Instagram let users choose rather than hide them for everyone?",
+  "answer": "Because hiding them changed less than hoped. Instagram reported in 2021 that removing the counts helped some people and annoyed others, without a broad lift in how people felt, so it made showing counts a personal setting. A number millions blamed for their anxiety turned out to be one cause among many.",
+  "move": "Removing a visible symptom does not always reach the cause.",
+  "ask": "Which visible thing am I blaming for a feeling that probably has deeper roots?",
+  "keywords": [
+    "instagram",
+    "like counts",
+    "wellbeing",
+    "social media design"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Instagram, Giving People More Control, 2021",
+  "source_kind": "company",
+  "reference": "Instagram, Giving People More Control on Instagram and Facebook, 26 May 2021",
+  "written": "2026-09-26"
+}

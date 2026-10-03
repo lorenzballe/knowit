@@ -1,0 +1,40 @@
+{
+  "id": "language-who-invents-words-2",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.who_invents_words",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Dictionaries once credited Shakespeare with the first use of hundreds of words. Why do those credits keep shrinking?",
+  "options": [
+    "Earlier texts became searchable",
+    "Scholars doubt he wrote the plays",
+    "Printers had changed his spellings"
+  ],
+  "correct": 0,
+  "answer": "Earlier texts became searchable. The Oxford English Dictionary's volunteer readers combed Shakespeare line by line in the 1800s but read obscure pamphlets far less closely. Digitised archives now find many of his supposed coinages in older, forgotten books. He wrote memorably; he was also simply the most-read author in the sample.",
+  "move": "The famous source gets the credit because it was the one searched.",
+  "ask": "Whose ideas do I credit only because theirs are the ones I happened to read?",
+  "trap": "Doubts about who wrote the plays, a famous argument.",
+  "keywords": [
+    "shakespeare",
+    "first citations",
+    "oxford english dictionary",
+    "digitised archives"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Crystal, Think On My Words, 2008",
+  "source_kind": "book",
+  "reference": "Crystal, Think On My Words: Exploring Shakespeare's Language, Cambridge University Press, 2008",
+  "written": "2026-10-03"
+}

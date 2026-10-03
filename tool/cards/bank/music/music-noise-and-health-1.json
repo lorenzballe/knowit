@@ -1,0 +1,36 @@
+{
+  "id": "music-noise-and-health-1",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.noise_and_health",
+  "also": [
+    "human_body.blood_and_heart.blood_pressure"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can traffic noise harm the heart of someone who sleeps right through it every night?",
+  "answer": "Because the body keeps reacting after the mind stops noticing. Passing lorries trigger brief arousals that never become waking: heart rate and blood pressure jump, then settle. Mathias Basner's review ties such spikes, night after night, to higher risks of hypertension and heart disease. Getting used to it is mostly a feeling.",
+  "move": "Getting used to something is not the same as it losing its effect.",
+  "ask": "What in my surroundings have I stopped noticing that my body may still be reacting to?",
+  "keywords": [
+    "traffic noise",
+    "sleep",
+    "blood pressure",
+    "heart disease"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Basner et al., The Lancet, 2014",
+  "source_kind": "paper",
+  "reference": "Basner et al., Auditory and non-auditory effects of noise on health, The Lancet, 2014",
+  "written": "2026-09-26"
+}

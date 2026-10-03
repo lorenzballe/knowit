@@ -1,0 +1,40 @@
+{
+  "id": "medicine-reading-results-3",
+  "topic": "medicine",
+  "genre": "medicine.talk_to_your_doctor",
+  "strand": "medicine.talk_to_your_doctor.reading_results",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "A CT report mentions a 4 mm lung nodule in a 45-year-old who has never smoked. What do guidelines advise?",
+  "options": [
+    "No routine follow-up scan",
+    "A biopsy within a month",
+    "A repeat CT every year"
+  ],
+  "correct": 0,
+  "answer": "No routine follow-up scan. Under the Fleischner Society guidelines, a solid nodule under 6 mm in a low-risk person carries a cancer risk well below 1%, so chasing it does more harm than good. Most are old scars or tiny lymph nodes. Nodule sounds like a verdict; at this size it is usually furniture.",
+  "move": "A scary word on a report needs a size and an odds before a reaction.",
+  "ask": "When a frightening word appears in a report about me, have I asked how often it actually means trouble?",
+  "trap": "A biopsy within a month, since any spot on a lung sounds like cancer.",
+  "keywords": [
+    "lung nodule",
+    "ct report",
+    "fleischner society",
+    "incidental findings"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "MacMahon et al., Radiology, 2017",
+  "source_kind": "paper",
+  "reference": "MacMahon et al., Guidelines for management of incidental pulmonary nodules detected on CT images: from the Fleischner Society 2017, Radiology, 2017",
+  "written": "2026-10-03"
+}

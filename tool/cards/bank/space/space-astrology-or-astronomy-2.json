@@ -1,0 +1,43 @@
+{
+  "id": "space-astrology-or-astronomy-2",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.astrology_or_astronomy",
+  "also": [
+    "science.spot_bad_science.pseudoscience"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "In a 1985 double-blind test, astrologers picked which of three personality profiles matched each birth chart. How often were they right?",
+  "options": [
+    "About 1 in 3",
+    "About 1 in 2",
+    "About 2 in 3"
+  ],
+  "correct": 0,
+  "answer": "About 1 in 3, the score of pure guessing. Beforehand the astrologers expected to get at least half right. With charts and profiles coded so nobody knew whose was whose, their hits fell to chance; the physicist Shawn Carlson published the result in Nature.",
+  "move": "Before trusting a skill, ask how often a blind guess would score.",
+  "ask": "When someone's advice feels uncannily right, would a random guess have felt just as right?",
+  "trap": "About 1 in 2, because experts ought to beat blind guessing.",
+  "keywords": [
+    "astrology",
+    "double-blind test",
+    "shawn carlson",
+    "chance"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carlson, Nature, 1985",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/318419a0",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "music-voice-2",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.voice",
+  "also": [
+    "music.sound_itself.frequencies"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are the words of a soprano singing very high notes so hard to make out, even in a good hall?",
+  "answer": "Because high notes leave no room for vowels. A vowel is recognised by resonances of the mouth, the first lying roughly between 300 and 800 Hz. A note near 1,000 Hz has no energy down there for those resonances to shape. Sopranos tune their mouths to the note instead, trading the vowel for loudness.",
+  "move": "When a signal carries two messages, pushing one to its limit can erase the other.",
+  "ask": "When I push hard to be heard, what part of my message am I losing?",
+  "keywords": [
+    "soprano",
+    "vowels",
+    "formants",
+    "diction",
+    "vocal tract"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Joliveau, Smith & Wolfe, Nature, 2004",
+  "source_kind": "paper",
+  "reference": "Joliveau, Smith & Wolfe, Tuning of vocal tract resonance by sopranos, Nature, 2004",
+  "written": "2026-09-26"
+}

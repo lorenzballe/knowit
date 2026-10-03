@@ -1,0 +1,39 @@
+{
+  "id": "art-myths-about-genius-2",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.myths_about_genius",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: Michelangelo wrote that he saw the angel in the marble and carved until he set it free?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. No letter, poem or recorded conversation of his contains the line; it spreads through posters without a source. The nearest thing he wrote is a sonnet saying the best artist can conceive nothing that a single block does not already hold inside it. That is a thought about skill, not a sentence about angels.",
+  "move": "A quote with no source is a story someone wanted told.",
+  "ask": "Which quote have I shared lately without knowing who really said it?",
+  "trap": "True, because the line is quoted everywhere under his name.",
+  "keywords": [
+    "michelangelo",
+    "misattributed quote",
+    "sonnet",
+    "marble"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Saslow, The Poetry of Michelangelo, 1991",
+  "source_kind": "book",
+  "reference": "James M. Saslow, The Poetry of Michelangelo: An Annotated Translation, Yale University Press, 1991",
+  "written": "2026-10-03"
+}

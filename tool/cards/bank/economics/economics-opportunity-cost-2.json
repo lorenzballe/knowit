@@ -1,0 +1,42 @@
+{
+  "id": "economics-opportunity-cost-2",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.opportunity_cost",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A petrol station 20 minutes away sells fuel 4 cents a litre cheaper. Filling 50 litres, the round trip earns how many euros an hour?",
+  "value": 3,
+  "unit": "euros an hour",
+  "answer": "Pay: 2 ÷ 2/3 = €3 an hour, before the fuel burned getting there",
+  "move": "Turn a saving that costs time into pay per hour before chasing it.",
+  "ask": "Which bargain do I chase that pays me less per hour than I would accept for work?",
+  "trap": "Seeing the cheaper price per litre and leaving the 40 minutes unpriced.",
+  "hint": "Work out the total saving, then divide by the hours the trip takes.",
+  "steps": [
+    "Saving: 50 × €0.04 = €2",
+    "Time: a 40-minute round trip is 2/3 of an hour",
+    "Pay: 2 ÷ 2/3 = €3 an hour, before the fuel burned getting there"
+  ],
+  "keywords": [
+    "opportunity cost",
+    "petrol prices",
+    "value of time",
+    "bargain hunting"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Becker, The Economic Journal, 1965",
+  "source_kind": "arithmetic",
+  "reference": "Becker, A Theory of the Allocation of Time, The Economic Journal, 1965",
+  "written": "2026-10-03"
+}

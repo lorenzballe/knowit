@@ -1,0 +1,33 @@
+{
+  "id": "sport-fans-1",
+  "topic": "sport",
+  "genre": "sport.sport_and_society",
+  "strand": "sport.sport_and_society.fans",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did American students do differently on campus after their university's football team won?",
+  "answer": "They wore more university clothing and said we won, while after defeats they more often said they lost. Cialdini and colleagues counted scarves and sweatshirts at seven universities and recorded the words students used. Fans borrow a team's success to shine in it, and step back from its failures.",
+  "move": "People claim a share of wins and hand back the losses.",
+  "ask": "When my team or company does well, do I say we, and when it fails, do I say they?",
+  "keywords": [
+    "basking in reflected glory",
+    "fans",
+    "identity",
+    "college football"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cialdini et al., J Pers Soc Psychol, 1976",
+  "source_kind": "paper",
+  "reference": "Cialdini, Borden, Thorne, Walker, Freeman & Sloan, Basking in reflected glory: three (football) field studies, Journal of Personality and Social Psychology, 1976",
+  "written": "2026-09-26"
+}

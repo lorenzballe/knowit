@@ -1,0 +1,39 @@
+{
+  "id": "art-fakes-today-2",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.fakes_today",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "True or false: in Australia, most money spent on Aboriginal-style souvenirs goes on items not made by Aboriginal artists?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The Productivity Commission's 2022 inquiry found that inauthentic products, often made overseas, take most souvenir spending, while many buyers believe they are supporting Aboriginal makers. Nothing on a boomerang or a printed tea towel has to say who made it. A label such as Aboriginal design describes a style, not a person.",
+  "move": "Where fakes are common, a shop's look tells you little about the maker.",
+  "ask": "When I buy something sold as local or handmade, how do I know who really made it?",
+  "trap": "False, because shops would not sell so many fakes openly.",
+  "keywords": [
+    "aboriginal art",
+    "souvenirs",
+    "productivity commission",
+    "inauthentic products"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Productivity Commission, Aboriginal Visual Arts and Crafts, 2022",
+  "source_kind": "institution",
+  "reference": "Productivity Commission, Aboriginal and Torres Strait Islander Visual Arts and Crafts, Inquiry Report, Australian Government, 2022",
+  "written": "2026-10-03"
+}

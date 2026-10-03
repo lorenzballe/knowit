@@ -1,0 +1,40 @@
+{
+  "id": "science-why-things-break-3",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "A steel axle that was never once overloaded snaps after ten years of service. What is the likeliest cause?",
+  "options": [
+    "One heavy blow nobody noticed",
+    "Millions of small, repeated loads",
+    "Steel weakening simply with age"
+  ],
+  "correct": 1,
+  "answer": "Millions of small, repeated loads. Each turn flexes the metal slightly, far below its breaking strength, yet a microscopic crack can start at a scratch and creep forward a fraction with every cycle. The broken face often shows it: smooth, rippled bands of slow growth, then a rough patch where the last metal tore.",
+  "move": "Small strains repeated often can do what one big shock cannot.",
+  "ask": "What small daily strain in my life, repeated for years, could do more damage than one big crisis?",
+  "trap": "One heavy blow, because breaks feel like single events.",
+  "keywords": [
+    "metal fatigue",
+    "axles",
+    "cracks",
+    "repeated loading"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schijve, Fatigue of Structures and Materials, 2009",
+  "source_kind": "book",
+  "reference": "Schijve, Fatigue of Structures and Materials, 2nd ed., Springer, 2009",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "food-heat-and-the-brain-3",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.heat_and_the_brain",
+  "also": [
+    "medicine.pain.chronic"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a skin patch loaded with chilli's burning molecule ease chronic nerve pain for months?",
+  "answer": "By overloading the nerves that carry the pain. A patch with 8% capsaicin, left on for about an hour, floods the pain fibres' heat sensors until their endings stop working and pull back from the skin. The first hour burns; afterwards those fibres send fewer pain signals, often for weeks to months, until they regrow.",
+  "move": "Overload an alarm long enough and it stops ringing for a while.",
+  "ask": "Which warning have I heard so often that I no longer notice it?",
+  "keywords": [
+    "capsaicin patch",
+    "nerve pain",
+    "trpv1",
+    "pain fibres"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Anand & Bley, British Journal of Anaesthesia, 2011",
+  "source_kind": "paper",
+  "reference": "Anand & Bley, Topical capsaicin for pain management: therapeutic potential and mechanisms of action of the new high-concentration capsaicin 8% patch, British Journal of Anaesthesia, 2011",
+  "written": "2026-10-03"
+}

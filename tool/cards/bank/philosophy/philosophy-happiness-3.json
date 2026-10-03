@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-happiness-3",
+  "topic": "philosophy",
+  "genre": "philosophy.living_well",
+  "strand": "philosophy.living_well.happiness",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Students in California and the Midwest rated their own life satisfaction. Both groups expected Californians to be happier. Were they?",
+  "options": [
+    "Yes, clearly happier",
+    "No, equally satisfied",
+    "No, Midwesterners were happier"
+  ],
+  "correct": 1,
+  "answer": "No, both were equally satisfied. David Schkade and Daniel Kahneman found in 1998 that the climate drove the forecast, yet weather barely enters daily satisfaction. Kahneman's summary: nothing in life is as important as you think it is while you are thinking about it. The sunny move solves the problem you were picturing.",
+  "move": "What you are picturing right now will matter less once you live with it.",
+  "ask": "What change am I counting on to make me happy, and how much of an ordinary day would it touch?",
+  "trap": "Yes, because the sunshine is the first thing anyone pictures.",
+  "keywords": [
+    "focusing illusion",
+    "california",
+    "life satisfaction",
+    "daniel kahneman",
+    "climate"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schkade & Kahneman, Psychological Science, 1998",
+  "source_kind": "paper",
+  "reference": "Schkade & Kahneman, Does Living in California Make People Happy? A Focusing Illusion in Judgments of Life Satisfaction, Psychological Science 9 (5), 1998",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "psychology-social-proof-3",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.social_proof",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: door hangers saying neighbours were saving energy cut household use more than hangers about saving money?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In a Californian town, households got one of several messages: save money, protect the environment, help society, or most of your neighbours are saving energy. The neighbours message cut use the most, yet residents had rated what neighbours did as the least important reason for their own choices. People copy without noticing they copy.",
+  "move": "Look at what the people around you do before trusting your stated reasons.",
+  "ask": "Which of my habits did I pick up from the people around me without ever deciding to?",
+  "trap": "False: saving money seems a far stronger motive than copying neighbours.",
+  "keywords": [
+    "social norms",
+    "energy saving",
+    "households",
+    "door hangers"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nolan et al., PSPB, 2008",
+  "source_kind": "paper",
+  "reference": "Nolan, Schultz, Cialdini, Goldstein & Griskevicius, Normative social influence is underdetected, Personality and Social Psychology Bulletin, 2008",
+  "written": "2026-10-03"
+}

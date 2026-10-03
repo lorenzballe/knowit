@@ -1,0 +1,39 @@
+{
+  "id": "medicine-side-effects-in-numbers-3",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.side_effects_in_numbers",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should healthy teenage boys have been offered a second mRNA Covid dose, given the myocarditis signal?",
+  "sides": [
+    "Yes, offer it",
+    "No, hold back"
+  ],
+  "answer": "Yes. In June 2021, US advisers weighed about 40 myocarditis cases per million second doses in young men, mostly mild and resolving, against thousands of infections and hundreds of hospital stays prevented. Covid itself inflames the heart too. Offering the dose, with honest numbers, let families choose on the real balance rather than on fear.",
+  "move": "Whichever side you took, the hinge is whose risk the benefit is weighed for.",
+  "ask": "When a choice is good on average, have I checked whether it is good for someone exactly like me?",
+  "counterpoint": "Healthy boys faced very low risk from Covid, and many had already been infected, so the gain from a second dose was thin. The heart risk fell mostly on them. Several Nordic countries stopped giving Moderna to young men, and spacing doses eight weeks or more lowered myocarditis rates. A single dose, or a gap, would have been wiser.",
+  "keywords": [
+    "myocarditis",
+    "mrna vaccine",
+    "teenagers",
+    "covid-19",
+    "benefit and risk"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gargano et al., MMWR, 2021",
+  "source_kind": "institution",
+  "reference": "Gargano et al., Use of mRNA COVID-19 Vaccine After Reports of Myocarditis Among Vaccine Recipients: Update from the Advisory Committee on Immunization Practices, MMWR 70(27), 2021",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "nature-climate-myths-2",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.climate_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "If a brighter Sun were heating Earth, the upper atmosphere would warm too. What has it been doing?",
+  "options": [
+    "Warming faster than the surface",
+    "Cooling",
+    "Staying exactly the same"
+  ],
+  "correct": 1,
+  "answer": "Cooling. Extra sunlight would heat every layer, but extra carbon dioxide traps heat low down while helping the high stratosphere shed heat to space. Satellites show the lower atmosphere warming and the stratosphere cooling, a pattern Santer and colleagues matched to human causes, not the Sun. The fingerprint points to the culprit.",
+  "move": "Find a test where rival explanations predict different things, then look.",
+  "ask": "When I suspect a cause, have I looked for a sign that only that cause would leave?",
+  "trap": "Sunlight comes in from above, so the top should warm first.",
+  "keywords": [
+    "stratosphere",
+    "solar activity",
+    "satellites",
+    "fingerprint"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Santer et al., PNAS, 2013",
+  "source_kind": "paper",
+  "reference": "Santer et al., Human and natural influences on the changing thermal structure of the atmosphere, Proceedings of the National Academy of Sciences, 2013",
+  "written": "2026-10-03"
+}

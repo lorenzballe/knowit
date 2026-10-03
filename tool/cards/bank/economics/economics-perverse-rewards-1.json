@@ -1,0 +1,41 @@
+{
+  "id": "economics-perverse-rewards-1",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.perverse_rewards",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Salespeople earn a large bonus for reaching a yearly target. When in the year do their firms' sales tend to bunch?",
+  "options": [
+    "Evenly through the year",
+    "Near the end of the year",
+    "In the first few weeks"
+  ],
+  "correct": 1,
+  "answer": "Near the end of the year. Paul Oyer found US firms' sales rise at the end of their own financial years and dip at the start, whatever the calendar month. Staff pull deals forward to reach a target, or hold them back once it is safe. Customers who wait for December get the discounts.",
+  "move": "A reward with a cliff edge shapes when work is done, not just how much.",
+  "ask": "Do my own deadlines make me rush things in, or hold them back for later?",
+  "trap": "Assuming customers' needs, not bonuses, set when deals get signed.",
+  "keywords": [
+    "sales targets",
+    "bonuses",
+    "fiscal year",
+    "timing",
+    "paul oyer"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Oyer, Quarterly Journal of Economics, 1998",
+  "source_kind": "paper",
+  "reference": "Oyer, Fiscal Year Ends and Nonlinear Incentive Contracts: The Effect on Business Seasonality, Quarterly Journal of Economics, 1998",
+  "written": "2026-10-03"
+}

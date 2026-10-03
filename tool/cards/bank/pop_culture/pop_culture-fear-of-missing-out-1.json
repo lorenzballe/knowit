@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-fear-of-missing-out-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.fear_of_missing_out",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: on days a stock is in the news, small investors tend to buy it far more than sell it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Barber and Odean found individual investors were net buyers of shares that caught attention, through news, unusual trading volume or a big one-day move. Choosing among thousands of shares is hard, so people pick from the few that come to mind; professional funds showed no such pull. The headline does the shortlisting.",
+  "move": "What grabs your attention gets onto your shortlist, deserved or not.",
+  "ask": "Which of my recent choices came from the few options that happened to be in the news?",
+  "trap": "News brings good and bad alike, so buying and selling should balance.",
+  "keywords": [
+    "individual investors",
+    "stock market",
+    "news",
+    "attention"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barber and Odean, Review of Financial Studies, 2008",
+  "source_kind": "paper",
+  "reference": "Brad M. Barber and Terrance Odean, All That Glitters: The Effect of Attention and News on the Buying Behavior of Individual and Institutional Investors, Review of Financial Studies, 2008",
+  "written": "2026-09-26"
+}

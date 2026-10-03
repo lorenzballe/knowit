@@ -1,0 +1,40 @@
+{
+  "id": "nature-tipping-points-2",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.tipping_points",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What warning sign often appears in a lake, a fishery or a climate shortly before it suddenly flips?",
+  "options": [
+    "It recovers more slowly from small knocks",
+    "It grows unusually calm and steady",
+    "Its average shifts quickly and steadily"
+  ],
+  "correct": 0,
+  "answer": "It recovers more slowly from small knocks. Near a tipping point the forces pulling the system back weaken, so each disturbance lingers and swings grow wider. Scheffer and colleagues found this critical slowing down in records before shifts in lakes and past climates. A rocked chair settles slowest just before it falls.",
+  "move": "Watch how fast things bounce back, not only where they stand.",
+  "ask": "Am I taking longer than usual to bounce back from small setbacks, and what might that be warning me?",
+  "trap": "A system near the edge seems to go quiet, like calm before a storm.",
+  "keywords": [
+    "tipping points",
+    "critical slowing down",
+    "early warning signals",
+    "resilience"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Scheffer et al., Nature, 2009",
+  "source_kind": "paper",
+  "reference": "Scheffer et al., Early-warning signals for critical transitions, Nature, 2009",
+  "written": "2026-10-03"
+}

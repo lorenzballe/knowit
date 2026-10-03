@@ -1,0 +1,43 @@
+{
+  "id": "cinema-editing-tricks-3",
+  "topic": "cinema",
+  "genre": "cinema.how_films_persuade",
+  "strand": "cinema.how_films_persuade.editing_tricks",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A 2-hour interview is cut down to a 3-minute segment on the news. What percentage of what was said is broadcast?",
+  "value": 2.5,
+  "unit": "percent",
+  "tolerance": 0.1,
+  "answer": "0.025 × 100 = 2.5 percent.",
+  "move": "Ask what the other ninety-odd per cent of the conversation said.",
+  "ask": "What did I conclude about someone from a clip that was a sliver of what they said?",
+  "trap": "Assuming a clip is a fair sample of the whole conversation.",
+  "hint": "Put both lengths in minutes first.",
+  "steps": [
+    "2 hours = 120 minutes.",
+    "3 / 120 = 0.025.",
+    "0.025 × 100 = 2.5 percent."
+  ],
+  "keywords": [
+    "news editing",
+    "interviews",
+    "selection",
+    "soundbites"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arithmetic of a broadcast edit",
+  "source_kind": "arithmetic",
+  "reference": "Proportion of an interview broadcast, worked arithmetic, 2026",
+  "written": "2026-10-03"
+}

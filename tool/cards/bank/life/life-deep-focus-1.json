@@ -1,0 +1,39 @@
+{
+  "id": "life-deep-focus-1",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.deep_focus",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a phone alert you notice but do not answer still makes you worse at an attention task?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Stothart, Mitchum and Yehnert had people do a task needing sustained attention while their phones received calls or texts they did not answer. Errors rose clearly, though nobody touched a phone. The alert alone started a train of thought about who it was and what they wanted, and the task paid for it.",
+  "move": "Remove the alert, not just the reply, when you need to think.",
+  "ask": "During my most important hour of work, which alerts can still reach me?",
+  "trap": "Ignoring an alert seems to cost nothing at all.",
+  "keywords": [
+    "phone notifications",
+    "attention",
+    "distraction",
+    "smartphones"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stothart, Mitchum and Yehnert, JEP: HPP, 2015",
+  "source_kind": "paper",
+  "reference": "Stothart, Mitchum and Yehnert, The attentional cost of receiving a cell phone notification, Journal of Experimental Psychology: Human Perception and Performance, 2015",
+  "written": "2026-10-03"
+}

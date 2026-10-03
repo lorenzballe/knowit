@@ -1,0 +1,41 @@
+{
+  "id": "science-energy-1",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Gram for gram, which stores more energy: a bar of milk chocolate or the explosive TNT?",
+  "options": [
+    "TNT, by about five times",
+    "About the same",
+    "Chocolate, by about five times"
+  ],
+  "correct": 2,
+  "answer": "Chocolate, by about five times. Milk chocolate holds roughly 22 kJ per gram; TNT releases about 4.2 kJ per gram. What makes TNT destructive is speed: it carries its own oxygen and frees its energy in millionths of a second. Chocolate needs air and a body, and hands its energy over across a day.",
+  "move": "Ask how fast energy is released, not only how much there is.",
+  "ask": "Which slow, quiet thing in my week holds more power over me than the dramatic one I worry about?",
+  "trap": "TNT, because its effects look so much bigger.",
+  "keywords": [
+    "energy density",
+    "tnt",
+    "chocolate",
+    "explosives",
+    "power"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NIST Guide for the Use of SI, 2008",
+  "source_kind": "standard",
+  "reference": "Thompson & Taylor, Guide for the Use of the International System of Units (SI), NIST Special Publication 811, 2008",
+  "written": "2026-09-26"
+}

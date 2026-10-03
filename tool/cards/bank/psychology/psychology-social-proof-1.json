@@ -1,0 +1,33 @@
+{
+  "id": "psychology-social-proof-1",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.social_proof",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which one sentence in British tax reminder letters got the most late payers to pay up?",
+  "answer": "Being told they were in a small unpaid minority. Added to the line that nine in ten people in Britain pay on time, it raised payments within 23 days about four times as much as the plain nine-in-ten line, and beat appeals to public services. Being the odd one out pulled hardest.",
+  "move": "Showing people they stand apart from the crowd moves them more than reasons.",
+  "ask": "Which of my choices are really driven by what I believe everyone else is doing?",
+  "keywords": [
+    "social norms",
+    "tax compliance",
+    "letters",
+    "hmrc"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hallsworth et al., Journal of Public Economics, 2017",
+  "source_kind": "paper",
+  "reference": "doi:10.1016/j.jpubeco.2017.02.003",
+  "written": "2026-10-03"
+}

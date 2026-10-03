@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-consciousness-2",
+  "topic": "philosophy",
+  "genre": "philosophy.big_questions",
+  "strand": "philosophy.big_questions.consciousness",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did David Chalmers call explaining attention, memory and speech the easy problems of consciousness?",
+  "answer": "Because each is a job, and science explains jobs by finding the mechanism. Even with every mechanism found, a question would remain: why is any of it felt, rather than happening in the dark? Chalmers named that the hard problem in 1995. A complete wiring diagram of pain would not show the hurt.",
+  "move": "Separate what a thing does from what it is like to be it.",
+  "ask": "When I explain someone's feelings by their situation, do I forget what it actually feels like for them?",
+  "keywords": [
+    "david chalmers",
+    "hard problem",
+    "consciousness",
+    "experience"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chalmers, Journal of Consciousness Studies, 1995",
+  "source_kind": "paper",
+  "reference": "Chalmers, Facing Up to the Problem of Consciousness, Journal of Consciousness Studies 2 (3), 1995",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,46 @@
+{
+  "id": "music-pop-songwriters-3",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.pop_songwriters",
+  "also": [
+    "economics.money_and_banks.inflation"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "From 1913 to 1977 US prices rose from 9.9 to 60.6 on the index; songwriters' 2-cent rate never moved. Its 1977 value, in 1913 cents?",
+  "value": 0.33,
+  "unit": "1913 cents",
+  "tolerance": 0.02,
+  "answer": "About 0.33 cents: five-sixths of the pay gone without a single vote",
+  "move": "A fee fixed in law is a pay cut that renews itself every year.",
+  "ask": "Which fixed amount in my life, like a wage or an allowance, is quietly shrinking each year?",
+  "trap": "Seeing an unchanged rate as unchanged pay.",
+  "hint": "Work out how many times prices rose, then divide the 2 cents by it.",
+  "steps": [
+    "Prices rose 60.6 ÷ 9.9 ≈ 6.1 times",
+    "2 cents ÷ 6.1 ≈ 0.33",
+    "About 0.33 cents: five-sixths of the pay gone without a single vote"
+  ],
+  "keywords": [
+    "mechanical royalty",
+    "copyright act 1909",
+    "inflation",
+    "songwriters"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Copyright Act of 1909; BLS consumer prices",
+  "source_kind": "primary_document",
+  "reference": "Copyright Act of 1909, section 1(e), 2-cent mechanical rate; US Bureau of Labor Statistics, CPI-U annual averages, 1913 and 1977",
+  "written": "2026-09-26"
+}

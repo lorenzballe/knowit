@@ -1,0 +1,33 @@
+{
+  "id": "cinema-screenwriting-1",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.screenwriting",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are Hollywood scripts still typed in a plain typewriter font with fixed margins?",
+  "answer": "So that a page means a minute. In the standard layout, 12-point Courier with set margins, one page runs close to one minute of screen time. That turns the script into a measuring tool: assistant directors break scenes into eighths of a page and build the shooting schedule and budget from those counts.",
+  "move": "A rough rule everyone shares beats a precise one nobody uses.",
+  "ask": "Which rough rule of thumb helps me plan my week, and do the people I work with share it?",
+  "keywords": [
+    "screenplay format",
+    "courier font",
+    "page count",
+    "shooting schedule"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Riley, The Hollywood Standard",
+  "source_kind": "book",
+  "reference": "Christopher Riley, The Hollywood Standard, 2nd edn, Michael Wiese Productions, 2009",
+  "written": "2026-10-03"
+}

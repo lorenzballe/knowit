@@ -1,0 +1,41 @@
+{
+  "id": "food-eat-smarter-sugar-2",
+  "topic": "food",
+  "genre": "food.eat_smarter",
+  "strand": "food.eat_smarter.sugar",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "UK advisers say free sugars should stay under 5% of energy. On 2,000 kcal a day, at 4 kcal per gram, how many grams?",
+  "value": 25,
+  "unit": "grams",
+  "answer": "25 g a day, about six level teaspoons of sugar in all",
+  "move": "Turn a percentage into something you can picture before judging it.",
+  "ask": "Do I know what my own daily limits look like in real spoonfuls or portions?",
+  "hint": "Turn the percentage into kilocalories first, then into grams.",
+  "steps": [
+    "5% of 2,000 kcal = 100 kcal",
+    "100 kcal ÷ 4 kcal per gram = 25 g",
+    "25 g a day, about six level teaspoons of sugar in all"
+  ],
+  "keywords": [
+    "free sugars",
+    "sacn",
+    "calories",
+    "teaspoons"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "SACN, Carbohydrates and Health, 2015",
+  "source_kind": "institution",
+  "reference": "Scientific Advisory Committee on Nutrition, Carbohydrates and Health, The Stationery Office, 2015",
+  "written": "2026-10-03"
+}

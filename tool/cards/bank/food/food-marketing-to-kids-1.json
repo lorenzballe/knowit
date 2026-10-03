@@ -1,0 +1,41 @@
+{
+  "id": "food-marketing-to-kids-1",
+  "topic": "food",
+  "genre": "food.eat_smarter",
+  "strand": "food.eat_smarter.marketing_to_kids",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Young children tasted identical crackers from two packs, one showing a popular cartoon character. Which tasted better to them?",
+  "options": [
+    "The pack with the character",
+    "Both tasted the same",
+    "The plain pack"
+  ],
+  "correct": 0,
+  "answer": "The pack with the character. In a 2010 Yale study, 40 children aged four to six mostly said crackers and gummy snacks tasted better from packs carrying a familiar cartoon character. The effect was weaker for baby carrots. The sticker changed the taste the children reported, not the food in the pack.",
+  "move": "A face on the packet works on the tongue as well as the eye.",
+  "ask": "Which brand do I like partly because of the picture, not what is inside?",
+  "trap": "Both the same, since the food inside was identical.",
+  "keywords": [
+    "cartoon characters",
+    "packaging",
+    "children",
+    "taste",
+    "food marketing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Roberto et al., Pediatrics, 2010",
+  "source_kind": "paper",
+  "reference": "Roberto, Baik, Harris & Brownell, Influence of licensed characters on children's taste and snack preferences, Pediatrics, 2010",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "art-art-and-money-2",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.art_and_money",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do some of the world's most expensive paintings spend years in warehouses near airports?",
+  "answer": "Tax. In freeports such as Geneva's, goods count as in transit, so import duties and sales taxes are not charged. A painting can be bought and sold many times without leaving its crate. Worry about hidden owners led the European Union in 2018 to make art dealers check buyers' identities from €10,000.",
+  "move": "When something is bought to be locked away, it has become money.",
+  "ask": "Is something I am investing in still something I enjoy, or only a number I watch?",
+  "keywords": [
+    "freeports",
+    "geneva",
+    "money laundering",
+    "art market"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "EU Fifth Anti-Money Laundering Directive, 2018",
+  "source_kind": "primary_document",
+  "reference": "Directive (EU) 2018/843 of the European Parliament and of the Council (Fifth Anti-Money Laundering Directive), 2018",
+  "written": "2026-10-03"
+}

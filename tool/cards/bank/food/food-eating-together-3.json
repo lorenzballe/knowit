@@ -1,0 +1,40 @@
+{
+  "id": "food-eating-together-3",
+  "topic": "food",
+  "genre": "food.eat_smarter",
+  "strand": "food.eat_smarter.eating_together",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: in OECD time-use surveys, the French spend nearly twice as long eating each day as Americans?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The OECD's 2009 comparison of time-use surveys put the French at about two and a quarter hours a day eating and drinking, the most of any member country, against about an hour and a quarter for Americans. The gap is mostly long, shared meals at fixed hours. A French lunch is an event.",
+  "move": "How long a meal lasts shapes it as much as the menu.",
+  "ask": "When did I last sit through a whole meal with someone, without rushing?",
+  "trap": "Judging every country's meals by the quick lunch I know.",
+  "keywords": [
+    "time use",
+    "france",
+    "united states",
+    "mealtimes",
+    "oecd"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "OECD, Society at a Glance 2009",
+  "source_kind": "statistics",
+  "reference": "OECD, Society at a Glance 2009: OECD Social Indicators, OECD Publishing, 2009",
+  "written": "2026-10-03"
+}

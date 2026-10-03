@@ -1,0 +1,36 @@
+{
+  "id": "space-big-bang-3",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.big_bang",
+  "also": [
+    "science.think_like_a_scientist.falsification"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What evidence finally beat the rival theory of a universe with no beginning, which also explained why galaxies fly apart?",
+  "answer": "Evidence that the universe was different in the past. The steady-state theory had new matter appearing to keep space unchanged forever. But distant, older regions hold radio galaxies and quasars that nearby space lacks, and in 1965 a faint microwave glow from a hot early universe turned up. An unchanging universe could explain neither.",
+  "move": "To choose between two ideas, find a fact on which they disagree.",
+  "ask": "In a disagreement I'm in, what fact would each side predict differently?",
+  "keywords": [
+    "steady state theory",
+    "big bang",
+    "quasars",
+    "cosmic microwave background"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kragh, Cosmology and Controversy, 1996",
+  "source_kind": "book",
+  "reference": "Kragh, Cosmology and Controversy: The Historical Development of Two Theories of the Universe, Princeton University Press, 1996",
+  "written": "2026-10-03"
+}

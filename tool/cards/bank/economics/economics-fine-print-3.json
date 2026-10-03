@@ -1,0 +1,39 @@
+{
+  "id": "economics-fine-print-3",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.fine_print",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: until 2018, a UK broadband advert could quote an up-to speed that only one customer in ten received?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Advertising guidance let providers quote speeds available to at least 10% of customers, labelled up to. From May 2018 it asked for speeds that at least half of customers get between 8 and 10pm, labelled average. The big number on the poster had described the lucky tenth.",
+  "move": "Ask whose experience a headline figure describes: the typical one or the best.",
+  "ask": "When a product promises up to something, what would someone like me actually get?",
+  "trap": "Reading up to as a typical speed rather than a best case.",
+  "keywords": [
+    "broadband",
+    "advertising standards",
+    "up to speeds",
+    "median speed"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Advertising Standards Authority, broadband speeds, 2018",
+  "source_kind": "institution",
+  "reference": "https://www.asa.org.uk/news/new-standard-on-broadband-speed-claims-in-ads-comes-into-force-today.html",
+  "written": "2026-10-03"
+}

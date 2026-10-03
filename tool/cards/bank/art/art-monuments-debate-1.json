@@ -1,0 +1,40 @@
+{
+  "id": "art-monuments-debate-1",
+  "topic": "art",
+  "genre": "art.sculpture",
+  "strand": "art.sculpture.monuments_debate",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "When did the biggest wave of Confederate monuments in the United States go up?",
+  "options": [
+    "Between 1900 and the 1920s",
+    "Within ten years of the war",
+    "During the 1960s"
+  ],
+  "correct": 0,
+  "answer": "Between 1900 and the 1920s, two generations after the war ended in 1865. Counts by the Southern Poverty Law Center show the peak came as states passed segregation laws, with a second, smaller rise during the civil-rights struggles of the 1950s and 1960s. Many stand outside courthouses, where Black citizens came to seek justice.",
+  "move": "Ask when a memorial was built, not only what it remembers.",
+  "ask": "When someone tells me a story about the past, what was happening in their own present?",
+  "trap": "Right after the war, raised by grieving veterans and widows.",
+  "keywords": [
+    "confederate monuments",
+    "segregation",
+    "civil war",
+    "courthouses"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Southern Poverty Law Center, Whose Heritage?, 2016",
+  "source_kind": "institution",
+  "reference": "Southern Poverty Law Center, Whose Heritage? Public Symbols of the Confederacy, 2016",
+  "written": "2026-10-03"
+}

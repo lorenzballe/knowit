@@ -1,0 +1,40 @@
+{
+  "id": "psychology-updating-beliefs-3",
+  "topic": "psychology",
+  "genre": "psychology.change_your_mind",
+  "strand": "psychology.change_your_mind.updating_beliefs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Asked the same trivia figure twice, three weeks apart, which of a person's estimates tends to be most accurate?",
+  "options": [
+    "The first guess",
+    "The second guess",
+    "The average of both"
+  ],
+  "correct": 2,
+  "answer": "The average of both. Vul and Pashler found that a person's two guesses carry partly separate errors, so averaging cancels some of them, much as averaging two different people does. The gain was larger with weeks between guesses than minutes. Each guess is a draw from what the mind holds, not its final word.",
+  "move": "Ask yourself twice, apart in time, and split the difference.",
+  "ask": "For my next big estimate, could I guess again in a few days and average the two?",
+  "trap": "Trusting the first guess as the purest, least second-guessed answer.",
+  "keywords": [
+    "estimates",
+    "crowd within",
+    "averaging",
+    "guessing"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vul & Pashler, Psychological Science, 2008",
+  "source_kind": "paper",
+  "reference": "Vul & Pashler, Measuring the crowd within: probabilistic representations within individuals, Psychological Science, 2008",
+  "written": "2026-10-03"
+}

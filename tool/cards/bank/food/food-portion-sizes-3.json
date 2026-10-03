@@ -1,0 +1,33 @@
+{
+  "id": "food-portion-sizes-3",
+  "topic": "food",
+  "genre": "food.eat_smarter",
+  "strand": "food.eat_smarter.portion_sizes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do the cookies and muffins sold in US shops compare with the portion the government's food guide assumes?",
+  "answer": "They are several times bigger. Young and Nestle weighed foods sold in shops and restaurants against the US Department of Agriculture's standard servings. Cookies, cooked pasta and muffins showed the widest gaps, from about three to eight times the standard. Advice counted in servings, so one muffin could be three servings eaten as one.",
+  "move": "One of something is whatever the seller decided it is.",
+  "ask": "When I eat one of something, who decided how big one is?",
+  "keywords": [
+    "portion sizes",
+    "serving standards",
+    "muffins",
+    "marion nestle"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Young & Nestle, American Journal of Public Health, 2002",
+  "source_kind": "paper",
+  "reference": "Young & Nestle, The contribution of expanding portion sizes to the US obesity epidemic, American Journal of Public Health, 2002",
+  "written": "2026-10-03"
+}

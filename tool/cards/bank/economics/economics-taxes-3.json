@@ -1,0 +1,38 @@
+{
+  "id": "economics-taxes-3",
+  "topic": "economics",
+  "genre": "economics.inequality",
+  "strand": "economics.inequality.taxes",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should countries tax large fortunes every year, not just income and inheritances?",
+  "sides": [
+    "Yes, tax wealth yearly",
+    "No, tax income instead"
+  ],
+  "answer": "The largest fortunes are mostly unrealised gains, untaxed until assets are sold, which may be never. A small yearly levy on wealth above a high threshold reaches money that otherwise compounds untaxed across generations. Norway, Spain and Switzerland still run one, and the Swiss cantons have levied one for generations.",
+  "move": "Whichever side you took, whether wealth can be valued and kept from fleeing decides it.",
+  "ask": "Do I judge a rule by what it is meant to achieve, or by what it actually achieves?",
+  "counterpoint": "The OECD counted twelve member countries with a net wealth tax in 1990 and only four by 2017; most dropped them as revenues disappointed. Valuing private firms, land and art every year is costly and contestable, the rich move or restructure, and savers owe tax even in years their assets earn nothing.",
+  "keywords": [
+    "wealth tax",
+    "oecd",
+    "unrealised gains",
+    "fortunes"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "OECD, Net Wealth Taxes report, 2018",
+  "source_kind": "institution",
+  "reference": "https://www.oecd.org/en/publications/the-role-and-design-of-net-wealth-taxes-in-the-oecd_9789264290303-en.html",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "life-learning-from-mistakes-3",
+  "topic": "life",
+  "genre": "life.learn_anything",
+  "strand": "life.learn_anything.learning_from_mistakes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Hospital units with the best teamwork recorded more drug errors than other units. What did the researcher conclude?",
+  "options": [
+    "They were more willing to report them",
+    "They were making more mistakes",
+    "They were treating sicker patients"
+  ],
+  "correct": 0,
+  "answer": "They were more willing to report them. Edmondson expected well-led teams to make fewer errors, and was puzzled when their records showed more. Interviews showed that in those units nurses felt safe admitting mistakes; elsewhere errors stayed hidden. The best teams looked worst on paper because they could see their errors.",
+  "move": "Read an error count as a measure of honesty before competence.",
+  "ask": "Where I work or live, is it safe to admit a mistake, or do mistakes simply go unrecorded?",
+  "trap": "More errors recorded must mean more errors made.",
+  "keywords": [
+    "medication errors",
+    "hospital teams",
+    "error reporting",
+    "amy edmondson",
+    "psychological safety"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Edmondson, J. Applied Behavioral Science, 1996",
+  "source_kind": "paper",
+  "reference": "Edmondson, Learning from mistakes is easier said than done: Group and organizational influences on the detection and correction of human error, Journal of Applied Behavioral Science, 1996",
+  "written": "2026-10-03"
+}

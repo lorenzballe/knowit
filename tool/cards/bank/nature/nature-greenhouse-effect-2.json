@@ -1,0 +1,40 @@
+{
+  "id": "nature-greenhouse-effect-2",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.greenhouse_effect",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "If carbon dioxide already absorbs nearly all heat at its main wavelengths near the ground, does adding more still warm?",
+  "options": [
+    "No, the effect is saturated",
+    "Yes, heat escapes from higher, colder air",
+    "Yes, extra gas absorbs sunlight"
+  ],
+  "correct": 1,
+  "answer": "Yes, heat escapes from higher, colder air. What matters is the height from which heat finally leaks to space. More carbon dioxide raises that height, and colder air up there radiates less, so the planet warms until outflow balances again. Pierrehumbert explains why the effect weakens as gas is added but never stops.",
+  "move": "Find where the real bottleneck is before calling anything maxed out.",
+  "ask": "What have I written off as maxed out without checking where the real limit is?",
+  "trap": "Saturated absorption sounds like extra gas can change nothing.",
+  "keywords": [
+    "co2 saturation",
+    "greenhouse effect",
+    "emission height",
+    "infrared"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pierrehumbert, Physics Today, 2011",
+  "source_kind": "paper",
+  "reference": "Pierrehumbert, Infrared radiation and planetary temperature, Physics Today, 2011",
+  "written": "2026-10-03"
+}

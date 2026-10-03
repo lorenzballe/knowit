@@ -1,0 +1,39 @@
+{
+  "id": "human_body-cortisol-2",
+  "topic": "human_body",
+  "genre": "human_body.stress_and_the_body",
+  "strand": "human_body.stress_and_the_body.cortisol",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: adrenal fatigue, glands worn out by chronic stress, is a diagnosis that medical tests confirm?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A systematic review by Cadegiani and Kater found no evidence that adrenal fatigue exists; studies contradicted each other and the tests used were inconsistent. The adrenal glands do not tire like a muscle. The tiredness is real and deserves a cause, such as poor sleep, depression or anaemia, which the label can hide.",
+  "move": "A label that explains everything may be stopping the search for a cause.",
+  "ask": "Which explanation for my tiredness have I settled on that stops me looking further?",
+  "trap": "Stress drains energy, so the stress glands must be drained too.",
+  "keywords": [
+    "adrenal fatigue",
+    "cortisol",
+    "chronic stress",
+    "tiredness"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cadegiani and Kater, BMC Endocrine Disorders, 2016",
+  "source_kind": "paper",
+  "reference": "Cadegiani FA, Kater CE, Adrenal fatigue does not exist: a systematic review, BMC Endocrine Disorders, 2016",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-brand-loyalty-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.brand_loyalty",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "For a typical consumer brand, what share of sales comes from its heaviest-buying 20% of customers?",
+  "options": [
+    "About 80%",
+    "About half",
+    "About a fifth"
+  ],
+  "correct": 1,
+  "answer": "About half. Across categories from toothpaste to petrol, the top 20% of a brand's buyers usually account for roughly 50 to 60% of its sales, not 80%. The rest comes from a long tail of light buyers who purchase once or twice a year, and that tail is where a brand mostly grows.",
+  "move": "Test a famous ratio against the data before planning around it.",
+  "ask": "Which famous rule of thumb am I using at work without ever having checked it?",
+  "trap": "Reaching for the famous 80/20 rule because it sounds like a law.",
+  "keywords": [
+    "pareto rule",
+    "heavy buyers",
+    "light buyers",
+    "brand growth"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Romaniuk and Sharp, How Brands Grow 2",
+  "source_kind": "book",
+  "reference": "Jenni Romaniuk and Byron Sharp, How Brands Grow Part 2, Oxford University Press, 2016",
+  "written": "2026-09-26"
+}

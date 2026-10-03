@@ -1,0 +1,40 @@
+{
+  "id": "sport-tech-doping-2",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.tech_doping",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the first rider caught racing with a motor hidden in the bike was competing at a world championship?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. At the 2016 cyclo-cross world championships in Belgium, officials found a motor inside the frame of a spare bike belonging to an under-23 rider, Femke Van den Driessche; she was banned for six years. Cycling now scans thousands of bikes a season with tablets that detect magnetic fields.",
+  "move": "Once a cheat is possible and pays, assume someone has tried it.",
+  "ask": "Where have I assumed nobody would bother cheating, simply because I would not?",
+  "trap": "Assuming a cheat would test a hidden motor at minor races first.",
+  "keywords": [
+    "mechanical doping",
+    "hidden motor",
+    "cyclo-cross",
+    "uci",
+    "bike scans"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "UCI Disciplinary Commission decision, 2016",
+  "source_kind": "primary_document",
+  "reference": "Union Cycliste Internationale, Disciplinary Commission decision in the case of Femke Van den Driessche, 26 April 2016",
+  "written": "2026-09-26"
+}

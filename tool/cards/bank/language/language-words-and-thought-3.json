@@ -1,0 +1,38 @@
+{
+  "id": "language-words-and-thought-3",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.words_and_thought",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Does the language people grow up speaking shape how they think, and not just what they say?",
+  "sides": [
+    "Yes, it shapes thought",
+    "No, only expression"
+  ],
+  "answer": "Speakers of Guugu Yimithirr, in northern Australia, describe space by compass points rather than left and right, and they keep track of north at every moment, even indoors. Turned around in experiments, they rearranged objects by direction, not by their own body. A habit of speech, practised daily, became a habit of mind.",
+  "move": "Whichever side you took, the hinge is whether speech habits outlast the task.",
+  "ask": "Do the words I use every day make some ways of seeing easier for me than others?",
+  "counterpoint": "Measured effects are small and depend on the task. English speakers also switch to compass terms when landmarks make it easy, and culture and terrain can shape both speech and habit. Languages differ in what they oblige speakers to say, not in what speakers are able to think, and a translation can always be found.",
+  "keywords": [
+    "linguistic relativity",
+    "guugu yimithirr",
+    "spatial reasoning",
+    "compass directions"
+  ],
+  "era": "timeless",
+  "region": "oceania",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Levinson, Space in Language and Cognition, 2003",
+  "source_kind": "book",
+  "reference": "Levinson, Space in Language and Cognition: Explorations in Cognitive Diversity, Cambridge University Press, 2003",
+  "written": "2026-10-03"
+}

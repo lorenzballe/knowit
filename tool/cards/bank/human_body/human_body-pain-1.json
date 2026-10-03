@@ -1,0 +1,33 @@
+{
+  "id": "human_body-pain-1",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.pain",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a stubbed toe hurt in two waves, a sharp jab and then a deep ache?",
+  "answer": "Because two kinds of nerve fibre carry the news at different speeds. Fibres wrapped in insulating myelin send the sharp first pain at 5 to 30 metres a second; bare C fibres crawl at under 2 metres a second and bring the dull, lasting ache. From toe to brain, that is about a second apart.",
+  "move": "One event can arrive as two messages; wait for the second.",
+  "ask": "When something hurts me, in body or mood, do I react before the full message has arrived?",
+  "keywords": [
+    "pain fibres",
+    "nerve conduction",
+    "first pain",
+    "second pain"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Purves et al., Neuroscience, 2018",
+  "source_kind": "book",
+  "reference": "Purves D, Augustine GJ, Fitzpatrick D et al., Neuroscience, 6th edition, Oxford University Press, 2018",
+  "written": "2026-09-26"
+}

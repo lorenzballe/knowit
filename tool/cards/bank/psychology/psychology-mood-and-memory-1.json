@@ -1,0 +1,33 @@
+{
+  "id": "psychology-mood-and-memory-1",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.mood_and_memory",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a low mood make the past seem worse than it was?",
+  "answer": "Because mood steers which memories come up first. In a sad state, unhappy memories surface quickly while happy ones take longer to find, so the evidence the mind gathers about its own life is already tilted. The past did not change; the search did. The same week, recalled on a gloomy evening, looks greyer.",
+  "move": "Postpone big verdicts about your life until a dark mood lifts.",
+  "ask": "When I feel low, can I note my gloomy conclusions and check them again on a better day?",
+  "keywords": [
+    "mood-congruent memory",
+    "sadness",
+    "recall",
+    "rumination"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Teasdale & Fogarty, Journal of Abnormal Psychology, 1979",
+  "source_kind": "paper",
+  "reference": "Teasdale & Fogarty, Differential effects of induced mood on retrieval of pleasant and unpleasant events from episodic memory, Journal of Abnormal Psychology, 1979",
+  "written": "2026-10-03"
+}

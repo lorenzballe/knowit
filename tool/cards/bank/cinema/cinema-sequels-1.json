@@ -1,0 +1,40 @@
+{
+  "id": "cinema-sequels-1",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.sequels",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "A studio greenlights sequels only to its biggest surprise hits. On average, how should those sequels do against their originals?",
+  "options": [
+    "Earn more, with fans built in",
+    "Earn less than the originals",
+    "Earn about the same"
+  ],
+  "correct": 1,
+  "answer": "Earn less. A film picked because it did unusually well owes part of that to luck, and luck does not come back on request. Basuroy and Chatterjee found sequels fall short of their parent films, yet still beat ordinary new releases, which is why studios keep making them.",
+  "move": "Whatever was chosen for being exceptional will usually look more ordinary next time.",
+  "ask": "What did I pick because it went brilliantly once, and expect to go brilliantly again?",
+  "trap": "Earn more, since the first film already proved the audience exists.",
+  "keywords": [
+    "sequels",
+    "box office",
+    "brand extensions",
+    "luck"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Basuroy and Chatterjee, 2008",
+  "source_kind": "paper",
+  "reference": "Basuroy and Chatterjee, Fast and Frequent: Investigating Box Office Revenues of Motion Picture Sequels, Journal of Business Research, 61(7), 2008",
+  "written": "2026-10-03"
+}

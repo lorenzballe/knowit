@@ -1,0 +1,40 @@
+{
+  "id": "economics-free-is-not-free-1",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.free_is_not_free",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Shoppers chose between a 15-cent truffle and a 1-cent chocolate. When both became a cent cheaper, what happened?",
+  "options": [
+    "Most switched to the free one",
+    "Most still took the truffle",
+    "Choices barely moved at all"
+  ],
+  "correct": 0,
+  "answer": "Most switched to the free one. At 15 and 1 cent, most chose the better truffle. Cutting both by a cent left the gap exactly the same, yet most now took the chocolate that cost nothing. Free pulled harder than any small price: it felt like a choice with no downside.",
+  "move": "Treat free as a price, and ask what it makes you give up.",
+  "ask": "What have I chosen lately only because it was free, over something I liked better?",
+  "trap": "Reasoning that an unchanged gap should leave choices unchanged.",
+  "keywords": [
+    "zero price effect",
+    "free offers",
+    "chocolate",
+    "ariely"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shampanier, Mazar and Ariely, Marketing Science, 2007",
+  "source_kind": "paper",
+  "reference": "https://web.mit.edu/ariely/www/MIT/Papers/zero.pdf",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "cinema-spot-the-trick-3",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.spot_the_trick",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: when a film's only actor was swapped for a different person across a cut, most viewers noticed?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Levin and Simons made short films in which the sole actor changed into another person at a cut, and most viewers did not report it. Attention follows the action, not the face or the shirt. Continuity mistakes on screen slip past most people for the same reason.",
+  "move": "Seeing something is not the same as noticing that it changed.",
+  "ask": "What has changed around me, at home or work, that I have been looking at without noticing?",
+  "trap": "True, recalling the famous bloopers that someone did spot.",
+  "keywords": [
+    "change blindness",
+    "continuity errors",
+    "attention",
+    "daniel simons"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Levin and Simons, 1997",
+  "source_kind": "paper",
+  "reference": "Levin and Simons, Failure to Detect Changes to Attended Objects in Motion Pictures, Psychonomic Bulletin and Review, 4(4), 1997",
+  "written": "2026-10-03"
+}

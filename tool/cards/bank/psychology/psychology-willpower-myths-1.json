@@ -1,0 +1,33 @@
+{
+  "id": "psychology-willpower-myths-1",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.willpower_myths",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does a sugary drink restore self-control by refuelling the brain?",
+  "answer": "No. The idea that self-control burns blood sugar rested on small studies. Kurzban showed the brain's glucose use barely changes with mental effort, far too little to drain a tank. Later, merely rinsing the mouth with sugar water and spitting it out seemed to help too, which no fuel could explain.",
+  "move": "Test a tidy metaphor against the measurement it implies.",
+  "ask": "When I say I have no willpower left, is that true, or have I just stopped wanting to?",
+  "keywords": [
+    "glucose",
+    "self-control",
+    "willpower",
+    "brain energy"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kurzban, Evolutionary Psychology, 2010",
+  "source_kind": "paper",
+  "reference": "Kurzban, Does the mind run on glucose? Continuing controversy and a reply, Evolutionary Psychology, 2010",
+  "written": "2026-10-03"
+}

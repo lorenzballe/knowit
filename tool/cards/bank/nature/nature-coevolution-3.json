@@ -1,0 +1,39 @@
+{
+  "id": "nature-coevolution-3",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.coevolution",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: dogs read a human pointing to hidden food better than chimpanzees, our closest relatives, do?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Hare and colleagues hid food under one of two cups and pointed or gazed at it. Dogs, even puppies with little human contact, chose correctly far more often than chimpanzees, and better than wolves raised by people. Thousands of years living alongside humans selected dogs for reading us.",
+  "move": "Skill follows the job a creature evolved for, not family resemblance.",
+  "ask": "Who reads me best: the person most like me, or the one who has spent most time with me?",
+  "trap": "Chimpanzees share most of our DNA, so they should read us best.",
+  "keywords": [
+    "dogs",
+    "domestication",
+    "pointing",
+    "chimpanzees"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hare et al., Science, 2002",
+  "source_kind": "paper",
+  "reference": "Hare, Brown, Williamson & Tomasello, The domestication of social cognition in dogs, Science, 2002",
+  "written": "2026-10-03"
+}

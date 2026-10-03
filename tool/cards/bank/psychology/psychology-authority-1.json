@@ -1,0 +1,39 @@
+{
+  "id": "psychology-authority-1",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.authority",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: when nurses knew the drug and could consult colleagues, most still followed a phoned order for an overdose?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In a 1966 study, 21 of 22 nurses prepared an unfamiliar drug at double its stated maximum dose on a stranger's phoned order. When the test was rerun with a familiar drug and colleagues to talk to, only 2 of 18 did. A colleague within earshot was the best safety device on the ward.",
+  "move": "Obedience depends less on the person than on how alone they are.",
+  "ask": "When someone senior asks me to do something that feels wrong, who could I check with first?",
+  "trap": "True: the classic study found nearly every nurse obeyed.",
+  "keywords": [
+    "obedience",
+    "nurses",
+    "hospitals",
+    "replication"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rank & Jacobson, J Health Soc Behav, 1977",
+  "source_kind": "paper",
+  "reference": "Rank & Jacobson, Hospital nurses' compliance with medication overdose orders: A failure to replicate, Journal of Health and Social Behavior, 1977",
+  "written": "2026-10-03"
+}

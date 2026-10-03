@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-how-do-you-know-3",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.how_do_you_know",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A shipowner sincerely believed his old ship was safe, and it sank. Why did W. K. Clifford call him guilty anyway?",
+  "answer": "Because he had no right to his belief. In Clifford's 1877 essay, the owner silences his doubts about the worn ship and trusts providence; the emigrants drown. Had the ship arrived safely, Clifford said, he would be no less guilty: the fault was in how he came to believe, not in how things turned out.",
+  "move": "Judge a belief by how it was formed, not by whether it worked out.",
+  "ask": "Is there a belief I hold because it is comfortable, and who would pay if I am wrong?",
+  "keywords": [
+    "w. k. clifford",
+    "ethics of belief",
+    "shipowner",
+    "evidence"
+  ],
+  "era": "nineteenth",
+  "region": "none",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Clifford, The Ethics of Belief",
+  "source_kind": "book",
+  "reference": "Clifford, The Ethics of Belief and Other Essays, Prometheus Books, 1999",
+  "written": "2026-10-03"
+}

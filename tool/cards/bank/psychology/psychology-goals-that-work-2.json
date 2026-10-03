@@ -1,0 +1,39 @@
+{
+  "id": "psychology-goals-that-work-2",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.goals_that_work",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: tracking progress on a goal helps more when the progress is written down or shared?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Harkin and colleagues pooled 138 studies in which people were prompted to monitor progress on goals such as weight, exercise or blood pressure. Monitoring helped, and it helped most when the record was physical, such as a log, or reported to others. A number kept only in the head is easy to round up.",
+  "move": "Put your progress somewhere outside your head, where it cannot be rounded up.",
+  "ask": "Which goal am I tracking only in my head, where it is easy to fool myself?",
+  "trap": "Assuming silent self-checking works as well as a written record.",
+  "keywords": [
+    "goal monitoring",
+    "progress tracking",
+    "meta-analysis",
+    "self-report"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Harkin et al., Psychological Bulletin, 2016",
+  "source_kind": "paper",
+  "reference": "Harkin, Webb, Chang, Prestwich, Conner, Kellar, Benn & Sheeran, Does monitoring goal progress promote goal attainment? A meta-analysis of the experimental evidence, Psychological Bulletin, 2016",
+  "written": "2026-10-03"
+}

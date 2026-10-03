@@ -1,0 +1,33 @@
+{
+  "id": "economics-inheritance-3",
+  "topic": "economics",
+  "genre": "economics.inequality",
+  "strand": "economics.inequality.inheritance",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "At what age do most Britons who inherit from their parents actually receive the money?",
+  "answer": "In their late fifties or early sixties. The ONS found people aged 55 to 64 the likeliest to inherit, and the Resolution Foundation expects millennials to inherit most often at about 61. With parents living into their late eighties, the money lands after the mortgage, the children and most of a career.",
+  "move": "Help given early often counts for more than a larger sum given late.",
+  "ask": "Is there help I could give someone now that would matter more than the same help later?",
+  "keywords": [
+    "inheritance",
+    "ageing",
+    "office for national statistics",
+    "intergenerational transfers"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ONS, Intergenerational transfers, 2018",
+  "source_kind": "statistics",
+  "reference": "https://www.ons.gov.uk/peoplepopulationandcommunity/personalandhouseholdfinances/incomeandwealth/articles/intergenerationaltransfersthedistributionofinheritancesgiftsandloans/2018-10-30",
+  "written": "2026-10-03"
+}

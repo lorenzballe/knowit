@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-meaning-2",
+  "topic": "philosophy",
+  "genre": "philosophy.living_well",
+  "strand": "philosophy.living_well.meaning",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A life seems tiny against the universe. Thomas Nagel asked what would change if people lived a million years. His answer?",
+  "options": [
+    "Nothing: the absurdity would remain",
+    "Life would then feel meaningful",
+    "People would run out of purposes"
+  ],
+  "correct": 0,
+  "answer": "Nothing: the absurdity would remain. In his 1971 essay, Nagel argued that if a seventy-year life is pointless, a million-year one would be too; size and duration are not the problem. The absurd comes from being able to step back and see our serious concerns as arbitrary. His advice was irony, not despair.",
+  "move": "If something feels pointless small, making it bigger will not fix it.",
+  "ask": "What am I postponing meaning for, as if more time or success would supply it?",
+  "trap": "That life would feel meaningful, as long and large seems significant.",
+  "keywords": [
+    "thomas nagel",
+    "the absurd",
+    "meaning of life",
+    "cosmic scale"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nagel, The Absurd, Journal of Philosophy, 1971",
+  "source_kind": "paper",
+  "reference": "Nagel, The Absurd, Journal of Philosophy 68 (20), 1971",
+  "written": "2026-10-03"
+}

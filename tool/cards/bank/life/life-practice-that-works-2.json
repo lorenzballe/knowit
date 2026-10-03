@@ -1,0 +1,33 @@
+{
+  "id": "life-practice-that-works-2",
+  "topic": "life",
+  "genre": "life.learn_anything",
+  "strand": "life.learn_anything.practice_that_works",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do words you complete yourself, like hot and c_ld, stick better than the same words simply read?",
+  "answer": "Because producing them takes effort that leaves a stronger trace. Slamecka and Graf showed people word pairs either whole or with letters missing, to be filled in from a rule such as opposites. Words people generated were remembered better than words they read, and later reviews of many studies found the gain held up.",
+  "move": "Make yourself produce the answer before you look at it.",
+  "ask": "What am I rereading that I could instead try to produce from memory first?",
+  "keywords": [
+    "generation effect",
+    "memory",
+    "word pairs",
+    "active learning"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Slamecka and Graf, JEP, 1978",
+  "source_kind": "paper",
+  "reference": "Slamecka and Graf, The generation effect: Delineation of a phenomenon, Journal of Experimental Psychology: Human Learning and Memory, 1978",
+  "written": "2026-10-03"
+}

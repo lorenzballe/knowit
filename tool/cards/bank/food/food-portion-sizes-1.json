@@ -1,0 +1,39 @@
+{
+  "id": "food-portion-sizes-1",
+  "topic": "food",
+  "genre": "food.eat_smarter",
+  "strand": "food.eat_smarter.portion_sizes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A Cochrane review pooled dozens of trials that served people bigger or smaller portions. What did bigger portions do?",
+  "options": [
+    "Made people eat more",
+    "Left more food on plates"
+  ],
+  "correct": 0,
+  "answer": "Made people eat more. The 2015 review found that larger portions, packages and plates consistently raised how much adults and children ate, by a small to moderate amount each time. The authors estimated that removing the larger sizes from UK adults' diets could cut their daily energy intake by 12 to 16%.",
+  "move": "The amount put in front of you quietly sets the amount you eat.",
+  "ask": "Who decides how much I eat: my hunger, or whoever filled my plate?",
+  "trap": "Leaving more on the plate, since hunger rather than size should decide.",
+  "keywords": [
+    "portion size",
+    "cochrane review",
+    "packaging",
+    "energy intake"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hollands et al., Cochrane Database of Systematic Reviews, 2015",
+  "source_kind": "paper",
+  "reference": "Hollands, Shemilt, Marteau et al., Portion, package or tableware size for changing selection and consumption of food, alcohol and tobacco, Cochrane Database of Systematic Reviews, 2015",
+  "written": "2026-10-03"
+}

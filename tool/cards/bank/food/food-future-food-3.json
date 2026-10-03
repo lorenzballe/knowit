@@ -1,0 +1,39 @@
+{
+  "id": "food-future-food-3",
+  "topic": "food",
+  "genre": "food.food_and_the_planet",
+  "strand": "food.food_and_the_planet.future_food",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should countries ban the sale of meat grown from animal cells, as Italy did in 2023?",
+  "sides": [
+    "Yes, ban it",
+    "No, allow it"
+  ],
+  "answer": "Its promised benefits are unproven. A 2023 analysis from the University of California, Davis, not yet peer reviewed, estimated that if growth broth is purified to drug-grade standards, cultivated meat could emit several times more than beef. A ban protects farmers and traditions, and keeps an untested industrial product off plates until the evidence exists.",
+  "move": "It turns on whether rules should wait for evidence or prevent it.",
+  "ask": "Do I reject new things before I know enough, or try to learn first?",
+  "counterpoint": "Singapore approved cultivated chicken in 2020 and the United States in 2023 after safety reviews, so regulators can judge products case by case. A ban halts the very production that would show whether costs and emissions fall. Shoppers already choose freely among foods with far larger known harms, from processed meat to alcohol.",
+  "keywords": [
+    "cultivated meat",
+    "italy",
+    "food regulation",
+    "singapore",
+    "precaution"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Italian Law no. 172 of 1 December 2023",
+  "source_kind": "primary_document",
+  "reference": "Legge 1 dicembre 2023, n. 172, Gazzetta Ufficiale della Repubblica Italiana, 2023",
+  "written": "2026-10-03"
+}

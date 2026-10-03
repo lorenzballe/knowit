@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-bandwagons-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.bandwagons",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A news site gave randomly chosen new comments one fake up-vote. How did those comments end up rated?",
+  "options": [
+    "About 25% higher than others",
+    "No different by the end",
+    "Lower, as readers pushed back"
+  ],
+  "correct": 0,
+  "answer": "About 25% higher than others. Muchnik, Aral and Taylor ran the test on a live site with over 100,000 comments: one early up-vote made the next reader about a third more likely to up-vote too, and the lead lasted. A random early down-vote, by contrast, was soon corrected by readers.",
+  "move": "An early nudge can decide what looks like a crowd's free verdict.",
+  "ask": "When I liked something because many others had, did I judge it for myself first?",
+  "trap": "Readers judge each comment on its merits, so one vote washes out.",
+  "keywords": [
+    "social influence",
+    "up-votes",
+    "herding",
+    "online comments"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Muchnik, Aral and Taylor, Science, 2013",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/science.1240466",
+  "written": "2026-09-26"
+}

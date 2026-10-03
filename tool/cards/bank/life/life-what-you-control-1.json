@@ -1,0 +1,33 @@
+{
+  "id": "life-what-you-control-1",
+  "topic": "life",
+  "genre": "life.handle_setbacks",
+  "strand": "life.handle_setbacks.what_you_control",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did the scientists behind learned helplessness conclude, fifty years on, that they had got backwards?",
+  "answer": "That passivity is not learned; control is. Revisiting the work, Maier and Seligman concluded that the default response to prolonged bad events that cannot be escaped is passivity, and that what animals learn is the presence of control, which switches that response off. Discovering that an action works is what wakes effort up.",
+  "move": "Look for one action that visibly works; effort follows proof of control.",
+  "ask": "Where do I feel stuck, and what small action could show me I have some control there?",
+  "keywords": [
+    "learned helplessness",
+    "control",
+    "passivity",
+    "neuroscience"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Maier and Seligman, Psychological Review, 2016",
+  "source_kind": "paper",
+  "reference": "Maier and Seligman, Learned helplessness at fifty: Insights from neuroscience, Psychological Review, 2016",
+  "written": "2026-10-03"
+}

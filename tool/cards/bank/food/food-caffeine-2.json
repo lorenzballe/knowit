@@ -1,0 +1,33 @@
+{
+  "id": "food-caffeine-2",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.caffeine",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a habitual coffee drinker's first cup of the morning feel so powerful?",
+  "answer": "Mostly because it ends a small withdrawal. Overnight, a regular drinker's brain, used to caffeine, starts to run dull. In a 2010 Bristol study of 379 people kept off caffeine for 16 hours, regular drinkers given caffeine ended up about as alert as non-drinkers given a placebo. The cup returns them to normal.",
+  "move": "Relief from a habit can feel exactly like a benefit of it.",
+  "ask": "Which of my daily habits mostly fixes a problem that the habit itself created?",
+  "keywords": [
+    "caffeine withdrawal",
+    "tolerance",
+    "alertness",
+    "coffee"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rogers et al., Neuropsychopharmacology, 2010",
+  "source_kind": "paper",
+  "reference": "Rogers, Hohoff, Heatherley, Mullings, Maxfield, Evershed, Deckert & Nutt, Association of the anxiogenic and alerting effects of caffeine with ADORA2A and ADORA1 polymorphisms and habitual level of caffeine consumption, Neuropsychopharmacology, 2010",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "economics-mental-accounting-3",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.mental_accounting",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: many households carry costly card debt while holding bank savings that could clear it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Gross and Souleles found that about a third of US households with card debt held liquid savings worth at least a month's income. They paid card interest many times what their deposits earned. Money labelled for emergencies stays untouched while the card bill compounds beside it, every month.",
+  "move": "A debt and a saving side by side are often one cost in disguise.",
+  "ask": "Am I paying interest on a debt while money I could use sits in a pot I call untouchable?",
+  "trap": "False, since nobody sensible saves at 1% while borrowing at 20%.",
+  "keywords": [
+    "credit card debt",
+    "savings",
+    "household finance",
+    "interest"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gross and Souleles, Quarterly Journal of Economics, 2002",
+  "source_kind": "paper",
+  "reference": "Gross & Souleles, Do Liquidity Constraints and Interest Rates Matter for Consumer Behavior? Evidence from Credit Card Data, Quarterly Journal of Economics, 2002",
+  "written": "2026-10-03"
+}

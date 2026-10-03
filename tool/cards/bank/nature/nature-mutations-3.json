@@ -1,0 +1,43 @@
+{
+  "id": "nature-mutations-3",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.mutations",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "Each newborn carries about 60 new DNA changes among 3 billion letters. Across 8 billion people, how many times has each letter mutated, on average?",
+  "value": 160,
+  "unit": "times",
+  "answer": "About 160 times each.",
+  "move": "Multiply a rare chance by the number of tries before calling it impossible.",
+  "ask": "Which unlikely thing am I calling impossible when enough tries make it close to certain?",
+  "trap": "A one-in-a-billion change sounds too rare to happen even once.",
+  "hint": "Multiply people by new changes each, then share them across the letters.",
+  "steps": [
+    "New changes among everyone alive: 8 billion × 60 = 480 billion",
+    "Letters in the genome: 3 billion",
+    "480 billion ÷ 3 billion = 160",
+    "About 160 times each."
+  ],
+  "keywords": [
+    "mutations",
+    "human genome",
+    "population",
+    "probability"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lynch, PNAS, 2010",
+  "source_kind": "paper",
+  "reference": "Lynch, Rate, molecular spectrum, and consequences of human mutation, Proceedings of the National Academy of Sciences, 2010",
+  "written": "2026-10-03"
+}

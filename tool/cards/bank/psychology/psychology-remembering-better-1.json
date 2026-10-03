@@ -1,0 +1,33 @@
+{
+  "id": "psychology-remembering-better-1",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.remembering_better",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is a word remembered better when people complete it themselves, as in hot and c_ld, than when they read it whole?",
+  "answer": "Because producing it takes effort that reading skips. In the original experiments, words people generated from a cue and a first letter were recalled better than the same words simply read, and the effect has held across dozens of later studies. The flashcard that asks beats the page that tells.",
+  "move": "Make the material ask you something before it tells you anything.",
+  "ask": "When I study something, how often do I make myself produce the answer instead of just reading it?",
+  "keywords": [
+    "generation effect",
+    "flashcards",
+    "studying",
+    "recall"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Slamecka & Graf, Journal of Experimental Psychology, 1978",
+  "source_kind": "paper",
+  "reference": "Slamecka & Graf, The generation effect: Delineation of a phenomenon, Journal of Experimental Psychology: Human Learning and Memory, 1978",
+  "written": "2026-10-03"
+}

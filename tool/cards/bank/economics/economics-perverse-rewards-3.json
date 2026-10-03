@@ -1,0 +1,39 @@
+{
+  "id": "economics-perverse-rewards-3",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.perverse_rewards",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: after English hospitals were set a four-hour target, a spike of patients left A&E just before four hours?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Times spent in emergency departments showed a sharp peak in the last minutes before the four-hour mark, instead of the smooth curve that patients' needs alone would give. Some were moved to wards or assessment units just in time to count. The clock, not the patient, often set the moment of leaving.",
+  "move": "When a measure becomes a target, look for the bunch just below the line.",
+  "ask": "Which deadline makes me rush to look finished rather than actually finish?",
+  "trap": "Assuming discharge times follow patients' needs, not the deadline.",
+  "keywords": [
+    "four-hour target",
+    "emergency departments",
+    "nhs",
+    "waiting times"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Locker and Mason, BMJ, 2005",
+  "source_kind": "paper",
+  "reference": "Locker & Mason, Analysis of the Distribution of Time That Patients Spend in Emergency Departments, BMJ, 2005",
+  "written": "2026-10-03"
+}

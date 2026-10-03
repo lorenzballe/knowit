@@ -1,0 +1,40 @@
+{
+  "id": "life-boredom-1",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.boredom",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Left alone to think for 15 minutes with a button that gave a mild shock, what share of men pressed it?",
+  "options": [
+    "About 2 in 3",
+    "Almost none",
+    "About 1 in 10"
+  ],
+  "correct": 0,
+  "answer": "About 2 in 3. Wilson and colleagues found that 67% of men and 25% of women gave themselves at least one shock, though all had said beforehand they would pay to avoid one. Across their studies most people found sitting with their own thoughts unpleasant. With nothing to do, even pain counted as something.",
+  "move": "Notice what you reach for when there is nothing to do.",
+  "ask": "When I am left with nothing to do, what do I reach for first, and do I even want it?",
+  "trap": "Nobody would choose pain over sitting quietly for a while.",
+  "keywords": [
+    "thinking alone",
+    "boredom",
+    "electric shock",
+    "solitude"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wilson and colleagues, Science, 2014",
+  "source_kind": "paper",
+  "reference": "Wilson, Reinhard, Westgate, Gilbert, Ellerbeck, Hahn, Brown and Shaked, Just think: The challenges of the disengaged mind, Science, 2014",
+  "written": "2026-10-03"
+}

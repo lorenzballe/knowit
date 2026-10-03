@@ -1,0 +1,40 @@
+{
+  "id": "economics-loyalty-traps-3",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.loyalty_traps",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Café regulars need 10 stamps for a free coffee. How does their buying change as the card fills up?",
+  "options": [
+    "They buy more often near the end",
+    "They keep a steady pace",
+    "They slow down near the end"
+  ],
+  "correct": 0,
+  "answer": "They buy more often near the end. Kivetz, Urminsky and Zheng tracked a university café's card: the gap between coffees shrank as members neared the free drink, then lengthened again once it was claimed and a new card began. The card was setting the pace of purchases its holders took for their own habit.",
+  "move": "Notice when a reward is setting the pace of your choices.",
+  "ask": "Which loyalty card or streak keeps me buying because I'm already partway there?",
+  "trap": "Assuming regulars buy coffee when they want one, at a steady pace.",
+  "keywords": [
+    "loyalty cards",
+    "goal gradient",
+    "coffee",
+    "rewards programmes"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kivetz, Urminsky and Zheng, JMR, 2006",
+  "source_kind": "paper",
+  "reference": "Kivetz, Urminsky & Zheng, The Goal-Gradient Hypothesis Resurrected: Purchase Acceleration, Illusionary Goal Progress, and Customer Retention, Journal of Marketing Research, 2006",
+  "written": "2026-10-03"
+}

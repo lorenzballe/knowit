@@ -1,0 +1,42 @@
+{
+  "id": "music-classical-2",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.classical",
+  "also": [
+    "psychology.bias.halo_effect"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: in blind trials, leading violin soloists reliably picked out Stradivari and other old Italian violins from new ones?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Claudia Fritz's team had ten soloists play six old Italian and six new violins in goggles that hid the instruments. Six of the ten chose a new violin as the one to take on tour, and they could not tell old from new better than chance. Fame and price had been doing the hearing.",
+  "move": "Hide the label, then check whether the preference survives.",
+  "ask": "Which of my favourite brands would I still choose if the label were hidden?",
+  "trap": "Assuming instruments costing millions must sound better to experts.",
+  "keywords": [
+    "stradivari",
+    "violins",
+    "blind test",
+    "soloists"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fritz et al., PNAS, 2014",
+  "source_kind": "paper",
+  "reference": "Fritz et al., Soloist evaluations of six Old Italian and six new violins, Proceedings of the National Academy of Sciences, 2014",
+  "written": "2026-09-26"
+}

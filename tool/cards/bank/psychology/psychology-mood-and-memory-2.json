@@ -1,0 +1,40 @@
+{
+  "id": "psychology-mood-and-memory-2",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.mood_and_memory",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: in surveys of over a million Americans, people rated their whole lives clearly higher on sunny days?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Matching each answer to that day's local weather, researchers found most conditions unrelated to life satisfaction, and the few links were tiny. The well-known 1983 finding that sunshine lifts life ratings came from a small telephone sample. Weather may colour the moment, not a verdict on a whole life.",
+  "move": "A passing mood moves small judgements more than big settled ones.",
+  "ask": "On a grey day, which big conclusions about my life am I tempted to draw that could wait?",
+  "trap": "True: a famous classic study found sunshine lifts life ratings.",
+  "keywords": [
+    "weather",
+    "life satisfaction",
+    "mood",
+    "replication",
+    "surveys"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lucas & Lawless, JPSP, 2013",
+  "source_kind": "paper",
+  "reference": "Lucas & Lawless, Does life seem better on a sunny day? Examining the association between daily weather conditions and life satisfaction judgments, Journal of Personality and Social Psychology, 2013",
+  "written": "2026-10-03"
+}

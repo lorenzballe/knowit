@@ -1,0 +1,39 @@
+{
+  "id": "human_body-loneliness-3",
+  "topic": "human_body",
+  "genre": "human_body.stress_and_the_body",
+  "strand": "human_body.stress_and_the_body.loneliness",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: in UK official surveys, adults aged 16 to 24 report feeling lonely often more than people over 65?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The Office for National Statistics found that younger adults, aged 16 to 24, were more likely than older age groups to say they felt lonely often or always. The usual picture is an elderly widow; the data also point to students and young workers who have left home and not yet built new ties.",
+  "move": "Check the numbers before trusting the picture that comes to mind.",
+  "ask": "Which young person around me might be lonelier than they look?",
+  "trap": "Loneliness pictures an elderly person alone, so the old must top it.",
+  "keywords": [
+    "loneliness",
+    "young adults",
+    "office for national statistics",
+    "surveys"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Office for National Statistics, 2018",
+  "source_kind": "institution",
+  "reference": "Office for National Statistics, Loneliness - What characteristics and circumstances are associated with feeling lonely?, 2018",
+  "written": "2026-09-26"
+}

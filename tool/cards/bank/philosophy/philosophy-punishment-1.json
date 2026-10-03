@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-punishment-1",
+  "topic": "philosophy",
+  "genre": "philosophy.justice",
+  "strand": "philosophy.justice.punishment",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "To deter crime, which works better: raising the chance of being caught, or lengthening sentences?",
+  "options": [
+    "Raising the chance of being caught",
+    "Lengthening sentences",
+    "Both about equally"
+  ],
+  "correct": 0,
+  "answer": "Raising the chance of being caught. Daniel Nagin's 2013 review found that the certainty of being caught deters far more reliably than severity; adding years to already long sentences has little measurable effect. Would-be offenders weigh the risk they can see: a police car on the corner, not a clause in the code.",
+  "move": "People respond to the risk they can see now, not the penalty later.",
+  "ask": "Do the rules I set at home or work rely on harsh penalties instead of consistent follow-through?",
+  "trap": "Longer sentences, because a harsher penalty is easier to picture as frightening.",
+  "keywords": [
+    "deterrence",
+    "daniel nagin",
+    "sentencing",
+    "policing",
+    "crime"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nagin, Crime and Justice, 2013",
+  "source_kind": "paper",
+  "reference": "Nagin, Deterrence in the Twenty-First Century, Crime and Justice 42 (1), 2013",
+  "written": "2026-10-03"
+}

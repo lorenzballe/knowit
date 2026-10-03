@@ -1,0 +1,40 @@
+{
+  "id": "economics-luck-1",
+  "topic": "economics",
+  "genre": "economics.inequality",
+  "strand": "economics.inequality.luck",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Roughly how much of the variation in incomes across the world is explained by the country a person lives in?",
+  "options": [
+    "About a tenth",
+    "About a quarter",
+    "Over half"
+  ],
+  "correct": 2,
+  "answer": "Over half, by Branko Milanovic's estimate. Effort, talent and schooling matter within a country, but the gaps between countries dwarf them: a bus driver in Oslo earns many times what one in Nairobi earns for the same route and the same hours. The biggest single factor in a typical income was settled at birth.",
+  "move": "Before crediting effort for a result, ask what was settled before the effort.",
+  "ask": "Which advantage in my life did I simply start with, and do I count it when I judge others?",
+  "trap": "About a tenth, picturing effort and talent doing most of the work.",
+  "keywords": [
+    "global inequality",
+    "citizenship",
+    "birthplace",
+    "branko milanovic"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Milanovic, Review of Economics and Statistics, 2015",
+  "source_kind": "paper",
+  "reference": "Milanovic, Global Inequality of Opportunity: How Much of Our Income Is Determined by Where We Live?, Review of Economics and Statistics, 2015",
+  "written": "2026-10-03"
+}

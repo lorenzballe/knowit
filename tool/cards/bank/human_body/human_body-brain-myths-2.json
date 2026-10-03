@@ -1,0 +1,40 @@
+{
+  "id": "human_body-brain-myths-2",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.brain_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "After an hour of hard mental arithmetic, how much more energy has the brain used than in an hour of rest?",
+  "options": [
+    "A few percent more",
+    "About twice as much",
+    "About half as much again"
+  ],
+  "correct": 0,
+  "answer": "A few percent more. The resting brain already burns about a fifth of the body's energy, mostly keeping cells charged. Brain imaging puts the extra cost of a demanding task at a small fraction of that baseline. Mental tiredness after a long exam is real, but it is not a tank of fuel running dry.",
+  "move": "A feeling of effort is a signal to read, not a fuel gauge.",
+  "ask": "When my head feels tired, do I need fuel, rest, or simply a change of task?",
+  "trap": "Thinking hard feels draining, so it must burn far more fuel.",
+  "keywords": [
+    "brain energy",
+    "glucose",
+    "mental effort",
+    "fatigue"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Raichle and Gusnard, PNAS, 2002",
+  "source_kind": "paper",
+  "reference": "Raichle ME, Gusnard DA, Appraising the brain's energy budget, Proceedings of the National Academy of Sciences, 2002",
+  "written": "2026-09-26"
+}

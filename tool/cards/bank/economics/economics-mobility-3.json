@@ -1,0 +1,40 @@
+{
+  "id": "economics-mobility-3",
+  "topic": "economics",
+  "genre": "economics.inequality",
+  "strand": "economics.inequality.mobility",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a poor child in San Jose had about three times the chance of reaching the top fifth as one in Charlotte?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Chetty and colleagues found that a child from the poorest fifth of families had a 12.9% chance of reaching the top fifth in San Jose, against 4.4% in Charlotte. Same country, same laws, same currency. The areas that did best had less segregation, better schools and stronger community ties around the child.",
+  "move": "Where someone grows up can matter as much as how hard they try.",
+  "ask": "What around me, my street, my school, my friends, is quietly raising or lowering my odds?",
+  "trap": "False, since one country's laws and markets should give similar odds.",
+  "keywords": [
+    "social mobility",
+    "san jose",
+    "charlotte",
+    "neighbourhoods",
+    "raj chetty"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chetty et al., Quarterly Journal of Economics, 2014",
+  "source_kind": "paper",
+  "reference": "Chetty, Hendren, Kline & Saez, Where Is the Land of Opportunity? The Geography of Intergenerational Mobility in the United States, Quarterly Journal of Economics, 2014",
+  "written": "2026-10-03"
+}

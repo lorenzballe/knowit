@@ -1,0 +1,38 @@
+{
+  "id": "economics-crypto-3",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.crypto",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should ordinary savers keep a small slice of their savings in crypto?",
+  "sides": [
+    "Yes, a small slice",
+    "No, stay out"
+  ],
+  "answer": "A slice of 1–2% caps the damage: lose it all and a household's plans barely change, while a big rise would matter. Bitcoin has survived more than fifteen years, several crashes of three-quarters and repeated obituaries, and regulated funds that hold it are now sold by mainstream asset managers. Owning none is also a bet.",
+  "move": "Whichever side you took, whether an asset earns income or only resells decides it.",
+  "ask": "Could I explain where the return on each thing I own actually comes from?",
+  "counterpoint": "Crypto pays no dividend, rent or interest, so its price rests only on what the next buyer will pay. Bitcoin lost about three-quarters of its value in 2022, thousands of smaller coins have gone to zero, and exchanges such as FTX collapsed holding customers' coins. A saver's slice is safer in assets that produce something.",
+  "keywords": [
+    "bitcoin",
+    "cryptocurrency",
+    "savings",
+    "portfolio"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Contested question in household finance",
+  "source_kind": "book",
+  "reference": "Malkiel, A Random Walk Down Wall Street, 13th edition, W. W. Norton, 2023",
+  "written": "2026-10-03"
+}

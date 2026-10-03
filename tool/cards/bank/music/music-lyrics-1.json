@@ -1,0 +1,36 @@
+{
+  "id": "music-lyrics-1",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.lyrics",
+  "also": [
+    "human_body.senses.senses_fooled"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do listeners mishear a song lyric with total confidence, and keep hearing it wrong for years?",
+  "answer": "Because hearing sung words is guessing. Melody and backing smear the syllables, so the brain fills the gaps with likely phrases and delivers its guess as plain sound. The writer Sylvia Wright named the effect in 1954: as a child she had heard a ballad's laid him on the green as Lady Mondegreen.",
+  "move": "What feels like plain perception is often a confident guess filling a gap.",
+  "ask": "Which thing I am sure I heard someone say might be my own guess filling a gap?",
+  "keywords": [
+    "mondegreen",
+    "misheard lyrics",
+    "sylvia wright",
+    "speech perception"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wright, Harper's Magazine, November 1954",
+  "source_kind": "news_archive",
+  "reference": "Wright, The Death of Lady Mondegreen, Harper's Magazine, November 1954",
+  "written": "2026-09-26"
+}

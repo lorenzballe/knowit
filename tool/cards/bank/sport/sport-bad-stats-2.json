@@ -1,0 +1,41 @@
+{
+  "id": "sport-bad-stats-2",
+  "topic": "sport",
+  "genre": "sport.sport_and_numbers",
+  "strand": "sport.sport_and_numbers.bad_stats",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "simpson",
+  "question": "Hitter A had a higher batting average than hitter B in 1995 and again in 1996. Over both years combined?",
+  "options": [
+    "A must be higher",
+    "B can be higher",
+    "They must be level"
+  ],
+  "correct": 1,
+  "answer": "B can be higher. David Justice out-hit Derek Jeter in both seasons, .253 to .250 and .321 to .314, yet over the two years Jeter averaged .310 to Justice's .270. Jeter batted most in his strong year; Justice batted most in his weak one. The weights, not the skill, flipped the result.",
+  "move": "Ask how much each part weighs before adding the parts up.",
+  "ask": "When I combine results from different periods or groups, have I checked how big each one was?",
+  "trap": "Assuming a lead in every part guarantees a lead in the whole.",
+  "keywords": [
+    "batting average",
+    "derek jeter",
+    "david justice",
+    "simpson's paradox",
+    "baseball"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Ross, A Mathematician at the Ballpark, 2004",
+  "source_kind": "book",
+  "reference": "Ken Ross, A Mathematician at the Ballpark: Odds and Probabilities for Baseball Fans, Pi Press, 2004",
+  "written": "2026-09-26"
+}

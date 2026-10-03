@@ -1,0 +1,43 @@
+{
+  "id": "space-life-elsewhere-3",
+  "topic": "space",
+  "genre": "space.questions_with_no_answer_yet",
+  "strand": "space.questions_with_no_answer_yet.life_elsewhere",
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "Europa's ocean lies about 1,500 km from its centre and is 100 km deep. Estimate its volume in multiples of Earth's oceans, 1.3 billion km³.",
+  "value": 2.2,
+  "unit": "times Earth's oceans",
+  "withinFactor": 3,
+  "answer": "2.8 ÷ 1.3 ≈ 2.2: about twice the water in all Earth's oceans.",
+  "move": "Depth can outweigh width; multiply every dimension before comparing.",
+  "ask": "Where do I judge something by its surface when its depth is what matters?",
+  "trap": "A moon smaller than ours cannot hold more water than Earth.",
+  "hint": "A thin shell's volume is its surface area times its thickness.",
+  "steps": [
+    "Area ≈ 4 × 3.14 × 1,500² ≈ 28 million km².",
+    "28 million km² × 100 km ≈ 2.8 billion km³.",
+    "2.8 ÷ 1.3 ≈ 2.2: about twice the water in all Earth's oceans."
+  ],
+  "keywords": [
+    "europa",
+    "subsurface ocean",
+    "ocean worlds",
+    "jupiter's moons"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Greenberg, Europa: The Ocean Moon, 2005",
+  "source_kind": "book",
+  "reference": "Greenberg, Europa: The Ocean Moon: Search for an Alien Biosphere, Springer, 2005",
+  "written": "2026-10-03"
+}

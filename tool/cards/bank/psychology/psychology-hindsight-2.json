@@ -1,0 +1,33 @@
+{
+  "id": "psychology-hindsight-2",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.hindsight",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Are experts judging events in their own field less prone to hindsight bias than lay people?",
+  "answer": "Not measurably. A review pooling 95 studies found no clear link between expertise and the size of hindsight bias: once told the outcome, specialists overrated how foreseeable it had been about as much as novices did. Knowing a field mostly supplies more material for a convincing story of why it was always obvious.",
+  "move": "Expertise makes the after-the-fact story more convincing, not more accurate.",
+  "ask": "When I say I saw something coming, did I write that down before it happened?",
+  "keywords": [
+    "hindsight bias",
+    "expertise",
+    "meta-analysis",
+    "foreseeability"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Guilbault et al., Basic Appl Soc Psych, 2004",
+  "source_kind": "paper",
+  "reference": "Guilbault, Bryant, Brockway & Posavac, A meta-analysis of research on hindsight bias, Basic and Applied Social Psychology, 2004",
+  "written": "2026-10-03"
+}

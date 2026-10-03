@@ -1,0 +1,40 @@
+{
+  "id": "psychology-anger-1",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.anger",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "True or false: hitting a punching bag while thinking about someone who caused anger drains the urge to retaliate?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Angered students who hit a bag while picturing the person who had insulted them were later more aggressive towards that person, blasting louder noise at them, than students who simply sat quietly. Anger fades by itself with time; venting only gets the credit. Hitting the bag rehearsed the grudge.",
+  "move": "A feeling that fades on its own makes whatever came before look like a cure.",
+  "ask": "When I am angry, do my habits for letting it out cool me down, or keep me rehearsing it?",
+  "trap": "True: people do feel calmer some time after letting rip.",
+  "keywords": [
+    "catharsis",
+    "venting",
+    "aggression",
+    "punching bag",
+    "rumination"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bushman, Personality and Social Psychology Bulletin, 2002",
+  "source_kind": "paper",
+  "reference": "Bushman, Does venting anger feed or extinguish the flame? Catharsis, rumination, distraction, anger, and aggressive responding, Personality and Social Psychology Bulletin, 2002",
+  "written": "2026-10-03"
+}

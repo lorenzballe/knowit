@@ -1,0 +1,41 @@
+{
+  "id": "sport-nationalism-3",
+  "topic": "sport",
+  "genre": "sport.sport_and_society",
+  "strand": "sport.sport_and_society.nationalism",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Which single fact about a country best predicts how many Olympic medals it wins?",
+  "options": [
+    "Its sporting culture",
+    "The size of its economy",
+    "Its climate"
+  ],
+  "correct": 1,
+  "answer": "The size of its economy. Bernard and Busse found medal shares follow population times income per head, that is total GDP, with extra boosts for hosts and, in the Cold War, for Soviet-bloc states. A medal table largely ranks how many people a country has and how rich they are.",
+  "move": "Before reading a ranking as character, check it against size and wealth.",
+  "ask": "When I compare my results with someone else's, have I allowed for how much more they started with?",
+  "trap": "Reading the medal table as proof of a nation's sporting character.",
+  "keywords": [
+    "olympic medals",
+    "gdp",
+    "population",
+    "medal table",
+    "national pride"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bernard & Busse, Rev Econ Stat, 2004",
+  "source_kind": "paper",
+  "reference": "Andrew B. Bernard & Meghan R. Busse, Who Wins the Olympic Games: Economic Resources and Medal Totals, Review of Economics and Statistics, 2004",
+  "written": "2026-09-26"
+}

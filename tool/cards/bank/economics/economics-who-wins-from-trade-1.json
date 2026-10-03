@@ -1,0 +1,33 @@
+{
+  "id": "economics-who-wins-from-trade-1",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.who_wins_from_trade",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If cheaper imports made the US richer overall, why did some American towns get poorer?",
+  "answer": "Because the gains were spread thin and the losses landed in a few places. Cheaper goods saved every shopper a little, while imports from China after 1999 cost an estimated 2 to 2.4 million jobs, concentrated in towns built on furniture, textiles or toys. Few workers moved away, and the damage lasted over a decade.",
+  "move": "A gain shared by millions can coexist with a loss crushing thousands.",
+  "ask": "Which change that helps me as a shopper is hurting someone I know as a worker?",
+  "keywords": [
+    "china shock",
+    "imports",
+    "manufacturing jobs",
+    "local labour markets"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Acemoglu et al., Journal of Labor Economics, 2016",
+  "source_kind": "paper",
+  "reference": "Acemoglu, Autor, Dorn, Hanson & Price, Import Competition and the Great US Employment Sag of the 2000s, Journal of Labor Economics, 2016",
+  "written": "2026-10-03"
+}

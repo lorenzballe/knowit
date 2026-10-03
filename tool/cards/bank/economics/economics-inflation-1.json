@@ -1,0 +1,41 @@
+{
+  "id": "economics-inflation-1",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.inflation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Prices rise 3% every year. Roughly how long until a banknote kept in a drawer buys half as much as today?",
+  "options": [
+    "About 17 years",
+    "About 33 years",
+    "About 23 years"
+  ],
+  "correct": 2,
+  "answer": "About 23 years. Each year's rise takes 3% of what the note can still buy, not of what it bought at the start, so the loss slows as it goes. Half the buying power means prices have doubled, and 70 divided by 3 gives about 23 years. At 2%, it is about 35 years.",
+  "move": "Divide 70 by a yearly rate to find how long doubling takes.",
+  "ask": "How much of my money sits where rising prices shrink it every year without my noticing?",
+  "trap": "Dividing 50% by 3% a year, as if each year's loss simply added up.",
+  "keywords": [
+    "inflation",
+    "purchasing power",
+    "rule of 70",
+    "savings",
+    "cash"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rule of 70 for compound growth",
+  "source_kind": "arithmetic",
+  "reference": "Doubling time under compound growth, worked arithmetic, 2026",
+  "written": "2026-10-03"
+}

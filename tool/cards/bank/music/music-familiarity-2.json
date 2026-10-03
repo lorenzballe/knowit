@@ -1,0 +1,40 @@
+{
+  "id": "music-familiarity-2",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.familiarity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: in a brain-scanning study of pop songs, liking a song lit up reward areas more than knowing it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Pereira's team played listeners songs they had rated, crossing liked and disliked with familiar and unfamiliar. Familiarity drove the brain's reward and emotion regions more strongly than liking did. People who think they listen for quality may mostly be listening for recognition. The old album keeps beating the new one.",
+  "move": "When two causes usually travel together, separate them before crediting either.",
+  "ask": "Do I really prefer the familiar option, or have I never given the new one a fair go?",
+  "trap": "Thinking music rewards because it is liked, not because it is known.",
+  "keywords": [
+    "familiarity",
+    "reward system",
+    "brain scans",
+    "pop songs",
+    "liking"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pereira et al., PLoS ONE, 2011",
+  "source_kind": "paper",
+  "reference": "Pereira et al., Music and emotions in the brain: familiarity matters, PLoS ONE, 2011",
+  "written": "2026-09-26"
+}

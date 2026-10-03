@@ -1,0 +1,40 @@
+{
+  "id": "psychology-multitasking-3",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.multitasking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Of 200 people who drove a simulator while doing a hard memory task by phone, how many showed no loss in either?",
+  "options": [
+    "About 50",
+    "About 5",
+    "None at all"
+  ],
+  "correct": 1,
+  "answer": "About 5. Five of the 200, or 2.5%, kept both their driving and their memory scores at their single-task level; everyone else got worse at one or both. Such people do exist, which makes it easy for anyone to imagine being one. The odds are one in forty.",
+  "move": "Before betting you are the exception, find out how rare exceptions are.",
+  "ask": "Where do I assume I am the exception who can do two things at once?",
+  "trap": "About 50: it is easy to picture people who manage both.",
+  "keywords": [
+    "supertaskers",
+    "driving",
+    "phone calls",
+    "dual tasking"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Watson & Strayer, Psychonomic Bulletin & Review, 2010",
+  "source_kind": "paper",
+  "reference": "Watson & Strayer, Supertaskers: Profiles in extraordinary multitasking ability, Psychonomic Bulletin & Review, 2010",
+  "written": "2026-10-03"
+}

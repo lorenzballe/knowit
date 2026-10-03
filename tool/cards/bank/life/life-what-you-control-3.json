@@ -1,0 +1,40 @@
+{
+  "id": "life-what-you-control-3",
+  "topic": "life",
+  "genre": "life.handle_setbacks",
+  "strand": "life.handle_setbacks.what_you_control",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Office workers bought $1 lottery tickets, some picking their own, some simply handed one. Asked to resell, how much did pickers want?",
+  "options": [
+    "About the same",
+    "About twice as much",
+    "More than four times as much"
+  ],
+  "correct": 2,
+  "answer": "More than four times as much. In Langer's study, workers who had chosen their own ticket asked on average about $8.67 to give it up, against about $1.96 for those handed one. Choosing felt like influence over a draw that no choice can touch. The odds were identical; the feeling of control was not.",
+  "move": "Separate what you chose from what you can actually influence.",
+  "ask": "Where am I treating a choice I made as if it gave me some control over luck?",
+  "trap": "About the same, since a ticket's odds are fixed either way.",
+  "keywords": [
+    "illusion of control",
+    "lottery tickets",
+    "ellen langer",
+    "chance"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Langer, JPSP, 1975",
+  "source_kind": "paper",
+  "reference": "Langer, The illusion of control, Journal of Personality and Social Psychology, 1975",
+  "written": "2026-10-03"
+}

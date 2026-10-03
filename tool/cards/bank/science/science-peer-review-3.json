@@ -1,0 +1,39 @@
+{
+  "id": "science-peer-review-3",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.peer_review",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should news outlets report science from preprints, papers posted online before any peer review?",
+  "sides": [
+    "Yes, with a clear warning",
+    "No, wait for review"
+  ],
+  "answer": "Review takes months, and in a fast crisis the public needs the best evidence now. Review is no guarantee anyway: the 2020 hydroxychloroquine study that set off worldwide demand was accepted by its journal within a day. Reporting preprints openly, labelled as unchecked, lets other scientists pick them apart in public, faster than any journal.",
+  "move": "Whichever side you took, the hinge is whether a warning label survives the headline.",
+  "ask": "Before I share a striking new finding, do I know whether anyone has checked it yet?",
+  "counterpoint": "A headline travels further than any label. In 2021 a preprint reporting that ivermectin cut COVID-19 deaths shaped prescribing around the world before readers found duplicated patient records and it was withdrawn. Journalists cannot judge raw statistics. Review, however imperfect, filters out the worst, and the cost of waiting is usually only weeks.",
+  "keywords": [
+    "preprints",
+    "peer review",
+    "hydroxychloroquine",
+    "ivermectin",
+    "science news"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rosendaal, Int. J. Antimicrobial Agents, 2020",
+  "source_kind": "paper",
+  "reference": "Rosendaal, Review of: Hydroxychloroquine and azithromycin as a treatment of COVID-19, International Journal of Antimicrobial Agents 56:106063, 2020",
+  "written": "2026-09-26"
+}

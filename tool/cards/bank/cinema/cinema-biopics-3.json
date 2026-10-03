@@ -1,0 +1,40 @@
+{
+  "id": "cinema-biopics-3",
+  "topic": "cinema",
+  "genre": "cinema.films_and_history",
+  "strand": "cinema.films_and_history.biopics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Bohemian Rhapsody has Freddie Mercury reveal his HIV diagnosis to the band before Live Aid, 1985. When was he diagnosed?",
+  "options": [
+    "The same week",
+    "A year before",
+    "About two years after"
+  ],
+  "correct": 2,
+  "answer": "About two years after. Jim Hutton, his partner, dates the diagnosis to around April 1987. The film moved it before the concert so the band's triumph could double as a farewell. The real Live Aid performance was a comeback, not a goodbye; the sorrow was added later and set on top.",
+  "move": "When a real event lands at the perfect dramatic moment, check the date.",
+  "ask": "Which memory of mine has been rearranged into a better story than what happened?",
+  "trap": "The same week, as the film lays it out.",
+  "keywords": [
+    "freddie mercury",
+    "live aid",
+    "bohemian rhapsody",
+    "biopics"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hutton, Mercury and Me, 1994",
+  "source_kind": "book",
+  "reference": "Jim Hutton with Tim Wapshott, Mercury and Me, Bloomsbury, 1994",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "human_body-sleep-and-thinking-1",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.sleep_and_thinking",
+  "also": [
+    "psychology.sleep_and_dreams.naps"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "After a short night, which length of afternoon nap gave the quickest and longest-lasting boost in alertness?",
+  "options": [
+    "About 30 minutes",
+    "About 10 minutes",
+    "About 5 minutes"
+  ],
+  "correct": 1,
+  "answer": "About 10 minutes. Brooks and Lack compared naps of 5, 10, 20 and 30 minutes after restricted sleep. Ten minutes improved alertness at once, for over two hours; 30 minutes first left people groggy, as they sank into deeper sleep. Five minutes did little. A short nap is a reset, not a second night.",
+  "move": "More of a good thing can cross into a different, worse thing.",
+  "ask": "Where am I overdoing a rest or a reward until it stops working?",
+  "trap": "A longer nap means more rest, so thirty minutes should win.",
+  "keywords": [
+    "naps",
+    "alertness",
+    "sleep inertia",
+    "sleep restriction"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brooks and Lack, Sleep, 2006",
+  "source_kind": "paper",
+  "reference": "Brooks A, Lack L, A brief afternoon nap following nocturnal sleep restriction: which nap duration is most recuperative?, Sleep, 2006",
+  "written": "2026-09-26"
+}

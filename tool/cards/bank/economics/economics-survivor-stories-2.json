@@ -1,0 +1,42 @@
+{
+  "id": "economics-survivor-stories-2",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.survivor_stories",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "1,000 traders each have an even chance of beating the market each year, by luck alone. How many beat it five years running?",
+  "value": 31,
+  "unit": "traders",
+  "tolerance": 1,
+  "answer": "Expected streaks: 1,000 ÷ 32 ≈ 31 traders",
+  "move": "Among enough players, luck alone produces stars with spotless records.",
+  "ask": "Whose winning streak am I admiring without knowing how many others tried and lost?",
+  "trap": "Nobody, since a five-year streak surely takes real skill.",
+  "hint": "Halve the number of winners once for each year.",
+  "steps": [
+    "Chance of five wins in a row: (1/2)^5 = 1/32",
+    "Expected streaks: 1,000 ÷ 32 ≈ 31 traders"
+  ],
+  "keywords": [
+    "luck",
+    "trading records",
+    "streaks",
+    "coin flips"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Taleb, Fooled by Randomness",
+  "source_kind": "arithmetic",
+  "reference": "Taleb, Fooled by Randomness: The Hidden Role of Chance in Life and in the Markets, Texere, 2001",
+  "written": "2026-10-03"
+}

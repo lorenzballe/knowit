@@ -1,0 +1,40 @@
+{
+  "id": "medicine-shared-decisions-3",
+  "topic": "medicine",
+  "genre": "medicine.talk_to_your_doctor",
+  "strand": "medicine.talk_to_your_doctor.shared_decisions",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Doctors believed 71% of breast cancer patients ranked keeping their breast as a top priority. What share of patients did?",
+  "options": [
+    "About 7%",
+    "About 70%",
+    "About 95%"
+  ],
+  "correct": 0,
+  "answer": "About 7%. Doctors read their patients' wishes through their own assumptions and got this most personal priority wrong tenfold. Mulley, Trimble and Elwyn call it preference misdiagnosis: unlike a wrong diagnosis of disease, it leaves no trace in any record. The patient receives the right treatment for someone else.",
+  "move": "Never assume what someone wants; ask them, then listen.",
+  "ask": "Whose wishes am I sure I know, at home or at work, without ever having asked them?",
+  "trap": "About 70%, close to the doctors' figure, since doctors know patients.",
+  "keywords": [
+    "patient preferences",
+    "preference misdiagnosis",
+    "breast cancer",
+    "shared decision making"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mulley, Trimble & Elwyn, King's Fund, 2012",
+  "source_kind": "institution",
+  "reference": "Mulley, Trimble & Elwyn, Patients' preferences matter: stop the silent misdiagnosis, The King's Fund, 2012",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "music-practice-2",
+  "topic": "music",
+  "genre": "music.music_and_the_brain",
+  "strand": "music.music_and_the_brain.practice",
+  "also": [
+    "life.learn_anything.practice_that_works"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "A pianist practises four short melodies, either one at a time in blocks or shuffled together. Which is remembered better later?",
+  "options": [
+    "Blocks, one melody at a time",
+    "Both equally, if time is equal",
+    "Shuffled, switching between melodies"
+  ],
+  "correct": 2,
+  "answer": "Shuffled. Abushanab and Bishara found that players who practised melodies in a random order recalled them better later, though blocked practice felt smoother and they judged it more effective. Switching forces the player to fetch each piece afresh, which is exactly what a performance demands. The struggle felt like failure and worked as training.",
+  "move": "Practice that feels smooth is often practice that tests nothing.",
+  "ask": "Is the way I practise or study the one that feels good, or the one that works?",
+  "trap": "Choosing blocks, because each repeat feels smoother and more secure.",
+  "keywords": [
+    "interleaved practice",
+    "piano",
+    "memory",
+    "metacognition"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Abushanab & Bishara, Memory & Cognition, 2013",
+  "source_kind": "paper",
+  "reference": "Abushanab & Bishara, Memory and metacognition for piano melodies: illusory advantages of fixed- over random-order practice, Memory & Cognition, 2013",
+  "written": "2026-09-26"
+}

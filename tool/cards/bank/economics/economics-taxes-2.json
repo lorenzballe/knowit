@@ -1,0 +1,33 @@
+{
+  "id": "economics-taxes-2",
+  "topic": "economics",
+  "genre": "economics.inequality",
+  "strand": "economics.inequality.taxes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does UK income tax take 60p of each extra pound earned just above £100,000?",
+  "answer": "Because the tax-free allowance shrinks by £1 for every £2 earned above £100,000. Each extra pound is taxed at 40% and also pulls 50p out of the allowance, which is then taxed at 40%: another 20p. The rate stays at 60% until the allowance is gone at £125,140, then falls back to 45%.",
+  "move": "Look for the hidden rate where an allowance is withdrawn.",
+  "ask": "Is there a benefit or allowance I could lose by earning a little more, and do I know where?",
+  "keywords": [
+    "income tax",
+    "personal allowance",
+    "marginal tax rate",
+    "united kingdom"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "GOV.UK, Income Tax rates and Personal Allowances",
+  "source_kind": "institution",
+  "reference": "https://www.gov.uk/income-tax-rates",
+  "written": "2026-10-03"
+}

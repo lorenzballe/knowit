@@ -1,0 +1,42 @@
+{
+  "id": "economics-loyalty-traps-2",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.loyalty_traps",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Ana's €10,000 earns 5% in year one, then 1%. Switching each year would earn 4%. Ignoring compounding, euros lost by staying three years?",
+  "value": 600,
+  "unit": "euros",
+  "answer": "Lost by staying: 1,300 − 700 = €600",
+  "move": "An introductory rate is often the price paid for your inertia later.",
+  "ask": "Which account or deal am I still on long after its introductory offer ran out?",
+  "trap": "Treating three points a year as too small to bother switching for.",
+  "hint": "Year one is the same either way; compare years two and three.",
+  "steps": [
+    "Staying: 500 + 100 + 100 = €700",
+    "Switching after year one: 500 + 400 + 400 = €1,300",
+    "Lost by staying: 1,300 − 700 = €600"
+  ],
+  "keywords": [
+    "savings accounts",
+    "teaser rates",
+    "switching",
+    "interest"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arithmetic of a teaser savings rate",
+  "source_kind": "arithmetic",
+  "reference": "Teaser rate versus switching, worked arithmetic, 2026",
+  "written": "2026-10-03"
+}

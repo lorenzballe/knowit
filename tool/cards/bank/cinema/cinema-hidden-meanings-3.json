@@ -1,0 +1,39 @@
+{
+  "id": "cinema-hidden-meanings-3",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.hidden_meanings",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: the reading of The Wizard of Oz as a coded 1890s money debate came from a 1964 article?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Henry Littlefield, a teacher, proposed in 1964 that the yellow brick road stood for gold and the silver shoes for silver coinage. Baum never said so, and the 1939 film had already turned the shoes ruby for Technicolor. A neat hidden meaning can be built sixty years later and still feel planted.",
+  "move": "A meaning that fits neatly may have been fitted afterwards.",
+  "ask": "Which neat explanation of my past did I build later and now treat as the plan all along?",
+  "trap": "False, since an allegory that neat seems planted by the author.",
+  "keywords": [
+    "the wizard of oz",
+    "allegory",
+    "henry littlefield",
+    "gold standard"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Littlefield, American Quarterly, 1964",
+  "source_kind": "paper",
+  "reference": "Henry M. Littlefield, The Wizard of Oz: Parable on Populism, American Quarterly, 16(1), 1964",
+  "written": "2026-10-03"
+}

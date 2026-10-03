@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-villains-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.why_stories_grip_us",
+  "strand": "pop_culture.why_stories_grip_us.villains",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "People described a time they angered someone and a time someone angered them. How did the two kinds of story differ?",
+  "options": [
+    "Victims blamed themselves more",
+    "Perpetrators saw reasons and brief harm",
+    "Both told much the same story"
+  ],
+  "correct": 1,
+  "answer": "Perpetrators saw reasons and brief harm. In Baumeister, Stillwell and Wotman's study, people who caused the anger described the incident as understandable and over; as victims, they described it as senseless, unjust and still hurting. Each account was sincere, and who looked like the villain depended on who held the pen.",
+  "move": "Before naming someone the villain, hear the story told from their side.",
+  "ask": "Who might be telling a story right now in which I am the one who caused the harm?",
+  "trap": "People are honest about their faults, so both accounts should match.",
+  "keywords": [
+    "perpetrators",
+    "victims",
+    "conflict",
+    "self-justification"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baumeister, Stillwell and Wotman, JPSP, 1990",
+  "source_kind": "paper",
+  "reference": "Roy F. Baumeister, Arlene Stillwell and Sara R. Wotman, Victim and Perpetrator Accounts of Interpersonal Conflict, Journal of Personality and Social Psychology, 1990",
+  "written": "2026-09-26"
+}

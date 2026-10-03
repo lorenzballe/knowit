@@ -1,0 +1,40 @@
+{
+  "id": "economics-compound-interest-1",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.compound_interest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Ana saves €2,000 yearly from 25 to 35, then stops. Ben saves €2,000 yearly from 35 to 65. At 7%, who ends richer?",
+  "options": [
+    "Ben",
+    "About the same",
+    "Ana"
+  ],
+  "correct": 2,
+  "answer": "Ana, with about €210,000 against Ben's €189,000. Her €20,000 gets thirty extra years: by 35 it has grown to about €27,600, which then multiplies about 7.6 times before 65. Ben puts in three times as much money but gives it less time. Ana's one early decade outruns Ben's thirty years.",
+  "move": "Time does more of the work than the amount you put in.",
+  "ask": "What small amount could I start putting aside this month, rather than a bigger one later?",
+  "trap": "Ben, who puts in €60,000 against Ana's €20,000.",
+  "keywords": [
+    "compound interest",
+    "saving early",
+    "pensions",
+    "time"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Future value of yearly savings at 7%",
+  "source_kind": "arithmetic",
+  "reference": "Malkiel, A Random Walk Down Wall Street, 12th edition, W. W. Norton, 2019",
+  "written": "2026-10-03"
+}

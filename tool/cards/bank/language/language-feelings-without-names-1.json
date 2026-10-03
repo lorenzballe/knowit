@@ -1,0 +1,33 @@
+{
+  "id": "language-feelings-without-names-1",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.feelings_without_names",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When a Swiss medical student coined the word nostalgia in 1688, what was he naming?",
+  "answer": "A disease. Johannes Hofer described Swiss soldiers serving abroad who grew so homesick that they stopped eating and sleeping, and some were thought to die of it. Doctors treated it as an illness for two centuries. Only later did nostalgia become a bittersweet mood people seek out with old songs and photographs.",
+  "move": "The name given to a feeling decides whether it is treated or enjoyed.",
+  "ask": "Which feeling of mine have I labelled a problem when it might be part of caring?",
+  "keywords": [
+    "nostalgia",
+    "johannes hofer",
+    "homesickness",
+    "swiss soldiers"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hofer, Dissertation on Nostalgia, trans. Anspach, 1934",
+  "source_kind": "primary_document",
+  "reference": "Hofer, Medical Dissertation on Nostalgia (1688), trans. Anspach, Bulletin of the Institute of the History of Medicine 2, 1934",
+  "written": "2026-10-03"
+}

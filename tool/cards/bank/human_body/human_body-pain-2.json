@@ -1,0 +1,33 @@
+{
+  "id": "human_body-pain-2",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.pain",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to children born with no ability to feel pain at all?",
+  "answer": "They get hurt, badly and often. Cox and colleagues studied Pakistani families with a broken SCN9A gene, which disables a channel pain nerves need. Affected children had bitten tongues, burns and fractures they ignored; one boy who performed street stunts died after jumping from a roof. Pain is the alarm that keeps bodies intact.",
+  "move": "An unpleasant signal is often what keeps a person safe.",
+  "ask": "Which discomfort in my life am I trying to switch off that is actually warning me?",
+  "keywords": [
+    "congenital insensitivity to pain",
+    "scn9a",
+    "sodium channel",
+    "injury"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cox et al., Nature, 2006",
+  "source_kind": "paper",
+  "reference": "Cox JJ, Reimann F, Nicholas AK et al., An SCN9A channelopathy causes congenital inability to experience pain, Nature, 2006",
+  "written": "2026-09-26"
+}

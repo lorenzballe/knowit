@@ -1,0 +1,41 @@
+{
+  "id": "life-priorities-2",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.priorities",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A week has 168 hours. Take away eight hours of sleep a night and 50 hours of work and travel. How many hours remain?",
+  "value": 62,
+  "unit": "hours",
+  "answer": "168 − 56 − 50 = 62 hours",
+  "move": "Count the hours you have before saying you have none.",
+  "ask": "Of the sixty-odd free hours in my week, how many go to what I say matters most?",
+  "trap": "A busy week feels as if almost nothing is left over.",
+  "hint": "Work out the week's sleep first, then take both from 168.",
+  "steps": [
+    "Sleep: 8 × 7 = 56 hours",
+    "168 − 56 − 50 = 62 hours"
+  ],
+  "keywords": [
+    "time budget",
+    "weekly hours",
+    "free time",
+    "priorities"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vanderkam, 168 Hours, 2010",
+  "source_kind": "book",
+  "reference": "Vanderkam, 168 Hours: You Have More Time Than You Think, Portfolio, 2010",
+  "written": "2026-10-03"
+}

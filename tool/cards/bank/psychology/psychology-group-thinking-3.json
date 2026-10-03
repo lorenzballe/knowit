@@ -1,0 +1,39 @@
+{
+  "id": "psychology-group-thinking-3",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.group_thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: letting people see each other's guesses before guessing again made the group's average more accurate?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Lorenz and colleagues had people estimate facts such as crime figures, with some shown others' answers between rounds. Their guesses converged, shrinking the spread that lets errors cancel, yet the group grew no more accurate, and its members grew more confident. A crowd is wise only while each member guesses alone.",
+  "move": "Gather everyone's judgement separately before anyone hears the others.",
+  "ask": "Before asking others for advice, do I write down my own guess first?",
+  "trap": "Assuming that pooling information always sharpens a group's judgement.",
+  "keywords": [
+    "wisdom of crowds",
+    "social influence",
+    "estimates",
+    "confidence"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lorenz et al., PNAS, 2011",
+  "source_kind": "paper",
+  "reference": "Lorenz, Rauhut, Schweitzer & Helbing, How social influence can undermine the wisdom of crowd effect, PNAS, 2011",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "psychology-scarcity-tricks-3",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.scarcity_tricks",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should online shops be banned from showing countdown timers and low-stock warnings altogether?",
+  "sides": [
+    "Yes, ban them",
+    "No, ban only false ones"
+  ],
+  "answer": "These messages exist to rush buyers past the moment of comparison. A crawl of about 11,000 shopping sites found countdown timers that simply reset when they reached zero. Checking every claim is impossible at internet scale, so only a blanket ban protects buyers. Real stock levels can still be shown as plain numbers on request.",
+  "move": "Whichever side you took, the hinge is whether false claims can be policed singly.",
+  "ask": "When a timer is counting down, what would I decide if it were not there?",
+  "counterpoint": "Sometimes stock really is low and offers really do end, and buyers benefit from knowing it: a concert seat, a flight, a limited run. Consumer law already forbids false urgency. The fix is enforcement, with fines heavy enough to deter, not a ban on true information that helps people decide in time.",
+  "keywords": [
+    "dark patterns",
+    "countdown timers",
+    "scarcity",
+    "consumer protection",
+    "online shopping"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mathur et al., ACM CSCW, 2019",
+  "source_kind": "paper",
+  "reference": "Mathur et al., Dark patterns at scale: Findings from a crawl of 11K shopping websites, Proceedings of the ACM on Human-Computer Interaction, 2019",
+  "written": "2026-10-03"
+}

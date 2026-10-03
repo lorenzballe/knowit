@@ -1,0 +1,43 @@
+{
+  "id": "sport-doping-2",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.doping",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "baseRate",
+  "question": "Of 10,000 athletes, 100 dope. A test flags 90% of dopers and 1% of clean athletes. How many flagged athletes are clean?",
+  "value": 99,
+  "unit": "clean athletes",
+  "answer": "99 clean athletes, more than the 90 cheats caught",
+  "move": "A rare cheat and a decent test still give many false accusations.",
+  "ask": "When a check flags someone I know, how many innocent people would that same check also have flagged?",
+  "trap": "Expecting almost every flagged athlete to be a cheat.",
+  "hint": "Count the clean athletes first, then take 1% of them.",
+  "steps": [
+    "Clean athletes: 10,000 − 100 = 9,900",
+    "Wrongly flagged: 1% of 9,900 = 99",
+    "Rightly flagged: 90% of 100 = 90",
+    "99 clean athletes, more than the 90 cheats caught"
+  ],
+  "keywords": [
+    "drug testing",
+    "false positives",
+    "base rates",
+    "anti-doping"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Berry, Nature, 2008",
+  "source_kind": "paper",
+  "reference": "Donald A. Berry, The science of doping, Nature, 2008",
+  "written": "2026-09-26"
+}

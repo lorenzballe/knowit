@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-happiness-2",
+  "topic": "philosophy",
+  "genre": "philosophy.living_well",
+  "strand": "philosophy.living_well.happiness",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "At twenty, John Stuart Mill asked himself one question that plunged him into depression. What did he conclude about happiness?",
+  "answer": "That it comes sideways. Mill asked whether achieving all his reforms would make him happy, heard himself answer no, and sank. Recovering, he wrote that those are happy who fix their minds on something other than their own happiness: ask yourself whether you are happy, and you cease to be so.",
+  "move": "Aim at something worth doing; happiness tends to arrive on the way.",
+  "ask": "What am I doing lately for its own sake, rather than to check whether it makes me happy?",
+  "keywords": [
+    "john stuart mill",
+    "happiness",
+    "depression",
+    "autobiography"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mill, Autobiography, chapter 5",
+  "source_kind": "book",
+  "reference": "Mill, Autobiography, ed. Robson, Penguin Classics, 1989, chapter 5",
+  "written": "2026-10-03"
+}

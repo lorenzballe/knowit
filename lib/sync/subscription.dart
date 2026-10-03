@@ -36,6 +36,7 @@ const String kRevenueCatIosKey = String.fromEnvironment('REVENUECAT_IOS_KEY');
 
 const String kRevenueCatAndroidKey = String.fromEnvironment(
   'REVENUECAT_ANDROID_KEY',
+  defaultValue: 'goog_YaeEfHnlTfzLXeDDjfmQcgCVpKl',
 );
 
 /// Package identifiers, tried in order.

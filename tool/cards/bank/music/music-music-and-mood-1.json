@@ -1,0 +1,36 @@
+{
+  "id": "music-music-and-mood-1",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.music_and_mood",
+  "also": [
+    "psychology.emotions.why_we_cry"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do so many people choose sad music, when it is supposed to make them sad?",
+  "answer": "Because what sad music brings is mostly not sadness. In an online survey, Liila Taruffi and Stefan Koelsch found it most often evoked nostalgia, peacefulness and tenderness. The grief stays inside the song, at a safe distance, and the listener gets the company of a feeling shared. Sorrow is held at arm's length.",
+  "move": "A feeling portrayed is not the same as a feeling caused.",
+  "ask": "Which sad song or film do I keep returning to, and what does it actually give me?",
+  "keywords": [
+    "sad music",
+    "nostalgia",
+    "emotion",
+    "survey"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Taruffi & Koelsch, PLoS ONE, 2014",
+  "source_kind": "paper",
+  "reference": "Taruffi & Koelsch, The paradox of music-evoked sadness: an online survey, PLoS ONE, 2014",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "cinema-biopics-2",
+  "topic": "cinema",
+  "genre": "cinema.films_and_history",
+  "strand": "cinema.films_and_history.biopics",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did Amadeus get the idea that Salieri, eaten by envy, destroyed Mozart?",
+  "answer": "From gossip and a play, not from records. Rumours that Salieri poisoned Mozart spread in 1820s Vienna; Pushkin dramatised them in 1830, and Peter Shaffer's play of 1979 became the film. Historians find no evidence of murder. Salieri, a respected teacher, later taught Mozart's own son.",
+  "move": "A good villain is often borrowed from gossip, not found in records.",
+  "ask": "Whose reputation in my mind rests on a story I heard rather than anything I saw?",
+  "keywords": [
+    "amadeus",
+    "antonio salieri",
+    "mozart",
+    "biopics"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Braunbehrens, Maligned Master, 1992",
+  "source_kind": "book",
+  "reference": "Volkmar Braunbehrens, Maligned Master: The Real Story of Antonio Salieri, Fromm International, 1992",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "human_body-sleep-and-thinking-2",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.sleep_and_thinking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does sleeping on a problem sometimes produce the answer in the morning?",
+  "answer": "Because sleep reorganises what was learned. In Wagner's experiment, people practised a number task hiding a shortcut; after a night's sleep, more than twice as many found the shortcut as those who stayed awake for the same time. The brain replays and recombines the day's material overnight: the morning mind starts from a reshuffled deck.",
+  "move": "Stop working on a hard problem early enough to sleep on it.",
+  "ask": "Which decision am I forcing tonight that would be clearer after a night's sleep?",
+  "keywords": [
+    "sleep",
+    "insight",
+    "problem solving",
+    "memory consolidation"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wagner et al., Nature, 2004",
+  "source_kind": "paper",
+  "reference": "Wagner U, Gais S, Haider H, Verleger R, Born J, Sleep inspires insight, Nature, 2004",
+  "written": "2026-09-26"
+}

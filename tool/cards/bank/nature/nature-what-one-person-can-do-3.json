@@ -1,0 +1,38 @@
+{
+  "id": "nature-what-one-person-can-do-3",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.what_one_person_can_do",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should someone worried about climate change spend their effort cutting their own footprint, or pushing for policy?",
+  "sides": [
+    "Cut my own footprint",
+    "Push for policy"
+  ],
+  "answer": "Cut my own footprint. Personal choices are fully in your control and add up across millions, especially among the better-off, whose flights, homes and cars weigh most, as Nielsen and colleagues stress. Visible changes spread to neighbours and markets, and they give a campaigner credibility. Demanding change from others while flying often rings hollow.",
+  "move": "Whichever side you took, how far one example spreads decides it.",
+  "ask": "Where would my next hour of effort for the climate do the most: at home or in my community?",
+  "counterpoint": "Push for policy. A carbon price, a clean grid or a building standard changes the choices of millions at once, including people who never think about climate. One vote, letter or local campaign can move more emissions than a lifetime of careful shopping. Treating personal footprints as the main lever was always convenient for the biggest polluters.",
+  "keywords": [
+    "climate action",
+    "personal footprint",
+    "climate policy",
+    "carbon pricing"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nielsen et al., Nature Energy, 2021",
+  "source_kind": "paper",
+  "reference": "Nielsen, Nicholas, Creutzig, Dietz & Stern, The role of high-socioeconomic-status people in locking in or rapidly reducing energy-driven greenhouse gas emissions, Nature Energy, 2021",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "life-asking-for-more-2",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.asking_for_more",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a request made face to face succeed so much more often than the same request sent by email?",
+  "answer": "Because askers forget how hard it is to refuse a face. Roghanizad and Bohns had participants ask strangers to fill in a survey, in person or by email. Askers expected both to work about equally well; in person was about 34 times as successful. An email can be ignored without anyone seeing a face fall.",
+  "move": "For a request that matters, ask in person, not in writing.",
+  "ask": "What request have I sent by message that I could make in person this week?",
+  "keywords": [
+    "requests",
+    "email",
+    "face to face",
+    "persuasion"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Roghanizad and Bohns, J. Experimental Social Psychology, 2017",
+  "source_kind": "paper",
+  "reference": "Roghanizad and Bohns, Ask in person: You're less persuasive than you think over email, Journal of Experimental Social Psychology, 2017",
+  "written": "2026-10-03"
+}

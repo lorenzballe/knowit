@@ -1,0 +1,33 @@
+{
+  "id": "life-inversion-1",
+  "topic": "life",
+  "genre": "life.clear_thinking",
+  "strand": "life.clear_thinking.inversion",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does imagining a project has already failed turn up more problems than asking what might go wrong?",
+  "answer": "Because certainty frees the explanation. Mitchell, Russo and Pennington found that imagining an event had already happened raised people's ability to name correct reasons for it by about 30%. Gary Klein turned this into the pre-mortem: before launch, the team is told the project has failed, and each member writes down why.",
+  "move": "Imagine it has already gone wrong, then explain how it happened.",
+  "ask": "If my next big plan had already failed, what would be the first reason I would name?",
+  "keywords": [
+    "pre-mortem",
+    "prospective hindsight",
+    "project planning",
+    "gary klein"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mitchell, Russo and Pennington, 1989",
+  "source_kind": "paper",
+  "reference": "Mitchell, Russo and Pennington, Back to the future: Temporal perspective in the explanation of events, Journal of Behavioral Decision Making, 1989",
+  "written": "2026-10-03"
+}

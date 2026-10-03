@@ -1,0 +1,38 @@
+{
+  "id": "human_body-burnout-2",
+  "topic": "human_body",
+  "genre": "human_body.stress_and_the_body",
+  "strand": "human_body.stress_and_the_body.burnout",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is burnout mostly depression under a gentler, work-friendly name?",
+  "sides": [
+    "Yes, mostly depression",
+    "No, a distinct problem"
+  ],
+  "answer": "Yes. Studies by Bianchi and colleagues find that burnout and depression overlap heavily: people scoring high on burnout exhaustion usually meet criteria for depression, and the symptoms rise and fall together over time. The gentler label helps people speak up, but can steer them to holidays when they need proper treatment.",
+  "move": "The hinge is whether the trouble stays at work or follows the person home.",
+  "ask": "Does my low mood lift on weekends and holidays, or follow me everywhere?",
+  "counterpoint": "No. Burnout is tied to a specific setting: it often lifts when the job changes, while depression follows a person everywhere. Many burnt-out workers still enjoy life outside work. Treating burnout as depression puts pills on a problem of workload, control and fairness that only changing the job can fix, and lets employers off the hook.",
+  "keywords": [
+    "burnout",
+    "depression",
+    "diagnosis",
+    "work"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bianchi, Schonfeld and Laurent, Clin Psychol Rev, 2015",
+  "source_kind": "paper",
+  "reference": "Bianchi R, Schonfeld IS, Laurent E, Burnout-depression overlap: a review, Clinical Psychology Review, 2015",
+  "written": "2026-09-26"
+}

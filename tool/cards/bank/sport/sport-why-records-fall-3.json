@@ -1,0 +1,44 @@
+{
+  "id": "sport-why-records-fall-3",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.why_records_fall",
+  "also": [
+    "sport.sport_and_society.gender"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "The fastest women's marathon fell from about 2:46 in 1971 to about 2:22 in 1983. What mainly drove the drop?",
+  "options": [
+    "Far more women were allowed to race",
+    "Lighter shoes and better drinks",
+    "A new style of training"
+  ],
+  "correct": 0,
+  "answer": "Far more women were allowed to race. Until the 1970s major marathons barred women; Boston admitted them officially only in 1972, and the Olympics added the event in 1984. When the pool of runners grows from a few hundred to many thousands, its fastest member is far faster, though no body changed.",
+  "move": "A best result depends on how many people were allowed to try.",
+  "ask": "Whose talent around me goes unseen simply because they were never allowed to try?",
+  "trap": "Crediting a training breakthrough for what a bigger field produced.",
+  "keywords": [
+    "women's marathon",
+    "participation",
+    "boston marathon",
+    "records",
+    "talent pool"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Switzer, Marathon Woman, 2007",
+  "source_kind": "book",
+  "reference": "Kathrine Switzer, Marathon Woman: Running the Race to Revolutionize Women's Sports, Carroll & Graf, 2007",
+  "written": "2026-09-26"
+}

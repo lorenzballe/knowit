@@ -1,0 +1,42 @@
+{
+  "id": "space-moon-landing-doubts-3",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.moon_landing_doubts",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Hubble's finest detail is the distance divided by 4.8 million. How small a thing could it see on the Moon, 384,000 km away, in metres?",
+  "value": 80,
+  "unit": "metres",
+  "answer": "About 80 m, while an Apollo flag is about 1.2 m wide.",
+  "move": "Seeing far and seeing small are different powers; ask which one is needed.",
+  "ask": "When I say there is no proof, have I checked whether the proof could even be seen from where I stand?",
+  "trap": "A telescope that sees distant galaxies can surely see a flag.",
+  "hint": "Turn the distance into metres, then divide.",
+  "steps": [
+    "384,000 km = 384,000,000 m.",
+    "384,000,000 ÷ 4,800,000 = 80.",
+    "About 80 m, while an Apollo flag is about 1.2 m wide."
+  ],
+  "keywords": [
+    "hubble space telescope",
+    "angular resolution",
+    "apollo flags",
+    "diffraction"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hecht, Optics, 2017",
+  "source_kind": "book",
+  "reference": "Hecht, Optics, 5th edition, Pearson, 2017",
+  "written": "2026-10-03"
+}

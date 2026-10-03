@@ -1,0 +1,40 @@
+{
+  "id": "science-cold-myths-3",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.cold_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a stiff drink on a freezing day makes the body lose heat faster?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Alcohol widens the blood vessels in the skin, so warm blood flows to the surface: the face flushes and the drinker feels warmer while the core cools faster. It also blunts shivering, the body's own heater. The glow on the cheeks is heat on its way out into the cold air.",
+  "move": "Ask whether a pleasant feeling marks a gain or a loss underway.",
+  "ask": "Which comfort in my life feels like it's helping while it quietly drains me?",
+  "trap": "False, because the drink makes the body feel warmer.",
+  "keywords": [
+    "alcohol",
+    "hypothermia",
+    "blood vessels",
+    "shivering",
+    "body heat"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Freund et al., Journal of Wilderness Medicine, 1994",
+  "source_kind": "paper",
+  "reference": "Freund, O'Brien & Young, Alcohol ingestion and temperature regulation during cold exposure, Journal of Wilderness Medicine 5:88–98, 1994",
+  "written": "2026-09-26"
+}

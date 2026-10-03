@@ -1,0 +1,39 @@
+{
+  "id": "economics-bubbles-3",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.bubbles",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: anyone who bought Japan's Nikkei index at its 1989 peak waited over 30 years to see that level again?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The Nikkei 225 closed at 38,915 on 29 December 1989 and did not close higher until February 2024, more than 34 years later. Dividends softened the wait, but only a little. The comforting rule that markets always come back soon was learned mostly from American history, the market that happened to win.",
+  "move": "A rule drawn from the winner's history may not hold for you.",
+  "ask": "Which comforting rule about money do I believe only because it worked in one place?",
+  "trap": "False, since share markets always recover within a decade or so.",
+  "keywords": [
+    "nikkei 225",
+    "japan",
+    "asset bubble",
+    "stock market recovery"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nikkei Inc., Nikkei 225 historical data",
+  "source_kind": "statistics",
+  "reference": "https://indexes.nikkei.co.jp/en/nkave/",
+  "written": "2026-10-03"
+}

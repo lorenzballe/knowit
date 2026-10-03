@@ -1,0 +1,78 @@
+{
+  "id": "science-base-rates-2",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.base_rates",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "baseRate",
+  "question": "Of 10,000 emails, 100 are phishing. A filter flags 90% of phishing and 2% of genuine emails. What share of flagged emails are phishing?",
+  "options": [
+    "About 90%",
+    "About 30%",
+    "About 2%"
+  ],
+  "correct": 1,
+  "answer": "About 30%. The filter catches 90 of the 100 phishing emails, but 2% of the 9,900 genuine ones is 198 more. So 90 of 288 flagged emails are phishing, about 31%. When the threat is rare, most warnings land on the innocent, which is why people learn to ignore the spam folder.",
+  "move": "Before trusting a warning, count the innocents it sweeps up too.",
+  "ask": "When my gut flags someone as a threat, how many harmless people would the same signal catch?",
+  "trap": "About 90%, reading the filter's catch rate as its accuracy.",
+  "keywords": [
+    "phishing",
+    "spam filters",
+    "base rates",
+    "false positives"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "diagram": {
+    "type": "tree",
+    "n": 10000,
+    "label": "emails",
+    "branches": [
+      {
+        "n": 100,
+        "label": "phishing",
+        "branches": [
+          {
+            "n": 90,
+            "label": "flagged",
+            "hi": true
+          },
+          {
+            "n": 10,
+            "label": "missed"
+          }
+        ]
+      },
+      {
+        "n": 9900,
+        "label": "genuine",
+        "branches": [
+          {
+            "n": 198,
+            "label": "flagged anyway",
+            "hi": true
+          },
+          {
+            "n": 9702,
+            "label": "let through"
+          }
+        ]
+      }
+    ],
+    "caption": "Of 288 emails flagged, only 90 are phishing: about 31 per cent."
+  },
+  "source": "Gigerenzer, Reckoning with Risk, 2002",
+  "source_kind": "book",
+  "reference": "Gigerenzer, Reckoning with Risk: Learning to Live with Uncertainty, Penguin, 2002",
+  "written": "2026-09-26"
+}

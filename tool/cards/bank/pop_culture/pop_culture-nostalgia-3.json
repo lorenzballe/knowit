@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-nostalgia-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.nostalgia",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Netflix pay about $100 million to keep a 1990s sitcom for just one more year?",
+  "answer": "Because old comfort shows stop subscribers leaving. Friends, which ended in 2004, was among Netflix's most watched titles, replayed by many viewers again and again. Losing it risked cancellations, so in late 2018 Netflix paid roughly $100 million for 2019 alone; then its owner, WarnerMedia, took it back for its own service.",
+  "move": "Price a thing by what losing it would cost, not by its age.",
+  "ask": "What do I return to again and again for comfort, and what would I miss without it?",
+  "keywords": [
+    "friends",
+    "netflix",
+    "licensing",
+    "rewatching"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The New York Times, December 2018",
+  "source_kind": "news_archive",
+  "reference": "The New York Times, report on Netflix's renewal of Friends for 2019, December 2018",
+  "written": "2026-09-26"
+}

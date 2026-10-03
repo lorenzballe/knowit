@@ -1,0 +1,33 @@
+{
+  "id": "human_body-ageing-well-1",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.ageing_well",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which simple test, needing only a stopwatch and a corridor, predicts an older person's survival remarkably well?",
+  "answer": "Walking speed. Pooling nine studies of about 34,000 people over 65, Studenski found that usual walking pace predicted survival about as well as age, sex, chronic illness, smoking, blood pressure and hospital stays combined. Walking draws on heart, lungs, nerves, muscles and balance at once, so a slow pace adds up many quiet failures.",
+  "move": "One everyday act that needs every system at once is a good gauge.",
+  "ask": "What everyday thing I do, like climbing stairs, would tell me most honestly how I am doing?",
+  "keywords": [
+    "walking speed",
+    "survival",
+    "older adults",
+    "gait"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Studenski et al., JAMA, 2011",
+  "source_kind": "paper",
+  "reference": "Studenski S, Perera S, Patel K et al., Gait speed and survival in older adults, JAMA, 2011",
+  "written": "2026-09-26"
+}

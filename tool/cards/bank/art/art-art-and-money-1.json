@@ -1,0 +1,40 @@
+{
+  "id": "art-art-and-money-1",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.art_and_money",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "survivorship",
+  "question": "Art price indexes follow paintings each time they resell at auction. Why can that make art look like a better investment than it is?",
+  "options": [
+    "Paintings that lost value rarely resell",
+    "Sale prices are inflated by houses",
+    "Inflation is left out of them"
+  ],
+  "correct": 0,
+  "answer": "Because the losers drop out. Owners of paintings that fell in value tend to keep them rather than sell at a loss, so the index is built mostly from winners. Correcting for this, Korteweg and colleagues found art's returns, set against its risk, well below what raw indexes suggest. The flops hang in hallways, uncounted.",
+  "move": "Ask what would be missing from the data if things went badly.",
+  "ask": "When someone shows me how well something performed, which results never made it into the figures?",
+  "trap": "Auction houses inflating prices, a familiar suspicion about salerooms.",
+  "keywords": [
+    "art investment",
+    "price indexes",
+    "selection bias",
+    "auctions"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Korteweg et al., Review of Financial Studies, 2016",
+  "source_kind": "paper",
+  "reference": "Arthur Korteweg, Roman Kräussl & Patrick Verwijmeren, Does it pay to invest in art? A selection-corrected returns perspective, Review of Financial Studies, 2016",
+  "written": "2026-10-03"
+}

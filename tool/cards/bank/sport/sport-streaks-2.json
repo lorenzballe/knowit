@@ -1,0 +1,41 @@
+{
+  "id": "sport-streaks-2",
+  "topic": "sport",
+  "genre": "sport.luck_or_skill",
+  "strand": "sport.luck_or_skill.streaks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "A team's 82 games are each a pure coin flip. How long is its longest losing run in a typical season?",
+  "options": [
+    "About 2 games",
+    "About 15 games",
+    "About 5 games"
+  ],
+  "correct": 2,
+  "answer": "About 5 games. The longest run of one side in a series of tosses is typically near log2 of half the tosses: here log2 of 41, a little over 5. People asked to invent coin sequences rarely include runs that long. A five-game slump in such a season needs no explanation at all.",
+  "move": "Long runs are what chance looks like, so do not explain every one.",
+  "ask": "Am I hunting for a reason behind a bad run that chance alone would happily produce?",
+  "trap": "Expecting short runs, as if chance should keep alternating.",
+  "keywords": [
+    "losing streak",
+    "coin flips",
+    "runs",
+    "randomness",
+    "basketball season"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schilling, College Mathematics Journal, 1990",
+  "source_kind": "paper",
+  "reference": "Mark F. Schilling, The Longest Run of Heads, The College Mathematics Journal, 1990",
+  "written": "2026-09-26"
+}

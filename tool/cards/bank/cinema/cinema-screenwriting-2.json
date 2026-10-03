@@ -1,0 +1,40 @@
+{
+  "id": "cinema-screenwriting-2",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.screenwriting",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A second writer rewrites an original screenplay. Under Writers Guild rules, how much must they contribute to share the credit?",
+  "options": [
+    "Any scene that is shot",
+    "About half the final script",
+    "A tenth of the dialogue"
+  ],
+  "correct": 1,
+  "answer": "About half the final script. The Writers Guild of America compares drafts, and a later writer on an original screenplay must account for roughly half the final shooting script. Script doctors who polish jokes or fix whole acts often go uncredited, so the screen shows a ruling, not a full list.",
+  "move": "A credit records who passed a test, not everyone who did the work.",
+  "ask": "Whose quiet work sits behind something I put my name on?",
+  "trap": "Any scene that is shot, since writing it should earn a credit.",
+  "keywords": [
+    "writers guild",
+    "screen credits",
+    "script doctors",
+    "credit arbitration"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Writers Guild of America, Screen Credits Manual",
+  "source_kind": "primary_document",
+  "reference": "https://www.wga.org/contracts/credits/manuals/screen-credits-manual",
+  "written": "2026-10-03"
+}

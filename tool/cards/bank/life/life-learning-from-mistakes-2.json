@@ -1,0 +1,33 @@
+{
+  "id": "life-learning-from-mistakes-2",
+  "topic": "life",
+  "genre": "life.learn_anything",
+  "strand": "life.learn_anything.learning_from_mistakes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does trying to answer before you are taught, and getting it wrong, help or hurt your learning?",
+  "answer": "It helps. Kornell, Hays and Bjork had people guess the partner of a cue word before seeing it. Even when the guess failed, they later remembered the right pairing better than people who spent the same time simply studying it. The failed search seems to prepare a place for the answer to land.",
+  "move": "Attempt the answer first; even a wrong try opens a slot for it.",
+  "ask": "Before my next lesson or meeting, could I try to answer the key question myself first?",
+  "keywords": [
+    "pretesting",
+    "guessing",
+    "errors",
+    "retrieval"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kornell, Hays and Bjork, JEP: LMC, 2009",
+  "source_kind": "paper",
+  "reference": "Kornell, Hays and Bjork, Unsuccessful retrieval attempts enhance subsequent learning, Journal of Experimental Psychology: Learning, Memory, and Cognition, 2009",
+  "written": "2026-10-03"
+}

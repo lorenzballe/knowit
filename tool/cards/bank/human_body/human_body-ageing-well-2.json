@@ -1,0 +1,40 @@
+{
+  "id": "human_body-ageing-well-2",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.ageing_well",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Nursing-home residents aged around 90 lifted heavy weights three times a week for eight weeks. What happened to their leg strength?",
+  "options": [
+    "Almost tripled",
+    "Rose by about a tenth",
+    "Stayed the same"
+  ],
+  "correct": 0,
+  "answer": "Almost tripled. In Fiatarone's study, frail volunteers aged up to 96 gained on average 174% in strength, their thigh muscle grew by about 9%, and their walking speed improved. Muscle at 90 still answers a load, as long as the load is heavy enough to ask.",
+  "move": "Ask whether a decline is age itself or years of disuse.",
+  "ask": "What have I stopped doing because of my age that I could start again tomorrow?",
+  "trap": "Muscle in the very old is too far gone to respond.",
+  "keywords": [
+    "strength training",
+    "very old people",
+    "muscle",
+    "nursing homes"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fiatarone et al., JAMA, 1990",
+  "source_kind": "paper",
+  "reference": "Fiatarone MA, Marks EC, Ryan ND et al., High-intensity strength training in nonagenarians: effects on skeletal muscle, JAMA, 1990",
+  "written": "2026-09-26"
+}

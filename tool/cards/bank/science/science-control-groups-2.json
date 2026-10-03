@@ -1,0 +1,40 @@
+{
+  "id": "science-control-groups-2",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.control_groups",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Trials comparing a new treatment's patients with past patients favoured it 79% of the time. Randomised trials of the same treatments?",
+  "options": [
+    "About 80% of the time",
+    "About half the time",
+    "About 20% of the time"
+  ],
+  "correct": 2,
+  "answer": "About 20% of the time. Sacks, Chalmers and Smith compared 56 trials that used past patients as the comparison with 50 randomised trials of the same six treatments. Past patients differ from today's in care, diagnosis and who gets referred. A control group treated at the same time, chosen by lot, removes that flattering gap.",
+  "move": "Compare with now, not with then, when judging what a change did.",
+  "ask": "When I say a change made my life better, am I comparing with now or with an older me?",
+  "trap": "About 80%, since the treatments and the illnesses were the same.",
+  "keywords": [
+    "historical controls",
+    "randomised trials",
+    "clinical trials",
+    "bias"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sacks, Chalmers & Smith, American Journal of Medicine, 1982",
+  "source_kind": "paper",
+  "reference": "Sacks, Chalmers & Smith, Randomized versus historical controls for clinical trials, American Journal of Medicine 72:233–240, 1982",
+  "written": "2026-09-26"
+}

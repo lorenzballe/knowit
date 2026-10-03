@@ -1,0 +1,33 @@
+{
+  "id": "human_body-calories-burned-1",
+  "topic": "human_body",
+  "genre": "human_body.your_body_in_numbers",
+  "strand": "human_body.your_body_in_numbers.calories_burned",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do Hadza hunter-gatherers, who walk for hours every day, burn about as many calories as office workers?",
+  "answer": "Because the body budgets its energy. Pontzer measured the Hadza of Tanzania with doubly labelled water, a precise tracer method, and found their daily expenditure, adjusted for size, matched that of Westerners. Active bodies seem to spend less on other tasks, such as inflammation. Exercise reshapes the budget more than it raises the total.",
+  "move": "A system with a budget shifts spending instead of simply spending more.",
+  "ask": "If I add effort in one place, where does my body or my week quietly cut back?",
+  "keywords": [
+    "hadza",
+    "energy expenditure",
+    "hunter-gatherers",
+    "metabolism"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pontzer et al., PLoS ONE, 2012",
+  "source_kind": "paper",
+  "reference": "Pontzer H, Raichlen DA, Wood BM et al., Hunter-gatherer energetics and human obesity, PLoS ONE, 2012",
+  "written": "2026-09-26"
+}

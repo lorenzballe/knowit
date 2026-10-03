@@ -1,0 +1,40 @@
+{
+  "id": "psychology-reading-faces-2",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.reading_faces",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Across 206 studies, how often did people correctly tell a lie from the truth by watching and listening?",
+  "options": [
+    "About four times in five",
+    "About two times in three",
+    "Little better than a coin toss"
+  ],
+  "correct": 2,
+  "answer": "Little better than a coin toss: about 54%. Bond and DePaulo pooled judgements from more than 24,000 people, and police and other professionals did little better than students. Common cues such as averted eyes or fidgeting barely separate liars from truth-tellers. Confidence in catching liars rests on the lies that later came out.",
+  "move": "Count the misses you never learned about, not only the hits you remember.",
+  "ask": "When I feel sure someone is lying because of how they look, what else could explain it?",
+  "trap": "Recalling caught lies and believing nervous eyes give liars away.",
+  "keywords": [
+    "lie detection",
+    "deception",
+    "meta-analysis",
+    "body language"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bond & DePaulo, PSPR, 2006",
+  "source_kind": "paper",
+  "reference": "Bond & DePaulo, Accuracy of deception judgments, Personality and Social Psychology Review, 2006",
+  "written": "2026-10-03"
+}

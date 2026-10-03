@@ -1,0 +1,40 @@
+{
+  "id": "medicine-when-not-to-take-them-1",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.when_not_to_take_them",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: green or yellow phlegm with a cough is a reliable sign that antibiotics will help?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The colour comes from an enzyme in white blood cells, which flood the airways in viral infections too. In a European study of thousands of adults with acute cough, coloured phlegm made antibiotics far likelier, yet it is a poor guide to bacterial infection. Green means a fight, not bacteria.",
+  "move": "A sign that something is happening is not a sign of what is happening.",
+  "ask": "Which visible sign do I treat as proof of a cause, when it only shows that something is going on?",
+  "trap": "True, because green looks like infection and infection means antibiotics.",
+  "keywords": [
+    "phlegm",
+    "sputum colour",
+    "acute cough",
+    "white blood cells",
+    "antibiotic prescribing"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Butler et al., European Respiratory Journal, 2011",
+  "source_kind": "paper",
+  "reference": "Butler et al., Antibiotic prescribing for discoloured sputum in acute cough/lower respiratory tract infection, European Respiratory Journal, 2011",
+  "written": "2026-10-03"
+}

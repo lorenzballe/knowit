@@ -1,0 +1,39 @@
+{
+  "id": "psychology-gratitude-2",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.gratitude",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: people grateful to someone who had just helped them were also readier to help a total stranger?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Bartlett and DeSteno staged a computer crash that a helpful stranger fixed. Grateful participants later spent more time on a tedious favour, even when the person asking was someone new rather than their helper. Gratitude did not just repay a debt; it spread to a newcomer.",
+  "move": "Kindness received tends to be passed on, not just paid back.",
+  "ask": "Who helped me recently, and whom could I pass that help on to this week?",
+  "trap": "Assuming gratitude is repaid only to the person who helped.",
+  "keywords": [
+    "gratitude",
+    "helping",
+    "prosocial behaviour",
+    "reciprocity"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bartlett & DeSteno, Psychological Science, 2006",
+  "source_kind": "paper",
+  "reference": "Bartlett & DeSteno, Gratitude and prosocial behavior: helping when it costs you, Psychological Science, 2006",
+  "written": "2026-10-03"
+}

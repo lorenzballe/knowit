@@ -1,0 +1,33 @@
+{
+  "id": "space-before-the-big-bang-1",
+  "topic": "space",
+  "genre": "space.questions_with_no_answer_yet",
+  "strand": "space.questions_with_no_answer_yet.before_the_big_bang",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What could 'before the Big Bang' even mean, if time itself may have started then?",
+  "answer": "Possibly nothing, like asking what lies north of the North Pole: the question uses a direction that runs out. But that is only one option. The Big Bang theory describes a hot, dense universe expanding; it does not say that state was the start, and some models put an earlier, contracting universe before it.",
+  "move": "Check whether a question assumes something its subject may deny.",
+  "ask": "Which question am I stuck on that might rest on a wrong assumption?",
+  "keywords": [
+    "big bang",
+    "beginning of time",
+    "cosmology",
+    "bouncing universe"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carroll, From Eternity to Here, 2010",
+  "source_kind": "book",
+  "reference": "Carroll, From Eternity to Here: The Quest for the Ultimate Theory of Time, Dutton, 2010",
+  "written": "2026-10-03"
+}

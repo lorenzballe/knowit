@@ -1,0 +1,39 @@
+{
+  "id": "life-comparison-3",
+  "topic": "life",
+  "genre": "life.handle_setbacks",
+  "strand": "life.handle_setbacks.comparison",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: a pupil moved to a school of stronger classmates tends to rate their own ability higher?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Marsh and Hau, using data from 26 countries, found the big-fish-little-pond effect: pupils of the same ability rate themselves lower in schools where classmates are stronger. Self-image is set by the people nearby, not by any absolute scale. The same pupil feels clever in one school and slow in another.",
+  "move": "Your sense of your own ability is borrowed from the people around you.",
+  "ask": "Whom do I measure myself against every day, and is that the fairest group to pick?",
+  "trap": "Better company seems to lift how capable a pupil feels.",
+  "keywords": [
+    "big fish little pond",
+    "self-concept",
+    "selective schools",
+    "pupils"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marsh and Hau, American Psychologist, 2003",
+  "source_kind": "paper",
+  "reference": "Marsh and Hau, Big-fish-little-pond effect on academic self-concept: A cross-cultural (26-country) test of the negative effects of academically selective schools, American Psychologist, 2003",
+  "written": "2026-10-03"
+}

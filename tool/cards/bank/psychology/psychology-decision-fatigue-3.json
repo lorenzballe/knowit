@@ -1,0 +1,33 @@
+{
+  "id": "psychology-decision-fatigue-3",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.decision_fatigue",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "On a long ballot, what happens to the votes on a measure printed near the bottom?",
+  "answer": "More people skip it, and more fall back on the default. Augenblick and Nicholson used San Diego ballots on which the same measure sat lower in some precincts than others. Lower placement meant more blanks and more votes for the status quo. A law can pass or fail partly on where the printer put it.",
+  "move": "A choice made after many others gets only the attention left over.",
+  "ask": "Which important choices do I leave to the end of the day, when I have the least attention left?",
+  "keywords": [
+    "ballots",
+    "voting",
+    "choice fatigue",
+    "status quo"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Augenblick & Nicholson, Review of Economic Studies, 2016",
+  "source_kind": "paper",
+  "reference": "Augenblick & Nicholson, Ballot position, choice fatigue, and voter behaviour, Review of Economic Studies, 2016",
+  "written": "2026-10-03"
+}

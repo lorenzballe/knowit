@@ -1,0 +1,37 @@
+{
+  "id": "sport-coin-tosses-2",
+  "topic": "sport",
+  "genre": "sport.luck_or_skill",
+  "strand": "sport.luck_or_skill.coin_tosses",
+  "also": [
+    "sport.rules_and_why.rule_changes"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the NFL change its overtime rules in 2010, after the coin toss kept deciding games?",
+  "answer": "Because winning the toss had become winning the game. From 1994, when the kickoff spot was moved, toss winners won about 60% of sudden-death overtimes, often after one drive and a field goal as kickers grew more accurate. From 2010 a first-possession field goal no longer ended a playoff game.",
+  "move": "Recheck a fair rule whenever the people playing it get better.",
+  "ask": "Is a rule I set years ago still fair, now that people have got better at playing it?",
+  "keywords": [
+    "overtime",
+    "coin toss",
+    "nfl",
+    "sudden death",
+    "field goals"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ESPN, NFL owners pass playoff OT rules, 2010",
+  "source_kind": "news_archive",
+  "reference": "https://www.espn.com/nfl/news/story?id=5022064",
+  "written": "2026-09-26"
+}

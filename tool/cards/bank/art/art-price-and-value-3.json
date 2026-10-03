@@ -1,0 +1,38 @@
+{
+  "id": "art-price-and-value-3",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.price_and_value",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should artists receive a share of the price each time one of their works is resold?",
+  "sides": [
+    "Yes, a share",
+    "No, a sale is final"
+  ],
+  "answer": "Yes. Value often rises long after the artist sold cheaply. Robert Scull bought Rauschenberg's Thaw for $900 and sold it in 1973 for $85,000; Rauschenberg got nothing. EU law gives artists a small share of resales, 4% at the low end, capped at €12,500. It costs buyers little.",
+  "move": "Whichever side you took, it turns on who actually receives the money.",
+  "ask": "When I support a creator I like, does my money reach them or someone further along the chain?",
+  "counterpoint": "No. Payments under resale schemes are heavily concentrated: a small group of famous names and their estates collects much of the money, while struggling artists see little. Every sale bears the cost and paperwork, and big sales can drift to markets without the levy, such as New York. Help young artists directly instead of taxing the trade.",
+  "keywords": [
+    "resale right",
+    "robert rauschenberg",
+    "robert scull",
+    "royalties"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "EU Directive 2001/84/EC on resale right",
+  "source_kind": "primary_document",
+  "reference": "Directive 2001/84/EC of the European Parliament and of the Council on the resale right for the benefit of the author of an original work of art, 2001",
+  "written": "2026-10-03"
+}

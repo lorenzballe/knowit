@@ -1,0 +1,33 @@
+{
+  "id": "psychology-anchoring-bias-2",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.anchoring_bias",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In a negotiation, who usually ends nearer to their own target: the side that names a number first, or the side that waits?",
+  "answer": "Often the side that names it first. In negotiation experiments the opening offer pulled the final price towards it, whoever made it. What weakened that pull was not ignoring the offer but thinking hard about the other side's walk-away price or one's own target. Silence hands the pen to the other side.",
+  "move": "Whoever puts the first number on the table sets the frame.",
+  "ask": "In my next salary or price talk, have I decided my own number before hearing theirs?",
+  "keywords": [
+    "negotiation",
+    "first offers",
+    "anchoring",
+    "bargaining"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Galinsky & Mussweiler, JPSP, 2001",
+  "source_kind": "paper",
+  "reference": "Galinsky & Mussweiler, First offers as anchors: The role of perspective-taking and negotiator focus, Journal of Personality and Social Psychology, 2001",
+  "written": "2026-10-03"
+}

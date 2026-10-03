@@ -1,0 +1,40 @@
+{
+  "id": "nature-survival-of-the-fittest-2",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.survival_of_the_fittest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A vampire bat that fails to feed for two or three nights risks starving. What usually saves it?",
+  "options": [
+    "Fat stored up for lean weeks",
+    "A roost-mate regurgitates blood for it",
+    "Switching to nectar and fruit"
+  ],
+  "correct": 1,
+  "answer": "A roost-mate regurgitates blood for it. Wilkinson watched wild vampire bats in Costa Rica and found well-fed bats sharing meals with hungry ones, mostly relatives and bats that had fed them before. The donor gives up a little; the receiver gains far more. Survival in a roost depends on who owes you dinner.",
+  "move": "Survival often depends less on strength than on who will help you.",
+  "ask": "Who would feed me on a bad night, and whom have I fed lately?",
+  "trap": "Hard survival seems to call for self-reliance, such as stored fat.",
+  "keywords": [
+    "vampire bats",
+    "food sharing",
+    "reciprocity",
+    "costa rica"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wilkinson, Nature, 1984",
+  "source_kind": "paper",
+  "reference": "Wilkinson, Reciprocal food sharing in the vampire bat, Nature, 1984",
+  "written": "2026-10-03"
+}

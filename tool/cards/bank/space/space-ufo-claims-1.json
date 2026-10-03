@@ -1,0 +1,36 @@
+{
+  "id": "space-ufo-claims-1",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.ufo_claims",
+  "also": [
+    "science.think_like_a_scientist.testable_claims"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Billions of people now carry a camera phone everywhere. Why does that matter to claims of alien craft in the sky?",
+  "answer": "Because the evidence should have grown with the cameras. By 2023 nearly four in five people aged 10 and over owned a mobile phone, most with a camera. If craft were visiting, sharp, close videos from many angles should be piling up. What still arrives is mostly blurred dots.",
+  "move": "When cameras multiply and the pictures don't improve, believe the cameras.",
+  "ask": "If what I believe were true, what evidence should have turned up by now?",
+  "keywords": [
+    "ufos",
+    "smartphones",
+    "cameras",
+    "evidence"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ITU, Facts and Figures, 2023",
+  "source_kind": "statistics",
+  "reference": "International Telecommunication Union, Measuring digital development: Facts and Figures, 2023",
+  "written": "2026-10-03"
+}

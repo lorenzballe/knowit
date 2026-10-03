@@ -1,0 +1,33 @@
+{
+  "id": "human_body-senses-fooled-3",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.senses_fooled",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a clock's second hand seem to freeze for a moment when someone first glances at it?",
+  "answer": "Because the brain backdates what it sees. During the quick eye movement to the clock, vision is blanked; the brain fills that gap with the image the eyes land on. So the first second looks longer than the next. Yarrow's team found the stretch grew with the length of the eye movement.",
+  "move": "What feels like a direct view is partly the brain filling gaps.",
+  "ask": "Which memory of mine is partly filled in, and how sure should I really be of it?",
+  "keywords": [
+    "chronostasis",
+    "eye movements",
+    "clock",
+    "time perception"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Yarrow et al., Nature, 2001",
+  "source_kind": "paper",
+  "reference": "Yarrow K, Haggard P, Heal R, Brown P, Rothwell JC, Illusory perceptions of space and time preserve cross-saccadic perceptual continuity, Nature, 2001",
+  "written": "2026-09-26"
+}

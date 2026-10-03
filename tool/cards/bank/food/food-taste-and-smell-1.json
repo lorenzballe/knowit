@@ -1,0 +1,33 @@
+{
+  "id": "food-taste-and-smell-1",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.taste_and_smell",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do so many passengers order tomato juice on planes, when few of them drink it on the ground?",
+  "answer": "Because the noise changes the taste. In a 2015 Cornell study, eating with roughly 85-decibel noise, like a cabin's roar, dulled sweetness and strengthened umami, the savoury taste tomatoes are rich in. Dry cabin air also dulls smell, which flattens most flavours. Tomato juice is one of the few drinks the cabin improves.",
+  "move": "The room shapes the taste as much as the recipe does.",
+  "ask": "Where might my surroundings be shaping a judgment I think is all mine?",
+  "keywords": [
+    "umami",
+    "tomato juice",
+    "aircraft noise",
+    "flavour perception"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Yan & Dando, J. Exp. Psychol. Hum. Percept. Perform., 2015",
+  "source_kind": "paper",
+  "reference": "Yan & Dando, A crossmodal role for audition in taste perception, Journal of Experimental Psychology: Human Perception and Performance, 2015",
+  "written": "2026-10-03"
+}

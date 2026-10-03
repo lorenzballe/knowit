@@ -1,0 +1,43 @@
+{
+  "id": "space-looking-back-in-time-3",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.looking_back_in_time",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "On a day when Mars is 225 million km away, how many minutes old is each picture a rover sends, with radio at 300,000 km/s?",
+  "value": 12.5,
+  "unit": "minutes",
+  "tolerance": 0.1,
+  "answer": "12.5 minutes: each picture shows the rover as it was.",
+  "move": "When news travels slowly, act on rules set in advance, not on reactions.",
+  "ask": "Where am I reacting to news that is already out of date by the time it reaches me?",
+  "trap": "Radio is instant, so a rover can be steered like a toy car.",
+  "hint": "Divide the distance by the speed to get seconds.",
+  "steps": [
+    "225,000,000 km ÷ 300,000 km/s = 750 s.",
+    "750 s ÷ 60 = 12.5.",
+    "12.5 minutes: each picture shows the rover as it was."
+  ],
+  "keywords": [
+    "mars rovers",
+    "signal delay",
+    "radio",
+    "light travel time"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ellery, Planetary Rovers, 2016",
+  "source_kind": "book",
+  "reference": "Ellery, Planetary Rovers: Robotic Exploration of the Solar System, Springer, 2016",
+  "written": "2026-10-03"
+}

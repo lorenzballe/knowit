@@ -1,0 +1,42 @@
+{
+  "id": "space-myths-about-them-1",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.myths_about_them",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: if the Sun were swapped for a black hole of exactly the same mass, Earth would be pulled in?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. At a distance, gravity depends only on mass, so Earth would keep its 365-day orbit. Only the light would go: a black hole of one solar mass is about 6 km across, and Earth would freeze in the dark. The danger starts only very close to it.",
+  "move": "Judge a danger by how much is there, not by how its name sounds.",
+  "ask": "Which thing in my life seems dangerous mostly because of its reputation, not its actual weight?",
+  "trap": "True, because black holes are pictured as cosmic vacuum cleaners.",
+  "keywords": [
+    "black holes",
+    "sun",
+    "earth's orbit",
+    "gravity"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thorne, Black Holes and Time Warps, 1994",
+  "source_kind": "book",
+  "reference": "Thorne, Black Holes and Time Warps: Einstein's Outrageous Legacy, W. W. Norton, 1994",
+  "written": "2026-10-03"
+}

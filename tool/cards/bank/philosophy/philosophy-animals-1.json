@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-animals-1",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.animals",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: UK law formally recognises crabs, lobsters and octopuses as sentient beings?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The Animal Welfare (Sentience) Act 2022 covers all animals with backbones plus decapod crustaceans and cephalopods. It followed a 2021 review led by Jonathan Birch at the LSE, which weighed eight kinds of evidence, such as whether an animal trades off pain against reward. The lobster in the boiling pot became a policy question.",
+  "move": "When evidence is uncertain, ask what it would cost to be wrong each way.",
+  "ask": "Where am I waiting for proof of harm when being careful would cost me very little?",
+  "trap": "Assuming welfare law protects only animals with a backbone, as it long did.",
+  "keywords": [
+    "sentience",
+    "animal welfare act",
+    "lobsters",
+    "octopuses",
+    "jonathan birch"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Animal Welfare (Sentience) Act 2022",
+  "source_kind": "primary_document",
+  "reference": "https://www.legislation.gov.uk/ukpga/2022/22",
+  "written": "2026-10-03"
+}

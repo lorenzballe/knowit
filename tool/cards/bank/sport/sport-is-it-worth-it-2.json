@@ -1,0 +1,40 @@
+{
+  "id": "sport-is-it-worth-it-2",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.is_it_worth_it",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: a year after the 2012 Olympics, Londoners' life satisfaction was still raised compared with Parisians' and Berliners'?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Dolan and colleagues surveyed 26,000 people in London, Paris and Berlin over three summers. Londoners' well-being rose during the Games, peaking around the opening and closing ceremonies, then faded; a year later no lasting gain could be found. The joy was real and brief.",
+  "move": "Count how long a good feeling lasts, not how strong it was.",
+  "ask": "What am I planning to buy or do for a high that may fade within weeks?",
+  "trap": "Assuming a vivid national high leaves people lastingly happier.",
+  "keywords": [
+    "london 2012",
+    "life satisfaction",
+    "well-being",
+    "feel-good factor",
+    "hosting"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dolan et al., Journal of Public Economics, 2019",
+  "source_kind": "paper",
+  "reference": "Dolan, Kavetsos, Krekel et al., Quantifying the intangible impact of the Olympics using subjective well-being data, Journal of Public Economics, 2019",
+  "written": "2026-09-26"
+}

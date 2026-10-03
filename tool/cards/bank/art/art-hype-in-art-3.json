@@ -1,0 +1,41 @@
+{
+  "id": "art-hype-in-art-3",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.hype_in_art",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Collectors who buy Maurizio Cattelan's banana taped to a wall, sold for $6.2 million in 2024, receive what?",
+  "options": [
+    "A certificate and instructions",
+    "The original 2019 banana",
+    "A bronze cast of the fruit"
+  ],
+  "correct": 0,
+  "answer": "A certificate and instructions. The banana is replaced when it rots, so what is owned is the right to show it. The work first sold for $120,000 in 2019; after a performer ate one and the image went everywhere, an edition fetched $6.2 million. The fruit was cheap; the noise was not.",
+  "move": "When the object is cheap and replaceable, ask what the price is buying.",
+  "ask": "What am I paying for when I buy something mainly because people are talking about it?",
+  "trap": "The original banana, somehow preserved for the buyer.",
+  "keywords": [
+    "maurizio cattelan",
+    "comedian",
+    "banana",
+    "certificate of authenticity",
+    "auction"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sotheby's New York, November 2024",
+  "source_kind": "company",
+  "reference": "Sotheby's New York, The Now and Contemporary Evening Auction, 20 November 2024, Maurizio Cattelan, Comedian",
+  "written": "2026-10-03"
+}

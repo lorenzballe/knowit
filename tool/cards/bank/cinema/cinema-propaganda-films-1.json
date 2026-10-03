@@ -1,0 +1,33 @@
+{
+  "id": "cinema-propaganda-films-1",
+  "topic": "cinema",
+  "genre": "cinema.films_and_history",
+  "strand": "cinema.films_and_history.propaganda_films",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Did tsarist troops really massacre civilians down the Odessa steps in 1905, as Battleship Potemkin shows?",
+  "answer": "Not on the steps. Troops did fire on crowds in Odessa that June, and hundreds died, but elsewhere in the city. Eisenstein staged the slaughter on the grand staircase for the 1925 film, with the falling pram and broken glasses. The invented scene is now how the event is remembered.",
+  "move": "A powerful image can replace the memory of what it depicts.",
+  "ask": "Which event do I remember through a film's version of it rather than the record?",
+  "keywords": [
+    "battleship potemkin",
+    "odessa steps",
+    "sergei eisenstein",
+    "soviet film"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Taylor, The Battleship Potemkin, 2000",
+  "source_kind": "book",
+  "reference": "Richard Taylor, The Battleship Potemkin, KINOfiles Film Companion, I.B. Tauris, 2000",
+  "written": "2026-10-03"
+}

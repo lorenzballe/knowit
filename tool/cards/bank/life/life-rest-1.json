@@ -1,0 +1,33 @@
+{
+  "id": "life-rest-1",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.rest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does an evening off not always leave you rested for the next day?",
+  "answer": "Because rest depends on leaving work in the head, not only at the door. Sonnentag's studies find that people who stop thinking about job problems in their free time report better mood and less exhaustion the next morning. Checking work messages from the sofa keeps the job switched on while the body sits still.",
+  "move": "Count rest by the hours your mind is off the job.",
+  "ask": "Tonight, what would help me stop thinking about work, not only stop doing it?",
+  "keywords": [
+    "psychological detachment",
+    "recovery",
+    "evenings",
+    "work stress"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sonnentag, Current Directions in Psychological Science, 2012",
+  "source_kind": "paper",
+  "reference": "Sonnentag, Psychological detachment from work during leisure time: The benefits of mentally disengaging from work, Current Directions in Psychological Science, 2012",
+  "written": "2026-10-03"
+}

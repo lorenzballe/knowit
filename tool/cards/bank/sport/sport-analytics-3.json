@@ -1,0 +1,41 @@
+{
+  "id": "sport-analytics-3",
+  "topic": "sport",
+  "genre": "sport.sport_and_numbers",
+  "strand": "sport.sport_and_numbers.analytics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Basketball analysts ranked shots by points scored per attempt. Which shot sits near the bottom?",
+  "options": [
+    "A long two-pointer",
+    "A corner three-pointer",
+    "A shot at the rim"
+  ],
+  "correct": 0,
+  "answer": "A long two-pointer. A shot from just inside the arc goes in about 40% of the time for 2 points, roughly 0.8 per attempt, while a corner three made at about 38% yields over 1.1. NBA teams cut long twos sharply in the decade after 2010. The shot that looks safe was the poor bargain.",
+  "move": "Compare options by payoff per try, not by how often they succeed.",
+  "ask": "Am I choosing the option that succeeds most often, rather than the one that pays most per try?",
+  "trap": "Taking the closer, surer-looking two as the better shot.",
+  "keywords": [
+    "basketball",
+    "shot selection",
+    "three-pointer",
+    "mid-range",
+    "expected points"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goldsberry, SprawlBall, 2019",
+  "source_kind": "book",
+  "reference": "Kirk Goldsberry, SprawlBall: A Visual Tour of the New Era of the NBA, Houghton Mifflin Harcourt, 2019",
+  "written": "2026-09-26"
+}

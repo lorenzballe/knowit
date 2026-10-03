@@ -1,0 +1,40 @@
+{
+  "id": "nature-balance-of-nature-2",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.balance_of_nature",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "The Kaibab deer boom after predators were killed became a textbook case of nature thrown off balance. What did later checks find?",
+  "options": [
+    "The deer counts were mostly guesses",
+    "The boom happened just as described",
+    "Predators had never been hunted there"
+  ],
+  "correct": 0,
+  "answer": "The deer counts were mostly guesses. Textbooks told of 4,000 deer swelling to 100,000 and then starving. Caughley, and later Binkley and colleagues, found the figures were rough estimates by officials who disagreed, and that livestock grazing and fire also mattered. A tidy moral had been built on numbers nobody had counted.",
+  "move": "Before trusting a tidy story, ask who counted, and how.",
+  "ask": "Which favourite story I tell about my own life rests on numbers I never checked?",
+  "trap": "A story repeated in every textbook must rest on solid counts.",
+  "keywords": [
+    "kaibab plateau",
+    "mule deer",
+    "predator control",
+    "aldo leopold"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Binkley et al., Ecosystems, 2006",
+  "source_kind": "paper",
+  "reference": "Binkley, Moore, Romme & Brown, Was Aldo Leopold right about the Kaibab deer herd?, Ecosystems, 2006; Caughley, Eruption of ungulate populations, with emphasis on Himalayan thar in New Zealand, Ecology, 1970",
+  "written": "2026-10-03"
+}

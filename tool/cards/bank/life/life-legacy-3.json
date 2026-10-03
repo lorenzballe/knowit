@@ -1,0 +1,39 @@
+{
+  "id": "life-legacy-3",
+  "topic": "life",
+  "genre": "life.meaning",
+  "strand": "life.meaning.legacy",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should parents aim to leave their children a large inheritance?",
+  "sides": [
+    "Yes, leave them a lot",
+    "No, spend or give it"
+  ],
+  "answer": "Yes. An inheritance can buy a home, a safer start or the freedom to take a risky job, and it lands when many people are raising children of their own. Wealth handed on is security that wages alone rarely build. Parents who saved for it chose to turn their effort into their children's choices.",
+  "move": "Whichever side you took, the hinge is what the money would do to effort.",
+  "ask": "What do I most want to hand on to the people after me, and is money the best form of it?",
+  "counterpoint": "No. Holtz-Eakin, Joulfaian and Rosen found Americans who inherited over $150,000 were about four times as likely to leave work as those inheriting under $25,000. A large sum can quiet ambition just as a career begins to form. Paying for education while alive, or giving to causes, builds the abilities a cheque cannot.",
+  "keywords": [
+    "inheritance",
+    "wealth",
+    "parents",
+    "children",
+    "work"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Holtz-Eakin, Joulfaian and Rosen, QJE, 1993",
+  "source_kind": "paper",
+  "reference": "Holtz-Eakin, Joulfaian and Rosen, The Carnegie Conjecture: Some Empirical Evidence, Quarterly Journal of Economics, 1993",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "language-learning-an-accent-2",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.learning_an_accent",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does a strong foreign accent make a speaker hard to understand?",
+  "answer": "Often not. In a 1995 study, listeners wrote down what Mandarin-speaking learners of English said and rated how accented each sentence sounded. Many sentences rated heavily accented were written down perfectly. How foreign speech sounds and how much of it gets understood turned out to be largely separate things.",
+  "move": "Aim to be understood, not to sound like someone else.",
+  "ask": "Am I polishing how I sound when people already understand me perfectly well?",
+  "keywords": [
+    "foreign accent",
+    "intelligibility",
+    "mandarin speakers",
+    "pronunciation"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Munro & Derwing, Language Learning, 1995",
+  "source_kind": "paper",
+  "reference": "Munro & Derwing, Foreign accent, comprehensibility, and intelligibility in the speech of second language learners, Language Learning 45(1), 1995",
+  "written": "2026-10-03"
+}

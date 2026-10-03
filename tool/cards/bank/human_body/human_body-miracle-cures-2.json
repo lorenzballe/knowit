@@ -1,0 +1,33 @@
+{
+  "id": "human_body-miracle-cures-2",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.miracle_cures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How could a cancer remedy that did nothing still collect thousands of grateful testimonials?",
+  "answer": "Because only the living write letters. Laetrile, made from apricot kernels, was taken by many thousands in the 1970s; some also had surgery or radiation, and those who died sent no thanks. When Moertel's team tested it on 178 patients, cancers kept growing, and some patients had cyanide levels near the toxic range.",
+  "move": "Testimonials come from survivors, so count the silent ones too.",
+  "ask": "Which advice do I trust because of glowing stories, without hearing from those it failed?",
+  "keywords": [
+    "laetrile",
+    "testimonials",
+    "cancer",
+    "clinical trial"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Moertel et al., NEJM, 1982",
+  "source_kind": "paper",
+  "reference": "Moertel CG, Fleming TR, Rubin J et al., A clinical trial of amygdalin (Laetrile) in the treatment of human cancer, New England Journal of Medicine, 1982",
+  "written": "2026-09-26"
+}

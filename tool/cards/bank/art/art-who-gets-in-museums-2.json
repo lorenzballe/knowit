@@ -1,0 +1,33 @@
+{
+  "id": "art-who-gets-in-museums-2",
+  "topic": "art",
+  "genre": "art.art_and_power",
+  "strand": "art.art_and_power.who_gets_in_museums",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did so few women paint the large history pictures that topped the art world before about 1900?",
+  "answer": "They were barred from the training. History painting meant heroic nude figures, and academies taught it by drawing from nude models, in classes closed to women. London's Royal Academy let women draw a partly draped male model only from 1893. Linda Nochlin argued in 1971 that the question was about institutions, not talent.",
+  "move": "Before judging who succeeded, ask who was allowed to train.",
+  "ask": "In my workplace, who is quietly kept away from the training that leads to the top jobs?",
+  "keywords": [
+    "linda nochlin",
+    "royal academy",
+    "life drawing",
+    "women artists"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nochlin, ARTnews, 1971",
+  "source_kind": "paper",
+  "reference": "Linda Nochlin, Why Have There Been No Great Women Artists?, ARTnews, January 1971",
+  "written": "2026-10-03"
+}

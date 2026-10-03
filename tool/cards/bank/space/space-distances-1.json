@@ -1,0 +1,43 @@
+{
+  "id": "space-distances-1",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.distances",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Voyager 1 moves at about 17 km/s. How many thousand years would it take to cover 40 trillion km, the distance to the nearest star?",
+  "value": 74,
+  "unit": "thousand years",
+  "tolerance": 2,
+  "answer": "2.35 trillion ÷ 31.6 million ≈ 74,000 years, so about 74 thousand.",
+  "move": "Crossing the first border says little about the distance still ahead.",
+  "ask": "In a long project, am I celebrating leaving home as if it meant arriving?",
+  "trap": "Voyager has left the Solar System, so it must be nearly there.",
+  "hint": "Find the seconds first, then turn them into years of about 31.6 million seconds.",
+  "steps": [
+    "40,000,000,000,000 km ÷ 17 km/s ≈ 2,350,000,000,000 s.",
+    "One year is about 31,600,000 s.",
+    "2.35 trillion ÷ 31.6 million ≈ 74,000 years, so about 74 thousand."
+  ],
+  "keywords": [
+    "voyager 1",
+    "proxima centauri",
+    "interstellar travel",
+    "light-years"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bell, The Interstellar Age, 2015",
+  "source_kind": "book",
+  "reference": "Bell, The Interstellar Age: Inside the Forty-Year Voyager Mission, Dutton, 2015",
+  "written": "2026-10-03"
+}

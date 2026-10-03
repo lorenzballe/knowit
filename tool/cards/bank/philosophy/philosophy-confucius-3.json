@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-confucius-3",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.confucius",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should the law oblige adult children to visit and care for their ageing parents?",
+  "sides": [
+    "Yes, make it a legal duty",
+    "No, leave it to love"
+  ],
+  "answer": "Yes. Confucius said that merely feeding parents is not enough, since dogs and horses are fed too; without reverence, where is the difference? Care for the old falls on families everywhere, and a law that names the duty protects parents whose children drift away. China's elderly-rights law has required visits since 2013.",
+  "move": "It turns on whether care given under duty is still the care that matters.",
+  "ask": "What do I owe my parents, and is it a debt or something I give freely?",
+  "counterpoint": "Jane English argued in 1979 that grown children owe parents no debts: favours requested create debts, but a parent's sacrifices were never requested. What remains is love, which law cannot command and which sours when turned into an obligation. A visit made under threat of a fine gives a parent company, not a child.",
+  "keywords": [
+    "filial piety",
+    "confucius",
+    "elderly care",
+    "jane english",
+    "family duty"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "English, What Do Grown Children Owe Their Parents?",
+  "source_kind": "book",
+  "reference": "English, What Do Grown Children Owe Their Parents?, in O'Neill & Ruddick (eds.), Having Children, Oxford University Press, 1979; Confucius, Analects 2.7",
+  "written": "2026-10-03"
+}

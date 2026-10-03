@@ -1,0 +1,39 @@
+{
+  "id": "language-emoji-2",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.emoji",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a Canadian court has ruled that replying with a thumbs-up emoji accepted a binding contract?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 2023 a Saskatchewan grain buyer texted a farmer a photo of a flax contract and asked him to confirm. He replied with a thumbs-up, then did not deliver. The judge held that the emoji was his acceptance and ordered him to pay about 82,000 Canadian dollars in damages.",
+  "move": "A quick reply can bind as firmly as a signed page.",
+  "ask": "What have I agreed to lately with a quick reaction I never thought of as a promise?",
+  "trap": "False, because a quick emoji cannot stand in for a signature.",
+  "keywords": [
+    "thumbs-up emoji",
+    "contract law",
+    "saskatchewan",
+    "text messages"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "South West Terminal v Achter Land, 2023 SKKB 116",
+  "source_kind": "primary_document",
+  "reference": "South West Terminal Ltd. v Achter Land & Cattle Ltd., 2023 SKKB 116, Court of King's Bench for Saskatchewan, 2023",
+  "written": "2026-10-03"
+}

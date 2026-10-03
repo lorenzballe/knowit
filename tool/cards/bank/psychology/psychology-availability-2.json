@@ -1,0 +1,33 @@
+{
+  "id": "psychology-availability-2",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.availability",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When each partner in a couple estimates their own share of the household work, why do the two shares add up past 100%?",
+  "answer": "Because each remembers their own efforts best. Married couples asked for their share of chores such as shopping, cleaning and planning outings tended to total more than 100%: one's own work is seen and felt, the other's often happens off stage. Neither is lying. Each simply holds a fuller diary of their own days.",
+  "move": "Count the work you did not see before you weigh your share.",
+  "ask": "In my home or team, what does the other person do that I rarely see happening?",
+  "keywords": [
+    "egocentric bias",
+    "couples",
+    "housework",
+    "credit"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ross & Sicoly, JPSP, 1979",
+  "source_kind": "paper",
+  "reference": "Ross & Sicoly, Egocentric biases in availability and attribution, Journal of Personality and Social Psychology, 1979",
+  "written": "2026-10-03"
+}

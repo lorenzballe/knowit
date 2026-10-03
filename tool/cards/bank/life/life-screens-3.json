@@ -1,0 +1,40 @@
+{
+  "id": "life-screens-3",
+  "topic": "life",
+  "genre": "life.habits",
+  "strand": "life.habits.screens",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: in a three-week trial, students limited to 30 minutes of social media a day grew less anxious than unlimited students?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In Hunt and colleagues' trial, anxiety fell in both groups, including students who kept their usual habits but logged their use. Only loneliness and low mood fell more in the limited group. Without the comparison group, the whole drop in anxiety would have been credited to the limit.",
+  "move": "Before crediting a change, ask what happened to people who did not make it.",
+  "ask": "When I feel better after cutting something out, how do I know it was the cutting and not the paying attention?",
+  "trap": "The limited group felt better, so the limit seems to explain it all.",
+  "keywords": [
+    "social media",
+    "loneliness",
+    "anxiety",
+    "control group",
+    "students"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hunt and colleagues, JSCP, 2018",
+  "source_kind": "paper",
+  "reference": "Hunt, Marx, Lipson and Young, No More FOMO: Limiting Social Media Decreases Loneliness and Depression, Journal of Social and Clinical Psychology, 2018",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "language-feelings-without-names-2",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.feelings_without_names",
+  "also": [
+    "psychology.emotions.naming_feelings"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "People looking at angry faces either picked a word for the emotion or matched it to another face. Which calmed the brain's alarm more?",
+  "options": [
+    "Neither made any difference",
+    "Matching it to another face",
+    "Picking a word for it"
+  ],
+  "correct": 2,
+  "answer": "Picking a word for it. In a 2007 brain-scanning study, choosing a label such as angry lowered activity in the amygdala, a region that reacts to threat, more than matching the face did. Naming also engaged a part of the frontal lobe that seems to damp the alarm. A word gives a feeling edges.",
+  "move": "Putting a word on a feeling turns weather into a thing.",
+  "ask": "What am I feeling right now, in one precise word?",
+  "trap": "Matching it, since naming an emotion seems likely to stir it up.",
+  "keywords": [
+    "affect labelling",
+    "amygdala",
+    "emotions",
+    "brain imaging"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lieberman et al., Psychological Science, 2007",
+  "source_kind": "paper",
+  "reference": "Lieberman, Eisenberger, Crockett, Tom, Pfeifer & Way, Putting feelings into words: affect labeling disrupts amygdala activity in response to affective stimuli, Psychological Science 18(5), 2007",
+  "written": "2026-10-03"
+}

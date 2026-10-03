@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-cliffhangers-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.why_stories_grip_us",
+  "strand": "pop_culture.why_stories_grip_us.cliffhangers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: people reliably remember interrupted tasks better than finished ones, which explains why cliffhangers work?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A recent meta-analysis of decades of studies found no reliable memory advantage for unfinished tasks; that famous claim has not held up. What does hold is the urge to go back and finish what was interrupted. A cliffhanger works on that pull to resume, not on a sharper memory of the episode.",
+  "move": "Ask which half of a famous finding actually survived.",
+  "ask": "What unfinished task keeps pulling at me, and could I simply finish it or drop it today?",
+  "trap": "The textbook story says unfinished tasks stick in memory.",
+  "keywords": [
+    "zeigarnik effect",
+    "ovsiankina effect",
+    "interrupted tasks",
+    "cliffhangers"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ghibellini and Meier, meta-analysis, 2025",
+  "source_kind": "paper",
+  "reference": "Ghibellini and Meier, The hypothesis of unfinished business: a systematic review and meta-analysis of the Zeigarnik and Ovsiankina effects, Humanities and Social Sciences Communications, 2025",
+  "written": "2026-09-26"
+}

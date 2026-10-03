@@ -1,0 +1,40 @@
+{
+  "id": "science-experts-disagree-3",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.experts_disagree",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Philip Tetlock scored 284 experts' forecasts over two decades. Which experts tended to forecast worst?",
+  "options": [
+    "Those drawing on many small ideas",
+    "Those most often quoted in the media",
+    "Those who admitted most doubt"
+  ],
+  "correct": 1,
+  "answer": "Those most often quoted in the media. Tetlock tracked about 28,000 predictions; experts as a whole barely beat simple rules of thumb, and the famous did worse than the obscure. Confident thinkers with one big idea make good television and poor forecasts; those who drew on many ideas and changed their minds did best.",
+  "move": "Trust the forecaster who keeps score and changes their mind.",
+  "ask": "Whose confident predictions do I follow, and has anyone ever checked how often they were right?",
+  "trap": "Those who admitted most doubt, since hesitation looks like ignorance.",
+  "keywords": [
+    "forecasting",
+    "experts",
+    "philip tetlock",
+    "media"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tetlock, Expert Political Judgment, 2005",
+  "source_kind": "book",
+  "reference": "Tetlock, Expert Political Judgment: How Good Is It? How Can We Know?, Princeton University Press, 2005",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "food-marketing-to-kids-2",
+  "topic": "food",
+  "genre": "food.eat_smarter",
+  "strand": "food.eat_smarter.marketing_to_kids",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should adverts for foods high in fat, salt or sugar be banned from television before 9 pm?",
+  "sides": [
+    "Yes, ban them",
+    "No, leave them"
+  ],
+  "answer": "Children watch most of their television in family slots, not children's programmes, so rules covering only children's shows miss most of what they see. The UK government's impact assessment estimated a 9 pm watershed would remove about 7.2 billion calories a year from children's diets and mean about 20,000 fewer children with obesity.",
+  "move": "It turns on whether many tiny effects add up to a big one.",
+  "ask": "Which small daily nudge in my life might matter more than it looks?",
+  "counterpoint": "Spread across the population, 7.2 billion calories is under two kilocalories per child per day: a crumb of a biscuit. The estimates come from models, not observed results, and advertisers can move spending online, to sponsorship or to packaging. A ban costs broadcasters revenue while barely touching what children eat.",
+  "keywords": [
+    "advertising",
+    "junk food",
+    "children",
+    "watershed",
+    "television"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "UK DHSC, HFSS advertising impact assessment, 2020",
+  "source_kind": "primary_document",
+  "reference": "Department of Health and Social Care, Introducing further advertising restrictions on TV and online for products high in fat, sugar and salt (HFSS): impact assessment, 2020",
+  "written": "2026-10-03"
+}

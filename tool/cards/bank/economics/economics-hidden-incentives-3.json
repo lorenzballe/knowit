@@ -1,0 +1,39 @@
+{
+  "id": "economics-hidden-incentives-3",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.hidden_incentives",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in an undercover study, most US financial advisers urged clients to move into low-fee index funds?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Trained mystery shoppers visited advisers with different portfolios. Advisers recommended index funds in only about 7.5% of visits, but suggested actively managed funds, which carry higher fees, in about half. Even shoppers arriving with a cheap, well-spread portfolio were pushed to change it.",
+  "move": "Advice is paid for somewhere; find where before acting on it.",
+  "ask": "Is the person advising me about money paid more if I pick one option over another?",
+  "trap": "Assuming expert advice is shaped mainly by the client's interest.",
+  "keywords": [
+    "financial advisers",
+    "index funds",
+    "mystery shoppers",
+    "fees"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mullainathan, Noeth and Schoar, NBER, 2012",
+  "source_kind": "paper",
+  "reference": "https://www.nber.org/system/files/working_papers/w17929/w17929.pdf",
+  "written": "2026-10-03"
+}

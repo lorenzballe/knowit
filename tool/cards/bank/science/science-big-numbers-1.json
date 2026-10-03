@@ -1,0 +1,43 @@
+{
+  "id": "science-big-numbers-1",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.big_numbers",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A million seconds is about 11.6 days. How many years is a billion seconds?",
+  "value": 31.7,
+  "unit": "years",
+  "tolerance": 0.5,
+  "answer": "About 31.7 years: a thousand times 11.6 days.",
+  "move": "Turn big numbers into time before comparing them.",
+  "ask": "When I hear millions and billions in the news, do I picture the gap, or just the words?",
+  "trap": "Guessing about a year, since billion sounds like million plus a bit.",
+  "hint": "Work out how many seconds there are in a year first.",
+  "steps": [
+    "A year: 365.25 × 86,400 ≈ 31.6 million seconds.",
+    "1,000 million ÷ 31.6 million ≈ 31.7.",
+    "About 31.7 years: a thousand times 11.6 days."
+  ],
+  "keywords": [
+    "million",
+    "billion",
+    "seconds",
+    "scale"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Paulos, Innumeracy, 1988",
+  "source_kind": "book",
+  "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988",
+  "written": "2026-09-26"
+}

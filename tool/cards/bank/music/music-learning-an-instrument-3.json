@@ -1,0 +1,37 @@
+{
+  "id": "music-learning-an-instrument-3",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.learning_an_instrument",
+  "also": [
+    "human_body.the_brain.plasticity"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If two adult musicians have practised for the same number of years, does starting before age 7 still matter?",
+  "answer": "For fine timing, it seems so. Virginia Penhune's group matched musicians for years of training and found that those who began before 7 reproduced timed finger sequences more accurately than later starters. The gap is narrow: it says nothing about whether a late starter can play beautifully, only about one kind of precision.",
+  "move": "An early start buys some precise skills; it does not close the door on others.",
+  "ask": "What have I told myself I started too late to learn, and is that really true?",
+  "keywords": [
+    "early training",
+    "sensitive period",
+    "motor learning",
+    "musicians",
+    "age"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Watanabe, Savion-Lemieux & Penhune, Exp Brain Res, 2007",
+  "source_kind": "paper",
+  "reference": "Watanabe, Savion-Lemieux & Penhune, The effect of early musical training on adult motor performance: evidence for a sensitive period in motor learning, Experimental Brain Research, 2007",
+  "written": "2026-09-26"
+}

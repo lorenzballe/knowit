@@ -1,0 +1,42 @@
+{
+  "id": "life-mortality-3",
+  "topic": "life",
+  "genre": "life.meaning",
+  "strand": "life.meaning.mortality",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Maya is 40; her parents are 70 and may live to about 85. Seeing them five times a year, how many visits are left?",
+  "value": 75,
+  "unit": "visits",
+  "answer": "15 × 5 = 75 visits.",
+  "move": "Count the time left in visits, not in years.",
+  "ask": "How many more times will I see the people I love most at my current pace, and is that enough?",
+  "trap": "Thinking of 15 years, which sounds like a long time.",
+  "hint": "Work out the years left, then multiply by the visits a year.",
+  "steps": [
+    "85 - 70 = 15 years left.",
+    "15 × 5 = 75 visits."
+  ],
+  "keywords": [
+    "parents",
+    "time left",
+    "visits",
+    "family",
+    "mortality"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Urban, The Tail End, 2015",
+  "source_kind": "arithmetic",
+  "reference": "https://waitbutwhy.com/2015/12/the-tail-end.html",
+  "written": "2026-10-03"
+}

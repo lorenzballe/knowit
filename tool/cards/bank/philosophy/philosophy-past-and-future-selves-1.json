@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-past-and-future-selves-1",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.past_and_future_selves",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Asked how much their values and tastes will change in the next ten years, what do people of every age predict?",
+  "options": [
+    "About as much as before",
+    "Less than in the last ten",
+    "More, as life speeds up"
+  ],
+  "correct": 1,
+  "answer": "Less than they changed in the last ten. Jordi Quoidbach, Daniel Gilbert and Timothy Wilson surveyed over 19,000 people in 2013: at every age, people reported large change behind them and expected little ahead. They would pay more to see their current favourite band in ten years than their old favourite now.",
+  "move": "The person you are now is a stage, not the finished version.",
+  "ask": "What am I deciding today as if my present tastes will never change?",
+  "trap": "About as much as before, the sensible-sounding forecast.",
+  "keywords": [
+    "end of history illusion",
+    "personality change",
+    "future self",
+    "daniel gilbert"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Quoidbach, Gilbert & Wilson, Science, 2013",
+  "source_kind": "paper",
+  "reference": "Quoidbach, Gilbert & Wilson, The End of History Illusion, Science 339 (6115), 2013",
+  "written": "2026-10-03"
+}

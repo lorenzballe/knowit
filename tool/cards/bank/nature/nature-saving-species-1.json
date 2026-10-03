@@ -1,0 +1,33 @@
+{
+  "id": "nature-saving-species-1",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.saving_species",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How many bird and mammal extinctions did conservation work prevent between 1993 and 2020?",
+  "answer": "Somewhere between 28 and 48, by the best estimate. Bolam and colleagues went species by species with experts and judged that action saved 21 to 32 birds and 7 to 16 mammals, the Iberian lynx and the Puerto Rican parrot among them. Without it, extinctions would have run about three to four times faster.",
+  "move": "Count the disasters that did not happen before calling an effort useless.",
+  "ask": "Which effort of mine looks pointless only because the trouble it prevents never shows up?",
+  "keywords": [
+    "conservation",
+    "prevented extinctions",
+    "iberian lynx",
+    "puerto rican parrot"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bolam et al., Conservation Letters, 2021",
+  "source_kind": "paper",
+  "reference": "Bolam et al., How many bird and mammal extinctions has recent conservation action prevented?, Conservation Letters, 2021",
+  "written": "2026-10-03"
+}

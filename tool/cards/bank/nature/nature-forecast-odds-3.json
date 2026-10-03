@@ -1,0 +1,43 @@
+{
+  "id": "nature-forecast-odds-3",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.forecast_odds",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "Saturday and Sunday each have a 40% chance of rain. Treating them as independent, what is the chance of a dry weekend, in percent?",
+  "value": 36,
+  "unit": "percent",
+  "answer": "A 36% chance of a dry weekend.",
+  "move": "Every extra thing that must go right shrinks the odds of the whole.",
+  "ask": "How many things must all go right for my plan this week to work?",
+  "trap": "Each day is 60% dry, so the weekend seems 60% dry too.",
+  "hint": "Find the chance each day stays dry, then the chance both do.",
+  "steps": [
+    "Chance Saturday is dry: 100% − 40% = 60%",
+    "Chance Sunday is dry: also 60%",
+    "Both dry: 0.6 × 0.6 = 0.36",
+    "A 36% chance of a dry weekend."
+  ],
+  "keywords": [
+    "probability of precipitation",
+    "weekend forecast",
+    "rain",
+    "joint probability"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US National Weather Service, PoP guide",
+  "source_kind": "institution",
+  "reference": "https://www.weather.gov/ffc/pop",
+  "written": "2026-10-03"
+}

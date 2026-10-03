@@ -1,0 +1,40 @@
+{
+  "id": "economics-real-or-nominal-1",
+  "topic": "economics",
+  "genre": "economics.read_money_news",
+  "strand": "economics.read_money_news.real_or_nominal",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "One US buyer borrowed at 9% in 1975, with 9% inflation; another at 4% in 2019, with 2%. Whose loan cost more in real terms?",
+  "options": [
+    "The 1975 borrower",
+    "Both about the same",
+    "The 2019 borrower"
+  ],
+  "correct": 2,
+  "answer": "The 2019 borrower. The real cost of a loan is its rate minus inflation. In 1975 the average 30-year mortgage charged about 9.05% while consumer prices rose about 9.1%: a real rate near zero. In 2019 it was 3.94% against 1.8% inflation, about 2% real. The 1975 debt melted as wages rose with prices.",
+  "move": "Subtract inflation from any rate before calling it cheap or dear.",
+  "ask": "When I compare a loan or a pay rise with the past, have I taken inflation out first?",
+  "trap": "The 1975 borrower, because 9% looks more than twice 4%.",
+  "keywords": [
+    "mortgage rates",
+    "inflation",
+    "real interest rate",
+    "freddie mac"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Freddie Mac Primary Mortgage Market Survey",
+  "source_kind": "statistics",
+  "reference": "https://www.freddiemac.com/pmms",
+  "written": "2026-10-03"
+}

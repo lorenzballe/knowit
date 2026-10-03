@@ -1,0 +1,40 @@
+{
+  "id": "human_body-heart-and-stress-2",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.heart_and_stress",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: on days Germany played in the 2006 World Cup, cardiac emergencies around Munich more than doubled?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Wilbert-Lampen's team counted emergencies in the Munich area and found them at 2.66 times the usual rate on German match days, with men hit hardest. The stress of watching, not exertion, did it: adrenaline, a racing pulse, a spike in pressure. For a heart already narrowed, a penalty shoot-out can be the last straw.",
+  "move": "Count the strain of watching, not only the strain of doing.",
+  "ask": "What do I watch or follow that leaves my heart pounding, and is it worth it?",
+  "trap": "Watching from the sofa involves no effort, so cannot strain the heart.",
+  "keywords": [
+    "world cup",
+    "football",
+    "cardiac emergencies",
+    "emotional stress",
+    "munich"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wilbert-Lampen et al., NEJM, 2008",
+  "source_kind": "paper",
+  "reference": "Wilbert-Lampen U, Leistner D, Greven S et al., Cardiovascular events during World Cup soccer, New England Journal of Medicine, 2008",
+  "written": "2026-09-26"
+}

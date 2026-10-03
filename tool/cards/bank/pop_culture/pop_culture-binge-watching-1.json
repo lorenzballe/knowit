@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-binge-watching-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.binge_watching",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "When Netflix announced in 2013 that binge watching was the new normal, what counted as a binge?",
+  "options": [
+    "Two to six episodes at once",
+    "A whole season in a weekend",
+    "Over five hours in a sitting"
+  ],
+  "correct": 0,
+  "answer": "Two to six episodes at once. Netflix's own survey, run by Harris Interactive, used that definition and reported that 61% of its streamers binged regularly. Two episodes of a half-hour comedy is one hour of television, an ordinary evening's viewing for decades. The wide definition turned that evening into a headline.",
+  "move": "Before trusting how common something is, ask how it was defined.",
+  "ask": "When a survey says most people like me do something, do I know what they actually counted?",
+  "trap": "Picturing the vivid version: a whole season devoured in a weekend.",
+  "keywords": [
+    "netflix",
+    "binge watching",
+    "survey definition",
+    "harris interactive"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Netflix and Harris Interactive survey, 2013",
+  "source_kind": "company",
+  "reference": "Netflix press release, Netflix Declares Binge Watching is the New Normal, 13 December 2013",
+  "written": "2026-09-26"
+}

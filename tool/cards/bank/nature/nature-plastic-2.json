@@ -1,0 +1,39 @@
+{
+  "id": "nature-plastic-2",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.plastic",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a cotton tote bag beats a thin plastic bag on climate after about ten uses?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The Environment Agency's review found a cotton bag had to be used 131 times to match the climate impact of a thin plastic bag used once, and a paper bag 3 times. Growing cotton takes land, water, fertiliser and energy. Plastic's real harm is litter at sea, which a carbon count leaves out.",
+  "move": "Judge a greener swap by how often it is used, not its material.",
+  "ask": "Which greener thing I bought only pays off if I actually use it many times?",
+  "trap": "Cotton is natural and reusable, so it should win from the start.",
+  "keywords": [
+    "carrier bags",
+    "cotton tote",
+    "life cycle assessment",
+    "plastic bags"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Environment Agency, carrier bag review, 2011",
+  "source_kind": "institution",
+  "reference": "Edwards & Fry, Life cycle assessment of supermarket carrier bags: a review of the bags available in 2006, Environment Agency, 2011",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "life-questions-to-others-3",
+  "topic": "life",
+  "genre": "life.ask_better_questions",
+  "strand": "life.ask_better_questions.questions_to_others",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: asking a colleague for advice makes them rate you as more capable?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Brooks, Gino and Schweitzer found people who asked for advice were seen as more competent than those who did not, as long as the task was hard and the person asked was the right one. Being asked flatters the adviser's judgement, and some of that credit returns to the asker.",
+  "move": "Ask for advice on hard things; it reads as judgement, not weakness.",
+  "ask": "What am I struggling with alone that I could ask someone's advice on this week?",
+  "trap": "Asking seems to reveal that you do not know.",
+  "keywords": [
+    "advice",
+    "competence",
+    "asking for help",
+    "workplace",
+    "alison wood brooks"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brooks, Gino and Schweitzer, Management Science, 2015",
+  "source_kind": "paper",
+  "reference": "Brooks, Gino and Schweitzer, Smart People Ask for (My) Advice: Seeking Advice Boosts Perceptions of Competence, Management Science, 2015",
+  "written": "2026-10-03"
+}

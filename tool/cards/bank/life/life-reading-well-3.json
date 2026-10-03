@@ -1,0 +1,33 @@
+{
+  "id": "life-reading-well-3",
+  "topic": "life",
+  "genre": "life.learn_anything",
+  "strand": "life.learn_anything.reading_well",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Do people understand a text less well when they read it on a screen rather than on paper?",
+  "answer": "Somewhat, for some texts. Delgado and colleagues pooled 54 studies with about 171,000 readers and found a small advantage for paper, mainly for informational texts and when time was limited; for stories there was no clear gap. The advantage of paper grew over the years studied, rather than shrinking as people got used to screens.",
+  "move": "Give dense reading the time, and the medium, that make you slow down.",
+  "ask": "Where do I skim important reading on a screen that deserves paper, or simply more time?",
+  "keywords": [
+    "screen reading",
+    "paper",
+    "comprehension",
+    "meta-analysis"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Delgado and colleagues, Educational Research Review, 2018",
+  "source_kind": "paper",
+  "reference": "Delgado, Vargas, Ackerman and Salmerón, Don't throw away your printed books: A meta-analysis on the effects of reading media on reading comprehension, Educational Research Review, 2018",
+  "written": "2026-10-03"
+}

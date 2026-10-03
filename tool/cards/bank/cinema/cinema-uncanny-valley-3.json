@@ -1,0 +1,39 @@
+{
+  "id": "cinema-uncanny-valley-3",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.uncanny_valley",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: when people rated 80 real robot faces, liking rose steadily the more human a face looked?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Mathur and Reichling found liking rose as faces became more human, then fell sharply for faces that were nearly but not quite human, before recovering. The dip also showed in a trust game: people bet less money on the faces stuck in the valley. Close to human was the worst place to be.",
+  "move": "More of a good thing can pass through a bad patch before it pays.",
+  "ask": "Is something I am improving stuck in an awkward middle where it looks worse before it looks better?",
+  "trap": "True, because each step towards human should feel more familiar.",
+  "keywords": [
+    "robot faces",
+    "uncanny valley",
+    "trust game",
+    "likability"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mathur and Reichling, Cognition, 2016",
+  "source_kind": "paper",
+  "reference": "Mathur and Reichling, Navigating a Social World with Robot Partners: A Quantitative Cartography of the Uncanny Valley, Cognition, 146, 2016",
+  "written": "2026-10-03"
+}

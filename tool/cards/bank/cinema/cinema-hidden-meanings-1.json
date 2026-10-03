@@ -1,0 +1,40 @@
+{
+  "id": "cinema-hidden-meanings-1",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.hidden_meanings",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "A fan finds the number 23 forty times in a two-hour film and calls it a hidden code. What should be checked first?",
+  "options": [
+    "How often 23 turns up in any film",
+    "Whether the director likes 23",
+    "Whether other fans found it too"
+  ],
+  "correct": 0,
+  "answer": "How often 23 turns up in any film. Clocks, addresses, plates, prices and sums offer thousands of chances for any number to appear, and a searcher who also counts 2+3 and 32 will find more. Michael Shermer calls the habit patternicity. Without the background count, forty sightings mean nothing.",
+  "move": "Before calling a pattern a message, count how often it appears by chance.",
+  "ask": "Which sign or coincidence have I read meaning into without asking how often it happens anyway?",
+  "trap": "Whether other fans found it too, as if agreement made it real.",
+  "keywords": [
+    "fan theories",
+    "patternicity",
+    "coincidence",
+    "michael shermer"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shermer, The Believing Brain, 2011",
+  "source_kind": "book",
+  "reference": "Michael Shermer, The Believing Brain, Times Books, 2011",
+  "written": "2026-10-03"
+}

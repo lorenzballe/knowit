@@ -1,0 +1,41 @@
+{
+  "id": "sport-rest-days-2",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.rest_days",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Elite rowers, skiers and runners log huge training volumes. Roughly what share of their sessions is easy, low-intensity work?",
+  "options": [
+    "About a fifth",
+    "About half",
+    "About four fifths"
+  ],
+  "correct": 2,
+  "answer": "About four fifths. Seiler's review of elite endurance athletes across sports found the same pattern: roughly 80% of sessions below the first lactate threshold, where talking is easy, and only the rest hard. The easy days let the body absorb the few hard ones, which is why champions look slow most of the week.",
+  "move": "Most progress comes from many easy days around a few hard ones.",
+  "ask": "Am I making every day a hard day, and leaving no easy ones for the hard ones to work?",
+  "trap": "Guessing few easy sessions, since the filmed ones are brutal.",
+  "keywords": [
+    "polarised training",
+    "easy sessions",
+    "endurance athletes",
+    "lactate threshold",
+    "training intensity"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Seiler, Int J Sports Physiol Perform, 2010",
+  "source_kind": "paper",
+  "reference": "Stephen Seiler, What is best practice for training intensity and duration distribution in endurance athletes?, International Journal of Sports Physiology and Performance, 2010",
+  "written": "2026-09-26"
+}

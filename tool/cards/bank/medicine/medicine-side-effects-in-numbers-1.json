@@ -1,0 +1,40 @@
+{
+  "id": "medicine-side-effects-in-numbers-1",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.side_effects_in_numbers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "A febrile seizure follows about 1 in 3,000 MMR doses. Which is likelier for an unvaccinated child who catches measles?",
+  "options": [
+    "Brain inflammation from measles",
+    "A fit after the vaccine",
+    "Both about equally likely"
+  ],
+  "correct": 0,
+  "answer": "Brain inflammation from measles. Encephalitis follows about 1 measles case in 1,000, three times the rate of vaccine fever fits, and it can leave lasting damage, while febrile seizures almost always pass harmlessly. Measles also kills 1 to 3 children per 1,000 cases. The fair comparison is the jab against the disease, not against nothing.",
+  "move": "Weigh a risk you choose against the risk it replaces, not against zero.",
+  "ask": "When I worry about the risk of doing something, have I priced the risk of not doing it?",
+  "trap": "A fit after the vaccine, because a caused harm feels likelier than chance.",
+  "keywords": [
+    "mmr",
+    "febrile seizure",
+    "measles encephalitis",
+    "vaccine safety"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CDC Pink Book, Measles chapter",
+  "source_kind": "institution",
+  "reference": "CDC, Epidemiology and Prevention of Vaccine-Preventable Diseases (Pink Book), Measles chapter, 14th edition, 2021",
+  "written": "2026-10-03"
+}

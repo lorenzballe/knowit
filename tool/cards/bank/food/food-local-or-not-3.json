@@ -1,0 +1,38 @@
+{
+  "id": "food-local-or-not-3",
+  "topic": "food",
+  "genre": "food.food_and_the_planet",
+  "strand": "food.food_and_the_planet.local_or_not",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is choosing locally grown food worth the extra cost and effort for someone who cares about the climate?",
+  "sides": [
+    "Yes, it is worth it",
+    "No, focus elsewhere"
+  ],
+  "answer": "Local and seasonal often go together: a summer tomato from a nearby field avoids both air freight and a heated glasshouse. Buying from nearby farms keeps farmland in use and money in the region, and short chains lose less. Air-freighted produce, though rare, carries many times the emissions of food sent by sea.",
+  "move": "It turns on whether the goal is climate, freshness or the local economy.",
+  "ask": "When I choose local, which of my reasons is the one that really matters to me?",
+  "counterpoint": "In a US analysis by Weber and Matthews, delivery from producer to shop was only about 4% of food's emissions. Swapping red meat and dairy for other foods on less than one day a week cut more than buying everything local. Out-of-season local crops from heated glasshouses can be worse than imports from sunnier places.",
+  "keywords": [
+    "local food",
+    "seasonal produce",
+    "air freight",
+    "food miles"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Weber & Matthews, Environ. Sci. Technol., 2008",
+  "source_kind": "paper",
+  "reference": "Weber & Matthews, Food-miles and the relative climate impacts of food choices in the United States, Environmental Science & Technology, 2008",
+  "written": "2026-10-03"
+}

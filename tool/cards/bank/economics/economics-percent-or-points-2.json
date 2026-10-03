@@ -1,0 +1,42 @@
+{
+  "id": "economics-percent-or-points-2",
+  "topic": "economics",
+  "genre": "economics.read_money_news",
+  "strand": "economics.read_money_news.percent_or_points",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "VAT rises from 20% to 22%. A jacket costs €120 including VAT. What is its new price, in euros?",
+  "value": 122,
+  "unit": "euros",
+  "answer": "New price: 100 + 22 = €122",
+  "move": "A tax on top of a price moves the price less than the rate.",
+  "ask": "When a tax I pay goes up, do I work out the real change in my bill before reacting?",
+  "trap": "Adding 10% to €120, because the tax rate rose by a tenth.",
+  "hint": "First take the VAT out of €120 to find the price before tax.",
+  "steps": [
+    "Price before VAT: 120 ÷ 1.20 = €100",
+    "New VAT: 22% of €100 = €22",
+    "New price: 100 + 22 = €122"
+  ],
+  "keywords": [
+    "vat",
+    "sales tax",
+    "percentage points",
+    "prices"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tax-inclusive price arithmetic",
+  "source_kind": "arithmetic",
+  "reference": "Blastland & Dilnot, The Tiger That Isn't: Seeing Through a World of Numbers, Profile Books, 2007",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "psychology-expectations-3",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.expectations",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Junior academics predicted how unhappy they would be years after being denied tenure. How did those denied really fare?",
+  "options": [
+    "Much less happy, as predicted",
+    "About as happy as those promoted",
+    "Happier than those promoted"
+  ],
+  "correct": 1,
+  "answer": "About as happy as those promoted. Gilbert and colleagues found assistant professors expected a refusal to hurt for years, yet those refused years earlier were no less happy than those who got the job for life. Forecasters picture the blow and forget the coping: new jobs, new reasons, a mind that explains things away.",
+  "move": "When dreading a loss, forecast the recovery as well as the blow.",
+  "ask": "Which feared outcome am I picturing at its worst moment, without picturing how I would cope after?",
+  "trap": "Picturing the moment of rejection and assuming the pain lasts.",
+  "keywords": [
+    "affective forecasting",
+    "tenure",
+    "resilience",
+    "impact bias"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gilbert et al., JPSP, 1998",
+  "source_kind": "paper",
+  "reference": "Gilbert, Pinel, Wilson, Blumberg & Wheatley, Immune neglect: a source of durability bias in affective forecasting, Journal of Personality and Social Psychology, 1998",
+  "written": "2026-10-03"
+}

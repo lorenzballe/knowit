@@ -1,0 +1,43 @@
+{
+  "id": "science-why-ice-floats-2",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.why_ice_floats",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Ice weighs 917 kg per cubic metre; seawater, 1,025. What percentage of a floating iceberg sits below the surface?",
+  "value": 89.5,
+  "unit": "%",
+  "tolerance": 0.5,
+  "answer": "917 ÷ 1,025 = 0.895, so about 89.5%.",
+  "move": "Work out what is hidden from the ratio, not from the view.",
+  "ask": "In the problem I'm facing, how much lies below what I can see?",
+  "trap": "Picturing a berg mostly above water, as cartoons draw it.",
+  "hint": "Ask what share of the berg's volume, filled with seawater, would weigh as much as the whole berg.",
+  "steps": [
+    "A floating body sinks until it displaces its own weight of water.",
+    "Share under water = 917 ÷ 1,025.",
+    "917 ÷ 1,025 = 0.895, so about 89.5%."
+  ],
+  "keywords": [
+    "icebergs",
+    "buoyancy",
+    "density",
+    "seawater"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hobbs, Ice Physics, 1974",
+  "source_kind": "book",
+  "reference": "Hobbs, Ice Physics, Clarendon Press, Oxford, 1974",
+  "written": "2026-09-26"
+}

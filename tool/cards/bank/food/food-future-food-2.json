@@ -1,0 +1,40 @@
+{
+  "id": "food-future-food-2",
+  "topic": "food",
+  "genre": "food.food_and_the_planet",
+  "strand": "food.food_and_the_planet.future_food",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "True or false: crickets raised on cheap food scraps turn feed into protein far more efficiently than chickens?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In a 2015 trial, crickets fed poultry feed converted it to protein about as efficiently as chickens do. On cheaper diets of lightly processed food waste they grew poorly, and many died before harvest. The famous efficiency figures assume high-quality feed. Insects are not a free lunch; they need a good lunch themselves.",
+  "move": "An efficiency figure holds only under the conditions it was measured in.",
+  "ask": "Which promise am I counting on that only holds under ideal conditions?",
+  "trap": "Insects are famously efficient, so any feed should give a bargain.",
+  "keywords": [
+    "edible insects",
+    "crickets",
+    "feed conversion",
+    "food waste",
+    "chickens"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lundy & Parrella, PLoS ONE, 2015",
+  "source_kind": "paper",
+  "reference": "Lundy & Parrella, Crickets are not a free lunch: protein capture from scalable organic side-streams via high-density populations of Acheta domesticus, PLoS ONE, 2015",
+  "written": "2026-10-03"
+}

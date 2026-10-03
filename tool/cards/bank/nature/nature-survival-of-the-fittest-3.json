@@ -1,0 +1,39 @@
+{
+  "id": "nature-survival-of-the-fittest-3",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.survival_of_the_fittest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a male redback spider that gets eaten while mating fathers more young than one that escapes?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The male somersaults his abdomen into the female's jaws during mating. Andrade found that males who were eaten mated longer and fertilised more eggs, and the female was then more likely to reject a second male. With little chance of finding another mate, dying well pays better than living on.",
+  "move": "Judge a strategy by what it achieves, not by how it looks.",
+  "ask": "Which of my sacrifices look like losses but are buying what I actually care about?",
+  "trap": "Being eaten is the ultimate failure, so survivors must do better.",
+  "keywords": [
+    "redback spider",
+    "sexual cannibalism",
+    "mating",
+    "sexual selection"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Andrade, Science, 1996",
+  "source_kind": "paper",
+  "reference": "Andrade, Sexual selection for male sacrifice in the Australian redback spider, Science, 1996",
+  "written": "2026-10-03"
+}

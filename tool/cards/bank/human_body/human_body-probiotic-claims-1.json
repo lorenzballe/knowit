@@ -1,0 +1,33 @@
+{
+  "id": "human_body-probiotic-claims-1",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.probiotic_claims",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a probiotic show up in someone's stool without having settled in their gut at all?",
+  "answer": "Because the bacteria can simply pass through. Zmora's team sampled the gut lining directly by endoscopy, not just stool, and found that many volunteers' guts resisted the probiotic strains, which were shed rather than settling. Others let them colonise. Finding a bacterium in a sample shows that it travelled, not that it moved in.",
+  "move": "Evidence that something arrived is not evidence that it stayed or worked.",
+  "ask": "Which product do I take because I can see it went in, not because it does anything?",
+  "keywords": [
+    "probiotics",
+    "gut lining",
+    "colonisation",
+    "stool tests"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zmora et al., Cell, 2018",
+  "source_kind": "paper",
+  "reference": "Zmora N, Zilberman-Schapira G, Suez J et al., Personalized gut mucosal colonization resistance to empiric probiotics is associated with unique host and microbiome features, Cell, 2018",
+  "written": "2026-09-26"
+}

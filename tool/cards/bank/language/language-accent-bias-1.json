@@ -1,0 +1,40 @@
+{
+  "id": "language-accent-bias-1",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.accent_bias",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Students heard one recorded lecture by a native English speaker, shown with a photo of either a white or an Asian woman. What changed?",
+  "options": [
+    "Nothing measurable changed",
+    "They heard an accent and understood less",
+    "They rated her as less friendly"
+  ],
+  "correct": 1,
+  "answer": "They heard an accent and understood less. In Donald Rubin's 1992 study, students shown the Asian face rated the same American voice as more accented and scored lower on a test of the lecture's content. The study was small, but later work found the same pattern. The accent lived in the listener's expectation.",
+  "move": "Expecting to struggle is often enough to make the struggle real.",
+  "ask": "Whose words do I find hard to follow because I decided in advance they would be?",
+  "trap": "Nothing measurable, because the recording itself never changed.",
+  "keywords": [
+    "accent",
+    "stereotypes",
+    "listening comprehension",
+    "teaching assistants"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rubin, Research in Higher Education, 1992",
+  "source_kind": "paper",
+  "reference": "Rubin, Nonlanguage factors affecting undergraduates' judgments of nonnative English-speaking teaching assistants, Research in Higher Education 33(4), 1992",
+  "written": "2026-10-03"
+}

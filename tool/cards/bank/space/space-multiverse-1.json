@@ -1,0 +1,41 @@
+{
+  "id": "space-multiverse-1",
+  "topic": "space",
+  "genre": "space.questions_with_no_answer_yet",
+  "strand": "space.questions_with_no_answer_yet.multiverse",
+  "also": [
+    "science.think_like_a_scientist.falsification"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is the multiverse a scientific idea, if no other universe can ever be observed?",
+  "sides": [
+    "Yes, it is science",
+    "No, it is not"
+  ],
+  "answer": "Science already accepts things it cannot see when they follow from well-tested theories, such as regions beyond our cosmic horizon or the inside of a black hole. If inflation, which fits the cosmic background well, naturally produces many universes, refusing to consider them means ignoring what a successful theory predicts.",
+  "move": "Whichever side you took, the hinge is whether the idea could ever be shown wrong.",
+  "ask": "Which of my beliefs could I ever be shown wrong about, and how?",
+  "counterpoint": "A theory that can explain any observation predicts none. George Ellis and Joe Silk warned in 2014 that dropping the demand for testable predictions would weaken physics. With endless universes, every outcome happens somewhere, so no measurement here could count against the idea. Without a way to be wrong, it is philosophy, however elegant the mathematics.",
+  "keywords": [
+    "multiverse",
+    "falsifiability",
+    "inflation",
+    "george ellis"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ellis & Silk, Nature, 2014",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/516321a",
+  "written": "2026-10-03"
+}

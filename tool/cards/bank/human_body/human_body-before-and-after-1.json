@@ -1,0 +1,33 @@
+{
+  "id": "human_body-before-and-after-1",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.before_and_after",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did US advertising rules in 2009 stop protecting dramatic before-and-after photos marked results not typical?",
+  "answer": "Because the disclaimer did not undo the impression. The Federal Trade Commission revised its endorsement guides so that an advert showing an extraordinary result must also say what typical users achieve. Shown a person who lost 40 kg, readers assume that is the norm. A small-print warning cannot outweigh a big photograph.",
+  "move": "A vivid single case speaks louder than the small print beside it.",
+  "ask": "Which success story am I measuring myself against that was never typical?",
+  "keywords": [
+    "advertising",
+    "before-and-after photos",
+    "testimonials",
+    "federal trade commission"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US FTC endorsement guides, 2009",
+  "source_kind": "institution",
+  "reference": "US Federal Trade Commission, Guides Concerning the Use of Endorsements and Testimonials in Advertising, 16 CFR Part 255, 2009",
+  "written": "2026-09-26"
+}

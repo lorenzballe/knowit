@@ -1,0 +1,40 @@
+{
+  "id": "human_body-burnout-3",
+  "topic": "human_body",
+  "genre": "human_body.stress_and_the_body",
+  "strand": "human_body.stress_and_the_body.burnout",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Two nurses on the same ward burn out within a year. What does research say predicts burnout most strongly?",
+  "options": [
+    "Weak personal resilience",
+    "Workload, control and fairness",
+    "Age and length of service"
+  ],
+  "correct": 1,
+  "answer": "Workload, control and fairness. Reviewing decades of studies, Maslach and Leiter conclude that burnout grows from mismatches between people and their jobs in workload, control, reward, community, fairness and values, more than from personality. Two burnt-out colleagues on one ward are a clue about the ward. Resilience training cannot outrun a broken rota.",
+  "move": "When several people fail the same way, look at what they share.",
+  "ask": "If my colleagues are as tired as I am, what about the work do we all share?",
+  "trap": "Burnout looks personal, so it must be a weakness of the person.",
+  "keywords": [
+    "burnout",
+    "workload",
+    "nurses",
+    "job demands"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Maslach and Leiter, World Psychiatry, 2016",
+  "source_kind": "paper",
+  "reference": "Maslach C, Leiter MP, Understanding the burnout experience: recent research and its implications for psychiatry, World Psychiatry, 2016",
+  "written": "2026-09-26"
+}

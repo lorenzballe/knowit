@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-brand-loyalty-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.brand_loyalty",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does a small brand make up for having few buyers by having especially devoted ones?",
+  "answer": "Usually not. Marketers call the pattern double jeopardy: a small brand has fewer buyers, and those buyers also buy it a little less often and are a little less loyal. Most of them also buy the big brands, and pick the small one now and then, when it is the one in front of them.",
+  "move": "A small following is rarely a more devoted one; check before believing it.",
+  "ask": "Am I assuming my few fans love my work more, when they may simply know it less?",
+  "keywords": [
+    "double jeopardy",
+    "brand loyalty",
+    "market share",
+    "repeat buying"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sharp, How Brands Grow, 2010",
+  "source_kind": "book",
+  "reference": "Byron Sharp, How Brands Grow: What Marketers Don't Know, Oxford University Press, 2010",
+  "written": "2026-09-26"
+}

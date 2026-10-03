@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-bandwagons-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.bandwagons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a crowded restaurant beside an empty one turn out to be the worse of the two?",
+  "answer": "Because the crowd may be copying, not judging. Bikhchandani, Hirshleifer and Welch showed that once a few early diners pick one place, later arrivals sensibly trust the queue over their own hunch, so private knowledge stops being used. A handful of first choices, made by chance, can fill one dining room and empty the other.",
+  "move": "A crowd that copies tells you only about its first few members.",
+  "ask": "Which choice am I making mainly because others made it, and what would I choose alone?",
+  "keywords": [
+    "information cascades",
+    "herding",
+    "restaurants",
+    "crowds"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bikhchandani et al., Journal of Political Economy, 1992",
+  "source_kind": "paper",
+  "reference": "Sushil Bikhchandani, David Hirshleifer and Ivo Welch, A Theory of Fads, Fashion, Custom, and Cultural Change as Informational Cascades, Journal of Political Economy, 1992",
+  "written": "2026-09-26"
+}

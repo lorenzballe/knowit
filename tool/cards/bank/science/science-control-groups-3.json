@@ -1,0 +1,42 @@
+{
+  "id": "science-control-groups-3",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.control_groups",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "In a trial, 40 of 100 patients on a pill improve, against 30 of 100 on a dummy. How many improved because of the pill?",
+  "value": 10,
+  "unit": "patients",
+  "answer": "40 − 30 = 10 patients helped by the pill itself.",
+  "move": "Credit a cause only with what changed beyond what happened anyway.",
+  "ask": "When something I tried seemed to work, how many of those good days would have come anyway?",
+  "trap": "Crediting the pill with all 40 who got better.",
+  "hint": "Ask what the dummy-pill group shows would have happened anyway.",
+  "steps": [
+    "Improved on the pill: 40 of 100.",
+    "Would have improved anyway, as the dummy group shows: 30 of 100.",
+    "40 − 30 = 10 patients helped by the pill itself."
+  ],
+  "keywords": [
+    "placebo",
+    "control groups",
+    "clinical trials",
+    "treatment effect"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Evans et al., Testing Treatments, 2011",
+  "source_kind": "book",
+  "reference": "Evans, Thornton, Chalmers & Glasziou, Testing Treatments: Better Research for Better Healthcare, 2nd ed., Pinter & Martin, 2011",
+  "written": "2026-09-26"
+}

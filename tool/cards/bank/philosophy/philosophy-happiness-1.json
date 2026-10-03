@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-happiness-1",
+  "topic": "philosophy",
+  "genre": "philosophy.living_well",
+  "strand": "philosophy.living_well.happiness",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: for most people, day-to-day happiness keeps rising with income well beyond $75,000 a year?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True, for most people. In 2023 Matthew Killingsworth, Daniel Kahneman and Barbara Mellers re-examined the data behind the famous plateau and found happiness kept rising with income for most; only the unhappiest fifth levelled off, around $100,000. The gains track doublings: each doubling of income buys roughly the same small step.",
+  "move": "A famous finding can be overturned; check who has looked again since.",
+  "ask": "Which pay rise am I chasing, and would it change my ordinary days as much as I imagine?",
+  "trap": "False, recalling the widely reported $75,000 ceiling from 2010.",
+  "keywords": [
+    "income",
+    "happiness",
+    "daniel kahneman",
+    "matthew killingsworth",
+    "money"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Killingsworth, Kahneman & Mellers, PNAS, 2023",
+  "source_kind": "paper",
+  "reference": "Killingsworth, Kahneman & Mellers, Income and Emotional Well-Being: A Conflict Resolved, PNAS 120 (10), 2023",
+  "written": "2026-10-03"
+}

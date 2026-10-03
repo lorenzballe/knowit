@@ -1,0 +1,42 @@
+{
+  "id": "life-asking-for-more-3",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.asking_for_more",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Ana negotiates a starting salary £2,000 higher than offered. With 3% raises a year, how much higher is her pay after 24 years, in pounds?",
+  "value": 4000,
+  "unit": "pounds",
+  "tolerance": 100,
+  "answer": "£2,000 doubled = £4,000",
+  "move": "A small gap that grows by percentages keeps on growing.",
+  "ask": "Which small amount am I not asking for now that would compound for years?",
+  "trap": "Assuming a one-off £2,000 stays a £2,000 gap for good.",
+  "hint": "Ask how long 3% a year takes to double something.",
+  "steps": [
+    "Rule of 72: 72 ÷ 3 = 24 years to double",
+    "£2,000 doubled = £4,000"
+  ],
+  "keywords": [
+    "salary negotiation",
+    "compound growth",
+    "rule of 72",
+    "pay rises"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rule of 72 for compound growth",
+  "source_kind": "arithmetic",
+  "reference": "Brealey, Myers and Allen, Principles of Corporate Finance, McGraw-Hill, 2020",
+  "written": "2026-10-03"
+}

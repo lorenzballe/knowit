@@ -1,0 +1,43 @@
+{
+  "id": "life-enough-money-2",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.enough_money",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "If satisfaction tracks percentage rises in pay, what raise, in thousands, matches for someone on 200,000 the lift 10,000 gives on 20,000?",
+  "value": 100,
+  "unit": "thousand",
+  "answer": "100 thousand.",
+  "move": "Judge a raise by its share of what you have, not its size.",
+  "ask": "What raise would really change my life, measured against what I earn now rather than in round numbers?",
+  "trap": "Assuming the same 10,000 lifts everyone equally.",
+  "hint": "Work out what fraction 10,000 is of 20,000, then apply it to 200,000.",
+  "steps": [
+    "10,000 on 20,000 is a 50% rise.",
+    "50% of 200,000 = 100,000.",
+    "100 thousand."
+  ],
+  "keywords": [
+    "income",
+    "life satisfaction",
+    "log income",
+    "raises",
+    "happiness"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stevenson and Wolfers, Brookings Papers, 2008",
+  "source_kind": "paper",
+  "reference": "Stevenson and Wolfers, Economic Growth and Subjective Well-Being: Reassessing the Easterlin Paradox, Brookings Papers on Economic Activity, 2008",
+  "written": "2026-10-03"
+}

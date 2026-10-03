@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-rights-2",
+  "topic": "philosophy",
+  "genre": "philosophy.justice",
+  "strand": "philosophy.justice.rights",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the US First Amendment protects private-sector employees from being fired for their political posts?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The First Amendment begins Congress shall make no law, and courts read it as a limit on government, not on private employers. Private workers depend on state law or contract. A right is a duty laid on someone in particular, and here that someone is the state.",
+  "move": "For every right, ask who exactly is bound to respect it.",
+  "ask": "Which right do I assume protects me, and do I know who is actually obliged to honour it?",
+  "trap": "True, taking free speech to bind everyone, not only the state.",
+  "keywords": [
+    "first amendment",
+    "free speech",
+    "employment",
+    "state action",
+    "rights"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Constitution, First Amendment",
+  "source_kind": "primary_document",
+  "reference": "https://www.archives.gov/founding-docs/bill-of-rights-transcript",
+  "written": "2026-10-03"
+}

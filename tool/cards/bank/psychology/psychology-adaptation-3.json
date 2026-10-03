@@ -1,0 +1,40 @@
+{
+  "id": "psychology-adaptation-3",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.adaptation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "People watched a sitcom either straight through or broken up by advertisements. Which group enjoyed the show more?",
+  "options": [
+    "Those who saw it straight through",
+    "Both enjoyed it equally",
+    "Those who saw the advert breaks"
+  ],
+  "correct": 2,
+  "answer": "Those who saw the advert breaks. Nelson, Meyvis and Galak found that interruptions, even by adverts people disliked, made the show more enjoyable. Pleasure fades as the mind gets used to it; a break resets that adaptation, so the show feels fresh again. Asked beforehand, people still predicted, and chose, the version without breaks.",
+  "move": "Break up a pleasure to keep feeling it; spread out what you enjoy.",
+  "ask": "Which pleasure do I gulp in one go that I would enjoy more spread out, with breaks?",
+  "trap": "Assuming interruptions always spoil absorption, as they feel they must.",
+  "keywords": [
+    "advertisements",
+    "television",
+    "hedonic adaptation",
+    "interruptions"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nelson, Meyvis & Galak, J Consumer Research, 2009",
+  "source_kind": "paper",
+  "reference": "Nelson, Meyvis & Galak, Enhancing the television-viewing experience through commercial interruptions, Journal of Consumer Research, 2009",
+  "written": "2026-10-03"
+}

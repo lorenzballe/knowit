@@ -1,0 +1,37 @@
+{
+  "id": "music-familiarity-3",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.familiarity",
+  "also": [
+    "psychology.happiness_research.adaptation"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a new song often sound better on the fifth hearing and worse on the fiftieth?",
+  "answer": "Because liking follows an arch. Early repetitions make the music easier to process, and ease feels like pleasure; once nothing is left to predict, ease turns into boredom. The psychologist Daniel Berlyne described this inverted U in 1971, and most music studies since find it. Radio programmers rest a hit before it wears out.",
+  "move": "Repetition builds liking up to a point, then starts spending it.",
+  "ask": "What did I once love that I have simply worn out by overuse?",
+  "keywords": [
+    "inverted u",
+    "repetition",
+    "liking",
+    "boredom",
+    "daniel berlyne"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Berlyne, Aesthetics and Psychobiology, 1971",
+  "source_kind": "book",
+  "reference": "Berlyne, Aesthetics and Psychobiology, Appleton-Century-Crofts, 1971",
+  "written": "2026-09-26"
+}

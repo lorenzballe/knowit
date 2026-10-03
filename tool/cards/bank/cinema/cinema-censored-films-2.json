@@ -1,0 +1,40 @@
+{
+  "id": "cinema-censored-films-2",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.censored_films",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Swedish posters for Life of Brian used Norway's ban of the film to sell tickets?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. When Norway banned Monty Python's Life of Brian, Swedish distributors advertised it as so funny it was banned in Norway. The ban did the marketing. Forbidding a film tells everyone there is something worth seeing, and the forbidden version usually ends up watched anyway, across the border.",
+  "move": "Banning something loudly is a way of advertising it.",
+  "ask": "When I forbid something, to my children or myself, do I make it more tempting?",
+  "trap": "False, because a ban is assumed to scare off any distributor.",
+  "keywords": [
+    "life of brian",
+    "monty python",
+    "film bans",
+    "norway",
+    "sweden"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hewison, Monty Python: The Case Against",
+  "source_kind": "book",
+  "reference": "Robert Hewison, Monty Python: The Case Against, Eyre Methuen, 1981",
+  "written": "2026-10-03"
+}

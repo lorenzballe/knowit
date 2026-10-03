@@ -1,0 +1,40 @@
+{
+  "id": "nature-animal-minds-3",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.animal_minds",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Owners left dogs with a forbidden treat, then came back. What best predicted the dog's guilty look?",
+  "options": [
+    "Whether it had eaten the treat",
+    "How long it was left alone",
+    "Whether the owner scolded it"
+  ],
+  "correct": 2,
+  "answer": "Whether the owner scolded it. Horowitz sometimes removed the treat herself and told owners the dog had eaten it. Dogs that had obeyed but were scolded looked as guilty as those that had disobeyed, often more. The lowered head and averted eyes answer the owner's mood, not a memory of the crime.",
+  "move": "Before reading a feeling into a face, check what it is reacting to.",
+  "ask": "When someone looks guilty to me, could they simply be reacting to my tone?",
+  "trap": "The look follows the misdeed, so it must be a sign of guilt.",
+  "keywords": [
+    "dogs",
+    "guilty look",
+    "dog owners",
+    "animal behaviour"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Horowitz, Behavioural Processes, 2009",
+  "source_kind": "paper",
+  "reference": "Horowitz, Disambiguating the guilty look: salient prompts to a familiar dog behaviour, Behavioural Processes, 2009",
+  "written": "2026-10-03"
+}

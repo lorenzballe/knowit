@@ -1,0 +1,39 @@
+{
+  "id": "nature-tipping-points-3",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.tipping_points",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: past a warming threshold, the Greenland ice sheet could keep shrinking even if warming stopped there?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. As the ice thins, its surface sinks into lower, warmer air, so it melts faster still. Robinson and colleagues modelled a threshold between 0.8 and 3.2°C of global warming, best estimate 1.6°C, beyond which the sheet heads towards loss. It would take thousands of years, but it would not readily grow back.",
+  "move": "Some damage keeps going after the push stops; find the threshold first.",
+  "ask": "Which slide in my life would keep going even if I stopped what started it?",
+  "trap": "Stop the warming and the ice should simply stop melting too.",
+  "keywords": [
+    "greenland ice sheet",
+    "tipping point",
+    "melting",
+    "sea level"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Robinson et al., Nature Climate Change, 2012",
+  "source_kind": "paper",
+  "reference": "Robinson, Calov & Ganopolski, Multistability and critical thresholds of the Greenland ice sheet, Nature Climate Change, 2012",
+  "written": "2026-10-03"
+}

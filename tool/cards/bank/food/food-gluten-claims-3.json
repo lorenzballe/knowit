@@ -1,0 +1,40 @@
+{
+  "id": "food-gluten-claims-3",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.gluten_claims",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "Lena felt better off gluten for months, then asked her doctor for a coeliac blood test. What is the problem?",
+  "options": [
+    "None; a gluten-free start helps",
+    "It may falsely read negative",
+    "It may falsely read positive"
+  ],
+  "correct": 1,
+  "answer": "It may falsely read negative. Coeliac tests look for the body's reaction to gluten: antibodies in the blood, damage to the gut lining. Off gluten, both fade, so a sick gut can look healthy. UK guidance asks people to eat gluten in more than one meal a day for at least six weeks before testing.",
+  "move": "A test can only find a reaction to something that is still there.",
+  "ask": "Before I decide something does not affect me, have I been around it enough to tell?",
+  "trap": "Thinking a gluten-free start gives the test a cleaner baseline.",
+  "keywords": [
+    "coeliac disease",
+    "antibody test",
+    "gluten challenge",
+    "diagnosis"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NICE guideline NG20, Coeliac disease, 2015",
+  "source_kind": "institution",
+  "reference": "https://www.nice.org.uk/guidance/ng20",
+  "written": "2026-10-03"
+}

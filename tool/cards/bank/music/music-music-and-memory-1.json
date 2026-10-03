@@ -1,0 +1,33 @@
+{
+  "id": "music-music-and-memory-1",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.music_and_memory",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do many twenty-year-olds know and love hit songs released decades before they were born?",
+  "answer": "Because they absorbed their parents' music. Carol Krumhansl and Justin Zupnick tested students on decades of hits: memory and liking peaked for their own teens, rose again for the 1980s, when their parents were young, and again for the 1960s, their grandparents' era. Family car journeys pass taste down like an heirloom.",
+  "move": "Much of what feels like personal taste was handed down at home.",
+  "ask": "Which of my tastes did I inherit from my family without ever choosing it?",
+  "keywords": [
+    "reminiscence bump",
+    "family listening",
+    "popular music",
+    "memory"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Krumhansl & Zupnick, Psychological Science, 2013",
+  "source_kind": "paper",
+  "reference": "Krumhansl & Zupnick, Cascading reminiscence bumps in popular music, Psychological Science, 2013",
+  "written": "2026-09-26"
+}

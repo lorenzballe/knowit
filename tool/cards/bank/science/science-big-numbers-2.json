@@ -1,0 +1,40 @@
+{
+  "id": "science-big-numbers-2",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.big_numbers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A UK government project costs £1 billion. Split across about 67 million people, roughly what is each person's share?",
+  "options": [
+    "About £15",
+    "About £150",
+    "About £1,500"
+  ],
+  "correct": 0,
+  "answer": "About £15. A billion is a thousand million, and 1,000 million divided by 67 million is just under 15. Billions sound alike whether ruinous or trivial; dividing by the population turns each into the price of a takeaway or a holiday. £100 billion, by the same sum, is about £1,500 each.",
+  "move": "Divide a national sum by the population before reacting to it.",
+  "ask": "Which big figure in the news upset me before I worked out what it meant per person?",
+  "trap": "About £1,500, because a billion of anything sounds ruinous.",
+  "keywords": [
+    "public spending",
+    "billions",
+    "per person",
+    "population"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Office for National Statistics, population estimates",
+  "source_kind": "institution",
+  "reference": "Office for National Statistics, Population estimates for the UK, England, Wales, Scotland and Northern Ireland: mid-2022, 2024",
+  "written": "2026-09-26"
+}

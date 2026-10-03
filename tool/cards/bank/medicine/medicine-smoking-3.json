@@ -1,0 +1,38 @@
+{
+  "id": "medicine-smoking-3",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.smoking",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should the legal age to buy tobacco rise by a year every year, so nobody born after a set date can ever buy it?",
+  "sides": [
+    "Yes, phase it out",
+    "No, adults choose"
+  ],
+  "answer": "Yes. Most smokers start young, before they can weigh a lifelong addiction, and the habit kills about half of long-term users. Phasing sales out by birth year never takes cigarettes from a current smoker; it simply stops new customers arriving. Britain's Tobacco and Vapes Bill proposed exactly this in 2024.",
+  "move": "Whichever side you took, the hinge is protecting adults from their own choices.",
+  "ask": "Where would I accept a rule that limits me, if it stopped someone younger from starting something harmful?",
+  "counterpoint": "A 40-year-old would be barred from a legal product a 41-year-old can buy, treating grown adults as children. Bans breed black markets, and enforcement falls on shopkeepers. New Zealand passed a generational ban in 2022 and repealed it in 2024 before it took effect. Taxes and help to quit work without forbidding.",
+  "keywords": [
+    "generational ban",
+    "tobacco",
+    "new zealand",
+    "tobacco and vapes bill"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "UK Tobacco and Vapes Bill, 2024",
+  "source_kind": "primary_document",
+  "reference": "UK Parliament, Tobacco and Vapes Bill, introduced 5 November 2024",
+  "written": "2026-10-03"
+}

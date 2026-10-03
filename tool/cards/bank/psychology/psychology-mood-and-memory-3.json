@@ -1,0 +1,40 @@
+{
+  "id": "psychology-mood-and-memory-3",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.mood_and_memory",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Trial one: a hand in painful 14 °C water for 60 seconds. Trial two: the same, then 30 slightly warmer seconds. Which do most repeat?",
+  "options": [
+    "Trial one, the shorter",
+    "Trial two, the longer",
+    "Neither: choices split evenly"
+  ],
+  "correct": 1,
+  "answer": "Trial two, the longer. It held all the pain of trial one and more, yet ending on a milder note left it remembered as less unpleasant. Memory scores an experience mostly by its worst moment and its end, and largely ignores how long it lasted. The last half-minute rewrote the whole minute and a half.",
+  "move": "How something ends shapes how all of it is remembered.",
+  "ask": "How could I end a hard day, or a hard conversation, so the memory of it is kinder?",
+  "trap": "Trial one, since less total pain should be the obvious pick.",
+  "keywords": [
+    "peak-end rule",
+    "pain",
+    "memory",
+    "duration neglect"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kahneman et al., Psychological Science, 1993",
+  "source_kind": "paper",
+  "reference": "doi:10.1111/j.1467-9280.1993.tb00589.x",
+  "written": "2026-10-03"
+}

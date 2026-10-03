@@ -1,0 +1,40 @@
+{
+  "id": "economics-get-rich-quick-1",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.get_rich_quick",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Of Brazilians who day-traded futures on more than 300 days, how many lost money?",
+  "options": [
+    "About 30%",
+    "About 60%",
+    "About 97%"
+  ],
+  "correct": 2,
+  "answer": "About 97%. Chague, De-Losso and Giovannetti followed everyone who began day trading Brazil's main futures market from 2013 to 2015. Among those who kept at it for over 300 days, only 1.1% earned more than the minimum wage. The courses advertise the rare winners; the losers stop posting screenshots.",
+  "move": "The people selling the dream are rarely the ones living on it.",
+  "ask": "Whose success am I copying, and do I know how many tried the same thing and lost?",
+  "trap": "About 30%, judging by the winners who post their gains online.",
+  "keywords": [
+    "day trading",
+    "brazil",
+    "futures",
+    "trading courses"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chague, De-Losso and Giovannetti, 2019",
+  "source_kind": "paper",
+  "reference": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3423101",
+  "written": "2026-10-03"
+}

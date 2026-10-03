@@ -1,0 +1,40 @@
+{
+  "id": "human_body-supplements-1",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.supplements",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: in a large trial of Finnish male smokers, beta-carotene pills raised the rate of lung cancer?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Among 29,133 smokers, those given beta-carotene had about 18% more lung cancer than those given placebo. People who eat plenty of vegetables rich in it get less cancer, but they differ in many other ways too. Isolated in a pill at a high dose, the molecule did not behave like a carrot.",
+  "move": "A nutrient that helps inside a food may act differently alone.",
+  "ask": "Which healthy food do I replace with a pill, assuming the pill does the same job?",
+  "trap": "Vegetable eaters get less cancer, so the vegetable's antioxidant must protect.",
+  "keywords": [
+    "beta-carotene",
+    "lung cancer",
+    "smokers",
+    "antioxidants",
+    "supplements"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ATBC Study Group, NEJM, 1994",
+  "source_kind": "paper",
+  "reference": "The Alpha-Tocopherol, Beta Carotene Cancer Prevention Study Group, The effect of vitamin E and beta carotene on the incidence of lung cancer and other cancers in male smokers, New England Journal of Medicine, 1994",
+  "written": "2026-09-26"
+}

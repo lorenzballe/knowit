@@ -1,0 +1,41 @@
+{
+  "id": "food-gut-health-claims-2",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.gut_health_claims",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In a ten-week Stanford trial, which diet widened the variety of volunteers' gut microbes?",
+  "options": [
+    "A high-fibre diet",
+    "A diet rich in fermented foods",
+    "Both diets equally"
+  ],
+  "correct": 1,
+  "answer": "A diet rich in fermented foods. Volunteers who built up to about six servings a day of yoghurt, kefir, kimchi and similar foods gained microbial diversity and showed lower levels of 19 inflammation markers. The high-fibre group gained in neither, though their gut changed in other ways. The trial was small: 36 adults.",
+  "move": "The food with the best reputation is not always the one that works.",
+  "ask": "Am I choosing what is best known, or what has been shown to work for this?",
+  "trap": "Fibre, since it is the most famous food for gut bacteria.",
+  "keywords": [
+    "fermented foods",
+    "fibre",
+    "microbiome diversity",
+    "inflammation",
+    "kefir"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wastyk et al., Cell, 2021",
+  "source_kind": "paper",
+  "reference": "Wastyk, Fragiadakis, Perelman et al., Gut-microbiota-targeted diets modulate human immune status, Cell, 2021",
+  "written": "2026-10-03"
+}

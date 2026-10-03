@@ -1,0 +1,39 @@
+{
+  "id": "human_body-breath-2",
+  "topic": "human_body",
+  "genre": "human_body.stress_and_the_body",
+  "strand": "human_body.stress_and_the_body.breath",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "True or false: breathing into a paper bag is a safe first fix for someone who seems to be hyperventilating?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Rebreathing from a bag raises carbon dioxide but also lowers oxygen, and Callaham measured oxygen falling to risky levels. Worse, fast breathing can come from asthma, a lung clot or a heart attack, which a bag makes more dangerous. Slowing the breath and checking the cause work better than the bag.",
+  "move": "Check what else could cause a symptom before applying the familiar fix.",
+  "ask": "Which familiar fix do I reach for without checking what is really causing the problem?",
+  "trap": "Fast breathing usually means panic, so the panic fix seems safe.",
+  "keywords": [
+    "hyperventilation",
+    "paper bag",
+    "panic attack",
+    "oxygen"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Callaham, Annals of Emergency Medicine, 1989",
+  "source_kind": "paper",
+  "reference": "Callaham M, Hypoxic hazards of traditional paper bag rebreathing in hyperventilating patients, Annals of Emergency Medicine, 1989",
+  "written": "2026-09-26"
+}

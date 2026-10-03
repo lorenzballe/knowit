@@ -1,0 +1,39 @@
+{
+  "id": "medicine-reading-results-1",
+  "topic": "medicine",
+  "genre": "medicine.talk_to_your_doctor",
+  "strand": "medicine.talk_to_your_doctor.reading_results",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: an hour of weightlifting can push a healthy man's liver blood test above normal for a week?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In a Swedish study, healthy men who did one hour of intense weightlifting had raised liver enzymes for at least seven days. The enzymes had leaked from strained muscle, not from the liver. Unless someone asks about the gym, a doctor may suspect liver damage or stop a needed drug.",
+  "move": "An odd reading may come from something nobody thought to ask about.",
+  "ask": "Before I panic over a bad result, at work or at home, what ordinary thing might have caused it?",
+  "trap": "False, since a liver test should only reflect the liver.",
+  "keywords": [
+    "liver enzymes",
+    "weightlifting",
+    "blood tests",
+    "muscle damage"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pettersson et al., Br J Clin Pharmacol, 2008",
+  "source_kind": "paper",
+  "reference": "Pettersson et al., Muscular exercise can cause highly pathological liver function tests in healthy men, British Journal of Clinical Pharmacology, 2008",
+  "written": "2026-10-03"
+}

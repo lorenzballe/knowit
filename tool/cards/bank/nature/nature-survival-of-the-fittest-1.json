@@ -1,0 +1,33 @@
+{
+  "id": "nature-survival-of-the-fittest-1",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.survival_of_the_fittest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a small, sickly-looking animal count among the fittest, in the sense evolution means?",
+  "answer": "Because fitness means leaving offspring, not strength. The phrase survival of the fittest was Herbert Spencer's, and Darwin adopted it in 1869 as shorthand for natural selection. A frail bird that raises six chicks is fitter than a strong one that raises none. Evolution keeps score in grandchildren, not in fights won.",
+  "move": "Ask what a contest really scores before deciding who is winning.",
+  "ask": "In the race I feel I am losing, what is actually being scored?",
+  "keywords": [
+    "survival of the fittest",
+    "herbert spencer",
+    "fitness",
+    "natural selection"
+  ],
+  "era": "nineteenth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Darwin, Origin of Species, fifth edition, 1869",
+  "source_kind": "book",
+  "reference": "Darwin, On the Origin of Species: A Variorum Text, ed. Peckham, University of Pennsylvania Press, 1959 (fifth edition text, 1869)",
+  "written": "2026-10-03"
+}

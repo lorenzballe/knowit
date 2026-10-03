@@ -1,0 +1,41 @@
+{
+  "id": "life-circle-of-competence-2",
+  "topic": "life",
+  "genre": "life.clear_thinking",
+  "strand": "life.clear_thinking.circle_of_competence",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Tetlock scored thousands of predictions by political experts. How did their forecasts inside their own speciality compare with outside it?",
+  "options": [
+    "Not reliably better",
+    "Far better inside it",
+    "Far worse inside it"
+  ],
+  "correct": 0,
+  "answer": "Not reliably better. In Expert Political Judgment, Tetlock found that specialists forecasting events in their own region did little better than well-informed experts from other fields. Deep knowledge helped explain the past but added little to predicting a messy future. The circle in which expertise counted was smaller than the title on the door.",
+  "move": "Ask whether someone's knowledge covers predicting, or only explaining.",
+  "ask": "Whose forecasts do I trust because they know a lot, rather than because they have been right before?",
+  "trap": "Far better, since knowing a region should mean seeing its future.",
+  "keywords": [
+    "forecasting",
+    "experts",
+    "philip tetlock",
+    "prediction",
+    "politics"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tetlock, Expert Political Judgment, 2005",
+  "source_kind": "book",
+  "reference": "Tetlock, Expert Political Judgment: How Good Is It? How Can We Know?, Princeton University Press, 2005",
+  "written": "2026-10-03"
+}

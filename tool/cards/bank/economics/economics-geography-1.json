@@ -1,0 +1,39 @@
+{
+  "id": "economics-geography-1",
+  "topic": "economics",
+  "genre": "economics.how_countries_get_rich",
+  "strand": "economics.how_countries_get_rich.geography",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a typical landlocked country trades about as much as a typical coastal one?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Limão and Venables found the median landlocked country trades only about 30% as much as the median coastal economy, and a representative one pays about 50% more to move goods. Every container must cross a neighbour's roads, borders and ports first. Distance to the sea is paid on every single shipment.",
+  "move": "A cost paid on every transaction outweighs a big cost paid once.",
+  "ask": "Which small cost do I pay every single day that adds up to more than any big bill?",
+  "trap": "True, since roads and railways now reach almost everywhere.",
+  "keywords": [
+    "landlocked countries",
+    "transport costs",
+    "trade",
+    "infrastructure"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Limão and Venables, World Bank Economic Review, 2001",
+  "source_kind": "paper",
+  "reference": "Limão & Venables, Infrastructure, Geographical Disadvantage, Transport Costs, and Trade, World Bank Economic Review, 2001",
+  "written": "2026-10-03"
+}

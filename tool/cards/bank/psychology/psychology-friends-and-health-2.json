@@ -1,0 +1,40 @@
+{
+  "id": "psychology-friends-and-health-2",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.friends_and_health",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Volunteers had a cold virus dripped into their noses. Who was least likely to come down with a cold?",
+  "options": [
+    "People with few social contacts",
+    "No difference by social life",
+    "People with many kinds of relationship"
+  ],
+  "correct": 2,
+  "answer": "People with many kinds of relationship. Cohen's team gave 276 adults the same dose, so exposure was equal. Those with six or more types of social tie, such as partner, colleague or club member, fell ill less often; those with one to three types were about four times as likely to catch a cold.",
+  "move": "Fix the exposure first, then see what difference remains.",
+  "ask": "How many different kinds of people, not just how many people, do I spend time with each week?",
+  "trap": "Assuming fewer contacts protect by exposing a person to fewer germs.",
+  "keywords": [
+    "common cold",
+    "social ties",
+    "immunity",
+    "rhinovirus"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cohen et al., JAMA, 1997",
+  "source_kind": "paper",
+  "reference": "Cohen, Doyle, Skoner, Rabin & Gwaltney, Social ties and susceptibility to the common cold, JAMA, 1997",
+  "written": "2026-10-03"
+}

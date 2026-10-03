@@ -1,0 +1,39 @@
+{
+  "id": "cinema-biopics-1",
+  "topic": "cinema",
+  "genre": "cinema.films_and_history",
+  "strand": "cinema.films_and_history.biopics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "True or false: Alan Turing's codebreaking machine at Bletchley Park was named Christopher, as The Imitation Game shows?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The machines were bombes, built from Turing's design with Gordon Welchman's key improvement and the Polish bomba before them, and dozens were run by teams. The film's single machine named for Turing's school friend is invented. A lone genius with a personal secret makes a tidier story than a factory of codebreakers.",
+  "move": "A story with one hero usually hides a crowd.",
+  "ask": "Who helped me with something I tell as my own achievement?",
+  "trap": "True, because the name is so specific and personal.",
+  "keywords": [
+    "alan turing",
+    "bombe",
+    "bletchley park",
+    "the imitation game"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Copeland, Turing, 2012",
+  "source_kind": "book",
+  "reference": "B. Jack Copeland, Turing: Pioneer of the Information Age, Oxford University Press, 2012",
+  "written": "2026-10-03"
+}

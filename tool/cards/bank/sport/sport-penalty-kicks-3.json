@@ -1,0 +1,39 @@
+{
+  "id": "sport-penalty-kicks-3",
+  "topic": "sport",
+  "genre": "sport.luck_or_skill",
+  "strand": "sport.luck_or_skill.penalty_kicks",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should drawn knockout football matches be settled by penalty shoot-outs rather than by more play?",
+  "sides": [
+    "Yes, keep shoot-outs",
+    "No, keep playing"
+  ],
+  "answer": "Yes. After 120 minutes players are exhausted and injury risk climbs; replays crowd calendars and favour the deeper squad. A shoot-out is quick and decisive, and it tests a real skill under pressure: research on shoot-outs finds preparation and composure, not only luck, separate the teams.",
+  "move": "Whichever side you took, the hinge is whether a tiebreak should test the same skill.",
+  "ask": "When I break a tie at work or at home, does my tiebreak test what actually matters?",
+  "counterpoint": "No. A shoot-out settles a match on a different contest from the one played, where the better side over 120 minutes keeps only a small edge. Teams also start playing for penalties, killing the final half hour. Removing players to open the pitch, or replays, would keep the result inside football itself.",
+  "keywords": [
+    "penalty shoot-outs",
+    "extra time",
+    "replays",
+    "tiebreaks",
+    "knockout football"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jordet et al., Journal of Sports Sciences, 2007",
+  "source_kind": "paper",
+  "reference": "Jordet, Hartman, Visscher & Lemmink, Kicks from the penalty mark in soccer: the roles of stress, skill, and fatigue for kick outcomes, Journal of Sports Sciences, 2007",
+  "written": "2026-09-26"
+}

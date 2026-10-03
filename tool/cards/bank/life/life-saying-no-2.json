@@ -1,0 +1,43 @@
+{
+  "id": "life-saying-no-2",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.saying_no",
+  "also": [
+    "life.money_and_time.spending"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Asked whether to buy a $14.99 film, most said yes. What changed when not buying was phrased as keeping $14.99 for other things?",
+  "options": [
+    "Nothing changed",
+    "More people bought it",
+    "Fewer people bought it"
+  ],
+  "correct": 2,
+  "answer": "Fewer people bought it. In Frederick and colleagues' study, buying fell from about 75% to about 55% once the alternative was spelled out as keeping the money for other purchases. Everyone knew the money could go elsewhere; they simply did not think of it until reminded. Every yes quietly spends something on a no.",
+  "move": "Name what a yes takes away before you give it.",
+  "ask": "What will my next yes quietly take from my evenings, my money or my energy?",
+  "trap": "Stating such an obvious alternative seems bound to change nothing.",
+  "keywords": [
+    "opportunity cost",
+    "spending",
+    "choices",
+    "framing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frederick and colleagues, J. Consumer Research, 2009",
+  "source_kind": "paper",
+  "reference": "Frederick, Novemsky, Wang, Dhar and Nowlis, Opportunity Cost Neglect, Journal of Consumer Research, 2009",
+  "written": "2026-10-03"
+}

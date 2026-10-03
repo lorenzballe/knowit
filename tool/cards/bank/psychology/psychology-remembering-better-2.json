@@ -1,0 +1,33 @@
+{
+  "id": "psychology-remembering-better-2",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.remembering_better",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does reading study notes aloud make them stick better than reading them silently?",
+  "answer": "Yes, but mostly by contrast. Words read aloud are remembered better than words read silently from the same list, because saying them makes them distinctive. When every word is read aloud, the advantage largely fades. Speaking only the key lines, not the whole page, is what makes them stand out later.",
+  "move": "What stands out from the rest is what memory keeps.",
+  "ask": "When I review something important, which few lines could I say aloud so they stand apart?",
+  "keywords": [
+    "production effect",
+    "reading aloud",
+    "distinctiveness",
+    "studying"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "MacLeod et al., JEP: LMC, 2010",
+  "source_kind": "paper",
+  "reference": "MacLeod, Gopie, Hourihan, Neary & Ozubko, The production effect: Delineation of a phenomenon, Journal of Experimental Psychology: Learning, Memory, and Cognition, 2010",
+  "written": "2026-10-03"
+}

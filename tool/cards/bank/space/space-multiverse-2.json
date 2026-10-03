@@ -1,0 +1,33 @@
+{
+  "id": "space-multiverse-2",
+  "topic": "space",
+  "genre": "space.questions_with_no_answer_yet",
+  "strand": "space.questions_with_no_answer_yet.multiverse",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a physicist use the plain fact that people exist to predict the size of dark energy, a decade before it was measured?",
+  "answer": "Steven Weinberg argued in 1987 that if dark energy varied across many universes, it could not be too large in ours, or matter would have been pulled apart before galaxies formed. So observers should find a small but non-zero value near that limit. In 1998 a small, non-zero value turned up.",
+  "move": "Your own existence is evidence; ask what it rules out.",
+  "ask": "What does being where I am today rule out about the path that got me here?",
+  "keywords": [
+    "anthropic principle",
+    "cosmological constant",
+    "steven weinberg",
+    "predictions"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Weinberg, Physical Review Letters, 1987",
+  "source_kind": "paper",
+  "reference": "doi:10.1103/PhysRevLett.59.2607",
+  "written": "2026-10-03"
+}

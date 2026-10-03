@@ -1,0 +1,37 @@
+{
+  "id": "music-beethoven-3",
+  "topic": "music",
+  "genre": "music.composers",
+  "strand": "music.composers.beethoven",
+  "also": [
+    "economics.money_and_banks.inflation"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 1809 three noblemen promised Beethoven 4,000 florins a year for life. Why was he soon in court over it?",
+  "answer": "Because the money shrank and two payers faltered. In 1811 Austria's state bankruptcy swapped paper money for new notes worth a fifth of the old. Prince Kinsky died after a fall from his horse, and Prince Lobkowitz ran short of cash. Beethoven went to law to have the pension honoured at its old value.",
+  "move": "A promise fixed in money is a bet on the money.",
+  "ask": "Which of my plans assumes my money will be worth tomorrow what it is worth today?",
+  "keywords": [
+    "beethoven",
+    "annuity",
+    "inflation",
+    "austrian bankruptcy",
+    "patrons"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cooper, The Beethoven Compendium, 1991",
+  "source_kind": "reference_work",
+  "reference": "Cooper (ed.), The Beethoven Compendium: A Guide to Beethoven's Life and Music, Thames & Hudson, 1991",
+  "written": "2026-09-26"
+}

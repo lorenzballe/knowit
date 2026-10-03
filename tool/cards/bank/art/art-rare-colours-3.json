@@ -1,0 +1,41 @@
+{
+  "id": "art-rare-colours-3",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.rare_colours",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In the 1500s, what did New Spain, today's Mexico, export that was worth more than anything but silver?",
+  "options": [
+    "Cacao for chocolate",
+    "Tobacco leaf",
+    "A red dye from insects"
+  ],
+  "correct": 2,
+  "answer": "Cochineal, a red dye made from dried insects that live on prickly-pear cactus. Europe had no red so bright or so fast, and many buyers took the dried grains for seeds. Around 70,000 insects make a pound of dye, so cardinals' robes and officers' coats were paid for in silver.",
+  "move": "The dull-looking supplier of a prized thing often holds the real power.",
+  "ask": "Which small, unglamorous part of my work is the piece everyone else quietly depends on?",
+  "trap": "Cacao, because chocolate is the famous gift from Mexico.",
+  "keywords": [
+    "cochineal",
+    "new spain",
+    "red dye",
+    "silver",
+    "insects"
+  ],
+  "era": "early_modern",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Greenfield, A Perfect Red, 2005",
+  "source_kind": "book",
+  "reference": "Amy Butler Greenfield, A Perfect Red: Empire, Espionage, and the Quest for the Color of Desire, HarperCollins, 2005",
+  "written": "2026-10-03"
+}

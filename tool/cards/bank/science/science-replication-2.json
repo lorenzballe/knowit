@@ -1,0 +1,33 @@
+{
+  "id": "science-replication-2",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.replication",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When a drug company's scientists tried to repeat 53 landmark cancer studies, how many held up?",
+  "answer": "Six. In 2012 Glenn Begley and Lee Ellis reported that Amgen's teams could confirm only 6 of 53 high-profile laboratory papers, even after asking the original authors for help. Some originals had shown their best experiment, not their typical one. Drug programmes costing millions had been planned on foundations that would not stand twice.",
+  "move": "Before building on a result, check it stands when someone else repeats it.",
+  "ask": "What am I building my plans on that I've only ever seen work once?",
+  "keywords": [
+    "amgen",
+    "cancer research",
+    "replication",
+    "preclinical studies"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Begley & Ellis, Nature, 2012",
+  "source_kind": "paper",
+  "reference": "Begley & Ellis, Raise standards for preclinical cancer research, Nature 483:531–533, 2012",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "human_body-ageing-well-3",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.ageing_well",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: in trials, exercise programmes cut the rate of falls among older people living at home by about a quarter?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A Cochrane review of 108 trials found that exercise, especially balance and functional training, reduced the rate of falls by about 23%. Falls feel like bad luck, a wet floor or a loose rug, yet much of the risk sits in the legs and the balance system, and both can be trained.",
+  "move": "Look for the cause inside the system before blaming the moment.",
+  "ask": "Which of my mishaps do I blame on bad luck when a skill could prevent them?",
+  "trap": "Falls come from slippery floors and bad luck, not the body.",
+  "keywords": [
+    "falls",
+    "balance training",
+    "older adults",
+    "exercise"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sherrington et al., Cochrane Review, 2019",
+  "source_kind": "paper",
+  "reference": "Sherrington C, Fairhall NJ, Wallbank GK et al., Exercise for preventing falls in older people living in the community, Cochrane Database of Systematic Reviews, 2019",
+  "written": "2026-09-26"
+}

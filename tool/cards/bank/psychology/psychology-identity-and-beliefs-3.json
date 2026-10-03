@@ -1,0 +1,33 @@
+{
+  "id": "psychology-identity-and-beliefs-3",
+  "topic": "psychology",
+  "genre": "psychology.change_your_mind",
+  "strand": "psychology.change_your_mind.identity_and_beliefs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What made pro-environment messages persuade American conservatives in experiments?",
+  "answer": "Framing them around purity, not harm. Feinberg and Willer found that most environmental messages speak of care and harm, values liberals weigh heavily. Recast as keeping nature pure and undefiled, the same case moved conservatives towards pro-environment views. People hear an argument best when it speaks in values they already hold.",
+  "move": "To persuade, argue from the other person's values, not your own.",
+  "ask": "When I try to convince someone, do I argue from what they care about, or from what I care about?",
+  "keywords": [
+    "moral reframing",
+    "environment",
+    "conservatives",
+    "purity"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Feinberg & Willer, Psychological Science, 2013",
+  "source_kind": "paper",
+  "reference": "Feinberg & Willer, The moral roots of environmental attitudes, Psychological Science, 2013",
+  "written": "2026-10-03"
+}

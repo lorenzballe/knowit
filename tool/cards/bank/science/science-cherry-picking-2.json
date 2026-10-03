@@ -1,0 +1,56 @@
+{
+  "id": "science-cherry-picking-2",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.cherry_picking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "US regulators' files showed about half of 74 antidepressant trials were positive. In medical journals, what share looked positive?",
+  "options": [
+    "About half",
+    "About 94%",
+    "About 70%"
+  ],
+  "correct": 1,
+  "answer": "About 94%. Erick Turner and colleagues matched FDA records with journals: 37 of 38 positive trials were published, while most negative ones went unpublished or were written up as positive. Doctors reading the literature saw a far rosier drug than the regulator did. The evidence was not faked; it was chosen.",
+  "move": "Ask what was left out before trusting what was published.",
+  "ask": "When I look at people's lives online, how much of the picture was never posted?",
+  "trap": "About half, assuming journals mirror the trials that were run.",
+  "keywords": [
+    "antidepressants",
+    "publication bias",
+    "fda",
+    "clinical trials"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% of trials positive",
+    "items": [
+      {
+        "label": "In the FDA's files",
+        "value": 51
+      },
+      {
+        "label": "As published in journals",
+        "value": 94,
+        "hi": true
+      }
+    ],
+    "caption": "The same trials, two pictures: 51% positive in FDA files, 94% in the journals."
+  },
+  "source": "Turner et al., NEJM, 2008",
+  "source_kind": "paper",
+  "reference": "Turner et al., Selective publication of antidepressant trials and its influence on apparent efficacy, New England Journal of Medicine 358:252–260, 2008",
+  "written": "2026-09-26"
+}

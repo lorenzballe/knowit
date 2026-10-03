@@ -1,0 +1,42 @@
+{
+  "id": "music-music-and-mood-2",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.music_and_mood",
+  "also": [
+    "psychology.emotions.anger"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: in a 2015 laboratory study, angry fans of extreme metal got angrier while listening to it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Sharman and Dingle angered metal fans with a stressful interview, then had them hear their own extreme metal or sit in silence. Heart rate stayed high with the music, but hostility fell as much as in silence, and fans felt more inspired. The noise matched the mood, then helped carry it off.",
+  "move": "Judge a habit by what it does to its users, not how it looks.",
+  "ask": "What helps me calm down that might look, to others, like it should do the opposite?",
+  "trap": "Assuming furious music must feed a furious listener.",
+  "keywords": [
+    "extreme metal",
+    "anger",
+    "emotion regulation",
+    "music listening"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sharman & Dingle, Frontiers in Human Neuroscience, 2015",
+  "source_kind": "paper",
+  "reference": "Sharman & Dingle, Extreme metal music and anger processing, Frontiers in Human Neuroscience, 2015",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "life-apologies-1",
+  "topic": "life",
+  "genre": "life.relationships",
+  "strand": "life.relationships.apologies",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Of six common parts of an apology, which did people rate as the most important?",
+  "options": [
+    "Asking for forgiveness",
+    "Saying I am sorry",
+    "Accepting responsibility"
+  ],
+  "correct": 2,
+  "answer": "Accepting responsibility. Lewicki, Polin and Lount tested six elements: regret, explanation, acknowledging responsibility, promising not to repeat it, offering repair and asking for forgiveness. Acknowledging responsibility mattered most, then offering to repair. Asking for forgiveness, the part many apologies end on, mattered least.",
+  "move": "Own what you did before explaining it, and offer to repair it.",
+  "ask": "In the last apology I gave, did I clearly say what I did wrong, or mostly say sorry?",
+  "trap": "The words I am sorry seem to be the heart of it.",
+  "keywords": [
+    "apologies",
+    "responsibility",
+    "forgiveness",
+    "repair"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lewicki, Polin and Lount, NCMR, 2016",
+  "source_kind": "paper",
+  "reference": "Lewicki, Polin and Lount, An Exploration of the Structure of Effective Apologies, Negotiation and Conflict Management Research, 2016",
+  "written": "2026-10-03"
+}

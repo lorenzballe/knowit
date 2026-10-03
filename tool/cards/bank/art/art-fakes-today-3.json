@@ -1,0 +1,44 @@
+{
+  "id": "art-fakes-today-3",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.fakes_today",
+  "also": [
+    "art.modern_art.street_art"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A Banksy mural is cut from a wall and offered for sale. Will Pest Control, Banksy's authentication office, certify it?",
+  "options": [
+    "Only if the wall's owner agrees",
+    "Yes, once it confirms the site",
+    "No, it never certifies street pieces"
+  ],
+  "correct": 2,
+  "answer": "No. Pest Control, set up in 2008, authenticates only works Banksy made to be sold, such as canvases and prints; street pieces were meant to stay where they were painted. Without a certificate, a wall is hard to sell through the major auction houses. The refusal quietly makes cutting murals out less profitable.",
+  "move": "Ask who is able to vouch for something before you pay for it.",
+  "ask": "Before I buy something second-hand with a famous name on it, who could actually confirm it is real?",
+  "trap": "Yes, because the location proves Banksy painted it.",
+  "keywords": [
+    "banksy",
+    "pest control",
+    "authentication",
+    "street art",
+    "certificate"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pest Control Office, authentication policy",
+  "source_kind": "institution",
+  "reference": "https://pestcontroloffice.com",
+  "written": "2026-10-03"
+}

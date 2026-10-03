@@ -1,0 +1,39 @@
+{
+  "id": "economics-correlation-in-markets-3",
+  "topic": "economics",
+  "genre": "economics.read_money_news",
+  "strand": "economics.read_money_news.correlation_in_markets",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: share markets in different countries move together more in crashes than in calm years?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Longin and Solnik studied five large stock markets from 1959 to 1996 and found the links between them grow stronger in falling markets, not in rising ones. A spread that looks safe in calm years behaves like one bet exactly when protection is needed, as in 2008, when markets nearly everywhere fell together.",
+  "move": "Things that seem separate in good times can fail together in bad ones.",
+  "ask": "Are my safety nets truly separate, or would they all give way in the same bad year?",
+  "trap": "False, because markets in separate countries look independent in normal years.",
+  "keywords": [
+    "diversification",
+    "correlation",
+    "stock markets",
+    "crashes"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Longin and Solnik, Journal of Finance, 2001",
+  "source_kind": "paper",
+  "reference": "Longin & Solnik, Extreme Correlation of International Equity Markets, Journal of Finance, 2001",
+  "written": "2026-10-03"
+}

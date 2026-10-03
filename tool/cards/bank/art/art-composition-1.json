@@ -1,0 +1,39 @@
+{
+  "id": "art-composition-1",
+  "topic": "art",
+  "genre": "art.look_closer",
+  "strand": "art.look_closer.composition",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "multipleComparisons",
+  "question": "True or false: careful measurement shows Renaissance painters routinely built their pictures on the golden ratio?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The claims mostly come from rectangles drawn onto pictures after the fact. With enough possible lines and a loose tolerance, anything from about 1.5 to 1.7 counted as 1.618, almost any painting yields a golden rectangle somewhere. The mathematician George Markowsky showed in 1992 how such fits are found, not proven.",
+  "move": "If you test enough lines, one will fit; that proves nothing.",
+  "ask": "When I find a pattern I hoped for, how many other patterns did I try first?",
+  "trap": "True, because golden rectangles are drawn on so many famous paintings.",
+  "keywords": [
+    "golden ratio",
+    "composition",
+    "george markowsky",
+    "renaissance painting"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Markowsky, College Mathematics Journal, 1992",
+  "source_kind": "paper",
+  "reference": "George Markowsky, Misconceptions about the golden ratio, The College Mathematics Journal, 1992",
+  "written": "2026-10-03"
+}

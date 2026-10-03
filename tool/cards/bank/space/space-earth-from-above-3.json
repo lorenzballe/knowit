@@ -1,0 +1,33 @@
+{
+  "id": "space-earth-from-above-3",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.earth_from_above",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did a ground instrument in Antarctica, rather than a satellite, first reveal the ozone hole in 1985?",
+  "answer": "Because the satellite's readings were flagged as suspect. NASA's processing treated extremely low ozone values as probable errors, so nobody looked closely. The British Antarctic Survey, measuring from Halley station with an old instrument, published the drop first. When NASA rechecked, its satellite showed a hole about the size of the continent.",
+  "move": "A filter built to catch errors can also hide the discovery.",
+  "ask": "What surprising result have I been dismissing as a mistake without looking twice?",
+  "keywords": [
+    "ozone hole",
+    "british antarctic survey",
+    "halley station",
+    "satellite data"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Farman, Gardiner & Shanklin, Nature, 1985",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/315207a0",
+  "written": "2026-10-03"
+}

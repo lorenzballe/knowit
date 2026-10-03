@@ -1,0 +1,33 @@
+{
+  "id": "human_body-breath-3",
+  "topic": "human_body",
+  "genre": "human_body.stress_and_the_body",
+  "strand": "human_body.stress_and_the_body.breath",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a breath of air rich in carbon dioxide set off a panic attack in some people?",
+  "answer": "Because the brain has a suffocation alarm tuned to carbon dioxide, not oxygen. In people with panic disorder, a single deep breath of air with 35% carbon dioxide triggers panic far more often than in others. The psychiatrist Donald Klein proposed their alarm is set too sensitive, so stuffy air reads as danger.",
+  "move": "An alarm set too sensitive feels exactly like real danger.",
+  "ask": "Which alarm in me goes off too easily, and how could I check it against the facts?",
+  "keywords": [
+    "panic disorder",
+    "carbon dioxide",
+    "suffocation alarm",
+    "anxiety"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Klein, Archives of General Psychiatry, 1993",
+  "source_kind": "paper",
+  "reference": "Klein DF, False suffocation alarms, spontaneous panics, and related conditions: an integrative hypothesis, Archives of General Psychiatry, 1993",
+  "written": "2026-09-26"
+}

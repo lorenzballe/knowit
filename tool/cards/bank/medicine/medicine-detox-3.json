@@ -1,0 +1,39 @@
+{
+  "id": "medicine-detox-3",
+  "topic": "medicine",
+  "genre": "medicine.medical_myths",
+  "strand": "medicine.medical_myths.detox",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "An ionic foot bath turns brown while a client soaks. What happens when it runs with no feet in it?",
+  "options": [
+    "It stays clear",
+    "It turns brown anyway"
+  ],
+  "correct": 1,
+  "answer": "It turns brown anyway. The colour comes from metal electrodes corroding in salty water as current passes, not from anything leaving the body. Ben Goldacre ran one with no feet in it and got the same brown soup. Running the machine without the person is the test its sellers never show.",
+  "move": "Run the test without the thing claimed to matter, and compare.",
+  "ask": "Which result in my life would have happened even without the thing I credit for it?",
+  "trap": "It stays clear, since the brown seems to come from the feet.",
+  "keywords": [
+    "ionic foot bath",
+    "detox",
+    "electrodes",
+    "control test"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goldacre, Bad Science, 2008",
+  "source_kind": "book",
+  "reference": "Goldacre, Bad Science, Fourth Estate, 2008",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,46 @@
+{
+  "id": "space-tiny-and-huge-1",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.tiny_and_huge",
+  "also": [
+    "science.numbers_and_chance.big_numbers"
+  ],
+  "kind": "estimate",
+  "difficulty": "hard",
+  "principle": "estimation",
+  "question": "A mole of water, 602,000 billion billion molecules, weighs 18 g. Estimate the molecules in a 250 ml glass, in trillions of trillions.",
+  "value": 8.4,
+  "unit": "trillion trillion molecules",
+  "withinFactor": 3,
+  "answer": "About 8.4 trillion trillion molecules, over 1,000 times the glasses of water in all the oceans.",
+  "move": "When numbers get huge, count the zeros instead of trusting the feeling.",
+  "ask": "When I hear a huge number, do I count its zeros, or just feel that it is big?",
+  "trap": "The oceans are so vast that nothing in one glass could compare.",
+  "hint": "Find how many 18 g portions fit into 250 g of water.",
+  "steps": [
+    "250 g ÷ 18 g ≈ 14 moles.",
+    "14 × 602,000 billion billion ≈ 8.4 trillion trillion.",
+    "About 8.4 trillion trillion molecules, over 1,000 times the glasses of water in all the oceans."
+  ],
+  "keywords": [
+    "molecules",
+    "avogadro's number",
+    "oceans",
+    "big numbers"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NOAA, How much water is in the ocean",
+  "source_kind": "institution",
+  "reference": "https://oceanservice.noaa.gov/facts/oceanwater.html",
+  "written": "2026-10-03"
+}

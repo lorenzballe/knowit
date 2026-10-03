@@ -1,0 +1,40 @@
+{
+  "id": "economics-bubbles-2",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.bubbles",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Greenspan warned of irrational exuberance in December 1996, with the S&P 500 at 744. Where was it at the 2002 low?",
+  "options": [
+    "About 450",
+    "About 780",
+    "About 1,550"
+  ],
+  "correct": 1,
+  "answer": "About 780. The index roared past 1,500 by 2000, then crashed, yet its October 2002 low of 777 was still above the level of the warning. Calling a bubble early can be right about the excess and wrong about the money: a seller in 1996 missed the boom and got no discount at the bottom.",
+  "move": "Being early about a bubble can cost as much as being wrong.",
+  "ask": "When I am sure something is overpriced, what would it cost me to be right but years early?",
+  "trap": "About 450, picturing the crash wiping out the whole boom.",
+  "keywords": [
+    "irrational exuberance",
+    "alan greenspan",
+    "dot-com bubble",
+    "s&p 500"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Greenspan, speech at the American Enterprise Institute",
+  "source_kind": "primary_document",
+  "reference": "Greenspan, The Challenge of Central Banking in a Democratic Society, speech at the American Enterprise Institute, 5 December 1996",
+  "written": "2026-10-03"
+}

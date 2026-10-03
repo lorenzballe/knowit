@@ -1,0 +1,39 @@
+{
+  "id": "space-the-end-of-everything-3",
+  "topic": "space",
+  "genre": "space.questions_with_no_answer_yet",
+  "strand": "space.questions_with_no_answer_yet.the_end_of_everything",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: physicists can now say for certain that the universe will keep expanding forever?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Expansion is speeding up today, but nobody knows what drives it, so nobody knows if that lasts. If dark energy stays constant, expansion goes on forever; if it strengthens, it could tear everything apart; if it fades, as some 2025 data hint, a collapse becomes possible.",
+  "move": "A trend you cannot explain is a weak basis for predicting forever.",
+  "ask": "Which trend in my life am I assuming will run forever without knowing what drives it?",
+  "trap": "True, since the expansion has been accelerating for billions of years.",
+  "keywords": [
+    "fate of the universe",
+    "big rip",
+    "dark energy",
+    "big crunch"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Caldwell, Kamionkowski & Weinberg, PRL, 2003",
+  "source_kind": "paper",
+  "reference": "doi:10.1103/PhysRevLett.91.071301",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "cinema-based-on-a-true-story-1",
+  "topic": "cinema",
+  "genre": "cinema.how_films_persuade",
+  "strand": "cinema.how_films_persuade.based_on_a_true_story",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "The Perfect Storm shows a lost fishing crew's last hours at sea. Who could have known what they said?",
+  "answer": "Nobody. The Andrea Gail vanished in 1991 with all six men aboard, and no one heard their final hours. Sebastian Junger's book left them out; the film wrote them. Families of two crew sued over the invented scenes and lost in Florida's Supreme Court in 2005. The label covered the gaps.",
+  "move": "Ask which parts of a true story anyone could have witnessed.",
+  "ask": "In the true stories I repeat, which details could nobody actually have known?",
+  "keywords": [
+    "the perfect storm",
+    "andrea gail",
+    "true stories",
+    "dramatisation"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tyne v. Time Warner, Florida Supreme Court",
+  "source_kind": "primary_document",
+  "reference": "https://caselaw.findlaw.com/court/fl-supreme-court/1239122.html",
+  "written": "2026-10-03"
+}

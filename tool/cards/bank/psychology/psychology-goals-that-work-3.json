@@ -1,0 +1,38 @@
+{
+  "id": "psychology-goals-that-work-3",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.goals_that_work",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should managers set their staff hard, specific numeric targets?",
+  "sides": [
+    "Yes, set hard targets",
+    "No, avoid hard targets"
+  ],
+  "answer": "Decades of experiments back them. Locke and Latham reviewed hundreds of studies in which a specific, difficult goal beat do-your-best instructions, among loggers, typists and scientists alike. A clear number focuses attention, sustains effort and makes feedback possible. Without one, people settle for comfortable. The cure for gaming is better measurement, not vaguer aims.",
+  "move": "Whichever side you took, the hinge is whether the number can be gamed.",
+  "ask": "Is there a target in my life that I am hitting while missing the point of it?",
+  "counterpoint": "Targets get hit at the expense of the job. Ordóñez and colleagues showed how narrow goals invite shortcuts; in experiments, people just short of a specific goal overstated their results more often. Wells Fargo staff, pushed to sell more accounts per customer, opened millions of accounts nobody had asked for. What gets measured gets gamed.",
+  "keywords": [
+    "goal setting",
+    "targets",
+    "cheating",
+    "wells fargo"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Locke & Latham, American Psychologist, 2002",
+  "source_kind": "paper",
+  "reference": "Locke & Latham, Building a practically useful theory of goal setting and task motivation: a 35-year odyssey, American Psychologist, 2002",
+  "written": "2026-10-03"
+}

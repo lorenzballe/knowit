@@ -1,0 +1,41 @@
+{
+  "id": "medicine-side-effects-in-numbers-2",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.side_effects_in_numbers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In Mexico and Brazil, how many diarrhoea hospital stays did rotavirus vaccine prevent for each bowel blockage it caused?",
+  "options": [
+    "About 8",
+    "About 80",
+    "About 800"
+  ],
+  "correct": 2,
+  "answer": "About 800. The vaccine slightly raises the risk of intussusception, a bowel folding into itself: about 100 extra cases a year across both countries. Against that, it prevented roughly 80,000 hospital stays and over 1,000 deaths from diarrhoea a year. Each harm has a name and a bed; the prevented ones never arrive.",
+  "move": "A harm you can point to always looks bigger than harms that never happened.",
+  "ask": "Which good habit of mine gets judged only by its rare visible cost, never by the trouble it quietly prevents?",
+  "trap": "About 8, because a named harm feels as weighty as many unseen savings.",
+  "keywords": [
+    "rotavirus vaccine",
+    "intussusception",
+    "mexico",
+    "brazil",
+    "benefit and risk"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Patel et al., NEJM, 2011",
+  "source_kind": "paper",
+  "reference": "Patel et al., Intussusception risk and health benefits of rotavirus vaccination in Mexico and Brazil, New England Journal of Medicine, 2011",
+  "written": "2026-10-03"
+}

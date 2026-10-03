@@ -1,0 +1,33 @@
+{
+  "id": "psychology-first-impressions-1",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.first_impressions",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long does it take to judge whether a stranger's face looks trustworthy, and what does more time add?",
+  "answer": "About a tenth of a second, and extra time adds mostly confidence. Willis and Todorov flashed faces for 100 milliseconds; judgements of trustworthiness already lined up closely with those made with no time limit. Longer looks made people surer, not different. The verdict is in before the person has spoken.",
+  "move": "A verdict on a stranger arrives before any evidence does; hold it loosely.",
+  "ask": "Whom did I size up within seconds this week, and what have I learned since that might change it?",
+  "keywords": [
+    "faces",
+    "trustworthiness",
+    "snap judgements",
+    "alexander todorov"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Willis & Todorov, Psychological Science, 2006",
+  "source_kind": "paper",
+  "reference": "Willis & Todorov, First impressions: making up your mind after a 100-ms exposure to a face, Psychological Science, 2006",
+  "written": "2026-10-03"
+}

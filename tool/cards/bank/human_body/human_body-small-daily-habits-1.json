@@ -1,0 +1,39 @@
+{
+  "id": "human_body-small-daily-habits-1",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.small_daily_habits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: rinsing the mouth with water straight after brushing washes away much of the toothpaste's protection?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Fluoride protects teeth by staying on them after brushing. Public Health England's guidance is to spit out the toothpaste but not rinse, because water dilutes and clears the fluoride left behind. A habit learned in childhood, the rinse, quietly undoes part of the two minutes before it.",
+  "move": "Check whether the last step of a routine undoes the step before.",
+  "ask": "Which finishing touch in my routine might be cancelling out the useful part?",
+  "trap": "Rinsing feels like finishing the job with a clean mouth.",
+  "keywords": [
+    "toothbrushing",
+    "fluoride",
+    "toothpaste",
+    "rinsing"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Public Health England, Delivering better oral health, 2017",
+  "source_kind": "institution",
+  "reference": "Public Health England, Delivering better oral health: an evidence-based toolkit for prevention, 3rd edition, 2017",
+  "written": "2026-09-26"
+}

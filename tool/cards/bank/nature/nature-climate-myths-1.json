@@ -1,0 +1,39 @@
+{
+  "id": "nature-climate-myths-1",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.climate_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: the world's volcanoes release more carbon dioxide each year than human activity does?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Gerlach estimated that volcanoes on land and under the sea emit roughly 0.13 to 0.44 billion tonnes of carbon dioxide a year. Human activity emitted about 35 billion tonnes in 2010, around a hundred times more. An eruption is loud and brief; exhaust pipes and chimneys never stop.",
+  "move": "A spectacular source can be small next to a steady, dull one.",
+  "ask": "Which dramatic expense do I blame while small, steady ones add up to more?",
+  "trap": "Eruptions look enormous, so they must outpour any human source.",
+  "keywords": [
+    "volcanoes",
+    "carbon dioxide",
+    "emissions",
+    "eruptions"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gerlach, Eos, 2011",
+  "source_kind": "paper",
+  "reference": "Gerlach, Volcanic versus anthropogenic carbon dioxide, Eos, Transactions American Geophysical Union, 2011",
+  "written": "2026-10-03"
+}

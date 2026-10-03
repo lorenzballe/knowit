@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-comparison-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.comparison",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: Stanford students overestimated how often their classmates felt sad or lonely?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Alex Jordan and colleagues found students underestimated their peers' bad moments and overestimated their good times, because sadness is mostly felt in private while fun happens in public. Those who underestimated others' troubles most felt lonelier and less satisfied with life. A feed is that same corridor, with better lighting.",
+  "move": "You compare your inside with everyone else's outside.",
+  "ask": "Whose life looks easier than mine only because I see the parts they choose to show?",
+  "trap": "Worriers project their own sadness onto others, so overestimate it.",
+  "keywords": [
+    "loneliness",
+    "negative emotions",
+    "stanford",
+    "peers"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jordan et al., PSPB, 2011",
+  "source_kind": "paper",
+  "reference": "Alexander H. Jordan et al., Misery Has More Company Than People Think: Underestimating the Prevalence of Others' Negative Emotions, Personality and Social Psychology Bulletin, 2011",
+  "written": "2026-09-26"
+}

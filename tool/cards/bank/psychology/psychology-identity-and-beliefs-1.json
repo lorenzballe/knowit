@@ -1,0 +1,40 @@
+{
+  "id": "psychology-identity-and-beliefs-1",
+  "topic": "psychology",
+  "genre": "psychology.change_your_mind",
+  "strand": "psychology.change_your_mind.identity_and_beliefs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Shown the same scientist with elite credentials, which people judged him a genuine expert?",
+  "options": [
+    "Those who agreed with his conclusion",
+    "Nearly everyone, given his credentials",
+    "Mainly people with science degrees"
+  ],
+  "correct": 0,
+  "answer": "Those who agreed with his conclusion. Kahan, Jenkins-Smith and Braman described an invented scientist with top degrees and posts, then varied his view on climate change, carrying guns or nuclear waste. Whether people counted him an expert depended on whether his conclusion fitted their cultural group. Expertise was granted to agreement.",
+  "move": "Notice when you grant expertise only to experts who agree with you.",
+  "ask": "Which experts do I trust mainly because they say what my group already believes?",
+  "trap": "Expecting top credentials to convince people whatever the conclusion.",
+  "keywords": [
+    "cultural cognition",
+    "scientific consensus",
+    "experts",
+    "climate change"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kahan, Jenkins-Smith & Braman, J Risk Research, 2011",
+  "source_kind": "paper",
+  "reference": "Kahan, Jenkins-Smith & Braman, Cultural cognition of scientific consensus, Journal of Risk Research, 2011",
+  "written": "2026-10-03"
+}

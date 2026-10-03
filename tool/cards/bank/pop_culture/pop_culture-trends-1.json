@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-trends-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.trends",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Two baby names reached the same popularity, one within a few years, the other slowly over decades. Which fell out of use faster?",
+  "options": [
+    "The one that rose fast",
+    "The one that rose slowly",
+    "Neither; both faded alike"
+  ],
+  "correct": 0,
+  "answer": "The one that rose fast. Berger and Le Mens studied a century of French and American first names: those whose popularity shot up quickest also dropped quickest, while slow risers kept their place. Parents avoid names that feel like a passing craze, and a steep rise is exactly what makes a name feel like one.",
+  "move": "What rises fastest is usually the first thing people drop.",
+  "ask": "Which of my recent enthusiasms arrived suddenly, and will I still care about it next year?",
+  "trap": "Popularity is popularity; how fast it came should not matter.",
+  "keywords": [
+    "baby names",
+    "fads",
+    "adoption speed",
+    "cultural tastes"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Berger and Le Mens, PNAS, 2009",
+  "source_kind": "paper",
+  "reference": "Jonah Berger and Gaël Le Mens, How adoption speed affects the abandonment of cultural tastes, PNAS, 2009",
+  "written": "2026-09-26"
+}

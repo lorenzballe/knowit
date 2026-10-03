@@ -1,0 +1,33 @@
+{
+  "id": "human_body-cortisol-1",
+  "topic": "human_body",
+  "genre": "human_body.stress_and_the_body",
+  "strand": "human_body.stress_and_the_body.cortisol",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the body's main stress hormone surge in the half hour after waking, even on calm days?",
+  "answer": "To get the body ready for the day. Cortisol rises by roughly 50% to 75% within 30 to 45 minutes of waking, mobilising energy and sharpening alertness. This cortisol awakening response is a daily rhythm, not a sign of stress. Calling cortisol the stress hormone is like calling coffee the insomnia drink.",
+  "move": "A substance's nickname often hides most of what it does.",
+  "ask": "Which feeling in my body do I label as bad stress when it might just be getting me ready?",
+  "keywords": [
+    "cortisol",
+    "waking",
+    "stress hormone",
+    "daily rhythm"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fries, Dettenborn and Kirschbaum, Int J Psychophysiol, 2009",
+  "source_kind": "paper",
+  "reference": "Fries E, Dettenborn L, Kirschbaum C, The cortisol awakening response (CAR): facts and future directions, International Journal of Psychophysiology, 2009",
+  "written": "2026-09-26"
+}

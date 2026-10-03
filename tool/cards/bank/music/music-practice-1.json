@@ -1,0 +1,42 @@
+{
+  "id": "music-practice-1",
+  "topic": "music",
+  "genre": "music.music_and_the_brain",
+  "strand": "music.music_and_the_brain.practice",
+  "also": [
+    "human_body.your_body_your_choices.sleep_and_thinking"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a finger sequence practised in the evening is played faster the next morning, with no extra practice?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Matthew Walker's team trained people on a keyboard sequence and retested them. After a night's sleep, speed rose by about 20% with no further practice; the same hours awake in daytime brought almost no gain. Part of practice happens with the instrument in its case.",
+  "move": "Some progress is made only after the work stops for the night.",
+  "ask": "Am I cutting the sleep that would finish the learning I worked for today?",
+  "trap": "Believing skill grows only while the fingers are working.",
+  "keywords": [
+    "sleep",
+    "motor learning",
+    "practice",
+    "finger sequences"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Walker et al., Neuron, 2002",
+  "source_kind": "paper",
+  "reference": "Walker, Brakefield, Morgan, Hobson & Stickgold, Practice with sleep makes perfect: sleep-dependent motor skill learning, Neuron, 2002",
+  "written": "2026-09-26"
+}

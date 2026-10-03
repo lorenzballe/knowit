@@ -1,0 +1,39 @@
+{
+  "id": "nature-chain-reactions-3",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Did wolves returning to Yellowstone cause the recovery of its riverside willows and aspen?",
+  "sides": [
+    "Yes, the wolves did",
+    "No, not mainly"
+  ],
+  "answer": "Yes. After wolves returned in 1995, elk numbers fell and elk spent less time browsing in exposed valleys. Ripple and Beschta found young aspen and willow growing taller in places for the first time in decades, with beavers and songbirds following. The timing and the pattern fit a chain reaction that began with the predator.",
+  "move": "Whichever side you took, measured plots, not timing, decide the cause.",
+  "ask": "Which neat story about why something in my life got better have I never actually checked?",
+  "counterpoint": "Not mainly. Kauffman and colleagues measured aspen where elk faced high and low risk from wolves and found no difference: browsing stayed heavy. Human hunting, bears, cougars, drought and hard winters also cut elk. Where trees did recover, the loss of beavers and dried-out streams limited it. The neat story outruns the measurements.",
+  "keywords": [
+    "yellowstone",
+    "wolves",
+    "trophic cascade",
+    "aspen",
+    "elk"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kauffman et al., Ecology, 2010",
+  "source_kind": "paper",
+  "reference": "Kauffman, Brodie & Jules, Are wolves saving Yellowstone's aspen? A landscape-level test of a behaviorally mediated trophic cascade, Ecology, 2010; Ripple & Beschta, Trophic cascades in Yellowstone: the first 15 years after wolf reintroduction, Biological Conservation, 2012",
+  "written": "2026-10-03"
+}

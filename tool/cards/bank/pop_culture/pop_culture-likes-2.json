@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-likes-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.likes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Teenagers in a brain scanner viewed photos shown with many likes or few. What happened when likes were high?",
+  "options": [
+    "They liked those photos more",
+    "They ignored the like counts",
+    "They distrusted popular photos"
+  ],
+  "correct": 0,
+  "answer": "They liked those photos more. Sherman and colleagues found teenagers were more likely to like a picture that already showed many likes, even pictures of risky behaviour, and brain reward circuits responded more strongly to their own photos with many likes. A number on the screen nudged both judgement and pleasure.",
+  "move": "A visible count of approval changes what people approve of.",
+  "ask": "Did I enjoy that post because I liked it, or because many others already had?",
+  "trap": "Teens judge pictures by what they show, not the number below.",
+  "keywords": [
+    "teenagers",
+    "likes",
+    "reward circuits",
+    "peer influence"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sherman et al., Psychological Science, 2016",
+  "source_kind": "paper",
+  "reference": "Lauren E. Sherman et al., The Power of the Like in Adolescence: Effects of Peer Influence on Neural and Behavioral Responses to Social Media, Psychological Science, 2016",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "human_body-posture-myths-1",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.posture_myths",
+  "also": [
+    "medicine.pain.back_pain"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: reviews of the research show that slouched sitting is a proven cause of back pain?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A 2020 review of systematic reviews found no consensus that any sitting or standing posture causes low back pain. People in pain often sit differently, which can be a result of pain as much as a cause. The spine is built to bend; hours in any one position is what tends to bother it.",
+  "move": "Before blaming a habit for a pain, ask whether the pain shaped the habit.",
+  "ask": "Which of my habits might be a result of a problem rather than its cause?",
+  "trap": "Slumping looks like strain, so it must be the cause.",
+  "keywords": [
+    "posture",
+    "slouching",
+    "back pain",
+    "sitting"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Swain et al., Journal of Biomechanics, 2020",
+  "source_kind": "paper",
+  "reference": "Swain CTV, Pan F, Owen PJ, Schmidt H, Belavy DL, No consensus on causality of spine postures or physical exposure and low back pain: a systematic review of systematic reviews, Journal of Biomechanics, 2020",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "economics-cherry-picked-charts-1",
+  "topic": "economics",
+  "genre": "economics.read_money_news",
+  "strand": "economics.read_money_news.cherry_picked_charts",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How could the same share index, in March 2013, be fairly reported both as up 130% and as flat?",
+  "answer": "By choosing the start. The S&P 500 closed at 676 on 9 March 2009, its crisis low, and at 1,569 on 28 March 2013: up about 132%. Start from its October 2007 peak of 1,565 and five and a half years had earned nothing. Same index, same end; only the chart's left edge moved.",
+  "move": "Ask why a chart starts where it does before reading its slope.",
+  "ask": "When someone shows me a chart of how well something went, do I ask why it starts there?",
+  "keywords": [
+    "s&p 500",
+    "start date",
+    "charts",
+    "share prices"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "S&P Dow Jones Indices, S&P 500 closing levels",
+  "source_kind": "statistics",
+  "reference": "https://www.spglobal.com/spdji/en/indices/equity/sp-500/",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "science-kitchen-myths-2",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.kitchen_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: in blinded tests, people who say MSG gives them symptoms react to it reliably?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In a 2000 trial, 130 people who reported reactions were given MSG or a dummy without knowing which, several times over. Almost none reacted consistently to MSG and not to the dummy. Tomatoes and parmesan carry the same glutamate and are eaten without complaint, because no label names it.",
+  "move": "Test a reaction without knowing what was taken before trusting it.",
+  "ask": "Which food or habit do I blame for how I feel without ever having tested it blind?",
+  "trap": "True, since so many people describe the same reaction.",
+  "keywords": [
+    "msg",
+    "glutamate",
+    "blind trials",
+    "food reactions",
+    "placebo"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Geha et al., Journal of Allergy and Clinical Immunology, 2000",
+  "source_kind": "paper",
+  "reference": "Geha et al., Multicenter, double-blind, placebo-controlled, multiple-challenge evaluation of reported reactions to monosodium glutamate, J Allergy Clin Immunol 106:973–980, 2000",
+  "written": "2026-09-26"
+}

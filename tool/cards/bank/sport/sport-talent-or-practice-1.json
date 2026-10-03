@@ -1,0 +1,41 @@
+{
+  "id": "sport-talent-or-practice-1",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.talent_or_practice",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Across dozens of studies of athletes, how much of the difference in skill did hours of deliberate practice explain?",
+  "options": [
+    "About four fifths",
+    "About a fifth",
+    "About half"
+  ],
+  "correct": 1,
+  "answer": "About a fifth. Macnamara, Moreau and Hambrick pooled the sports studies and found deliberate practice accounted for 18% of the variation in performance. Among elite athletes alone it explained just 1%: at the top everyone practises hard, so hours stop telling them apart.",
+  "move": "When everyone puts in the work, the work stops explaining who wins.",
+  "ask": "Where am I assuming more hours will close a gap that hours alone may not explain?",
+  "trap": "Trusting the popular story that practice hours explain nearly everything.",
+  "keywords": [
+    "deliberate practice",
+    "expertise",
+    "meta-analysis",
+    "talent",
+    "elite athletes"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Macnamara, Moreau & Hambrick, Perspect Psychol Sci, 2016",
+  "source_kind": "paper",
+  "reference": "Macnamara, Moreau & Hambrick, The Relationship Between Deliberate Practice and Performance in Sports: A Meta-Analysis, Perspectives on Psychological Science, 2016",
+  "written": "2026-09-26"
+}

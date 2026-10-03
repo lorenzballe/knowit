@@ -1,0 +1,33 @@
+{
+  "id": "food-future-food-1",
+  "topic": "food",
+  "genre": "food.food_and_the_planet",
+  "strand": "food.food_and_the_planet.future_food",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What makes meat grown from animal cells in steel tanks so hard to produce cheaply?",
+  "answer": "Its cells grow slowly and have no defences. Animal cells divide about once a day; a stray bacterium can divide every 20 minutes and take over a tank of rich broth. So bioreactors must stay as sterile as a drug factory. A 2021 engineering analysis found that keeps costs far above those of ordinary meat.",
+  "move": "Something that grows slowly must be shielded from everything that grows fast.",
+  "ask": "What slow-growing thing in my life needs protecting from faster distractions?",
+  "keywords": [
+    "cultivated meat",
+    "bioreactors",
+    "contamination",
+    "cell culture"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Humbird, Biotechnology and Bioengineering, 2021",
+  "source_kind": "paper",
+  "reference": "Humbird, Scale-up economics for cultured meat, Biotechnology and Bioengineering, 2021",
+  "written": "2026-10-03"
+}

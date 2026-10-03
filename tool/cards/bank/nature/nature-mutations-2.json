@@ -1,0 +1,33 @@
+{
+  "id": "nature-mutations-2",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.mutations",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a father's age matter more than a mother's for the new mutations a child carries?",
+  "answer": "Because sperm come from cells that keep dividing for life, and each copy risks a slip, while eggs are mostly formed before a woman is born. Kong and colleagues sequenced Icelandic families and found a father of 20 passed on about 25 new mutations, a father of 40 about 65: roughly two more each year.",
+  "move": "Every copy of a copy carries a small risk of error.",
+  "ask": "Which routine in my life gets riskier each time it is repeated without a fresh check?",
+  "keywords": [
+    "de novo mutations",
+    "paternal age",
+    "sperm",
+    "iceland"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kong et al., Nature, 2012",
+  "source_kind": "paper",
+  "reference": "Kong et al., Rate of de novo mutations and the importance of father's age to disease risk, Nature, 2012",
+  "written": "2026-10-03"
+}

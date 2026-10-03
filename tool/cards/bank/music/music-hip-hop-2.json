@@ -1,0 +1,42 @@
+{
+  "id": "music-hip-hop-2",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.hip_hop",
+  "also": [
+    "psychology.other_people.first_impressions"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should courts be allowed to show juries a defendant's rap lyrics as evidence of a crime?",
+  "sides": [
+    "No, keep lyrics out",
+    "Yes, let juries weigh them"
+  ],
+  "answer": "Lyrics are art, and juries read rap as confession in a way they read no other genre. In a 2016 study by Dunbar, Kubrin and Scurich, identical violent lyrics were judged more literal and more threatening when labelled rap than when labelled country. California restricted the practice in 2022. Nobody convicts a crime novelist.",
+  "move": "Whichever side you took, ask whether the lyric adds facts or only atmosphere.",
+  "ask": "When I judge someone by what they create or post, am I reading facts or a style?",
+  "counterpoint": "Sometimes the words are the evidence. A verse can name a real victim, a date, or a detail only the shooter could know, and excluding it hands the jury less truth. Judges already weigh whether evidence proves more than it prejudices, and California's law kept that test rather than a ban. Context, not genre, should decide.",
+  "keywords": [
+    "rap lyrics",
+    "courts",
+    "juries",
+    "evidence",
+    "prejudice"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dunbar et al., Psychol Public Policy Law, 2016",
+  "source_kind": "paper",
+  "reference": "Dunbar, Kubrin & Scurich, The threatening nature of rap music, Psychology, Public Policy, and Law, 2016",
+  "written": "2026-09-26"
+}

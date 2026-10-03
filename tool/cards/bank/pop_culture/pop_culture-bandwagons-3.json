@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-bandwagons-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.bandwagons",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should publishing opinion polls be banned in the final days before an election?",
+  "sides": [
+    "Yes, ban late polls",
+    "No, let them run"
+  ],
+  "answer": "Yes. Late polls tell voters who is winning just as they decide, nudging some towards the front-runner. Several democracies limit them: Italy bars publishing polls in the 15 days before a vote, and France bans them on the eve and the day itself. Voters should hear arguments last, not the scoreboard.",
+  "move": "Whichever side you took, whether polls cause bandwagons or merely report them decides it.",
+  "ask": "When I make up my mind, do I weigh the arguments or check which side is winning?",
+  "counterpoint": "No. Polls are information, and a ban does not stop parties, banks and insiders commissioning private ones; it only keeps ordinary voters in the dark while rumours fill the gap. Evidence that polls create bandwagons is mixed. Tactical voters need them to vote wisely, and foreign websites dodge a ban easily.",
+  "keywords": [
+    "opinion polls",
+    "elections",
+    "bandwagon effect",
+    "italy",
+    "france"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Italian Law 28 of 22 February 2000",
+  "source_kind": "primary_document",
+  "reference": "Legge 22 febbraio 2000, n. 28 (par condicio), article 8",
+  "written": "2026-09-26"
+}

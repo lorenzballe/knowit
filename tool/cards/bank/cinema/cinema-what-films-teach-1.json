@@ -1,0 +1,40 @@
+{
+  "id": "cinema-what-films-teach-1",
+  "topic": "cinema",
+  "genre": "cinema.films_and_history",
+  "strand": "cinema.films_and_history.what_films_teach",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Students read an accurate history text, then watched a film clip with errors, after a general warning. What did they later recall?",
+  "options": [
+    "Often the film's errors",
+    "Mostly the accurate text",
+    "Neither version well"
+  ],
+  "correct": 0,
+  "answer": "Often the film's errors. Butler and colleagues found clips boosted recall of whatever they showed, right or wrong. A general reminder that films can be inaccurate barely helped; only a warning about the specific mistake, given beforehand, cancelled it. The vivid scene beat the page.",
+  "move": "A general warning protects little; name the specific error in advance.",
+  "ask": "Which historical fact do I know only from a film, and have I ever checked it?",
+  "trap": "Mostly the accurate text, since they were warned about films.",
+  "keywords": [
+    "misinformation",
+    "history films",
+    "memory",
+    "classroom learning"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Butler et al., Psychological Science, 2009",
+  "source_kind": "paper",
+  "reference": "Butler, Zaromb, Lyle and Roediger, Using Popular Films to Enhance Classroom Learning: The Good, the Bad, and the Interesting, Psychological Science, 20(9), 2009",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "psychology-steelmanning-3",
+  "topic": "psychology",
+  "genre": "psychology.change_your_mind",
+  "strand": "psychology.change_your_mind.steelmanning",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Across 25 experiments, what made people better at knowing what another person thought or felt?",
+  "options": [
+    "Imagining themselves in the other's shoes",
+    "Asking the person and listening",
+    "Both improved accuracy equally"
+  ],
+  "correct": 1,
+  "answer": "Asking them. Eyal, Steffel and Epley tested imagining oneself in the other's shoes against asking. Imagining made people more confident but no more accurate, because they filled the other mind with their own views. Asking and listening was the only reliable route. The other person is the best source on what the other person thinks.",
+  "move": "To understand a view, ask its holder before imagining it for them.",
+  "ask": "Whose opinion have I been guessing at, when I could simply ask them and listen?",
+  "trap": "Trusting that imagining another's position reveals what they think.",
+  "keywords": [
+    "perspective taking",
+    "mind reading",
+    "listening",
+    "empathy"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Eyal, Steffel & Epley, JPSP, 2018",
+  "source_kind": "paper",
+  "reference": "Eyal, Steffel & Epley, Perspective mistaking: accurately understanding the mind of another requires getting perspective, not taking perspective, Journal of Personality and Social Psychology, 2018",
+  "written": "2026-10-03"
+}

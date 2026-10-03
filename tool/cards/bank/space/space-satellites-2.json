@@ -1,0 +1,39 @@
+{
+  "id": "space-satellites-2",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.satellites",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: weather forecasts have gained about one day of useful range every decade since the 1980s?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A six-day forecast is about as reliable as a five-day one was ten years earlier, a gain sustained for decades. Satellites feeding measurements of the whole globe into the models are a large part of it. The forecast that ruined a picnic is remembered; the thousands that were right are not.",
+  "move": "Judge a forecaster by the record, not by the day it failed you.",
+  "ask": "Am I judging someone by the one time they got it wrong, ignoring the many times they got it right?",
+  "trap": "False, because the forecasts that went wrong are the ones remembered.",
+  "keywords": [
+    "weather forecasting",
+    "weather satellites",
+    "numerical models",
+    "forecast skill"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bauer, Thorpe & Brunet, Nature, 2015",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/nature14956",
+  "written": "2026-10-03"
+}

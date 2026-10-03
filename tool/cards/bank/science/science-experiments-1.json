@@ -1,0 +1,41 @@
+{
+  "id": "science-experiments-1",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Fifty-four wine students tasted a white wine secretly dyed red. How did they describe its smell?",
+  "options": [
+    "As an odd white wine",
+    "With words used for red wines",
+    "As smelling of the dye"
+  ],
+  "correct": 1,
+  "answer": "With words used for red wines. In Morrot, Brochet and Dubourdieu's 2001 study, the same white wine drew white-wine words undyed and red-wine words once coloured. Expectation shaped what trained noses reported, and none flagged the trick. That is why serious tastings, like drug trials, hide what is being tested.",
+  "move": "Hide what people expect before asking them what they perceive.",
+  "ask": "Where do I judge something only after seeing its label, price or packaging?",
+  "trap": "As an odd white wine, since trained noses should see through colour.",
+  "keywords": [
+    "wine tasting",
+    "expectation",
+    "blind testing",
+    "smell",
+    "colour"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Morrot, Brochet & Dubourdieu, Brain and Language, 2001",
+  "source_kind": "paper",
+  "reference": "Morrot, Brochet & Dubourdieu, The color of odors, Brain and Language 79:309–320, 2001",
+  "written": "2026-09-26"
+}

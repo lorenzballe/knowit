@@ -1,0 +1,56 @@
+{
+  "id": "art-who-gets-in-museums-1",
+  "topic": "art",
+  "genre": "art.art_and_power",
+  "strand": "art.art_and_power.who_gets_in_museums",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "A 2019 study counted the artists in 18 major US art museums' collections. What share were women?",
+  "options": [
+    "About 13%",
+    "About 30%",
+    "About 45%"
+  ],
+  "correct": 0,
+  "answer": "About 13%, with men at 87%. Topaz and colleagues identified about 10,000 artists across the collections and found 85% were white. Recent headline shows of women artists are vivid but small beside centuries of buying. A collection records who was bought, and most of the buying happened long ago.",
+  "move": "A stock built over centuries barely moves when this year's flow changes.",
+  "ask": "In my team or on my bookshelf, whose voices have I been collecting for years without noticing?",
+  "trap": "About 30%, because recent shows of women artists stand out.",
+  "keywords": [
+    "women artists",
+    "museum collections",
+    "diversity",
+    "united states"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Men",
+        "value": 87
+      },
+      {
+        "label": "Women",
+        "value": 13,
+        "hi": true
+      }
+    ],
+    "caption": "Of artists in 18 major US museum collections, about 13% were women."
+  },
+  "source": "Topaz et al., PLOS ONE, 2019",
+  "source_kind": "paper",
+  "reference": "Chad M. Topaz et al., Diversity of artists in major U.S. museums, PLOS ONE, 2019",
+  "written": "2026-10-03"
+}

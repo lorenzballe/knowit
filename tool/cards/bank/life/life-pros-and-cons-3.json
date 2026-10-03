@@ -1,0 +1,41 @@
+{
+  "id": "life-pros-and-cons-3",
+  "topic": "life",
+  "genre": "life.clear_thinking",
+  "strand": "life.clear_thinking.pros_and_cons",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Managers decided yes or no on a single option, instead of weighing two or more. How did those decisions fare?",
+  "options": [
+    "They failed about as often",
+    "They failed far less often",
+    "They failed far more often"
+  ],
+  "correct": 2,
+  "answer": "They failed far more often. Paul Nutt studied decisions in organisations and found that whether-or-not choices, pros and cons for one option, failed about half the time over the long run, against about a third when several alternatives were compared. A second real option shows what else was possible.",
+  "move": "Before listing pros and cons, ask what the second option is.",
+  "ask": "On my current dilemma, am I weighing one option yes or no, without a real second option beside it?",
+  "trap": "A thorough list for one option feels as good as comparing two.",
+  "keywords": [
+    "decision making",
+    "alternatives",
+    "paul nutt",
+    "organisations",
+    "narrow framing"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nutt, Academy of Management Executive, 1999",
+  "source_kind": "paper",
+  "reference": "Nutt, Surprising but true: Half the decisions in organizations fail, Academy of Management Executive, 1999",
+  "written": "2026-10-03"
+}

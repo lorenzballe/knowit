@@ -1,0 +1,37 @@
+{
+  "id": "space-earth-from-above-1",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.earth_from_above",
+  "also": [
+    "economics.how_countries_get_rich.corruption"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can satellite photos of lights at night reveal that a government is inflating its economic growth?",
+  "answer": "By giving a second witness. Night lights grow with economic activity, and no ministry can edit them. Luis Martinez found that, for the same growth in lights, the least free regimes report much faster GDP growth than democracies, suggesting they inflate their yearly figures by about a third. The power stations tell on the statisticians.",
+  "move": "Check a claim against a witness the claimant cannot control.",
+  "ask": "When someone reports their own success, what independent sign could I check it against?",
+  "keywords": [
+    "night lights",
+    "gdp",
+    "autocracies",
+    "satellite data",
+    "official statistics"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Martinez, Journal of Political Economy, 2022",
+  "source_kind": "paper",
+  "reference": "Martinez, How Much Should We Trust the Dictator's GDP Growth Estimates?, Journal of Political Economy, 2022",
+  "written": "2026-10-03"
+}

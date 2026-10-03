@@ -1,0 +1,33 @@
+{
+  "id": "sport-bad-stats-3",
+  "topic": "sport",
+  "genre": "sport.sport_and_numbers",
+  "strand": "sport.sport_and_numbers.bad_stats",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can an ordinary basketball player post one of the best plus-minus scores on his team?",
+  "answer": "Because plus-minus counts the score while he is on court, not what he did. Share the floor with the team's stars, against tired reserves, and points pile up around him. Analysts built adjusted versions that compare lineups with and without each player, and even those need several seasons of data to settle.",
+  "move": "A number earned in company says little about one member of it.",
+  "ask": "Am I taking credit, or giving it, for results that came from the team around one person?",
+  "keywords": [
+    "plus-minus",
+    "basketball",
+    "lineups",
+    "player ratings"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Winston, Mathletics, 2009",
+  "source_kind": "book",
+  "reference": "Wayne L. Winston, Mathletics, Princeton University Press, 2009",
+  "written": "2026-09-26"
+}

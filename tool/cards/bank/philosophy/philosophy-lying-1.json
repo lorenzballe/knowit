@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-lying-1",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.lying",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A white lie looks harmless to the person telling it. What test did Sissela Bok propose for judging it?",
+  "answer": "Ask whether it would survive being made public. Bok argued that liars judge from their own seat, where the lie looks small and kind. Picture explaining it to the person deceived, and to reasonable onlookers. Many kind lies, such as hiding a diagnosis from an adult, fail once the deceived person gets a vote.",
+  "move": "Judge a deception from the seat of the person deceived, not the deceiver.",
+  "ask": "Is there a kind lie I tell that I could not comfortably explain to the person I tell it to?",
+  "keywords": [
+    "sissela bok",
+    "white lies",
+    "publicity test",
+    "deception"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bok, Lying, Pantheon, 1978",
+  "source_kind": "book",
+  "reference": "Bok, Lying: Moral Choice in Public and Private Life, Pantheon Books, 1978",
+  "written": "2026-10-03"
+}

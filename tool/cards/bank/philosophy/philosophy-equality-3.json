@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-equality-3",
+  "topic": "philosophy",
+  "genre": "philosophy.justice",
+  "strand": "philosophy.justice.equality",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: John Stuart Mill, the great defender of liberty, proposed limiting how much any one person could inherit?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In his Principles of Political Economy, Mill saw nothing objectionable in limiting what anyone may acquire by the mere favour of others, without exercising their own faculties. He would let people leave money freely but cap what any one heir receives. Earning, for Mill, was liberty; inheriting was luck.",
+  "move": "Ask whether a freedom protects effort or protects a head start.",
+  "ask": "If I could leave my children anything, what would I still want them to earn for themselves?",
+  "trap": "False, assuming a champion of liberty would oppose any cap on gifts.",
+  "keywords": [
+    "john stuart mill",
+    "inheritance",
+    "liberty",
+    "inequality",
+    "taxation"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mill, Principles of Political Economy, II.2",
+  "source_kind": "book",
+  "reference": "Mill, Principles of Political Economy, ed. Robson, Collected Works vol. 2, University of Toronto Press, 1965, Book 2, chapter 2",
+  "written": "2026-10-03"
+}

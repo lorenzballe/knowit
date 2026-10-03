@@ -1,0 +1,40 @@
+{
+  "id": "language-accent-bias-3",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.accent_bias",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "In 2020, five big speech-recognition systems transcribed Black and white American speakers. How did their error rates compare?",
+  "options": [
+    "About equal for both groups",
+    "Nearly double for Black speakers",
+    "Ten times higher for Black speakers"
+  ],
+  "correct": 1,
+  "answer": "Nearly double for Black speakers. Across systems from Amazon, Apple, Google, IBM and Microsoft, about 35 words in 100 came out wrong for Black speakers, against 19 for white speakers. The gap came from sounds and rhythms the systems had rarely been trained on, not from the words people chose.",
+  "move": "A tool learns the voices it was fed and stumbles on the rest.",
+  "ask": "Which tool I rely on was built for people unlike the ones I serve?",
+  "trap": "About equal, since a machine has no prejudice about voices.",
+  "keywords": [
+    "speech recognition",
+    "word error rate",
+    "african american english",
+    "training data"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Koenecke et al., PNAS, 2020",
+  "source_kind": "paper",
+  "reference": "Koenecke, Nam, Lake, Nudell, Quartey, Mengesha, Toups, Rickford, Jurafsky & Goel, Racial disparities in automated speech recognition, PNAS 117(14), 2020",
+  "written": "2026-10-03"
+}

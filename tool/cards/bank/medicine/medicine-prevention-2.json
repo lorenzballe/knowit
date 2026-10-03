@@ -1,0 +1,39 @@
+{
+  "id": "medicine-prevention-2",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.prevention",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: after Britain began advising parents in 1991 to lay babies on their backs, cot deaths fell by over half?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Sudden infant deaths in England and Wales fell by more than half within a few years of the campaign. For decades, doctors had advised front sleeping so babies would not choke; a review found the evidence against it existed from 1970. Advice from experts, about a cot, had been costing infants' lives.",
+  "move": "Free advice can be the most powerful treatment, or the most harmful.",
+  "ask": "Which piece of confident advice am I following that nobody has checked against the evidence lately?",
+  "trap": "False, since a sleeping position could hardly change death rates that much.",
+  "keywords": [
+    "cot death",
+    "sudden infant death",
+    "back to sleep",
+    "sleeping position"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gilbert et al., Int J Epidemiol, 2005",
+  "source_kind": "paper",
+  "reference": "Gilbert et al., Infant sleeping position and the sudden infant death syndrome: systematic review of observational studies and historical review of recommendations from 1940 to 2002, International Journal of Epidemiology, 2005",
+  "written": "2026-10-03"
+}

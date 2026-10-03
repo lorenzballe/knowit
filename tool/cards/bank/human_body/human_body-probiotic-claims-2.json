@@ -1,0 +1,33 @@
+{
+  "id": "human_body-probiotic-claims-2",
+  "topic": "human_body",
+  "genre": "human_body.gut",
+  "strand": "human_body.gut.probiotic_claims",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the word probiotic on a yoghurt label say almost nothing about what it will do?",
+  "answer": "Because effects belong to particular strains, not to the word. Experts define a probiotic as a live microbe that, in adequate amounts, gives a health benefit, and that proof is usually for one strain at one dose. Two products called probiotic can differ like two pills that are both called medicine.",
+  "move": "A category name promises less than the specific thing that was tested.",
+  "ask": "When I buy something for my health, do I know which exact version was shown to work?",
+  "keywords": [
+    "probiotics",
+    "bacterial strains",
+    "food labels",
+    "yoghurt"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hill et al., Nat Rev Gastroenterol Hepatol, 2014",
+  "source_kind": "paper",
+  "reference": "Hill C, Guarner F, Reid G et al., Expert consensus document: the International Scientific Association for Probiotics and Prebiotics consensus statement on the scope and appropriate use of the term probiotic, Nature Reviews Gastroenterology & Hepatology, 2014",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-god-1",
+  "topic": "philosophy",
+  "genre": "philosophy.big_questions",
+  "strand": "philosophy.big_questions.god",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Pascal said betting on God costs little and might win infinitely. What flaw did Diderot point out in one line?",
+  "answer": "That an imam could reason the same way. The wager works for every religion that threatens infinite loss, and they cannot all be backed at once; each bet on one god risks the wrath of another. Diderot made the point in 1746. A wager with one table turns out to be a casino.",
+  "move": "An argument that proves too many rival things proves none of them.",
+  "ask": "Does my favourite argument for something work just as well for its rivals?",
+  "keywords": [
+    "pascal's wager",
+    "denis diderot",
+    "many gods objection",
+    "religion"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Diderot, Philosophical Thoughts, 1746, §59",
+  "source_kind": "book",
+  "reference": "Diderot, Pensées philosophiques, §59, in Œuvres philosophiques, ed. Vernière, Garnier, 1964",
+  "written": "2026-10-03"
+}

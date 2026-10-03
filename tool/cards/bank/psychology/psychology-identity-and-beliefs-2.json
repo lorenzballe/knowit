@@ -1,0 +1,39 @@
+{
+  "id": "psychology-identity-and-beliefs-2",
+  "topic": "psychology",
+  "genre": "psychology.change_your_mind",
+  "strand": "psychology.change_your_mind.identity_and_beliefs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: paying people to follow a month of posts from the opposing party pushed some further towards their own side?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Bail and colleagues paid American Twitter users to follow a bot sharing messages from the other party's politicians and commentators. A month later, Republicans had become noticeably more conservative; Democrats moved slightly more liberal, though not reliably. Meeting the other side's loudest voices felt like an attack, and attacks harden identities.",
+  "move": "Hearing an opponent's loudest voices tends to harden, not soften, your own view.",
+  "ask": "When I read the other side, am I meeting their best arguments or only their loudest voices?",
+  "trap": "Assuming exposure to the other side naturally softens views.",
+  "keywords": [
+    "polarisation",
+    "social media",
+    "twitter",
+    "political identity"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bail et al., PNAS, 2018",
+  "source_kind": "paper",
+  "reference": "Bail, Argyle, Brown et al., Exposure to opposing views on social media can increase political polarization, PNAS, 2018",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,38 @@
+{
+  "id": "music-music-therapy-3",
+  "topic": "music",
+  "genre": "music.music_and_the_brain",
+  "strand": "music.music_and_the_brain.music_therapy",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should health services pay for music therapy for people with dementia living in care homes?",
+  "sides": [
+    "Yes, fund it",
+    "No, spend it elsewhere"
+  ],
+  "answer": "It helps where little else does. A Cochrane review of trials found music-based therapy probably reduces depression and may improve behaviour and emotional well-being in dementia, without the side effects of the sedatives often used instead. In a care home, a session can be the one hour of a resident's day spent calm and present.",
+  "move": "Whichever side you took, the hinge is which outcome matters most to carers.",
+  "ask": "For someone I care for, which small, cheap comfort have I not yet tried?",
+  "counterpoint": "The same review found little or no effect on agitation, aggression or thinking, the problems that weigh most on carers, and many trials were small, with participants who knew they were getting music. Money for trained therapists competes with staff numbers. A playlist of a resident's old favourites on headphones costs almost nothing.",
+  "keywords": [
+    "dementia",
+    "music therapy",
+    "care homes",
+    "cochrane review"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "van der Steen et al., Cochrane Review, 2018",
+  "source_kind": "paper",
+  "reference": "van der Steen et al., Music-based therapeutic interventions for people with dementia, Cochrane Database of Systematic Reviews, 2018",
+  "written": "2026-09-26"
+}

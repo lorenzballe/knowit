@@ -1,0 +1,33 @@
+{
+  "id": "psychology-procrastination-1",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.procrastination",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When someone keeps putting off a dreaded task, what are they really trying to avoid?",
+  "answer": "A bad feeling, not the work. Sirois and Pychyl argue that procrastination is short-term mood repair: the task stirs boredom, anxiety or self-doubt, and delay brings instant relief. The cost lands on a future self who feels like a stranger. Schedules miss the point when the trouble is the feeling attached to the first step.",
+  "move": "When stuck, name the feeling a task gives you before planning the time.",
+  "ask": "What feeling does the task I keep putting off give me when I imagine starting it?",
+  "keywords": [
+    "procrastination",
+    "mood repair",
+    "future self",
+    "avoidance"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sirois & Pychyl, Social and Personality Psychology Compass, 2013",
+  "source_kind": "paper",
+  "reference": "Sirois & Pychyl, Procrastination and the priority of short-term mood regulation: consequences for future self, Social and Personality Psychology Compass, 2013",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "food-taste-and-smell-2",
+  "topic": "food",
+  "genre": "food.cooking_science",
+  "strand": "food.cooking_science.taste_and_smell",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Volunteers in a brain scanner tasted one wine, labelled once at $90 and once at $10. What changed?",
+  "options": [
+    "Only what they claimed to prefer",
+    "Their pleasure and its brain signal",
+    "Nothing that could be measured"
+  ],
+  "correct": 1,
+  "answer": "Their pleasure and its brain signal. In a 2008 Caltech study, the same wine labelled $90 was rated more pleasant than when labelled $10, and activity rose in the medial orbitofrontal cortex, an area that tracks how pleasant things feel. The price did not just change the opinion; it changed what the brain recorded.",
+  "move": "A price on the label is part of what the senses report.",
+  "ask": "Would I enjoy my favourite things as much if I did not know what they cost?",
+  "trap": "Assuming people only said they liked it, to seem discerning.",
+  "keywords": [
+    "wine",
+    "price",
+    "pleasure",
+    "orbitofrontal cortex",
+    "expectations"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Plassmann et al., PNAS, 2008",
+  "source_kind": "paper",
+  "reference": "Plassmann, O'Doherty, Shiv & Rangel, Marketing actions can modulate neural representations of experienced pleasantness, PNAS, 2008",
+  "written": "2026-10-03"
+}

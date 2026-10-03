@@ -1,0 +1,38 @@
+{
+  "id": "art-experts-fooled-3",
+  "topic": "art",
+  "genre": "art.forgeries",
+  "strand": "art.forgeries.experts_fooled",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "When a painting's author is disputed, should laboratory tests outrank the judgement of expert eyes?",
+  "sides": [
+    "Yes, trust the lab",
+    "No, the eye decides"
+  ],
+  "answer": "Yes. Expert eyes have been fooled again and again, from van Meegeren's Vermeers to statues carved in a garden shed, often because the fake fitted a theory. A lab finding a modern pigment or a tree ring too young cannot be talked round. Anyone can repeat a measurement; nobody can repeat a connoisseur's certainty.",
+  "move": "Whichever side you took, it turns on whether a test can confirm or only exclude.",
+  "ask": "In my own decisions, which evidence can rule things out, and which can actually prove something?",
+  "counterpoint": "No. Science can show a picture is not old enough, but it can never show who painted it: a seventeenth-century canvas with period pigments could be by a pupil, a follower or a forger with old materials. Only trained comparison of handling, drawing and invention names an artist. Labs exclude; eyes attribute.",
+  "keywords": [
+    "authentication",
+    "connoisseurship",
+    "scientific analysis",
+    "attribution"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Charney, The Art of Forgery, 2015",
+  "source_kind": "book",
+  "reference": "Noah Charney, The Art of Forgery: The Minds, Motives and Methods of Master Forgers, Phaidon, 2015",
+  "written": "2026-10-03"
+}

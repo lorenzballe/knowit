@@ -1,0 +1,38 @@
+{
+  "id": "psychology-expectations-2",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.expectations",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is keeping expectations low a wise recipe for a happier life?",
+  "sides": [
+    "Yes, aim low",
+    "No, keep hopes up"
+  ],
+  "answer": "Yes. Disappointment is the gap between hope and outcome, so shrink the hope. In Rutledge's model, outcomes that beat expectations lift mood most. A tongue-in-cheek BMJ study linked Danes' top life satisfaction to modest expectations. Expect little from a party, a job or a film, and most of life becomes a pleasant surprise.",
+  "move": "Whichever side you took, the hinge is whether anticipation counts as part of happiness.",
+  "ask": "Do I protect myself from disappointment by hoping for less, and what does it cost me?",
+  "counterpoint": "Anticipation is itself a large share of pleasure. The same model finds that looking forward to a good outcome raises mood before anything happens, and holidaymakers gain more happiness before a trip than after it. Oettingen found that positive expectations, unlike idle fantasies, predict more effort and more success. Aim honestly, not low.",
+  "keywords": [
+    "expectations",
+    "disappointment",
+    "anticipation",
+    "denmark"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Christensen, Herskind & Vaupel, BMJ, 2006",
+  "source_kind": "paper",
+  "reference": "Christensen, Herskind & Vaupel, Why Danes are smug: comparative study of life satisfaction in the European Union, BMJ, 2006",
+  "written": "2026-10-03"
+}

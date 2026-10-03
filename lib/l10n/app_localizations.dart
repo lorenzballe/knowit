@@ -2867,6 +2867,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n} more from your week with Plus'**
   String weekRecapMore(int n);
+
+  /// No description provided for @plusInTheApp.
+  ///
+  /// In en, this message translates to:
+  /// **'Astute+ is in the app: download Astute on iPhone or Android to start your free trial.'**
+  String get plusInTheApp;
 }
 
 class _AppLocalizationsDelegate

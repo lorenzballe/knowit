@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-hidden-premises-3",
+  "topic": "philosophy",
+  "genre": "philosophy.arguments",
+  "strand": "philosophy.arguments.hidden_premises",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: smoking shortens life, therefore you ought not to smoke is a valid argument as it stands?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Facts alone never yield an ought; something like you ought not to shorten your life must be assumed. Hume noticed in 1739 that writers slide from is to ought without explaining how. Here the hidden premise is easy to grant, but a soldier or a dying patient might not grant it.",
+  "move": "Every should hides a value; find it before arguing about the facts.",
+  "ask": "When I tell someone they should do something, which of my values am I assuming they share?",
+  "trap": "True, because the hidden premise is one nearly everyone holds.",
+  "keywords": [
+    "is-ought",
+    "david hume",
+    "hidden premise",
+    "values",
+    "smoking"
+  ],
+  "era": "early_modern",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hume, A Treatise of Human Nature 3.1.1",
+  "source_kind": "book",
+  "reference": "Hume, A Treatise of Human Nature, ed. Norton & Norton, Oxford University Press, 2000, 3.1.1",
+  "written": "2026-10-03"
+}

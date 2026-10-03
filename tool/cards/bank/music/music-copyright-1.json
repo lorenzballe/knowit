@@ -1,0 +1,33 @@
+{
+  "id": "music-copyright-1",
+  "topic": "music",
+  "genre": "music.the_music_business",
+  "strand": "music.the_music_business.copyright",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did film-makers keep paying to use the song Happy Birthday until a US court ruling in 2015?",
+  "answer": "Because Warner/Chappell claimed the copyright and charged for it, collecting about $2 million a year. In 2015 Judge George King ruled that the 1935 registration Warner relied on covered only certain piano arrangements, not the lyrics. Warner settled for $14 million. Decades of fees had rested on one unexamined filing.",
+  "move": "Before paying for a right, ask to see the paper that proves it.",
+  "ask": "What am I paying for or obeying only because someone confidently claims they own it?",
+  "keywords": [
+    "happy birthday",
+    "warner chappell",
+    "public domain",
+    "copyright"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marya v. Warner/Chappell Music, 2015",
+  "source_kind": "primary_document",
+  "reference": "Marya v. Warner/Chappell Music, Inc., US District Court for the Central District of California, 22 September 2015",
+  "written": "2026-09-26"
+}

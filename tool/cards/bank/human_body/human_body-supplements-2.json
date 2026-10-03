@@ -1,0 +1,40 @@
+{
+  "id": "human_body-supplements-2",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.supplements",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A healthy adult takes 1,000 mg of vitamin C a day instead of 200 mg. How much higher does the level in their blood go?",
+  "options": [
+    "About five times higher",
+    "Barely higher at all",
+    "About twice as high"
+  ],
+  "correct": 1,
+  "answer": "Barely higher at all. Levine's team found blood plasma nearly saturated at about 200 mg a day; at higher doses less was absorbed and the kidneys passed the surplus. At 1,000 mg, most of the extra ended up in urine. A bucket already full does not get any fuller.",
+  "move": "Past the point of need, more input mostly becomes more waste.",
+  "ask": "Where am I adding more of something when I already have enough of it?",
+  "trap": "Five times the dose should give five times the vitamin.",
+  "keywords": [
+    "vitamin c",
+    "supplements",
+    "absorption",
+    "kidneys"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Levine et al., PNAS, 1996",
+  "source_kind": "paper",
+  "reference": "Levine M, Conry-Cantilena C, Wang Y et al., Vitamin C pharmacokinetics in healthy volunteers: evidence for a recommended dietary allowance, Proceedings of the National Academy of Sciences, 1996",
+  "written": "2026-09-26"
+}

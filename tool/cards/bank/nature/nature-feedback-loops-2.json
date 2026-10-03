@@ -1,0 +1,43 @@
+{
+  "id": "nature-feedback-loops-2",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.feedback_loops",
+  "also": [
+    "nature.climate.greenhouse_effect"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Water vapour traps more heat than any other gas in the air. Why is it not treated as a cause of warming?",
+  "options": [
+    "There is too little of it",
+    "It rains out within days, following temperature",
+    "It absorbs no infrared radiation"
+  ],
+  "correct": 1,
+  "answer": "It rains out within days, following temperature. Vapour stays aloft about nine days, so its amount depends on how warm the air is. Lacis and colleagues showed it amplifies warming started by long-lived gases such as carbon dioxide rather than starting it. Vapour is the echo; carbon dioxide is the voice.",
+  "move": "Ask whether a big factor is a cause or only an amplifier.",
+  "ask": "In my moods or arguments, what am I blaming that is really just amplifying something else?",
+  "trap": "The biggest heat-trapping gas must be the one driving the change.",
+  "keywords": [
+    "water vapour",
+    "carbon dioxide",
+    "greenhouse gases",
+    "feedback"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lacis et al., Science, 2010",
+  "source_kind": "paper",
+  "reference": "Lacis, Schmidt, Rind & Ruedy, Atmospheric CO2: principal control knob governing Earth's temperature, Science, 2010",
+  "written": "2026-10-03"
+}

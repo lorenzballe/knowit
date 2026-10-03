@@ -1,0 +1,39 @@
+{
+  "id": "human_body-steps-2",
+  "topic": "human_body",
+  "genre": "human_body.your_body_in_numbers",
+  "strand": "human_body.your_body_in_numbers.steps",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: in a study of 4,840 US adults, walking faster lowered death rates beyond what the total step count explained?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Saint-Maurice's team found that 8,000 steps a day went with 51% lower mortality than 4,000, but once total steps were accounted for, a faster pace added no clear further benefit. Brisk walkers simply walked more. Speed looked protective only because it travelled with distance.",
+  "move": "Before crediting one feature, check it is not riding along with another.",
+  "ask": "Which detail of my routine do I credit when the real work is done by simply doing more?",
+  "trap": "Brisk walking feels more like exercise, so it must count more.",
+  "keywords": [
+    "step count",
+    "walking pace",
+    "mortality",
+    "cadence"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Saint-Maurice et al., JAMA, 2020",
+  "source_kind": "paper",
+  "reference": "https://jamanetwork.com/journals/jama/fullarticle/2763292",
+  "written": "2026-09-26"
+}

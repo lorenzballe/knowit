@@ -1,0 +1,39 @@
+{
+  "id": "music-taste-and-status-3",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.taste_and_status",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in a 2016 UK poll, about half of recent vinyl buyers had not yet played the record they bought?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. An ICM poll for the BBC found 48% of people who had bought vinyl in the past month had not yet played it, and some owned no record player at all. A record is also a poster, a gift and a signal. On many shelves it is furniture that says who its owner is.",
+  "move": "Ask what a purchase says about the buyer, not only what it does.",
+  "ask": "What have I bought mostly for what it says about me rather than for using it?",
+  "trap": "Assuming people buy a music format mainly in order to listen.",
+  "keywords": [
+    "vinyl records",
+    "record buying",
+    "identity",
+    "icm poll"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "BBC News, ICM vinyl poll, April 2016",
+  "source_kind": "news_archive",
+  "reference": "BBC News, Vinyl revival: Records being bought but not played, April 2016",
+  "written": "2026-09-26"
+}

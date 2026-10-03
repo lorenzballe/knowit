@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-binge-watching-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.binge_watching",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do people who binge watch at night sleep worse, beyond simply going to bed later?",
+  "answer": "Because their minds stay switched on. Exelmans and Van den Bulck surveyed 423 young adults: binge viewers reported poorer sleep, more fatigue and more insomnia, and the link ran through pre-sleep arousal, a racing mind at lights out. A story built to make the next episode irresistible keeps working after the screen goes dark.",
+  "move": "What keeps you watching also keeps you thinking once you stop.",
+  "ask": "What do I do in the last hour before bed that leaves my mind still running?",
+  "keywords": [
+    "binge viewing",
+    "sleep",
+    "insomnia",
+    "arousal"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Exelmans and Van den Bulck, 2017",
+  "source_kind": "paper",
+  "reference": "Liese Exelmans and Jan Van den Bulck, Binge Viewing, Sleep, and the Role of Pre-Sleep Arousal, Journal of Clinical Sleep Medicine, 2017",
+  "written": "2026-09-26"
+}

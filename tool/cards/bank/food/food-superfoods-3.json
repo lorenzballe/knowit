@@ -1,0 +1,39 @@
+{
+  "id": "food-superfoods-3",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.superfoods",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Did rich countries' craze for quinoa hurt the Andean households who grow and eat it?",
+  "sides": [
+    "Yes, it hurt them",
+    "No, it helped them"
+  ],
+  "answer": "As quinoa became a superfood, its price roughly tripled between 2006 and 2013, putting a traditional staple out of easy reach for poorer Andean families. On Bolivia's high plains, fields once rested and grazed by llamas were ploughed for export, and soils eroded. A food that fed the region began to leave it.",
+  "move": "It turns on whether the families mostly sell quinoa or only buy it.",
+  "ask": "When I hear my choices hurt someone far away, do I also ask who gains?",
+  "counterpoint": "Household surveys tell another story. Bellemare and colleagues studied Peru from 2004 to 2013 and found that rising quinoa prices improved the welfare of households in growing regions, including many who only bought it. For farmers in some of the poorest places in South America, a crop suddenly in demand meant cash.",
+  "keywords": [
+    "quinoa",
+    "bolivia",
+    "peru",
+    "superfoods",
+    "food prices"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bellemare et al., World Development, 2018",
+  "source_kind": "paper",
+  "reference": "Bellemare, Fajardo-Gonzalez & Gitter, Foods and fads: the welfare impacts of rising quinoa prices in Peru, World Development, 2018",
+  "written": "2026-10-03"
+}

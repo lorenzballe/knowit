@@ -1,0 +1,40 @@
+{
+  "id": "space-asteroid-risk-2",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.asteroid_risk",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In 2013 a 20 m asteroid exploded over Chelyabinsk, Russia, hurting about 1,600 people. What injured most of them?",
+  "options": [
+    "Falling fragments of the rock",
+    "Glass from windows blown in",
+    "Heat from the fireball"
+  ],
+  "correct": 1,
+  "answer": "Glass from windows blown in. The rock burst about 30 km up with a flash brighter than the Sun, and many people went to their windows to look. The shock wave, travelling far slower than light, arrived a minute or more later and shattered the glass into them.",
+  "move": "The dramatic part of a disaster is often not the part that hurts.",
+  "ask": "In a crisis, would I rush to watch, or step back from the glass?",
+  "trap": "Falling rock, the image every impact film shows.",
+  "keywords": [
+    "chelyabinsk meteor",
+    "shock wave",
+    "airburst",
+    "injuries"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Popova et al., Science, 2013",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/science.1242642",
+  "written": "2026-10-03"
+}

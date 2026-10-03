@@ -1,0 +1,38 @@
+{
+  "id": "cinema-music-and-mood-3",
+  "topic": "cinema",
+  "genre": "cinema.how_films_persuade",
+  "strand": "cinema.how_films_persuade.music_and_mood",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should documentaries use emotional music scores over real events?",
+  "sides": [
+    "Yes, score it",
+    "No, leave it bare"
+  ],
+  "answer": "Documentaries compete with fiction for attention, and music is how film has always guided feeling. A score tells the viewer which moment matters and keeps them watching long enough to learn something true. Silence is not neutral either: the editor's cuts already shape every scene. Honest feeling is still honest.",
+  "move": "Whichever side you took, it turns on whether feeling is guiding or replacing judgement.",
+  "ask": "When a video makes me feel strongly, how much of that feeling came from the music?",
+  "counterpoint": "Music tells the viewer what to feel before they have judged the facts, and in a film claiming to show reality that is a thumb on the scale. A sinister cello turns an ordinary man into a suspect. Bill Nichols notes viewers trust documentary as evidence; score it like drama and it borrows trust it did not earn.",
+  "keywords": [
+    "documentary",
+    "film scores",
+    "bill nichols",
+    "persuasion"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nichols, Introduction to Documentary",
+  "source_kind": "book",
+  "reference": "Bill Nichols, Introduction to Documentary, 3rd edn, Indiana University Press, 2017",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "cinema-critics-or-crowds-1",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.critics_or_crowds",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A film carries a 90% score on Rotten Tomatoes' Tomatometer. What does that 90% measure?",
+  "options": [
+    "The share of critics who passed it",
+    "The critics' average mark out of 100",
+    "How strongly critics liked it"
+  ],
+  "correct": 0,
+  "answer": "The share of critics who passed it. Each review counts as fresh or rotten, and the score is the percentage of fresh ones. A film every critic found merely decent can score 100%, while a film half of them adored and half hated scores 50%. It measures agreement, not enthusiasm.",
+  "move": "Before trusting a score, find out what single question it answers.",
+  "ask": "Which number I rely on, a rating or a score, answers a different question from the one I ask it?",
+  "trap": "The critics' average mark, since scores usually read as averages.",
+  "keywords": [
+    "rotten tomatoes",
+    "tomatometer",
+    "film reviews",
+    "ratings"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rotten Tomatoes, About the Tomatometer",
+  "source_kind": "company",
+  "reference": "https://www.rottentomatoes.com/about",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "sport-hot-hand-1",
+  "topic": "sport",
+  "genre": "sport.luck_or_skill",
+  "strand": "sport.luck_or_skill.hot_hand",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "An NBA player makes the first of two free throws. Compared with missing it, how likely is he to make the second?",
+  "options": [
+    "A little more likely",
+    "Exactly as likely",
+    "A little less likely"
+  ],
+  "correct": 0,
+  "answer": "A little more likely. Arkes studied a season of paired NBA free throws, comparing each player only with himself: making the first raised his chance on the second by a few percentage points. Free throws remove defenders and shot choice, so they are the cleanest place to look, and a small hot hand shows up.",
+  "move": "Look for an effect where nothing else can mimic it.",
+  "ask": "Where could I test a hunch about myself in conditions so plain that nothing else could explain the result?",
+  "trap": "Saying exactly as likely, since the hot hand was called a myth.",
+  "keywords": [
+    "hot hand",
+    "free throws",
+    "nba",
+    "streaks",
+    "momentum"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arkes, J Quant Anal Sports, 2010",
+  "source_kind": "paper",
+  "reference": "Jeremy Arkes, Revisiting the Hot Hand Theory with Free Throw Data in a Multivariate Framework, Journal of Quantitative Analysis in Sports, 2010",
+  "written": "2026-09-26"
+}

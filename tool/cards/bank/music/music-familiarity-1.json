@@ -1,0 +1,40 @@
+{
+  "id": "music-familiarity-1",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.familiarity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "People heard short tone melodies in one ear while repeating a story heard in the other. What happened when tested later?",
+  "options": [
+    "They recognised and preferred those melodies",
+    "Neither recognised nor preferred them",
+    "Did not recognise them, yet preferred them"
+  ],
+  "correct": 2,
+  "answer": "They did not recognise them, yet preferred them. In William Wilson's 1979 study, listeners picked out the melodies they had been played no better than chance, but rated them as more likeable than new ones. Repetition had built a liking the listeners never noticed. A tune can become a favourite before anyone remembers hearing it.",
+  "move": "A preference can be planted without its owner ever noticing the planting.",
+  "ask": "Which of my tastes did I choose, and which simply came from meeting it again and again?",
+  "trap": "Assuming that liking something needs a memory of having met it.",
+  "keywords": [
+    "mere exposure",
+    "melodies",
+    "recognition",
+    "liking"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wilson, J Personality and Social Psychology, 1979",
+  "source_kind": "paper",
+  "reference": "Wilson, Feeling more than we can know: exposure effects without learning, Journal of Personality and Social Psychology, 1979",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "art-censorship-1",
+  "topic": "art",
+  "genre": "art.art_and_power",
+  "strand": "art.art_and_power.censorship",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 1933 Nelson Rockefeller asked Diego Rivera to paint out Lenin's face in his Rockefeller Center mural. What happened?",
+  "options": [
+    "Lincoln was painted over Lenin",
+    "The mural was covered, then destroyed",
+    "It was moved intact to a museum"
+  ],
+  "correct": 1,
+  "answer": "Rivera refused, offering instead to add Abraham Lincoln for balance. He was paid his fee in full and ordered off the scaffold; the mural was covered, then chipped off the wall in 1934. Rivera repainted it in Mexico City from photographs. The Rockefellers owned the wall, and the wall decided what stayed.",
+  "move": "Whoever owns the wall decides what may stay on it.",
+  "ask": "Whose platform is my work on, and what happens if they disagree with it?",
+  "trap": "Lincoln painted over Lenin, since Rivera did offer to add him.",
+  "keywords": [
+    "diego rivera",
+    "rockefeller center",
+    "man at the crossroads",
+    "lenin",
+    "mural"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marnham, Dreaming with His Eyes Open, 1998",
+  "source_kind": "book",
+  "reference": "Patrick Marnham, Dreaming with His Eyes Open: A Life of Diego Rivera, Knopf, 1998",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "art-stolen-art-3",
+  "topic": "art",
+  "genre": "art.art_and_power",
+  "strand": "art.art_and_power.stolen_art",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Napoleon's troops took Veronese's huge Wedding at Cana from a Venice monastery in 1797. Where does it hang today?",
+  "options": [
+    "In the Louvre in Paris",
+    "Back in Venice since 1815",
+    "In Vienna's imperial gallery"
+  ],
+  "correct": 0,
+  "answer": "In the Louvre, facing the Mona Lisa. When the allies forced France to return looted art in 1815, the Austrian commissioners agreed to leave it, judging it too big and fragile to move, and took a painting by Charles Le Brun instead. A convenient swap two centuries ago still decides where millions see it.",
+  "move": "Arrangements made for convenience have a way of becoming permanent.",
+  "ask": "Which temporary arrangement in my life has quietly become permanent?",
+  "trap": "Back in Venice, since much of Napoleon's loot was returned.",
+  "keywords": [
+    "wedding at cana",
+    "veronese",
+    "napoleon",
+    "louvre",
+    "looted art"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gould, Trophy of Conquest, 1965",
+  "source_kind": "book",
+  "reference": "Cecil Gould, Trophy of Conquest: The Musée Napoléon and the Creation of the Louvre, Faber, 1965",
+  "written": "2026-10-03"
+}

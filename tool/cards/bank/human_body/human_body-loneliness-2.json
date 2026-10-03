@@ -1,0 +1,40 @@
+{
+  "id": "human_body-loneliness-2",
+  "topic": "human_body",
+  "genre": "human_body.stress_and_the_body",
+  "strand": "human_body.stress_and_the_body.loneliness",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In a review of 50 trials to reduce loneliness, which kind of approach worked best?",
+  "options": [
+    "More chances to meet people",
+    "Changing how people read others",
+    "Training in social skills"
+  ],
+  "correct": 1,
+  "answer": "Changing how people read others. Masi and colleagues found that programmes tackling lonely people's habit of expecting rejection and reading others as hostile did better than those offering more chances to meet. Loneliness makes the mind watchful for snubs, which keeps people away: a full room cannot help a mind braced for rejection.",
+  "move": "Before adding more of something, check how the existing supply is received.",
+  "ask": "Do I read a slow reply or a short message as rejection before checking?",
+  "trap": "Lonely people lack company, so supplying company must work best.",
+  "keywords": [
+    "loneliness",
+    "interventions",
+    "social cognition",
+    "rejection"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Masi et al., Personality and Social Psychology Review, 2011",
+  "source_kind": "paper",
+  "reference": "Masi CM, Chen HY, Hawkley LC, Cacioppo JT, A meta-analysis of interventions to reduce loneliness, Personality and Social Psychology Review, 2011",
+  "written": "2026-09-26"
+}

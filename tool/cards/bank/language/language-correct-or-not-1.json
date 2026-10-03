@@ -1,0 +1,33 @@
+{
+  "id": "language-correct-or-not-1",
+  "topic": "language",
+  "genre": "language.grammar_oddities",
+  "strand": "language.grammar_oddities.correct_or_not",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who first objected to splitting an infinitive, as in to boldly go, and when?",
+  "answer": "An anonymous letter writer in 1834, though English writers had split infinitives since the 1300s. The rule spread through Victorian usage books such as Henry Alford's of 1864. Usage experts from Fowler onward have called it a superstition. Sometimes the split is clearer: to more than double profits cannot be unsplit without blurring it.",
+  "move": "Ask who made a rule, and when, before obeying it as ancient.",
+  "ask": "Which rule do I follow only because someone once told me it was always so?",
+  "keywords": [
+    "split infinitive",
+    "usage rules",
+    "henry alford",
+    "prescriptivism"
+  ],
+  "era": "nineteenth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Merriam-Webster's Dictionary of English Usage, 1989",
+  "source_kind": "reference_work",
+  "reference": "Merriam-Webster's Dictionary of English Usage, Merriam-Webster, 1989",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,42 @@
+{
+  "id": "human_body-calories-burned-3",
+  "topic": "human_body",
+  "genre": "human_body.your_body_in_numbers",
+  "strand": "human_body.your_body_in_numbers.calories_burned",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "A gym machine shows 300 kcal for an hour's session. Sitting still, Tom burns about 80 kcal an hour anyway. Extra kcal burned?",
+  "value": 220,
+  "unit": "kcal",
+  "answer": "About 220 kcal extra, from the exercise itself",
+  "move": "Credit an action only with what it adds to what happens anyway.",
+  "ask": "Which of my efforts do I count in full, forgetting what would have happened without them?",
+  "trap": "Counting all 300 kcal as extra, though 80 burn anyway.",
+  "hint": "Subtract what the hour would have cost him sitting on the sofa.",
+  "steps": [
+    "Burned anyway in that hour: about 80 kcal",
+    "300 − 80 = 220 kcal",
+    "About 220 kcal extra, from the exercise itself"
+  ],
+  "keywords": [
+    "calories",
+    "exercise",
+    "resting metabolism",
+    "gym machines"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ainsworth et al., Compendium of Physical Activities, 2011",
+  "source_kind": "paper",
+  "reference": "Ainsworth BE, Haskell WL, Herrmann SD et al., 2011 Compendium of Physical Activities: a second update of codes and MET values, Medicine & Science in Sports & Exercise, 2011",
+  "written": "2026-09-26"
+}

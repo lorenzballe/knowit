@@ -1,0 +1,39 @@
+{
+  "id": "medicine-back-pain-2",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.back_pain",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "Ali's back pain is the worst it has ever been. He starts a herbal cream that day; two weeks later he is far better. Why?",
+  "options": [
+    "The cream eased the pain",
+    "The pain would have eased anyway"
+  ],
+  "correct": 1,
+  "answer": "The pain would have eased anyway. People start treatments when pain peaks, and new back pain usually improves fast: in pooled cohort studies, pain fell by more than half within the first month. Whatever is begun on the worst day rides that slope down and collects the credit.",
+  "move": "Anything started at the worst moment will look like it worked.",
+  "ask": "What remedy do I swear by that I only ever tried on my very worst days?",
+  "trap": "The cream eased the pain, since relief followed the very day he began.",
+  "keywords": [
+    "acute back pain",
+    "natural course",
+    "regression to the mean",
+    "remedies"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pengel et al., BMJ, 2003",
+  "source_kind": "paper",
+  "reference": "Pengel et al., Acute low back pain: systematic review of its prognosis, BMJ, 2003",
+  "written": "2026-10-03"
+}

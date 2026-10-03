@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-god-2",
+  "topic": "philosophy",
+  "genre": "philosophy.big_questions",
+  "strand": "philosophy.big_questions.god",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Is cruelty wrong because God forbids it, or forbidden because it is wrong? What follows from the first answer?",
+  "options": [
+    "Morality becomes more secure",
+    "God becomes unnecessary",
+    "Morality becomes arbitrary command"
+  ],
+  "correct": 2,
+  "answer": "Morality becomes arbitrary command. If wrongness simply is being forbidden, a different command would have made cruelty right, and calling God good would only say God obeys himself. The other horn has its own cost: goodness then stands apart from God. Plato set the dilemma in the Euthyphro, and believers still debate it.",
+  "move": "Ask whether a rule is good because commanded, or commanded because good.",
+  "ask": "Is something I treat as right only right because someone with authority said so?",
+  "trap": "More secure, since a divine source feels like the firmest ground.",
+  "keywords": [
+    "euthyphro dilemma",
+    "plato",
+    "divine command",
+    "morality",
+    "god"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Plato, Euthyphro 10a",
+  "source_kind": "book",
+  "reference": "Plato, Euthyphro, in Five Dialogues, trans. Grube, rev. Cooper, Hackett, 2002",
+  "written": "2026-10-03"
+}

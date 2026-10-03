@@ -1,0 +1,40 @@
+{
+  "id": "human_body-studies-on-mice-2",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.studies_on_mice",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "Of 76 highly cited animal studies in top journals, how many were confirmed by later human trials?",
+  "options": [
+    "About nine in ten",
+    "About one in a hundred",
+    "About a third"
+  ],
+  "correct": 2,
+  "answer": "About a third. Hackam and Redelmeier traced 76 much-cited animal studies and found about a third replicated in human randomised trials; about a tenth led to approved treatments. Results that reach top journals are the most striking, which is why later tests so often shrink them.",
+  "move": "The most striking first result is the one most likely to shrink.",
+  "ask": "Which exciting first result have I believed before anyone tried it again?",
+  "trap": "Results famous enough for top journals are usually confirmed in people.",
+  "keywords": [
+    "animal studies",
+    "replication",
+    "clinical trials",
+    "translation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hackam and Redelmeier, JAMA, 2006",
+  "source_kind": "paper",
+  "reference": "Hackam DG, Redelmeier DA, Translation of research evidence from animals to humans, JAMA, 2006",
+  "written": "2026-09-26"
+}

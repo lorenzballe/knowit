@@ -1,0 +1,39 @@
+{
+  "id": "life-apologies-3",
+  "topic": "life",
+  "genre": "life.relationships",
+  "strand": "life.relationships.apologies",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: when a hospital system began admitting its errors to patients and offering compensation, lawsuits went up?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Kachalia and colleagues studied the University of Michigan Health System's programme of disclosing errors, apologising and offering fair compensation early. Afterwards new claims and lawsuits fell, and so did legal costs. Patients who are told the truth have less reason to go to court to find it.",
+  "move": "Owning a mistake early often costs less than defending it.",
+  "ask": "What mistake am I defending that would cost me less to admit now?",
+  "trap": "Admitting fault seems to hand patients their case.",
+  "keywords": [
+    "medical errors",
+    "disclosure",
+    "lawsuits",
+    "apology"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kachalia and colleagues, Annals of Internal Medicine, 2010",
+  "source_kind": "paper",
+  "reference": "Kachalia, Kaufman, Boothman, Anderson, Welch, Saint and Rogers, Liability claims and costs before and after implementation of a medical error disclosure program, Annals of Internal Medicine, 2010",
+  "written": "2026-10-03"
+}

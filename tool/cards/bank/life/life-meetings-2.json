@@ -1,0 +1,33 @@
+{
+  "id": "life-meetings-2",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.meetings",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a brainstorming meeting usually produce fewer ideas than the same people working alone?",
+  "answer": "Mainly because only one person can speak at a time. Diehl and Stroebe found that while waiting for a turn, people forget ideas, hold them back, or stop producing new ones; they called it production blocking. The same number of people working alone, with ideas pooled afterwards, produced more. Silent notes beat a round table.",
+  "move": "Collect ideas in silence first, then discuss them together.",
+  "ask": "In my next group discussion, could everyone write ideas alone for five minutes before anyone speaks?",
+  "keywords": [
+    "brainstorming",
+    "production blocking",
+    "group creativity",
+    "ideas"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Diehl and Stroebe, JPSP, 1987",
+  "source_kind": "paper",
+  "reference": "Diehl and Stroebe, Productivity loss in brainstorming groups: Toward the solution of a riddle, Journal of Personality and Social Psychology, 1987",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "economics-corruption-3",
+  "topic": "economics",
+  "genre": "economics.how_countries_get_rich",
+  "strand": "economics.how_countries_get_rich.corruption",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: in early-1990s Uganda, schools received most of the central grant meant for them?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Surveys that followed the money found schools received on average about 13% of the grant between 1991 and 1995; local officials kept the rest. When the government began publishing monthly transfers in newspapers, the share reaching schools rose above 80%. Head teachers could now point at a printed figure and ask where it went.",
+  "move": "Count what arrives at the far end, not what was sent.",
+  "ask": "When I pay for something to reach someone, do I ever check what actually got there?",
+  "trap": "True, since the ministry's books showed the money as paid out.",
+  "keywords": [
+    "uganda",
+    "school grants",
+    "public spending",
+    "newspapers",
+    "leakage"
+  ],
+  "era": "twentieth",
+  "region": "africa",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Reinikka and Svensson, Quarterly Journal of Economics, 2004",
+  "source_kind": "paper",
+  "reference": "Reinikka & Svensson, Local Capture: Evidence from a Central Government Transfer Program in Uganda, Quarterly Journal of Economics, 2004",
+  "written": "2026-10-03"
+}

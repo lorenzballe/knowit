@@ -1,0 +1,40 @@
+{
+  "id": "human_body-senses-fooled-1",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.senses_fooled",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Wine students taste a white wine coloured red with a tasteless dye. How do they describe it?",
+  "options": [
+    "With words used for red wine",
+    "As a white wine, oddly coloured",
+    "As flat and tasteless"
+  ],
+  "correct": 0,
+  "answer": "With words used for red wine. In Morrot's experiment, 54 oenology students reached for red-wine terms, such as red fruit, to describe a white wine dyed red. The eye reached the brain first and set the frame for the nose. Training did not protect them; it gave them more red-wine words to choose from.",
+  "move": "The first sense to speak sets the story the others fill in.",
+  "ask": "Where does my first impression decide what I notice next, at work or with people?",
+  "trap": "Trained tasters judge by taste, so colour should not fool them.",
+  "keywords": [
+    "wine tasting",
+    "colour",
+    "smell",
+    "expectation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Morrot, Brochet and Dubourdieu, Brain and Language, 2001",
+  "source_kind": "paper",
+  "reference": "Morrot G, Brochet F, Dubourdieu D, The color of odors, Brain and Language, 2001",
+  "written": "2026-09-26"
+}

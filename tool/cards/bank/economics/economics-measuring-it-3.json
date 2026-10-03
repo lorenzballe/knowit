@@ -1,0 +1,39 @@
+{
+  "id": "economics-measuring-it-3",
+  "topic": "economics",
+  "genre": "economics.inequality",
+  "strand": "economics.inequality.measuring_it",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: a country where everyone lived identical lives could still show large wealth inequality?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Wealth builds up over a working life and is spent in retirement. In a nation of identical people, a 25-year-old owns little while a 64-year-old holds a full pension pot and a paid-off home, so any snapshot shows a wide gap. Morton Paglin argued that part of measured inequality is simply age.",
+  "move": "A snapshot can show a gap that is really people at different stages.",
+  "ask": "When I compare my savings with someone else's, am I comparing people at the same stage of life?",
+  "trap": "False, since unequal wealth must mean unequal people.",
+  "keywords": [
+    "wealth inequality",
+    "life cycle",
+    "age",
+    "gini coefficient"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Paglin, American Economic Review, 1975",
+  "source_kind": "paper",
+  "reference": "Paglin, The Measurement and Trend of Inequality: A Basic Revision, American Economic Review, 1975",
+  "written": "2026-10-03"
+}

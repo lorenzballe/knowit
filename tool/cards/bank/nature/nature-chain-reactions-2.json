@@ -1,0 +1,41 @@
+{
+  "id": "nature-chain-reactions-2",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.chain_reactions",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "India's vultures crashed after feeding on cattle treated with a painkiller. What did one study link to their loss?",
+  "options": [
+    "A boom in crows that replaced them",
+    "About 500,000 extra human deaths",
+    "Fewer stray dogs in towns"
+  ],
+  "correct": 1,
+  "answer": "About 500,000 extra human deaths. With vultures gone, carcasses rotted, water was fouled, and feral dogs, which spread rabies, fed and multiplied. Frank and Sudarshan compared districts that had held many vultures with those that had few, and found death rates rose most where the birds had been, between 2000 and 2005.",
+  "move": "Price an unseen cleaner by asking what piles up without it.",
+  "ask": "Who quietly cleans up after me, at work or at home, and what would pile up without them?",
+  "trap": "Scavengers seem like a sideshow to human health.",
+  "keywords": [
+    "vultures",
+    "diclofenac",
+    "india",
+    "rabies",
+    "feral dogs"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frank & Sudarshan, American Economic Review, 2024",
+  "source_kind": "paper",
+  "reference": "Frank & Sudarshan, The Social Costs of Keystone Species Collapse: Evidence from the Decline of Vultures in India, American Economic Review, 2024",
+  "written": "2026-10-03"
+}

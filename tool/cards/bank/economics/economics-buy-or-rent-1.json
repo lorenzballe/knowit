@@ -1,0 +1,43 @@
+{
+  "id": "economics-buy-or-rent-1",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.buy_or_rent",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Owning a €300,000 flat costs 1% a year in property tax, 1% upkeep and 3% in lost investment returns. Matching monthly rent, in euros?",
+  "value": 1250,
+  "unit": "euros a month",
+  "answer": "Per month: 15,000 ÷ 12 = €1,250",
+  "move": "Compare the money you never get back on each side, not rent with nothing.",
+  "ask": "When I say renting is throwing money away, have I counted what owning throws away too?",
+  "trap": "Treating rent as money lost and owning as if it cost nothing.",
+  "hint": "Add up what owning costs each year that is never got back.",
+  "steps": [
+    "Yearly cost never recovered: 1% + 1% + 3% = 5%",
+    "5% of €300,000 = €15,000 a year",
+    "Per month: 15,000 ÷ 12 = €1,250"
+  ],
+  "keywords": [
+    "renting",
+    "home ownership",
+    "opportunity cost",
+    "property tax",
+    "maintenance"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arithmetic of owning versus renting",
+  "source_kind": "arithmetic",
+  "reference": "Unrecoverable costs of owning versus renting, worked arithmetic, 2026",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-parasocial-bonds-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.parasocial_bonds",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to viewers when a favourite television character is written out of a show?",
+  "answer": "Many feel a real, if milder, version of a breakup. Jonathan Cohen asked viewers to imagine losing their favourite character: those with the strongest one-sided bonds expected the most distress, as did people anxious in their real relationships. The grief tracks the closeness felt, though the character never knew they existed.",
+  "move": "A bond can run one way and still be real enough to grieve.",
+  "ask": "Who do I feel I know well without ever having spoken to them?",
+  "keywords": [
+    "parasocial relationships",
+    "television characters",
+    "attachment",
+    "breakups"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cohen, Journal of Social and Personal Relationships, 2004",
+  "source_kind": "paper",
+  "reference": "Jonathan Cohen, Parasocial Break-Up from Favorite Television Characters: The Role of Attachment Styles and Relationship Intensity, Journal of Social and Personal Relationships, 2004",
+  "written": "2026-09-26"
+}

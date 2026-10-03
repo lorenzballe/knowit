@@ -1,0 +1,33 @@
+{
+  "id": "economics-hidden-costs-2",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.hidden_costs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do poorer households in Britain often pay more than others for the very same energy, insurance and credit?",
+  "answer": "Because the cheapest deals go to those who can pay by direct debit, borrow from a bank and shop online. Prepayment meters, cash payments, high-cost loans and postcode-priced insurance add up: researchers at Bristol put the average poverty premium at about £490 a year. Being short of money is itself expensive.",
+  "move": "Ask what a price assumes about the buyer before calling it the price.",
+  "ask": "Which bill would cost me less if I changed how I pay it rather than what I buy?",
+  "keywords": [
+    "poverty premium",
+    "prepayment meters",
+    "household bills",
+    "high-cost credit"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Davies, Finney and Hartfree, University of Bristol, 2016",
+  "source_kind": "institution",
+  "reference": "Davies, Finney & Hartfree, Paying to Be Poor: Uncovering the Scale and Nature of the Poverty Premium, University of Bristol Personal Finance Research Centre, 2016",
+  "written": "2026-10-03"
+}

@@ -457,5 +457,6 @@
   "themePuzzlesLine": "ペンと1分で解ける謎",
   "weekRecapCaps": "今週あなたが自分に問いかけたこと",
   "weekRecapLine": "カードが残してくれた問い",
-  "weekRecapMore": "Plusで今週のあと{n}件"
+  "weekRecapMore": "Plusで今週のあと{n}件",
+  "plusInTheApp": "Astute+ はアプリで利用できます。iPhone か Android に Astute をダウンロードして無料体験を始めましょう。"
 }

@@ -1,0 +1,40 @@
+{
+  "id": "art-my-kid-could-do-that-1",
+  "topic": "art",
+  "genre": "art.modern_art",
+  "strand": "art.modern_art.my_kid_could_do_that",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Shown unlabelled pairs, an abstract painting by a known artist beside one by a child or an animal, which did viewers prefer?",
+  "options": [
+    "The artist's, about two in three",
+    "Neither, about half each",
+    "The child's or animal's"
+  ],
+  "correct": 0,
+  "answer": "The artist's, about two times in three, and they judged it the better work too even when some labels were swapped. The researchers suggest people sense intention: a plan in the marks. The likeness is real at a glance; a closer look finds a difference most people can feel but not name.",
+  "move": "Looking easy at a glance is not the test; compare side by side.",
+  "ask": "What have I dismissed as easy without ever trying it, or comparing it closely?",
+  "trap": "About half each, because the paintings look so alike.",
+  "keywords": [
+    "abstract expressionism",
+    "children's paintings",
+    "intention",
+    "preference"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hawley-Dolan & Winner, Psychological Science, 2011",
+  "source_kind": "paper",
+  "reference": "Angelina Hawley-Dolan & Ellen Winner, Seeing the mind behind the art: people can distinguish abstract expressionist paintings from highly similar paintings by children, chimps, monkeys, and elephants, Psychological Science, 2011",
+  "written": "2026-10-03"
+}

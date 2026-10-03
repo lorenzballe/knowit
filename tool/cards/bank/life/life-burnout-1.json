@@ -1,0 +1,39 @@
+{
+  "id": "life-burnout-1",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.burnout",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the World Health Organization classifies burnout as a medical condition in its catalogue of diseases?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. ICD-11 lists burnout as an occupational phenomenon, among factors that influence health, not as a disease. It applies only to chronic workplace stress that has not been managed, and has three marks: exhaustion, mental distance or cynicism about the job, and a sense of doing it less well. The label points at the job.",
+  "move": "Look at the conditions before treating a reaction as a personal illness.",
+  "ask": "If I feel worn out, how much is about me, and how much about the job as it is set up?",
+  "trap": "Burnout feels like an illness, so it seems classed as one.",
+  "keywords": [
+    "burnout",
+    "icd-11",
+    "world health organization",
+    "workplace stress"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "World Health Organization, ICD-11, 2019",
+  "source_kind": "institution",
+  "reference": "World Health Organization, Burn-out an occupational phenomenon: International Classification of Diseases, 28 May 2019",
+  "written": "2026-10-03"
+}

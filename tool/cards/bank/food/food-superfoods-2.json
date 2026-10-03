@@ -1,0 +1,39 @@
+{
+  "id": "food-superfoods-2",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.superfoods",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the body absorbs iron from spinach about as well as iron from red meat?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Meat carries haem iron, held in the same ring-shaped molecule as in blood, which the gut takes up readily. Spinach holds non-haem iron, and its oxalates bind much of it into forms the gut cannot use. Only a few per cent gets in. A heaped bowl gives far less than food tables suggest.",
+  "move": "What a food contains is not what your body gets from it.",
+  "ask": "Am I counting what I take in, or what I actually keep?",
+  "trap": "Iron is iron, so the amount in the food is what you get.",
+  "keywords": [
+    "spinach",
+    "iron absorption",
+    "haem iron",
+    "oxalates"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hurrell & Egli, Am. J. Clin. Nutr., 2010",
+  "source_kind": "paper",
+  "reference": "Hurrell & Egli, Iron bioavailability and dietary reference values, American Journal of Clinical Nutrition, 2010",
+  "written": "2026-10-03"
+}

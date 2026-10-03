@@ -1,0 +1,41 @@
+{
+  "id": "pop_culture-status-signals-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.status_signals",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Within one luxury brand's range of handbags, how does the size of the logo relate to the price?",
+  "options": [
+    "Bigger logos on dearer bags",
+    "Smaller logos on dearer bags",
+    "No link between them"
+  ],
+  "correct": 1,
+  "answer": "Smaller logos on dearer bags. Han, Nunes and Drèze found that at Louis Vuitton and Gucci the quietest designs cost the most. Loud logos sell to buyers who want everyone to read the signal; the richest buyers want to be recognised only by people who already know the bags.",
+  "move": "The highest status signal is often the one only insiders can read.",
+  "ask": "Who am I really trying to impress with the things I own, everyone or a few?",
+  "trap": "Paying more should buy a bigger, more visible display of status.",
+  "keywords": [
+    "luxury handbags",
+    "logos",
+    "louis vuitton",
+    "gucci",
+    "brand prominence"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Han, Nunes and Drèze, Journal of Marketing, 2010",
+  "source_kind": "paper",
+  "reference": "Young Jee Han, Joseph C. Nunes and Xavier Drèze, Signaling Status with Luxury Goods: The Role of Brand Prominence, Journal of Marketing, 2010",
+  "written": "2026-09-26"
+}

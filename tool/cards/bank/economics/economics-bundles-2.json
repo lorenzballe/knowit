@@ -1,0 +1,40 @@
+{
+  "id": "economics-bundles-2",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.bundles",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "reflection",
+  "question": "Cinema A would pay $8,000 for film X and $2,500 for film Y; cinema B $7,000 and $3,000. Which earns the distributor more?",
+  "options": [
+    "Selling each film separately",
+    "Selling them only as a pair",
+    "Both earn exactly the same"
+  ],
+  "correct": 1,
+  "answer": "Selling them only as a pair. Priced separately, the best is $7,000 for X and $2,500 for Y, so both cinemas buy both: $19,000. As a pair, A values the two at $10,500 and B at $10,000, so both pay $10,000: $20,000. The pair works because the cinemas disagree about which film matters.",
+  "move": "A package price can collect what separate prices leave on the table.",
+  "ask": "When a package looks generous, which part of it am I really paying for?",
+  "trap": "Assuming a forced pair can only lose buyers who wanted one film.",
+  "keywords": [
+    "block booking",
+    "bundling",
+    "film distribution",
+    "price discrimination"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stigler, Supreme Court Review, 1963",
+  "source_kind": "paper",
+  "reference": "Stigler, United States v. Loew's Inc.: A Note on Block-Booking, Supreme Court Review, 1963",
+  "written": "2026-10-03"
+}

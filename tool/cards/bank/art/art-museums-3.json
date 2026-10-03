@@ -1,0 +1,33 @@
+{
+  "id": "art-museums-3",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.museums",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are galleries of modern art almost always white rooms with one row of pictures at eye level?",
+  "answer": "Because the room tells you what to think of what hangs in it. Nineteenth-century shows packed pictures to the ceiling on coloured walls. From the 1930s New York's Museum of Modern Art hung works singly on pale walls, and the style spread. In 1976 Brian O'Doherty argued the bare room makes anything look like art.",
+  "move": "The setting around a thing tells you how much to value it.",
+  "ask": "What setting, a price, a brand or a room, is telling me how much to value something?",
+  "keywords": [
+    "white cube",
+    "museum of modern art",
+    "brian o'doherty",
+    "hanging"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "O'Doherty, Inside the White Cube, 1976",
+  "source_kind": "book",
+  "reference": "Brian O'Doherty, Inside the White Cube: The Ideology of the Gallery Space, Artforum, 1976; Lapis Press, 1986",
+  "written": "2026-10-03"
+}

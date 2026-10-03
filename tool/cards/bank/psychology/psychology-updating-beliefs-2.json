@@ -1,0 +1,33 @@
+{
+  "id": "psychology-updating-beliefs-2",
+  "topic": "psychology",
+  "genre": "psychology.change_your_mind",
+  "strand": "psychology.change_your_mind.updating_beliefs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In a four-year forecasting tournament, how did the most accurate forecasters change their minds?",
+  "answer": "Often, and by small amounts. Analysing thousands of forecasters in a US government tournament, Atanasov and colleagues found the best updated their estimates frequently, nudging them a few points at a time as news arrived. Those who rarely revised, then lurched, did worse. The best treated a belief like a dial, not a switch.",
+  "move": "Revise often and a little; big lurches mean earlier news was ignored.",
+  "ask": "Is there a belief I have not adjusted at all in years, despite plenty of new news?",
+  "keywords": [
+    "forecasting",
+    "superforecasters",
+    "belief updating",
+    "tournaments"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Atanasov et al., OBHDP, 2020",
+  "source_kind": "paper",
+  "reference": "Atanasov, Witkowski, Ungar, Mellers & Tetlock, Small steps to accuracy: incremental belief updaters are better forecasters, Organizational Behavior and Human Decision Processes, 2020",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "human_body-blood-pressure-3",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.blood_pressure",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A nurse takes Omar's blood pressure while his arm hangs down by his side. How does the reading compare with the true one?",
+  "options": [
+    "Lower than the true one",
+    "Higher than the true one",
+    "Much the same"
+  ],
+  "correct": 1,
+  "answer": "Higher than the true one. A cuff below heart level also measures the weight of the column of blood above it, about 0.8 mmHg for every centimetre. An arm hanging down can add ten or more. Resting the arm on a table at chest height removes the error.",
+  "move": "Before trusting a reading, check how the instrument was held.",
+  "ask": "Which number do I rely on, on a scale or a screen, without asking how it was taken?",
+  "trap": "The cuff measures the arm, so where the arm sits cannot matter.",
+  "keywords": [
+    "blood pressure",
+    "cuff",
+    "arm position",
+    "measurement error"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pickering et al., Hypertension, 2005",
+  "source_kind": "paper",
+  "reference": "Pickering TG, Hall JE, Appel LJ et al., Recommendations for blood pressure measurement in humans and experimental animals, Hypertension, 2005",
+  "written": "2026-09-26"
+}

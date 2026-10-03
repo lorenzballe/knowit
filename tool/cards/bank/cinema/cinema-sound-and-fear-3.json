@@ -1,0 +1,39 @@
+{
+  "id": "cinema-sound-and-fear-3",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.sound_and_fear",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Hitchcock first planned the shower murder in Psycho with no music at all?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Hitchcock wanted the scene played with only the water and the screams. Bernard Herrmann scored it anyway with shrieking, stabbing strings, and once Hitchcock heard it he kept the cue. The sound now most tied to the film nearly never existed; it came from the person who disagreed.",
+  "move": "The best part of a plan sometimes comes from the person who disagreed.",
+  "ask": "Whose idea did I wave away this week that I should hear out once?",
+  "trap": "False, since the famous strings seem the heart of the plan.",
+  "keywords": [
+    "psycho",
+    "bernard herrmann",
+    "alfred hitchcock",
+    "shower scene"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smith, A Heart at Fire's Center",
+  "source_kind": "book",
+  "reference": "Steven C. Smith, A Heart at Fire's Center: The Life and Music of Bernard Herrmann, University of California Press, 1991",
+  "written": "2026-10-03"
+}

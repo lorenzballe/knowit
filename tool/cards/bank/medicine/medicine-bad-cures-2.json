@@ -1,0 +1,40 @@
+{
+  "id": "medicine-bad-cures-2",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.bad_cures",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Women taking hormone therapy after menopause had less heart disease in observational studies. What did the 2002 randomised trial find?",
+  "options": [
+    "Stronger protection than expected",
+    "Slightly more heart disease",
+    "Protection only for older women"
+  ],
+  "correct": 1,
+  "answer": "Slightly more heart disease. In the Women's Health Initiative, about 16,600 women were randomly given oestrogen plus progestin or placebo, and coronary events ran about 29% higher on hormones. The earlier studies compared women who chose hormones, who were wealthier, slimmer and more health-minded. The pill had been taking credit for its users.",
+  "move": "People who choose a treatment differ from those who do not, before any pill.",
+  "ask": "Is something I admire really doing the good, or are the people who choose it simply different?",
+  "trap": "Stronger protection than expected, as dozens of studies had pointed that way.",
+  "keywords": [
+    "hormone replacement therapy",
+    "women's health initiative",
+    "heart disease",
+    "menopause"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Writing Group for the WHI, JAMA, 2002",
+  "source_kind": "paper",
+  "reference": "Writing Group for the Women's Health Initiative Investigators, Risks and benefits of estrogen plus progestin in healthy postmenopausal women, JAMA, 2002",
+  "written": "2026-10-03"
+}

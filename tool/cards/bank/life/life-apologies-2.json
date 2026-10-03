@@ -1,0 +1,33 @@
+{
+  "id": "life-apologies-2",
+  "topic": "life",
+  "genre": "life.relationships",
+  "strand": "life.relationships.apologies",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does an apology that costs the giver something work better than the same words given cheaply?",
+  "answer": "Because cost is hard to fake. Ohtsubo and Watanabe found people judged apologies more sincere, and were readier to forgive, when the offender paid in effort or money, such as cancelling plans or travelling to apologise in person. Cheap words could come from anyone; a costly apology shows the relationship is worth something.",
+  "move": "Show what a relationship is worth by what you give up to repair it.",
+  "ask": "To whom do I owe an apology, and what could I give up to show I mean it?",
+  "keywords": [
+    "costly apology",
+    "sincerity",
+    "forgiveness",
+    "signalling"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ohtsubo and Watanabe, Evolution and Human Behavior, 2009",
+  "source_kind": "paper",
+  "reference": "Ohtsubo and Watanabe, Do sincere apologies need to be costly? Test of a costly signaling model of apology, Evolution and Human Behavior, 2009",
+  "written": "2026-10-03"
+}

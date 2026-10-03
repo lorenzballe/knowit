@@ -1,0 +1,39 @@
+{
+  "id": "medicine-pain-and-mind-3",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.pain_and_mind",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: warning a patient that a needle will sting like a bee makes the same injection hurt more?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In a 2010 study, women in labour told that the numbing injection before an epidural would feel like a big bee sting rated it more painful than women told the area would go numb. The needle and the drug were identical. The words set what the brain listened for.",
+  "move": "The first words about an experience shape the experience itself.",
+  "ask": "How do I describe a hard task to myself or my children before it starts, and does that make it harder?",
+  "trap": "False, since honest warnings prepare people and so should ease the pain.",
+  "keywords": [
+    "nocebo",
+    "epidural",
+    "injection pain",
+    "doctor's words"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Varelmann et al., Anesthesia & Analgesia, 2010",
+  "source_kind": "paper",
+  "reference": "Varelmann et al., Nocebo-induced hyperalgesia during local anesthetic injection, Anesthesia & Analgesia, 2010",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "science-relative-or-absolute-1",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.relative_or_absolute",
+  "also": [
+    "psychology.resist_persuasion.framing"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Do doctors judge a treatment differently when the same result is given as a relative cut rather than an absolute one?",
+  "answer": "Yes, markedly. In 1992 Naylor and colleagues showed doctors one trial's results in different forms; they rated the treatment more effective as a relative cut than as the absolute difference or the number needed to treat. The same pills sound bigger as a third fewer heart attacks than as one or two fewer per hundred.",
+  "move": "Ask for the same result in people per hundred before judging it.",
+  "ask": "When a deal or a treatment sounds impressive, have I asked to see it in plain counts?",
+  "keywords": [
+    "relative risk",
+    "absolute risk",
+    "doctors",
+    "framing"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Naylor, Chen & Strauss, Annals of Internal Medicine, 1992",
+  "source_kind": "paper",
+  "reference": "Naylor, Chen & Strauss, Measured enthusiasm: does the method of reporting trial results alter perceptions of therapeutic effectiveness?, Annals of Internal Medicine 117:916–921, 1992",
+  "written": "2026-09-26"
+}

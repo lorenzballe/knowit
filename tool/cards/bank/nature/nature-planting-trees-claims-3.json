@@ -1,0 +1,39 @@
+{
+  "id": "nature-planting-trees-claims-3",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.planting_trees_claims",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: across 133 studies of tropical forest restoration, planting trees beat simply letting forests regrow?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Crouzeilles and colleagues pooled over 1,700 comparisons and found natural regrowth recovered plants, animals and forest structure better than planting. Seeds blown in or dropped by birds bring local species suited to the spot. The regrowing sites may have been easier ones, and planting still helps where no forest is near to send seed.",
+  "move": "Compare any effort with what would have happened if you had simply waited.",
+  "ask": "Where in my life would doing less, and letting things recover, work better than my next effort?",
+  "trap": "Planting is effort, and effort usually beats leaving things alone.",
+  "keywords": [
+    "natural regeneration",
+    "forest restoration",
+    "tropical forests",
+    "tree planting"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Crouzeilles et al., Science Advances, 2017",
+  "source_kind": "paper",
+  "reference": "https://www.science.org/doi/10.1126/sciadv.1701345",
+  "written": "2026-10-03"
+}

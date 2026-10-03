@@ -1,0 +1,33 @@
+{
+  "id": "food-organic-2",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.organic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can organic farming pollute less per field yet cost the planet more per loaf?",
+  "answer": "Because an organic field grows less. A 2012 analysis in Nature found organic yields about 25% lower on average, from about 5% for some legumes to 34% in the strictest comparisons. The same food then needs more land, and ploughed or cleared land has its own cost. Per field and per tonne can disagree.",
+  "move": "Judge a method per unit of what it makes, not per field.",
+  "ask": "Am I measuring my choices per item, when what matters is the total result?",
+  "keywords": [
+    "organic yields",
+    "land use",
+    "meta-analysis",
+    "agriculture"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Seufert, Ramankutty & Foley, Nature, 2012",
+  "source_kind": "paper",
+  "reference": "Seufert, Ramankutty & Foley, Comparing the yields of organic and conventional agriculture, Nature, 2012",
+  "written": "2026-10-03"
+}

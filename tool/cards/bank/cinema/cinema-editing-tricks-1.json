@@ -1,0 +1,33 @@
+{
+  "id": "cinema-editing-tricks-1",
+  "topic": "cinema",
+  "genre": "cinema.how_films_persuade",
+  "strand": "cinema.how_films_persuade.editing_tricks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In a television interview filmed with one camera, when were the reporter's nods filmed?",
+  "answer": "Usually afterwards. With one camera on the guest, the crew turns round once the interview ends and films the reporter nodding or asking questions again, to cut in later. The BBC's editorial guidelines warn that these noddies must not change the meaning, because a nod placed after an answer reads as agreement.",
+  "move": "A reaction placed after a statement can be filmed at any time.",
+  "ask": "When I see someone nodding along in a video, do I know when that nod happened?",
+  "keywords": [
+    "noddies",
+    "cutaways",
+    "tv interviews",
+    "bbc editorial guidelines"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "BBC Editorial Guidelines",
+  "source_kind": "institution",
+  "reference": "BBC Editorial Guidelines, Section 3: Accuracy, British Broadcasting Corporation, 2019",
+  "written": "2026-10-03"
+}

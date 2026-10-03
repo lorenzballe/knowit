@@ -1,0 +1,41 @@
+{
+  "id": "life-boundaries-3",
+  "topic": "life",
+  "genre": "life.relationships",
+  "strand": "life.relationships.boundaries",
+  "also": [
+    "life.relationships.family"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should parents check their teenager's phone messages to keep them safe?",
+  "sides": [
+    "Yes, check them",
+    "No, respect their privacy"
+  ],
+  "answer": "Yes. Teenagers meet risks online that parents cannot see from the kitchen: bullying, strangers, pressure to share images. A parent who checks can spot trouble that a child is too ashamed or frightened to mention. Safety comes first, and a phone bought and paid for by parents is not a private diary.",
+  "move": "Whichever side you took, the hinge is whether checking makes them tell you less.",
+  "ask": "With the people I care for, do I learn more by checking up on them or by being easy to talk to?",
+  "counterpoint": "No. Kerr and Stattin found that what parents know about their teenagers comes mostly from what the teenagers choose to tell them, not from tracking or rules. Surveillance can leave teenagers feeling controlled, and they then say less. Trust keeps open the channel through which the real warnings come, and checking can quietly close it.",
+  "keywords": [
+    "parental monitoring",
+    "teenagers",
+    "privacy",
+    "disclosure"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kerr and Stattin, Developmental Psychology, 2000",
+  "source_kind": "paper",
+  "reference": "Kerr and Stattin, What parents know, how they know it, and several forms of adolescent adjustment: Further support for a reinterpretation of monitoring, Developmental Psychology, 2000",
+  "written": "2026-10-03"
+}

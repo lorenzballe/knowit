@@ -1,0 +1,43 @@
+{
+  "id": "economics-too-good-to-be-true-2",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.too_good_to_be_true",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "A scheme needs every member to recruit six new members. Starting from one person, at which level would recruits outnumber Earth's 8 billion people?",
+  "value": 13,
+  "unit": "levels",
+  "answer": "Level 13: about 13 billion, so level 13",
+  "move": "Any plan that needs ever more newcomers has a date when it must collapse.",
+  "ask": "Does the offer I'm hearing earn money from a product, or only from signing up the next person?",
+  "trap": "Guessing hundreds of levels, since six recruits each sounds modest.",
+  "hint": "Multiply by six for each level and count until you pass 8 billion.",
+  "steps": [
+    "Level n needs 6 to the power n new recruits",
+    "Level 10: about 60 million; level 11: about 363 million",
+    "Level 12: about 2.2 billion, still short of 8 billion",
+    "Level 13: about 13 billion, so level 13"
+  ],
+  "keywords": [
+    "pyramid schemes",
+    "recruitment",
+    "exponential growth",
+    "multi-level marketing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arithmetic of pyramid recruitment",
+  "source_kind": "arithmetic",
+  "reference": "Recruitment levels in a pyramid scheme, worked arithmetic, 2026",
+  "written": "2026-10-03"
+}

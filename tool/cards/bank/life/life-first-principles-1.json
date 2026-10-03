@@ -1,0 +1,41 @@
+{
+  "id": "life-first-principles-1",
+  "topic": "life",
+  "genre": "life.ask_better_questions",
+  "strand": "life.ask_better_questions.first_principles",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A café charges £2.50 for a pot of tea brewed from one bag out of an 80-bag box costing £2.40. Tea cost, in pence?",
+  "value": 3,
+  "unit": "pence",
+  "answer": "240 pence ÷ 80 bags = 3 pence per bag",
+  "move": "Break a price into its parts before guessing what you are paying for.",
+  "ask": "What do I pay for every week where I have never broken the price into its parts?",
+  "trap": "Assuming the tea itself must be a large share of the price.",
+  "hint": "Turn the price of the box into the price of one bag.",
+  "steps": [
+    "£2.40 is 240 pence",
+    "240 pence ÷ 80 bags = 3 pence per bag"
+  ],
+  "keywords": [
+    "tea",
+    "unit cost",
+    "pricing",
+    "cafés"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Unit cost from the box price",
+  "source_kind": "arithmetic",
+  "reference": "Pólya, How to Solve It, Princeton University Press, 1945",
+  "written": "2026-10-03"
+}

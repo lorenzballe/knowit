@@ -1,0 +1,39 @@
+{
+  "id": "sport-coin-tosses-1",
+  "topic": "sport",
+  "genre": "sport.luck_or_skill",
+  "strand": "sport.luck_or_skill.coin_tosses",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a coin flipped by hand lands on the side it started on slightly more than half the time?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Diaconis, Holmes and Montgomery showed that a flipped coin wobbles as it spins and spends a little more of its flight with its starting face up; they put the bias near 51%. A 2023 team flipped over 350,000 coins and found about 50.8%. Fair enough for a captain's call, but not perfectly fair.",
+  "move": "A fair-looking process can carry a small tilt from how it starts.",
+  "ask": "Which process I trust as fair might quietly favour whoever gets to start it?",
+  "trap": "Assuming a coin is exactly 50–50 because it has two sides.",
+  "keywords": [
+    "coin toss",
+    "probability",
+    "physics of coins",
+    "fairness"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Diaconis, Holmes & Montgomery, SIAM Review, 2007",
+  "source_kind": "paper",
+  "reference": "Persi Diaconis, Susan Holmes & Richard Montgomery, Dynamical Bias in the Coin Toss, SIAM Review, 2007",
+  "written": "2026-09-26"
+}

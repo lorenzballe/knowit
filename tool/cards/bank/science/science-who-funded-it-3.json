@@ -1,0 +1,38 @@
+{
+  "id": "science-who-funded-it-3",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.who_funded_it",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should readers discount a drug study because the company selling the drug paid for it?",
+  "sides": [
+    "Yes, discount it",
+    "No, judge the methods"
+  ],
+  "answer": "A 2017 Cochrane review found company-sponsored drug trials more often reported favourable results and conclusions than independent ones, even when standard checks found no difference in their risk of bias. Influence hides in choices those checks miss: the comparison drug, the dose, which outcomes are reported and when.",
+  "move": "Whichever side you took, the hinge is whether the hidden choices can be checked.",
+  "ask": "When I distrust a source for who paid for it, do I also check the work itself?",
+  "counterpoint": "Companies pay for most large drug trials because nobody else can, and those trials are now registered in advance, with their outcomes fixed before the data arrive. Discounting them wholesale throws out much of the best evidence there is. Judge each trial on its design, its comparator and its published protocol; a bad independent study is still bad.",
+  "keywords": [
+    "industry funding",
+    "drug trials",
+    "cochrane",
+    "bias"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lundh et al., Cochrane Database of Systematic Reviews, 2017",
+  "source_kind": "paper",
+  "reference": "Lundh, Lexchin, Mintzes, Schroll & Bero, Industry sponsorship and research outcome, Cochrane Database of Systematic Reviews, MR000033, 2017",
+  "written": "2026-09-26"
+}

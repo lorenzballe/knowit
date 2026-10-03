@@ -1,0 +1,39 @@
+{
+  "id": "nature-carbon-footprint-2",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.carbon_footprint",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: an hour of streaming video emits about as much carbon dioxide as driving a car 10 km?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Widely shared headlines in 2019 said half an hour of streaming emitted 1.6 kg, like a 6 km drive. Kamiya at the International Energy Agency rechecked the data flows and devices and put an hour at roughly 36 grams. The error came from overstating how much energy networks use for each gigabyte.",
+  "move": "A striking number repeated everywhere may trace back to one mistake.",
+  "ask": "Which striking statistic do I repeat without ever having checked where it came from?",
+  "trap": "A precise figure repeated in many headlines feels well checked.",
+  "keywords": [
+    "streaming video",
+    "data centres",
+    "carbon footprint",
+    "internet"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kamiya, International Energy Agency, 2020",
+  "source_kind": "institution",
+  "reference": "Kamiya, The carbon footprint of streaming video: fact-checking the headlines, International Energy Agency commentary, 2020",
+  "written": "2026-10-03"
+}

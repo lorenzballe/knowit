@@ -1,0 +1,38 @@
+{
+  "id": "economics-aid-3",
+  "topic": "economics",
+  "genre": "economics.how_countries_get_rich",
+  "strand": "economics.how_countries_get_rich.aid",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Does foreign aid make poor countries grow faster?",
+  "sides": [
+    "Yes, it helps growth",
+    "No, not reliably"
+  ],
+  "answer": "Aid aimed at things that pay off quickly, such as roads, power and farming, shows a measurable growth effect: Clemens and colleagues found it raised growth, with diminishing returns, once the delay is allowed for. Vaccines, bed nets and schooling paid by aid have saved millions of lives, and healthy workers produce more.",
+  "move": "Whichever side you took, whom the money makes governments answer to decides it.",
+  "ask": "When I help someone, does it make them stronger, or more dependent on my help?",
+  "counterpoint": "Decades of studies find no robust link. Burnside and Dollar's result that aid works in well-governed countries faded when Easterly, Levine and Roodman added more data. Large inflows can prop up bad rulers, push up currencies against exporters and make governments answer to donors instead of taxpayers. China grew fastest receiving little aid for its size.",
+  "keywords": [
+    "foreign aid",
+    "economic growth",
+    "governance",
+    "development"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Clemens, Radelet, Bhavnani and Bazzi, Economic Journal, 2012",
+  "source_kind": "paper",
+  "reference": "Clemens, Radelet, Bhavnani & Bazzi, Counting Chickens When They Hatch: Timing and the Effects of Aid on Growth, Economic Journal, 2012",
+  "written": "2026-10-03"
+}

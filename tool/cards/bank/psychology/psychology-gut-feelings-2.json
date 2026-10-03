@@ -1,0 +1,33 @@
+{
+  "id": "psychology-gut-feelings-2",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.gut_feelings",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Asked whether San Diego or San Antonio had more people, why did German students beat American ones?",
+  "answer": "Because most had heard only of San Diego, and picked it. Goldstein and Gigerenzer found every German student right, against about 62% of Americans, who knew both names and had to reason. Recognition worked because bigger cities are talked about more. A gut shortcut is good exactly where what comes to mind tracks the answer.",
+  "move": "Trust a shortcut only where what you notice is linked to what is true.",
+  "ask": "Where do I lean on what I have heard of, and does fame there really track quality?",
+  "keywords": [
+    "recognition heuristic",
+    "city sizes",
+    "gerd gigerenzer",
+    "less is more"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goldstein & Gigerenzer, Psychological Review, 2002",
+  "source_kind": "paper",
+  "reference": "Goldstein & Gigerenzer, Models of ecological rationality: the recognition heuristic, Psychological Review, 2002",
+  "written": "2026-10-03"
+}

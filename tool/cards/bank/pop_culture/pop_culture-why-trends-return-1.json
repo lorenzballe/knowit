@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-why-trends-return-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.why_trends_return",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Emma, a top girls' name in 1880s America, become the most popular again in the 2000s?",
+  "answer": "Because a name sounds old only while old people carry it. By the 1970s Emma had sunk far down the list, attached to grandmothers; once that generation thinned out, it sounded fresh to parents who had never met an Emma their own age. In 2008 it topped the US list.",
+  "move": "A style looks dated while people you know still wear it.",
+  "ask": "Which old habit or idea have I dismissed only because it reminds me of the people who had it?",
+  "keywords": [
+    "baby names",
+    "emma",
+    "social security administration",
+    "name cycles"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Social Security Administration, Popular Baby Names",
+  "source_kind": "statistics",
+  "reference": "https://www.ssa.gov/oact/babynames/",
+  "written": "2026-09-26"
+}

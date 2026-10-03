@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-sorites-2",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.sorites",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Each notch on a dial adds pain too small to feel and pays $10,000; the last notch is agony. Where should he stop?",
+  "options": [
+    "At the notch where pain first shows",
+    "Wherever a plan made in advance says",
+    "Never, since each notch pays"
+  ],
+  "correct": 1,
+  "answer": "Wherever a plan made in advance says. In Warren Quinn's puzzle, each step brings money and no felt change, so step-by-step reasoning always says one more, and ends in agony. Quinn argued he must pick a stopping point beforehand and keep to it. Snacks, scrolling and overtime are all one more imperceptible notch.",
+  "move": "Decide the stopping point before the steps, because no single step will tell you.",
+  "ask": "Which habit am I letting grow one harmless-looking step at a time?",
+  "trap": "Where pain first shows, though no single notch ever shows it.",
+  "keywords": [
+    "warren quinn",
+    "self-torturer",
+    "small steps",
+    "precommitment",
+    "vagueness"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Quinn, Philosophical Studies, 1990",
+  "source_kind": "paper",
+  "reference": "Quinn, The Puzzle of the Self-Torturer, Philosophical Studies 59 (1), 1990",
+  "written": "2026-10-03"
+}

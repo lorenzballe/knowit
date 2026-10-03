@@ -1,0 +1,33 @@
+{
+  "id": "sport-home-advantage-1",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.home_advantage",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happens to a team's home advantage in its first season after moving to a new stadium?",
+  "answer": "It shrinks. Pollard studied 37 North American baseball, basketball and ice hockey teams that moved grounds within their own city between 1987 and 2001: home advantage fell in the first season in the new building, by an estimated quarter. Same fans, same city, same travel; what was lost was knowing the place.",
+  "move": "Part of any home advantage is simply knowing the room.",
+  "ask": "Where could I get to know the place in advance, before the day that really counts?",
+  "keywords": [
+    "home advantage",
+    "new stadium",
+    "familiarity",
+    "north american sport"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pollard, Journal of Sports Sciences, 2002",
+  "source_kind": "paper",
+  "reference": "Richard Pollard, Evidence of a reduced home advantage when a team moves to a new stadium, Journal of Sports Sciences, 2002",
+  "written": "2026-09-26"
+}

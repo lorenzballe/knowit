@@ -1,0 +1,39 @@
+{
+  "id": "nature-animal-myths-1",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.animal_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: a wild wolf pack is led by an alpha that fought its way to the top?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A wild pack is usually a family: a breeding pair and their young of the past few years. Mech, whose early book spread the alpha idea, later showed it came from studies of unrelated captive wolves thrown together. In the wild the leaders are simply the parents.",
+  "move": "Ask whether behaviour seen in a cage would happen anywhere else.",
+  "ask": "Is the competitive behaviour I see at work natural, or a product of how the place is set up?",
+  "trap": "Dominance fights seen in captive wolves look like the natural order.",
+  "keywords": [
+    "wolves",
+    "alpha wolf",
+    "wolf packs",
+    "dominance"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mech, Canadian Journal of Zoology, 1999",
+  "source_kind": "paper",
+  "reference": "Mech, Alpha status, dominance, and division of labor in wolf packs, Canadian Journal of Zoology, 1999",
+  "written": "2026-10-03"
+}

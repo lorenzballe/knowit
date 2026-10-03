@@ -1,0 +1,40 @@
+{
+  "id": "space-gps-3",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.gps",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Besides showing the way, what critical job do GPS signals quietly do for mobile networks and power grids?",
+  "options": [
+    "Supplying a precise clock",
+    "Carrying their data traffic",
+    "Measuring power demand"
+  ],
+  "correct": 0,
+  "answer": "Supplying a precise clock. Phone networks, power grids and stock exchanges use GPS time to keep their equipment in step to millionths of a second. A UK study put the cost of losing satellite navigation for five days at about £5.2 billion. The blue dot on the map is the smaller part of the job.",
+  "move": "Ask what quietly depends on a tool besides its famous use.",
+  "ask": "Which tool or person in my life does a hidden job I'd only notice if it vanished?",
+  "trap": "Carrying their data, since satellites are pictured as relays for calls.",
+  "keywords": [
+    "gps timing",
+    "power grids",
+    "mobile networks",
+    "critical infrastructure"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "London Economics, Economic impact of a GNSS disruption, 2017",
+  "source_kind": "institution",
+  "reference": "London Economics, The economic impact on the UK of a disruption to GNSS, report for UK Space Agency, 2017",
+  "written": "2026-10-03"
+}

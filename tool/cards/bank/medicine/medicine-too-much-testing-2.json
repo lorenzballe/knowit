@@ -1,0 +1,38 @@
+{
+  "id": "medicine-too-much-testing-2",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.too_much_testing",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should health services keep offering routine check-ups to healthy adults with no symptoms?",
+  "sides": [
+    "Yes, keep them",
+    "No, drop them"
+  ],
+  "answer": "Yes. A check-up finds high blood pressure, raised blood sugar and heavy drinking that cause no symptoms for years, and gives healthy people a reason to see a doctor at all. Many trials behind the doubts are decades old, run before today's cheap and effective drugs for blood pressure and cholesterol.",
+  "move": "Whichever side you took, the hinge is whether old trials still describe today.",
+  "ask": "Do I go looking for problems in what is working, while the things already hurting me wait?",
+  "counterpoint": "A 2019 Cochrane review, pooling trials with well over 200,000 people, found general health checks made no difference to deaths overall, from heart disease or from cancer. They did add diagnoses and prescriptions. Those who turn up are often the healthy and worried. The time is better spent on the sick and those at known risk.",
+  "keywords": [
+    "health checks",
+    "check-ups",
+    "cochrane review",
+    "prevention"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Krogsbøll et al., Cochrane Review, 2019",
+  "source_kind": "paper",
+  "reference": "Krogsbøll, Jørgensen & Gøtzsche, General health checks in adults for reducing morbidity and mortality from disease, Cochrane Database of Systematic Reviews, 2019",
+  "written": "2026-10-03"
+}

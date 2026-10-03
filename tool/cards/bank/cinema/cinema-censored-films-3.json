@@ -1,0 +1,33 @@
+{
+  "id": "cinema-censored-films-3",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.censored_films",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which kind of censorship shapes the most Hollywood films today, without any censor seeing them?",
+  "answer": "Self-censorship. PEN America documented how studios cut or change scenes in advance to keep access to China's huge market: a Taiwanese flag dropped from a jacket in a trailer, villains rewritten from Chinese to North Korean. Nobody has to ban anything when the edit is made before the script is finished.",
+  "move": "The strongest censor is the one already inside the room.",
+  "ask": "What do I leave out of what I say before anyone has asked me to?",
+  "keywords": [
+    "self-censorship",
+    "china",
+    "pen america",
+    "hollywood"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "PEN America, Made in Hollywood, 2020",
+  "source_kind": "institution",
+  "reference": "https://pen.org/report/made-in-hollywood-censored-by-beijing/",
+  "written": "2026-10-03"
+}

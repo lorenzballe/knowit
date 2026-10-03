@@ -1,0 +1,40 @@
+{
+  "id": "life-side-projects-1",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.side_projects",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Founders who kept their day job while starting a business, compared with those who quit to do it: what was their failure risk?",
+  "options": [
+    "About the same",
+    "About a third lower",
+    "About a third higher"
+  ],
+  "correct": 1,
+  "answer": "About a third lower. Raffiee and Feng followed US founders and found that those who kept their jobs while starting out were about 33% less likely to fail. Part of the gap is who chooses this path: more cautious people. Keeping an income bought time to test the idea before betting everything on it.",
+  "move": "Test a big bet while something steady pays the bills.",
+  "ask": "What idea could I test in evenings and weekends before deciding whether to leap?",
+  "trap": "Stories of all-in founders make half-measures seem doomed.",
+  "keywords": [
+    "hybrid entrepreneurship",
+    "day job",
+    "start-ups",
+    "risk"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Raffiee and Feng, Academy of Management Journal, 2014",
+  "source_kind": "paper",
+  "reference": "Raffiee and Feng, Should I Quit My Day Job? A Hybrid Path to Entrepreneurship, Academy of Management Journal, 2014",
+  "written": "2026-10-03"
+}

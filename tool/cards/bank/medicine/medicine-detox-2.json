@@ -1,0 +1,39 @@
+{
+  "id": "medicine-detox-2",
+  "topic": "medicine",
+  "genre": "medicine.medical_myths",
+  "strand": "medicine.medical_myths.detox",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: when campaigners asked makers of 15 detox products which toxins they removed, none could name one?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 2009 the charity Sense About Science contacted makers of products from foot patches to shampoos and smoothies. None could name a specific toxin their product removed, and none offered evidence that it removed anything. The word detox described a feeling of being cleaner, not a measured result.",
+  "move": "Ask a vague promise to name its target, and watch it go quiet.",
+  "ask": "When a product promises to clean, boost or balance me, could I name exactly what it changes?",
+  "trap": "False, since products on shop shelves must rest on some test.",
+  "keywords": [
+    "detox products",
+    "sense about science",
+    "toxins",
+    "marketing claims"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sense About Science, Detox Dossier, 2009",
+  "source_kind": "institution",
+  "reference": "Sense About Science, The Detox Dossier, 2009",
+  "written": "2026-10-03"
+}

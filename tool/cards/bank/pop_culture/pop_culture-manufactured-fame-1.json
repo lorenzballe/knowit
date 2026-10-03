@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-manufactured-fame-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.manufactured_fame",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did thousands of public figures, from actors to pundits, come to have followers who did not exist?",
+  "answer": "They bought them. In 2018 The New York Times traced millions of fake Twitter accounts to Devumi, a Florida company that had sold more than 200 million followers to customers including actors, athletes and politicians. Many accounts copied real people's names and photos. A large following had become something anyone could order by the thousand.",
+  "move": "Treat any number that can be bought as a price, not a vote.",
+  "ask": "Which numbers do I trust as signs of popularity that someone could simply have paid for?",
+  "keywords": [
+    "devumi",
+    "fake followers",
+    "twitter",
+    "bots"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The New York Times, The Follower Factory",
+  "source_kind": "news_archive",
+  "reference": "Nicholas Confessore et al., The Follower Factory, The New York Times, 27 January 2018",
+  "written": "2026-09-26"
+}

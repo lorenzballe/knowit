@@ -1,0 +1,42 @@
+{
+  "id": "medicine-side-effects-2",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.side_effects",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "A drug trial of 1,500 people sees no liver failure. By the rule of three, what is the highest plausible rate, in cases per 1,000?",
+  "value": 2,
+  "unit": "cases per 1,000",
+  "answer": "0.002 × 1,000 = 2 cases per 1,000",
+  "move": "Seeing nothing in a small group only rules out the common.",
+  "ask": "What have I decided is safe just because nothing went wrong the few times I tried it?",
+  "trap": "Zero, because nothing at all happened to anyone in the trial.",
+  "hint": "With nothing seen in a group, the upper limit is about three divided by its size.",
+  "steps": [
+    "Rule of three: upper limit is about 3 ÷ people watched",
+    "3 ÷ 1,500 = 0.002",
+    "0.002 × 1,000 = 2 cases per 1,000"
+  ],
+  "keywords": [
+    "rule of three",
+    "rare side effects",
+    "clinical trials",
+    "liver failure"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hanley & Lippman-Hand, JAMA, 1983",
+  "source_kind": "paper",
+  "reference": "Hanley & Lippman-Hand, If nothing goes wrong, is everything all right? Interpreting zero numerators, JAMA, 1983",
+  "written": "2026-10-03"
+}

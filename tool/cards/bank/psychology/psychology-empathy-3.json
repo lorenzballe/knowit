@@ -1,0 +1,38 @@
+{
+  "id": "psychology-empathy-3",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.empathy",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is empathy, feeling what others feel, a good guide to doing good?",
+  "sides": [
+    "No, it misleads",
+    "Yes, it drives kindness"
+  ],
+  "answer": "No: empathy is a spotlight. It falls on the near, the similar and the photogenic, and cannot count. In Batson's experiments, people moved to feel for one girl moved her up a medical waiting list ahead of children in greater need. Bloom argues for compassion guided by reason, without sharing the pain.",
+  "move": "Whichever side you took, the hinge is whether empathy can be widened or only aimed.",
+  "ask": "When I give or help, is it the person in front of me deciding, or how much good it will do?",
+  "counterpoint": "Reason without feeling rarely moves anyone to act. Batson's own experiments found that empathic concern makes people help even when walking away is easy, and Zaki argues that empathy can be widened by practice, not just aimed. The fix for a narrow spotlight is a wider beam, not switching the light off.",
+  "keywords": [
+    "empathy",
+    "compassion",
+    "altruism",
+    "paul bloom"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Batson et al., JPSP, 1995",
+  "source_kind": "paper",
+  "reference": "Batson, Klein, Highberger & Shaw, Immorality from empathy-induced altruism: when compassion and justice conflict, Journal of Personality and Social Psychology, 1995",
+  "written": "2026-10-03"
+}

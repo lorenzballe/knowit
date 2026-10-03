@@ -1,0 +1,33 @@
+{
+  "id": "psychology-self-deception-1",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.self_deception",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Volunteers were told cold-water tolerance reveals heart health. What did they then do with their hand in icy water?",
+  "answer": "They changed how long they held it there. Those told a healthy heart means longer tolerance held on longer; those told it means shorter tolerance pulled out sooner. Most denied trying to influence the result, and many concluded their hearts were fine. They rigged a test of their own body and believed the reading.",
+  "move": "A test you can steer only tells you what you hoped.",
+  "ask": "Where do I measure my own progress in a way I can nudge without noticing?",
+  "keywords": [
+    "self-deception",
+    "cold water",
+    "diagnosis",
+    "motivated reasoning"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Quattrone & Tversky, JPSP, 1984",
+  "source_kind": "paper",
+  "reference": "Quattrone & Tversky, Causal versus diagnostic contingencies: On self-deception and on the voter's illusion, Journal of Personality and Social Psychology, 1984",
+  "written": "2026-10-03"
+}

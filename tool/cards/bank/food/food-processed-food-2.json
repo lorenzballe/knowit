@@ -1,0 +1,39 @@
+{
+  "id": "food-processed-food-2",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.processed_food",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: under the NOVA scheme that defines ultra-processed food, plain frozen peas count as processed food?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. NOVA puts plain frozen peas in its first group, unprocessed or minimally processed foods, beside fresh vegetables, milk and dried pasta. Freezing, drying and pasteurising do not move a food up. Ultra-processed means industrial formulations built largely from extracted substances and additives, like flavoured yoghurts or packaged buns.",
+  "move": "Before a label sorts things for you, find out what it lumps together.",
+  "ask": "Which word do I use to judge things that actually covers very different things?",
+  "trap": "Anything changed in a factory sounds like processed food.",
+  "keywords": [
+    "nova classification",
+    "ultra-processed food",
+    "frozen vegetables",
+    "food processing"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Monteiro et al., Public Health Nutrition, 2019",
+  "source_kind": "paper",
+  "reference": "Monteiro, Cannon, Levy et al., Ultra-processed foods: what they are and how to identify them, Public Health Nutrition, 2019",
+  "written": "2026-10-03"
+}

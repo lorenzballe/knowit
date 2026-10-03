@@ -1,0 +1,33 @@
+{
+  "id": "human_body-sun-and-skin-1",
+  "topic": "human_body",
+  "genre": "human_body.skin_and_bone",
+  "strand": "human_body.skin_and_bone.sun_and_skin",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a bottle labelled SPF 30 rarely give SPF 30 protection on a beach?",
+  "answer": "Because the label is tested on a thick layer, 2 mg of cream per square centimetre of skin. Most people spread a quarter to a half of that, and protection falls steeply as the layer thins. Covering a whole adult body properly takes about 35 ml, roughly seven teaspoons, at every application.",
+  "move": "A tested number holds only under the conditions of the test.",
+  "ask": "Which product do I trust without ever using it the way it was tested?",
+  "keywords": [
+    "sunscreen",
+    "spf",
+    "application thickness",
+    "uv protection"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Petersen and Wulf, Photodermatol Photoimmunol Photomed, 2014",
+  "source_kind": "paper",
+  "reference": "Petersen B, Wulf HC, Application of sunscreen: theory and reality, Photodermatology, Photoimmunology & Photomedicine, 2014",
+  "written": "2026-09-26"
+}

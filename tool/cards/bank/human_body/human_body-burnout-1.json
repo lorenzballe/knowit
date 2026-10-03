@@ -1,0 +1,33 @@
+{
+  "id": "human_body-burnout-1",
+  "topic": "human_body",
+  "genre": "human_body.stress_and_the_body",
+  "strand": "human_body.stress_and_the_body.burnout",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did the WHO classify burnout in 2019 as a work phenomenon rather than a medical illness?",
+  "answer": "Because it is defined by its setting. ICD-11 describes burnout as the result of chronic workplace stress that has not been successfully managed, marked by exhaustion, mental distance or cynicism about one's job, and reduced effectiveness, and it applies only to work. Classing it as occupational points at the job, not only the worker.",
+  "move": "Where a problem is filed decides who is expected to fix it.",
+  "ask": "When I am worn out, do I blame myself first, or ask what about the work is wearing me down?",
+  "keywords": [
+    "burnout",
+    "icd-11",
+    "world health organization",
+    "workplace stress"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "World Health Organization, ICD-11, 2019",
+  "source_kind": "institution",
+  "reference": "World Health Organization, Burn-out an occupational phenomenon: International Classification of Diseases, 2019",
+  "written": "2026-09-26"
+}

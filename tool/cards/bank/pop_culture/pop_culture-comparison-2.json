@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-comparison-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.comparison",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "True or false: Instagram's own researchers found the app made most teenage girls feel worse about their bodies?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False, though the real finding is bad enough. Internal slides reported by The Wall Street Journal in 2021 said that among teenage girls who already felt bad about their bodies, 32% said Instagram made them feel worse. That is a third of a vulnerable group, not most girls: the harm lands hardest where it hurts most.",
+  "move": "Always ask which group a percentage is a percentage of.",
+  "ask": "When I quote a scary statistic, do I know which group of people it was actually about?",
+  "trap": "Headlines said Instagram hurts girls, so it sounds like most of them.",
+  "keywords": [
+    "instagram",
+    "body image",
+    "teenage girls",
+    "internal research"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "The Wall Street Journal, 14 September 2021",
+  "source_kind": "news_archive",
+  "reference": "Georgia Wells, Jeff Horwitz and Deepa Seetharaman, Facebook Knows Instagram Is Toxic for Teen Girls, Company Documents Show, The Wall Street Journal, 14 September 2021",
+  "written": "2026-09-26"
+}

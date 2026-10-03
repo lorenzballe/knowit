@@ -1,0 +1,39 @@
+{
+  "id": "life-asking-for-more-1",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.asking_for_more",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "In mock negotiations over the sale of a factory, did the side that made the first offer end up better or worse off?",
+  "options": [
+    "Worse off",
+    "Better off"
+  ],
+  "correct": 1,
+  "answer": "Better off. Galinsky and Mussweiler found that whoever opened, buyer or seller, pulled the final price towards their first offer, because the opening number anchored what both sides thought reasonable. The effect weakened when the other side focused on facts that contradicted the anchor. Waiting to hear their number first hands them the anchor.",
+  "move": "Name a well-researched number first, and let them argue from it.",
+  "ask": "In my next negotiation, over pay, rent or a price, what number will I say first?",
+  "trap": "Speaking first seems to reveal your hand and invite a squeeze.",
+  "keywords": [
+    "negotiation",
+    "first offers",
+    "anchoring",
+    "bargaining"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Galinsky and Mussweiler, JPSP, 2001",
+  "source_kind": "paper",
+  "reference": "Galinsky and Mussweiler, First offers as anchors: The role of perspective-taking and negotiator focus, Journal of Personality and Social Psychology, 2001",
+  "written": "2026-10-03"
+}

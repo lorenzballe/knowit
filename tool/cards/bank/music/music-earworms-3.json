@@ -1,0 +1,33 @@
+{
+  "id": "music-earworms-3",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.earworms",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do the people who sing, play and listen to music most also get the most tunes stuck in their heads?",
+  "answer": "Because an earworm is musical memory rehearsing itself. Lassi Liikkanen surveyed over 12,000 Finns: about nine in ten had a stuck tune at least weekly, and frequency rose with how much music people played, sang and heard. More tunes stocked and used means more to replay. A fuller jukebox plays more often.",
+  "move": "Whatever fills the hours supplies what the idle mind replays later.",
+  "ask": "What am I feeding my mind all day that it keeps replaying when I am idle?",
+  "keywords": [
+    "earworms",
+    "musical memory",
+    "survey",
+    "finland"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Liikkanen, Psychology of Music, 2012",
+  "source_kind": "paper",
+  "reference": "Liikkanen, Musical activities predispose to involuntary musical imagery, Psychology of Music, 2012",
+  "written": "2026-09-26"
+}

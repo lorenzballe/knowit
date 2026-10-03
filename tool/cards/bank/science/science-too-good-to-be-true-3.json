@@ -1,0 +1,39 @@
+{
+  "id": "science-too-good-to-be-true-3",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.too_good_to_be_true",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: results that match a scientist's predicted ratios almost perfectly can themselves be a warning sign?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Real counts wobble around a prediction by chance. In 1936 the statistician Ronald Fisher showed that Gregor Mendel's pea counts sat closer to his expected ratios than chance usually allows. Whether an assistant tidied them or counting stopped when the numbers looked right is still argued. Too neat is a pattern too.",
+  "move": "Expect honest numbers to wobble; distrust ones that never do.",
+  "ask": "Which perfect-looking record, a review score or a CV, should make me ask what got smoothed?",
+  "trap": "False, since a perfect fit sounds like the strongest evidence possible.",
+  "keywords": [
+    "gregor mendel",
+    "ronald fisher",
+    "peas",
+    "statistics"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fisher, Annals of Science, 1936",
+  "source_kind": "paper",
+  "reference": "Fisher, Has Mendel's work been rediscovered?, Annals of Science 1:115–137, 1936",
+  "written": "2026-09-26"
+}

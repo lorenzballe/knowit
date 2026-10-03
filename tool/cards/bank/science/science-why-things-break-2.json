@@ -1,0 +1,39 @@
+{
+  "id": "science-why-things-break-2",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.why_things_break",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: drilling a small hole at the tip of a crack in a metal plate can stop the crack growing?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A crack grows because its sharp tip concentrates stress far beyond the average in the plate. Drill a round hole at the tip and the point becomes a smooth curve that spreads the load. Engineers have used the trick for decades: taking away a little material leaves the part tougher, not weaker.",
+  "move": "Blunt the sharpest point of a problem before adding strength elsewhere.",
+  "ask": "Where could I take something away, rather than add more, to stop a problem spreading?",
+  "trap": "False, since cutting away metal must weaken it further.",
+  "keywords": [
+    "cracks",
+    "stress concentration",
+    "crack-stop holes",
+    "fracture"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gordon, The New Science of Strong Materials",
+  "source_kind": "book",
+  "reference": "Gordon, The New Science of Strong Materials, 2nd ed., Penguin, 1976",
+  "written": "2026-09-26"
+}

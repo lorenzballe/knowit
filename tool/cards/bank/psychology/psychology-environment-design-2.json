@@ -1,0 +1,41 @@
+{
+  "id": "psychology-environment-design-2",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.environment_design",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "At a cafeteria salad bar, one food was moved about 25 cm further from diners' reach. What happened to how much was taken?",
+  "options": [
+    "It barely changed at all",
+    "It roughly halved",
+    "It fell by about 8 to 16%"
+  ],
+  "correct": 2,
+  "answer": "It fell by about 8 to 16%. Putting a food slightly harder to reach, or serving it with tongs instead of a spoon, modestly but reliably cut how much people took. Nobody decided to eat less; the extra stretch did the deciding. Small frictions, repeated every day, add up over years.",
+  "move": "Add a little effort to whatever you want to do less of.",
+  "ask": "What small obstacle could I put between myself and the habit I am trying to cut?",
+  "trap": "It barely changed: people take what they want regardless of position.",
+  "keywords": [
+    "choice architecture",
+    "cafeteria",
+    "food intake",
+    "salad bar",
+    "friction"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rozin et al., Judgment and Decision Making, 2011",
+  "source_kind": "paper",
+  "reference": "https://journal.sjdm.org/11/11213/jdm11213.pdf",
+  "written": "2026-10-03"
+}

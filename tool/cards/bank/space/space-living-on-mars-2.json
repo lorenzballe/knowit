@@ -1,0 +1,39 @@
+{
+  "id": "space-living-on-mars-2",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.living_on_mars",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the main obstacle to growing food in Martian soil is too little sunlight?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Mars gets about 43% of Earth's sunlight, enough for many crops under glass. The harder problem is in the soil: the Phoenix lander found perchlorate salts at about half a percent, which block the thyroid's use of iodine and must be washed out before anything grown there is safe to eat.",
+  "move": "The obvious shortage is often not the one that actually stops you.",
+  "ask": "In a plan of mine that keeps stalling, is the problem I name really the one blocking it?",
+  "trap": "True, because Mars is farther from the Sun and looks dim.",
+  "keywords": [
+    "perchlorates",
+    "martian soil",
+    "phoenix lander",
+    "space farming"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hecht et al., Science, 2009",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/science.1172339",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "life-good-enough-3",
+  "topic": "life",
+  "genre": "life.decisions",
+  "strand": "life.decisions.good_enough",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "For a big purchase such as a car, should you aim to find the best option?",
+  "sides": [
+    "Yes, find the best",
+    "No, take good enough"
+  ],
+  "answer": "Yes. A car costs months of pay and lasts years, so an extra week of research is cheap against a decade of living with a poor choice. Prices and reliability records are public; ignoring them leaves money on the table. Settling early suits socks, not the biggest bills in a life.",
+  "move": "Whichever side you took, the hinge is the cost of searching against the gap.",
+  "ask": "In my next big purchase, how much better would the best option really be than the first good one?",
+  "counterpoint": "No. Past a short list, more comparison mostly buys doubt. Schwartz and colleagues found people who habitually seek the best report less happiness and more regret, and the gap between the best car and a good one is often small next to the hours spent. Set two or three must-haves, buy the first that meets them, and stop reading reviews.",
+  "keywords": [
+    "satisficing",
+    "maximising",
+    "big purchases",
+    "cars",
+    "search costs"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schwartz and colleagues, JPSP, 2002",
+  "source_kind": "paper",
+  "reference": "Schwartz, Ward, Monterosso, Lyubomirsky, White and Lehman, Maximizing Versus Satisficing: Happiness Is a Matter of Choice, Journal of Personality and Social Psychology, 2002",
+  "written": "2026-10-03"
+}

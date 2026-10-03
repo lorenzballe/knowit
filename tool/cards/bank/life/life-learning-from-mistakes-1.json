@@ -1,0 +1,39 @@
+{
+  "id": "life-learning-from-mistakes-1",
+  "topic": "life",
+  "genre": "life.learn_anything",
+  "strand": "life.learn_anything.learning_from_mistakes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a wrong answer you were very sure of is easier to correct than one you only guessed?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Butterfield and Metcalfe found that errors made with high confidence were the most likely to be corrected once people were shown the right answer. The jolt of being confidently wrong seems to grab attention, so the correction sticks. The firmest mistakes are the easiest to fix, once they are exposed.",
+  "move": "Check your surest answers first; being shown wrong there teaches most.",
+  "ask": "What am I completely sure of that I have never once checked?",
+  "trap": "A firmly held belief seems more deeply rooted, so harder to shift.",
+  "keywords": [
+    "hypercorrection",
+    "confidence",
+    "errors",
+    "feedback"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Butterfield and Metcalfe, JEP: LMC, 2001",
+  "source_kind": "paper",
+  "reference": "Butterfield and Metcalfe, Errors committed with high confidence are hypercorrected, Journal of Experimental Psychology: Learning, Memory, and Cognition, 2001",
+  "written": "2026-10-03"
+}

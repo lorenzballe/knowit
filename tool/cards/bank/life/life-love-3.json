@@ -1,0 +1,39 @@
+{
+  "id": "life-love-3",
+  "topic": "life",
+  "genre": "life.relationships",
+  "strand": "life.relationships.love",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: people who see their partner more positively than the partner sees themselves tend to be happier together?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Murray, Holmes and Griffin found that people who rated their partners more generously than the partners rated themselves were more satisfied, in dating couples and in marriages, and later work found such couples more likely to stay together. Seeing a partner a little better than they are seemed to help them grow towards it.",
+  "move": "A generous view of someone can help make it true.",
+  "ask": "Do I describe my partner or closest friend more generously than they describe themselves?",
+  "trap": "Rose-tinted views seem bound to end in disappointment.",
+  "keywords": [
+    "positive illusions",
+    "idealisation",
+    "couples",
+    "satisfaction"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Murray, Holmes and Griffin, JPSP, 1996",
+  "source_kind": "paper",
+  "reference": "Murray, Holmes and Griffin, The benefits of positive illusions: Idealization and the construction of satisfaction in close relationships, Journal of Personality and Social Psychology, 1996",
+  "written": "2026-10-03"
+}

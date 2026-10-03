@@ -1,0 +1,33 @@
+{
+  "id": "life-deep-focus-2",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.deep_focus",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does switching between two tasks cost more than the moment it takes to switch?",
+  "answer": "Because the mind has to reload the rules of each task. Rubinstein, Meyer and Evans found that every switch adds time for shifting goals and activating the new task's rules, and that the cost grows with the task's complexity. Each switch costs a fraction of a second; hundreds a day add up.",
+  "move": "Batch similar tasks so the rules you need stay loaded.",
+  "ask": "Which two tasks do I keep switching between that I could batch into separate blocks?",
+  "keywords": [
+    "task switching",
+    "multitasking",
+    "switch costs",
+    "executive control"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rubinstein, Meyer and Evans, JEP: HPP, 2001",
+  "source_kind": "paper",
+  "reference": "Rubinstein, Meyer and Evans, Executive control of cognitive processes in task switching, Journal of Experimental Psychology: Human Perception and Performance, 2001",
+  "written": "2026-10-03"
+}

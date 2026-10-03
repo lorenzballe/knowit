@@ -1,0 +1,41 @@
+{
+  "id": "sport-home-advantage-3",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.home_advantage",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "When European football leagues played behind closed doors in 2020 and 2021, what happened to home advantage?",
+  "options": [
+    "It shrank, often by about half",
+    "It stayed about the same",
+    "It grew a little"
+  ],
+  "correct": 0,
+  "answer": "It shrank, often by about half. A review of the studies of these ghost games found most reported a reduced or strongly reduced home advantage, and not one an increase. Referees changed most, judging home sides more like visitors. What survived came from what crowds do not supply: no travel and familiar turf.",
+  "move": "Find the moment one cause is removed, and watch what changes.",
+  "ask": "If one support in my life vanished for a while, what would it reveal about how much it was doing?",
+  "trap": "Assuming players do the same at home with or without fans.",
+  "keywords": [
+    "ghost games",
+    "covid-19",
+    "home advantage",
+    "empty stadiums",
+    "referees"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Leitner et al., Management Review Quarterly, 2022",
+  "source_kind": "paper",
+  "reference": "Leitner, Daumann, Follert & Richlan, The cauldron has cooled down: a systematic literature review on home advantage in football during the COVID-19 pandemic, Management Review Quarterly, 2022",
+  "written": "2026-09-26"
+}

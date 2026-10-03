@@ -1,0 +1,41 @@
+{
+  "id": "art-leonardo-2",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.leonardo",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Leonardo spent years preparing a giant bronze horse for Milan's ruler. What became of the bronze set aside for it?",
+  "options": [
+    "Cast into cannon for war",
+    "Melted by invading French troops",
+    "Sold to pay Leonardo's debts"
+  ],
+  "correct": 0,
+  "answer": "It went into cannon. In 1494, with a French army marching into Italy, Ludovico Sforza sent the metal to his father-in-law in Ferrara to be cast into guns. Leonardo's full-size clay model stood for five more years, until French soldiers took Milan in 1499 and used it for target practice. The horse was never cast.",
+  "move": "A project that takes years competes with every emergency in between.",
+  "ask": "Which slow, important project of mine keeps losing its time to whatever feels urgent this week?",
+  "trap": "French troops, because they did ruin the clay model later.",
+  "keywords": [
+    "sforza horse",
+    "bronze",
+    "cannon",
+    "ludovico sforza",
+    "milan"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Isaacson, Leonardo da Vinci, 2017",
+  "source_kind": "book",
+  "reference": "Walter Isaacson, Leonardo da Vinci, Simon & Schuster, 2017",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "space-signals-3",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.signals",
+  "also": [
+    "science.physics.energy"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A radio beacon is just detectable from 10 light-years away. Moved to 100 light-years, how much weaker does its signal arrive?",
+  "options": [
+    "10 times weaker",
+    "100 times weaker",
+    "1,000 times weaker"
+  ],
+  "correct": 1,
+  "answer": "100 times weaker. The signal spreads over a growing sphere, and a sphere's surface grows with the square of its radius: ten times the distance spreads the same power over a hundred times the area. To be heard ten times farther, a transmitter must be a hundred times stronger.",
+  "move": "Spreading thin works by the square of the distance, not the distance.",
+  "ask": "Is what I say to people far from my daily life reaching them much weaker than I assume?",
+  "trap": "10 times, because the distance grew ten times.",
+  "keywords": [
+    "inverse square law",
+    "radio signals",
+    "transmitters",
+    "seti"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Halliday, Resnick & Walker, Fundamentals of Physics, 2013",
+  "source_kind": "book",
+  "reference": "Halliday, Resnick & Walker, Fundamentals of Physics, 10th edition, Wiley, 2013",
+  "written": "2026-10-03"
+}

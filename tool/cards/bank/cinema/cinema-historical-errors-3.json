@@ -1,0 +1,40 @@
+{
+  "id": "cinema-historical-errors-3",
+  "topic": "cinema",
+  "genre": "cinema.films_and_history",
+  "strand": "cinema.films_and_history.historical_errors",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Braveheart stages the 1297 Battle of Stirling Bridge on an open field. What did leaving out the bridge remove?",
+  "options": [
+    "Only a scenic backdrop",
+    "The reason the Scots won",
+    "The English cavalry charge"
+  ],
+  "correct": 1,
+  "answer": "The reason the Scots won. At Stirling the English had to cross a narrow bridge a few men abreast, and the Scots attacked the vanguard once part had crossed, cutting it off. On an open field, victory looks like pure courage. Remove the terrain and tactics turn into character.",
+  "move": "When a win is told as pure courage, look at the ground.",
+  "ask": "Which success of mine do I put down to character when circumstances did much of the work?",
+  "trap": "Only a scenic backdrop, since a bridge seems a detail of setting.",
+  "keywords": [
+    "braveheart",
+    "stirling bridge",
+    "william wallace",
+    "military tactics"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barrow, Robert Bruce, 1988",
+  "source_kind": "book",
+  "reference": "G. W. S. Barrow, Robert Bruce and the Community of the Realm of Scotland, 3rd edn, Edinburgh University Press, 1988",
+  "written": "2026-10-03"
+}

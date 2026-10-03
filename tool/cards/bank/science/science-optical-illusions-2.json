@@ -1,0 +1,40 @@
+{
+  "id": "science-optical-illusions-2",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.optical_illusions",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: people from every culture tested are fooled equally by two equal lines with arrow-shaped ends?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In the 1960s Segall and colleagues tested people in more than a dozen societies. Students in Evanston, Illinois, saw the lines as most unequal; San foragers in the Kalahari were barely fooled at all. Why is still argued, perhaps a life among straight walls and corners. Textbooks had treated students' eyes as everyone's.",
+  "move": "Ask who was tested before calling a finding human nature.",
+  "ask": "Which of my everyone-thinks-this beliefs rests only on people like me?",
+  "trap": "True, since an illusion seems built into the eye itself.",
+  "keywords": [
+    "müller-lyer illusion",
+    "culture",
+    "perception",
+    "san",
+    "samples"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Segall, Campbell & Herskovits, 1966",
+  "source_kind": "book",
+  "reference": "Segall, Campbell & Herskovits, The Influence of Culture on Visual Perception, Bobbs-Merrill, 1966",
+  "written": "2026-09-26"
+}

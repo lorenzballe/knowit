@@ -1,0 +1,43 @@
+{
+  "id": "cinema-what-films-teach-3",
+  "topic": "cinema",
+  "genre": "cinema.films_and_history",
+  "strand": "cinema.films_and_history.what_films_teach",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "An 8 g bullet at 360 m/s stops in an 80 kg man. How fast does it push him backwards, in cm per second?",
+  "value": 3.6,
+  "unit": "cm per second",
+  "tolerance": 0.1,
+  "answer": "0.036 m/s = 3.6 cm per second.",
+  "move": "Check a dramatic effect against the size of its cause.",
+  "ask": "What dramatic cause and effect have I accepted from films without checking the physics?",
+  "trap": "Picturing him thrown off his feet, as in countless films.",
+  "hint": "Momentum before equals momentum after: mass times speed.",
+  "steps": [
+    "Bullet momentum: 0.008 kg × 360 m/s = 2.88 kg m/s.",
+    "Shared by the man: 2.88 / 80 = 0.036 m/s.",
+    "0.036 m/s = 3.6 cm per second."
+  ],
+  "keywords": [
+    "momentum",
+    "gunshots",
+    "film physics",
+    "action films"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Conservation of momentum, worked arithmetic",
+  "source_kind": "arithmetic",
+  "reference": "Conservation of linear momentum, worked arithmetic, 2026",
+  "written": "2026-10-03"
+}

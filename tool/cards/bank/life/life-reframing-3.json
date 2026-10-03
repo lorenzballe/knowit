@@ -1,0 +1,38 @@
+{
+  "id": "life-reframing-3",
+  "topic": "life",
+  "genre": "life.handle_setbacks",
+  "strand": "life.handle_setbacks.reframing",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "After a serious setback, is it better to look for the good in it than to see it as plainly bad?",
+  "sides": [
+    "Yes, look for the good",
+    "No, see it plainly"
+  ],
+  "answer": "Yes. Helgeson, Reynolds and Tomich pooled studies of people facing illness and other trauma: those who found benefits, such as closer relationships or new priorities, reported less depression and more well-being. Looking for what a setback taught is not denial; it is a way of keeping going while the loss is still real.",
+  "move": "Whichever side you took, the hinge is whether the bright view stops you acting.",
+  "ask": "In my last setback, did looking on the bright side help me act, or help me avoid acting?",
+  "counterpoint": "No. Oettingen's studies found that people who indulged in positive fantasies about the future, from job hunting to recovering from hip surgery, did worse than those who pictured the obstacles. Defensive pessimists, Norem showed, perform best when allowed to imagine what could go wrong. Forced brightness can hide the very problem that needs fixing.",
+  "keywords": [
+    "benefit finding",
+    "positive thinking",
+    "defensive pessimism",
+    "setbacks"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Helgeson, Reynolds and Tomich, JCCP, 2006",
+  "source_kind": "paper",
+  "reference": "Helgeson, Reynolds and Tomich, A meta-analytic review of benefit finding and growth, Journal of Consulting and Clinical Psychology, 2006",
+  "written": "2026-10-03"
+}

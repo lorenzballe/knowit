@@ -1,0 +1,47 @@
+{
+  "id": "economics-warning-signs-3",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.warning_signs",
+  "also": [
+    "economics.markets_and_hype.experts_forecasts"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "In 1966 Samuelson joked that stock markets had predicted nine of the last five recessions. When markets fell, what percent preceded recessions?",
+  "value": 56,
+  "unit": "percent",
+  "tolerance": 1,
+  "answer": "About 56%",
+  "move": "A signal that catches every case may still cry wolf half the time.",
+  "ask": "How often do my worries come true, compared with how often I have them?",
+  "trap": "Hearing that the market caught every recession and trusting each alarm.",
+  "hint": "Count the alarms, then how many of them turned out real.",
+  "steps": [
+    "Alarms: 9 market falls",
+    "Real recessions among them: 5",
+    "Share of alarms that were right: 5 ÷ 9 ≈ 0.56",
+    "About 56%"
+  ],
+  "keywords": [
+    "recession forecasts",
+    "stock market",
+    "false alarms",
+    "samuelson"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Samuelson, Newsweek, 19 September 1966",
+  "source_kind": "news_archive",
+  "reference": "Paul Samuelson, Science and Stocks, Newsweek, 19 September 1966",
+  "written": "2026-10-03"
+}

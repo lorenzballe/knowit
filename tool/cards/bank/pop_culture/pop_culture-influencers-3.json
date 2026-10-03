@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-influencers-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.influencers",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should influencers be required by law to label photos they have retouched for paid posts?",
+  "sides": [
+    "Yes, label the retouching",
+    "No, keep it voluntary"
+  ],
+  "answer": "Yes. Paid images that reshape bodies sell products by selling an impossible standard, and young viewers cannot tell what was edited. Norway has required a label on retouched advertising, influencers' sponsored posts included, since 2022. A small mark costs the advertiser little and tells viewers the body they compare themselves to does not exist.",
+  "move": "Whichever side you took, whether a label changes what viewers feel decides it.",
+  "ask": "When I compare myself with a photo, do I know how much of it was real?",
+  "counterpoint": "No. Nearly every commercial photo is adjusted for light, colour or skin, so a label on everything soon means nothing, and enforcing it means policing millions of posts. A label also leaves the image itself untouched in the viewer's mind. Teaching media literacy and banning false claims about the product would do more.",
+  "keywords": [
+    "retouching",
+    "norway",
+    "sponsored posts",
+    "body image"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Norwegian Marketing Control Act, 2021 amendment",
+  "source_kind": "primary_document",
+  "reference": "Norwegian Marketing Control Act (markedsføringsloven), amendment on retouched advertising, adopted June 2021",
+  "written": "2026-09-26"
+}

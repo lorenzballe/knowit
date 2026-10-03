@@ -1,0 +1,38 @@
+{
+  "id": "economics-risk-and-reward-3",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.risk_and_reward",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "With spare cash, should a household with a 4% mortgage pay it down rather than buy shares?",
+  "sides": [
+    "Yes, pay it down",
+    "No, buy shares"
+  ],
+  "answer": "Every euro repaid earns exactly the mortgage rate, guaranteed, with no fees and no bad years. Shares may average more, but only on average: a household that invested in 2007 watched its savings halve while the mortgage stayed whole. A smaller loan also shrinks the monthly bill that would hurt most after losing a job.",
+  "move": "Whichever side you took, how soon the money might be needed decides it.",
+  "ask": "If my income stopped next year, which use of my spare money would I be glad I had chosen?",
+  "counterpoint": "Over long periods shares have paid well above 4%: since 1900, world equities have beaten inflation by roughly 5% a year. Money sunk into bricks cannot easily be taken out in a crisis, while an invested pot can. Twenty years of compounding at the higher rate usually leaves a far larger cushion than a cleared mortgage.",
+  "keywords": [
+    "mortgages",
+    "overpayment",
+    "investing",
+    "equity returns"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dimson, Marsh and Staunton, Triumph of the Optimists",
+  "source_kind": "book",
+  "reference": "Dimson, Marsh & Staunton, Triumph of the Optimists: 101 Years of Global Investment Returns, Princeton University Press, 2002",
+  "written": "2026-10-03"
+}

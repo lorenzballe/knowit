@@ -1,0 +1,33 @@
+{
+  "id": "art-hype-in-art-2",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.hype_in_art",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 1911, what drew crowds to the Louvre's Salon Carré while the Mona Lisa was missing from it?",
+  "answer": "The empty wall. After the painting was stolen in August 1911, newspapers around the world printed its picture for weeks, and visitors queued to stare at the four iron hooks where it had hung. Before the theft it was admired by connoisseurs; by its return in 1913 it was the most famous painting on earth.",
+  "move": "Attention feeds on itself; fame alone is not proof of quality.",
+  "ask": "Which thing do I admire mainly because everyone already talks about it?",
+  "keywords": [
+    "mona lisa",
+    "louvre",
+    "art theft",
+    "fame"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Scotti, Vanished Smile, 2009",
+  "source_kind": "book",
+  "reference": "R. A. Scotti, Vanished Smile: The Mysterious Theft of Mona Lisa, Knopf, 2009",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "nature-cute-and-dangerous-1",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.cute_and_dangerous",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is a slow loris raising its arms in a viral tickling video not enjoying itself?",
+  "answer": "Because raised arms are its defence. The slow loris is a venomous primate: glands on its upper arms make a secretion it mixes with saliva, and lifting its arms brings them to its mouth to ready a bite. Nekaris and colleagues found most viewers read the pose as pleasure. The pet is frightened.",
+  "move": "Learn what a pose means to its owner before calling it cute.",
+  "ask": "Whose distress have I mistaken for something sweet because it looked appealing to me?",
+  "keywords": [
+    "slow loris",
+    "venom",
+    "pet trade",
+    "viral videos"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nekaris et al., PLoS ONE, 2013",
+  "source_kind": "paper",
+  "reference": "Nekaris, Campbell, Coggins, Rode & Nijman, Tickled to death: analysing public perceptions of cute videos of threatened species (slow lorises, Nycticebus spp.) on Web 2.0 sites, PLoS ONE, 2013",
+  "written": "2026-10-03"
+}

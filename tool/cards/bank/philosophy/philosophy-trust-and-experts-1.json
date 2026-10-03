@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-trust-and-experts-1",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.trust_and_experts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Philip Tetlock scored about 28,000 forecasts by political experts. Which experts did worst?",
+  "options": [
+    "Those forecasting outside their field",
+    "Those with the fewest years' experience",
+    "Those who knew one big idea"
+  ],
+  "correct": 2,
+  "answer": "Those who knew one big idea. Tetlock's hedgehogs, who forced events into a single theory, lost to foxes, who drew on many small ideas and changed their minds. Experts forecasting outside their own field did about as well as inside it. The confident single story also made the best television.",
+  "move": "Trust the expert who can say what would change their mind.",
+  "ask": "Which commentator do I trust because they sound sure, rather than because they have been right?",
+  "trap": "Outside their field, since expertise should help most at home.",
+  "keywords": [
+    "philip tetlock",
+    "forecasting",
+    "hedgehogs and foxes",
+    "expert judgment"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tetlock, Expert Political Judgment, 2005",
+  "source_kind": "book",
+  "reference": "Tetlock, Expert Political Judgment: How Good Is It? How Can We Know?, Princeton University Press, 2005",
+  "written": "2026-10-03"
+}

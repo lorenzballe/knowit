@@ -1,0 +1,41 @@
+{
+  "id": "music-classical-1",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.classical",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "US orchestras began auditioning players behind a screen, and the share of women rose. How much of that rise did the screen explain?",
+  "options": [
+    "Nearly all of the rise",
+    "Perhaps a quarter of it",
+    "None of the rise at all"
+  ],
+  "correct": 1,
+  "answer": "Perhaps a quarter. Claudia Goldin and Cecilia Rouse estimated that screens explained roughly a quarter to a third of the rise in women hired, with wide error bands that later critics pressed on. Over the same decades more women were trained and applying. Without counting the pool, every rise looks like the screen's work.",
+  "move": "When a fix and a trend arrive together, ask what the trend alone would do.",
+  "ask": "When things improved after I changed something, how much would have improved anyway?",
+  "trap": "Seeing screens arrive and women's share rise, and crediting screens alone.",
+  "keywords": [
+    "blind auditions",
+    "orchestras",
+    "women musicians",
+    "screens",
+    "hiring"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goldin & Rouse, American Economic Review, 2000",
+  "source_kind": "paper",
+  "reference": "Goldin & Rouse, Orchestrating Impartiality: The Impact of Blind Auditions on Female Musicians, American Economic Review, 2000",
+  "written": "2026-09-26"
+}

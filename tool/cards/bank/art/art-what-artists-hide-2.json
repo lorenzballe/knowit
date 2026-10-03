@@ -1,0 +1,41 @@
+{
+  "id": "art-what-artists-hide-2",
+  "topic": "art",
+  "genre": "art.look_closer",
+  "strand": "art.look_closer.what_artists_hide",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "X-rays show that several of Picasso's Blue Period paintings cover earlier pictures. What was the main reason?",
+  "options": [
+    "Hiding messages for friends",
+    "He was too poor for canvas",
+    "Erasing rivals' unsold work"
+  ],
+  "correct": 1,
+  "answer": "He was too poor for fresh canvas. Broke in Barcelona and Paris in the early 1900s, Picasso painted over his own work and other people's. The Old Guitarist hides a woman's face; The Blue Room, in Washington, hides a portrait of a bearded man. Hidden layers in famous paintings are usually thrift, not secret codes.",
+  "move": "Check for the dull reason before the secret one.",
+  "ask": "When something in my life seems mysterious, have I checked the boring explanation first?",
+  "trap": "Hidden messages, because secret layers make a better story.",
+  "keywords": [
+    "picasso",
+    "blue period",
+    "x-ray",
+    "the blue room",
+    "reused canvas"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Phillips Collection, The Blue Room study, 2014",
+  "source_kind": "institution",
+  "reference": "The Phillips Collection, technical study of Picasso's The Blue Room, Washington, 2014",
+  "written": "2026-10-03"
+}

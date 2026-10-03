@@ -1,0 +1,33 @@
+{
+  "id": "psychology-goals-that-work-1",
+  "topic": "psychology",
+  "genre": "psychology.motivation",
+  "strand": "psychology.motivation.goals_that_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Graduates who daydreamed most vividly about landing a dream job: how did their job hunt go?",
+  "answer": "Worse. Oettingen and Mayer found that students with the rosiest fantasies about the future sent fewer applications, got fewer offers and earned less two years later. Later studies found such fantasies lower energy, as if the goal were already half reached. Positive expectations based on past experience helped; dreamy pictures did not.",
+  "move": "Picture the obstacle as clearly as the prize, or the prize saps your effort.",
+  "ask": "When I picture a goal, do I also picture what will most likely get in my way?",
+  "keywords": [
+    "positive fantasies",
+    "job search",
+    "expectations",
+    "gabriele oettingen"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Oettingen & Mayer, JPSP, 2002",
+  "source_kind": "paper",
+  "reference": "Oettingen & Mayer, The motivating function of thinking about the future: expectations versus fantasies, Journal of Personality and Social Psychology, 2002",
+  "written": "2026-10-03"
+}

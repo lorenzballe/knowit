@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-trends-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.trends",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Which is more likely to still be read in 50 years: a book in print for 50 years, or last year's bestseller?",
+  "options": [
+    "The 50-year-old book",
+    "Last year's bestseller",
+    "Equally likely"
+  ],
+  "correct": 0,
+  "answer": "The 50-year-old book. Nassim Taleb popularised the idea as the Lindy effect: for books, ideas and tools, which do not wear out like bodies, each year survived suggests more years ahead. A bestseller has passed one year's test; the older book has outlasted fifty years of fashions that came and went.",
+  "move": "For things that do not age, past survival is the best forecast.",
+  "ask": "Which advice I follow has lasted for generations, and which only became popular last year?",
+  "trap": "The bestseller is selling now, so it must have the brighter future.",
+  "keywords": [
+    "lindy effect",
+    "bestsellers",
+    "longevity",
+    "classics"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Taleb, Antifragile, 2012",
+  "source_kind": "book",
+  "reference": "Nassim Nicholas Taleb, Antifragile: Things That Gain from Disorder, Random House, 2012",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "human_body-sleep-and-thinking-3",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.sleep_and_thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: after 17 to 19 hours awake, people performed some tests as badly as at 0.05% blood alcohol?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Williamson and Feyer kept volunteers awake and, on another occasion, tested them after drinking. After 17 to 19 hours without sleep, speed and accuracy on some tasks matched or fell below performance at 0.05% alcohol, the drink-driving limit in much of Europe. A long day plus a late drive home is that.",
+  "move": "Weigh a risk by its effects, not by how familiar it feels.",
+  "ask": "When I drive or decide late at night, would I accept the same state from a drink?",
+  "trap": "Tiredness feels milder than drink, so it must be safer.",
+  "keywords": [
+    "sleep deprivation",
+    "alcohol",
+    "driving",
+    "reaction time"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Williamson and Feyer, Occup Environ Med, 2000",
+  "source_kind": "paper",
+  "reference": "Williamson AM, Feyer AM, Moderate sleep deprivation produces impairments in cognitive and motor performance equivalent to legally prescribed levels of alcohol intoxication, Occupational and Environmental Medicine, 2000",
+  "written": "2026-09-26"
+}

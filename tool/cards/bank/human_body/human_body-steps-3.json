@@ -1,0 +1,40 @@
+{
+  "id": "human_body-steps-3",
+  "topic": "human_body",
+  "genre": "human_body.your_body_in_numbers",
+  "strand": "human_body.your_body_in_numbers.steps",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Older women taking 4,400 steps a day died 41% less often than those taking 2,700. What most limits that finding?",
+  "options": [
+    "Step counters miscount slow walkers",
+    "Women overstated their walking",
+    "Women already ill walk less"
+  ],
+  "correct": 2,
+  "answer": "Women already ill walk less. In I-Min Lee's study of about 17,000 women, the link held after early deaths were set aside. But any study that watches walking, rather than assigning it, must ask whether hidden illness lowers both steps and survival. Steps were counted by a device, so overstating was not possible.",
+  "move": "Ask whether the outcome might be shaping the behaviour being measured.",
+  "ask": "When I see healthy people doing something, could their health be why they can do it?",
+  "trap": "Suspecting the counting device, the most visible part of the study.",
+  "keywords": [
+    "step count",
+    "older women",
+    "reverse causation",
+    "mortality"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lee et al., JAMA Internal Medicine, 2019",
+  "source_kind": "paper",
+  "reference": "Lee IM, Shiroma EJ, Kamada M et al., Association of step volume and intensity with all-cause mortality in older women, JAMA Internal Medicine, 2019",
+  "written": "2026-09-26"
+}

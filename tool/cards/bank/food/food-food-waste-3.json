@@ -1,0 +1,39 @@
+{
+  "id": "food-food-waste-3",
+  "topic": "food",
+  "genre": "food.food_and_the_planet",
+  "strand": "food.food_and_the_planet.food_waste",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: food buried in a landfill breaks down much as it would in a garden compost heap?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A compost heap is turned and full of air, so microbes break food down to carbon dioxide. Buried under tonnes of rubbish, food gets no oxygen, and other microbes turn it into methane, a far stronger greenhouse gas. The US Environmental Protection Agency estimates food causes about 58% of the methane escaping municipal landfills.",
+  "move": "The same process can turn harmful when its conditions change.",
+  "ask": "Which harmless habit of mine might turn harmful in a different setting?",
+  "trap": "Rotting food sounds natural, so it seems harmless wherever it rots.",
+  "keywords": [
+    "landfill",
+    "methane",
+    "composting",
+    "food waste"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US EPA, methane from landfilled food waste, 2023",
+  "source_kind": "institution",
+  "reference": "US Environmental Protection Agency, Quantifying Methane Emissions from Landfilled Food Waste, 2023",
+  "written": "2026-10-03"
+}

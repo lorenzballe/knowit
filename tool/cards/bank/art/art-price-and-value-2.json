@@ -1,0 +1,40 @@
+{
+  "id": "art-price-and-value-2",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.price_and_value",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Two similar paintings come up for resale today. One was last bought in a boom, the other in a slump. Which tends to fetch more?",
+  "options": [
+    "The one bought in the slump",
+    "Neither: today's market decides",
+    "The one bought in the boom"
+  ],
+  "correct": 2,
+  "answer": "The one bought in the boom. Studying repeat sales at auction, Beggs and Graddy found that a high past price pulls today's price up, even allowing for the work and the market. Buyers read the old number as news about value. A bid from a hot year keeps whispering in the saleroom.",
+  "move": "The first price you heard keeps steering the price you accept.",
+  "ask": "When I negotiate, whose first number is quietly setting the range?",
+  "trap": "Neither, because a market should price only present value.",
+  "keywords": [
+    "anchoring",
+    "auctions",
+    "repeat sales",
+    "art prices"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Beggs & Graddy, American Economic Review, 2009",
+  "source_kind": "paper",
+  "reference": "Alan Beggs & Kathryn Graddy, Anchoring effects: evidence from art auctions, American Economic Review, 2009",
+  "written": "2026-10-03"
+}

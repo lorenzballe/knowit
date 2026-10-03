@@ -1,0 +1,33 @@
+{
+  "id": "life-priorities-3",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.priorities",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Asked to carry one of two buckets to the end of an alley, why did people pick up the nearer one and carry it further?",
+  "answer": "To get something done sooner. Rosenbaum, Gong and Potts called it pre-crastination: hurrying to complete a step, even at extra physical cost. Their reading was that finishing a step frees the mind from having to hold it. Answering the quick email before starting the hard report is the same move.",
+  "move": "Notice when you finish easy steps first just to stop holding them.",
+  "ask": "Which easy task do I rush to tick off first, and what harder one does it push back?",
+  "keywords": [
+    "pre-crastination",
+    "subgoals",
+    "to-do lists",
+    "effort"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rosenbaum, Gong and Potts, Psychological Science, 2014",
+  "source_kind": "paper",
+  "reference": "Rosenbaum, Gong and Potts, Pre-crastination: Hastening subgoal completion at the expense of extra physical effort, Psychological Science, 2014",
+  "written": "2026-10-03"
+}

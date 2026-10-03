@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-why-trends-return-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.why_trends_return",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a fashion start to die at the very moment everyone finally has it?",
+  "answer": "Because it was worn to stand out. In 1904 Georg Simmel argued fashion does two jobs at once: it lets people copy those they admire and set themselves apart from everyone else. Once a style spreads downwards it stops marking anyone out, so its leaders drop it, and the dropped look waits in the cupboard.",
+  "move": "A sign that everyone can copy soon stops saying anything.",
+  "ask": "Do I like this thing for itself, or for what owning it says about me?",
+  "keywords": [
+    "georg simmel",
+    "fashion cycle",
+    "imitation",
+    "distinction"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Simmel, Fashion, International Quarterly, 1904",
+  "source_kind": "paper",
+  "reference": "Georg Simmel, Fashion, International Quarterly, 1904; reprinted in the American Journal of Sociology, 1957",
+  "written": "2026-09-26"
+}

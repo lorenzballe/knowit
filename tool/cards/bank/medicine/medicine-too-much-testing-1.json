@@ -1,0 +1,40 @@
+{
+  "id": "medicine-too-much-testing-1",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.too_much_testing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Before 19,557 cataract operations, half the patients had routine blood tests and a heart tracing. How did complications compare?",
+  "options": [
+    "Fewer in the tested group",
+    "The same in both groups",
+    "Fewer in the untested group"
+  ],
+  "correct": 1,
+  "answer": "The same in both groups: about 31 problems per 1,000 operations either way. Cataract surgery is short, done under local anaesthetic, and rarely upset by a mildly odd blood count. The tests found things, but nothing that changed what happened on the day. They added cost, delay and worry.",
+  "move": "A check that cannot change the decision is not worth running.",
+  "ask": "Which check do I keep doing out of habit, though no answer it gives would change what I do?",
+  "trap": "Fewer in the tested group, since checking first should catch hidden problems.",
+  "keywords": [
+    "cataract surgery",
+    "preoperative tests",
+    "ecg",
+    "routine testing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schein et al., NEJM, 2000",
+  "source_kind": "paper",
+  "reference": "Schein et al., The value of routine preoperative medical testing before cataract surgery, New England Journal of Medicine, 2000",
+  "written": "2026-10-03"
+}

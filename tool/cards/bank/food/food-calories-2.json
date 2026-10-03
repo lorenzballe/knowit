@@ -1,0 +1,42 @@
+{
+  "id": "food-calories-2",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.calories",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Ana permanently eats 500 kJ a day less. Each 100 kJ a day moves eventual weight about 1 kg. How many kg does she lose?",
+  "value": 5,
+  "unit": "kg",
+  "answer": "About 5 kg in all: half within a year, nearly all within three, then her weight settles",
+  "move": "A body adjusts to a change, so steady effort reaches a new level.",
+  "ask": "Which change am I expecting to keep paying off forever, when it will level off?",
+  "trap": "Expecting the same loss again every year, as older rules promised.",
+  "hint": "Divide the daily cut by the 100 kJ that each kilo needs.",
+  "steps": [
+    "500 kJ ÷ 100 kJ = 5",
+    "5 × 1 kg = 5 kg",
+    "About 5 kg in all: half within a year, nearly all within three, then her weight settles"
+  ],
+  "keywords": [
+    "energy balance",
+    "weight loss",
+    "kilojoules",
+    "plateau"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hall et al., The Lancet, 2011",
+  "source_kind": "paper",
+  "reference": "Hall, Sacks, Chandramohan, Chow, Wang, Gortmaker & Swinburn, Quantification of the effect of energy imbalance on bodyweight, The Lancet, 2011",
+  "written": "2026-10-03"
+}

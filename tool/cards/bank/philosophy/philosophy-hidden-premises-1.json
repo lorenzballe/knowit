@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-hidden-premises-1",
+  "topic": "philosophy",
+  "genre": "philosophy.arguments",
+  "strand": "philosophy.arguments.hidden_premises",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "The supplement is natural, so it is safe. What else must be true for that argument to work?",
+  "options": [
+    "The maker has tested it",
+    "Natural substances are safe",
+    "The dose is labelled correctly"
+  ],
+  "correct": 1,
+  "answer": "Natural substances are safe. That premise goes unsaid because, spoken aloud, it is plainly false: hemlock, arsenic and death cap mushrooms are natural. Aristotle saw that arguments with a step left out persuade best when the audience supplies it themselves. A label saying natural recruits the shopper to finish the argument.",
+  "move": "Say the unstated premise out loud and see whether it survives.",
+  "ask": "Which unspoken assumption did the last advert that persuaded me rely on?",
+  "trap": "That the maker tested it, which sounds like the missing support.",
+  "keywords": [
+    "enthymeme",
+    "aristotle",
+    "hidden premise",
+    "natural products",
+    "advertising"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Aristotle, On Rhetoric, trans. Kennedy",
+  "source_kind": "book",
+  "reference": "Aristotle, On Rhetoric, trans. Kennedy, 2nd edition, Oxford University Press, 2007",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "psychology-expectations-1",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.expectations",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In a phone game played by thousands, what best predicted how happy players felt from moment to moment?",
+  "answer": "Results compared with expectations, plus the expectations themselves. Rutledge and colleagues fitted a model to more than 18,000 players of a gambling app. Happiness rose when outcomes beat what players expected, but also when they looked forward to a good gamble. Low expectations make good news sweeter while stealing the pleasure of anticipation.",
+  "move": "Happiness tracks surprises and hopes, not just how things turn out.",
+  "ask": "Am I keeping my hopes low to avoid disappointment, and losing the pleasure of looking forward?",
+  "keywords": [
+    "expectations",
+    "reward prediction",
+    "momentary happiness",
+    "smartphone app"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rutledge et al., PNAS, 2014",
+  "source_kind": "paper",
+  "reference": "Rutledge, Skandali, Dayan & Dolan, A computational and neural model of momentary subjective well-being, PNAS, 2014",
+  "written": "2026-10-03"
+}

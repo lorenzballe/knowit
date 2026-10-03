@@ -1,0 +1,43 @@
+{
+  "id": "economics-taxes-1",
+  "topic": "economics",
+  "genre": "economics.inequality",
+  "strand": "economics.inequality.taxes",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Tax is 0% on the first €10,000, 20% up to €50,000 and 40% above. On €60,000, what percentage goes in tax?",
+  "value": 20,
+  "unit": "per cent",
+  "answer": "Total €12,000 ÷ €60,000 = 20%",
+  "move": "A top tax rate applies to the top slice, not to everything.",
+  "ask": "Have I ever turned down a raise or extra work fearing a higher tax band would take it all?",
+  "trap": "40%, the rate charged on the top slice of income.",
+  "hint": "Tax each band separately, then divide the total by the income.",
+  "steps": [
+    "First €10,000 at 0%: €0",
+    "Next €40,000 at 20%: €8,000",
+    "Last €10,000 at 40%: €4,000",
+    "Total €12,000 ÷ €60,000 = 20%"
+  ],
+  "keywords": [
+    "income tax",
+    "tax bands",
+    "marginal rate",
+    "average rate"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marginal and average tax rates",
+  "source_kind": "arithmetic",
+  "reference": "Mankiw, Principles of Economics, 9th edition, Cengage, 2020",
+  "written": "2026-10-03"
+}

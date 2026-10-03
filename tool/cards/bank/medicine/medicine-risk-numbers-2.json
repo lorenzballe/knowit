@@ -1,0 +1,43 @@
+{
+  "id": "medicine-risk-numbers-2",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.risk_numbers",
+  "also": [
+    "science.read_a_study.relative_or_absolute"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "In 1995, British women heard some contraceptive pills doubled their risk of blood clots. In absolute terms, about how big was the rise?",
+  "options": [
+    "1 extra woman in 7,000 a year",
+    "1 extra woman in 700 a year",
+    "1 extra woman in 70 a year"
+  ],
+  "correct": 0,
+  "answer": "About 1 extra woman in 7,000 a year: from roughly 1 in 7,000 to 2 in 7,000. Doubled was true and terrifying. Many women stopped the pill abruptly, and an estimated 13,000 extra abortions followed in England and Wales, while pregnancy itself carries a higher clot risk than either pill.",
+  "move": "Before reacting to doubled, ask doubled from what.",
+  "ask": "When a headline says a risk doubled, do I ask what it was before I change anything?",
+  "trap": "1 extra woman in 70, because doubled sounds like a large share.",
+  "keywords": [
+    "pill scare",
+    "blood clots",
+    "contraceptive pill",
+    "relative risk"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gigerenzer, Risk Savvy, 2014",
+  "source_kind": "book",
+  "reference": "Gigerenzer, Risk Savvy: How to Make Good Decisions, Viking, 2014",
+  "written": "2026-10-03"
+}

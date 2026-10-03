@@ -1,0 +1,43 @@
+{
+  "id": "language-loaded-words-2",
+  "topic": "language",
+  "genre": "language.words_that_persuade",
+  "strand": "language.words_that_persuade.loaded_words",
+  "also": [
+    "psychology.resist_persuasion.framing"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "One US survey asks whether too little is spent on welfare; another, on assistance to the poor. How do answers compare?",
+  "options": [
+    "About the same share say too little",
+    "Far more say too little for the poor",
+    "Far more say too little on welfare"
+  ],
+  "correct": 1,
+  "answer": "Far more say too little for the poor. In the General Social Survey of the 1980s, about a fifth said too little was spent on welfare, while about two-thirds said so of assistance to the poor. The spending was the same; welfare carried decades of attached images. A poll's wording can choose its answer.",
+  "move": "Before trusting a poll, read the exact words people were asked.",
+  "ask": "Which word in a question put to me lately quietly decided my answer?",
+  "trap": "About the same, since both questions ask about one kind of spending.",
+  "keywords": [
+    "welfare",
+    "question wording",
+    "general social survey",
+    "polls"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smith, Public Opinion Quarterly, 1987",
+  "source_kind": "paper",
+  "reference": "Smith, That which we call welfare by any other name would smell sweeter: an analysis of the impact of question wording on response patterns, Public Opinion Quarterly 51(1), 1987",
+  "written": "2026-10-03"
+}

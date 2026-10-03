@@ -1,0 +1,39 @@
+{
+  "id": "food-food-safety-3",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.food_safety",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: home canners need pressure for low-acid vegetables mainly because boiling cannot destroy botulinum toxin?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The toxin is a protein that heat breaks apart: WHO says it is destroyed above about 85 °C held for five minutes. The pressure is for the spores, which survive hours of boiling and wake later in a sealed, low-acid jar. Only under pressure, at 116 to 121 °C, do they die.",
+  "move": "Ask which part of a danger each safeguard is actually aimed at.",
+  "ask": "Do I know what each of my safety habits is really protecting me from?",
+  "trap": "Assuming the deadliest poison must also be the hardest to destroy.",
+  "keywords": [
+    "pressure canning",
+    "botulinum toxin",
+    "spores",
+    "home preserving"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "WHO, Botulism fact sheet, 2023",
+  "source_kind": "institution",
+  "reference": "https://www.who.int/news-room/fact-sheets/detail/botulism",
+  "written": "2026-10-03"
+}

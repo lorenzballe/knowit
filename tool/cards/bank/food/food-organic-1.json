@@ -1,0 +1,40 @@
+{
+  "id": "food-organic-1",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.organic",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: EU rules allow some pesticides to be sprayed on certified organic crops?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. The EU's organic rules list approved crop-protection products, mostly of natural origin: copper compounds against fungi, sulphur, pyrethrins from chrysanthemums, and spinosad, an insecticide made by bacteria. Copper never breaks down and builds up in vineyard soils, so the EU caps it at an average of 4 kg per hectare a year.",
+  "move": "A label tells you which rules were followed, not that nothing was used.",
+  "ask": "What do I assume a label promises that it never actually says?",
+  "trap": "Organic sounds like spray-free, so any pesticide seems against the rules.",
+  "keywords": [
+    "organic farming",
+    "pesticides",
+    "copper",
+    "spinosad",
+    "eu regulation"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Commission Implementing Regulation (EU) 2021/1165",
+  "source_kind": "primary_document",
+  "reference": "Commission Implementing Regulation (EU) 2021/1165 authorising certain products and substances for use in organic production, Annex I, 2021",
+  "written": "2026-10-03"
+}

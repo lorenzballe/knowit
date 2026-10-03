@@ -1,0 +1,33 @@
+{
+  "id": "cinema-war-films-1",
+  "topic": "cinema",
+  "genre": "cinema.films_and_history",
+  "strand": "cinema.films_and_history.war_films",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In the 1916 film The Battle of the Somme, which famous shot of soldiers going over the top was staged?",
+  "answer": "The best-known one. The sequence of men climbing from a trench into the smoke, one sliding back as if hit, was filmed at a training ground behind the lines. About 20 million Britons saw the film in its first six weeks. The image people remember of the battle was rehearsed.",
+  "move": "The most iconic shot is the one most worth checking.",
+  "ask": "Which picture of a real event shapes my opinion, and do I know how it was made?",
+  "keywords": [
+    "battle of the somme",
+    "staged footage",
+    "imperial war museum",
+    "war films"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Imperial War Museums, Malins and the Somme film",
+  "source_kind": "institution",
+  "reference": "https://www.iwm.org.uk/history/geoffrey-malins-and-the-battle-of-the-somme-film",
+  "written": "2026-10-03"
+}

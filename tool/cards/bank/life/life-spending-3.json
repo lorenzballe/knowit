@@ -1,0 +1,41 @@
+{
+  "id": "life-spending-3",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.spending",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Students bid for sold-out basketball tickets, some paying by card, some in cash. How did the card bids compare?",
+  "options": [
+    "About the same",
+    "About 10% higher",
+    "About twice as high"
+  ],
+  "correct": 2,
+  "answer": "About twice as high. In Prelec and Simester's auction at MIT, people told they would pay by credit card bid on average nearly double what cash payers bid for the same tickets. Handing over notes hurts at the moment of buying; a card moves that pain to a later bill.",
+  "move": "Feel the price at the moment you pay, or it will be paid twice.",
+  "ask": "Would I still buy the thing in my basket if I had to count out the cash for it right now?",
+  "trap": "Money is money, so the way it is paid should not matter.",
+  "keywords": [
+    "credit cards",
+    "pain of paying",
+    "auctions",
+    "willingness to pay",
+    "cash"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Prelec and Simester, Marketing Letters, 2001",
+  "source_kind": "paper",
+  "reference": "https://web.mit.edu/simester/Public/Papers/Alwaysleavehome.pdf",
+  "written": "2026-10-03"
+}

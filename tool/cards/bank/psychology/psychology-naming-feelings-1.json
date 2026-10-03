@@ -1,0 +1,33 @@
+{
+  "id": "psychology-naming-feelings-1",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.naming_feelings",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does writing about a painful experience for 15 minutes on a few days in a row do any measurable good?",
+  "answer": "A little, on average. In early studies, students who wrote about their deepest feelings on a trauma later visited the health centre less often. Pooling 146 studies, the average benefit was real but small, and larger for some people than for others. Fifteen minutes with a pen is a modest tool, not a cure.",
+  "move": "Turning a jumble of feeling into sentences gives the mind something to file.",
+  "ask": "Is there something heavy I keep circling in my head that I could write out for 15 minutes?",
+  "keywords": [
+    "expressive writing",
+    "trauma",
+    "health",
+    "meta-analysis"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frattaroli, Psychological Bulletin, 2006",
+  "source_kind": "paper",
+  "reference": "Frattaroli, Experimental disclosure and its moderators: A meta-analysis, Psychological Bulletin, 2006",
+  "written": "2026-10-03"
+}

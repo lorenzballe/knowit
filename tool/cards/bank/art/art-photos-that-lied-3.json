@@ -1,0 +1,40 @@
+{
+  "id": "art-photos-that-lied-3",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.photos_that_lied",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Robert Doisneau's famous 1950 photograph of a couple kissing outside Paris's town hall was posed?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Doisneau hired two young drama students, Françoise Bornet and Jacques Carteaud, for a Life magazine story on Paris lovers, and had them kiss at several spots. It came out in 1993, when a couple who believed they were the pair sued him. The kiss was real enough; the chance moment was made to order.",
+  "move": "A moment that looks candid may have been arranged for the camera.",
+  "ask": "Which candid-looking moments in my feed were actually set up for the camera?",
+  "trap": "False, because it looks like a moment snatched in passing.",
+  "keywords": [
+    "robert doisneau",
+    "the kiss",
+    "staged photograph",
+    "paris",
+    "life magazine"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hamilton, Robert Doisneau: A Photographer's Life, 1995",
+  "source_kind": "book",
+  "reference": "Peter Hamilton, Robert Doisneau: A Photographer's Life, Abbeville Press, 1995",
+  "written": "2026-10-03"
+}

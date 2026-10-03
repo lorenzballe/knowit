@@ -1,0 +1,40 @@
+{
+  "id": "nature-adaptation-2",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.adaptation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Judged by 2003's toll, France's 2006 heatwave should have caused about 6,400 extra deaths. How many were counted?",
+  "options": [
+    "About 2,000",
+    "About 6,400",
+    "About 15,000"
+  ],
+  "correct": 0,
+  "answer": "About 2,000. After about 15,000 people died in the 2003 heatwave, France built a heat warning system, checked on isolated elderly people and cooled care homes. Fouillet and colleagues modelled the 2006 heat with 2003's vulnerability and expected 6,452 extra deaths; 2,065 were counted. Roughly 4,400 lives fit in that gap.",
+  "move": "Measure a precaution against the toll expected without it.",
+  "ask": "Which preparation of mine has quietly prevented trouble I never got to see?",
+  "trap": "Similar heat should kill similar numbers; people cannot change the heat.",
+  "keywords": [
+    "heatwave",
+    "france",
+    "heat warning system",
+    "excess deaths"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fouillet et al., Int. J. Epidemiology, 2008",
+  "source_kind": "paper",
+  "reference": "Fouillet et al., Has the impact of heat waves on mortality changed in France since the European heat wave of summer 2003? A study of the 2006 heat wave, International Journal of Epidemiology, 2008",
+  "written": "2026-10-03"
+}

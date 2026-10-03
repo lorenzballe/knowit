@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-likes-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.likes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Which kind of Facebook activity was linked to people later feeling better about their lives?",
+  "options": [
+    "Collecting likes on their posts",
+    "Messages written by close friends",
+    "Browsing friends' updates"
+  ],
+  "correct": 1,
+  "answer": "Messages written by close friends. Burke and Kraut matched months of surveys with users' actual Facebook activity: personal, composed messages from people they were close to tracked rises in wellbeing, while one-click feedback such as likes, and scrolling through others' broadcasts, did not. A few sentences from a friend outweighed a hundred taps.",
+  "move": "Effort is what makes attention from others feel like care.",
+  "ask": "Who could I send a few real sentences to today instead of a quick like?",
+  "trap": "Likes feel rewarding in the moment, so piling them up should help.",
+  "keywords": [
+    "facebook",
+    "wellbeing",
+    "likes",
+    "close friends"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Burke and Kraut, J. Computer-Mediated Communication, 2016",
+  "source_kind": "paper",
+  "reference": "Moira Burke and Robert E. Kraut, The Relationship Between Facebook Use and Well-Being Depends on Communication Type and Tie Strength, Journal of Computer-Mediated Communication, 2016",
+  "written": "2026-09-26"
+}

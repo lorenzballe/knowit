@@ -1,0 +1,40 @@
+{
+  "id": "space-astrology-or-astronomy-1",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.astrology_or_astronomy",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Someone born on 1 April has the sign of Aries. Which group of stars was the Sun actually in that day?",
+  "options": [
+    "Aries",
+    "Pisces",
+    "Taurus"
+  ],
+  "correct": 1,
+  "answer": "Pisces. The signs were fixed about 2,000 years ago, but Earth's axis wobbles like a slowing top, sliding the calendar against the stars by about a day every 72 years. The Sun now reaches the stars of Aries around 18 April, so most people called Aries were born under Pisces.",
+  "move": "A label fixed long ago may no longer match the thing it named.",
+  "ask": "Which label I gave myself years ago still describes who I actually am today?",
+  "trap": "Aries, since the sign is named after that constellation.",
+  "keywords": [
+    "zodiac",
+    "precession",
+    "constellations",
+    "astrology"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kaler, The Ever-Changing Sky, 1996",
+  "source_kind": "book",
+  "reference": "Kaler, The Ever-Changing Sky: A Guide to the Celestial Sphere, Cambridge University Press, 1996",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "music-music-and-memory-3",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.music_and_memory",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Streaming data show which songs men in their late thirties still play most. Released when the men were about what age?",
+  "options": [
+    "About 14",
+    "About 24",
+    "About 34"
+  ],
+  "correct": 0,
+  "answer": "About 14. Seth Stephens-Davidowitz analysed Spotify plays and found that songs released when men were 13 to 16 weighed most in their adult taste, and for women those from ages 11 to 14. Early-teen hits beat those of the twenties, the years of clubs and first wages. Adult playlists were mostly chosen at school.",
+  "move": "Tastes set early in life keep passing themselves off as adult choices.",
+  "ask": "Which of my strong preferences were set when I was a teenager, and do they still fit me?",
+  "trap": "Picking the twenties, the years of clubs, concerts and money.",
+  "keywords": [
+    "reminiscence bump",
+    "spotify",
+    "teenage years",
+    "musical taste"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stephens-Davidowitz, The New York Times, 2018",
+  "source_kind": "news_archive",
+  "reference": "Stephens-Davidowitz, The Songs That Bind, The New York Times, 10 February 2018",
+  "written": "2026-09-26"
+}

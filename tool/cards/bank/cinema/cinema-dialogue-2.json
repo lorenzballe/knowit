@@ -1,0 +1,33 @@
+{
+  "id": "cinema-dialogue-2",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.dialogue",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why would a word-for-word transcript of a real conversation make terrible film dialogue?",
+  "answer": "Real talk is full of stumbles. Bortfeld and colleagues counted about six disfluencies, such as ums, repeats and restarts, in every 100 words of ordinary conversation. Screenwriters strip all of that out and give characters the perfect reply first time. Next to them, every real speaker sounds clumsy.",
+  "move": "Do not judge live speech by the standard of rehearsed lines.",
+  "ask": "Am I judging someone, or myself, against the polish of speech that was written and rehearsed?",
+  "keywords": [
+    "disfluency",
+    "film dialogue",
+    "conversation",
+    "screenwriting"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bortfeld et al., Language and Speech, 2001",
+  "source_kind": "paper",
+  "reference": "Bortfeld, Leon, Bloom, Schober and Brennan, Disfluency Rates in Conversation: Effects of Age, Relationship, Topic, Role, and Gender, Language and Speech, 44(2), 2001",
+  "written": "2026-10-03"
+}

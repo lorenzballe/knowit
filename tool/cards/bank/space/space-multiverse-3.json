@@ -1,0 +1,40 @@
+{
+  "id": "space-multiverse-3",
+  "topic": "space",
+  "genre": "space.questions_with_no_answer_yet",
+  "strand": "space.questions_with_no_answer_yet.multiverse",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "If space is infinite and filled with matter much as it is here, how many exact copies of Earth would exist?",
+  "options": [
+    "None, since Earth is unique",
+    "A few, by rare chance",
+    "Infinitely many"
+  ],
+  "correct": 2,
+  "answer": "Infinitely many. A region the size of the visible universe can be arranged in only a finite number of ways, enormous but finite. Repeat such regions forever and every arrangement, Earth included, comes round again and again, though the nearest copy would be unimaginably far away. Nobody knows whether space is infinite.",
+  "move": "Given endless tries, the nearly impossible becomes certain.",
+  "ask": "Which coincidence in my life feels like fate, when enough tries made it likely?",
+  "trap": "None, since something as complex as Earth cannot repeat exactly.",
+  "keywords": [
+    "infinite universe",
+    "multiverse",
+    "max tegmark",
+    "copies"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tegmark, Scientific American, 2003",
+  "source_kind": "news_archive",
+  "reference": "Tegmark, Parallel Universes, Scientific American, May 2003",
+  "written": "2026-10-03"
+}

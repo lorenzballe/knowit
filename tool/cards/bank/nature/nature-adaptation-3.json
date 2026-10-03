@@ -1,0 +1,38 @@
+{
+  "id": "nature-adaptation-3",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.adaptation",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should governments pay people to leave homes that keep flooding, rather than keep defending them?",
+  "sides": [
+    "Yes, pay them to move",
+    "No, defend the homes"
+  ],
+  "answer": "Yes. Defences built today will be overtopped as seas rise, and each rebuild invites the next loss. Mach and colleagues counted more than 43,000 voluntary buyouts of flood-prone US homes since 1989, land that now soaks up floods instead of generating claims. Paying once to move beats paying forever to stay.",
+  "move": "Whichever side you took, who pays and who must leave decides it.",
+  "ask": "Am I still defending something in my life that it would be wiser to walk away from?",
+  "counterpoint": "Buyouts break up communities, and those paid to leave are often poorer families who cannot afford to stay nearby. The Dutch show that dense places can be defended for centuries if the will and money exist. Retreat also shrinks the tax base that pays for schools. It should be the last tool, not the first.",
+  "keywords": [
+    "managed retreat",
+    "flood buyouts",
+    "sea level rise",
+    "flood defences"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mach et al., Science Advances, 2019",
+  "source_kind": "paper",
+  "reference": "Mach et al., Managed retreat through voluntary buyouts of flood-prone properties, Science Advances, 2019",
+  "written": "2026-10-03"
+}

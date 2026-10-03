@@ -1,0 +1,39 @@
+{
+  "id": "cinema-historical-errors-2",
+  "topic": "cinema",
+  "genre": "cinema.films_and_history",
+  "strand": "cinema.films_and_history.historical_errors",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: Roman writers clearly record a thumbs-down from the crowd as the signal to kill a gladiator?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Latin sources mention a turned thumb, pollice verso, without saying which way it turned. The thumbs-down image comes from Jean-Léon Gérôme's 1872 painting of that name, which Gladiator later copied. Scholars such as Anthony Corbeill still argue over the gesture. A painting settled what the texts left open.",
+  "move": "A vivid picture can quietly overwrite a vague record.",
+  "ask": "Which fact about the past do I picture clearly only because I saw it in a film?",
+  "trap": "True, because the gesture is shown in every gladiator film.",
+  "keywords": [
+    "gladiators",
+    "pollice verso",
+    "jean-léon gérôme",
+    "gladiator"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Corbeill, Nature Embodied, 2004",
+  "source_kind": "book",
+  "reference": "Anthony Corbeill, Nature Embodied: Gesture in Ancient Rome, Princeton University Press, 2004",
+  "written": "2026-10-03"
+}

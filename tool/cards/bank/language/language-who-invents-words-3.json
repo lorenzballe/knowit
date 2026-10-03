@@ -1,0 +1,39 @@
+{
+  "id": "language-who-invents-words-3",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.who_invents_words",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: most words newly added to English are built from parts the language already had?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A study of 50 years of new English words found most were compounds, words with added prefixes or suffixes, shortenings and blends; words made from nothing were a tiny fraction. Kodak and googol stick in the mind because they are rare. New vocabulary is mostly old pieces snapped together, like smartphone or binge-watch.",
+  "move": "Vivid cases are remembered because they are rare, not because they are typical.",
+  "ask": "Which of my ideas could be built from pieces I already have rather than from scratch?",
+  "trap": "False, because invented words like googol are the ones remembered.",
+  "keywords": [
+    "neologisms",
+    "compounds",
+    "blends",
+    "word formation"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Algeo, Fifty Years Among the New Words, 1991",
+  "source_kind": "book",
+  "reference": "Algeo, Fifty Years Among the New Words: A Dictionary of Neologisms, 1941–1991, Cambridge University Press, 1991",
+  "written": "2026-10-03"
+}

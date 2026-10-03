@@ -1,0 +1,33 @@
+{
+  "id": "psychology-money-and-happiness-3",
+  "topic": "psychology",
+  "genre": "psychology.happiness_research",
+  "strand": "psychology.happiness_research.money_and_happiness",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who feels more sadness and stress from a divorce, an illness or living alone: people on low incomes or high?",
+  "answer": "People on low incomes. From about 450,000 US survey answers, Kahneman and Deaton found that low income magnifies the emotional pain of misfortunes such as divorce, ill health and being alone. Beyond a point, money did little for daily joy, but kept softening blows. It works less like a lift than a cushion.",
+  "move": "Value money for the blows it softens, not the highs it promises.",
+  "ask": "Am I saving for a high I imagine, or for a cushion against the bad days that will come?",
+  "keywords": [
+    "income",
+    "emotional well-being",
+    "misfortune",
+    "angus deaton"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kahneman & Deaton, PNAS, 2010",
+  "source_kind": "paper",
+  "reference": "Kahneman & Deaton, High income improves evaluation of life but not emotional well-being, PNAS, 2010",
+  "written": "2026-10-03"
+}

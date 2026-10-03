@@ -1,0 +1,33 @@
+{
+  "id": "science-correlation-or-cause-1",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.correlation_or_cause",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did hormone replacement therapy seem to protect women's hearts until a randomised trial tested it?",
+  "answer": "Because the women who chose it were healthier to begin with: richer, slimmer, more active. Observational studies credited the pills. The Women's Health Initiative assigned 16,608 women by lot and in 2002 found slightly more heart disease on the hormones, not less. The healthy habits came with the prescription, not from it.",
+  "move": "Ask who chooses a treatment before crediting it with their health.",
+  "ask": "Which habit do I credit for my health that people like me tend to have anyway?",
+  "keywords": [
+    "hormone replacement therapy",
+    "women's health initiative",
+    "healthy user effect",
+    "randomised trials"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Writing Group for the WHI, JAMA, 2002",
+  "source_kind": "paper",
+  "reference": "Writing Group for the Women's Health Initiative Investigators, Risks and benefits of estrogen plus progestin in healthy postmenopausal women, JAMA 288:321–333, 2002",
+  "written": "2026-09-26"
+}

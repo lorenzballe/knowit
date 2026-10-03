@@ -1,0 +1,41 @@
+{
+  "id": "nature-pests-3",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.pests",
+  "also": [
+    "nature.insects.bees"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should neonicotinoid seed coatings, which protect crops from pests, stay banned on European farms?",
+  "sides": [
+    "Yes, keep the ban",
+    "No, lift the ban"
+  ],
+  "answer": "Yes. Woodcock and colleagues ran field trials in Britain, Germany and Hungary and linked neonicotinoid residues to fewer wild bee offspring, with harm to honeybees in two of the countries. A coating puts insecticide into every plant, nearby weeds and soil water, whether pests come or not. Pollinators matter more than one crop's convenience.",
+  "move": "Whichever side you took, what farmers use instead is what decides it.",
+  "ask": "When I give something up, have I checked what I will reach for instead?",
+  "counterpoint": "The ban did not end spraying; it changed it. British oilseed rape growers switched to pyrethroid sprays, which hit insects broadly, and flea beetle damage helped shrink the crop's area. The same trials found no harm to honeybees in Germany. A targeted seed coating may do less harm than the sprays that replaced it.",
+  "keywords": [
+    "neonicotinoids",
+    "seed treatment",
+    "wild bees",
+    "oilseed rape"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Woodcock et al., Science, 2017",
+  "source_kind": "paper",
+  "reference": "Woodcock et al., Country-specific effects of neonicotinoid pesticides on honey bees and wild bees, Science, 2017",
+  "written": "2026-10-03"
+}

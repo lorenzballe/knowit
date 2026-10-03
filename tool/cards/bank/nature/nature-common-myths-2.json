@@ -1,0 +1,40 @@
+{
+  "id": "nature-common-myths-2",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.common_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Critics claimed the textbook peppered moth story was staged. What did a seven-year rerun with 4,864 moths find?",
+  "options": [
+    "Birds ate the more visible moths more",
+    "Birds ate both forms equally often",
+    "The moths never rested on trunks"
+  ],
+  "correct": 0,
+  "answer": "Birds ate the more visible moths more. Michael Majerus released moths in his Cambridge garden and watched birds take them; in today's cleaner air, the dark form now stood out and was eaten more. Cook and colleagues published his results after his death. A debunking can be wrong too; rerunning the test settled it.",
+  "move": "Treat a debunking as a claim too, and check it the same way.",
+  "ask": "Which debunking have I accepted as readily as the story it knocked down?",
+  "trap": "A famous example that was criticised seems likely to be bogus.",
+  "keywords": [
+    "peppered moth",
+    "michael majerus",
+    "bird predation",
+    "industrial melanism"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cook et al., Biology Letters, 2012",
+  "source_kind": "paper",
+  "reference": "Cook, Grant, Saccheri & Mallet, Selective bird predation on the peppered moth: the last experiment of Michael Majerus, Biology Letters, 2012",
+  "written": "2026-10-03"
+}

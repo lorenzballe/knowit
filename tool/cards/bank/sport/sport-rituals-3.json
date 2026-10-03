@@ -1,0 +1,33 @@
+{
+  "id": "sport-rituals-3",
+  "topic": "sport",
+  "genre": "sport.the_mind_in_sport",
+  "strand": "sport.the_mind_in_sport.rituals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What separates a useful pre-shot routine from a superstition, when both look like odd, repeated habits?",
+  "answer": "What each one is for. A routine, such as a server's fixed bounces and breath, sets the tempo and points attention at the task, and it can be changed if something works better. A superstition is credited with changing the outcome itself, so dropping it feels dangerous. Cotterill's review treats routines as tools for focus.",
+  "move": "Keep habits that steer attention; question habits that claim to steer luck.",
+  "ask": "Which of my routines helps me focus, and which do I keep only out of fear of dropping it?",
+  "keywords": [
+    "pre-performance routines",
+    "superstition",
+    "attention",
+    "tennis serve"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cotterill, Int Rev Sport Exerc Psychol, 2010",
+  "source_kind": "paper",
+  "reference": "Stewart Cotterill, Pre-performance routines in sport: current understanding and future directions, International Review of Sport and Exercise Psychology, 2010",
+  "written": "2026-09-26"
+}

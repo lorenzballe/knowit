@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-epicurus-2",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.epicurus",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Epicurus sorted human desires into three kinds. Where did he put the desire for honours and statues of yourself?",
+  "options": [
+    "Natural but not necessary",
+    "Natural and necessary",
+    "Neither natural nor necessary"
+  ],
+  "correct": 2,
+  "answer": "Neither natural nor necessary. An ancient note on his Principal Doctrines gives the examples: drink when thirsty is natural and necessary; costly food natural but unnecessary; crowns and statues neither, because they spring from empty opinion and have no limit. A follower count has no level that would ever be enough.",
+  "move": "A desire with no natural stopping point will never be satisfied.",
+  "ask": "Which of my wants has no finish line, and what would enough look like?",
+  "trap": "Natural but unnecessary, since wanting respect feels deeply human.",
+  "keywords": [
+    "epicurus",
+    "desires",
+    "principal doctrines",
+    "fame",
+    "status"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Epicurus, Principal Doctrines 29, scholion",
+  "source_kind": "book",
+  "reference": "Inwood & Gerson (trans.), The Epicurus Reader, Hackett, 1994, Principal Doctrines 29",
+  "written": "2026-10-03"
+}

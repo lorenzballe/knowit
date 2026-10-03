@@ -1,0 +1,43 @@
+{
+  "id": "music-sampling-1",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.sampling",
+  "also": [
+    "music.the_music_business.copyright"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: US courts agree that a sample under two seconds long is too small to need a licence?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In 2005 the Sixth Circuit ruled against NWA's use of a two-second guitar chord from Funkadelic, lowered in pitch and looped: get a licence or do not sample. In 2016 the Ninth Circuit disagreed, over a split-second horn stab in Madonna's Vogue. The answer depends on where the case is filed.",
+  "move": "A rule everyone repeats may be a rule no court has written.",
+  "ask": "Which rule I follow at work is just something everyone repeats and nobody has checked?",
+  "trap": "Trusting the folk rule that a few seconds are always free.",
+  "keywords": [
+    "bridgeport music",
+    "sampling",
+    "copyright",
+    "funkadelic",
+    "de minimis"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bridgeport Music v. Dimension Films, 2005",
+  "source_kind": "primary_document",
+  "reference": "Bridgeport Music, Inc. v. Dimension Films, 410 F.3d 792 (6th Cir. 2005)",
+  "written": "2026-09-26"
+}

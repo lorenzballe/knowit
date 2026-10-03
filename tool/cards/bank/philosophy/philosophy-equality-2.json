@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-equality-2",
+  "topic": "philosophy",
+  "genre": "philosophy.justice",
+  "strand": "philosophy.justice.equality",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Of Americans born in 1980, roughly what share earned more at age 30 than their parents had at that age?",
+  "options": [
+    "About half",
+    "About 90%",
+    "About a fifth"
+  ],
+  "correct": 0,
+  "answer": "About half. Raj Chetty and colleagues found in 2017 that about 90% of Americans born in 1940 out-earned their parents at 30, against about 50% of those born in 1980. Most of the fall came from growth going to the top, not from slower growth. The ladder was still there; fewer rungs reached the middle.",
+  "move": "Ask who receives growth, not only how fast an economy grows.",
+  "ask": "Am I measuring my progress against my parents, and is that the fairest comparison?",
+  "trap": "About 90%, anchored on the post-war pattern of each generation outdoing the last.",
+  "keywords": [
+    "absolute mobility",
+    "raj chetty",
+    "american dream",
+    "income",
+    "inequality"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chetty et al., Science, 2017",
+  "source_kind": "paper",
+  "reference": "Chetty, Grusky, Hell, Hendren, Manduca & Narang, The Fading American Dream: Trends in Absolute Income Mobility Since 1940, Science 356 (6336), 2017",
+  "written": "2026-10-03"
+}

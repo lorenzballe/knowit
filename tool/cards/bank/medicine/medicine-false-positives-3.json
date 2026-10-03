@@ -1,0 +1,33 @@
+{
+  "id": "medicine-false-positives-3",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.false_positives",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do newborn blood-spot programmes accept many false alarms for every baby who is truly affected?",
+  "answer": "Because the two mistakes cost different amounts. Missing a baby with a treatable metabolic disorder can mean lifelong brain damage; a false alarm costs a retest and a frightening week for the parents. So cut-offs are set to catch nearly every case, and in many US states false alarms outnumbered true cases many times over.",
+  "move": "Where you set an alarm depends on which mistake you can least afford.",
+  "ask": "In my own decisions, which mistake costs me more, missing something or a false alarm, and have I set my worry to match?",
+  "keywords": [
+    "newborn screening",
+    "false positives",
+    "metabolic disorders",
+    "cut-offs"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tarini, Christakis & Welch, Pediatrics, 2006",
+  "source_kind": "paper",
+  "reference": "Tarini, Christakis & Welch, State newborn screening in the tandem mass spectrometry era: more tests, more false-positive results, Pediatrics, 2006",
+  "written": "2026-10-03"
+}

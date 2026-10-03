@@ -1,0 +1,39 @@
+{
+  "id": "language-spelling-2",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.spelling",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "True or false: by the rules English spelling really follows, ghoti could be read aloud as fish?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Gh says f only at the end of a syllable, as in tough, never at the start of a word. O says i only in women. Ti says sh only before a vowel in an ending, as in nation. Placed where ghoti puts them, those letters cannot spell fish. Messy, not random.",
+  "move": "A rule that looks broken may be following a condition nobody named.",
+  "ask": "Where have I called something random before learning the condition it follows?",
+  "trap": "True, because each letter group does make that sound somewhere.",
+  "keywords": [
+    "ghoti",
+    "spelling rules",
+    "english orthography",
+    "letter position"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cook, The English Writing System, 2004",
+  "source_kind": "book",
+  "reference": "Cook, The English Writing System, Arnold, 2004",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "cinema-fake-or-real-2",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.fake_or_real",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the horses seen falling hard in 1930s Hollywood westerns were mostly trained or faked falls?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Many were tripped with the running W, a wire attached to the forelegs that the rider yanked at full gallop; horses broke legs and necks. After a horse died driven off a cliff for Jesse James in 1939, the American Humane Association began monitoring film sets.",
+  "move": "Real on screen can mean someone paid the real price.",
+  "ask": "When I want something to look real, who carries the cost of making it real?",
+  "trap": "True, because old films are assumed to fake every danger.",
+  "keywords": [
+    "running w",
+    "stunt horses",
+    "jesse james",
+    "american humane association"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Burt, Animals in Film",
+  "source_kind": "book",
+  "reference": "Jonathan Burt, Animals in Film, Reaktion Books, 2002",
+  "written": "2026-10-03"
+}

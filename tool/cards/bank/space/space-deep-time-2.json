@@ -1,0 +1,43 @@
+{
+  "id": "space-deep-time-2",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.deep_time",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Squeeze Earth's 4.6 billion years into one day. How many seconds before midnight do the last 300,000 years, the time of our species, begin?",
+  "value": 5.6,
+  "unit": "seconds",
+  "tolerance": 0.2,
+  "answer": "About 5.6 seconds before midnight.",
+  "move": "Shrink a long span into a single day to feel where things fall.",
+  "ask": "If my life so far were one day, at what hour did today's worry begin?",
+  "trap": "A few minutes, since 300,000 years sounds immense.",
+  "hint": "Find what fraction of 4.6 billion is 300,000, then take that share of 86,400 seconds.",
+  "steps": [
+    "300,000 ÷ 4,600,000,000 ≈ 0.000065 of the day.",
+    "0.000065 × 86,400 s ≈ 5.6.",
+    "About 5.6 seconds before midnight."
+  ],
+  "keywords": [
+    "deep time",
+    "homo sapiens",
+    "age of the earth",
+    "geological time"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hublin et al., Nature, 2017",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/nature22336",
+  "written": "2026-10-03"
+}

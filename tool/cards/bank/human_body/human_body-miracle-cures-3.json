@@ -1,0 +1,39 @@
+{
+  "id": "human_body-miracle-cures-3",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.miracle_cures",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: US cancer patients who chose only alternative medicine died at about two and a half times the rate of conventionally treated ones?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Comparing patients who used alternative medicine alone with similar patients having standard treatment, Johnson and colleagues found a death rate about 2.5 times higher, worst in breast and bowel cancer. The remedies themselves may be harmless. The harm lies in the treatment left untaken while the tumour keeps growing.",
+  "move": "Price a choice by what it displaces, not only by what it is.",
+  "ask": "What do I give up when I choose the gentler-sounding option?",
+  "trap": "Natural remedies may not help, but they cannot do any harm.",
+  "keywords": [
+    "alternative medicine",
+    "cancer survival",
+    "opportunity cost",
+    "treatment refusal"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Johnson et al., J Natl Cancer Inst, 2018",
+  "source_kind": "paper",
+  "reference": "Johnson SB, Park HS, Gross CP, Yu JB, Use of alternative medicine for cancer and its impact on survival, Journal of the National Cancer Institute, 2018",
+  "written": "2026-09-26"
+}

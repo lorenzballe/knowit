@@ -1,0 +1,39 @@
+{
+  "id": "nature-humans-evolving-3",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.humans_evolving",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: natural selection has been measured acting on women in a US town studied since 1948?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Byars and colleagues used Framingham Heart Study records of over 2,000 women, linking traits to how many children each had. Selection favoured slightly shorter, heavier women with lower cholesterol and blood pressure and later menopause. The predicted changes are tiny, but medicine has not switched selection off; it has changed what selection acts on.",
+  "move": "When one pressure is lifted, ask what new pressure has replaced it.",
+  "ask": "Which pressures shape my choices today that did not exist for my grandparents?",
+  "trap": "Modern medicine keeps nearly everyone alive, so selection must have stopped.",
+  "keywords": [
+    "framingham heart study",
+    "natural selection",
+    "human evolution",
+    "fertility"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Byars et al., PNAS, 2010",
+  "source_kind": "paper",
+  "reference": "Byars, Ewbank, Govindaraju & Stearns, Natural selection in a contemporary human population, Proceedings of the National Academy of Sciences, 2010",
+  "written": "2026-10-03"
+}

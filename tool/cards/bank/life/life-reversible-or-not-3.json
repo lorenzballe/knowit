@@ -1,0 +1,42 @@
+{
+  "id": "life-reversible-or-not-3",
+  "topic": "life",
+  "genre": "life.clear_thinking",
+  "strand": "life.clear_thinking.reversible_or_not",
+  "also": [
+    "life.relationships.love"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a couple live together before marrying, to try the big decision before making it?",
+  "sides": [
+    "Yes, try it first",
+    "No, decide first"
+  ],
+  "answer": "Yes. Living together shows the daily habits, money styles and conflicts that a long engagement can hide, and leaving a shared flat is easier than leaving a marriage. In American data the old link between living together first and later divorce has faded for recent marriages, which suggests it reflected who moved in, not the trial itself.",
+  "move": "Whichever side you took, the hinge is whether the trial is truly reversible.",
+  "ask": "What am I treating as a trial that is quietly becoming hard to undo?",
+  "counterpoint": "No. Stanley and Rhoades argue that moving in is often a slide, not a decision: a shared lease, a pet and joint bills create inertia, so couples who would have parted end up marrying. In their studies, couples who moved in before getting engaged reported poorer marriages than those engaged first. The trial is less reversible than it looks.",
+  "keywords": [
+    "cohabitation",
+    "marriage",
+    "sliding versus deciding",
+    "divorce",
+    "inertia"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stanley, Rhoades and Markman, Family Relations, 2006",
+  "source_kind": "paper",
+  "reference": "Stanley, Rhoades and Markman, Sliding Versus Deciding: Inertia and the Premarital Cohabitation Effect, Family Relations, 2006",
+  "written": "2026-10-03"
+}

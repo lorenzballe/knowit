@@ -1,0 +1,46 @@
+{
+  "id": "medicine-risk-numbers-1",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.risk_numbers",
+  "also": [
+    "science.read_a_study.relative_or_absolute"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A Scottish statin trial cut five-year heart attacks from 7.9% to 5.5%. Men treated per attack prevented, to the nearest whole number?",
+  "value": 42,
+  "unit": "men",
+  "answer": "About 42 men treated for five years per heart attack prevented",
+  "move": "Turn every risk cut into people treated for one person helped.",
+  "ask": "When a pill or plan promises to cut a risk, do I know how many people take it for one to benefit?",
+  "trap": "Reading the 31% relative cut as 31 men helped in every 100.",
+  "hint": "Subtract the two percentages, then ask how many men share one avoided attack.",
+  "steps": [
+    "7.9% − 5.5% = 2.4 heart attacks avoided per 100 men",
+    "100 ÷ 2.4 = 41.7 men per attack avoided",
+    "About 42 men treated for five years per heart attack prevented"
+  ],
+  "keywords": [
+    "statins",
+    "number needed to treat",
+    "woscops",
+    "heart attack",
+    "absolute risk"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shepherd et al., NEJM, 1995",
+  "source_kind": "paper",
+  "reference": "Shepherd et al., Prevention of coronary heart disease with pravastatin in men with hypercholesterolemia, New England Journal of Medicine, 1995",
+  "written": "2026-10-03"
+}

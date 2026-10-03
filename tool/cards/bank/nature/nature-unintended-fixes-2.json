@@ -1,0 +1,40 @@
+{
+  "id": "nature-unintended-fixes-2",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.unintended_fixes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 1902, French officials in Hanoi paid a bounty for each rat tail handed in. What soon appeared?",
+  "options": [
+    "Rats running free without tails",
+    "Far fewer rats in the sewers",
+    "Cats bred to hunt rats"
+  ],
+  "correct": 0,
+  "answer": "Rats running free without tails. Hunters found it paid better to cut off a tail and release the rat to breed more bounty. Michael Vann's history of the episode also records reports of rat farms outside the city. Paying for proof of a kill rewarded the proof, not the kill.",
+  "move": "Reward the result you want, not a token that can be faked.",
+  "ask": "What am I rewarding, in myself or others, that is only a stand-in for what I want?",
+  "trap": "A bounty per kill should simply mean more rats killed.",
+  "keywords": [
+    "hanoi",
+    "rat bounty",
+    "perverse incentives",
+    "plague"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vann, French Colonial History, 2003",
+  "source_kind": "paper",
+  "reference": "Vann, Of rats, rice, and race: the Great Hanoi Rat Massacre, an episode in French colonial history, French Colonial History, 2003",
+  "written": "2026-10-03"
+}

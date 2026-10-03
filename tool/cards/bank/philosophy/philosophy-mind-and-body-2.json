@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-mind-and-body-2",
+  "topic": "philosophy",
+  "genre": "philosophy.big_questions",
+  "strand": "philosophy.big_questions.mind_and_body",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: after an iron rod passed through his brain in 1848, Phineas Gage later held a demanding job for years?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Gage later spent about seven years driving six-horse stagecoaches in Chile. Malcolm Macmillan's research showed that the textbook picture of a permanent wreck grew from thin early reports and swelled with retelling. The brain shapes character, but it can also relearn: his recovery is the chapter the textbooks dropped.",
+  "move": "Ask what happened next before trusting the famous version of a case.",
+  "ask": "Which story about myself do I tell from its worst chapter, leaving out how I recovered?",
+  "trap": "False, recalling the textbook tale of a man permanently ruined.",
+  "keywords": [
+    "phineas gage",
+    "brain injury",
+    "malcolm macmillan",
+    "personality",
+    "recovery"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Macmillan, An Odd Kind of Fame, 2000",
+  "source_kind": "book",
+  "reference": "Macmillan, An Odd Kind of Fame: Stories of Phineas Gage, MIT Press, 2000",
+  "written": "2026-10-03"
+}

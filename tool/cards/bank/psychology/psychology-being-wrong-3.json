@@ -1,0 +1,40 @@
+{
+  "id": "psychology-being-wrong-3",
+  "topic": "psychology",
+  "genre": "psychology.change_your_mind",
+  "strand": "psychology.change_your_mind.being_wrong",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "In a study of hospital nursing units, which units recorded the most drug errors?",
+  "options": [
+    "The worst-led, tensest units",
+    "The best-led, most open units",
+    "Units with the newest nurses"
+  ],
+  "correct": 1,
+  "answer": "The best-led, most open units. Edmondson expected good teams to make fewer mistakes, then found they reported more. Where nurses felt safe to own up, errors were written down; elsewhere they were hidden. The count measured honesty as much as mistakes, and the cleanest record could belong to the most frightened ward.",
+  "move": "A low count of problems may measure silence rather than success.",
+  "ask": "Do the people around me feel safe telling me about mistakes, or do I just never hear about them?",
+  "trap": "Reading the error count as a direct measure of mistakes made.",
+  "keywords": [
+    "hospitals",
+    "medication errors",
+    "psychological safety",
+    "nursing teams"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Edmondson, J Applied Behavioral Science, 1996",
+  "source_kind": "paper",
+  "reference": "Edmondson, Learning from mistakes is easier said than done: group and organizational influences on the detection and correction of human error, Journal of Applied Behavioral Science, 1996",
+  "written": "2026-10-03"
+}

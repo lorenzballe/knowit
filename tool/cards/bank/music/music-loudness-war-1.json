@@ -1,0 +1,41 @@
+{
+  "id": "music-loudness-war-1",
+  "topic": "music",
+  "genre": "music.studio_tricks",
+  "strand": "music.studio_tricks.loudness_war",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "On Spotify with loudness normalisation switched on, how does a master pushed 6 dB louder than its rival play?",
+  "options": [
+    "6 dB louder than the rival",
+    "About as loud, but flatter",
+    "Louder only on good headphones"
+  ],
+  "correct": 1,
+  "answer": "About as loud, but flatter. Spotify measures each track's average loudness and turns it towards a common target of about −14 LUFS, a loudness unit. The hot master is simply turned down to match. What remains is the price of getting hot: peaks squashed by compression, so its drums hit softer than the gentler rival's.",
+  "move": "When a referee evens out the contest, the old advantage becomes pure cost.",
+  "ask": "What am I still doing to stand out that the rules no longer reward?",
+  "trap": "Assuming a louder file still plays louder, as it did on CD.",
+  "keywords": [
+    "loudness normalisation",
+    "mastering",
+    "lufs",
+    "compression",
+    "spotify"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Spotify for Artists, Loudness normalization",
+  "source_kind": "company",
+  "reference": "https://artists.spotify.com/help/article/loudness-normalization",
+  "written": "2026-09-26"
+}

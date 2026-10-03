@@ -1,0 +1,33 @@
+{
+  "id": "medicine-placebo-or-real-2",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.placebo_or_real",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In a German back pain trial, how did real acupuncture compare with shallow needles placed at random?",
+  "answer": "About the same, and both beat usual care. After six months, about 47% improved with real acupuncture, 44% with sham needling and 27% with standard drugs and physiotherapy. Where the needles went made little difference. The ritual of sessions, attention and expectation did much of the work.",
+  "move": "When the fake works as well as the real, the active part is elsewhere.",
+  "ask": "In something that helps me, is it the thing itself or the ritual and attention around it?",
+  "keywords": [
+    "acupuncture",
+    "sham needling",
+    "chronic back pain",
+    "gerac trial"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Haake et al., Archives of Internal Medicine, 2007",
+  "source_kind": "paper",
+  "reference": "Haake et al., German Acupuncture Trials (GERAC) for chronic low back pain, Archives of Internal Medicine, 2007",
+  "written": "2026-10-03"
+}

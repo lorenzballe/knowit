@@ -1,0 +1,40 @@
+{
+  "id": "cinema-fake-or-real-1",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.fake_or_real",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Many viewers say computer effects always look fake. Why is their own experience poor evidence for that?",
+  "options": [
+    "Good effects are never noticed",
+    "Their eyes adapt to effects",
+    "Critics taught them the view"
+  ],
+  "correct": 0,
+  "answer": "Good effects are never noticed. The only shots a viewer can call fake are the ones that failed; digital skies, set extensions, crowds and removed wires pass as plain photography. Stephen Prince shows most digital work in films is this invisible kind, so the bad examples are a biased sample of the whole.",
+  "move": "If you only catch the failures, you will think everything fails.",
+  "ask": "Which skill or tool do I dismiss because I only ever notice it when it goes wrong?",
+  "trap": "Their eyes adapt to effects and see through them better each year.",
+  "keywords": [
+    "digital effects",
+    "invisible effects",
+    "stephen prince",
+    "set extensions"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Prince, Digital Visual Effects in Cinema",
+  "source_kind": "book",
+  "reference": "Stephen Prince, Digital Visual Effects in Cinema: The Seduction of Reality, Rutgers University Press, 2012",
+  "written": "2026-10-03"
+}

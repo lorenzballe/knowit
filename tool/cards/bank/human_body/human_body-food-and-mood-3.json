@@ -1,0 +1,40 @@
+{
+  "id": "human_body-food-and-mood-3",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.food_and_mood",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Regular coffee drinkers feel sharp after their morning cup. Compared with people who never drink coffee, how alert are they?",
+  "options": [
+    "Much more alert",
+    "Less alert than them",
+    "About as alert"
+  ],
+  "correct": 2,
+  "answer": "About as alert. Rogers's team found that after an overnight break, habitual coffee drinkers were less alert than non-drinkers, and caffeine merely brought them back to level. Much of the morning lift is the end of a small overnight withdrawal. The cup cures a dip it partly created.",
+  "move": "Ask whether a remedy is relieving a problem it created.",
+  "ask": "Which daily habit of mine mostly fixes a low that the habit itself causes?",
+  "trap": "The lift after coffee feels like a gain above normal.",
+  "keywords": [
+    "caffeine",
+    "coffee",
+    "withdrawal",
+    "alertness"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rogers et al., Neuropsychopharmacology, 2010",
+  "source_kind": "paper",
+  "reference": "Rogers PJ, Hohoff C, Heatherley SV et al., Association of the anxiogenic and alerting effects of caffeine with ADORA2A and ADORA1 polymorphisms and habitual level of caffeine consumption, Neuropsychopharmacology, 2010",
+  "written": "2026-09-26"
+}

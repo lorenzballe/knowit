@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-luck-1",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.luck",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A quiet German businessman moved to Argentina in 1930. Why did Thomas Nagel ask what he would have become had he stayed?",
+  "answer": "To show circumstantial luck. Nagel wrote that such a man might have become a concentration camp officer, as others who stayed did, and that we judge the two very differently though the difference was a business move. Most people's courage has never met the test that would reveal it.",
+  "move": "A clean record may only mean the test never came.",
+  "ask": "What would I have done in the worst moment that someone I judge has faced?",
+  "keywords": [
+    "thomas nagel",
+    "moral luck",
+    "circumstantial luck",
+    "nazi germany"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nagel, Moral Luck, in Mortal Questions",
+  "source_kind": "book",
+  "reference": "Nagel, Mortal Questions, Cambridge University Press, 1979, chapter 3",
+  "written": "2026-10-03"
+}

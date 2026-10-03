@@ -1,0 +1,33 @@
+{
+  "id": "music-classical-3",
+  "topic": "music",
+  "genre": "music.genres",
+  "strand": "music.genres.classical",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When did concert audiences start expecting to hear mostly music by composers who were long dead?",
+  "answer": "Only in the 1800s. Before then, concerts were mostly new music, and an old piece was simply out of date. Over the nineteenth century, the cult of Beethoven, cheap printed scores and new middle-class audiences wanting proven works turned the concert into a museum of classics. The halls kept the seats and changed the exhibits.",
+  "move": "Ask when a custom began before treating it as the natural order.",
+  "ask": "Which way of doing things around me feels permanent but started quite recently?",
+  "keywords": [
+    "concert programmes",
+    "musical canon",
+    "dead composers",
+    "beethoven"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Weber, The Great Transformation of Musical Taste, 2008",
+  "source_kind": "book",
+  "reference": "Weber, The Great Transformation of Musical Taste: Concert Programming from Haydn to Brahms, Cambridge University Press, 2008",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "sport-streaks-1",
+  "topic": "sport",
+  "genre": "sport.luck_or_skill",
+  "strand": "sport.luck_or_skill.streaks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "coincidence",
+  "question": "Researchers re-ran baseball's whole history 10,000 times by computer from players' real hit rates. How often did a 56-game hitting streak appear?",
+  "options": [
+    "In about half of the runs",
+    "In about 1 run in 100",
+    "In none of the runs"
+  ],
+  "correct": 0,
+  "answer": "In about half of the runs. Arbesman and Strogatz simulated every season since 1871: in any single year such a streak is very unlikely, but across more than a century of hitters, someone reaching 56 games was close to a coin flip. In their runs it often happened in the game's early decades.",
+  "move": "Ask how many people had the chance, not how rare it was for one.",
+  "ask": "When something rare happens to someone I know, how many people had the same chance?",
+  "trap": "Judging the streak by one player's odds instead of everyone's.",
+  "keywords": [
+    "hitting streak",
+    "joe dimaggio",
+    "simulation",
+    "baseball",
+    "rare events"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arbesman & Strogatz, arXiv, 2008",
+  "source_kind": "paper",
+  "reference": "https://arxiv.org/pdf/0807.5082",
+  "written": "2026-09-26"
+}

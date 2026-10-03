@@ -1,0 +1,33 @@
+{
+  "id": "psychology-naps-2",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.naps",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a cup of coffee drunk just before a 15-minute nap make the nap work better?",
+  "answer": "Because the two act at different times. Caffeine takes about 20 minutes to act, so it arrives as the nap ends, and the nap clears some of the sleep pressure caffeine cannot. Sleepy drivers in a simulator given both drifted less than those given either alone. Coffee, then lights out, then the road.",
+  "move": "Two weak remedies, timed together, can beat either one alone.",
+  "ask": "Which two small things I already do could work better if I timed them together?",
+  "keywords": [
+    "caffeine",
+    "napping",
+    "driver sleepiness",
+    "driving simulator"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Horne & Reyner, Psychophysiology, 1996",
+  "source_kind": "paper",
+  "reference": "Horne & Reyner, Counteracting driver sleepiness: effects of napping, caffeine, and placebo, Psychophysiology, 1996",
+  "written": "2026-10-03"
+}

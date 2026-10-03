@@ -1,0 +1,33 @@
+{
+  "id": "art-seeing-for-yourself-2",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.seeing_for_yourself",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How long do museum visitors spend in front of a painting, and what can appear if they stay far longer?",
+  "answer": "About 17 seconds was the median at the Metropolitan Museum in Smith and Smith's 2001 study. The art historian Jennifer Roberts makes her Harvard students sit three hours before one work. Trying it on a Copley portrait, she needed nine minutes to notice that the boy's ear echoes the fur on the squirrel's belly.",
+  "move": "What you see in the first seconds is mostly what you expected.",
+  "ask": "What is one thing I pass every day that I have never looked at for ten whole minutes?",
+  "keywords": [
+    "jennifer roberts",
+    "slow looking",
+    "museum visitors",
+    "attention"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Roberts, The Power of Patience, Harvard Magazine, 2013",
+  "source_kind": "institution",
+  "reference": "Jennifer L. Roberts, The Power of Patience, Harvard Magazine, November–December 2013",
+  "written": "2026-10-03"
+}

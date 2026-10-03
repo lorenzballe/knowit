@@ -1,0 +1,38 @@
+{
+  "id": "science-experts-disagree-2",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.experts_disagree",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should official diet advice keep telling people to cut saturated fat, the fat in butter and fatty meat?",
+  "sides": [
+    "Yes, keep the limit",
+    "No, relax it"
+  ],
+  "answer": "A 2020 Cochrane review of randomised trials, the strongest kind of evidence, found that cutting saturated fat for at least two years lowered combined cardiovascular events by about a fifth. The benefit was clearest when the fat was replaced with unsaturated oils. Observational doubts cannot outweigh trials; keep the advice and spell out the swap.",
+  "move": "Whichever side you took, the hinge is what replaces the fat that is cut.",
+  "ask": "When I cut something out of my life, do I notice what quietly takes its place?",
+  "counterpoint": "A 2010 meta-analysis pooling 21 cohort studies, following some 350,000 people, found no clear link between saturated fat and heart disease. Foods matter more than one nutrient: cheese and yoghurt behave differently from processed meat. Blanket limits pushed people towards sugar and refined starch, which may have done more harm than the butter they replaced.",
+  "keywords": [
+    "saturated fat",
+    "heart disease",
+    "diet guidelines",
+    "cochrane"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hooper et al., Cochrane Database of Systematic Reviews, 2020",
+  "source_kind": "paper",
+  "reference": "Hooper et al., Reduction in saturated fat intake for cardiovascular disease, Cochrane Database of Systematic Reviews, CD011737, 2020",
+  "written": "2026-09-26"
+}

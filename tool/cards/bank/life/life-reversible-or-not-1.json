@@ -1,0 +1,33 @@
+{
+  "id": "life-reversible-or-not-1",
+  "topic": "life",
+  "genre": "life.clear_thinking",
+  "strand": "life.clear_thinking.reversible_or_not",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Amazon's founder warn that deciding everything with great care makes a large company slow?",
+  "answer": "Because most decisions can be walked back. In his 2015 letter to shareholders, Jeff Bezos split decisions into Type 1, near irreversible, which deserve slow thought, and Type 2, two-way doors that can be reopened if the result is poor. Large firms, he wrote, tend to treat both kinds with Type 1 caution.",
+  "move": "Match the care you take to how hard the choice is to undo.",
+  "ask": "Which decision am I agonising over that I could simply try, and reverse if it goes badly?",
+  "keywords": [
+    "reversible decisions",
+    "jeff bezos",
+    "two-way doors",
+    "decision speed"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bezos, letter to Amazon shareholders, 2015",
+  "source_kind": "primary_document",
+  "reference": "Bezos, 2015 Letter to Shareholders, Amazon.com Inc., 2016",
+  "written": "2026-10-03"
+}

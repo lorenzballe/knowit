@@ -1,0 +1,40 @@
+{
+  "id": "psychology-group-thinking-1",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.group_thinking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Like-minded citizens in Boulder, Colorado discussed climate change in small groups. Afterwards, how had their views changed?",
+  "options": [
+    "More moderate and more varied",
+    "Much the same as before",
+    "More extreme and more alike"
+  ],
+  "correct": 2,
+  "answer": "More extreme and more alike. Schkade, Sunstein and Hastie ran parallel discussions among liberals in Boulder and conservatives in Colorado Springs. After talking, each group moved further towards its own pole, and the private disagreement within it shrank. A room that already agrees hears mostly arguments for one side, and counts them as confirmation.",
+  "move": "A group that agrees at the start hears only half the arguments.",
+  "ask": "When did I last talk over a strong opinion with someone who started out disagreeing with me?",
+  "trap": "Expecting discussion to average views out towards the middle.",
+  "keywords": [
+    "group polarisation",
+    "deliberation",
+    "climate change",
+    "colorado"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schkade, Sunstein & Hastie, California Law Review, 2007",
+  "source_kind": "paper",
+  "reference": "Schkade, Sunstein & Hastie, What happened on deliberation day?, California Law Review, 2007",
+  "written": "2026-10-03"
+}

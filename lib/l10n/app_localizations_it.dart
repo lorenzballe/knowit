@@ -1928,4 +1928,8 @@ class AppLocalizationsIt extends AppLocalizations {
   String weekRecapMore(int n) {
     return 'Altre $n della tua settimana con Plus';
   }
+
+  @override
+  String get plusInTheApp =>
+      'Astute+ è nell\'app: scarica Astute su iPhone o Android per iniziare la prova gratuita.';
 }

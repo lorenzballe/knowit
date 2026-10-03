@@ -1,0 +1,41 @@
+{
+  "id": "food-bread-and-history-1",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.bread_and_history",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "In Paris in the summer of 1789, what share of a labourer's daily wage went on his family's bread?",
+  "options": [
+    "About a fifth",
+    "About half",
+    "Over four fifths"
+  ],
+  "correct": 2,
+  "answer": "Over four fifths. From Paris price and wage records, the historian George Rudé estimated that bread normally took about half a labourer's wage, and by the summer of 1789 about 88%. Rent, fuel and candles still had to be paid. When the staple eats the budget, a price rise is felt as hunger.",
+  "move": "Ask what share of income the essentials take before judging a price rise.",
+  "ask": "If the things I cannot skip got dearer, how much room would I really have left?",
+  "trap": "Guessing a fifth, because bread is cheap in today's shops.",
+  "keywords": [
+    "french revolution",
+    "bread prices",
+    "wages",
+    "paris",
+    "george rudé"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rudé, The Crowd in the French Revolution, 1959",
+  "source_kind": "book",
+  "reference": "Rudé, The Crowd in the French Revolution, Oxford University Press, 1959",
+  "written": "2026-10-03"
+}

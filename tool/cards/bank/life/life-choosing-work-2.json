@@ -1,0 +1,38 @@
+{
+  "id": "life-choosing-work-2",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.choosing_work",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "When choosing work, should you follow a passion you already have?",
+  "sides": [
+    "Yes, follow it",
+    "No, build one"
+  ],
+  "answer": "Yes. Work fills most waking hours, and people who see their job as a calling report more satisfaction with work and with life. Knowing what absorbs you is real information about where you will put in the long effort that skill needs. Setting a strong interest aside to chase pay or prestige is a common regret.",
+  "move": "Whichever side you took, the hinge is whether interest comes before skill or after.",
+  "ask": "Which of my interests began only after I got good at something?",
+  "counterpoint": "No. O'Keefe, Dweck and Walton found that people who believe passions are found, not developed, expect a true interest to bring endless motivation, and lose interest when the subject gets hard. Many people's passions grew out of work they first became good at. Waiting to discover a passion can mean never building one.",
+  "keywords": [
+    "passion",
+    "career choice",
+    "interests",
+    "calling"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "O'Keefe, Dweck and Walton, Psychological Science, 2018",
+  "source_kind": "paper",
+  "reference": "O'Keefe, Dweck and Walton, Implicit Theories of Interest: Finding Your Passion or Developing It?, Psychological Science, 2018",
+  "written": "2026-10-03"
+}

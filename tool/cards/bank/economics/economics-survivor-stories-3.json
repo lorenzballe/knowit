@@ -1,0 +1,39 @@
+{
+  "id": "economics-survivor-stories-3",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.survivor_stories",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: a new investment fund's strong record before opening to the public predicts strong returns afterwards?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Richard Evans found that fund families start several funds privately and open only the winners. These incubated funds beat others by about 3.5% a year while hidden, then the edge vanished once outsiders could buy in. The launch brochure shows the survivor of a contest whose losers were quietly closed.",
+  "move": "A record chosen after the fact is a selection, not a forecast.",
+  "ask": "When someone shows me their best results, do I ask what happened to the rest?",
+  "trap": "True, because a track record is evidence of the manager's skill.",
+  "keywords": [
+    "mutual funds",
+    "fund incubation",
+    "track records",
+    "fund launches"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Evans, Journal of Finance, 2010",
+  "source_kind": "paper",
+  "reference": "Evans, Mutual Fund Incubation, Journal of Finance, 2010",
+  "written": "2026-10-03"
+}

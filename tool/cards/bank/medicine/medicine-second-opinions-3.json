@@ -1,0 +1,38 @@
+{
+  "id": "medicine-second-opinions-3",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.second_opinions",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should health insurers require a second surgeon's opinion before paying for a planned, non-urgent operation?",
+  "sides": [
+    "Yes, require it",
+    "No, keep it optional"
+  ],
+  "answer": "Yes. Rates of many planned operations vary several-fold between areas with similar patients, a sign that much surgery is a judgement call. A second surgeon who will not operate has no stake in the answer. Germany gave patients a legal right to one before some planned operations in 2019. An hour of checking is cheap.",
+  "move": "Whichever side you took, the hinge is how often the second surgeon actually disagrees.",
+  "ask": "Before a big decision, would a second view cost me little compared with what being wrong would cost?",
+  "counterpoint": "US insurers tried compulsory second opinions in the 1970s and 1980s. The second surgeon usually agreed, and reviews found little proof that the savings beat the extra visits and delays. Forcing it treats every patient and surgeon as a suspect. Better to target the few operations where rates vary most and offer, not impose, a check.",
+  "keywords": [
+    "second opinion",
+    "elective surgery",
+    "insurers",
+    "germany"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lindsey & Newhouse, J Health Politics, 1990",
+  "source_kind": "paper",
+  "reference": "Lindsey & Newhouse, The cost and value of second surgical opinion programs: a critical review of the literature, Journal of Health Politics, Policy and Law, 1990",
+  "written": "2026-10-03"
+}

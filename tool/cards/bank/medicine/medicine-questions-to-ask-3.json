@@ -1,0 +1,39 @@
+{
+  "id": "medicine-questions-to-ask-3",
+  "topic": "medicine",
+  "genre": "medicine.talk_to_your_doctor",
+  "strand": "medicine.talk_to_your_doctor.questions_to_ask",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: patients remember most of the medical information a doctor gives them during a consultation?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A review estimated that 40% to 80% of medical information is forgotten almost at once, and much of what is kept is remembered wrongly. Worry, jargon and sheer quantity crowd it out. Writing things down, bringing someone along or repeating the plan back all raise what survives the walk to the car park.",
+  "move": "What feels clear in the room may be gone by the door.",
+  "ask": "After important conversations, do I write down what was said, or trust a memory that leaks?",
+  "trap": "True, since people surely remember what concerns their own health.",
+  "keywords": [
+    "patient memory",
+    "consultation",
+    "medical information",
+    "recall"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kessels, J R Soc Med, 2003",
+  "source_kind": "paper",
+  "reference": "Kessels, Patients' memory for medical information, Journal of the Royal Society of Medicine, 2003",
+  "written": "2026-10-03"
+}

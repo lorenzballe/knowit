@@ -1,0 +1,38 @@
+{
+  "id": "psychology-self-deception-3",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.self_deception",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Are mildly rosy views of oneself good for mental health?",
+  "sides": [
+    "Yes, they help",
+    "No, accuracy helps more"
+  ],
+  "answer": "Most mentally healthy people see themselves a little better than others see them, overrate their control and expect more good than bad. These illusions sustain effort and hope after setbacks; people facing serious illness who held mildly optimistic beliefs often coped better. A slight shine on the self-image works like a cushion, not a lie.",
+  "move": "Whichever side you took, the hinge is whether the illusion changes what you do.",
+  "ask": "Is my most flattering belief about myself pushing me to act, or excusing me from acting?",
+  "counterpoint": "When self-ratings were compared with friends' ratings, people who inflated themselves were seen as defensive and grew less liked over time, and their early good mood faded. Rosy views also cost in practice: people who overrate their health skip check-ups. Feeling good about oneself lasts best when it rests on an accurate picture.",
+  "keywords": [
+    "positive illusions",
+    "self-enhancement",
+    "optimism",
+    "mental health"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Taylor & Brown, Psychological Bulletin, 1988",
+  "source_kind": "paper",
+  "reference": "Taylor & Brown, Illusion and well-being: A social psychological perspective on mental health, Psychological Bulletin, 1988",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "cinema-auteurs-2",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.auteurs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: on most Hollywood studio films, the director has the contractual right to the final cut?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The Directors Guild guarantees a director the right to deliver a first cut, the director's cut, but on most studio films the final say on what reaches cinemas belongs to the studio. Final cut is a rare contract term won only by a handful of directors with a long run of hits.",
+  "move": "Before praising or blaming the name on top, ask who signed off.",
+  "ask": "On the project I am proudest of, who actually had the last word?",
+  "trap": "True, because the film is sold as the director's work.",
+  "keywords": [
+    "final cut",
+    "directors guild",
+    "studios",
+    "director's cut"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "DGA Basic Agreement, creative rights",
+  "source_kind": "primary_document",
+  "reference": "Directors Guild of America, Basic Agreement of 2020, Article 7: Creative Rights, 2020",
+  "written": "2026-10-03"
+}

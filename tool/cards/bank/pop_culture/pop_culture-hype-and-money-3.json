@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-hype-and-money-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.hype_and_money",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "In 2021 an NFT of the first tweet sold for $2.9 million. When it was offered for resale in 2022, what was the top bid?",
+  "options": [
+    "About $280",
+    "About $1 million",
+    "About $3 million"
+  ],
+  "correct": 0,
+  "answer": "About $280. The buyer asked $48 million when he listed the token of Jack Dorsey's first tweet a year later, and the best offers came to a few hundred dollars. A price paid once, by one enthusiast at the top of a craze, says nothing about what anyone else will pay.",
+  "move": "What one buyer paid is not what the next will.",
+  "ask": "What do I own whose value I judge by what I paid, not by what someone would pay now?",
+  "trap": "Treating the $2.9 million paid as the token's real value.",
+  "keywords": [
+    "nft",
+    "jack dorsey",
+    "first tweet",
+    "crypto bubble"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Reuters, April 2022",
+  "source_kind": "news_archive",
+  "reference": "Reuters, report on bids for the NFT of Jack Dorsey's first tweet, April 2022",
+  "written": "2026-09-26"
+}

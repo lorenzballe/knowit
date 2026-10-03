@@ -1,0 +1,33 @@
+{
+  "id": "human_body-heart-and-stress-1",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.heart_and_stress",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can grief or a sudden shock alone make the heart's main pumping chamber balloon out?",
+  "answer": "Through a flood of stress hormones. In takotsubo syndrome, a surge of adrenaline after a bereavement, an accident or a row stuns part of the left ventricle, which balloons like a Japanese octopus pot. It mimics a heart attack, with clear arteries, mostly in older women. The heart usually recovers within weeks.",
+  "move": "A body can be hurt by news as truly as by a blow.",
+  "ask": "When bad news hits me hard, do I treat it as a strain on my body that needs care?",
+  "keywords": [
+    "takotsubo",
+    "broken heart syndrome",
+    "adrenaline",
+    "left ventricle"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ghadri et al., European Heart Journal, 2018",
+  "source_kind": "paper",
+  "reference": "Ghadri JR, Wittstein IS, Prasad A et al., International Expert Consensus Document on Takotsubo Syndrome (Part I), European Heart Journal, 2018",
+  "written": "2026-09-26"
+}

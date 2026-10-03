@@ -1,0 +1,43 @@
+{
+  "id": "economics-real-or-nominal-3",
+  "topic": "economics",
+  "genre": "economics.read_money_news",
+  "strand": "economics.read_money_news.real_or_nominal",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "£10,000 saved at 4% interest in a year when prices rise 10%. In last year's pounds, what is it worth, to the nearest pound?",
+  "value": 9455,
+  "unit": "pounds",
+  "tolerance": 1,
+  "answer": "In last year's pounds: 10,400 ÷ 1.10 ≈ £9,455",
+  "move": "A balance that grows can still buy less; divide by the price rise.",
+  "ask": "Is the money I keep in savings growing faster than the prices of what I buy?",
+  "trap": "Reading the £10,400 on the statement as a gain.",
+  "hint": "Add the interest, then divide by how much prices grew.",
+  "steps": [
+    "After interest: 10,000 × 1.04 = £10,400",
+    "Prices grew by a factor of 1.10",
+    "In last year's pounds: 10,400 ÷ 1.10 ≈ £9,455"
+  ],
+  "keywords": [
+    "savings",
+    "inflation",
+    "real value",
+    "interest rates"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Deflating by a price index",
+  "source_kind": "arithmetic",
+  "reference": "Mankiw, Principles of Economics, 9th edition, Cengage, 2020",
+  "written": "2026-10-03"
+}

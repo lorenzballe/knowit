@@ -1,0 +1,33 @@
+{
+  "id": "art-stolen-art-2",
+  "topic": "art",
+  "genre": "art.art_and_power",
+  "strand": "art.art_and_power.stolen_art",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What do thieves usually do with a famous stolen painting that no buyer would dare touch?",
+  "answer": "Use it as a bargaining chip. Without a buyer, a masterpiece becomes collateral in criminal deals or something to trade for a lighter sentence. Robert Wittman, who founded the FBI's art crime team, recovered many works by posing as a crooked buyer. Underground, millions on paper shrink to a promise.",
+  "move": "A thing's value depends on who can use it, not its price tag.",
+  "ask": "What do I own that looks valuable on paper but that I could never actually sell?",
+  "keywords": [
+    "art theft",
+    "robert wittman",
+    "fbi",
+    "black market"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wittman, Priceless, 2010",
+  "source_kind": "book",
+  "reference": "Robert K. Wittman with John Shiffman, Priceless: How I Went Undercover to Rescue the World's Stolen Treasures, Crown, 2010",
+  "written": "2026-10-03"
+}

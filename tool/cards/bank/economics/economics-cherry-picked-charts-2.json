@@ -1,0 +1,43 @@
+{
+  "id": "economics-cherry-picked-charts-2",
+  "topic": "economics",
+  "genre": "economics.read_money_news",
+  "strand": "economics.read_money_news.cherry_picked_charts",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A bar chart's axis starts at 95. Its bars show 98 and 102. How many times taller is the second bar drawn?",
+  "value": 2.3,
+  "unit": "times",
+  "tolerance": 0.1,
+  "answer": "Ratio: 7 ÷ 3 ≈ 2.3 times",
+  "move": "Check where an axis starts before trusting the size of a gap.",
+  "ask": "When a chart makes a difference look dramatic, do I check where its axis begins?",
+  "trap": "Answering about 4% taller, the real gap between the two numbers.",
+  "hint": "Measure each bar from the bottom of the axis, not from zero.",
+  "steps": [
+    "Drawn height of the 98 bar: 98 − 95 = 3",
+    "Drawn height of the 102 bar: 102 − 95 = 7",
+    "Ratio: 7 ÷ 3 ≈ 2.3 times"
+  ],
+  "keywords": [
+    "bar charts",
+    "truncated axis",
+    "lie factor",
+    "data visualisation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Tufte, The Visual Display of Quantitative Information",
+  "source_kind": "book",
+  "reference": "Tufte, The Visual Display of Quantitative Information, Graphics Press, 1983",
+  "written": "2026-10-03"
+}

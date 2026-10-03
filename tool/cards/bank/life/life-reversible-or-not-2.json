@@ -1,0 +1,39 @@
+{
+  "id": "life-reversible-or-not-2",
+  "topic": "life",
+  "genre": "life.clear_thinking",
+  "strand": "life.clear_thinking.reversible_or_not",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: lenient return policies raise how much people buy more than they raise how much people send back?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Janakiraman, Syrdal and Freling pooled earlier studies and found that leniency increased purchases more than it increased returns. An easy way back lowers the felt risk of buying, so more people commit, and many of them never use the exit they were given.",
+  "move": "Making a choice easy to undo is often what gets it made.",
+  "ask": "What would I try this month if I first made sure I could back out of it?",
+  "trap": "An easy exit seems to invite more returns than it wins sales.",
+  "keywords": [
+    "return policies",
+    "shopping",
+    "reversibility",
+    "meta-analysis"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Janakiraman and colleagues, Journal of Retailing, 2016",
+  "source_kind": "paper",
+  "reference": "Janakiraman, Syrdal and Freling, The Effect of Return Policy Leniency on Consumer Purchase and Return Decisions: A Meta-analytic Review, Journal of Retailing, 2016",
+  "written": "2026-10-03"
+}

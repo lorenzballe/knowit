@@ -1,0 +1,33 @@
+{
+  "id": "space-looking-back-in-time-1",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.looking_back_in_time",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How far into the past is the face of a friend sitting across a table?",
+  "answer": "About a tenth of a second, and almost none of that is the light. Light crosses a metre in about 3 billionths of a second; the eye and brain then need roughly 100 milliseconds to build it into a seen face. Everyone at the table sees a slightly old version of everyone else.",
+  "move": "Everything you perceive is a report about the past, delivered late.",
+  "ask": "Which of my opinions about someone rests on an old picture of them I have never updated?",
+  "keywords": [
+    "perception",
+    "speed of light",
+    "visual processing",
+    "delay"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thorpe, Fize & Marlot, Nature, 1996",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/381520a0",
+  "written": "2026-10-03"
+}

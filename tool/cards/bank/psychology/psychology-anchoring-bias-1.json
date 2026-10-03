@@ -1,0 +1,40 @@
+{
+  "id": "psychology-anchoring-bias-1",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.anchoring_bias",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Mock jurors heard one injury case, with the plaintiff asking anything from $100 to $1 billion. What did larger requests do to awards?",
+  "options": [
+    "Pushed awards up, even very high asks",
+    "Backfired once the ask looked greedy",
+    "Made no real difference to awards"
+  ],
+  "correct": 0,
+  "answer": "Pushed awards up, even very high asks. The same injury, described the same way, drew larger awards the more the plaintiff asked, and the expected backlash against greedy demands barely showed. Jurors had no scale for pain in dollars, so the number on the table became the scale.",
+  "move": "When nobody knows the right number, the first one named becomes it.",
+  "ask": "When I judge whether a price is fair, whose number set my sense of what is normal?",
+  "trap": "Backfired once the ask looked greedy, as outrageous demands should repel jurors.",
+  "keywords": [
+    "anchoring",
+    "juries",
+    "damages",
+    "lawsuits"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chapman & Bornstein, Applied Cognitive Psychology, 1996",
+  "source_kind": "paper",
+  "reference": "Chapman & Bornstein, The more you ask for, the more you get: Anchoring in personal injury verdicts, Applied Cognitive Psychology, 1996",
+  "written": "2026-10-03"
+}

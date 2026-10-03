@@ -192,8 +192,9 @@ void main() {
           (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
         )
         .first;
-    for (int i = 0; i < 4; i++) {
-      await tester.drag(down, const Offset(0, -560));
+    await shoot(tester, 'explore-top');
+    for (int i = 0; i < 7; i++) {
+      await tester.drag(down, const Offset(0, -700));
       await settle(tester);
       await shoot(tester, 'explore-themes-$i');
     }

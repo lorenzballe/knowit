@@ -1,0 +1,42 @@
+{
+  "id": "science-too-good-to-be-true-2",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.too_good_to_be_true",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A diet promises 5 kg of fat lost in a week. Each kilogram of body fat holds about 7,700 kcal. What daily deficit, in kcal?",
+  "value": 5500,
+  "unit": "kcal per day",
+  "answer": "5,500 kcal a day: more than twice what most adults burn.",
+  "move": "Check a promise against the physics before believing the testimonials.",
+  "ask": "Which quick-results promise have I been tempted by, without doing the sum on what it would take?",
+  "trap": "Trusting the scale, where quick early losses are mostly water.",
+  "hint": "Multiply the kilograms by the energy in each, then share it over the days.",
+  "steps": [
+    "Energy in 5 kg of fat: 5 × 7,700 = 38,500 kcal.",
+    "Spread over 7 days: 38,500 ÷ 7 = 5,500.",
+    "5,500 kcal a day: more than twice what most adults burn."
+  ],
+  "keywords": [
+    "weight loss",
+    "calories",
+    "body fat",
+    "diets"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hall, International Journal of Obesity, 2008",
+  "source_kind": "paper",
+  "reference": "Hall, What is the required energy deficit per unit weight loss?, International Journal of Obesity 32:573–576, 2008",
+  "written": "2026-09-26"
+}

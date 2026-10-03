@@ -1,0 +1,33 @@
+{
+  "id": "life-comparison-2",
+  "topic": "life",
+  "genre": "life.handle_setbacks",
+  "strand": "life.handle_setbacks.comparison",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Would people rather earn $50,000 while others earn $25,000, or $100,000 while others earn $200,000?",
+  "answer": "About half chose the first. Solnick and Hemenway put such choices to students and staff at a school of public health, prices held equal; many would give up half their real income to stay ahead. The pull of rank was much weaker for holidays: most preferred more weeks off even if others had more.",
+  "move": "Notice which of your wants are about having, and which about outranking.",
+  "ask": "Which of my goals would I drop if nobody around me could see whether I reached it?",
+  "keywords": [
+    "positional goods",
+    "income",
+    "status",
+    "relative position"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Solnick and Hemenway, JEBO, 1998",
+  "source_kind": "paper",
+  "reference": "Solnick and Hemenway, Is more always better? A survey on positional concerns, Journal of Economic Behavior and Organization, 1998",
+  "written": "2026-10-03"
+}

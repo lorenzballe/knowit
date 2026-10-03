@@ -1,0 +1,43 @@
+{
+  "id": "human_body-breathing-3",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.breathing",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Panting: 30 breaths a minute of 200 ml, 150 ml of each stuck in the airways. Litres of fresh air reaching the lungs per minute?",
+  "value": 1.5,
+  "unit": "litres",
+  "tolerance": 0.1,
+  "answer": "1.5 litres a minute, a quarter of the 6 litres moved",
+  "move": "Subtract the fixed cost before counting what each repetition delivers.",
+  "ask": "Where do I do many quick, shallow repetitions when fewer, deeper ones would get more done?",
+  "trap": "Counting all 6 litres moved as air that reached the lungs.",
+  "hint": "Subtract the air that never leaves the airways, then multiply by the breaths.",
+  "steps": [
+    "200 ml − 150 ml = 50 ml of fresh air per breath",
+    "50 ml × 30 = 1,500 ml a minute",
+    "1.5 litres a minute, a quarter of the 6 litres moved"
+  ],
+  "keywords": [
+    "dead space",
+    "breathing rate",
+    "ventilation",
+    "panting"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "West, Respiratory Physiology: The Essentials, 2012",
+  "source_kind": "book",
+  "reference": "West JB, Respiratory Physiology: The Essentials, 9th edition, Lippincott Williams & Wilkins, 2012",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,36 @@
+{
+  "id": "psychology-memory-and-stress-2",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.memory_and_stress",
+  "also": [
+    "psychology.memory.remembering_better"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Stress before a test makes recall slip. Which way of studying the day before protected memory against it?",
+  "answer": "Testing oneself. Students learned material either by re-reading it or by taking practice tests; a day later, half gave a speech and did mental arithmetic in front of judges before recall. Stress cut recall among the re-readers but not among the self-testers. A memory pulled out many times has a well-worn path back.",
+  "move": "Practise pulling knowledge out, not putting it in, before a high-stakes day.",
+  "ask": "Before my next interview or exam, have I practised recalling the material, or only rereading it?",
+  "keywords": [
+    "retrieval practice",
+    "acute stress",
+    "exam nerves",
+    "recall"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smith, Floerke & Thomas, Science, 2016",
+  "source_kind": "paper",
+  "reference": "Smith, Floerke & Thomas, Retrieval practice protects memory against acute stress, Science, 2016",
+  "written": "2026-10-03"
+}

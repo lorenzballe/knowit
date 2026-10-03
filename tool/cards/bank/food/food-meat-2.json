@@ -1,0 +1,61 @@
+{
+  "id": "food-meat-2",
+  "topic": "food",
+  "genre": "food.food_and_the_planet",
+  "strand": "food.food_and_the_planet.meat",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Livestock and their feed take most of the world's farmland. What share of the world's calories do they supply?",
+  "options": [
+    "About 80%",
+    "About half",
+    "About 18%"
+  ],
+  "correct": 2,
+  "answer": "About 18%. Our World in Data, using UN farm statistics, finds livestock, counting pasture and feed land, uses about 77% of the world's farmland yet supplies 18% of its calories and 37% of its protein. Animals burn most of what they eat keeping warm and moving. Most of that land feeds animals, not people.",
+  "move": "Count what goes into a system, not only what comes out.",
+  "ask": "Which part of my life takes the most of my time while giving back the least?",
+  "trap": "About half, since meat and milk fill so many rich-world plates.",
+  "keywords": [
+    "livestock",
+    "farmland",
+    "calories",
+    "protein",
+    "land use"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "% of world total",
+    "items": [
+      {
+        "label": "Farmland used by livestock",
+        "value": 77,
+        "hi": true
+      },
+      {
+        "label": "Calories from livestock",
+        "value": 18
+      },
+      {
+        "label": "Protein from livestock",
+        "value": 37
+      }
+    ],
+    "caption": "Livestock uses about 77% of farmland for 18% of calories and 37% of protein."
+  },
+  "source": "Ritchie, Our World in Data, 2019",
+  "source_kind": "statistics",
+  "reference": "https://ourworldindata.org/global-land-for-agriculture",
+  "written": "2026-10-03"
+}

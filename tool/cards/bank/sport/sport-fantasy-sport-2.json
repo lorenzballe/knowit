@@ -1,0 +1,43 @@
+{
+  "id": "sport-fantasy-sport-2",
+  "topic": "sport",
+  "genre": "sport.sport_and_numbers",
+  "strand": "sport.sport_and_numbers.fantasy_sport",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A fantasy contest takes £20 from each of 1,000 entrants and keeps 12%. On average, how many pounds does an entrant get back?",
+  "value": 17.6,
+  "unit": "pounds",
+  "tolerance": 0.1,
+  "answer": "£17.60 back per £20 entry, on average",
+  "move": "Know the cut taken before judging whether you can win.",
+  "ask": "What cut is taken before I even get a chance to win, in the deals I sign up for?",
+  "hint": "Find the prize pool left after the site's cut.",
+  "steps": [
+    "Pool: 1,000 × £20 = £20,000",
+    "Paid out after the 12% cut: £20,000 × 0.88 = £17,600",
+    "£17,600 ÷ 1,000 = £17.60",
+    "£17.60 back per £20 entry, on average"
+  ],
+  "keywords": [
+    "fantasy sport",
+    "entry fees",
+    "rake",
+    "prize pool"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": true,
+  "language": "en",
+  "figure": "none",
+  "source": "Arithmetic of a contest's rake",
+  "source_kind": "arithmetic",
+  "reference": "Todd Easton & Sarah Newell, Are daily fantasy sports gambling?, Journal of Sports Analytics, 2019",
+  "written": "2026-09-26"
+}

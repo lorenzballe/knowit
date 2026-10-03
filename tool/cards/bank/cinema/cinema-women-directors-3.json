@@ -1,0 +1,38 @@
+{
+  "id": "cinema-women-directors-3",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.women_directors",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should public film funds aim to split their money equally between women and men directors?",
+  "sides": [
+    "Yes, aim for half",
+    "No, judge projects only"
+  ],
+  "answer": "Public money should reach the public, and half of it is women. Sweden's film institute set a 50/50 target in 2011, when about 26% of its funding went to women, and reached it by 2014 while its films kept winning festival prizes. A target forces funders to look for talent they had been overlooking.",
+  "move": "Whichever side you took, it turns on whether talent was being missed or simply absent.",
+  "ask": "When I pick people for something, how would I know if I am missing good ones?",
+  "counterpoint": "A fund exists to back the best projects in front of it, not to balance a ledger. If fewer women apply, a fixed split can mean weaker films funded over stronger ones, and every woman funded is suspected of filling a slot. Fixing who applies, through training and childcare on shoots, removes the cause rather than the numbers.",
+  "keywords": [
+    "swedish film institute",
+    "gender equality",
+    "film funding",
+    "quotas"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Swedish Film Institute, Gender Equality Report",
+  "source_kind": "institution",
+  "reference": "https://www.filminstitutet.se/globalassets/2.-fa-kunskap-om-film/analys-och-statistik/publications/other-publications/swedish-film-insitute-gender-equality-report_2017_eng.pdf",
+  "written": "2026-10-03"
+}

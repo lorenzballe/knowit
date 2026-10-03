@@ -1,0 +1,42 @@
+{
+  "id": "medicine-alternative-medicine-1",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.alternative_medicine",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Each homeopathic C step dilutes 1 part in 100. After how many steps would a whole mole leave under one molecule?",
+  "value": 12,
+  "unit": "dilution steps",
+  "answer": "After 12 steps: 6 × 10^23 ÷ 10^24 = 0.6, under one: 12 steps",
+  "move": "Repeated small divisions empty anything faster than intuition allows.",
+  "ask": "Which good habit am I watering down a little at a time, until almost nothing of it is left?",
+  "trap": "Guessing hundreds of steps, since 1 in 100 sounds mild.",
+  "hint": "A mole is about 6 × 10^23 molecules; each step removes two powers of ten.",
+  "steps": [
+    "One mole holds about 6 × 10^23 molecules",
+    "After 11 steps: 6 × 10^23 ÷ 10^22 = about 60 molecules",
+    "After 12 steps: 6 × 10^23 ÷ 10^24 = 0.6, under one: 12 steps"
+  ],
+  "keywords": [
+    "homeopathy",
+    "dilution",
+    "avogadro constant",
+    "molecules"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Avogadro constant, CODATA",
+  "source_kind": "standard",
+  "reference": "Tiesinga et al., CODATA recommended values of the fundamental physical constants: 2018, Reviews of Modern Physics, 2021",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "medicine-cold-and-flu-myths-3",
+  "topic": "medicine",
+  "genre": "medicine.medical_myths",
+  "strand": "medicine.medical_myths.cold_and_flu_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In 2023, US FDA advisers reviewed oral phenylephrine, the decongestant in many cold pills. What did they conclude?",
+  "options": [
+    "It works but raises blood pressure",
+    "It works no better than a dummy pill"
+  ],
+  "correct": 1,
+  "answer": "No better than a dummy pill, by a unanimous vote. Swallowed phenylephrine is mostly broken down in the gut and liver, so very little reaches the nose. Newer trials found no effect on congestion. It had sat on pharmacy shelves for decades on the strength of small, older studies.",
+  "move": "Being everywhere on the shelf is not evidence of working.",
+  "ask": "What do I buy mainly because it is everywhere, not because I know it works?",
+  "trap": "It works but raises blood pressure, since it is sold everywhere.",
+  "keywords": [
+    "phenylephrine",
+    "decongestant",
+    "cold remedies",
+    "fda advisory committee"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FDA Nonprescription Drugs Advisory Committee, 2023",
+  "source_kind": "institution",
+  "reference": "US FDA, Nonprescription Drugs Advisory Committee meeting on oral phenylephrine, 11-12 September 2023",
+  "written": "2026-10-03"
+}

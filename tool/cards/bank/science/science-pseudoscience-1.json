@@ -1,0 +1,33 @@
+{
+  "id": "science-pseudoscience-1",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.pseudoscience",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a nine-year-old test whether touch therapists could really feel a human energy field?",
+  "answer": "She hid behind a screen, held her hand over one of theirs, chosen by a coin toss, and asked which. Emily Rosa ran 280 trials with 21 practitioners; they named the right hand 44% of the time, worse than the 50% of pure guessing. Published in JAMA in 1998, she became its youngest author.",
+  "move": "Ask what result would show a claim false, then go and look.",
+  "ask": "Which of my beliefs have I never put to a simple test I could easily run?",
+  "keywords": [
+    "therapeutic touch",
+    "energy fields",
+    "emily rosa",
+    "science fair"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rosa et al., JAMA, 1998",
+  "source_kind": "paper",
+  "reference": "Rosa, Rosa, Sarner & Barrett, A close look at therapeutic touch, JAMA 279:1005–1010, 1998",
+  "written": "2026-09-26"
+}

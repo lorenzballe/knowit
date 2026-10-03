@@ -1,0 +1,43 @@
+{
+  "id": "nature-weather-or-climate-3",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.weather_or_climate",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "In a climate that is not changing, what is the chance that year 100 of a record sets a new high, in percent?",
+  "value": 1,
+  "unit": "percent",
+  "answer": "A 1% chance.",
+  "move": "In a steady world records grow rarer, so a cluster of them is a signal.",
+  "ask": "When records keep piling up in my life, have I asked what has changed underneath?",
+  "trap": "Assuming new records stay as common as in the first few years.",
+  "hint": "Ask how many years could equally be the warmest so far.",
+  "steps": [
+    "With no trend, each of the 100 years is equally likely to be the warmest",
+    "So year 100 has a 1 in 100 chance",
+    "1 ÷ 100 = 0.01",
+    "A 1% chance."
+  ],
+  "keywords": [
+    "temperature records",
+    "probability",
+    "climate trend",
+    "record years"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Benestad, Climate Research, 2003",
+  "source_kind": "paper",
+  "reference": "Benestad, How often can we expect a record event?, Climate Research, 2003",
+  "written": "2026-10-03"
+}

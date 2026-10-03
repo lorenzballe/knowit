@@ -1,0 +1,41 @@
+{
+  "id": "life-what-things-cost-in-hours-2",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.what_things_cost_in_hours",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Three streaming subscriptions at 12 a month each: for someone who keeps 15 an hour, how many eight-hour working days a year is that?",
+  "options": [
+    "About 3 to 4 days",
+    "Under one day",
+    "About two weeks"
+  ],
+  "correct": 0,
+  "answer": "About 3.6 days. Three at 12 is 36 a month, or 432 a year. At 15 an hour that is about 29 hours of work, or three and a half working days. Small monthly prices hide their size because the year never arrives as one bill.",
+  "move": "Multiply a monthly price by twelve before deciding it is small.",
+  "ask": "Which small monthly payment would I cancel if I saw it as days of my working year?",
+  "trap": "A dozen a month feels like loose change, so under a day.",
+  "keywords": [
+    "subscriptions",
+    "monthly costs",
+    "working hours",
+    "budgeting",
+    "streaming"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arithmetic of recurring costs",
+  "source_kind": "arithmetic",
+  "reference": "Robin and Dominguez, Your Money or Your Life, revised edition, Penguin, 2018",
+  "written": "2026-10-03"
+}

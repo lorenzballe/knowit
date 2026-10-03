@@ -1,0 +1,40 @@
+{
+  "id": "cinema-auteurs-1",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.auteurs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "A critic sees a famous director's signature themes in every scene of her new film. Which test would show the signature is real?",
+  "options": [
+    "Spotting it with the credits hidden",
+    "Finding it in more of her films",
+    "Hearing the director confirm it"
+  ],
+  "correct": 0,
+  "answer": "Spotting it blind. A critic who knows the name looks for the themes, and almost any film offers something to find. Pauline Kael mocked auteur critics in 1963 for praising a director's trademarks wherever they appeared. If the style is real, a viewer should pick the director out of unlabelled films.",
+  "move": "A pattern you find only when you know where to look is suspect.",
+  "ask": "Would I still rate this work so highly if I did not know who made it?",
+  "trap": "Finding it in more of her films, which feels like stronger proof.",
+  "keywords": [
+    "auteur theory",
+    "pauline kael",
+    "film criticism",
+    "blind test"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kael, Circles and Squares, 1963",
+  "source_kind": "paper",
+  "reference": "Pauline Kael, Circles and Squares, Film Quarterly, 16(3), 1963",
+  "written": "2026-10-03"
+}

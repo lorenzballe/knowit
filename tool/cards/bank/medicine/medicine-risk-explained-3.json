@@ -1,0 +1,40 @@
+{
+  "id": "medicine-risk-explained-3",
+  "topic": "medicine",
+  "genre": "medicine.talk_to_your_doctor",
+  "strand": "medicine.talk_to_your_doctor.risk_explained",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A medicine leaflet calls a side effect common. Under the EU convention, how often does that mean?",
+  "options": [
+    "Up to 1 in 10 people",
+    "About half of people",
+    "Up to 1 in 1,000 people"
+  ],
+  "correct": 0,
+  "answer": "Between 1 in 100 and 1 in 10 people. Yet when researchers asked the public, people read common as about 45%, several times too high. The same word means one thing to the regulator and another to the reader, so a leaflet saying common can scare people off a useful drug.",
+  "move": "Ask for the number behind every word like rare or common.",
+  "ask": "When someone tells me a risk is rare or common, do I ask what number they mean?",
+  "trap": "About half of people, since common sounds like most people get it.",
+  "keywords": [
+    "patient leaflets",
+    "verbal descriptors",
+    "side effects",
+    "european union"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Berry, Knapp & Raynor, The Lancet, 2002",
+  "source_kind": "paper",
+  "reference": "Berry, Knapp & Raynor, Provision of information about drug side-effects to patients, The Lancet, 2002",
+  "written": "2026-10-03"
+}

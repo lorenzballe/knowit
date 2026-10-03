@@ -1,0 +1,40 @@
+{
+  "id": "nature-insect-decline-1",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.insect_decline",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "A 2019 review warned insects could nearly vanish within a century. Why did other ecologists distrust its method?",
+  "options": [
+    "It searched only for studies of decline",
+    "It counted only tropical insects",
+    "It relied on data from before 1950"
+  ],
+  "correct": 0,
+  "answer": "It searched only for studies of decline. Sánchez-Bayo and Wyckhuys found their papers by searching a database with the word decline, so studies showing stable or rising numbers were mostly left out. Komonen and colleagues called it alarmist by design. Real declines exist, but a net cast for losses catches losses.",
+  "move": "Ask how the evidence was gathered before asking what it says.",
+  "ask": "When I look things up, do I search for the answer I already expect?",
+  "trap": "A review of many studies seems balanced simply because it is big.",
+  "keywords": [
+    "insect decline",
+    "literature review",
+    "search bias",
+    "insect apocalypse"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Komonen et al., Rethinking Ecology, 2019",
+  "source_kind": "paper",
+  "reference": "Komonen, Halme & Kotiaho, Alarmist by bad design: strongly popularized unsubstantiated claims undermine credibility of conservation science, Rethinking Ecology, 2019; Sánchez-Bayo & Wyckhuys, Worldwide decline of the entomofauna: a review of its drivers, Biological Conservation, 2019",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "medicine-smoking-1",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.smoking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In the 50-year study of British doctors, how much life did lifelong smokers lose on average?",
+  "options": [
+    "About 10 years",
+    "About 2 years",
+    "About 25 years"
+  ],
+  "correct": 0,
+  "answer": "About 10 years. Doctors who smoked all their lives died about a decade earlier than those who never smoked. Stopping at 30 won back nearly all of it; stopping at 50, about six years; even at 60, about three. Everyone knows a smoker who reached 90; the study counted all the others too.",
+  "move": "The one exception you remember hides the many you never met.",
+  "ask": "Which risky habit do I excuse because I know one person it never seemed to hurt?",
+  "trap": "About 2 years, since everyone knows a smoker who reached 90.",
+  "keywords": [
+    "smoking",
+    "british doctors study",
+    "life expectancy",
+    "quitting",
+    "richard doll"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Doll et al., BMJ, 2004",
+  "source_kind": "paper",
+  "reference": "Doll, Peto, Boreham & Sutherland, Mortality in relation to smoking: 50 years' observations on male British doctors, BMJ, 2004",
+  "written": "2026-10-03"
+}

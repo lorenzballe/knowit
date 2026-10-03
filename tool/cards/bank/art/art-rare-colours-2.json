@@ -1,0 +1,39 @@
+{
+  "id": "art-rare-colours-2",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.rare_colours",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: the story that Indian yellow came from cows fed only mango leaves rests on many eyewitness reports?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Nearly every retelling traces back to one letter, sent in 1883 by T. N. Mukharji to the Society of Arts in London after a visit near Monghyr, in Bihar. Chemistry supports an origin in animal urine; the starved, mango-fed cows rest on that one witness alone.",
+  "move": "Count the original witnesses behind a story, not the times it is retold.",
+  "ask": "That story I keep hearing everywhere: how many people actually saw it happen?",
+  "trap": "True, because the story appears in so many books.",
+  "keywords": [
+    "indian yellow",
+    "mango leaves",
+    "pigment",
+    "t. n. mukharji"
+  ],
+  "era": "nineteenth",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Finlay, Colour: Travels Through the Paintbox, 2002",
+  "source_kind": "book",
+  "reference": "Victoria Finlay, Colour: Travels Through the Paintbox, Sceptre, 2002",
+  "written": "2026-10-03"
+}

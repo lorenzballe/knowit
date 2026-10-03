@@ -1,0 +1,38 @@
+{
+  "id": "nature-forests-and-climate-3",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.forests_and_climate",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should electricity from burning wood pellets count as carbon neutral, as European rules allow?",
+  "sides": [
+    "Yes, count it neutral",
+    "No, count the smoke"
+  ],
+  "answer": "Yes. The carbon in wood was drawn from the air and is drawn back as forests regrow, so over a full harvest cycle the books balance. Much of the fuel is sawmill waste and thinnings that would rot anyway. Coal, by contrast, releases carbon buried for millions of years and never takes it back.",
+  "move": "Whichever side you took, how long the regrowth takes is what decides it.",
+  "ask": "When I call a choice even in the long run, am I counting what it costs in the meantime?",
+  "counterpoint": "Burning wood releases more carbon per unit of electricity than coal, and regrowth takes decades. Sterman and colleagues modelled the swap and found payback times of roughly 44 to 104 years even when forests regrow. Counting pellets as zero lets that debt sit in the air through exactly the decades that matter most.",
+  "keywords": [
+    "wood pellets",
+    "bioenergy",
+    "carbon neutrality",
+    "carbon debt"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sterman et al., Environmental Research Letters, 2018",
+  "source_kind": "paper",
+  "reference": "Sterman, Siegel & Rooney-Varga, Does replacing coal with wood lower CO2 emissions? Dynamic lifecycle analysis of wood bioenergy, Environmental Research Letters, 2018",
+  "written": "2026-10-03"
+}

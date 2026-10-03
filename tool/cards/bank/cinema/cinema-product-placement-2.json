@@ -1,0 +1,41 @@
+{
+  "id": "cinema-product-placement-2",
+  "topic": "cinema",
+  "genre": "cinema.how_films_persuade",
+  "strand": "cinema.how_films_persuade.product_placement",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A brand pays $1 million for its drink to appear in a film seen by 50 million people. Cost per thousand viewers, in dollars?",
+  "value": 20,
+  "unit": "dollars per thousand viewers",
+  "answer": "$1,000,000 / 50,000 = 20 dollars per thousand viewers.",
+  "move": "Divide the price by the people reached before calling a deal expensive.",
+  "ask": "What do I call expensive without dividing it by how much use I will get from it?",
+  "trap": "Calling a million dollars extravagant for a few seconds on screen.",
+  "hint": "Turn 50 million viewers into thousands of viewers first.",
+  "steps": [
+    "50,000,000 viewers / 1,000 = 50,000 thousands.",
+    "$1,000,000 / 50,000 = 20 dollars per thousand viewers."
+  ],
+  "keywords": [
+    "product placement",
+    "advertising costs",
+    "audience reach",
+    "cost per thousand"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arithmetic of advertising reach",
+  "source_kind": "arithmetic",
+  "reference": "Cost per thousand viewers, worked arithmetic, 2026",
+  "written": "2026-10-03"
+}

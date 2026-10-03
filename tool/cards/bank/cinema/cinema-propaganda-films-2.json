@@ -1,0 +1,40 @@
+{
+  "id": "cinema-propaganda-films-2",
+  "topic": "cinema",
+  "genre": "cinema.films_and_history",
+  "strand": "cinema.films_and_history.propaganda_films",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "A weekly newsreel repeats a false claim in every issue. What does the repetition do to viewers who already know the truth?",
+  "options": [
+    "Makes them distrust it more",
+    "Has no effect on them",
+    "Makes it feel truer anyway"
+  ],
+  "correct": 2,
+  "answer": "Makes it feel truer anyway. Fazio and colleagues showed that repeated statements are rated more true even by people who know the correct answer, because familiar sentences are processed easily and ease feels like truth. Knowing better helps, but does not switch off the effect. Repetition does the work argument cannot.",
+  "move": "Hearing something often is not evidence; treat familiarity as a warning sign.",
+  "ask": "Which claim do I believe mostly because I have heard it so many times?",
+  "trap": "Has no effect on them, since they know the truth.",
+  "keywords": [
+    "illusory truth",
+    "repetition",
+    "newsreels",
+    "propaganda"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fazio et al., Journal of Experimental Psychology, 2015",
+  "source_kind": "paper",
+  "reference": "Fazio, Brashier, Payne and Marsh, Knowledge Does Not Protect Against Illusory Truth, Journal of Experimental Psychology: General, 144(5), 2015",
+  "written": "2026-10-03"
+}

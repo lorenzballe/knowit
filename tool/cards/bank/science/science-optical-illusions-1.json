@@ -1,0 +1,36 @@
+{
+  "id": "science-optical-illusions-1",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.optical_illusions",
+  "also": [
+    "science.light_and_colour.how_eyes_see_colour"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did a 2015 photo of a dress split people into those seeing blue and black and those seeing white and gold?",
+  "answer": "Because the photo hides its lighting. Each brain guesses the light and subtracts it: assume bluish shade and the dress looks white and gold; assume warm indoor light and it looks blue and black. A survey of 1,401 people found the split ran along those guesses. The dress itself was blue and black.",
+  "move": "When two people see one thing differently, compare their unstated assumptions.",
+  "ask": "When someone sees it differently from me, what am I assuming that they are not?",
+  "keywords": [
+    "the dress",
+    "colour constancy",
+    "lighting",
+    "perception"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lafer-Sousa et al., Current Biology, 2015",
+  "source_kind": "paper",
+  "reference": "Lafer-Sousa, Hermann & Conway, Striking individual differences in color perception uncovered by 'the dress' photograph, Current Biology 25:R545–R546, 2015",
+  "written": "2026-09-26"
+}

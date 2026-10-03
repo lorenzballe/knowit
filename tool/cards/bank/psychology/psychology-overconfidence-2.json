@@ -1,0 +1,33 @@
+{
+  "id": "psychology-overconfidence-2",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.overconfidence",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 35,000 household brokerage accounts, who traded shares more often, men or women, and what did the trading cost them?",
+  "answer": "Men, by about 45%. Trading cut men's net returns by about 2.65 percentage points a year, against 1.72 for women, and single men traded most of all. The researchers read the extra trading as overconfidence: each trade assumed knowing better than whoever took the other side. Every click carried a fee and a bet.",
+  "move": "Each trade bets that you know more than whoever takes the other side.",
+  "ask": "Where do I keep tinkering, with money or plans, when leaving things alone would cost less?",
+  "keywords": [
+    "overconfidence",
+    "share trading",
+    "investors",
+    "gender"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barber & Odean, Quarterly Journal of Economics, 2001",
+  "source_kind": "paper",
+  "reference": "Barber & Odean, Boys will be boys: Gender, overconfidence, and common stock investment, Quarterly Journal of Economics, 2001",
+  "written": "2026-10-03"
+}

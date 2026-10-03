@@ -1,0 +1,39 @@
+{
+  "id": "science-cherry-picking-3",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.cherry_picking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: twenty heartfelt patient testimonials are good evidence that a treatment works?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Testimonials come only from people who improved and chose to speak; nobody counts those who got worse, stayed the same or would have recovered anyway. A clinic with thousands of patients can fill a wall with true stories while helping no one. The missing number is how many tried it in all.",
+  "move": "Ask how many tried it before counting how many praise it.",
+  "ask": "When glowing reviews sell me something, do I wonder how many people tried it and stayed silent?",
+  "trap": "True, since twenty real people cannot all be mistaken.",
+  "keywords": [
+    "testimonials",
+    "survivorship",
+    "alternative treatments",
+    "evidence"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Goldacre, Bad Science, 2008",
+  "source_kind": "book",
+  "reference": "Goldacre, Bad Science, Fourth Estate, 2008",
+  "written": "2026-09-26"
+}

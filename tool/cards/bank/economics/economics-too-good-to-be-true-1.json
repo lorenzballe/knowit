@@ -1,0 +1,33 @@
+{
+  "id": "economics-too-good-to-be-true-1",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.too_good_to_be_true",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Charles Ponzi's 1920 scheme rested on a real profit from postal coupons. Why could it never have worked honestly?",
+  "answer": "Because the trick could not grow. Buying international reply coupons cheaply in Europe and redeeming them for American stamps did make money, but paying his investors would have taken about 160 million coupons; only about 27,000 were in circulation. New investors' money paid old ones instead, until it ran out within a year.",
+  "move": "A real edge that cannot grow cannot pay big returns to many people.",
+  "ask": "If an offer's secret really worked, why would they need my money to run it?",
+  "keywords": [
+    "charles ponzi",
+    "ponzi scheme",
+    "postal reply coupons",
+    "fraud"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zuckoff, Ponzi's Scheme, 2005",
+  "source_kind": "book",
+  "reference": "Mitchell Zuckoff, Ponzi's Scheme: The True Story of a Financial Legend, Random House, 2005",
+  "written": "2026-10-03"
+}

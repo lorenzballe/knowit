@@ -1,0 +1,38 @@
+{
+  "id": "art-protest-art-3",
+  "topic": "art",
+  "genre": "art.art_and_power",
+  "strand": "art.art_and_power.protest_art",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Do protests that target famous artworks, like soup thrown at glass-covered paintings, help the protesters' cause?",
+  "sides": [
+    "Yes, they help",
+    "No, they backfire"
+  ],
+  "answer": "Yes, often indirectly. Attacks on glazed paintings harm nothing but win coverage that marches never get. Experiments by Simpson, Willer and Feinberg found a radical group's disruption can raise support for moderate groups with the same aims, because the radicals make the moderates look reasonable. Attention is scarce, and these protests buy it cheaply.",
+  "move": "Whichever side you took, it turns on whether attention becomes support.",
+  "ask": "When I want to change someone's mind, am I seeking their attention or their agreement?",
+  "counterpoint": "No. Feinberg, Willer and Kovacheff ran experiments showing that extreme protest actions cut public support for the movement itself, because people judge the protesters immoral and stop identifying with them. Polls after the gallery stunts found large majorities disapproving. Coverage that makes people dislike your cause is not progress; it is advertising for the other side.",
+  "keywords": [
+    "climate protest",
+    "museums",
+    "radical flank effect",
+    "activism"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Feinberg, Willer & Kovacheff, JPSP, 2020",
+  "source_kind": "paper",
+  "reference": "Matthew Feinberg, Robb Willer & Chloe Kovacheff, The activist's dilemma: extreme protest actions reduce popular support for social movements, Journal of Personality and Social Psychology, 2020",
+  "written": "2026-10-03"
+}

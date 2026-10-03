@@ -1,0 +1,40 @@
+{
+  "id": "psychology-sleep-debt-1",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.sleep_debt",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Volunteers got a cold virus in nose drops. Compared with seven-hour sleepers, how likely were people sleeping under six hours to fall ill?",
+  "options": [
+    "About as likely",
+    "About 4 times as likely",
+    "About 20% more likely"
+  ],
+  "correct": 1,
+  "answer": "About 4 times as likely. Their sleep had been measured with wrist monitors for a week beforehand, not just reported, and the link held after allowing for age, stress and other habits. A short-sleep week weakens the body's defences before any virus arrives. Six-hour nights turned a possible sniffle into a likely cold.",
+  "move": "Costs that build quietly are paid all at once, when tested.",
+  "ask": "Before a busy season, have I protected my sleep the way I would protect my money?",
+  "trap": "About 20% more likely, since a little lost sleep seems minor.",
+  "keywords": [
+    "sleep debt",
+    "common cold",
+    "immune system",
+    "short sleep"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Prather et al., Sleep, 2015",
+  "source_kind": "paper",
+  "reference": "Prather, Janicki-Deverts, Hall & Cohen, Behaviorally assessed sleep and susceptibility to the common cold, Sleep, 2015",
+  "written": "2026-10-03"
+}

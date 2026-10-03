@@ -1,0 +1,43 @@
+{
+  "id": "science-how-eyes-see-colour-2",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.how_eyes_see_colour",
+  "also": [
+    "science.light_and_colour.rainbows"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: magenta, the pinkish purple of printer ink, appears nowhere in a rainbow?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A rainbow holds only single wavelengths, from red to violet, and no single wavelength looks magenta. The brain makes magenta when its red and blue cones fire but the green ones stay quiet, a pairing from opposite ends of the spectrum. It is a colour the eye builds, not one light carries alone.",
+  "move": "Some of what is seen is assembled by the viewer, not delivered.",
+  "ask": "Which of my strong impressions did I build myself, rather than find out there?",
+  "trap": "False, since every colour must sit somewhere in the spectrum.",
+  "keywords": [
+    "magenta",
+    "rainbows",
+    "spectrum",
+    "cones",
+    "colour vision"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wyszecki & Stiles, Color Science, 1982",
+  "source_kind": "book",
+  "reference": "Wyszecki & Stiles, Color Science: Concepts and Methods, Quantitative Data and Formulae, 2nd ed., Wiley, 1982",
+  "written": "2026-09-26"
+}

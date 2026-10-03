@@ -1,0 +1,37 @@
+{
+  "id": "sport-why-records-fall-2",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.why_records_fall",
+  "also": [
+    "sport.equipment.tech_doping"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a men's javelin throw of 104.80 m, made in 1984, not stand as the world record?",
+  "answer": "Because the javelin itself was changed. Throws that long were starting to threaten people at the far end of stadiums, so in 1986 the men's javelin was redesigned with its centre of gravity 4 cm further forward, making it nose down sooner. Records started again; the best with the new design is 98.48 m.",
+  "move": "Before comparing two results, check they were made with the same tools.",
+  "ask": "Am I comparing my results today with ones made under rules or tools that no longer apply?",
+  "keywords": [
+    "javelin",
+    "uwe hohn",
+    "centre of gravity",
+    "world record",
+    "equipment rules"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IAAF, Progression of World Records, 2015",
+  "source_kind": "reference_work",
+  "reference": "IAAF, Progression of IAAF World Records, 2015 edition, IAAF, 2015",
+  "written": "2026-09-26"
+}

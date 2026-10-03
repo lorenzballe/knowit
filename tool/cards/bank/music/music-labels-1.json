@@ -1,0 +1,46 @@
+{
+  "id": "music-labels-1",
+  "topic": "music",
+  "genre": "music.the_music_business",
+  "strand": "music.the_music_business.labels",
+  "also": [
+    "economics.spot_a_bad_deal.fine_print"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A label advances €100,000, repaid only from the artist's 20% royalty. What must the record earn first, in thousands of euros?",
+  "value": 500,
+  "unit": "thousand euros",
+  "answer": "€500,000, by which point the label has taken €400,000",
+  "move": "A loan repaid from a small slice takes the whole pie to clear.",
+  "ask": "In any deal I have signed, from what share of the money is my debt actually repaid?",
+  "trap": "Thinking €100,000 of earnings repays a €100,000 advance.",
+  "hint": "Ask what total, taken at 20%, adds up to the advance.",
+  "steps": [
+    "The royalty must cover the advance: €100,000 ÷ 0.20",
+    "= €500,000 of earnings",
+    "The label keeps the other 80%: €400,000",
+    "€500,000, by which point the label has taken €400,000"
+  ],
+  "keywords": [
+    "record advance",
+    "recoupment",
+    "royalty rate",
+    "record labels"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Passman, All You Need to Know, 2019",
+  "source_kind": "book",
+  "reference": "Passman, All You Need to Know About the Music Business, 10th edition, Simon & Schuster, 2019",
+  "written": "2026-09-26"
+}

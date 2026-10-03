@@ -1,0 +1,42 @@
+{
+  "id": "science-estimating-3",
+  "topic": "science",
+  "genre": "science.numbers_and_chance",
+  "strand": "science.numbers_and_chance.estimating",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A protest fills a square 100 m by 50 m, packed at about 2 people per square metre. How many thousand people?",
+  "value": 10,
+  "unit": "thousand people",
+  "answer": "About 10 thousand people.",
+  "move": "Measure the space before believing anyone's count of a crowd.",
+  "ask": "When someone tells me how many people agree with them, could I check it with a rough sum?",
+  "trap": "Guessing from the noise, which makes a crowd feel far bigger.",
+  "hint": "Multiply the area by how many people stand on each square metre.",
+  "steps": [
+    "Area: 100 m × 50 m = 5,000 square metres.",
+    "People: 5,000 × 2 = 10,000.",
+    "About 10 thousand people."
+  ],
+  "keywords": [
+    "crowd counting",
+    "protests",
+    "jacobs method",
+    "area"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Watson & Yip, Significance, 2011",
+  "source_kind": "paper",
+  "reference": "Watson & Yip, How many were there when it mattered? Estimating the sizes of crowds, Significance 8(3):104–107, 2011",
+  "written": "2026-09-26"
+}

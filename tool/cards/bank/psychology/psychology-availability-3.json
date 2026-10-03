@@ -1,0 +1,40 @@
+{
+  "id": "psychology-availability-3",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.availability",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "After a flood hits a US community, what happens to the number of households holding flood insurance over the following years?",
+  "options": [
+    "It rises and stays high",
+    "It barely changes at all",
+    "It jumps, then drifts back down"
+  ],
+  "correct": 2,
+  "answer": "It jumps, then drifts back down. Take-up rises by about 9% the year after a flood, then slides back towards its old level over the following decade, although the risk has not changed. People insure against what they remember. By the next flood, the memory and the cover have often lapsed together.",
+  "move": "Risk does not fade when the memory of it does.",
+  "ask": "Which risk did I take seriously right after a scare, and have I quietly let it slide since?",
+  "trap": "It rises and stays high, as if the lesson had been learned.",
+  "keywords": [
+    "flood insurance",
+    "risk perception",
+    "memory",
+    "disasters"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gallagher, AEJ: Applied Economics, 2014",
+  "source_kind": "paper",
+  "reference": "Gallagher, Learning about an infrequent event: Evidence from flood insurance take-up in the United States, American Economic Journal: Applied Economics, 2014",
+  "written": "2026-10-03"
+}

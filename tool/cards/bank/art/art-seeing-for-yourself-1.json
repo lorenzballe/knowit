@@ -1,0 +1,40 @@
+{
+  "id": "art-seeing-for-yourself-1",
+  "topic": "art",
+  "genre": "art.what_makes_it_valuable",
+  "strand": "art.what_makes_it_valuable.seeing_for_yourself",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "People rated the same abstract images, told some came from a gallery and others from a computer. Which did they find more beautiful?",
+  "options": [
+    "The computer ones",
+    "The gallery ones",
+    "Neither; ratings matched"
+  ],
+  "correct": 1,
+  "answer": "The ones labelled as from a gallery, though the labels were assigned at random. In Kirk and colleagues' brain-scanning study, the gallery label also raised activity in brain areas linked to reward. Expectation did not just change what people said; it changed what they felt while looking. The word gallery arrived before the picture did.",
+  "move": "What you are told before you look changes what you see.",
+  "ask": "Before I judge something new this week, what label or review has already shaped my opinion?",
+  "trap": "Neither, since the pictures themselves were the same.",
+  "keywords": [
+    "aesthetic judgement",
+    "labels",
+    "fmri",
+    "expectation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kirk et al., NeuroImage, 2009",
+  "source_kind": "paper",
+  "reference": "Ulrich Kirk et al., Modulation of aesthetic value by semantic context: an fMRI study, NeuroImage, 2009",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-sorites-3",
+  "topic": "philosophy",
+  "genre": "philosophy.paradoxes",
+  "strand": "philosophy.paradoxes.sorites",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 2017 US guidelines lowered the line for high blood pressure from 140/90 to 130/80. What happened to the share of adults with it?",
+  "options": [
+    "Rose from a third to nearly half",
+    "Barely changed",
+    "Rose by about one point"
+  ],
+  "correct": 0,
+  "answer": "It rose from about a third to nearly half: 31.9% to 45.6%, by Paul Muntner and colleagues' count. Blood pressure runs on a smooth scale with no natural break, so any line is a choice; where people crowd near it, a small move sweeps up millions overnight.",
+  "move": "Where people cluster near a line, a small move redraws the whole picture.",
+  "ask": "Which label do I carry, like healthy or behind, that depends mostly on where someone drew a line?",
+  "trap": "Barely changed, since ten points sounds like a small adjustment.",
+  "keywords": [
+    "hypertension",
+    "blood pressure",
+    "guidelines",
+    "thresholds",
+    "diagnosis"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Muntner et al., Circulation, 2018",
+  "source_kind": "paper",
+  "reference": "Muntner et al., Potential US Population Impact of the 2017 ACC/AHA High Blood Pressure Guideline, Circulation 137 (2), 2018",
+  "written": "2026-10-03"
+}

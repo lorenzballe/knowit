@@ -1,0 +1,38 @@
+{
+  "id": "cinema-plot-holes-2",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.plot_holes",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Does a plot hole really damage a film if the audience is moved anyway?",
+  "sides": [
+    "Yes, logic matters",
+    "No, feeling matters"
+  ],
+  "answer": "A story is a promise that its world holds together. Once viewers spot a gap, every later scene loses weight, because nothing seems to have consequences. Today they rewatch, pause and discuss online, so holes that once vanished on the way home now define a film's reputation for years. Sloppy logic shows disrespect.",
+  "move": "Whichever side you took, it turns on whether the gap breaks belief while watching.",
+  "ask": "Do I judge things I love by feeling and things I dislike by logic?",
+  "counterpoint": "Aristotle wrote that a likely impossibility beats an unconvincing possibility: what matters is that the audience believes it while watching. Many loved classics are full of holes nobody minds. A film exists to make people feel and think, not to survive an audit, and a gap that does not break the spell has cost nothing.",
+  "keywords": [
+    "plot holes",
+    "aristotle",
+    "poetics",
+    "storytelling"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Aristotle, Poetics, trans. Heath",
+  "source_kind": "book",
+  "reference": "Aristotle, Poetics, trans. Malcolm Heath, Penguin Classics, 1996",
+  "written": "2026-10-03"
+}

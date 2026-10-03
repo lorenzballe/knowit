@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-death-3",
+  "topic": "philosophy",
+  "genre": "philosophy.living_well",
+  "strand": "philosophy.living_well.death",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is death bad for the person who dies, if they are no longer there to experience it?",
+  "sides": [
+    "No, it harms no one",
+    "Yes, it robs them"
+  ],
+  "answer": "No. A harm needs someone to bear it. While you exist, death is absent; when it comes, you are not. Epicurus argued that grasping this removes the craving for immortality and makes a mortal life enjoyable: the fear is the only harm death does, and the fear can be cured.",
+  "move": "It turns on whether a harm needs someone present to feel it.",
+  "ask": "If I stopped fearing my death, what would I do differently with this year?",
+  "counterpoint": "Something can harm you without your feeling it: a betrayal you never learn of still makes your life worse. Thomas Nagel argued in 1970 that death is bad because it takes away the goods that more life would have held. A woman killed at thirty loses decades, whether or not she is there to miss them.",
+  "keywords": [
+    "death",
+    "epicurus",
+    "thomas nagel",
+    "deprivation",
+    "harm"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nagel, Death, Noûs, 1970",
+  "source_kind": "paper",
+  "reference": "Nagel, Death, Noûs 4 (1), 1970; Epicurus, Letter to Menoeceus, in Inwood & Gerson, The Epicurus Reader, Hackett, 1994",
+  "written": "2026-10-03"
+}

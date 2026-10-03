@@ -1,0 +1,39 @@
+{
+  "id": "language-jargon-2",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.jargon",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: adding a plain definition beside each technical term removes the harm jargon does to readers?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In a 2019 experiment, readers of science texts full of jargon felt less able to follow them, less interested and less persuaded, and defining each term did not repair the damage. The unfamiliar word had already told them the text was not meant for them; the definition arrived too late.",
+  "move": "A defined term still tells the reader they are an outsider.",
+  "ask": "Which words do I use at work that tell newcomers they do not belong?",
+  "trap": "True, since a definition gives readers everything the term contains.",
+  "keywords": [
+    "jargon",
+    "science communication",
+    "definitions",
+    "readers"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bullock et al., Public Understanding of Science, 2019",
+  "source_kind": "paper",
+  "reference": "Bullock, Colón Amill, Shulman & Dixon, Jargon as a barrier to effective science communication: evidence from metacognition, Public Understanding of Science 28(7), 2019",
+  "written": "2026-10-03"
+}

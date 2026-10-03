@@ -1,0 +1,40 @@
+{
+  "id": "science-why-ice-floats-3",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.why_ice_floats",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: if all the Arctic Ocean's floating sea ice melted, sea level would rise more than a metre?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Floating ice already displaces its own weight of water, so melting it barely changes the level; the tiny effect comes from fresh meltwater being lighter than seawater. Sea level rises from ice resting on land. Greenland's ice sheet alone holds about 7 metres of it: the ice cube outside the glass.",
+  "move": "Ask whether the thing that changes was already counted in the total.",
+  "ask": "Before I worry about a change, do I ask whether it moves the total at all?",
+  "trap": "True, picturing melting polar ice from the news.",
+  "keywords": [
+    "sea ice",
+    "sea level",
+    "greenland",
+    "buoyancy",
+    "arctic"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Noerdlinger & Brower, Geophysical Journal International, 2007",
+  "source_kind": "paper",
+  "reference": "Noerdlinger & Brower, The melting of floating ice raises the ocean level, Geophysical Journal International 170:145–150, 2007",
+  "written": "2026-09-26"
+}

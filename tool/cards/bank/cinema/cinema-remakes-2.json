@@ -1,0 +1,33 @@
+{
+  "id": "cinema-remakes-2",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.remakes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did a German producer shoot a $1 million Fantastic Four film in 1992 that was never meant to be released?",
+  "answer": "To keep the rights. Bernd Eichinger's licence from Marvel would lapse on 31 December 1992 unless a film was in production. Roger Corman started shooting days before the deadline, on a tiny budget, and the result was shelved. The rights stayed, and became the big-budget film of 2005.",
+  "move": "A deadline in a contract can be met in letter while emptied in spirit.",
+  "ask": "Is anything in my life being kept going only to stop it lapsing?",
+  "keywords": [
+    "fantastic four",
+    "film rights",
+    "roger corman",
+    "bernd eichinger"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "A.V. Club oral history, Fantastic Four",
+  "source_kind": "news_archive",
+  "reference": "https://www.avclub.com/the-fantastic-four-roger-corman-1994-oral-history-1851489671",
+  "written": "2026-10-03"
+}

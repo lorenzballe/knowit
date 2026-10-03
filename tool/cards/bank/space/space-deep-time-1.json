@@ -1,0 +1,33 @@
+{
+  "id": "space-deep-time-1",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.deep_time",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did oxygen take hundreds of millions of years to build up in the air after microbes began making it?",
+  "answer": "Because the planet soaked it up first. Oxygen-making microbes may have worked for hundreds of millions of years before the air changed, about 2.4 billion years ago. Iron dissolved in the seas and gases from volcanoes grabbed the oxygen; the rusted iron settled as the striped rocks mined for steel today.",
+  "move": "A change can run for ages before it shows, while something absorbs it.",
+  "ask": "Which effort of mine is still being soaked up, not failing, just not showing yet?",
+  "keywords": [
+    "great oxidation event",
+    "cyanobacteria",
+    "banded iron formations",
+    "atmosphere"
+  ],
+  "era": "ancient",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lyons, Reinhard & Planavsky, Nature, 2014",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/nature13068",
+  "written": "2026-10-03"
+}

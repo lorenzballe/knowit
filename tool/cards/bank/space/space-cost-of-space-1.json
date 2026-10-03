@@ -1,0 +1,40 @@
+{
+  "id": "space-cost-of-space-1",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.cost_of_space",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A NASA study put the Shuttle at $54,500 per kg to low orbit and Falcon 9 at $2,720. How many times cheaper is Falcon 9?",
+  "value": 20,
+  "unit": "times",
+  "answer": "About 20 times cheaper per kilogram.",
+  "move": "When a price falls twentyfold, the new uses matter more than the old.",
+  "ask": "What would I start doing if something I avoid because of its cost became twenty times cheaper?",
+  "hint": "Divide the old price per kilogram by the new one.",
+  "steps": [
+    "54,500 ÷ 2,720 ≈ 20.",
+    "About 20 times cheaper per kilogram."
+  ],
+  "keywords": [
+    "launch costs",
+    "space shuttle",
+    "falcon 9",
+    "price per kilogram"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jones, International Conference on Environmental Systems, 2018",
+  "source_kind": "paper",
+  "reference": "Jones, The Recent Large Reduction in Space Launch Cost, 48th International Conference on Environmental Systems, 2018",
+  "written": "2026-10-03"
+}

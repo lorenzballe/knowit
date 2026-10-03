@@ -1,0 +1,40 @@
+{
+  "id": "cinema-reviews-1",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.reviews",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "A film app shows an average of 3.9 stars from users. Who mostly wrote those ratings?",
+  "options": [
+    "Viewers who loved or hated it",
+    "A fair cross-section of viewers",
+    "Mostly professional critics"
+  ],
+  "correct": 0,
+  "answer": "Viewers who loved or hated it. Hu, Pavlou and Zhang found online ratings pile up at five stars with a smaller spike at one, a J shape, because people who felt strongly are the ones who bother to write. The lukewarm majority stays silent, so the average describes the motivated few.",
+  "move": "Ask who bothered to answer before trusting what the answers say.",
+  "ask": "Before I trust the next star rating I see, who probably bothered to leave it?",
+  "trap": "A fair cross-section of viewers, since anyone could rate it.",
+  "keywords": [
+    "online reviews",
+    "star ratings",
+    "self-selection",
+    "j-shaped distribution"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hu, Pavlou and Zhang, 2009",
+  "source_kind": "paper",
+  "reference": "Hu, Pavlou and Zhang, Overcoming the J-shaped Distribution of Product Reviews, Communications of the ACM, 52(10), 2009",
+  "written": "2026-10-03"
+}

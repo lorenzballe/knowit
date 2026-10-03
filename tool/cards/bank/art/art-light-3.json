@@ -1,0 +1,33 @@
+{
+  "id": "art-light-3",
+  "topic": "art",
+  "genre": "art.look_closer",
+  "strand": "art.look_closer.light",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did eighteenth-century tourists in the Lake District turn their backs on the views they had come to see?",
+  "answer": "To look at them in a Claude glass, a small, slightly convex, dark-tinted mirror. It framed the landscape and softened it into the golden haze of Claude Lorrain's paintings. Picturesque travellers judged a view by how well it made a picture, and some sketched from the mirror with the real scene behind them.",
+  "move": "A filter can make you prefer the copy to the thing itself.",
+  "ask": "When I travel, how much do I see through a screen rather than with my own eyes?",
+  "keywords": [
+    "claude glass",
+    "claude lorrain",
+    "picturesque",
+    "lake district"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Maillet, The Claude Glass, 2004",
+  "source_kind": "book",
+  "reference": "Arnaud Maillet, The Claude Glass: Use and Meaning of the Black Mirror in Western Art, Zone Books, 2004",
+  "written": "2026-10-03"
+}

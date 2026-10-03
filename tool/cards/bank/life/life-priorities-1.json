@@ -1,0 +1,39 @@
+{
+  "id": "life-priorities-1",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.priorities",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: people often choose a task with a smaller reward simply because its deadline is closer?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Zhu, Yang and Hsee found that people picked a task paying less over one paying more when the cheaper one had a short deadline, even though both deadlines were easy to meet. Urgency pulled attention on its own, apart from importance. The urgent email gets the morning; the important report gets what is left.",
+  "move": "Ask what a task is worth before asking how soon it is due.",
+  "ask": "What did I do first today because it was urgent, not because it mattered most?",
+  "trap": "People seem to weigh rewards and ignore deadlines that pose no threat.",
+  "keywords": [
+    "urgency",
+    "deadlines",
+    "priorities",
+    "task choice"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zhu, Yang and Hsee, J. Consumer Research, 2018",
+  "source_kind": "paper",
+  "reference": "Zhu, Yang and Hsee, The Mere Urgency Effect, Journal of Consumer Research, 2018",
+  "written": "2026-10-03"
+}

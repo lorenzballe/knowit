@@ -1,0 +1,39 @@
+{
+  "id": "psychology-reciprocity-3",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.reciprocity",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should doctors be barred from accepting even small meals paid for by drug companies?",
+  "sides": [
+    "Yes, bar them",
+    "No, disclose them"
+  ],
+  "answer": "Across nearly 280,000 US doctors, a single sponsored meal worth under $20 was linked with prescribing more of the promoted brand-name drug. Reciprocity works below awareness, so doctors sincerely feel unaffected, while patients pay through costlier prescriptions. If a sandwich can tilt a prescription, the only clean rule is that no sandwich arrives.",
+  "move": "Whichever side you took, the hinge is whether meals cause prescriptions or follow them.",
+  "ask": "Is there someone whose small favours have made it harder for me to judge them fairly?",
+  "counterpoint": "The study shows an association, not proof that meals cause prescribing: companies court doctors already inclined to their drugs. Industry meetings also carry real information about new treatments, and a ban could slow its spread. Public disclosure, already law in the US, lets patients and employers judge. A ban treats professionals as unable to manage a known influence.",
+  "keywords": [
+    "reciprocity",
+    "pharmaceutical industry",
+    "doctors",
+    "prescribing",
+    "conflicts of interest"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "DeJong et al., JAMA Internal Medicine, 2016",
+  "source_kind": "paper",
+  "reference": "DeJong et al., Pharmaceutical industry-sponsored meals and physician prescribing patterns for Medicare beneficiaries, JAMA Internal Medicine, 2016",
+  "written": "2026-10-03"
+}
