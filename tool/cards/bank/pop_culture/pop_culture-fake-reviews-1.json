@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-fake-reviews-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.fake_reviews",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a garden shed in south London become TripAdvisor's top-rated restaurant in the city?",
+  "answer": "With reviews written by friends. In 2017 the journalist Oobah Butler listed his shed as an appointment-only restaurant, had acquaintances post glowing fake reviews, and told callers it was fully booked. Scarcity read as exclusivity, and the shed climbed to first place among thousands of London restaurants before it had served a single meal.",
+  "move": "Praise nobody can check, plus scarcity, can build a reputation from nothing.",
+  "ask": "When I pick a place by its rating, how many of the reviews could I actually check?",
+  "keywords": [
+    "the shed at dulwich",
+    "tripadvisor",
+    "fake reviews",
+    "london"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Butler, Vice, December 2017",
+  "source_kind": "news_archive",
+  "reference": "Oobah Butler, I Made My Shed the Top Rated Restaurant on TripAdvisor, Vice, December 2017",
+  "written": "2026-09-26"
+}

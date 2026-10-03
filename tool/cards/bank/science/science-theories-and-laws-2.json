@@ -10,7 +10,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "If Einstein's relativity replaced Newton's gravity, why were the Apollo flights to the Moon planned with Newton's?",
-  "answer": "Because Newton's theory is not wrong at those speeds, only incomplete. For a spacecraft moving a few kilometres per second, relativity's corrections are far smaller than the uncertainty in engine thrust. Einstein's equations shrink to Newton's when gravity is weak and speeds are low. A replaced theory lives on as a special case of its successor.",
+  "answer": "Because Newton's theory is not wrong at those speeds, only incomplete. At a few kilometres per second, relativity's corrections are far smaller than the uncertainty in engine thrust. Einstein's equations shrink to Newton's when gravity is weak and speeds are low. A replaced theory lives on as a special case of its successor.",
   "move": "Ask where an old idea still works before throwing it out.",
   "ask": "Which old rule of mine is still right in its own territory, even if it fails outside it?",
   "keywords": [

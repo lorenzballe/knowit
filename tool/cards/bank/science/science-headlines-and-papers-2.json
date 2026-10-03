@@ -13,7 +13,7 @@
     "About one in a hundred"
   ],
   "correct": 1,
-  "answer": "About a third: 28 of the 76. Hackam and Redelmeier found 14 more were contradicted by human trials and the rest never tested in people at all, and these were the most cited animal papers in top journals. A mouse result is a promising lead; a headline that drops the mouse has dropped most of the doubt.",
+  "answer": "About a third: 28 of the 76. Hackam and Redelmeier found 14 more contradicted by human trials and the rest never tested in people, and these were the most cited animal papers. A mouse result is a promising lead; a headline that drops the mouse has dropped most of the doubt.",
   "move": "Ask what was studied before applying a finding to people.",
   "ask": "When I read a hopeful health headline, do I check whether it was tested in people like me?",
   "trap": "About nine in ten, since these were the most respected studies.",

@@ -1,0 +1,43 @@
+{
+  "id": "pop_culture-comparison-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.social_media",
+  "strand": "pop_culture.social_media.comparison",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "200 friends each post mostly from their one best week a year. On average, how many friends are in their best week right now?",
+  "value": 3.85,
+  "unit": "friends",
+  "tolerance": 0.2,
+  "answer": "About 4 friends: every week the feed is stocked with several people at their yearly peak.",
+  "move": "A feed of highlights from many people is a highlight every day.",
+  "ask": "When my week feels dull next to my feed, how many of those posts are someone's best moment?",
+  "trap": "Assuming a friend's peak week is rare, so feeds show ordinary life.",
+  "hint": "Each friend's best week is one of 52 in the year.",
+  "steps": [
+    "Each friend has 1 best week out of 52",
+    "200 × 1 ÷ 52 = 3.85",
+    "About 4 friends: every week the feed is stocked with several people at their yearly peak."
+  ],
+  "keywords": [
+    "highlight reel",
+    "social comparison",
+    "feeds",
+    "best moments"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arithmetic of a 52-week year",
+  "source_kind": "arithmetic",
+  "reference": "Leon Festinger, A Theory of Social Comparison Processes, Human Relations, 1954",
+  "written": "2026-09-26"
+}

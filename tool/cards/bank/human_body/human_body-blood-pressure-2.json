@@ -6,7 +6,7 @@
   "kind": "number",
   "difficulty": "medium",
   "principle": "exponential",
-  "question": "From 115 mmHg, each extra 20 mmHg of systolic pressure roughly doubles the risk of dying of heart disease. At 175, how many times the risk?",
+  "question": "From 115 mmHg, each extra 20 mmHg of systolic pressure roughly doubles the risk of heart-disease death. At 175, how many times the risk?",
   "value": 8,
   "unit": "times the risk",
   "answer": "2 × 2 × 2 = 8 times the risk",

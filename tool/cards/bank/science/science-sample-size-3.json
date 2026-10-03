@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why do the most dramatic results in a research field so often come from its smallest studies?",
-  "answer": "Because small studies are noisy, and only noisy results that happen to look big pass the bar for significance. A 2013 review put the median power of neuroscience studies at about 21%: they would miss a real effect four times in five, and the hits tend to overstate it. A small study's big result is often the lucky high.",
+  "answer": "Because small studies are noisy, and only results that happen to look big pass the bar for significance. A 2013 review put the typical neuroscience study's power at about 21%: it would miss a real effect four times in five, and its hits overstate it. A small study's big result is often the lucky high.",
   "move": "Shrink any striking result in proportion to how few cases produced it.",
   "ask": "When a small trial in my own life went brilliantly, how much of that was luck?",
   "keywords": [

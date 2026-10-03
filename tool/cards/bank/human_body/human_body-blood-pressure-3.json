@@ -13,7 +13,7 @@
     "Much the same"
   ],
   "correct": 1,
-  "answer": "Higher than the true one. Blood pressure is meant to be measured at heart level; a cuff below the heart also measures the weight of the column of blood above it, about 0.8 mmHg for every centimetre. An arm hanging down can add ten or more. Resting the arm on a table at chest height removes the error.",
+  "answer": "Higher than the true one. A cuff below heart level also measures the weight of the column of blood above it, about 0.8 mmHg for every centimetre. An arm hanging down can add ten or more. Resting the arm on a table at chest height removes the error.",
   "move": "Before trusting a reading, check how the instrument was held.",
   "ask": "Which number do I rely on, on a scale or a screen, without asking how it was taken?",
   "trap": "The cuff measures the arm, so where the arm sits cannot matter.",
