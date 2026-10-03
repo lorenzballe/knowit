@@ -389,7 +389,7 @@ void main() {
     expect(find.text('The same for everyone, and only today'), findsOneWidget);
     expect(find.text('Top of the week'), findsOneWidget);
     expect(find.byKey(const ValueKey('top-empty')), findsOneWidget);
-    // Further down, today's turning themes and then the ones that ask most.
+    // Further down, the ones that ask most.
     final Finder asking = find.text(
       'The ones that ask the most',
       skipOffstage: false,
@@ -408,15 +408,25 @@ void main() {
       find.text('Across everyone, not just your mix', skipOffstage: false),
       findsOneWidget,
     );
-    expect(
-      find.byWidgetPredicate(
-        (w) =>
-            w.key is ValueKey<String> &&
-            (w.key! as ValueKey<String>).value.startsWith('theme-'),
-        skipOffstage: false,
-      ),
-      findsWidgets,
+    // Under everything that was always there, the turning themes.
+    final Finder themes = find.byWidgetPredicate(
+      (w) =>
+          w.key is ValueKey<String> &&
+          (w.key! as ValueKey<String>).value.startsWith('theme-'),
+      skipOffstage: false,
     );
+    for (int i = 0; i < 20 && themes.evaluate().isEmpty; i++) {
+      await tester.drag(
+        find
+            .byWidgetPredicate(
+              (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+            )
+            .first,
+        const Offset(0, -400),
+      );
+      await tester.pump();
+    }
+    expect(themes, findsWidgets);
     await tester.scrollUntilVisible(
       find.text("Today's shelf"),
       -400,
