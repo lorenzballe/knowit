@@ -8,11 +8,11 @@
   "principle": "sampling",
   "question": "Which space junk poses the greatest threat to working satellites?",
   "options": [
-    "The large pieces radar tracks",
     "Pieces of 1 to 10 cm",
+    "The large pieces radar tracks",
     "Specks of paint under 1 mm"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Pieces of 1 to 10 cm. They are too small for the radar catalogues to follow, so satellites cannot steer around them, yet too big for shielding to stop. ESA estimates about a million of them, against a few tens of thousands of objects that are tracked.",
   "move": "The risk you can count is not always the risk that hurts.",
   "ask": "Which risk in my life is too small to notice but big enough to do real damage?",

@@ -1,0 +1,33 @@
+{
+  "id": "life-family-3",
+  "topic": "life",
+  "genre": "life.relationships",
+  "strand": "life.relationships.family",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do two children raised in the same home so often turn out so different?",
+  "answer": "Because the home they share shapes personality less than expected. Plomin and Daniels reviewed twin and adoption studies and found that, apart from genes, experiences siblings do not share, such as friends, teachers, treatment and luck, explain most of their differences. Two children at one table are growing up in two families.",
+  "move": "Look for what differs inside a shared setting, not only what is shared.",
+  "ask": "How did my siblings or my children grow up in a different family from the one I remember?",
+  "keywords": [
+    "siblings",
+    "non-shared environment",
+    "twin studies",
+    "personality"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Plomin and Daniels, Behavioral and Brain Sciences, 1987",
+  "source_kind": "paper",
+  "reference": "Plomin and Daniels, Why are children in the same family so different from one another?, Behavioral and Brain Sciences, 1987",
+  "written": "2026-10-03"
+}

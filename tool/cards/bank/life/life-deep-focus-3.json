@@ -1,0 +1,38 @@
+{
+  "id": "life-deep-focus-3",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.deep_focus",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should teams work in open-plan offices so that people talk and share ideas more?",
+  "sides": [
+    "Yes, open them up",
+    "No, give people walls"
+  ],
+  "answer": "Yes. Thomas Allen's studies of engineers found that how often colleagues talked fell steeply with the distance between their desks; a few dozen metres apart, contact nearly stopped. Ideas travel through chance conversations, and walls and corridors cut them off. Putting people within sight of each other makes the quick question cheap to ask.",
+  "move": "Whichever side you took, the hinge is whether openness creates talk or retreat.",
+  "ask": "Where I work, what helps me focus for an hour, and what helps me talk to the right person?",
+  "counterpoint": "No. When two large companies moved staff into open-plan space, Bernstein and Turban measured face-to-face interaction with wearable sensors: it fell by about 70%, while email and messaging rose. People exposed to everyone's eyes and noise retreat into headphones. Focus suffers, and the conversations the walls were blamed for blocking still do not happen.",
+  "keywords": [
+    "open-plan offices",
+    "collaboration",
+    "focus",
+    "workplace design"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bernstein and Turban, Phil. Trans. B, 2018",
+  "source_kind": "paper",
+  "reference": "Bernstein and Turban, The impact of the 'open' workspace on human collaboration, Philosophical Transactions of the Royal Society B, 2018",
+  "written": "2026-10-03"
+}

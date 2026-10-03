@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False, though the real finding is bad enough. Internal slides reported by The Wall Street Journal in 2021 said that among teenage girls who already felt bad about their bodies, 32% said Instagram made them feel worse. That is about a third of a vulnerable group, not most girls, and it hits hardest where it hurts most.",
+  "answer": "False, though the real finding is bad enough. Internal slides reported by The Wall Street Journal in 2021 said that among teenage girls who already felt bad about their bodies, 32% said Instagram made them feel worse. That is a third of a vulnerable group, not most girls: the harm lands hardest where it hurts most.",
   "move": "Always ask which group a percentage is a percentage of.",
   "ask": "When I quote a scary statistic, do I know which group of people it was actually about?",
   "trap": "Headlines said Instagram hurts girls, so it sounds like most of them.",

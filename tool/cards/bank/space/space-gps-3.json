@@ -8,11 +8,11 @@
   "principle": "reflection",
   "question": "Besides showing the way, what critical job do GPS signals quietly do for mobile networks and power grids?",
   "options": [
-    "Carrying their data traffic",
     "Supplying a precise clock",
+    "Carrying their data traffic",
     "Measuring power demand"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Supplying a precise clock. Phone networks, power grids and stock exchanges use GPS time to keep their equipment in step to millionths of a second. A UK study put the cost of losing satellite navigation for five days at about £5.2 billion. The blue dot on the map is the smaller part of the job.",
   "move": "Ask what quietly depends on a tool besides its famous use.",
   "ask": "Which tool or person in my life does a hidden job I'd only notice if it vanished?",

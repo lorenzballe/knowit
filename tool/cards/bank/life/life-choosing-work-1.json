@@ -1,0 +1,33 @@
+{
+  "id": "life-choosing-work-1",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.choosing_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Administrative assistants doing the same job were asked what their work meant to them. How did their answers split?",
+  "answer": "Into three, in roughly equal numbers. Wrzesniewski and colleagues found people in the same role saw it as a job, for the pay; a career, for advancement; or a calling, for the work itself. Those with a calling were the most satisfied with work and life. The desk was the same; the job was not.",
+  "move": "Ask what a job means to the person in it, not only what it is.",
+  "ask": "Do I treat my work as a job, a career or a calling, and is that partly my choice?",
+  "keywords": [
+    "calling",
+    "work orientation",
+    "job satisfaction",
+    "administrative assistants"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wrzesniewski and colleagues, J. Research in Personality, 1997",
+  "source_kind": "paper",
+  "reference": "Wrzesniewski, McCauley, Rozin and Schwartz, Jobs, Careers, and Callings: People's Relations to Their Work, Journal of Research in Personality, 1997",
+  "written": "2026-10-03"
+}

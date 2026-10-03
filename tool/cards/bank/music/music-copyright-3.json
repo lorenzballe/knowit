@@ -1,0 +1,42 @@
+{
+  "id": "music-copyright-3",
+  "topic": "music",
+  "genre": "music.the_music_business",
+  "strand": "music.the_music_business.copyright",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A songwriter writes a hit at 25 and dies at 85. Under life plus 70 years, how many years after writing does it become public?",
+  "value": 130,
+  "unit": "years",
+  "answer": "130 years, against 14, renewable once, under the first US copyright law of 1790",
+  "move": "A deadline counted from an unknown future date can stretch further than expected.",
+  "ask": "Which commitment of mine has no fixed end date, and how long could it really run?",
+  "trap": "Counting 70 years from the writing, forgetting the writer's remaining life.",
+  "hint": "Count the years the writer lives after the song, then add the term after death.",
+  "steps": [
+    "Years the writer lives after writing it: 85 − 25 = 60",
+    "Add the term after death: 60 + 70 = 130",
+    "130 years, against 14, renewable once, under the first US copyright law of 1790"
+  ],
+  "keywords": [
+    "copyright term",
+    "public domain",
+    "life plus 70",
+    "songwriters"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "timeline",
+  "source": "EU Directive 2006/116/EC on copyright term",
+  "source_kind": "primary_document",
+  "reference": "Directive 2006/116/EC of the European Parliament and of the Council on the term of protection of copyright and certain related rights, 2006",
+  "written": "2026-09-26"
+}

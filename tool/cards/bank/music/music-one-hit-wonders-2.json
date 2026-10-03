@@ -1,0 +1,39 @@
+{
+  "id": "music-one-hit-wonders-2",
+  "topic": "music",
+  "genre": "music.the_music_business",
+  "strand": "music.the_music_business.one_hit_wonders",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: judged by the US singles chart, Jimi Hendrix was a one-hit wonder?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. His only single in the US Top 40 was All Along the Watchtower, which peaked at number 20 in 1968. Hendrix lived on albums and on stage, which a singles chart does not count. Lists of one-hit wonders built from that chart sweep up acts that were giants by every other measure.",
+  "move": "A label is only as good as the measure that produced it.",
+  "ask": "Which label people put on me comes from a measure that misses what I do best?",
+  "trap": "Thinking one-hit-wonder status measures a career, not one chart.",
+  "keywords": [
+    "jimi hendrix",
+    "one-hit wonders",
+    "top 40",
+    "all along the watchtower"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Whitburn, Top 40 Hits, 2010",
+  "source_kind": "reference_work",
+  "reference": "Whitburn, The Billboard Book of Top 40 Hits, 9th edition, Billboard Books, 2010",
+  "written": "2026-09-26"
+}

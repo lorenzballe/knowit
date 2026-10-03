@@ -1,0 +1,36 @@
+{
+  "id": "music-one-hit-wonders-3",
+  "topic": "music",
+  "genre": "music.the_music_business",
+  "strand": "music.the_music_business.one_hit_wonders",
+  "also": [
+    "economics.inequality.luck"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can one hit song earn many thousands of times more than a song almost as good?",
+  "answer": "Because recordings let one performer serve the whole market. Sherwin Rosen showed in 1981 that when copies cost almost nothing, small differences in appeal become huge differences in income: everyone can pick the slightly better song. A village singer once had a village. A record reaches everyone, and the near-miss gets nearly nothing.",
+  "move": "Where copying is free, being slightly better can pay enormously more.",
+  "ask": "Is my field one where the best take nearly everything, and does my plan allow for that?",
+  "keywords": [
+    "superstar economics",
+    "sherwin rosen",
+    "winner-take-all",
+    "recordings"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rosen, American Economic Review, 1981",
+  "source_kind": "paper",
+  "reference": "Rosen, The economics of superstars, American Economic Review, 1981",
+  "written": "2026-09-26"
+}

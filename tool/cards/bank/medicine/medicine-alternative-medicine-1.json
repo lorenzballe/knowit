@@ -11,7 +11,7 @@
   "unit": "dilution steps",
   "answer": "After 12 steps: 6 × 10^23 ÷ 10^24 = 0.6, under one: 12 steps",
   "move": "Repeated small divisions empty anything faster than intuition allows.",
-  "ask": "Where am I watering something down a little at a time, a habit or a promise, until nothing is left?",
+  "ask": "Which good habit am I watering down a little at a time, until almost nothing of it is left?",
   "trap": "Guessing hundreds of steps, since 1 in 100 sounds mild.",
   "hint": "A mole is about 6 × 10^23 molecules; each step removes two powers of ten.",
   "steps": [

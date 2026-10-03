@@ -1,0 +1,39 @@
+{
+  "id": "music-copyright-2",
+  "topic": "music",
+  "genre": "music.the_music_business",
+  "strand": "music.the_music_business.copyright",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: US AM and FM radio stations pay nothing to the singers and labels whose records they play?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. US broadcast radio pays songwriters and publishers for the songs, but owes no royalty for the recordings themselves, a gap almost unique among rich countries. Broadcasters long argued that airplay is free advertising for records. Satellite and internet radio do pay performers. A singer earns from an FM hit everywhere except on FM.",
+  "move": "Ask who wrote a payment rule before wondering why it is unfair.",
+  "ask": "When a deal seems lopsided, do I know who had the power when it was set?",
+  "trap": "Assuming a station that profits from a voice must pay that voice.",
+  "keywords": [
+    "radio royalties",
+    "performance right",
+    "broadcast radio",
+    "copyright office"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US Copyright Office, Music Marketplace report, 2015",
+  "source_kind": "institution",
+  "reference": "US Copyright Office, Copyright and the Music Marketplace, February 2015",
+  "written": "2026-09-26"
+}

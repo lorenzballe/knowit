@@ -1,0 +1,40 @@
+{
+  "id": "music-one-hit-wonders-1",
+  "topic": "music",
+  "genre": "music.the_music_business",
+  "strand": "music.the_music_business.one_hit_wonders",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "A band's first single reaches number 1. Its second, made with the same care and skill, most likely charts how?",
+  "options": [
+    "As high as the first",
+    "Lower than the first",
+    "Higher than the first"
+  ],
+  "correct": 1,
+  "answer": "Lower. A number 1 takes talent plus luck: the right week, a playlist slot, a viral clip. The talent comes back for the second single; the luck is drawn again. So most follow-ups fall back towards the band's usual level, with nothing gone wrong. Many one-hit wonders are luck returning to normal.",
+  "move": "After an extreme result, expect something ordinary, and do not invent a reason.",
+  "ask": "When a great result is followed by an ordinary one, do I blame myself for what was luck?",
+  "trap": "A proven band should repeat its success, so expect as high.",
+  "keywords": [
+    "regression to the mean",
+    "one-hit wonders",
+    "luck",
+    "follow-up singles"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kahneman, Thinking, Fast and Slow, 2011",
+  "source_kind": "book",
+  "reference": "Kahneman, Thinking, Fast and Slow, Farrar, Straus and Giroux, 2011",
+  "written": "2026-09-26"
+}

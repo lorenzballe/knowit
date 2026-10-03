@@ -8,10 +8,10 @@
   "principle": "reflection",
   "question": "Which is wider: the Moon, or mainland Australia from west to east?",
   "options": [
-    "The Moon",
-    "Australia"
+    "Australia",
+    "The Moon"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Australia. Its mainland runs about 4,000 km from west to east, while the Moon is 3,474 km across. The Moon feels bigger because it is a whole world and a country is only part of one. Laid on the map, the Moon would not quite span the continent.",
   "move": "Compare the numbers, not the categories the things belong to.",
   "ask": "Am I judging something as big or small by its label rather than its actual size?",

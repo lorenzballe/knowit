@@ -8,11 +8,11 @@
   "principle": "sampling",
   "question": "The Milky Way should hold something like 100 million black holes the mass of stars. Why have only a few dozen been found?",
   "options": [
-    "Most hide behind thick dust",
     "Most are alone and give off nothing",
+    "Most hide behind thick dust",
     "Most have already evaporated"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Most are alone and give off nothing. Nearly every known one was found because it is stripping gas from a partner star, and that gas glows in X-rays as it falls. A black hole with no partner has nothing to heat, so it sits dark among the stars.",
   "move": "A list of finds shows what is easy to see, not what is there.",
   "ask": "Which quiet people around me do I overlook simply because they never make any noise?",

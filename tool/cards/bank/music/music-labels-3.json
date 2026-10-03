@@ -1,0 +1,38 @@
+{
+  "id": "music-labels-3",
+  "topic": "music",
+  "genre": "music.the_music_business",
+  "strand": "music.the_music_business.labels",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a new artist today sign with a major label rather than release music independently?",
+  "sides": [
+    "Yes, sign with a major",
+    "No, stay independent"
+  ],
+  "answer": "Attention is the scarce thing, and majors still buy it best. Their marketing, radio and playlist teams can make a song a hit in weeks, and the industry's own body puts the cost of breaking a new act in a major market at hundreds of thousands of dollars. Few independent artists can raise that alone.",
+  "move": "Whichever side you took, ask whether reach or ownership is the scarcer asset.",
+  "ask": "In my own work, am I short of reach or short of ownership, and which deal fixes that?",
+  "counterpoint": "Distribution is now cheap and ownership compounds. An independent artist keeps the masters and most of the income from the first stream, while a major deal pays a minority royalty and recoups costs first. Spotify reports that about half its royalties now go to independent artists and labels. A slower climb, owned, can outearn a fast one rented.",
+  "keywords": [
+    "major labels",
+    "independent artists",
+    "masters",
+    "marketing"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IFPI, Investing in Music, 2016",
+  "source_kind": "institution",
+  "reference": "IFPI, Investing in Music: The Value of Record Companies, 2016",
+  "written": "2026-09-26"
+}
