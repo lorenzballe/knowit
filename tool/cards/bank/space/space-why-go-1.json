@@ -1,0 +1,38 @@
+{
+  "id": "space-why-go-1",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.why_go",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should people go to Mars before robots have settled whether anything lives there?",
+  "sides": [
+    "Yes, send people now",
+    "No, robots first"
+  ],
+  "answer": "People do in days what rovers do in years. Apollo 17's crew drove about 36 km in three days; Curiosity needed about a decade to cover 30 km. A geologist can pick a rock, crack it and change plan on the spot. Waiting for robots to settle the life question could take generations.",
+  "move": "Whichever side you took, the hinge is whether contamination could ever be undone.",
+  "ask": "Which step in my plans can't be undone, and have I learned enough before taking it?",
+  "counterpoint": "Every person carries trillions of microbes, and no suit or habitat seals perfectly. Once Earth life spreads on Mars, any later find could be our own contamination, and native life, if it exists, could be harmed before it is studied. A robot can be baked clean before launch; a human cannot. International planetary protection rules exist for exactly this reason.",
+  "keywords": [
+    "planetary protection",
+    "human spaceflight",
+    "mars rovers",
+    "contamination"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "COSPAR Policy on Planetary Protection, 2020",
+  "source_kind": "institution",
+  "reference": "COSPAR Policy on Planetary Protection, Space Research Today, 2020",
+  "written": "2026-10-03"
+}

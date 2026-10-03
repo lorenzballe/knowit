@@ -1,0 +1,37 @@
+{
+  "id": "life-deep-work-3",
+  "topic": "life",
+  "genre": "life.habits",
+  "strand": "life.habits.deep_work",
+  "also": [
+    "life.growth.limits"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How many hours a day did the best violin students spend on their most demanding, solitary practice?",
+  "answer": "About four, split into sessions of an hour or so. Ericsson, Krampe and Tesch-Römer found the top students at a Berlin academy practised hard and alone in short blocks, and napped more than weaker students. Full concentration seemed to run out near four hours, however keen the player.",
+  "move": "Plan your hardest thinking as a few short blocks, not a whole day.",
+  "ask": "How many truly focused hours am I asking of myself each day, and is it more than anyone can give?",
+  "keywords": [
+    "deliberate practice",
+    "violinists",
+    "concentration",
+    "anders ericsson",
+    "rest"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ericsson, Krampe and Tesch-Römer, 1993",
+  "source_kind": "paper",
+  "reference": "Ericsson, Krampe and Tesch-Römer, The Role of Deliberate Practice in the Acquisition of Expert Performance, Psychological Review, 1993",
+  "written": "2026-10-03"
+}

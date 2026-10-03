@@ -1,0 +1,46 @@
+{
+  "id": "space-living-on-mars-3",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.living_on_mars",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A Mars greenhouse holds Earth-pressure air, pushing out with about 100,000 newtons on each square metre. That is the weight of how many tonnes?",
+  "value": 10.2,
+  "unit": "tonnes",
+  "tolerance": 0.3,
+  "answer": "About 10.2 tonnes on every square metre, pushing outwards.",
+  "move": "Ask which way the force pushes before picturing the danger.",
+  "ask": "Is the pressure I'm bracing against coming from outside, or building up inside?",
+  "trap": "Picturing the dome being crushed, as a submarine is by the sea.",
+  "hint": "One tonne weighs about 9,800 newtons on Earth.",
+  "steps": [
+    "One tonne weighs about 9,800 newtons.",
+    "100,000 ÷ 9,800 ≈ 10.2.",
+    "About 10.2 tonnes on every square metre, pushing outwards."
+  ],
+  "keywords": [
+    "mars habitats",
+    "air pressure",
+    "greenhouses",
+    "pressure vessels"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NASA Mars Fact Sheet",
+  "source_kind": "reference_work",
+  "reference": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+  "written": "2026-10-03"
+}

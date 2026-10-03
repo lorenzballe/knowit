@@ -1,0 +1,33 @@
+{
+  "id": "cinema-film-preservation-1",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.film_preservation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "An archive keeps its films as data on tape. Why must it copy everything onto new tapes every few years?",
+  "answer": "Because the machines die before the tapes. Each new generation of LTO data tape drive reads only tapes one or two generations older. A tape kept perfectly for twenty years can be unreadable simply because no working drive accepts it. Archives keep their collections alive by migrating them, again and again, on schedule.",
+  "move": "Storing something is not keeping it if nothing can still read it.",
+  "ask": "Which of my photos or files sit in a format I could no longer open?",
+  "keywords": [
+    "digital preservation",
+    "lto tape",
+    "data migration",
+    "film archives"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "LTO Program, generation compatibility",
+  "source_kind": "standard",
+  "reference": "Ultrium LTO Program, LTO Generation Compatibility and Roadmap, 2021",
+  "written": "2026-10-03"
+}

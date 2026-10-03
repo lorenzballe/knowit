@@ -1,0 +1,36 @@
+{
+  "id": "space-moon-landing-doubts-1",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.moon_landing_doubts",
+  "also": [
+    "science.spot_bad_science.pseudoscience"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "About 400,000 people worked on the Apollo programme. What does that number do to the idea that the landings were faked?",
+  "answer": "It makes the secret almost impossible to keep. Every one of them would have had to stay silent for more than half a century, through rivalries, divorces and deathbed confessions. A 2016 model of real leaked secrets found that a plot needing that many people would have come out within about four years.",
+  "move": "The more people a secret needs, the sooner it leaks.",
+  "ask": "When a story needs thousands of people to keep quiet forever, how likely is it really?",
+  "keywords": [
+    "apollo programme",
+    "conspiracy theories",
+    "secrets",
+    "nasa"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Grimes, PLOS ONE, 2016",
+  "source_kind": "paper",
+  "reference": "doi:10.1371/journal.pone.0147905",
+  "written": "2026-10-03"
+}

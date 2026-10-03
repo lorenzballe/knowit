@@ -1,0 +1,38 @@
+{
+  "id": "nature-overfishing-3",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.overfishing",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should governments stop paying the fuel and boat subsidies that keep fishing fleets at sea?",
+  "sides": [
+    "Yes, end them",
+    "No, keep them"
+  ],
+  "answer": "Yes. Sumaila and colleagues counted about $35 billion of fisheries subsidies in 2018, roughly $22 billion of it for fuel, boats and gear that add fishing power. That money keeps fleets chasing stocks that would not pay on their own, so the public pays to empty its own seas.",
+  "move": "Whichever side you took, whether catch limits are enforced decides it.",
+  "ask": "Which of my habits carries on only because someone else is quietly paying for it?",
+  "counterpoint": "Not across the board. Millions of small-scale fishers live on thin margins, and fuel support can be the difference between feeding a family and quitting. Cutting it overnight hurts poor coasts first, while big distant-water fleets adapt. Better to tie support to catch limits that are enforced, as the 2022 WTO deal partly attempts.",
+  "keywords": [
+    "fishing subsidies",
+    "fuel subsidies",
+    "fishing fleets",
+    "world trade organization"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sumaila et al., Marine Policy, 2019",
+  "source_kind": "paper",
+  "reference": "Sumaila et al., Updated estimates and analysis of global fisheries subsidies, Marine Policy, 2019",
+  "written": "2026-10-03"
+}

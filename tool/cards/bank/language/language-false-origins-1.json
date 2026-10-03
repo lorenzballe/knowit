@@ -1,0 +1,40 @@
+{
+  "id": "language-false-origins-1",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.false_origins",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conjunction",
+  "question": "True or false: posh comes from port out, starboard home, stamped on tickets for the shady cabins to India?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. No ticket or booking record stamped with those letters has ever been found, and the explanation turns up in print only after the word was already in use. Its precise detail, the cooler side of the ship on the voyage out and back, is exactly what makes it feel true.",
+  "move": "The more neatly a story explains everything, the harder it deserves checking.",
+  "ask": "Which tidy story about my own past have I never checked, because it fits too well?",
+  "trap": "True, because the detail about the sunny side fits the voyage perfectly.",
+  "keywords": [
+    "posh",
+    "acronyms",
+    "folk etymology",
+    "p&o",
+    "ocean liners"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Quinion, Port Out, Starboard Home, 2004",
+  "source_kind": "book",
+  "reference": "Quinion, Port Out, Starboard Home: The Fascinating Stories We Tell About the Words We Use, Penguin, 2004",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,56 @@
+{
+  "id": "cinema-film-preservation-2",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.film_preservation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Fresh acetate film lasts about 40 years at 21°C and 50% humidity before decay sets in. At 13°C and 40%?",
+  "options": [
+    "About 50 years",
+    "About 80 years",
+    "About 150 years"
+  ],
+  "correct": 2,
+  "answer": "About 150 years. The Image Permanence Institute's tables show the chemical decay called vinegar syndrome slows sharply as temperature and humidity fall, because reaction rates drop by a multiple with every few degrees. Eight degrees cooler and a little drier nearly quadruples the time. Colder still, the estimates run to centuries.",
+  "move": "Slowing a rate a little, early, beats any rescue after the damage.",
+  "ask": "What small, steady change would slow the slow damage in my life the most?",
+  "trap": "About 50 years, since eight degrees sounds like a small change.",
+  "keywords": [
+    "acetate film",
+    "vinegar syndrome",
+    "cold storage",
+    "image permanence institute"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "years",
+    "items": [
+      {
+        "label": "21°C, 50% humidity",
+        "value": 40
+      },
+      {
+        "label": "13°C, 40% humidity",
+        "value": 150,
+        "hi": true
+      }
+    ],
+    "caption": "The same fresh acetate film: about 40 years warm, about 150 years cool and drier."
+  },
+  "source": "Reilly, IPI Storage Guide for Acetate Film",
+  "source_kind": "institution",
+  "reference": "https://s3.cad.rit.edu/ipi-assets/publications/acetate_guide.pdf",
+  "written": "2026-10-03"
+}

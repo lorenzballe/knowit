@@ -1,0 +1,41 @@
+{
+  "id": "life-enough-money-3",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.enough_money",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Asked to choose between earning $50,000 when others earn $25,000, or $100,000 when others earn $200,000, what share took the smaller salary?",
+  "options": [
+    "About 5%",
+    "About half",
+    "About 90%"
+  ],
+  "correct": 1,
+  "answer": "About half. Solnick and Hemenway found that roughly half of respondents at a school of public health preferred the world where they earned less money but more than others. Enough is partly set by the neighbours: the same pay feels different beside a richer street.",
+  "move": "Before chasing more, ask whose income you are measuring yours against.",
+  "ask": "Would I feel I have enough if I stopped comparing my pay with the people around me?",
+  "trap": "Twice the money buys twice the life, so almost nobody would refuse.",
+  "keywords": [
+    "relative income",
+    "status",
+    "comparison",
+    "salary",
+    "positional goods"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Solnick and Hemenway, JEBO, 1998",
+  "source_kind": "paper",
+  "reference": "Solnick and Hemenway, Is More Always Better? A Survey on Positional Concerns, Journal of Economic Behavior and Organization, 1998",
+  "written": "2026-10-03"
+}

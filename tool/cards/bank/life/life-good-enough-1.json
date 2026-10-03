@@ -1,0 +1,41 @@
+{
+  "id": "life-good-enough-1",
+  "topic": "life",
+  "genre": "life.decisions",
+  "strand": "life.decisions.good_enough",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Graduates who searched hardest for the best possible job were followed into work. How did they end up?",
+  "options": [
+    "Better paid and happier",
+    "Better paid but less satisfied",
+    "Worse paid and less satisfied"
+  ],
+  "correct": 1,
+  "answer": "Better paid but less satisfied. Iyengar, Wells and Schwartz found these maximisers landed starting salaries about 20% higher, yet felt worse about the job they took and more anxious and regretful through the search. Every option seen and turned down stayed in mind as a comparison.",
+  "move": "Decide what good enough means before you start, then stop looking.",
+  "ask": "Where am I still searching for the best when a good enough option is already in front of me?",
+  "trap": "A harder search should find a better job and so more satisfaction.",
+  "keywords": [
+    "maximising",
+    "satisficing",
+    "job search",
+    "graduates",
+    "barry schwartz"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Iyengar, Wells and Schwartz, Psychological Science, 2006",
+  "source_kind": "paper",
+  "reference": "Iyengar, Wells and Schwartz, Doing Better but Feeling Worse: Looking for the Best Job Undermines Satisfaction, Psychological Science, 2006",
+  "written": "2026-10-03"
+}

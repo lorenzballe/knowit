@@ -1,0 +1,36 @@
+{
+  "id": "science-averages-2",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.averages",
+  "also": [
+    "psychology.motivation.comparison"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do most people's friends have more friends than they do?",
+  "answer": "Because popular people turn up on many more friend lists. Someone with 50 friends is counted 50 times when everyone tallies their friends; someone with 2, twice. So the average friend is better connected than the average person, as Scott Feld showed in 1991. Other people's busy social lives are partly a counting effect.",
+  "move": "Ask how the people being compared were chosen before feeling behind.",
+  "ask": "When others seem to have fuller lives than mine, am I comparing myself with a fair sample?",
+  "keywords": [
+    "friendship paradox",
+    "social networks",
+    "averages",
+    "popularity"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Feld, American Journal of Sociology, 1991",
+  "source_kind": "paper",
+  "reference": "Feld, Why your friends have more friends than you do, American Journal of Sociology 96(6):1464–1477, 1991",
+  "written": "2026-09-26"
+}

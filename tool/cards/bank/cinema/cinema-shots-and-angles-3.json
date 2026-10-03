@@ -1,0 +1,40 @@
+{
+  "id": "cinema-shots-and-angles-3",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.shots_and_angles",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "The same person is filmed from slightly below eye level, then slightly above. In experiments, how did viewers judge them from below?",
+  "options": [
+    "Weaker and less sure",
+    "No different at all",
+    "Stronger and more dominant"
+  ],
+  "correct": 2,
+  "answer": "Stronger and more dominant. Robert Kraft showed viewers the same events shot from low, level and high angles. People filmed from below were judged stronger, bolder and even taller; from above, weaker and more passive. Viewers rarely noticed the angle at all, which is why it works on news footage and election adverts too.",
+  "move": "Notice where the camera stands before judging the person in front of it.",
+  "ask": "In the last political video I watched, where was the camera, and did that shape my opinion?",
+  "trap": "No different at all, since viewers barely notice camera angles.",
+  "keywords": [
+    "camera angle",
+    "low-angle shot",
+    "perception",
+    "robert kraft"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kraft, Memory and Cognition, 1987",
+  "source_kind": "paper",
+  "reference": "Robert N. Kraft, The Influence of Camera Angle on Comprehension and Retention of Pictorial Events, Memory and Cognition, 15(4), 1987",
+  "written": "2026-10-03"
+}

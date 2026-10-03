@@ -1,0 +1,40 @@
+{
+  "id": "life-second-order-effects-3",
+  "topic": "life",
+  "genre": "life.clear_thinking",
+  "strand": "life.clear_thinking.second_order_effects",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Californian towns banned thin plastic shopping bags. How much of the plastic saved came back as bought bin bags?",
+  "options": [
+    "About 30%",
+    "None of it",
+    "More than all of it"
+  ],
+  "correct": 0,
+  "answer": "About 30%. Taylor found that people had been reusing the free bags as bin liners. Once they were banned, sales of small bin bags rose by about 120%, offsetting roughly 28.5% of the plastic the ban removed. The kitchen bin still needed lining, and now the liner came from the shelf.",
+  "move": "Before counting the gain, ask what people will use instead.",
+  "ask": "When I cut out a habit, what will I reach for instead, and is it any better?",
+  "trap": "None, since banning a bag seems simply to remove it.",
+  "keywords": [
+    "plastic bag ban",
+    "bin bags",
+    "california",
+    "substitution"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Taylor, J. Environmental Economics and Management, 2019",
+  "source_kind": "paper",
+  "reference": "Taylor, Bag leakage: The effect of disposable carryout bag regulations on unregulated bags, Journal of Environmental Economics and Management, 2019",
+  "written": "2026-10-03"
+}

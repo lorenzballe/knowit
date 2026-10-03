@@ -1,0 +1,40 @@
+{
+  "id": "economics-aid-1",
+  "topic": "economics",
+  "genre": "economics.how_countries_get_rich",
+  "strand": "economics.how_countries_get_rich.aid",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: poor households given cash with no strings attached spend noticeably more on alcohol and tobacco?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Evans and Popova reviewed 19 studies of cash transfers in Latin America, Africa and Asia: spending on alcohol and tobacco did not rise, and in several studies it fell. The money went on other needs. The picture of cash poured into drink came from fears about the poor, not from their receipts.",
+  "move": "Check the spending records before trusting the vivid story of misuse.",
+  "ask": "Whose choices do I distrust on a picture in my head rather than on what they actually did?",
+  "trap": "True, picturing a handout spent in the nearest bar.",
+  "keywords": [
+    "cash transfers",
+    "temptation goods",
+    "alcohol",
+    "poverty",
+    "aid"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Evans and Popova, Economic Development and Cultural Change, 2017",
+  "source_kind": "paper",
+  "reference": "Evans & Popova, Cash Transfers and Temptation Goods, Economic Development and Cultural Change, 2017",
+  "written": "2026-10-03"
+}

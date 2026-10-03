@@ -1,0 +1,39 @@
+{
+  "id": "medicine-back-pain-1",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.back_pain",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in a 1995 Helsinki trial, people with acute back pain recovered faster after two days' bed rest than by carrying on?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Those who carried on with ordinary life, as far as the pain allowed, recovered fastest, and bed rest gave the slowest recovery, with special back exercises in between. Rest suits a broken bone, but a strained back is not a fracture. Muscles and joints that keep moving keep their strength and their owner's confidence.",
+  "move": "What heals one kind of injury can slow the healing of another.",
+  "ask": "When something in my life aches, am I resting it out of habit when gentle use would help more?",
+  "trap": "True, because resting an injury is what everyone is taught to do.",
+  "keywords": [
+    "bed rest",
+    "acute back pain",
+    "ordinary activity",
+    "helsinki"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Malmivaara et al., NEJM, 1995",
+  "source_kind": "paper",
+  "reference": "Malmivaara et al., The treatment of acute low back pain: bed rest, exercises, or ordinary activity?, New England Journal of Medicine, 1995",
+  "written": "2026-10-03"
+}

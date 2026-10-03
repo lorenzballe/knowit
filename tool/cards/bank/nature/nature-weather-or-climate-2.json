@@ -1,0 +1,40 @@
+{
+  "id": "nature-weather-or-climate-2",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.weather_or_climate",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In an unchanging climate, record daily highs and record lows come about equally. What did US stations show in the 2000s?",
+  "options": [
+    "About equal numbers of each",
+    "About two highs for every low",
+    "About twenty highs for every low"
+  ],
+  "correct": 1,
+  "answer": "About two highs for every low. Meehl and colleagues counted daily records at US weather stations: in the 1950s the two kinds were close to even, but by the 2000s record highs outnumbered record lows by roughly two to one. Cold records still fall; they just fall half as often.",
+  "move": "Count the records on both sides before reading anything into one.",
+  "ask": "When something good or bad happens to me, do I also count how often the opposite happens?",
+  "trap": "Records are just weather noise, so both kinds should still balance.",
+  "keywords": [
+    "temperature records",
+    "heat records",
+    "weather stations",
+    "united states"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Meehl et al., Geophysical Research Letters, 2009",
+  "source_kind": "paper",
+  "reference": "Meehl, Tebaldi, Walton, Easterling & McDaniel, Relative increase of record high maximum temperatures compared to record low minimum temperatures in the U.S., Geophysical Research Letters, 2009",
+  "written": "2026-10-03"
+}

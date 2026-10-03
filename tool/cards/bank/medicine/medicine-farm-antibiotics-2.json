@@ -1,0 +1,40 @@
+{
+  "id": "medicine-farm-antibiotics-2",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.farm_antibiotics",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: after Denmark banned antibiotic growth promoters for pigs around 2000, its pig production fell?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Danish pig production kept growing after the ban, while antibiotic use per kilo of pork fell sharply. Better hygiene, later weaning and vaccination did the work the drugs had been credited with. Treatment use for sick pigs rose for a while, but well below the old daily dosing. The pigs kept getting bigger.",
+  "move": "What a habit is credited with may be done by the things around it.",
+  "ask": "Which habit do I think I cannot drop, when other things I do might be doing the real work?",
+  "trap": "True, since the drugs were sold precisely to make animals grow.",
+  "keywords": [
+    "denmark",
+    "pigs",
+    "growth promoters",
+    "antibiotic ban",
+    "livestock"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Aarestrup et al., Am J Vet Res, 2010",
+  "source_kind": "paper",
+  "reference": "Aarestrup et al., Changes in the use of antimicrobials and the effects on productivity of swine farms in Denmark, American Journal of Veterinary Research, 2010",
+  "written": "2026-10-03"
+}

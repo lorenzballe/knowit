@@ -1,0 +1,40 @@
+{
+  "id": "cinema-reviews-3",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.reviews",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "Film A has 5.0 stars from 4 ratings; film B, 4.6 from 3,000. After 1,000 more ratings each, which likely scores higher?",
+  "options": [
+    "Film A, already perfect",
+    "About the same",
+    "Film B"
+  ],
+  "correct": 2,
+  "answer": "Film B. Four ratings can be four friends or four lucky draws; small groups produce extreme averages, high and low, by chance alone. As more viewers rate it, film A's score will drift towards ordinary. Howard Wainer called ignoring this the most dangerous equation; 3,000 ratings have already settled.",
+  "move": "Treat a perfect score from a handful as a rumour, not a verdict.",
+  "ask": "Which small, perfect sample made me sure of something too early?",
+  "trap": "Film A, already perfect, since 5.0 beats 4.6.",
+  "keywords": [
+    "star ratings",
+    "sample size",
+    "howard wainer",
+    "online reviews"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wainer, American Scientist, 2007",
+  "source_kind": "paper",
+  "reference": "Howard Wainer, The Most Dangerous Equation, American Scientist, 95(3), 2007",
+  "written": "2026-10-03"
+}

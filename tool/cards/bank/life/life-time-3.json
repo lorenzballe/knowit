@@ -1,0 +1,37 @@
+{
+  "id": "life-time-3",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.time",
+  "also": [
+    "life.people.kindness"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What makes people feel they have more free time: getting an unexpected free hour, or giving time away?",
+  "answer": "Giving time away. Mogilner, Chance and Norton found that people who spent minutes helping someone else, such as writing to a sick child, felt less pressed for time afterwards than people who spent the same minutes on themselves or were let off early. Helping made people feel capable, and time felt bigger.",
+  "move": "When short of time, spend a little of it on someone else.",
+  "ask": "When I next feel I have no time at all, what ten minutes could I give someone else?",
+  "keywords": [
+    "time pressure",
+    "helping",
+    "time affluence",
+    "cassie mogilner",
+    "generosity"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mogilner, Chance and Norton, Psychological Science, 2012",
+  "source_kind": "paper",
+  "reference": "Mogilner, Chance and Norton, Giving Time Gives You Time, Psychological Science, 2012",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "cinema-plot-holes-3",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.plot_holes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a coincidence that lands a hero in trouble feel fine, while one that rescues them feels like cheating?",
+  "answer": "Because bad luck looks like life and good luck looks like the writer. Pixar story artist Emma Coats put it in her 2011 list of storytelling rules: coincidences that get characters into trouble are great; ones that get them out are cheating. Viewers accept random trouble, but expect rescue to be earned.",
+  "move": "Bad luck is believable; a lucky escape needs a reason.",
+  "ask": "When luck rescued one of my plans, did I quietly give the credit to my planning?",
+  "keywords": [
+    "coincidence",
+    "storytelling rules",
+    "emma coats",
+    "pixar"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Coats, Pixar storytelling rules, 2011",
+  "source_kind": "primary_document",
+  "reference": "Emma Coats, 22 rules of storytelling, posted while a Pixar story artist, 2011",
+  "written": "2026-10-03"
+}

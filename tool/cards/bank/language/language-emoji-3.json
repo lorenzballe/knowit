@@ -1,0 +1,33 @@
+{
+  "id": "language-emoji-3",
+  "topic": "language",
+  "genre": "language.writing_systems",
+  "strand": "language.writing_systems.emoji",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When linguists study how people string emoji together, what do the strings most resemble?",
+  "answer": "Gestures, not sentences. Emoji strings rarely follow word order or grammar; the commonest pattern is one emoji repeated, like a laugh drawn out or a wave made bigger. Most emoji sit beside words to set their tone, the way a shrug or a wink sits beside speech. They put back the face and hands that typing took away.",
+  "move": "Before judging a new habit, ask what older thing it replaces.",
+  "ask": "Which of my habits is quietly filling a gap I have never named?",
+  "keywords": [
+    "emoji",
+    "gesture",
+    "internet linguistics",
+    "tone"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McCulloch, Because Internet, 2019",
+  "source_kind": "book",
+  "reference": "McCulloch, Because Internet: Understanding the New Rules of Language, Riverhead Books, 2019",
+  "written": "2026-10-03"
+}

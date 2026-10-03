@@ -1,0 +1,33 @@
+{
+  "id": "economics-survivor-stories-1",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.survivor_stories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do databases of hedge fund returns make the industry look better than it is?",
+  "answer": "Because funds report by choice and stop when they fail. Malkiel and Saha estimated that losing the dead funds inflated average yearly returns by about 4.4 points, and that funds adding flattering early records when they joined added about 5.7 more. The database is a hall of fame that also writes its own entry rules.",
+  "move": "Ask who stopped reporting before trusting an average built from volunteers.",
+  "ask": "When I hear how well people did at something, who stopped telling their story?",
+  "keywords": [
+    "hedge funds",
+    "survivorship bias",
+    "backfill bias",
+    "fund databases"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Malkiel and Saha, Financial Analysts Journal, 2005",
+  "source_kind": "paper",
+  "reference": "Malkiel & Saha, Hedge Funds: Risk and Return, Financial Analysts Journal, 2005",
+  "written": "2026-10-03"
+}

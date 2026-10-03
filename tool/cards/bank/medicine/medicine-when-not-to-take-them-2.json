@@ -1,0 +1,41 @@
+{
+  "id": "medicine-when-not-to-take-them-2",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.when_not_to_take_them",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "In a trial of 2,061 European adults with a fresh chest cough, what did amoxicillin do compared with a dummy pill?",
+  "options": [
+    "Cut the illness by about two days",
+    "No faster recovery, more side effects",
+    "Helped only the over-60s"
+  ],
+  "correct": 1,
+  "answer": "No faster recovery, more side effects. Symptoms lasted about as long on the antibiotic as on placebo, even in patients over 60. Nausea, rash and diarrhoea were more common on amoxicillin. Most chest coughs are viral and clear within three weeks whatever is swallowed; the pill simply arrives in time to take the credit.",
+  "move": "Before crediting a fix, ask how things would have gone without it.",
+  "ask": "What recently got better for me that would probably have got better anyway, without the thing I credit?",
+  "trap": "Cut the illness by about two days, as recovery followed the pills.",
+  "keywords": [
+    "amoxicillin",
+    "acute cough",
+    "chest infection",
+    "placebo",
+    "grace trial"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Little et al., Lancet Infectious Diseases, 2013",
+  "source_kind": "paper",
+  "reference": "Little et al., Amoxicillin for acute lower-respiratory-tract infection in primary care when pneumonia is not suspected: a 12-country, randomised, placebo-controlled trial, Lancet Infectious Diseases, 2013",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "science-how-eyes-see-colour-3",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.how_eyes_see_colour",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In a class of 30 boys of northern European descent, how many are likely to have red-green colour blindness?",
+  "options": [
+    "Probably none",
+    "About 2",
+    "About 10"
+  ],
+  "correct": 1,
+  "answer": "About 2. Roughly 8% of men of northern European descent have a red-green colour deficiency, against about 0.5% of women, because the genes for those cones sit on the X chromosome. Many never find out: they learn colour names from others and only stumble over a red line on a green chart.",
+  "move": "A difference nobody mentions can still be common in the room.",
+  "ask": "Who around me might be seeing a chart, a signal or a situation differently, without ever saying so?",
+  "trap": "Probably none, since colour blindness is so rarely mentioned.",
+  "keywords": [
+    "colour blindness",
+    "red-green deficiency",
+    "x chromosome",
+    "cones"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Birch, JOSA A, 2012",
+  "source_kind": "paper",
+  "reference": "Birch, Worldwide prevalence of red-green color deficiency, Journal of the Optical Society of America A 29(3):313–320, 2012",
+  "written": "2026-09-26"
+}

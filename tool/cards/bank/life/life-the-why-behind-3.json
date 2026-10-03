@@ -1,0 +1,41 @@
+{
+  "id": "life-the-why-behind-3",
+  "topic": "life",
+  "genre": "life.ask_better_questions",
+  "strand": "life.ask_better_questions.the_why_behind",
+  "also": [
+    "life.clear_thinking.second_order_effects"
+  ],
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Before scrapping a rule nobody can explain, should you first find out why it was made?",
+  "sides": [
+    "Yes, find out first",
+    "No, scrap it and see"
+  ],
+  "answer": "Yes. Chesterton's point, in a 1929 essay, was that a fence across a road was put there by someone for a reason, and a reformer who cannot see the reason should go and find it. Rules often guard against rare events: the safety check skipped for years works fine until the one day it was written for.",
+  "move": "Whichever side you took, how easily the change can be undone decides it.",
+  "ask": "Which rule at home or at work am I itching to scrap before knowing why it was put there?",
+  "counterpoint": "No. Tracing the origin of every rule can cost more than the rule is worth, and many outlive their reason: forms, approvals and meetings pile up because nobody dares remove them. When a change can be reversed, removing the rule and watching what breaks is the fastest way to learn why it existed, and often nothing breaks.",
+  "keywords": [
+    "chesterton's fence",
+    "rules",
+    "reform",
+    "unintended consequences"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chesterton, The Thing, 1929",
+  "source_kind": "book",
+  "reference": "Chesterton, The Thing, Sheed and Ward, 1929",
+  "written": "2026-10-03"
+}

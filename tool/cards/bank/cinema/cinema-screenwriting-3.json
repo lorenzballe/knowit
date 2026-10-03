@@ -1,0 +1,38 @@
+{
+  "id": "cinema-screenwriting-3",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.screenwriting",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should studios be free to hand screenwriters an AI-generated draft to rewrite?",
+  "sides": [
+    "Yes, allow it",
+    "No, keep it out"
+  ],
+  "answer": "A draft is a tool, like a research file or an old treatment. If a machine can lay out a structure in minutes, writers spend their time on what only people do well: voice, wit, surprise. A ban only pushes it out of sight, where nobody negotiates the pay.",
+  "move": "Whichever side you took, it turns on who is counted as the author.",
+  "ask": "If a tool did the first draft of my work, who would get the credit and the pay?",
+  "counterpoint": "Whoever writes the first draft owns the story, and pay follows ownership. Treat an AI draft as source material and the human becomes a cheaper rewriter on someone else's work. That is why the 2023 Writers Guild deal, won after a 148-day strike, ruled that AI output is not source material and cannot cut a writer's credit.",
+  "keywords": [
+    "artificial intelligence",
+    "writers strike",
+    "screen credits",
+    "rewrites"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "WGA–AMPTP Memorandum of Agreement, 2023",
+  "source_kind": "primary_document",
+  "reference": "Writers Guild of America and Alliance of Motion Picture and Television Producers, 2023 Memorandum of Agreement, Article on Generative Artificial Intelligence, 2023",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "life-questions-to-others-2",
+  "topic": "life",
+  "genre": "life.ask_better_questions",
+  "strand": "life.ask_better_questions.questions_to_others",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Buying a used music player from someone who knows it sometimes freezes, which question most often gets the truth?",
+  "options": [
+    "What can you tell me about it?",
+    "It has no problems, does it?",
+    "What problems does it have?"
+  ],
+  "correct": 2,
+  "answer": "What problems does it have? Minson and colleagues found this question, which assumes a problem, drew far more honest answers than an open 'What can you tell me about it?' or the hopeful 'It has no problems, does it?' Assuming a flaw makes hiding it an outright lie.",
+  "move": "Ask questions that make the honest answer the easiest one to give.",
+  "ask": "What question could I ask that makes it easy for the other person to tell me the bad news?",
+  "trap": "An open question feels neutral, so it seems likeliest to draw honesty.",
+  "keywords": [
+    "questions",
+    "disclosure",
+    "honesty",
+    "negotiation",
+    "julia minson"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Minson and colleagues, OBHDP, 2018",
+  "source_kind": "paper",
+  "reference": "https://faculty.wharton.upenn.edu/wp-content/uploads/2018/04/Minson-VanEpps-Yip-Schweitzer.pdf",
+  "written": "2026-10-03"
+}

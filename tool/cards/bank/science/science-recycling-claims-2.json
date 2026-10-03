@@ -1,0 +1,43 @@
+{
+  "id": "science-recycling-claims-2",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.recycling_claims",
+  "also": [
+    "science.materials.plastics"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Of all the plastic ever thrown away up to 2015, what share had been recycled?",
+  "options": [
+    "About 9%",
+    "About 30%",
+    "About 60%"
+  ],
+  "correct": 0,
+  "answer": "About 9%. Geyer and colleagues tallied 6.3 billion tonnes of plastic waste: 9% recycled, 12% burned, 79% piling up in landfills or the environment, and only a tenth of the recycled share was recycled more than once. The full bin on the kerb shows the effort, not the destination.",
+  "move": "Judge a system by where things end up, not by the effort seen.",
+  "ask": "Which of my good habits do I judge by the effort I see, not by where it ends up?",
+  "trap": "About 30%, the share a full recycling bin seems to suggest.",
+  "keywords": [
+    "plastic waste",
+    "recycling rates",
+    "landfill",
+    "incineration"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Geyer, Jambeck & Law, Science Advances, 2017",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/sciadv.1700782",
+  "written": "2026-09-26"
+}

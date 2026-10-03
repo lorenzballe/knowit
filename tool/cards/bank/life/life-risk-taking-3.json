@@ -1,0 +1,41 @@
+{
+  "id": "life-risk-taking-3",
+  "topic": "life",
+  "genre": "life.decisions",
+  "strand": "life.decisions.risk_taking",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "Nearly 3,000 people starting a business rated their own odds of success. What share put them at 7 in 10 or better?",
+  "options": [
+    "About 81%",
+    "About 40%",
+    "About 15%"
+  ],
+  "correct": 0,
+  "answer": "About 81%. Cooper, Woo and Dunkelberg found that a third even rated their odds at 10 in 10, while giving similar firms run by others much lower chances. Many new firms close within a few years. Each founder judged the inside story and set aside the crowd it belonged to.",
+  "move": "Before betting on your own case, ask how cases like it usually end.",
+  "ask": "For the risk I am weighing, how do things usually go for people like me, before I add my reasons?",
+  "trap": "Founders seem to know how often new firms fail, so expect modest odds.",
+  "keywords": [
+    "entrepreneurs",
+    "optimism",
+    "startups",
+    "odds",
+    "overconfidence"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cooper, Woo and Dunkelberg, 1988",
+  "source_kind": "paper",
+  "reference": "Cooper, Woo and Dunkelberg, Entrepreneurs' Perceived Chances for Success, Journal of Business Venturing, 1988",
+  "written": "2026-10-03"
+}

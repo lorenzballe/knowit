@@ -1,0 +1,43 @@
+{
+  "id": "space-moon-and-sleep-2",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.moon_and_sleep",
+  "also": [
+    "technology.screens.screens_and_sleep"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In Toba communities in Argentina, some without electricity, people slept least on which nights of the lunar month?",
+  "options": [
+    "The nights of the full moon",
+    "The nights of the new moon",
+    "The few nights before full moon"
+  ],
+  "correct": 2,
+  "answer": "The few nights before full moon. Then the moon is already bright and high soon after sunset, so it lights the evening hours people would otherwise spend in the dark. A 2021 study found later bedtimes and shorter sleep on those nights, most clearly where homes had no electric light.",
+  "move": "Ask when a light shines, not only how bright it gets.",
+  "ask": "Which light in my evenings, a screen or a lamp, is quietly pushing my bedtime later?",
+  "trap": "The full moon itself, since that is when the moon is brightest.",
+  "keywords": [
+    "toba communities",
+    "moonlight",
+    "sleep timing",
+    "evening light"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Casiraghi et al., Science Advances, 2021",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/sciadv.abe0465",
+  "written": "2026-10-03"
+}

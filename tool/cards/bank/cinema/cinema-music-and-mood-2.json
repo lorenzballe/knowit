@@ -1,0 +1,33 @@
+{
+  "id": "cinema-music-and-mood-2",
+  "topic": "cinema",
+  "genre": "cinema.how_films_persuade",
+  "strand": "cinema.how_films_persuade.music_and_mood",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a cheerful pop song make a screen act of cruelty feel worse than a menacing score?",
+  "answer": "Because the music refuses to care. Michel Chion called it anempathetic sound: music that carries on indifferent to what happens, like a radio playing in Reservoir Dogs during a torture scene. The indifference doubles the horror, because the world is shown carrying on as if nothing were wrong.",
+  "move": "A calm tone around something terrible can be the loudest signal.",
+  "ask": "When someone sounds breezy about something serious, what are they asking me not to notice?",
+  "keywords": [
+    "anempathetic sound",
+    "michel chion",
+    "reservoir dogs",
+    "film music"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chion, Audio-Vision, 1994",
+  "source_kind": "book",
+  "reference": "Michel Chion, Audio-Vision: Sound on Screen, trans. Claudia Gorbman, Columbia University Press, 1994",
+  "written": "2026-10-03"
+}

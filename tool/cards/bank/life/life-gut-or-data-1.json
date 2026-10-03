@@ -1,0 +1,41 @@
+{
+  "id": "life-gut-or-data-1",
+  "topic": "life",
+  "genre": "life.decisions",
+  "strand": "life.decisions.gut_or_data",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "In 136 studies pitting expert judgement against a simple formula, how often was the expert clearly more accurate?",
+  "options": [
+    "In most of them",
+    "In about half",
+    "In about 6 to 16%"
+  ],
+  "correct": 2,
+  "answer": "Rarely: in about 6 to 16% of studies. Grove and colleagues found formulas clearly won in a third to a half, and the rest were roughly a tie. The formula never tires, never has a bad day and weighs the same clues the same way each time.",
+  "move": "Where the same call is made often, write the rule down and check it.",
+  "ask": "Which repeated decision do I make by feel that a simple checklist might make better?",
+  "trap": "Experts recall their good calls, so their judgement seems to win.",
+  "keywords": [
+    "expert judgement",
+    "algorithms",
+    "prediction",
+    "paul meehl",
+    "checklists"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Grove and colleagues, Psychological Assessment, 2000",
+  "source_kind": "paper",
+  "reference": "Grove, Zald, Lebow, Snitz and Nelson, Clinical versus Mechanical Prediction: A Meta-Analysis, Psychological Assessment, 2000",
+  "written": "2026-10-03"
+}

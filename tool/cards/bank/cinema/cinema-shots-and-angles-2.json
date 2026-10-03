@@ -1,0 +1,39 @@
+{
+  "id": "cinema-shots-and-angles-2",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.shots_and_angles",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a selfie taken at arm's length makes your nose look about 30% wider than it is?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Ward and colleagues modelled faces photographed at about 30 cm and at 1.5 m: close up, the nose sits much nearer the lens than the cheeks, so it swells, by about 30% across the base. Cinematographers shoot close-ups from farther back with longer lenses for exactly this reason.",
+  "move": "Distance changes the shape of what you see, not just its size.",
+  "ask": "Which picture of myself do I dislike that was simply taken from too close?",
+  "trap": "False, since a camera is assumed to record shapes faithfully.",
+  "keywords": [
+    "selfies",
+    "perspective distortion",
+    "camera distance",
+    "close-ups"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ward et al., JAMA Facial Plastic Surgery, 2018",
+  "source_kind": "paper",
+  "reference": "Ward, Ward, Fried and Paskhover, Nasal Distortion in Short-Distance Photographs: The Selfie Effect, JAMA Facial Plastic Surgery, 20(4), 2018",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "language-words-and-thought-1",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.words_and_thought",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Russian has separate everyday words for light blue and dark blue. What did a 2007 test find this changes?",
+  "options": [
+    "Russians see shades others cannot",
+    "Russians tell some blues apart faster",
+    "Nothing that can be measured"
+  ],
+  "correct": 1,
+  "answer": "Russians tell some blues apart faster. Shown two shades on either side of their light-blue, dark-blue line, Russian speakers picked the odd one out a fraction of a second quicker; English speakers had no such edge. When a word task kept their language busy, the edge vanished. The words help sort colours, not see new ones.",
+  "move": "Ask how big an effect is before believing how deep it goes.",
+  "ask": "Which exciting claim have I repeated without asking how big the effect really was?",
+  "trap": "They see shades others cannot, as if a word could create a colour.",
+  "keywords": [
+    "russian blues",
+    "linguistic relativity",
+    "colour perception",
+    "goluboy"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Winawer et al., PNAS, 2007",
+  "source_kind": "paper",
+  "reference": "Winawer, Witthoft, Frank, Wu, Wade & Boroditsky, Russian blues reveal effects of language on color discrimination, PNAS 104(19), 2007",
+  "written": "2026-10-03"
+}

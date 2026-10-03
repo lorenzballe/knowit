@@ -1,0 +1,33 @@
+{
+  "id": "cinema-hidden-meanings-2",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.hidden_meanings",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If a director denies a symbol was intended, does that make a critic's reading of it wrong?",
+  "answer": "Not necessarily. Wimsatt and Beardsley argued in 1946 that the work, not the maker's private intention, is the evidence. Directors disagree with their own films: Ridley Scott says Blade Runner's Deckard is a replicant, while Harrison Ford, who played him, long held he was human. The film supports both.",
+  "move": "Judge a reading by the evidence in the work, not the author's say-so.",
+  "ask": "When someone tells me what they meant, do I also check what they actually did?",
+  "keywords": [
+    "intentional fallacy",
+    "blade runner",
+    "interpretation",
+    "ridley scott"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wimsatt and Beardsley, Sewanee Review, 1946",
+  "source_kind": "paper",
+  "reference": "W. K. Wimsatt and Monroe C. Beardsley, The Intentional Fallacy, Sewanee Review, 54(3), 1946",
+  "written": "2026-10-03"
+}

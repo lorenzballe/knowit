@@ -1,0 +1,39 @@
+{
+  "id": "nature-forests-and-climate-1",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.forests_and_climate",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: covering the snowy northern lands with forest could warm the planet rather than cool it?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Dark conifers soak up sunlight that bare snow would reflect back to space. In a 2007 model study by Bala and colleagues, that darkening outweighed the carbon the northern trees store, so forests there warmed the globe overall. In the tropics the opposite held: trees cooled, by storing carbon and evaporating water.",
+  "move": "A remedy that works in one place can backfire in another.",
+  "ask": "Which habit that helps me in one setting might be quietly hurting me in another?",
+  "trap": "Trees store carbon, so more trees anywhere must mean cooling.",
+  "keywords": [
+    "boreal forest",
+    "albedo",
+    "snow",
+    "afforestation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bala et al., PNAS, 2007",
+  "source_kind": "paper",
+  "reference": "Bala et al., Combined climate and carbon-cycle effects of large-scale deforestation, Proceedings of the National Academy of Sciences, 2007",
+  "written": "2026-10-03"
+}

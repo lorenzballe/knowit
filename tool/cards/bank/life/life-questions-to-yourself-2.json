@@ -1,0 +1,41 @@
+{
+  "id": "life-questions-to-yourself-2",
+  "topic": "life",
+  "genre": "life.ask_better_questions",
+  "strand": "life.ask_better_questions.questions_to_yourself",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Asking 'what might go wrong?' or imagining the plan has already failed and asking 'why did it fail?': which found more reasons?",
+  "options": [
+    "About the same",
+    "Imagining it failed",
+    "Asking what might go wrong"
+  ],
+  "correct": 1,
+  "answer": "Imagining it had failed, by about 30%. Mitchell, Russo and Pennington found that treating an outcome as certain helped people produce more reasons for it. Klein later turned this into the pre-mortem: before starting, a team imagines the project failed and writes down why.",
+  "move": "Before starting, imagine it failed, then ask why.",
+  "ask": "For the plan I am about to start, if it had failed a year from now, what would the reason be?",
+  "trap": "Both ask about failure, so they should find the same reasons.",
+  "keywords": [
+    "pre-mortem",
+    "planning",
+    "hindsight",
+    "gary klein",
+    "failure"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mitchell, Russo and Pennington, 1989",
+  "source_kind": "paper",
+  "reference": "Mitchell, Russo and Pennington, Back to the future: Temporal perspective in the explanation of events, Journal of Behavioral Decision Making, 1989",
+  "written": "2026-10-03"
+}

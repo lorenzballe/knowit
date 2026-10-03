@@ -1,0 +1,43 @@
+{
+  "id": "science-averages-1",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.averages",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Ten people in a café earn £30,000 a year; an eleventh earns £1.1 million. What is the mean income, in thousands of pounds?",
+  "value": 127.3,
+  "unit": "thousand pounds",
+  "tolerance": 0.5,
+  "answer": "About 127.3 thousand pounds, while the median is still £30,000.",
+  "move": "When one value is huge, ask for the middle, not the mean.",
+  "ask": "When I compare myself with an average, do I know whether a few extremes are pulling it up?",
+  "trap": "Expecting the average to describe a typical person in the room.",
+  "hint": "Add up all eleven incomes, then divide by eleven.",
+  "steps": [
+    "Total: 10 × £30,000 + £1,100,000 = £1,400,000.",
+    "Mean: £1,400,000 ÷ 11 = £127,273.",
+    "About 127.3 thousand pounds, while the median is still £30,000."
+  ],
+  "keywords": [
+    "mean",
+    "median",
+    "income",
+    "outliers"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Huff, How to Lie with Statistics, 1954",
+  "source_kind": "book",
+  "reference": "Huff, How to Lie with Statistics, W. W. Norton, 1954",
+  "written": "2026-09-26"
+}

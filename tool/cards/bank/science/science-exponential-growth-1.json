@@ -1,0 +1,41 @@
+{
+  "id": "science-exponential-growth-1",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.exponential_growth",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "A monthly subscription rises 7% every year. Roughly how many years until its price has doubled?",
+  "value": 10,
+  "unit": "years",
+  "answer": "70 ÷ 7 = 10, so about 10 years.",
+  "move": "Divide 70 by any yearly growth rate to see when it doubles.",
+  "ask": "Which of my regular bills is quietly growing a few per cent a year, and when will it double?",
+  "trap": "About 14 years, adding 7% fourteen times to reach 100%.",
+  "hint": "Divide 70 by the yearly rise in per cent.",
+  "steps": [
+    "Rule of 70: doubling time ≈ 70 ÷ yearly growth in per cent.",
+    "70 ÷ 7 = 10, so about 10 years."
+  ],
+  "keywords": [
+    "doubling time",
+    "rule of 70",
+    "compound growth",
+    "prices"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Meadows et al., The Limits to Growth, 1972",
+  "source_kind": "book",
+  "reference": "Meadows, Meadows, Randers & Behrens, The Limits to Growth, Universe Books, 1972",
+  "written": "2026-09-26"
+}

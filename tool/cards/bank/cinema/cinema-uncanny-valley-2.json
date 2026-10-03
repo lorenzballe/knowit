@@ -1,0 +1,40 @@
+{
+  "id": "cinema-uncanny-valley-2",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.uncanny_valley",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Researchers enlarged the eyes on faces from cartoonish to photographic. Where did the bigger eyes look most unpleasant?",
+  "options": [
+    "On the cartoonish faces",
+    "On the photographic faces",
+    "Equally on all faces"
+  ],
+  "correct": 1,
+  "answer": "On the photographic faces. Seyama and Nagayama morphed artificial faces into real ones and found the strong unpleasantness only when near-real faces carried an odd feature such as bizarre eyes. On a doll the same eyes were fine. Realism alone was not enough; realism plus one wrong detail was.",
+  "move": "The closer something gets to real, the less error it can hide.",
+  "ask": "Where does a small flaw hurt me more because everything else is so polished?",
+  "trap": "On the cartoonish faces, since they already look the least human.",
+  "keywords": [
+    "uncanny valley",
+    "face perception",
+    "morphing",
+    "eyes"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Seyama and Nagayama, Presence, 2007",
+  "source_kind": "paper",
+  "reference": "Seyama and Nagayama, The Uncanny Valley: Effect of Realism on the Impression of Artificial Human Faces, Presence, 16(4), 2007",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-confucius-2",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.confucius",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Asked for one word to live by, how did Confucius phrase his rule for treating others?",
+  "options": [
+    "Do not impose what you would not want",
+    "Treat others as you want to be treated",
+    "Honour your elders before yourself"
+  ],
+  "correct": 0,
+  "answer": "Do not impose on others what you would not want. In Analects 15.24 Zigong asks for a single word; Confucius answers shu, roughly reciprocity. The negative form restrains rather than pushes: it forbids imposing your own tastes, which the positive form can license. The friend who hates surprise parties is protected by it.",
+  "move": "Ask first what you would refuse, before what you would offer.",
+  "ask": "Am I doing something for someone because I would want it, without checking that they do?",
+  "trap": "The positive rule, because the familiar wording comes to mind first.",
+  "keywords": [
+    "confucius",
+    "golden rule",
+    "reciprocity",
+    "analects",
+    "zigong"
+  ],
+  "era": "ancient",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Confucius, Analects 15.24",
+  "source_kind": "book",
+  "reference": "Confucius, The Analects, trans. Slingerland, Hackett, 2003, 15.24",
+  "written": "2026-10-03"
+}

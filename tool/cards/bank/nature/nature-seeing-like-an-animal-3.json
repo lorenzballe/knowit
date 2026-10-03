@@ -1,0 +1,40 @@
+{
+  "id": "nature-seeing-like-an-animal-3",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.seeing_like_an_animal",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "To the eyes of a deer, what does a tiger's orange coat look most like?",
+  "options": [
+    "Glowing orange, as to us",
+    "Green, like the leaves",
+    "Dull grey, like rock"
+  ],
+  "correct": 1,
+  "answer": "Green, like the leaves. Deer have two kinds of colour cone, not three, so orange and green give them the same signal. Fennell and colleagues modelled this and found the tiger nearly matches foliage for its prey while standing out to people. Mammals cannot make green fur; orange is the nearest thing that works.",
+  "move": "Judge a disguise by the eyes it has to fool, not your own.",
+  "ask": "When I judge how something comes across, am I using my eyes or those of the person it is for?",
+  "trap": "Assuming the prey sees the same bright orange that people see.",
+  "keywords": [
+    "tigers",
+    "camouflage",
+    "deer",
+    "colour vision"
+  ],
+  "era": "timeless",
+  "region": "asia",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fennell et al., J. R. Soc. Interface, 2019",
+  "source_kind": "paper",
+  "reference": "Fennell, Shanks & Cuthill, Optimizing colour for camouflage and visibility using deep learning: the effects of the environment and the observer's visual system, Journal of the Royal Society Interface, 2019",
+  "written": "2026-10-03"
+}

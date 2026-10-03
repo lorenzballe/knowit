@@ -1,0 +1,38 @@
+{
+  "id": "cinema-critics-or-crowds-3",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.critics_or_crowds",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should review sites count audience ratings only from people who can prove they bought a ticket?",
+  "sides": [
+    "Yes, verified only",
+    "No, open to all"
+  ],
+  "answer": "An audience score is useless if people who never saw the film can sink it. Organised campaigns have flooded films with low ratings before release, over casting or politics. In 2019 Rotten Tomatoes began marking ratings from verified ticket buyers. A score should report what viewers thought, not who was angriest online.",
+  "move": "Whichever side you took, it turns on who sets the gate and what they gain.",
+  "ask": "Whose opinions am I counting in my own decisions, and who has been filtered out?",
+  "counterpoint": "Tying ratings to one ticket seller shuts out anyone who paid cash, watched at a festival or streamed the film later, and hands a company control of the public's voice. It also quietly favours films sold through that company's partners. Open scores are noisy, but readers can learn to discount noise; they cannot see a filter.",
+  "keywords": [
+    "audience scores",
+    "review bombing",
+    "verified ratings",
+    "rotten tomatoes"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fandango, Rotten Tomatoes verified ratings, 2019",
+  "source_kind": "company",
+  "reference": "Fandango Media, announcement of Rotten Tomatoes Verified Audience Score and ratings, May 2019",
+  "written": "2026-10-03"
+}

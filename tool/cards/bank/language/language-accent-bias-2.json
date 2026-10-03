@@ -1,0 +1,33 @@
+{
+  "id": "language-accent-bias-2",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.accent_bias",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Do some accents simply sound uglier than others, whatever the listener knows about the people who speak them?",
+  "answer": "No. British listeners who knew no Greek heard Athenian and Cretan speech and found neither more pleasant or refined, though Greeks rank Athenian far higher. Welsh listeners judging varieties of Canadian French did the same. Without knowing who speaks an accent, people hear no ugliness in it; the judgement is learned with the label.",
+  "move": "A dislike you only feel once you know the label is about the label.",
+  "ask": "Which voice, name or place do I judge before the person has said anything worth judging?",
+  "keywords": [
+    "accent attitudes",
+    "greek dialects",
+    "canadian french",
+    "prestige"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Trudgill, Sociolinguistics, 2000",
+  "source_kind": "book",
+  "reference": "Trudgill, Sociolinguistics: An Introduction to Language and Society, 4th ed., Penguin, 2000",
+  "written": "2026-10-03"
+}

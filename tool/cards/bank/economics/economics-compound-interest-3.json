@@ -1,0 +1,39 @@
+{
+  "id": "economics-compound-interest-3",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.compound_interest",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "True or false: €10,000 growing at 7% a year gains more in years 31 to 40 than in years 1 to 30?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. After 30 years the €10,000 has become about €76,100, a gain of €66,100. Ten more years at 7% take it to about €149,700: a further €73,600. Each year's growth is charged on everything already earned, so the last decade outgrows the first three. Most of a patient saver's money arrives at the very end.",
+  "move": "With compounding, the reward comes late; leaving early forfeits most of it.",
+  "ask": "Which long effort in my life am I tempted to quit just before it would start paying?",
+  "trap": "False, because thirty years of growth must beat ten.",
+  "keywords": [
+    "compound interest",
+    "long-term saving",
+    "growth",
+    "patience"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "doubling",
+  "source": "Compound growth at 7% a year",
+  "source_kind": "arithmetic",
+  "reference": "Housel, The Psychology of Money, Harriman House, 2020",
+  "written": "2026-10-03"
+}

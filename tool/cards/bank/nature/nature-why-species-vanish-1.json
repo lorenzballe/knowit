@@ -1,0 +1,40 @@
+{
+  "id": "nature-why-species-vanish-1",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.why_species_vanish",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "On land, what did the 2019 global assessment by IPBES rank as the biggest driver of nature's loss so far?",
+  "options": [
+    "Climate change",
+    "Changes in how land is used",
+    "Pollution from industry"
+  ],
+  "correct": 1,
+  "answer": "Changes in how land is used. IPBES ranked turning forests, wetlands and grasslands into farms, pasture and towns first on land, ahead of hunting and harvesting, climate change, pollution and invasive species. At sea, fishing came first. Climate is rising fast as a cause, but so far the plough has done more.",
+  "move": "The loudest threat in the news is not always the biggest so far.",
+  "ask": "Which worry gets my attention because it is in the news, while a duller one costs me more?",
+  "trap": "Climate change dominates the news, so it seems the main cause.",
+  "keywords": [
+    "ipbes",
+    "land use change",
+    "biodiversity loss",
+    "farming"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IPBES Global Assessment, 2019",
+  "source_kind": "institution",
+  "reference": "IPBES, Summary for Policymakers of the Global Assessment Report on Biodiversity and Ecosystem Services, 2019",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "life-conversation-3",
+  "topic": "life",
+  "genre": "life.people",
+  "strand": "life.people.conversation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: train commuters told to talk with a stranger had a more pleasant journey than those told to keep to themselves?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Epley and Schroeder found commuters in Chicago expected a chat with a stranger to make the ride worse, and that strangers would not want to talk. Those who did talk had the more pleasant trip, and nobody reported being rebuffed. Solitude was the forecast; connection was the result.",
+  "move": "Test the fear of a short conversation by having one.",
+  "ask": "On my next journey or queue, could I try one short conversation and see how it really goes?",
+  "trap": "An awkward rebuff is easy to picture, so silence seems safer.",
+  "keywords": [
+    "strangers",
+    "commuting",
+    "small talk",
+    "nicholas epley",
+    "solitude"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Epley and Schroeder, JEP: General, 2014",
+  "source_kind": "paper",
+  "reference": "Epley and Schroeder, Mistakenly Seeking Solitude, Journal of Experimental Psychology: General, 2014",
+  "written": "2026-10-03"
+}

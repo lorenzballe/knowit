@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-trust-and-experts-3",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.trust_and_experts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "independence",
+  "question": "True or false: a senior paediatrician was right to square 1 in 8,543 to give a jury the odds of two cot deaths?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Squaring treats the two deaths as unrelated, like two coin tosses, but siblings share genes and homes that can make a second death likelier after a first. The Royal Statistical Society said so publicly in 2001. Sally Clark's conviction was quashed in 2003: a doctor's authority had carried a statistician's question.",
+  "move": "An expert's authority stops at the edge of the expert's own field.",
+  "ask": "When an expert tells me something, is it inside what they are actually expert in?",
+  "trap": "Trusting the arithmetic because a senior doctor gave it under oath.",
+  "keywords": [
+    "sally clark",
+    "roy meadow",
+    "cot death",
+    "expert witness",
+    "statistics"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Royal Statistical Society statement, 2001",
+  "source_kind": "institution",
+  "reference": "Royal Statistical Society, Statement regarding statistical issues in the Sally Clark case, 23 October 2001",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "language-words-and-thought-2",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.words_and_thought",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What can people whose language has no words for exact numbers do with quantities?",
+  "answer": "Match them, but not remember them. The Pirahã of Brazil, whose language has no exact number words, lined up equal rows of objects perfectly when both rows were in view. Asked to match a set they had seen and that was then hidden, they erred more and more as sets grew. Number words work like a notepad for amounts.",
+  "move": "A word for something lets you carry it when it is out of sight.",
+  "ask": "What do I keep losing track of simply because I have never given it a name?",
+  "keywords": [
+    "piraha",
+    "number words",
+    "counting",
+    "amazon"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frank et al., Cognition, 2008",
+  "source_kind": "paper",
+  "reference": "Frank, Everett, Fedorenko & Gibson, Number as a cognitive technology: evidence from Pirahã language and cognition, Cognition 108(3), 2008",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "life-pros-and-cons-2",
+  "topic": "life",
+  "genre": "life.clear_thinking",
+  "strand": "life.clear_thinking.pros_and_cons",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: students who wrote down their reasons before choosing a poster were happier with it weeks later?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Wilson and colleagues let students pick a poster to take home; some first listed why they liked or disliked each one. The reason-listers chose differently and, a few weeks later, were less satisfied with their choice. Reasons easy to put into words had crowded out feelings that were harder to name.",
+  "move": "On matters of taste, weigh the feelings that resist words as well.",
+  "ask": "For a choice about taste, like a flat or a gift, am I trusting only the reasons that are easy to say?",
+  "trap": "Careful reasoning seems as if it must improve any choice.",
+  "keywords": [
+    "reasons",
+    "choice satisfaction",
+    "posters",
+    "introspection"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wilson and colleagues, PSPB, 1993",
+  "source_kind": "paper",
+  "reference": "Wilson, Lisle, Schooler, Hodges, Klaaren and LaFleur, Introspecting about reasons can reduce post-choice satisfaction, Personality and Social Psychology Bulletin, 1993",
+  "written": "2026-10-03"
+}

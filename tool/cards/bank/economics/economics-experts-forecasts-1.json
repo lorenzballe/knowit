@@ -1,0 +1,40 @@
+{
+  "id": "economics-experts-forecasts-1",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.experts_forecasts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Over the 15 years to 2024, what share of US large-company funds run by stock pickers trailed the S&P 500?",
+  "options": [
+    "About a quarter",
+    "About half",
+    "About nine in ten"
+  ],
+  "correct": 2,
+  "answer": "About nine in ten: 89.5%, by S&P's SPIVA scorecard. Each year a fair number of managers beat the index, but rarely the same ones, and fees eat their margin. Over fifteen years the shortfalls pile up. A fund charging 1% a year must beat the market by that much every year just to draw level.",
+  "move": "Before paying for expertise, ask how often it beat doing nothing special.",
+  "ask": "Am I paying someone for advice that a simple, cheap default would beat?",
+  "trap": "About half, since skill and luck should split them evenly.",
+  "keywords": [
+    "fund managers",
+    "index funds",
+    "spiva",
+    "fees"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "S&P Dow Jones Indices, SPIVA U.S. Year-End 2024",
+  "source_kind": "statistics",
+  "reference": "https://www.spglobal.com/spdji/en/spiva/article/spiva-us-year-end-2024",
+  "written": "2026-10-03"
+}

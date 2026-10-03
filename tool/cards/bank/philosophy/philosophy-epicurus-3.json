@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-epicurus-3",
+  "topic": "philosophy",
+  "genre": "philosophy.ancient_thinkers",
+  "strand": "philosophy.ancient_thinkers.epicurus",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Epicurus advised looking for someone to eat with before looking for something to eat?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Seneca quotes him in his 19th letter: consider whom you eat and drink with before what you eat and drink, since feeding without a friend is the life of a lion or a wolf. Epicurus ranked friendship first among the things wisdom provides for a happy life. Bread shared beat a banquet alone.",
+  "move": "Choose the company before the menu; it decides more of the pleasure.",
+  "ask": "Who is the person I most enjoy simply sharing a meal with, and when did I last do it?",
+  "trap": "False, assuming a pleasure philosopher ranked the food above the company.",
+  "keywords": [
+    "epicurus",
+    "friendship",
+    "seneca",
+    "meals",
+    "company"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Seneca, Letters on Ethics 19",
+  "source_kind": "book",
+  "reference": "Seneca, Letters on Ethics, trans. Graver & Long, University of Chicago Press, 2015, Letter 19",
+  "written": "2026-10-03"
+}

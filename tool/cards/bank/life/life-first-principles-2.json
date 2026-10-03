@@ -1,0 +1,39 @@
+{
+  "id": "life-first-principles-2",
+  "topic": "life",
+  "genre": "life.ask_better_questions",
+  "strand": "life.ask_better_questions.first_principles",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: people solve the candle-on-the-wall puzzle more easily when the drawing pins come inside their box?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In Duncker's puzzle a candle must be fixed to a wall using matches and a box of drawing pins; the answer is to pin the empty box up as a shelf. With the pins inside, people saw the box as a container and took longer. Handed over empty, it looked like material.",
+  "move": "Describe each thing by what it is made of, not what it is for.",
+  "ask": "What tool, skill or contact do I own that I only ever see in its usual role?",
+  "trap": "Having the box in plain view seems enough to suggest using it.",
+  "keywords": [
+    "candle problem",
+    "functional fixedness",
+    "karl duncker",
+    "problem solving"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Duncker, Psychological Monographs, 1945",
+  "source_kind": "paper",
+  "reference": "Duncker, On problem-solving, Psychological Monographs, 1945",
+  "written": "2026-10-03"
+}

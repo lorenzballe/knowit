@@ -1,0 +1,43 @@
+{
+  "id": "life-kindness-4",
+  "topic": "life",
+  "genre": "life.people",
+  "strand": "life.people.kindness",
+  "also": [
+    "life.growth.failure"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: students told to be kind to themselves after failing a test studied less for the retake?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Breines and Chen found students encouraged to treat their failure with self-compassion studied longer for a second test than students given a boost to their self-esteem or nothing. Kindness to oneself made the failure safe to look at, and so worth fixing.",
+  "move": "Speak to yourself after a failure as you would to a friend.",
+  "ask": "After my last mistake, did I speak to myself the way I would speak to a friend who had made it?",
+  "trap": "Going easy on oneself sounds like letting oneself off.",
+  "keywords": [
+    "self-compassion",
+    "failure",
+    "motivation",
+    "studying",
+    "kindness"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Breines and Chen, PSPB, 2012",
+  "source_kind": "paper",
+  "reference": "Breines and Chen, Self-Compassion Increases Self-Improvement Motivation, Personality and Social Psychology Bulletin, 2012",
+  "written": "2026-10-03"
+}

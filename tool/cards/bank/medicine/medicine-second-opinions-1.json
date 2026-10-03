@@ -1,0 +1,40 @@
+{
+  "id": "medicine-second-opinions-1",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.second_opinions",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 1934, New York children whose tonsils doctors had judged fine were sent to new doctors. What share did these recommend removing?",
+  "options": [
+    "Almost none",
+    "About one in ten",
+    "Nearly half"
+  ],
+  "correct": 2,
+  "answer": "Nearly half. Of 389 eleven-year-olds still with tonsils, the first doctors picked 45% for surgery. The rest went to fresh doctors, who picked 46% of them; a third round picked 44% of what was left. Each group of examiners found about the same share to cut, whichever children stood in front of them.",
+  "move": "When every judge finds the same share guilty, the share belongs to the judges.",
+  "ask": "When an expert tells me I need something, how would I know if they say it to nearly everyone?",
+  "trap": "Almost none, since those children had already been examined and cleared.",
+  "keywords": [
+    "tonsillectomy",
+    "children",
+    "medical judgement",
+    "american child health association"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bakwin, NEJM, 1945",
+  "source_kind": "paper",
+  "reference": "Bakwin, Pseudodoxia pediatrica, New England Journal of Medicine, 1945",
+  "written": "2026-10-03"
+}

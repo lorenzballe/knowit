@@ -1,0 +1,33 @@
+{
+  "id": "nature-animal-minds-1",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.animal_minds",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a young chimpanzee in Kyoto beat university students at a memory test?",
+  "answer": "By taking in a whole screen at a glance. Numerals 1 to 9 flashed in random spots, then turned into blank squares, and Ayumu touched them in order. Given about a fifth of a second to look, he stayed accurate while students faltered. Inoue and Matsuzawa suggest people traded such snapshot memory for other skills.",
+  "move": "Do not rank minds on one ladder; each is built for its own job.",
+  "ask": "Whose skill have I underrated because it is not the kind of clever I happen to have?",
+  "keywords": [
+    "chimpanzees",
+    "working memory",
+    "ayumu",
+    "kyoto university"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Inoue & Matsuzawa, Current Biology, 2007",
+  "source_kind": "paper",
+  "reference": "Inoue & Matsuzawa, Working memory of numerals in chimpanzees, Current Biology, 2007",
+  "written": "2026-10-03"
+}

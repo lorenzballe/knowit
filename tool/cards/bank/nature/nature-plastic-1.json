@@ -1,0 +1,33 @@
+{
+  "id": "nature-plastic-1",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.plastic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Millions of tonnes of plastic enter the sea each year. Why do surface surveys find so little of it floating?",
+  "answer": "Because most of it does not stay afloat. Jambeck and colleagues estimated 4.8 to 12.7 million tonnes entered the ocean in 2010; van Sebille and colleagues put all small floating plastic at roughly 93,000 to 236,000 tonnes. The rest sinks once coated in algae, crumbles too small for nets, or washes back ashore.",
+  "move": "When the visible part is small, ask where the rest has gone.",
+  "ask": "Which problem in my life looks small only because most of it has sunk out of sight?",
+  "keywords": [
+    "ocean plastic",
+    "microplastics",
+    "floating debris",
+    "sea floor"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "van Sebille et al., Environmental Research Letters, 2015",
+  "source_kind": "paper",
+  "reference": "van Sebille et al., A global inventory of small floating plastic debris, Environmental Research Letters, 2015; Jambeck et al., Plastic waste inputs from land into the ocean, Science, 2015",
+  "written": "2026-10-03"
+}

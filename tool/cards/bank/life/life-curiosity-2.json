@@ -1,0 +1,40 @@
+{
+  "id": "life-curiosity-2",
+  "topic": "life",
+  "genre": "life.ask_better_questions",
+  "strand": "life.ask_better_questions.curiosity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: while curious about a trivia answer, people also better remember unrelated faces shown during the wait?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Gruber, Gelman and Ranganath showed people trivia questions, then a stranger's face while they waited for each answer. In a surprise test afterwards, faces seen during high curiosity were recognised better, though they had nothing to do with the question. Brain scans showed curiosity engaging reward and memory circuits for whatever came along.",
+  "move": "Start from a question that grips you, and learn the dull parts alongside.",
+  "ask": "What dull thing could I learn while chasing a question I genuinely want answered?",
+  "trap": "Memory seems to need attention on the thing itself.",
+  "keywords": [
+    "curiosity",
+    "memory",
+    "trivia questions",
+    "dopamine",
+    "hippocampus"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gruber, Gelman and Ranganath, Neuron, 2014",
+  "source_kind": "paper",
+  "reference": "Gruber, Gelman and Ranganath, States of curiosity modulate hippocampus-dependent learning via the dopaminergic circuit, Neuron, 2014",
+  "written": "2026-10-03"
+}

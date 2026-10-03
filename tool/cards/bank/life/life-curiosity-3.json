@@ -1,0 +1,40 @@
+{
+  "id": "life-curiosity-3",
+  "topic": "life",
+  "genre": "life.ask_better_questions",
+  "strand": "life.ask_better_questions.curiosity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "People waited beside pens that might give a mild shock. When did they click more: knowing each pen shocked, or not knowing?",
+  "options": [
+    "When every pen surely shocked",
+    "When they did not know"
+  ],
+  "correct": 1,
+  "answer": "When they did not know. Hsee and Ruan left waiting participants with pens labelled as certain to shock or as uncertain. Those with uncertain pens clicked more of them, accepting pain to find out. The authors called it the Pandora effect. The same itch gets a teasing headline clicked.",
+  "move": "Notice when you are paying only to stop not knowing.",
+  "ask": "Which tap, scroll or click do I make only to end not knowing, even when I expect it to sting?",
+  "trap": "Nobody seeks pain, so uncertainty should make people more careful.",
+  "keywords": [
+    "curiosity",
+    "uncertainty",
+    "pandora effect",
+    "clickbait",
+    "electric shock"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hsee and Ruan, Psychological Science, 2016",
+  "source_kind": "paper",
+  "reference": "Hsee and Ruan, The Pandora Effect: The Power and Peril of Curiosity, Psychological Science, 2016",
+  "written": "2026-10-03"
+}

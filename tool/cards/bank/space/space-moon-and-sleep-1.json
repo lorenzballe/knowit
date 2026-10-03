@@ -1,0 +1,43 @@
+{
+  "id": "space-moon-and-sleep-1",
+  "topic": "space",
+  "genre": "space.the_moon",
+  "strand": "space.the_moon.moon_and_sleep",
+  "also": [
+    "science.how_science_knows.replication"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "multipleComparisons",
+  "question": "A sleep lab re-sorts years of old recordings by moon phase and finds shorter sleep near full moon. What is the strongest reason for doubt?",
+  "options": [
+    "Moonlight leaking into the lab",
+    "Only hits from many reanalyses get published",
+    "Volunteers knowing the moon was full"
+  ],
+  "correct": 1,
+  "answer": "Only hits get published. Many labs hold old sleep data and can sort it by moon phase; those finding nothing rarely write it up. A 2013 study of 33 volunteers in a windowless lab reported 20 minutes less sleep near full moon. Larger datasets checked afterwards mostly showed no such effect.",
+  "move": "Before trusting a striking finding, ask how many people looked and found nothing.",
+  "ask": "When I hear one surprising result, do I ask how many quiet failures never got told?",
+  "trap": "Moonlight leaking in, because light is the obvious way the moon acts.",
+  "keywords": [
+    "lunar cycle",
+    "sleep studies",
+    "file drawer problem",
+    "publication bias"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cordi et al., Current Biology, 2014",
+  "source_kind": "paper",
+  "reference": "Cordi et al., Lunar cycle effects on sleep and the file drawer problem, Current Biology, 2014",
+  "written": "2026-10-03"
+}

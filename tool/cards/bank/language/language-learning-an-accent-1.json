@@ -1,0 +1,40 @@
+{
+  "id": "language-learning-an-accent-1",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.learning_an_accent",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Japanese adults were trained to hear English r and l. Which training carried over best to voices they had never heard?",
+  "options": [
+    "One clear speaker, many times",
+    "Slowed-down recordings of one voice",
+    "Many different speakers"
+  ],
+  "correct": 2,
+  "answer": "Many different speakers. In studies from 1991 on, learners trained on five talkers improved and kept the gain with new voices; learners trained on one talker mostly learned that one voice. Variety taught them which differences mark the sound and which are just one person's way of speaking.",
+  "move": "Learn from many examples, or you only learn the example.",
+  "ask": "Am I learning a skill from one person's habits, or from enough variety to see the pattern?",
+  "trap": "One clear speaker, because a clean model seems easier to copy.",
+  "keywords": [
+    "r and l",
+    "japanese learners",
+    "perceptual training",
+    "speech sounds"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Logan, Lively & Pisoni, JASA, 1991",
+  "source_kind": "paper",
+  "reference": "Logan, Lively & Pisoni, Training Japanese listeners to identify English /r/ and /l/: a first report, Journal of the Acoustical Society of America 89(2), 1991",
+  "written": "2026-10-03"
+}

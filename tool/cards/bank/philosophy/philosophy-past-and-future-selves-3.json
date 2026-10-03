@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-past-and-future-selves-3",
+  "topic": "philosophy",
+  "genre": "philosophy.time",
+  "strand": "philosophy.time.past_and_future_selves",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a man be punished at 94 for a crime he took part in at 21, if he has changed completely?",
+  "sides": [
+    "Yes, still punish him",
+    "No, he is someone else now"
+  ],
+  "answer": "Yes. The man who aged is the man who acted, and the victims' loss did not shrink with time. In 2015 a German court convicted Oskar Gröning, 94, a former Auschwitz bookkeeper, as an accessory to 300,000 murders. Letting decades erase guilt would reward those who hide longest.",
+  "move": "It turns on whether guilt belongs to the body that acted or the person now.",
+  "ask": "Do I still hold someone to a version of themselves they left behind long ago?",
+  "counterpoint": "Punishment aims to protect, deter and reform, and a frail man of 94 needs none of it. Derek Parfit argued that what binds us to a past self is psychological connection, and over seventy years it can thin almost to nothing. Jailing a changed old man punishes a stranger for a young man's acts.",
+  "keywords": [
+    "oskar gröning",
+    "auschwitz",
+    "statute of limitations",
+    "personal identity",
+    "punishment"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lüneburg Regional Court verdict, July 2015",
+  "source_kind": "news_archive",
+  "reference": "Lüneburg Regional Court, verdict on Oskar Gröning, 15 July 2015, as reported in The Guardian, 15 July 2015",
+  "written": "2026-10-03"
+}

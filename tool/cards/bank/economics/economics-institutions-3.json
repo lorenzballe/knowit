@@ -1,0 +1,38 @@
+{
+  "id": "economics-institutions-3",
+  "topic": "economics",
+  "genre": "economics.how_countries_get_rich",
+  "strand": "economics.how_countries_get_rich.institutions",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Do good institutions make countries rich, rather than wealth producing good institutions?",
+  "sides": [
+    "Institutions come first",
+    "Wealth comes first"
+  ],
+  "answer": "Compare places with the same land and people but different rules: North and South Korea, or colonies where settlers built property rights against those run for extraction. Acemoglu, Johnson and Robinson found that institutions laid down centuries ago predict incomes today. Secure property, fair courts and limits on rulers come first; growth follows them.",
+  "move": "Whichever side you took, telling cause from consequence in slow-moving history decides it.",
+  "ask": "When I credit my progress to one habit, could the habit have followed the progress instead?",
+  "counterpoint": "Glaeser and colleagues showed that the usual measures of institutions are outcomes, improving as countries grow richer. South Korea and Taiwan grew fast under dictators and built democratic institutions only once educated and prosperous. Schooling and sound policy, even under poor institutions, explain much of growth; good institutions often arrive as a reward for wealth.",
+  "keywords": [
+    "institutions",
+    "property rights",
+    "colonialism",
+    "economic growth"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Acemoglu, Johnson and Robinson, AER, 2001",
+  "source_kind": "paper",
+  "reference": "Acemoglu, Johnson & Robinson, The Colonial Origins of Comparative Development: An Empirical Investigation, American Economic Review, 2001",
+  "written": "2026-10-03"
+}

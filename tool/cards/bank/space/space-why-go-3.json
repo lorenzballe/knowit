@@ -1,0 +1,39 @@
+{
+  "id": "space-why-go-3",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.why_go",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Which would be easier for people to live in: Mars at its best, or Earth just after the asteroid that ended the dinosaurs?",
+  "options": [
+    "Mars at its best",
+    "Earth just after the impact"
+  ],
+  "correct": 1,
+  "answer": "Earth just after the impact. Even then Earth kept breathable air, an atmosphere thick enough for liquid water, a magnetic field and soil, and small mammals came through. Mars at its best has air less than 1% as thick as Earth's, almost no oxygen and soil laced with toxic salts.",
+  "move": "Compare a backup with the worst day of the original, not its best.",
+  "ask": "Is my plan B really better than a bad day of my plan A?",
+  "trap": "Mars, because the impact left Earth a burning, darkened ruin.",
+  "keywords": [
+    "backup planet",
+    "chicxulub impact",
+    "mars settlement",
+    "habitability"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Weinersmith & Weinersmith, A City on Mars, 2023",
+  "source_kind": "book",
+  "reference": "Weinersmith & Weinersmith, A City on Mars, Penguin Press, 2023",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "economics-education-3",
+  "topic": "economics",
+  "genre": "economics.how_countries_get_rich",
+  "strand": "economics.how_countries_get_rich.education",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "If each extra year of school raises pay by about 9%, how much more does four extra years bring, in per cent?",
+  "value": 41,
+  "unit": "per cent",
+  "tolerance": 1,
+  "answer": "About 41% more pay",
+  "move": "Gains that stack on each other beat gains that merely add up.",
+  "ask": "Which skill could I keep adding to, year after year, so the gains build on each other?",
+  "trap": "About 36%, adding 9% four times.",
+  "hint": "Each year's 9% applies to pay already raised by the years before.",
+  "steps": [
+    "Two years: 1.09 × 1.09 ≈ 1.188",
+    "Four years: 1.188 × 1.188 ≈ 1.412",
+    "About 41% more pay"
+  ],
+  "keywords": [
+    "returns to education",
+    "wages",
+    "schooling",
+    "compounding"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Psacharopoulos and Patrinos, Education Economics, 2018",
+  "source_kind": "paper",
+  "reference": "Psacharopoulos & Patrinos, Returns to Investment in Education: A Decennial Review of the Global Literature, Education Economics, 2018",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "life-small-wins-1",
+  "topic": "life",
+  "genre": "life.habits",
+  "strand": "life.habits.small_wins",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Asked to rank five things that motivate staff, where did 669 managers put helping people make progress in their work?",
+  "options": [
+    "First",
+    "Third",
+    "Last"
+  ],
+  "correct": 2,
+  "answer": "Last. In Amabile and Kramer's survey, only 35 managers ranked progress first. Yet in nearly 12,000 diary entries from 238 professionals, a day of even small forward steps was the strongest lift to mood and drive. Managers looked to praise and bonuses, while staff were counting finished pieces of work.",
+  "move": "Make the day's progress visible, however small, before chasing bigger rewards.",
+  "ask": "What small step did I finish today that I have not even noticed, and could I write it down?",
+  "trap": "Progress sounds like a need so plain that managers would rank it high.",
+  "keywords": [
+    "small wins",
+    "progress",
+    "motivation",
+    "managers",
+    "diaries"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Amabile and Kramer, Harvard Business Review, 2011",
+  "source_kind": "paper",
+  "reference": "Amabile and Kramer, The Power of Small Wins, Harvard Business Review, 2011",
+  "written": "2026-10-03"
+}

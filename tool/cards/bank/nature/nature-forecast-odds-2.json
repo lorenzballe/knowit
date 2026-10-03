@@ -1,0 +1,40 @@
+{
+  "id": "nature-forecast-odds-2",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.forecast_odds",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "conditional",
+  "question": "When The Weather Channel gave a 20% chance of rain, how often did it rain, by one analyst's check?",
+  "options": [
+    "About 5% of the time",
+    "About 20% of the time",
+    "About 40% of the time"
+  ],
+  "correct": 0,
+  "answer": "About 5% of the time. Nate Silver found commercial forecasts leaned wet on purpose at low odds. People shrug off a forecast of rain on a dry day but curse one that misses a downpour, so small chances get rounded up. The government's National Weather Service figures stayed much closer to honest.",
+  "move": "Ask what the person giving you odds gains by shading them.",
+  "ask": "Which warnings in my life are padded to protect the person giving them?",
+  "trap": "Taking the printed 20% at face value, as a measured chance.",
+  "keywords": [
+    "wet bias",
+    "rain forecasts",
+    "the weather channel",
+    "probability"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Silver, The Signal and the Noise, 2012",
+  "source_kind": "book",
+  "reference": "Silver, The Signal and the Noise: Why So Many Predictions Fail but Some Don't, Penguin Press, 2012",
+  "written": "2026-10-03"
+}

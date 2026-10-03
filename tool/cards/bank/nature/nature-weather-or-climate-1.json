@@ -1,0 +1,33 @@
+{
+  "id": "nature-weather-or-climate-1",
+  "topic": "nature",
+  "genre": "nature.weather",
+  "strand": "nature.weather.weather_or_climate",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do climate scientists wait for 30 years of weather before calling a change climate?",
+  "answer": "Because single years swing more than the trend moves. A country's average temperature can jump by a degree from one year to the next, while warming adds about 0.2°C a decade. The WMO defines climate normals as 30-year averages, long enough for drift to rise above noise. One cold winter is one toss.",
+  "move": "Do not judge a trend from a single point, however vivid it is.",
+  "ask": "Which trend in my life am I judging from one good or bad week?",
+  "keywords": [
+    "climate normals",
+    "weather",
+    "climate",
+    "temperature trend"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "WMO, Guidelines on Climate Normals, 2017",
+  "source_kind": "institution",
+  "reference": "World Meteorological Organization, WMO Guidelines on the Calculation of Climate Normals, WMO-No. 1203, 2017",
+  "written": "2026-10-03"
+}

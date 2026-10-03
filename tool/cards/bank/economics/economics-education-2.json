@@ -1,0 +1,40 @@
+{
+  "id": "economics-education-2",
+  "topic": "economics",
+  "genre": "economics.how_countries_get_rich",
+  "strand": "economics.how_countries_get_rich.education",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in rural India in 2016, about nine in ten fifth-year pupils could read a second-year text?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The ASER survey, which tests children at home across rural India, found that only 47.8% of pupils in their fifth year could read a text meant for the second. Nearly all children were enrolled; far fewer were learning. Counting enrolment counts desks and registers, not what is in the pupils' heads.",
+  "move": "Being enrolled and learning are two numbers; ask which one you have.",
+  "ask": "Am I measuring the effort I put into something, or what it actually produces?",
+  "trap": "True, since nearly every child of that age is enrolled.",
+  "keywords": [
+    "aser",
+    "india",
+    "literacy",
+    "primary school",
+    "learning outcomes"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ASER Centre, Annual Status of Education Report 2016",
+  "source_kind": "statistics",
+  "reference": "ASER Centre, Annual Status of Education Report (Rural) 2016, Pratham, 2017",
+  "written": "2026-10-03"
+}

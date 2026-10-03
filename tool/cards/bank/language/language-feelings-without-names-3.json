@@ -1,0 +1,36 @@
+{
+  "id": "language-feelings-without-names-3",
+  "topic": "language",
+  "genre": "language.untranslatable_words",
+  "strand": "language.untranslatable_words.feelings_without_names",
+  "also": [
+    "psychology.emotions.naming_feelings"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why might people who tell apart many kinds of bad feeling cope better under stress?",
+  "answer": "Because a precise feeling points to a fix. Disappointed, embarrassed and lonely each suggest a different next step; feeling just bad suggests none. In a 2010 study of young adults who drank, those who told their negative emotions apart finely drank less on their most distressing days. Psychologists call this skill emotion differentiation.",
+  "move": "A vague problem has no handle; name it precisely to find one.",
+  "ask": "When I say I feel bad, which exact feeling is it, and what does it need?",
+  "keywords": [
+    "emotion differentiation",
+    "stress",
+    "alcohol",
+    "coping"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kashdan et al., Psychological Science, 2010",
+  "source_kind": "paper",
+  "reference": "Kashdan, Ferssizidis, Collins & Muraven, Emotion differentiation as resilience against excessive alcohol use, Psychological Science 21(9), 2010",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-cancel-culture-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.cancel_culture",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Among US adults on Twitter in 2018, what share of all tweets came from the most active 10% of users?",
+  "options": [
+    "About 20%",
+    "About half",
+    "About 80%"
+  ],
+  "correct": 2,
+  "answer": "About 80%. Pew Research found the busiest tenth of American adult users wrote about four in five tweets, while the median user posted about twice a month. A storm that seems to involve everyone online is often a small, very loud group, watched by a much larger silent one.",
+  "move": "The loudest tenth of any room is not the room.",
+  "ask": "When it feels like everyone is angry about something, how many people have I actually heard from?",
+  "trap": "Assuming users post roughly equally, so the top tenth writes little more.",
+  "keywords": [
+    "twitter",
+    "pew research center",
+    "heavy users",
+    "tweets"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pew Research Center, Sizing Up Twitter Users",
+  "source_kind": "statistics",
+  "reference": "Pew Research Center, Sizing Up Twitter Users, 24 April 2019",
+  "written": "2026-09-26"
+}

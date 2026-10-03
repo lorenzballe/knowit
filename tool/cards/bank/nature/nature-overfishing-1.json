@@ -1,0 +1,33 @@
+{
+  "id": "nature-overfishing-1",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.overfishing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did fifty years of trophy photos from Key West fishing boats reveal about the fish?",
+  "answer": "That the trophies shrank almost tenfold. McClenachan measured fish in dockside photos from 1956 to 2007: the average estimated weight fell from about 20 kg to 2.3 kg, while the anglers' grins stayed just as wide. Each generation judged a good catch against the sea it first knew.",
+  "move": "Ask what normal looked like before you started counting.",
+  "ask": "What do I call normal only because it is what I happened to know first?",
+  "keywords": [
+    "shifting baselines",
+    "trophy fish",
+    "key west",
+    "historical photographs"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McClenachan, Conservation Biology, 2009",
+  "source_kind": "paper",
+  "reference": "McClenachan, Documenting loss of large trophy fish from the Florida Keys with historical photographs, Conservation Biology, 2009",
+  "written": "2026-10-03"
+}

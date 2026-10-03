@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-animals-3",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.animals",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is it wrong to eat an animal that had a good life and a painless death?",
+  "sides": [
+    "Yes, it is still wrong",
+    "No, not if it lived well"
+  ],
+  "answer": "Yes. Death takes from the animal every good day it would still have had, and that loss is real whether or not it sees it coming. A pig can live fifteen years; most are killed within one. A painless end removes the suffering, not the harm, just as a painless murder is still a murder.",
+  "move": "It turns on whether death harms a being that cannot plan its future.",
+  "ask": "Do I judge the lives behind my food by how they ended, or by what they lost?",
+  "counterpoint": "A being with no sense of itself across time has no plans that death cuts short. Peter Singer considered in Practical Ethics that such animals may be replaceable: if a happy life is followed by another happy life that would not otherwise exist, nothing is lost overall. What matters is the suffering, and humane farming removes it.",
+  "keywords": [
+    "meat eating",
+    "peter singer",
+    "replaceability",
+    "humane farming",
+    "deprivation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Singer, Practical Ethics, 2011",
+  "source_kind": "book",
+  "reference": "Singer, Practical Ethics, 3rd edition, Cambridge University Press, 2011",
+  "written": "2026-10-03"
+}

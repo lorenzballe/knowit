@@ -1,0 +1,40 @@
+{
+  "id": "cinema-critics-or-crowds-2",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.critics_or_crowds",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Films that critics praise tend to sell more tickets. What did a study of week-by-week takings suggest about why?",
+  "options": [
+    "Critics' praise drives the sales",
+    "Critics mostly foresee, not cause, success",
+    "Big sales sway the critics"
+  ],
+  "correct": 1,
+  "answer": "Critics mostly foresee it. Eliashberg and Shugan found reviews tracked a film's later and total takings but not its opening weeks, when reviews are newest and should matter most. Critics seem to spot what audiences will like; the film's own qualities drive both the praise and the crowds.",
+  "move": "When two things rise together, look for the third thing behind both.",
+  "ask": "What do I credit for a good result that may simply have seen it coming?",
+  "trap": "Critics' praise drives the sales, because good reviews come first.",
+  "keywords": [
+    "film critics",
+    "box office",
+    "eliashberg",
+    "reviews"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Eliashberg and Shugan, Journal of Marketing, 1997",
+  "source_kind": "paper",
+  "reference": "Eliashberg and Shugan, Film Critics: Influencers or Predictors?, Journal of Marketing, 61(2), 1997",
+  "written": "2026-10-03"
+}

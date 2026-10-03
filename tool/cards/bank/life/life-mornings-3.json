@@ -1,0 +1,41 @@
+{
+  "id": "life-mornings-3",
+  "topic": "life",
+  "genre": "life.habits",
+  "strand": "life.habits.mornings",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "Seattle moved its high-school start from 7:50 to 8:45. How much more did students sleep each night?",
+  "options": [
+    "About 34 minutes",
+    "Almost none",
+    "About 55 minutes"
+  ],
+  "correct": 0,
+  "answer": "About 34 minutes. Dunster and colleagues tracked students with wrist monitors before and after the change. They went to bed slightly later but woke much later, so the net gain was about half an hour, and median grades in the class studied rose 4.5%. Some of the hour was spent, most was kept.",
+  "move": "Count what people do with a change, not only the change itself.",
+  "ask": "If I moved my alarm later, what would I do with the extra time at night, and how much would I keep?",
+  "trap": "The 55-minute shift seems to hand over a full 55 minutes.",
+  "keywords": [
+    "school start times",
+    "teenagers",
+    "sleep",
+    "seattle",
+    "grades"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dunster and colleagues, Science Advances, 2018",
+  "source_kind": "paper",
+  "reference": "https://www.science.org/doi/10.1126/sciadv.aau6200",
+  "written": "2026-10-03"
+}

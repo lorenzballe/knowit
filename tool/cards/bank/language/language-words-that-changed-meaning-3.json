@@ -1,0 +1,39 @@
+{
+  "id": "language-words-that-changed-meaning-3",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.words_that_changed_meaning",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should dictionaries accept literally used for emphasis, as in I literally died laughing?",
+  "sides": [
+    "Yes, record it",
+    "No, resist it"
+  ],
+  "answer": "Dictionaries record how words are used, and this use is old. Writers have used literally for emphasis since the 18th century; Fitzgerald wrote that Gatsby literally glowed. Context almost always shows which sense is meant. Very and really made the same journey, from truly to merely emphatic, and nobody now mourns the old meanings.",
+  "move": "Whichever side you took, the hinge is whether the lost distinction can be replaced.",
+  "ask": "Which word do I use so loosely that it no longer helps anyone understand me?",
+  "counterpoint": "Literally is the one word that says this is not a figure of speech, and English has no spare. When a doctor, a witness or a contract uses it, readers must now guess. Recording a sense is not neutral either: a dictionary entry lends it authority, and careful writers lose a tool that worked.",
+  "keywords": [
+    "literally",
+    "intensifiers",
+    "dictionaries",
+    "usage",
+    "fitzgerald"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Merriam-Webster, literally, usage note",
+  "source_kind": "reference_work",
+  "reference": "https://www.merriam-webster.com/dictionary/literally",
+  "written": "2026-10-03"
+}

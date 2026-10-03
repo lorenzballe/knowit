@@ -1,0 +1,37 @@
+{
+  "id": "life-limits-3",
+  "topic": "life",
+  "genre": "life.growth",
+  "strand": "life.growth.limits",
+  "also": [
+    "life.habits.routines"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "After two weeks of sleeping six hours a night, how impaired were people, and how impaired did they feel?",
+  "answer": "As impaired as after up to two nights with no sleep, while feeling only slightly sleepy. Van Dongen and colleagues kept volunteers on six hours for 14 days. Their attention and memory slid day after day, but their own ratings of sleepiness levelled off early. The gauge broke before the engine did.",
+  "move": "Do not use how you feel to measure how tired you are.",
+  "ask": "Am I judging my energy by how I feel, when my mistakes this week might tell a different story?",
+  "keywords": [
+    "sleep restriction",
+    "fatigue",
+    "self-assessment",
+    "attention",
+    "limits"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Van Dongen and colleagues, Sleep, 2003",
+  "source_kind": "paper",
+  "reference": "Van Dongen, Maislin, Mullington and Dinges, The Cumulative Cost of Additional Wakefulness, Sleep, 2003",
+  "written": "2026-10-03"
+}

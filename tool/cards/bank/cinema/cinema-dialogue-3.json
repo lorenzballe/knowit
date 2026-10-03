@@ -1,0 +1,38 @@
+{
+  "id": "cinema-dialogue-3",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.dialogue",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should streaming services remix films so that dialogue is louder at home, even against the director's cinema mix?",
+  "sides": [
+    "Yes, remix for home",
+    "No, keep the original"
+  ],
+  "answer": "A film that cannot be followed has failed, whatever the cinema mix sounded like. Most viewing now happens on televisions and phones. Netflix already sets its loudness target by measuring dialogue alone, at -27 LKFS, so speech, not explosions, is the anchor. A home remix simply admits where the audience now sits.",
+  "move": "Whichever side you took, it turns on who owns the balance after the cinema.",
+  "ask": "When I change something someone else made so it suits me, when does that become changing what it means?",
+  "counterpoint": "The mix is part of the work: a muttered line under a storm is a choice, and remixing it is like brightening a dark painting. Home mixes already exist for most films; the trouble is cheap speakers and processing in televisions. Fix the playback, or offer an optional dialogue boost, and leave the artist's balance alone.",
+  "keywords": [
+    "netflix",
+    "sound mixing",
+    "dialogue loudness",
+    "home viewing"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Netflix Sound Mix Specifications",
+  "source_kind": "company",
+  "reference": "https://partnerhelp.netflixstudios.com/hc/en-us/articles/360001794307-Netflix-Sound-Mix-Specifications-Best-Practices-v1-6",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "science-exponential-growth-2",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.exponential_growth",
+  "kind": "pickOne",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "An epidemic's cases double every three days. Acting one week later means facing roughly how many times as many cases?",
+  "options": [
+    "About twice as many",
+    "About five times as many",
+    "About twenty times as many"
+  ],
+  "correct": 1,
+  "answer": "About five times as many. A week holds 7 ÷ 3, about 2.3 doublings, and 2 multiplied by itself 2.3 times is about 5. In 2020 modellers estimated that US distancing one week earlier would have avoided more than half the deaths by early May. Each lost day multiplies; it does not add.",
+  "move": "When things double, count a delay in doublings, not in days.",
+  "ask": "What problem in my life is growing while I wait, and how many doublings have I already let pass?",
+  "trap": "About twice as many, treating a week as one extra doubling.",
+  "keywords": [
+    "epidemics",
+    "doubling",
+    "covid-19",
+    "delay",
+    "lockdown timing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pei, Kandula & Shaman, Science Advances, 2020",
+  "source_kind": "paper",
+  "reference": "Pei, Kandula & Shaman, Differential effects of intervention timing on COVID-19 spread in the United States, Science Advances 6:eabd6370, 2020",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "life-trust-3",
+  "topic": "life",
+  "genre": "life.people",
+  "strand": "life.people.trust",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should you trust a new colleague fully until they give you a reason not to?",
+  "sides": [
+    "Yes, trust first",
+    "No, let it be earned"
+  ],
+  "answer": "Yes. Most people repay trust: in experiments about four in five strangers return money they could keep, and people guess far fewer. Distrust is costly in its own way, slowing every task and inviting the coldness it expects. Trusting first lets a working relationship start, and a single betrayal still teaches you who to watch.",
+  "move": "Whichever side you took, the hinge is how costly one betrayal would be.",
+  "ask": "With the new person in my life, what would it cost me to trust them a little more this week?",
+  "counterpoint": "No. Trust should match the stakes. One in five keeping the money is fine with small sums, ruinous with a client list or a password. Graded trust, giving small responsibilities and widening them as they are kept, still starts the relationship while capping the damage, and it gives the newcomer a fair way to earn more.",
+  "keywords": [
+    "trust",
+    "colleagues",
+    "workplace",
+    "reciprocity",
+    "betrayal"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fetchenhauer and Dunning, J. Economic Psychology, 2009",
+  "source_kind": "paper",
+  "reference": "Fetchenhauer and Dunning, Do people trust too much or too little?, Journal of Economic Psychology, 2009",
+  "written": "2026-10-03"
+}

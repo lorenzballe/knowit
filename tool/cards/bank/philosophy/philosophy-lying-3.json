@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-lying-3",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.lying",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is misleading someone with carefully true words less wrong than telling them an outright lie?",
+  "sides": [
+    "Yes, misleading is less wrong",
+    "No, it is just as wrong"
+  ],
+  "answer": "A lie asserts what you believe false, and asserting is a pledge: you vouch for the words. Misleading leaves the inference to the listener, who could still ask again. Jonathan Adler argued in 1997 that this protects the trust that lets anyone rely on plain words. Courts draw the same line under oath.",
+  "move": "It turns on whether the wrong lies in the words or the belief created.",
+  "ask": "When I choose my words carefully to avoid lying, am I protecting the other person or just myself?",
+  "counterpoint": "The victim ends up with the same false belief, and was steered there on purpose. Jennifer Saul argued in 2012 that misleading is no better as an act; careful phrasing often shows more planning, not more respect. A doctor who says the lungs looked clear while hiding the liver has deceived as surely as a liar.",
+  "keywords": [
+    "lying",
+    "misleading",
+    "jennifer saul",
+    "jonathan adler",
+    "assertion"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Saul, Lying, Misleading, and What Is Said, 2012",
+  "source_kind": "book",
+  "reference": "Saul, Lying, Misleading, and What Is Said, Oxford University Press, 2012; Adler, Lying, Deceiving, or Falsely Implicating, Journal of Philosophy 94 (9), 1997",
+  "written": "2026-10-03"
+}

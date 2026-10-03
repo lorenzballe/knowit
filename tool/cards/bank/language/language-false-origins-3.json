@@ -1,0 +1,40 @@
+{
+  "id": "language-false-origins-3",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.false_origins",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "When SOS became the international distress signal in 1906, what did its three letters stand for?",
+  "options": [
+    "Save Our Souls",
+    "Nothing at all",
+    "Save Our Ship"
+  ],
+  "correct": 1,
+  "answer": "Nothing at all. The 1906 Berlin radiotelegraph convention chose it for its Morse: three dots, three dashes, three dots, sent as one unbroken pattern that is hard to mistake even through static. Save Our Souls was fitted to the letters later. Engineers picked a sound; storytellers supplied the words.",
+  "move": "A meaning attached afterwards can feel older than the thing it explains.",
+  "ask": "Which reason for one of my choices did I actually invent after making it?",
+  "trap": "Save Our Souls, because a signal that urgent must say something.",
+  "keywords": [
+    "sos",
+    "morse code",
+    "distress signal",
+    "backronym"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "International Radiotelegraph Convention, Berlin, 1906",
+  "source_kind": "primary_document",
+  "reference": "International Radiotelegraph Convention and Service Regulations, Berlin, 3 November 1906",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "economics-mental-accounting-2",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.mental_accounting",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "When US petrol prices halved in late 2008, what did many drivers do with the money saved at the pump?",
+  "options": [
+    "Saved the difference",
+    "Bought premium petrol",
+    "Drove much further"
+  ],
+  "correct": 1,
+  "answer": "Bought premium petrol. Hastings and Shapiro followed shoppers as prices fell and found they switched to premium grades far more than an equal rise in income would explain. Money saved in the petrol budget stayed in the petrol budget, spent at the pump on fuel their engines did not need.",
+  "move": "Money is money whichever jar it came from; spend it as such.",
+  "ask": "When I save on one thing, do I spend the difference on the same thing without noticing?",
+  "trap": "Saved the difference, since the money was free to go anywhere.",
+  "keywords": [
+    "petrol prices",
+    "premium fuel",
+    "household budgets",
+    "fungibility"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hastings and Shapiro, Quarterly Journal of Economics, 2013",
+  "source_kind": "paper",
+  "reference": "Hastings & Shapiro, Fungibility and Consumer Choice: Evidence from Commodity Price Shocks, Quarterly Journal of Economics, 2013",
+  "written": "2026-10-03"
+}

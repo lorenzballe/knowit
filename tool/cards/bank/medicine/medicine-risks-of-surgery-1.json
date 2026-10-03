@@ -1,0 +1,39 @@
+{
+  "id": "medicine-risks-of-surgery-1",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.risks_of_surgery",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: after Ontario required a surgical safety checklist in every hospital, deaths after surgery fell clearly?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Across 101 Ontario hospitals, deaths within 30 days went from 0.71% to 0.65%, a gap that chance could explain, and complications barely moved. The famous 2009 pilot that roughly halved deaths ran in eight hospitals keen enough to join. A checklist works through the team that believes in it, not the paper.",
+  "move": "A result from eager volunteers may not survive being made compulsory for everyone.",
+  "ask": "Is the success story I am copying from people who chose it eagerly, while I would be following orders?",
+  "trap": "True, since the checklist had already halved deaths in a famous trial.",
+  "keywords": [
+    "surgical safety checklist",
+    "ontario",
+    "surgery deaths",
+    "hospitals"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Urbach et al., NEJM, 2014",
+  "source_kind": "paper",
+  "reference": "Urbach et al., Introduction of surgical safety checklists in Ontario, Canada, New England Journal of Medicine, 2014",
+  "written": "2026-10-03"
+}

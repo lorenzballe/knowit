@@ -1,0 +1,40 @@
+{
+  "id": "life-trust-1",
+  "topic": "life",
+  "genre": "life.people",
+  "strand": "life.people.trust",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: across 40 countries, wallets handed in with cash inside were returned more often than empty ones?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Cohn and colleagues turned in about 17,000 wallets as lost property. With money inside, 51% were reported back; without, 40%. Most people, including economists asked to predict, expected cash to lower the return rate. More money made keeping it feel more like theft.",
+  "move": "Expect more honesty from strangers than the news suggests.",
+  "ask": "Whom am I distrusting because of stories I have heard, rather than anything they have done?",
+  "trap": "Stories of theft are vivid, so cash seems to tempt keeping.",
+  "keywords": [
+    "lost wallets",
+    "honesty",
+    "field experiment",
+    "strangers",
+    "trust"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cohn and colleagues, Science, 2019",
+  "source_kind": "paper",
+  "reference": "Cohn, Maréchal, Tannenbaum and Zünd, Civic honesty around the globe, Science, 2019",
+  "written": "2026-10-03"
+}

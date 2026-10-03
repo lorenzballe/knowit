@@ -1,0 +1,39 @@
+{
+  "id": "economics-get-rich-quick-3",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.get_rich_quick",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: most Americans who join multilevel marketing schemes end up making a profit?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In a 2018 AARP Foundation survey of past and present participants, 47% lost money and 27% made nothing; only about a quarter made a profit, most of them small. Recruiting pages show the few at the top of the chain. In such schemes the money flows upwards from the many below.",
+  "move": "Ask where the money comes from before asking how much you could make.",
+  "ask": "If I were offered a side business tomorrow, how would I find out what the typical member earns?",
+  "trap": "True, judging by the success stories recruiters share online.",
+  "keywords": [
+    "multilevel marketing",
+    "aarp",
+    "side hustles",
+    "recruitment"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "AARP Foundation, multilevel marketing survey, 2018",
+  "source_kind": "statistics",
+  "reference": "https://www.aarp.org/work/job-search/advice-for-job-seekers-tempted-by-multilevel-marketing-offers/",
+  "written": "2026-10-03"
+}

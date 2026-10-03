@@ -1,0 +1,33 @@
+{
+  "id": "cinema-auteurs-3",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.auteurs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Who is the legal author of a Hollywood film, and does the answer change in Europe?",
+  "answer": "It does. In the United States a studio film is usually a work made for hire, so the company that paid for it is the author in law. EU law names the principal director an author, and copyright runs until 70 years after the last of director, screenwriter, dialogue writer and composer dies.",
+  "move": "Who counts as the author is a legal choice, not a fact of nature.",
+  "ask": "Who legally owns the work I create in my job, and have I read that clause?",
+  "keywords": [
+    "copyright",
+    "work made for hire",
+    "film directors",
+    "european union"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Council Directive 93/98/EEC, Article 2",
+  "source_kind": "primary_document",
+  "reference": "Council Directive 93/98/EEC harmonizing the term of protection of copyright and certain related rights, Official Journal L 290, 1993",
+  "written": "2026-10-03"
+}

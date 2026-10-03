@@ -1,0 +1,40 @@
+{
+  "id": "nature-pests-2",
+  "topic": "nature",
+  "genre": "nature.insects",
+  "strand": "nature.insects.pests",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Farmers growing insect-killing GM cotton are told to plant some ordinary cotton nearby. Why?",
+  "options": [
+    "To compare yields against a control",
+    "To keep pests the toxin kills alive",
+    "To give bees untreated flowers"
+  ],
+  "correct": 1,
+  "answer": "To keep pests the toxin kills alive. Rare resistant insects that survive the GM crop then mostly mate with susceptible ones from the refuge, and their young stay vulnerable. Tabashnik and colleagues found resistance came slowest where refuges were kept. Where they were skipped, as with pink bollworm in India, resistance spread within years.",
+  "move": "Leave some of the problem untouched, so the cure keeps working.",
+  "ask": "Where would going easier, not harder, keep my strongest tool working longer?",
+  "trap": "An untreated plot sounds like a scientific control for comparing yields.",
+  "keywords": [
+    "bt cotton",
+    "pest resistance",
+    "refuges",
+    "pink bollworm"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tabashnik et al., Nature Biotechnology, 2013",
+  "source_kind": "paper",
+  "reference": "Tabashnik, Brévault & Carrière, Insect resistance to Bt crops: lessons from the first billion acres, Nature Biotechnology, 2013",
+  "written": "2026-10-03"
+}

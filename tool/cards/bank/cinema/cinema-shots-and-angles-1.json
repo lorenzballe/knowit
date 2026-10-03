@@ -1,0 +1,33 @@
+{
+  "id": "cinema-shots-and-angles-1",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.shots_and_angles",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a conversation scene suddenly feel wrong if the camera jumps to the other side of the two actors?",
+  "answer": "Because left and right swap. Film crews draw an imaginary line between the actors and keep the camera on one side, the 180-degree rule. Cross it and the woman who looked right now looks left, so viewers sense she has turned away. Directors break the rule on purpose when they want unease.",
+  "move": "Your sense of where things are depends on where you are watching from.",
+  "ask": "In an argument I had recently, how would it look from the other side of the table?",
+  "keywords": [
+    "180-degree rule",
+    "screen direction",
+    "continuity editing",
+    "camera placement"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Katz, Film Directing Shot by Shot",
+  "source_kind": "book",
+  "reference": "Steven D. Katz, Film Directing Shot by Shot: Visualizing from Concept to Screen, Michael Wiese Productions, 1991",
+  "written": "2026-10-03"
+}

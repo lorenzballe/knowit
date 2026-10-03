@@ -1,0 +1,33 @@
+{
+  "id": "cinema-sound-and-fear-1",
+  "topic": "cinema",
+  "genre": "cinema.sound_design",
+  "strand": "cinema.sound_design.sound_and_fear",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do horror soundtracks lean on harsh, rasping, broken noises rather than just low, ominous notes?",
+  "answer": "Because they borrow from animal alarm calls. A frightened animal's scream breaks into noise and sudden jumps in pitch, and listeners of many species react to that roughness at once. Blumstein and colleagues compared soundtracks across genres and found horror scores packed with these jagged, nonlinear sounds, much more than dramas.",
+  "move": "When a sound grabs you before you think, ask what it imitates.",
+  "ask": "Which sounds in my day put me on edge, and were any of them designed to?",
+  "keywords": [
+    "horror soundtracks",
+    "alarm calls",
+    "nonlinear sounds",
+    "film music"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Blumstein et al., Biology Letters, 2010",
+  "source_kind": "paper",
+  "reference": "Blumstein, Davitian and Kaye, Do Film Soundtracks Contain Nonlinear Analogues to Influence Emotion?, Biology Letters, 6(6), 2010",
+  "written": "2026-10-03"
+}

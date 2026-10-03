@@ -1,0 +1,33 @@
+{
+  "id": "cinema-plot-holes-1",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.plot_holes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Hitchcock not mind leaving a logical gap that audiences would notice only after the film?",
+  "answer": "Because they noticed it too late to matter. Hitchcock called such moments icebox scenes: holes that strike a viewer at home, pulling cold chicken from the icebox, after the film has done its work. Asked about one in Vertigo, he told Truffaut the emotion in the cinema counted more.",
+  "move": "An argument can win in the moment and still fail at home.",
+  "ask": "Which argument convinced me in the moment but would not survive a quiet look later?",
+  "keywords": [
+    "alfred hitchcock",
+    "icebox scenes",
+    "plot holes",
+    "francois truffaut"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Truffaut, Hitchcock, 1984",
+  "source_kind": "book",
+  "reference": "François Truffaut, Hitchcock, revised edn, Simon and Schuster, 1984",
+  "written": "2026-10-03"
+}

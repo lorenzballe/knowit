@@ -1,0 +1,40 @@
+{
+  "id": "cinema-product-placement-3",
+  "topic": "cinema",
+  "genre": "cinema.how_films_persuade",
+  "strand": "cinema.how_films_persuade.product_placement",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Viewers who love a show see a brand pushed prominently into a scene. What tends to happen to their opinion of the brand?",
+  "options": [
+    "It rises most of all",
+    "It hardly changes",
+    "It falls"
+  ],
+  "correct": 2,
+  "answer": "It falls. Cowley and Barron found prominent placements lowered brand attitudes among viewers who liked the programme most, while viewers who cared less warmed to the brand. Fans felt the sales pitch interrupt something they valued. Subtle placements rarely backfired; a lingering close-up on the label did.",
+  "move": "Pushing hardest on the people who already like you can backfire.",
+  "ask": "Where am I pushing too hard on someone who was already on my side?",
+  "trap": "It rises most of all, as fans carry their love onto the brand.",
+  "keywords": [
+    "product placement",
+    "brand attitudes",
+    "television",
+    "advertising"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cowley and Barron, Journal of Advertising, 2008",
+  "source_kind": "paper",
+  "reference": "Cowley and Barron, When Product Placement Goes Wrong: The Effects of Program Liking and Placement Prominence, Journal of Advertising, 37(1), 2008",
+  "written": "2026-10-03"
+}

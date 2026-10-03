@@ -1,0 +1,41 @@
+{
+  "id": "life-feedback-1",
+  "topic": "life",
+  "genre": "life.growth",
+  "strand": "life.growth.feedback",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Kluger and DeNisi pooled 131 feedback experiments that each had a control group. In how many did feedback make performance worse?",
+  "options": [
+    "In over a third",
+    "In about 1 in 20",
+    "In about two thirds"
+  ],
+  "correct": 0,
+  "answer": "In over a third, 38%. On average feedback helped, but often it hurt, especially when it drew attention to the person rather than the task. Without the control groups, those drops would have been invisible, since people often improve anyway with practice.",
+  "move": "Aim feedback at the work, never at the worth of the person.",
+  "ask": "When I next give feedback, will it be about the task in front of us or about the person?",
+  "trap": "Performance often rises after feedback, so feedback seems always to help.",
+  "keywords": [
+    "feedback",
+    "performance",
+    "meta-analysis",
+    "avraham kluger",
+    "workplace"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kluger and DeNisi, Psychological Bulletin, 1996",
+  "source_kind": "paper",
+  "reference": "Kluger and DeNisi, The Effects of Feedback Interventions on Performance: A Historical Review, a Meta-Analysis, and a Preliminary Feedback Intervention Theory, Psychological Bulletin, 1996",
+  "written": "2026-10-03"
+}

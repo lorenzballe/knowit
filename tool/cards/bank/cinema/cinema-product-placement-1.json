@@ -1,0 +1,33 @@
+{
+  "id": "cinema-product-placement-1",
+  "topic": "cinema",
+  "genre": "cinema.how_films_persuade",
+  "strand": "cinema.how_films_persuade.product_placement",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "According to director Rian Johnson, why can a mystery's villain never be seen holding an iPhone?",
+  "answer": "Because Apple will not allow it, he said. Breaking down Knives Out for Vanity Fair in 2020, Johnson explained that Apple lets films use iPhones, but bad guys cannot have them on camera. Brands that lend products also vet whose hands they appear in, so a phone can quietly give away the culprit.",
+  "move": "The objects on screen were chosen; ask who chose them and why.",
+  "ask": "Which everyday object in a show I love was placed there by someone selling it?",
+  "keywords": [
+    "product placement",
+    "apple",
+    "rian johnson",
+    "knives out"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IndieWire, Rian Johnson on Apple, 2020",
+  "source_kind": "news_archive",
+  "reference": "https://www.indiewire.com/2020/02/rian-johnson-apple-bad-guys-iphones-movies-1202213693/",
+  "written": "2026-10-03"
+}

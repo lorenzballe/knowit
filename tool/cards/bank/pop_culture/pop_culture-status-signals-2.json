@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-status-signals-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fashion",
+  "strand": "pop_culture.fashion.status_signals",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did a suntan switch from a mark of poverty to a mark of wealth in the twentieth century?",
+  "answer": "Because the kind of work changed. While most poor people laboured in fields, pale skin proved you did not; once they moved into factories and offices, a tan proved you had the time and money for sun and holidays. In the 1920s fashion took it up, and bronze became a luxury.",
+  "move": "A status symbol is whatever most people find hard to get.",
+  "ask": "Which thing I envy is really just whatever happens to be hard to get right now?",
+  "keywords": [
+    "suntan",
+    "pale skin",
+    "factories",
+    "holidays"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Segrave, Suntanning in 20th Century America",
+  "source_kind": "book",
+  "reference": "Kerry Segrave, Suntanning in 20th Century America, McFarland, 2005",
+  "written": "2026-09-26"
+}

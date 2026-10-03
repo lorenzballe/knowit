@@ -1,0 +1,39 @@
+{
+  "id": "life-gut-or-data-3",
+  "topic": "life",
+  "genre": "life.decisions",
+  "strand": "life.decisions.gut_or_data",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should a job interview follow a fixed list of questions with scores, rather than the interviewer's judgement?",
+  "sides": [
+    "Yes, use the scored list",
+    "No, keep the judgement"
+  ],
+  "answer": "Yes. Schmidt and Hunter's review of 85 years of hiring research found structured interviews predicted job performance clearly better than free-form ones, with validities around 0.51 against 0.38. Same questions, same scale, so candidates are compared on the job and not on rapport, and the interviewer's mood on the day weighs less.",
+  "move": "Whichever side you took, the hinge is what the free conversation adds beyond the score.",
+  "ask": "When I judge someone new, am I scoring what matters or how comfortable they made me feel?",
+  "counterpoint": "No. A script catches what the job description foresaw and misses what it did not. Free conversation shows how someone thinks under pressure, and Schmidt and Hunter's figures still credit unstructured interviews with real predictive power. A good interviewer can add the scored questions and keep room to follow a surprising answer.",
+  "keywords": [
+    "job interviews",
+    "hiring",
+    "structured interviews",
+    "intuition",
+    "prediction"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schmidt and Hunter, Psychological Bulletin, 1998",
+  "source_kind": "paper",
+  "reference": "Schmidt and Hunter, The Validity and Utility of Selection Methods in Personnel Psychology, Psychological Bulletin, 1998",
+  "written": "2026-10-03"
+}

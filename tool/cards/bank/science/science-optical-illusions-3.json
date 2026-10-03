@@ -1,0 +1,40 @@
+{
+  "id": "science-optical-illusions-3",
+  "topic": "science",
+  "genre": "science.light_and_colour",
+  "strand": "science.light_and_colour.optical_illusions",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "The Moon rising over a rooftop looks huge; hours later, high overhead, it looks small. What changed?",
+  "options": [
+    "The air magnified it near the horizon",
+    "The brain's judgement of its size",
+    "Its distance from the viewer"
+  ],
+  "correct": 1,
+  "answer": "The brain's judgement of its size. Photograph both and the Moon's image is the same width; rising, it is even slightly farther away. Set beside roofs and trees on a horizon that seems distant, the brain inflates it. Look at it through a rolled-up paper tube and it shrinks back.",
+  "move": "Measure before explaining; the thing to explain may lie in the observer.",
+  "ask": "What problem am I trying to explain out there that might be in how I'm looking?",
+  "trap": "The air near the horizon acting like a magnifying glass.",
+  "keywords": [
+    "moon illusion",
+    "perception",
+    "horizon",
+    "apparent size"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ross & Plug, The Mystery of the Moon Illusion",
+  "source_kind": "book",
+  "reference": "Ross & Plug, The Mystery of the Moon Illusion, Oxford University Press, 2002",
+  "written": "2026-09-26"
+}

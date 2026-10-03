@@ -1,0 +1,40 @@
+{
+  "id": "life-comfort-zone-1",
+  "topic": "life",
+  "genre": "life.growth",
+  "strand": "life.growth.comfort_zone",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: people asking strangers for a small favour needed to ask fewer people than they had predicted?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Flynn and Lake had people ask strangers to fill in a form or lend a phone. Before starting, they guessed they would need to ask about twice as many people as they did. They pictured the refusals and underestimated how awkward saying no is for the person asked.",
+  "move": "Ask for the favour; refusing you is harder than you picture.",
+  "ask": "What help have I not asked for because I am sure they would say no?",
+  "trap": "A blunt refusal is easy to picture, so most seem likely to refuse.",
+  "keywords": [
+    "asking for help",
+    "favours",
+    "strangers",
+    "refusal",
+    "frank flynn"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Flynn and Lake, JPSP, 2008",
+  "source_kind": "paper",
+  "reference": "Flynn and Lake, If You Need Help, Just Ask: Underestimating Compliance With Direct Requests for Help, Journal of Personality and Social Psychology, 2008",
+  "written": "2026-10-03"
+}

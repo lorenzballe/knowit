@@ -1,0 +1,40 @@
+{
+  "id": "medicine-false-positives-1",
+  "topic": "medicine",
+  "genre": "medicine.diagnosis",
+  "strand": "medicine.diagnosis.false_positives",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "baseRate",
+  "question": "A prenatal blood test for Down syndrome is over 99% accurate. In ordinary pregnancies, what share of its positive results were confirmed?",
+  "options": [
+    "About 99%",
+    "About 80%",
+    "About 40%"
+  ],
+  "correct": 1,
+  "answer": "About 80%. Among nearly 16,000 women of ordinary risk, the test flagged 47 pregnancies and 38 were confirmed. Accuracy describes the test; what a positive means depends on how rare the condition is among those tested. In lower-risk groups a positive is shakier still, which is why it is checked before any decision.",
+  "move": "How good a test is says little until you know how rare the target is.",
+  "ask": "When a reliable alarm goes off in my life, have I asked how often the thing it warns of really happens?",
+  "trap": "About 99%, reading the test's accuracy as the chance a positive is right.",
+  "keywords": [
+    "prenatal screening",
+    "cell-free dna",
+    "down syndrome",
+    "positive predictive value"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Norton et al., NEJM, 2015",
+  "source_kind": "paper",
+  "reference": "Norton et al., Cell-free DNA analysis for noninvasive examination of trisomy, New England Journal of Medicine, 2015",
+  "written": "2026-10-03"
+}

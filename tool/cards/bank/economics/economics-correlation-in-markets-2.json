@@ -1,0 +1,40 @@
+{
+  "id": "economics-correlation-in-markets-2",
+  "topic": "economics",
+  "genre": "economics.read_money_news",
+  "strand": "economics.read_money_news.correlation_in_markets",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "In 2001 and 2007 the US Federal Reserve cut interest rates, and shares then fell for months. Did the cuts push shares down?",
+  "options": [
+    "Yes, cuts spooked investors",
+    "No, a slump caused both",
+    "Yes, cuts weakened the dollar"
+  ],
+  "correct": 1,
+  "answer": "No: a slump caused both. The Fed cuts rates when it sees a downturn coming, and a downturn also drags profits and share prices. After the cuts that began in January 2001 and September 2007, shares kept falling because recessions were already under way. The fire engine outside did not start the fire.",
+  "move": "When two things move together, look for what makes both of them move.",
+  "ask": "When two things happen together in my life, could something else be driving both?",
+  "trap": "Yes, cuts spooked investors, since shares fell soon after each one.",
+  "keywords": [
+    "federal reserve",
+    "interest rate cuts",
+    "recessions",
+    "share prices"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Federal Reserve, FOMC rate decisions",
+  "source_kind": "institution",
+  "reference": "https://www.federalreserve.gov/monetarypolicy/openmarket.htm",
+  "written": "2026-10-03"
+}

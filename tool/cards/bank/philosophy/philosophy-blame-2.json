@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-blame-2",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.blame",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Told how an 1814 clash between British troops and Gurkhas ended, how likely did readers judge that outcome beforehand?",
+  "options": [
+    "About as likely as uninformed readers",
+    "More likely than uninformed readers",
+    "Less likely, as a surprise"
+  ],
+  "correct": 1,
+  "answer": "More likely than readers not told. In Baruch Fischhoff's 1975 study, knowing the outcome made it seem predictable, and readers believed they would have seen it coming. Blame for a bad decision is often written after the result is known: the doctor judged by how the patient fared, not by what the scans showed.",
+  "move": "Judge a decision by what could be known when it was made.",
+  "ask": "Am I blaming someone for not seeing what only became obvious after it happened?",
+  "trap": "About as likely, since knowing the end should not change the start.",
+  "keywords": [
+    "hindsight bias",
+    "baruch fischhoff",
+    "gurkhas",
+    "blame",
+    "outcome"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fischhoff, J. Exp. Psychology: HPP, 1975",
+  "source_kind": "paper",
+  "reference": "Fischhoff, Hindsight ≠ Foresight: The Effect of Outcome Knowledge on Judgment Under Uncertainty, Journal of Experimental Psychology: Human Perception and Performance 1 (3), 1975",
+  "written": "2026-10-03"
+}

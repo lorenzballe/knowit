@@ -1,0 +1,33 @@
+{
+  "id": "cinema-heroes-and-villains-2",
+  "topic": "cinema",
+  "genre": "cinema.how_films_persuade",
+  "strand": "cinema.how_films_persuade.heroes_and_villains",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do audiences cheer an action hero who kills far more people than the villain does?",
+  "answer": "Because the film decides whose side they are on before it shows any acts. Murray Smith calls it alignment and allegiance: the camera follows the hero, shares his view and his reasons, and so the viewer forgives in him what would horrify in anyone else. The body count goes uncounted.",
+  "move": "Judge the act before you check which side did it.",
+  "ask": "Which behaviour do I excuse in people on my side that I would condemn in others?",
+  "keywords": [
+    "murray smith",
+    "film heroes",
+    "allegiance",
+    "point of view"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Smith, Engaging Characters, 1995",
+  "source_kind": "book",
+  "reference": "Murray Smith, Engaging Characters: Fiction, Emotion, and the Cinema, Clarendon Press, 1995",
+  "written": "2026-10-03"
+}

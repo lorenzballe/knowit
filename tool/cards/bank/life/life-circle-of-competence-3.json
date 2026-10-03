@@ -1,0 +1,39 @@
+{
+  "id": "life-circle-of-competence-3",
+  "topic": "life",
+  "genre": "life.clear_thinking",
+  "strand": "life.clear_thinking.circle_of_competence",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: people who rate themselves as finance experts are less likely to claim to know invented finance terms?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Atir, Rosenzweig and Dunning asked people how well they knew a list of financial terms, slipping in made-up ones such as pre-rated stocks. The more expert people felt, the more often they claimed to know the fakes. Feeling at home in a field made its edge harder to see.",
+  "move": "Feeling at home in a subject is not proof you know its corners.",
+  "ask": "In which subject do I feel expert enough that I might nod along to something that does not exist?",
+  "trap": "Real expertise should make invented terms easier to spot.",
+  "keywords": [
+    "overclaiming",
+    "self-perceived expertise",
+    "finance terms",
+    "knowledge"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Atir, Rosenzweig and Dunning, Psychological Science, 2015",
+  "source_kind": "paper",
+  "reference": "Atir, Rosenzweig and Dunning, When knowledge knows no bounds: Self-perceived expertise predicts claims of impossible knowledge, Psychological Science, 2015",
+  "written": "2026-10-03"
+}

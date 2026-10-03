@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-cancel-culture-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.cancel_culture",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should employers be barred from firing staff over lawful opinions they post in their own time?",
+  "sides": [
+    "Yes, protect off-duty speech",
+    "No, leave it to employers"
+  ],
+  "answer": "Yes. Few people can afford to lose a job over a clumsy post, and that fear silences far more than are ever fired. Some places already protect it: California bars employers from controlling workers' political activity, and Connecticut protects employee speech unless it disrupts the work. A livelihood is too high a price.",
+  "move": "Whichever side you took, the line between opinion and conduct decides it.",
+  "ask": "Would I want my job to depend on the worst thing I ever posted?",
+  "counterpoint": "No. Staff are a firm's public face; one viral post can drive off customers, upset colleagues and make others feel unsafe at work. Narrow rules already cover harassment and disruption, but a broad ban would make courts decide what counts as an opinion. A firm forced to keep someone who insulted its own clients is not free either.",
+  "keywords": [
+    "free speech",
+    "employment law",
+    "california",
+    "connecticut",
+    "social media posts"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "California Labor Code, sections 1101 and 1102",
+  "source_kind": "primary_document",
+  "reference": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=1101",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "cinema-music-and-mood-1",
+  "topic": "cinema",
+  "genre": "cinema.how_films_persuade",
+  "strand": "cinema.how_films_persuade.music_and_mood",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Viewers watched the same ambiguous scene with cheerful or ominous music. What changed besides their mood?",
+  "options": [
+    "Only how they felt",
+    "What they later remembered seeing",
+    "How long they kept watching"
+  ],
+  "correct": 1,
+  "answer": "What they remembered seeing. Marilyn Boltz found the music changed how viewers read a character's intentions, and also which objects in the scene they recalled: details that fit the music stuck, the rest faded. The soundtrack worked on memory as well as feeling, so viewers left with different films in their heads.",
+  "move": "What you felt at the time decides what you remember happened.",
+  "ask": "What background mood was I in when I formed my memory of an important day?",
+  "trap": "Only how they felt, since music is heard and not seen.",
+  "keywords": [
+    "film music",
+    "memory",
+    "marilyn boltz",
+    "interpretation"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Boltz, Music Perception, 2001",
+  "source_kind": "paper",
+  "reference": "Marilyn G. Boltz, Musical Soundtracks as a Schematic Influence on the Cognitive Processing of Filmed Events, Music Perception, 18(4), 2001",
+  "written": "2026-10-03"
+}

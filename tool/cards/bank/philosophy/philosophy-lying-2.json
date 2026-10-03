@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-lying-2",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.lying",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in US federal law, a witness who answers under oath with a true but misleading statement commits perjury?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In Bronston v. United States (1973), a man asked whether he had ever had a Swiss bank account replied that his company had had one in Zurich for six months. True, and he had held one personally too. The Supreme Court ruled it was not perjury: the questioner should have pressed.",
+  "move": "A true sentence can still be built to mislead; check what was left unsaid.",
+  "ask": "When someone answers my question, do I check whether they answered the question I actually asked?",
+  "trap": "Assuming the law punishes deceiving, not just saying false words.",
+  "keywords": [
+    "perjury",
+    "bronston v. united states",
+    "misleading",
+    "literal truth",
+    "supreme court"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bronston v. United States, 409 U.S. 352",
+  "source_kind": "primary_document",
+  "reference": "Bronston v. United States, 409 U.S. 352, US Supreme Court, 1973",
+  "written": "2026-10-03"
+}

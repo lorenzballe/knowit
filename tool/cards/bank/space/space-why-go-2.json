@@ -1,0 +1,33 @@
+{
+  "id": "space-why-go-2",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.why_go",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why might Mars hold a better record of how life began than Earth does?",
+  "answer": "Because Mars stopped rewriting its surface. On Earth, moving plates, rain and life have recycled almost all rock older than 3.5 billion years, leaving scraps in places such as Greenland and western Australia. Much of Mars's southern half is older than that and lies nearly untouched, like an archive nobody has tidied.",
+  "move": "To study a lost past, look where nobody rewrote it.",
+  "ask": "Where could I find an honest record of my own past, before memory tidied it up?",
+  "keywords": [
+    "early life",
+    "plate tectonics",
+    "martian highlands",
+    "ancient rocks"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Carr, The Surface of Mars, 2006",
+  "source_kind": "book",
+  "reference": "Carr, The Surface of Mars, Cambridge University Press, 2006",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "nature-plastic-3",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.plastic",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Earlier models blamed about 20 big rivers for most river plastic reaching the sea. What did a 2021 model find?",
+  "options": [
+    "About ten rivers carry 90%",
+    "Over 1,000 rivers carry 80%",
+    "Rivers carry under a twentieth"
+  ],
+  "correct": 1,
+  "answer": "Over 1,000 rivers carry 80%. Meijer and colleagues found that what matters most is how close waste is dumped to a river and how close that river runs to the sea. Many are short streams through crowded coastal cities, such as Manila's. Cleaning a few giant rivers would leave most of the flow untouched.",
+  "move": "A problem spread across thousands of small sources has no single switch.",
+  "ask": "Is the drain on my time or money one big thing, or many small leaks I keep ignoring?",
+  "trap": "Famous giant rivers like the Yangtze seem the obvious main culprits.",
+  "keywords": [
+    "river plastic",
+    "ocean pollution",
+    "coastal cities",
+    "philippines"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Meijer et al., Science Advances, 2021",
+  "source_kind": "paper",
+  "reference": "Meijer et al., More than 1000 rivers account for 80% of global riverine plastic emissions into the ocean, Science Advances, 2021",
+  "written": "2026-10-03"
+}

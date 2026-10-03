@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-blame-1",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.blame",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Students read a pro-Castro essay and were told its writer had been assigned that side. What did they conclude?",
+  "options": [
+    "That the writer leaned pro-Castro",
+    "Nothing about the writer's views",
+    "That the writer was anti-Castro"
+  ],
+  "correct": 0,
+  "answer": "That the writer leaned pro-Castro anyway. In Edward Jones and Victor Harris's 1967 study, readers rated assigned writers as favouring the side they argued, though less than writers who chose freely. Behaviour fills the view; the situation that forced it stays invisible. The driver who cut in may be rushing to a hospital.",
+  "move": "Before blaming the person, list what the situation forced on them.",
+  "ask": "Whose behaviour this week did I put down to character when the situation might explain it?",
+  "trap": "Nothing, since an assigned essay plainly shows nothing about its writer.",
+  "keywords": [
+    "fundamental attribution error",
+    "edward jones",
+    "castro essay",
+    "blame",
+    "situation"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jones & Harris, J. Exp. Social Psychology, 1967",
+  "source_kind": "paper",
+  "reference": "Jones & Harris, The Attribution of Attitudes, Journal of Experimental Social Psychology 3 (1), 1967",
+  "written": "2026-10-03"
+}

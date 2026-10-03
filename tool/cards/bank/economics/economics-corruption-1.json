@@ -1,0 +1,41 @@
+{
+  "id": "economics-corruption-1",
+  "topic": "economics",
+  "genre": "economics.how_countries_get_rich",
+  "strand": "economics.how_countries_get_rich.corruption",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In 600 Indonesian village road projects, what cut the money that went missing most?",
+  "options": [
+    "Village monitoring meetings",
+    "Certain government audits",
+    "Both about equally"
+  ],
+  "correct": 1,
+  "answer": "Certain government audits. Benjamin Olken had engineers measure the roads and compare them with the books. Raising the chance of an audit from 4% to 100% cut missing spending by about 8 percentage points. Inviting villagers to monitoring meetings barely touched it, since most theft was in materials no villager could weigh.",
+  "move": "Oversight works when the watcher can see where the loss happens.",
+  "ask": "Where do I rely on someone keeping an eye on things they have no way of measuring?",
+  "trap": "Village monitoring meetings, since neighbours see the road every day.",
+  "keywords": [
+    "corruption",
+    "audits",
+    "indonesia",
+    "public works",
+    "benjamin olken"
+  ],
+  "era": "recent",
+  "region": "asia",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Olken, Journal of Political Economy, 2007",
+  "source_kind": "paper",
+  "reference": "Olken, Monitoring Corruption: Evidence from a Field Experiment in Indonesia, Journal of Political Economy, 2007",
+  "written": "2026-10-03"
+}

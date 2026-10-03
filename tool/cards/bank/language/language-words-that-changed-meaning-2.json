@@ -1,0 +1,41 @@
+{
+  "id": "language-words-that-changed-meaning-2",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.words_that_changed_meaning",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Around 1300, an English writer used the word girl. Who could that word describe?",
+  "options": [
+    "Any child, boy or girl",
+    "A young unmarried woman",
+    "A female servant of any age"
+  ],
+  "correct": 0,
+  "answer": "Any child, boy or girl. Middle English girle meant a young person of either sex, and only by about 1500 had it narrowed to female children. Meat travelled the same road, from any food to animal flesh, and deer from any wild animal to one kind. Old words often meant more, not less.",
+  "move": "Before trusting an old text, check what its plain words meant then.",
+  "ask": "When I read an old letter or rule, am I hearing what it said, or what I would mean?",
+  "trap": "A young unmarried woman, reading today's sense back into old text.",
+  "keywords": [
+    "girl",
+    "meat",
+    "deer",
+    "narrowing",
+    "middle english"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Crystal, Cambridge Encyclopedia of the English Language",
+  "source_kind": "reference_work",
+  "reference": "Crystal, The Cambridge Encyclopedia of the English Language, Cambridge University Press, 1995",
+  "written": "2026-10-03"
+}

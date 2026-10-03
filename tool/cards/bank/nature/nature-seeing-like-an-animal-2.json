@@ -1,0 +1,39 @@
+{
+  "id": "nature-seeing-like-an-animal-2",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.seeing_like_an_animal",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: mantis shrimp, with twelve kinds of colour receptor, tell similar colours apart better than people?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Thoen and colleagues trained mantis shrimp to choose a colour for food, then offered close alternatives. They failed when two colours were 12 to 25 nanometres apart in wavelength, a gap people see easily. Their receptors seem to label colours fast, like a checklist, rather than compare them finely as human eyes do.",
+  "move": "More sensors do not mean finer judgement; how they are combined decides.",
+  "ask": "Am I gathering more information when what I really need is a better way to compare it?",
+  "trap": "More colour receptors should mean finer colour vision, like more pixels.",
+  "keywords": [
+    "mantis shrimp",
+    "colour vision",
+    "photoreceptors",
+    "wavelength"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thoen et al., Science, 2014",
+  "source_kind": "paper",
+  "reference": "Thoen, How, Chiou & Marshall, A different form of color vision in mantis shrimp, Science, 2014",
+  "written": "2026-10-03"
+}

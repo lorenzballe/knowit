@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-cancel-culture-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.cancel_culture",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did a joke tweeted to about 170 followers become the world's top topic before its author landed?",
+  "answer": "One share did it. In December 2013 Justine Sacco posted a joke about AIDS before an eleven-hour flight to Cape Town,; a journalist with a far bigger following passed it on. As she slept, strangers piled in, a hashtag asked whether she had landed yet, and a stranger photographed her arrival at the airport.",
+  "move": "A crowd's anger scales with its size, not with the offence.",
+  "ask": "Before I add my voice to an online pile-on, how many voices are already there?",
+  "keywords": [
+    "justine sacco",
+    "public shaming",
+    "twitter",
+    "pile-on"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ronson, So You've Been Publicly Shamed, 2015",
+  "source_kind": "book",
+  "reference": "Jon Ronson, So You've Been Publicly Shamed, Picador, 2015",
+  "written": "2026-09-26"
+}

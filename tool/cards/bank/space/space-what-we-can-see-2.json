@@ -1,0 +1,40 @@
+{
+  "id": "space-what-we-can-see-2",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.what_we_can_see",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "The Milky Way should hold something like 100 million black holes the mass of stars. Why have only a few dozen been found?",
+  "options": [
+    "Most hide behind thick dust",
+    "Most are alone and give off nothing",
+    "Most have already evaporated"
+  ],
+  "correct": 1,
+  "answer": "Most are alone and give off nothing. Nearly every known one was found because it is stripping gas from a partner star, and that gas glows in X-rays as it falls. A black hole with no partner has nothing to heat, so it sits dark among the stars.",
+  "move": "A list of finds shows what is easy to see, not what is there.",
+  "ask": "Which quiet people around me do I overlook simply because they never make any noise?",
+  "trap": "Dust, because it already hides so much of the galaxy from view.",
+  "keywords": [
+    "stellar black holes",
+    "x-ray binaries",
+    "blackcat catalogue",
+    "milky way"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Corral-Santana et al., Astronomy & Astrophysics, 2016",
+  "source_kind": "paper",
+  "reference": "Corral-Santana et al., BlackCAT: A catalogue of stellar-mass black holes in X-ray transients, Astronomy & Astrophysics, 2016",
+  "written": "2026-10-03"
+}

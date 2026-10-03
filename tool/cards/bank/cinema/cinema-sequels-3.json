@@ -1,0 +1,42 @@
+{
+  "id": "cinema-sequels-3",
+  "topic": "cinema",
+  "genre": "cinema.how_films_are_made",
+  "strand": "cinema.how_films_are_made.sequels",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "exponential",
+  "question": "A film grosses $250 million. Each sequel earns 80% of the one before. What does the fourth film gross, in millions of dollars?",
+  "value": 128,
+  "unit": "million dollars",
+  "answer": "Film 4: 160 × 0.8 = 128 million dollars.",
+  "move": "A steady percentage loss shrinks slower than a fixed cut, then never stops.",
+  "ask": "Where in my life is something shrinking by a percentage each year, and where will that leave it?",
+  "trap": "Taking 20% of 250 off each time and landing on 100.",
+  "hint": "Multiply by 0.8 once for each sequel, not three equal subtractions.",
+  "steps": [
+    "Film 2: 250 × 0.8 = 200 million.",
+    "Film 3: 200 × 0.8 = 160 million.",
+    "Film 4: 160 × 0.8 = 128 million dollars."
+  ],
+  "keywords": [
+    "sequels",
+    "franchise decline",
+    "percentages",
+    "box office"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arithmetic of repeated percentages",
+  "source_kind": "arithmetic",
+  "reference": "Compound percentage change, worked arithmetic, 2026",
+  "written": "2026-10-03"
+}

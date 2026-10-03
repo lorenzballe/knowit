@@ -1,0 +1,39 @@
+{
+  "id": "economics-risk-and-reward-2",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.risk_and_reward",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: most US shares listed since 1926 did worse over their lives than one-month Treasury bills?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Bessembinder tracked about 26,000 US shares: 57% returned less than one-month government bills over their listed lives. The market's whole gain over bills came from the best 4% of companies. Shares as a group beat safe savings; the typical single share did not. Five shares are closer to five lottery tickets.",
+  "move": "What pays on average for a crowd can fail for most of its members.",
+  "ask": "Is my money spread widely enough to catch the rare winners, or bet on a few?",
+  "trap": "False, since shares as a group have beaten bills for a century.",
+  "keywords": [
+    "stock picking",
+    "treasury bills",
+    "diversification",
+    "skewness"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bessembinder, Journal of Financial Economics, 2018",
+  "source_kind": "paper",
+  "reference": "Bessembinder, Do Stocks Outperform Treasury Bills?, Journal of Financial Economics, 2018",
+  "written": "2026-10-03"
+}

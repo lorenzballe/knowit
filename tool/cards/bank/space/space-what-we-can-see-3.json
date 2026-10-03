@@ -1,0 +1,36 @@
+{
+  "id": "space-what-we-can-see-3",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.what_we_can_see",
+  "also": [
+    "science.physics.relativity"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How was a black hole with no partner star, giving off no light at all, finally spotted in 2022?",
+  "answer": "By the way it bent a background star's light. In 2011 it drifted in front of a distant star, acting as a lens: the star brightened for months and its image shifted sideways. Hubble tracked that shift for six years, giving a mass of about seven suns, though one rival team estimated less.",
+  "move": "An invisible thing can still be found by how it distorts what lies behind it.",
+  "ask": "What hidden pressure in my life could I spot by noticing how it bends my other choices?",
+  "keywords": [
+    "gravitational microlensing",
+    "isolated black hole",
+    "hubble space telescope",
+    "ogle-2011-blg-0462"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sahu et al., Astrophysical Journal, 2022",
+  "source_kind": "paper",
+  "reference": "Sahu et al., An Isolated Stellar-mass Black Hole Detected through Astrometric Microlensing, Astrophysical Journal, 2022",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "life-mornings-2",
+  "topic": "life",
+  "genre": "life.habits",
+  "strand": "life.habits.mornings",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Across a large survey of sleep times, at about what age is the typical body clock at its latest?",
+  "options": [
+    "About 13",
+    "About 20",
+    "About 45"
+  ],
+  "correct": 1,
+  "answer": "About 20. Roenneberg's team found sleep timing drifts later through the teenage years, peaks around 19 for women and 21 for men, then creeps earlier for the rest of life. A 20-year-old who cannot rise at 7 is often fighting biology, not showing laziness.",
+  "move": "Before calling someone lazy, ask what their body clock says the time is.",
+  "ask": "Whose late mornings, maybe my own, have I judged as laziness when it might be the body clock?",
+  "trap": "The picture of a young teenager who will not get up comes first.",
+  "keywords": [
+    "chronotype",
+    "body clock",
+    "adolescence",
+    "sleep timing",
+    "age"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Roenneberg and colleagues, Current Biology, 2004",
+  "source_kind": "paper",
+  "reference": "Roenneberg and colleagues, A marker for the end of adolescence, Current Biology, 2004",
+  "written": "2026-10-03"
+}

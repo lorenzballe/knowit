@@ -1,0 +1,33 @@
+{
+  "id": "philosophy-trust-and-experts-2",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.trust_and_experts",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Hilary Putnam could not tell an elm from a beech. Why did his word elm still mean elm?",
+  "answer": "Because other people can tell them apart. In 1975 Putnam argued that meaning is shared like labour: ordinary speakers lean on experts who can sort trees, or test gold. Most of what anyone knows works the same way, borrowed from people never met. The word in his mouth was held up by a botanist.",
+  "move": "Most of what you know is a loan; know who you borrowed it from.",
+  "ask": "Which of my firm beliefs rests on someone I have never checked, and do I know who that is?",
+  "keywords": [
+    "hilary putnam",
+    "division of linguistic labour",
+    "meaning",
+    "testimony"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Putnam, The Meaning of Meaning, 1975",
+  "source_kind": "paper",
+  "reference": "Putnam, The Meaning of 'Meaning', Minnesota Studies in the Philosophy of Science 7, 1975",
+  "written": "2026-10-03"
+}

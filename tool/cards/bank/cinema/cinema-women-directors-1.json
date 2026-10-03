@@ -1,0 +1,56 @@
+{
+  "id": "cinema-women-directors-1",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.women_directors",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In 2023, the year of Barbie, what share of directors behind the 100 top-grossing US films were women?",
+  "options": [
+    "About 12%",
+    "About 30%",
+    "About 45%"
+  ],
+  "correct": 0,
+  "answer": "About 12%. The Annenberg Inclusion Initiative counted 116 directors on that year's top 100 films, and 14 were women. One huge, much-discussed hit by a woman filled the headlines, but it was one film; the other ninety-nine were mostly directed by men, much as in 2022.",
+  "move": "One famous exception can feel like a trend; count the whole list.",
+  "ask": "Which change am I sure has happened because I keep hearing about one striking example?",
+  "trap": "About 30%, since the year's biggest film was directed by a woman.",
+  "keywords": [
+    "women directors",
+    "barbie",
+    "annenberg inclusion initiative",
+    "hollywood"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "diagram": {
+    "type": "split",
+    "unit": "%",
+    "parts": [
+      {
+        "label": "Women, 14 of 116",
+        "value": 12,
+        "hi": true
+      },
+      {
+        "label": "Men, 102 of 116",
+        "value": 88
+      }
+    ],
+    "caption": "Directors of 2023's top 100 US films: about 12% were women."
+  },
+  "source": "Annenberg Inclusion Initiative, 2024",
+  "source_kind": "institution",
+  "reference": "https://assets.uscannenberg.org/docs/aii-inclusion-directors-chair-2024.pdf",
+  "written": "2026-10-03"
+}

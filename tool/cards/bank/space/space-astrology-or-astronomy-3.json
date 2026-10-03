@@ -1,0 +1,36 @@
+{
+  "id": "space-astrology-or-astronomy-3",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.astrology_or_astronomy",
+  "also": [
+    "psychology.know_your_own_mind.self_deception"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a horoscope written for millions of readers feel as if it were written for you?",
+  "answer": "Because it is built to fit almost anyone. In the late 1940s Bertram Forer gave his students one identical personality sketch, drawn largely from an astrology book, each believing it was theirs. They rated it 4.26 out of 5 for accuracy. Lines such as 'you have a great deal of unused capacity' fit nearly everybody.",
+  "move": "A description that fits everyone tells you nothing about anyone.",
+  "ask": "When something seems to describe me perfectly, would it describe my friends just as well?",
+  "keywords": [
+    "horoscopes",
+    "barnum effect",
+    "bertram forer",
+    "personality"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Forer, Journal of Abnormal and Social Psychology, 1949",
+  "source_kind": "paper",
+  "reference": "Forer, The fallacy of personal validation, Journal of Abnormal and Social Psychology, 1949",
+  "written": "2026-10-03"
+}

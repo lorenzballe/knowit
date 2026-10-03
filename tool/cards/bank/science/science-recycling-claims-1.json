@@ -1,0 +1,33 @@
+{
+  "id": "science-recycling-claims-1",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.recycling_claims",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does the number inside the recycling arrows on a plastic pot mean it can be recycled?",
+  "answer": "No. The number, 1 to 7, only says which plastic it is; the arrows were a 1988 industry design, not a promise. Bottles marked 1 and 2 are widely recycled; most items marked 3 to 7 have no buyer and are landfilled or burned. In 2013 the standard swapped the arrows for a plain triangle.",
+  "move": "A symbol that looks like a promise may only be a label.",
+  "ask": "Which reassuring symbol do I trust without knowing who put it there or what it promises?",
+  "keywords": [
+    "resin identification code",
+    "plastics",
+    "recycling symbols",
+    "astm"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ASTM D7611, Resin Identification Code",
+  "source_kind": "standard",
+  "reference": "ASTM D7611/D7611M, Standard Practice for Coding Plastic Manufactured Articles for Resin Identification, ASTM International, 2013",
+  "written": "2026-09-26"
+}

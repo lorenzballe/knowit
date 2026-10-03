@@ -1,0 +1,39 @@
+{
+  "id": "nature-saving-species-2",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.saving_species",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a bird species once down to a single breeding female now numbers in the hundreds?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. By 1980 the Chatham Islands black robin was down to five birds, with one fertile pair. Don Merton's team moved her eggs into the nests of another species so the female, Old Blue, would lay again. Every black robin alive descends from her, and the population has grown to a few hundred.",
+  "move": "Do not write something off because it is down to its last few.",
+  "ask": "What have I given up on that is down to very little, but not yet to nothing?",
+  "trap": "Five birds and one female seem too few; inbreeding must doom them.",
+  "keywords": [
+    "black robin",
+    "chatham islands",
+    "old blue",
+    "cross-fostering"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Butler & Merton, The Black Robin, 1992",
+  "source_kind": "book",
+  "reference": "Butler & Merton, The Black Robin: Saving the World's Most Endangered Bird, Oxford University Press, 1992",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "economics-experts-forecasts-2",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.experts_forecasts",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In Philip Tetlock's twenty-year study of expert forecasts, which experts did worst?",
+  "answer": "The confident ones with one big idea, and the famous. Tetlock scored thousands of predictions from 284 experts on politics and economics. Many barely beat the simple rule that nothing changes. Those who explained everything through one theory did worst, and the more media attention an expert drew, the less accurate they tended to be.",
+  "move": "Trust the forecaster who says probably over the one who is always certain.",
+  "ask": "Whose confident predictions do I follow, and have I ever checked how often they came true?",
+  "keywords": [
+    "philip tetlock",
+    "forecasting",
+    "experts",
+    "pundits"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tetlock, Expert Political Judgment, 2005",
+  "source_kind": "book",
+  "reference": "Tetlock, Expert Political Judgment: How Good Is It? How Can We Know?, Princeton University Press, 2005",
+  "written": "2026-10-03"
+}

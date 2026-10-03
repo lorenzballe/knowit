@@ -1,0 +1,40 @@
+{
+  "id": "cinema-heroes-and-villains-1",
+  "topic": "cinema",
+  "genre": "cinema.how_films_persuade",
+  "strand": "cinema.how_films_persuade.heroes_and_villains",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Jack Shaheen studied about 1,000 Hollywood films with Arab characters. How many portrayed them positively?",
+  "options": [
+    "About 12",
+    "About 250",
+    "About 450"
+  ],
+  "correct": 0,
+  "answer": "About 12. Shaheen counted around 1,000 films from the silent era to 2000 and found 12 positive portrayals and 52 balanced ones; the rest showed villains, fools or menace. Few viewers ever meet these people in life, so for many the screen supplied the picture. Repeated a thousand times, it felt like knowledge.",
+  "move": "An image met a thousand times can pass for experience you never had.",
+  "ask": "About which group of people is my picture built mostly from films and news, not from anyone I know?",
+  "trap": "About 250, assuming a huge industry's portrayals roughly even out.",
+  "keywords": [
+    "jack shaheen",
+    "stereotypes",
+    "arab characters",
+    "hollywood villains"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shaheen, Reel Bad Arabs, 2001",
+  "source_kind": "book",
+  "reference": "Jack G. Shaheen, Reel Bad Arabs: How Hollywood Vilifies a People, Olive Branch Press, 2001",
+  "written": "2026-10-03"
+}

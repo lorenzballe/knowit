@@ -1,0 +1,33 @@
+{
+  "id": "cinema-women-directors-2",
+  "topic": "cinema",
+  "genre": "cinema.directors",
+  "strand": "cinema.directors.women_directors",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why were women more common behind the camera in Hollywood in 1915 than in 1935?",
+  "answer": "Because the money changed. Early film was a small, risky trade, and women wrote, directed and ran companies. In the 1920s banks and Wall Street financed vertically integrated studios, and directing became a well-paid, managerial job reserved for men. Karen Ward Mahar traces how the doors closed as the business grew.",
+  "move": "When a job becomes prestigious and well paid, watch who gets shut out.",
+  "ask": "In my own field, who was doing the work before it became well paid?",
+  "keywords": [
+    "women filmmakers",
+    "silent era",
+    "studio system",
+    "karen ward mahar"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mahar, Women Filmmakers in Early Hollywood",
+  "source_kind": "book",
+  "reference": "Karen Ward Mahar, Women Filmmakers in Early Hollywood, Johns Hopkins University Press, 2006",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "language-learning-an-accent-3",
+  "topic": "language",
+  "genre": "language.accents",
+  "strand": "language.accents.learning_an_accent",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: some adults who began English after age 12 have been judged native speakers by native listeners?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In a 1997 study of Dutch learners, a few highly motivated people who started English after 12 were rated within the range of native speakers by native judges. They are hard to notice in daily life for a simple reason: anyone who succeeds is taken for a native, so only the accented ones stand out.",
+  "move": "Success that hides itself never shows up in the count.",
+  "ask": "Who might be quietly succeeding at the thing I have decided cannot be done?",
+  "trap": "False, because every late learner seems to keep an accent.",
+  "keywords": [
+    "late learners",
+    "native-like accent",
+    "dutch learners",
+    "critical period"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bongaerts et al., Studies in Second Language Acquisition, 1997",
+  "source_kind": "paper",
+  "reference": "Bongaerts, van Summeren, Planken & Schils, Age and ultimate attainment in the pronunciation of a foreign language, Studies in Second Language Acquisition 19(4), 1997",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "cinema-heroes-and-villains-3",
+  "topic": "cinema",
+  "genre": "cinema.how_films_persuade",
+  "strand": "cinema.how_films_persuade.heroes_and_villains",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a national film body has refused to fund films whose villains are marked out by facial scars?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In 2018 the British Film Institute said it would no longer fund films that signal villainy through scars or facial difference, backing the charity Changing Faces' campaign I Am Not Your Villain. Decades of scarred villains had taught audiences to read a marked face as a warning, a lesson real people carry daily.",
+  "move": "Shortcuts that tell an audience who is bad also teach them whom to fear.",
+  "ask": "Whose face or look do I read as a warning, and where did I learn that?",
+  "trap": "False, because funders are assumed to stay out of creative choices.",
+  "keywords": [
+    "british film institute",
+    "facial scars",
+    "villains",
+    "changing faces"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "IndieWire, BFI funding pledge, 2018",
+  "source_kind": "news_archive",
+  "reference": "https://www.indiewire.com/features/general/british-film-institute-not-fund-movies-facial-scars-villains-1202024278/",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "space-myths-about-them-2",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.myths_about_them",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What keeps the Sun and the Milky Way's other stars circling the centre of the galaxy?",
+  "options": [
+    "The central black hole's pull",
+    "The combined mass of the galaxy itself"
+  ],
+  "correct": 1,
+  "answer": "The combined mass of the galaxy itself. The central black hole weighs about four million suns, while the stars, gas and dark matter inside the Sun's orbit weigh roughly a hundred billion. The hole's pull rules only the few light-years around it; remove it and the Sun's path would barely change.",
+  "move": "The thing at the centre is not always the thing holding it together.",
+  "ask": "In my team or family, who really holds things together: the one at the centre, or everyone around them?",
+  "trap": "The black hole, since everything in the galaxy seems to circle it.",
+  "keywords": [
+    "milky way",
+    "galactic rotation",
+    "central black hole",
+    "dark matter"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bland-Hawthorn & Gerhard, Annual Review of Astronomy and Astrophysics, 2016",
+  "source_kind": "paper",
+  "reference": "Bland-Hawthorn & Gerhard, The Galaxy in Context: Structural, Kinematic, and Integrated Properties, Annual Review of Astronomy and Astrophysics, 2016",
+  "written": "2026-10-03"
+}

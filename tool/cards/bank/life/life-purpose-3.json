@@ -1,0 +1,41 @@
+{
+  "id": "life-purpose-3",
+  "topic": "life",
+  "genre": "life.meaning",
+  "strand": "life.meaning.purpose",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "University fundraising callers met one student their calls paid for, for five minutes. A month later, how much more did they raise?",
+  "options": [
+    "Over twice as much",
+    "About 20% more",
+    "About the same"
+  ],
+  "correct": 0,
+  "answer": "Over twice as much. In Grant and colleagues' study, callers who met a scholarship student raised about $503 a week against about $186 before, and spent more than twice as long on the phone. Callers who only read a letter from a student did not change. A face turned a script into a person.",
+  "move": "Find one face your work helps, and keep it in view.",
+  "ask": "Who, by name, benefits from what I do each day, and when did I last see them?",
+  "trap": "Five minutes seems far too short to change a month of work.",
+  "keywords": [
+    "purpose",
+    "motivation",
+    "fundraising",
+    "adam grant",
+    "call centres"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Grant and colleagues, OBHDP, 2007",
+  "source_kind": "paper",
+  "reference": "Grant, Campbell, Chen, Cottone, Lapedis and Lee, Impact and the art of motivation maintenance: The effects of contact with beneficiaries on persistence behavior, Organizational Behavior and Human Decision Processes, 2007",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "life-the-why-behind-2",
+  "topic": "life",
+  "genre": "life.ask_better_questions",
+  "strand": "life.ask_better_questions.the_why_behind",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A four-year-old asks why the moon changes shape and gets a non-answer. What does the child usually do next?",
+  "options": [
+    "Moves on to a new question",
+    "Asks again or offers their own reason",
+    "Loses interest in the topic"
+  ],
+  "correct": 1,
+  "answer": "Asks again or offers their own reason. Frazier, Gelman and Wellman studied preschoolers' why questions at home and in the laboratory. Given a real explanation, children tended to agree or ask a follow-up; given a non-answer, they repeated the question or proposed an explanation themselves. The why was a search for causes, not attention.",
+  "move": "Treat a repeated why as a sign the real answer has not arrived.",
+  "ask": "When someone keeps asking me why, have I given them a reason or only a reply?",
+  "trap": "Children's whys seem a game for attention, so any reply satisfies them.",
+  "keywords": [
+    "children's questions",
+    "explanations",
+    "preschoolers",
+    "why questions"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Frazier, Gelman and Wellman, Child Development, 2009",
+  "source_kind": "paper",
+  "reference": "Frazier, Gelman and Wellman, Preschoolers' search for explanatory information within adult-child conversation, Child Development, 2009",
+  "written": "2026-10-03"
+}

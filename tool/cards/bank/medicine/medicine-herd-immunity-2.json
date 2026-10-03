@@ -1,0 +1,40 @@
+{
+  "id": "medicine-herd-immunity-2",
+  "topic": "medicine",
+  "genre": "medicine.vaccines",
+  "strand": "medicine.vaccines.herd_immunity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: most infections prevented by a US baby pneumococcal vaccine, in its first years, were in unvaccinated adults?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Babies carry pneumococcus in their noses and pass it to parents and grandparents. Once infants were vaccinated from 2000, carriage fell and serious infections dropped among older adults who never got the jab. CDC estimates for 2003 put more prevented cases in the unvaccinated than in vaccinated children.",
+  "move": "Count the benefit where the chain was broken, not only where the act happened.",
+  "ask": "Who around me quietly benefits when I take care of something, even though they never see it?",
+  "trap": "False, since a vaccine surely protects mainly the person who gets it.",
+  "keywords": [
+    "pneumococcal vaccine",
+    "indirect protection",
+    "older adults",
+    "carriage",
+    "infants"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CDC, MMWR, 2005",
+  "source_kind": "institution",
+  "reference": "CDC, Direct and indirect effects of routine vaccination of children with 7-valent pneumococcal conjugate vaccine on incidence of invasive pneumococcal disease, United States, 1998-2003, MMWR 54(36), 2005",
+  "written": "2026-10-03"
+}

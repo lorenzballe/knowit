@@ -1,0 +1,43 @@
+{
+  "id": "life-what-things-cost-in-hours-1",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.what_things_cost_in_hours",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Lena nets 2,000 a month for 160 hours of work plus 40 hours of commuting. How many such hours does a 300 phone cost?",
+  "value": 30,
+  "unit": "hours",
+  "answer": "300 / 10 = 30 hours.",
+  "move": "Price things in the hours they cost you, door to door.",
+  "ask": "What is my real hourly pay once I count the commute, and what is my next purchase worth in those hours?",
+  "trap": "Dividing by the 160 paid hours alone and getting under 25.",
+  "hint": "First find what one hour of her working life really earns.",
+  "steps": [
+    "160 + 40 = 200 hours a month given to work.",
+    "2,000 / 200 = 10 per hour.",
+    "300 / 10 = 30 hours."
+  ],
+  "keywords": [
+    "real hourly wage",
+    "commuting",
+    "purchases",
+    "time",
+    "work"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Robin and Dominguez, Your Money or Your Life",
+  "source_kind": "book",
+  "reference": "Robin and Dominguez, Your Money or Your Life, Viking, 1992",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "economics-percent-or-points-1",
+  "topic": "economics",
+  "genre": "economics.read_money_news",
+  "strand": "economics.read_money_news.percent_or_points",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A mortgage rate goes from 2% to 3%, reported as up one point. By how much does the yearly interest bill rise?",
+  "options": [
+    "About 1%",
+    "About 50%",
+    "About 3%"
+  ],
+  "correct": 1,
+  "answer": "About 50%. On a €200,000 loan, interest at 2% costs €4,000 a year; at 3% it costs €6,000. The rate moved one percentage point, a step on its scale, but the bill grew by half of itself: €2,000 more every year, behind a headline that sounded like a rounding error.",
+  "move": "When a rate moves by points, work out what happens to the bill.",
+  "ask": "When a rate I pay rises by one point, do I know what that adds to my bill?",
+  "trap": "About 1%, reading a one-point rise as a one-percent rise.",
+  "keywords": [
+    "mortgage rates",
+    "percentage points",
+    "interest",
+    "headlines"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Percentage points against per cent",
+  "source_kind": "arithmetic",
+  "reference": "Paulos, Innumeracy: Mathematical Illiteracy and Its Consequences, Hill and Wang, 1988",
+  "written": "2026-10-03"
+}

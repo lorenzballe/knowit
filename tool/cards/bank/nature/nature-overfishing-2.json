@@ -1,0 +1,40 @@
+{
+  "id": "nature-overfishing-2",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.overfishing",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "In the years before Newfoundland's cod collapsed in 1992, why did trawlers' catch per hour stay high?",
+  "options": [
+    "Cod crowded into fewer, denser shoals",
+    "Cod held steady until a sudden die-off",
+    "Trawlers moved to rich new grounds"
+  ],
+  "correct": 0,
+  "answer": "Cod crowded into fewer, denser shoals. As the stock shrank, the survivors packed together, and trawlers with sonar found them. Rose and Kulka showed the catch per unit of effort rose while the total stock fell. The boats measured the crowd they found, not the empty sea around it, until the last shoals were gone.",
+  "move": "A measure taken where things gather says little about the gaps between.",
+  "ask": "Is my sense that things are fine based only on the busy corner I happen to look at?",
+  "trap": "Steady catches seemed to prove the stock was steady too.",
+  "keywords": [
+    "northern cod",
+    "newfoundland",
+    "catch per effort",
+    "fishery collapse"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rose & Kulka, Canadian Journal of Fisheries, 1999",
+  "source_kind": "paper",
+  "reference": "Rose & Kulka, Hyperaggregation of fish and fisheries: how catch-per-unit-effort increased as the northern cod (Gadus morhua) declined, Canadian Journal of Fisheries and Aquatic Sciences, 1999",
+  "written": "2026-10-03"
+}

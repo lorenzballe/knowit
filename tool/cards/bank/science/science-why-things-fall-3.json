@@ -1,0 +1,46 @@
+{
+  "id": "science-why-things-fall-3",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A stone dropped down a well falls 4.9 m in its first second. How many metres has it fallen after 3 seconds?",
+  "value": 44.1,
+  "unit": "metres",
+  "tolerance": 0.5,
+  "answer": "4.9 × 9 = 44.1 metres.",
+  "move": "When something keeps speeding up, expect totals to outrun the time spent.",
+  "ask": "What in my life is gathering speed, so that waiting twice as long means far more than twice the result?",
+  "trap": "Tripling 4.9 m to about 15 m, as if speed stayed fixed.",
+  "hint": "Ask whether distance grows with the time, or with the time multiplied by itself.",
+  "steps": [
+    "Distance fallen grows with time squared: 4.9 m × t².",
+    "t² = 3 × 3 = 9.",
+    "4.9 × 9 = 44.1 metres."
+  ],
+  "keywords": [
+    "free fall",
+    "acceleration",
+    "galileo",
+    "wells"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Galileo, Two New Sciences, 1638",
+  "source_kind": "book",
+  "reference": "Galileo, Dialogues Concerning Two New Sciences, trans. Crew & de Salvio, Macmillan, 1914",
+  "written": "2026-09-26"
+}

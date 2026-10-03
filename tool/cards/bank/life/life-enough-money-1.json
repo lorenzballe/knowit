@@ -1,0 +1,40 @@
+{
+  "id": "life-enough-money-1",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.enough_money",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: in an American time-use study, people earning over $100,000 spent more of their day on relaxing leisure than the poorest?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Kahneman and colleagues found higher earners spent less of their day in passive leisure such as television, and more working, commuting and on obligations, which are tenser activities. Imagining a raise brings to mind what it buys, not the hours and pressure that usually come attached.",
+  "move": "When picturing more money, picture an ordinary Tuesday that comes with it.",
+  "ask": "If I earned more, what would my ordinary weekday actually look like, hour by hour?",
+  "trap": "Picturing wealth brings to mind its free afternoons, not its hours.",
+  "keywords": [
+    "income",
+    "happiness",
+    "leisure",
+    "time use",
+    "focusing illusion"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kahneman and colleagues, Science, 2006",
+  "source_kind": "paper",
+  "reference": "Kahneman, Krueger, Schkade, Schwarz and Stone, Would You Be Happier If You Were Richer? A Focusing Illusion, Science, 2006",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "science-recycling-claims-3",
+  "topic": "science",
+  "genre": "science.materials",
+  "strand": "science.materials.recycling_claims",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: remelting a used aluminium can takes less than a tenth of the energy of making new aluminium?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. New aluminium is pulled from its oxide by electrolysis, which takes around 15 kWh of electricity per kilogram; remelting scrap needs about 5% of that. Glass and paper save far less, because melting sand or pulping wood was never the costly step. That gap is why scrap dealers pay for cans, not bottles.",
+  "move": "Ask which step is expensive before judging what recycling saves.",
+  "ask": "Which of my green habits saves a lot, and which only feels like it does?",
+  "trap": "False, because recycling usually saves only a modest share.",
+  "keywords": [
+    "aluminium",
+    "recycling",
+    "electrolysis",
+    "energy",
+    "cans"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Allwood & Cullen, Sustainable Materials, 2012",
+  "source_kind": "book",
+  "reference": "Allwood & Cullen, Sustainable Materials: With Both Eyes Open, UIT Cambridge, 2012",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "economics-opportunity-cost-3",
+  "topic": "economics",
+  "genre": "economics.your_money_decisions",
+  "strand": "economics.your_money_decisions.opportunity_cost",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "For a typical full-time student, which is usually the largest cost of a three-year degree?",
+  "options": [
+    "Tuition fees",
+    "Earnings given up",
+    "Rent and food"
+  ],
+  "correct": 1,
+  "answer": "Earnings given up. Three years spent studying are three years not earning: at even €20,000 a year, that is €60,000, usually more than the fees. Rent and food are not really a cost of the degree, since a worker would pay them too. The largest price of a degree never arrives as an invoice.",
+  "move": "The biggest cost of a choice is often the thing you stop doing.",
+  "ask": "What am I giving up, in time or income, to keep doing what I am doing now?",
+  "trap": "Tuition fees, because they are the bill that actually arrives.",
+  "keywords": [
+    "opportunity cost",
+    "university",
+    "tuition fees",
+    "forgone earnings"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mankiw, Principles of Economics",
+  "source_kind": "book",
+  "reference": "Mankiw, Principles of Economics, 9th edition, Cengage, 2020",
+  "written": "2026-10-03"
+}

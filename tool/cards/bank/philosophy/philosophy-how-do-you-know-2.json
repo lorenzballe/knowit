@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-how-do-you-know-2",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.how_do_you_know",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: people who already know the right answer are immune to a false claim feeling truer when repeated?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In a 2015 study by Lisa Fazio and colleagues, reading that a sari is the pleated skirt worn by Scots made the claim seem truer, even to people who knew it is a kilt. Familiarity feels like truth, and the mind takes that shortcut before consulting what it knows. Slogans work by rehearsal.",
+  "move": "Feeling that a claim is familiar is not evidence that it is true.",
+  "ask": "Which belief of mine do I hold mainly because I have heard it so many times?",
+  "trap": "True, since knowing the fact should override a passing feeling.",
+  "keywords": [
+    "illusory truth effect",
+    "repetition",
+    "familiarity",
+    "misinformation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fazio et al., J. Exp. Psychology: General, 2015",
+  "source_kind": "paper",
+  "reference": "Fazio, Brashier, Payne & Marsh, Knowledge Does Not Protect Against Illusory Truth, Journal of Experimental Psychology: General 144 (5), 2015",
+  "written": "2026-10-03"
+}

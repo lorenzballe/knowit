@@ -1,0 +1,33 @@
+{
+  "id": "nature-why-species-vanish-2",
+  "topic": "nature",
+  "genre": "nature.extinction",
+  "strand": "nature.extinction.why_species_vanish",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can a species be doomed long after its forest has stopped shrinking?",
+  "answer": "Because extinction lags behind the damage. Tilman and colleagues showed that when habitat is cut, the species that need the most space or spread their seeds worst decline slowly, over decades or centuries, before vanishing. Ecologists call it an extinction debt. A forest fragment can hold birds and trees that are already, in effect, ghosts.",
+  "move": "Damage done today may not send its full bill for decades.",
+  "ask": "Which choice of mine looks harmless today only because its cost has not arrived yet?",
+  "keywords": [
+    "extinction debt",
+    "habitat loss",
+    "fragmentation",
+    "time lag"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tilman et al., Nature, 1994",
+  "source_kind": "paper",
+  "reference": "Tilman, May, Lehman & Nowak, Habitat destruction and the extinction debt, Nature, 1994",
+  "written": "2026-10-03"
+}

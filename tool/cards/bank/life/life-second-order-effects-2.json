@@ -1,0 +1,40 @@
+{
+  "id": "life-second-order-effects-2",
+  "topic": "life",
+  "genre": "life.clear_thinking",
+  "strand": "life.clear_thinking.second_order_effects",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A US city adds 10% more motorway lanes. About ten years on, how has the distance driven on them changed?",
+  "options": [
+    "Up by about 1%",
+    "Up by about 10%",
+    "Roughly unchanged"
+  ],
+  "correct": 1,
+  "answer": "Up by about 10%. Duranton and Turner found that vehicle kilometres travelled in US cities rose roughly one for one with new lane kilometres. Extra lanes drew new trips: people drove more, lived further out, and lorries rerouted. Congestion ended about where it started, with more cars in it.",
+  "move": "Ask who else will change what they do once the fix arrives.",
+  "ask": "When I make something easier for myself, like more time or money, what quietly grows to fill it?",
+  "trap": "Same traffic on more lanes, so journeys should simply get faster.",
+  "keywords": [
+    "road congestion",
+    "induced demand",
+    "motorways",
+    "traffic"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Duranton and Turner, American Economic Review, 2011",
+  "source_kind": "paper",
+  "reference": "Duranton and Turner, The Fundamental Law of Road Congestion: Evidence from US Cities, American Economic Review, 2011",
+  "written": "2026-10-03"
+}

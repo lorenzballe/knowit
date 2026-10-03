@@ -1,0 +1,37 @@
+{
+  "id": "life-feedback-3",
+  "topic": "life",
+  "genre": "life.growth",
+  "strand": "life.growth.feedback",
+  "also": [
+    "life.growth.failure"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "On a quiz where people learn whether each answer was right, do they learn more from being told right or wrong?",
+  "answer": "From being told right. Eskreis-Winkler and Fishbach found people learned less from failure feedback than from success feedback, even when both carried the same information. Being told they were wrong stung, so they tuned out. The lesson in a mistake is missed because looking at it hurts.",
+  "move": "When a correction stings, slow down and read it twice.",
+  "ask": "Which piece of criticism did I brush off this month because it hurt, and what was it trying to tell me?",
+  "keywords": [
+    "feedback",
+    "failure",
+    "ego",
+    "learning",
+    "ayelet fishbach"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Eskreis-Winkler and Fishbach, Psychological Science, 2019",
+  "source_kind": "paper",
+  "reference": "Eskreis-Winkler and Fishbach, Not Learning From Failure: The Greatest Failure of All, Psychological Science, 2019",
+  "written": "2026-10-03"
+}

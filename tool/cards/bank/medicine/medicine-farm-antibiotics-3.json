@@ -1,0 +1,39 @@
+{
+  "id": "medicine-farm-antibiotics-3",
+  "topic": "medicine",
+  "genre": "medicine.antibiotics",
+  "strand": "medicine.antibiotics.farm_antibiotics",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should every country ban routine preventive antibiotics for groups of healthy farm animals, as the EU did in 2022?",
+  "sides": [
+    "Yes, ban it",
+    "No, leave it to vets"
+  ],
+  "answer": "Yes. Resistance genes bred on farms reach people through meat, water and workers, as colistin resistance did. Healthy animals can be kept healthy by space, hygiene and vaccines. The Netherlands cut farm antibiotic sales by about 70% from 2009 without wrecking its livestock industry. Rescue drugs should not be breakfast for the herd.",
+  "move": "Whichever side you took, the hinge is how much farm use drives human resistance.",
+  "ask": "When I want to ban something, have I weighed who pays for the ban and who gains?",
+  "counterpoint": "A blanket ban fits rich farms with vets and capital. In poorer countries, preventive dosing protects cheap protein and livelihoods, and untreated outbreaks cause animal suffering. How much human resistance comes from farms is contested and differs by germ. Better targeting, surveillance and vet oversight can cut use without banning a tool outright.",
+  "keywords": [
+    "farm antibiotics",
+    "european union",
+    "netherlands",
+    "livestock",
+    "resistance"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "EU Regulation 2019/6 on veterinary medicines",
+  "source_kind": "primary_document",
+  "reference": "https://eur-lex.europa.eu/eli/reg/2019/6/oj",
+  "written": "2026-10-03"
+}

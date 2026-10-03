@@ -1,0 +1,56 @@
+{
+  "id": "space-living-on-mars-1",
+  "topic": "space",
+  "genre": "space.mars_and_rovers",
+  "strand": "space.mars_and_rovers.living_on_mars",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A crew flies six months to Mars, stays 500 days, then flies six months home. Which part gives the most radiation?",
+  "options": [
+    "The two six-month flights",
+    "The 500 days on the surface",
+    "Both give about the same"
+  ],
+  "correct": 0,
+  "answer": "The two six-month flights. Curiosity measured about 1.8 mSv a day in transit but about 0.64 mSv a day on the ground, where the planet blocks half the sky. That makes about 660 mSv for the flights and 320 mSv for the 500-day stay.",
+  "move": "The longest part of a plan is not always where the risk piles up.",
+  "ask": "In a long project of mine, is the risk really in the longest stretch, or in the short exposed crossings?",
+  "trap": "The surface stay, because it lasts longer than both flights together.",
+  "keywords": [
+    "space radiation",
+    "curiosity rover",
+    "mars mission",
+    "radiation dose"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "mSv",
+    "items": [
+      {
+        "label": "Two six-month flights",
+        "value": 660,
+        "hi": true
+      },
+      {
+        "label": "500 days on the surface",
+        "value": 320
+      }
+    ],
+    "caption": "About 660 mSv in transit against about 320 mSv on the ground."
+  },
+  "source": "Hassler et al., Science, 2014",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/science.1244797",
+  "written": "2026-10-03"
+}

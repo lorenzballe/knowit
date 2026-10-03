@@ -1,0 +1,39 @@
+{
+  "id": "science-cold-myths-1",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.cold_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: most of the body's heat escapes through the head on a cold day?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The head is about a tenth of the body's surface and loses heat roughly in proportion. The idea traces to 1950s US Army tests in which volunteers wore arctic suits but no hats, so of course most heat left through the head. Stripped to swimming trunks, a person loses about a tenth that way.",
+  "move": "Ask what else was covered up when a measurement was taken.",
+  "ask": "Which of my beliefs came from a test that was set up to give that answer?",
+  "trap": "True, because a hat feels like it makes the biggest difference.",
+  "keywords": [
+    "heat loss",
+    "hats",
+    "body heat",
+    "army tests"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vreeman & Carroll, BMJ, 2008",
+  "source_kind": "paper",
+  "reference": "Vreeman & Carroll, Festive medical myths, BMJ 337:a2769, 2008",
+  "written": "2026-09-26"
+}

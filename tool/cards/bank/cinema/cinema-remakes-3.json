@@ -1,0 +1,39 @@
+{
+  "id": "cinema-remakes-3",
+  "topic": "cinema",
+  "genre": "cinema.box_office",
+  "strand": "cinema.box_office.remakes",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is it better to remake a foreign hit in English than to release the original with subtitles?",
+  "sides": [
+    "Yes, remake it",
+    "No, release the original"
+  ],
+  "answer": "A story belongs to whoever can feel it, and many viewers will not read subtitles for two hours. A remake moves the jokes, laws and places into a world the audience knows, so the ideas land. The Departed, made from Hong Kong's Infernal Affairs, reached millions who would never have seen the original.",
+  "move": "Whichever side you took, it turns on whether subtitles are a wall or a habit.",
+  "ask": "What do I avoid because it takes a little effort at first, like reading subtitles?",
+  "counterpoint": "Remakes teach audiences that foreign films need translating into their own faces, and they pay the original makers once while the rights holders keep the rest. Subtitles are a habit, not a wall: Parasite won the top Oscar in 2020 and Squid Game became Netflix's biggest series. Release the original well and audiences follow.",
+  "keywords": [
+    "remakes",
+    "subtitles",
+    "infernal affairs",
+    "the departed",
+    "parasite"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Verevis, Film Remakes",
+  "source_kind": "book",
+  "reference": "Constantine Verevis, Film Remakes, Edinburgh University Press, 2006",
+  "written": "2026-10-03"
+}

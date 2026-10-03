@@ -1,0 +1,40 @@
+{
+  "id": "medicine-pain-and-mind-2",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.pain_and_mind",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A builder arrives in agony with a 15 cm nail through his boot. Sedated, the boot comes off. What did doctors find?",
+  "options": [
+    "A wound right through the foot",
+    "The nail between his toes",
+    "A broken bone but no wound"
+  ],
+  "correct": 1,
+  "answer": "The nail between his toes. It had gone through the boot without touching skin, yet he needed strong painkilling sedation before anyone could pull it out. His brain produced real agony from what it saw and expected. Pain is the brain's judgement of danger, not a direct reading of damage.",
+  "move": "How much something hurts measures the threat you see, not the harm done.",
+  "ask": "Which worry of mine hurts as if the damage were real, before I have checked whether it is?",
+  "trap": "A wound right through the foot, since agony like that must mean damage.",
+  "keywords": [
+    "nail",
+    "builder",
+    "pain perception",
+    "case report"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fisher, Hassan & O'Connor, BMJ, 1995",
+  "source_kind": "paper",
+  "reference": "Fisher, Hassan & O'Connor, Minerva, BMJ 310:70, 1995",
+  "written": "2026-10-03"
+}

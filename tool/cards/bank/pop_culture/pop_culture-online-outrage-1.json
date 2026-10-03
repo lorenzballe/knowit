@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-online-outrage-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.internet_culture",
+  "strand": "pop_culture.internet_culture.online_outrage",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A Twitter user's angry post about a moral issue gets unusually many likes. What happens to their next posts?",
+  "options": [
+    "They grow calmer, feeling heard",
+    "They carry more outrage",
+    "Their tone stays the same"
+  ],
+  "correct": 1,
+  "answer": "They carry more outrage. Tracking millions of tweets, Brady and Crockett found that likes and retweets for an outraged post made the user's next posts more outraged, the way any reward builds a habit. Users in politically moderate networks were swayed most, learning the tone of the louder crowd.",
+  "move": "Whatever a crowd rewards you for, you will do more of.",
+  "ask": "Which of my habits online have been quietly trained by the reactions I get?",
+  "trap": "Venting is thought to drain anger, so praise should calm them.",
+  "keywords": [
+    "moral outrage",
+    "likes",
+    "reinforcement",
+    "twitter"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brady et al., Science Advances, 2021",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/sciadv.abe5641",
+  "written": "2026-09-26"
+}

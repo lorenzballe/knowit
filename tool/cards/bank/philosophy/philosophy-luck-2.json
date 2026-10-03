@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-luck-2",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.luck",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Across the whole world, how much of the gap between people's incomes is explained by the country they live in?",
+  "options": [
+    "About a tenth",
+    "More than half",
+    "About a quarter"
+  ],
+  "correct": 1,
+  "answer": "More than half. Branko Milanović found in 2015 that the country where someone lives explains over half the variation in income across the world's population; adding parents' income class explains far more. Effort and talent move people within a country's range. Being born in Norway or Niger sets the range.",
+  "move": "Before crediting effort, ask how much the starting point already decided.",
+  "ask": "Which of my advantages did I earn, and which came with where and to whom I was born?",
+  "trap": "About a tenth, because stories of self-made success come easily to mind.",
+  "keywords": [
+    "branko milanović",
+    "global inequality",
+    "income",
+    "birthplace",
+    "citizenship"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Milanović, Review of Economics and Statistics, 2015",
+  "source_kind": "paper",
+  "reference": "Milanović, Global Inequality of Opportunity: How Much of Our Income Is Determined by Where We Live?, Review of Economics and Statistics 97 (2), 2015",
+  "written": "2026-10-03"
+}

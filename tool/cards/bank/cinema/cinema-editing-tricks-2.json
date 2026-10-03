@@ -1,0 +1,40 @@
+{
+  "id": "cinema-editing-tricks-2",
+  "topic": "cinema",
+  "genre": "cinema.how_films_persuade",
+  "strand": "cinema.how_films_persuade.editing_tricks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Mid-answer, a documentary cuts away to the speaker's hands for two seconds, then back. Why is the cutaway likely there?",
+  "options": [
+    "To show the speaker's nerves",
+    "To hide a cut in the answer",
+    "To rest the viewer's eyes"
+  ],
+  "correct": 1,
+  "answer": "To hide a cut. Join two parts of an answer directly and the face jumps. Lay a shot of hands, a window or the listener over the join and the sentence sounds continuous, even if its halves were spoken ten minutes apart. Michael Rabiger's documentary handbook teaches it as routine.",
+  "move": "A smooth surface can hide a join; look for what covers it.",
+  "ask": "When a quote seems to say exactly what I suspected, how could I check it was said that way?",
+  "trap": "To show the speaker's nerves, reading it as a clue.",
+  "keywords": [
+    "cutaways",
+    "documentary editing",
+    "interviews",
+    "b-roll"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rabiger, Directing the Documentary",
+  "source_kind": "book",
+  "reference": "Michael Rabiger, Directing the Documentary, 6th edn, Focal Press, 2015",
+  "written": "2026-10-03"
+}

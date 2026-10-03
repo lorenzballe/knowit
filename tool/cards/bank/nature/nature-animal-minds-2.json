@@ -1,0 +1,39 @@
+{
+  "id": "nature-animal-minds-2",
+  "topic": "nature",
+  "genre": "nature.animal_senses",
+  "strand": "nature.animal_senses.animal_minds",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: a small reef fish has passed the mirror test once passed only by apes, dolphins, elephants and magpies?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Kohda and colleagues put a coloured mark on cleaner wrasses' throats, visible only in a mirror. Three of four marked fish then scraped the spot against the sand, as if removing it from their own body. They spend their lives picking parasites off other fish, so a parasite-like mark matters to them.",
+  "move": "A test of intelligence also tests whether the task suits the one tested.",
+  "ask": "Have I judged someone as slow on a test that simply did not fit what they care about?",
+  "trap": "Fish seem simple, so a test of self-awareness should defeat them.",
+  "keywords": [
+    "cleaner wrasse",
+    "mirror test",
+    "self-recognition",
+    "fish"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kohda et al., PLoS Biology, 2019",
+  "source_kind": "paper",
+  "reference": "Kohda et al., If a fish can pass the mark test, what are the implications for consciousness and self-awareness testing in animals?, PLoS Biology, 2019",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-blame-3",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.blame",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "If nobody ultimately chooses their own character, should we give up blaming people for wrongdoing?",
+  "sides": [
+    "Yes, give up blame",
+    "No, keep blame"
+  ],
+  "answer": "Yes. Blame in its full sense says the wrongdoer deserves to suffer for what they did, and that needs a control nobody has. Derk Pereboom argued that we can still protect others, as with quarantine, and still tell people they did wrong, without the anger that hurts for its own sake.",
+  "move": "It turns on whether blame must look back at desert or forward at repair.",
+  "ask": "When I blame someone, do I want them to suffer, or the harm to stop and be put right?",
+  "counterpoint": "Blame tells someone their act mattered and that they are someone who can answer for it. Herbert Morris argued in 1968 that treating offenders as patients to be managed denies them the dignity of persons. Victims, too, are owed the recognition that they were wronged, not merely damaged by a faulty mechanism.",
+  "keywords": [
+    "blame",
+    "derk pereboom",
+    "free will",
+    "herbert morris",
+    "desert"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pereboom, Living Without Free Will, 2001",
+  "source_kind": "book",
+  "reference": "Pereboom, Living Without Free Will, Cambridge University Press, 2001; Morris, Persons and Punishment, The Monist 52 (4), 1968",
+  "written": "2026-10-03"
+}

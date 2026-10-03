@@ -1,0 +1,33 @@
+{
+  "id": "economics-get-rich-quick-2",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.get_rich_quick",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What in Bernard Madoff's returns should have alarmed investors years before his fraud collapsed in 2008?",
+  "answer": "Their smoothness. His funds reported about 1% a month, year after year, with almost no losing months, through markets that swung hard. Real strategies have bad patches. From 2000 Harry Markopolos told the SEC that such steadiness was implausible. A fraud can fake calm more easily than it can fake a real trading record.",
+  "move": "Distrust returns that never wobble; real ones always do.",
+  "ask": "Is anyone offering me a return that sounds too steady to be true?",
+  "keywords": [
+    "bernard madoff",
+    "ponzi scheme",
+    "harry markopolos",
+    "sec"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "SEC Office of Inspector General, Report OIG-509",
+  "source_kind": "primary_document",
+  "reference": "SEC Office of Inspector General, Investigation of Failure of the SEC to Uncover Bernard Madoff's Ponzi Scheme, Report No. OIG-509, 2009",
+  "written": "2026-10-03"
+}

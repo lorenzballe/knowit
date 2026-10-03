@@ -1,0 +1,40 @@
+{
+  "id": "medicine-risks-of-surgery-3",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.risks_of_surgery",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Men with a small bulge in the main artery got either early repair or regular scans. Who lived longer?",
+  "options": [
+    "Men repaired early",
+    "Men watched with scans",
+    "Neither, survival was similar"
+  ],
+  "correct": 2,
+  "answer": "Neither: survival was about the same. Early open repair killed 5.8% of men within 30 days, while small aneurysms under watch burst only about 1% a year. The operation front-loaded a risk that the scans spread thinly over years. Watched men had surgery later if the bulge grew past 5.5 cm.",
+  "move": "Removing a danger has its own danger, paid all at once.",
+  "ask": "Is the drastic fix I am tempted by riskier, right now, than living with the problem a while?",
+  "trap": "Men repaired early, because removing a danger feels like the safe choice.",
+  "keywords": [
+    "aortic aneurysm",
+    "surveillance",
+    "operative mortality",
+    "watchful waiting"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "UK Small Aneurysm Trial, The Lancet, 1998",
+  "source_kind": "paper",
+  "reference": "UK Small Aneurysm Trial Participants, Mortality results for randomised controlled trial of early elective surgery or ultrasonographic surveillance for small abdominal aortic aneurysms, The Lancet, 1998",
+  "written": "2026-10-03"
+}

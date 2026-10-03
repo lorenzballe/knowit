@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-luck-3",
+  "topic": "philosophy",
+  "genre": "philosophy.free_will",
+  "strand": "philosophy.free_will.luck",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Bernard Williams imagined a painter who abandons his family to paint in Tahiti. What could justify him?",
+  "options": [
+    "The sincerity of his intention",
+    "Nothing could ever justify it",
+    "Only his success as a painter"
+  ],
+  "correct": 2,
+  "answer": "Only his success as a painter. In Williams's 1976 paper on moral luck, if the painter fails, nothing redeems the desertion; if he becomes great, perhaps something does. He cannot know in advance which, and the outcome turns partly on luck. Many bold choices are judged by results nobody could have promised when making them.",
+  "move": "Bold choices are often judged by outcomes their makers could not control.",
+  "ask": "Which risky choice of mine will I judge by how it turns out, rather than how I made it?",
+  "trap": "His sincere intention, since motives seem to be what counts morally.",
+  "keywords": [
+    "bernard williams",
+    "moral luck",
+    "gauguin",
+    "justification",
+    "outcomes"
+  ],
+  "era": "twentieth",
+  "region": "oceania",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Williams, Moral Luck, 1976",
+  "source_kind": "paper",
+  "reference": "Williams, Moral Luck, Proceedings of the Aristotelian Society, Supplementary Volume 50, 1976",
+  "written": "2026-10-03"
+}

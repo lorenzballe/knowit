@@ -1,0 +1,33 @@
+{
+  "id": "medicine-risks-of-surgery-2",
+  "topic": "medicine",
+  "genre": "medicine.surgery",
+  "strand": "medicine.surgery.risks_of_surgery",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "US hospitals with high and low death rates after surgery: what mostly separates them?",
+  "answer": "What happens after a complication, not how often one occurs. In over 84,000 operations, the hospitals with the highest death rates had about as many complications as the best. But patients with a serious complication died far more often there: about 21% against 12.5%. The gap lay in spotting trouble early and rescuing.",
+  "move": "Judge a team less by how often things go wrong than by its recovery.",
+  "ask": "When something goes wrong in my work or home, how quickly would anyone notice and act?",
+  "keywords": [
+    "failure to rescue",
+    "complications",
+    "surgical mortality",
+    "hospital quality"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ghaferi, Birkmeyer & Dimick, NEJM, 2009",
+  "source_kind": "paper",
+  "reference": "Ghaferi, Birkmeyer & Dimick, Variation in hospital mortality associated with inpatient surgery, New England Journal of Medicine, 2009",
+  "written": "2026-10-03"
+}

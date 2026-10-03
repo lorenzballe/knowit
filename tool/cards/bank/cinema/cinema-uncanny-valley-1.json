@@ -1,0 +1,33 @@
+{
+  "id": "cinema-uncanny-valley-1",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.uncanny_valley",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Masahiro Mori advise robot designers to aim for once he had described the uncanny dip?",
+  "answer": "To stop short of human. In his 1970 essay Mori recommended aiming for the first peak, a figure clearly artificial but appealing, rather than risking the valley by chasing full realism. Animated films that win audiences mostly follow him: their people have big eyes and simple skin, never pores.",
+  "move": "When almost right looks worse than plainly stylised, choose the stylised.",
+  "ask": "Where would something clearly simple serve me better than something almost perfect?",
+  "keywords": [
+    "masahiro mori",
+    "uncanny valley",
+    "robot design",
+    "stylisation"
+  ],
+  "era": "twentieth",
+  "region": "asia",
+  "hook": "origin",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mori, The Uncanny Valley, IEEE, 2012",
+  "source_kind": "paper",
+  "reference": "Masahiro Mori, The Uncanny Valley, trans. MacDorman and Kageki, IEEE Robotics and Automation Magazine, 19(2), 2012",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "science-why-things-fall-1",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.why_things_fall",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A large raindrop falls from a cloud 2 km up. About how fast is it going when it hits you?",
+  "options": [
+    "About 9 m/s",
+    "About 50 m/s",
+    "About 200 m/s"
+  ],
+  "correct": 0,
+  "answer": "About 9 m/s, a brisk cycling speed. Air drag grows with speed until it matches the drop's weight; then the drop stops speeding up. Timed in still air in 1949, even the biggest drops, about 5 mm across, topped out near 9 m/s. Without air, a 2 km fall would end near 200 m/s.",
+  "move": "Ask what pushes back as speed grows before extending any trend.",
+  "ask": "What in my plans keeps speeding up only on paper, ignoring whatever pushes back?",
+  "trap": "About 200 m/s, working it out as if there were no air.",
+  "keywords": [
+    "raindrops",
+    "terminal velocity",
+    "air resistance",
+    "drag"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gunn & Kinzer, Journal of Meteorology, 1949",
+  "source_kind": "paper",
+  "reference": "Gunn & Kinzer, The terminal velocity of fall for water droplets in stagnant air, Journal of Meteorology 6:243–248, 1949",
+  "written": "2026-09-26"
+}

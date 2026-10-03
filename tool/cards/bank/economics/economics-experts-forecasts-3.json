@@ -1,0 +1,39 @@
+{
+  "id": "economics-experts-forecasts-3",
+  "topic": "economics",
+  "genre": "economics.markets_and_hype",
+  "strand": "economics.markets_and_hype.experts_forecasts",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: a year ahead, the consensus of economic forecasters has usually seen recessions coming?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Prakash Loungani of the IMF checked consensus forecasts for the 1990s: of 60 recessions around the world, only 2 were foreseen a year ahead, and two-thirds were still unseen seven months before they began. Forecasts tend to draw next year as a lightly adjusted copy of this one, until the turn arrives.",
+  "move": "Treat any forecast of a turning point as a guess with a uniform on.",
+  "ask": "Which plan of mine quietly assumes that next year will look much like this one?",
+  "trap": "True, recalling the few who loudly called the last crash.",
+  "keywords": [
+    "recessions",
+    "economic forecasts",
+    "imf",
+    "consensus forecasts"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Loungani, International Journal of Forecasting, 2001",
+  "source_kind": "paper",
+  "reference": "Loungani, How Accurate Are Private Sector Forecasts? Cross-Country Evidence from Consensus Forecasts of Output Growth, International Journal of Forecasting, 2001",
+  "written": "2026-10-03"
+}
