@@ -1,0 +1,39 @@
+{
+  "id": "art-colour-and-mood-1",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.colour_and_mood",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: painting holding cells a particular bubble-gum pink has been shown to calm aggressive prisoners?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The idea grew from small, uncontrolled reports around 1979, and jails and police cells were painted to match. When Genschow and colleagues tested it properly in Swiss prisons in 2015, comparing pink cells with grey ones, aggression did not differ. The colour was cheap to try and easy to believe.",
+  "move": "A cheap fix that feels right still needs a comparison before you trust it.",
+  "ask": "Which simple fix at home or at work have I trusted without ever comparing it with doing nothing?",
+  "trap": "True, because pink cells were adopted widely and seemed to work.",
+  "keywords": [
+    "baker-miller pink",
+    "prison cells",
+    "aggression",
+    "colour psychology"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Genschow et al., Psychology, Crime & Law, 2015",
+  "source_kind": "paper",
+  "reference": "Oliver Genschow et al., Does Baker-Miller pink reduce aggression in prison detention cells? A critical empirical examination, Psychology, Crime & Law, 2015",
+  "written": "2026-10-03"
+}

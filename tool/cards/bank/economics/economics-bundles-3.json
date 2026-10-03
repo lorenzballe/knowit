@@ -1,0 +1,39 @@
+{
+  "id": "economics-bundles-3",
+  "topic": "economics",
+  "genre": "economics.pricing_tricks",
+  "strand": "economics.pricing_tricks.bundles",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: store surveys have found about a quarter of brands sold in two sizes charge more per gram for the bigger pack?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Surveys of American supermarkets found these quantity surcharges on roughly 16% to 34% of brands sold in two or more sizes. Most shoppers believe the big pack is the economy size, so a shop can price against that belief. The price per kilo on the shelf label settles it in seconds.",
+  "move": "Check the unit price; a rule of thumb is what sellers price against.",
+  "ask": "Which shopping rule of thumb do I follow without ever checking the label?",
+  "trap": "Trusting that the big pack is always the cheaper way to buy.",
+  "keywords": [
+    "quantity surcharges",
+    "unit prices",
+    "supermarkets",
+    "pack sizes"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sprott, Manning and Miyazaki, Journal of Marketing, 2003",
+  "source_kind": "paper",
+  "reference": "Sprott, Manning & Miyazaki, Grocery Price Setting and Quantity Surcharges, Journal of Marketing, 2003",
+  "written": "2026-10-03"
+}

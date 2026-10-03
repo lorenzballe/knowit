@@ -1,0 +1,37 @@
+{
+  "id": "sport-is-it-worth-it-3",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.is_it_worth_it",
+  "also": [
+    "sport.olympics.hosting"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did voters in Munich and Hamburg turn down chances to host the Olympics in the 2010s?",
+  "answer": "Because, unusually, they were asked. In referendums in 2013 and 2015, residents weighed a long record of cost overruns and empty venues against two weeks of sport, and said no. Boston and Oslo pulled out too. Short of bidders, the IOC cut its demands and later began choosing hosts through private talks.",
+  "move": "Ask what the answer would be if the people paying had a vote.",
+  "ask": "Is anyone who would pay for my plan actually being asked whether they want it?",
+  "keywords": [
+    "olympic bids",
+    "referendums",
+    "munich",
+    "hamburg",
+    "hosting costs"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Zimbalist, Circus Maximus, 2016",
+  "source_kind": "book",
+  "reference": "Andrew Zimbalist, Circus Maximus: The Economic Gamble Behind Hosting the Olympics and the World Cup, revised edition, Brookings Institution Press, 2016",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "economics-hidden-costs-2",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.hidden_costs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How much more pay would a one-hour commute need to leave someone just as satisfied with life?",
+  "answer": "About 40% more, by one estimate from German survey data. Stutzer and Frey found people with long commutes reported lower life satisfaction, with no sign that higher pay or cheaper housing made up for it. Choosing a home, people price the rent to the euro and the daily journey hardly at all.",
+  "move": "Put a price on the hours a choice will take every day.",
+  "ask": "What daily cost did I accept with my last big choice that I never put a number on?",
+  "keywords": [
+    "commuting",
+    "life satisfaction",
+    "stutzer and frey",
+    "housing choice"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stutzer and Frey, Scandinavian Journal of Economics, 2008",
+  "source_kind": "paper",
+  "reference": "https://docs.iza.org/dp1278.pdf",
+  "written": "2026-10-03"
+}

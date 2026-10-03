@@ -1,0 +1,40 @@
+{
+  "id": "cinema-spot-the-trick-1",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.spot_the_trick",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A news photo of a beach is taken with a long telephoto lens from far down the shore. How do the people look?",
+  "options": [
+    "Exactly as far apart as they are",
+    "Packed closer together than they are",
+    "Spread farther apart than they are"
+  ],
+  "correct": 1,
+  "answer": "Packed closer together than they are. From far away, a person 20 m behind another is barely farther from the lens, so both appear almost the same size and the gap between them vanishes. Film-makers use this compression to make crowds look denser and traffic jams endless; a wide lens nearby does the opposite.",
+  "move": "Before judging how crowded a picture is, ask where the camera stood.",
+  "ask": "Which photo made me angry or worried recently, and how far away was the camera?",
+  "trap": "Exactly as far apart as they are, since a photo records the scene.",
+  "keywords": [
+    "telephoto lens",
+    "lens compression",
+    "news photos",
+    "crowds"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bordwell and Thompson, Film Art",
+  "source_kind": "book",
+  "reference": "David Bordwell and Kristin Thompson, Film Art: An Introduction, 12th edn, McGraw-Hill, 2019",
+  "written": "2026-10-03"
+}

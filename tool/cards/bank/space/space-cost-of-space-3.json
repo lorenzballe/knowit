@@ -1,0 +1,38 @@
+{
+  "id": "space-cost-of-space-3",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.cost_of_space",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is sending people into space worth the cost, when robots can do most of the science for far less?",
+  "sides": [
+    "Yes, keep sending people",
+    "No, send robots"
+  ],
+  "answer": "Astronauts fixed Hubble's flawed mirror in 1993 and serviced it four more times, turning a failure into one of the most productive telescopes ever built. People improvise when things break. Crewed missions also win public support and draw young engineers in a way robotic ones rarely do. Science is not the only return worth buying.",
+  "move": "Whichever side you took, the hinge is whether inspiration counts as a return.",
+  "ask": "Which of my spending do I justify by how it makes me feel, and is that a fair return?",
+  "counterpoint": "The International Space Station has cost well over $100 billion, more than ten James Webb telescopes. For that money robots could have visited every planet several times over. Keeping people alive takes most of a crewed mission's mass and budget, and its science per dollar has rarely matched a robotic mission's.",
+  "keywords": [
+    "human spaceflight",
+    "robotic missions",
+    "hubble servicing",
+    "international space station"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Launius & McCurdy, Robots in Space, 2008",
+  "source_kind": "book",
+  "reference": "Launius & McCurdy, Robots in Space: Technology, Evolution, and Interplanetary Travel, Johns Hopkins University Press, 2008",
+  "written": "2026-10-03"
+}

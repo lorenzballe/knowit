@@ -1,0 +1,33 @@
+{
+  "id": "sport-streaks-3",
+  "topic": "sport",
+  "genre": "sport.luck_or_skill",
+  "strand": "sport.luck_or_skill.streaks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When a statistician tested years of major league batting records for streaky hitters, what did he find?",
+  "answer": "Mostly chance. Albright tested whether hitters did better after recent hits than their usual rate predicted. A few players looked streaky in a given season, about as many as random variation would produce, and they were rarely the same players the following year. The streaky hitter was usually a different person each season.",
+  "move": "A pattern that does not repeat in fresh data was probably noise.",
+  "ask": "Is the pattern I see in someone a lasting trait, or something that may not show up next time?",
+  "keywords": [
+    "hitting streaks",
+    "baseball",
+    "randomness",
+    "statistics"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Albright, J Am Stat Assoc, 1993",
+  "source_kind": "paper",
+  "reference": "S. Christian Albright, A Statistical Analysis of Hitting Streaks in Baseball, Journal of the American Statistical Association, 1993",
+  "written": "2026-10-03"
+}

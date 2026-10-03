@@ -1,0 +1,39 @@
+{
+  "id": "economics-bank-runs-3",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.bank_runs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: after US federal deposit insurance began in 1934, bank failures still ran into the hundreds that year?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. About 4,000 banks suspended in 1933; in 1934 only nine insured banks failed. Banks had not suddenly become sound. Depositors stopped running because a guarantee made waiting safe, and without runs, fewer banks were forced to sell good loans in a hurry to pay out.",
+  "move": "A guarantee can stop a panic without ever being used.",
+  "ask": "What promise in my life lets me stay calm, even though I have never had to call on it?",
+  "trap": "Expecting weak banks to keep failing until the bad ones were gone.",
+  "keywords": [
+    "deposit insurance",
+    "fdic",
+    "great depression",
+    "bank failures"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FDIC, A Brief History of Deposit Insurance",
+  "source_kind": "institution",
+  "reference": "Federal Deposit Insurance Corporation, A Brief History of Deposit Insurance in the United States, 1998",
+  "written": "2026-10-03"
+}

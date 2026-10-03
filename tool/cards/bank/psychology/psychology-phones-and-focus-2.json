@@ -1,0 +1,41 @@
+{
+  "id": "psychology-phones-and-focus-2",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.phones_and_focus",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In a field experiment, people got phone notifications as usual, in three batches a day, or never. Who reported feeling best?",
+  "options": [
+    "Those notified three times a day",
+    "Those notified as usual",
+    "Those never notified"
+  ],
+  "correct": 0,
+  "answer": "Those notified three times a day. They felt more attentive, more productive, in a better mood and more in control of their phones. Those with notifications switched off entirely felt more anxious about missing out, and hourly batches changed little. The fix was a timetable, not a ban.",
+  "move": "Bundle interruptions into set times rather than banning them outright.",
+  "ask": "Could I pick three times a day to check messages, and let them wait otherwise?",
+  "trap": "Those never notified, because removing every interruption seems best.",
+  "keywords": [
+    "notifications",
+    "batching",
+    "smartphones",
+    "well-being",
+    "stress"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fitz et al., Computers in Human Behavior, 2019",
+  "source_kind": "paper",
+  "reference": "https://www.sciencedirect.com/science/article/abs/pii/S0747563219302596",
+  "written": "2026-10-03"
+}

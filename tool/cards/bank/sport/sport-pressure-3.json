@@ -1,0 +1,40 @@
+{
+  "id": "sport-pressure-3",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.pressure",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: in top-flight football, teams usually keep more of the ball while winning than while losing?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Teams that go ahead tend to sit deeper and let the opponent have it, while teams behind push forward with the ball. Lago-Peñas and Dellal found Spanish sides had more possession when losing and less when winning. Raw possession partly records the scoreline rather than causing it.",
+  "move": "Before reading a statistic as a cause, ask whether the result caused it.",
+  "ask": "Which number I watch might be a result of how things are going, rather than the cause?",
+  "trap": "Assuming more possession is what makes a team the one ahead.",
+  "keywords": [
+    "possession",
+    "game state",
+    "score effects",
+    "la liga",
+    "football tactics"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lago-Peñas & Dellal, J Hum Kinet, 2010",
+  "source_kind": "paper",
+  "reference": "Lago-Peñas & Dellal, Ball possession strategies in elite soccer according to the evolution of the match-score: the influence of situational variables, Journal of Human Kinetics, 2010",
+  "written": "2026-10-03"
+}

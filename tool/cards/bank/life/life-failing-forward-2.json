@@ -1,0 +1,39 @@
+{
+  "id": "life-failing-forward-2",
+  "topic": "life",
+  "genre": "life.handle_setbacks",
+  "strand": "life.handle_setbacks.failing_forward",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "Rocket launch organisations learned from past launches. Which cut the chance of the next launch failing more: past successes or past failures?",
+  "options": [
+    "Past successes",
+    "Past failures"
+  ],
+  "correct": 1,
+  "answer": "Past failures. Madsen and Desai studied orbital launches worldwide and found that organisations learned more from their failures than from their successes, and that knowledge from failures faded more slowly. A failure forces an investigation; a success is rarely taken apart to see why it worked.",
+  "move": "Take apart a success as carefully as you would a failure.",
+  "ask": "When did I last study why something went well, as carefully as I study what went wrong?",
+  "trap": "Success seems to confirm what works, so it should teach more.",
+  "keywords": [
+    "rocket launches",
+    "organisational learning",
+    "failure",
+    "success"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Madsen and Desai, Academy of Management Journal, 2010",
+  "source_kind": "paper",
+  "reference": "Madsen and Desai, Failing to learn? The effects of failure and success on organizational learning in the global orbital launch vehicle industry, Academy of Management Journal, 2010",
+  "written": "2026-10-03"
+}

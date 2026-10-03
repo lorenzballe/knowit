@@ -1,0 +1,33 @@
+{
+  "id": "psychology-naming-feelings-3",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.naming_feelings",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does telling one bad feeling from another change how much young drinkers drink when stressed?",
+  "answer": "It seems to. Young social drinkers logged their feelings and their drinking on handheld devices. Those who habitually told nervous from guilty from irritated drank about 40% less on stressful nights than those whose bad feelings blurred into one. The link comes from observation, not an experiment. A precise name points to a precise fix.",
+  "move": "The finer you can name a bad feeling, the better you can answer it.",
+  "ask": "When I say I feel bad, could I name which bad: tired, lonely, anxious or resentful?",
+  "keywords": [
+    "emotion differentiation",
+    "alcohol",
+    "stress",
+    "emotional granularity"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kashdan et al., Psychological Science, 2010",
+  "source_kind": "paper",
+  "reference": "Kashdan, Ferssizidis, Collins & Muraven, Emotion differentiation as resilience against excessive alcohol use, Psychological Science, 2010",
+  "written": "2026-10-03"
+}

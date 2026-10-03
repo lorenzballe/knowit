@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-binge-watching-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.binge_watching",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: months after watching a series, people who had binged it remembered it better than weekly viewers?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In a University of Melbourne study, binge viewers recalled the most just after finishing, but their memory faded fastest; 140 days later, those who had spaced the episodes out remembered more, and had enjoyed the show more too. Spacing gives the brain several chances to store a story.",
+  "move": "Spread out what you want to keep; cram only what you need tomorrow.",
+  "ask": "Is there something I hope to keep in my head that I am cramming instead of spreading out?",
+  "trap": "More hours at once should mean the story sinks in deeper.",
+  "keywords": [
+    "binge watching",
+    "memory",
+    "spacing",
+    "university of melbourne"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Horvath et al., First Monday, 2017",
+  "source_kind": "paper",
+  "reference": "Jared Cooney Horvath et al., The impact of binge watching on memory and perceived comprehension, First Monday, 2017",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "food-food-safety-2",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.food_safety",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Botulism from traditional fermented fish and seal rose in Alaska in the late twentieth century. What had changed?",
+  "options": [
+    "Warmer winters thawed the food",
+    "Sealed plastic tubs replaced open pits",
+    "Fish began carrying new spores"
+  ],
+  "correct": 1,
+  "answer": "Sealed plastic tubs replaced open pits. Fish heads and seal were once fermented in grass-lined pits or wooden barrels, cool and open to some air. Plastic buckets and bags, often left in warm kitchens, made the food airless and warm: ideal for the spores. Alaska has had among the highest botulism rates in the world.",
+  "move": "When an old practice turns dangerous, look at the newest convenience in it.",
+  "ask": "Which convenience did I add to an old habit without asking what it changed?",
+  "trap": "Blaming warmer winters, the change already on everyone's mind.",
+  "keywords": [
+    "botulism",
+    "alaska",
+    "fermented fish",
+    "plastic containers",
+    "indigenous foods"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "CDC, Morbidity and Mortality Weekly Report, 2001",
+  "source_kind": "institution",
+  "reference": "Centers for Disease Control and Prevention, Botulism outbreak associated with eating fermented food — Alaska, 2001, MMWR 50(32), 2001",
+  "written": "2026-10-03"
+}

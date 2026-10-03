@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-god-3",
+  "topic": "philosophy",
+  "genre": "philosophy.big_questions",
+  "strand": "philosophy.big_questions.god",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the riddle asking whether God is willing to prevent evil but not able appears in Epicurus's surviving writings?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. It survives only in Lactantius, a Christian writer around 313, who attributes it to Epicurus while arguing against him; nothing Epicurus left says it, and many scholars doubt it is his. David Hume gave it its famous wording in 1779, in the mouth of a character, Philo.",
+  "move": "A quotation passed through an opponent's hands deserves a second look.",
+  "ask": "Which famous quote do I repeat without knowing who really said it?",
+  "trap": "True, because his name is printed under it everywhere.",
+  "keywords": [
+    "problem of evil",
+    "epicurus",
+    "lactantius",
+    "david hume",
+    "attribution"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hume, Dialogues Concerning Natural Religion",
+  "source_kind": "book",
+  "reference": "Hume, Dialogues Concerning Natural Religion, ed. Kemp Smith, Nelson, 1947, Part 10; Lactantius, On the Anger of God, chapter 13",
+  "written": "2026-10-03"
+}

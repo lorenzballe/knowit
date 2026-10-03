@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-then-and-now-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.then_and_now",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: as US crime fell through the 1990s and after, most Americans told Gallup it was falling?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In 23 of 27 Gallup surveys from 1993 to 2020, at least six in ten Americans said there was more crime nationally than a year before, while violent crime fell sharply over the period. News reports crimes one at a time, and never the ones that did not happen.",
+  "move": "How often you hear about something is not how often it happens.",
+  "ask": "Which danger do I worry about more each year, and have I checked whether it is actually growing?",
+  "trap": "People sense trends around them, so a long fall should be noticed.",
+  "keywords": [
+    "crime",
+    "gallup",
+    "public perception",
+    "united states"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gallup crime surveys, via Pew Research Center",
+  "source_kind": "statistics",
+  "reference": "Pew Research Center, What the data says (and doesn't say) about crime in the United States, November 2020",
+  "written": "2026-09-26"
+}

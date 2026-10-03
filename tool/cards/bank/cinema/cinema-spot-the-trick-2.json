@@ -1,0 +1,33 @@
+{
+  "id": "cinema-spot-the-trick-2",
+  "topic": "cinema",
+  "genre": "cinema.watch_smarter",
+  "strand": "cinema.watch_smarter.spot_the_trick",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How can a car chase filmed at a safe speed look terrifyingly fast on screen?",
+  "answer": "By filming fewer frames each second. A camera running at 18 frames a second, played back at the standard 24, speeds everything up by a third; crews call it undercranking. Combined with a low camera close to the road and short, jumpy cuts, a careful drive becomes a race. Speed on screen is a setting.",
+  "move": "Speed on a screen is a choice made by whoever filmed it.",
+  "ask": "Which video of speed, danger or chaos have I trusted without asking how it was filmed?",
+  "keywords": [
+    "undercranking",
+    "frame rate",
+    "car chases",
+    "camera speed"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "American Cinematographer Manual",
+  "source_kind": "reference_work",
+  "reference": "American Cinematographer Manual, 10th edn, ASC Press, 2013",
+  "written": "2026-10-03"
+}

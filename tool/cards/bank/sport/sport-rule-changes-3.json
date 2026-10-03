@@ -1,0 +1,41 @@
+{
+  "id": "sport-rule-changes-3",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.rule_changes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Barbados needed to win by two; a golden goal in extra time counted double. Leading 2–1 late, what did Barbados do?",
+  "options": [
+    "Defended to keep the 2–1 lead",
+    "Scored deliberately into their own net",
+    "Pushed hard for a third goal"
+  ],
+  "correct": 1,
+  "answer": "Scored deliberately into their own net. At 2–1 they were going out, and a third goal against a packed defence looked unlikely. Level at 2–2, extra time offered a golden goal worth two. Grenada then tried to score at either end, Barbados defended both goals, and won in extra time.",
+  "move": "Before blaming the players, ask what the scoring rule actually rewards.",
+  "ask": "Is someone around me acting strangely because the rules reward it, not because they are foolish?",
+  "trap": "Defending the lead, since no team would choose to concede.",
+  "keywords": [
+    "own goal",
+    "golden goal",
+    "barbados",
+    "grenada",
+    "caribbean cup"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Caribbean Cup qualifier, Barbados v Grenada, 1994",
+  "source_kind": "news_archive",
+  "reference": "Shell Caribbean Cup 1994 qualifying, Barbados 4–2 Grenada (after extra time), Bridgetown, 27 January 1994",
+  "written": "2026-10-03"
+}

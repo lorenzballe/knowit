@@ -8,11 +8,11 @@
   "principle": "reflection",
   "question": "In the 1980s, researchers registered a small garment workshop in Lima strictly by the rules. How long did it take?",
   "options": [
-    "About 3 weeks",
     "About 10 months",
+    "About 3 weeks",
     "About 3 years"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "About 10 months: 289 days of six-hour efforts, plus $1,231 in fees and lost earnings, 32 times the monthly minimum wage. Hernando de Soto's team did it to measure the cost of being legal. Most small firms stayed informal instead, without contracts a court would enforce or deeds a bank would lend against.",
   "move": "When following the rules costs too much, people stop following them.",
   "ask": "Which rule in my work or home life costs so much effort that people quietly ignore it?",

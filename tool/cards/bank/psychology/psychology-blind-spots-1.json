@@ -1,0 +1,33 @@
+{
+  "id": "psychology-blind-spots-1",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.blind_spots",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do people readily spot bias in others' judgements but rarely in their own?",
+  "answer": "Because they judge themselves by looking inward and others by what they do. Searching their own thoughts, people find no biased motive, since most bias works out of sight, and conclude they are fair. Others offer only behaviour, where bias shows. Each person is graded on intentions, everyone else on results.",
+  "move": "Check your fairness by what you did, not by what you meant.",
+  "ask": "If a stranger watched only my actions this month, what bias might they see that I cannot?",
+  "keywords": [
+    "bias blind spot",
+    "introspection",
+    "self-knowledge",
+    "fairness"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pronin & Kugler, JESP, 2007",
+  "source_kind": "paper",
+  "reference": "Pronin & Kugler, Valuing thoughts, ignoring behavior: The introspection illusion as a source of the bias blind spot, Journal of Experimental Social Psychology, 2007",
+  "written": "2026-10-03"
+}

@@ -9,10 +9,10 @@
   "question": "When US petrol prices halved in late 2008, what did many drivers do with the money saved at the pump?",
   "options": [
     "Saved the difference",
-    "Bought premium petrol",
-    "Drove much further"
+    "Drove much further",
+    "Bought premium petrol"
   ],
-  "correct": 1,
+  "correct": 2,
   "answer": "Bought premium petrol. Hastings and Shapiro followed shoppers as prices fell and found they switched to premium grades far more than an equal rise in income would explain. Money saved in the petrol budget stayed in the petrol budget, spent at the pump on fuel their engines did not need.",
   "move": "Money is money whichever jar it came from; spend it as such.",
   "ask": "When I save on one thing, do I spend the difference on the same thing without noticing?",

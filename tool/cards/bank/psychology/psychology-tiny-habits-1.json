@@ -1,0 +1,40 @@
+{
+  "id": "psychology-tiny-habits-1",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.tiny_habits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Getting 1% better every day for a year is said to make someone 37 times better. What does data on practice show?",
+  "options": [
+    "Gains compound as the sum promises",
+    "Gains shrink as skill grows",
+    "Gains stay the same each day"
+  ],
+  "correct": 1,
+  "answer": "Gains shrink as skill grows. Across tasks from rolling cigars to reading mirror-reversed text, improvement follows a law of practice: large early gains, then ever smaller ones. 1.01 multiplied by itself 365 times is about 37.8, but skill does not grow like interest. Small daily practice pays most in its first weeks.",
+  "move": "Check whether a thing really compounds before trusting a compound-interest promise.",
+  "ask": "Which of my small daily efforts am I expecting to snowball, when they may simply add up steadily?",
+  "trap": "Gains compound as promised, because the arithmetic of 1.01 checks out.",
+  "keywords": [
+    "law of practice",
+    "skill learning",
+    "compounding",
+    "habits"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Newell & Rosenbloom, law of practice, 1981",
+  "source_kind": "book",
+  "reference": "Newell & Rosenbloom, Mechanisms of skill acquisition and the law of practice, in Anderson (ed.), Cognitive Skills and Their Acquisition, Erlbaum, 1981",
+  "written": "2026-10-03"
+}

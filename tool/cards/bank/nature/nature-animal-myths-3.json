@@ -1,0 +1,40 @@
+{
+  "id": "nature-animal-myths-3",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.animal_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Chameleons are famous for matching their background. What drove the evolution of their fastest, boldest colour changes?",
+  "options": [
+    "Matching leaves and branches",
+    "Signalling to rivals and mates",
+    "Warming up in the sun"
+  ],
+  "correct": 1,
+  "answer": "Signalling to rivals and mates. Stuart-Fox and Moussalli compared South African dwarf chameleons: the species with the widest colour range were those whose displays most needed to stand out, not those living against the most varied backgrounds. A chameleon flushing bright is usually shouting at another chameleon, not hiding.",
+  "move": "Ask whom a display is aimed at before assuming it is a disguise.",
+  "ask": "When someone changes how they look or act around me, who are they really signalling to?",
+  "trap": "Camouflage is the famous story, so it seems the obvious driver.",
+  "keywords": [
+    "chameleons",
+    "colour change",
+    "camouflage",
+    "social signalling"
+  ],
+  "era": "recent",
+  "region": "africa",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stuart-Fox & Moussalli, PLoS Biology, 2008",
+  "source_kind": "paper",
+  "reference": "Stuart-Fox & Moussalli, Selection for social signalling drives the evolution of chameleon colour change, PLoS Biology, 2008",
+  "written": "2026-10-03"
+}

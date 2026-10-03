@@ -1,0 +1,33 @@
+{
+  "id": "nature-balance-of-nature-1",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.balance_of_nature",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do fossil pollen records show forests made of tree mixes that exist nowhere on Earth today?",
+  "answer": "Because species move on their own, not as fixed communities. As the last ice age ended, each tree spread north at its own pace. Williams and Jackson describe North American woods mixing spruce, ash and hornbeam in ways no modern forest matches. Today's woods are a passing arrangement, not a settled order.",
+  "move": "What looks like a settled order may be a passing arrangement.",
+  "ask": "Which arrangement in my life do I treat as permanent that is really just this season's mix?",
+  "keywords": [
+    "fossil pollen",
+    "no-analog communities",
+    "ice age",
+    "forest history"
+  ],
+  "era": "ancient",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Williams & Jackson, Frontiers in Ecology, 2007",
+  "source_kind": "paper",
+  "reference": "Williams & Jackson, Novel climates, no-analog communities, and ecological surprises, Frontiers in Ecology and the Environment, 2007",
+  "written": "2026-10-03"
+}

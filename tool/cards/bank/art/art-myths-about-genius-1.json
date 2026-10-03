@@ -1,0 +1,33 @@
+{
+  "id": "art-myths-about-genius-1",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.myths_about_genius",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where do so many stories of Renaissance genius, like Giotto drawing a perfect circle freehand, come from?",
+  "answer": "Mostly from one book: Giorgio Vasari's Lives of the Artists, 1550. Vasari, a Medici court painter writing up to two centuries after some of his subjects, set out to crown Florence and his hero Michelangelo. He rarely checked an anecdote. Giotto's perfect O is a Florentine's story about Florence's first great painter.",
+  "move": "Ask who told the story first and what they gained by telling it.",
+  "ask": "When I hear a great success story, do I know who first told it, and why?",
+  "keywords": [
+    "giorgio vasari",
+    "lives of the artists",
+    "giotto",
+    "anecdote"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vasari, Lives of the Artists, 1550",
+  "source_kind": "book",
+  "reference": "Giorgio Vasari, The Lives of the Artists, trans. Julia Conaway Bondanella & Peter Bondanella, Oxford World's Classics, 1991",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "food-coffee-and-health-claims-1",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.coffee_and_health_claims",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A 1981 study in a top medical journal tied coffee to pancreatic cancer. Why did the link not survive?",
+  "answer": "Because of who it was compared with. The cancer patients were set against other patients of the same doctors, many with stomach and gut illnesses that had made them cut down on coffee. That made coffee look commoner among the cancer cases. The authors' own larger follow-up, in 1986, found no clear link.",
+  "move": "Before trusting a difference, ask who was picked for the comparison.",
+  "ask": "When I compare myself with others, have I picked a fair group to compare with?",
+  "keywords": [
+    "pancreatic cancer",
+    "case-control study",
+    "control group",
+    "coffee"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "MacMahon et al., NEJM, 1981",
+  "source_kind": "paper",
+  "reference": "MacMahon, Yen, Trichopoulos, Warren & Nardi, Coffee and cancer of the pancreas, New England Journal of Medicine, 1981",
+  "written": "2026-10-03"
+}

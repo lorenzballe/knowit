@@ -1,0 +1,42 @@
+{
+  "id": "food-caffeine-1",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.caffeine",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "Mia drinks 200 mg of caffeine at 3 pm. If half clears every 5 hours, how many mg remain at 1 am?",
+  "value": 50,
+  "unit": "mg",
+  "answer": "After 10 hours: 100 ÷ 2 = 50 mg, still in her blood at bedtime",
+  "move": "What fades by halves is never as gone as it feels.",
+  "ask": "What did I take in this afternoon that might still be working on me tonight?",
+  "trap": "Assuming it is gone because the buzz faded hours ago.",
+  "hint": "Count how many 5-hour halvings fit between 3 pm and 1 am.",
+  "steps": [
+    "3 pm to 1 am is 10 hours: two halvings",
+    "After 5 hours: 200 ÷ 2 = 100 mg",
+    "After 10 hours: 100 ÷ 2 = 50 mg, still in her blood at bedtime"
+  ],
+  "keywords": [
+    "caffeine",
+    "half-life",
+    "sleep",
+    "metabolism"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "EFSA, Scientific Opinion on caffeine, 2015",
+  "source_kind": "institution",
+  "reference": "EFSA Panel on Dietetic Products, Nutrition and Allergies, Scientific Opinion on the safety of caffeine, EFSA Journal 13(5):4102, 2015",
+  "written": "2026-10-03"
+}

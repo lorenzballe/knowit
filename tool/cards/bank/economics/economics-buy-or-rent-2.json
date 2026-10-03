@@ -1,0 +1,39 @@
+{
+  "id": "economics-buy-or-rent-2",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.buy_or_rent",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: after inflation, American house prices roughly tripled between 1890 and 1990?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. On Robert Shiller's long index, real US home prices in 1990 were not far above their 1890 level, after a deep fall and a post-war recovery. Houses wear out and new land keeps being built on, so prices long tracked building costs. The big real gains came later, mostly after 2000.",
+  "move": "Check whether a trend you trust holds across the whole record.",
+  "ask": "Which belief about money do I hold only because of what happened in my own lifetime?",
+  "trap": "Generalising from recent decades, when house prices outran inflation.",
+  "keywords": [
+    "house prices",
+    "robert shiller",
+    "real prices",
+    "housing investment"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Shiller, Irrational Exuberance, 2015",
+  "source_kind": "book",
+  "reference": "Robert J. Shiller, Irrational Exuberance, 3rd edition, Princeton University Press, 2015",
+  "written": "2026-10-03"
+}

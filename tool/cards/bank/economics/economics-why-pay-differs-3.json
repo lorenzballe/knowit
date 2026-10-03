@@ -1,0 +1,40 @@
+{
+  "id": "economics-why-pay-differs-3",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.why_pay_differs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: in Denmark, most of the earnings gap between men and women opens up after the first child?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Using records for everyone in Denmark from 1980 to 2013, economists found women's earnings fall sharply at the first birth and stay about 20% lower for good, while men's barely move. By 2013 this child penalty explained about 80% of the gap between men and women, up from 40% in 1980.",
+  "move": "When a gap appears, find the moment it opens.",
+  "ask": "In my household, whose career bent when the children came, and did we choose that together?",
+  "trap": "Blaming the gap mainly on different pay for the same work.",
+  "keywords": [
+    "gender pay gap",
+    "child penalty",
+    "denmark",
+    "parenthood",
+    "earnings"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kleven, Landais and Søgaard, AEJ Applied, 2019",
+  "source_kind": "paper",
+  "reference": "https://www.henrikkleven.com/research/published/kleven-landais-sogaard_aej-applied_sep2018.pdf",
+  "written": "2026-10-03"
+}

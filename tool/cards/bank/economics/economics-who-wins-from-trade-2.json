@@ -1,0 +1,45 @@
+{
+  "id": "economics-who-wins-from-trade-2",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.who_wins_from_trade",
+  "also": [
+    "economics.your_money_decisions.opportunity_cost"
+  ],
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A lawyer earning €200 an hour types twice as fast as her €25-an-hour assistant. A letter takes her one hour. Saving from delegating, in euros?",
+  "value": 150,
+  "unit": "euros",
+  "answer": "Saving from delegating: 200 − 50 = €150",
+  "move": "Do what you are best at relative to others, not everything you do best.",
+  "ask": "What do I keep doing myself because I am good at it, when my time is worth more elsewhere?",
+  "trap": "Keeping the task because she does it better than anyone.",
+  "hint": "Price each person's time on the letter, not who types faster.",
+  "steps": [
+    "Typing it herself costs her hour: €200",
+    "The assistant needs 2 hours: 2 × 25 = €50",
+    "Saving from delegating: 200 − 50 = €150"
+  ],
+  "keywords": [
+    "comparative advantage",
+    "delegation",
+    "opportunity cost",
+    "ricardo"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Comparative advantage, Ricardo, 1817",
+  "source_kind": "arithmetic",
+  "reference": "Ricardo, On the Principles of Political Economy and Taxation, ed. Sraffa, Cambridge University Press, 1951",
+  "written": "2026-10-03"
+}

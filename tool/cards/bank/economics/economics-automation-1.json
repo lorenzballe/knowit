@@ -1,0 +1,41 @@
+{
+  "id": "economics-automation-1",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.automation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Cash machines spread through American banks from the 1980s. What happened to the number of human cashiers working in them?",
+  "options": [
+    "Fell by about half",
+    "Fell to almost none",
+    "Kept growing slowly"
+  ],
+  "correct": 2,
+  "answer": "Kept growing slowly. Machines cut the tellers an average urban branch needed from 20 to 13 between 1988 and 2004. That made branches cheaper to run, so banks opened 43% more of them. Fewer tellers per branch, more branches: the job moved from counting cash to selling services across the counter.",
+  "move": "A machine that makes a task cheap can create more of the work around it.",
+  "ask": "If a machine made the dullest part of my job cheap, what would the rest of my work become?",
+  "trap": "Assuming each machine simply replaced the person whose task it did.",
+  "keywords": [
+    "atms",
+    "cashiers",
+    "automation",
+    "bank branches",
+    "bessen"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bessen, IMF Finance & Development, 2015",
+  "source_kind": "institution",
+  "reference": "https://www.imf.org/external/pubs/ft/fandd/2015/03/bessen.htm",
+  "written": "2026-10-03"
+}

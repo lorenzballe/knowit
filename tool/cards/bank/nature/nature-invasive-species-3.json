@@ -1,0 +1,38 @@
+{
+  "id": "nature-invasive-species-3",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.invasive_species",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should conservationists judge introduced species by the harm they do, rather than by where they came from?",
+  "sides": [
+    "Yes, judge the harm",
+    "No, origin matters"
+  ],
+  "answer": "Yes. Davis and colleagues argued that many introduced species are harmless or useful, and that natives can turn into pests too. As climates shift, the line between native and alien blurs further. Money spent fighting every newcomer is money not spent on the few that actually damage crops, health or wildlife.",
+  "move": "Whichever side you took, how long harm takes to show decides it.",
+  "ask": "Do I judge new people or ideas by what they do, or by where they came from?",
+  "counterpoint": "Origin is the best early warning. Harm from newcomers often appears decades after arrival, when removing them is no longer possible. Simberloff and 140 co-signers replied that introduced species drive many extinctions, especially on islands. Waiting for proof of damage means acting only when it is too late and the bill is far larger.",
+  "keywords": [
+    "invasive species",
+    "native species",
+    "introduced species",
+    "conservation policy"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Davis et al., Nature, 2011",
+  "source_kind": "paper",
+  "reference": "Davis et al., Don't judge species on their origins, Nature, 2011; Simberloff et al., Non-natives: 141 scientists object, Nature, 2011",
+  "written": "2026-10-03"
+}

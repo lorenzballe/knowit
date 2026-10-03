@@ -1,0 +1,33 @@
+{
+  "id": "space-what-we-do-not-know-2",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.what_we_do_not_know",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How were the atoms that astronomers could not find in the universe finally weighed in 2020?",
+  "answer": "With flashes of radio waves. Fast radio bursts last milliseconds and cross billions of light-years; loose electrons in the thin gas between galaxies slightly delay their lower frequencies. Timing that lag for bursts at known distances, Macquart's team found the gas held the atoms that counts had missed, as the Big Bang predicts.",
+  "move": "To weigh what you cannot see, measure how it slows what passes through.",
+  "ask": "Who in my life is invisible, yet quietly slows or shapes everything that passes through them?",
+  "keywords": [
+    "missing baryons",
+    "fast radio bursts",
+    "intergalactic gas",
+    "ordinary matter"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Macquart et al., Nature, 2020",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/s41586-020-2300-2",
+  "written": "2026-10-03"
+}

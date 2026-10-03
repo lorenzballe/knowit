@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-what-is-real-3",
+  "topic": "philosophy",
+  "genre": "philosophy.big_questions",
+  "strand": "philosophy.big_questions.what_is_real",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is the physicist's table, mostly empty space and charges, more real than the solid table you lean on?",
+  "sides": [
+    "Yes, the physicist's table",
+    "No, both are the same table"
+  ],
+  "answer": "Yes. Arthur Eddington wrote in 1928 that his scientific table, mostly emptiness with electric charges rushing about, was the one really there. Wilfrid Sellars later put it bluntly: in describing and explaining the world, science is the measure of all things. Colour and solidity are how particles look to creatures like us.",
+  "move": "It turns on whether explaining something is the same as showing it unreal.",
+  "ask": "Is something in my life less real because I can explain it, like a feeling explained by chemistry?",
+  "counterpoint": "Susan Stebbing replied in 1937 that solid means just what this table is, as opposed to a sponge or a puddle; physics cannot show the table is not solid, only explain why it is. Calling the everyday table unreal misuses words. The table you lean on and the physicist's are one table, described twice.",
+  "keywords": [
+    "arthur eddington",
+    "two tables",
+    "susan stebbing",
+    "wilfrid sellars",
+    "scientific image"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stebbing, Philosophy and the Physicists, 1937",
+  "source_kind": "book",
+  "reference": "Stebbing, Philosophy and the Physicists, Methuen, 1937; Eddington, The Nature of the Physical World, Cambridge University Press, 1928",
+  "written": "2026-10-03"
+}

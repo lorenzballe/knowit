@@ -1,0 +1,40 @@
+{
+  "id": "psychology-overconfidence-1",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.overconfidence",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "People gave ranges they were 90% sure contained true values, such as a river's length. How often did the truth fall inside?",
+  "options": [
+    "Close to 90% of the time",
+    "Nearly every time",
+    "Around half the time or less"
+  ],
+  "correct": 2,
+  "answer": "Around half the time or less. In study after study, ranges meant to be 90% certain miss the truth far more often than one time in ten, because people start from a best guess and widen it too little. A forecaster's range is usually narrower than their real uncertainty.",
+  "move": "Whatever range feels safe, widen it before you rely on it.",
+  "ask": "When I estimate how long a job will take, how often have I actually landed inside my range?",
+  "trap": "Close to 90%, since people chose the ranges themselves.",
+  "keywords": [
+    "overconfidence",
+    "confidence intervals",
+    "calibration",
+    "estimation"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Soll & Klayman, JEP: LMC, 2004",
+  "source_kind": "paper",
+  "reference": "Soll & Klayman, Overconfidence in interval estimates, Journal of Experimental Psychology: Learning, Memory, and Cognition, 2004",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "sport-rest-days-3",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.rest_days",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should youth sports clubs require one or two rest days a week and months off from their sport each year?",
+  "sides": [
+    "Yes, build rest in",
+    "No, let children choose"
+  ],
+  "answer": "Yes. Overuse injuries in children rose as year-round, single-sport training spread, and growing bodies recover slowly. The American Academy of Pediatrics advises one to two days off a week and two to three months a year away from a single sport. Left to ambitious adults, rest is cut first.",
+  "move": "Whichever side you took, the hinge is who limits the load if no rule does.",
+  "ask": "Who in my life would rest more if someone simply gave them permission?",
+  "counterpoint": "No. The evidence links injury mainly to total hours and sudden jumps in training load, not to a fixed calendar, and rigid rules fit badly with children who play several sports for fun. A child who loves the game and trains moderately gains little from enforced days off. Better to watch load, pain and enjoyment child by child.",
+  "keywords": [
+    "youth sport",
+    "overuse injuries",
+    "rest days",
+    "burnout",
+    "early specialisation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brenner, Pediatrics, 2007",
+  "source_kind": "paper",
+  "reference": "Brenner and the Council on Sports Medicine and Fitness, Overuse injuries, overtraining, and burnout in child and adolescent athletes, Pediatrics, 2007",
+  "written": "2026-10-03"
+}

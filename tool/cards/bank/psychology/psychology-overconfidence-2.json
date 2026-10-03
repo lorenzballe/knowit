@@ -1,0 +1,33 @@
+{
+  "id": "psychology-overconfidence-2",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.overconfidence",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When tens of thousands of expert political forecasts were scored years later, which experts did worst?",
+  "answer": "The ones with one big theory. Across about 28,000 predictions, experts barely beat simple rules, and those who fitted every event to a single grand idea did worse than those who drew on many small ones and doubted themselves. The more famous the forecaster, the worse the record tended. Confidence sold well and predicted poorly.",
+  "move": "Trust the forecaster who says it depends over the one with one answer.",
+  "ask": "Whose confident predictions do I follow, and have I ever checked how often they came true?",
+  "keywords": [
+    "forecasting",
+    "experts",
+    "hedgehogs and foxes",
+    "prediction"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tetlock, Expert Political Judgment, 2005",
+  "source_kind": "book",
+  "reference": "Tetlock, Expert Political Judgment: How Good Is It? How Can We Know?, Princeton University Press, 2005",
+  "written": "2026-10-03"
+}

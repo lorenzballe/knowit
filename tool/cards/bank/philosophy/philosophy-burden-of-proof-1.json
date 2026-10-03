@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-burden-of-proof-1",
+  "topic": "philosophy",
+  "genre": "philosophy.arguments",
+  "strand": "philosophy.arguments.burden_of_proof",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in the US, a dietary supplement must be shown safe and effective before it can be sold?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Under the Dietary Supplement Health and Education Act of 1994, makers need no approval, and the Food and Drug Administration must show a product unsafe to remove it. Who carried the burden decided the outcome: ephedra stayed on shelves for years after reports of harm, until its ban in 2004.",
+  "move": "Ask who has to prove what, because that often decides the dispute.",
+  "ask": "In a disagreement I am in, have I quietly put the whole burden of proof on the other side?",
+  "trap": "True, assuming anything sold in a pharmacy passed drug-style tests.",
+  "keywords": [
+    "dietary supplements",
+    "fda",
+    "dshea",
+    "ephedra",
+    "burden of proof"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dietary Supplement Health and Education Act, 1994",
+  "source_kind": "primary_document",
+  "reference": "Dietary Supplement Health and Education Act of 1994, Public Law 103-417, US Congress, 1994",
+  "written": "2026-10-03"
+}

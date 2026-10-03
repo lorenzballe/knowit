@@ -1,0 +1,40 @@
+{
+  "id": "human_body-brain-myths-1",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.brain_myths",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: counted cell by cell at autopsy, the cortex of long-term heavy drinkers holds far fewer neurons?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. When Jensen and Pakkenberg counted neurons in the brains of alcoholics, the cortex held about as many as in non-drinkers. What had shrunk was the white matter, the insulated wiring between cells, which can partly recover with abstinence. The damage lay in the connections, not in a pile of dead cells.",
+  "move": "Ask what exactly is lost before deciding the loss is permanent.",
+  "ask": "Which harm in my life have I written off as permanent that might mend if I stopped?",
+  "trap": "Brains shrink in heavy drinkers, so the cells must have died.",
+  "keywords": [
+    "alcohol",
+    "neurons",
+    "white matter",
+    "cortex",
+    "autopsy"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jensen and Pakkenberg, The Lancet, 1993",
+  "source_kind": "paper",
+  "reference": "Jensen GB, Pakkenberg B, Do alcoholics drink their neurons away?, The Lancet, 1993",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "science-sample-size-3",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.sample_size",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do the most dramatic results in a research field so often come from its smallest studies?",
+  "answer": "Because small studies are noisy, and only noisy results that happen to look big pass the bar for significance. A 2013 review put the median power of neuroscience studies at about 21%: they would miss a real effect four times in five, and the hits tend to overstate it. A small study's big result is often the lucky high.",
+  "move": "Shrink any striking result in proportion to how few cases produced it.",
+  "ask": "When a small trial in my own life went brilliantly, how much of that was luck?",
+  "keywords": [
+    "statistical power",
+    "small studies",
+    "neuroscience",
+    "effect size"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Button et al., Nature Reviews Neuroscience, 2013",
+  "source_kind": "paper",
+  "reference": "Button et al., Power failure: why small sample size undermines the reliability of neuroscience, Nature Reviews Neuroscience 14:365–376, 2013",
+  "written": "2026-09-26"
+}

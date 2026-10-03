@@ -1,0 +1,36 @@
+{
+  "id": "space-odds-of-life-1",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.odds_of_life",
+  "also": [
+    "science.numbers_and_chance.estimating"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What is the Drake equation for, if nobody knows most of the numbers that go into it?",
+  "answer": "It turns one hopeless question into several smaller ones. Frank Drake wrote it in 1961 as a meeting's agenda: how many stars form, how many have planets, how many planets get life. Some factors are now measured, since most stars have planets; others are guesses, so answers run from far below one to millions.",
+  "move": "Split a big unknown into parts to see which part you are guessing.",
+  "ask": "In a big decision I can't call, which single piece am I actually unsure about?",
+  "keywords": [
+    "drake equation",
+    "frank drake",
+    "exoplanets",
+    "seti"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cassan et al., Nature, 2012",
+  "source_kind": "paper",
+  "reference": "doi:10.1038/nature10684",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "life-memory-tricks-3",
+  "topic": "life",
+  "genre": "life.learn_anything",
+  "strand": "life.learn_anything.memory_tricks",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: words judged by asking whether they describe you are recalled better than words judged for meaning?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Rogers, Kuiper and Kirker had people judge adjectives in different ways; those judged against the self were recalled best, beating judgements of meaning. A later review of more than a hundred studies confirmed the effect. Linking a fact to one's own life files it among the best-organised memories anyone has.",
+  "move": "Ask how a new fact touches your own life, and it will stay.",
+  "ask": "What did I learn today, and where does it touch my own life?",
+  "trap": "Thinking about meaning seems the deepest way to process a word.",
+  "keywords": [
+    "self-reference effect",
+    "memory",
+    "encoding",
+    "adjectives"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rogers, Kuiper and Kirker, JPSP, 1977",
+  "source_kind": "paper",
+  "reference": "Rogers, Kuiper and Kirker, Self-reference and the encoding of personal information, Journal of Personality and Social Psychology, 1977",
+  "written": "2026-10-03"
+}

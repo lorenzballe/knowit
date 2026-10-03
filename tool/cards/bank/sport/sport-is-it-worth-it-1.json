@@ -1,0 +1,43 @@
+{
+  "id": "sport-is-it-worth-it-1",
+  "topic": "sport",
+  "genre": "sport.olympics",
+  "strand": "sport.olympics.is_it_worth_it",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "UK Sport invested £274 million in the four years before Rio 2016, where Britain won 67 medals. Millions of pounds per medal?",
+  "value": 4.1,
+  "unit": "million pounds",
+  "tolerance": 0.1,
+  "answer": "About £4.1 million of public money for each medal",
+  "move": "Put a price on each result before deciding whether it was worth it.",
+  "ask": "What does each of my results really cost me, once I divide the effort by what it produced?",
+  "hint": "Divide the funding by the number of medals.",
+  "steps": [
+    "£274 million ÷ 67 medals",
+    "= £4.09 million per medal",
+    "About £4.1 million of public money for each medal"
+  ],
+  "keywords": [
+    "uk sport",
+    "rio 2016",
+    "medal funding",
+    "cost per medal",
+    "team gb"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "UK Sport, Rio 2016 investment",
+  "source_kind": "institution",
+  "reference": "UK Sport, Annual Report and Accounts 2016–17, UK Sport, 2017",
+  "written": "2026-10-03"
+}

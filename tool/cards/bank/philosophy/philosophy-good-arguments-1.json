@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-good-arguments-1",
+  "topic": "philosophy",
+  "genre": "philosophy.arguments",
+  "strand": "philosophy.arguments.good_arguments",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: an argument whose conclusion is plainly false can still be logically valid?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Validity only says the conclusion follows: if the premises were true, it would have to be true too. All fish can fly, salmon are fish, so salmon can fly: valid, and false. Sound means valid with true premises as well. A tight argument from a bad premise reaches a bad place efficiently.",
+  "move": "Check the starting points before admiring how tightly the reasoning joins them.",
+  "ask": "Which argument have I accepted because each step followed, without checking where it started?",
+  "trap": "False, because in everyday speech valid means correct.",
+  "keywords": [
+    "validity",
+    "soundness",
+    "logic",
+    "premises",
+    "syllogism"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Copi, Cohen & McMahon, Introduction to Logic",
+  "source_kind": "book",
+  "reference": "Copi, Cohen & McMahon, Introduction to Logic, 14th edition, Pearson, 2011",
+  "written": "2026-10-03"
+}

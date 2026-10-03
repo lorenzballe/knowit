@@ -1,0 +1,40 @@
+{
+  "id": "psychology-anchoring-bias-1",
+  "topic": "psychology",
+  "genre": "psychology.bias",
+  "strand": "psychology.bias.anchoring_bias",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "One group was asked if Gandhi died before or after age 9; another, age 140. Each then guessed his real age. How far apart?",
+  "options": [
+    "About 17 years apart",
+    "Within a year or two",
+    "About 60 years apart"
+  ],
+  "correct": 0,
+  "answer": "About 17 years apart. The average guess was 50 after the age-9 question and 67 after the age-140 one, although nobody could have believed either number. An absurd anchor still sends the mind looking for reasons the answer might be near it, and those reasons stick. Gandhi died at 78.",
+  "move": "A number you reject out of hand can still steer your guess.",
+  "ask": "When someone opens with an outrageous figure, do I notice it shaping my reply anyway?",
+  "trap": "Within a year or two: an impossible number should be ignored.",
+  "keywords": [
+    "anchoring",
+    "implausible anchors",
+    "estimation",
+    "gandhi"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Strack & Mussweiler, JPSP, 1997",
+  "source_kind": "paper",
+  "reference": "Strack & Mussweiler, Explaining the enigmatic anchoring effect: Mechanisms of selective accessibility, Journal of Personality and Social Psychology, 1997",
+  "written": "2026-10-03"
+}

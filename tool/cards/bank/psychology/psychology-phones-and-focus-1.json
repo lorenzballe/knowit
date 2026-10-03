@@ -1,0 +1,33 @@
+{
+  "id": "psychology-phones-and-focus-1",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.phones_and_focus",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does a phone buzz cost attention even when its owner never looks at the phone?",
+  "answer": "Yes. People doing a dull attention task made more errors after their phone buzzed or chimed with a message, even though they did not touch it, and the drop was comparable to that seen in people who actually read or answered. The alert alone starts the mind drafting a reply.",
+  "move": "An alert you ignore still takes a slice of attention.",
+  "ask": "Which alerts on my phone could I switch off today without missing anything that matters?",
+  "keywords": [
+    "notifications",
+    "smartphones",
+    "attention",
+    "errors"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stothart, Mitchum & Yehnert, JEP: HPP, 2015",
+  "source_kind": "paper",
+  "reference": "Stothart, Mitchum & Yehnert, The attentional cost of receiving a cell phone notification, Journal of Experimental Psychology: Human Perception and Performance, 2015",
+  "written": "2026-10-03"
+}

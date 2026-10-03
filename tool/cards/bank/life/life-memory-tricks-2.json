@@ -1,0 +1,33 @@
+{
+  "id": "life-memory-tricks-2",
+  "topic": "life",
+  "genre": "life.learn_anything",
+  "strand": "life.learn_anything.memory_tricks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Given 40 seconds per word, why do people who draw each word remember more than those who write it out?",
+  "answer": "Because drawing forces several kinds of processing. Wammes, Meade and Fernandes found that drawing a word's meaning beat writing it out repeatedly, and the gain held across many versions of the task. A drawing needs the meaning, a picture in the mind and a movement of the hand: three routes back to the word.",
+  "move": "Turn what you must remember into a quick sketch, however bad.",
+  "ask": "What will I need to remember this week that I could sketch in thirty seconds instead of writing out?",
+  "keywords": [
+    "drawing effect",
+    "memory",
+    "sketching",
+    "recall"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wammes, Meade and Fernandes, QJEP, 2016",
+  "source_kind": "paper",
+  "reference": "Wammes, Meade and Fernandes, The drawing effect: Evidence for reliable and robust memory benefits in free recall, Quarterly Journal of Experimental Psychology, 2016",
+  "written": "2026-10-03"
+}

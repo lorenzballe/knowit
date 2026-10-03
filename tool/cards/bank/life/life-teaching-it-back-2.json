@@ -1,0 +1,33 @@
+{
+  "id": "life-teaching-it-back-2",
+  "topic": "life",
+  "genre": "life.learn_anything",
+  "strand": "life.learn_anything.teaching_it_back",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Is expecting to teach enough, or does explaining the material out loud add something more?",
+  "answer": "Explaining adds more, and it lasts. Fiorella and Mayer had students study a lesson either for a test, expecting to teach it, or expecting to teach and then recording a short video lecture. Both teaching groups did better at once, but a week later only those who had recorded the lecture kept a clear edge.",
+  "move": "Say it out loud to someone, even a camera, to make it last.",
+  "ask": "What did I learn this month that I could explain aloud to someone, today, in five minutes?",
+  "keywords": [
+    "learning by teaching",
+    "explaining",
+    "video lecture",
+    "retention"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fiorella and Mayer, Contemporary Educational Psychology, 2013",
+  "source_kind": "paper",
+  "reference": "Fiorella and Mayer, The relative benefits of learning by teaching and teaching expectancy, Contemporary Educational Psychology, 2013",
+  "written": "2026-10-03"
+}

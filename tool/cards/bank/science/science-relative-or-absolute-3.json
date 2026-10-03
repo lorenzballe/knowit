@@ -1,0 +1,40 @@
+{
+  "id": "science-relative-or-absolute-3",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.relative_or_absolute",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Eating 50 g of processed meat daily raises bowel cancer risk by 18%. If 6 in 100 would get it anyway, how many now?",
+  "options": [
+    "About 24 in 100",
+    "About 7 in 100",
+    "About 18 in 100"
+  ],
+  "correct": 1,
+  "answer": "About 7 in 100. The 18% is a relative rise, a share of the existing risk: 18% of 6 is about one more case per 100 people. That was the estimate of the World Health Organization's cancer agency in 2015. Real and worth knowing, and a long way from headlines that set bacon beside cigarettes.",
+  "move": "Ask whether a percentage is of the risk or of the people.",
+  "ask": "Which scary percentage have I believed without asking what it was a percentage of?",
+  "trap": "About 24 in 100, adding 18 percentage points to the 6.",
+  "keywords": [
+    "processed meat",
+    "bowel cancer",
+    "relative risk",
+    "iarc"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bouvard et al., Lancet Oncology, 2015",
+  "source_kind": "paper",
+  "reference": "Bouvard et al., Carcinogenicity of consumption of red and processed meat, Lancet Oncology 16:1599–1600, 2015",
+  "written": "2026-09-26"
+}

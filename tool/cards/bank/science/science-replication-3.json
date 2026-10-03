@@ -1,0 +1,39 @@
+{
+  "id": "science-replication-3",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.replication",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "True or false: the first studies to report a medical effect tend to report a bigger one than later studies?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. John Ioannidis followed 45 highly cited clinical studies claiming a treatment worked: 7 were contradicted by later research and 7 more had found stronger effects than later work did. Small early studies catch the lucky highs, and the striking ones get published and cited. Larger studies then drift back towards the true, smaller size.",
+  "move": "Expect a dramatic first number to shrink when it is measured again.",
+  "ask": "Which first impression, of a person or a plan, have I not yet given the chance to settle back?",
+  "trap": "False, since later studies simply confirm what the first one found.",
+  "keywords": [
+    "decline effect",
+    "clinical research",
+    "replication",
+    "effect size"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ioannidis, JAMA, 2005",
+  "source_kind": "paper",
+  "reference": "Ioannidis, Contradicted and initially stronger effects in highly cited clinical research, JAMA 294:218–228, 2005",
+  "written": "2026-09-26"
+}

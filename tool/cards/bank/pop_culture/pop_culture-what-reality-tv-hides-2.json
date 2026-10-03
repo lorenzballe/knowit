@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-what-reality-tv-hides-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.what_reality_tv_hides",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are the people who shape the plots of reality shows usually credited as producers, not writers?",
+  "answer": "Because writers are unionised and producers are not. Calling the job story producing kept these shows outside Writers Guild contracts, with their minimum pay, health cover and residuals, the fees paid on reruns. The plots are still built: casting for conflict, setting up scenes, and cutting hundreds of hours of footage into arcs.",
+  "move": "Check the job title against the work actually being done.",
+  "ask": "Does my job title describe the work I actually do, and who benefits from the gap?",
+  "keywords": [
+    "story producers",
+    "writers guild",
+    "residuals",
+    "reality television"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pozner, Reality Bites Back, 2010",
+  "source_kind": "book",
+  "reference": "Jennifer L. Pozner, Reality Bites Back: The Troubling Truth About Guilty Pleasure TV, Seal Press, 2010",
+  "written": "2026-09-26"
+}

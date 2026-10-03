@@ -1,0 +1,40 @@
+{
+  "id": "economics-who-wins-from-trade-3",
+  "topic": "economics",
+  "genre": "economics.trade_routes",
+  "strand": "economics.trade_routes.who_wins_from_trade",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "If a country stopped trading with the rest of the world, whose spending power would fall the most?",
+  "options": [
+    "The richest tenth of households",
+    "Both about equally",
+    "The poorest tenth of households"
+  ],
+  "correct": 2,
+  "answer": "The poorest tenth of households. Across 40 countries, closing trade would cut real income by about 63% for the poorest tenth and 28% for the richest tenth, on average. Poorer families spend more of their money on food and goods that cross borders; richer ones spend more on local services such as restaurants and care.",
+  "move": "Ask what share of each budget a change touches, not who buys luxuries.",
+  "ask": "Which of the everyday things I buy cheaply exist only because they cross a border?",
+  "trap": "Picturing imported luxuries, so assuming the rich would lose most.",
+  "keywords": [
+    "gains from trade",
+    "inequality",
+    "household budgets",
+    "imports"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fajgelbaum and Khandelwal, QJE, 2016",
+  "source_kind": "paper",
+  "reference": "https://www.nber.org/system/files/working_papers/w20331/w20331.pdf",
+  "written": "2026-10-03"
+}

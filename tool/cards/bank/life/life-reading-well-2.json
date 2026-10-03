@@ -1,0 +1,39 @@
+{
+  "id": "life-reading-well-2",
+  "topic": "life",
+  "genre": "life.learn_anything",
+  "strand": "life.learn_anything.reading_well",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: training your eyes to move faster can let you read 1,000 words a minute with full understanding?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Rayner and colleagues reviewed the evidence and found that reading speed is limited mainly by how fast words can be recognised and understood, not by the eyes. Speed-reading methods amount to skimming: faster, with understanding falling as speed rises. Skimming has its uses, but it misses the detail a careful reader catches.",
+  "move": "The limit on reading is understanding, so extra speed costs comprehension.",
+  "ask": "When I read something important, am I racing to finish it or reading to understand it?",
+  "trap": "Eyes seem to be the bottleneck, so training them should help.",
+  "keywords": [
+    "speed reading",
+    "comprehension",
+    "eye movements",
+    "skimming"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rayner and colleagues, PSPI, 2016",
+  "source_kind": "paper",
+  "reference": "Rayner, Schotter, Masson, Potter and Treiman, So Much to Read, So Little Time: How Do We Read, and Can Speed Reading Help?, Psychological Science in the Public Interest, 2016",
+  "written": "2026-10-03"
+}

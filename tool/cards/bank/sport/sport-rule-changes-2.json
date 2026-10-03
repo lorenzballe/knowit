@@ -1,0 +1,43 @@
+{
+  "id": "sport-rule-changes-2",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.rule_changes",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "After a 19–18 NBA game, an owner wanted about 120 shots in 48 minutes. At most how many seconds per shot?",
+  "value": 24,
+  "unit": "seconds",
+  "answer": "24 seconds per possession: the shot clock the NBA adopted in 1954",
+  "move": "Set a limit by working back from the outcome you want.",
+  "ask": "What result do I want each week, and what time limit, worked back from it, would make it happen?",
+  "trap": "Expecting a round number like 30, picked for convenience.",
+  "hint": "Turn the whole game into seconds first.",
+  "steps": [
+    "48 minutes × 60 = 2,880 seconds of play",
+    "2,880 seconds ÷ 120 shots = 24 seconds",
+    "24 seconds per possession: the shot clock the NBA adopted in 1954"
+  ],
+  "keywords": [
+    "shot clock",
+    "danny biasone",
+    "nba",
+    "stalling",
+    "24 seconds"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Naismith Basketball Hall of Fame, Danny Biasone",
+  "source_kind": "institution",
+  "reference": "Naismith Memorial Basketball Hall of Fame, Danny Biasone, contributor, enshrined 2000",
+  "written": "2026-10-03"
+}

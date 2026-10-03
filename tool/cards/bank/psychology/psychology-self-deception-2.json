@@ -1,0 +1,39 @@
+{
+  "id": "psychology-self-deception-2",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.self_deception",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: people told a strip test shows a health risk tend to retest more than those told they are fine?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Volunteers tested their saliva on a strip said to detect an enzyme problem. Those whose strip signalled a risk took longer to accept the result, judged the test less accurate and were more likely to retest; those given good news accepted it quickly. Unwelcome evidence gets an audit that welcome evidence never faces.",
+  "move": "Give pleasant evidence the same scrutiny you give unpleasant evidence.",
+  "ask": "Which good news about myself have I accepted without the questions I would ask of bad news?",
+  "trap": "False: people should check good and bad news equally hard.",
+  "keywords": [
+    "motivated scepticism",
+    "health test",
+    "self-deception",
+    "evidence"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ditto & Lopez, JPSP, 1992",
+  "source_kind": "paper",
+  "reference": "Ditto & Lopez, Motivated skepticism: Use of differential decision criteria for preferred and nonpreferred conclusions, Journal of Personality and Social Psychology, 1992",
+  "written": "2026-10-03"
+}

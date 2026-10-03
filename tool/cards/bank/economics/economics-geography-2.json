@@ -8,11 +8,11 @@
   "principle": "confounding",
   "question": "Among lands colonised by Europeans, which tend to be richest today?",
   "options": [
-    "Those richest in 1500",
     "Those poorest in 1500",
+    "Those richest in 1500",
     "No link with 1500"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Those poorest in 1500. Using city sizes and population density, Acemoglu, Johnson and Robinson showed that the most prosperous places of 1500, such as the Aztec and Inca lands or Mughal India, are poorer today than once-empty North America or Australia. The soil and climate stayed; the rules colonisers built there changed.",
   "move": "If the land stayed the same and fortunes flipped, look at the rules.",
   "ask": "When I blame where I started for how things turned out, what rules could I change instead?",

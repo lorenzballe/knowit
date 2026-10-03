@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. Gh says f only at the end of a syllable, as in tough, never at the start of a word. O says i only in women. Ti says sh only before a vowel in an ending, as in nation. Placed where ghoti puts them, those letters cannot spell fish. English spelling is messy, but not random.",
+  "answer": "False. Gh says f only at the end of a syllable, as in tough, never at the start of a word. O says i only in women. Ti says sh only before a vowel in an ending, as in nation. Placed where ghoti puts them, those letters cannot spell fish. Messy, not random.",
   "move": "A rule that looks broken may be following a condition nobody named.",
   "ask": "Where have I called something random before learning the condition it follows?",
   "trap": "True, because each letter group does make that sound somewhere.",

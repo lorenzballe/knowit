@@ -1,0 +1,33 @@
+{
+  "id": "medicine-bad-cures-3",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.bad_cures",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In the 1980s, doctors widely gave drugs that calmed irregular heartbeats after heart attacks. What did a trial find?",
+  "answer": "The drugs killed. In the Cardiac Arrhythmia Suppression Trial, patients on encainide or flecainide died more than twice as often as those on placebo, and the trial was stopped early in 1989. The drugs did tidy the heart tracing. Doctors had judged them by the tracing, not by who stayed alive.",
+  "move": "Improving a measurement is not the same as improving what it was meant to measure.",
+  "ask": "Which number am I working to improve that may not be the thing I really care about?",
+  "keywords": [
+    "cardiac arrhythmia suppression trial",
+    "flecainide",
+    "surrogate endpoints",
+    "heart attack"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Echt et al., NEJM, 1991",
+  "source_kind": "paper",
+  "reference": "Echt et al., Mortality and morbidity in patients receiving encainide, flecainide, or placebo: the Cardiac Arrhythmia Suppression Trial, New England Journal of Medicine, 1991",
+  "written": "2026-10-03"
+}

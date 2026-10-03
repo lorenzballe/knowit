@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-parasocial-bonds-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.parasocial_bonds",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "In the month after Princess Diana's funeral in 1997, what happened to suicides in England and Wales?",
+  "options": [
+    "They fell slightly",
+    "They rose by about a sixth",
+    "No measurable change"
+  ],
+  "correct": 1,
+  "answer": "They rose by about a sixth. Hawton and colleagues found suicides 17% above the expected level in the following month, and 45% higher among women aged 25 to 44, the group most like her; self-harm rose too. Grief for someone known only through screens and pages showed up in national statistics.",
+  "move": "A loss can cut deep even when the bond only ran one way.",
+  "ask": "When a famous death hits me hard, do I let myself treat it as real grief?",
+  "trap": "Grief for a stranger seems too slight to move national figures.",
+  "keywords": [
+    "princess diana",
+    "grief",
+    "suicide statistics",
+    "england and wales"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hawton et al., British Journal of Psychiatry, 2000",
+  "source_kind": "paper",
+  "reference": "Keith Hawton et al., Effect of death of Diana, Princess of Wales on suicide and deliberate self-harm, British Journal of Psychiatry, 2000",
+  "written": "2026-09-26"
+}

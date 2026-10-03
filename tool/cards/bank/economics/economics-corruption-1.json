@@ -8,11 +8,11 @@
   "principle": "reflection",
   "question": "In 600 Indonesian village road projects, what cut the money that went missing most?",
   "options": [
-    "Village monitoring meetings",
     "Certain government audits",
+    "Village monitoring meetings",
     "Both about equally"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Certain government audits. Benjamin Olken had engineers measure the roads and compare them with the books. Raising the chance of an audit from 4% to 100% cut missing spending by about 8 percentage points. Inviting villagers to monitoring meetings barely touched it, since most theft was in materials no villager could weigh.",
   "move": "Oversight works when the watcher can see where the loss happens.",
   "ask": "Where do I rely on someone keeping an eye on things they have no way of measuring?",

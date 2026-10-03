@@ -1,0 +1,44 @@
+{
+  "id": "sport-regression-3",
+  "topic": "sport",
+  "genre": "sport.luck_or_skill",
+  "strand": "sport.luck_or_skill.regression",
+  "also": [
+    "sport.sport_and_numbers.moneyball"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "Which better predicts a baseball pitcher's next season: his strikeouts, or how many balls hit into play fell for hits?",
+  "options": [
+    "His strikeouts",
+    "Hits on balls in play",
+    "Both predict equally well"
+  ],
+  "correct": 0,
+  "answer": "His strikeouts. In 2001 Voros McCracken showed that the share of balls in play that become hits swings from year to year with little link to the pitcher, so it drifts back toward the league average. Strikeouts and walks are his own work, and they repeat. A lucky year shows up first in that share.",
+  "move": "Trust the numbers a person controls, and expect the rest to drift back.",
+  "ask": "Which of my results depend on me, and which am I taking credit or blame for unfairly?",
+  "trap": "Trusting hits allowed because they decide the scoreboard.",
+  "keywords": [
+    "baseball",
+    "pitching",
+    "strikeouts",
+    "balls in play",
+    "sabermetrics"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McCracken, Baseball Prospectus, 2001",
+  "source_kind": "news_archive",
+  "reference": "Voros McCracken, Pitching and Defense: How Much Control Do Hurlers Have?, Baseball Prospectus, 23 January 2001",
+  "written": "2026-10-03"
+}

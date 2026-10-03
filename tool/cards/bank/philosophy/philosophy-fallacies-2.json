@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-fallacies-2",
+  "topic": "philosophy",
+  "genre": "philosophy.arguments",
+  "strand": "philosophy.arguments.fallacies",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Nothing is better than lasting happiness. A cheese sandwich is better than nothing. So a sandwich beats happiness. Where is the flaw?",
+  "options": [
+    "The second premise is false",
+    "Happiness cannot be ranked",
+    "The word nothing changes meaning"
+  ],
+  "correct": 2,
+  "answer": "The word nothing changes meaning. In the first line it means no thing at all is better; in the second it means having nothing. An argument that swaps meanings midway can prove anything. Real cases are quieter: only a theory slides from the scientist's tested explanation to the everyday hunch.",
+  "move": "When an argument surprises you, check whether a key word quietly changed meaning.",
+  "ask": "In my last heated argument, were we both using the key word in the same sense?",
+  "trap": "The second premise, since a sandwich seems a poor rival to anything.",
+  "keywords": [
+    "equivocation",
+    "ambiguity",
+    "fallacy",
+    "meaning",
+    "theory"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Walton, Fallacies Arising from Ambiguity, 1996",
+  "source_kind": "book",
+  "reference": "Walton, Fallacies Arising from Ambiguity, Kluwer Academic Publishers, 1996",
+  "written": "2026-10-03"
+}

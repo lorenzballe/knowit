@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-consciousness-3",
+  "topic": "philosophy",
+  "genre": "philosophy.big_questions",
+  "strand": "philosophy.big_questions.consciousness",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Could an artificial intelligence system ever be conscious, with experiences of its own?",
+  "sides": [
+    "Yes, in principle",
+    "No, never"
+  ],
+  "answer": "Yes, in principle. If consciousness depends on what a system does, how it processes and integrates information, then the material should not matter. A 2023 report by Patrick Butlin, Robert Long and colleagues checked AI systems against scientific theories of consciousness and found no obvious technical barrier to building ones that meet the indicators.",
+  "move": "It turns on whether consciousness depends on what a system does or is made of.",
+  "ask": "When something talks like it has feelings, what would I need to know before believing it?",
+  "counterpoint": "John Searle argued in 1980 that following rules for symbols is not understanding them: a man in a room matching Chinese characters by a rulebook understands no Chinese. A language model is trained to produce the words people use about feelings, so its talk of feelings is exactly what it would say without any.",
+  "keywords": [
+    "artificial intelligence",
+    "consciousness",
+    "chinese room",
+    "john searle",
+    "functionalism"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Butlin, Long et al., arXiv, 2023",
+  "source_kind": "paper",
+  "reference": "Butlin, Long et al., Consciousness in Artificial Intelligence: Insights from the Science of Consciousness, arXiv:2308.08708, 2023; Searle, Minds, Brains, and Programs, Behavioral and Brain Sciences 3 (3), 1980",
+  "written": "2026-10-03"
+}

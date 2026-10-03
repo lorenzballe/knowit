@@ -1,0 +1,43 @@
+{
+  "id": "economics-inflation-3",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.inflation",
+  "also": [
+    "economics.read_money_news.averages_that_mislead"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: in Britain in 2022, low-income households faced a higher rate of inflation than high-income ones?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In October 2022 the Office for National Statistics measured 13.5% for low-income households, 2.0 points above high-income ones. Energy and food took 46.1% of poorer households' spending against 37.9% for richer ones, and those were the prices that soared. One headline rate covered very different shopping baskets.",
+  "move": "An official average describes a basket that may not be yours.",
+  "ask": "What do I spend most on, and has that risen faster than the headline rate?",
+  "trap": "Assuming the single inflation figure applies to every household alike.",
+  "keywords": [
+    "inflation",
+    "household costs",
+    "energy prices",
+    "low-income households",
+    "ons"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ONS, Inflation and household groups, 2022",
+  "source_kind": "statistics",
+  "reference": "https://www.ons.gov.uk/economy/inflationandpriceindices/articles/inflationandthecostoflivingforhouseholdgroups/october2022",
+  "written": "2026-10-03"
+}

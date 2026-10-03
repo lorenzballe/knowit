@@ -1,0 +1,41 @@
+{
+  "id": "sport-pressure-2",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.pressure",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "PGA Tour pros face two putts of equal length, one for birdie and one for par. Which do they hole more often?",
+  "options": [
+    "The birdie putt",
+    "The par putt",
+    "Both equally often"
+  ],
+  "correct": 1,
+  "answer": "The par putt. Pope and Schweitzer analysed millions of laser-measured putts and found par putts holed a few percentage points more often than birdie putts from the same distance. Missing par feels like losing a stroke; missing birdie, like failing to gain one. So birdie putts are struck more timidly and stop short.",
+  "move": "A loss looms larger than an equal gain, so check your caution.",
+  "ask": "Am I playing safer when chasing a gain than when avoiding a loss of the same size?",
+  "trap": "Assuming top professionals putt the same whatever the score.",
+  "keywords": [
+    "golf",
+    "putting",
+    "loss aversion",
+    "par",
+    "birdie"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pope & Schweitzer, American Economic Review, 2011",
+  "source_kind": "paper",
+  "reference": "Devin G. Pope & Maurice E. Schweitzer, Is Tiger Woods Loss Averse? Persistent Bias in the Face of Experience, Competition, and High Stakes, American Economic Review, 2011",
+  "written": "2026-10-03"
+}

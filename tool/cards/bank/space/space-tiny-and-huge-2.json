@@ -1,0 +1,36 @@
+{
+  "id": "space-tiny-and-huge-2",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.tiny_and_huge",
+  "also": [
+    "science.physics.quantum"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If atoms are almost entirely empty space, why can't a hand pass straight through a table?",
+  "answer": "Empty is the wrong picture. The nucleus is tiny, but electrons fill the whole atom as a cloud, and two clouds cannot squeeze into one space: electrons refuse to share a state, and their charges repel. A 1967 proof showed this rule is what stops matter collapsing. The table pushes back with its electrons.",
+  "move": "Empty by one measure can be full by the measure that counts.",
+  "ask": "Which thing I dismiss as empty or useless is full by a measure I'm not using?",
+  "keywords": [
+    "atoms",
+    "electrons",
+    "pauli exclusion principle",
+    "solidity"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dyson & Lenard, Journal of Mathematical Physics, 1967",
+  "source_kind": "paper",
+  "reference": "Dyson & Lenard, Stability of Matter. I, Journal of Mathematical Physics, 1967",
+  "written": "2026-10-03"
+}

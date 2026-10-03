@@ -1,0 +1,42 @@
+{
+  "id": "science-sample-size-2",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.sample_size",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A poll of 1,000 people has a margin of error of about 3 points. How many people would it take to halve it?",
+  "value": 4000,
+  "unit": "people",
+  "answer": "1,000 × 4 = 4,000 people.",
+  "move": "Precision gets expensive: halving the doubt costs four times the evidence.",
+  "ask": "How much more evidence would I need to be twice as sure of something I believe?",
+  "trap": "Doubling to 2,000, as if error fell in step with size.",
+  "hint": "Ask how the error depends on the square root of the number asked.",
+  "steps": [
+    "The margin of error shrinks with the square root of the sample size.",
+    "Halving it means doubling the square root, so the sample grows fourfold.",
+    "1,000 × 4 = 4,000 people."
+  ],
+  "keywords": [
+    "opinion polls",
+    "margin of error",
+    "sample size",
+    "square root"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Freedman, Pisani & Purves, Statistics, 2007",
+  "source_kind": "book",
+  "reference": "Freedman, Pisani & Purves, Statistics, 4th ed., W. W. Norton, 2007",
+  "written": "2026-09-26"
+}

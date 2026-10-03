@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-nostalgia-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.nostalgia",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "How old were people, typically, when the songs they still love most today were first released?",
+  "options": [
+    "In their early teens",
+    "In their mid-twenties",
+    "Around thirty"
+  ],
+  "correct": 0,
+  "answer": "In their early teens. Analysing Spotify data, Seth Stephens-Davidowitz found men's favourite songs came out when they were about 14, women's about 13. That helps explain why a decade returns once its teenagers reach their forties and run studios, stations and advertising budgets: the 1990s revival is their adolescence on sale.",
+  "move": "What moved you at fourteen still sets much of your taste.",
+  "ask": "Which of my tastes did I actually choose, and which did I just absorb at fourteen?",
+  "trap": "Assuming taste peaks in one's twenties, the years of clubs and gigs.",
+  "keywords": [
+    "spotify",
+    "favourite songs",
+    "adolescence",
+    "nostalgia"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stephens-Davidowitz, The New York Times, 2018",
+  "source_kind": "news_archive",
+  "reference": "Seth Stephens-Davidowitz, The Songs That Bind, The New York Times, 10 February 2018",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-stoic-tools-2",
+  "topic": "philosophy",
+  "genre": "philosophy.living_well",
+  "strand": "philosophy.living_well.stoic_tools",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A Stoic tennis player wants to win, which is only partly up to her. What goal does William Irvine suggest instead?",
+  "options": [
+    "To stop caring about the result",
+    "To win, but expect to lose",
+    "To play as well as she can"
+  ],
+  "correct": 2,
+  "answer": "To play as well as she can. Irvine argues that most goals are partly in our control, so a Stoic internalises them: train, prepare, give her best. She still tries to win; she just measures herself by what she did. The scoreboard becomes information, not a verdict.",
+  "move": "Set goals you can meet by effort, and let the score be information.",
+  "ask": "Which goal of mine depends on other people's choices, and what part of it is actually mine?",
+  "trap": "To stop caring, the usual picture of Stoic indifference.",
+  "keywords": [
+    "william irvine",
+    "dichotomy of control",
+    "goals",
+    "stoicism",
+    "tennis"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Irvine, A Guide to the Good Life, 2009",
+  "source_kind": "book",
+  "reference": "Irvine, A Guide to the Good Life: The Ancient Art of Stoic Joy, Oxford University Press, 2009",
+  "written": "2026-10-03"
+}

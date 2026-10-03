@@ -1,0 +1,40 @@
+{
+  "id": "psychology-remembering-better-3",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.remembering_better",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Given time to memorise each word on a list, which way of using that time led to the best recall later?",
+  "options": [
+    "Writing the word out repeatedly",
+    "Listing its physical features",
+    "Drawing a quick picture of it"
+  ],
+  "correct": 2,
+  "answer": "Drawing a quick picture of it. Across several experiments, drawn words were recalled far better than words written out over and over, and better than words described by their features, even among people with no talent for drawing. A sketch forces meaning, an image and a hand movement into one memory.",
+  "move": "Turn what you want to keep into something you make, not copy.",
+  "ask": "What am I trying to learn right now that I could sketch rather than copy out?",
+  "trap": "Writing it out repeatedly, because copying feels like the most diligent work.",
+  "keywords": [
+    "drawing effect",
+    "memory",
+    "note taking",
+    "recall"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wammes, Meade & Fernandes, QJEP, 2016",
+  "source_kind": "paper",
+  "reference": "Wammes, Meade & Fernandes, The drawing effect: Evidence for reliable and robust memory benefits in free recall, Quarterly Journal of Experimental Psychology, 2016",
+  "written": "2026-10-03"
+}

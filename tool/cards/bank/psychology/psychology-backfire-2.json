@@ -1,0 +1,39 @@
+{
+  "id": "psychology-backfire-2",
+  "topic": "psychology",
+  "genre": "psychology.change_your_mind",
+  "strand": "psychology.change_your_mind.backfire",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: a correction that repeats the myth it is debunking tends to strengthen belief in that myth?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The worry was that repeating a myth makes it familiar, and familiar feels true. Testing this, Ecker, Hogan and Lewandowsky found retractions that restated the myth worked as well as those that avoided it, or better. Naming the myth clearly lets the correction attach to the exact memory it has to overwrite.",
+  "move": "Point straight at the error; a vague correction has nothing to hold on to.",
+  "ask": "When I set the record straight, do I name the exact claim I am correcting?",
+  "trap": "Fearing that repetition makes a myth familiar and so believable.",
+  "keywords": [
+    "myths",
+    "debunking",
+    "familiarity",
+    "retractions"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ecker, Hogan & Lewandowsky, JARMAC, 2017",
+  "source_kind": "paper",
+  "reference": "Ecker, Hogan & Lewandowsky, Reminders and repetition of misinformation: helping or hindering its retraction?, Journal of Applied Research in Memory and Cognition, 2017",
+  "written": "2026-10-03"
+}

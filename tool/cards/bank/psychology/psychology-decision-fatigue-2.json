@@ -1,0 +1,40 @@
+{
+  "id": "psychology-decision-fatigue-2",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.decision_fatigue",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Over a clinic session, doctors see patient after patient with coughs and colds. Which way do antibiotic prescriptions drift?",
+  "options": [
+    "They fall as caution grows",
+    "They rise as the hours pass",
+    "They stay flat all session"
+  ],
+  "correct": 1,
+  "answer": "They rise as the hours pass. In US primary care, Linder and colleagues found doctors more likely to prescribe antibiotics for respiratory infections later in morning and afternoon sessions. Explaining why a cold needs no antibiotic takes effort; writing the prescription ends the visit. Tired minds drift to whatever closes the conversation.",
+  "move": "When worn down, notice which option merely ends the discussion fastest.",
+  "ask": "Late in a long day, which of my choices is really the one that ends the conversation fastest?",
+  "trap": "Expecting tired doctors to do less, including writing fewer prescriptions.",
+  "keywords": [
+    "antibiotics",
+    "primary care",
+    "time of day",
+    "prescribing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Linder et al., JAMA Internal Medicine, 2014",
+  "source_kind": "paper",
+  "reference": "Linder, Doctor, Friedberg et al., Time of day and the decision to prescribe antibiotics, JAMA Internal Medicine, 2014",
+  "written": "2026-10-03"
+}

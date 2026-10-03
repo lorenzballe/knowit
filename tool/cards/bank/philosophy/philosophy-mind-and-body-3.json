@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-mind-and-body-3",
+  "topic": "philosophy",
+  "genre": "philosophy.big_questions",
+  "strand": "philosophy.big_questions.mind_and_body",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: patients told openly that their pills were sugar pills still reported more relief than untreated patients?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In Ted Kaptchuk's 2010 trial, 80 people with irritable bowel syndrome got either no treatment or pills plainly labelled placebo. After three weeks, 59% of the pill group reported adequate relief, against 35% of the untreated. Ritual, attention and expectation change what a body reports, even without a lie.",
+  "move": "Count the ritual and the attention as part of any treatment.",
+  "ask": "Which of my daily rituals helps me mostly because of the care and attention that come with it?",
+  "trap": "False, assuming a placebo works only when the patient is fooled.",
+  "keywords": [
+    "placebo",
+    "open-label placebo",
+    "ted kaptchuk",
+    "irritable bowel syndrome",
+    "expectation"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kaptchuk et al., PLoS ONE, 2010",
+  "source_kind": "paper",
+  "reference": "Kaptchuk et al., Placebos without Deception: A Randomized Controlled Trial in Irritable Bowel Syndrome, PLoS ONE 5 (12), 2010",
+  "written": "2026-10-03"
+}

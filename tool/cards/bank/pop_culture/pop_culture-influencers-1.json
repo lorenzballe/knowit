@@ -1,0 +1,40 @@
+{
+  "id": "pop_culture-influencers-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.influencers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "Of all YouTube views over a decade, roughly what share went to the top 3% of channels?",
+  "options": [
+    "About 85%",
+    "About 40%",
+    "About 10%"
+  ],
+  "correct": 0,
+  "answer": "About 85%. Mathias Bärtl analysed a large sample of channels from 2006 to 2016 and found that 3% of them drew about 85% of the views, while most drew almost none. The creators everyone has heard of are the few who won, and they make the job look ordinary.",
+  "move": "The successes you see are a sample picked for you by success.",
+  "ask": "Whose success am I measuring myself against, without seeing the many who tried and vanished?",
+  "trap": "The creators you see seem typical, so views must spread widely.",
+  "keywords": [
+    "youtube",
+    "creators",
+    "views",
+    "winner takes all"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bärtl, Convergence, 2018",
+  "source_kind": "paper",
+  "reference": "Mathias Bärtl, YouTube channels, uploads and views: A statistical analysis of the past 10 years, Convergence, 2018",
+  "written": "2026-09-26"
+}

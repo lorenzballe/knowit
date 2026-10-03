@@ -1,0 +1,33 @@
+{
+  "id": "psychology-steelmanning-1",
+  "topic": "psychology",
+  "genre": "psychology.change_your_mind",
+  "strand": "psychology.change_your_mind.steelmanning",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Before criticising an opponent's view, what should come first, according to rules Dennett popularised?",
+  "answer": "Restating their view so well that they wish they had put it that way. Dennett's version of Rapoport's rules then asks for points of agreement and anything learned from the opponent, and only then a rebuttal. An opponent who feels understood listens; one who feels caricatured only defends. The test is their nod, not yours.",
+  "move": "Earn the right to disagree by first stating the other view at its best.",
+  "ask": "Could I explain the view of someone I disagree with so well that they would nod along?",
+  "keywords": [
+    "daniel dennett",
+    "rapoport's rules",
+    "argument",
+    "disagreement"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dennett, Intuition Pumps, 2013",
+  "source_kind": "book",
+  "reference": "Dennett, Intuition Pumps and Other Tools for Thinking, W. W. Norton, 2013",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-death-1",
+  "topic": "philosophy",
+  "genre": "philosophy.living_well",
+  "strand": "philosophy.living_well.death",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Waking in hospital, you either had ten hours of painful surgery yesterday, now forgotten, or face one hour today. Which did Derek Parfit prefer?",
+  "options": [
+    "One hour today",
+    "Ten hours yesterday"
+  ],
+  "correct": 1,
+  "answer": "Ten hours yesterday. In Reasons and Persons, Parfit admits he would choose the longer pain, as long as it is over. People care far more about what is to come than about what is past. The same bias may explain why the endless time before birth troubles nobody, while the time after death troubles most.",
+  "move": "Notice how differently you weigh the same thing before and after it happens.",
+  "ask": "Which past hardship do I now shrug off that, still ahead of me, would fill me with dread?",
+  "trap": "One hour today, because less pain is surely less pain.",
+  "keywords": [
+    "derek parfit",
+    "bias towards the future",
+    "lucretius",
+    "death",
+    "pain"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Parfit, Reasons and Persons, 1984",
+  "source_kind": "book",
+  "reference": "Parfit, Reasons and Persons, Oxford University Press, 1984, section 64",
+  "written": "2026-10-03"
+}

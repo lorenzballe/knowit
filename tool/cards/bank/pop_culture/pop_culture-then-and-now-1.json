@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-then-and-now-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.then_and_now",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What brought down the printed Encyclopaedia Britannica's sales in the 1990s, years before Wikipedia existed?",
+  "answer": "A cheap CD-ROM. Britannica's sales peaked in 1990, with sets sold door to door for well over $1,000; Microsoft's Encarta cost a small fraction of that or came free with a new PC. Parents had bought the books partly to feel they were helping their children; a computer now did that.",
+  "move": "Find the job a product does for its buyers, and the real rival appears.",
+  "ask": "What job does my work really do for people, and what cheaper thing could do it instead?",
+  "keywords": [
+    "encyclopaedia britannica",
+    "encarta",
+    "cd-rom",
+    "door-to-door sales"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Evans and Wurster, Blown to Bits, 2000",
+  "source_kind": "book",
+  "reference": "Philip Evans and Thomas S. Wurster, Blown to Bits, Harvard Business School Press, 2000",
+  "written": "2026-09-26"
+}

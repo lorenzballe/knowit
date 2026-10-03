@@ -1,0 +1,38 @@
+{
+  "id": "pop_culture-what-reality-tv-hides-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.what_reality_tv_hides",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should reality shows have to tell viewers when a scene was set up or reshot by producers?",
+  "sides": [
+    "Yes, label staged scenes",
+    "No, viewers know the game"
+  ],
+  "answer": "Yes. Viewers judge real people by what they see, and contestants have been hounded online over scenes producers arranged. Britain's broadcasting code already forbids materially misleading the audience; a short on-screen note when a scene was set up or reshot would apply that rule to the genre most built on seeming real.",
+  "move": "Whichever side you took, how much viewers already understand decides it.",
+  "ask": "When I judge someone I saw on a screen, how much of what I saw was arranged?",
+  "counterpoint": "No. Every documentary shapes reality by choosing where to point the camera and what to cut, so labelling only the set-ups would imply the rest is untouched. Audiences have watched these shows for decades and largely understand the format. Rules protecting contestants' welfare would do more good than labels most viewers would soon stop noticing.",
+  "keywords": [
+    "reality television",
+    "staged scenes",
+    "ofcom",
+    "broadcasting code"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ofcom Broadcasting Code, Section Two",
+  "source_kind": "primary_document",
+  "reference": "Ofcom, The Ofcom Broadcasting Code, Section Two: Harm and Offence, rule 2.2, 2019 edition",
+  "written": "2026-09-26"
+}

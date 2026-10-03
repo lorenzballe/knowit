@@ -1,0 +1,39 @@
+{
+  "id": "space-cost-of-space-2",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.cost_of_space",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: NASA spends more than 5 cents of every dollar in the US federal budget?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. NASA's 2023 budget of about $25 billion was about 0.4% of federal spending, under half a cent per dollar. Its share peaked in 1966, during the race to the Moon, at a little over 4%. Launches on the evening news make it look far bigger than its line in the accounts.",
+  "move": "Loud spending is not the same as big spending; check the share.",
+  "ask": "Which cost in my own budget do I overestimate because it is the one I notice most?",
+  "trap": "True, because NASA is in the news far more than most agencies.",
+  "keywords": [
+    "nasa budget",
+    "federal spending",
+    "apollo programme",
+    "public perception"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Office of Management and Budget, Historical Tables",
+  "source_kind": "statistics",
+  "reference": "Office of Management and Budget, Historical Tables, Budget of the U.S. Government, Fiscal Year 2025, 2024",
+  "written": "2026-10-03"
+}

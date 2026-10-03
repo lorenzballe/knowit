@@ -1,0 +1,42 @@
+{
+  "id": "space-odds-of-life-3",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.odds_of_life",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "About 22% of Sun-like stars have an Earth-size planet where water could stay liquid. Out of 20 billion such stars, how many billion planets?",
+  "value": 4.4,
+  "unit": "billion planets",
+  "tolerance": 0.1,
+  "answer": "4.4 billion planets: places to look, not places known to hold life.",
+  "move": "Counting the chances is not the same as knowing the odds of each.",
+  "ask": "When I hear there are many opportunities out there, do I know the odds of any single one?",
+  "hint": "Turn the percentage into a fraction and multiply.",
+  "steps": [
+    "22% = 0.22.",
+    "0.22 × 20 billion = 4.4 billion.",
+    "4.4 billion planets: places to look, not places known to hold life."
+  ],
+  "keywords": [
+    "habitable zone",
+    "kepler mission",
+    "earth-size planets",
+    "sun-like stars"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Petigura, Howard & Marcy, PNAS, 2013",
+  "source_kind": "paper",
+  "reference": "doi:10.1073/pnas.1319909110",
+  "written": "2026-10-03"
+}

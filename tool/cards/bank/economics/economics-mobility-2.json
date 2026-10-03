@@ -1,0 +1,40 @@
+{
+  "id": "economics-mobility-2",
+  "topic": "economics",
+  "genre": "economics.inequality",
+  "strand": "economics.inequality.mobility",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Of Americans born in the early 1980s, how many earn more than their parents did at the same age?",
+  "options": [
+    "About half",
+    "About 90%",
+    "About 70%"
+  ],
+  "correct": 0,
+  "answer": "About half. Chetty and colleagues found that about 90% of Americans born in 1940 out-earned their parents after inflation, but only about 50% of those born in the 1980s. Most of the fall came from growth flowing to the top, not slower growth. Out-earning one's parents stopped being the default.",
+  "move": "An economy can grow while the typical person stops moving up.",
+  "ask": "Am I measuring my progress against my parents, or against what the economy as a whole has gained?",
+  "trap": "About 90%, since a growing economy lifts each new generation.",
+  "keywords": [
+    "absolute mobility",
+    "american dream",
+    "raj chetty",
+    "generations"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chetty et al., Science, 2017",
+  "source_kind": "paper",
+  "reference": "Chetty, Grusky, Hell, Hendren, Manduca & Narang, The Fading American Dream: Trends in Absolute Income Mobility Since 1940, Science, 2017",
+  "written": "2026-10-03"
+}

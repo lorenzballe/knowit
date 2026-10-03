@@ -1,0 +1,40 @@
+{
+  "id": "life-starting-again-3",
+  "topic": "life",
+  "genre": "life.handle_setbacks",
+  "strand": "life.handle_setbacks.starting_again",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Among the fastest-growing US start-ups, what was the founder's average age when the company began?",
+  "options": [
+    "About 35",
+    "About 45",
+    "About 25"
+  ],
+  "correct": 1,
+  "answer": "About 45. Azoulay, Jones, Kim and Miranda used US Census records on millions of founders; for the top 0.1% fastest-growing firms the average founding age was 45. A founder of 50 was nearly twice as likely as one of 30 to build such a firm. Experience, contacts and savings arrive with age.",
+  "move": "Judge what is typical from the whole record, not the famous cases.",
+  "ask": "What am I telling myself I am too old to start, and is that true for most people who do?",
+  "trap": "Famous young founders make about 25 seem typical.",
+  "keywords": [
+    "founders",
+    "start-ups",
+    "age",
+    "entrepreneurship"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Azoulay and colleagues, AER: Insights, 2020",
+  "source_kind": "paper",
+  "reference": "Azoulay, Jones, Kim and Miranda, Age and High-Growth Entrepreneurship, American Economic Review: Insights, 2020",
+  "written": "2026-10-03"
+}

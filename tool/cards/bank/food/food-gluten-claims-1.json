@@ -1,0 +1,39 @@
+{
+  "id": "food-gluten-claims-1",
+  "topic": "food",
+  "genre": "food.bread_and_baking",
+  "strand": "food.bread_and_baking.gluten_claims",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: wheat bred over the last century carries far more gluten than the wheat farmers grew around 1900?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A 2013 review of US wheat records found no clear rise in protein or gluten content across the twentieth century. What did rise was gluten added as an ingredient: Americans' intake of vital wheat gluten, a powder bakers mix in, roughly tripled after 1977. The change came from the factory, not the field.",
+  "move": "When a problem grows, check what was added before blaming what changed.",
+  "ask": "When something in my life gets worse, do I look at what I added, or only at what changed?",
+  "trap": "Modern wheat is blamed so often that the breeding story feels proven.",
+  "keywords": [
+    "wheat breeding",
+    "gluten",
+    "vital wheat gluten",
+    "coeliac disease"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kasarda, J. Agric. Food Chem., 2013",
+  "source_kind": "paper",
+  "reference": "Kasarda, Can an increase in celiac disease be attributed to an increase in the gluten content of wheat as a consequence of wheat breeding?, Journal of Agricultural and Food Chemistry, 2013",
+  "written": "2026-10-03"
+}

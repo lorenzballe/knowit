@@ -1,0 +1,41 @@
+{
+  "id": "life-reading-well-1",
+  "topic": "life",
+  "genre": "life.learn_anything",
+  "strand": "life.learn_anything.reading_well",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Adults read fiction silently at about 260 words a minute. How many hours does a 78,000-word novel take?",
+  "value": 5,
+  "unit": "hours",
+  "answer": "300 ÷ 60 = 5 hours",
+  "move": "Turn a vague effort into minutes and it often shrinks.",
+  "ask": "If I read twenty minutes a day, how many books would that make in a year, and which would I choose?",
+  "trap": "A thick novel feels like weeks of work.",
+  "hint": "Divide the words by the speed, then turn minutes into hours.",
+  "steps": [
+    "78,000 ÷ 260 = 300 minutes",
+    "300 ÷ 60 = 5 hours"
+  ],
+  "keywords": [
+    "reading speed",
+    "novels",
+    "words per minute",
+    "reading time"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brysbaert, J. Memory and Language, 2019",
+  "source_kind": "paper",
+  "reference": "Brysbaert, How many words do we read per minute? A review and meta-analysis of reading rate, Journal of Memory and Language, 2019",
+  "written": "2026-10-03"
+}

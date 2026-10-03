@@ -1,0 +1,42 @@
+{
+  "id": "psychology-multitasking-2",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.multitasking",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Two jobs each need 60 minutes. Worked in alternating 10-minute slices, with no switching cost at all, when is the first job finished, in minutes?",
+  "value": 110,
+  "unit": "minutes",
+  "answer": "11 × 10 = 110 minutes.",
+  "move": "Juggling delays every finish line, even before any switching costs are counted.",
+  "ask": "Which one task could I finish first today, instead of nudging three along at once?",
+  "trap": "About 60 minutes, as if splitting time cost nothing.",
+  "hint": "Count which slice in the whole sequence is the first job's last one.",
+  "steps": [
+    "Each job needs 60 ÷ 10 = 6 slices, taken in turn: A, B, A, B and so on.",
+    "The first job's sixth slice is the eleventh slice overall.",
+    "11 × 10 = 110 minutes."
+  ],
+  "keywords": [
+    "multitasking",
+    "scheduling",
+    "deadlines",
+    "time slicing"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pinedo, Scheduling, Springer, 2016",
+  "source_kind": "book",
+  "reference": "Pinedo, Scheduling: Theory, Algorithms, and Systems, 5th ed., Springer, 2016",
+  "written": "2026-10-03"
+}

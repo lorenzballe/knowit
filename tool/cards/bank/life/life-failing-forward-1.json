@@ -1,0 +1,33 @@
+{
+  "id": "life-failing-forward-1",
+  "topic": "life",
+  "genre": "life.handle_setbacks",
+  "strand": "life.handle_setbacks.failing_forward",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In a quiz, people told which answers were wrong learned less than people told which were right. Why?",
+  "answer": "Because failure stings, and people stop paying attention. Eskreis-Winkler and Fishbach gave people the same amount of information through success or failure feedback, and they learned less from failure. When the failures were someone else's, the gap disappeared. The lesson was in the feedback; the ego tuned it out.",
+  "move": "Read your own failures as if they belonged to a stranger.",
+  "ask": "Which recent failure have I avoided looking at closely, and what would a stranger learn from it?",
+  "keywords": [
+    "failure feedback",
+    "ego threat",
+    "learning",
+    "attention"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Eskreis-Winkler and Fishbach, Psychological Science, 2019",
+  "source_kind": "paper",
+  "reference": "Eskreis-Winkler and Fishbach, Not learning from failure: The greatest failure of all, Psychological Science, 2019",
+  "written": "2026-10-03"
+}

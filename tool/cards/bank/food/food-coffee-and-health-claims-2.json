@@ -1,0 +1,39 @@
+{
+  "id": "food-coffee-and-health-claims-2",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.coffee_and_health_claims",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: in pooled studies, people drinking three or four cups of coffee a day died at lower rates than non-drinkers?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. A 2017 BMJ umbrella review of over 200 meta-analyses found the lowest death rates at three to four cups a day, about 17% lower than among non-drinkers. These are observations, not trials, so coffee drinkers may differ in other ways. Pregnancy was the clear exception, where higher intake went with harm.",
+  "move": "Feeling like a vice is not the same as evidence of harm.",
+  "ask": "Which of my habits do I feel guilty about without ever checking the evidence?",
+  "trap": "Coffee feels like a vice, and vices are assumed to shorten life.",
+  "keywords": [
+    "coffee",
+    "mortality",
+    "umbrella review",
+    "observational studies"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Poole et al., BMJ, 2017",
+  "source_kind": "paper",
+  "reference": "Poole, Kennedy, Roderick, Fallowfield, Hayes & Parkes, Coffee consumption and health: umbrella review of meta-analyses of multiple health outcomes, BMJ, 2017",
+  "written": "2026-10-03"
+}

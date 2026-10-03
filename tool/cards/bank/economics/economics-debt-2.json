@@ -1,0 +1,40 @@
+{
+  "id": "economics-debt-2",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.debt",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Elena owes £500 on one card at 10% and £3,000 on another at 25%. To pay least interest, where should spare money go first?",
+  "options": [
+    "The £3,000 at 25%",
+    "The £500, to clear it",
+    "Split equally between them"
+  ],
+  "correct": 0,
+  "answer": "The £3,000 at 25%. Every pound paid there saves 25p a year in interest; on the smaller card it saves 10p. Studies of real borrowers find many favour clearing the small balance, because closing a whole account feels like progress. The lender charges on the rate, not on how many debts are left.",
+  "move": "Rank costs by their rate, not by their size.",
+  "ask": "Which of my debts do I pay off first, and is it the one charging me the most?",
+  "trap": "Clearing the small debt first because closing one feels like progress.",
+  "keywords": [
+    "debt repayment",
+    "interest rates",
+    "credit cards",
+    "debt avalanche"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Amar et al., Journal of Marketing Research, 2011",
+  "source_kind": "paper",
+  "reference": "Amar, Ariely, Ayal, Cryder & Rick, Winning the Battle but Losing the War: The Psychology of Debt Management, Journal of Marketing Research, 2011",
+  "written": "2026-10-03"
+}

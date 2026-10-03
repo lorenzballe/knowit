@@ -1,0 +1,39 @@
+{
+  "id": "economics-luck-3",
+  "topic": "economics",
+  "genre": "economics.inequality",
+  "strand": "economics.inequality.luck",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: Florida lottery winners of $50,000 to $150,000 were less likely to go bankrupt within five years than small winners?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Hankins, Hoekstra and Skiba linked 35,000 Florida winners to court records. Big winners filed for bankruptcy less in the first two years, then more in years three to five, ending at about the same rate as people who won under $10,000. The windfall moved the date of the trouble, not the trouble.",
+  "move": "Money that arrives by luck rarely changes the habits that spend it.",
+  "ask": "If I received a large sum tomorrow, which of my habits would quietly undo it?",
+  "trap": "True, since a windfall that size clears most household debts.",
+  "keywords": [
+    "lottery winners",
+    "bankruptcy",
+    "windfalls",
+    "florida"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hankins, Hoekstra and Skiba, Review of Economics and Statistics, 2011",
+  "source_kind": "paper",
+  "reference": "Hankins, Hoekstra & Skiba, The Ticket to Easy Street? The Financial Consequences of Winning the Lottery, Review of Economics and Statistics, 2011",
+  "written": "2026-10-03"
+}

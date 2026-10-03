@@ -1,0 +1,39 @@
+{
+  "id": "nature-feedback-loops-3",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.feedback_loops",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in Canada's fur-trade records, lynx numbers peaked a year or two after the snowshoe hares they hunt?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Elton and Nicholson traced about a century of Hudson's Bay Company pelt counts and found a cycle of roughly ten years, with lynx peaks trailing hare peaks. More hares feed more lynx; more lynx and dwindling food cut the hares; hungry lynx then crash. The delay keeps the swing going.",
+  "move": "A delay in a balancing loop turns steadiness into swings.",
+  "ask": "Where am I overreacting because I judge results before my last change has had time to work?",
+  "trap": "Predators should rise and fall in step with their prey.",
+  "keywords": [
+    "lynx",
+    "snowshoe hare",
+    "population cycles",
+    "fur trade records"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Elton & Nicholson, Journal of Animal Ecology, 1942",
+  "source_kind": "paper",
+  "reference": "Elton & Nicholson, The ten-year cycle in numbers of the lynx in Canada, Journal of Animal Ecology, 1942",
+  "written": "2026-10-03"
+}

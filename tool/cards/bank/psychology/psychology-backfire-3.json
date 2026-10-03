@@ -1,0 +1,38 @@
+{
+  "id": "psychology-backfire-3",
+  "topic": "psychology",
+  "genre": "psychology.change_your_mind",
+  "strand": "psychology.change_your_mind.backfire",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should social networks attach warning labels to false posts rather than delete them?",
+  "sides": [
+    "Yes, label them",
+    "No, remove them"
+  ],
+  "answer": "Labels inform without silencing. Experiments find fact-check tags cut belief in, and sharing of, flagged claims, and corrections rarely backfire. Deletion hands the author a censorship story, pushes followers to platforms no correction reaches, and makes a company the judge of truth. A label keeps the false post and its rebuttal side by side.",
+  "move": "Whichever side you took, the hinge is what happens to the posts nobody checks.",
+  "ask": "When something I see online carries no warning, do I treat that as a sign it has been checked?",
+  "counterpoint": "Labels arrive late and leak. Pennycook and colleagues found an implied truth effect: once some false headlines carried warnings, unlabelled false ones were believed more, as if checked. Fact-checkers can tag only a sliver of what spreads, and corrected beliefs tend to drift back within weeks. For harmful falsehoods, removal stops the spread at its source.",
+  "keywords": [
+    "social media",
+    "fact-checking",
+    "warning labels",
+    "implied truth effect"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pennycook, Bear, Collins & Rand, Management Science, 2020",
+  "source_kind": "paper",
+  "reference": "Pennycook, Bear, Collins & Rand, The implied truth effect: attaching warnings to a subset of fake news headlines increases perceived accuracy of headlines without warnings, Management Science, 2020",
+  "written": "2026-10-03"
+}

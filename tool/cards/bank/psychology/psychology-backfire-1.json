@@ -1,0 +1,33 @@
+{
+  "id": "psychology-backfire-1",
+  "topic": "psychology",
+  "genre": "psychology.change_your_mind",
+  "strand": "psychology.change_your_mind.backfire",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does a corrected rumour keep shaping people's thinking even after they accept the correction?",
+  "answer": "Because a correction leaves a hole in the story. Johnson and Seifert's readers, told a warehouse fire involved paint and gas cans, then that the cupboard had been empty, still blamed toxic fumes. Offering another cause, such as signs of arson, cut the effect sharply. A complete wrong story beats an incomplete true one.",
+  "move": "Do not just remove a false explanation; put a better one in its place.",
+  "ask": "When I correct someone, do I give them a better explanation, or just tell them they are wrong?",
+  "keywords": [
+    "misinformation",
+    "corrections",
+    "continued influence",
+    "rumours"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Johnson & Seifert, J Exp Psychology: LMC, 1994",
+  "source_kind": "paper",
+  "reference": "Johnson & Seifert, Sources of the continued influence effect: when misinformation in memory affects later inferences, Journal of Experimental Psychology: Learning, Memory, and Cognition, 1994",
+  "written": "2026-10-03"
+}

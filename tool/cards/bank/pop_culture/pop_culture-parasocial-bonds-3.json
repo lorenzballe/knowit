@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-parasocial-bonds-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.parasocial_bonds",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do so many video hosts look straight into the lens and speak as if to one person?",
+  "answer": "Because it imitates being spoken to. Horton and Wohl noted in 1956 that television hosts who address the camera create the illusion of a face-to-face conversation, and viewers answer with a feeling of intimacy. Vloggers chatting to the lens from their bedrooms have refined the same trick into a nightly visit.",
+  "move": "Feeling spoken to is not the same as being known.",
+  "ask": "Which voice on my screen feels like a friend, and what does it ask of me in return?",
+  "keywords": [
+    "direct address",
+    "vloggers",
+    "intimacy",
+    "television hosts"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Horton and Wohl, Psychiatry, 1956",
+  "source_kind": "paper",
+  "reference": "Donald Horton and R. Richard Wohl, Mass Communication and Para-Social Interaction, Psychiatry, 1956",
+  "written": "2026-09-26"
+}

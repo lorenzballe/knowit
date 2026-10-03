@@ -1,0 +1,40 @@
+{
+  "id": "medicine-placebo-or-real-3",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.placebo_or_real",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "When trials compared a placebo with no treatment at all, where did the placebo show a clear effect?",
+  "options": [
+    "On blood tests and measurements",
+    "On patients' own pain ratings",
+    "On recovery and death rates"
+  ],
+  "correct": 1,
+  "answer": "On patients' own pain ratings. Pooling 114 trials, researchers found placebos made little difference to measured outcomes such as blood pressure or lab results, or to whether people recovered. Their effect showed in what patients themselves reported, chiefly pain. A placebo changes how an illness feels far more than its course.",
+  "move": "Feeling better and getting better are two claims; check which one is made.",
+  "ask": "When I say something made me better, do I mean I feel better, or that something really changed?",
+  "trap": "On blood tests and measurements, as if belief alone repaired the body.",
+  "keywords": [
+    "placebo",
+    "no treatment",
+    "pain",
+    "objective outcomes"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hróbjartsson & Gøtzsche, NEJM, 2001",
+  "source_kind": "paper",
+  "reference": "Hróbjartsson & Gøtzsche, Is the placebo powerless? An analysis of clinical trials comparing placebo with no treatment, New England Journal of Medicine, 2001",
+  "written": "2026-10-03"
+}

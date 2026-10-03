@@ -1,0 +1,40 @@
+{
+  "id": "science-correlation-or-cause-2",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.correlation_or_cause",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "Countries that eat more chocolate win more Nobel prizes per person. What best explains the link?",
+  "options": [
+    "Chocolate's flavanols sharpening the mind",
+    "National wealth, which buys both",
+    "Laureates' fame boosting chocolate sales"
+  ],
+  "correct": 1,
+  "answer": "National wealth, which buys both. Franz Messerli's 2012 note found a strong correlation across 23 countries, and offered cocoa flavanols half in jest. Rich countries fund universities and laboratories, and their people can afford luxuries. Switzerland tops both lists for the same reason: money, not cocoa, fills the shelves and the labs.",
+  "move": "Before linking two things, ask what single cause could buy both.",
+  "ask": "Which two things in my life rise together because of something else I haven't named?",
+  "trap": "Chocolate's flavanols, because a mechanism makes the link feel real.",
+  "keywords": [
+    "chocolate",
+    "nobel prizes",
+    "correlation",
+    "national wealth"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Messerli, New England Journal of Medicine, 2012",
+  "source_kind": "paper",
+  "reference": "Messerli, Chocolate consumption, cognitive function, and Nobel laureates, New England Journal of Medicine 367:1562–1564, 2012",
+  "written": "2026-09-26"
+}

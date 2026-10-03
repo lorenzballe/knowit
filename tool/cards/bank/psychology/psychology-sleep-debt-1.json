@@ -1,0 +1,40 @@
+{
+  "id": "psychology-sleep-debt-1",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.sleep_debt",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "After two weeks of six hours' sleep a night, volunteers' attention lapses matched a night without sleep. How sleepy did they feel?",
+  "options": [
+    "As sleepy as after no sleep",
+    "Only slightly sleepy",
+    "Extremely sleepy"
+  ],
+  "correct": 1,
+  "answer": "Only slightly sleepy. Their lapses kept climbing night after night, reaching the level seen after one or two nights of total sleep loss, yet their ratings of sleepiness rose a little and then levelled off. Short sleep comes to feel normal. The gauge that should warn of the debt is the first thing it bends.",
+  "move": "Feeling fine is a poor gauge of how impaired you are.",
+  "ask": "On weeks of short nights, do I trust how I feel, or how well I am actually performing?",
+  "trap": "As sleepy as after no sleep, since the lapses were equal.",
+  "keywords": [
+    "sleep restriction",
+    "sleep debt",
+    "attention lapses",
+    "sleepiness"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Van Dongen et al., Sleep, 2003",
+  "source_kind": "paper",
+  "reference": "Van Dongen, Maislin, Mullington & Dinges, The cumulative cost of additional wakefulness, Sleep, 2003",
+  "written": "2026-10-03"
+}

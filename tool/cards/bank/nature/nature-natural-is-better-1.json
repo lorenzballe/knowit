@@ -1,0 +1,40 @@
+{
+  "id": "nature-natural-is-better-1",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.natural_is_better",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "By weight, what share of the pesticides in a typical American diet did Ames estimate plants make themselves?",
+  "options": [
+    "Under 1%",
+    "About half",
+    "About 99.99%"
+  ],
+  "correct": 2,
+  "answer": "About 99.99%. Plants cannot run, so they make chemical defences against insects and fungi, in cabbage, coffee, celery and more. Ames and colleagues estimated Americans eat about 1,500 mg of these a day, some 10,000 times more than synthetic pesticide residues. Natural chemicals get no exemption from toxicology; the dose decides.",
+  "move": "Judge a substance by its dose, not by where it came from.",
+  "ask": "Do I trust something more because it is labelled natural, without asking how much I take?",
+  "trap": "Pesticides are factory chemicals, so most must come from farm sprays.",
+  "keywords": [
+    "natural pesticides",
+    "pesticide residues",
+    "bruce ames",
+    "toxicology"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ames et al., PNAS, 1990",
+  "source_kind": "paper",
+  "reference": "Ames, Profet & Gold, Dietary pesticides (99.99% all natural), Proceedings of the National Academy of Sciences, 1990",
+  "written": "2026-10-03"
+}

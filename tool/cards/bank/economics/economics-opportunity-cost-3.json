@@ -8,11 +8,11 @@
   "principle": "reflection",
   "question": "For a typical full-time student, which is usually the largest cost of a three-year degree?",
   "options": [
-    "Tuition fees",
     "Earnings given up",
+    "Tuition fees",
     "Rent and food"
   ],
-  "correct": 1,
+  "correct": 0,
   "answer": "Earnings given up. Three years spent studying are three years not earning: at even €20,000 a year, that is €60,000, usually more than the fees. Rent and food are not really a cost of the degree, since a worker would pay them too. The largest price of a degree never arrives as an invoice.",
   "move": "The biggest cost of a choice is often the thing you stop doing.",
   "ask": "What am I giving up, in time or income, to keep doing what I am doing now?",

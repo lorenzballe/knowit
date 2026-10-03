@@ -1,0 +1,39 @@
+{
+  "id": "cinema-propaganda-films-3",
+  "topic": "cinema",
+  "genre": "cinema.films_and_history",
+  "strand": "cinema.films_and_history.propaganda_films",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: fewer than one in six feature films made in Nazi Germany was openly political propaganda?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. David Welch counts 1,097 features from 1933 to 1945, and under a sixth carried overt political messages. The rest were comedies, musicals and melodramas, many quietly carrying the regime's values. Goebbels believed propaganda worked best unseen. The few notorious films taught today are not the ones most Germans watched.",
+  "move": "Persuasion works best inside what people choose for pleasure.",
+  "ask": "Which light entertainment I enjoy carries a message I have never questioned?",
+  "trap": "False, because the Nazi films still shown are the notorious ones.",
+  "keywords": [
+    "nazi cinema",
+    "joseph goebbels",
+    "entertainment films",
+    "david welch"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Welch, Propaganda and the German Cinema",
+  "source_kind": "book",
+  "reference": "David Welch, Propaganda and the German Cinema, 1933-1945, Clarendon Press, 1983",
+  "written": "2026-10-03"
+}

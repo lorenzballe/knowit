@@ -1,0 +1,39 @@
+{
+  "id": "psychology-naps-3",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.naps",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: studies linking long daily naps with earlier death in older adults show that the naps themselves cause harm?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Those studies follow people over time; they do not assign naps. Heart disease, diabetes, depression and poor night-time sleep all make people nap longer and also shorten lives, so long naps can be a symptom rather than a cause. A short, planned nap is a different thing from long daytime sleep that simply happens.",
+  "move": "When the sick do more of something, ask whether sickness came first.",
+  "ask": "Is there a habit of mine I blame for feeling unwell that might be a sign of it instead?",
+  "trap": "True: a link found in large studies means naps do damage.",
+  "keywords": [
+    "napping",
+    "mortality",
+    "older adults",
+    "reverse causation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Yamada et al., Sleep, 2015",
+  "source_kind": "paper",
+  "reference": "Yamada, Hara, Shojima, Yamauchi & Kadowaki, Daytime napping and the risk of cardiovascular disease and all-cause mortality: A prospective study and dose-response meta-analysis, Sleep, 2015",
+  "written": "2026-10-03"
+}

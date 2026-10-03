@@ -1,0 +1,33 @@
+{
+  "id": "life-reframing-2",
+  "topic": "life",
+  "genre": "life.handle_setbacks",
+  "strand": "life.handle_setbacks.reframing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Students about to sit a maths test were told a racing heart can help performance. What happened to their scores?",
+  "answer": "They rose. Jamieson and colleagues told some students preparing for the GRE, the American graduate entrance exam, that arousal during a test can improve performance. They scored higher on the maths section in the laboratory, and later in the real exam. Their hearts still pounded; what changed was what the pounding meant.",
+  "move": "Read a racing heart as fuel before reading it as fear.",
+  "ask": "Before my next nerve-racking moment, could I treat the pounding heart as my body getting ready?",
+  "keywords": [
+    "arousal reappraisal",
+    "test anxiety",
+    "exams",
+    "stress"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Jamieson and colleagues, J. Experimental Social Psychology, 2010",
+  "source_kind": "paper",
+  "reference": "Jamieson, Mendes, Blackstock and Schmader, Turning the knots in your stomach into bows: Reappraising arousal improves performance on the GRE, Journal of Experimental Social Psychology, 2010",
+  "written": "2026-10-03"
+}

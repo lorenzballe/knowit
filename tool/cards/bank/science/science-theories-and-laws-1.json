@@ -1,0 +1,39 @@
+{
+  "id": "science-theories-and-laws-1",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.theories_and_laws",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: in science, a theory that gathers enough evidence is eventually promoted to a law?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A law describes what happens, often as an equation: Newton's law gives the pull between two masses. A theory explains why, and can be among the best-tested ideas there are, like evolution or the germ theory of disease. They do different jobs, and no pile of evidence turns one into the other.",
+  "move": "Ask what job a word is doing before ranking it.",
+  "ask": "When someone dismisses an idea as only a theory, do I know which meaning they're using?",
+  "trap": "True, since a law sounds like the higher, proven rank.",
+  "keywords": [
+    "scientific theory",
+    "scientific law",
+    "evolution",
+    "germ theory"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US National Academy of Sciences, 2008",
+  "source_kind": "institution",
+  "reference": "National Academy of Sciences and Institute of Medicine, Science, Evolution, and Creationism, National Academies Press, 2008",
+  "written": "2026-09-26"
+}

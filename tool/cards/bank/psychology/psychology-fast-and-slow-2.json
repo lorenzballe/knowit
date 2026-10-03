@@ -1,0 +1,33 @@
+{
+  "id": "psychology-fast-and-slow-2",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.fast_and_slow",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When people give the quick wrong answer to a trick puzzle, do they feel as sure as usual?",
+  "answer": "No, they feel a little less sure. De Neys and colleagues gave people trick puzzles alongside matched versions with no trap. Those who fell for the trap rated their confidence lower than on the easy twins. Part of the mind notices the clash; the doubt arrives, but too faintly to stop the answer.",
+  "move": "A faint doubt about an easy answer is a signal, not noise.",
+  "ask": "When an answer feels easy but a small doubt nags, do I stop and look again?",
+  "keywords": [
+    "intuition",
+    "confidence",
+    "conflict detection",
+    "trick puzzles"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "De Neys, Rossi & Houdé, Psychonomic Bulletin & Review, 2013",
+  "source_kind": "paper",
+  "reference": "De Neys, Rossi & Houdé, Bats, balls, and substitution sensitivity: cognitive misers are no happy fools, Psychonomic Bulletin & Review, 2013",
+  "written": "2026-10-03"
+}

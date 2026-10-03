@@ -1,0 +1,43 @@
+{
+  "id": "psychology-tiny-habits-2",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.tiny_habits",
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "Reading 15 minutes a day at about 250 words a minute, how many 80,000-word books are finished in a year?",
+  "value": 17.1,
+  "unit": "books",
+  "tolerance": 1,
+  "answer": "1,368,750 ÷ 80,000 ≈ 17.1 books.",
+  "move": "A small daily amount, multiplied by 365, is rarely small.",
+  "ask": "What would 15 minutes a day of something I love add up to by this time next year?",
+  "trap": "Two or three books, since 15 minutes feels like almost nothing.",
+  "hint": "Find the words read in a day, then in a year.",
+  "steps": [
+    "15 × 250 = 3,750 words a day.",
+    "3,750 × 365 = 1,368,750 words a year.",
+    "1,368,750 ÷ 80,000 ≈ 17.1 books."
+  ],
+  "keywords": [
+    "reading speed",
+    "daily habits",
+    "books",
+    "time"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Brysbaert, Journal of Memory and Language, 2019",
+  "source_kind": "paper",
+  "reference": "Brysbaert, How many words do we read per minute? A review and meta-analysis of reading rate, Journal of Memory and Language, 2019",
+  "written": "2026-10-03"
+}

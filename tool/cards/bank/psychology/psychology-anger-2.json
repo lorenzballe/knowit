@@ -1,0 +1,33 @@
+{
+  "id": "psychology-anger-2",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.anger",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "After September 2001, how did feeling angry rather than afraid change Americans' estimates of future risks?",
+  "answer": "Anger made the risks look smaller. Volunteers led to feel anger rated future dangers lower and favoured tougher responses; those led to feel fear rated the same dangers higher and leaned towards caution. Both are bad feelings, yet anger carries a sense of certainty and control. An angry decision feels safer than it is.",
+  "move": "Feeling certain and in control is not evidence that a risk is small.",
+  "ask": "What decision have I made while angry that I would weigh differently once calm?",
+  "keywords": [
+    "anger",
+    "fear",
+    "risk perception",
+    "terrorism"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lerner et al., Psychological Science, 2003",
+  "source_kind": "paper",
+  "reference": "Lerner, Gonzalez, Small & Fischhoff, Effects of fear and anger on perceived risks of terrorism: A national field experiment, Psychological Science, 2003",
+  "written": "2026-10-03"
+}

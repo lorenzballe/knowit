@@ -1,0 +1,40 @@
+{
+  "id": "space-deep-time-3",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.deep_time",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "The Atlantic widens about 2.5 cm a year, close to how fast fingernails grow. How much is that over 200 million years?",
+  "options": [
+    "About 5,000 km",
+    "About 50 km",
+    "About 500 km"
+  ],
+  "correct": 0,
+  "answer": "About 5,000 km. Multiply 2.5 cm by 200 million and you get 500 million cm, which is 5,000 km, the same order as the Atlantic's width today. Since the supercontinent Pangaea split, a pace too slow to notice in a lifetime has opened an entire ocean.",
+  "move": "Never dismiss a slow rate before multiplying it by the time available.",
+  "ask": "What small thing, done every day for ten years, could reshape my life without my noticing?",
+  "trap": "About 50 km, as a fingernail's pace sounds too slow to matter.",
+  "keywords": [
+    "plate tectonics",
+    "atlantic ocean",
+    "seafloor spreading",
+    "pangaea"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "USGS, This Dynamic Earth",
+  "source_kind": "institution",
+  "reference": "https://pubs.usgs.gov/gip/dynamic/",
+  "written": "2026-10-03"
+}

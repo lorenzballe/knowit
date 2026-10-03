@@ -1,0 +1,41 @@
+{
+  "id": "economics-inheritance-1",
+  "topic": "economics",
+  "genre": "economics.inequality",
+  "strand": "economics.inequality.inheritance",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "regression",
+  "question": "Florence's richest families in its 1427 tax census: where do people with their surnames stand in 2011's tax data?",
+  "options": [
+    "Back to average",
+    "Below average",
+    "Still above average"
+  ],
+  "correct": 2,
+  "answer": "Still above average. Barone and Mocetti linked Florentine surnames across six centuries and found that descendants of the top earners of 1427 still tended to earn and own more, and to work in elite professions. Republics, plagues, wars and Italian unification came and went; the advantage leaked away far more slowly than models predicted.",
+  "move": "Advantage can outlast every upheaval that was supposed to wash it away.",
+  "ask": "Which advantages from my family's past still shape my chances today, for better or worse?",
+  "trap": "Back to average, after nearly six centuries of wars and reforms.",
+  "keywords": [
+    "florence",
+    "intergenerational mobility",
+    "surnames",
+    "tax records",
+    "elites"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Barone and Mocetti, Review of Economic Studies, 2021",
+  "source_kind": "paper",
+  "reference": "Barone & Mocetti, Intergenerational Mobility in the Very Long Run: Florence 1427–2011, Review of Economic Studies, 2021",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "life-starting-again-1",
+  "topic": "life",
+  "genre": "life.handle_setbacks",
+  "strand": "life.handle_setbacks.starting_again",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does one cigarette after months without smoking so often turn into a full relapse?",
+  "answer": "Because of how the slip is read. Marlatt called it the abstinence violation effect: a person who takes a lapse as proof of having no willpower feels the whole effort is ruined, and gives up. Read as a mistake in one situation, to be planned for next time, the same cigarette stays a single lapse.",
+  "move": "Treat a slip as one event to learn from, not a verdict.",
+  "ask": "Which habit did I drop after one bad day, and could I simply start again tomorrow?",
+  "keywords": [
+    "relapse",
+    "abstinence violation effect",
+    "smoking",
+    "lapses"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Marlatt and Gordon, Relapse Prevention, 1985",
+  "source_kind": "book",
+  "reference": "Marlatt and Gordon (eds.), Relapse Prevention: Maintenance Strategies in the Treatment of Addictive Behaviors, Guilford Press, 1985",
+  "written": "2026-10-03"
+}

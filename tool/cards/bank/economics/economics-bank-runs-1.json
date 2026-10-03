@@ -1,0 +1,33 @@
+{
+  "id": "economics-bank-runs-1",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.bank_runs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why can fear alone bring down a bank, even one whose loans would all be repaid?",
+  "answer": "Because a bank lends for years but owes depositors on demand. If enough depositors expect others to withdraw, withdrawing first is sensible for each, and the fear makes itself true. Runs now move fast: on 9 March 2023, Silicon Valley Bank was asked for $42 billion, a quarter of deposits, in eight hours.",
+  "move": "When each person's best move depends on others, fear can make itself true.",
+  "ask": "Which of my plans works only as long as everyone else stays calm?",
+  "keywords": [
+    "bank runs",
+    "silicon valley bank",
+    "deposits",
+    "maturity mismatch"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Federal Reserve, Review of SVB, 2023",
+  "source_kind": "institution",
+  "reference": "https://www.federalreserve.gov/publications/files/svb-review-20230428.pdf",
+  "written": "2026-10-03"
+}

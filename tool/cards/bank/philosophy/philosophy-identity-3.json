@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-identity-3",
+  "topic": "philosophy",
+  "genre": "philosophy.big_questions",
+  "strand": "philosophy.big_questions.identity",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "A woman's living will refuses treatment if she gets dementia. Now demented and content, she wants to live. Follow the will?",
+  "sides": [
+    "Yes, follow the directive",
+    "No, follow her present wishes"
+  ],
+  "answer": "Yes. The woman who wrote the directive cared how her whole life would go, and that concern does not lapse when she can no longer voice it. Ronald Dworkin called this precedent autonomy: the competent self's settled values about her life's shape outrank the passing wishes of the demented self.",
+  "move": "It turns on whether a past self can speak for a present one who disagrees.",
+  "ask": "What would I want my family to do if I later wanted something I would once have refused?",
+  "counterpoint": "The person in the bed has interests now: she enjoys her meals, her painting, her visitors. Rebecca Dresser argued in 1995 that letting an earlier self, who could not imagine this life, condemn it sacrifices a living person to an abstraction. Her past self wrote about a future she had never seen.",
+  "keywords": [
+    "advance directives",
+    "dementia",
+    "ronald dworkin",
+    "rebecca dresser",
+    "precedent autonomy"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "dark",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dworkin, Life's Dominion, 1993",
+  "source_kind": "book",
+  "reference": "Dworkin, Life's Dominion, Knopf, 1993; Dresser, Dworkin on Dementia: Elegant Theory, Questionable Policy, Hastings Center Report 25 (6), 1995",
+  "written": "2026-10-03"
+}

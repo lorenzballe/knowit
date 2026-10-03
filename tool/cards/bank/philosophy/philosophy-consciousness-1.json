@@ -1,0 +1,40 @@
+{
+  "id": "philosophy-consciousness-1",
+  "topic": "philosophy",
+  "genre": "philosophy.big_questions",
+  "strand": "philosophy.big_questions.consciousness",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: some people blind in part of their visual field can still point accurately to objects there?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Lawrence Weiskrantz studied a patient, DB, whose damaged visual cortex left him insisting he saw nothing on one side; yet he guessed the position and tilt of lines there far above chance. Weiskrantz called it blindsight. A great deal of what the brain does with information never reaches awareness.",
+  "move": "Doing something well does not mean you are aware of doing it.",
+  "ask": "Which of my snap judgements happen without my noticing, and might deserve a slower second look?",
+  "trap": "False, assuming seeing and knowing you see are the same thing.",
+  "keywords": [
+    "blindsight",
+    "lawrence weiskrantz",
+    "visual cortex",
+    "awareness",
+    "perception"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Weiskrantz, Blindsight: A Case Study, 1986",
+  "source_kind": "book",
+  "reference": "Weiskrantz, Blindsight: A Case Study and Implications, Oxford University Press, 1986",
+  "written": "2026-10-03"
+}

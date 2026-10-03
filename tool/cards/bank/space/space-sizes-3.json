@@ -1,0 +1,37 @@
+{
+  "id": "space-sizes-3",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.sizes",
+  "also": [
+    "science.physics.gravity"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are moons and asteroids smaller than a few hundred kilometres lumpy, while bigger ones are round?",
+  "answer": "Because at that size gravity beats the strength of rock. A body's pull on its own surface grows with its size, and past a few hundred kilometres it can crush its high points down, the way a tall sandcastle slumps. Icy bodies give way at a smaller size than rocky ones, because ice is softer.",
+  "move": "Size changes which force wins, so big things follow different rules.",
+  "ask": "In my work, at what size does a project start obeying different rules from when it was small?",
+  "keywords": [
+    "asteroids",
+    "moons",
+    "hydrostatic equilibrium",
+    "gravity",
+    "potato radius"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lineweaver & Norman, The Potato Radius, 2010",
+  "source_kind": "paper",
+  "reference": "Lineweaver & Norman, The Potato Radius: a Lower Minimum Size for Dwarf Planets, arXiv:1004.1091, 2010",
+  "written": "2026-10-03"
+}

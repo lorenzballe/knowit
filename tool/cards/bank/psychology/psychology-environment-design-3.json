@@ -1,0 +1,33 @@
+{
+  "id": "psychology-environment-design-3",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.environment_design",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What happened to soda sales when a hospital cafeteria put bottled water into the drinks fridges beside the tills?",
+  "answer": "They fell. After water was added to fridges that had held only soda, and baskets of bottles were placed by the food stations, regular soda sales dropped 11.4% and water sales rose 25.8% over three months. No price changed and nothing was banned. The bottle within reach did what a poster rarely does.",
+  "move": "The easiest option in sight is the one most people pick.",
+  "ask": "At work or at home, what is the easiest thing to grab, and is that the one I want?",
+  "keywords": [
+    "choice architecture",
+    "hospital cafeteria",
+    "soda",
+    "bottled water"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Thorndike et al., Am J Public Health, 2012",
+  "source_kind": "paper",
+  "reference": "doi:10.2105/AJPH.2011.300391",
+  "written": "2026-10-03"
+}

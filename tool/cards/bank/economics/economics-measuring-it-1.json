@@ -1,0 +1,40 @@
+{
+  "id": "economics-measuring-it-1",
+  "topic": "economics",
+  "genre": "economics.inequality",
+  "strand": "economics.inequality.measuring_it",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "What share of all US household wealth did the poorer half of households own in 2024?",
+  "options": [
+    "About 15%",
+    "About 2.5%",
+    "About 30%"
+  ],
+  "correct": 1,
+  "answer": "About 2.5%, by the Federal Reserve's distributional accounts. Wealth is far more unequal than pay: the poorer half earns a real share of the nation's wages but owns little beyond a car and some savings, much of it cancelled by debts. Picture 100 households sharing $100: fifty of them split $2.50.",
+  "move": "Ask whether a gap is measured in what people earn or what they own.",
+  "ask": "If my pay stopped tomorrow, how many months could what I own carry me?",
+  "trap": "About 15%, assuming wealth is shared about the way pay is.",
+  "keywords": [
+    "wealth inequality",
+    "federal reserve",
+    "household wealth",
+    "united states"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "source": "Federal Reserve, Distributional Financial Accounts",
+  "source_kind": "statistics",
+  "reference": "https://www.federalreserve.gov/releases/z1/dataviz/dfa/",
+  "written": "2026-10-03"
+}

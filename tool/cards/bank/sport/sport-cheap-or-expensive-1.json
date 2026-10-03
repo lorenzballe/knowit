@@ -1,0 +1,40 @@
+{
+  "id": "sport-cheap-or-expensive-1",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.cheap_or_expensive",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Researchers pressure-tested running shoes from three brands at three prices. How did the cheapest pairs cushion the foot?",
+  "options": [
+    "Worse than the dearest pairs",
+    "As well or better",
+    "Only better when walking"
+  ],
+  "correct": 1,
+  "answer": "As well or better. Clinghan and colleagues measured pressure under the foot in low, medium and high-priced models of three brands, while walking and running on a treadmill. The cheaper shoes cushioned at least as well, and comfort did not follow price either. Whatever the extra money bought, it was not cushioning.",
+  "move": "Test what the price claims to buy before paying for it.",
+  "ask": "What did I last pay extra for without checking whether it does the job any better?",
+  "trap": "Assuming a higher price buys better protection for the foot.",
+  "keywords": [
+    "running shoes",
+    "cushioning",
+    "price",
+    "plantar pressure"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Clinghan et al., Br J Sports Med, 2008",
+  "source_kind": "paper",
+  "reference": "Clinghan et al., Do you get value for money when you buy an expensive pair of running shoes?, British Journal of Sports Medicine, 2008",
+  "written": "2026-10-03"
+}

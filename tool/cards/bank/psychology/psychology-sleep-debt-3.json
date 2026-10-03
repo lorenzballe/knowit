@@ -1,0 +1,38 @@
+{
+  "id": "psychology-sleep-debt-3",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.sleep_debt",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should secondary schools be required to start no earlier than about 8:30 in the morning?",
+  "sides": [
+    "Yes, start later",
+    "No, leave it local"
+  ],
+  "answer": "Teenagers' body clocks shift later at puberty, so early starts cut sleep rather than moving bedtime earlier. When Seattle moved high-school start times nearly an hour later, students slept a median 34 minutes more a night, grades rose 4.5% and attendance improved. Few measures buy that much sleep for a whole age group at once.",
+  "move": "Whichever side you took, the hinge is who bears the cost of the sleep gained.",
+  "ask": "What fixed time in my household's morning is costing someone sleep they need?",
+  "counterpoint": "Later starts cost real money and time: bus routes rebuilt, after-school jobs and sports squeezed, working parents rearranged. The evidence comes mostly from single districts before and after a change, not randomised trials, and gains vary. A national rule ignores rural travel and local trade-offs that schools and families understand better.",
+  "keywords": [
+    "school start times",
+    "teenagers",
+    "body clock",
+    "seattle"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Dunster et al., Science Advances, 2018",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/sciadv.aau6200",
+  "written": "2026-10-03"
+}

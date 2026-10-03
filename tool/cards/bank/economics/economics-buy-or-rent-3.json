@@ -1,0 +1,33 @@
+{
+  "id": "economics-buy-or-rent-3",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.buy_or_rent",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What cost of owning a home shows up in the job market rather than on any bill?",
+  "answer": "Owners move less, so they are slower to follow work. Two economists found that US states where home ownership rose later saw higher unemployment, longer commutes and fewer new firms, a link still debated. Selling a house takes months and several percent in fees; a renter can leave in weeks.",
+  "move": "Value the freedom to leave as well as the thing you hold.",
+  "ask": "What would it cost me to move if a better job came up in another city?",
+  "keywords": [
+    "home ownership",
+    "labour mobility",
+    "unemployment",
+    "commuting"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Blanchflower and Oswald, IZA, 2013",
+  "source_kind": "paper",
+  "reference": "https://www.iza.org/publications/dp/7640/does-high-home-ownership-impair-the-labor-market",
+  "written": "2026-10-03"
+}

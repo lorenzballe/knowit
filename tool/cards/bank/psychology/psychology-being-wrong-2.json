@@ -1,0 +1,33 @@
+{
+  "id": "psychology-being-wrong-2",
+  "topic": "psychology",
+  "genre": "psychology.change_your_mind",
+  "strand": "psychology.change_your_mind.being_wrong",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When experts' confident political forecasts failed, how did most of them explain the miss?",
+  "answer": "As near-misses. Tetlock tracked tens of thousands of predictions by specialists over many years. When wrong, many said they were almost right, merely early, or undone by a freak event, and they revised their views far less than their own earlier odds required. The defences cost nothing and left every belief standing.",
+  "move": "Write down what would prove you wrong before the result is in.",
+  "ask": "When I got something wrong lately, did I call it bad luck instead of asking what I misjudged?",
+  "keywords": [
+    "forecasting",
+    "experts",
+    "philip tetlock",
+    "excuses"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tetlock, Expert Political Judgment, 2005",
+  "source_kind": "book",
+  "reference": "Tetlock, Expert Political Judgment: How Good Is It? How Can We Know?, Princeton University Press, 2005",
+  "written": "2026-10-03"
+}

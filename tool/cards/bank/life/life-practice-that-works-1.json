@@ -1,0 +1,39 @@
+{
+  "id": "life-practice-that-works-1",
+  "topic": "life",
+  "genre": "life.learn_anything",
+  "strand": "life.learn_anything.practice_that_works",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: children tested at a target 90 cm away did best if they had practised only at 90 cm?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. In Kerr and Booth's study, children who practised throwing beanbags only at the test distance did worse on it than children who had practised at 60 and 120 cm and never at 90. Varied practice taught the arm to adjust its force, not to repeat one movement, so their throws landed closer.",
+  "move": "Practise around the target, not only at it, to learn the adjustment.",
+  "ask": "Which skill am I drilling in one fixed form when I will need it in many?",
+  "trap": "Practising the exact test seems the shortest road to passing it.",
+  "keywords": [
+    "varied practice",
+    "motor learning",
+    "children",
+    "beanbag throwing"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kerr and Booth, Perceptual and Motor Skills, 1978",
+  "source_kind": "paper",
+  "reference": "Kerr and Booth, Specific and varied practice of motor skill, Perceptual and Motor Skills, 1978",
+  "written": "2026-10-03"
+}

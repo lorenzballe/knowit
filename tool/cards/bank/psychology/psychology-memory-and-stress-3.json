@@ -1,0 +1,39 @@
+{
+  "id": "psychology-memory-and-stress-3",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.memory_and_stress",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: a pill that blocks adrenaline's action also removes the extra memory people form for an upsetting story?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Volunteers watched a slide story in which a boy is badly hurt in an accident. A week later, those on a dummy pill remembered the upsetting middle best; those given propranolol, a beta-blocker, did not, while recall of the calm parts was unchanged. The boost runs on stress chemistry, not on meaning alone.",
+  "move": "How strongly a moment is stored depends on the body's alarm, not its importance.",
+  "ask": "Which memories do I treat as the most important ones, simply because they were the most alarming?",
+  "trap": "False: upsetting parts stick because they matter, not because of hormones.",
+  "keywords": [
+    "adrenaline",
+    "propranolol",
+    "emotional memory",
+    "beta-blocker"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cahill et al., Nature, 1994",
+  "source_kind": "paper",
+  "reference": "Cahill, Prins, Weber & McGaugh, Beta-adrenergic activation and memory for emotional events, Nature, 1994",
+  "written": "2026-10-03"
+}

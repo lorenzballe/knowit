@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-what-reality-tv-hides-1",
+  "topic": "pop_culture",
+  "genre": "pop_culture.tv",
+  "strand": "pop_culture.tv.what_reality_tv_hides",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A French reality show called its contestants players in a game. What made the country's top court call them workers?",
+  "answer": "Because of who gave the orders. Contestants on L'Île de la tentation followed a schedule set by the producer, took part in activities it chose and could be sanctioned for breaking its rules. The Cour de cassation looked past the word game to that subordination, so the producer owed them an employment contract and pay.",
+  "move": "Judge a relationship by who gives the orders, not by its name.",
+  "ask": "Is anyone in my life getting my work for free by calling it something else?",
+  "keywords": [
+    "cour de cassation",
+    "l'île de la tentation",
+    "employment contract",
+    "france"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cour de cassation, chambre sociale, 3 June 2009",
+  "source_kind": "primary_document",
+  "reference": "Cour de cassation, chambre sociale, arrêt du 3 juin 2009 (L'Île de la tentation)",
+  "written": "2026-09-26"
+}

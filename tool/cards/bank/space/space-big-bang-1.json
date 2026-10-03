@@ -1,0 +1,40 @@
+{
+  "id": "space-big-bang-1",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.big_bang",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "What share of the universe's ordinary matter, by mass, became helium in its first few minutes?",
+  "options": [
+    "Under 1%",
+    "About half",
+    "About a quarter"
+  ],
+  "correct": 2,
+  "answer": "About a quarter. Early on the universe was hot and dense enough to fuse protons, then cooled too fast to build much beyond helium. Theory set the share near 25% by mass, and measurements in the oldest, least-processed gas found about 24%. Stars since have added only a few percent.",
+  "move": "Trust the idea that names a number before the measurement arrives.",
+  "ask": "Which advice I follow has ever predicted something specific that then came true?",
+  "trap": "Under 1%, since helium is thought of as made inside stars.",
+  "keywords": [
+    "big bang nucleosynthesis",
+    "helium",
+    "primordial gas",
+    "predictions"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Peebles, Principles of Physical Cosmology, 1993",
+  "source_kind": "book",
+  "reference": "Peebles, Principles of Physical Cosmology, Princeton University Press, 1993",
+  "written": "2026-10-03"
+}

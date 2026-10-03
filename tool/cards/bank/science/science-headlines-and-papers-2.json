@@ -1,0 +1,40 @@
+{
+  "id": "science-headlines-and-papers-2",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.headlines_and_papers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Of 76 highly cited animal studies, how many were confirmed when the treatment was later tested in people?",
+  "options": [
+    "About nine in ten",
+    "About a third",
+    "About one in a hundred"
+  ],
+  "correct": 1,
+  "answer": "About a third: 28 of the 76. Hackam and Redelmeier found 14 more were contradicted by human trials and the rest never tested in people at all, and these were the most cited animal papers in top journals. A mouse result is a promising lead; a headline that drops the mouse has dropped most of the doubt.",
+  "move": "Ask what was studied before applying a finding to people.",
+  "ask": "When I read a hopeful health headline, do I check whether it was tested in people like me?",
+  "trap": "About nine in ten, since these were the most respected studies.",
+  "keywords": [
+    "animal studies",
+    "mice",
+    "clinical trials",
+    "translation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hackam & Redelmeier, JAMA, 2006",
+  "source_kind": "paper",
+  "reference": "Hackam & Redelmeier, Translation of research evidence from animals to humans, JAMA 296:1731–1732, 2006",
+  "written": "2026-09-26"
+}

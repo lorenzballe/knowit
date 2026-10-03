@@ -1,0 +1,39 @@
+{
+  "id": "space-tiny-and-huge-3",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.tiny_and_huge",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "exponential",
+  "question": "True or false: counted in multiples, a person is closer in size to a hydrogen atom than to planet Earth?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Earth is about 7 million times wider than a 1.7 m person; that person is about 17 billion times wider than a hydrogen atom, a tenth of a billionth of a metre across. Counted in multiples, people sit nearer the planet than the atom.",
+  "move": "Compare in multiples, not in how impressive each thing feels.",
+  "ask": "When I compare two problems, do I measure how many times bigger, or just how big each feels?",
+  "trap": "True, since a planet feels immense and an atom merely small.",
+  "keywords": [
+    "powers of ten",
+    "hydrogen atom",
+    "earth",
+    "human scale"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Morrison & Morrison, Powers of Ten, 1982",
+  "source_kind": "book",
+  "reference": "Morrison & Morrison, Powers of Ten, Scientific American Library, 1982",
+  "written": "2026-10-03"
+}

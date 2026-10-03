@@ -1,0 +1,40 @@
+{
+  "id": "sport-referees-1",
+  "topic": "sport",
+  "genre": "sport.rules_and_why",
+  "strand": "sport.rules_and_why.referees",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: after a study of racial bias in NBA foul calls made front pages in 2007, the measured bias disappeared?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Price and Wolfers had found referees called slightly more fouls on players of a different race from their own. The league disputed the study and announced no new policy, yet when Pope, Price and Wolfers looked at the seasons after the headlines, the gap could no longer be found.",
+  "move": "A bias that is seen and named often shrinks without a rule.",
+  "ask": "Which of my own habits might change if someone simply counted it out loud?",
+  "trap": "Assuming a hidden bias can only shrink through rules or training.",
+  "keywords": [
+    "referees",
+    "racial bias",
+    "nba",
+    "foul calls",
+    "awareness"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Pope, Price & Wolfers, Management Science, 2018",
+  "source_kind": "paper",
+  "reference": "Pope, Price & Wolfers, Awareness Reduces Racial Bias, Management Science, 2018",
+  "written": "2026-10-03"
+}

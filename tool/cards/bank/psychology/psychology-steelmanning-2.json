@@ -1,0 +1,39 @@
+{
+  "id": "psychology-steelmanning-2",
+  "topic": "psychology",
+  "genre": "psychology.change_your_mind",
+  "strand": "psychology.change_your_mind.steelmanning",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: asking people to explain step by step how a policy works reliably makes their views on it more moderate?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A 2013 study found it did: people discovered they could not explain policies such as cap-and-trade, rated their understanding lower, and softened. Three preregistered replications by Crawford and Ruscio confirmed the drop in felt understanding, but views barely moved. Learning you know less does not, by itself, change what you want.",
+  "move": "Feeling less sure and changing your view are two separate steps.",
+  "ask": "When I realise I understand less than I thought, do I still hold my view just as tightly?",
+  "trap": "Expecting a humbling discovery to soften a strong opinion automatically.",
+  "keywords": [
+    "explanatory depth",
+    "political views",
+    "replication",
+    "policy"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Crawford & Ruscio, Psychological Science, 2021",
+  "source_kind": "paper",
+  "reference": "Crawford & Ruscio, Asking people to explain complex policies does not increase political moderation: three preregistered failures to closely replicate Fernbach, Rogers, Fox, and Sloman's (2013) findings, Psychological Science, 2021",
+  "written": "2026-10-03"
+}

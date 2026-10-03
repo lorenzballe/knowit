@@ -1,0 +1,43 @@
+{
+  "id": "economics-hidden-costs-1",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.hidden_costs",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Marco's car loses €3,000 of value a year; insurance is €800, repairs €700, fuel €1,500. He drives 10,000 km. Cost per km, in cents?",
+  "value": 60,
+  "unit": "cents per km",
+  "answer": "60 cents per km",
+  "move": "Price a habit by its yearly total, not by the bill you see most.",
+  "ask": "What does one trip in my car really cost, once I count what I pay without seeing it?",
+  "trap": "Counting only fuel, 15 cents a kilometre, because that is paid at the pump.",
+  "hint": "Add up the whole year's costs before dividing by the distance.",
+  "steps": [
+    "Costs besides fuel: 3,000 + 800 + 700 = €4,500",
+    "Add fuel: 4,500 + 1,500 = €6,000 a year",
+    "Per km: 6,000 ÷ 10,000 = €0.60",
+    "60 cents per km"
+  ],
+  "keywords": [
+    "car ownership",
+    "depreciation",
+    "running costs",
+    "fuel"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Arithmetic of car running costs",
+  "source_kind": "arithmetic",
+  "reference": "Full cost of running a car per kilometre, worked arithmetic, 2026",
+  "written": "2026-10-03"
+}

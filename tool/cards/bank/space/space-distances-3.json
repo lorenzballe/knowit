@@ -1,0 +1,33 @@
+{
+  "id": "space-distances-3",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.distances",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In films, spaceships weave through crowded asteroid fields. How crowded is the real asteroid belt?",
+  "answer": "Nearly empty. Its rocks are spread around a ring hundreds of millions of kilometres around, so neighbours are typically about a million kilometres apart, more than twice the distance to the Moon. Probes cross it without steering round anything. A map marking every rock with a dot paints a crowd where there is mostly space.",
+  "move": "A crowded map can describe a nearly empty place.",
+  "ask": "Which crowded picture of a risk in my head would look nearly empty if drawn to scale?",
+  "keywords": [
+    "asteroid belt",
+    "space probes",
+    "maps",
+    "empty space"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NASA Science, Asteroids",
+  "source_kind": "institution",
+  "reference": "https://science.nasa.gov/solar-system/asteroids/facts/",
+  "written": "2026-10-03"
+}

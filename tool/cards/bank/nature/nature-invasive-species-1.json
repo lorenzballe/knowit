@@ -1,0 +1,33 @@
+{
+  "id": "nature-invasive-species-1",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.invasive_species",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why are the cane toads at the front of their spread across Australia faster than those behind?",
+  "answer": "Because the fastest keep breeding with the fastest. The farthest travellers reach new ground first and mate with each other. Phillips and colleagues found front-line toads had longer legs, and the invasion sped up from about 10 km a year to over 50. Speed was sorted to the edge, not won by surviving better.",
+  "move": "At the edge of anything spreading, expect the most extreme to gather.",
+  "ask": "Am I judging a whole group by the boldest few who happened to reach me first?",
+  "keywords": [
+    "cane toads",
+    "australia",
+    "spatial sorting",
+    "invasion"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Phillips et al., Nature, 2006",
+  "source_kind": "paper",
+  "reference": "Phillips, Brown, Webb & Shine, Invasion and the evolution of speed in toads, Nature, 2006",
+  "written": "2026-10-03"
+}

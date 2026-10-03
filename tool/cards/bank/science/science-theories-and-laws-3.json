@@ -1,0 +1,40 @@
+{
+  "id": "science-theories-and-laws-3",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.theories_and_laws",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Ohm's law, taught in every school, says current rises in step with voltage. For which of these does it hold?",
+  "options": [
+    "A light-emitting diode",
+    "A metal wire kept at steady temperature",
+    "An old filament bulb as it brightens"
+  ],
+  "correct": 1,
+  "answer": "A metal wire kept at steady temperature. A diode passes almost nothing until a threshold voltage, then a flood; a filament's resistance climbs about tenfold as it heats from cold to white hot. Georg Ohm found a rule for certain materials, and history called it a law. Many laws are reliable habits of particular stuff.",
+  "move": "Treat a law's name as history, and go looking for its limits.",
+  "ask": "Which rule do I apply everywhere just because it was called a law when I learned it?",
+  "trap": "The filament bulb, the classic circuit in every textbook.",
+  "keywords": [
+    "ohm's law",
+    "diodes",
+    "resistance",
+    "light bulbs"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Horowitz & Hill, The Art of Electronics, 2015",
+  "source_kind": "book",
+  "reference": "Horowitz & Hill, The Art of Electronics, 3rd ed., Cambridge University Press, 2015",
+  "written": "2026-09-26"
+}

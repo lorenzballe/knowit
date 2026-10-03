@@ -1,0 +1,58 @@
+{
+  "id": "pop_culture-then-and-now-3",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.then_and_now",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "US music sales: $14.6 billion in 1999, $17.1 billion in 2023. Prices rose 1.83-fold. In real terms, 2023 is what percentage of 1999?",
+  "value": 64,
+  "unit": "%",
+  "answer": "About 64%: the 2023 record sits about a third below 1999 once prices are counted.",
+  "move": "Before calling anything a record, put the money into the same year.",
+  "ask": "Is my last pay rise really a rise once I count what everything now costs?",
+  "trap": "Reading a record in dollars as a record in real money.",
+  "hint": "First turn 1999's $14.6 billion into 2023 prices.",
+  "steps": [
+    "1999 in 2023 prices: 14.6 × 1.83 = 26.7 billion",
+    "2023 against it: 17.1 ÷ 26.7 = 0.64",
+    "About 64%: the 2023 record sits about a third below 1999 once prices are counted."
+  ],
+  "keywords": [
+    "recorded music",
+    "inflation",
+    "riaa",
+    "record sales"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "$ billion",
+    "items": [
+      {
+        "label": "1999 sales, in 2023 prices",
+        "value": 26.7,
+        "hi": true
+      },
+      {
+        "label": "2023 sales, a record in dollars",
+        "value": 17.1
+      }
+    ],
+    "caption": "In 2023 prices, 1999's $26.7 billion beats 2023's record $17.1 billion."
+  },
+  "source": "RIAA year-end revenue reports, 1999 and 2023",
+  "source_kind": "statistics",
+  "reference": "RIAA, U.S. Music Revenue Database and Year-End 2023 Music Industry Revenue Report, March 2024",
+  "written": "2026-09-26"
+}

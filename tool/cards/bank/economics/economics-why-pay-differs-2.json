@@ -1,0 +1,41 @@
+{
+  "id": "economics-why-pay-differs-2",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.why_pay_differs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "A bus driver in Stockholm earns many times more than one in Delhi. What mainly explains the gap?",
+  "options": [
+    "Swedish drivers are far more skilled",
+    "Swedish buses carry more passengers",
+    "Other Swedish workers are far more productive"
+  ],
+  "correct": 2,
+  "answer": "Other Swedish workers are far more productive. Driving a bus is about as productive in either city. But a Swedish driver could earn well in other Swedish jobs, so the bus company must match that, and immigration limits keep Delhi's drivers out. Pay tracks the economy around a job as much as the job.",
+  "move": "Ask what else the worker could earn nearby; that sets the floor.",
+  "ask": "How much of my pay comes from my own skill, and how much from where I happen to work?",
+  "trap": "Assuming pay reflects each worker's own skill at the job.",
+  "keywords": [
+    "wages",
+    "bus drivers",
+    "productivity",
+    "immigration",
+    "sweden"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Chang, 23 Things They Don't Tell You, 2010",
+  "source_kind": "book",
+  "reference": "Ha-Joon Chang, 23 Things They Don't Tell You About Capitalism, Allen Lane, 2010, Thing 3",
+  "written": "2026-10-03"
+}

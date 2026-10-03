@@ -1,0 +1,40 @@
+{
+  "id": "human_body-brain-and-habits-1",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.brain_and_habits",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "People press a key to win a snack, then eat that snack until sick of it. Who keeps pressing for more?",
+  "options": [
+    "Those trained for one short day",
+    "Those trained over three days",
+    "Neither group keeps pressing"
+  ],
+  "correct": 1,
+  "answer": "Those trained over three days. In Tricomi's brain-scanning study, briefly trained volunteers stopped pressing once the snack lost its appeal, but heavily trained ones kept going, and activity shifted towards a part of the striatum tied to habits. Repetition hands an action from the brain's goal-weighing circuits to the ones that simply run it.",
+  "move": "Repeat an action often enough and it stops asking what it is for.",
+  "ask": "Which of my routines would I drop if I asked what it still gives me?",
+  "trap": "People act for rewards they want, so nobody would keep pressing.",
+  "keywords": [
+    "habit learning",
+    "striatum",
+    "rewards",
+    "overtraining"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Tricomi, Balleine and O'Doherty, Eur J Neurosci, 2009",
+  "source_kind": "paper",
+  "reference": "Tricomi E, Balleine BW, O'Doherty JP, A specific role for posterior dorsolateral striatum in human habit learning, European Journal of Neuroscience, 2009",
+  "written": "2026-09-26"
+}

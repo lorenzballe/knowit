@@ -1,0 +1,40 @@
+{
+  "id": "art-colour-and-mood-3",
+  "topic": "art",
+  "genre": "art.colour_and_pigment",
+  "strand": "art.colour_and_pigment.colour_and_mood",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "Australia's 2012 plain cigarette packs are a drab olive-brown. How was that exact colour chosen?",
+  "options": [
+    "It matched tar-stained lungs",
+    "Smokers rated it least appealing",
+    "It was the cheapest ink"
+  ],
+  "correct": 1,
+  "answer": "By testing it on smokers. Researchers working for the Australian government showed smokers many candidate colours over several rounds and kept the one judged dirtiest, cheapest-looking and most harmful: Pantone 448C. A colour carries a feeling before any word on the pack is read, which is exactly why brands spend so much choosing theirs.",
+  "move": "A colour is often chosen to make you feel something before you think.",
+  "ask": "Which colours in the shops and apps I use were picked to make me feel something before I decide?",
+  "trap": "Matching tar-stained lungs, a story that sounds deliberate and grim.",
+  "keywords": [
+    "plain packaging",
+    "pantone 448c",
+    "cigarettes",
+    "market research"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "GfK Bluemoon, plain packaging research, 2011",
+  "source_kind": "institution",
+  "reference": "GfK Bluemoon, Market Research to Determine Effective Plain Packaging of Tobacco Products, report for the Australian Department of Health and Ageing, 2011",
+  "written": "2026-10-03"
+}

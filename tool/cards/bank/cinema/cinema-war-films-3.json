@@ -1,0 +1,38 @@
+{
+  "id": "cinema-war-films-3",
+  "topic": "cinema",
+  "genre": "cinema.films_and_history",
+  "strand": "cinema.films_and_history.war_films",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should film-makers accept military help with jets and ships if the military may review their script?",
+  "sides": [
+    "Yes, take the help",
+    "No, stay independent"
+  ],
+  "answer": "Real aircraft carriers and fighter jets are impossible to fake well or rent anywhere else, and the military's advisers fix countless errors of procedure. The review mostly checks that service members are shown plausibly. Audiences get accuracy they could not otherwise see, and a film can always walk away if the conditions are too high.",
+  "move": "Whichever side you took, it turns on whether viewers know what was traded.",
+  "ask": "When a source gave someone access, what might they have agreed not to say?",
+  "counterpoint": "The Defense Department's own rules tie help to how authentically, which in practice means how favourably, the military is shown. Scripts change to win cooperation, and audiences are never told which scenes were bargained over. A war film shaped by one side of the war is advertising, however good the jets look.",
+  "keywords": [
+    "pentagon",
+    "military films",
+    "script approval",
+    "top gun"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "DoD Instruction 5410.16, 2015",
+  "source_kind": "primary_document",
+  "reference": "US Department of Defense, Instruction 5410.16: DoD Assistance to Non-Government, Entertainment-Oriented Media Productions, 2015",
+  "written": "2026-10-03"
+}

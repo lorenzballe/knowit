@@ -1,0 +1,40 @@
+{
+  "id": "medicine-alternative-medicine-2",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.alternative_medicine",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Patients with curable cancers who chose alternative medicine alone, refusing standard treatment: how did their death risk compare?",
+  "options": [
+    "About the same",
+    "About 2.5 times higher",
+    "Slightly lower"
+  ],
+  "correct": 1,
+  "answer": "About 2.5 times higher. A US study matched 281 such patients with similar ones who took conventional treatment; for breast cancer the gap exceeded five times. Herbs and diets did little direct harm. The damage came from the surgery, chemotherapy or radiotherapy they replaced.",
+  "move": "Judge a choice by what it displaces, not only by what it does.",
+  "ask": "What good option am I quietly giving up by choosing the gentler-sounding one?",
+  "trap": "About the same, since natural remedies do little harm.",
+  "keywords": [
+    "alternative medicine",
+    "cancer survival",
+    "conventional treatment",
+    "breast cancer"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Johnson et al., JNCI, 2018",
+  "source_kind": "paper",
+  "reference": "Johnson et al., Use of alternative medicine for cancer and its impact on survival, Journal of the National Cancer Institute, 2018",
+  "written": "2026-10-03"
+}

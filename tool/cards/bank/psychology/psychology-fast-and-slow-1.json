@@ -1,0 +1,39 @@
+{
+  "id": "psychology-fast-and-slow-1",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.fast_and_slow",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: printing a tricky reasoning puzzle in a hard-to-read font makes people solve it more often?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. An early study of about 40 students found that a faint, awkward font raised scores, as if the struggle forced careful thought. Pooling many attempts with more than 7,000 people, Meyer, Frederick and colleagues found no gain at all. The slow check is switched on by suspicion, not by squinting.",
+  "move": "Treat a striking result from a small group as a rumour until repeated.",
+  "ask": "Which habit or trick do I follow because one small, striking example convinced me?",
+  "trap": "Believing that struggling to read forces the mind to slow down.",
+  "keywords": [
+    "disfluent fonts",
+    "cognitive reflection",
+    "replication",
+    "reasoning puzzles"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Meyer et al., J Experimental Psychology: General, 2015",
+  "source_kind": "paper",
+  "reference": "Meyer, Frederick, Burnham et al., Disfluent fonts don't help people solve math problems, Journal of Experimental Psychology: General, 2015",
+  "written": "2026-10-03"
+}

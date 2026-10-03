@@ -1,0 +1,39 @@
+{
+  "id": "space-big-bang-2",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.big_bang",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: the Big Bang theory says everything began as a small dot at one particular place in space?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The theory describes space itself stretching everywhere at once, not matter flying out from a spot. Every place was part of the early hot, dense state, so there is no centre to point to, and the afterglow arrives equally from all directions. The bang is a nickname, not the picture.",
+  "move": "When a word conjures a picture, check the claim does not rely on it.",
+  "ask": "Which word in a debate I care about drags in a picture the facts don't support?",
+  "trap": "True, because the word bang suggests an explosion at a point.",
+  "keywords": [
+    "big bang",
+    "expanding space",
+    "cosmic centre",
+    "misconceptions"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ryden, Introduction to Cosmology, 2016",
+  "source_kind": "book",
+  "reference": "Ryden, Introduction to Cosmology, 2nd edition, Cambridge University Press, 2016",
+  "written": "2026-10-03"
+}

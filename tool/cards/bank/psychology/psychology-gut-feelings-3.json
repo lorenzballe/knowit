@@ -1,0 +1,39 @@
+{
+  "id": "psychology-gut-feelings-3",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.gut_feelings",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: being distracted for a few minutes before a complex choice leads to better picks than thinking it over?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. A 2006 study claimed the unconscious mind sorts complex options best while attention is elsewhere. A large replication with about 400 people, plus a pooling of earlier studies, found no reliable advantage over plain deliberation. The insight after a walk is memorable; the equally good one reached at the desk is not.",
+  "move": "Before crediting a pause for an idea, ask whether it would have come anyway.",
+  "ask": "When I say I will sleep on a decision, am I thinking it through or just putting it off?",
+  "trap": "Crediting the break for answers that steady thought would have reached.",
+  "keywords": [
+    "unconscious thought",
+    "deliberation",
+    "replication",
+    "complex choices"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nieuwenstein et al., Judgment and Decision Making, 2015",
+  "source_kind": "paper",
+  "reference": "Nieuwenstein, Wierenga, Morey, Wicherts, Blom, Wagenmakers & van Rijn, On making the right choice: a meta-analysis and large-scale replication attempt of the unconscious thought advantage, Judgment and Decision Making, 2015",
+  "written": "2026-10-03"
+}

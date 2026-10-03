@@ -1,0 +1,37 @@
+{
+  "id": "sport-tech-doping-1",
+  "topic": "sport",
+  "genre": "sport.equipment",
+  "strand": "sport.equipment.tech_doping",
+  "also": [
+    "sport.records.why_records_fall"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When cycling's hour record was reset to traditional bikes in 2000, how far did Chris Boardman ride?",
+  "answer": "49.441 km, just 10 metres beyond Eddy Merckx's 49.431 km from 1972. Four years earlier, on a bike built around a stretched-out position with arms forward, Boardman had covered 56.375 km. Nearly seven of those kilometres belonged to the machine and the posture, not to 24 years of human progress.",
+  "move": "Hold the equipment fixed before you credit the person with the progress.",
+  "ask": "Which of my improvements came from better tools, and which really came from me?",
+  "keywords": [
+    "hour record",
+    "chris boardman",
+    "eddy merckx",
+    "aerodynamics",
+    "bike rules"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Boardman, Triumphs and Turbulence, 2016",
+  "source_kind": "book",
+  "reference": "Chris Boardman, Triumphs and Turbulence: My Autobiography, Ebury Press, 2016",
+  "written": "2026-10-03"
+}

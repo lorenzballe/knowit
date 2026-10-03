@@ -1,0 +1,46 @@
+{
+  "id": "space-space-junk-2",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.space_junk",
+  "also": [
+    "science.physics.energy"
+  ],
+  "kind": "number",
+  "difficulty": "hard",
+  "principle": "computation",
+  "question": "A 1.4 g aluminium scrap hits a satellite at 10 km/s. A 1,000 kg car with equal energy would be doing how many km/h?",
+  "value": 43,
+  "unit": "km/h",
+  "tolerance": 2,
+  "answer": "11.8 m/s × 3.6 ≈ 43 km/h: a car crash in a scrap the size of a pea.",
+  "move": "Speed counts twice: double it and the damage grows fourfold.",
+  "ask": "Where in my life does something small hit hard simply because it arrives so fast?",
+  "trap": "A gram of metal can do little harm, whatever its speed.",
+  "hint": "Energy is half the mass times the speed squared; find it, then solve for the car's speed.",
+  "steps": [
+    "½ × 0.0014 kg × (10,000 m/s)² = 70,000 joules.",
+    "Car: ½ × 1,000 × v² = 70,000, so v² = 140 and v ≈ 11.8 m/s.",
+    "11.8 m/s × 3.6 ≈ 43 km/h: a car crash in a scrap the size of a pea."
+  ],
+  "keywords": [
+    "space debris",
+    "kinetic energy",
+    "hypervelocity impact",
+    "satellites"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Klinkrad, Space Debris, 2006",
+  "source_kind": "book",
+  "reference": "Klinkrad, Space Debris: Models and Risk Analysis, Springer, 2006",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "life-what-you-control-2",
+  "topic": "life",
+  "genre": "life.handle_setbacks",
+  "strand": "life.handle_setbacks.what_you_control",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "People worked through bursts of loud random noise. Some had a button to stop it but rarely pressed it. Who coped better afterwards?",
+  "options": [
+    "Those with the unused button",
+    "Those without a button"
+  ],
+  "correct": 0,
+  "answer": "Those with the unused button. Glass, Singer and Friedman found that after unpredictable noise, people gave up sooner on hard puzzles and made more proofreading errors. Simply knowing they could stop the noise, though few did, sharply reduced those after-effects. The noise was the same; the sense of control was not.",
+  "move": "Keep an exit you control, even if you never use it.",
+  "ask": "What small lever of control could I keep in a stressful situation, even if I never pull it?",
+  "trap": "An unused button changes nothing about the noise people heard.",
+  "keywords": [
+    "perceived control",
+    "noise",
+    "stress",
+    "after-effects"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Glass, Singer and Friedman, JPSP, 1969",
+  "source_kind": "paper",
+  "reference": "Glass, Singer and Friedman, Psychic cost of adaptation to an environmental stressor, Journal of Personality and Social Psychology, 1969",
+  "written": "2026-10-03"
+}

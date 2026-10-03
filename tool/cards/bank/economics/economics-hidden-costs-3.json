@@ -1,0 +1,41 @@
+{
+  "id": "economics-hidden-costs-3",
+  "topic": "economics",
+  "genre": "economics.everyday_costs",
+  "strand": "economics.everyday_costs.hidden_costs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "StubHub showed some buyers ticket prices with fees included, others only at checkout. How did the second group's spending compare?",
+  "options": [
+    "About 21% higher",
+    "About the same",
+    "About 10% lower"
+  ],
+  "correct": 0,
+  "answer": "About 21% higher. In a large 2015 experiment, buyers who met the fees only at checkout bought more often and chose pricier seats. Having picked a seat at the lower price, few went back to compare. By the final click, the decision had already been made.",
+  "move": "Judge a price at the moment it is complete, not when it first appears.",
+  "ask": "Do I compare prices at the start, before the extras appear, or at the very end?",
+  "trap": "Assuming buyers add up the fees in the end, so totals match.",
+  "keywords": [
+    "drip pricing",
+    "stubhub",
+    "ticket fees",
+    "checkout",
+    "hidden fees"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Blake, Moshary, Sweeney and Tadelis, Marketing Science, 2021",
+  "source_kind": "paper",
+  "reference": "https://www.nber.org/system/files/working_papers/w25186/w25186.pdf",
+  "written": "2026-10-03"
+}

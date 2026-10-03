@@ -1,0 +1,39 @@
+{
+  "id": "space-sizes-2",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.sizes",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Which is wider: the Moon, or mainland Australia from west to east?",
+  "options": [
+    "The Moon",
+    "Australia"
+  ],
+  "correct": 1,
+  "answer": "Australia. Its mainland runs about 4,000 km from west to east, while the Moon is 3,474 km across. The Moon feels bigger because it is a whole world and a country is only part of one. Laid on the map, the Moon would not quite span the continent.",
+  "move": "Compare the numbers, not the categories the things belong to.",
+  "ask": "Am I judging something as big or small by its label rather than its actual size?",
+  "trap": "The Moon, since a whole world must beat a single country.",
+  "keywords": [
+    "moon",
+    "australia",
+    "diameter",
+    "scale"
+  ],
+  "era": "timeless",
+  "region": "oceania",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Geoscience Australia, Area of Australia",
+  "source_kind": "institution",
+  "reference": "https://www.ga.gov.au/scientific-topics/national-location-information/dimensions/area-of-australia-states-and-territories",
+  "written": "2026-10-03"
+}

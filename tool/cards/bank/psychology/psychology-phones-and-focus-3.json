@@ -1,0 +1,38 @@
+{
+  "id": "psychology-phones-and-focus-3",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.phones_and_focus",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should smartphones arrive with non-urgent notifications batched a few times a day by default?",
+  "sides": [
+    "Yes, batch by default",
+    "No, leave it to users"
+  ],
+  "answer": "Defaults decide what most people live with, because few ever change settings. A field experiment found people whose notifications came three times a day felt more attentive, productive and less stressed. Each app pushes alerts that serve it, not the user. A sensible default protects focus and leaves anyone free to switch it off.",
+  "move": "Whichever side you took, the hinge is who decides which alerts count as urgent.",
+  "ask": "Who decided how often my phone interrupts me: me, or the apps on it?",
+  "counterpoint": "Which alert is urgent differs by person: a carer's text, a shift offer, a message from a child. A blanket default would make phones worse for those who rely on live alerts, and the evidence comes from short trials with volunteers. Switching everything off raised anxiety in the same study. Better tools to choose beat one choice for everyone.",
+  "keywords": [
+    "notifications",
+    "default settings",
+    "smartphones",
+    "app design"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fitz et al., Computers in Human Behavior, 2019",
+  "source_kind": "paper",
+  "reference": "Fitz, Kushlev, Jagannathan, Lewis, Paliwal & Ariely, Batching smartphone notifications can improve well-being, Computers in Human Behavior, 2019",
+  "written": "2026-10-03"
+}

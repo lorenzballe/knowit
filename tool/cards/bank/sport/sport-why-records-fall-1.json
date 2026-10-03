@@ -1,0 +1,33 @@
+{
+  "id": "sport-why-records-fall-1",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.why_records_fall",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did a 2008 analysis of the whole history of world records in athletics, swimming and cycling find about their progress?",
+  "answer": "That it is slowing toward a ceiling. Berthelot and colleagues fitted every record since 1896 and found the curves flattening: new marks beat old ones by ever thinner margins. In their reading, the big human gains of the twentieth century were a brief burst; leaps now come mostly from equipment.",
+  "move": "When each gain is smaller than the last, ask how near the ceiling is.",
+  "ask": "Where am I expecting the same big gains as before, when I may be close to my own ceiling?",
+  "keywords": [
+    "world records",
+    "performance limits",
+    "progression",
+    "olympic sports"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Berthelot et al., PLoS ONE, 2008",
+  "source_kind": "paper",
+  "reference": "Berthelot et al., The Citius End: World Records Progression Announces the Completion of a Brief Ultra-Physiological Quest, PLoS ONE, 2008",
+  "written": "2026-10-03"
+}

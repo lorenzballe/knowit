@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-burden-of-proof-3",
+  "topic": "philosophy",
+  "genre": "philosophy.arguments",
+  "strand": "philosophy.arguments.burden_of_proof",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "When a new technology might cause serious harm, should its makers have to prove it safe first?",
+  "sides": [
+    "Yes, prove it safe first",
+    "No, prove it harmful first"
+  ],
+  "answer": "Yes. Harm from chemicals, drugs or pollutants often shows up only after years, when it is too late to undo. The 1992 Rio Declaration says lack of full scientific certainty should not delay measures against serious or irreversible damage. Leaded petrol and ozone-eating CFCs were both assumed harmless until proved otherwise.",
+  "move": "It turns on whether the harms of waiting count like the harms of acting.",
+  "ask": "Am I treating doing nothing as the safe option, without counting what waiting costs?",
+  "counterpoint": "Not acting has risks too, and the principle hides them. Cass Sunstein argued in 2005 that strict precaution forbids its own advice: blocking a new drug, crop or power plant leaves the old dangers in place. Every delay to a safer technology is paid in the harms it would have prevented.",
+  "keywords": [
+    "precautionary principle",
+    "rio declaration",
+    "cass sunstein",
+    "risk",
+    "regulation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sunstein, Laws of Fear, 2005",
+  "source_kind": "book",
+  "reference": "Sunstein, Laws of Fear: Beyond the Precautionary Principle, Cambridge University Press, 2005; Rio Declaration on Environment and Development, Principle 15, United Nations, 1992",
+  "written": "2026-10-03"
+}

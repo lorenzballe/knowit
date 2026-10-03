@@ -1,0 +1,39 @@
+{
+  "id": "science-experiments-2",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Is it fair to test a promising social policy by giving it to a random half and withholding it from the rest?",
+  "sides": [
+    "Yes, randomise it",
+    "No, it is unfair"
+  ],
+  "answer": "Without a lottery, those who sign up differ from those who do not, and nobody learns whether the policy works. Finland's 2017–2018 trial paid 2,000 randomly chosen unemployed people €560 a month, so they could be compared with similar people who got nothing. When money is limited anyway, a lottery shares it fairly.",
+  "move": "Whichever side you took, the hinge is whether there is enough to go round.",
+  "ask": "When I try something new in my life, how will I know it was the change, not luck, that helped?",
+  "counterpoint": "If officials truly believe a policy helps, denying it by coin toss to people who need it treats them as a means. Need, not chance, should decide who gets help. And trials run small and short: two years of payments to a few thousand people cannot show how a whole country would respond, so the sacrifice may mislead.",
+  "keywords": [
+    "randomised trials",
+    "basic income",
+    "finland",
+    "social policy",
+    "fairness"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kangas et al., Finnish Ministry of Social Affairs, 2019",
+  "source_kind": "institution",
+  "reference": "Kangas, Jauhiainen, Simanainen & Ylikännö, The Basic Income Experiment 2017–2018 in Finland: Preliminary Results, Ministry of Social Affairs and Health, 2019",
+  "written": "2026-09-26"
+}

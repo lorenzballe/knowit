@@ -1,0 +1,40 @@
+{
+  "id": "medicine-doctors-who-were-right-2",
+  "topic": "medicine",
+  "genre": "medicine.medical_history",
+  "strand": "medicine.medical_history.doctors_who_were_right",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confirmation",
+  "question": "True or false: a 1956 finding that X-raying pregnant women raised childhood cancer risk changed practice within two years?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Alice Stewart's Oxford survey linked X-rays in pregnancy to more childhood cancer. Critics doubted a study built on mothers' memories and kept looking for flaws, and routine X-raying went on for about two decades, until larger studies confirmed her and ultrasound offered another way to look inside.",
+  "move": "Evidence against a habit gets audited far harder than evidence for it.",
+  "ask": "Which inconvenient finding am I picking apart harder than I would if it agreed with me?",
+  "trap": "True, since solid evidence of harm to children should be acted on fast.",
+  "keywords": [
+    "alice stewart",
+    "x-rays",
+    "pregnancy",
+    "childhood cancer",
+    "oxford survey"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Stewart et al., The Lancet, 1956",
+  "source_kind": "paper",
+  "reference": "Stewart, Webb, Giles & Hewitt, Malignant disease in childhood and diagnostic irradiation in utero, The Lancet, 1956",
+  "written": "2026-10-03"
+}

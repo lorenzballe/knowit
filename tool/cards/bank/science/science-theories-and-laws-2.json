@@ -1,0 +1,36 @@
+{
+  "id": "science-theories-and-laws-2",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.theories_and_laws",
+  "also": [
+    "science.physics.relativity"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If Einstein's relativity replaced Newton's gravity, why were the Apollo flights to the Moon planned with Newton's?",
+  "answer": "Because Newton's theory is not wrong at those speeds, only incomplete. For a spacecraft moving a few kilometres per second, relativity's corrections are far smaller than the uncertainty in engine thrust. Einstein's equations shrink to Newton's when gravity is weak and speeds are low. A replaced theory lives on as a special case of its successor.",
+  "move": "Ask where an old idea still works before throwing it out.",
+  "ask": "Which old rule of mine is still right in its own territory, even if it fails outside it?",
+  "keywords": [
+    "newtonian gravity",
+    "general relativity",
+    "apollo",
+    "approximation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Will, Was Einstein Right?, 1993",
+  "source_kind": "book",
+  "reference": "Will, Was Einstein Right? Putting General Relativity to the Test, 2nd ed., Basic Books, 1993",
+  "written": "2026-09-26"
+}

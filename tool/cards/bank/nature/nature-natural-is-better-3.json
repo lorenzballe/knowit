@@ -1,0 +1,38 @@
+{
+  "id": "nature-natural-is-better-3",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.natural_is_better",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should herbal supplements have to pass the same safety tests as medicines before going on sale?",
+  "sides": [
+    "Yes, test them first",
+    "No, keep rules light"
+  ],
+  "answer": "Yes. Herbs are drugs with active chemicals, and some do serious harm. In the early 1990s, Belgian women on a slimming regimen suffered rapid kidney failure after one Chinese herb was swapped for another containing aristolochic acid, as Vanherweghem and colleagues reported. Testing before sale catches what reports after the damage cannot.",
+  "move": "Whichever side you took, where buyers would go instead decides it.",
+  "ask": "When I take something because it seems natural and harmless, have I checked what is in it?",
+  "counterpoint": "Full drug trials cost millions, and nobody can patent a common herb, so most would vanish or move to unregulated online sellers. Most traditional remedies at normal doses cause little harm. Better to police contamination, mislabelling and the few known dangerous plants, as many regulators already do, than to price the shelf out of existence.",
+  "keywords": [
+    "herbal supplements",
+    "aristolochic acid",
+    "kidney failure",
+    "regulation"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Vanherweghem et al., The Lancet, 1993",
+  "source_kind": "paper",
+  "reference": "Vanherweghem et al., Rapidly progressive interstitial renal fibrosis in young women: association with slimming regimen including Chinese herbs, The Lancet, 1993",
+  "written": "2026-10-03"
+}

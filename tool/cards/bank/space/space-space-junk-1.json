@@ -1,0 +1,36 @@
+{
+  "id": "space-space-junk-1",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.space_junk",
+  "also": [
+    "economics.think_in_incentives.tragedy_of_the_commons"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why could the junk in low orbit keep multiplying even if nobody launched anything ever again?",
+  "answer": "Because crashes make junk faster than the air removes it. Above about 800 km, thin air drags fragments down only over decades to centuries. Each collision shatters objects into thousands of pieces, and each piece can hit something else. A 2006 NASA model found the debris count would eventually rise even with launches stopped.",
+  "move": "Some messes feed themselves; clean up before the cycle starts.",
+  "ask": "Which small mess in my life is now creating more mess on its own?",
+  "keywords": [
+    "kessler syndrome",
+    "orbital debris",
+    "collisions",
+    "low earth orbit"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Liou & Johnson, Science, 2006",
+  "source_kind": "paper",
+  "reference": "doi:10.1126/science.1121337",
+  "written": "2026-10-03"
+}

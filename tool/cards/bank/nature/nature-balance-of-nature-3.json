@@ -1,0 +1,39 @@
+{
+  "id": "nature-balance-of-nature-3",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.balance_of_nature",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: Britain's lowland heaths, prized as wild nature, exist only because people cleared and grazed them?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Most lowland heath grew on land cleared of woodland from the Bronze Age onwards, then kept open for thousands of years by grazing, cutting and burning. Webb's history shows that where commoners and their animals left, birch and pine moved in. Leave a heath alone and within a few decades it becomes a wood.",
+  "move": "Ask what a place would become if people simply stopped.",
+  "ask": "Which part of my life feels natural but only stays that way because I keep tending it?",
+  "trap": "A wild-looking landscape seems to be what nature left alone.",
+  "keywords": [
+    "heathland",
+    "grazing",
+    "bronze age",
+    "woodland"
+  ],
+  "era": "ancient",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Webb, Heathlands, 1986",
+  "source_kind": "book",
+  "reference": "Webb, Heathlands, Collins New Naturalist, 1986",
+  "written": "2026-10-03"
+}

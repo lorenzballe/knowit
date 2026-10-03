@@ -1,0 +1,39 @@
+{
+  "id": "food-coffee-and-health-claims-3",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.coffee_and_health_claims",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Should pregnant women be advised to avoid caffeine altogether, rather than keep under 200 mg a day?",
+  "sides": [
+    "Yes, advise none",
+    "No, keep the limit"
+  ],
+  "answer": "A 2020 review by the psychologist Jack James found most published findings linking caffeine in pregnancy to miscarriage, stillbirth or low birth weight, with no safe threshold in sight. Caffeine crosses the placenta, and the fetus barely clears it. When harm is plausible and the gain only pleasure, the simplest advice is none.",
+  "move": "It turns on whether nausea, not caffeine, explains the link.",
+  "ask": "When a rule says avoid completely, do I know what evidence it stands on?",
+  "counterpoint": "The evidence is observational and tangled with nausea: women with healthy pregnancies feel sicker early on and drink less coffee, which makes coffee look harmful. Bodies from the American College of Obstetricians and Gynecologists to the NHS keep a 200 mg limit. Telling women any cup risks harm adds guilt and anxiety the data cannot justify.",
+  "keywords": [
+    "pregnancy",
+    "caffeine",
+    "miscarriage",
+    "guidelines",
+    "morning sickness"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "James, BMJ Evidence-Based Medicine, 2020",
+  "source_kind": "paper",
+  "reference": "James, Maternal caffeine consumption and pregnancy outcomes: a narrative review with implications for advice to mothers and mothers-to-be, BMJ Evidence-Based Medicine, 2020",
+  "written": "2026-10-03"
+}

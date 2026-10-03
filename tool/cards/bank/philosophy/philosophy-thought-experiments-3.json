@@ -1,0 +1,39 @@
+{
+  "id": "philosophy-thought-experiments-3",
+  "topic": "philosophy",
+  "genre": "philosophy.arguments",
+  "strand": "philosophy.arguments.thought_experiments",
+  "kind": "debate",
+  "difficulty": "medium",
+  "principle": "none",
+  "question": "Can our gut verdicts on imaginary cases count as real evidence about right and wrong?",
+  "sides": [
+    "Yes, they are evidence",
+    "No, they are too unstable"
+  ],
+  "answer": "Yes. Ethics tests principles against considered judgments much as science tests theories against observations; John Rawls called the back-and-forth reflective equilibrium. If a theory says a surgeon may kill one patient to save five, the shock is data. Without verdicts on cases, a moral theory would have nothing to answer to.",
+  "move": "It turns on whether a gut verdict about a made-up case tracks anything real.",
+  "ask": "Which of my strong moral reactions have I ever tested by changing the details of the case?",
+  "counterpoint": "Experimental philosophers found that verdicts on imagined cases shift with the order cases are read in. Swain, Alexander and Weinberg showed in 2008 that whether people said a man with a temperature-reading implant knew the temperature depended on what they had read just before. A gauge that drifts with its order is not yet a gauge.",
+  "keywords": [
+    "thought experiments",
+    "intuitions",
+    "reflective equilibrium",
+    "john rawls",
+    "experimental philosophy"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Swain, Alexander & Weinberg, PPR, 2008",
+  "source_kind": "paper",
+  "reference": "Swain, Alexander & Weinberg, The Instability of Philosophical Intuitions: Running Hot and Cold on Truetemp, Philosophy and Phenomenological Research 76 (1), 2008; Rawls, A Theory of Justice, Harvard University Press, 1971",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "psychology-naming-feelings-2",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.naming_feelings",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "People afraid of spiders approached a tarantula while describing their fear aloud, reassuring themselves, or thinking of other things. Who reacted least a week later?",
+  "options": [
+    "Those who reassured themselves",
+    "Those who described their fear",
+    "Those who thought of other things"
+  ],
+  "correct": 1,
+  "answer": "Those who described their fear. A week later, facing another spider elsewhere, their bodies reacted less, measured by sweat on the skin, than those who had told themselves the spider was harmless or had distracted themselves. They did not report less fear; their bodies showed it. More fear words meant a larger drop.",
+  "move": "Naming a fear plainly can calm it more than arguing it away.",
+  "ask": "What worry could I describe plainly, in words, instead of telling myself it is nothing?",
+  "trap": "Those who reassured themselves, because calming thoughts seem the obvious remedy.",
+  "keywords": [
+    "affect labelling",
+    "spider phobia",
+    "exposure therapy",
+    "reappraisal"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kircanski, Lieberman & Craske, Psychological Science, 2012",
+  "source_kind": "paper",
+  "reference": "doi:10.1177/0956797612443830",
+  "written": "2026-10-03"
+}

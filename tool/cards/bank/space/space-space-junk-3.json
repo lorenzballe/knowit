@@ -1,0 +1,40 @@
+{
+  "id": "space-space-junk-3",
+  "topic": "space",
+  "genre": "space.rockets",
+  "strand": "space.rockets.space_junk",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "Which space junk poses the greatest threat to working satellites?",
+  "options": [
+    "The large pieces radar tracks",
+    "Pieces of 1 to 10 cm",
+    "Specks of paint under 1 mm"
+  ],
+  "correct": 1,
+  "answer": "Pieces of 1 to 10 cm. They are too small for the radar catalogues to follow, so satellites cannot steer around them, yet too big for shielding to stop. ESA estimates about a million of them, against a few tens of thousands of objects that are tracked.",
+  "move": "The risk you can count is not always the risk that hurts.",
+  "ask": "Which risk in my life is too small to notice but big enough to do real damage?",
+  "trap": "The big tracked pieces, since those are the ones counted and reported.",
+  "keywords": [
+    "space debris",
+    "radar tracking",
+    "satellite shielding",
+    "esa"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ESA Space Environment Report, 2024",
+  "source_kind": "institution",
+  "reference": "ESA Space Debris Office, ESA's Annual Space Environment Report, 2024",
+  "written": "2026-10-03"
+}

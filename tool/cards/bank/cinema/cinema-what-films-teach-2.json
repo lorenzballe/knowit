@@ -1,0 +1,40 @@
+{
+  "id": "cinema-what-films-teach-2",
+  "topic": "cinema",
+  "genre": "cinema.films_and_history",
+  "strand": "cinema.films_and_history.what_films_teach",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "In 1990s television medical dramas, what share of patients given CPR survived the immediate cardiac arrest?",
+  "options": [
+    "About a tenth",
+    "About three quarters",
+    "About half"
+  ],
+  "correct": 1,
+  "answer": "About three quarters. Diem and colleagues watched ER, Chicago Hope and Rescue 911 and found 75% of 60 screen resuscitations survived the arrest, and 67% seemed to leave hospital. Real survival is far lower, especially for the old and ill. Families making end-of-life choices bring the screen's odds with them.",
+  "move": "Ask where your sense of the odds was learned before you rely on it.",
+  "ask": "Which risk or chance in my life do I judge by what I have seen on screen?",
+  "trap": "About a tenth, assuming the screen shows typical hospital cases.",
+  "keywords": [
+    "cpr",
+    "medical dramas",
+    "survival rates",
+    "resuscitation"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Diem et al., NEJM, 1996",
+  "source_kind": "paper",
+  "reference": "Diem, Lantos and Tulsky, Cardiopulmonary Resuscitation on Television: Miracles and Misinformation, New England Journal of Medicine, 334(24), 1996",
+  "written": "2026-10-03"
+}

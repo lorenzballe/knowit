@@ -1,0 +1,41 @@
+{
+  "id": "philosophy-identity-2",
+  "topic": "philosophy",
+  "genre": "philosophy.big_questions",
+  "strand": "philosophy.big_questions.identity",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Which change makes people most likely to say a loved one is no longer the same person?",
+  "options": [
+    "Losing their memories",
+    "Losing their intelligence",
+    "Losing their moral character"
+  ],
+  "correct": 2,
+  "answer": "Losing their moral character. Nina Strohminger and Shaun Nichols found in 2014 that changes to kindness or honesty seemed more identity-destroying than memory loss. Families of patients with frontotemporal dementia, which erodes moral behaviour, felt the person was gone more than families facing Alzheimer's. Who someone is seems to live in how they treat others.",
+  "move": "People know you by how you treat them more than by what you remember.",
+  "ask": "If I changed in one way tomorrow, which trait would make the people I love say I was gone?",
+  "trap": "Losing their memories, the textbook basis of who someone is.",
+  "keywords": [
+    "personal identity",
+    "moral self",
+    "dementia",
+    "nina strohminger",
+    "memory"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Strohminger & Nichols, Cognition, 2014",
+  "source_kind": "paper",
+  "reference": "Strohminger & Nichols, The Essential Moral Self, Cognition 131 (1), 2014; Strohminger & Nichols, Neurodegeneration and Identity, Psychological Science 26 (9), 2015",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,39 @@
+{
+  "id": "life-teaching-it-back-1",
+  "topic": "life",
+  "genre": "life.learn_anything",
+  "strand": "life.learn_anything.teaching_it_back",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: people who study expecting to teach the material later recall it better than those expecting a test?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Nestojko and colleagues gave people the same passage; some were told they would teach it to another student, others that they would be tested. Then everyone was tested. Those expecting to teach recalled more, and in better order, especially the main points. Preparing to explain made them sort what mattered from what did not.",
+  "move": "Study as if you will have to explain it to someone tomorrow.",
+  "ask": "What am I learning now that I could study as if I had to teach it next week?",
+  "trap": "A coming test seems the stronger push to study hard.",
+  "keywords": [
+    "learning by teaching",
+    "expectation",
+    "recall",
+    "studying"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Nestojko and colleagues, Memory and Cognition, 2014",
+  "source_kind": "paper",
+  "reference": "Nestojko, Bui, Kornell and Bjork, Expecting to teach enhances learning and organization of knowledge in free recall of text passages, Memory and Cognition, 2014",
+  "written": "2026-10-03"
+}

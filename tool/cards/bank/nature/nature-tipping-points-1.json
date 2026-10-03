@@ -1,0 +1,33 @@
+{
+  "id": "nature-tipping-points-1",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.tipping_points",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why must a murky lake's phosphorus be cut far below the level at which it first turned murky?",
+  "answer": "Because a murky lake holds itself murky. In clear water, rooted plants anchor the mud and soak up nutrients; once algae cloud the water and the plants die, waves stir the mud and keep it cloudy. Scheffer and colleagues showed such lakes have two stable states. Getting back means pushing far past the old threshold.",
+  "move": "Getting out of a rut can take far more than getting into it.",
+  "ask": "Which rut am I trying to leave with the same small effort it took to fall in?",
+  "keywords": [
+    "shallow lakes",
+    "eutrophication",
+    "phosphorus",
+    "stable states"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Scheffer et al., Nature, 2001",
+  "source_kind": "paper",
+  "reference": "Scheffer, Carpenter, Foley, Folke & Walker, Catastrophic shifts in ecosystems, Nature, 2001",
+  "written": "2026-10-03"
+}

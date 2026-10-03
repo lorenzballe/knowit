@@ -1,0 +1,33 @@
+{
+  "id": "food-gut-health-claims-1",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.gut_health_claims",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "After a course of antibiotics, what did a probiotic do to volunteers' recovering gut bacteria?",
+  "answer": "It held them back. In a 2018 Weizmann Institute study, volunteers given an 11-strain probiotic after antibiotics took months longer to regain their usual gut community than those left alone, as the probiotic strains occupied the space. Volunteers given back their own gut bacteria, frozen before treatment, recovered within days.",
+  "move": "Filling a gap fast can block what would have grown back.",
+  "ask": "Is there a gap in my life I rushed to fill that might have healed on its own?",
+  "keywords": [
+    "probiotics",
+    "antibiotics",
+    "microbiome",
+    "faecal transplant"
+  ],
+  "era": "recent",
+  "region": "middle_east",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Suez et al., Cell, 2018",
+  "source_kind": "paper",
+  "reference": "Suez, Zmora, Zilberman-Schapira et al., Post-antibiotic gut mucosal microbiome reconstitution is impaired by probiotics and improved by autologous FMT, Cell, 2018",
+  "written": "2026-10-03"
+}

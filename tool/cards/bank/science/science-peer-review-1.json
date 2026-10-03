@@ -1,0 +1,40 @@
+{
+  "id": "science-peer-review-1",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.peer_review",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Researchers planted 9 major errors in a paper and sent it to over 600 reviewers. How many did a typical reviewer catch?",
+  "options": [
+    "About two or three",
+    "About six",
+    "All nine"
+  ],
+  "correct": 0,
+  "answer": "About two or three. In Schroter and colleagues' 2008 study at the BMJ, reviewers spotted on average about three of the nine, and training barely helped. Reviewers read for plausibility in a few unpaid hours and rarely see the raw data. A peer-reviewed label means someone read it, not that every claim was checked.",
+  "move": "Treat an approval as a first filter, not a full inspection.",
+  "ask": "Which source do I trust only because it passed a gate, not because anyone checked the details?",
+  "trap": "All nine, since reviewing exists to catch exactly these.",
+  "keywords": [
+    "peer review",
+    "errors",
+    "bmj",
+    "reviewers"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schroter et al., JRSM, 2008",
+  "source_kind": "paper",
+  "reference": "Schroter et al., What errors do peer reviewers detect, and does training improve their ability to detect them?, Journal of the Royal Society of Medicine 101:507–514, 2008",
+  "written": "2026-09-26"
+}

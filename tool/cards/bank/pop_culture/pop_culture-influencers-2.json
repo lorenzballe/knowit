@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-influencers-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.fame",
+  "strand": "pop_culture.fame.influencers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did Britain's advertising regulator rule against influencer posts for fake-tan products in 2021?",
+  "answer": "Because the posts used beauty filters. A filter that smooths and bronzes skin exaggerates exactly what a tanning product promises, so the photos misled buyers about the result. The Advertising Standards Authority ruled that filters must not be used in ads where they distort the effect of the product being sold.",
+  "move": "Ask whether the picture shows the product or the editing.",
+  "ask": "Which before-and-after picture convinced me to buy something, and did I ask how it was edited?",
+  "keywords": [
+    "beauty filters",
+    "advertising standards authority",
+    "fake tan",
+    "instagram"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Advertising Standards Authority, Skinny Tan ruling",
+  "source_kind": "institution",
+  "reference": "Advertising Standards Authority, ASA Ruling on Skinny Tan Ltd, February 2021",
+  "written": "2026-09-26"
+}

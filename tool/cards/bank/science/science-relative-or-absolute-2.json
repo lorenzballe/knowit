@@ -1,0 +1,58 @@
+{
+  "id": "science-relative-or-absolute-2",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.relative_or_absolute",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "A drug halves heart-attack risk, from 2 in 100 to 1 in 100. How many people must take it for one to benefit?",
+  "value": 100,
+  "unit": "people",
+  "answer": "1 ÷ 0.01 = 100 people treated for one to benefit.",
+  "move": "Turn any percentage cut into how many must act for one gain.",
+  "ask": "For a pill or plan I'm offered, how many people like me must use it for one to benefit?",
+  "trap": "Thinking that half of the people taking it are protected.",
+  "hint": "Subtract the two risks, then ask how many people it takes to add up to one case.",
+  "steps": [
+    "Risk without the drug: 2 in 100; with it: 1 in 100.",
+    "Absolute difference: 2% − 1% = 1 percentage point.",
+    "1 ÷ 0.01 = 100 people treated for one to benefit."
+  ],
+  "keywords": [
+    "number needed to treat",
+    "relative risk",
+    "absolute risk",
+    "heart attacks"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "dots",
+  "diagram": {
+    "type": "dots",
+    "total": 100,
+    "groups": [
+      {
+        "n": 1,
+        "label": "heart attack even with the drug"
+      },
+      {
+        "n": 1,
+        "label": "heart attack the drug prevents",
+        "hi": true
+      }
+    ],
+    "caption": "Of 100 people taking the drug, one is spared; 98 were never going to have one."
+  },
+  "source": "Laupacis, Sackett & Roberts, NEJM, 1988",
+  "source_kind": "paper",
+  "reference": "Laupacis, Sackett & Roberts, An assessment of clinically useful measures of the consequences of treatment, New England Journal of Medicine 318:1728–1733, 1988",
+  "written": "2026-09-26"
+}

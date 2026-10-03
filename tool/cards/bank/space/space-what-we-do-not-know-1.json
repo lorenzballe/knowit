@@ -1,0 +1,40 @@
+{
+  "id": "space-what-we-do-not-know-1",
+  "topic": "space",
+  "genre": "space.edge_of_the_universe",
+  "strand": "space.edge_of_the_universe.what_we_do_not_know",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "A 2016 study put the number of galaxies at 2 trillion. What did New Horizons, beyond Pluto, suggest after measuring the sky's darkness?",
+  "options": [
+    "About 2 trillion, as estimated",
+    "Far more: tens of trillions",
+    "Far fewer: hundreds of billions"
+  ],
+  "correct": 2,
+  "answer": "Far fewer: hundreds of billions. The 2016 figure extrapolated huge numbers of galaxies too faint to see. Far from the Sun's glare, New Horizons measured how dark the sky really is, and the total glow left little room for that many unseen galaxies.",
+  "move": "A count of things nobody has seen is a model wearing a number.",
+  "ask": "Which big number I repeat is really an estimate of things nobody has ever counted?",
+  "trap": "About 2 trillion, because that headline figure was so widely reported.",
+  "keywords": [
+    "number of galaxies",
+    "new horizons",
+    "cosmic optical background",
+    "estimates"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Lauer et al., Astrophysical Journal, 2021",
+  "source_kind": "paper",
+  "reference": "Lauer et al., New Horizons Observations of the Cosmic Optical Background, Astrophysical Journal, 2021",
+  "written": "2026-10-03"
+}

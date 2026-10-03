@@ -1,0 +1,33 @@
+{
+  "id": "psychology-remembering-better-2",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.remembering_better",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Does a wrong guess, made before seeing the right answer, help or hurt memory of that answer?",
+  "answer": "It helps. In experiments matched for total study time, people who first tried to answer and failed, then saw the answer, remembered it better than people who simply studied the answer all along. The failed attempt opens a question that the answer then fills. A wrong guess is a hook, not a waste.",
+  "move": "Attempt the answer before looking it up, even when you expect to fail.",
+  "ask": "Next time I want to look something up, could I take a guess first?",
+  "keywords": [
+    "pretesting",
+    "errors",
+    "guessing",
+    "learning"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kornell, Hays & Bjork, JEP: LMC, 2009",
+  "source_kind": "paper",
+  "reference": "Kornell, Hays & Bjork, Unsuccessful retrieval attempts enhance subsequent learning, Journal of Experimental Psychology: Learning, Memory, and Cognition, 2009",
+  "written": "2026-10-03"
+}

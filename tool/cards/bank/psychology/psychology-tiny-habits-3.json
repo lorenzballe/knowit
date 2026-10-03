@@ -1,0 +1,36 @@
+{
+  "id": "psychology-tiny-habits-3",
+  "topic": "psychology",
+  "genre": "psychology.habits",
+  "strand": "psychology.habits.tiny_habits",
+  "also": [
+    "psychology.habits.cues"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Is a new habit easier to build when tacked on just before an existing routine, or just after it?",
+  "answer": "After it, in one study. Fifty adults learning to floss were told to do it either before or after brushing their teeth. Those who flossed after brushing tended to build stronger habits, and eight months later they flossed more often. The finished routine works as the cue: toothbrush down, floss in hand.",
+  "move": "Hang a new habit on the end of one you already finish.",
+  "ask": "Which thing I already do every day could become the signal for a habit I keep postponing?",
+  "keywords": [
+    "habit formation",
+    "flossing",
+    "cues",
+    "routines"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Judah, Gardner & Aunger, BJHP, 2013",
+  "source_kind": "paper",
+  "reference": "doi:10.1111/j.2044-8287.2012.02086.x",
+  "written": "2026-10-03"
+}

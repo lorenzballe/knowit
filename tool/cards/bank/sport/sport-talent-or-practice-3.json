@@ -1,0 +1,40 @@
+{
+  "id": "sport-talent-or-practice-3",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.talent_or_practice",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "True or false: when hundreds of adults followed one identical 20-week endurance programme, some barely improved their aerobic fitness?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In the HERITAGE Family Study, gains in maximal oxygen uptake ranged from almost nothing to more than a litre a minute under the same supervised training. Relatives responded alike: about half of the spread in response ran in families. One plan, followed to the letter, built very different bodies.",
+  "move": "An average result hides people for whom the plan barely works.",
+  "ask": "Have I given up on something because it did not work for me as fast as it did for others?",
+  "trap": "Assuming the same training gives everyone roughly the same gains.",
+  "keywords": [
+    "trainability",
+    "heritage family study",
+    "vo2max",
+    "genetics",
+    "endurance training"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bouchard et al., J Appl Physiol, 1999",
+  "source_kind": "paper",
+  "reference": "Bouchard et al., Familial aggregation of VO2max response to exercise training: results from the HERITAGE Family Study, Journal of Applied Physiology, 1999",
+  "written": "2026-10-03"
+}

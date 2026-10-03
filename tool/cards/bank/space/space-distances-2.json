@@ -1,0 +1,63 @@
+{
+  "id": "space-distances-2",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.distances",
+  "also": [
+    "science.maths_curios.averages"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Averaged over time, which planet is closest to Earth?",
+  "options": [
+    "Venus",
+    "Mars",
+    "Mercury"
+  ],
+  "correct": 2,
+  "answer": "Mercury. Venus comes closest at its nearest, but spends long stretches on the far side of the Sun. Mercury's small orbit never lets it get far away. Averaged over time, Mercury sits 1.04 times the Earth–Sun distance from us, Venus 1.14 and Mars 1.69.",
+  "move": "The best-case number and the average can crown different winners.",
+  "ask": "Am I choosing by someone's best day, when I'll mostly live with their average day?",
+  "trap": "Venus, because it comes closer than any other planet at its nearest.",
+  "keywords": [
+    "mercury",
+    "venus",
+    "planetary distances",
+    "averages"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "diagram": {
+    "type": "bars",
+    "unit": "× Earth–Sun distance",
+    "items": [
+      {
+        "label": "Mercury",
+        "value": 1.04,
+        "hi": true
+      },
+      {
+        "label": "Venus",
+        "value": 1.14
+      },
+      {
+        "label": "Mars",
+        "value": 1.69
+      }
+    ],
+    "caption": "Averaged over time: Mercury 1.04, Venus 1.14, Mars 1.69 times the Earth–Sun distance."
+  },
+  "source": "Stockman, Monroe & Cordner, Physics Today, 2019",
+  "source_kind": "paper",
+  "reference": "Stockman, Monroe & Cordner, Venus is not Earth's closest neighbor, Physics Today, 2019",
+  "written": "2026-10-03"
+}

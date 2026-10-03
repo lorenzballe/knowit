@@ -1,0 +1,39 @@
+{
+  "id": "science-headlines-and-papers-3",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.headlines_and_papers",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "multipleComparisons",
+  "question": "True or false: most ingredients picked at random from a cookbook have been linked to cancer in published studies?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. Jonathan Schoenfeld and John Ioannidis picked 50 ingredients from a cookbook; 40 had studies claiming they raised or lowered cancer risk. Most claims rested on weak evidence and shrank in larger reviews. With thousands of researchers testing foods against diseases, some links appear by chance alone, and each can make a headline.",
+  "move": "When everything is linked to something, ask how many links were tested.",
+  "ask": "Which food rule do I follow because of one headline rather than a pile of evidence?",
+  "trap": "False, since only a few notorious foods ever seem to be blamed.",
+  "keywords": [
+    "cancer risk",
+    "nutrition studies",
+    "cookbooks",
+    "headlines"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Schoenfeld & Ioannidis, Am. J. Clinical Nutrition, 2013",
+  "source_kind": "paper",
+  "reference": "Schoenfeld & Ioannidis, Is everything we eat associated with cancer? A systematic cookbook review, American Journal of Clinical Nutrition 97:127–134, 2013",
+  "written": "2026-09-26"
+}

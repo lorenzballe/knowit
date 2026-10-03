@@ -1,0 +1,37 @@
+{
+  "id": "sport-penalty-kicks-2",
+  "topic": "sport",
+  "genre": "sport.luck_or_skill",
+  "strand": "sport.luck_or_skill.penalty_kicks",
+  "also": [
+    "sport.the_mind_in_sport.choking"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where do anxious penalty takers look just before the kick, and what does it do to the shot?",
+  "answer": "At the goalkeeper. Wilson, Wood and Vine fitted players with eye trackers: under pressure they fixed on the keeper sooner and for longer, and their shots drifted toward the centre, within the keeper's reach. Later work found that training players to fix their eyes on the target spot made shots more accurate under pressure.",
+  "move": "Under pressure, eyes go to the threat; point them at the target.",
+  "ask": "In a stressful moment, am I staring at the threat instead of at what I want to hit?",
+  "keywords": [
+    "penalty kicks",
+    "eye tracking",
+    "anxiety",
+    "goalkeeper",
+    "quiet eye"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wilson, Wood & Vine, J Sport Exerc Psychol, 2009",
+  "source_kind": "paper",
+  "reference": "Wilson, Wood & Vine, Anxiety, attentional control, and performance impairment in penalty kicks, Journal of Sport & Exercise Psychology, 2009",
+  "written": "2026-10-03"
+}

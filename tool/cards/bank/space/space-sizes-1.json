@@ -1,0 +1,43 @@
+{
+  "id": "space-sizes-1",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.sizes",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "computation",
+  "question": "Shrink the Sun to a 22 cm football. Earth is 109 times narrower than the Sun: how many millimetres across is it?",
+  "value": 2,
+  "unit": "mm",
+  "tolerance": 0.1,
+  "answer": "About 2 mm: a peppercorn, about 24 m from the ball.",
+  "move": "Draw it to scale once and the textbook picture never looks right again.",
+  "ask": "Which picture in my head was drawn out of scale by whoever first showed it to me?",
+  "trap": "Picturing a marble beside the ball, as textbook drawings show.",
+  "hint": "Turn the football's width into millimetres, then divide.",
+  "steps": [
+    "22 cm = 220 mm.",
+    "220 ÷ 109 ≈ 2.",
+    "About 2 mm: a peppercorn, about 24 m from the ball."
+  ],
+  "keywords": [
+    "sun",
+    "earth",
+    "scale model",
+    "solar system"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NASA Sun Fact Sheet",
+  "source_kind": "reference_work",
+  "reference": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html",
+  "written": "2026-10-03"
+}

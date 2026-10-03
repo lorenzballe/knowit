@@ -1,0 +1,40 @@
+{
+  "id": "psychology-hindsight-3",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.hindsight",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Two surgeons make the same choice to operate, knowing the same odds. One patient recovers, one dies. How do people rate the decisions?",
+  "options": [
+    "The same, since the odds were equal",
+    "Worse for the one whose patient died",
+    "Hard to judge without more cases"
+  ],
+  "correct": 1,
+  "answer": "Worse for the one whose patient died. In experiments with identical choices and identical information, people rated the decision, and the competence of whoever made it, lower when the outcome was bad. Yet a good decision can end badly. The coin landing tails does not make the call wrong.",
+  "move": "Grade the choice on the odds it faced, not the result it got.",
+  "ask": "Am I judging a past decision of mine by how it turned out, or by what I knew then?",
+  "trap": "The same, since a fair judge rates the choice, not the luck.",
+  "keywords": [
+    "outcome bias",
+    "decision making",
+    "surgery",
+    "judgement"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Baron & Hershey, JPSP, 1988",
+  "source_kind": "paper",
+  "reference": "Baron & Hershey, Outcome bias in decision evaluation, Journal of Personality and Social Psychology, 1988",
+  "written": "2026-10-03"
+}

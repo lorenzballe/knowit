@@ -1,0 +1,41 @@
+{
+  "id": "food-spice-trade-1",
+  "topic": "food",
+  "genre": "food.spices",
+  "strand": "food.spices.spice_trade",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "The Dutch East India Company held a monopoly on nutmeg and cloves. Why did it sometimes burn its own stock?",
+  "options": [
+    "To hold prices up",
+    "To destroy spoiled cargo",
+    "To stop smugglers stealing seeds"
+  ],
+  "correct": 0,
+  "answer": "To hold prices up. A seller with no rivals earns most by selling less at a higher price. The company also uprooted clove trees on islands it could not police, so cloves grew only where its garrisons stood. Stock the market could not absorb at its prices went on the fire in Amsterdam.",
+  "move": "A seller with no rivals profits from making less, not more.",
+  "ask": "When something I want is scarce, do I ask who benefits from keeping it scarce?",
+  "trap": "Spoiled cargo, since nobody would destroy goods that could still sell.",
+  "keywords": [
+    "dutch east india company",
+    "nutmeg",
+    "cloves",
+    "monopoly",
+    "banda islands"
+  ],
+  "era": "early_modern",
+  "region": "asia",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Milton, Nathaniel's Nutmeg, 1999",
+  "source_kind": "book",
+  "reference": "Milton, Nathaniel's Nutmeg: How One Man's Courage Changed the Course of History, Hodder & Stoughton, 1999",
+  "written": "2026-10-03"
+}

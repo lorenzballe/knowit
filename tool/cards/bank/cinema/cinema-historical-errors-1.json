@@ -1,0 +1,33 @@
+{
+  "id": "cinema-historical-errors-1",
+  "topic": "cinema",
+  "genre": "cinema.films_and_history",
+  "strand": "cinema.films_and_history.historical_errors",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did the stiff-armed Roman salute of so many epic films really come from?",
+  "answer": "From paintings and early films, not from Rome. No ancient text or monument clearly shows it. Jacques-Louis David's Oath of the Horatii of 1784 made the gesture famous, and Italian epics such as Cabiria of 1914 spread it. Fascists then adopted it as ancient tradition. Cinema invented a custom that politics later claimed.",
+  "move": "An old-looking custom may be younger than the story told about it.",
+  "ask": "Which tradition I follow might be much younger than I assume?",
+  "keywords": [
+    "roman salute",
+    "cabiria",
+    "jacques-louis david",
+    "fascism"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Winkler, The Roman Salute, 2009",
+  "source_kind": "book",
+  "reference": "Martin M. Winkler, The Roman Salute: Cinema, History, Ideology, Ohio State University Press, 2009",
+  "written": "2026-10-03"
+}

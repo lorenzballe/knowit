@@ -1,0 +1,33 @@
+{
+  "id": "medicine-side-effects-3",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.side_effects",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why is the side-effect list in a medicine leaflet longer than the list of what the drug really causes?",
+  "answer": "Because many entries are things people reported during trials, not things shown to be caused by the drug. People on dummy pills report headaches, tiredness and nausea too, and leaflets rarely print that placebo rate beside the drug's. A list of everything that happened gets read as everything the pill does.",
+  "move": "Something that happened after is not the same as something that was caused.",
+  "ask": "Which of my aches have I blamed on a new thing in my life, without asking whether they came anyway?",
+  "keywords": [
+    "patient leaflets",
+    "side effects",
+    "adverse events",
+    "placebo"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Academy of Medical Sciences, report, 2017",
+  "source_kind": "institution",
+  "reference": "Academy of Medical Sciences, Enhancing the use of scientific evidence to judge the potential benefits and harms of medicines, 2017",
+  "written": "2026-10-03"
+}

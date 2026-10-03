@@ -1,0 +1,40 @@
+{
+  "id": "economics-debt-3",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.debt",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "anchoring",
+  "question": "True or false: most English students who started university between 2012 and 2022 were expected to repay their loans in full?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Forecasts put the share repaying in full well below half, often a quarter to a third; the rest is written off after 30 years. Graduates repay 9% of earnings above a threshold, so the loan works like a tax on graduate pay. The balance on the statement says little about what will be paid.",
+  "move": "Judge a debt by its repayment rules, not by its headline balance.",
+  "ask": "Do I know what I will actually repay on my debts, or only what the statement says?",
+  "trap": "Reading the balance owed as the amount that will be repaid.",
+  "keywords": [
+    "student loans",
+    "plan 2",
+    "graduates",
+    "england",
+    "write-off"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Institute for Fiscal Studies, Plan 2 loans",
+  "source_kind": "institution",
+  "reference": "https://ifs.org.uk/articles/how-do-plan-2-student-loans-work-and-how-have-they-changed-over-time",
+  "written": "2026-10-03"
+}

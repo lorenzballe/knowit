@@ -1,0 +1,40 @@
+{
+  "id": "life-practice-that-works-3",
+  "topic": "life",
+  "genre": "life.learn_anything",
+  "strand": "life.learn_anything.practice_that_works",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "reflection",
+  "question": "Does rehearsing a skill only in your head, without moving, improve how you later perform it?",
+  "options": [
+    "No, it changes nothing",
+    "Yes, but less than real practice",
+    "Yes, as much as real practice"
+  ],
+  "correct": 1,
+  "answer": "Yes, but less than real practice. Driskell, Copper and Moran pooled dozens of studies and found mental rehearsal improved performance, more for tasks heavy in thinking, such as planning a sequence, than for strength or stamina. The benefit faded unless renewed. A pianist can rehearse fingering on a train; the train cannot replace the keys.",
+  "move": "When you cannot practise, rehearse in your head, then test it for real.",
+  "ask": "Which skill could I rehearse in my head during dead time this week?",
+  "trap": "Without movement, it seems nothing can be trained.",
+  "keywords": [
+    "mental practice",
+    "rehearsal",
+    "performance",
+    "skills"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Driskell, Copper and Moran, J. Applied Psychology, 1994",
+  "source_kind": "paper",
+  "reference": "Driskell, Copper and Moran, Does mental practice enhance performance?, Journal of Applied Psychology, 1994",
+  "written": "2026-10-03"
+}

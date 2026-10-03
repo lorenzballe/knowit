@@ -1,0 +1,40 @@
+{
+  "id": "sport-doping-3",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.doping",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "True or false: in an anonymous survey at the 2011 world athletics championships, under 1 in 10 athletes admitted doping that year?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Ulrich and colleagues used a method in which a private random draw decides whether each athlete answers the doping question or a harmless one, so no single reply can incriminate anyone. They estimated about 44% had doped in the past year, far above the share caught by drug tests.",
+  "move": "What gets caught is a floor, not a count of what happens.",
+  "ask": "Am I judging how common a problem is only by the cases that get caught?",
+  "trap": "Reading the share of positive tests as the share who dope.",
+  "keywords": [
+    "doping prevalence",
+    "randomised response",
+    "surveys",
+    "world championships",
+    "drug tests"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ulrich et al., Sports Medicine, 2018",
+  "source_kind": "paper",
+  "reference": "Ulrich et al., Doping in Two Elite Athletics Competitions Assessed by Randomized-Response Surveys, Sports Medicine, 2018",
+  "written": "2026-10-03"
+}

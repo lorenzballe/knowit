@@ -1,0 +1,33 @@
+{
+  "id": "psychology-panic-2",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.panic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Many people having a panic attack fear they are about to faint. Why do they almost never do?",
+  "answer": "Because panic raises blood pressure, and fainting needs it to fall. The racing heart and light head are the body's alarm working normally. In Clark's model, an attack grows when such sensations are read as a catastrophe, which sounds more alarm. Blood-injury phobia, where pressure drops at the sight of a needle, is the exception.",
+  "move": "A frightening sensation is not proof of danger; ask what it usually means.",
+  "ask": "Which sensation in my body do I read as danger when it might just be alarm doing its job?",
+  "keywords": [
+    "panic attacks",
+    "fainting",
+    "blood pressure",
+    "catastrophic misinterpretation"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Clark, Behaviour Research and Therapy, 1986",
+  "source_kind": "paper",
+  "reference": "Clark, A cognitive approach to panic, Behaviour Research and Therapy, 1986",
+  "written": "2026-10-03"
+}

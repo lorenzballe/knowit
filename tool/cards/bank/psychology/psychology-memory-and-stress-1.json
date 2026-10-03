@@ -1,0 +1,36 @@
+{
+  "id": "psychology-memory-and-stress-1",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.memory_and_stress",
+  "also": [
+    "psychology.memory.false_memories"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A robber waves a gun at a shop assistant. Why may she describe the gun well and his face poorly?",
+  "answer": "Because fear narrows where the eyes go. When witnesses in experiments watched a scene with a weapon, their eyes kept returning to it, so less of the face was ever taken in, and they picked the person out less accurately later. The face was never properly recorded in the first place.",
+  "move": "Strong emotion records the centre of a scene and drops the edges.",
+  "ask": "When I recall a heated moment, which details did I truly see, and which am I filling in?",
+  "keywords": [
+    "weapon focus",
+    "eyewitness memory",
+    "attention",
+    "fear"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Loftus et al., Law and Human Behavior, 1987",
+  "source_kind": "paper",
+  "reference": "Loftus, Loftus & Messo, Some facts about weapon focus, Law and Human Behavior, 1987",
+  "written": "2026-10-03"
+}

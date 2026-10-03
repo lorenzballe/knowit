@@ -1,0 +1,42 @@
+{
+  "id": "medicine-screening-1",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.screening",
+  "kind": "number",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "Symptoms reveal a cancer at 67; it kills at 70. Screening would have found it at 62, death still at 70. Extra years of survival?",
+  "value": 5,
+  "unit": "years",
+  "answer": "8 − 3 = 5 extra years of survival, and no extra life",
+  "move": "Survival counted from diagnosis grows when diagnosis moves earlier, even if death does not.",
+  "ask": "Is my progress real, or have I just started the clock earlier?",
+  "trap": "Treating five extra years of survival as five extra years of life.",
+  "hint": "Measure survival from the day of diagnosis in each case.",
+  "steps": [
+    "Found by symptoms: 70 − 67 = 3 years of survival",
+    "Found by screening: 70 − 62 = 8 years of survival",
+    "8 − 3 = 5 extra years of survival, and no extra life"
+  ],
+  "keywords": [
+    "lead time",
+    "cancer screening",
+    "survival rates",
+    "diagnosis"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Welch, Schwartz & Woloshin, JAMA, 2000",
+  "source_kind": "paper",
+  "reference": "Welch, Schwartz & Woloshin, Are increasing 5-year survival rates evidence of success against cancer?, JAMA, 2000",
+  "written": "2026-10-03"
+}

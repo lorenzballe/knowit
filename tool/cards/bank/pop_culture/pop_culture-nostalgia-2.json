@@ -1,0 +1,39 @@
+{
+  "id": "pop_culture-nostalgia-2",
+  "topic": "pop_culture",
+  "genre": "pop_culture.nineties",
+  "strand": "pop_culture.nineties.nostalgia",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "survivorship",
+  "question": "True or false: on a three-week cycling holiday, people enjoyed it more at the time than they recalled later?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. Mitchell and colleagues asked cyclists on a California trip to rate it before, during and after. During the trip ratings were lowest, dragged down by fatigue and small irritations; afterwards those faded from memory and the trip was rated better. The past is remembered after the boring parts are cut.",
+  "move": "Before missing an old time, recall what living it actually felt like.",
+  "ask": "Which old period of my life do I miss, and what did I complain about while I was in it?",
+  "trap": "Memory fades, so the lived moment should beat the recollection.",
+  "keywords": [
+    "rosy view",
+    "memory",
+    "holidays",
+    "nostalgia"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Mitchell et al., J. Experimental Social Psychology, 1997",
+  "source_kind": "paper",
+  "reference": "Terence R. Mitchell, Leigh Thompson, Erika Peterson and Randy Cronk, Temporal Adjustments in the Evaluation of Events: The Rosy View, Journal of Experimental Social Psychology, 1997",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,40 @@
+{
+  "id": "cinema-war-films-2",
+  "topic": "cinema",
+  "genre": "cinema.films_and_history",
+  "strand": "cinema.films_and_history.war_films",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "American Civil War films show men falling in battle. What killed most of the soldiers who died in that war?",
+  "options": [
+    "Battle wounds",
+    "Disease",
+    "Executions and prisons"
+  ],
+  "correct": 1,
+  "answer": "Disease. Of the roughly 620,000 soldiers who died, about two thirds were killed by dysentery, typhoid, pneumonia, measles and other illnesses spread in crowded, filthy camps. Battles are what cameras and paintings record; camp sickness rarely makes a scene. Most of those men died lying in a tent.",
+  "move": "The dramatic cause of harm is rarely the most common one.",
+  "ask": "What risk in my life gets the attention, while a dull one does most of the damage?",
+  "trap": "Battle wounds, since that is what every war story shows.",
+  "keywords": [
+    "american civil war",
+    "disease",
+    "war deaths",
+    "war films"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Faust, This Republic of Suffering, 2008",
+  "source_kind": "book",
+  "reference": "Drew Gilpin Faust, This Republic of Suffering: Death and the American Civil War, Alfred A. Knopf, 2008",
+  "written": "2026-10-03"
+}

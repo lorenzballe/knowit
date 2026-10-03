@@ -1,0 +1,33 @@
+{
+  "id": "economics-debt-1",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.debt",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When does Britain's financial regulator count a credit-card customer as stuck in persistent debt?",
+  "answer": "When, over 18 months, they have paid more in interest, fees and charges than they repaid of what they borrowed. Since 2018 card firms must then nudge them to pay faster, and at 36 months offer a way out or suspend the card. Minimum payments had kept many paying rent on one debt for years.",
+  "move": "Compare what a debt costs you with how much it actually shrinks.",
+  "ask": "Over the last year, how much of what I paid on my cards actually reduced what I owe?",
+  "keywords": [
+    "credit cards",
+    "persistent debt",
+    "minimum payments",
+    "financial conduct authority"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FCA, Policy Statement PS18/4, 2018",
+  "source_kind": "primary_document",
+  "reference": "Financial Conduct Authority, PS18/4 Credit card market study: persistent debt and earlier intervention remedies, February 2018",
+  "written": "2026-10-03"
+}

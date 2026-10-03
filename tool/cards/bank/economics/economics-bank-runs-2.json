@@ -1,0 +1,40 @@
+{
+  "id": "economics-bank-runs-2",
+  "topic": "economics",
+  "genre": "economics.crises",
+  "strand": "economics.crises.bank_runs",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "At the end of 2022, what share of Silicon Valley Bank's deposits sat above the US insurance limit of $250,000?",
+  "options": [
+    "About 94%",
+    "About 30%",
+    "About 5%"
+  ],
+  "correct": 0,
+  "answer": "About 94%. Its customers were mostly start-ups and investors keeping payroll cash in single accounts far above the insured limit, and they knew each other well. Each had every reason to leave at the first doubt. Small savers protected by insurance can afford to wait; the bank's depositors were mostly those who could not.",
+  "move": "Ask who stands to lose if things go wrong; they will move first.",
+  "ask": "Where do I keep more money than any guarantee would cover?",
+  "trap": "Picturing ordinary savers, whose deposits sit mostly under the limit.",
+  "keywords": [
+    "deposit insurance",
+    "silicon valley bank",
+    "uninsured deposits",
+    "start-ups"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Federal Reserve Board, SVB review, 2023",
+  "source_kind": "institution",
+  "reference": "Board of Governors of the Federal Reserve System, Review of the Federal Reserve's Supervision and Regulation of Silicon Valley Bank, April 2023",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "sport-home-advantage-2",
+  "topic": "sport",
+  "genre": "sport.tactics",
+  "strand": "sport.tactics.home_advantage",
+  "also": [
+    "sport.training.altitude"
+  ],
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "confounding",
+  "question": "True or false: in a century of South American internationals, high-altitude home sides won no more often than low-lying ones?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. McSharry analysed 1,460 matches from 1900 to 2004: between teams from the same altitude, the home side won about 54% of the time; with a gap of about 3,700 m, like La Paz over the coast, about 83%. Each extra 1,000 m of difference added about half a goal to the home margin.",
+  "move": "Before crediting the crowd, check what else the home ground supplies.",
+  "ask": "When I do better on my own turf, how much is the place itself doing the work?",
+  "trap": "Treating home advantage as crowd support, the same at every ground.",
+  "keywords": [
+    "altitude",
+    "la paz",
+    "home advantage",
+    "south america",
+    "international football"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "number",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McSharry, BMJ, 2007",
+  "source_kind": "paper",
+  "reference": "Patrick E. McSharry, Effect of altitude on physiological performance: a statistical analysis using results of international football games, BMJ, 2007",
+  "written": "2026-10-03"
+}

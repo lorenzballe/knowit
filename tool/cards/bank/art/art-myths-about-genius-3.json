@@ -1,0 +1,40 @@
+{
+  "id": "art-myths-about-genius-3",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.myths_about_genius",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "In what posture did Michelangelo work on the Sistine vault, high above the chapel floor?",
+  "options": [
+    "Lying flat on his back",
+    "From a hanging rope seat",
+    "Standing, head bent backwards"
+  ],
+  "correct": 2,
+  "answer": "Standing on a scaffold he designed, head tipped back, arm raised. A sonnet he wrote to a friend complains of his beard pointing to heaven and paint dripping on his face, beside a sketch of himself upright. Plasterers and assistants worked alongside him. The lone man lying on his back comes largely from film.",
+  "move": "An image seen many times is not evidence that it happened.",
+  "ask": "Which picture of how success looks did I get from films rather than from people who did it?",
+  "trap": "Lying on his back, the image made famous by film.",
+  "keywords": [
+    "sistine chapel",
+    "michelangelo",
+    "scaffold",
+    "ceiling"
+  ],
+  "era": "early_modern",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "King, Michelangelo and the Pope's Ceiling, 2002",
+  "source_kind": "book",
+  "reference": "Ross King, Michelangelo and the Pope's Ceiling, Chatto & Windus, 2002",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "science-experiments-3",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "also": [
+    "medicine.medical_history.germ_theory"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What made Vienna's two maternity clinics of the 1840s such a powerful experiment for Ignaz Semmelweis?",
+  "answer": "Admission alternated by day, so chance, not choice, decided which clinic a woman entered. The clinic run by doctors, who came from dissecting corpses, lost about 10% of mothers to childbed fever; the midwives' clinic, about 4%. With similar women on both sides, only the care differed. Chlorine handwashing then cut the doctors' rate sharply.",
+  "move": "Look for places where chance has already done the sorting.",
+  "ask": "Where in my own life has chance already run a fair comparison I could learn from?",
+  "keywords": [
+    "semmelweis",
+    "natural experiments",
+    "childbed fever",
+    "vienna",
+    "handwashing"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Semmelweis, The Etiology of Childbed Fever",
+  "source_kind": "book",
+  "reference": "Semmelweis, The Etiology, Concept, and Prophylaxis of Childbed Fever, trans. Carter, University of Wisconsin Press, 1983",
+  "written": "2026-09-26"
+}

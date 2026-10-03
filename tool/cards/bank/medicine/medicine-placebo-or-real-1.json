@@ -1,0 +1,40 @@
+{
+  "id": "medicine-placebo-or-real-1",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.placebo_or_real",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "counterfactual",
+  "question": "True or false: in a large US arthritis trial, about 6 in 10 knee pain patients on dummy pills had meaningful relief?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 0,
+  "answer": "True. In the GAIT trial of about 1,600 people, 60% on placebo reached the relief target, against 67% on glucosamine plus chondroitin, a gap chance could explain. Pain comes and goes, and people join trials in bad spells. Anyone selling a pill to this group would collect a grateful testimonial from most buyers.",
+  "move": "A cure that works for most users may work no better than nothing.",
+  "ask": "Which product do I trust because people say it helped them, without knowing how many got better anyway?",
+  "trap": "False, since a dummy pill cannot help more than a few people.",
+  "keywords": [
+    "glucosamine",
+    "chondroitin",
+    "knee arthritis",
+    "placebo response",
+    "gait trial"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Clegg et al., NEJM, 2006",
+  "source_kind": "paper",
+  "reference": "Clegg et al., Glucosamine, chondroitin sulfate, and the two in combination for painful knee osteoarthritis, New England Journal of Medicine, 2006",
+  "written": "2026-10-03"
+}

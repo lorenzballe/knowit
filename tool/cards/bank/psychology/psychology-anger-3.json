@@ -1,0 +1,33 @@
+{
+  "id": "psychology-anger-3",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.anger",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When replaying an argument that still stings, which way of thinking about it cools the anger rather than feeding it?",
+  "answer": "Stepping back. People who recalled an anger-provoking memory as if watching themselves from a distance, and asked why it happened, felt less anger and had fewer angry thoughts than those who relived it through their own eyes. Same memory, same question; only the vantage point changed. A fly on the wall rarely shouts.",
+  "move": "Look at a painful moment from outside before asking why it happened.",
+  "ask": "Next time a conversation keeps replaying in my head, can I watch it as an outsider would?",
+  "keywords": [
+    "self-distancing",
+    "rumination",
+    "anger",
+    "perspective"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Kross, Ayduk & Mischel, Psychological Science, 2005",
+  "source_kind": "paper",
+  "reference": "Kross, Ayduk & Mischel, When asking why does not hurt: Distinguishing rumination from reflective processing of negative emotions, Psychological Science, 2005",
+  "written": "2026-10-03"
+}

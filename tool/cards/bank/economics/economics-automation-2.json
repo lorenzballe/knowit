@@ -1,0 +1,40 @@
+{
+  "id": "economics-automation-2",
+  "topic": "economics",
+  "genre": "economics.work_and_wages",
+  "strand": "economics.work_and_wages.automation",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "availability",
+  "question": "True or false: since 1980, computers have mostly squeezed out the lowest-paid jobs in rich countries?",
+  "options": [
+    "True",
+    "False"
+  ],
+  "correct": 1,
+  "answer": "False. The jobs that shrank most were in the middle: clerks, bookkeepers, machine operators, whose work followed rules a computer could copy. Cleaners, carers and cooks do tasks that are hard to write down, and their numbers grew. Offices emptied of typing pools while hospital wards still needed hands.",
+  "move": "Ask whether a task follows written rules, not what it pays.",
+  "ask": "Which parts of my work follow fixed rules, and which need judgment that no checklist captures?",
+  "trap": "Picturing the least-skilled work as the easiest to hand to machines.",
+  "keywords": [
+    "automation",
+    "routine tasks",
+    "job polarisation",
+    "middle-skill jobs",
+    "autor"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Autor, Journal of Economic Perspectives, 2015",
+  "source_kind": "paper",
+  "reference": "Autor, Why Are There Still So Many Jobs? The History and Future of Workplace Automation, Journal of Economic Perspectives, 2015",
+  "written": "2026-10-03"
+}
