@@ -1,0 +1,304 @@
+<title>Astute Cards, Round Two</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,700&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+/* Layout: the app's Today screen; each card keeps Astute's frame and type, and tells its story in its own way: a game, a slider, a drawing, branches, a zoom, kinetic type. */
+:root{--ground:#000;--paper:#f2f1ec;--muted:#6f6e76;--line:#26262b;
+--display:"Fraunces",Georgia,serif;--body:"Figtree",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;color-scheme:dark}
+html,body{height:100%}body{background:var(--ground);color:var(--paper);font-family:var(--body);overflow:hidden}
+.app{height:100%;display:flex;flex-direction:column;align-items:center;padding-inline:16px;padding-block:10px;box-sizing:border-box;gap:8px}
+.top{width:100%;max-width:440px;display:flex;flex-direction:column;gap:10px}
+.top h1{margin:0;font:800 26px/1 var(--display)}
+.dots{display:flex;gap:5px}.dots span{flex:1;height:3px;border-radius:2px;background:var(--line);transition:.3s}.dots span.on{background:var(--paper)}
+.kind{font:600 11px/1 var(--body);letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.stage{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;position:relative}
+.nav{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#000c;color:var(--paper);font-size:16px;cursor:pointer}
+#prev{left:-6px}#next{right:-6px}
+button:focus-visible,input:focus-visible,.card:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.card{container-type:size;height:min(100%, calc((100vw - 32px) * 16 / 9.3));aspect-ratio:9/16;max-width:100%;border-radius:6cqw;display:none;position:relative;background:var(--c);color:var(--k);box-shadow:0 1.1cqh 0 var(--edge);overflow:hidden}
+.card.on{display:block}
+.in{position:absolute;inset:0;padding:5cqh 7.5cqw 4.4cqh;display:flex;flex-direction:column;gap:2.2cqh}
+.label{display:flex;align-items:center;gap:2.6cqw;font:600 1.6cqh/1 var(--body);letter-spacing:.16em;text-transform:uppercase}
+.label svg{width:2.5cqh;height:2.5cqh;flex:none}.label .t{opacity:.8}
+.tag{margin-left:auto;font:800 1.3cqh/1 var(--body);letter-spacing:.12em;padding:.8cqh 2.4cqw;border-radius:99px;background:var(--k);color:var(--c)}
+.mono{font:700 1.25cqh/1.2 var(--mono);letter-spacing:.06em;opacity:.6;text-transform:uppercase}
+.q{font:800 3.5cqh/1.13 var(--display);margin:0;text-wrap:balance;letter-spacing:-.012em}
+.q em{font-style:italic;font-weight:700}
+.say{font:600 2.15cqh/1.42 var(--body);margin:0;text-wrap:pretty}.say b{font-weight:800}
+.stagebox{flex:1;min-height:0;position:relative}
+.keep{margin-top:auto;background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:2.8cqh;padding:2cqh 5.5cqw;font:600 2.1cqh/1.38 var(--body)}
+.keep b{display:block;font:700 1.35cqh/1 var(--body);letter-spacing:.16em;opacity:.7;margin-bottom:1cqh}
+.foot{display:flex;align-items:center;gap:4cqw}.src{font:500 1.42cqh/1.3 var(--body);opacity:.65;flex:1;min-width:0}
+.btn{font:800 2cqh/1 var(--body);border:0;border-radius:99px;padding:1.8cqh 6cqw;cursor:pointer;background:var(--k);color:var(--c)}
+.btn.ghost{background:transparent;color:var(--k);box-shadow:inset 0 0 0 .28cqh var(--k)}
+.row{display:flex;gap:3cqw;flex-wrap:wrap}
+.gone{display:none!important}
+.num{font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--k);margin:0}
+.float{background:#fff;color:#111;border-radius:2cqh;box-shadow:0 1.4cqh 3cqh rgba(0,0,0,.18),0 .3cqh .8cqh rgba(0,0,0,.1)}
+svg text{font-family:var(--body)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="app">
+  <div class="top"><h1>Today</h1><div class="dots" id="dots"></div><div class="kind" id="kind"></div></div>
+  <div class="stage">
+    <button class="nav" id="prev" aria-label="Previous card">←</button>
+    <button class="nav" id="next" aria-label="Next card">→</button>
+
+    <!-- 1 · WALD: tap where the armour goes -->
+    <article class="card" id="w" style="--c:#F2F1EC;--k:#10100c;--edge:#8f8d84" data-kind="Your call · then the twist">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><span class="t">Thinking</span><span class="tag">YOUR CALL</span></div>
+        <h2 class="q" id="wq">1943. Bombers come back <em>full of holes</em>. Tap where you’d add armour.</h2>
+        <div class="mono">// returning aircraft · hits plotted</div>
+        <div class="stagebox"><svg id="plane" style="position:absolute;inset:0;width:100%;height:100%" aria-label="A bomber seen from above, with bullet holes"></svg></div>
+        <p class="say" id="ws">Tap the wings, the body, the tail or the engines.</p>
+        <div class="keep gone" id="wk"><b>WHAT TO KEEP</b>The data you have is the data that survived. Look for what’s missing.</div>
+        <div class="foot"><span class="src">Source · Mangel &amp; Samaniego, JASA, 1984 (on Abraham Wald, 1943)</span></div>
+      </div>
+    </article>
+
+    <!-- 2 · TRAFFIC: slide the cars away -->
+    <article class="card" id="t" style="--c:#00E5A0;--k:#10100c;--edge:#00835b" data-kind="Move it · and listen">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6M10 3v6l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3"/></svg><span class="t">Science</span><span class="tag">DRAG</span></div>
+        <h2 class="q">Your street is loud. How many cars must go before it <em>sounds half as loud</em>?</h2>
+        <div class="stagebox float" style="background:#10100c;overflow:hidden"><canvas id="road" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+          <div class="mono" style="position:absolute;left:4cqw;top:1.4cqh;color:#00E5A0;opacity:.9" id="carsl">CARS · 100%</div></div>
+        <div style="display:grid;grid-template-columns:auto 1fr auto;gap:1.2cqh 3cqw;align-items:center;font:800 1.45cqh var(--body);letter-spacing:.1em">
+          <span>SOUND ENERGY</span><div style="height:1.8cqh;border-radius:99px;background:color-mix(in srgb,var(--k) 12%,transparent);overflow:hidden"><i id="te" style="display:block;height:100%;width:100%;background:var(--k);border-radius:99px"></i></div><span class="num" id="tev">100%</span>
+          <span>HOW LOUD IT FEELS</span><div style="height:1.8cqh;border-radius:99px;background:color-mix(in srgb,var(--k) 12%,transparent);overflow:hidden"><i id="tf" style="display:block;height:100%;width:100%;background:var(--k);border-radius:99px"></i></div><span class="num" id="tfv">100%</span>
+        </div>
+        <input type="range" id="tr" min="1" max="100" value="100" aria-label="Share of cars left">
+        <p class="say" id="ts">Drag left to take cars off the road.</p>
+        <div class="keep gone" id="tk"><b>WHAT TO KEEP</b>Halving the traffic barely helps. To sound half as loud, nine cars in ten must go.</div>
+        <div class="foot"><span class="src">Source · 10 dB ≈ twice as loud: Stevens, Psychological Review, 1957</span></div>
+      </div>
+    </article>
+
+    <!-- 3 · ROULETTE: race two strategies -->
+    <article class="card" id="r" style="--c:#FFE600;--k:#10100c;--edge:#9c8d00" data-kind="Run it 1,000 times">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg><span class="t">Economics</span><span class="tag">SIMULATE</span></div>
+        <h2 class="q">You have £100 and want £200 at the roulette table. Which way is smarter?</h2>
+        <div class="stagebox" style="display:grid;grid-template-columns:1fr 1fr;gap:3cqw">
+          <div class="float" style="padding:2cqh 4cqw;display:flex;flex-direction:column;gap:1cqh">
+            <div class="mono" style="opacity:.55">STRATEGY A</div><div style="font:800 2.3cqh/1.15 var(--display)">100 bets of £1 on red</div>
+            <div style="flex:1;display:flex;align-items:flex-end;gap:1cqw"><div id="ra" style="flex:1;height:0;background:#10100c;border-radius:1cqh 1cqh 0 0"></div></div>
+            <div><b class="num" id="ran" style="font:900 4.6cqh var(--display)">0</b><div class="mono" style="opacity:.6">EVENINGS DOUBLED</div></div>
+          </div>
+          <div class="float" style="padding:2cqh 4cqw;display:flex;flex-direction:column;gap:1cqh">
+            <div class="mono" style="opacity:.55">STRATEGY B</div><div style="font:800 2.3cqh/1.15 var(--display)">One bet of £100 on red</div>
+            <div style="flex:1;display:flex;align-items:flex-end;gap:1cqw"><div id="rb" style="flex:1;height:0;background:#e5484d;border-radius:1cqh 1cqh 0 0"></div></div>
+            <div><b class="num" id="rbn" style="font:900 4.6cqh var(--display)">0</b><div class="mono" style="opacity:.6">EVENINGS DOUBLED</div></div>
+          </div>
+        </div>
+        <div class="row" id="rrow"><button class="btn" id="rgo">Play 1,000 evenings</button></div>
+        <p class="say gone" id="rs"></p>
+        <div class="keep gone" id="rk"><b>WHAT TO KEEP</b>When the odds lean slightly against you, play as few rounds as you can.</div>
+        <div class="foot"><span class="src mono" style="opacity:.65;text-transform:none;font-weight:500">Single-zero wheel · red pays 18 in 37 · Feller, 1968</span></div>
+      </div>
+    </article>
+
+    <!-- 4 · DRAW IT -->
+    <article class="card" id="d" style="--c:#00A6FF;--k:#10100c;--edge:#005e91" data-kind="Draw it · then see">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8"/></svg><span class="t">Technology</span><span class="tag">DRAW IT</span></div>
+        <h2 class="q">The computing power behind top AI grows <em>4.5× a year</em>. Draw where it gets in five years.</h2>
+        <div class="stagebox float" style="background:#fff;padding:0"><svg id="dsvg" style="position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair" aria-label="Draw your guess"></svg></div>
+        <div class="row"><button class="btn" id="dgo">Show me the real line</button><button class="btn ghost" id="dclr">Redraw</button></div>
+        <p class="say" id="ds">Draw with your finger from today to year 5.</p>
+        <div class="keep gone" id="dk"><b>WHAT TO KEEP</b>Growth that multiplies looks flat for a while, then leaves every guess behind.</div>
+        <div class="foot"><span class="src">Source · Epoch AI, training compute trends, 2024</span></div>
+      </div>
+    </article>
+
+    <!-- 5 · STREISAND: branches -->
+    <article class="card" id="s" style="--c:#FF3D7F;--k:#fff;--edge:#a3204d" data-kind="Pick a branch">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg><span class="t">Pop culture</span><span class="tag">YOUR MOVE</span></div>
+        <h2 class="q">A photo of your house is online. Almost nobody has seen it. What do you do?</h2>
+        <div class="stagebox" id="sbox" style="display:flex;flex-direction:column;justify-content:space-between">
+          <svg id="ssvg" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none"></svg>
+          <div class="float" id="s0" style="position:relative;align-self:center;width:62%;padding:1.6cqh 4cqw"><div class="mono" style="opacity:.5">PHOTO #3850 · CLIFF HOUSE</div><div style="font:800 2.1cqh var(--body);margin-top:.6cqh">Downloads: <span class="num">6</span></div></div>
+          <div style="display:flex;justify-content:space-between;gap:4cqw;position:relative">
+            <button class="float" id="sa" style="flex:1;padding:1.8cqh 3cqw;border:0;text-align:left;cursor:pointer;font:800 1.9cqh/1.2 var(--body)">Ignore it</button>
+            <button class="float" id="sb" style="flex:1;padding:1.8cqh 3cqw;border:0;text-align:left;cursor:pointer;font:800 1.9cqh/1.2 var(--body)">Sue to have it removed</button></div>
+          <div id="sr" style="position:relative;padding:1.8cqh 5cqw;min-height:11cqh;border-radius:2cqh;border:.3cqh dashed color-mix(in srgb,var(--k) 55%,transparent);display:grid;place-items:center;font:800 1.9cqh var(--body);opacity:.8">What happens next?</div>
+        </div>
+        <p class="say" id="ss">Barbra Streisand faced this in 2003. Choose.</p>
+        <div class="keep gone" id="sk"><b>WHAT TO KEEP</b>Trying to hide something online is often the fastest way to advertise it.</div>
+        <div class="foot"><span class="src">Source · Associated Press, 24 June 2003</span></div>
+      </div>
+    </article>
+
+    <!-- 6 · ZOOM: a million, a billion, a trillion -->
+    <article class="card" id="z" style="--c:#2B5CFF;--k:#fff;--edge:#152f8f" data-kind="Zoom out">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18"/></svg><span class="t">Science</span><span class="tag">TAP TO ZOOM</span></div>
+        <h2 class="q" id="zq">How long is a <em>million</em> seconds?</h2>
+        <div class="stagebox" style="display:flex;flex-direction:column;justify-content:center;gap:2cqh">
+          <div style="font:900 9cqh/1 var(--display);letter-spacing:-.02em" class="num" id="zn">0</div>
+          <div class="mono" id="zu" style="opacity:.8;font-size:1.6cqh">DAYS</div>
+          <div style="position:relative;height:5cqh"><div style="position:absolute;inset:auto 0 0 0;height:.3cqh;background:color-mix(in srgb,var(--k) 30%,transparent)"></div>
+            <div id="zbar" style="position:absolute;left:0;bottom:0;height:5cqh;width:0;background:var(--k);border-radius:.8cqh .8cqh 0 0"></div>
+            <div id="zprev" style="position:absolute;left:0;bottom:0;height:5cqh;width:0;background:#ffe600;border-radius:.8cqh .8cqh 0 0"></div></div>
+          <p class="say" id="zs" style="min-height:9cqh"></p>
+        </div>
+        <div class="row" id="zrow"><button class="btn" id="zgo">Now a billion →</button></div>
+        <div class="keep gone" id="zk"><b>WHAT TO KEEP</b>A billion isn’t a big million. It’s a thousand of them. Check the word before you picture the size.</div>
+        <div class="foot"><span class="src">1 million s ≈ 11.6 days · 1 billion s ≈ 31.7 years · 1 trillion s ≈ 31,700 years</span></div>
+      </div>
+    </article>
+
+    <!-- 7 · KINETIC ONE LINE -->
+    <article class="card" id="k" tabindex="0" style="--c:#FFC49B;--k:#10100c;--edge:#a8714a;cursor:pointer" data-kind="One line · then why">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c0-6 0-9 6-14M12 21c0-5-1-8-6-10"/></svg><span class="t">Life</span><span class="tag">ONE LINE</span></div>
+        <div class="mono">// 01 — on goals</div>
+        <div class="stagebox" style="display:flex;align-items:center"><p id="kl" style="margin:0;font:900 5.4cqh/1.04 var(--display);letter-spacing:-.02em"></p></div>
+        <p class="say gone" id="kw">Everyone in a race wants to win; the winners and the losers share the goal. What differs is what each does on an ordinary Tuesday.</p>
+        <div class="keep gone" id="kk"><b>WHAT TO KEEP</b>Don’t only pick the goal. Build the day that gets you there.</div>
+        <div class="mono" id="kt" style="text-align:left">TAP FOR WHY</div>
+        <div class="foot"><span class="src">Source · Clear, Atomic Habits, 2018</span></div>
+      </div>
+    </article>
+
+    <!-- 8 · GPS: a flat diagram with a measure -->
+    <article class="card" id="g" style="--c:#10141f;--k:#fff;--edge:#000" data-kind="How it works">
+      <div class="in">
+        <div class="label" style="color:#9fb4ff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18"/></svg><span class="t">Space</span><span class="tag" style="background:#9fb4ff;color:#10141f">HOW IT WORKS</span></div>
+        <h2 class="q">Why does the map on your phone need <em style="color:#9fb4ff">Einstein</em>?</h2>
+        <div class="stagebox"><svg id="gsvg" style="position:absolute;inset:0;width:100%;height:100%;overflow:visible"></svg></div>
+        <div class="row"><button class="btn" id="ggo" style="background:#9fb4ff;color:#10141f">Switch relativity off</button></div>
+        <p class="say" id="gs">GPS satellites carry clocks. Your phone times their signals to find you.</p>
+        <div class="keep gone" id="gk"><b>WHAT TO KEEP</b>The strangest physics is already in your pocket, keeping you on the map.</div>
+        <div class="foot"><span class="src">Source · Ashby, Living Reviews in Relativity, 2003</span></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id),show=id=>{const e=$(id);e.classList.remove('gone');gsap.fromTo(e,{opacity:0,y:12},{opacity:1,y:0,duration:.5,ease:'power2.out'})},hide=id=>$(id).classList.add('gone');
+const cards=[...document.querySelectorAll('.card')];let at=0;const dots=$('dots');cards.forEach(()=>dots.appendChild(document.createElement('span')));
+const onShow={};
+function go(i){at=(i+cards.length)%cards.length;cards.forEach((c,k)=>c.classList.toggle('on',k===at));[...dots.children].forEach((d,k)=>d.classList.toggle('on',k<=at));$('kind').textContent=(at+1)+' / '+cards.length+' · '+cards[at].dataset.kind;
+gsap.fromTo(cards[at],{opacity:0,y:14},{opacity:1,y:0,duration:.45,ease:'power3.out'});requestAnimationFrame(()=>onShow[cards[at].id]?.())}
+$('prev').onclick=()=>go(at-1);$('next').onclick=()=>go(at+1);addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(e.key==='ArrowRight')go(at+1);if(e.key==='ArrowLeft')go(at-1)});
+addEventListener('resize',()=>onShow[cards[at].id]?.());
+const box=el=>{const r=el.getBoundingClientRect();return{W:Math.max(1,r.width),H:Math.max(1,r.height)}};
+const NS='http://www.w3.org/2000/svg';const mk=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p&&p.appendChild(e);return e};
+
+/* 1 · Wald */
+(()=>{const svg=$('plane');let done=false;
+const holes=[[-.62,.02],[-.5,-.03],[-.38,.04],[-.7,-.02],[.6,.03],[.48,-.02],[.4,.04],[.72,.0],[-.55,.07],[.56,.07],[0,-.3],[.02,-.18],[-.02,.1],[.01,.22],[0,.32],[-.08,.42],[.09,.42],[-.05,.18],[.04,-.08],[-.6,-.06],[.64,-.07],[-.16,.43],[.15,.44],[-.44,.0],[.45,.08]];
+function draw(){const{W,H}=box(svg);svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.innerHTML='';const cx=W/2,cy=H*.5,s=Math.min(W*.5,H*.74);const g=mk('g',{},svg);
+const P=(x,y)=>`${cx+x*s},${cy+y*s}`;
+const body=`M${P(0,-.5)} C${P(.07,-.45)} ${P(.07,-.2)} ${P(.06,0)} L${P(.05,.4)} L${P(.2,.46)} L${P(.2,.52)} L${P(0,.5)} L${P(-.2,.52)} L${P(-.2,.46)} L${P(-.05,.4)} L${P(-.06,0)} C${P(-.07,-.2)} ${P(-.07,-.45)} ${P(0,-.5)}Z`;
+const wing=`M${P(-.06,-.08)} L${P(-.95,.05)} L${P(-.95,.1)} L${P(-.06,.08)} L${P(.06,.08)} L${P(.95,.1)} L${P(.95,.05)} L${P(.06,-.08)}Z`;
+mk('path',{d:wing,fill:'#d9d6cc',stroke:'#10100c','stroke-width':2,'data-z':'wings'},g);mk('path',{d:body,fill:'#d9d6cc',stroke:'#10100c','stroke-width':2,'data-z':'body'},g);
+const eng=[[-.32,-.06],[-.6,-.04],[.32,-.06],[.6,-.04]].map(([x,y])=>mk('ellipse',{cx:cx+x*s,cy:cy+y*s,rx:s*.045,ry:s*.11,fill:'#bdb9ad',stroke:'#10100c','stroke-width':2,'data-z':'engines'},g));
+holes.forEach(([x,y],i)=>mk('circle',{cx:cx+x*s,cy:cy+y*s,r:Math.max(2.5,s*.018),fill:'#e5484d',class:'hole'},g));
+mk('text',{x:cx,y:cy+s*.66,'text-anchor':'middle','font-size':Math.max(10,H/30),'font-weight':800,fill:'#10100c',opacity:.55},g).textContent='HOLES ON THE PLANES THAT CAME BACK';
+g.querySelectorAll('[data-z]').forEach(e=>{e.style.cursor='pointer';e.onclick=()=>pick(e.dataset.z,g,cx,cy,s)});
+if(done)reveal(g,cx,cy,s,false)}
+function pick(z,g,cx,cy,s){if(done)return;done=true;$('ws').innerHTML=(z==='engines'?'<b>Right, and almost nobody picks it.</b> ':`You picked the ${z}. That’s what the Navy wanted too. `)+'Abraham Wald said: armour the engines, where there are <b>no</b> holes.';reveal(g,cx,cy,s,true)}
+function reveal(g,cx,cy,s,anim){const ghost=mk('g',{opacity:0},g);[[-.32,-.06],[-.6,-.04],[.32,-.06],[.6,-.04]].forEach(([x,y])=>{mk('circle',{cx:cx+x*s,cy:cy+y*s,r:s*.11,fill:'none',stroke:'#e5484d','stroke-width':3,'stroke-dasharray':'4 4'},ghost)});
+mk('text',{x:cx,y:cy-s*.62,'text-anchor':'middle','font-size':Math.max(11,s*.07),'font-weight':900,fill:'#e5484d'},ghost).textContent='HIT HERE → NEVER CAME BACK';
+anim?gsap.to(ghost,{opacity:1,duration:.8,delay:.2}):ghost.setAttribute('opacity',1);
+$('wq').innerHTML='The planes hit in the engines <em>never made it home</em>.';show('wk')}
+onShow.w=draw;draw()})();
+
+/* 2 · Traffic */
+(()=>{const cv=$('road'),ctx=cv.getContext('2d');let cars=[],share=1,shown=false,raf;
+function seed(){const{W,H}=box(cv);cv.width=W*devicePixelRatio;cv.height=H*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);cars=[];
+for(let lane=0;lane<4;lane++)for(let k=0;k<14;k++)cars.push({lane,x:Math.random()*W*1.4-W*.2,v:(lane<2?1:-1)*(0.6+Math.random()*.5),r:Math.random(),c:['#00E5A0','#f2f1ec','#ffe600','#9fb4ff'][Math.floor(Math.random()*4)]})}
+function tick(){const{W,H}=box(cv);ctx.clearRect(0,0,W,H);const top=H*.22,lh=(H*.7)/4;
+ctx.fillStyle='#1b1b1f';ctx.fillRect(0,top,W,lh*4);ctx.strokeStyle='#ffffff30';ctx.setLineDash([10,10]);for(let i=1;i<4;i++){ctx.beginPath();ctx.moveTo(0,top+i*lh);ctx.lineTo(W,top+i*lh);ctx.stroke()}ctx.setLineDash([]);
+cars.forEach(c=>{if(c.r>share)return;c.x+=c.v*1.4;if(c.x>W+40)c.x=-40;if(c.x<-40)c.x=W+40;const y=top+c.lane*lh+lh*.25,w=Math.max(22,W*.08),h=lh*.5;ctx.fillStyle=c.c;ctx.beginPath();ctx.roundRect(c.x,y,w,h,5);ctx.fill()});
+raf=requestAnimationFrame(tick)}
+function upd(){share=+$('tr').value/100;const db=10*Math.log10(share),feel=Math.pow(2,db/10);$('carsl').textContent='CARS · '+Math.round(share*100)+'%';
+$('te').style.width=share*100+'%';$('tev').textContent=Math.round(share*100)+'%';$('tf').style.width=feel*100+'%';$('tfv').textContent=Math.round(feel*100)+'%';
+const p=Math.round(share*100);$('ts').innerHTML=p>=95?'Drag left to take cars off the road.':p>55?`${100-p}% of cars gone… it still feels <b>${Math.round(feel*100)}%</b> as loud.`:p>12?`Half the cars gone feels only about <b>20% quieter</b>. Keep going…`:`Now: about <b>${100-p}%</b> of cars gone, and it finally feels about <b>half as loud</b>.`;
+if(p<=12&&!shown){shown=true;show('tk')}}
+$('tr').oninput=upd;onShow.t=()=>{cancelAnimationFrame(raf);seed();tick()};seed();upd()})();
+
+/* 3 · Roulette */
+(()=>{let ran=false;$('rgo').onclick=()=>{if(ran)return;ran=true;hide('rrow');let a=0,b=0,n=0;
+const one=()=>{let m=100;while(m>0&&m<200)m+=Math.random()<18/37?1:-1;return m>=200};
+const step=()=>{for(let j=0;j<20;j++){if(one())a++;if(Math.random()<18/37)b++;n++}
+$('ran').textContent=a;$('rbn').textContent=b;$('ra').style.height=(a/n*100)+'%';$('rb').style.height=(b/n*100)+'%';
+if(n<1000)requestAnimationFrame(step);else{$('rs').innerHTML=`Small bets doubled the money <b>${a}</b> times in 1,000; one bold bet, <b>${b}</b>. Each small bet hands the casino its tiny edge again, a hundred times over.`;show('rs');show('rk')}};step()}})();
+
+/* 4 · Draw it */
+(()=>{const svg=$('dsvg');let pts=[],drawing=false,revealed=false,dims;
+const real=t=>Math.pow(4.5,t);const MAX=1900;
+function frame(){const{W,H}=box(svg);dims={W,H,l:W*.12,r:W*.95,t:H*.1,b:H*.86};svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.innerHTML='';const f=Math.max(10,H/22);
+const X=t=>dims.l+t/5*(dims.r-dims.l),Y=v=>dims.b-(v/MAX)*(dims.b-dims.t);dims.X=X;dims.Y=Y;
+for(let t=0;t<=5;t++){mk('line',{x1:X(t),y1:dims.t,x2:X(t),y2:dims.b,stroke:'#0001'},svg);mk('text',{x:X(t),y:dims.b+f*1.3,'text-anchor':'middle','font-size':f*.9,'font-weight':700,fill:'#555'},svg).textContent=t===0?'today':'yr '+t}
+[[1,'×1'],[500,'×500'],[1000,'×1,000'],[1500,'×1,500']].forEach(([v,l])=>{mk('line',{x1:dims.l,y1:Y(v),x2:dims.r,y2:Y(v),stroke:'#0001'},svg);mk('text',{x:dims.l-6,y:Y(v)+4,'text-anchor':'end','font-size':f*.8,'font-weight':700,fill:'#777'},svg).textContent=l});
+mk('circle',{cx:X(0),cy:Y(1),r:6,fill:'#10100c'},svg);
+if(pts.length>1)mk('path',{d:'M'+pts.map(p=>`${X(p[0])},${Y(p[1])}`).join(' L'),fill:'none',stroke:'#10100c','stroke-width':4,'stroke-dasharray':'2 8','stroke-linecap':'round'},svg);
+if(revealed)drawReal(false)}
+function toT(e){const r=svg.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;const t=Math.max(0,Math.min(5,(x-dims.l)/(dims.r-dims.l)*5)),v=Math.max(0,Math.min(MAX,(dims.b-y)/(dims.b-dims.t)*MAX));return[t,v]}
+svg.addEventListener('pointerdown',e=>{if(revealed)return;drawing=true;pts=[[0,1]];svg.setPointerCapture(e.pointerId)});
+svg.addEventListener('pointermove',e=>{if(!drawing)return;const p=toT(e);if(p[0]>pts[pts.length-1][0])pts.push(p);frame()});
+svg.addEventListener('pointerup',()=>{drawing=false;if(pts.length>3)$('ds').textContent='Happy with it? Now see the real line.'});
+function drawReal(anim){const{X,Y}=dims;let d='';for(let t=0;t<=5.001;t+=.05)d+=(d?' L':'M')+X(t)+','+Y(Math.min(MAX,real(t)));
+const p=mk('path',{d,fill:'none',stroke:'#00A6FF','stroke-width':6,'stroke-linecap':'round'},svg);const end=mk('text',{x:X(5)-6,y:Y(1845)-8,'text-anchor':'end','font-size':Math.max(12,dims.H/18),'font-weight':900,fill:'#0077c2'},svg);end.textContent='×1,845';
+if(anim){const L=p.getTotalLength();p.style.strokeDasharray=L;p.style.strokeDashoffset=L;gsap.to(p.style,{strokeDashoffset:0,duration:2,ease:'power2.in'});gsap.from(end,{opacity:0,delay:1.9})}}
+$('dgo').onclick=()=>{if(revealed)return;revealed=true;drawReal(true);const guess=pts.length>1?pts[pts.length-1][1]:null;
+$('ds').innerHTML=(guess!=null&&guess<500?`You guessed about <b>×${Math.round(guess)}</b>. `:'')+'4.5 × 4.5 × 4.5 × 4.5 × 4.5 ≈ <b>×1,845</b>. Most of the climb happens in the last year.';show('dk')};
+$('dclr').onclick=()=>{if(revealed){revealed=false;hide('dk')}pts=[];frame();$('ds').textContent='Draw with your finger from today to year 5.'};
+onShow.d=frame;frame()})();
+
+/* 5 · Streisand */
+(()=>{let chosen=false,last=null;const svg=$('ssvg');
+function lines(which){const b=$('sbox').getBoundingClientRect(),c=e=>{const r=$(e).getBoundingClientRect();return{x:r.left-b.left+r.width*.5,y:r.top-b.top,b:r.bottom-b.top}};svg.innerHTML='';
+const s0=c('s0'),a=c('sa'),bb=c('sb');const oth=which==='a'?'sb':which==='b'?'sa':null;if(oth)gsap.to('#'+oth,{opacity:.35,duration:.4});const path=(p,q,col,w)=>{const d=`M${p.x},${p.b} C${p.x},${(p.b+q.y)/2} ${q.x},${(p.b+q.y)/2} ${q.x},${q.y}`;return mk('path',{d,fill:'none',stroke:col,'stroke-width':w,'stroke-linecap':'round'},svg)};
+const la=path(s0,a,which==='a'?'#fff':'#ffffff55',which==='a'?4:2),lb=path(s0,bb,which==='b'?'#fff':'#ffffff55',which==='b'?4:2);
+}
+function choose(w){if(chosen)return;chosen=true;const r=$('sr');r.className='float';r.style.border='0';r.style.display='block';r.style.opacity=1;
+r.innerHTML=w==='a'?`<div class="mono" style="opacity:.5">WHAT WOULD HAVE HAPPENED</div><div style="font:800 2.2cqh/1.25 var(--body);margin-top:.6cqh">Nothing. Six downloads, two of them by her own lawyers.</div>`:
+`<div class="mono" style="opacity:.5">WHAT HAPPENED</div><div style="font:900 4.2cqh/1 var(--display);margin:.6cqh 0" class="num" id="scount">6</div><div style="font:700 1.8cqh/1.3 var(--body)">visits in the month after the lawsuit made the news</div>`;
+gsap.fromTo(r,{opacity:0,y:20},{opacity:1,y:0,duration:.5});last=w;requestAnimationFrame(()=>lines(w));
+if(w==='b'){const o={v:6};gsap.to(o,{v:420000,duration:2.2,ease:'power3.in',delay:.4,onUpdate:()=>$('scount').textContent=Math.round(o.v).toLocaleString('en')})}
+$('ss').innerHTML=w==='b'?'She sued. The case made the news, and everyone went to look. Now it has a name: <b>the Streisand effect</b>.':'She didn’t: she sued, and <b>420,000</b> people came to look. Now it has a name: <b>the Streisand effect</b>.';
+setTimeout(()=>show('sk'),900)}
+$('sa').onclick=()=>choose('a');$('sb').onclick=()=>choose('b');onShow.s=()=>lines(last);setTimeout(()=>lines(null),50)})();
+
+/* 6 · Zoom */
+(()=>{const steps=[{q:'How long is a <em>million</em> seconds?',n:11.6,u:'DAYS',w:.003,s:'About <b>11 and a half days</b>. A long holiday.',b:'Now a billion →'},
+{q:'And a <em>billion</em> seconds?',n:31.7,u:'YEARS',w:.035,s:'About <b>31.7 years</b>. Most of a career. The million is now the yellow speck.',b:'Now a trillion →'},
+{q:'And a <em>trillion</em> seconds?',n:31700,u:'YEARS',w:1,s:'About <b>31,700 years</b>. Before farming, before writing: back to the cave painters.',b:'Again'}];let i=-1;
+function next(){i=(i+1)%steps.length;const s=steps[i];$('zq').innerHTML=s.q;const o={v:0};gsap.to(o,{v:s.n,duration:1.4,ease:'power2.out',onUpdate:()=>$('zn').textContent=(s.n>100?Math.round(o.v).toLocaleString('en'):o.v.toFixed(1))});
+$('zu').textContent=s.u;gsap.to('#zbar',{width:s.w*100+'%',duration:1.2,ease:'power2.inOut'});gsap.to('#zprev',{width:(i===0?0:steps[i-1].w/s.w*100)+'%',duration:1.2});
+$('zs').innerHTML=s.s;$('zgo').textContent=s.b;if(i===2)show('zk');else hide('zk')}
+$('zgo').onclick=next;onShow.z=()=>{if(i<0)next()};})();
+
+/* 7 · Kinetic line */
+(()=>{const line='You do not rise to the level of your goals. You fall to the level of your systems.';let played=false,open=false;
+const el=$('kl');el.innerHTML=line.split(' ').map(w=>`<span style="display:inline-block;margin-right:.22em">${w.replace('goals.','<span style="font-style:italic">goals.</span>').replace('systems.','<span style="font-style:italic;text-decoration:underline;text-decoration-thickness:.08em;text-underline-offset:.1em">systems.</span>')}</span>`).join('');
+onShow.k=()=>{if(played)return;played=true;gsap.from('#kl > span',{y:'0.8em',opacity:0,rotate:4,filter:'blur(6px)',duration:.6,stagger:.07,ease:'power3.out'})};
+$('k').onclick=()=>{if(open)return;open=true;gsap.to('#kl',{fontSize:'4cqh',duration:.5});hide('kt');show('kw');show('kk')};})();
+
+/* 8 · GPS */
+(()=>{const svg=$('gsvg');let off=false,t0=null,raf;
+function draw(drift){const{W,H}=box(svg);svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.innerHTML='';const f=Math.max(10,Math.min(H/18,W/22)),c='#fff';
+const sx=W*.5,sy=H*.08;mk('rect',{x:sx-W*.05,y:sy-H*.035,width:W*.1,height:H*.07,rx:4,fill:'#cfd6e6'},svg);mk('rect',{x:sx-W*.22,y:sy-H*.022,width:W*.16,height:H*.044,fill:'#2B5CFF',stroke:'#9fb4ff'},svg);mk('rect',{x:sx+W*.06,y:sy-H*.022,width:W*.16,height:H*.044,fill:'#2B5CFF',stroke:'#9fb4ff'},svg);
+const gy=H*.5;mk('line',{x1:sx,y1:sy+H*.05,x2:sx,y2:gy-H*.04,stroke:'#3ddc84','stroke-width':4,'stroke-dasharray':'6 6'},svg);
+const lab=mk('g',{},svg);mk('rect',{x:sx+W*.05,y:H*.27,width:W*.4,height:f*2,rx:f*.5,fill:'#10141f',stroke:'#3ddc84','stroke-width':2.5},lab);mk('text',{x:sx+W*.25,y:H*.27+f*1.35,'text-anchor':'middle','font-size':f*1.15,'font-weight':900,fill:c},lab).textContent='20,200 KM';
+mk('rect',{x:0,y:H*.12,width:W*.4,height:f*2.9,rx:f*.5,fill:'#10141f',stroke:'#ffe600','stroke-width':2.5},svg);mk('text',{x:W*.2,y:H*.12+f*1.25,'text-anchor':'middle','font-size':f*.8,'font-weight':800,fill:'#ffe600'},svg).textContent='SATELLITE CLOCK';mk('text',{x:W*.2,y:H*.12+f*2.35,'text-anchor':'middle','font-size':f*1.05,'font-weight':900,fill:'#ffe600'},svg).textContent='+38 μs a day';
+mk('rect',{x:0,y:gy,width:W,height:H*.5,rx:12,fill:'#1a2133'},svg);for(let k=1;k<6;k++){mk('line',{x1:0,y1:gy+k*H*.065,x2:W,y2:gy+k*H*.065,stroke:'#ffffff14'},svg);mk('line',{x1:k*W/6,y1:gy,x2:k*W/6,y2:H,stroke:'#ffffff14'},svg)}
+mk('text',{x:10,y:gy+f*1.2,'font-size':f*.8,'font-weight':800,fill:'#9fb4ff'},svg).textContent='YOUR MAP';
+const px=W*.28,py=gy+H*.27;mk('circle',{cx:px,cy:py,r:f*.55,fill:'none',stroke:'#fff','stroke-width':2,opacity:.5},svg);mk('text',{x:px,y:py+f*1.7,'text-anchor':'middle','font-size':f*.75,'font-weight':800,fill:'#fff',opacity:.7},svg).textContent='YOU';
+const dx=Math.min(W*.6,drift/10*W*.5);mk('circle',{cx:px+dx,cy:py-dx*.15,r:f*.45,fill:'#2B5CFF',stroke:'#fff','stroke-width':3},svg);
+if(drift>0)mk('text',{x:Math.min(W-6,px+dx),y:py-dx*.15-f,'text-anchor':'end','font-size':f*.95,'font-weight':900,fill:'#ffe600'},svg).textContent=`${drift.toFixed(1)} km off`}
+function run(ts){if(t0==null)t0=ts;const days=Math.min(1,(ts-t0)/3500);draw(days*10);$('gs').innerHTML=`Day ${days<1?'… ':''}<b>${(days*24).toFixed(0)} h</b> without correction: your dot is <b>${(days*10).toFixed(1)} km</b> away.`;if(days<1)raf=requestAnimationFrame(run);else{$('gs').innerHTML='Up there, clocks run <b>38 μs a day</b> fast: weaker gravity, high speed. Uncorrected, you drift <b>10 km a day</b>.';show('gk')}}
+$('ggo').onclick=()=>{if(off)return;off=true;$('ggo').parentElement.classList.add('gone');t0=null;raf=requestAnimationFrame(run)};onShow.g=()=>draw(off?10:0);draw(0)})();
+
+go(0);
+</script>
