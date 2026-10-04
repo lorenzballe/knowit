@@ -1,0 +1,30 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute Cards</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,700&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Caveat:wght@600;700&display=swap">
+<link rel="stylesheet" href="astute-card.css">
+<!-- Libraries: load only what the cards use. Local copies in vendor/ for testing; CDN links in LIBRERIE.md for publishing. -->
+<script src="vendor/gsap.min.js"></script>
+<div class="app">
+  <div class="top"><h1>Today</h1><div class="dots" id="dots"></div><div class="kind" id="kind"></div></div>
+  <div class="stage">
+    <button class="nav" id="prev" aria-label="Previous card">←</button>
+    <button class="nav" id="next" aria-label="Next card">→</button>
+
+    <!-- One card. Subject colours: docs/cards/kit/LIBRERIE.md -->
+    <article class="card" id="c1" style="--c:#FFE600;--k:#10100c;--edge:#9c8d00" data-kind="Format name">
+      <div class="in">
+        <div class="label"><span class="t">Economics</span><span class="tag">TAG</span></div>
+        <h2 class="q">The question or hook.</h2>
+        <div class="stagebox"><!-- the drawing, the game, the scene --></div>
+        <p class="say" id="c1s">What the reader sees happen.</p>
+        <div class="keep gone" id="c1k"><b>WHAT TO KEEP</b>The line to take away.</div>
+        <div class="foot"><span class="src">Source · Author, Publication, Year</span></div>
+      </div>
+    </article>
+  </div>
+</div>
+<script src="astute-card.js"></script>
+<script>
+Kit.onShow.c1 = () => { /* draw at the card's real size here */ };
+Kit.deck();
+</script>

@@ -303,8 +303,8 @@ const blobAF=s=>`M${-s*.35},${-s*.5} C${-s*.05},${-s*.6} ${s*.25},${-s*.55} ${s*
 const lat=y=>72-(y/H)*110;// top ≈72°N, bottom ≈ -38°
 function draw(){const r=svg.getBoundingClientRect();W=r.width;H=r.height;svg.setAttribute('viewBox',`0 0 ${W} ${H}`);if(gx==null){gx=W*.3;gy=H*.14}
 base=Math.min(W,H)*.5;const k=Math.cos(72*Math.PI/180)/Math.cos(Math.max(-60,Math.min(80,lat(gy)))*Math.PI/180);// Mercator shrink toward true size
-let s='';for(let i=1;i<6;i++)s+=`<line x1="0" y1="${i*H/6}" x2="${W}" y2="${i*H/6}" stroke="#ffffff14"/>`;s+=`<text x="${W-8}" y="${H*.12}" text-anchor="end" font-size="${Math.max(10,H/26)}" font-weight="800" fill="#ffffff66">70°N</text><text x="${W-8}" y="${H*.66}" text-anchor="end" font-size="${Math.max(10,H/26)}" font-weight="800" fill="#ffffff66">EQUATOR</text>`;
-const ax=W*.62,ay=H*.68;s+=`<path d="${blobAF(base)}" transform="translate(${ax},${ay})" fill="#FFB000" stroke="#10100c" stroke-width="2"/><text x="${ax}" y="${ay+6}" text-anchor="middle" font-size="${Math.max(12,H/18)}" font-weight="900" fill="#10100c">AFRICA</text>`;
+let s='';for(let i=1;i<6;i++)s+=`<line x1="0" y1="${i*H/6}" x2="${W}" y2="${i*H/6}" stroke="#ffffff14"/>`;s+=`<text x="${W-8}" y="${H*.12}" text-anchor="end" font-size="${Math.max(10,H/26)}" font-weight="800" fill="#ffffff66">70°N</text><text x="8" y="${H*.66}" text-anchor="start" font-size="${Math.max(10,H/26)}" font-weight="800" fill="#ffffff66">EQUATOR</text>`;
+const ax=W*.64,ay=H*.7;s+=`<path d="${blobAF(base)}" transform="translate(${ax},${ay})" fill="#FFB000" stroke="#10100c" stroke-width="2"/><text x="${ax}" y="${ay+6}" text-anchor="middle" font-size="${Math.max(12,H/18)}" font-weight="900" fill="#10100c">AFRICA</text>`;
 const gs=base*.92*Math.min(1,k*1.05);s+=`<g id="gl" transform="translate(${gx},${gy})" style="cursor:grab"><path d="${blobGL(gs)}" fill="#fff" stroke="#10100c" stroke-width="2"/><text y="5" text-anchor="middle" font-size="${Math.max(10,H/22)}" font-weight="900" fill="#10100c">GREENLAND</text></g>`;
 svg.innerHTML=s}
 const pt=e=>{const r=svg.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]};
