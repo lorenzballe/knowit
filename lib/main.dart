@@ -60,6 +60,7 @@ TopSeed launchCrowd() => TopSeed(
 Future<void> main() async {
   Analytics.launched();
   WidgetsFlutterBinding.ensureInitialized();
+  readDebugToolsFromAddress(web: kIsWeb);
   // Never blocks the app: see Cloud.start.
   final Stopwatch cloud = Stopwatch()..start();
   await Cloud.start();
@@ -472,7 +473,7 @@ class _AstutoRootState extends State<AstutoRoot> {
         // polite sentence is the right thing for a reader and the wrong
         // thing for the person trying to fix it.
         _say(
-          kDebugTools && _account.lastError != null
+          debugToolsOn && _account.lastError != null
               ? '$label sign-in failed — ${_account.lastError}'
               : 'Could not sign in with $label. You can carry on without an '
                     'account.',

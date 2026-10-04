@@ -588,7 +588,7 @@ class ProfileScreen extends StatelessWidget {
           Eyebrow(context.l10n.anonymousUsage),
           const SizedBox(height: 11),
           const _UsageSwitch(),
-          if (kDebugTools) ...[
+          if (debugToolsOn) ...[
             const SizedBox(height: 40),
             const Eyebrow('Debug'),
             const SizedBox(height: 6),
