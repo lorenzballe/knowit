@@ -34,7 +34,7 @@ Nessuna carta da sola cambia la vita. Sono **le piccole cose sommate**, giorno d
 
 ## Cosa deve provare con ogni carta
 
-Ogni carta deve dare **almeno una** di queste sensazioni, meglio due:
+Ogni carta deve dare **almeno una** di queste sensazioni, meglio due (le carte del *bello* ne hanno una quinta: **"che bello"**):
 
 1. **"Ah, ecco perché! Ora ho davvero capito."** Ha visto un meccanismo che prima non vedeva.
 2. **"Questo sono io."** Si riconosce: la carta parla della sua vita.
@@ -49,6 +49,9 @@ Se una carta non dà nessuna di queste sensazioni, non è una carta di Astute.
 - **Fatta per te.** Tutto si basa su una personalizzazione profonda: argomenti, livello, tono e formato scelti per quella persona.
 - **Un perché vero.** Ogni carta spiega il perché di qualcosa, o offre un punto di vista. Il meccanismo, non solo il fatto: fa **collegare i puntini**.
 - **Ogni carta racconta una storia, nel modo migliore per quella storia.** A volte basta leggerla. A volte è un giochino, una scommessa, un cursore da muovere, un grafico da smascherare, una storia a scene, una frase sola, un video, una discussione, un vero o falso, una risposta multipla, una notizia recente. Il formato si sceglie per ogni storia, o si inventa.
+- **Anche l'attualità.** Carte sulle notizie della settimana, ma solo se **spiegano la situazione**: perché sta succedendo, come si collega alla storia, quali puntini unisce. Mai la notizia nuda.
+- **Anche il bello.** Alcune carte esistono per migliorarti la giornata: un'animazione bellissima, una musica, una creazione strana e fuori dal comune, qualcosa di sorprendente da guardare. Anche il bello fa crescere.
+- **Infiniti tipi di carta.** Non c'è una lista chiusa: ogni volta che una storia lo chiede, si inventa un tipo nuovo.
 - **Tutti i toni.** Serio, curioso, ironico, divertente, duro: le carte devono essere **molto diverse fra loro**, così nessuna giornata sembra uguale alla precedente.
 - **Bella.** Ogni carta deve sembrare fatta a mano, con cura: colori, animazioni, impaginazione perfetta, niente scritte storte, niente spazi vuoti. Le persone pagano quello che sentono fatto bene.
 - **Cinque al giorno.** Poche, così ogni carta conta. Una giornata è un mix: alcune carte da leggere, alcune da fare.
@@ -110,4 +113,5 @@ I dettagli sono negli altri documenti di questa cartella: `CRITERI.md`, `FORMATI
 - **Età:** tutte. La personalizzazione decide argomenti, livello e tono.
 - **Lingua:** per ora **solo inglese**.
 - **Tono:** tutti i toni, con carte molto diverse fra loro.
-- **Attualità** (carte sulle notizie della settimana, spiegate col perché): **da decidere**.
+- **Attualità:** sì, se spiegano la situazione del mondo, collegano i puntini e la storia.
+- **Il bello:** sì, carte anche solo belle da vedere o da sentire, fuori dal comune.
