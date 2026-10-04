@@ -161,6 +161,23 @@ Fondo nero diviso da linee bianche orizzontali; in ogni fascia una frase ("bette
 - **Ritmo**: una riga, una frase, un'immagine; poi tutto converge in una parola.
 - Le immagini piccole e la parola grande: la gerarchia è chiarissima.
 
+### Storie di business illustrate (`51`–`56`, `plainownership-*`)
+Un'altra serie a schema fisso: il magazzino ("A better pitch. The same old file."), l'app copiata a metà prezzo, il negozio che mette il budget in pubblicità, il podcast di chi dice di essersi fatto da solo, Instagram venduto ("13 people. $1 billion."), Slack con il cartellino del prezzo.
+- **Titolo in due frasi brevi, una contro l'altra** ("Same app. / Half the price."): il contrasto è già la storia.
+- **Etichetta maiuscola piccola sopra** che dice il tipo di scena, a volte con onestà ("THE COPY TEST · ILLUSTRATIVE SCENARIO"): si dichiara quando un caso è inventato.
+- **Il fatto vero con la data, piccolo e colorato** sotto il numero ("Announced deal · April 9, 2012").
+- **Illustrazione piatta, toni caldi** (senape, terracotta, azzurro polvere) su fondo crema; personaggi semplici.
+- **Le quantità contate davvero**: 13 omini per 13 persone, il cartellino col prezzo appeso all'oggetto, il contatore "VISITORS 0 / CUSTOMERS 0" che resta a zero.
+- **Sottotitolo in un rettangolo verde scurissimo**, parola evidenziata in giallo.
+- Per noi: le carte di economia e decisioni. Il "caso illustrativo" dichiarato è una buona regola anche per Astute.
+
+### La pioggia: corri o cammini? (`57-pioggia-corri-cammina`, `58-pioggia-fermo`)
+Fondo nero, pioggia a righe sottili azzurre, due omini stilizzati (arancione "RUNNER", azzurro "WALKER") su due fasce, ciascuno sul suo percorso. Poi un omino fermo, solo un cerchio e una linea.
+- **L'intuizione sbagliata nel titolo** ("Most people think running hits MORE raindrops"), poi la simulazione che risponde.
+- **Due casi uno sopra l'altro, stesso spazio**: il confronto è immediato.
+- Il minimo assoluto: linee, cerchi, due colori. Tutto il resto è movimento.
+- Per noi: le carte "cosa conviene fare?" con una simulazione semplice da guardare.
+
 ## Cosa portare nelle carte
 
 1. **Micro-etichette monospaziate** negli angoli o sopra i disegni: danno l'aria di "fatto da professionisti".
