@@ -18,16 +18,22 @@ Si usa quella che serve alla storia, non tutte. **Ogni carta di un gruppo deve u
 
 | Libreria | Per cosa | Pubblicare (CDN) | Locale | Nell'app (Flutter) |
 |---|---|---|---|---|
-| **GSAP** | Movimento: entrate, sequenze, numeri che contano, testo che vola | `https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js` | `vendor/gsap.min.js` | `flutter_animate`, `AnimationController` |
+| **GSAP** 3.15 | Movimento: entrate, sequenze, numeri che contano, testo che vola | `https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js` | `vendor/gsap.min.js` | `flutter_animate`, `AnimationController` |
+| **Plugin GSAP** (gratis da GSAP 3.13) | `SplitText` testo che si spezza in lettere e parole · `DrawSVGPlugin` linee che si disegnano · `MorphSVGPlugin` una forma che diventa un'altra · `MotionPathPlugin` oggetti lungo un percorso · `Flip` elementi che cambiano posto con continuità · `ScrambleTextPlugin` testo che si "decifra" · `Physics2DPlugin` lanci e gravità · `CustomEase` curve su misura | `https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/<Nome>.min.js` | `vendor/gsap-plugins/` | `CustomPainter` + `AnimationController`, `path_drawing` |
+| **Lottie** | Animazioni disegnate da un designer (After Effects), leggerissime | `https://cdn.jsdelivr.net/npm/lottie-web@5.13.0/build/player/lottie.min.js` | `vendor/lottie.min.js` | `lottie` (stesso file .json) |
+| **Rive** | Animazioni interattive con stati (reagiscono al tocco) | `https://cdn.jsdelivr.net/npm/@rive-app/canvas@2.44.0/rive.js` | `vendor/rive.js` + `rive.wasm` | `rive` (stesso file .riv) |
+| **p5.js** | Arte generativa e sketch interattivi | `https://cdn.jsdelivr.net/npm/p5@2.3.4/lib/p5.min.js` | `vendor/p5.min.js` (licenza LGPL, copia non modificata) | `CustomPainter` |
 | **D3** | Grafici e dati veri: scale, assi, curve, mappe | `https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js` | `vendor/d3.min.js` | `CustomPainter`, `fl_chart` |
 | **rough.js** | Stile disegnato a mano, schizzi | `https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js` | `vendor/rough.js` | `CustomPainter` con tratti irregolari |
 | **Matter.js** | Fisica: cose che cadono, rimbalzano, si urtano | `https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js` | `vendor/matter.min.js` | `forge2d` / `flame` |
 | **three.js** | 3D: oggetti che ruotano, spazio, scale | `https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js` | `vendor/three.module.min.js` | `flutter_gl`, oppure video pre-renderizzati |
 | **Tone.js** | Suono: note, ritmi, illusioni sonore | `https://cdn.jsdelivr.net/npm/tone@15.0.4/build/Tone.js` | `vendor/Tone.js` | `just_audio` + suoni generati |
 | **Canvas e SVG** | Particelle, arte generativa, disegni su misura | (nel browser) | (nel browser) | `CustomPainter` |
-| **Manim** (3Blue1Brown) | Video di spiegazioni matematiche, per le carte *Video* | `pip install manim` (si installa qui) | — | Il video si mette nella carta |
+| **Manim** (3Blue1Brown) | Video di spiegazioni matematiche, per le carte *Video* | `bash tool/cards/setup_manim.sh`, poi `/opt/manim-venv/bin/manim -qh scena.py Scena` | — | Il video (.mp4) si mette nella carta |
 
-Altre da considerare quando servono: **Lottie** e **Rive** (animazioni disegnate da un designer, leggerissime, ottime in Flutter), **p5.js** (arte generativa), **Motion Canvas** e **Remotion** (video animati da codice).
+Altre da considerare quando servono: **Motion Canvas** (video animati da codice, c'è la skill `mo-motion-canvas`). **Remotion** no: la licenza non è libera per le aziende.
+
+Come usare bene ognuna: le skill `mo-*` (vedi `SKILLS.md`).
 
 ## I colori delle materie
 

@@ -29,6 +29,19 @@ frame**, never instead of it.
 - `hf-hyperframes-animation`, `hf-hyperframes-keyframes`, `hf-motion-graphics`: animation
   principles, easing, a catalogue of transitions and motion-graphics techniques.
 - `dataviz` (built in): any chart or number shown as a picture.
+- `mo-emil-animate`, `mo-emil-find-animation-opportunities`: whether and how each thing
+  should move. `mo-design-motion-principles` and `mo-emil-review-animations`: audit the
+  motion before the critic sees it.
+- `mo-gsap-*`: the GSAP API done right, including the plugins in `kit/vendor/gsap-plugins/`
+  (SplitText, DrawSVG, MorphSVG, MotionPath, Flip, ScrambleText, Physics2D).
+- By technique: `mo-svg-animation`, `mo-p5js`, `mo-ui-sound-design`, `mo-lottie-motion-design`,
+  `mo-rive-interactive`, `mo-micro-interaction`; for Video cards `mo-manim-*`,
+  `mo-3b1b-explainers` (install Manim with `tool/cards/setup_manim.sh`).
+- Writing and facts: `ct-feynman-technique` for the explanation, `ct-fact-check-workflow`
+  and `ct-source-verification` for every claim, `ct-humanizer` as the last pass on the text.
+- Porting to Flutter (step 7): `fl-animating-apps`, `fl-animations-mad`, `fl-flutter-animate`,
+  `fl-z-custom-canvas-and-gestures`, `fl-z-motion-and-haptics`, `fl-z-accessibility-as-code`.
+- The full map of every installed skill is in `docs/cards/kit/SKILLS.md`.
 
 ## 2. Pick the stories
 - Only stories with a real *why* that gives one of the feelings in SCOPO. No empty trivia.
