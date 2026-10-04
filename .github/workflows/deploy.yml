@@ -54,6 +54,7 @@ jobs:
           flutter build web --release \
             --base-href /app/ \
             --pwa-strategy=none \
+            --dart-define=DEBUG_TOOLS=false \
             --dart-define=POSTHOG_KEY=${{ vars.POSTHOG_KEY }} \
             --dart-define=POSTHOG_HOST=${{ vars.POSTHOG_HOST || 'https://eu.i.posthog.com' }}
 

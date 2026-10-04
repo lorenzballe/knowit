@@ -54,3 +54,6 @@ tool/illustrations/**/__pycache__/
 # The rules test's tools, installed on demand.
 tool/rules/node_modules/
 tool/rules/package-lock.json
+
+# API keys for media tools (tool/media), never committed
+.env
