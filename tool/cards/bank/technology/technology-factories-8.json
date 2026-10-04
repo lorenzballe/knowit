@@ -125,6 +125,92 @@
     ],
     "caption": "Ten more points of load, from 80% to 90% busy, more than double the wait."
   },
+  "scene": {
+    "type": "slider",
+    "control": "How busy the machine is",
+    "controlUnit": "%",
+    "readout": "Average wait, in job lengths",
+    "readoutUnit": "jobs",
+    "start": 50,
+    "step": 1,
+    "decimals": 1,
+    "points": [
+      [
+        50,
+        1.0
+      ],
+      [
+        60,
+        1.5
+      ],
+      [
+        70,
+        2.3
+      ],
+      [
+        75,
+        3.0
+      ],
+      [
+        80,
+        4.0
+      ],
+      [
+        85,
+        5.7
+      ],
+      [
+        88,
+        7.3
+      ],
+      [
+        90,
+        9.0
+      ],
+      [
+        92,
+        11.5
+      ],
+      [
+        94,
+        15.7
+      ],
+      [
+        95,
+        19.0
+      ],
+      [
+        96,
+        24.0
+      ],
+      [
+        97,
+        32.3
+      ],
+      [
+        98,
+        49.0
+      ]
+    ],
+    "notes": [
+      {
+        "at": 50,
+        "text": "Half busy: a job waits, on average, as long as one job takes."
+      },
+      {
+        "at": 80,
+        "text": "80% busy: the wait is four jobs long."
+      },
+      {
+        "at": 90,
+        "text": "Ten points busier and the wait is nine: more than double."
+      },
+      {
+        "at": 95,
+        "text": "At 95%, nineteen. Near full, each extra point costs more than the last."
+      }
+    ]
+  },
   "source": "Hopp & Spearman, Factory Physics, 2008",
   "source_kind": "book",
   "reference": "Hopp & Spearman, Factory Physics, 3rd edition, McGraw-Hill, 2008",

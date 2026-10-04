@@ -26,6 +26,67 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "slider",
+    "control": "Your monthly payment",
+    "controlUnit": "€",
+    "readout": "What you owe after 10 years",
+    "readoutUnit": "€",
+    "start": 80,
+    "step": 5,
+    "points": [
+      [
+        60,
+        26327
+      ],
+      [
+        70,
+        24745
+      ],
+      [
+        80,
+        23163
+      ],
+      [
+        90,
+        21582
+      ],
+      [
+        100,
+        20000
+      ],
+      [
+        110,
+        18418
+      ],
+      [
+        120,
+        16837
+      ],
+      [
+        130,
+        15255
+      ],
+      [
+        140,
+        13673
+      ]
+    ],
+    "notes": [
+      {
+        "at": 60,
+        "text": "The interest outruns you: the debt grows every year."
+      },
+      {
+        "at": 100,
+        "text": "Exactly the interest. You pay for ten years and owe the same."
+      },
+      {
+        "at": 105,
+        "text": "Only now does the debt start to shrink."
+      }
+    ]
+  },
   "source": "Loan amortisation arithmetic",
   "source_kind": "arithmetic",
   "reference": "Brealey, Myers & Allen, Principles of Corporate Finance, 13th edition, McGraw-Hill, 2020",

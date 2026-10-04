@@ -34,6 +34,88 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
+  "scene": {
+    "type": "slider",
+    "control": "Screen refresh rate",
+    "controlUnit": "Hz",
+    "readout": "Time between frames",
+    "readoutUnit": "ms",
+    "start": 30,
+    "step": 1,
+    "decimals": 1,
+    "points": [
+      [
+        30,
+        33.3
+      ],
+      [
+        40,
+        25.0
+      ],
+      [
+        50,
+        20.0
+      ],
+      [
+        60,
+        16.7
+      ],
+      [
+        75,
+        13.3
+      ],
+      [
+        90,
+        11.1
+      ],
+      [
+        120,
+        8.3
+      ],
+      [
+        144,
+        6.9
+      ],
+      [
+        165,
+        6.1
+      ],
+      [
+        200,
+        5.0
+      ],
+      [
+        240,
+        4.2
+      ],
+      [
+        300,
+        3.3
+      ],
+      [
+        360,
+        2.8
+      ]
+    ],
+    "notes": [
+      {
+        "at": 30,
+        "text": "30 Hz: a new picture every 33.3 ms."
+      },
+      {
+        "at": 60,
+        "text": "One doubling to 60 Hz saved 16.7 ms."
+      },
+      {
+        "at": 120,
+        "text": "The next doubling saves only 8.3 ms."
+      },
+      {
+        "at": 360,
+        "text": "60 to 360 Hz, six times the rate, saves 13.9 ms: less than 30 to 60."
+      }
+    ]
+  },
   "source": "Larrick & Soll, Science, 2008",
   "source_kind": "paper",
   "reference": "Larrick & Soll, The MPG Illusion, Science 320, 2008",

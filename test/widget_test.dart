@@ -41,6 +41,7 @@ import 'package:astuto/widgets/scaled_text.dart';
 import 'package:astuto/widgets/share_day.dart';
 import 'package:astuto/widgets/motion.dart';
 import 'package:astuto/widgets/pill_card.dart';
+import 'package:astuto/widgets/place_it.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/ui.dart';
 
@@ -3586,6 +3587,37 @@ void main() {
       expect(find.text('WHAT TO KEEP'), findsOneWidget);
     });
 
+    testWidgets('a scene is played with, not thrown or turned over', (
+      tester,
+    ) async {
+      final played = PillBank.cards.firstWhere(
+        (p) => p.scene != null && p.challenge is NoChallenge,
+      );
+      final scene = played.scene! as SliderScene;
+      await tester.pumpWidget(host([played], {}));
+      await tester.pumpAndSettle();
+
+      final track = find.bySemanticsLabel(scene.control);
+      expect(track, findsOneWidget);
+      final before = tester.getSemantics(track).value;
+      final box = tester.getRect(track);
+      await tester.dragFrom(
+        box.centerLeft + const Offset(16, 0),
+        Offset(box.width * 0.6, 0),
+      );
+      await tester.pumpAndSettle();
+
+      // The knob moved, and the card is still the one on top, unturned.
+      expect(tester.getSemantics(track).value, isNot(before));
+      expect(find.text(played.question), findsOneWidget);
+      expect(find.text('WHAT TO KEEP'), findsNothing);
+
+      // A tap anywhere but the scene still turns it over.
+      await tester.tap(find.text('Tap to reveal'));
+      await tester.pumpAndSettle();
+      expect(find.text('WHAT TO KEEP'), findsOneWidget);
+    });
+
     testWidgets('a card that asks will not turn over until you commit', (
       tester,
     ) async {
@@ -3706,10 +3738,18 @@ void main() {
 
       expect(find.text('Estimate. Close enough counts.'), findsOneWidget);
 
-      // Deliberately off, but inside the band.
-      await tester.enterText(find.byType(TextField), '${challenge.answer * 2}');
+      // Deliberately off, but inside the band: placed on the ruler, the
+      // way a reader places it, at twice the answer.
+      final ruler = EstimateRuler.around(challenge.answer, guess.id);
+      final box = tester.getRect(find.bySemanticsLabel('Your estimate'));
+      await tester.tapAt(
+        Offset(
+          box.left + ruler.at(challenge.answer * 2) * box.width,
+          box.center.dy,
+        ),
+      );
       await tester.pumpAndSettle();
-      await tester.tap(find.byIcon(Icons.arrow_forward_rounded));
+      await tester.tap(find.text('LOCK IT IN'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('60%'));
       await tester.pumpAndSettle();

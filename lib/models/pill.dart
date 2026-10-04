@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'diagram.dart';
+import 'scene.dart';
 
 export 'diagram.dart';
+export 'scene.dart';
 
 /// What a card asks of the reader before it will turn over.
 ///
@@ -423,6 +425,10 @@ class Pill {
   /// has one (see [Diagram]).
   final Diagram? diagram;
 
+  /// Something to play with before the answer, when the card has one (see
+  /// [Scene]).
+  final Scene? scene;
+
   const Pill({
     required this.id,
     required this.topic,
@@ -458,6 +464,7 @@ class Pill {
     this.buildsOn = const [],
     this.figure = '',
     this.diagram,
+    this.scene,
   });
 
   /// Whether the card carries its tags. Every card in the bank does; a card

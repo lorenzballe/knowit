@@ -26,6 +26,55 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "slider",
+    "control": "Your yearly pay",
+    "controlUnit": "£",
+    "readout": "Income tax on your next £100",
+    "readoutUnit": "£",
+    "start": 90000,
+    "step": 100,
+    "points": [
+      [
+        80000,
+        40
+      ],
+      [
+        100000,
+        40
+      ],
+      [
+        100100,
+        60
+      ],
+      [
+        125100,
+        60
+      ],
+      [
+        125200,
+        45
+      ],
+      [
+        150000,
+        45
+      ]
+    ],
+    "notes": [
+      {
+        "at": 80000,
+        "text": "Above £50,270, each extra £100 costs £40 in tax."
+      },
+      {
+        "at": 100100,
+        "text": "The tax-free allowance now shrinks £1 per £2 earned: £60 of each £100 goes."
+      },
+      {
+        "at": 125200,
+        "text": "Allowance gone at £125,140. The rate falls back to 45%."
+      }
+    ]
+  },
   "source": "GOV.UK, Income Tax rates and Personal Allowances",
   "source_kind": "institution",
   "reference": "https://www.gov.uk/income-tax-rates",

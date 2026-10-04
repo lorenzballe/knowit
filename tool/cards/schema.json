@@ -112,6 +112,11 @@
       "required": ["type"],
       "description": "The picture itself, as data the app draws and animates in the card's colour: dots, bars, scale, area, split, line or timeline. Every number in it is one the card states or its steps work out. tool/cards/diagrams.py holds the rules for each kind."
     },
+    "scene": {
+      "type": "object",
+      "required": ["type"],
+      "description": "Something the reader plays with before the answer, as data the app draws: today `slider` (move one quantity, watch another follow measured points, with a line that changes at the moments that matter). tool/cards/scenes.py holds the rules."
+    },
     "also": {
       "type": "array",
       "items": { "type": "string", "pattern": "^[a-z_]+\\.[a-z0-9_]+\\.[a-z0-9_]+$" },

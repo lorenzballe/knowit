@@ -53,6 +53,71 @@
     ],
     "caption": "A 1% yearly fee takes about a quarter of what €10,000 grows to in 30 years."
   },
+  "scene": {
+    "type": "slider",
+    "control": "Yearly fee",
+    "controlUnit": "%",
+    "readout": "Share of the pot the fee eats",
+    "readoutUnit": "%",
+    "start": 0,
+    "step": 0.1,
+    "points": [
+      [
+        0.0,
+        0.0
+      ],
+      [
+        0.25,
+        6.8
+      ],
+      [
+        0.5,
+        13.2
+      ],
+      [
+        0.75,
+        19.2
+      ],
+      [
+        1.0,
+        24.8
+      ],
+      [
+        1.25,
+        29.9
+      ],
+      [
+        1.5,
+        34.8
+      ],
+      [
+        1.75,
+        39.3
+      ],
+      [
+        2.0,
+        43.5
+      ]
+    ],
+    "notes": [
+      {
+        "at": 0,
+        "text": "No fee: €10,000 grows to about €57,400 in 30 years."
+      },
+      {
+        "at": 0.5,
+        "text": "Half a percent a year already eats about one euro in eight."
+      },
+      {
+        "at": 1,
+        "text": "1% a year sounds small. It takes a quarter of the pot."
+      },
+      {
+        "at": 2,
+        "text": "At 2%, almost half of what you would have had is gone."
+      }
+    ]
+  },
   "source": "Arithmetic of compound fees",
   "source_kind": "arithmetic",
   "reference": "Effect of a 1% annual fee over 30 years, worked arithmetic, 2026",

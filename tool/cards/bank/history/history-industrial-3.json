@@ -34,6 +34,87 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "scene": {
+    "type": "slider",
+    "control": "Growth per year",
+    "controlUnit": "%",
+    "readout": "Years to double",
+    "readoutUnit": "years",
+    "start": 0.5,
+    "step": 0.05,
+    "points": [
+      [
+        0.25,
+        278
+      ],
+      [
+        0.3,
+        231
+      ],
+      [
+        0.4,
+        174
+      ],
+      [
+        0.5,
+        139
+      ],
+      [
+        0.6,
+        116
+      ],
+      [
+        0.75,
+        93
+      ],
+      [
+        1,
+        70
+      ],
+      [
+        1.25,
+        56
+      ],
+      [
+        1.5,
+        47
+      ],
+      [
+        2,
+        35
+      ],
+      [
+        2.5,
+        28
+      ],
+      [
+        3,
+        23
+      ],
+      [
+        4,
+        18
+      ]
+    ],
+    "notes": [
+      {
+        "at": 0.25,
+        "text": "A quarter percent a year: almost three centuries to double."
+      },
+      {
+        "at": 0.5,
+        "text": "Income per head around 1800: 139 years, five generations."
+      },
+      {
+        "at": 2,
+        "text": "Total output's 2%: 35 years, within one working life."
+      },
+      {
+        "at": 3,
+        "text": "3%: 23 years. Six times the rate of 0.5%, six times faster."
+      }
+    ]
+  },
   "source": "Crafts & Harley, Economic History Review, 1992",
   "source_kind": "paper",
   "reference": "Crafts & Harley, Output Growth and the British Industrial Revolution: A Restatement of the Crafts-Harley View, Economic History Review, 1992",
