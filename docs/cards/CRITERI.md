@@ -16,7 +16,7 @@
 
 1. **È vera.** Ogni fatto e ogni numero è corretto e torna con la fonte. Un solo errore e la carta si ferma.
 2. **Ha una fonte vera e verificabile:** libro, studio, giornale serio, dato ufficiale, o un calcolo che il lettore può rifare. Mai una fonte inventata o "a memoria" senza controllo.
-3. **Non è una curiosità vuota.** Supera il test dell'amico sveglio: non "interessante, e allora?", ma "aspetta, lo faccio anch'io" o "ah, ecco perché".
+3. **Non è una curiosità vuota.** Supera il test dell'amico sveglio: direbbe "interessante! Questo è in gamba, lo faccio anch'io, bello", non solo "ok".
 4. **Dà almeno una delle sensazioni** di `SCOPO.md`: "ecco perché", "questo sono io", "figo, riguarda me", "e se fosse così?", oppure "che bello" per le carte del bello.
 5. **Sta in una schermata, perfetta.** Niente scroll, niente scritte storte o tagliate, niente sovrapposizioni, niente grandi spazi vuoti. Va controllato **guardando lo screenshot** su almeno tre telefoni (piccolo, medio, grande), non a occhio sul testo.
 6. **Non è un doppione** di una carta già esistente: stessa idea, stesso esempio o stessa domanda.
@@ -31,7 +31,7 @@
 | 3 | **Su di me** | La persona si riconosce o la usa nella sua vita? | "Questo sono io" | Non la riguarda |
 | 4 | **Chiarezza** | Si capisce al primo colpo, al **livello di quella persona**? | Limpida | Bisogna rileggerla |
 | 5 | **Forma giusta** | Il formato è il modo migliore per questa storia? Gioco, grafico o animazione servono a capire? | Non si potrebbe raccontare meglio | Formato messo a caso, o decorazione inutile |
-| 6 | **Da portarsi via** | La frase finale vale anche senza la carta? Uno la ripeterebbe a cena? | Citabile | È solo un riassunto |
+| 6 | **Da portarsi via** | Resta qualcosa dopo? Una frase che vale anche senza la carta, o un ragionamento che continua. (Non serve per forza una frase: non tutto si riassume.) | Citabile, o ci pensi tutto il giorno | Non resta niente |
 | 7 | **Bellezza** | Impaginazione, colori, animazione, ritmo: sembra fatta a mano? | Da screenshot | Sciatta |
 | 8 | **Sorpresa** | Toglie qualcosa che si dava per scontato, o è diversa da quello che uno si aspetta? | Ribalta un'idea | Prevedibile |
 
@@ -67,7 +67,7 @@
 
 ## Test veloci
 
-- **L'amico sveglio:** direbbe "interessante" e passerebbe oltre (via), o "aspetta, lo faccio anch'io" (tieni)?
+- **L'amico sveglio:** direbbe "interessante! Questo è in gamba, lo faccio anch'io, bello" (tieni), o solo "ok" (via)?
 - **La cena:** chi la legge la racconterebbe stasera a qualcuno?
 - **Lo screenshot:** qualcuno la fotograferebbe per mandarla a un amico?
 - **I 2 secondi:** coprendo tutto tranne la prima riga, verrebbe voglia di continuare?
@@ -92,4 +92,4 @@
 1. **Lo scrittore** si dà il voto da solo prima di consegnare, e scrive in una riga perché la carta merita.
 2. **Il critico**, un agente diverso dallo scrittore, rivota guardando **lo screenshot** della carta, non solo il testo. Se il voto è sotto soglia, la rimanda indietro con il motivo.
 3. **Il proprietario** vede le carte approvate nella pagina di revisione: ✅ approva, ❌ scarta, 💬 commenta. Ogni suo commento finisce in `ESEMPI.md`, così il sistema impara il suo gusto.
-4. **Dopo la pubblicazione decidono i dati** (vedi `SCOPO.md`): finite, salvate, condivise, saltate. Una carta con buoni voti ma dati pessimi si riscrive.
+4. **Dopo la pubblicazione decidono i dati** (vedi `SCOPO.md`): finite, salvate, condivise, saltate, tempo passato sopra. Una carta con buoni voti ma dati pessimi si riscrive.

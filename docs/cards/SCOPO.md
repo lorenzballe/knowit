@@ -71,9 +71,9 @@ Queste cose non sono vietate. Vanno bene quando servono a quella persona:
 
 ## I fatti: sì, ma solo se servono
 
-Un fatto entra in una carta solo se fa capire un perché importante, o fa nascere la domanda giusta.
+Un fatto entra in una carta solo se fa capire un perché importante, o fa nascere un ragionamento o la domanda giusta.
 
-Per ogni fatto la domanda è: **un amico sveglio direbbe "interessante" e passerebbe oltre, o direbbe "aspetta, lo faccio anch'io"?** Il primo caso si butta, il secondo si tiene.
+Per ogni fatto la domanda è: **un amico sveglio, sentendolo, direbbe "interessante! Questo è in gamba, lo faccio anch'io, bello"?** Se sì, si tiene. Se direbbe solo "ok" e passerebbe oltre, si butta.
 
 ## Perché le persone pagano
 
@@ -92,7 +92,8 @@ Con migliaia di utenti decidono i dati, non le opinioni. Una carta funziona se l
 - la **finisce**, invece di saltarla. Attenzione però: chi la salta **può semplicemente saperla già**. Saltare non vuol dire per forza che non piaccia, e va letto insieme agli altri segnali.
 - la **salva** o la **condivide**;
 - **torna** il giorno dopo;
-- alla lunga **si abbona**.
+- alla lunga **si abbona**;
+- ci **resta sopra a lungo**: la legge, ci gioca, ci ragiona.
 
 Le carte che i dati bocciano si riscrivono o si tolgono. Le carte migliori diventano esempi per scrivere le prossime.
 
@@ -101,7 +102,7 @@ Le carte che i dati bocciano si riscrivono o si tolgono. Le carte migliori diven
 1. **Parti spesso da una cosa che la persona vive o vede.** Non sempre: a volte bisogna entrare nel dettaglio di un argomento specifico o difficile, ed è giusto così.
 2. **Un solo meccanismo per carta**, spiegato fino al "ah!".
 3. **Scegli il formato migliore** per quella storia, anche inventandolo.
-4. **Una frase finale da portarsi via** ("WHAT TO KEEP").
+4. **Spesso, una frase finale da portarsi via** ("WHAT TO KEEP"). Non sempre: non tutto si può riassumere in una frase, e quando semplificare tradirebbe l'idea, meglio non farlo.
 5. **Fonte vera, sempre.** Se non sei sicuro, cambia storia.
 6. **Tutto in una schermata**, niente scroll, e la carta deve essere **piena e perfetta**.
 7. **Parole chiare, al livello della persona.** Semplici per chi parte da zero, precise per chi sa già molto.
