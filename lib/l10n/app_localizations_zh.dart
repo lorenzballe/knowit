@@ -1859,4 +1859,52 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get plusInTheApp =>
       'Astute+ 在应用中提供：在 iPhone 或 Android 上下载 Astute，开始免费试用。';
+
+  @override
+  String get purchaseComplete => '购买成功。';
+
+  @override
+  String get successWelcome => '欢迎加入 Astute+。今天的五张卡片已经准备好了。';
+
+  @override
+  String successWelcomeNamed(String name) {
+    return '欢迎加入 Astute+，$name。今天的五张卡片已经准备好了。';
+  }
+
+  @override
+  String get successFiveCards => '每天 5 张卡片';
+
+  @override
+  String get successArchive => '完整存档';
+
+  @override
+  String successPlanName(String plan) {
+    return 'Astute+ $plan';
+  }
+
+  @override
+  String successFreeUntil(String date, String price, String suffix) {
+    return '$date 前免费，之后 $price$suffix';
+  }
+
+  @override
+  String successRenewsLine(String date, String price, String suffix) {
+    return '$date 续订 · $price$suffix';
+  }
+
+  @override
+  String get successReceipt => '收据';
+
+  @override
+  String get letsStart => '开始吧';
+
+  @override
+  String successFootFirstCharge(String date) {
+    return '首次扣款 $date · 随时取消';
+  }
+
+  @override
+  String successFootRenews(String date) {
+    return '$date 续订 · 随时取消';
+  }
 }

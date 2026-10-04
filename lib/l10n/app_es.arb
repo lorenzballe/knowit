@@ -458,5 +458,17 @@
   "weekRecapCaps": "ESTA SEMANA TE PREGUNTASTE",
   "weekRecapLine": "Las preguntas que te dejaron tus cartas",
   "weekRecapMore": "{n} más de tu semana con Plus",
-  "plusInTheApp": "Astute+ está en la app: descarga Astute en iPhone o Android para empezar tu prueba gratuita."
+  "plusInTheApp": "Astute+ está en la app: descarga Astute en iPhone o Android para empezar tu prueba gratuita.",
+  "purchaseComplete": "Compra completada.",
+  "successWelcome": "Bienvenido a Astute+. Las cinco cartas de hoy están listas.",
+  "successWelcomeNamed": "Bienvenido a Astute+, {name}. Las cinco cartas de hoy están listas.",
+  "successFiveCards": "5 cartas al día",
+  "successArchive": "Todo el archivo",
+  "successPlanName": "Astute+ {plan}",
+  "successFreeUntil": "Gratis hasta el {date}, luego {price}{suffix}",
+  "successRenewsLine": "Se renueva el {date} · {price}{suffix}",
+  "successReceipt": "Recibo",
+  "letsStart": "Empecemos",
+  "successFootFirstCharge": "Primer cargo el {date} · cancela cuando quieras",
+  "successFootRenews": "Se renueva el {date} · cancela cuando quieras"
 }

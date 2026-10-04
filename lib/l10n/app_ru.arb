@@ -458,5 +458,17 @@
   "weekRecapCaps": "НА ЭТОЙ НЕДЕЛЕ ТЫ СПРАШИВАЛ СЕБЯ",
   "weekRecapLine": "Вопросы, которые оставили тебе карточки",
   "weekRecapMore": "Ещё {n} за неделю с Plus",
-  "plusInTheApp": "Astute+ — в приложении: скачай Astute на iPhone или Android, чтобы начать бесплатный период."
+  "plusInTheApp": "Astute+ — в приложении: скачай Astute на iPhone или Android, чтобы начать бесплатный период.",
+  "purchaseComplete": "Покупка завершена.",
+  "successWelcome": "Добро пожаловать в Astute+. Пять сегодняшних карточек готовы.",
+  "successWelcomeNamed": "Добро пожаловать в Astute+, {name}. Пять сегодняшних карточек готовы.",
+  "successFiveCards": "5 карточек в день",
+  "successArchive": "Весь архив",
+  "successPlanName": "Astute+ {plan}",
+  "successFreeUntil": "Бесплатно до {date}, затем {price}{suffix}",
+  "successRenewsLine": "Продление {date} · {price}{suffix}",
+  "successReceipt": "Чек",
+  "letsStart": "Начнём",
+  "successFootFirstCharge": "Первое списание {date} · отмена в любой момент",
+  "successFootRenews": "Продление {date} · отмена в любой момент"
 }

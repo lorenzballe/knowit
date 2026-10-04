@@ -1628,5 +1628,95 @@
    }
   }
  },
- "plusInTheApp": "Astute+ is in the app: download Astute on iPhone or Android to start your free trial."
+ "plusInTheApp": "Astute+ is in the app: download Astute on iPhone or Android to start your free trial.",
+ "purchaseComplete": "Purchase complete.",
+ "@purchaseComplete": {
+  "description": "Purchase success screen (design 129a)."
+ },
+ "successWelcome": "Welcome to Astute+. Today’s five cards are ready.",
+ "@successWelcome": {
+  "description": "Purchase success screen (design 129a)."
+ },
+ "successWelcomeNamed": "Welcome to Astute+, {name}. Today’s five cards are ready.",
+ "@successWelcomeNamed": {
+  "description": "Purchase success screen (design 129a).",
+  "placeholders": {
+   "name": {
+    "type": "String"
+   }
+  }
+ },
+ "successFiveCards": "5 cards a day",
+ "@successFiveCards": {
+  "description": "Purchase success screen (design 129a)."
+ },
+ "successArchive": "Full archive",
+ "@successArchive": {
+  "description": "Purchase success screen (design 129a)."
+ },
+ "successPlanName": "Astute+ {plan}",
+ "@successPlanName": {
+  "description": "Purchase success screen (design 129a).",
+  "placeholders": {
+   "plan": {
+    "type": "String"
+   }
+  }
+ },
+ "successFreeUntil": "Free until {date}, then {price}{suffix}",
+ "@successFreeUntil": {
+  "description": "Purchase success screen (design 129a).",
+  "placeholders": {
+   "date": {
+    "type": "String"
+   },
+   "price": {
+    "type": "String"
+   },
+   "suffix": {
+    "type": "String"
+   }
+  }
+ },
+ "successRenewsLine": "Renews {date} · {price}{suffix}",
+ "@successRenewsLine": {
+  "description": "Purchase success screen (design 129a).",
+  "placeholders": {
+   "date": {
+    "type": "String"
+   },
+   "price": {
+    "type": "String"
+   },
+   "suffix": {
+    "type": "String"
+   }
+  }
+ },
+ "successReceipt": "Receipt",
+ "@successReceipt": {
+  "description": "Purchase success screen (design 129a)."
+ },
+ "letsStart": "Let’s start",
+ "@letsStart": {
+  "description": "Purchase success screen (design 129a)."
+ },
+ "successFootFirstCharge": "First charge {date} · cancel any time",
+ "@successFootFirstCharge": {
+  "description": "Purchase success screen (design 129a).",
+  "placeholders": {
+   "date": {
+    "type": "String"
+   }
+  }
+ },
+ "successFootRenews": "Renews {date} · cancel any time",
+ "@successFootRenews": {
+  "description": "Purchase success screen (design 129a).",
+  "placeholders": {
+   "date": {
+    "type": "String"
+   }
+  }
+ }
 }

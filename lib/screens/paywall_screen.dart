@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 import '../analytics.dart';
 import '../l10n/l10n.dart';
@@ -19,6 +20,7 @@ import '../widgets/fit_text.dart';
 import '../data/topics.dart';
 import '../widgets/ambient.dart';
 import '../widgets/motion.dart';
+import 'purchase_success_screen.dart';
 
 /// What Astute+ costs, in cents, so the saving can be worked out rather than
 /// asserted. A hardcoded "save 37%" is a number that quietly stops being true
@@ -261,6 +263,8 @@ class _PaywallScreenState extends State<PaywallScreen> {
     switch (outcome) {
       case PurchaseOutcome.bought:
         await widget.app.applyEntitlement(true);
+        if (!mounted) return;
+        await _celebrate();
         if (mounted) _leaveBy('bought');
       case PurchaseOutcome.cancelled:
         break;
@@ -269,6 +273,60 @@ class _PaywallScreenState extends State<PaywallScreen> {
           SnackBar(content: Text(context.l10n.thatDidNotGoThrough)),
         );
     }
+  }
+
+  /// The screen a purchase ends on (design 129a): what was bought, what it
+  /// does next, and one button to begin. Returns when the reader starts.
+  Future<void> _celebrate() async {
+    final l = context.l10n;
+    final Plan plan = _plan;
+    final String price = _priceFor(plan);
+    final String suffix = plan == Plan.year ? l.perYearShort : l.perMonthShort;
+    final int? days = _freeDays(plan);
+    final DateTime now = DateTime.now();
+    final DateTime renew = plan == Plan.year
+        ? DateTime(now.year + 1, now.month, now.day)
+        : DateTime(now.year, now.month + 1, now.day);
+    final String locale = Localizations.localeOf(context).toString();
+    String day(DateTime d) => DateFormat.MMMd(locale).format(d);
+    final String? end = days == null
+        ? null
+        : day(now.add(Duration(days: days)));
+    final String name = widget.app.name.trim();
+    final String? first = name.isEmpty || name == 'You'
+        ? null
+        : name.split(RegExp(r'\s+')).first;
+    Analytics.capture('purchase success shown', {
+      'source': widget.source,
+      'plan': plan.name,
+      'trial': days != null,
+    });
+    await Navigator.of(context).push(
+      PageRouteBuilder<void>(
+        transitionDuration: const Duration(milliseconds: 250),
+        reverseTransitionDuration: const Duration(milliseconds: 250),
+        pageBuilder: (context, _, _) => PurchaseSuccessScreen(
+          firstName: first,
+          planName: l.successPlanName(
+            plan == Plan.year ? l.planYearly : l.planMonthly,
+          ),
+          planLine: end != null
+              ? l.successFreeUntil(end, price, suffix)
+              : l.successRenewsLine(day(renew), price, suffix),
+          foot: end != null
+              ? l.successFootFirstCharge(end)
+              : l.successFootRenews(day(renew)),
+          onReceipt: () => _openLink(
+            'subscriptions',
+            Theme.of(context).platform == TargetPlatform.iOS
+                ? 'https://apps.apple.com/account/subscriptions'
+                : 'https://play.google.com/store/account/subscriptions',
+          ),
+        ),
+        transitionsBuilder: (context, animation, _, child) =>
+            FadeTransition(opacity: animation, child: child),
+      ),
+    );
   }
 
   /// Google Play's reviewers cannot pay, so they type the code Play Console

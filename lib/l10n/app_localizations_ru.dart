@@ -1994,4 +1994,53 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get plusInTheApp =>
       'Astute+ — в приложении: скачай Astute на iPhone или Android, чтобы начать бесплатный период.';
+
+  @override
+  String get purchaseComplete => 'Покупка завершена.';
+
+  @override
+  String get successWelcome =>
+      'Добро пожаловать в Astute+. Пять сегодняшних карточек готовы.';
+
+  @override
+  String successWelcomeNamed(String name) {
+    return 'Добро пожаловать в Astute+, $name. Пять сегодняшних карточек готовы.';
+  }
+
+  @override
+  String get successFiveCards => '5 карточек в день';
+
+  @override
+  String get successArchive => 'Весь архив';
+
+  @override
+  String successPlanName(String plan) {
+    return 'Astute+ $plan';
+  }
+
+  @override
+  String successFreeUntil(String date, String price, String suffix) {
+    return 'Бесплатно до $date, затем $price$suffix';
+  }
+
+  @override
+  String successRenewsLine(String date, String price, String suffix) {
+    return 'Продление $date · $price$suffix';
+  }
+
+  @override
+  String get successReceipt => 'Чек';
+
+  @override
+  String get letsStart => 'Начнём';
+
+  @override
+  String successFootFirstCharge(String date) {
+    return 'Первое списание $date · отмена в любой момент';
+  }
+
+  @override
+  String successFootRenews(String date) {
+    return 'Продление $date · отмена в любой момент';
+  }
 }

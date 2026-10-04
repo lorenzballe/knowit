@@ -458,5 +458,17 @@
   "weekRecapCaps": "이번 주 스스로에게 던진 질문",
   "weekRecapLine": "카드가 남긴 질문들",
   "weekRecapMore": "Plus로 이번 주 {n}개 더 보기",
-  "plusInTheApp": "Astute+는 앱에서 이용할 수 있어요. iPhone이나 Android에 Astute를 받아 무료 체험을 시작하세요."
+  "plusInTheApp": "Astute+는 앱에서 이용할 수 있어요. iPhone이나 Android에 Astute를 받아 무료 체험을 시작하세요.",
+  "purchaseComplete": "구매가 완료되었습니다.",
+  "successWelcome": "Astute+에 오신 것을 환영해요. 오늘의 카드 다섯 장이 준비됐어요.",
+  "successWelcomeNamed": "Astute+에 오신 것을 환영해요, {name}님. 오늘의 카드 다섯 장이 준비됐어요.",
+  "successFiveCards": "하루 5장의 카드",
+  "successArchive": "전체 보관함",
+  "successPlanName": "Astute+ {plan}",
+  "successFreeUntil": "{date}까지 무료, 이후 {price}{suffix}",
+  "successRenewsLine": "{date}에 갱신 · {price}{suffix}",
+  "successReceipt": "영수증",
+  "letsStart": "시작하기",
+  "successFootFirstCharge": "첫 결제 {date} · 언제든 해지 가능",
+  "successFootRenews": "{date}에 갱신 · 언제든 해지 가능"
 }

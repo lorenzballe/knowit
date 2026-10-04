@@ -1870,4 +1870,52 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get plusInTheApp =>
       'Astute+는 앱에서 이용할 수 있어요. iPhone이나 Android에 Astute를 받아 무료 체험을 시작하세요.';
+
+  @override
+  String get purchaseComplete => '구매가 완료되었습니다.';
+
+  @override
+  String get successWelcome => 'Astute+에 오신 것을 환영해요. 오늘의 카드 다섯 장이 준비됐어요.';
+
+  @override
+  String successWelcomeNamed(String name) {
+    return 'Astute+에 오신 것을 환영해요, $name님. 오늘의 카드 다섯 장이 준비됐어요.';
+  }
+
+  @override
+  String get successFiveCards => '하루 5장의 카드';
+
+  @override
+  String get successArchive => '전체 보관함';
+
+  @override
+  String successPlanName(String plan) {
+    return 'Astute+ $plan';
+  }
+
+  @override
+  String successFreeUntil(String date, String price, String suffix) {
+    return '$date까지 무료, 이후 $price$suffix';
+  }
+
+  @override
+  String successRenewsLine(String date, String price, String suffix) {
+    return '$date에 갱신 · $price$suffix';
+  }
+
+  @override
+  String get successReceipt => '영수증';
+
+  @override
+  String get letsStart => '시작하기';
+
+  @override
+  String successFootFirstCharge(String date) {
+    return '첫 결제 $date · 언제든 해지 가능';
+  }
+
+  @override
+  String successFootRenews(String date) {
+    return '$date에 갱신 · 언제든 해지 가능';
+  }
 }

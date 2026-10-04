@@ -1931,4 +1931,53 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get plusInTheApp =>
       'Astute+ está en la app: descarga Astute en iPhone o Android para empezar tu prueba gratuita.';
+
+  @override
+  String get purchaseComplete => 'Compra completada.';
+
+  @override
+  String get successWelcome =>
+      'Bienvenido a Astute+. Las cinco cartas de hoy están listas.';
+
+  @override
+  String successWelcomeNamed(String name) {
+    return 'Bienvenido a Astute+, $name. Las cinco cartas de hoy están listas.';
+  }
+
+  @override
+  String get successFiveCards => '5 cartas al día';
+
+  @override
+  String get successArchive => 'Todo el archivo';
+
+  @override
+  String successPlanName(String plan) {
+    return 'Astute+ $plan';
+  }
+
+  @override
+  String successFreeUntil(String date, String price, String suffix) {
+    return 'Gratis hasta el $date, luego $price$suffix';
+  }
+
+  @override
+  String successRenewsLine(String date, String price, String suffix) {
+    return 'Se renueva el $date · $price$suffix';
+  }
+
+  @override
+  String get successReceipt => 'Recibo';
+
+  @override
+  String get letsStart => 'Empecemos';
+
+  @override
+  String successFootFirstCharge(String date) {
+    return 'Primer cargo el $date · cancela cuando quieras';
+  }
+
+  @override
+  String successFootRenews(String date) {
+    return 'Se renueva el $date · cancela cuando quieras';
+  }
 }
