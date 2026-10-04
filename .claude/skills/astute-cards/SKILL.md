@@ -18,6 +18,18 @@ writing anything; it wins over your own taste.
 7. `docs/cards/kit/LIBRERIE.md`: the kit, the libraries, the colours, the checker.
 8. The prototypes in `docs/cards/prototipi/`: what has been approved as the level.
 
+## 1b. Design and motion skills to load as you build
+These live in `.claude/skills/` (third-party, MIT/Apache, see `docs/cards/kit/SKILLS.md`).
+They were written for web pages: use their taste and technique **inside the Astute card
+frame**, never instead of it.
+- `frontend-design`, `taste-taste-skill`: taste, typography, anti-generic rules. Load always.
+- `taste-minimalist-skill`, `taste-soft-skill`, `taste-brutalist-skill`: three very different
+  visual directions, so cards in a batch don't all look alike.
+- `algorithmic-art`: generative art and particles (flow fields, seeded randomness).
+- `hf-hyperframes-animation`, `hf-hyperframes-keyframes`, `hf-motion-graphics`: animation
+  principles, easing, a catalogue of transitions and motion-graphics techniques.
+- `dataviz` (built in): any chart or number shown as a picture.
+
 ## 2. Pick the stories
 - Only stories with a real *why* that gives one of the feelings in SCOPO. No empty trivia.
 - Sources must be real. If you cannot check a source, change the story.
