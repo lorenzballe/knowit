@@ -3,6 +3,7 @@
 > Si legge dopo `SCOPO.md`. Serve a decidere, per ogni carta, una cosa sola: **si pubblica o no?**
 > Lo usa chi scrive (per controllarsi), il critico (per votare) e il proprietario (per approvare).
 > Prima di pubblicare decidono questi criteri; dopo la pubblicazione decidono i dati.
+> Nel dubbio, la domanda di fondo è sempre: **questa carta dà un valore vero alle persone che la riceveranno?**
 
 ## Come funziona, in breve
 
@@ -18,8 +19,10 @@
 2. **Ha una fonte vera e verificabile:** libro, studio, giornale serio, dato ufficiale, o un calcolo che il lettore può rifare. Mai una fonte inventata o "a memoria" senza controllo.
 3. **Non è una curiosità vuota.** Supera il test dell'amico sveglio: direbbe "interessante! Questo è in gamba, lo faccio anch'io, bello", non solo "ok".
 4. **Dà almeno una delle sensazioni** di `SCOPO.md`: "ecco perché", "questo sono io", "figo, riguarda me", "e se fosse così?", oppure "che bello" per le carte del bello.
-5. **Sta in una schermata, perfetta.** Niente scroll, niente scritte storte o tagliate, niente sovrapposizioni, niente grandi spazi vuoti. Va controllato **guardando lo screenshot** su almeno tre telefoni (piccolo, medio, grande), non a occhio sul testo.
+5. **Sta nella carta, perfetta.** Niente scroll, niente scritte storte o tagliate, niente sovrapposizioni, niente grandi spazi vuoti. Va controllato **guardando lo screenshot** su almeno tre telefoni (piccolo, medio, grande), non a occhio sul testo.
+   Video, animazioni e qualsiasi altra cosa restano **dentro le dimensioni della carta**. Solo in casi eccezionali una carta può uscirne, e sempre con **un pulsante apposito** (schermo intero, ruotare il telefono…).
 6. **Non è un doppione** di una carta già esistente: stessa idea, stesso esempio o stessa domanda.
+   **Eccezione:** lo stesso tema può tornare se è affrontato davvero a **livelli diversi** (difficoltà, complessità, profondità), per persone diverse. Se le due carte sono troppo simili, no.
 7. **Non fa danni.** Nessun consiglio medico o finanziario pericoloso, niente odio, niente sensazionalismo che spaventa senza spiegare.
 
 ## 2. Il voto (1–5 per ognuna)
@@ -31,7 +34,7 @@
 | 3 | **Su di me** | La persona si riconosce o la usa nella sua vita? | "Questo sono io" | Non la riguarda |
 | 4 | **Chiarezza** | Si capisce al primo colpo, al **livello di quella persona**? | Limpida | Bisogna rileggerla |
 | 5 | **Forma giusta** | Il formato è il modo migliore per questa storia? Gioco, grafico o animazione servono a capire? | Non si potrebbe raccontare meglio | Formato messo a caso, o decorazione inutile |
-| 6 | **Da portarsi via** | Resta qualcosa dopo? Una frase che vale anche senza la carta, o un ragionamento che continua. (Non serve per forza una frase: non tutto si riassume.) | Citabile, o ci pensi tutto il giorno | Non resta niente |
+| 6 | **Da portarsi via** | Resta qualcosa dopo? Una frase che vale anche senza la carta, o un ragionamento che continua. Non serve per forza una frase: non tutto si riassume. | Citabile, o ci pensi tutto il giorno | Non resta niente |
 | 7 | **Bellezza** | Impaginazione, colori, animazione, ritmo: sembra fatta a mano? | Da screenshot | Sciatta |
 | 8 | **Sorpresa** | Toglie qualcosa che si dava per scontato, o è diversa da quello che uno si aspetta? | Ribalta un'idea | Prevedibile |
 
@@ -41,6 +44,7 @@
 - **Carta di punta:** media ≥ 4,5. Diventa candidata per la carta del giorno, per Esplora e per gli esempi in `ESEMPI.md`.
 - **Si riscrive:** media tra 3 e 4, oppure un solo voto sotto 3. Si torna allo scrittore con **il voto e il motivo**.
 - **Si butta:** un cancello fallito che non si può sistemare, oppure media sotto 3.
+- **Esperimenti:** una carta in dubbio, che non fallisce nessun cancello ma ha un'idea nuova o un formato mai provato, può uscire **come esperimento** a una piccola parte degli utenti. Poi decidono i dati.
 
 **Meglio una carta in meno che una carta debole.**
 
@@ -51,13 +55,14 @@
 ### Carte di attualità
 - Spiegano **perché** sta succedendo, non solo **cosa**.
 - Collegano la notizia a un meccanismo o alla storia: "è già successo così nel…", "funziona così perché…".
-- Hanno una **data di scadenza**: quando la notizia non è più attuale, la carta si ritira o si aggiorna.
+- Hanno una **data di scadenza**. Quando la notizia non è più attuale, la carta **non viene più mostrata**, ma chi l'ha salvata continua a vederla. Se serve, si aggiorna.
 - Sui temi divisivi presentano **le ragioni delle varie parti**, senza tifare.
 
 ### Carte del bello
+- Un video, un'animazione bellissima, una musica, una creazione strana e fuori dal comune.
 - Possono non avere un meccanismo né un "WHAT TO KEEP". Il cancello 3 diventa: **è davvero straordinaria da vedere o da sentire?**
 - Devono essere **brevi e perfette**. Una carta del bello mediocre è peggio di nessuna carta.
-- Al massimo **una ogni tanto**, non tutti i giorni, così restano una sorpresa.
+- Escono **molto, molto raramente**, così restano una sorpresa. La frequenza esatta di ogni tipo di carta si decide a parte, con criteri suoi.
 
 ### Carte di livello alto
 - Si giudicano **al livello del lettore a cui sono destinate**. Una carta tecnica per un esperto non perde punti di chiarezza perché un principiante non la capirebbe.
@@ -68,22 +73,26 @@
 ## Test veloci
 
 - **L'amico sveglio:** direbbe "interessante! Questo è in gamba, lo faccio anch'io, bello" (tieni), o solo "ok" (via)?
-- **La cena:** chi la legge la racconterebbe stasera a qualcuno?
 - **Lo screenshot:** qualcuno la fotograferebbe per mandarla a un amico?
 - **I 2 secondi:** coprendo tutto tranne la prima riga, verrebbe voglia di continuare?
-- **La nonna e l'esperto:** al livello indicato, una persona di quel livello la capisce e la trova interessante?
+- **La persona giusta:** una persona del livello indicato la capisce e la trova interessante?
 
 ## Segnali di allarme (quasi sempre vuol dire riscrivere)
 
 - Comincia con "Lo sapevi che…", "È interessante notare che…", "Molti pensano…".
 - "Gli studi dimostrano" senza dire quali.
 - Numeri senza una scala che li faccia capire ("3 milioni": tanti o pochi rispetto a cosa?).
-- Due idee nella stessa carta.
-- La risposta ripete la domanda con altre parole.
-- Finisce con una morale generica ("quindi bisogna sempre riflettere").
 - Domanda a trabocchetto: il lettore sbaglia per un dettaglio, non perché aveva un'idea sbagliata.
 - Un grafico o un'animazione che **decora** invece di **spiegare**.
 - Il tono di chi si sente superiore.
+
+## Da guardare con attenzione (dipende dalla carta)
+
+Queste cose spesso indicano una carta debole, ma **non sempre**. Si decide guardando lo scopo di quella carta:
+
+- **Due idee nella stessa carta.** Di solito ne basta una. Nelle carte di ragionamento o di dibattito, però, mettere a confronto due idee può essere proprio il punto.
+- **Una risposta che non chiude.** Va male se ripete la domanda con altre parole. Va bene quando la domanda non ha una risposta assoluta e la carta lo mostra con onestà.
+- **Una chiusura riflessiva.** "Quindi bisogna sempre riflettere" detto per riempire va male. Lasciare una riflessione aperta va bene quando è proprio lo scopo della carta.
 
 ---
 
