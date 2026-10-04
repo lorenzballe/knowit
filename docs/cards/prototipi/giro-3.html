@@ -1,0 +1,326 @@
+<title>Astute Cards, Round Three</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,700&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&family=Caveat:wght@600;700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/roughjs@4.6.6/bundled/rough.js"></script>
+<style>
+/* Layout: Astute's frame and type on every card; inside, each card uses a different technique: particles, falling balls, 3D tiles, hotspots, sketch, swipe, sound, drag, generative art. */
+:root{--ground:#000;--paper:#f2f1ec;--muted:#6f6e76;--line:#26262b;
+--display:"Fraunces",Georgia,serif;--body:"Figtree",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;--hand:"Caveat","Comic Sans MS",cursive;color-scheme:dark}
+html,body{height:100%}body{background:var(--ground);color:var(--paper);font-family:var(--body);overflow:hidden}
+.app{height:100%;display:flex;flex-direction:column;align-items:center;padding-inline:16px;padding-block:10px;box-sizing:border-box;gap:8px}
+.top{width:100%;max-width:440px;display:flex;flex-direction:column;gap:10px}
+.top h1{margin:0;font:800 26px/1 var(--display)}
+.dots{display:flex;gap:5px}.dots span{flex:1;height:3px;border-radius:2px;background:var(--line);transition:.3s}.dots span.on{background:var(--paper)}
+.kind{font:600 11px/1 var(--body);letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.stage{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;position:relative}
+.nav{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#000c;color:var(--paper);font-size:16px;cursor:pointer}
+#prev{left:-6px}#next{right:-6px}
+button:focus-visible,input:focus-visible,.card:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.card{container-type:size;height:min(100%, calc((100vw - 32px) * 16 / 9.3));aspect-ratio:9/16;max-width:100%;border-radius:6cqw;display:none;position:relative;background:var(--c);color:var(--k);box-shadow:0 1.1cqh 0 var(--edge);overflow:hidden}
+.card.on{display:block}
+.in{position:absolute;inset:0;padding:5cqh 7.5cqw 4.4cqh;display:flex;flex-direction:column;gap:2.1cqh}
+.label{display:flex;align-items:center;gap:2.6cqw;font:600 1.6cqh/1 var(--body);letter-spacing:.16em;text-transform:uppercase}
+.label svg{width:2.5cqh;height:2.5cqh;flex:none}.label .t{opacity:.8}
+.tag{margin-left:auto;font:800 1.3cqh/1 var(--body);letter-spacing:.12em;padding:.8cqh 2.4cqw;border-radius:99px;background:var(--k);color:var(--c)}
+.mono{font:700 1.25cqh/1.2 var(--mono);letter-spacing:.06em;opacity:.65;text-transform:uppercase}
+.q{font:800 3.4cqh/1.13 var(--display);margin:0;text-wrap:balance;letter-spacing:-.012em}.q em{font-style:italic;font-weight:700}
+.say{font:600 2.1cqh/1.42 var(--body);margin:0;text-wrap:pretty}.say b{font-weight:800}
+.stagebox{flex:1;min-height:0;position:relative}
+.keep{margin-top:auto;background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:2.8cqh;padding:2cqh 5.5cqw;font:600 2.05cqh/1.38 var(--body)}
+.keep b{display:block;font:700 1.35cqh/1 var(--body);letter-spacing:.16em;opacity:.7;margin-bottom:1cqh}
+.foot{display:flex;align-items:center;gap:4cqw}.src{font:500 1.42cqh/1.3 var(--body);opacity:.65;flex:1;min-width:0}
+.btn{font:800 2cqh/1 var(--body);border:0;border-radius:99px;padding:1.8cqh 6cqw;cursor:pointer;background:var(--k);color:var(--c)}
+.btn.ghost{background:transparent;color:var(--k);box-shadow:inset 0 0 0 .28cqh var(--k)}
+.row{display:flex;gap:3cqw;flex-wrap:wrap}
+.gone{display:none!important}.num{font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--k);margin:0}
+canvas,svg.full{position:absolute;inset:0;width:100%;height:100%;user-select:none;-webkit-user-select:none}
+/* ship tiles */
+.planks{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);gap:1.2cqw;align-content:center;perspective:600px}
+.pl{aspect-ratio:2.2/1;border-radius:.8cqh;background:#b98a52;transform-style:preserve-3d;position:relative;cursor:pointer;transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+.pl.new{transform:rotateX(180deg)}
+.pl::before,.pl::after{content:"";position:absolute;inset:0;border-radius:.8cqh;backface-visibility:hidden}
+.pl::before{background:repeating-linear-gradient(90deg,#9c6d3a 0 2px,#b98a52 2px 9px);box-shadow:inset 0 0 0 .2cqh #6b4522}
+.pl::after{background:repeating-linear-gradient(90deg,#e7c38f 0 2px,#f3d9ae 2px 9px);transform:rotateX(180deg);box-shadow:inset 0 0 0 .2cqh #c39a5f}
+/* email */
+.mail{position:absolute;inset:0;background:#fff;color:#1d1d1f;border-radius:2cqh;padding:2cqh 4cqw;display:flex;flex-direction:column;gap:1.2cqh;font:500 1.75cqh/1.4 var(--body);box-shadow:0 1.4cqh 3cqh #0003}
+.hot{border-radius:.6cqh;cursor:pointer;transition:background .3s,box-shadow .3s}
+.hot.found{background:#ffe1e1;box-shadow:0 0 0 .25cqh #e5484d}
+.hint{display:none;font:700 1.35cqh/1.3 var(--mono);color:#c42b2b;margin-top:.3cqh}.hot.found .hint{display:block}
+/* swipe */
+.deck{position:absolute;inset:0}
+.sw{position:absolute;inset:4% 2%;border-radius:2.6cqh;background:#fff;color:#1d1d1f;padding:3cqh 5cqw;display:flex;flex-direction:column;justify-content:center;gap:2cqh;box-shadow:0 1.4cqh 3cqh #0004;touch-action:none;cursor:grab;user-select:none}
+.sw h3{margin:0;font:800 3cqh/1.15 var(--display)}
+.sw .stamp{position:absolute;top:3cqh;font:900 2.4cqh var(--body);padding:.6cqh 2.4cqw;border-radius:1cqh;border:.4cqh solid;opacity:0}
+.sw p{margin:0;font:600 1.85cqh/1.4 var(--body);display:none}
+.sw.told p{display:block}
+</style>
+
+<div class="app">
+  <div class="top"><h1>Today</h1><div class="dots" id="dots"></div><div class="kind" id="kind"></div></div>
+  <div class="stage">
+    <button class="nav" id="prev" aria-label="Previous card">←</button>
+    <button class="nav" id="next" aria-label="Next card">→</button>
+
+    <!-- 1 · particles: the crowd's guess -->
+    <article class="card" id="c1" style="--c:#9B5CFF;--k:#fff;--edge:#5a2ea6" data-kind="Particles · a crowd guesses">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="5"/><path d="M9 21h6M12 14v7"/></svg><span class="t">Psychology</span><span class="tag">WATCH</span></div>
+        <h2 class="q">1906, a country fair. 787 people guess the weight of an ox. How close is the crowd?</h2>
+        <div class="stagebox"><canvas id="p1"></canvas><div class="mono" id="p1l" style="position:absolute;left:0;bottom:0">787 GUESSES · IN POUNDS</div></div>
+        <div class="row" id="p1r"><button class="btn" id="p1b">Take the middle guess</button></div>
+        <p class="say" id="p1s">Each dot is one person’s guess. Most are way off.</p>
+        <div class="keep gone" id="p1k"><b>WHAT TO KEEP</b>Many independent guesses cancel each other’s errors. The key word is independent.</div>
+        <div class="foot"><span class="src">Source · Galton, “Vox Populi”, Nature, 1907</span></div>
+      </div>
+    </article>
+
+    <!-- 2 · physics: Galton board -->
+    <article class="card" id="c2" style="--c:#00E5A0;--k:#10100c;--edge:#00835b" data-kind="Physics · drop the balls">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6M10 3v6l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3"/></svg><span class="t">Science</span><span class="tag">DROP</span></div>
+        <h2 class="q">Each ball bounces left or right at random. Where do <em>most</em> of them land?</h2>
+        <div class="stagebox" style="background:#10100c;border-radius:2.4cqh;overflow:hidden"><canvas id="p2"></canvas></div>
+        <div class="row" id="p2r"><button class="btn" id="p2b">Drop 400 balls</button></div>
+        <p class="say" id="p2s">Twelve rows of pins. Fifty-fifty at every pin.</p>
+        <div class="keep gone" id="p2k"><b>WHAT TO KEEP</b>Many small random pushes pile up in the middle. That’s why so much in life looks like a bell.</div>
+        <div class="foot"><span class="src">Source · Galton, Natural Inheritance, 1889</span></div>
+      </div>
+    </article>
+
+    <!-- 3 · 3D tiles: Ship of Theseus -->
+    <article class="card" id="c3" style="--c:#4C6FFF;--k:#fff;--edge:#2a3fa3" data-kind="Flip it · a thought experiment">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5"/></svg><span class="t">Philosophy</span><span class="tag">TAP</span></div>
+        <h2 class="q" id="p3q">Replace the ship’s planks one by one. When does it stop being <em>the same ship</em>?</h2>
+        <div class="stagebox"><div class="planks" id="planks"></div></div>
+        <div class="mono" id="p3c" style="font-size:1.6cqh;opacity:.85">ORIGINAL PLANKS · 36 / 36</div>
+        <div class="row" id="p3r"><button class="btn" id="p3b">Replace them all</button></div>
+        <p class="say" id="p3s">Tap a plank to swap it for a new one.</p>
+        <div class="keep gone" id="p3k"><b>WHAT TO KEEP</b>“Same” can mean same stuff or same story. Most arguments about identity are about which one you mean.</div>
+        <div class="foot"><span class="src">Source · Plutarch, Life of Theseus · Hobbes, De Corpore, 1655</span></div>
+      </div>
+    </article>
+
+    <!-- 4 · hotspots: phishing -->
+    <article class="card" id="c4" style="--c:#00A6FF;--k:#10100c;--edge:#005e91" data-kind="Spot it · tap the clues">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8"/></svg><span class="t">Technology</span><span class="tag" id="p4n">0 / 4 FOUND</span></div>
+        <h2 class="q">This email is a trap. Tap the four clues.</h2>
+        <div class="stagebox"><div class="mail">
+          <div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:2cqh">PayPal</b><span class="mono" style="color:#999;opacity:1">09:41</span></div>
+          <div class="hot" data-i="0">From: service@paypa1-secure.com<div class="hint">“paypa1” with a one, not an L</div></div>
+          <div style="font:800 2.1cqh var(--body)">Your account will be suspended</div>
+          <div class="hot" data-i="1">Dear Customer,<div class="hint">your bank knows your name</div></div>
+          <div>We noticed unusual activity. <span class="hot" data-i="2">Confirm your details within 24 hours or lose access.<span class="hint">panic is the point: no time to think</span></span></div>
+          <div class="hot" data-i="3" style="align-self:flex-start;background:#0070ba;color:#fff;padding:1.2cqh 4cqw;border-radius:99px;font-weight:800">Verify now →<div class="hint" style="color:#ffd2d2">leads to secure-login.ru, not paypal.com</div></div>
+        </div></div>
+        <p class="say" id="p4s">Look at who, how, why the hurry, and where.</p>
+        <div class="keep gone" id="p4k"><b>WHAT TO KEEP</b>A message that makes you hurry wants you not to think. Slow down, then check where it really leads.</div>
+        <div class="foot"><span class="src">Source · UK National Cyber Security Centre, phishing guidance</span></div>
+      </div>
+    </article>
+
+    <!-- 5 · sketch: Concorde -->
+    <article class="card" id="c5" style="--c:#FFE600;--k:#10100c;--edge:#9c8d00" data-kind="Sketch · you decide">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg><span class="t">Economics</span><span class="tag">YOUR CALL</span></div>
+        <h2 class="q">The plane is late and over budget, and will never pay back. You’ve spent billions. <em>Keep going?</em></h2>
+        <div class="stagebox" style="background:#fffdf3;border-radius:1.6cqh;box-shadow:0 1cqh 2cqh #0002"><svg class="full" id="p5"></svg></div>
+        <div class="row" id="p5r"><button class="btn" id="p5y">Keep going</button><button class="btn ghost" id="p5n">Stop now</button></div>
+        <p class="say" id="p5s">Britain and France faced this with Concorde for years.</p>
+        <div class="keep gone" id="p5k"><b>WHAT TO KEEP</b>Money already spent is gone either way. Decide on what’s ahead, not on what’s behind.</div>
+        <div class="foot"><span class="src">Source · Arkes &amp; Ayton, Psychological Bulletin, 1999</span></div>
+      </div>
+    </article>
+
+    <!-- 6 · swipe: myths -->
+    <article class="card" id="c6" style="--c:#FF2D5F;--k:#fff;--edge:#9e1638" data-kind="Swipe · true or myth">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 11c0 5.5-7 10-7 10z"/></svg><span class="t">Human body</span><span class="tag" id="p6n">1 / 4</span></div>
+        <h2 class="q">Swipe right if it’s true, left if it’s a myth.</h2>
+        <div class="stagebox"><div class="deck" id="deck"></div></div>
+        <div class="row" style="justify-content:space-between" id="p6r"><button class="btn ghost" id="p6l">← Myth</button><button class="btn" id="p6t">True →</button></div>
+        <div class="keep gone" id="p6k"><b>WHAT TO KEEP</b>A myth survives because it’s a good story. Ask who measured it, and how.</div>
+        <div class="foot"><span class="src" id="p6src">Sources under each card</span></div>
+      </div>
+    </article>
+
+    <!-- 7 · sound: Shepard tone -->
+    <article class="card" id="c7" style="--c:#C13AFF;--k:#fff;--edge:#6e1a99" data-kind="Listen · an illusion">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><span class="t">Music</span><span class="tag">SOUND ON</span></div>
+        <h2 class="q">This note keeps rising. <em>Forever.</em> How is that possible?</h2>
+        <div class="stagebox"><canvas id="p7"></canvas></div>
+        <div class="row" id="p7r"><button class="btn" id="p7b">▶ Play</button><button class="btn ghost gone" id="p7x">Show the trick</button></div>
+        <p class="say" id="p7s">Put the sound on and listen for ten seconds.</p>
+        <div class="keep gone" id="p7k"><b>WHAT TO KEEP</b>Your ear judges direction, not position. Film scores use it to build tension that never resolves.</div>
+        <div class="foot"><span class="src">Source · Shepard, J. Acoustical Society of America, 1964</span></div>
+      </div>
+    </article>
+
+    <!-- 8 · drag: Mercator -->
+    <article class="card" id="c8" style="--c:#FFB000;--k:#10100c;--edge:#a06c00" data-kind="Drag it · the map lies">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span class="t">History</span><span class="tag">DRAG</span></div>
+        <h2 class="q">On most maps Greenland looks as big as Africa. Drag it down next to Africa.</h2>
+        <div class="stagebox" style="background:#0f2a3a;border-radius:2.2cqh;overflow:hidden"><svg class="full" id="p8" style="touch-action:none"></svg></div>
+        <p class="say" id="p8s">Grab the white shape at the top.</p>
+        <div class="keep gone" id="p8k"><b>WHAT TO KEEP</b>Every flat map distorts something. Ask what this one stretches, and why it was drawn that way.</div>
+        <div class="foot"><span class="src">Source · areas: Greenland 2.17M km², Africa 30.4M km² · Mercator, 1569</span></div>
+      </div>
+    </article>
+
+    <!-- 9 · generative: sunflower -->
+    <article class="card" id="c9" style="--c:#0c1a10;--k:#f2f1ec;--edge:#000" data-kind="Generative · the beautiful">
+      <div class="in">
+        <div class="label" style="color:#00D451"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c0-6 0-9 6-14M12 21c0-5-1-8-6-10"/></svg><span class="t">Nature</span><span class="tag" style="background:#00D451;color:#0c1a10">TURN THE DIAL</span></div>
+        <h2 class="q">A sunflower places each new seed at a fixed turn from the last. Why <em style="color:#00D451">this</em> angle?</h2>
+        <div class="stagebox"><canvas id="p9"></canvas></div>
+        <div class="mono" style="display:flex;justify-content:space-between;opacity:.85;font-size:1.5cqh"><span>TURN</span><span class="num" id="p9a">137.5°</span></div>
+        <input type="range" id="p9r" min="1300" max="1450" value="1375" aria-label="Angle between seeds" style="accent-color:#00D451">
+        <p class="say" id="p9s">Move the dial even slightly and watch the gaps open.</p>
+        <div class="keep gone" id="p9k"><b>WHAT TO KEEP</b>The golden angle never repeats, so no seed lines up behind another. Packing perfect comes from never repeating.</div>
+        <div class="foot"><span class="src">Source · Vogel, Mathematical Biosciences, 1979</span></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id),show=id=>{const e=$(id);if(!e.classList.contains('gone'))return;e.classList.remove('gone');gsap.fromTo(e,{opacity:0,y:12},{opacity:1,y:0,duration:.5,ease:'power2.out'})},hide=id=>$(id).classList.add('gone');
+const cards=[...document.querySelectorAll('.card')];let at=0;const dots=$('dots');cards.forEach(()=>dots.appendChild(document.createElement('span')));
+const onShow={},onHide={};
+function go(i){onHide[cards[at].id]?.();at=(i+cards.length)%cards.length;cards.forEach((c,k)=>c.classList.toggle('on',k===at));[...dots.children].forEach((d,k)=>d.classList.toggle('on',k<=at));$('kind').textContent=(at+1)+' / '+cards.length+' · '+cards[at].dataset.kind;
+gsap.fromTo(cards[at],{opacity:0,scale:.985},{opacity:1,scale:1,duration:.45,ease:'power3.out'});requestAnimationFrame(()=>onShow[cards[at].id]?.())}
+$('prev').onclick=()=>go(at-1);$('next').onclick=()=>go(at+1);addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(e.key==='ArrowRight')go(at+1);if(e.key==='ArrowLeft')go(at-1)});
+addEventListener('resize',()=>onShow[cards[at].id]?.());
+const fitC=cv=>{const r=cv.getBoundingClientRect(),W=Math.max(1,r.width),H=Math.max(1,r.height);cv.width=W*devicePixelRatio;cv.height=H*devicePixelRatio;const x=cv.getContext('2d');x.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);return{x,W,H}};
+const rnd=(()=>{let s=7;return()=>(s=(s*16807)%2147483647)/2147483647})();
+const gauss=()=>{let u=0,v=0;while(!u)u=rnd();while(!v)v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)};
+
+/* 1 · particles */
+(()=>{const cv=$('p1');let P=[],raf,phase=0,ctx;const TRUE=1198,MED=1207,lo=800,hi=1600;
+function init(){const f=fitC(cv);ctx=f;P=Array.from({length:787},()=>{const g=Math.max(lo+10,Math.min(hi-10,MED+gauss()*75+(rnd()<.08?gauss()*220:0)));return{g,x:rnd()*f.W,y:rnd()*f.H,tx:0,ty:0}});layout()}
+function X(v){return 12+(v-lo)/(hi-lo)*(ctx.W-24)}
+function layout(){const cols={};P.forEach(p=>{const b=Math.round(X(p.g)/5)*5;cols[b]=(cols[b]||0)+1;p.tx=b;p.ty=cols[b]});const mx=Math.max(...Object.values(cols));const step=Math.min(4.2,(ctx.H*.6)/mx);P.forEach(p=>p.ty=ctx.H*.82-p.ty*step)}
+function tick(){const{x,W,H}=ctx;x.clearRect(0,0,W,H);
+x.strokeStyle='#ffffff33';x.beginPath();x.moveTo(0,H*.84);x.lineTo(W,H*.84);x.stroke();x.fillStyle='#ffffffaa';x.font=`700 ${Math.max(9,H/26)}px Figtree`;[900,1100,1300,1500].forEach(v=>{x.fillText(v,X(v)-12,H*.84+Math.max(11,H/20))});
+P.forEach(p=>{p.x+=(p.tx-p.x)*.08;p.y+=(p.ty-p.y)*.08;x.fillStyle=phase>=1?'#ffffffcc':'#fff';x.beginPath();x.arc(p.x,p.y,1.9,0,7);x.fill()});
+if(phase>=1){const m=X(MED),t=X(TRUE);x.strokeStyle='#ffe600';x.lineWidth=3;x.beginPath();x.moveTo(m,H*.06);x.lineTo(m,H*.84);x.stroke();x.fillStyle='#ffe600';x.font=`900 ${Math.max(12,H/16)}px Figtree`;x.textAlign='right';x.fillText('crowd: 1,207',m-8,H*.1);
+x.strokeStyle='#fff';x.setLineDash([5,5]);x.beginPath();x.moveTo(t,H*.04);x.lineTo(t,H*.84);x.stroke();x.setLineDash([]);x.fillStyle='#fff';x.textAlign='left';x.fillText('ox: 1,198',t+8,H*.1);x.textAlign='start'}
+raf=requestAnimationFrame(tick)}
+$('p1b').onclick=()=>{phase=1;hide('p1r');$('p1s').innerHTML='The middle of 787 guesses: <b>1,207 lb</b>. The ox weighed <b>1,198</b>. Off by less than 1%, from a crowd of farmers, butchers and passers-by.';show('p1k')};
+onShow.c1=()=>{cancelAnimationFrame(raf);init();tick()};onHide.c1=()=>cancelAnimationFrame(raf)})();
+
+/* 2 · Galton board */
+(()=>{const cv=$('p2');let ctx,balls=[],bins=[],raf,dropped=0,run=false;const ROWS=12;
+function init(){ctx=fitC(cv);bins=new Array(ROWS+1).fill(0);balls=[];dropped=0}
+function geo(){const{W,H}=ctx;const top=H*.06,dx=W/(ROWS+2),dy=(H*.5)/ROWS;return{top,dx,dy,W,H}}
+function tick(){const{x}=ctx;const g=geo();x.clearRect(0,0,g.W,g.H);
+for(let r=0;r<ROWS;r++)for(let k=0;k<=r;k++){const px=g.W/2+(k-r/2)*g.dx,py=g.top+r*g.dy;x.fillStyle='#00E5A0';x.beginPath();x.arc(px,py,2.2,0,7);x.fill()}
+const bw=g.dx,base=g.H-4,maxh=g.H*.4;const mx=Math.max(8,...bins);
+bins.forEach((n,i)=>{const bx=g.W/2+(i-ROWS/2)*g.dx-bw*.42;const h=n/mx*maxh;x.fillStyle=i===ROWS/2?'#ffe600':'#f2f1ec';x.fillRect(bx,base-h,bw*.84,h)});
+if(run&&dropped<400&&rnd()<.9){balls.push({r:0,k:0,t:0});dropped++}
+balls.forEach(b=>{b.t+=.18;if(b.t>=1){b.t=0;if(b.r<ROWS){b.k+=rnd()<.5?0:1;b.r++}else{bins[b.k]++;b.done=true}}
+const r0=Math.min(b.r,ROWS),px=g.W/2+(b.k-r0/2)*g.dx,py=g.top+(r0-1+b.t)*g.dy;x.fillStyle='#ffe600';x.beginPath();x.arc(px,Math.min(py,base),3.2,0,7);x.fill()});
+balls=balls.filter(b=>!b.done);
+if(run&&dropped>=400&&!balls.length){run=false;const mid=bins[5]+bins[6]+bins[7];$('p2s').innerHTML=`<b>${Math.round(mid/4)}%</b> landed in the middle three slots; the far edges got almost none. No ball aimed for the middle.`;show('p2k')}
+raf=requestAnimationFrame(tick)}
+$('p2b').onclick=()=>{hide('p2r');run=true};onShow.c2=()=>{cancelAnimationFrame(raf);if(!run&&dropped===0)init();else ctx=fitC(cv);tick()};onHide.c2=()=>cancelAnimationFrame(raf)})();
+
+/* 3 · Ship of Theseus */
+(()=>{const box=$('planks');let n=36,stage=0;for(let i=0;i<36;i++){const d=document.createElement('button');d.className='pl';d.setAttribute('aria-label','Plank '+(i+1));d.style.border='0';d.style.padding='0';d.onclick=()=>flip(d);box.appendChild(d)}
+function upd(){const left=[...box.children].filter(p=>!p.classList.contains('new')).length;$('p3c').textContent=`ORIGINAL PLANKS · ${left} / 36`;
+if(left===18)$('p3s').innerHTML='Half new. Still the same ship?';if(left===0&&stage===0){stage=1;$('p3b').textContent='Now rebuild the old ones';$('p3s').innerHTML='Every plank is new. Most people still say: same ship. Now Hobbes’s twist…'}}
+function flip(d){if(d.classList.contains('new'))return;d.classList.add('new');upd()}
+$('p3b').onclick=()=>{if(stage===0){[...box.children].forEach((p,i)=>setTimeout(()=>flip(p),i*40));return}
+stage=2;hide('p3r');$('p3q').innerHTML='Someone kept every old plank and built them into a second ship. <em>Which one is Theseus’s?</em>';
+const ghost=box.cloneNode(true);ghost.id='';ghost.querySelectorAll('.pl').forEach(p=>p.classList.remove('new'));ghost.style.cssText='position:absolute;inset:auto 0 0 0;transform:translateY(105%);';box.parentElement.appendChild(ghost);
+gsap.to(box,{y:'-26%',scale:.62,duration:.9,ease:'power3.inOut'});gsap.fromTo(ghost,{y:'120%',scale:.62},{y:'26%',duration:.9,ease:'power3.inOut'});
+$('p3c').textContent='TOP: ALL NEW PLANKS · BOTTOM: ALL THE ORIGINALS';$('p3s').innerHTML='The new one sailed on with the name. The old one has every original piece. Both have a claim.';show('p3k')};})();
+
+/* 4 · phishing hotspots */
+(()=>{let found=0;document.querySelectorAll('#c4 .hot').forEach(h=>h.onclick=e=>{e.stopPropagation();if(h.classList.contains('found'))return;h.classList.add('found');found++;$('p4n').textContent=found+' / 4 FOUND';gsap.fromTo(h,{scale:1.04},{scale:1,duration:.4});
+if(found===4){$('p4s').innerHTML='All four: <b>fake sender, no name, a deadline, a hidden link</b>.';show('p4k')}})})();
+
+/* 5 · Concorde sketch */
+(()=>{const svg=$('p5');let chosen=null;
+function draw(){const r=svg.getBoundingClientRect(),W=r.width,H=r.height;svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.innerHTML='';if(!window.rough){return}const rc=rough.svg(svg);const base=H*.82,left=W*.1,bw=(W*.8)/6;
+const spent=[.12,.25,.42,.6,.78,.95];
+svg.appendChild(rc.line(left-8,base,W*.94,base,{stroke:'#10100c',strokeWidth:2,roughness:1.6}));
+spent.forEach((v,i)=>{svg.appendChild(rc.rectangle(left+i*bw+bw*.15,base-v*H*.55,bw*.7,v*H*.55,{fill:i<4||chosen==='y'?'#e5484d':'#e5484d55',fillStyle:'hachure',hachureGap:5,stroke:'#10100c',roughness:1.8}))});
+const t=(s,x,y,size,c='#10100c',a='middle')=>{const e=document.createElementNS('http://www.w3.org/2000/svg','text');e.setAttribute('x',x);e.setAttribute('y',y);e.setAttribute('text-anchor',a);e.setAttribute('font-family','Caveat, cursive');e.setAttribute('font-size',size);e.setAttribute('font-weight',700);e.setAttribute('fill',c);e.textContent=s;svg.appendChild(e)};
+t('money already spent',W*.36,H*.12,Math.max(16,H/12));svg.appendChild(rc.path(`M${W*.55} ${H*.15} Q ${W*.66} ${H*.2} ${W*.68} ${H*.33}`,{stroke:'#10100c',roughness:1.2}));
+t('1962',left+bw*.5,base+Math.max(16,H/12),Math.max(14,H/14));t('1976',left+bw*5.5,base+Math.max(16,H/12),Math.max(14,H/14));
+if(chosen){svg.appendChild(rc.circle(W*.82,H*.25,Math.min(W,H)*.28,{stroke:'#2B5CFF',strokeWidth:2.5,roughness:2}));t(chosen==='y'?'they kept going!':'they didn’t stop',W*.82,H*.26,Math.max(15,H/13),'#2B5CFF')}}
+function pick(c){if(chosen)return;chosen=c;hide('p5r');draw();$('p5s').innerHTML=(c==='y'?'So did they. ':'Wise, but they didn’t. ')+'Each year the spending made stopping feel like a waste. Concorde flew from 1976 and never paid back what it cost to build.';show('p5k')}
+$('p5y').onclick=()=>pick('y');$('p5n').onclick=()=>pick('n');onShow.c5=draw})();
+
+/* 6 · swipe deck */
+(()=>{const items=[
+{t:'We only use 10% of our brain.',a:false,w:'Brain scans show activity across nearly all of it over a day; damage almost anywhere causes problems.',s:'Beyerstein, in Mind Myths, 1999'},
+{t:'Sugar makes children hyperactive.',a:false,w:'In blind trials, kids on sugar and on placebo behaved the same. Parents who thought theirs had sugar rated them wilder.',s:'Wolraich et al., JAMA, 1995'},
+{t:'Muscle cramps during exercise come mainly from dehydration.',a:false,w:'Studies of athletes find little link with fluid or salt levels; tired muscles misfiring explain more.',s:'Schwellnus, Br J Sports Med, 2009'},
+{t:'Exercise grows new neurons in the adult brain.',a:true,w:'In adults, a year of aerobic exercise enlarged the hippocampus by about 2%, reversing a year or two of shrinkage.',s:'Erickson et al., PNAS, 2011'}];
+const deck=$('deck');let i=0;
+function card(k){const it=items[k];const d=document.createElement('div');d.className='sw';d.innerHTML=`<span class="stamp" style="left:5cqw;color:#e5484d;border-color:#e5484d;transform:rotate(-12deg)">MYTH</span><span class="stamp" style="right:5cqw;color:#00a35c;border-color:#00a35c;transform:rotate(12deg)">TRUE</span><div class="mono" style="color:#999;opacity:1">CLAIM ${k+1} OF ${items.length}</div><h3>${it.t}</h3><p>${it.w}</p><div class="mono gone" style="color:#999;opacity:1">${it.s}</div>`;return d}
+function render(){deck.innerHTML='';if(i>=items.length){$('p6r').classList.add('gone');deck.innerHTML='<div class="sw" style="cursor:default;align-items:flex-start"><div class="mono" style="color:#999;opacity:1">YOUR SCORE</div><h3>'+score+' / '+items.length+'</h3><p style="display:block">Three famous “facts” were myths; the surprising one was true.</p></div>';show('p6k');return}
+if(i+1<items.length){const b=card(i+1);b.style.transform='scale(.94) translateY(3%)';b.style.opacity=.6;deck.appendChild(b)}
+const d=card(i);deck.appendChild(d);$('p6n').textContent=(i+1)+' / '+items.length;bind(d)}
+let score=0;
+function decide(d,saidTrue){const it=items[i];const ok=saidTrue===it.a;if(ok)score++;d.classList.add('told');d.querySelector('.mono.gone').classList.remove('gone');
+d.querySelectorAll('.stamp')[it.a?1:0].style.opacity=1;gsap.to(d,{x:0,rotate:0,duration:.3});
+$('p6r').innerHTML=`<span class="say" style="align-self:center">${ok?'Right.':'Not quite.'}</span><button class="btn" id="p6nx">Next →</button>`;$('p6nx').onclick=()=>{gsap.to(d,{x:(it.a?1:-1)*500,rotate:(it.a?1:-1)*20,opacity:0,duration:.35,onComplete:()=>{i++;$('p6r').innerHTML='<button class="btn ghost" id="p6l">← Myth</button><button class="btn" id="p6t">True →</button>';wire();render()}})}}
+function bind(d){let sx=null,dx=0;d.onpointerdown=e=>{if(d.classList.contains('told'))return;sx=e.clientX;d.setPointerCapture(e.pointerId)};
+d.onpointermove=e=>{if(sx==null)return;dx=e.clientX-sx;d.style.transform=`translateX(${dx}px) rotate(${dx/18}deg)`;d.querySelectorAll('.stamp')[0].style.opacity=Math.max(0,-dx/80);d.querySelectorAll('.stamp')[1].style.opacity=Math.max(0,dx/80)};
+d.onpointerup=()=>{if(sx==null)return;sx=null;if(Math.abs(dx)>70){decide(d,dx>0)}else{gsap.to(d,{x:0,rotate:0,duration:.3});d.style.transform='';d.querySelectorAll('.stamp').forEach(s=>s.style.opacity=0)}dx=0}}
+function wire(){$('p6l').onclick=()=>{const d=deck.lastChild;if(!d.classList.contains('told'))decide(d,false)};$('p6t').onclick=()=>{const d=deck.lastChild;if(!d.classList.contains('told'))decide(d,true)}}
+wire();render();$('p6src').textContent='Each card names its source when you answer'})();
+
+/* 7 · Shepard tone */
+(()=>{const cv=$('p7');let ctx,raf,ac=null,nodes=[],t0=0,playing=false,reveal=false;
+function draw(){const{x,W,H}=ctx;x.clearRect(0,0,W,H);const t=playing?(performance.now()-t0)/1000:0;const N=6,cy=H*.5,cx=W*.5;
+for(let k=0;k<N;k++){const pos=((k+t/4)%N)/N;const amp=Math.sin(Math.PI*pos)**2;
+if(!reveal){const r=Math.min(W,H)*.12+pos*Math.min(W,H)*.34;x.strokeStyle=`rgba(255,255,255,${amp})`;x.lineWidth=2+amp*6;x.beginPath();x.arc(cx,cy,r,0,7);x.stroke()}
+else{const y=H*.92-pos*H*.84;x.fillStyle=`rgba(255,255,255,${.15+amp*.85})`;x.fillRect(W*.15,y-3,W*.7*(.3+amp*.7),6);x.fillStyle='#ffffffaa';x.font=`700 ${Math.max(10,H/26)}px Figtree`;x.fillText(Math.round(amp*100)+'%',W*.88,y+4)}}
+if(reveal){x.fillStyle='#fff';x.font=`800 ${Math.max(11,H/22)}px Figtree`;x.fillText('high: fading out',W*.15,H*.05);x.fillText('low: fading in',W*.15,H*.99)}
+raf=requestAnimationFrame(draw)}
+function play(){if(playing)return;try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){return}const master=ac.createGain();master.gain.value=.12;master.connect(ac.destination);t0=performance.now();playing=true;
+for(let k=0;k<6;k++){const o=ac.createOscillator(),g=ac.createGain();o.type='sine';o.connect(g);g.connect(master);o.start();nodes.push({o,g,k})}
+const step=()=>{if(!playing)return;const t=(performance.now()-t0)/1000;nodes.forEach(n=>{const pos=((n.k+t/4)%6)/6;n.o.frequency.setTargetAtTime(55*Math.pow(2,pos*6),ac.currentTime,.02);n.g.gain.setTargetAtTime(Math.sin(Math.PI*pos)**2,ac.currentTime,.02)});setTimeout(step,30)};step();
+$('p7b').textContent='■ Stop';$('p7x').classList.remove('gone');$('p7s').innerHTML='It never stops climbing… yet never gets higher.'}
+function stop(){playing=false;nodes.forEach(n=>{try{n.o.stop()}catch(e){}});nodes=[];ac&&ac.close();ac=null;$('p7b').textContent='▶ Play'}
+$('p7b').onclick=()=>playing?stop():play();
+$('p7x').onclick=()=>{reveal=true;$('p7x').classList.add('gone');if(!playing)t0=performance.now(),playing=false;$('p7s').innerHTML='Six tones an octave apart all rise together. The top one fades out as a new one fades in at the bottom, so you only ever hear <b>rising</b>.';show('p7k')};
+onShow.c7=()=>{cancelAnimationFrame(raf);ctx=fitC(cv);draw()};onHide.c7=()=>{cancelAnimationFrame(raf);stop()}})();
+
+/* 8 · Mercator drag */
+(()=>{const svg=$('p8');let gx,gy,drag=false,done=false,W,H,base;
+const NS='http://www.w3.org/2000/svg';const blobGL=s=>`M0,${-s*.55} C${s*.45},${-s*.6} ${s*.55},${-s*.15} ${s*.35},${s*.2} C${s*.25},${s*.45} ${s*.05},${s*.6} ${-s*.1},${s*.55} C${-s*.35},${s*.4} ${-s*.5},${s*.05} ${-s*.4},${-s*.25} C${-s*.32},${-s*.45} ${-s*.2},${-s*.55} 0,${-s*.55}Z`;
+const blobAF=s=>`M${-s*.35},${-s*.5} C${-s*.05},${-s*.6} ${s*.25},${-s*.55} ${s*.4},${-s*.3} C${s*.55},${-s*.1} ${s*.45},${s*.05} ${s*.3},${s*.25} C${s*.15},${s*.5} ${s*.05},${s*.62} ${-s*.05},${s*.6} C${-s*.15},${s*.4} ${-s*.15},${s*.15} ${-s*.3},${s*.05} C${-s*.5},${-s*.05} ${-s*.55},${-s*.35} ${-s*.35},${-s*.5}Z`;
+const lat=y=>72-(y/H)*110;// top ≈72°N, bottom ≈ -38°
+function draw(){const r=svg.getBoundingClientRect();W=r.width;H=r.height;svg.setAttribute('viewBox',`0 0 ${W} ${H}`);if(gx==null){gx=W*.3;gy=H*.14}
+base=Math.min(W,H)*.5;const k=Math.cos(72*Math.PI/180)/Math.cos(Math.max(-60,Math.min(80,lat(gy)))*Math.PI/180);// Mercator shrink toward true size
+let s='';for(let i=1;i<6;i++)s+=`<line x1="0" y1="${i*H/6}" x2="${W}" y2="${i*H/6}" stroke="#ffffff14"/>`;s+=`<text x="${W-8}" y="${H*.12}" text-anchor="end" font-size="${Math.max(10,H/26)}" font-weight="800" fill="#ffffff66">70°N</text><text x="${W-8}" y="${H*.66}" text-anchor="end" font-size="${Math.max(10,H/26)}" font-weight="800" fill="#ffffff66">EQUATOR</text>`;
+const ax=W*.62,ay=H*.68;s+=`<path d="${blobAF(base)}" transform="translate(${ax},${ay})" fill="#FFB000" stroke="#10100c" stroke-width="2"/><text x="${ax}" y="${ay+6}" text-anchor="middle" font-size="${Math.max(12,H/18)}" font-weight="900" fill="#10100c">AFRICA</text>`;
+const gs=base*.92*Math.min(1,k*1.05);s+=`<g id="gl" transform="translate(${gx},${gy})" style="cursor:grab"><path d="${blobGL(gs)}" fill="#fff" stroke="#10100c" stroke-width="2"/><text y="5" text-anchor="middle" font-size="${Math.max(10,H/22)}" font-weight="900" fill="#10100c">GREENLAND</text></g>`;
+svg.innerHTML=s}
+const pt=e=>{const r=svg.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]};
+svg.addEventListener('pointerdown',e=>{if(e.target.closest('#gl')){drag=true;svg.setPointerCapture(e.pointerId)}});
+svg.addEventListener('pointermove',e=>{if(!drag)return;[gx,gy]=pt(e);gx=Math.max(20,Math.min(W-20,gx));gy=Math.max(20,Math.min(H-20,gy));draw();if(lat(gy)<20&&!done){done=true;$('p8s').innerHTML='Near the equator it shrinks to its real size. Africa is <b>14 times</b> bigger. The map stretches everything near the poles.';show('p8k')}});
+svg.addEventListener('pointerup',()=>drag=false);onShow.c8=draw})();
+
+/* 9 · sunflower */
+(()=>{const cv=$('p9');let ctx,shown=false,n=0,raf;
+function draw(){const{x,W,H}=ctx;x.clearRect(0,0,W,H);const a=(+$('p9r').value/10)*Math.PI/180,cx=W/2,cy=H/2,R=Math.min(W,H)*.48,N=Math.min(n,700);
+for(let i=0;i<N;i++){const r=R*Math.sqrt(i/700),th=i*a;const hue=40+ (i/700)*20;x.fillStyle=`hsl(${hue},95%,${55+(i%2)*6}%)`;x.beginPath();x.arc(cx+r*Math.cos(th),cy+r*Math.sin(th),Math.max(1.6,R*.028),0,7);x.fill()}
+if(n<700){n+=9;raf=requestAnimationFrame(draw)}}
+$('p9r').oninput=()=>{const v=+$('p9r').value/10;$('p9a').textContent=v.toFixed(1)+'°';n=700;draw();
+$('p9s').innerHTML=Math.abs(v-137.5)<.15?'At <b>137.5°</b>, the golden angle, seeds fill the head with no gaps.':'Off the golden angle, seeds stack into straight spokes and leave gaps: wasted space.';
+if(!shown&&Math.abs(v-137.5)>1){shown=true;setTimeout(()=>show('p9k'),600)}};
+onShow.c9=()=>{cancelAnimationFrame(raf);ctx=fitC(cv);n=0;draw()}})();
+
+go(0);
+</script>
