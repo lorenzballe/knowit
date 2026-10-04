@@ -114,6 +114,17 @@ Foto ritagliate, blocchi di colore pieno (arancione, giallo, azzurro, nero), tes
 - Barre orizzontali sottilissime, una per categoria, con il numero a destra.
 - Per noi: le carte con risultati e percentuali, e la pagina dei progressi.
 
+### "Come funziona?" in serie (`24`–`37`, `dailytotals-*`)
+Una serie intera sullo stesso schema: il CAPTCHA, la slot machine, il QR rovinato che si legge ancora, le miglia aeree, Google Maps (distanza e traffico), la blockchain, il pacco che arriva in una notte, il semaforo, Minecraft, l'AirTag, quanto paga Spotify, Shazam.
+- **Lo schema fisso è il prodotto**: in alto un'etichetta monospaziata spaziata e colorata ("GOOGLE MAPS", "LATE AT NIGHT", "FIRST GUESS"), sotto una domanda in grassetto di una o due righe, al centro l'oggetto, in basso il sottotitolo. Cambia il tema, mai la struttura: si riconosce al primo sguardo.
+- **La domanda è sempre su un oggetto quotidiano** che tutti hanno usato e nessuno si è chiesto come funzioni. La curiosità c'è già: basta nominarla.
+- **Un personaggio fisso** (la ragazza con il libro) che guarda la scena da un lato: dà una faccia alla serie e una reazione allo spettatore (stupita, pensierosa, a occhi chiusi).
+- **L'oggetto vero, rifatto pulito**: lo schermo del telefono con l'app, il biglietto, la slot con i rulli che girano, l'incrocio isometrico di notte, il mondo a cubetti. Riconoscibile subito, senza dettagli inutili.
+- **Sottotitolo a pillola, una parola evidenziata alla volta** (giallo, azzurro, o al contrario bianco su nero) mentre viene detta: l'occhio segue la voce.
+- **Il colore di fondo cambia col tema** (crema, blu notte, celeste, nero) ma il resto resta uguale.
+- **Prima l'ipotesi ovvia, poi la verità** ("FIRST GUESS: Just compare the sound waves?"): si mostra la risposta sbagliata che pensa tutti, poi si svela quella vera.
+- Per noi: questo è quasi esattamente il formato di una carta di Astute. Etichetta del tema, domanda, oggetto disegnato, una parola evidenziata. E l'idea della "prima ipotesi" per le carte che smontano un'intuizione.
+
 ## Cosa portare nelle carte
 
 1. **Micro-etichette monospaziate** negli angoli o sopra i disegni: danno l'aria di "fatto da professionisti".
