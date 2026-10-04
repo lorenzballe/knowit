@@ -1,18 +1,21 @@
 # I formati delle carte
 
 > Si legge dopo `SCOPO.md` e `CRITERI.md`. Dice **in che forma** si può raccontare una storia.
-> La regola di fondo: **prima la storia, poi la forma.** Si sceglie il formato che la fa capire meglio, oppure se ne inventa uno nuovo.
-> Questa non è una lista chiusa: è il catalogo di quello che l'app sa già fare.
+> La regola di fondo: **prima la storia, poi la forma.**
+> Questo catalogo **non è una lista chiusa**: sono linee guida e idee. Ogni carta può avere un formato **inventato sul momento** per lei, anzi è normale e voluto. Più le carte sono varie e sorprendenti, meglio è.
 
 ## Cosa hanno tutte le carte, sempre
 
-Qualunque sia il formato, ogni carta ha:
+Qualunque sia il formato:
 
 - **la cornice di Astute**: forma della carta, colore della sua materia, icona ed etichetta della materia in alto, i due font dell'app (vedi `STILE.md`);
-- **una domanda o un titolo** che fa da gancio;
 - **la fonte**, in basso;
-- **spesso** un "WHAT TO KEEP", non sempre (vedi `SCOPO.md`);
 - **tutto dentro la carta**, senza scroll.
+
+Quasi sempre, ma non sempre:
+
+- **una domanda o un titolo** che fa da gancio. Senza succede molto, molto raramente, quando la storia funziona meglio così;
+- **una frase da portarsi via** ("WHAT TO KEEP", o "BAR MOVE": l'etichetta è da decidere), quando l'idea si può riassumere senza tradirla (vedi `SCOPO.md`).
 
 E questi dati, che servono a darla alla persona giusta:
 
@@ -28,133 +31,131 @@ E questi dati, che servono a darla alla persona giusta:
 
 ---
 
-## Il catalogo
+## Il catalogo: formati e idee
 
-Per ogni formato: cos'è, quando usarlo, quando no, un esempio.
+Per ogni famiglia: cosa fa il lettore, e qualche formato con un esempio. Si possono **mescolare**: per esempio una storia a scene che finisce con una scommessa.
 
-### 1. Da leggere
-La storia raccontata bene in poche righe.
-- **Quando:** il meccanismo si capisce con le parole e la storia è già forte da sola.
-- **Quando no:** se c'è un numero, un processo o un confronto che si capirebbe meglio vedendolo.
-- **Esempio:** come una lingua segreta degli anni '60 è morta proprio perché la radio l'ha resa famosa.
+### Leggere e capire
+| Formato | Com'è | Esempio |
+|---|---|---|
+| **Da leggere** | La storia raccontata benissimo in poche righe | La lingua segreta degli anni '60 che la radio ha ucciso rendendola famosa |
+| **Una frase sola** | Una frase fortissima che riempie la carta; toccando arriva la storia dietro | "Quando una misura diventa un obiettivo…", poi i topi di Hanoi |
+| **Storia a scene** | Un caso vero in 3–6 scene da toccare, con colpo di scena | L'aeroporto di Houston e l'attesa "vuota" |
+| **Spiegazione animata** | Il meccanismo si costruisce passo dopo passo | Come il numero della carta di credito si controlla da solo |
+| **Catena dei perché** | Ogni tocco chiede "e perché?" e si scende di un livello, fino alla causa vera | Perché il caffè costa di più al bar dell'aeroporto? |
+| **Collega i puntini** | Idee o eventi sparsi che, toccandoli, si uniscono in un disegno | Tre invenzioni lontane che hanno la stessa causa |
+| **Traduttore** | Una frase di gergo (contratto, medico, politico) e, sotto, cosa vuol dire davvero | Le clausole di un abbonamento in parole semplici |
 
-### 2. Scelta multipla
-Una domanda con 2–3 risposte. Una è la trappola in cui cade quasi chiunque.
-- **Quando:** c'è un'idea sbagliata comune da far emergere prima di correggerla.
-- **Quando no:** se la risposta giusta si indovina per esclusione.
-- **Esempio:** "Chi scrive le recensioni a 4 stelle sulle app?"
+### Rispondere
+| Formato | Com'è | Esempio |
+|---|---|---|
+| **Scelta multipla** | 2–3 risposte, una è la trappola in cui cade quasi chiunque | Chi scrive le recensioni a 4 stelle? |
+| **Vero o falso** | Un'affermazione che sembra vera, o falsa, e non lo è | "Un test al 99% e sei positivo: sei malato al 99%" |
+| **Raffica** | 5 affermazioni veloci da scorrere a destra (vero) o sinistra (falso) | Cinque miti sul sonno |
+| **Trova l'intruso** | Quattro cose, una non c'entra, e il perché è il punto | Quale di questi non è un pregiudizio cognitivo? |
+| **Completa la frase** | Il lettore sceglie la fine; la vera fine sorprende | Il proverbio di cui conosciamo solo metà |
 
-### 3. Vero o falso
-Un'affermazione che sembra vera, o falsa, e non lo è.
-- **Quando:** un mito diffuso, una frase che tutti ripetono.
-- **Quando no:** se la risposta dipende da un dettaglio, cioè una domanda a trabocchetto.
-- **Esempio:** "Un test accurato al 99% e sei positivo: sei malato al 99%."
+### Stimare e prevedere
+| Formato | Com'è | Esempio |
+|---|---|---|
+| **Scommetti prima** | Il lettore dà un numero, poi la realtà lo smentisce con un'animazione | Quante persone per un compleanno in comune? (23) |
+| **Disegna tu** | Il lettore traccia col dito la curva come se la immagina, poi appare quella vera | Come è cambiata la povertà nel mondo in 50 anni |
+| **Riempi la barra** | Il lettore stima una percentuale riempiendo una barra | Quanta parte del prezzo della benzina sono tasse? |
+| **Cosa succede dopo?** | Si ferma la storia e il lettore indovina il seguito | Il comune toglie i semafori: gli incidenti salgono o scendono? |
+| **Ordina** | Mettere in ordine (per grandezza, rischio, tempo…) trascinando | Ordina questi rischi dal più al meno mortale |
 
-### 4. Scommetti prima
-Il lettore dà un numero o una stima, poi la realtà lo smentisce, meglio se con un'animazione.
-- **Quando:** l'intuito sbaglia di grosso su un numero (probabilità, grandezze, tempi).
-- **Esempio:** quante persone servono perché due compiano gli anni lo stesso giorno (23).
+### Muovere e simulare
+| Formato | Com'è | Esempio |
+|---|---|---|
+| **Muovi tu** | Un cursore cambia un valore e si vede l'effetto | L'1% al giorno, trascinando fino a un anno |
+| **Simulatore** | Pochi comandi e un piccolo mondo che reagisce | Il traffico: cosa succede se un'auto frena |
+| **Zoom** | Da piccolissimo a enorme (o viceversa) con le dita, per capire le scale | Un miliardo di secondi contro un milione |
+| **Bilancia** | Due piatti: il lettore aggiunge pesi e vede da che parte pende | Costi e benefici di una scelta |
 
-### 5. Muovi tu
-Un cursore o un comando: il lettore cambia un valore e vede l'effetto.
-- **Quando:** il meccanismo è una relazione tra due cose (interesse composto, rischio, crescita, tempo).
-- **Esempio:** l'1% in più o in meno al giorno, trascinando i giorni fino a un anno.
+### Giocare
+| Formato | Com'è | Esempio |
+|---|---|---|
+| **Gioco** | Si gioca, si sbaglia, si riprova, si capisce | Le tre porte (Monty Hall) con 1.000 partite simulate |
+| **Indovina con gli indizi** | Gli indizi arrivano uno alla volta; prima indovini, più vale | Quale invenzione è questa? |
+| **Sfida a tempo** | Pochi secondi per rispondere, per far vedere come ragioniamo di fretta | Il problema della mazza e della palla |
+| **Abbina** | Collegare coppie (causa/effetto, termine/significato) | Ogni bias con la sua trappola quotidiana |
 
-### 6. Gioco
-Il lettore gioca, sbaglia, riprova, e capisce giocando.
-- **Quando:** il meccanismo si capisce solo provandolo (probabilità, strategia, scelte).
-- **Quando no:** se il gioco è più lungo di quello che insegna.
-- **Esempio:** le tre porte e la capra (Monty Hall), con 1.000 partite simulate.
+### Scoprire guardando
+| Formato | Com'è | Esempio |
+|---|---|---|
+| **Trova il trucco** | Grafico, titolo, offerta o scontrino che inganna: dov'è il trucco? | Un grafico che parte da 4,9% invece che da zero |
+| **Prima / dopo** | Due versioni della stessa cosa, si scorre e cambia il significato | La stessa foto tagliata in due modi |
+| **Tocca per scoprire** | Un'immagine con punti da toccare, ognuno svela un dettaglio | Un quadro e quello che il pittore ha nascosto |
+| **Mappa** | Si tocca il mondo e cambia la storia per ogni luogo | Dove si guida a sinistra, e perché |
+| **Linea del tempo** | Il lettore piazza un evento sulla linea, poi vede dov'era davvero | Quando è nato il weekend? |
+| **Illusione** | Un'illusione ottica o sonora, poi la spiegazione di come il cervello ci casca | I due quadrati dello stesso grigio |
 
-### 7. Esperimento su di te
-L'app fa cadere il lettore in un trucco della mente, poi gli mostra cosa è successo.
-- **Quando:** un bias o un effetto psicologico che si capisce davvero solo vivendolo.
-- **Esempio:** una ruota con un numero a caso che cambia le stime (ancoraggio).
+### Su di te
+| Formato | Com'è | Esempio |
+|---|---|---|
+| **Esperimento su di te** | L'app fa cadere il lettore in un trucco della mente, poi gli mostra cosa è successo | La ruota a caso che cambia le stime (ancoraggio) |
+| **Specchio** | Due o tre domande su come fai tu, poi cosa dice la ricerca di chi fa così | Come decidi quando sei stanco? |
+| **Prova oggi** | Una piccola sfida pratica per oggi, con il perché funziona | Due minuti di noia senza telefono |
+| **Sondaggio** | Il lettore risponde, poi vede cosa hanno risposto gli altri e perché divergono | Accetteresti 100 € oggi o 120 € tra un mese? |
 
-### 8. Trova il trucco
-Un grafico, un titolo, un'offerta o uno scontrino che inganna: il lettore deve scoprire dove.
-- **Quando:** manipolazioni di numeri, pubblicità, notizie, prezzi.
-- **Esempio:** un grafico che parte da 4,9% invece che da zero.
+### Discutere e riflettere
+| Formato | Com'è | Esempio |
+|---|---|---|
+| **Dibattito** | Si sceglie una parte, poi arrivano le ragioni migliori dell'altra parte e cosa hanno scelto gli altri | Tassare le eredità? |
+| **Dilemma** | Una scelta difficile senza risposta giusta, con quello che ognuna sacrifica | Salvare uno o cinque, ma su una scelta di lavoro |
+| **Avvocato del diavolo** | La carta difende con forza l'idea opposta a quella che il lettore ha appena scelto | Perché la tua risposta potrebbe essere sbagliata |
+| **Domanda aperta** | Una domanda che resta, con due o tre spunti per pensarci | Cosa vuol dire avere abbastanza? |
 
-### 9. Dibattito
-Una domanda senza risposta unica. Il lettore sceglie da che parte stare, poi vede le ragioni migliori dell'altra parte e cosa hanno scelto gli altri.
-- **Quando:** dilemmi etici, scelte di vita, politiche pubbliche, temi aperti.
-- **Regola:** dare le ragioni migliori di **tutte** le parti, senza tifare.
+### Il mondo di oggi
+| Formato | Com'è | Esempio |
+|---|---|---|
+| **Attualità** | Una notizia recente spiegata col perché, collegata alla storia o a un meccanismo. Scadenza obbligatoria | Perché il prezzo di qualcosa sale proprio ora |
+| **È già successo** | Una notizia di oggi accanto a un caso del passato che le somiglia | La bolla di oggi e quella dei tulipani |
 
-### 10. Una frase sola
-Una frase fortissima, grande, che riempie la carta. Toccando, arriva la storia che c'è dietro.
-- **Quando:** un'idea che vale da sola (una legge, un principio, una citazione vera).
-- **Esempio:** "Quando una misura diventa un obiettivo, smette di essere una buona misura", poi i topi di Hanoi.
+### Il bello
+| Formato | Com'è | Esempio |
+|---|---|---|
+| **Il bello** | Qualcosa di bellissimo da guardare o sentire: animazione, musica, creazione fuori dal comune. Molto raro | Un frattale che si apre all'infinito |
+| **Suono** | Un suono da ascoltare, e quello che rivela | Perché un accordo suona triste |
+| **Video** | Un breve video dentro la carta, schermo intero solo con un pulsante apposito | Un esperimento filmato al rallentatore |
 
-### 11. Storia a scene
-Un caso vero in 3–6 scene che si toccano una dopo l'altra, con un colpo di scena.
-- **Quando:** la storia ha un prima, un durante e un dopo, e un finale che sorprende.
-- **Esempio:** l'aeroporto di Houston e l'attesa "vuota".
-
-### 12. Prima / dopo
-Due immagini o due versioni della stessa cosa: si scorre e cambia il significato.
-- **Quando:** la differenza è il punto (una foto tagliata in due modi, due modi di dire la stessa cosa).
-
-### 13. Spiegazione animata
-Il meccanismo si costruisce passo dopo passo, come nei video di matematica e scienza.
-- **Quando:** un processo con passaggi (come funziona un algoritmo, una reazione, un sistema).
-- **Esempio:** come il numero della carta di credito si controlla da solo.
-
-### 14. Attualità
-Una notizia recente spiegata col perché, con un collegamento alla storia o a un meccanismo.
-- **Regole:** `scadenza` obbligatoria, ragioni di tutte le parti sui temi divisivi (vedi `CRITERI.md`).
-
-### 15. Video
-Un breve video, dentro la carta.
-- **Quando:** il movimento o la voce spiegano qualcosa che il testo non può.
-- **Regola:** sta nelle dimensioni della carta. Lo schermo intero solo con un pulsante apposito.
-
-### 16. Il bello
-Qualcosa di bellissimo da guardare o da sentire: un'animazione, una musica, una creazione fuori dal comune.
-- **Regole:** brevissima, perfetta, **molto rara** (vedi `CRITERI.md`).
-
-### 17. Serie
-Più carte collegate, da leggere in giorni diversi, quando un'idea è troppo grande per una carta sola.
-- **Regola:** ogni carta della serie deve reggersi anche da sola.
+### Più lunghi
+| Formato | Com'è |
+|---|---|
+| **Serie** | Più carte collegate in giorni diversi. Ognuna deve reggersi anche da sola |
+| **Mazzetto** | Due o tre carte di fila sullo stesso tema, nella stessa giornata, quando una sola non basta |
 
 ---
 
 ## Come scegliere il formato
 
-Fai queste domande, in ordine:
+Non c'è una regola fissa: si sceglie quello che fa capire meglio **questa** storia **a questa** persona. Alcune domande aiutano:
 
-1. **C'è un numero che l'intuito sbaglia?** Allora *Scommetti prima* o *Muovi tu*.
-2. **Si capisce solo provandolo?** Allora *Gioco* o *Esperimento su di te*.
-3. **C'è un inganno da smascherare?** Allora *Trova il trucco*.
-4. **È un processo a passi?** Allora *Spiegazione animata* o *Storia a scene*.
-5. **Non ha una risposta unica?** Allora *Dibattito*.
-6. **È un'idea che vale da sola?** Allora *Una frase sola*.
-7. **C'è un mito da smontare?** Allora *Vero o falso* o *Scelta multipla*.
-8. **Nessuna di queste?** Allora *Da leggere*, scritta benissimo.
+- C'è un numero che l'intuito sbaglia? → *stimare e prevedere*, *muovere e simulare*.
+- Si capisce solo provandolo? → *giocare*, *su di te*.
+- C'è un inganno? → *scoprire guardando*.
+- È un processo a passi o una catena di cause? → *leggere e capire*.
+- Non ha una risposta unica? → *discutere e riflettere*.
+- È un mito? → *rispondere*.
+- Niente di tutto questo? → una carta **da leggere** scritta benissimo, o un formato nuovo.
 
-Se la storia chiede qualcosa che nessun formato sa fare, **se ne inventa uno nuovo**.
+## Inventare un formato sul momento
 
-## Come inventare un formato nuovo
+Si fa spesso, ed è giusto così. Per farlo bene:
 
-Chi propone un formato nuovo compila questa scheda:
+- **Si costruisce con i mattoncini dell'app**: testo, numeri grandi, grafici, cursori, pulsanti, scelte, scene, animazioni, puntini, mappe, suoni. Combinandoli si ottengono formati nuovi **senza scrivere codice nuovo**, così la carta può uscire subito.
+- **Se servono mattoncini che non esistono ancora** (un nuovo tipo di animazione o di interazione), si descrivono in una scheda breve:
+  - nome;
+  - cosa fa il lettore;
+  - cosa vede, dentro la carta;
+  - quali dati servono.
 
-- **Nome:** due o tre parole.
-- **Perché serve:** quale storia non si può raccontare bene con i formati esistenti.
-- **Cosa fa il lettore:** tocca, trascina, sceglie, guarda, ascolta…
-- **Cosa vede:** schizzo o descrizione, dentro la carta, senza scroll.
-- **Dati che servono:** i campi che lo scrittore deve riempire.
-- **Pezzi già esistenti da riusare:** grafici, animazioni, pulsanti.
-- **Tre storie** che userebbero questo formato. Se ce n'è una sola, forse non serve un formato nuovo.
-
-Il formato poi va costruito nell'app, una volta sola, e da lì si riusa. **Finché non è costruito, la carta aspetta.**
+  Il mattoncino si costruisce una volta e da lì lo usano tutte le carte.
+- Anche un formato inventato deve rispettare **tutti i cancelli** di `CRITERI.md`: soprattutto stare nella carta ed essere perfetto sullo screenshot.
 
 ## Il mix della giornata
 
-Una giornata di cinque carte deve essere **varia**:
-
-- di solito **2–3 carte da leggere o da rispondere** (Da leggere, Scelta multipla, Vero o falso) e **2–3 da fare** (tutto il resto);
-- mai due carte dello stesso formato speciale nello stesso giorno;
-- toni diversi tra loro;
-- le carte del bello e le serie, molto raramente.
-
-La frequenza esatta di ogni formato si regola poi con i dati.
+- In generale **molto vario, quasi casuale, e personalizzato** sulla persona: i formati e i toni che le piacciono di più tornano più spesso, ma restano sempre le sorprese.
+- Mai due carte dello stesso formato speciale nello stesso giorno.
+- Le carte del bello e le serie escono molto raramente.
+- La frequenza di ogni formato si regola con i dati.
