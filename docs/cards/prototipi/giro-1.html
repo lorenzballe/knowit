@@ -1,0 +1,348 @@
+<title>Astute Card Prototypes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800;9..144,900&family=Figtree:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: the app's Today screen. One subject-coloured card with its raised edge; header, question, a stage that takes all the room left, then the one line to keep. Same frame and type on every card; only the way the story is told changes. */
+:root{
+  --ground:#000; --paper:#f2f1ec; --muted:#6f6e76; --line:#26262b;
+  --display:"Fraunces",Georgia,serif; --body:"Figtree",system-ui,sans-serif;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{background:var(--ground);color:var(--paper);font-family:var(--body);overflow:hidden}
+.app{height:100%;display:flex;flex-direction:column;align-items:center;padding-inline:16px;padding-block:10px;box-sizing:border-box;gap:8px}
+.top{width:100%;max-width:440px;display:flex;flex-direction:column;gap:10px}
+.top h1{margin:0;font:800 26px/1 var(--display)}
+.dots{display:flex;gap:5px}.dots span{flex:1;height:3px;border-radius:2px;background:var(--line);transition:.3s}.dots span.on{background:var(--paper)}
+.kind{font:600 11px/1 var(--body);letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.stage{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;position:relative}
+.nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#000c;color:var(--paper);font-size:16px;cursor:pointer}
+#prev{left:-6px}#next{right:-6px}
+button:focus-visible,input:focus-visible,.card:focus-visible{outline:2px solid #fff;outline-offset:2px}
+
+.card{container-type:size;height:min(100%, calc((100vw - 32px) * 16 / 9.3));aspect-ratio:9/16;max-width:100%;border-radius:6cqw;display:none;position:relative;background:var(--c);color:var(--k);box-shadow:0 1.1cqh 0 var(--edge)}
+.card.on{display:block;animation:in .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.in{position:absolute;inset:0;padding:5cqh 7.5cqw 4.4cqh;display:flex;flex-direction:column;gap:2.4cqh}
+.label{display:flex;align-items:center;gap:2.6cqw;font:600 1.6cqh/1 var(--body);letter-spacing:.16em;text-transform:uppercase}
+.label svg{width:2.5cqh;height:2.5cqh;flex:none}
+.label .t{opacity:.8}
+.tag{margin-left:auto;font:800 1.3cqh/1 var(--body);letter-spacing:.12em;padding:.8cqh 2.4cqw;border-radius:99px;background:var(--k);color:var(--c)}
+.q{font:800 3.6cqh/1.13 var(--display);margin:0;text-wrap:balance;letter-spacing:-.012em}
+.body{font:500 2.7cqh/1.48 var(--body);margin:0;text-wrap:pretty}
+.main{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-start;gap:2.4cqh}
+.keep{margin-top:auto}
+.keep{background:color-mix(in srgb,var(--k) 9%,transparent);border-radius:2.8cqh;padding:2cqh 5.5cqw;font:600 2.15cqh/1.38 var(--body)}
+.keep b{display:block;font:700 1.35cqh/1 var(--body);letter-spacing:.16em;opacity:.7;margin-bottom:1cqh}
+.foot{display:flex;align-items:center;gap:4cqw}
+.src{font:500 1.45cqh/1.3 var(--body);opacity:.65;flex:1;min-width:0}
+.foot svg{width:3.1cqh;height:3.1cqh;flex:none}
+.btn{font:800 2cqh/1 var(--body);border:0;border-radius:99px;padding:1.8cqh 6cqw;cursor:pointer;background:var(--k);color:var(--c)}
+.btn.ghost{background:transparent;color:var(--k);box-shadow:inset 0 0 0 .28cqh var(--k)}
+.btn:active{transform:translateY(.3cqh)}
+.row{display:flex;gap:3cqw;flex-wrap:wrap}
+.say{font:600 2.2cqh/1.4 var(--body);margin:0;text-wrap:pretty}
+.say b{font-weight:800}
+.gone{display:none!important}
+.fade{animation:in .5s both}
+.num{font-variant-numeric:tabular-nums}
+.chart{flex:1;min-height:14cqh;position:relative}
+.chart svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+input[type=range]{width:100%;accent-color:var(--k);margin:0}
+
+/* Monty Hall */
+.doors{flex:1;min-height:0;display:flex;gap:4.5cqw;align-items:stretch}
+.door{flex:1;border-radius:2.4cqh 2.4cqh .8cqh .8cqh;border:.32cqh solid var(--k);background:transparent;color:var(--k);cursor:pointer;font:900 4.4cqh var(--display);display:grid;place-items:center;transition:transform .35s,background .35s;position:relative}
+.door::after{content:"";position:absolute;right:16%;top:52%;width:1.1cqh;height:1.1cqh;border-radius:50%;background:currentColor;opacity:.6}
+.door.pick{background:color-mix(in srgb,var(--k) 12%,transparent);transform:translateY(-1cqh)}
+.door.open{background:var(--k);color:var(--c);font-size:6cqh}.door.open::after{display:none}
+.door.car{background:#ffe600;color:#10100c;border-color:#10100c}
+.tally{display:grid;grid-template-columns:14cqw 1fr 9cqw;gap:1.2cqh 3cqw;align-items:center;font:800 1.5cqh var(--body);letter-spacing:.1em}
+.tally .num{text-align:right}
+.track{height:1.6cqh;background:color-mix(in srgb,var(--k) 12%,transparent);border-radius:99px;overflow:hidden}.track i{display:block;height:100%;width:0;background:var(--k);border-radius:99px;transition:width .2s}
+
+/* bet */
+.bet{display:flex;align-items:baseline;gap:2.4cqw}.bet strong{font:900 8cqh/1 var(--display)}.bet span{font:600 2cqh var(--body);opacity:.75}
+
+/* options */
+.opts{display:grid;gap:1.4cqh}
+.opt{font:700 2.2cqh var(--body);text-align:left;padding:2cqh 5cqw;border-radius:2.2cqh;border:0;background:color-mix(in srgb,var(--k) 10%,transparent);color:var(--k);cursor:pointer}
+.opt.right{background:var(--k);color:var(--c)}.opt.wrong{opacity:.4;text-decoration:line-through}
+
+/* 1% */
+.twin{display:grid;grid-template-columns:1fr 1fr;gap:3cqw}
+.twin div{border-radius:2.4cqh;padding:1.6cqh 4cqw;background:color-mix(in srgb,var(--k) 9%,transparent)}
+.twin small{display:block;font:800 1.3cqh var(--body);letter-spacing:.14em;opacity:.7;margin-bottom:.6cqh}
+.twin b{font:900 5.4cqh/1 var(--display)}
+.days{display:flex;justify-content:space-between;font:800 1.45cqh var(--body);letter-spacing:.12em;opacity:.75}
+
+/* anchoring wheel */
+.wheel{flex:1;min-height:0;display:grid;place-items:center}
+.dial{height:100%;max-height:28cqh;aspect-ratio:1;border-radius:50%;border:.35cqh solid var(--k);display:grid;place-items:center;position:relative;background:repeating-conic-gradient(color-mix(in srgb,var(--k) 10%,transparent) 0 10deg,transparent 10deg 20deg)}
+.dial b{font:900 9cqh/1 var(--display);background:var(--c);border-radius:50%;width:58%;aspect-ratio:1;display:grid;place-items:center;border:.35cqh solid var(--k)}
+.dial::before{content:"";position:absolute;top:-1.6cqh;left:50%;transform:translateX(-50%);border:1.4cqh solid transparent;border-top:2cqh solid var(--k);border-bottom:0}
+
+/* newsprint clip */
+.clip{flex:1;min-height:0;border-radius:2.4cqh;background:#fff;color:#111;padding:2cqh 5cqw 4.4cqh;display:flex;flex-direction:column;gap:1.6cqh}
+.clip h3{margin:0;font:900 3.1cqh/1.02 var(--display);letter-spacing:-.01em}
+.clip p{margin:0;font:600 1.3cqh var(--body);letter-spacing:.12em;opacity:.55;text-transform:uppercase}
+.bars{flex:1;position:relative;display:flex;align-items:flex-end;gap:12cqw;padding:0 9cqw;border-bottom:.3cqh solid #111}
+.b4{flex:1;background:#ff2d5f;position:relative;border-radius:.8cqh .8cqh 0 0;transition:height 1s cubic-bezier(.3,.9,.2,1)}
+.b4 span{position:absolute;top:-3cqh;left:0;right:0;text-align:center;font:800 1.9cqh var(--body)}
+.b4 label{position:absolute;bottom:-3.2cqh;left:-5cqw;right:-5cqw;text-align:center;font:700 1.4cqh var(--body);opacity:.65}
+.axis{font:800 1.4cqh var(--body);color:#ff2d5f;letter-spacing:.04em}
+
+/* one line */
+.big{font:900 6cqh/1.04 var(--display);letter-spacing:-.02em;margin:0;text-wrap:balance}
+.who{font:700 1.5cqh var(--body);letter-spacing:.14em;opacity:.75;text-transform:uppercase}
+
+.waffle{display:grid;grid-template-columns:repeat(20,1fr);gap:.8cqw}
+.waffle i{aspect-ratio:1;border-radius:22%;box-shadow:inset 0 0 0 .2cqh var(--k);opacity:.55;animation:pop .3s both}
+.waffle i.ill{background:var(--k);opacity:1}
+#c5 .main{justify-content:center}
+/* story */
+.prog{display:flex;gap:1.4cqw}.prog i{flex:1;height:.5cqh;border-radius:9px;background:color-mix(in srgb,var(--k) 25%,transparent)}.prog i.on{background:var(--k)}
+.scene{font:800 4.9cqh/1.1 var(--display);text-wrap:balance;margin:0}
+.scene mark{background:var(--k);color:var(--c);padding:0 1.2cqw;border-radius:.7cqh}
+.legend{display:flex;gap:5cqw;font:800 1.35cqh var(--body);letter-spacing:.1em;opacity:.85}
+.legend i{display:inline-block;width:1.4cqh;height:1.4cqh;border-radius:3px;margin-right:1.6cqw;vertical-align:-.2cqh}
+.tl{display:flex;height:6cqh;border-radius:1.6cqh;overflow:hidden;background:color-mix(in srgb,var(--k) 10%,transparent)}
+.tl .walk{background:var(--k);transition:flex-grow .9s}.tl .wait{background:repeating-linear-gradient(45deg,color-mix(in srgb,var(--k) 40%,transparent) 0 1cqh,transparent 1cqh 2cqh);transition:flex-grow .9s}
+.moans{display:flex;gap:2cqw;flex-wrap:wrap;min-height:4.6cqh;align-content:center}
+.moans span{font:800 1.7cqh var(--body);padding:1cqh 2.6cqw;border-radius:1.6cqh 1.6cqh 1.6cqh .2cqh;background:var(--k);color:var(--c);animation:pop .4s both}
+@keyframes pop{from{transform:scale(.4);opacity:0}}
+.tap{font:800 1.3cqh var(--body);letter-spacing:.16em;opacity:.55}
+</style>
+
+<div class="app">
+  <div class="top"><h1>Today</h1><div class="dots" id="dots"></div><div class="kind" id="kind"></div></div>
+  <div class="stage">
+    <button class="nav" id="prev" aria-label="Previous card">←</button>
+    <button class="nav" id="next" aria-label="Next card">→</button>
+
+    <!-- 1 · read, as today -->
+    <article class="card" style="--c:#00D9D9;--k:#10100c;--edge:#007f80" data-kind="As today · a card you read">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H8l-4 4z"/><path d="M9 12l3-6 3 6M10 10h4"/></svg><span class="t">Language</span></div>
+        <h2 class="q">How did a secret slang of gay men reach millions of BBC radio listeners in the 1960s?</h2>
+        <div class="main"><p class="body">Through a comedy show. In <i>Round the Horne</i>, from 1965, two camp characters, Julian and Sandy, spoke Polari, a slang built from Italian, Romani, back slang and theatre talk: <i>bona</i> for good, <i>omi</i> for man. Audiences laughed at words many did not know were code, and the exposure hastened the code’s decline.</p></div>
+        <div class="keep"><b>WHAT TO KEEP</b>A secret language stops working the moment outsiders learn it.</div>
+        <div class="foot"><span class="src">Source · Baker, Polari, Routledge, 2002</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12v18l-6-4-6 4z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13M7 8l5-5 5 5M5 14v6h14v-6"/></svg></div>
+      </div>
+    </article>
+
+    <!-- 2 · game -->
+    <article class="card" id="c1" style="--c:#F2F1EC;--k:#10100c;--edge:#8f8d84" data-kind="A game · you play it">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg><span class="t">Thinking</span><span class="tag">PLAY</span></div>
+        <h2 class="q">A car hides behind one door. You pick one, the host opens a goat. Do you switch?</h2>
+        <div class="doors" id="doors"></div>
+        <p class="say" id="st1">Tap a door.</p>
+        <div class="row gone" id="choice"><button class="btn ghost" id="stay">Stay</button><button class="btn" id="switch">Switch</button></div>
+        <div class="tally"><span>STAY</span><div class="track"><i id="tS"></i></div><span class="num" id="pS">–</span><span>SWITCH</span><div class="track"><i id="tW"></i></div><span class="num" id="pW">–</span></div>
+        <div class="row" id="simrow"><button class="btn ghost" id="sim">Play 1,000 games for me</button></div>
+        <div class="keep gone" id="k1"><b>WHAT TO KEEP</b>When someone who knows takes an option away, what they leave you is information.</div>
+        <div class="foot"><span class="src">Source · Selvin, The American Statistician, 1975</span></div>
+      </div>
+    </article>
+
+    <!-- 3 · bet -->
+    <article class="card" id="c2" style="--c:#00E5A0;--k:#10100c;--edge:#00835b" data-kind="Bet first · then the truth" data-draw="bday">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6M10 3v6l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3"/></svg><span class="t">Science</span><span class="tag">YOUR BET</span></div>
+        <h2 class="q">How many people in a room before two of them probably share a birthday?</h2>
+        <div class="bet"><strong class="num" id="gv">90</strong><span>people, my bet</span></div>
+        <input type="range" id="g" min="2" max="183" value="90" aria-label="Your bet">
+        <div class="chart" id="bchart"><svg id="plot" aria-label="Chance of a shared birthday as people arrive"></svg></div>
+        <div class="row" id="lockrow"><button class="btn" id="lock">Lock it in</button></div>
+        <p class="say gone" id="rev"></p>
+        <div class="keep gone" id="k2"><b>WHAT TO KEEP</b>Coincidences aren’t rare. Pairs are many: 23 people make 253 of them.</div>
+        <div class="foot"><span class="src">Source · the birthday problem, von Mises, 1939</span></div>
+      </div>
+    </article>
+
+    <!-- 4 · true/false, as today -->
+    <article class="card" style="--c:#FF3B30;--k:#fff;--edge:#9e1c14" data-kind="As today · true or false">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16M4 12h16"/></svg><span class="t">Medicine</span><span class="tag">TRUE OR FALSE</span></div>
+        <h2 class="q">A test is 99% accurate and you test positive. So you are 99% likely to be ill.</h2>
+        <div class="main">
+          <div class="opts" id="tf"><button class="opt" data-a="0">True</button><button class="opt" data-a="1">False</button></div>
+          <p class="body gone" id="tfa">False. Say the illness hits 1 in 1,000. Test 100,000 people: 99 of the 100 who are ill test positive, and so do about 1,000 healthy people the test gets wrong. Your positive is one of roughly 1,100, and only 99 of those are ill: about <b>9%</b>.</p>
+          <div class="waffle gone" id="wf" aria-label="Of 100 positive tests, 9 are really ill"></div>
+          <div class="who gone" id="wfl">100 positive tests · ■ really ill</div>
+        </div>
+        <div class="keep gone" id="tfk"><b>WHAT TO KEEP</b>How rare something is matters as much as how good the test is.</div>
+        <div class="foot"><span class="src">Source · Gigerenzer, Reckoning with Risk, 2002</span></div>
+      </div>
+    </article>
+
+    <!-- 5 · drag -->
+    <article class="card" id="c3" style="--c:#FFC49B;--k:#10100c;--edge:#a8714a" data-kind="Move it · and watch" data-draw="pct">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21c0-6 0-9 6-14M12 21c0-5-1-8-6-10"/></svg><span class="t">Life</span><span class="tag">DRAG</span></div>
+        <h2 class="q">1% better every day, or 1% worse. How far apart after a year?</h2>
+        <div class="twin"><div><small>━ 1% BETTER</small><b class="num" id="u">×1.00</b></div><div><small>┅ 1% WORSE</small><b class="num" id="d">×1.00</b></div></div>
+        <div class="chart" id="pchart"><svg id="p3" aria-label="Growth and decline over a year"></svg></div>
+        <div class="days"><span>DAY <span class="num" id="dn">0</span></span><span>1 YEAR</span></div>
+        <input type="range" id="days" min="0" max="365" value="0" aria-label="Days">
+        <div class="keep gone" id="k3"><b>WHAT TO KEEP</b>Small changes don’t add up. They multiply, both ways.</div>
+        <div class="foot"><span class="src">1.01³⁶⁵ ≈ 37.8 · 0.99³⁶⁵ ≈ 0.03</span></div>
+      </div>
+    </article>
+
+    <!-- 6 · experiment on you -->
+    <article class="card" id="c6" style="--c:#FFE600;--k:#10100c;--edge:#9c8d00" data-kind="An experiment · on you">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg><span class="t">Economics</span><span class="tag">TRY IT</span></div>
+        <h2 class="q" id="aq">First, spin the wheel. It is completely random.</h2>
+        <div class="wheel" id="wbox"><div class="dial" id="dial"><b class="num" id="wn">?</b></div></div>
+        <div class="row" id="spinrow"><button class="btn" id="spin">Spin</button></div>
+        <div class="gone" id="est">
+          <div class="bet"><strong class="num" id="ev">50</strong><span>% , my guess</span></div>
+          <input type="range" id="e" min="0" max="100" value="50" aria-label="Your estimate">
+        </div>
+        <div class="row gone" id="estrow"><button class="btn" id="elock">That’s my answer</button></div>
+        <div class="chart gone" id="achart"><svg id="ap"></svg></div>
+        <p class="say gone" id="arev"></p>
+        <div class="keep gone" id="k6"><b>WHAT TO KEEP</b>The first number you hear pulls every number after it. Prices start high for a reason.</div>
+        <div class="foot"><span class="src">Source · Tversky &amp; Kahneman, Science, 1974</span></div>
+      </div>
+    </article>
+
+    <!-- 7 · spot the trick -->
+    <article class="card" id="c4" style="--c:#00A6FF;--k:#10100c;--edge:#005e91" data-kind="Spot the trick">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8"/></svg><span class="t">Technology</span><span class="tag">SPOT IT</span></div>
+        <h2 class="q">The evening news shows this. How much did unemployment really rise?</h2>
+        <div class="clip"><p>Evening news</p><h3>Unemployment soars</h3>
+          <span class="axis" id="ax">↓ axis starts at 4.9%</span><div class="bars">
+            <div class="b4" id="b1" style="height:22%"><span>5.0%</span><label>Last year</label></div>
+            <div class="b4" id="b2" style="height:92%"><span>5.3%</span><label>This year</label></div></div></div>
+        <div class="opts" id="o4"><button class="opt" data-a="0">It roughly quadrupled</button><button class="opt" data-a="1">Up by about 6%</button></div>
+        <p class="say gone" id="r4"></p>
+        <div class="keep gone" id="k4"><b>WHAT TO KEEP</b>Cut off the bottom of a chart and a small change looks huge. Check where the axis starts.</div>
+        <div class="foot"><span class="src">Source · Huff, How to Lie with Statistics, 1954</span></div>
+      </div>
+    </article>
+
+    <!-- 8 · one line -->
+    <article class="card" id="c8" tabindex="0" style="--c:#4C6FFF;--k:#fff;--edge:#2a3fa3;cursor:pointer" data-kind="One line · then the story">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5"/></svg><span class="t">Philosophy</span><span class="tag">ONE LINE</span></div>
+        <div class="main">
+          <p class="big">When a measure becomes a target, it stops being a good measure.</p>
+          <div class="who">Goodhart’s law</div>
+          <p class="body gone" id="g8">Hanoi, 1902. The French paid a bounty for every rat tail. Soon tailless rats ran through the city: people cut the tails off and let the rats go on breeding. Some began farming them.</p>
+        </div>
+        <div class="keep gone" id="k8"><b>WHAT TO KEEP</b>Reward the number and people will deliver the number, not the thing you wanted.</div>
+        <div class="tap" id="t8">TAP FOR THE STORY</div>
+        <div class="foot"><span class="src">Source · Strathern, 1997 · Vann, French Colonial History, 2003</span></div>
+      </div>
+    </article>
+
+    <!-- 9 · story -->
+    <article class="card" id="c5" tabindex="0" style="--c:#9B5CFF;--k:#fff;--edge:#5a2ea6;cursor:pointer" data-kind="A story · in scenes" aria-label="Tap for the next scene">
+      <div class="in">
+        <div class="label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="9" r="5"/><path d="M9 21h6M12 14v7"/></svg><span class="t">Psychology</span><span class="tag">TRUE STORY</span></div>
+        <div class="prog" id="prog"><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="main"><p class="scene" id="scene"></p><div class="moans" id="moans"></div></div>
+        <div class="legend"><span><i style="background:var(--k)"></i>WALKING</span><span><i style="background:color-mix(in srgb,var(--k) 40%,transparent)"></i>STANDING AT THE BELT</span></div>
+        <div class="tl"><div class="walk" id="tw" style="flex-grow:1"></div><div class="wait" id="tt" style="flex-grow:7"></div></div>
+        <div class="keep gone" id="k5"><b>WHAT TO KEEP</b>People don’t hate waiting. They hate empty waiting.</div>
+        <div class="tap" id="tap">TAP TO CONTINUE</div>
+        <div class="foot"><span class="src">Source · Stone, “Why Waiting Is Torture”, NYT, 2012</span></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id),on=id=>{$(id).classList.remove('gone');$(id).classList.add('fade')},off=id=>$(id).classList.add('gone');
+const cards=[...document.querySelectorAll('.card')];let at=0;const dots=$('dots');cards.forEach(()=>dots.appendChild(document.createElement('span')));
+const drawers={};
+function show(i){at=(i+cards.length)%cards.length;cards.forEach((c,k)=>c.classList.toggle('on',k===at));[...dots.children].forEach((d,k)=>d.classList.toggle('on',k<=at));$('kind').textContent=(at+1)+' / '+cards.length+' · '+cards[at].dataset.kind;requestAnimationFrame(redraw)}
+function redraw(){Object.values(drawers).forEach(f=>f())}
+$('prev').onclick=()=>show(at-1);$('next').onclick=()=>show(at+1);
+addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(e.key==='ArrowRight')show(at+1);if(e.key==='ArrowLeft')show(at-1)});
+addEventListener('resize',()=>requestAnimationFrame(redraw));
+/* An SVG drawn in real pixels: its viewBox is its own size, so text never stretches. */
+function fit(svg){const r=svg.getBoundingClientRect();const W=Math.max(1,r.width),H=Math.max(1,r.height);svg.setAttribute('viewBox',`0 0 ${W} ${H}`);return{W,H,f:Math.max(10,H/11)}}
+const ink=svg=>getComputedStyle(svg).color;
+
+/* 2 · Monty Hall */
+(()=>{const box=$('doors'),st=$('st1');let car,pick,opened,phase;const t={s:[0,0],w:[0,0]};
+const doors=[0,1,2].map(i=>{const d=document.createElement('button');d.className='door';d.setAttribute('aria-label','Door '+(i+1));d.onclick=()=>phase==='done'?reset():choose(i);box.appendChild(d);return d});
+function reset(){car=Math.floor(Math.random()*3);pick=opened=null;phase='pick';doors.forEach((d,i)=>{d.className='door';d.textContent=i+1});off('choice');st.textContent='Tap a door.'}
+function choose(i){if(phase!=='pick')return;pick=i;doors[i].classList.add('pick');const goats=[0,1,2].filter(k=>k!==i&&k!==car);opened=goats[Math.floor(Math.random()*goats.length)];phase='wait';
+setTimeout(()=>{doors[opened].classList.add('open');doors[opened].textContent='🐐';st.textContent='The host knows where the car is. He opens door '+(opened+1)+'.';phase='decide';on('choice')},450)}
+function end(sw){if(phase!=='decide')return;const fin=sw?[0,1,2].find(k=>k!==pick&&k!==opened):pick,won=fin===car;
+doors.forEach((d,i)=>{if(i!==opened){d.classList.add('open');d.textContent=i===car?'🚗':'🐐';if(i===car)d.classList.add('car')}});
+const k=sw?'w':'s';t[k][1]++;if(won)t[k][0]++;st.textContent=(won?'The car! ':'A goat. ')+'Tap a door to play again.';phase='done';off('choice');paint()}
+function paint(){for(const[k,el,p]of[['s','tS','pS'],['w','tW','pW']]){const[a,b]=t[k];$(el).style.width=b?(100*a/b)+'%':'0';$(p).textContent=b?Math.round(100*a/b)+'%':'–'}}
+$('stay').onclick=()=>end(false);$('switch').onclick=()=>end(true);
+$('sim').onclick=()=>{let n=0;off('simrow');off('choice');const run=()=>{for(let j=0;j<20;j++){const c=Math.floor(Math.random()*3),p=Math.floor(Math.random()*3);t.s[1]++;t.w[1]++;if(p===c)t.s[0]++;else t.w[0]++}n+=20;paint();
+if(n<1000)requestAnimationFrame(run);else{st.innerHTML='Switching wins <b>2 in 3</b>. The host can never open the car, so his door tells you where it isn’t.';on('k1')}};run()};reset()})();
+
+/* 3 · Birthday */
+(()=>{const g=$('g'),svg=$('plot');const P=n=>{let q=1;for(let k=0;k<n;k++)q*=(365-k)/365;return 1-q};let n=0,locked=false;
+function draw(){const{W,H,f}=fit(svg),c=ink(svg),X=k=>k/100*W,Y=p=>H-6-p*(H-24),v=+g.value,x=X(Math.min(v,100));
+let s=`<line x1="0" y1="${H-6}" x2="${W}" y2="${H-6}" stroke="${c}" stroke-width="2"/><line x1="0" y1="${Y(.5)}" x2="${W}" y2="${Y(.5)}" stroke="${c}" stroke-dasharray="4 5" opacity=".45"/><text x="0" y="${Y(.5)-6}" font-size="${f*.95}" font-family="Figtree" font-weight="800" fill="${c}" opacity=".75">50%</text>`;
+s+=`<line x1="${x}" y1="0" x2="${x}" y2="${H-6}" stroke="${c}" stroke-width="2.5"/><text x="${x>W*.7?x-8:x+8}" y="${H-6-f*.6}" text-anchor="${x>W*.7?'end':'start'}" font-size="${f}" font-family="Figtree" font-weight="800" fill="${c}">${v>100?'your bet ('+v+') →':'your bet'}</text>`;
+if(n>1){let d=`M0 ${Y(0)}`;for(let k=2;k<=n;k++)d+=` L${X(k)} ${Y(P(k))}`;s+=`<path d="${d}" fill="none" stroke="${c}" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>`;
+if(n>=23)s+=`<circle cx="${X(23)}" cy="${Y(P(23))}" r="${f*.55}" fill="#fff" stroke="${c}" stroke-width="3.5"/><text x="${X(23)+f}" y="${Y(P(23))+f*1.4}" font-size="${f*1.05}" font-family="Figtree" font-weight="800" fill="${c}">23 people</text>`}
+svg.innerHTML=s}
+drawers.bday=draw;g.oninput=()=>{$('gv').textContent=g.value;draw()};
+$('lock').onclick=()=>{if(locked)return;locked=true;off('lockrow');g.disabled=true;on('rev');n=1;const v=+g.value;
+const step=()=>{draw();$('rev').innerHTML=`<span class="num">${n}</span> people · <b class="num">${Math.round(P(n)*100)}%</b> chance`;
+if(n<70){n++;setTimeout(step,n<24?80:22)}else{$('rev').innerHTML=`Only <b>23</b>. You bet ${v}.`;on('k2')}};step()}})();
+
+/* 4 · True or false */
+document.querySelectorAll('#tf .opt').forEach(o=>o.onclick=()=>{document.querySelectorAll('#tf .opt').forEach(x=>{x.disabled=true;x.classList.add(x.dataset.a==='1'?'right':'wrong')});off('tf');on('tfa');on('wf');on('wfl');on('tfk');const w=$('wf');w.innerHTML=Array.from({length:100},(_,i)=>`<i class="${i<9?'ill':''}" style="animation-delay:${i*12}ms"></i>`).join('')});
+
+/* 5 · 1% */
+(()=>{const r=$('days'),svg=$('p3');let shown=false;
+function draw(){const n=+r.value,{W,H,f}=fit(svg),c=ink(svg),X=d=>d/365*W,Y=v=>H-4-v/38*(H-12);
+let a=`M0 ${Y(1)}`,b=a;for(let d=1;d<=n;d+=2){a+=` L${X(d)} ${Y(1.01**d)}`;b+=` L${X(d)} ${Y(.99**d)}`}
+let s=`<line x1="0" y1="${H-4}" x2="${W}" y2="${H-4}" stroke="${c}" stroke-width="2"/><path d="${a}" fill="none" stroke="${c}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="${b}" fill="none" stroke="${c}" stroke-width="5" stroke-dasharray="1 9" stroke-linecap="round"/>`;
+svg.innerHTML=s;$('u').textContent='×'+(1.01**n).toFixed(n>200?1:2);$('d').textContent='×'+(.99**n).toFixed(2);$('dn').textContent=n;if(n>=365&&!shown){shown=true;on('k3')}}
+drawers.pct=draw;r.oninput=draw})();
+
+/* 6 · Anchoring */
+(()=>{let anchor;const svg=$('ap');
+$('spin').onclick=()=>{off('spinrow');anchor=Math.random()<.5?10:65;let k=0;const roll=()=>{$('wn').textContent=Math.floor(Math.random()*100);$('dial').style.transform=`rotate(${k*37}deg)`;$('wn').style.transform=`rotate(${-k*37}deg)`;
+if(++k<22)setTimeout(roll,40+k*8);else{$('wn').textContent=anchor;$('aq').textContent=`What share of the countries in the United Nations are African?`;off('wbox');on('est');on('estrow')}};roll()};
+$('e').oninput=()=>$('ev').textContent=$('e').value;
+function draw(){if(anchor==null||$('achart').classList.contains('gone'))return;const{W,H,f}=fit(svg),c=ink(svg),you=+$('e').value;
+const rows=[['Wheel said 10',25],['Wheel said 65',45],['You · wheel said '+anchor,you]],row=H/3,bh=Math.min(row*.38,26),fs=Math.min(f,15);
+svg.innerHTML=rows.map(([l,v],i)=>{const y=i*row,w=Math.max(bh,v/100*(W-60));return `<text x="0" y="${y+fs}" font-size="${fs}" font-family="Figtree" font-weight="800" fill="${c}">${l}</text><rect x="0" y="${y+fs*1.5}" width="${w}" height="${bh}" rx="${bh/2}" fill="${i===2?c:'none'}" stroke="${c}" stroke-width="2.5"/><text x="${w+10}" y="${y+fs*1.5+bh/2}" dominant-baseline="central" font-size="${fs*1.2}" font-family="Figtree" font-weight="900" fill="${c}">${v}%</text>`}).join('')}
+drawers.anch=draw;
+$('elock').onclick=()=>{off('est');off('estrow');on('achart');$('aq').textContent='People who saw 10 guessed 25%. People who saw 65 guessed 45%.';requestAnimationFrame(draw);
+$('arev').innerHTML=`A number everyone knew was random moved the answers by <b>20 points</b>. The real share today is about 28%.`;on('arev');on('k6')}})();
+
+/* 7 · Spot the trick */
+document.querySelectorAll('#o4 .opt').forEach(o=>o.onclick=()=>{const right=o.dataset.a==='1';document.querySelectorAll('#o4 .opt').forEach(x=>{x.disabled=true;x.classList.add(x.dataset.a==='1'?'right':'wrong')});
+on('r4');$('r4').textContent=(right?'Right. ':'That’s what the bars say. ')+'Watch the axis drop to zero…';
+setTimeout(()=>{$('b1').style.height=(5/5.5*100)+'%';$('b2').style.height=(5.3/5.5*100)+'%';$('ax').textContent='↓ axis starts at 0%';
+setTimeout(()=>{off('o4');$('r4').innerHTML='From 5.0% to 5.3%: up <b>0.3 points</b>, about <b>6%</b>.';on('k4')},1100)},800)});
+
+/* 8 · One line */
+$('c8').onclick=()=>{if($('g8').classList.contains('gone')){on('g8');on('k8');off('t8')}};$('c8').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('c8').onclick()}};
+
+/* 9 · Story */
+(()=>{const S=[
+{t:'Houston airport. Passengers kept <mark>complaining</mark> about waiting for their bags.',w:1,a:7,m:3},
+{t:'So the airport hired more baggage handlers. The wait fell to about <mark>8 minutes</mark>.',w:1,a:7,m:3},
+{t:'Complaints didn’t fall. Someone looked closer: <mark>1 minute</mark> walking, <mark>7</mark> standing.',w:1,a:7,m:2},
+{t:'The fix: park the planes farther away. The walk got <mark>six times</mark> longer.',w:6,a:2,m:0},
+{t:'Complaints almost vanished. The wait was the same. It just wasn’t <mark>empty</mark>.',w:6,a:2,m:0}];let i=-1;
+function go(){i=(i+1)%S.length;const s=S[i];$('scene').innerHTML=s.t;$('tw').style.flexGrow=s.w;$('tt').style.flexGrow=s.a;
+$('moans').innerHTML=Array.from({length:s.m},(_,k)=>`<span style="animation-delay:${k*.12}s">${['Where are my bags?','Still waiting!','Ridiculous.'][k]}</span>`).join('');
+[...$('prog').children].forEach((p,k)=>p.classList.toggle('on',k<=i));if(i===S.length-1)on('k5');else off('k5');$('tap').textContent=i<S.length-1?'TAP TO CONTINUE':'TAP TO REPLAY'}
+$('c5').onclick=go;$('c5').onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();go()}};go()})();
+
+show(0);
+</script>
