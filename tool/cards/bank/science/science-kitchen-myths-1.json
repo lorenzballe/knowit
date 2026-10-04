@@ -27,6 +27,59 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "slider",
+    "control": "Time simmering",
+    "controlUnit": "min",
+    "readout": "Alcohol still in the pot",
+    "readoutUnit": "%",
+    "start": 15,
+    "step": 5,
+    "points": [
+      [
+        15,
+        40
+      ],
+      [
+        30,
+        35
+      ],
+      [
+        60,
+        25
+      ],
+      [
+        90,
+        20
+      ],
+      [
+        120,
+        10
+      ],
+      [
+        150,
+        5
+      ]
+    ],
+    "notes": [
+      {
+        "at": 15,
+        "text": "A quarter of an hour in: 40% of the alcohol is still there."
+      },
+      {
+        "at": 60,
+        "text": "A full hour of simmering, and a quarter remains."
+      },
+      {
+        "at": 120,
+        "text": "Two hours: still a tenth."
+      },
+      {
+        "at": 150,
+        "text": "Only after two and a half hours is it down to 5%."
+      }
+    ]
+  },
   "source": "USDA Table of Nutrient Retention Factors, 2007",
   "source_kind": "institution",
   "reference": "US Department of Agriculture, USDA Table of Nutrient Retention Factors, Release 6, 2007",

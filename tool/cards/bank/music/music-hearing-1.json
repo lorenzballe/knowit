@@ -40,6 +40,99 @@
   "mature": false,
   "language": "en",
   "figure": "doubling",
+  "scene": {
+    "type": "slider",
+    "control": "Sound level",
+    "controlUnit": "dB",
+    "readout": "Safe listening time per day",
+    "readoutUnit": "min",
+    "start": 85,
+    "step": 1,
+    "points": [
+      [
+        82,
+        960
+      ],
+      [
+        84,
+        605
+      ],
+      [
+        85,
+        480
+      ],
+      [
+        86,
+        381
+      ],
+      [
+        88,
+        240
+      ],
+      [
+        90,
+        151
+      ],
+      [
+        92,
+        95
+      ],
+      [
+        94,
+        60
+      ],
+      [
+        96,
+        38
+      ],
+      [
+        98,
+        24
+      ],
+      [
+        100,
+        15
+      ],
+      [
+        102,
+        9
+      ],
+      [
+        104,
+        6
+      ],
+      [
+        106,
+        4
+      ],
+      [
+        108,
+        2
+      ]
+    ],
+    "notes": [
+      {
+        "at": 82,
+        "text": "Below 85 dB: more than eight hours a day."
+      },
+      {
+        "at": 85,
+        "text": "85 dB: the limit for eight hours a day."
+      },
+      {
+        "at": 94,
+        "text": "Every 3 dB halves it. 94 dB: one hour."
+      },
+      {
+        "at": 100,
+        "text": "100 dB, a loud concert: 15 minutes, about four songs."
+      },
+      {
+        "at": 106,
+        "text": "106 dB, seven halvings above 85: under four minutes a day."
+      }
+    ]
+  },
   "source": "NIOSH, Occupational Noise Exposure criteria, 1998",
   "source_kind": "institution",
   "reference": "NIOSH, Criteria for a Recommended Standard: Occupational Noise Exposure, Revised Criteria 1998, DHHS (NIOSH) Publication No. 98-126",

@@ -27,6 +27,103 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "slider",
+    "control": "The luckier player leads for",
+    "controlUnit": "days",
+    "readout": "Share of games where that happens",
+    "readoutUnit": "%",
+    "start": 183,
+    "step": 1,
+    "points": [
+      [
+        183,
+        99.8
+      ],
+      [
+        200,
+        93.9
+      ],
+      [
+        220,
+        86.8
+      ],
+      [
+        240,
+        79.6
+      ],
+      [
+        260,
+        72.1
+      ],
+      [
+        280,
+        64.1
+      ],
+      [
+        300,
+        55.5
+      ],
+      [
+        311,
+        50.3
+      ],
+      [
+        320,
+        45.7
+      ],
+      [
+        330,
+        40.1
+      ],
+      [
+        340,
+        33.7
+      ],
+      [
+        350,
+        26.0
+      ],
+      [
+        355,
+        21.2
+      ],
+      [
+        360,
+        14.9
+      ],
+      [
+        362,
+        11.6
+      ],
+      [
+        364,
+        6.7
+      ],
+      [
+        365,
+        0.0
+      ]
+    ],
+    "notes": [
+      {
+        "at": 183,
+        "text": "In every game, someone leads for at least half the year."
+      },
+      {
+        "at": 260,
+        "text": "Most games still: the leader is ahead for 260 days or more."
+      },
+      {
+        "at": 311,
+        "text": "Half of all games: one player leads for 311 days or more."
+      },
+      {
+        "at": 364,
+        "text": "Even 'all year but one day' happens in about one game in fifteen."
+      }
+    ]
+  },
   "source": "Feller, Introduction to Probability Theory, 1968",
   "source_kind": "book",
   "reference": "Feller, An Introduction to Probability Theory and Its Applications, Volume 1, 3rd edition, Wiley, 1968",

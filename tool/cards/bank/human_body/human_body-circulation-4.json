@@ -152,6 +152,83 @@
     ],
     "caption": "Flow goes with the radius to the fourth power: 19% wider doubles it, a sixth narrower halves it."
   },
+  "scene": {
+    "type": "slider",
+    "control": "Change in the arteriole's radius",
+    "controlUnit": "%",
+    "readout": "Blood flow, as % of normal",
+    "readoutUnit": "%",
+    "start": 0,
+    "step": 1,
+    "points": [
+      [
+        -20,
+        41
+      ],
+      [
+        -16,
+        50
+      ],
+      [
+        -15,
+        52
+      ],
+      [
+        -10,
+        66
+      ],
+      [
+        -5,
+        81
+      ],
+      [
+        0,
+        100
+      ],
+      [
+        5,
+        122
+      ],
+      [
+        10,
+        146
+      ],
+      [
+        15,
+        175
+      ],
+      [
+        19,
+        201
+      ],
+      [
+        20,
+        207
+      ],
+      [
+        25,
+        244
+      ]
+    ],
+    "notes": [
+      {
+        "at": -20,
+        "text": "A fifth narrower, and only 41% of the blood gets through."
+      },
+      {
+        "at": -16,
+        "text": "Narrow it by a sixth and the supply halves."
+      },
+      {
+        "at": 0,
+        "text": "Resting width. Flow follows the radius to the fourth power."
+      },
+      {
+        "at": 19,
+        "text": "Widen it by 19% and the flow doubles."
+      }
+    ]
+  },
   "source": "Klabunde, Cardiovascular Physiology Concepts, 2011",
   "source_kind": "book",
   "reference": "Klabunde, Cardiovascular Physiology Concepts, 2nd edition, Lippincott Williams & Wilkins, 2011",

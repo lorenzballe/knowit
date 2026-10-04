@@ -135,6 +135,92 @@
     ],
     "caption": "Each day is 95% safe, yet fewer than one streak in four survives a month."
   },
+  "scene": {
+    "type": "slider",
+    "control": "Length of the streak",
+    "controlUnit": "days",
+    "readout": "Chance it is still unbroken",
+    "readoutUnit": "%",
+    "start": 1,
+    "step": 1,
+    "decimals": 1,
+    "points": [
+      [
+        1,
+        95.0
+      ],
+      [
+        5,
+        77.4
+      ],
+      [
+        10,
+        59.9
+      ],
+      [
+        14,
+        48.8
+      ],
+      [
+        20,
+        35.8
+      ],
+      [
+        25,
+        27.7
+      ],
+      [
+        30,
+        21.5
+      ],
+      [
+        40,
+        12.9
+      ],
+      [
+        50,
+        7.7
+      ],
+      [
+        60,
+        4.6
+      ],
+      [
+        70,
+        2.8
+      ],
+      [
+        80,
+        1.7
+      ],
+      [
+        90,
+        1.0
+      ],
+      [
+        100,
+        0.6
+      ]
+    ],
+    "notes": [
+      {
+        "at": 1,
+        "text": "Any single day: 95%. Almost certain."
+      },
+      {
+        "at": 14,
+        "text": "Two weeks: already less than even."
+      },
+      {
+        "at": 30,
+        "text": "A month unbroken: about one chance in five."
+      },
+      {
+        "at": 90,
+        "text": "Three months: 1%. A missed day is the normal outcome, not a failure."
+      }
+    ]
+  },
   "source": "Feller, Probability Theory, 1968",
   "source_kind": "book",
   "reference": "Feller, An Introduction to Probability Theory and Its Applications, Vol. 1, 3rd ed., Wiley, 1968",

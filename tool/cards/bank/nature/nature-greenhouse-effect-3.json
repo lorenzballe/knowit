@@ -37,6 +37,88 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "slider",
+    "control": "Carbon dioxide in the air",
+    "controlUnit": "ppm",
+    "readout": "Extra heating at the surface",
+    "readoutUnit": "W/m²",
+    "start": 280,
+    "step": 10,
+    "decimals": 1,
+    "points": [
+      [
+        280,
+        0.0
+      ],
+      [
+        320,
+        0.7
+      ],
+      [
+        350,
+        1.2
+      ],
+      [
+        400,
+        1.9
+      ],
+      [
+        420,
+        2.2
+      ],
+      [
+        480,
+        2.9
+      ],
+      [
+        560,
+        3.7
+      ],
+      [
+        640,
+        4.4
+      ],
+      [
+        700,
+        4.9
+      ],
+      [
+        800,
+        5.6
+      ],
+      [
+        900,
+        6.2
+      ],
+      [
+        1000,
+        6.8
+      ],
+      [
+        1120,
+        7.4
+      ]
+    ],
+    "notes": [
+      {
+        "at": 280,
+        "text": "Pre-industrial air: the starting point."
+      },
+      {
+        "at": 420,
+        "text": "Close to the level of the mid-2020s: 2.2 watts per square metre."
+      },
+      {
+        "at": 560,
+        "text": "The first doubling: 3.7 watts per square metre."
+      },
+      {
+        "at": 1120,
+        "text": "Doubling again adds the same 3.7, not twice as much."
+      }
+    ]
+  },
   "source": "Myhre et al., Geophysical Research Letters, 1998",
   "source_kind": "paper",
   "reference": "Myhre, Highwood, Shine & Stordal, New estimates of radiative forcing due to well mixed greenhouse gases, Geophysical Research Letters, 1998",

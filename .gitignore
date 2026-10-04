@@ -57,3 +57,5 @@ tool/rules/package-lock.json
 
 # API keys for media tools (tool/media), never committed
 .env
+# Card camera output (tool/card_shots.dart): looked at, not kept
+tool/shots/cards/

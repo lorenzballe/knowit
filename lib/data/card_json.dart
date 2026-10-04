@@ -89,6 +89,7 @@ Map<String, Object?> cardToJson(Pill p) {
   if (p.buildsOn.isNotEmpty) out['builds_on'] = p.buildsOn;
   if (p.figure.isNotEmpty) out['figure'] = p.figure;
   if (p.diagram != null) out['diagram'] = p.diagram!.raw;
+  if (p.scene != null) out['scene'] = p.scene!.raw;
   out['source'] = p.source;
   return out;
 }
@@ -205,5 +206,6 @@ Pill cardFromJson(Map<String, Object?> raw) {
     buildsOn: list('builds_on'),
     figure: text('figure'),
     diagram: Diagram.fromJson(raw['diagram'], id: id),
+    scene: Scene.fromJson(raw['scene'], id: id),
   );
 }

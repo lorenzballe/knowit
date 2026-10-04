@@ -9,6 +9,8 @@ import '../models/pill.dart';
 import '../theme.dart';
 import 'hold_to_keep.dart';
 import 'motion.dart';
+import 'place_it.dart';
+import 'scene_view.dart';
 import 'reveal_body.dart';
 import 'scaled_text.dart';
 import 'subject_icon.dart';
@@ -188,6 +190,9 @@ class PillCard extends StatelessWidget {
                 // The challenge decides the front. A new kind of challenge
                 // will not compile until it is given a face here.
                 : switch (pill.challenge) {
+                    NoChallenge() when pill.scene != null => _SceneFront(
+                      pill: pill,
+                    ),
                     NoChallenge() => _FrontFace(pill: pill),
                     PickOne(:final options) => _AskFace(
                       pill: pill,
@@ -222,14 +227,15 @@ class PillCard extends StatelessWidget {
                         onAnswer: commit,
                       ),
                     ),
-                    Estimate(:final unit) => _AskFace(
+                    // A feel for size is placed on a ruler, not typed.
+                    final Estimate estimate => _AskFace(
                       pill: pill,
                       onAnswer: onAnswer,
                       given: given,
                       prompt: context.l10n.estimateCloseEnough,
-                      input: (commit) => _NumberInput(
+                      input: (commit) => PlaceItInput(
                         pill: pill,
-                        unit: unit,
+                        estimate: estimate,
                         onAnswer: commit,
                       ),
                     ),
@@ -285,6 +291,58 @@ class _FrontFace extends StatelessWidget {
   }
 }
 
+/// A card with something to play with: the question on top, the scene
+/// filling the middle, the way to the answer at the foot.
+class _SceneFront extends StatelessWidget {
+  final Pill pill;
+  const _SceneFront({required this.pill});
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, box) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 12),
+          SizedBox(
+            height: box.maxHeight * 0.27,
+            child: ScaledText(
+              text: pill.question,
+              min: 18,
+              max: 27,
+              alignment: Alignment.topLeft,
+              styleFor: (size) => AppText.display(
+                size: size,
+                weight: FontWeight.w600,
+                height: 1.12,
+                spacing: -0.3 - size * 0.018,
+                color: pill.ink,
+              ),
+            ),
+          ),
+          const SizedBox(height: 14),
+          Expanded(
+            child: SceneView(
+              scene: pill.scene!,
+              ink: pill.ink,
+              ground: pill.color,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Text(
+            context.l10n.tapToReveal,
+            style: AppText.body(
+              size: 13,
+              weight: FontWeight.w500,
+              color: pill.ink.withValues(alpha: 0.6),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _BackFace extends StatelessWidget {
   final Pill pill;
   final Answer? given;
@@ -316,6 +374,14 @@ class _BackFace extends StatelessWidget {
                     confidence: given!.confidence,
                   ),
                 ),
+                if (pill.challenge case final Estimate estimate) ...[
+                  const SizedBox(height: 6),
+                  PlaceItReveal(
+                    pill: pill,
+                    estimate: estimate,
+                    response: given!.response,
+                  ),
+                ],
                 const SizedBox(height: 14),
               ] else if (!pill.isGraded && given != null) ...[
                 PopIn(
@@ -335,6 +401,19 @@ class _BackFace extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
+              // On a card that asked first, the scene waits for the answer:
+              // played before, it would have given it away.
+              if (pill.scene != null && pill.asksSomething) ...[
+                SizedBox(
+                  height: 270,
+                  child: SceneView(
+                    scene: pill.scene!,
+                    ink: pill.ink,
+                    ground: pill.color,
+                  ),
+                ),
+                const SizedBox(height: 18),
+              ],
               RevealBody.onCard(pill),
             ],
           ),

@@ -31,6 +31,7 @@ except ImportError:  # pragma: no cover - the workflow installs it
 import genres
 import sources
 from diagrams import check_diagram
+from scenes import check_scene
 
 HERE = Path(__file__).resolve().parent
 BANK = HERE / "bank"
@@ -70,7 +71,7 @@ KEY_ORDER = [
     "id", "topic", "genre", "strand", "also", "kind", "difficulty", "principle", "question",
     "options", "correct", "value", "unit", "tolerance", "withinFactor", "sides",
     "answer", "move", "ask", "trap", "hint", "steps", "simply", "counterpoint",
-    *TAG_KEYS, "builds_on", "figure", "diagram",
+    *TAG_KEYS, "builds_on", "figure", "diagram", "scene",
     "source", "source_kind", "reference", "quote", "written", "disabled",
 ]
 
@@ -292,6 +293,10 @@ def check_card(card: dict, *, strict: bool = False, schema: dict | None = None,
     # The picture, which the app refuses whole if it is malformed.
     if "diagram" in card:
         problems.extend(check_diagram(card["diagram"]))
+
+    # Something to play with, which the app refuses whole if it is malformed.
+    if "scene" in card:
+        problems.extend(check_scene(card["scene"]))
 
     if strict:
         problems.extend(check_strict(card))

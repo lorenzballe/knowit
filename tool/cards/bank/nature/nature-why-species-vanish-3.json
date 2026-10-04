@@ -37,6 +37,87 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "slider",
+    "control": "Habitat destroyed",
+    "controlUnit": "%",
+    "readout": "Species eventually lost",
+    "readoutUnit": "%",
+    "start": 0,
+    "step": 1,
+    "points": [
+      [
+        0,
+        0.0
+      ],
+      [
+        10,
+        2.6
+      ],
+      [
+        20,
+        5.4
+      ],
+      [
+        30,
+        8.5
+      ],
+      [
+        40,
+        12.0
+      ],
+      [
+        50,
+        15.9
+      ],
+      [
+        60,
+        20.5
+      ],
+      [
+        70,
+        26.0
+      ],
+      [
+        80,
+        33.1
+      ],
+      [
+        90,
+        43.8
+      ],
+      [
+        95,
+        52.7
+      ],
+      [
+        98,
+        62.4
+      ],
+      [
+        99,
+        68.4
+      ]
+    ],
+    "notes": [
+      {
+        "at": 0,
+        "text": "Species rise with area to the power 0.25: the first losses barely show."
+      },
+      {
+        "at": 50,
+        "text": "Half the habitat gone, and only 16% of species go."
+      },
+      {
+        "at": 90,
+        "text": "Lose 90% and 44% of species go."
+      },
+      {
+        "at": 98,
+        "text": "The last scraps hold the most: each lost point now costs far more species."
+      }
+    ]
+  },
   "source": "MacArthur & Wilson, Island Biogeography, 1967",
   "source_kind": "book",
   "reference": "MacArthur & Wilson, The Theory of Island Biogeography, Princeton University Press, 1967",

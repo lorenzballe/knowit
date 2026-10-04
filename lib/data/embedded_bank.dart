@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 1,
- "version": 202610031718,
- "built": "2026-10-03T17:18:35Z",
+ "version": 202610041434,
+ "built": "2026-10-04T14:34:06Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -23459,6 +23459,67 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "slider",
+    "control": "Your monthly payment",
+    "controlUnit": "€",
+    "readout": "What you owe after 10 years",
+    "readoutUnit": "€",
+    "start": 80,
+    "step": 5,
+    "points": [
+     [
+      60,
+      26327
+     ],
+     [
+      70,
+      24745
+     ],
+     [
+      80,
+      23163
+     ],
+     [
+      90,
+      21582
+     ],
+     [
+      100,
+      20000
+     ],
+     [
+      110,
+      18418
+     ],
+     [
+      120,
+      16837
+     ],
+     [
+      130,
+      15255
+     ],
+     [
+      140,
+      13673
+     ]
+    ],
+    "notes": [
+     {
+      "at": 60,
+      "text": "The interest outruns you: the debt grows every year."
+     },
+     {
+      "at": 100,
+      "text": "Exactly the interest. You pay for ten years and owe the same."
+     },
+     {
+      "at": 105,
+      "text": "Only now does the debt start to shrink."
+     }
+    ]
+   },
    "source": "Loan amortisation arithmetic",
    "source_kind": "arithmetic",
    "reference": "Brealey, Myers & Allen, Principles of Corporate Finance, 13th edition, McGraw-Hill, 2020",
@@ -25610,6 +25671,71 @@ const String kEmbeddedBank = r'''
      }
     ],
     "caption": "A 1% yearly fee takes about a quarter of what €10,000 grows to in 30 years."
+   },
+   "scene": {
+    "type": "slider",
+    "control": "Yearly fee",
+    "controlUnit": "%",
+    "readout": "Share of the pot the fee eats",
+    "readoutUnit": "%",
+    "start": 0,
+    "step": 0.1,
+    "points": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.25,
+      6.8
+     ],
+     [
+      0.5,
+      13.2
+     ],
+     [
+      0.75,
+      19.2
+     ],
+     [
+      1.0,
+      24.8
+     ],
+     [
+      1.25,
+      29.9
+     ],
+     [
+      1.5,
+      34.8
+     ],
+     [
+      1.75,
+      39.3
+     ],
+     [
+      2.0,
+      43.5
+     ]
+    ],
+    "notes": [
+     {
+      "at": 0,
+      "text": "No fee: €10,000 grows to about €57,400 in 30 years."
+     },
+     {
+      "at": 0.5,
+      "text": "Half a percent a year already eats about one euro in eight."
+     },
+     {
+      "at": 1,
+      "text": "1% a year sounds small. It takes a quarter of the pot."
+     },
+     {
+      "at": 2,
+      "text": "At 2%, almost half of what you would have had is gone."
+     }
+    ]
    },
    "source": "Arithmetic of compound fees",
    "source_kind": "arithmetic",
@@ -32295,6 +32421,55 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "slider",
+    "control": "Your yearly pay",
+    "controlUnit": "£",
+    "readout": "Income tax on your next £100",
+    "readoutUnit": "£",
+    "start": 90000,
+    "step": 100,
+    "points": [
+     [
+      80000,
+      40
+     ],
+     [
+      100000,
+      40
+     ],
+     [
+      100100,
+      60
+     ],
+     [
+      125100,
+      60
+     ],
+     [
+      125200,
+      45
+     ],
+     [
+      150000,
+      45
+     ]
+    ],
+    "notes": [
+     {
+      "at": 80000,
+      "text": "Above £50,270, each extra £100 costs £40 in tax."
+     },
+     {
+      "at": 100100,
+      "text": "The tax-free allowance now shrinks £1 per £2 earned: £60 of each £100 goes."
+     },
+     {
+      "at": 125200,
+      "text": "Allowance gone at £125,140. The rate falls back to 45%."
+     }
+    ]
+   },
    "source": "GOV.UK, Income Tax rates and Personal Allowances",
    "source_kind": "institution",
    "reference": "https://www.gov.uk/income-tax-rates",
@@ -47558,6 +47733,87 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "doubling",
+   "scene": {
+    "type": "slider",
+    "control": "Growth per year",
+    "controlUnit": "%",
+    "readout": "Years to double",
+    "readoutUnit": "years",
+    "start": 0.5,
+    "step": 0.05,
+    "points": [
+     [
+      0.25,
+      278
+     ],
+     [
+      0.3,
+      231
+     ],
+     [
+      0.4,
+      174
+     ],
+     [
+      0.5,
+      139
+     ],
+     [
+      0.6,
+      116
+     ],
+     [
+      0.75,
+      93
+     ],
+     [
+      1,
+      70
+     ],
+     [
+      1.25,
+      56
+     ],
+     [
+      1.5,
+      47
+     ],
+     [
+      2,
+      35
+     ],
+     [
+      2.5,
+      28
+     ],
+     [
+      3,
+      23
+     ],
+     [
+      4,
+      18
+     ]
+    ],
+    "notes": [
+     {
+      "at": 0.25,
+      "text": "A quarter percent a year: almost three centuries to double."
+     },
+     {
+      "at": 0.5,
+      "text": "Income per head around 1800: 139 years, five generations."
+     },
+     {
+      "at": 2,
+      "text": "Total output's 2%: 35 years, within one working life."
+     },
+     {
+      "at": 3,
+      "text": "3%: 23 years. Six times the rate of 0.5%, six times faster."
+     }
+    ]
+   },
    "source": "Crafts & Harley, Economic History Review, 1992",
    "source_kind": "paper",
    "reference": "Crafts & Harley, Output Growth and the British Industrial Revolution: A Restatement of the Crafts-Harley View, Economic History Review, 1992",
@@ -53906,6 +54162,83 @@ const String kEmbeddedBank = r'''
     ],
     "caption": "Flow goes with the radius to the fourth power: 19% wider doubles it, a sixth narrower halves it."
    },
+   "scene": {
+    "type": "slider",
+    "control": "Change in the arteriole's radius",
+    "controlUnit": "%",
+    "readout": "Blood flow, as % of normal",
+    "readoutUnit": "%",
+    "start": 0,
+    "step": 1,
+    "points": [
+     [
+      -20,
+      41
+     ],
+     [
+      -16,
+      50
+     ],
+     [
+      -15,
+      52
+     ],
+     [
+      -10,
+      66
+     ],
+     [
+      -5,
+      81
+     ],
+     [
+      0,
+      100
+     ],
+     [
+      5,
+      122
+     ],
+     [
+      10,
+      146
+     ],
+     [
+      15,
+      175
+     ],
+     [
+      19,
+      201
+     ],
+     [
+      20,
+      207
+     ],
+     [
+      25,
+      244
+     ]
+    ],
+    "notes": [
+     {
+      "at": -20,
+      "text": "A fifth narrower, and only 41% of the blood gets through."
+     },
+     {
+      "at": -16,
+      "text": "Narrow it by a sixth and the supply halves."
+     },
+     {
+      "at": 0,
+      "text": "Resting width. Flow follows the radius to the fourth power."
+     },
+     {
+      "at": 19,
+      "text": "Widen it by 19% and the flow doubles."
+     }
+    ]
+   },
    "source": "Klabunde, Cardiovascular Physiology Concepts, 2011",
    "source_kind": "book",
    "reference": "Klabunde, Cardiovascular Physiology Concepts, 2nd edition, Lippincott Williams & Wilkins, 2011",
@@ -57760,6 +58093,104 @@ const String kEmbeddedBank = r'''
      }
     ],
     "caption": "Five doublings between 30 and 70 multiply the risk by 32; the last two do most."
+   },
+   "scene": {
+    "type": "slider",
+    "control": "Age",
+    "controlUnit": "years",
+    "readout": "Risk of dying this year vs age 30",
+    "readoutUnit": "×",
+    "start": 30,
+    "step": 1,
+    "decimals": 1,
+    "points": [
+     [
+      30,
+      1.0
+     ],
+     [
+      34,
+      1.4
+     ],
+     [
+      38,
+      2.0
+     ],
+     [
+      42,
+      2.8
+     ],
+     [
+      46,
+      4.0
+     ],
+     [
+      50,
+      5.7
+     ],
+     [
+      54,
+      8.0
+     ],
+     [
+      58,
+      11.3
+     ],
+     [
+      62,
+      16.0
+     ],
+     [
+      66,
+      22.6
+     ],
+     [
+      70,
+      32.0
+     ],
+     [
+      74,
+      45.3
+     ],
+     [
+      78,
+      64.0
+     ],
+     [
+      82,
+      90.5
+     ],
+     [
+      86,
+      128.0
+     ],
+     [
+      90,
+      181.0
+     ]
+    ],
+    "notes": [
+     {
+      "at": 30,
+      "text": "The yearly risk at 30, the baseline."
+     },
+     {
+      "at": 38,
+      "text": "Eight years on, it has doubled."
+     },
+     {
+      "at": 54,
+      "text": "At 54 it is eight times. Most of the climb is still to come."
+     },
+     {
+      "at": 70,
+      "text": "At 70: 32 times the risk at 30."
+     },
+     {
+      "at": 86,
+      "text": "At 86, 128 times. Each 8 years doubles whatever it already is."
+     }
+    ]
    },
    "source": "Kirkwood, Phil Trans R Soc B, 2015",
    "source_kind": "paper",
@@ -93094,6 +93525,99 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "doubling",
+   "scene": {
+    "type": "slider",
+    "control": "Sound level",
+    "controlUnit": "dB",
+    "readout": "Safe listening time per day",
+    "readoutUnit": "min",
+    "start": 85,
+    "step": 1,
+    "points": [
+     [
+      82,
+      960
+     ],
+     [
+      84,
+      605
+     ],
+     [
+      85,
+      480
+     ],
+     [
+      86,
+      381
+     ],
+     [
+      88,
+      240
+     ],
+     [
+      90,
+      151
+     ],
+     [
+      92,
+      95
+     ],
+     [
+      94,
+      60
+     ],
+     [
+      96,
+      38
+     ],
+     [
+      98,
+      24
+     ],
+     [
+      100,
+      15
+     ],
+     [
+      102,
+      9
+     ],
+     [
+      104,
+      6
+     ],
+     [
+      106,
+      4
+     ],
+     [
+      108,
+      2
+     ]
+    ],
+    "notes": [
+     {
+      "at": 82,
+      "text": "Below 85 dB: more than eight hours a day."
+     },
+     {
+      "at": 85,
+      "text": "85 dB: the limit for eight hours a day."
+     },
+     {
+      "at": 94,
+      "text": "Every 3 dB halves it. 94 dB: one hour."
+     },
+     {
+      "at": 100,
+      "text": "100 dB, a loud concert: 15 minutes, about four songs."
+     },
+     {
+      "at": 106,
+      "text": "106 dB, seven halvings above 85: under four minutes a day."
+     }
+    ]
+   },
    "source": "NIOSH, Occupational Noise Exposure criteria, 1998",
    "source_kind": "institution",
    "reference": "NIOSH, Criteria for a Recommended Standard: Occupational Noise Exposure, Revised Criteria 1998, DHHS (NIOSH) Publication No. 98-126",
@@ -105554,6 +106078,88 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "slider",
+    "control": "Carbon dioxide in the air",
+    "controlUnit": "ppm",
+    "readout": "Extra heating at the surface",
+    "readoutUnit": "W/m²",
+    "start": 280,
+    "step": 10,
+    "decimals": 1,
+    "points": [
+     [
+      280,
+      0.0
+     ],
+     [
+      320,
+      0.7
+     ],
+     [
+      350,
+      1.2
+     ],
+     [
+      400,
+      1.9
+     ],
+     [
+      420,
+      2.2
+     ],
+     [
+      480,
+      2.9
+     ],
+     [
+      560,
+      3.7
+     ],
+     [
+      640,
+      4.4
+     ],
+     [
+      700,
+      4.9
+     ],
+     [
+      800,
+      5.6
+     ],
+     [
+      900,
+      6.2
+     ],
+     [
+      1000,
+      6.8
+     ],
+     [
+      1120,
+      7.4
+     ]
+    ],
+    "notes": [
+     {
+      "at": 280,
+      "text": "Pre-industrial air: the starting point."
+     },
+     {
+      "at": 420,
+      "text": "Close to the level of the mid-2020s: 2.2 watts per square metre."
+     },
+     {
+      "at": 560,
+      "text": "The first doubling: 3.7 watts per square metre."
+     },
+     {
+      "at": 1120,
+      "text": "Doubling again adds the same 3.7, not twice as much."
+     }
+    ]
+   },
    "source": "Myhre et al., Geophysical Research Letters, 1998",
    "source_kind": "paper",
    "reference": "Myhre, Highwood, Shine & Stordal, New estimates of radiative forcing due to well mixed greenhouse gases, Geophysical Research Letters, 1998",
@@ -110346,6 +110952,87 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "slider",
+    "control": "Habitat destroyed",
+    "controlUnit": "%",
+    "readout": "Species eventually lost",
+    "readoutUnit": "%",
+    "start": 0,
+    "step": 1,
+    "points": [
+     [
+      0,
+      0.0
+     ],
+     [
+      10,
+      2.6
+     ],
+     [
+      20,
+      5.4
+     ],
+     [
+      30,
+      8.5
+     ],
+     [
+      40,
+      12.0
+     ],
+     [
+      50,
+      15.9
+     ],
+     [
+      60,
+      20.5
+     ],
+     [
+      70,
+      26.0
+     ],
+     [
+      80,
+      33.1
+     ],
+     [
+      90,
+      43.8
+     ],
+     [
+      95,
+      52.7
+     ],
+     [
+      98,
+      62.4
+     ],
+     [
+      99,
+      68.4
+     ]
+    ],
+    "notes": [
+     {
+      "at": 0,
+      "text": "Species rise with area to the power 0.25: the first losses barely show."
+     },
+     {
+      "at": 50,
+      "text": "Half the habitat gone, and only 16% of species go."
+     },
+     {
+      "at": 90,
+      "text": "Lose 90% and 44% of species go."
+     },
+     {
+      "at": 98,
+      "text": "The last scraps hold the most: each lost point now costs far more species."
+     }
+    ]
+   },
    "source": "MacArthur & Wilson, Island Biogeography, 1967",
    "source_kind": "book",
    "reference": "MacArthur & Wilson, The Theory of Island Biogeography, Princeton University Press, 1967",
@@ -141874,6 +142561,92 @@ const String kEmbeddedBank = r'''
     ],
     "caption": "Each day is 95% safe, yet fewer than one streak in four survives a month."
    },
+   "scene": {
+    "type": "slider",
+    "control": "Length of the streak",
+    "controlUnit": "days",
+    "readout": "Chance it is still unbroken",
+    "readoutUnit": "%",
+    "start": 1,
+    "step": 1,
+    "decimals": 1,
+    "points": [
+     [
+      1,
+      95.0
+     ],
+     [
+      5,
+      77.4
+     ],
+     [
+      10,
+      59.9
+     ],
+     [
+      14,
+      48.8
+     ],
+     [
+      20,
+      35.8
+     ],
+     [
+      25,
+      27.7
+     ],
+     [
+      30,
+      21.5
+     ],
+     [
+      40,
+      12.9
+     ],
+     [
+      50,
+      7.7
+     ],
+     [
+      60,
+      4.6
+     ],
+     [
+      70,
+      2.8
+     ],
+     [
+      80,
+      1.7
+     ],
+     [
+      90,
+      1.0
+     ],
+     [
+      100,
+      0.6
+     ]
+    ],
+    "notes": [
+     {
+      "at": 1,
+      "text": "Any single day: 95%. Almost certain."
+     },
+     {
+      "at": 14,
+      "text": "Two weeks: already less than even."
+     },
+     {
+      "at": 30,
+      "text": "A month unbroken: about one chance in five."
+     },
+     {
+      "at": 90,
+      "text": "Three months: 1%. A missed day is the normal outcome, not a failure."
+     }
+    ]
+   },
    "source": "Feller, Probability Theory, 1968",
    "source_kind": "book",
    "reference": "Feller, An Introduction to Probability Theory and Its Applications, Vol. 1, 3rd ed., Wiley, 1968",
@@ -148986,6 +149759,59 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "slider",
+    "control": "Time simmering",
+    "controlUnit": "min",
+    "readout": "Alcohol still in the pot",
+    "readoutUnit": "%",
+    "start": 15,
+    "step": 5,
+    "points": [
+     [
+      15,
+      40
+     ],
+     [
+      30,
+      35
+     ],
+     [
+      60,
+      25
+     ],
+     [
+      90,
+      20
+     ],
+     [
+      120,
+      10
+     ],
+     [
+      150,
+      5
+     ]
+    ],
+    "notes": [
+     {
+      "at": 15,
+      "text": "A quarter of an hour in: 40% of the alcohol is still there."
+     },
+     {
+      "at": 60,
+      "text": "A full hour of simmering, and a quarter remains."
+     },
+     {
+      "at": 120,
+      "text": "Two hours: still a tenth."
+     },
+     {
+      "at": 150,
+      "text": "Only after two and a half hours is it down to 5%."
+     }
+    ]
+   },
    "source": "USDA Table of Nutrient Retention Factors, 2007",
    "source_kind": "institution",
    "reference": "US Department of Agriculture, USDA Table of Nutrient Retention Factors, Release 6, 2007",
@@ -150981,6 +151807,103 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "slider",
+    "control": "The luckier player leads for",
+    "controlUnit": "days",
+    "readout": "Share of games where that happens",
+    "readoutUnit": "%",
+    "start": 183,
+    "step": 1,
+    "points": [
+     [
+      183,
+      99.8
+     ],
+     [
+      200,
+      93.9
+     ],
+     [
+      220,
+      86.8
+     ],
+     [
+      240,
+      79.6
+     ],
+     [
+      260,
+      72.1
+     ],
+     [
+      280,
+      64.1
+     ],
+     [
+      300,
+      55.5
+     ],
+     [
+      311,
+      50.3
+     ],
+     [
+      320,
+      45.7
+     ],
+     [
+      330,
+      40.1
+     ],
+     [
+      340,
+      33.7
+     ],
+     [
+      350,
+      26.0
+     ],
+     [
+      355,
+      21.2
+     ],
+     [
+      360,
+      14.9
+     ],
+     [
+      362,
+      11.6
+     ],
+     [
+      364,
+      6.7
+     ],
+     [
+      365,
+      0.0
+     ]
+    ],
+    "notes": [
+     {
+      "at": 183,
+      "text": "In every game, someone leads for at least half the year."
+     },
+     {
+      "at": 260,
+      "text": "Most games still: the leader is ahead for 260 days or more."
+     },
+     {
+      "at": 311,
+      "text": "Half of all games: one player leads for 311 days or more."
+     },
+     {
+      "at": 364,
+      "text": "Even 'all year but one day' happens in about one game in fifteen."
+     }
+    ]
+   },
    "source": "Feller, Introduction to Probability Theory, 1968",
    "source_kind": "book",
    "reference": "Feller, An Introduction to Probability Theory and Its Applications, Volume 1, 3rd edition, Wiley, 1968",
@@ -158648,6 +159571,88 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "doubling",
+   "scene": {
+    "type": "slider",
+    "control": "Speed the rocket must gain",
+    "controlUnit": "km/s",
+    "readout": "Share of the rocket that is fuel",
+    "readoutUnit": "%",
+    "start": 0,
+    "step": 0.5,
+    "decimals": 1,
+    "points": [
+     [
+      0,
+      0.0
+     ],
+     [
+      1,
+      28.3
+     ],
+     [
+      2,
+      48.7
+     ],
+     [
+      3,
+      63.2
+     ],
+     [
+      4,
+      73.6
+     ],
+     [
+      5,
+      81.1
+     ],
+     [
+      6,
+      86.5
+     ],
+     [
+      7,
+      90.3
+     ],
+     [
+      8,
+      93.1
+     ],
+     [
+      9,
+      95.0
+     ],
+     [
+      10,
+      96.4
+     ],
+     [
+      11,
+      97.4
+     ],
+     [
+      12,
+      98.2
+     ]
+    ],
+    "notes": [
+     {
+      "at": 0,
+      "text": "Exhaust leaves at 3 km/s. Every 3 km/s gained divides what is left by e."
+     },
+     {
+      "at": 3,
+      "text": "Matching the exhaust speed already takes 63% fuel."
+     },
+     {
+      "at": 9,
+      "text": "Orbit: 95% fuel. Tanks, engines and cargo share the last 5%."
+     },
+     {
+      "at": 12,
+      "text": "At 12 km/s, 98%. This is why rockets drop stages."
+     }
+    ]
+   },
    "source": "Tsiolkovsky, Nauchnoye Obozreniye, 1903",
    "source_kind": "paper",
    "reference": "Tsiolkovsky, Exploration of Outer Space by Means of Reaction Devices, Nauchnoye Obozreniye, 1903",
@@ -180016,6 +181021,92 @@ const String kEmbeddedBank = r'''
     ],
     "caption": "Ten more points of load, from 80% to 90% busy, more than double the wait."
    },
+   "scene": {
+    "type": "slider",
+    "control": "How busy the machine is",
+    "controlUnit": "%",
+    "readout": "Average wait, in job lengths",
+    "readoutUnit": "jobs",
+    "start": 50,
+    "step": 1,
+    "decimals": 1,
+    "points": [
+     [
+      50,
+      1.0
+     ],
+     [
+      60,
+      1.5
+     ],
+     [
+      70,
+      2.3
+     ],
+     [
+      75,
+      3.0
+     ],
+     [
+      80,
+      4.0
+     ],
+     [
+      85,
+      5.7
+     ],
+     [
+      88,
+      7.3
+     ],
+     [
+      90,
+      9.0
+     ],
+     [
+      92,
+      11.5
+     ],
+     [
+      94,
+      15.7
+     ],
+     [
+      95,
+      19.0
+     ],
+     [
+      96,
+      24.0
+     ],
+     [
+      97,
+      32.3
+     ],
+     [
+      98,
+      49.0
+     ]
+    ],
+    "notes": [
+     {
+      "at": 50,
+      "text": "Half busy: a job waits, on average, as long as one job takes."
+     },
+     {
+      "at": 80,
+      "text": "80% busy: the wait is four jobs long."
+     },
+     {
+      "at": 90,
+      "text": "Ten points busier and the wait is nine: more than double."
+     },
+     {
+      "at": 95,
+      "text": "At 95%, nineteen. Near full, each extra point costs more than the last."
+     }
+    ]
+   },
    "source": "Hopp & Spearman, Factory Physics, 2008",
    "source_kind": "book",
    "reference": "Hopp & Spearman, Factory Physics, 3rd edition, McGraw-Hill, 2008",
@@ -182827,6 +183918,88 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "bars",
+   "scene": {
+    "type": "slider",
+    "control": "Screen refresh rate",
+    "controlUnit": "Hz",
+    "readout": "Time between frames",
+    "readoutUnit": "ms",
+    "start": 30,
+    "step": 1,
+    "decimals": 1,
+    "points": [
+     [
+      30,
+      33.3
+     ],
+     [
+      40,
+      25.0
+     ],
+     [
+      50,
+      20.0
+     ],
+     [
+      60,
+      16.7
+     ],
+     [
+      75,
+      13.3
+     ],
+     [
+      90,
+      11.1
+     ],
+     [
+      120,
+      8.3
+     ],
+     [
+      144,
+      6.9
+     ],
+     [
+      165,
+      6.1
+     ],
+     [
+      200,
+      5.0
+     ],
+     [
+      240,
+      4.2
+     ],
+     [
+      300,
+      3.3
+     ],
+     [
+      360,
+      2.8
+     ]
+    ],
+    "notes": [
+     {
+      "at": 30,
+      "text": "30 Hz: a new picture every 33.3 ms."
+     },
+     {
+      "at": 60,
+      "text": "One doubling to 60 Hz saved 16.7 ms."
+     },
+     {
+      "at": 120,
+      "text": "The next doubling saves only 8.3 ms."
+     },
+     {
+      "at": 360,
+      "text": "60 to 360 Hz, six times the rate, saves 13.9 ms: less than 30 to 60."
+     }
+    ]
+   },
    "source": "Larrick & Soll, Science, 2008",
    "source_kind": "paper",
    "reference": "Larrick & Soll, The MPG Illusion, Science 320, 2008",
@@ -196946,7 +198119,8 @@ const String kEmbeddedBank = r'''
   "430": "thinking-z9",
   "431": "thinking-12",
   "432": "thinking-z34",
-  "433": "thinking-1"
+  "433": "thinking-1",
+  "434": "thinking-z31"
  },
  "commons": {
   "1": [
@@ -201278,6 +202452,16 @@ const String kEmbeddedBank = r'''
    "pop_culture-then-and-now-1",
    "medicine-doctors-who-were-right-1",
    "language-great-speeches-3"
+  ],
+  "434": [
+   "pop_culture-what-reality-tv-hides-2",
+   "nature-forecast-odds-1",
+   "science-why-ice-floats-1",
+   "psychology-friends-and-health-1",
+   "sport-streaks-3",
+   "philosophy-what-is-real-1",
+   "space-odds-of-life-1",
+   "language-dialects-2"
   ]
  }
 }
