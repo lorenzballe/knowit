@@ -68,6 +68,7 @@ Queste cose non sono vietate. Vanno bene quando servono a quella persona:
 - **Le lezioni.** Una spiegazione vera, anche lunga o tecnica, va bene quando è il modo migliore per far capire. Se per un attimo fa sentire **un po' ignoranti** va bene anche quello: si migliora solo diventando consapevoli di cosa non si sa. L'app vuole farti migliorare, non coccolarti. Quello che non va mai è **umiliare** o fare la predica.
 - **Le frasi forti e motivazionali.** Vanno bene se colpiscono e piacciono. Meglio ancora se dietro c'è un meccanismo vero e una fonte.
 - **Il livello.** Non esiste un livello giusto per tutti: **la carta deve essere al livello della persona**. A un principiante si spiega da zero. A un laureato si possono dare cose molto complesse e specifiche del suo campo, e ne sarà felice. Il profilo dice a che livello stare.
+- **Sempre un gradino sopra.** Mai banale. La carta sta **un po' più in alto** del livello della persona: abbastanza da farla allungare, non tanto da perderla. Chi la legge deve sentirsi più intelligente, non trattato da bambino. Il modo tipico: partire da una cosa che conosce e portarla a un collegamento che non aveva mai fatto (la somma dei dispari → la caduta dei sassi di Galileo).
 
 ## I fatti: sì, ma solo se servono
 
