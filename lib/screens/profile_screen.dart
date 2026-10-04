@@ -670,6 +670,16 @@ class ProfileScreen extends StatelessWidget {
               label: 'Wipe everything and restart',
               onTap: () => _confirmReset(context),
             ),
+            // Everything a confirmed purchase does, without the store:
+            // Astute+ turns on and the screen a purchase ends on opens.
+            _LinkRow(
+              label: 'Simulate a successful purchase',
+              onTap: () async {
+                if (!app.isPlus) await app.startPlusTrial();
+                if (!context.mounted) return;
+                await showPurchaseSuccess(context, app, source: 'debug');
+              },
+            ),
             _LinkRow(
               label: app.isPlus ? 'Turn Astute+ off' : 'Turn Astute+ on',
               onTap: () async {

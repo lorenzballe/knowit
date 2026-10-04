@@ -285,6 +285,16 @@ class _AstutoRootState extends State<AstutoRoot> {
     _startAccountAndStore();
     _app.addListener(_onAppStateChanged);
     if (_app.ready) _onAppStateChanged();
+    // On the site, /app/?simulate=purchase opens the screen a purchase ends
+    // on, to look at. Only the screen: nothing is unlocked, so the link is
+    // safe to have in the open.
+    if (kIsWeb && Uri.base.queryParameters['simulate'] == 'purchase') {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          showPurchaseSuccess(context, _app, source: 'site preview');
+        }
+      });
+    }
   }
 
   /// The account comes first: the store is told who the reader is, so the

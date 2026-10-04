@@ -58,6 +58,88 @@ List<({IconData icon, String title, String sub})> _perks(
   ),
 ];
 
+/// What the store charges for [plan], or the price written into the app
+/// when it has not answered.
+String planPrice(Plan plan) {
+  final Subscription store = Subscription.instance;
+  final Package? package = plan == Plan.year ? store.yearly : store.monthly;
+  if (package != null) return package.storeProduct.priceString;
+  return _euros(plan == Plan.year ? kYearlyCents : kMonthlyCents);
+}
+
+/// How many days free [plan] starts with for this reader, or null when it
+/// is charged today. The store's word when it has answered — its
+/// introductory offer at no charge, for a reader it will still give it to
+/// — and otherwise the plans as sold: the year starts with [kTrialDays],
+/// the month is charged today. The button and the line under it never
+/// promise a day the store will not give.
+int? planFreeDays(Plan plan) {
+  final Subscription store = Subscription.instance;
+  if (plan == Plan.year) return store.trialDays;
+  final Package? package = store.monthly;
+  return package == null ? null : freeDaysOf(package);
+}
+
+/// The screen a purchase ends on (design 129a): what was bought, what it
+/// does next, and one button to begin. Returns when the reader starts.
+///
+/// Shown by the paywall after a purchase the store confirmed, and — to see
+/// it without paying — by the debug tools and the site's `?simulate=purchase`.
+Future<void> showPurchaseSuccess(
+  BuildContext context,
+  AppState app, {
+  required String source,
+  Plan? plan,
+}) async {
+  final l = context.l10n;
+  final Plan bought = plan ?? app.plan;
+  final String price = planPrice(bought);
+  final String suffix = bought == Plan.year ? l.perYearShort : l.perMonthShort;
+  final int? days = planFreeDays(bought);
+  final DateTime now = DateTime.now();
+  final DateTime renew = bought == Plan.year
+      ? DateTime(now.year + 1, now.month, now.day)
+      : DateTime(now.year, now.month + 1, now.day);
+  final String locale = Localizations.localeOf(context).toString();
+  String day(DateTime d) => DateFormat.MMMd(locale).format(d);
+  final String? end = days == null ? null : day(now.add(Duration(days: days)));
+  final String name = app.name.trim();
+  final String? first = name.isEmpty || name == 'You'
+      ? null
+      : name.split(RegExp(r'\s+')).first;
+  final bool iOS = Theme.of(context).platform == TargetPlatform.iOS;
+  Analytics.capture('purchase success shown', {
+    'source': source,
+    'plan': bought.name,
+    'trial': days != null,
+  });
+  await Navigator.of(context).push(
+    PageRouteBuilder<void>(
+      transitionDuration: const Duration(milliseconds: 250),
+      reverseTransitionDuration: const Duration(milliseconds: 250),
+      pageBuilder: (context, _, _) => PurchaseSuccessScreen(
+        firstName: first,
+        planName: l.successPlanName(
+          bought == Plan.year ? l.planYearly : l.planMonthly,
+        ),
+        planLine: end != null
+            ? l.successFreeUntil(end, price, suffix)
+            : l.successRenewsLine(day(renew), price, suffix),
+        foot: end != null
+            ? l.successFootFirstCharge(end)
+            : l.successFootRenews(day(renew)),
+        onReceipt: () => openLink(
+          iOS
+              ? 'https://apps.apple.com/account/subscriptions'
+              : 'https://play.google.com/store/account/subscriptions',
+        ),
+      ),
+      transitionsBuilder: (context, animation, _, child) =>
+          FadeTransition(opacity: animation, child: child),
+    ),
+  );
+}
+
 /// Astute+.
 ///
 /// Prices come from the store when it answers, so what is shown is what the
@@ -117,25 +199,9 @@ class _PaywallScreenState extends State<PaywallScreen> {
     });
   }
 
-  /// What the store charges, or the price written into the app when it has
-  /// not answered.
-  String _priceFor(Plan plan) {
-    final Package? package = plan == Plan.year ? _store.yearly : _store.monthly;
-    if (package != null) return package.storeProduct.priceString;
-    return _euros(plan == Plan.year ? kYearlyCents : kMonthlyCents);
-  }
+  String _priceFor(Plan plan) => planPrice(plan);
 
-  /// How many days free the plan starts with for this reader, or null when
-  /// it is charged today. The store's word when it has answered — its
-  /// introductory offer at no charge, for a reader it will still give it to
-  /// — and otherwise the plans as sold: the year starts with [kTrialDays],
-  /// the month is charged today. The button and the line under it never
-  /// promise a day the store will not give.
-  int? _freeDays(Plan plan) {
-    if (plan == Plan.year) return _store.trialDays;
-    final Package? package = _store.monthly;
-    return package == null ? null : freeDaysOf(package);
-  }
+  int? _freeDays(Plan plan) => planFreeDays(plan);
 
   String get _cta {
     if (widget.app.isPlus) return context.l10n.plusIsActive;
@@ -275,59 +341,14 @@ class _PaywallScreenState extends State<PaywallScreen> {
     }
   }
 
-  /// The screen a purchase ends on (design 129a): what was bought, what it
-  /// does next, and one button to begin. Returns when the reader starts.
-  Future<void> _celebrate() async {
-    final l = context.l10n;
-    final Plan plan = _plan;
-    final String price = _priceFor(plan);
-    final String suffix = plan == Plan.year ? l.perYearShort : l.perMonthShort;
-    final int? days = _freeDays(plan);
-    final DateTime now = DateTime.now();
-    final DateTime renew = plan == Plan.year
-        ? DateTime(now.year + 1, now.month, now.day)
-        : DateTime(now.year, now.month + 1, now.day);
-    final String locale = Localizations.localeOf(context).toString();
-    String day(DateTime d) => DateFormat.MMMd(locale).format(d);
-    final String? end = days == null
-        ? null
-        : day(now.add(Duration(days: days)));
-    final String name = widget.app.name.trim();
-    final String? first = name.isEmpty || name == 'You'
-        ? null
-        : name.split(RegExp(r'\s+')).first;
-    Analytics.capture('purchase success shown', {
-      'source': widget.source,
-      'plan': plan.name,
-      'trial': days != null,
-    });
-    await Navigator.of(context).push(
-      PageRouteBuilder<void>(
-        transitionDuration: const Duration(milliseconds: 250),
-        reverseTransitionDuration: const Duration(milliseconds: 250),
-        pageBuilder: (context, _, _) => PurchaseSuccessScreen(
-          firstName: first,
-          planName: l.successPlanName(
-            plan == Plan.year ? l.planYearly : l.planMonthly,
-          ),
-          planLine: end != null
-              ? l.successFreeUntil(end, price, suffix)
-              : l.successRenewsLine(day(renew), price, suffix),
-          foot: end != null
-              ? l.successFootFirstCharge(end)
-              : l.successFootRenews(day(renew)),
-          onReceipt: () => _openLink(
-            'subscriptions',
-            Theme.of(context).platform == TargetPlatform.iOS
-                ? 'https://apps.apple.com/account/subscriptions'
-                : 'https://play.google.com/store/account/subscriptions',
-          ),
-        ),
-        transitionsBuilder: (context, animation, _, child) =>
-            FadeTransition(opacity: animation, child: child),
-      ),
-    );
-  }
+  /// The screen a purchase ends on (design 129a). Returns when the reader
+  /// starts.
+  Future<void> _celebrate() => showPurchaseSuccess(
+    context,
+    widget.app,
+    source: widget.source,
+    plan: _plan,
+  );
 
   /// Google Play's reviewers cannot pay, so they type the code Play Console
   /// gave them. In English, as Google asks, and shown to nobody else: the
