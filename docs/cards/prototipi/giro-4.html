@@ -1,0 +1,457 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute Cards, Round Four</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,700&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="../kit/astute-card.css">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/DrawSVGPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Flip.min.js"></script>
+<script src="giro-4/land.js"></script>
+<style>
+/* Round four: each card uses a technique the others don't — kinetic type, a drawing that
+   builds itself, a Manim video, a map that folds into a 3D globe, a timeline you sort. */
+.stagebox{display:flex;flex-direction:column}
+/* OK */
+.okword{font:900 30cqh/.8 var(--display);letter-spacing:-.04em;margin:auto 0;transform-origin:left center}
+.okline{font:700 7.4cqh/1.15 var(--display);font-style:italic;letter-spacing:-.01em;white-space:nowrap;padding-top:.4cqh}
+.okline .hi{font-weight:900}
+.okline .lo{opacity:.55}
+.clip{padding:2cqh 4.5cqw;display:flex;flex-direction:column;gap:1.2cqh;margin-top:2.2cqh;transform:rotate(-1.2deg)}
+.clip .mono{opacity:.6;color:#111}
+.clip q{font:600 2.3cqh/1.35 var(--display);quotes:none}
+.clip q mark{background:#00D9D9;color:#10100c;padding:0 .4cqw;border-radius:.4cqh}
+.sibs{display:flex;flex-direction:column;align-items:flex-start;gap:1.6cqh;margin-top:2.6cqh}
+.sib{position:relative;display:flex;align-items:baseline;gap:3cqw;font:600 2.6cqh/1 var(--body)}
+.sib b{font:900 4.2cqh/1 var(--display);min-width:17cqw}
+.sib svg{position:absolute;left:-1cqw;top:50%;width:calc(100% + 2cqw);height:1cqh;overflow:visible;transform:translateY(-50%)}
+.badge{align-self:flex-start;margin-top:2.8cqh;display:flex;gap:3cqw;align-items:center;background:var(--k);color:var(--c);border-radius:99px;padding:1.4cqh 5cqw;font:800 1.9cqh/1 var(--body);letter-spacing:.04em}
+.badge i{font:700 1.4cqh/1 var(--mono);font-style:normal;opacity:.8}
+/* steps */
+.ctl{display:flex;align-items:center;gap:4cqw}
+.ctl .mono{opacity:.7}
+/* video */
+.vbox{position:relative;height:100%;width:auto;aspect-ratio:1;max-width:100%;cursor:pointer;border-radius:3cqh;overflow:hidden;background:#0f1412;box-shadow:0 1.2cqh 2.6cqh #0003}
+.vbox video{width:100%;height:100%;display:block;object-fit:contain}
+.vbox .play{position:absolute;inset:0;display:grid;place-items:center;background:#0f141299;border:0;cursor:pointer;color:#fff;font:800 2cqh/1 var(--body);letter-spacing:.08em}
+.vbox .play span{display:flex;align-items:center;gap:2.4cqw;background:#00E5A0;color:#10100c;border-radius:99px;padding:1.8cqh 6cqw}
+.vrow{flex:1;min-height:0;display:flex;flex-direction:column;gap:1.2cqh}
+.vrow .mono{flex:none}
+/* globe */
+.gl{position:relative;flex:1;min-height:0;border-radius:3cqh;overflow:hidden;background:color-mix(in srgb,var(--k) 10%,transparent)}
+.gl canvas{position:absolute;inset:0;width:100%;height:100%}
+.city{position:absolute;transform:translate(-50%,-140%);font:800 1.35cqh/1 var(--body);letter-spacing:.1em;background:var(--k);color:var(--c);border-radius:99px;padding:.7cqh 2cqw;white-space:nowrap;pointer-events:none}
+.legend{display:flex;gap:4cqw;font:700 1.45cqh/1 var(--body);letter-spacing:.06em;text-transform:uppercase}
+.legend span{display:flex;align-items:center;gap:1.6cqw}
+.legend i{width:6cqw;height:.6cqh;border-radius:1cqh;display:block}
+.fold{display:flex;align-items:center;gap:3cqw;font:700 1.5cqh/1 var(--body);letter-spacing:.08em;text-transform:uppercase}
+/* timeline */
+.tl{position:relative;flex:1;min-height:0}
+.chip{position:absolute;left:0;right:0;height:6.2cqh;display:flex;align-items:center;gap:3cqw;padding:0 4.5cqw;background:#fff;color:#1d1d1f;border-radius:1.6cqh;font:700 2.15cqh/1.15 var(--body);box-shadow:0 .6cqh 1.4cqh #0003;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;box-sizing:border-box}
+.chip .grip{font:700 2cqh/1 var(--mono);opacity:.35}
+.chip .yr{font:800 1.45cqh/1 var(--mono);color:#82208f;display:none}
+.tl.done .chip{flex-direction:column;align-items:flex-start;justify-content:center;gap:.5cqh;height:4.9cqh;font-size:1.6cqh;padding:0 3cqw;line-height:1.1;white-space:nowrap}
+.tl.done .chip.wrong{box-shadow:inset 0 0 0 .32cqh #c42b2b,0 .6cqh 1.4cqh #0003}
+.tl.done .chip{cursor:default}.tl.done .chip .yr{display:block}.tl.done .chip .grip{display:none}
+.chip.dragging{box-shadow:0 1.6cqh 3cqh #0005;z-index:3;cursor:grabbing}
+.tl svg.axis{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+</style>
+
+<div class="app">
+  <div class="top"><h1>Today</h1><div class="dots" id="dots"></div><div class="kind" id="kind"></div></div>
+  <div class="stage">
+    <button class="nav" id="prev" aria-label="Previous card">←</button>
+    <button class="nav" id="next" aria-label="Next card">→</button>
+
+    <!-- 1 · Kinetic type -->
+    <article class="card" id="ok" style="--c:#00D9D9;--k:#10100c;--edge:#007f80" data-kind="Unpack a word · kinetic type">
+      <div class="in">
+        <div class="label"><span class="t">Language</span><span class="tag">TAP</span></div>
+        <h2 class="q">You say it every day. <em>OK</em> is short for two words, and both are spelled wrong.</h2>
+        <div class="stagebox" id="okStage">
+          <div class="okword" id="okBig">OK</div>
+          <div class="okline gone" id="okLine"><span class="hi">O</span><span class="lo">ll</span>&nbsp;<span class="hi">K</span><span class="lo">orrect</span></div>
+          <div class="clip float gone" id="okClip">
+            <span class="mono">Boston Morning Post · 23 March 1839</span>
+            <q>“…would have the contribution box, et ceteras, <mark>o.k.—all correct</mark>—and cause the corks to fly, like sparks, upward.”</q>
+          </div>
+          <div class="sibs gone" id="okSibs">
+            <div class="sib"><b>O.W.</b>oll wright<svg><line x1="0" y1="50%" x2="100%" y2="50%" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+            <div class="sib"><b>K.Y.</b>know yuse<svg><line x1="0" y1="50%" x2="100%" y2="50%" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+            <div class="sib"><b>N.S.</b>’nuff said<svg><line x1="0" y1="50%" x2="100%" y2="50%" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+          </div>
+          <div class="badge gone" id="okBadge">O.K. CLUB <i>1840 · “OLD KINDERHOOK”</i></div>
+        </div>
+        <p class="say" id="okSay">Tap to take it apart.</p>
+        <div class="ctl"><button class="btn" id="okNext">Unpack it</button><span class="mono" id="okStep">1 / 4</span></div>
+        <div class="keep gone" id="okKeep"><b>WHAT TO KEEP</b>Words don’t survive by being clever. They survive by filling a gap.</div>
+        <div class="foot"><span class="src">Source · Allen Walker Read, <i>American Speech</i> (1963–64); Allan Metcalf, <i>OK</i> (2011)</span></div>
+      </div>
+    </article>
+
+    <!-- 2 · A drawing that builds itself -->
+    <article class="card" id="era" style="--c:#FFB000;--k:#10100c;--edge:#a06c00" data-kind="How he did it · watch it draw">
+      <div class="in">
+        <div class="label"><span class="t">History</span><span class="tag">STEP BY STEP</span></div>
+        <h2 class="q">In 240 BC, a librarian measured the whole Earth with two sticks. How?</h2>
+        <div class="stagebox"><svg class="full" id="eraSvg" role="img" aria-label="Eratosthenes' measurement drawn step by step"></svg></div>
+        <p class="say" id="eraSay">Noon, midsummer, in Syene. The sun is straight overhead: a stick casts <b>no shadow</b>.</p>
+        <div class="ctl"><button class="btn" id="eraNext">Next step</button><span class="mono" id="eraStep">1 / 4</span></div>
+        <div class="keep gone" id="eraKeep"><b>WHAT TO KEEP</b>One angle and one distance can measure what you can’t see.</div>
+        <div class="foot"><span class="src">Source · Cleomedes, <i>The Heavens</i> I.7; Dutka, <i>Archive for History of Exact Sciences</i> (1993)</span></div>
+      </div>
+    </article>
+
+    <!-- 3 · Manim video -->
+    <article class="card" id="gal" style="--c:#00E5A0;--k:#10100c;--edge:#00835b" data-kind="Video · a proof you can see">
+      <div class="in">
+        <div class="label"><span class="t">Science</span><span class="tag">WATCH</span></div>
+        <h2 class="q">A falling stone drops 1, 3, 5, 7… units in each second. The totals are always perfect squares. Why?</h2>
+        <div class="stagebox vrow">
+          <div class="vbox" id="galBox">
+            <video id="galVid" muted playsinline preload="auto" poster="giro-4/odd-squares-end.jpg" src="giro-4/odd-squares.mp4"></video>
+            <button class="play" id="galPlay" aria-label="Play the video"><span>▶ Play · 12 s</span></button>
+          </div>
+          <span class="mono" id="galNote">1 unit ≈ 4.9 metres of fall, on Earth</span>
+        </div>
+        <p class="say" id="galSay">Each new second adds the next odd number: exactly the L that makes the square one size bigger. So the distance grows with <b>time × time</b>.</p>
+        <p class="say gone" id="galMore" hidden>Each second adds the next odd number, the L that makes the square one size bigger. So distance grows with <b>time × time</b>, and a fall from twice as high takes only <b>1.4 times</b> as long.</p>
+        <div class="keep gone" id="galKeep"><b>WHAT TO KEEP</b>When a pattern looks like magic, look for the shape behind it.</div>
+        <div class="foot"><span class="src">Source · Galileo, <i>Two New Sciences</i> (1638), Third Day</span></div>
+      </div>
+    </article>
+
+    <!-- 4 · 3D: the map folds into a globe -->
+    <article class="card" id="geo" style="--c:#00A6FF;--k:#10100c;--edge:#005e91" data-kind="Fold it · 3D">
+      <div class="in">
+        <div class="label"><span class="t">Technology</span><span class="tag">FOLD IT</span></div>
+        <h2 class="q">London to Los Angeles. The straight line on the map crosses the Atlantic. So why do planes fly over Greenland?</h2>
+        <div class="stagebox" style="gap:1.4cqh">
+          <div class="gl" id="geoBox"><canvas id="geoCv"></canvas><span class="city" id="cLon">LONDON</span><span class="city" id="cLax">LOS ANGELES</span></div>
+          <div class="legend"><span><i style="background:repeating-linear-gradient(90deg,#fff 0 6px,transparent 6px 10px)"></i>Straight on the map</span><span><i style="background:#FFE600"></i>The route flown</span></div>
+          <label class="fold"><span>Map</span><input type="range" id="geoFold" min="0" max="1" step="0.001" value="0" aria-label="Fold the map into a globe"><span>Globe</span></label>
+        </div>
+        <p class="say" id="geoSay">Drag to fold the flat map into the real Earth. Watch the two lines.</p>
+        <div class="keep gone" id="geoKeep"><b>WHAT TO KEEP</b>Every flat map stretches something. If a shortcut looks bent, ask what got stretched.</div>
+        <div class="foot"><span class="src">Source · great-circle distance, haversine formula, Earth radius 6,371 km; coastlines: Natural Earth</span></div>
+      </div>
+    </article>
+
+    <!-- 5 · Sort it, then see the true scale -->
+    <article class="card" id="time" style="--c:#E040FB;--k:#ffffff;--edge:#82208f" data-kind="Sort it · then see the scale">
+      <div class="in">
+        <div class="label"><span class="t">Weird facts</span><span class="tag">DRAG</span></div>
+        <h2 class="q">Drag these into order, oldest on top. Then see how far apart they really are.</h2>
+        <div class="stagebox"><div class="tl" id="tl"></div></div>
+        <p class="say" id="timeSay">Hold a card and slide it up or down.</p>
+        <div class="ctl"><button class="btn" id="timeGo">Show the real order</button></div>
+        <div class="keep gone" id="timeKeep"><b>WHAT TO KEEP</b>We file the past in drawers, “ancient”, “medieval”, and squash each drawer flat.</div>
+        <div class="foot"><span class="src">Source · Britannica (Giza, Cleopatra, Tenochtitlan); Vartanyan et al., <i>Nature</i> 1993; University of Oxford; Bain, patent 9745 (1843)</span></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<script src="../kit/astute-card.js"></script>
+<script>
+gsap.registerPlugin(SplitText, ScrambleTextPlugin, DrawSVGPlugin, Flip);
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const D = s => calm ? 0 : s;
+
+/* ---------- 1 · OK ---------- */
+(() => {
+  let step = 0;
+  const say = Kit.$('okSay'), btn = Kit.$('okNext'), lab = Kit.$('okStep');
+  const lines = [
+    null,
+    'In 1830s Boston, papers had a craze: <b>misspell a phrase on purpose</b>, shorten it, and let readers decode the joke.',
+    'The first “o.k.” in print, with the decoding right beside it.',
+    'Its siblings died within a few years. OK got a lucky break: fans of President Van Buren, nicknamed Old Kinderhook, formed <b>O.K. Clubs</b>.'
+  ];
+  function reset() {
+    step = 0; lab.textContent = '1 / 4'; btn.textContent = 'Unpack it'; btn.disabled = false;
+    ['okLine', 'okClip', 'okSibs', 'okBadge', 'okKeep'].forEach(Kit.hide);
+    const big = Kit.$('okBig'); big.classList.remove('gone'); gsap.set(big, {clearProps: 'all'});
+    say.innerHTML = 'Tap to take it apart.';
+    if (!calm) { const sp = SplitText.create(big, {type: 'chars'}); gsap.from(sp.chars, {yPercent: 60, opacity: 0, stagger: .12, duration: .7, ease: 'back.out(1.6)', onComplete: () => sp.revert()}); }
+  }
+  async function next() {
+    step++; lab.textContent = Math.min(step + 1, 4) + ' / 4';
+    if (step === 1) {
+      const big = Kit.$('okBig');
+      await gsap.to(big, {scale: .34, duration: D(.6), ease: 'power3.inOut'}).then();
+      big.classList.add('gone');
+      const line = Kit.$('okLine'); line.classList.remove('gone');
+      const lo = line.querySelectorAll('.lo');
+      gsap.from(line.querySelectorAll('.hi'), {opacity: 0, x: -10, duration: D(.4), stagger: .1});
+      lo.forEach((e, i) => { const t = e.textContent; gsap.fromTo(e, {opacity: 0}, {opacity: .55, duration: D(.2), delay: D(.25 + i * .15)}); if (!calm) gsap.to(e, {duration: 1.1, delay: .25 + i * .15, scrambleText: {text: t, chars: 'lowercase', speed: .6}}); });
+      say.innerHTML = lines[1]; btn.textContent = 'Next';
+    } else if (step === 2) {
+      Kit.show('okClip'); gsap.from('#okClip', {rotate: -6, y: 30, duration: D(.6), ease: 'back.out(1.4)'});
+      say.innerHTML = lines[2];
+    } else if (step === 3) {
+      await gsap.to('#okClip', {opacity: 0, y: -10, duration: D(.3)}).then(); Kit.hide('okClip'); gsap.set('#okClip', {clearProps: 'opacity,transform'});
+      Kit.show('okSibs');
+      const strikes = [...document.querySelectorAll('#okSibs line')], rows = [...document.querySelectorAll('#okSibs .sib')];
+      gsap.set(strikes, {drawSVG: '0%'});
+      const tl = gsap.timeline();
+      tl.from(rows, {opacity: 0, x: -14, stagger: .12, duration: D(.35)})
+        .to(strikes, {drawSVG: '100%', stagger: .18, duration: D(.4), ease: 'power2.in'})
+        .to(rows, {opacity: .35, duration: D(.3)}, '<.2')
+        .add(() => { Kit.show('okBadge'); gsap.from('#okBadge', {scale: .6, duration: D(.5), ease: 'back.out(2)', transformOrigin: 'left center'}); });
+      say.innerHTML = lines[3]; btn.textContent = 'Why it lasted';
+    } else if (step === 4) {
+      say.innerHTML = 'But luck isn’t why it lasted. OK says <b>yes without saying how you feel</b>. No other word did that job.';
+      Kit.show('okKeep'); btn.textContent = 'Again'; lab.textContent = '4 / 4';
+    } else reset();
+  }
+  btn.onclick = next;
+  Kit.onShow.ok = () => { if (step === 0) reset(); };
+  Kit.play.ok = async () => { for (let i = 0; i < 4; i++) { await next(); await new Promise(r => setTimeout(r, 900)); } };
+})();
+
+/* ---------- 2 · Eratosthenes ---------- */
+(() => {
+  const svg = Kit.$('eraSvg'), say = Kit.$('eraSay'), btn = Kit.$('eraNext'), lab = Kit.$('eraStep');
+  let step = 0, g = null;
+  const SAYS = [
+    'Noon, midsummer, in Syene. The sun is straight overhead: a stick casts <b>no shadow</b>.',
+    'Same moment, Alexandria, 5,000 stadia north. Its stick <b>does</b> cast a shadow: the rays hit it at <b>7.2°</b> (drawn bigger here).',
+    'Extend both sticks to the Earth’s centre. The rays are parallel, so the angle there is <b>the same 7.2°</b>, and it spans the red 5,000 stadia.',
+    '7.2° is <b>1/50 of a circle</b>. So the Earth is 50 × 5,000 stadia around. Today’s figure: 40,075 km.'
+  ];
+  function draw() {
+    svg.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(svg), ink = '#10100c', red = '#c42b2b';
+    // Earth on the left, the sun far to the right: its rays arrive flat and parallel.
+    const r = Math.min(H * .44, W * .37), cx = r + f * .4, cy = H * .5, A = 38 * Math.PI / 180, k = 1.22;
+    const P = (a, m = 1) => [cx + Math.cos(a) * r * m, cy - Math.sin(a) * r * m];
+    const L = (pts, a = {}) => Kit.mk('polyline', Object.assign({points: pts.map(p => p.join(',')).join(' '), fill: 'none', stroke: ink, 'stroke-width': 2.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, a), svg);
+    const T = (x, y, txt, a = {}) => { const t = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': f * .82, fill: ink, 'letter-spacing': '.06em'}, a), svg); t.textContent = txt; return t; };
+    const arc = (x, y, rr, a0, a1, cls) => { const p0 = [x + Math.cos(a0) * rr, y - Math.sin(a0) * rr], p1 = [x + Math.cos(a1) * rr, y - Math.sin(a1) * rr]; const e = Kit.mk('path', {d: `M${p0} A${rr},${rr} 0 0 ${a1 < a0 ? 1 : 0} ${p1}`, fill: 'none', stroke: red, 'stroke-width': 3}, svg); e.classList.add(cls); return e; };
+    const tag = (e, c) => (e.classList.add(c), e);
+    tag(Kit.mk('circle', {cx, cy, r, fill: '#10100c12', stroke: ink, 'stroke-width': 2.6}, svg), 's0');
+    // sun
+    const sx = W - f * 1.6, sy = P(0, k)[1] - (P(0, k)[1] - P(A, k)[1]) / 2;
+    const sun = tag(Kit.mk('g', {}, svg), 's0');
+    Kit.mk('circle', {cx: sx, cy: sy, r: f * .95, fill: '#fff', stroke: ink, 'stroke-width': 2}, sun);
+    for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4; Kit.mk('line', {x1: sx + Math.cos(a) * f * 1.3, y1: sy + Math.sin(a) * f * 1.3, x2: sx + Math.cos(a) * f * 1.75, y2: sy + Math.sin(a) * f * 1.75, stroke: ink, 'stroke-width': 2, 'stroke-linecap': 'round'}, sun); }
+    const [syX, syY] = P(0, k), [alX, alY] = P(A, k);
+    for (const [x, y] of [[syX, syY], [alX, alY]]) tag(L([[sx - f * 2, y], [x, y]], {stroke: '#fff', 'stroke-width': 2.4, 'stroke-dasharray': '7 7'}), 's0');
+    for (const y of [cy + r * .45, cy - r * .9]) { const x = cx + Math.sqrt(r * r - (y - cy) ** 2); tag(L([[sx - f * 2, y], [x, y]], {stroke: '#ffffff99', 'stroke-width': 2, 'stroke-dasharray': '7 7'}), 's0'); }
+    tag(L([P(0, 1), [syX, syY]], {'stroke-width': 5}), 's0');
+    tag(T(syX - f * .2, syY + f * 1.5, 'SYENE'), 's0');
+    tag(T(syX - f * .2, syY + f * 2.5, 'NO SHADOW', {'font-size': f * .6, opacity: .7}), 's0');
+    // step 2: Alexandria's stick meets the rays at an angle
+    tag(L([P(A, 1), [alX, alY]], {'stroke-width': 5}), 's1');
+    tag(T(alX - f * .4, alY - f * .9, 'ALEXANDRIA', {'text-anchor': 'middle'}), 's1');
+    arc(alX, alY, f * 1.5, Math.PI + A, Math.PI, 's1');
+    tag(T(alX - f * 2.6, alY + f * 1.15, '7.2°', {fill: red, 'font-size': f}), 's1');
+    // step 3: both sticks point to the centre; the same angle there; the known distance
+    tag(L([[syX, syY], [cx, cy]], {'stroke-dasharray': '2 7'}), 's2');
+    tag(L([[alX, alY], [cx, cy]], {'stroke-dasharray': '2 7'}), 's2');
+    arc(cx, cy, r * .3, A, 0, 's2');
+    tag(T(cx + r * .34, cy - r * .07, '7.2°', {fill: red, 'font-size': f}), 's2');
+    tag(Kit.mk('path', {d: `M${P(0)} A${r},${r} 0 0 0 ${P(A)}`, fill: 'none', stroke: red, 'stroke-width': 6, 'stroke-linecap': 'round'}, svg), 's2');
+    // step 4: the whole circle is 50 of those slices
+    const ticks = tag(Kit.mk('g', {}, svg), 's3');
+    for (let i = 0; i < 50; i++) { const a = i / 50 * Math.PI * 2; const [x0, y0] = P(a, .9), [x1, y1] = P(a, 1); Kit.mk('line', {x1: x0, y1: y0, x2: x1, y2: y1, stroke: ink, 'stroke-width': 1.8}, ticks); }
+    tag(T(cx, cy + r * .5, '× 50', {'text-anchor': 'middle', 'font-family': 'Fraunces', 'font-weight': 900, 'font-size': f * 1.9}), 's3');
+    tag(T(W - f * .2, H - f * 2.5, '250,000 STADIA', {'text-anchor': 'end', 'font-size': f * .85}), 's3');
+    tag(T(W - f * .2, H - f * .45, '≈ 40,000 KM', {'text-anchor': 'end', 'font-family': 'Fraunces', 'font-weight': 900, 'font-size': f * 1.4}), 's3');
+    for (let st = 0; st < 4; st++) svg.querySelectorAll('.s' + st).forEach(e => e.style.display = st <= step ? '' : 'none');
+  }
+  function reveal(s) {
+    const els = [...svg.querySelectorAll('.s' + s)]; els.forEach(e => e.style.display = '');
+    if (calm) return;
+    const strokes = els.filter(e => ['polyline', 'path', 'circle'].includes(e.tagName) && !e.getAttribute('stroke-dasharray'));
+    gsap.from(strokes, {drawSVG: '0%', duration: .6, stagger: .08, ease: 'power2.inOut'});
+    gsap.from(els.filter(e => e.tagName === 'text' || e.tagName === 'g' || e.getAttribute('stroke-dasharray')), {opacity: 0, duration: .45, delay: .3, stagger: .06});
+    if (s === 3) gsap.from(svg.querySelectorAll('.s3 line'), {opacity: 0, duration: .05, stagger: .03});
+  }
+  function go() {
+    if (step === 3) { step = 0; Kit.hide('eraKeep'); btn.textContent = 'Next step'; draw(); reveal(0); }
+    else { step++; reveal(step); if (step === 3) { Kit.show('eraKeep'); btn.textContent = 'Again'; } }
+    say.innerHTML = SAYS[step]; lab.textContent = (step + 1) + ' / 4';
+  }
+  btn.onclick = go;
+  Kit.onShow.era = () => { draw(); if (step === 0) reveal(0); };
+  Kit.play.era = async () => { for (let i = 0; i < 3; i++) { go(); await new Promise(r => setTimeout(r, 700)); } };
+})();
+
+/* ---------- 3 · Galileo, the Manim video ---------- */
+(() => {
+  const v = Kit.$('galVid'), p = Kit.$('galPlay');
+  p.onclick = () => { v.currentTime = 0; v.play(); p.classList.add('gone'); Kit.hide('galKeep'); Kit.hide('galMore'); };
+  v.onended = () => { Kit.$('galNote').textContent = 'Tap the video to replay · 1 unit ≈ 4.9 m of fall'; Kit.$('galSay').innerHTML = Kit.$('galMore').innerHTML; Kit.show('galKeep'); };
+  Kit.$('galBox').addEventListener('click', e => { if (p.classList.contains('gone') && v.paused) { v.currentTime = 0; v.play(); } });
+  Kit.onHide.gal = () => v.pause();
+  Kit.play.gal = async () => { v.pause(); p.classList.add('gone'); try { v.currentTime = Math.max(0, (v.duration || 12.3) - .05); } catch (e) {} v.onended(); };
+})();
+
+/* ---------- 4 · The map folds into a globe (three.js) ---------- */
+let geoReady = null;
+(() => {
+  const LON0 = -60 * Math.PI / 180, LAT0 = 47 * Math.PI / 180;
+  const LONDON = [51.47, -0.45], LAX = [33.94, -118.41];
+  const rad = d => d * Math.PI / 180;
+  function slerp(a, b, f) {
+    const [la1, lo1, la2, lo2] = [rad(a[0]), rad(a[1]), rad(b[0]), rad(b[1])];
+    const d = 2 * Math.asin(Math.sqrt(Math.sin((la2 - la1) / 2) ** 2 + Math.cos(la1) * Math.cos(la2) * Math.sin((lo2 - lo1) / 2) ** 2));
+    const A = Math.sin((1 - f) * d) / Math.sin(d), B = Math.sin(f * d) / Math.sin(d);
+    const x = A * Math.cos(la1) * Math.cos(lo1) + B * Math.cos(la2) * Math.cos(lo2), y = A * Math.cos(la1) * Math.sin(lo1) + B * Math.cos(la2) * Math.sin(lo2), z = A * Math.sin(la1) + B * Math.sin(la2);
+    return [Math.atan2(z, Math.hypot(x, y)) * 180 / Math.PI, Math.atan2(y, x) * 180 / Math.PI];
+  }
+  function texture() {
+    const c = document.createElement('canvas'); c.width = 4096; c.height = 2048; const x = c.getContext('2d');
+    const X = lon => (lon + 180) / 360 * c.width, Y = lat => (90 - lat) / 180 * c.height;
+    x.fillStyle = '#0a5f93'; x.fillRect(0, 0, c.width, c.height);
+    x.strokeStyle = '#ffffff22'; x.lineWidth = 2;
+    for (let lo = -180; lo <= 180; lo += 30) { x.beginPath(); x.moveTo(X(lo), 0); x.lineTo(X(lo), c.height); x.stroke(); }
+    for (let la = -60; la <= 60; la += 30) { x.beginPath(); x.moveTo(0, Y(la)); x.lineTo(c.width, Y(la)); x.stroke(); }
+    x.fillStyle = '#10100c';
+    for (const ring of LAND) { x.beginPath(); for (let i = 0; i < ring.length; i += 2) { const px = X(ring[i]), py = Y(ring[i + 1]); i ? x.lineTo(px, py) : x.moveTo(px, py); } x.closePath(); x.fill(); }
+    x.lineCap = 'round';
+    x.strokeStyle = '#ffffff'; x.lineWidth = 9; x.setLineDash([26, 22]);
+    x.beginPath(); x.moveTo(X(LONDON[1]), Y(LONDON[0])); x.lineTo(X(LAX[1]), Y(LAX[0])); x.stroke();
+    x.setLineDash([]); x.strokeStyle = '#FFE600'; x.lineWidth = 13; x.beginPath();
+    for (let i = 0; i <= 120; i++) { const [la, lo] = slerp(LONDON, LAX, i / 120); i ? x.lineTo(X(lo), Y(la)) : x.moveTo(X(lo), Y(la)); } x.stroke();
+    for (const p of [LONDON, LAX]) { x.fillStyle = '#fff'; x.beginPath(); x.arc(X(p[1]), Y(p[0]), 16, 0, 7); x.fill(); }
+    return c;
+  }
+  geoReady = import('https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js').then(THREE => {
+    const box = Kit.$('geoBox'), cv = Kit.$('geoCv'), slider = Kit.$('geoFold');
+    const renderer = new THREE.WebGLRenderer({canvas: cv, antialias: true, alpha: true, preserveDrawingBuffer: true});
+    renderer.setPixelRatio(Math.min(2, devicePixelRatio));
+    const scene = new THREE.Scene(), cam = new THREE.PerspectiveCamera(30, 1, .1, 100);
+    const tex = new THREE.CanvasTexture(texture()); tex.wrapS = THREE.RepeatWrapping; tex.anisotropy = 8; tex.colorSpace = THREE.SRGBColorSpace;
+    const NX = 180, NY = 90, R = 1;
+    const geom = new THREE.BufferGeometry(), N = (NX + 1) * (NY + 1);
+    const pos = new Float32Array(N * 3), flat = new Float32Array(N * 3), ball = new Float32Array(N * 3), uv = new Float32Array(N * 2), idx = [];
+    const place = (lat, lon, outF, outB, o) => {
+      const l = lon - LON0;
+      outF[o] = l * R; outF[o + 1] = (lat - LAT0) * R; outF[o + 2] = 0;
+      const x = R * Math.cos(lat) * Math.sin(l), y = R * Math.sin(lat), z = R * Math.cos(lat) * Math.cos(l);
+      outB[o] = x; outB[o + 1] = y * Math.cos(LAT0) - z * Math.sin(LAT0); outB[o + 2] = y * Math.sin(LAT0) + z * Math.cos(LAT0) - R;
+    };
+    for (let j = 0; j <= NY; j++) for (let i = 0; i <= NX; i++) {
+      const k = j * (NX + 1) + i, lon = LON0 - Math.PI + i / NX * 2 * Math.PI, lat = Math.PI / 2 - j / NY * Math.PI;
+      place(lat, lon, flat, ball, k * 3);
+      uv[k * 2] = (lon * 180 / Math.PI + 180) / 360; uv[k * 2 + 1] = 1 - j / NY;
+      if (i < NX && j < NY) { const a = k, b = k + 1, c = k + NX + 1, d = c + 1; idx.push(a, c, b, b, c, d); }
+    }
+    geom.setAttribute('position', new THREE.BufferAttribute(pos, 3)); geom.setAttribute('uv', new THREE.BufferAttribute(uv, 2)); geom.setIndex(idx);
+    const mesh = new THREE.Mesh(geom, new THREE.MeshBasicMaterial({map: tex, side: THREE.DoubleSide}));
+    scene.add(mesh);
+    const cities = [[LONDON, Kit.$('cLon')], [LAX, Kit.$('cLax')]].map(([p, el]) => { const f = new Float32Array(3), b = new Float32Array(3); place(rad(p[0]), rad(p[1]), f, b, 0); return {f, b, el}; });
+    let t = 0;
+    const ease = s => s < .5 ? 4 * s * s * s : 1 - Math.pow(-2 * s + 2, 3) / 2;
+    function render() {
+      const W = box.clientWidth, H = box.clientHeight; if (!W || !H) return;
+      renderer.setSize(W, H, false); cam.aspect = W / H;
+      const e = ease(t);
+      for (let k = 0; k < N * 3; k++) pos[k] = flat[k] + (ball[k] - flat[k]) * e;
+      geom.attributes.position.needsUpdate = true; geom.computeBoundingSphere();
+      // frame the North Atlantic on the map, the whole globe at the end
+      const need = (1 - e) * 1.28 + e * 1.04, fov = cam.fov * Math.PI / 180;
+      const dist = need / Math.tan(fov / 2) / Math.min(1, cam.aspect);
+      cam.position.set(0, -.05 * (1 - e), dist - e * R); cam.lookAt(0, -.05 * (1 - e), -e * R); cam.updateProjectionMatrix();
+      mesh.rotation.y = 0;
+      renderer.render(scene, cam);
+      for (const c of cities) { const v = new THREE.Vector3(c.f[0] + (c.b[0] - c.f[0]) * e, c.f[1] + (c.b[1] - c.f[1]) * e, c.f[2] + (c.b[2] - c.f[2]) * e).project(cam); c.el.style.left = ((v.x + 1) / 2 * W) + 'px'; c.el.style.top = ((1 - v.y) / 2 * H) + 'px'; }
+    }
+    function set(v) {
+      t = +v; render();
+      if (t > .97) { Kit.$('geoSay').innerHTML = 'On the globe the yellow “detour” is the straight line: <b>8,760 km</b>, against <b>9,800</b> across the map. An hour of flying saved.'; Kit.show('geoKeep'); }
+    }
+    slider.oninput = e => set(e.target.value);
+    Kit.onShow.geo = () => { render(); if (!calm && t === 0) gsap.fromTo(slider, {value: 0}, {value: .06, duration: .5, yoyo: true, repeat: 1, onUpdate: () => set(slider.value)}); };
+    Kit.play.geo = () => new Promise(res => gsap.to(slider, {value: 1, duration: 1.2, ease: 'none', onUpdate: () => set(slider.value), onComplete: res}));
+    Kit.onShow.geo.ready = true;
+    if (document.querySelector('.card.on')?.id === 'geo') render();
+    return true;
+  });
+})();
+
+/* ---------- 5 · Sort the past ---------- */
+(() => {
+  const ITEMS = [
+    {t: 'The Great Pyramid is finished', s: 'Great Pyramid', y: -2560, yl: 'c. 2560 BC'},
+    {t: 'The last woolly mammoths die', s: 'Last mammoths', y: -2000, yl: 'c. 2000 BC'},
+    {t: 'Cleopatra dies', s: 'Cleopatra dies', y: -30, yl: '30 BC'},
+    {t: 'Teaching begins at Oxford', s: 'Oxford teaching', y: 1096, yl: '1096'},
+    {t: 'The Aztecs found their capital', s: 'Aztec capital', y: 1325, yl: '1325'},
+    {t: 'The first fax is patented', s: 'First fax', y: 1843, yl: '1843'}
+  ];
+  const START = [5, 2, 4, 1, 3, 0];
+  const tl = Kit.$('tl'); let order = [], done = false;
+  function build() {
+    tl.innerHTML = ''; tl.classList.remove('done'); done = false; order = START.slice();
+    START.forEach(i => { const c = document.createElement('div'); c.className = 'chip'; c.dataset.i = i; c.tabIndex = 0; c.innerHTML = `<span class="grip">⋮⋮</span><span class="nm">${ITEMS[i].t}</span><span class="yr">${ITEMS[i].yl}</span>`; tl.appendChild(c); });
+    layoutList(false);
+    Kit.hide('timeKeep'); Kit.$('timeGo').textContent = 'Show the real order'; Kit.$('timeSay').innerHTML = 'Hold a card and slide it up or down.';
+  }
+  const chips = () => [...tl.querySelectorAll('.chip')];
+  const slot = () => { const H = tl.clientHeight, h = chips()[0].offsetHeight; return {h, gap: Math.min(h * .35, (H - h * 6) / 5)}; };
+  function layoutList(anim) {
+    const {h, gap} = slot(), top = (tl.clientHeight - (6 * h + 5 * gap)) / 2;
+    const state = anim ? Flip.getState(chips()) : null;
+    order.forEach((i, k) => { const c = tl.querySelector(`[data-i="${i}"]`); if (c.classList.contains('dragging')) return; c.style.top = (top + k * (h + gap)) + 'px'; c.style.left = '0'; c.style.right = '0'; c.style.width = ''; });
+    if (state) Flip.from(state, {duration: D(.25), ease: 'power2.out', targets: chips().filter(c => !c.classList.contains('dragging'))});
+  }
+  tl.addEventListener('pointerdown', e => {
+    const c = e.target.closest('.chip'); if (!c || done) return;
+    c.setPointerCapture(e.pointerId); c.classList.add('dragging');
+    const y0 = e.clientY, top0 = parseFloat(c.style.top), {h, gap} = slot();
+    const move = ev => {
+      const y = top0 + ev.clientY - y0; c.style.top = y + 'px';
+      const from = order.indexOf(+c.dataset.i), base = (tl.clientHeight - (6 * h + 5 * gap)) / 2;
+      const to = Math.max(0, Math.min(5, Math.round((y - base) / (h + gap))));
+      if (to !== from) { order.splice(from, 1); order.splice(to, 0, +c.dataset.i); layoutList(true); }
+    };
+    const up = () => { c.classList.remove('dragging'); c.removeEventListener('pointermove', move); layoutList(true); };
+    c.addEventListener('pointermove', move); c.addEventListener('pointerup', up, {once: true}); c.addEventListener('pointercancel', up, {once: true});
+  });
+  tl.addEventListener('keydown', e => {
+    const c = e.target.closest('.chip'); if (!c || done || !['ArrowUp', 'ArrowDown'].includes(e.key)) return; e.preventDefault();
+    const from = order.indexOf(+c.dataset.i), to = Math.max(0, Math.min(5, from + (e.key === 'ArrowUp' ? -1 : 1)));
+    order.splice(from, 1); order.splice(to, 0, +c.dataset.i); layoutList(true); c.focus();
+  });
+  function reveal() {
+    done = true;
+    const right = order.filter((i, k) => i === k).length;
+    order.forEach((i, k) => { const c = tl.querySelector(`[data-i="${i}"]`); c.classList.toggle('wrong', i !== k); c.querySelector('.nm').textContent = ITEMS[i].s; });
+    const state = Flip.getState(chips());
+    tl.classList.add('done');
+    Kit.$('timeSay').innerHTML = `${right} of 6 right (red ones moved). Look at Cleopatra: the pyramid was <b>older to her</b> than she is to the Moon landing.`;
+    Kit.show('timeKeep'); Kit.$('timeGo').textContent = 'Try again';
+    // the true scale: a vertical axis from 2600 BC to the Moon landing, chips either side of it
+    const H = tl.clientHeight, W = tl.clientWidth, h = chips()[0].offsetHeight, ax = W * .5, cw = W * .43, top = h * .5;
+    const side = [0, 1, 0, 1, 0, 1];
+    let bot = H - h * .95, ys;
+    for (let tries = 0; tries < 40; tries++) {
+      const Y = yr => top + (yr + 2600) / (1969 + 2600) * (bot - top), last = [-1e9, -1e9];
+      ys = ITEMS.map((it, i) => { const y = Math.max(Y(it.y) - h / 2, last[side[i]] + h + 5); last[side[i]] = y; return y; });
+      if (Math.max(...ys) + h <= H - h * .8) break; bot -= 4;
+    }
+    const Y = yr => top + (yr + 2600) / (1969 + 2600) * (bot - top);
+    const svg = Kit.mk('svg', {class: 'axis'}, tl), fs = h * .26;
+    Kit.mk('line', {x1: ax, y1: top - h * .3, x2: ax, y2: bot, stroke: '#fff', 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
+    Kit.mk('circle', {cx: ax, cy: bot, r: h * .15, fill: '#fff'}, svg);
+    const moon = Kit.mk('text', {x: ax, y: H - h * .2, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs, 'letter-spacing': '.06em'}, svg); moon.textContent = '1969 · MOON LANDING';
+    ITEMS.forEach((it, i) => {
+      const c = tl.querySelector(`[data-i="${i}"]`), sd = side[i], y = ys[i];
+      c.style.top = y + 'px'; c.style.left = sd ? (W - cw) + 'px' : '0'; c.style.right = 'auto'; c.style.width = cw + 'px';
+      Kit.mk('circle', {cx: ax, cy: Y(it.y), r: h * .11, fill: '#fff'}, svg);
+      Kit.mk('line', {x1: ax, y1: Y(it.y), x2: sd ? W - cw : cw, y2: y + h / 2, stroke: '#ffffffaa', 'stroke-width': 1.5}, svg);
+    });
+    Flip.from(state, {duration: D(.9), ease: 'power3.inOut', stagger: .05});
+    gsap.from(svg, {opacity: 0, duration: D(.6), delay: D(.5)});
+  }
+  Kit.$('timeGo').onclick = () => done ? build() : reveal();
+  Kit.onShow.time = () => { if (!tl.children.length) build(); else if (!done) layoutList(false); };
+  Kit.play.time = async () => reveal();
+})();
+
+Kit.deck();
+</script>

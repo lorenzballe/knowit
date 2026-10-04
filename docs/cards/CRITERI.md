@@ -17,7 +17,7 @@
 
 1. **È vera.** Ogni fatto e ogni numero è corretto e torna con la fonte. Un solo errore e la carta si ferma.
 2. **Ha una fonte vera e verificabile:** libro, studio, giornale serio, dato ufficiale, o un calcolo che il lettore può rifare. Mai una fonte inventata o "a memoria" senza controllo.
-3. **Non è una curiosità vuota.** Supera il test dell'amico sveglio: direbbe "interessante! Questo è in gamba, lo faccio anch'io, bello", non solo "ok".
+3. **Non è una curiosità vuota, e non è banale.** Sta un gradino sopra il livello del lettore (vedi `SCOPO.md`, *Sempre un gradino sopra*): se lui l'avrebbe potuta scrivere da solo, non passa. Supera il test dell'amico sveglio: direbbe "interessante! Questo è in gamba, lo faccio anch'io, bello", non solo "ok".
 4. **Dà almeno una delle sensazioni** di `SCOPO.md`: "ecco perché", "questo sono io", "figo, riguarda me", "e se fosse così?", oppure "che bello" per le carte del bello.
 5. **Sta nella carta, perfetta.** Niente scroll, niente scritte storte o tagliate, niente sovrapposizioni, niente grandi spazi vuoti. Va controllato **guardando lo screenshot** su almeno tre telefoni (piccolo, medio, grande), non a occhio sul testo.
    Video, animazioni e qualsiasi altra cosa restano **dentro le dimensioni della carta**. Solo in casi eccezionali una carta può uscirne, e sempre con **un pulsante apposito** (schermo intero, ruotare il telefono…).

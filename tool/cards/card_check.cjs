@@ -15,8 +15,14 @@ const phones = {small: {width: 360, height: 740}, medium: {width: 390, height: 8
 (async () => {
   const browser = await pw.chromium.launch({executablePath: fs.existsSync('/opt/pw-browsers/chromium') ? '/opt/pw-browsers/chromium' : undefined});
   let problems = 0;
+  // Pages link libraries from the CDN; serve them from the kit's vendor/ copies so the
+  // check works offline and tests the same files. Fonts come from the system if installed.
+  const vendor = path.join(__dirname, '../../docs/cards/kit/vendor');
+  const local = url => { const base = url.split('?')[0].split('/').pop(); for (const d of [vendor, path.join(vendor, 'gsap-plugins')]) { const p = path.join(d, base); if (fs.existsSync(p)) return p; } return null; };
   for (const [name, vp] of Object.entries(phones)) {
     const page = await browser.newPage({viewport: vp});
+    await page.route(/^https:\/\/(cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com|unpkg\.com)\//, r => { const p = local(r.request().url()); return p ? r.fulfill({path: p, contentType: p.endsWith('.wasm') ? 'application/wasm' : 'text/javascript'}) : r.continue(); });
+    await page.route(/^https:\/\/fonts\.(googleapis|gstatic)\.com\//, r => r.abort());
     const errors = []; page.on('pageerror', e => errors.push(e.message));
     await page.goto('file://' + file); await page.waitForTimeout(1500);
     const n = await page.locator('.card').count();
@@ -33,6 +39,16 @@ const phones = {small: {width: 360, height: 740}, medium: {width: 390, height: 8
           const b = el.getBoundingClientRect(); if (!b.width || !b.height) continue;
           if (b.right > cb.right + 1 || b.left < cb.left - 1 || b.bottom > cb.bottom + 1) { issues.push(`spills out: <${el.tagName.toLowerCase()}${el.id ? '#' + el.id : ''}> "${(el.textContent || '').trim().slice(0, 30)}"`); break; }
         }
+        // Something drawn outside its own block of the column lands on the block next to it.
+        if (inn) for (const blk of inn.children) {
+          if (blk.classList.contains('gone') || getComputedStyle(blk).display === 'none') continue;
+          const bb = blk.getBoundingClientRect(); let hit = null;
+          for (const el of blk.querySelectorAll('*')) { const s = getComputedStyle(el); if (s.display === 'none' || s.visibility === 'hidden' || +s.opacity === 0 || el.closest('.gone') || el.closest('svg') && el.tagName !== 'svg') continue; const b = el.getBoundingClientRect(); if (b.width && b.height && (b.bottom > bb.bottom + 3 || b.top < bb.top - 3)) { hit = el; break; } }
+          if (hit) { issues.push(`spills out of its block: <${hit.tagName.toLowerCase()}> "${(hit.textContent || '').trim().slice(0, 30)}"`); break; }
+        }
+        // HTML pieces placed by hand (absolute) must not cover each other's text.
+        const boxes = [...card.querySelectorAll('.chip, .city, .float, .badge')].filter(e => getComputedStyle(e).display !== 'none' && !e.closest('.gone')).map(e => ({e, b: e.getBoundingClientRect()}));
+        for (let a = 0; a < boxes.length; a++) for (let c = a + 1; c < boxes.length; c++) { const A = boxes[a].b, B = boxes[c].b; if (A.left < B.right - 2 && B.left < A.right - 2 && A.top < B.bottom - 2 && B.top < A.bottom - 2) { issues.push(`pieces overlap: "${boxes[a].e.textContent.trim().slice(0, 20)}" / "${boxes[c].e.textContent.trim().slice(0, 20)}"`); a = boxes.length; break; } }
         const texts = [...card.querySelectorAll('svg text')].map(t => ({t: t.textContent, b: t.getBoundingClientRect()})).filter(x => x.b.width);
         for (let a = 0; a < texts.length; a++) for (let c = a + 1; c < texts.length; c++) { const A = texts[a].b, B = texts[c].b; if (A.left < B.right && B.left < A.right && A.top < B.bottom && B.top < A.bottom) { issues.push(`labels overlap: "${texts[a].t}" / "${texts[c].t}"`); a = texts.length; break; } }
         const kids = inn ? [...inn.children].filter(k => !k.classList.contains('gone') && getComputedStyle(k).display !== 'none') : [];
