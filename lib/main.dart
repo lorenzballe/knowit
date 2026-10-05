@@ -60,6 +60,7 @@ TopSeed launchCrowd() => TopSeed(
 Future<void> main() async {
   Analytics.launched();
   WidgetsFlutterBinding.ensureInitialized();
+  readDebugToolsFromAddress(web: kIsWeb);
   // Never blocks the app: see Cloud.start.
   final Stopwatch cloud = Stopwatch()..start();
   await Cloud.start();
@@ -285,6 +286,16 @@ class _AstutoRootState extends State<AstutoRoot> {
     _startAccountAndStore();
     _app.addListener(_onAppStateChanged);
     if (_app.ready) _onAppStateChanged();
+    // On the site, /app/?simulate=purchase opens the screen a purchase ends
+    // on, to look at. Only the screen: nothing is unlocked, so the link is
+    // safe to have in the open.
+    if (kIsWeb && Uri.base.queryParameters['simulate'] == 'purchase') {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          showPurchaseSuccess(context, _app, source: 'site preview');
+        }
+      });
+    }
   }
 
   /// The account comes first: the store is told who the reader is, so the
@@ -462,7 +473,7 @@ class _AstutoRootState extends State<AstutoRoot> {
         // polite sentence is the right thing for a reader and the wrong
         // thing for the person trying to fix it.
         _say(
-          kDebugTools && _account.lastError != null
+          debugToolsOn && _account.lastError != null
               ? '$label sign-in failed — ${_account.lastError}'
               : 'Could not sign in with $label. You can carry on without an '
                     'account.',

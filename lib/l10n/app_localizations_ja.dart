@@ -1860,6 +1860,54 @@ class AppLocalizationsJa extends AppLocalizations {
       'Astute+ はアプリで利用できます。iPhone か Android に Astute をダウンロードして無料体験を始めましょう。';
 
   @override
+  String get purchaseComplete => '購入が完了しました。';
+
+  @override
+  String get successWelcome => 'Astute+へようこそ。今日の5枚のカードが用意できました。';
+
+  @override
+  String successWelcomeNamed(String name) {
+    return 'Astute+へようこそ、$nameさん。今日の5枚のカードが用意できました。';
+  }
+
+  @override
+  String get successFiveCards => '1日5枚のカード';
+
+  @override
+  String get successArchive => 'すべてのアーカイブ';
+
+  @override
+  String successPlanName(String plan) {
+    return 'Astute+ $plan';
+  }
+
+  @override
+  String successFreeUntil(String date, String price, String suffix) {
+    return '$dateまで無料、その後$price$suffix';
+  }
+
+  @override
+  String successRenewsLine(String date, String price, String suffix) {
+    return '$dateに更新 · $price$suffix';
+  }
+
+  @override
+  String get successReceipt => 'レシート';
+
+  @override
+  String get letsStart => 'はじめよう';
+
+  @override
+  String successFootFirstCharge(String date) {
+    return '初回請求は$date · いつでも解約可能';
+  }
+
+  @override
+  String successFootRenews(String date) {
+    return '$dateに更新 · いつでも解約可能';
+  }
+
+  @override
   String get tryToday => '今日やってみる';
 
   @override

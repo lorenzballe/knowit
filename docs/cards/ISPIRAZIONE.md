@@ -125,6 +125,59 @@ Una serie intera sullo stesso schema: il CAPTCHA, la slot machine, il QR rovinat
 - **Prima l'ipotesi ovvia, poi la verità** ("FIRST GUESS: Just compare the sound waves?"): si mostra la risposta sbagliata che pensa tutti, poi si svela quella vera.
 - Per noi: questo è quasi esattamente il formato di una carta di Astute. Etichetta del tema, domanda, oggetto disegnato, una parola evidenziata. E l'idea della "prima ipotesi" per le carte che smontano un'intuizione.
 
+### Spiegazioni 3D con etichette tecniche (`49-ray-tracing`, `50-stelle-recensioni`)
+"Why 5 stars can lose": due teiere su due colonne dorate, "5.0★" contro "4.8★", con sotto "3 reviews" e "1,000 reviews"; una parte della colonna trasparente con scritto "could be luck".
+- **Il paradosso reso oggetto**: la colonna più alta è vuota dentro, e si vede.
+- **Etichette monospaziate collegate con una linea** al punto esatto ("could be luck", "tiny"), colorate come l'oggetto a cui si riferiscono.
+- **Sottotitolo serif con la parola chiave in corsivo sottolineata** ("Three reviews could just be *luck*.", "A ball is in the way. *Shadow*.").
+- **Indicatore di avanzamento a trattini** sotto la scena: si sa a che passo si è.
+- Fondo nero a puntini, luce morbida, materiali lucidi.
+- Per noi: le carte di statistica e probabilità. Esattamente il tono di Astute.
+
+### Il numero che conta, in grande (`44-cento-dollari`, `46-contatore-rec`)
+"$100 A MONTH" su un cartello appeso, banconote che volano, un registratore con lo schermo "$100", omini a cubetto. Oppure un contatore arancione "01:00:00" con "● REC RUNTIME" accanto, sopra le miniature di un canale con le visualizzazioni.
+- **Il numero chiave ripetuto in tre forme** (cartello, pillola, display): non si può perdere.
+- Cifre a caselle come un orologio da stazione, con una micro-etichetta tecnica accanto.
+- Fondo a colore pieno e caldo (giallo) o scuro con un solo accento arancione.
+
+### Titolo-oggetto (`38-nuvola-titolo`, `39-video-30-secondi`)
+Una nuvola bianca enorme su nero, sotto "Most AI lives in the cloud" in grassetto gigante. Oppure una domanda piccola su fondo chiaro ("Why does a **30-second** video…") con un lettore video in miniatura e una cifra che sale.
+- **L'oggetto della frase disegnato sopra la frase**, semplice come un'icona.
+- La parola numerica della domanda colorata.
+
+### Carosello con copertina e pagine (`40`–`43`, `carosello-*`)
+"How to TechMaxx in your 20s": copertina con la persona al centro e le icone degli strumenti che galleggiano attorno; poi pagine numerate "1/6", "2/6"…, ognuna con un titolo grande, un paragrafo **selezionato come testo** (evidenziazione blu con le maniglie), e in fondo prove concrete (il grafico dei contributi GitHub, le miniature dei corsi, i loghi delle gare).
+- **Numero di pagina in alto a destra**: si sa quanto manca.
+- **Ogni pagina ha una prova visibile** sotto il consiglio: non solo parole.
+- Pillola gialla "Start from these" che indica da dove partire.
+
+### Lo schema di un sistema intero (`45-schema-sistema`)
+"The One-Person Social Media Team": un diagramma enorme di riquadri, icone e frecce tratteggiate, con le sezioni numerate ("03 · The Brain", "06 · Data").
+- Fa sentire la **grandezza** di una cosa. Non si legge tutto: si capisce che è tanto.
+- Per noi: con cautela, solo come "panoramica" che poi si scompone.
+
+### Righe di parole e immagini (`47-righe-parole-immagini`, `48-collage-create`)
+Fondo nero diviso da linee bianche orizzontali; in ogni fascia una frase ("better content", "a clearer … strategy") e una piccola immagine che scivola. Poi "Create." al centro, con tanti lavori diversi che gli girano intorno.
+- **Ritmo**: una riga, una frase, un'immagine; poi tutto converge in una parola.
+- Le immagini piccole e la parola grande: la gerarchia è chiarissima.
+
+### Storie di business illustrate (`51`–`56`, `plainownership-*`)
+Un'altra serie a schema fisso: il magazzino ("A better pitch. The same old file."), l'app copiata a metà prezzo, il negozio che mette il budget in pubblicità, il podcast di chi dice di essersi fatto da solo, Instagram venduto ("13 people. $1 billion."), Slack con il cartellino del prezzo.
+- **Titolo in due frasi brevi, una contro l'altra** ("Same app. / Half the price."): il contrasto è già la storia.
+- **Etichetta maiuscola piccola sopra** che dice il tipo di scena, a volte con onestà ("THE COPY TEST · ILLUSTRATIVE SCENARIO"): si dichiara quando un caso è inventato.
+- **Il fatto vero con la data, piccolo e colorato** sotto il numero ("Announced deal · April 9, 2012").
+- **Illustrazione piatta, toni caldi** (senape, terracotta, azzurro polvere) su fondo crema; personaggi semplici.
+- **Le quantità contate davvero**: 13 omini per 13 persone, il cartellino col prezzo appeso all'oggetto, il contatore "VISITORS 0 / CUSTOMERS 0" che resta a zero.
+- **Sottotitolo in un rettangolo verde scurissimo**, parola evidenziata in giallo.
+- Per noi: le carte di economia e decisioni. Il "caso illustrativo" dichiarato è una buona regola anche per Astute.
+
+### La pioggia: corri o cammini? (`57-pioggia-corri-cammina`, `58-pioggia-fermo`)
+Fondo nero, pioggia a righe sottili azzurre, due omini stilizzati (arancione "RUNNER", azzurro "WALKER") su due fasce, ciascuno sul suo percorso. Poi un omino fermo, solo un cerchio e una linea.
+- **L'intuizione sbagliata nel titolo** ("Most people think running hits MORE raindrops"), poi la simulazione che risponde.
+- **Due casi uno sopra l'altro, stesso spazio**: il confronto è immediato.
+- Il minimo assoluto: linee, cerchi, due colori. Tutto il resto è movimento.
+- Per noi: le carte "cosa conviene fare?" con una simulazione semplice da guardare.
+
 ## Cosa portare nelle carte
 
 1. **Micro-etichette monospaziate** negli angoli o sopra i disegni: danno l'aria di "fatto da professionisti".

@@ -1915,6 +1915,54 @@ class AppLocalizationsTr extends AppLocalizations {
       'Astute+ uygulamada: ücretsiz denemeni başlatmak için Astute\'u iPhone veya Android\'e indir.';
 
   @override
+  String get purchaseComplete => 'Satın alma tamamlandı.';
+
+  @override
+  String get successWelcome => 'Astute+’a hoş geldin. Bugünün beş kartı hazır.';
+
+  @override
+  String successWelcomeNamed(String name) {
+    return 'Astute+’a hoş geldin, $name. Bugünün beş kartı hazır.';
+  }
+
+  @override
+  String get successFiveCards => 'Günde 5 kart';
+
+  @override
+  String get successArchive => 'Tüm arşiv';
+
+  @override
+  String successPlanName(String plan) {
+    return 'Astute+ $plan';
+  }
+
+  @override
+  String successFreeUntil(String date, String price, String suffix) {
+    return '$date tarihine kadar ücretsiz, sonra $price$suffix';
+  }
+
+  @override
+  String successRenewsLine(String date, String price, String suffix) {
+    return '$date tarihinde yenilenir · $price$suffix';
+  }
+
+  @override
+  String get successReceipt => 'Makbuz';
+
+  @override
+  String get letsStart => 'Başlayalım';
+
+  @override
+  String successFootFirstCharge(String date) {
+    return 'İlk ödeme $date · istediğin zaman iptal et';
+  }
+
+  @override
+  String successFootRenews(String date) {
+    return '$date tarihinde yenilenir · istediğin zaman iptal et';
+  }
+
+  @override
   String get tryToday => 'BUGÜN DENE';
 
   @override

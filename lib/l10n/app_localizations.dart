@@ -2874,6 +2874,78 @@ abstract class AppLocalizations {
   /// **'Astute+ is in the app: download Astute on iPhone or Android to start your free trial.'**
   String get plusInTheApp;
 
+  /// Purchase success screen (design 129a).
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase complete.'**
+  String get purchaseComplete;
+
+  /// Purchase success screen (design 129a).
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Astute+. Today’s five cards are ready.'**
+  String get successWelcome;
+
+  /// Purchase success screen (design 129a).
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Astute+, {name}. Today’s five cards are ready.'**
+  String successWelcomeNamed(String name);
+
+  /// Purchase success screen (design 129a).
+  ///
+  /// In en, this message translates to:
+  /// **'5 cards a day'**
+  String get successFiveCards;
+
+  /// Purchase success screen (design 129a).
+  ///
+  /// In en, this message translates to:
+  /// **'Full archive'**
+  String get successArchive;
+
+  /// Purchase success screen (design 129a).
+  ///
+  /// In en, this message translates to:
+  /// **'Astute+ {plan}'**
+  String successPlanName(String plan);
+
+  /// Purchase success screen (design 129a).
+  ///
+  /// In en, this message translates to:
+  /// **'Free until {date}, then {price}{suffix}'**
+  String successFreeUntil(String date, String price, String suffix);
+
+  /// Purchase success screen (design 129a).
+  ///
+  /// In en, this message translates to:
+  /// **'Renews {date} · {price}{suffix}'**
+  String successRenewsLine(String date, String price, String suffix);
+
+  /// Purchase success screen (design 129a).
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt'**
+  String get successReceipt;
+
+  /// Purchase success screen (design 129a).
+  ///
+  /// In en, this message translates to:
+  /// **'Let’s start'**
+  String get letsStart;
+
+  /// Purchase success screen (design 129a).
+  ///
+  /// In en, this message translates to:
+  /// **'First charge {date} · cancel any time'**
+  String successFootFirstCharge(String date);
+
+  /// Purchase success screen (design 129a).
+  ///
+  /// In en, this message translates to:
+  /// **'Renews {date} · cancel any time'**
+  String successFootRenews(String date);
+
   /// Footer of a card on the Use it today shelf: something to try before tonight.
   ///
   /// In en, this message translates to:

@@ -1930,6 +1930,55 @@ class AppLocalizationsNl extends AppLocalizations {
       'Astute+ zit in de app: download Astute op iPhone of Android om je gratis proefperiode te starten.';
 
   @override
+  String get purchaseComplete => 'Aankoop voltooid.';
+
+  @override
+  String get successWelcome =>
+      'Welkom bij Astute+. De vijf kaarten van vandaag staan klaar.';
+
+  @override
+  String successWelcomeNamed(String name) {
+    return 'Welkom bij Astute+, $name. De vijf kaarten van vandaag staan klaar.';
+  }
+
+  @override
+  String get successFiveCards => '5 kaarten per dag';
+
+  @override
+  String get successArchive => 'Volledig archief';
+
+  @override
+  String successPlanName(String plan) {
+    return 'Astute+ $plan';
+  }
+
+  @override
+  String successFreeUntil(String date, String price, String suffix) {
+    return 'Gratis tot $date, daarna $price$suffix';
+  }
+
+  @override
+  String successRenewsLine(String date, String price, String suffix) {
+    return 'Verlengt op $date · $price$suffix';
+  }
+
+  @override
+  String get successReceipt => 'Bon';
+
+  @override
+  String get letsStart => 'Aan de slag';
+
+  @override
+  String successFootFirstCharge(String date) {
+    return 'Eerste betaling op $date · altijd opzegbaar';
+  }
+
+  @override
+  String successFootRenews(String date) {
+    return 'Verlengt op $date · altijd opzegbaar';
+  }
+
+  @override
   String get tryToday => 'PROBEER HET VANDAAG';
 
   @override
