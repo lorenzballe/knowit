@@ -1858,4 +1858,15 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get plusInTheApp =>
       'Astute+ はアプリで利用できます。iPhone か Android に Astute をダウンロードして無料体験を始めましょう。';
+
+  @override
+  String get tryToday => '今日やってみる';
+
+  @override
+  String minutesShort(int n) {
+    return '$n分';
+  }
+
+  @override
+  String get sideOr => 'または';
 }

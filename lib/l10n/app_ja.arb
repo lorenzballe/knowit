@@ -458,5 +458,8 @@
   "weekRecapCaps": "今週あなたが自分に問いかけたこと",
   "weekRecapLine": "カードが残してくれた問い",
   "weekRecapMore": "Plusで今週のあと{n}件",
-  "plusInTheApp": "Astute+ はアプリで利用できます。iPhone か Android に Astute をダウンロードして無料体験を始めましょう。"
+  "plusInTheApp": "Astute+ はアプリで利用できます。iPhone か Android に Astute をダウンロードして無料体験を始めましょう。",
+  "tryToday": "今日やってみる",
+  "minutesShort": "{n}分",
+  "sideOr": "または"
 }

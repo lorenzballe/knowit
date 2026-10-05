@@ -1928,4 +1928,15 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get plusInTheApp =>
       'Astute+ zit in de app: download Astute op iPhone of Android om je gratis proefperiode te starten.';
+
+  @override
+  String get tryToday => 'PROBEER HET VANDAAG';
+
+  @override
+  String minutesShort(int n) {
+    return '$n MIN';
+  }
+
+  @override
+  String get sideOr => 'of';
 }

@@ -2873,6 +2873,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Astute+ is in the app: download Astute on iPhone or Android to start your free trial.'**
   String get plusInTheApp;
+
+  /// Footer of a card on the Use it today shelf: something to try before tonight.
+  ///
+  /// In en, this message translates to:
+  /// **'TRY TODAY'**
+  String get tryToday;
+
+  /// How long a card takes, in minutes, short and uppercase.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} MIN'**
+  String minutesShort(int n);
+
+  /// Between the two sides of a debate on the Pick a side shelf: Yes or No.
+  ///
+  /// In en, this message translates to:
+  /// **'or'**
+  String get sideOr;
 }
 
 class _AppLocalizationsDelegate

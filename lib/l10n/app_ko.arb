@@ -458,5 +458,8 @@
   "weekRecapCaps": "이번 주 스스로에게 던진 질문",
   "weekRecapLine": "카드가 남긴 질문들",
   "weekRecapMore": "Plus로 이번 주 {n}개 더 보기",
-  "plusInTheApp": "Astute+는 앱에서 이용할 수 있어요. iPhone이나 Android에 Astute를 받아 무료 체험을 시작하세요."
+  "plusInTheApp": "Astute+는 앱에서 이용할 수 있어요. iPhone이나 Android에 Astute를 받아 무료 체험을 시작하세요.",
+  "tryToday": "오늘 해 보기",
+  "minutesShort": "{n}분",
+  "sideOr": "또는"
 }

@@ -458,5 +458,8 @@
   "weekRecapCaps": "ESTA SEMANA TE PREGUNTASTE",
   "weekRecapLine": "Las preguntas que te dejaron tus cartas",
   "weekRecapMore": "{n} más de tu semana con Plus",
-  "plusInTheApp": "Astute+ está en la app: descarga Astute en iPhone o Android para empezar tu prueba gratuita."
+  "plusInTheApp": "Astute+ está en la app: descarga Astute en iPhone o Android para empezar tu prueba gratuita.",
+  "tryToday": "PRUÉBALO HOY",
+  "minutesShort": "{n} MIN",
+  "sideOr": "o"
 }

@@ -1936,4 +1936,15 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get plusInTheApp =>
       'Astute+ est dans l\'app : télécharge Astute sur iPhone ou Android pour commencer ton essai gratuit.';
+
+  @override
+  String get tryToday => 'À ESSAYER AUJOURD’HUI';
+
+  @override
+  String minutesShort(int n) {
+    return '$n MIN';
+  }
+
+  @override
+  String get sideOr => 'ou';
 }

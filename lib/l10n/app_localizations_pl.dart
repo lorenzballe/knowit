@@ -1992,4 +1992,15 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get plusInTheApp =>
       'Astute+ jest w aplikacji: pobierz Astute na iPhone\'a lub Androida, aby zacząć darmowy okres próbny.';
+
+  @override
+  String get tryToday => 'WYPRÓBUJ DZIŚ';
+
+  @override
+  String minutesShort(int n) {
+    return '$n MIN';
+  }
+
+  @override
+  String get sideOr => 'czy';
 }

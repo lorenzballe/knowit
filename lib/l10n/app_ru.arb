@@ -458,5 +458,8 @@
   "weekRecapCaps": "НА ЭТОЙ НЕДЕЛЕ ТЫ СПРАШИВАЛ СЕБЯ",
   "weekRecapLine": "Вопросы, которые оставили тебе карточки",
   "weekRecapMore": "Ещё {n} за неделю с Plus",
-  "plusInTheApp": "Astute+ — в приложении: скачай Astute на iPhone или Android, чтобы начать бесплатный период."
+  "plusInTheApp": "Astute+ — в приложении: скачай Astute на iPhone или Android, чтобы начать бесплатный период.",
+  "tryToday": "ПОПРОБУЙ СЕГОДНЯ",
+  "minutesShort": "{n} МИН",
+  "sideOr": "или"
 }

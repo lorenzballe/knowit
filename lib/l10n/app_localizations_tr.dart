@@ -1913,4 +1913,15 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get plusInTheApp =>
       'Astute+ uygulamada: ücretsiz denemeni başlatmak için Astute\'u iPhone veya Android\'e indir.';
+
+  @override
+  String get tryToday => 'BUGÜN DENE';
+
+  @override
+  String minutesShort(int n) {
+    return '$n DK';
+  }
+
+  @override
+  String get sideOr => 'ya da';
 }

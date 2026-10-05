@@ -214,6 +214,31 @@ void main() {
     await shoot(tester, 'card');
   });
 
+  testWidgets("Explore's signature shelves", (tester) async {
+    _installed();
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+    await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+    await settle(tester);
+    for (final (name, key) in [
+      ('numbers', 'signature-numbers'),
+      ('debates', 'signature-debates'),
+      ('practical', 'signature-practical'),
+    ]) {
+      final down = find.byWidgetPredicate(
+        (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+      );
+      await tester.scrollUntilVisible(
+        find.byKey(ValueKey(key)),
+        300,
+        scrollable: down.first,
+      );
+      await tester.drag(down.first, const Offset(0, -60));
+      await settle(tester);
+      await shoot(tester, 'explore-$name');
+    }
+  });
+
   testWidgets('the foot of the profile, where the debug tools live', (
     tester,
   ) async {

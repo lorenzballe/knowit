@@ -1870,4 +1870,15 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get plusInTheApp =>
       'Astute+는 앱에서 이용할 수 있어요. iPhone이나 Android에 Astute를 받아 무료 체험을 시작하세요.';
+
+  @override
+  String get tryToday => '오늘 해 보기';
+
+  @override
+  String minutesShort(int n) {
+    return '$n분';
+  }
+
+  @override
+  String get sideOr => '또는';
 }

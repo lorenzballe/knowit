@@ -171,13 +171,84 @@ List<ThemedShelf> themedShelves(List<Pill> pool, {required int day}) {
   final start = (day * kThemesPerDay) % kThemeCycle.length;
   for (int i = 0; i < kThemeCycle.length && out.length < kThemesPerDay; i++) {
     final theme = kThemeCycle[(start + i) % kThemeCycle.length];
-    final variant = themeVariant(theme, day);
-    final fits = pool.where((p) => _fits(theme, variant, p)).toList()
-      ..sort(
-        (a, b) =>
-            _hash('$day:${theme.name}:${a.id}')
-                .compareTo(_hash('$day:${theme.name}:${b.id}')),
-      );
+    final shelf = _deal(theme, themeVariant(theme, day), pool, day);
+    if (shelf != null) out.add(shelf);
+  }
+  return out;
+}
+
+/// The shelves Explore always shows, each with a card drawn for its kind
+/// (the design's "one signature per kind"): the figure itself for numbers,
+/// two halves for a debate, a sun about to set for something to try today.
+/// They are dealt like the turning themes, afresh each day, and the turning
+/// themes leave them out so no theme is on the screen twice.
+const List<ShelfTheme> kSignatureThemes = [
+  ShelfTheme.numbers,
+  ShelfTheme.debates,
+  ShelfTheme.practical,
+];
+
+List<ThemedShelf> signatureShelves(List<Pill> pool, {required int day}) => [
+  for (final theme in kSignatureThemes) ?_deal(theme, 0, pool, day),
+];
+
+/// The figure a numbers card is about, to be set large on its shelf: the
+/// first number in the question that is not a year, kept with its percent
+/// sign or its fraction. Null when the question has none worth showing.
+String? shelfFigure(Pill p) {
+  for (final m in RegExp(
+    r'([$€£])?(?<![\w.^/])(\d{1,3}(?:,\d{3})+|\d+(?:\.\d+)?)(\s?%|/\d+)?(?:\s(thousand|million|billion|trillion)\b)?(?![\w^])',
+  ).allMatches(p.question)) {
+    final money = m.group(1) ?? '';
+    final digits = m.group(2)!;
+    final n = num.tryParse(digits.replaceAll(',', ''));
+    if (n == null) continue;
+    final suffix = (m.group(3) ?? '').trim();
+    final scale = m.group(4);
+    // A four-digit year is when, not how much.
+    if (money.isEmpty &&
+        suffix.isEmpty &&
+        scale == null &&
+        !digits.contains(',') &&
+        n >= 1000 &&
+        n <= 2100 &&
+        n == n.round()) {
+      continue;
+    }
+    String body = digits;
+    if (scale != null) {
+      body =
+          '$digits${const {'thousand': 'k', 'million': 'M', 'billion': 'B', 'trillion': 'T'}[scale]}';
+    } else if (n >= 1e6) {
+      // A long run of digits, said the short way: 1,250,000 is 1.25M.
+      final (v, unit) = n >= 1e9 ? (n / 1e9, 'B') : (n / 1e6, 'M');
+      body =
+          '${v.toStringAsFixed(v >= 10 ? 0 : 2).replaceFirst(RegExp(r'\.?0+$'), '')}$unit';
+    }
+    final figure = '$money$body$suffix';
+    if (figure.length > 7) continue;
+    return figure;
+  }
+  return null;
+}
+
+ThemedShelf? _deal(ShelfTheme theme, int variant, List<Pill> pool, int day) {
+  {
+    final fits =
+        pool
+            .where(
+              (p) =>
+                  _fits(theme, variant, p) &&
+                  (theme != ShelfTheme.numbers || shelfFigure(p) != null) &&
+                  // Something to try today is not an argument to have.
+                  (theme != ShelfTheme.practical || p.challenge is! TakeASide),
+            )
+            .toList()
+          ..sort(
+            (a, b) =>
+                _hash('$day:${theme.name}:${a.id}')
+                    .compareTo(_hash('$day:${theme.name}:${b.id}')),
+          );
     final picked = <Pill>[];
     final perTopic = <String, int>{};
     for (final p in fits) {
@@ -195,10 +266,10 @@ List<ThemedShelf> themedShelves(List<Pill> pool, {required int day}) {
       }
     }
     if (picked.length >= kThemeMinimum) {
-      out.add(ThemedShelf(theme, variant, picked));
+      return ThemedShelf(theme, variant, picked);
     }
+    return null;
   }
-  return out;
 }
 
 /// Days since the epoch for [on], in local time, which is when the reader's

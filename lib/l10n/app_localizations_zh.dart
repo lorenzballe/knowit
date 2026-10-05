@@ -1859,4 +1859,15 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get plusInTheApp =>
       'Astute+ 在应用中提供：在 iPhone 或 Android 上下载 Astute，开始免费试用。';
+
+  @override
+  String get tryToday => '今天就试试';
+
+  @override
+  String minutesShort(int n) {
+    return '$n 分钟';
+  }
+
+  @override
+  String get sideOr => '还是';
 }

@@ -458,5 +458,8 @@
   "weekRecapCaps": "BU HAFTA KENDİNE SORDUN",
   "weekRecapLine": "Kartlarının sana bıraktığı sorular",
   "weekRecapMore": "Plus ile haftandan {n} tane daha",
-  "plusInTheApp": "Astute+ uygulamada: ücretsiz denemeni başlatmak için Astute'u iPhone veya Android'e indir."
+  "plusInTheApp": "Astute+ uygulamada: ücretsiz denemeni başlatmak için Astute'u iPhone veya Android'e indir.",
+  "tryToday": "BUGÜN DENE",
+  "minutesShort": "{n} DK",
+  "sideOr": "ya da"
 }

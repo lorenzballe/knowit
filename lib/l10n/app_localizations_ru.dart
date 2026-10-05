@@ -1994,4 +1994,15 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get plusInTheApp =>
       'Astute+ — в приложении: скачай Astute на iPhone или Android, чтобы начать бесплатный период.';
+
+  @override
+  String get tryToday => 'ПОПРОБУЙ СЕГОДНЯ';
+
+  @override
+  String minutesShort(int n) {
+    return '$n МИН';
+  }
+
+  @override
+  String get sideOr => 'или';
 }
