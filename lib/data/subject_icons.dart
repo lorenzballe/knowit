@@ -1,4 +1,6 @@
-/// The subjects' own marks, taken from artboard 56.
+/// The subjects' own marks, from the design file's app screens (the
+/// corrected set that replaced artboard 56: a ringed planet that reads as one,
+/// a clapperboard with its hinge, a knife beside the fork).
 ///
 /// SVG path data on a 24-unit grid at one stroke weight, drawn rather than
 /// picked from an icon font: a flask for Science, a ringed planet for Space,
@@ -11,27 +13,25 @@
 /// choice. A bulb, on the same grid and at the same weight.
 const Map<String, String> kSubjectIcons = {
   'Thinking': 'M9 18h6 M10 21h4 M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.3 1 2.1h5c0-.8.4-1.6 1-2.1A6 6 0 0 0 12 3z',
-  'Economics': 'M4 16l5-5 3 3 7-7 M15 7h5v5',
-  'Sport': 'M7 4h10v4a5 5 0 0 1-10 0V4z M7 5H4v2a3 3 0 0 0 3 3 M17 5h3v2a3 3 0 0 1-3 3 M12 13v4 M9 20h6l-1-3h-4z',
-  'Nature': 'M5 19C5 11 11 5 19 5c0 8-6 14-14 14z M9 15l6-6',
-  'Science': 'M9 3h6 M10 3v6l-5.2 8.4A2 2 0 0 0 6.5 21h11a2 2 0 0 0 1.7-3.6L14 9V3 M7.5 15h9',
-  'Language': 'M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-5 4V6z M9 12l3-6 3 6 M10.2 10h3.6',
-  'Technology': 'M9 9h6v6H9z M5 5h14v14H5z M9 5V2 M15 5V2 M9 22v-3 M15 22v-3 M5 9H2 M5 15H2 M22 9h-3 M22 15h-3',
-  'Space': 'M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16z M4.5 14.5c-2 1.5-2.8 3-2 3.9 1.4 1.6 7.3-.6 13.2-5s9.6-9.3 8.2-10.9c-.8-.9-2.4-.6-4.4.5',
+  'Economics': 'M3 17l6-6 4 4 8-8 M15 7h6v6',
+  'Sport': 'M7 4h10v4a5 5 0 0 1-10 0V4z M7 5H4.42v2a3 3 0 0 0 3 3 M17 5h2.58v2a3 3 0 0 1-3 3 M12 13v4 M9 20h6l-1-3h-4z',
+  'Nature': 'M6 18C6 10 12 4 20 4c0 8-6 14-14 14z M4 20L15 9',
+  'Science': 'M9 3h6 M10 3v6l-5.54 8.95A2 2 0 0 0 6.16 21h11.68a2 2 0 0 0 1.7-3.05L14 9V3 M6.29 15h11.42',
+  'Language': 'M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-5 4V6z M9 13l3-6 3 6 M10 11h4',
+  'Technology': 'M7 5h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z M10 9h4a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1z M9 5V3 M15 5V3 M9 21v-2 M15 21v-2 M5 9H3 M5 15H3 M21 9h-2 M21 15h-2',
+  'Space': 'M12 5.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 1 0 0-13z M15.48 6.51A10.5 3.6 -30 1 1 5.51 12.27',
   'Philosophy':
-      'M3 9h18L12 3 3 9z M5.5 9v10 M9.8 9v10 M14.2 9v10 M18.5 9v10 M3 21h18',
-  'Cinema': 'M3 8h18v12H3z M3 8l2-4h3l-2 4 M10 8l2-4h3l-2 4 M17 8l2-4h2',
-  'Psychology': 'M20 12a8 8 0 1 0-4 6.9V22 M12 8a3 3 0 1 0 2 5.2',
-  'Music': 'M9 18V6l10-2v12 M9 18a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z M19 16a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z M9 9l10-2',
-  'Weird facts': 'M11 3l1.9 5.1L18 10l-5.1 1.9L11 17l-1.9-5.1L4 10l5.1-1.9L11 3z M19 4l.6 1.7 1.7.6-1.7.6-.6 1.7-.6-1.7-1.7-.6 1.7-.6L19 4z',
-  'Art': 'M12 3a9 9 0 1 0 0 18 2 2 0 0 0 1.6-3.2 2 2 0 0 1 1.6-3.2H18a3 3 0 0 0 3-3c0-4.9-4-8.6-9-8.6z M7.6 10.6h.01 M10.1 7.1h.01 M14.6 7.6h.01 M6.6 14.1h.01',
-  'Pop culture': 'M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z',
-  'Human body':
-      'M12 20s-7-4.6-7-9.4A4 4 0 0 1 12 8a4 4 0 0 1 7 2.6C19 15.4 12 20 12 20z',
-  'Medicine': 'M10 3h4v7h7v4h-7v7h-4v-7H3v-4h7V3z',
-  'Food': 'M6 3v7a2 2 0 0 0 4 0V3 M8 10v11 M17 3c-2 2-2 6 0 8v10',
-  'History':
-      'M7 3h10 M7 21h10 M7 3c0 4 5 5 5 9s-5 5-5 9 M17 3c0 4-5 5-5 9s5 5 5 9',
+      'M3 9h18L12 3 3 9z M5.5 9v12 M9.83 9v12 M14.17 9v12 M18.5 9v12 M3 21h18',
+  'Cinema': 'M3 9h18v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9z M3 9V6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v3 M8 4l-2 5 M13 4l-2 5 M18 4l-2 5',
+  'Psychology': 'M20 11a8 8 0 1 0-4 6.93V21 M12 8a3 3 0 1 0 2.12 5.12',
+  'Music': 'M9.5 17.75V5.75l10-2v12 M9.5 17.75a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z M19.5 15.75a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z M9.5 8.75l10-2',
+  'Weird facts': 'M10 6.5l1.9 5.1 5.1 1.9-5.1 1.9-1.9 5.1-1.9-5.1-5.1-1.9 5.1-1.9z M18.5 3.5l.65 1.85 1.85.65-1.85.65-.65 1.85-.65-1.85-1.85-.65 1.85-.65z',
+  'Art': 'M12 3a9 9 0 1 0 0 18 2 2 0 0 0 1.6-3.2 2 2 0 0 1 1.6-3.2H18a3 3 0 0 0 3-3c0-4.9-4-8.6-9-8.6z M6.83 13.88h.01 M7.02 9.68h.01 M10.12 6.83h.01 M14.32 7.02h.01',
+  'Pop culture': 'M12 3.86l2.65 5.36 5.91.86-4.28 4.17 1.01 5.89L12 17.36l-5.29 2.78 1.01-5.89-4.28-4.17 5.91-.86z',
+  'Human body': 'M12 19.63s-8-5.25-8-10.74A4.57 4.57 0 0 1 12 5.92a4.57 4.57 0 0 1 8 2.97c0 5.49-8 10.74-8 10.74z',
+  'Medicine': 'M11 3h2a1 1 0 0 1 1 1v6h6a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-6v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-6H4a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h6V4a1 1 0 0 1 1-1z',
+  'Food': 'M6 3v7a2 2 0 0 0 4 0V3 M8 12v9 M18 3v18 M18 3c-2.5 1.5-3.5 4.5-3.5 7.5a1.5 1.5 0 0 0 1.5 1.5H18',
+  'History': 'M5 3h14 M5 21h14 M7 3c0 6 10 12 10 18 M17 3c0 6-10 12-10 18',
   'Life': 'M12 21v-9 M12 12c0-4 3-6 7-6 0 4-3 6-7 6z M12 15c0-3-2.5-5-6-5 0 3 2.5 5 6 5z',
 };
 
