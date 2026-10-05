@@ -1918,4 +1918,15 @@ class AppLocalizationsKo extends AppLocalizations {
   String successFootRenews(String date) {
     return '$date에 갱신 · 언제든 해지 가능';
   }
+
+  @override
+  String get tryToday => '오늘 해 보기';
+
+  @override
+  String minutesShort(int n) {
+    return '$n분';
+  }
+
+  @override
+  String get sideOr => '또는';
 }

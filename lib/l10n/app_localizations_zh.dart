@@ -1907,4 +1907,15 @@ class AppLocalizationsZh extends AppLocalizations {
   String successFootRenews(String date) {
     return '$date 续订 · 随时取消';
   }
+
+  @override
+  String get tryToday => '今天就试试';
+
+  @override
+  String minutesShort(int n) {
+    return '$n 分钟';
+  }
+
+  @override
+  String get sideOr => '还是';
 }

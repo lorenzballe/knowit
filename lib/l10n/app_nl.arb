@@ -470,5 +470,8 @@
   "successReceipt": "Bon",
   "letsStart": "Aan de slag",
   "successFootFirstCharge": "Eerste betaling op {date} · altijd opzegbaar",
-  "successFootRenews": "Verlengt op {date} · altijd opzegbaar"
+  "successFootRenews": "Verlengt op {date} · altijd opzegbaar",
+  "tryToday": "PROBEER HET VANDAAG",
+  "minutesShort": "{n} MIN",
+  "sideOr": "of"
 }

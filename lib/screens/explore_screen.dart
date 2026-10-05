@@ -16,6 +16,7 @@ import '../sync/tally.dart';
 import '../sync/trace.dart';
 import '../theme.dart';
 import '../widgets/scaled_text.dart';
+import '../widgets/signature_shelves.dart';
 import '../widgets/subject_icon.dart';
 import 'deck_viewer_screen.dart';
 import 'mix_screen.dart';
@@ -368,12 +369,20 @@ class ExploreScreenState extends State<ExploreScreen> {
     // for everybody, never a card already read and never one already on a
     // shelf above.
     final Set<String> shown = {for (final p in fresh) p.id};
+    final List<Pill> pool = _only(PillBank.cards)
+        .where((p) => unread(p) && !shown.contains(p.id))
+        .toList();
+    final int day = themeDay(DateTime.now());
+    // Three shelves are always here, each with its own drawing; the rest
+    // turn over and leave those three out, so no theme shows twice.
+    final List<ThemedShelf> signatures = signatureShelves(pool, day: day);
+    final Set<String> onSignature = {
+      for (final t in signatures) ...t.pills.map((p) => p.id),
+    };
     final List<ThemedShelf> themes = themedShelves(
-      _only(PillBank.cards)
-          .where((p) => unread(p) && !shown.contains(p.id))
-          .toList(),
-      day: themeDay(DateTime.now()),
-    );
+      pool.where((p) => !onSignature.contains(p.id)).toList(),
+      day: day,
+    ).where((t) => !kSignatureThemes.contains(t.theme)).toList();
     List<Widget> themed(Iterable<ThemedShelf> list) => [
       for (final t in list) ...[
         const SizedBox(height: 24),
@@ -506,6 +515,20 @@ class ExploreScreenState extends State<ExploreScreen> {
                   isRead: read,
                   onOpen: _open,
                   onShown: (p) => _seen('mine', p),
+                ),
+              ),
+            ],
+            for (final t in signatures) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                key: ValueKey('signature-${t.theme.name}'),
+                title: _themeTitle(context, t),
+                line: _themeLine(context, t),
+                child: SignatureRow(
+                  shelf: t,
+                  isRead: read,
+                  onOpen: _open,
+                  onShown: (p) => _seen('signature-${t.theme.name}', p),
                 ),
               ),
             ],

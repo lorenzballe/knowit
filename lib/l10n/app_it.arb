@@ -470,5 +470,8 @@
   "successReceipt": "Ricevuta",
   "letsStart": "Iniziamo",
   "successFootFirstCharge": "Primo addebito il {date} · disdici quando vuoi",
-  "successFootRenews": "Si rinnova il {date} · disdici quando vuoi"
+  "successFootRenews": "Si rinnova il {date} · disdici quando vuoi",
+  "tryToday": "PROVALO OGGI",
+  "minutesShort": "{n} MIN",
+  "sideOr": "o"
 }

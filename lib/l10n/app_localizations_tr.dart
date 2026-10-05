@@ -1961,4 +1961,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String successFootRenews(String date) {
     return '$date tarihinde yenilenir · istediğin zaman iptal et';
   }
+
+  @override
+  String get tryToday => 'BUGÜN DENE';
+
+  @override
+  String minutesShort(int n) {
+    return '$n DK';
+  }
+
+  @override
+  String get sideOr => 'ya da';
 }

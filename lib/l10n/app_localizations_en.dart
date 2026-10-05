@@ -1971,4 +1971,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String successFootRenews(String date) {
     return 'Renews $date · cancel any time';
   }
+
+  @override
+  String get tryToday => 'TRY TODAY';
+
+  @override
+  String minutesShort(int n) {
+    return '$n MIN';
+  }
+
+  @override
+  String get sideOr => 'or';
 }

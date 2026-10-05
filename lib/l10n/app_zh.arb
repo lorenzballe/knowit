@@ -470,5 +470,8 @@
   "successReceipt": "收据",
   "letsStart": "开始吧",
   "successFootFirstCharge": "首次扣款 {date} · 随时取消",
-  "successFootRenews": "{date} 续订 · 随时取消"
+  "successFootRenews": "{date} 续订 · 随时取消",
+  "tryToday": "今天就试试",
+  "minutesShort": "{n} 分钟",
+  "sideOr": "还是"
 }

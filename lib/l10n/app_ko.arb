@@ -470,5 +470,8 @@
   "successReceipt": "영수증",
   "letsStart": "시작하기",
   "successFootFirstCharge": "첫 결제 {date} · 언제든 해지 가능",
-  "successFootRenews": "{date}에 갱신 · 언제든 해지 가능"
+  "successFootRenews": "{date}에 갱신 · 언제든 해지 가능",
+  "tryToday": "오늘 해 보기",
+  "minutesShort": "{n}분",
+  "sideOr": "또는"
 }

@@ -2041,4 +2041,15 @@ class AppLocalizationsPl extends AppLocalizations {
   String successFootRenews(String date) {
     return 'Odnawia się $date · anuluj w każdej chwili';
   }
+
+  @override
+  String get tryToday => 'WYPRÓBUJ DZIŚ';
+
+  @override
+  String minutesShort(int n) {
+    return '$n MIN';
+  }
+
+  @override
+  String get sideOr => 'czy';
 }

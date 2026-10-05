@@ -470,5 +470,8 @@
   "successReceipt": "Reçu",
   "letsStart": "C’est parti",
   "successFootFirstCharge": "Premier prélèvement le {date} · résiliable à tout moment",
-  "successFootRenews": "Renouvellement le {date} · résiliable à tout moment"
+  "successFootRenews": "Renouvellement le {date} · résiliable à tout moment",
+  "tryToday": "À ESSAYER AUJOURD’HUI",
+  "minutesShort": "{n} MIN",
+  "sideOr": "ou"
 }

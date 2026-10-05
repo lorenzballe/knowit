@@ -1906,4 +1906,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String successFootRenews(String date) {
     return '$dateに更新 · いつでも解約可能';
   }
+
+  @override
+  String get tryToday => '今日やってみる';
+
+  @override
+  String minutesShort(int n) {
+    return '$n分';
+  }
+
+  @override
+  String get sideOr => 'または';
 }

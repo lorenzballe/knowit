@@ -470,5 +470,8 @@
   "successReceipt": "Recibo",
   "letsStart": "Vamos começar",
   "successFootFirstCharge": "Primeira cobrança em {date} · cancele quando quiser",
-  "successFootRenews": "Renova em {date} · cancele quando quiser"
+  "successFootRenews": "Renova em {date} · cancele quando quiser",
+  "tryToday": "EXPERIMENTA HOJE",
+  "minutesShort": "{n} MIN",
+  "sideOr": "ou"
 }

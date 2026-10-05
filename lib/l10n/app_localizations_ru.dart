@@ -2043,4 +2043,15 @@ class AppLocalizationsRu extends AppLocalizations {
   String successFootRenews(String date) {
     return 'Продление $date · отмена в любой момент';
   }
+
+  @override
+  String get tryToday => 'ПОПРОБУЙ СЕГОДНЯ';
+
+  @override
+  String minutesShort(int n) {
+    return '$n МИН';
+  }
+
+  @override
+  String get sideOr => 'или';
 }

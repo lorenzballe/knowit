@@ -470,5 +470,8 @@
   "successReceipt": "Makbuz",
   "letsStart": "Başlayalım",
   "successFootFirstCharge": "İlk ödeme {date} · istediğin zaman iptal et",
-  "successFootRenews": "{date} tarihinde yenilenir · istediğin zaman iptal et"
+  "successFootRenews": "{date} tarihinde yenilenir · istediğin zaman iptal et",
+  "tryToday": "BUGÜN DENE",
+  "minutesShort": "{n} DK",
+  "sideOr": "ya da"
 }

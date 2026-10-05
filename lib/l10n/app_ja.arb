@@ -470,5 +470,8 @@
   "successReceipt": "レシート",
   "letsStart": "はじめよう",
   "successFootFirstCharge": "初回請求は{date} · いつでも解約可能",
-  "successFootRenews": "{date}に更新 · いつでも解約可能"
+  "successFootRenews": "{date}に更新 · いつでも解約可能",
+  "tryToday": "今日やってみる",
+  "minutesShort": "{n}分",
+  "sideOr": "または"
 }

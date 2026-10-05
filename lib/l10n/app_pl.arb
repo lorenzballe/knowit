@@ -470,5 +470,8 @@
   "successReceipt": "Paragon",
   "letsStart": "Zaczynajmy",
   "successFootFirstCharge": "Pierwsza płatność {date} · anuluj w każdej chwili",
-  "successFootRenews": "Odnawia się {date} · anuluj w każdej chwili"
+  "successFootRenews": "Odnawia się {date} · anuluj w każdej chwili",
+  "tryToday": "WYPRÓBUJ DZIŚ",
+  "minutesShort": "{n} MIN",
+  "sideOr": "czy"
 }

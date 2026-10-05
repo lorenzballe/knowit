@@ -470,5 +470,8 @@
   "successReceipt": "Beleg",
   "letsStart": "Los geht’s",
   "successFootFirstCharge": "Erste Abbuchung am {date} · jederzeit kündbar",
-  "successFootRenews": "Verlängert sich am {date} · jederzeit kündbar"
+  "successFootRenews": "Verlängert sich am {date} · jederzeit kündbar",
+  "tryToday": "HEUTE AUSPROBIEREN",
+  "minutesShort": "{n} MIN",
+  "sideOr": "oder"
 }

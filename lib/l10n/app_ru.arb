@@ -470,5 +470,8 @@
   "successReceipt": "Чек",
   "letsStart": "Начнём",
   "successFootFirstCharge": "Первое списание {date} · отмена в любой момент",
-  "successFootRenews": "Продление {date} · отмена в любой момент"
+  "successFootRenews": "Продление {date} · отмена в любой момент",
+  "tryToday": "ПОПРОБУЙ СЕГОДНЯ",
+  "minutesShort": "{n} МИН",
+  "sideOr": "или"
 }

@@ -1977,4 +1977,15 @@ class AppLocalizationsNl extends AppLocalizations {
   String successFootRenews(String date) {
     return 'Verlengt op $date · altijd opzegbaar';
   }
+
+  @override
+  String get tryToday => 'PROBEER HET VANDAAG';
+
+  @override
+  String minutesShort(int n) {
+    return '$n MIN';
+  }
+
+  @override
+  String get sideOr => 'of';
 }
