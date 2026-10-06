@@ -20,3 +20,15 @@ of that format is just data. A writer fills in the fields; no code is needed.
 The model for each lives in `lib/models/scenes/<type>.dart`, the widget in
 `lib/widgets/scenes/<type>_view.dart`, the data rules in
 `tool/cards/scene_kinds/<type>.py`. Each file's header documents its JSON fields.
+
+## Second wave: formats built around the app's purpose
+
+| `scene.type` | Name | What the reader does | Why it serves the purpose |
+|---|---|---|---|
+| `trick` | Spot the trick | Sees a chart, headline or offer that misleads, taps where the trick is, then watches it fixed | "They can't fool me any more" |
+| `why` | Ask why | Taps "and why?" down a ladder of causes until the real one | "Ah, that's why" |
+| `poll` | You first | Answers for themself, then sees how others and the research answered, and why people split | "That's me" |
+| `story` | What happens next? | Taps through a real case in scenes, stops to predict the outcome, then sees it | Prediction before explanation |
+| `translate` | Translate it | Taps the phrases of a piece of jargon (a contract, a doctor's report, a politician) to read what they really mean | Not fooled by words |
+| `match` | Match them | Pairs things up (a bias with its everyday trap, a cause with its effect) | Connecting the dots |
+| `clues` | Guess from clues | Clues arrive one at a time; guessing early is worth more | Reasoning from evidence |

@@ -33,9 +33,8 @@
   "written": "2026-10-06",
   "scene": {
     "type": "rank",
-    "quantity": "Peak acceleration",
+    "quantity": "Peak acceleration, in g",
     "most": "Hardest",
-    "unit": "g",
     "log": true,
     "items": [
       {
@@ -52,6 +51,11 @@
         "label": "Fungus",
         "value": 20000,
         "note": "A dung fungus that fires its spores 2 m, at twice the shrimp's g."
+      },
+      {
+        "label": "Shuttle launch",
+        "value": 3,
+        "note": "Astronauts on a Space Shuttle felt at most about 3 g."
       }
     ]
   }

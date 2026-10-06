@@ -11,7 +11,13 @@ import 'scenes/rank_view.dart';
 import 'scenes/sample_view.dart';
 import 'scenes/sort_view.dart';
 import 'scenes/timeline_view.dart';
-
+import 'scenes/trick_view.dart';
+import 'scenes/why_view.dart';
+import 'scenes/poll_view.dart';
+import 'scenes/story_view.dart';
+import 'scenes/translate_view.dart';
+import 'scenes/match_view.dart';
+import 'scenes/clues_view.dart';
 
 /// Draws a [Scene] and lets the reader play with it.
 ///
@@ -37,7 +43,22 @@ class SceneView extends StatelessWidget {
     final RankScene s => RankSceneView(scene: s, ink: ink, ground: ground),
     final SampleScene s => SampleSceneView(scene: s, ink: ink, ground: ground),
     final SortScene s => SortSceneView(scene: s, ink: ink, ground: ground),
-    final TimelineScene s => TimelineSceneView(scene: s, ink: ink, ground: ground),
+    final TimelineScene s => TimelineSceneView(
+      scene: s,
+      ink: ink,
+      ground: ground,
+    ),
+    final TrickScene s => TrickSceneView(scene: s, ink: ink, ground: ground),
+    final WhyScene s => WhySceneView(scene: s, ink: ink, ground: ground),
+    final PollScene s => PollSceneView(scene: s, ink: ink, ground: ground),
+    final StoryScene s => StorySceneView(scene: s, ink: ink, ground: ground),
+    final TranslateScene s => TranslateSceneView(
+      scene: s,
+      ink: ink,
+      ground: ground,
+    ),
+    final MatchScene s => MatchSceneView(scene: s, ink: ink, ground: ground),
+    final CluesScene s => CluesSceneView(scene: s, ink: ink, ground: ground),
     _ => const SizedBox.shrink(),
   };
 }

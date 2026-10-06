@@ -32,12 +32,11 @@
   "written": "2026-10-06",
   "scene": {
     "type": "rank",
-    "quantity": "Raised per pair of pupils",
+    "quantity": "Raised per pair, in shekels",
     "most": "Most",
-    "unit": "NIS",
     "items": [
       {
-        "label": "Paid 1%",
+        "label": "1% pay",
         "value": 154,
         "note": "A third less than the unpaid: the token fee made charity a badly paid job."
       },
@@ -47,7 +46,7 @@
         "note": "Working for nothing, the outing stayed a good deed, and they worked hardest."
       },
       {
-        "label": "Paid 10%",
+        "label": "10% pay",
         "value": 219,
         "note": "Ten times the commission still did not beat working for free."
       }

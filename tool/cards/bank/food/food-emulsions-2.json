@@ -29,16 +29,16 @@
   "figure": "none",
   "scene": {
     "type": "draw",
-    "label": "Rising speed, % of a 4 µm drop",
+    "label": "Rise speed (%), by size in microns",
     "unit": "%",
     "columns": [
-      "4 µm",
-      "3.5 µm",
-      "3 µm",
-      "2.5 µm",
-      "2 µm",
-      "1.5 µm",
-      "1 µm"
+      "4",
+      "3.5",
+      "3",
+      "2.5",
+      "2",
+      "1.5",
+      "1"
     ],
     "values": [
       100,

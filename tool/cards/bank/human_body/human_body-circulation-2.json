@@ -32,7 +32,6 @@
     "columns": [
       "Aorta",
       "Arteries",
-      "Smaller",
       "Smallest",
       "Veins",
       "Big vein"
@@ -40,7 +39,6 @@
     "values": [
       330,
       41,
-      21,
       0.33,
       10,
       103
@@ -50,7 +48,7 @@
     "max": 1000,
     "log": true,
     "decimals": 1,
-    "judge": 3,
+    "judge": 2,
     "verdict": {
       "under": "Even lower than the truth. Capillaries run at 0.3 mm a second, a thousandth of the aorta.",
       "near": "Right: a thousand times slower in the capillaries, then faster as veins merge.",
@@ -58,12 +56,8 @@
     },
     "notes": [
       {
-        "at": 1,
-        "text": "Arteries: 41 mm a second"
-      },
-      {
-        "at": 5,
-        "text": "Back up to 103 mm/s"
+        "at": 4,
+        "text": "Back up to 103"
       }
     ]
   },

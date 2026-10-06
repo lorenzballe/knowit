@@ -31,21 +31,21 @@
   "reference": "Bar-On, Phillips & Milo, The biomass distribution on Earth, PNAS 115(25): 6506-6511, 2018",
   "scene": {
     "type": "rank",
-    "quantity": "Million tonnes of carbon",
-    "most": "Heaviest",
+    "quantity": "Mammals, million t carbon",
+    "most": "Most",
     "items": [
       {
-        "label": "Wild mammals",
+        "label": "Wild",
         "value": 7,
         "note": "Every whale, elephant, deer and mouse together: about 4% of all mammals."
       },
       {
-        "label": "Humans",
+        "label": "Human",
         "value": 60,
         "note": "More than eight times the weight of all wild mammals combined."
       },
       {
-        "label": "Farm animals",
+        "label": "Farmed",
         "value": 100,
         "note": "Mostly cattle: they outweigh humans and wild mammals put together."
       }

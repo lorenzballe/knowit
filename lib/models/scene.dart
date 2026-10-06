@@ -16,7 +16,11 @@
 /// Each other kind lives in its own file under `scenes/`, model beside view:
 /// `count` bet on a number, `draw` draw the curve you expect, `sort` swipe
 /// things into two piles, `timeline` place events in time, `hold` hold for as
-/// long as you think, `rank` put things in order, `sample` grow a sample.
+/// long as you think, `rank` put things in order, `sample` grow a sample,
+/// `trick` find the trick in a chart, `why` ask why until the root cause,
+/// `poll` answer for yourself then see everyone, `story` a case in scenes
+/// with a guess at what happens next, `translate` jargon into plain words,
+/// `match` pair things up, `clues` guess from clues that arrive one by one.
 library;
 
 import 'scenes/count.dart';
@@ -26,6 +30,13 @@ import 'scenes/rank.dart';
 import 'scenes/sample.dart';
 import 'scenes/sort.dart';
 import 'scenes/timeline.dart';
+import 'scenes/trick.dart';
+import 'scenes/why.dart';
+import 'scenes/poll.dart';
+import 'scenes/story.dart';
+import 'scenes/translate.dart';
+import 'scenes/match.dart';
+import 'scenes/clues.dart';
 
 export 'scenes/count.dart';
 export 'scenes/draw.dart';
@@ -34,6 +45,13 @@ export 'scenes/rank.dart';
 export 'scenes/sample.dart';
 export 'scenes/sort.dart';
 export 'scenes/timeline.dart';
+export 'scenes/trick.dart';
+export 'scenes/why.dart';
+export 'scenes/poll.dart';
+export 'scenes/story.dart';
+export 'scenes/translate.dart';
+export 'scenes/match.dart';
+export 'scenes/clues.dart';
 
 abstract class Scene {
   final Map<String, Object?> raw;
@@ -93,6 +111,20 @@ abstract class Scene {
         return SortScene.parse(raw, id);
       case 'timeline':
         return TimelineScene.parse(raw, id);
+      case 'trick':
+        return TrickScene.parse(raw, id);
+      case 'why':
+        return WhyScene.parse(raw, id);
+      case 'poll':
+        return PollScene.parse(raw, id);
+      case 'story':
+        return StoryScene.parse(raw, id);
+      case 'translate':
+        return TranslateScene.parse(raw, id);
+      case 'match':
+        return MatchScene.parse(raw, id);
+      case 'clues':
+        return CluesScene.parse(raw, id);
       default:
         return null;
     }
