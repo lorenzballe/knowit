@@ -548,7 +548,7 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
   let div = 0, running = false, done = false, hist = [[0, 100]], g, speed = 1, lastN = -1;
   const len = t => t.alt ? clamp(.55 + .22 * Math.sin(div * .45 + t.ph) + .14 * Math.sin(div * 1.3 + t.ph2), .25, 1) : clamp(t.L0 - (running || done ? t.loss * Math.min(div, t.stopAt) : 0), .06, 1);
   const growing = () => T.filter(t => div < t.stopAt).length;
-  function geo() { const {x, W, H} = Kit.fitCanvas(cv); const fit = n => Math.min(W / n, H / (100 / n * 1.15)); const cols = [10, 20, 25].reduce((b, n) => fit(n) > fit(b) ? n : b, 10), rows = 100 / cols, c = fit(cols); g = {x, W, H, c, cols, ox: (W - c * cols) / 2, oy: (H - c * rows * 1.15) / 2}; }
+  function geo() { const {x, W, H} = Kit.fitCanvas(cv); const fit = n => Math.min(W / n, H / (100 / n * 1.2)); const cols = [10, 20].reduce((b, n) => fit(n) > fit(b) ? n : b, 10), rows = 100 / cols, c = fit(cols); g = {x, W, H, c, cols, ox: (W - c * cols) / 2, oy: (H - c * rows * 1.2) / 2}; }
   ticks.te = (dt, now) => {
     if (running) {
       div = Math.min(MAX, div + dt * 10 * speed);
@@ -557,10 +557,10 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
     }
     if (!g) return; const {x, W, H, c, cols, ox, oy} = g; x.clearRect(0, 0, W, H);
     T.forEach((t, i) => {
-      const cx = ox + c * (i % cols + .5), cy = oy + c * 1.15 * Math.floor(i / cols) + c * .44;
+      const cx = ox + c * (i % cols + .5), cy = oy + c * 1.2 * Math.floor(i / cols) + c * .42;
       const f = t.stopT != null ? clamp((now - t.stopT) / 600) : 0, alive = div < t.stopAt;
       const pulse = alive ? Math.max(0, Math.sin((div % 1) * Math.PI)) * (running ? .1 : 0) + Math.sin(now / 420 + t.ph) * .04 : 0;
-      const r = c * .3 * (1 + pulse) * (1 - .3 * ss(f)), sh = shapes[i];
+      const r = c * .27 * (1 + pulse) * (1 - .3 * ss(f)), sh = shapes[i];
       x.beginPath();
       for (let a = 0; a <= 28; a++) { const ang = a / 28 * 6.283, w = sh[a % 7] * .5 + sh[(a + 1) % 7] * .5, rr = r * (1 + (w - 1) * .6); a ? x.lineTo(cx + Math.cos(ang) * rr, cy + Math.sin(ang) * rr) : x.moveTo(cx + Math.cos(ang) * rr, cy + Math.sin(ang) * rr); }
       x.closePath();
@@ -568,7 +568,7 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
       else { x.fillStyle = '#fff'; x.fill(); }
       if (done && t.alt) { x.strokeStyle = '#FFE600'; x.lineWidth = Math.max(2, c * .08); x.beginPath(); x.arc(cx, cy, c * .44, 0, 7); x.stroke(); }
       // the tip-length bar
-      const bw = c * .8, by = cy + c * .44, bh = Math.max(2.5, c * .16);
+      const bw = c * .84, by = cy + c * .4, bh = Math.max(3, c * .2);
       x.fillStyle = 'rgba(255,255,255,.25)'; x.fillRect(cx - bw / 2, by, bw, bh);
       x.fillStyle = done && t.alt ? '#FFE600' : alive ? '#fff' : 'rgba(255,255,255,.45)'; x.fillRect(cx - bw / 2, by, bw * len(t), bh);
     });

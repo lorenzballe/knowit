@@ -50,10 +50,11 @@
 
 /* 3 · where does it block */
 .diag{position:relative;flex:1;min-height:0;border-radius:2.2cqh;background:#2a0907;overflow:hidden}
-.meter{position:absolute;right:3cqw;top:1.4cqh;width:47%;display:flex;flex-direction:column;gap:.8cqh;padding:1.1cqh 3cqw;border-radius:1.4cqh;box-shadow:inset 0 0 0 .2cqh #ffffff40;background:#1a0504}
+.meter{position:absolute;right:2.6cqw;top:1.2cqh;width:41%;display:flex;flex-direction:column;gap:.8cqh;padding:1.1cqh 3cqw;border-radius:1.4cqh;box-shadow:inset 0 0 0 .2cqh #ffffff40;background:#1a0504}
 .meter .site b{display:block;font:800 1.7cqh/1.1 var(--body)}
 .meter .site span{font:600 1.3cqh/1.2 var(--body);opacity:.8}
-.mrow{display:grid;grid-template-columns:5.8cqh 1fr 7.4cqh;gap:1.4cqw;align-items:center;font:700 1.05cqh/1 var(--mono);letter-spacing:.05em}
+.mrow{display:grid;grid-template-columns:1fr auto;gap:.5cqh 1.4cqw;align-items:center;font:700 1.05cqh/1 var(--mono);letter-spacing:.05em}
+.mrow i{grid-column:1/-1}
 .mrow i{display:block;height:.9cqh;border-radius:1cqh;background:#ffffff26;overflow:hidden}
 .mrow u{display:block;height:100%;transform-origin:left;transition:transform .5s cubic-bezier(.23,1,.32,1)}
 .mrow em{font-style:normal;text-align:right;opacity:.9}
@@ -142,8 +143,8 @@
         <div class="stagebox">
           <div class="diag"><svg class="full" id="painSvg" role="img" aria-label="The pain route from toe to brain"></svg>
             <div class="meter" aria-live="polite"><div class="site"><b id="pmDrug">No drug</b><span id="pmSite">Both signals arrive</span></div>
-              <div class="mrow"><span style="color:#FFE600">PAIN</span><i><u id="pmPain" style="background:#FFE600"></u></i><em id="pmPainW">FULL</em></div>
-              <div class="mrow"><span style="color:#8fe3ff">TOUCH</span><i><u id="pmTouch" style="background:#8fe3ff"></u></i><em id="pmTouchW">FULL</em></div></div></div>
+              <div class="mrow"><span style="color:#FFE600">PAIN</span><em id="pmPainW">FULL</em><i><u id="pmPain" style="background:#FFE600"></u></i></div>
+              <div class="mrow"><span style="color:#8fe3ff">TOUCH</span><em id="pmTouchW">FULL</em><i><u id="pmTouch" style="background:#8fe3ff"></u></i></div></div></div>
           <div class="drugs" id="painDrugs">
             <button class="drug" data-d="ibu"><b>Ibuprofen</b><span>NSAID</span></button>
             <button class="drug" data-d="lido"><b>Lidocaine</b><span>numbing</span></button>
@@ -357,7 +358,7 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
     lab(W * .5, ry + rh + fs * 1.45, 'METAL RAIL', 'middle');
     T(wsvg, x0, ry + rh + fs * 1.45, 'LOW', {opacity: .75, 'font-family': MONO, 'font-weight': 700}, fs * .66);
     T(wsvg, x1, ry + rh + fs * 1.45, 'HIGH', {'text-anchor': 'end', opacity: .75, 'font-family': MONO, 'font-weight': 700}, fs * .66);
-    lab(x1, wy - fs * 1.5, pressed ? 'TOUCHING: SOUND' : 'PRESS AND SLIDE', 'end', '#FFE600');
+    if (!pressed) lab(x1, wy - fs * 1.5, 'PRESS AND SLIDE', 'end', '#FFE600');
   }
   // sound
   async function audio() {
