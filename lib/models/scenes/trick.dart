@@ -531,8 +531,9 @@ class TrickScene extends Scene {
   }
 
   /// The round values to mark on an axis from [r.lo] to [r.hi].
-  static List<double> ticks(TrickSceneRange r) {
-    final step = tidyStep(r.hi - r.lo, 4);
+  /// About [parts] steps; fewer on a short chart.
+  static List<double> ticks(TrickSceneRange r, [int parts = 4]) {
+    final step = tidyStep(r.hi - r.lo, parts);
     final out = <double>[];
     var v = (r.lo / step - 1e-9).ceil() * step;
     while (v <= r.hi + step * 1e-6) {

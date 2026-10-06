@@ -393,13 +393,11 @@ class _TrickSceneViewState extends State<TrickSceneView>
         }
         return after ? s.honestLabel : s.label;
       case TrickSceneRegion.yaxis:
-        final t = TrickScene.ticks(after ? s.fair : s.shown);
-        return '${f.tick(t.first, after ? s.fair : s.shown)} – '
-            '${f.tick(t.last, after ? s.fair : s.shown)}';
+        final range = after ? s.fair : s.shown;
+        return '${f.tick(range.lo, range)} – ${f.tick(range.hi, range)}';
       case TrickSceneRegion.yaxis2:
         final range = after ? s.fair : s.shown2;
-        final t = TrickScene.ticks(range);
-        return '${f.tick(t.first, range)} – ${f.tick(t.last, range)}';
+        return '${f.tick(range.lo, range)} – ${f.tick(range.hi, range)}';
       case TrickSceneRegion.xaxis:
         final a = after ? 0 : s.first;
         final b = after ? s.count - 1 : s.last;
@@ -622,8 +620,8 @@ class _TrickFormat {
 
   /// A mark on the value axis: as many decimals as the step needs, large
   /// numbers shortened, the unit only when it is short enough to sit there.
-  String tick(double v, TrickSceneRange range) {
-    final step = TrickScene.tidyStep(range.hi - range.lo, 4);
+  String tick(double v, TrickSceneRange range, [int parts = 4]) {
+    final step = TrickScene.tidyStep(range.hi - range.lo, parts);
     final big = math.max(range.hi.abs(), range.lo.abs());
     String n;
     if (big >= 1e5) {
@@ -681,6 +679,10 @@ class _TrickLayout {
   final Map<TrickSceneRegion, Rect> regions;
   final Map<TrickSceneRegion, Rect> boxes;
 
+  /// How many steps the value axis is cut into: fewer on a short chart, so
+  /// its labels never crowd.
+  final int parts;
+
   _TrickLayout._({
     required this.scene,
     required this.size,
@@ -696,6 +698,7 @@ class _TrickLayout {
     required this.rows,
     required this.regions,
     required this.boxes,
+    required this.parts,
   });
 
   static const pad = EdgeInsets.fromLTRB(14, 12, 14, 10);
@@ -920,6 +923,7 @@ class _TrickLayout {
       rows: rows,
       regions: regions,
       boxes: boxes,
+      parts: chart.height < 150 ? 2 : 4,
     );
   }
 
@@ -1142,8 +1146,8 @@ class _TrickChartPainter extends CustomPainter {
 
     // Grid and ticks: the old set fading as the new one comes, each at its
     // own value on the axis as it is now. A value in both sets stays put.
-    final oldTicks = TrickScene.ticks(s.shown);
-    final newTicks = TrickScene.ticks(s.fair);
+    final oldTicks = TrickScene.ticks(s.shown, layout.parts);
+    final newTicks = TrickScene.ticks(s.fair, layout.parts);
     final oldAlpha = s.refills ? (second ? 0.0 : 1 - drain) : 1 - e;
     final newAlpha = s.refills ? (second ? fill : 0.0) : e;
     canvas.save();
@@ -1160,7 +1164,7 @@ class _TrickChartPainter extends CustomPainter {
       // A flipping axis folds flat halfway; its labels fade as it does.
       _text(
         canvas,
-        f.tick(v, labelRange),
+        f.tick(v, labelRange, layout.parts),
         tickStyle,
         Offset(plot.left - 12, y),
         ax: 1,
@@ -1184,7 +1188,7 @@ class _TrickChartPainter extends CustomPainter {
     // axis's.
     if (s.trick == TrickSceneKind.dual) {
       for (final (set, alpha, r) in [
-        (TrickScene.ticks(s.shown2), 1 - e, s.shown2),
+        (TrickScene.ticks(s.shown2, layout.parts), 1 - e, s.shown2),
         (newTicks, e, s.fair),
       ]) {
         for (final v in set) {
@@ -1192,7 +1196,7 @@ class _TrickChartPainter extends CustomPainter {
           if (y < plot.top - 6 || y > plot.bottom + 6) continue;
           _text(
             canvas,
-            f.tick(v, r),
+            f.tick(v, r, layout.parts),
             tickStyle,
             Offset(plot.right + 8, y),
             ay: .5,
