@@ -88,7 +88,7 @@
 .srow span{font:600 1.9cqh/1.3 var(--body)}
 
 /* 5 · the time card */
-.tcbox{position:relative;flex:1;min-height:27cqh}
+.tcbox{position:relative;flex:1;min-height:0}
 .tc{position:absolute;left:50%;top:50%;width:min(72cqw,42cqh);height:min(100%,64cqh);background:#fbf6e6;color:#1b1a16;border-radius:1.2cqh;box-shadow:0 1.4cqh 3cqh #6b5f0055,0 .3cqh .6cqh #0002;padding:2.4cqh 5cqw;display:flex;flex-direction:column;gap:1.3cqh;box-sizing:border-box;transform-style:preserve-3d}
 .tc::before{content:"";position:absolute;left:50%;top:1.1cqh;width:5cqh;height:1.4cqh;margin-left:-2.5cqh;border-radius:1cqh;background:#e8dfc4}
 .tc .face,.tc .rear{position:absolute;inset:0;padding:3.6cqh 5cqw 2.4cqh;display:flex;flex-direction:column;gap:1.3cqh;backface-visibility:hidden;-webkit-backface-visibility:hidden}
@@ -109,17 +109,19 @@
 .vote .vl b{font:900 2.4cqh/1 var(--display)}
 .vbar{height:2.4cqh;border-radius:.6cqh;background:#1b1a1618;overflow:hidden;display:flex}
 .vbar i{display:block;height:100%;background:#1b1a16;width:0}
-.rack{position:absolute;left:0;right:0;top:8cqh;display:grid;grid-template-columns:repeat(10,1fr);gap:1.2cqh 1.6cqw}
-.slot{position:relative;aspect-ratio:3/4;perspective:40cqh}
+.rwrap{position:absolute;inset:0;display:flex;flex-direction:column;gap:1.6cqh}
+.rack{display:grid;grid-template-columns:repeat(10,1fr);gap:2.2cqh 1.6cqw;padding-top:1.2cqh}
+.slot{position:relative;aspect-ratio:1;perspective:40cqh}
 .slot .cd{position:absolute;inset:0;transform-style:preserve-3d}
 .slot .cd b{position:absolute;inset:0;display:grid;place-items:center;border-radius:.5cqh;background:#fbf6e6;color:#1b1a16;font:900 2.2cqh/1 var(--display);box-shadow:0 .4cqh .8cqh #6b5f0040;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .slot .cd b+b{transform:rotateY(180deg);background:#1b1a16;color:#FFE600}
 .slot.you .cd b{box-shadow:0 0 0 .45cqh #1b1a16}
-.slot.you::after{content:"YOU";position:absolute;left:0;right:0;bottom:-2.1cqh;text-align:center;font:800 1.15cqh/1 var(--mono);letter-spacing:.1em}
-.yr{position:absolute;left:0;top:0;right:0;display:flex;justify-content:space-between;align-items:baseline}
+.slot.you::after{content:"YOU";position:absolute;left:-1cqw;right:-1cqw;top:-1.9cqh;text-align:center;font:800 1.15cqh/1 var(--mono);letter-spacing:.1em}
+.yr{display:flex;justify-content:space-between;align-items:baseline}
 .yr b{font:900 5.6cqh/1 var(--display);letter-spacing:-.02em}
 .yr span{font:700 1.3cqh/1.3 var(--mono);letter-spacing:.08em;text-align:right;opacity:.75}
-.rnote{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;font:700 1.25cqh/1 var(--mono);letter-spacing:.06em;opacity:.7}
+.lg{display:flex;align-items:center;gap:1.6cqw}.lg i{width:1.4cqh;height:1.4cqh;border-radius:.3cqh;display:block}.lg i+i{margin-left:2cqw}
+.rnote{margin-top:auto;display:flex;justify-content:space-between;font:700 1.25cqh/1 var(--mono);letter-spacing:.06em;opacity:.7}
 </style>
 
 <div class="app">
@@ -221,7 +223,7 @@
       <div class="in">
         <div class="label"><span class="t">Economics</span><span class="tag" id="kelTag">YOUR VOTE</span></div>
         <h2 class="q">Kellogg’s cereal plant, 1946. Your shift is six hours. Keep it, or work eight for more pay?</h2>
-        <div class="stagebox">
+        <div class="stagebox" style="min-height:28cqh">
           <div class="tcbox" id="kelBox">
             <div class="tc" id="kelCard">
               <div class="face">
@@ -249,10 +251,10 @@
                 <div class="tcm" style="margin-top:auto"><span id="kelYou">YOU: 6 HOURS</span><span>FOR SIX HOURS</span></div>
               </div>
             </div>
-            <div class="gone" id="kelRackWrap" style="position:absolute;inset:0">
+            <div class="gone rwrap" id="kelRackWrap">
               <div class="yr"><b class="num" id="kelYr">1947</b><span id="kelYrl">EACH DEPARTMENT<br>NOW CHOOSES</span></div>
               <div class="rack" id="kelRack"></div>
-              <div class="rnote"><span>■ 6 HOURS &nbsp; <span style="background:#1b1a16;color:#FFE600;padding:0 .6cqw">■</span> 8 HOURS</span><span>PACE ILLUSTRATIVE</span></div>
+              <div class="rnote"><span class="lg"><i style="background:#fbf6e6"></i>6 HOURS <i style="background:#1b1a16"></i>8 HOURS</span><span>PACE ILLUSTRATIVE</span></div>
             </div>
           </div>
         </div>
@@ -674,7 +676,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
   const deck = Kit.$('tatDeck'), tally = Kit.$('tatTally'), say = Kit.$('tatSay');
   let at = 0, right = 0, busy = false;
   const slip = (d, i) => `<div class="slip" data-i="${i}"><div class="hd2"><span>THE TATLER · No. 230</span><span>${i + 1} / ${WORDS.length}</span></div><div class="w">${d.w}</div><p class="g">${d.g}</p><div class="hint"><span>← DEAD</span><span>ALIVE →</span></div><div class="stamp alive">ALIVE</div><div class="stamp dead">DEAD</div></div>`;
-  function pills() { tally.innerHTML = WORDS.map(() => '<span class="todo">? ? ?</span>').join(''); }
+  function pills() { tally.innerHTML = WORDS.map(() => '<span class="todo">?</span>').join(''); }
   function render() {
     deck.innerHTML = '';
     for (let i = Math.min(WORDS.length - 1, at + 2); i >= at; i--) deck.insertAdjacentHTML('beforeend', slip(WORDS[i], i));

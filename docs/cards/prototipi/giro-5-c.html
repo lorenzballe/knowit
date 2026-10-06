@@ -48,7 +48,7 @@
 .tube{position:absolute;left:1.5cqw;width:6.4cqw;top:1.5cqh;bottom:7.5cqw;border-radius:9cqw;box-shadow:inset 0 0 0 .32cqh var(--k);background:#ffffff59}
 .merc{position:absolute;left:1.6cqw;right:1.6cqw;bottom:1.4cqw;border-radius:9cqw;background:#d4161c}
 .bulb{position:absolute;left:-.5cqw;bottom:.4cqw;width:10.4cqw;aspect-ratio:1;border-radius:50%;background:#d4161c;box-shadow:0 0 0 .32cqh var(--k)}
-.tlab{position:absolute;left:10.4cqw;transform:translateY(50%);font:700 1.3cqh/1 var(--mono);opacity:.7}
+.tlab{position:absolute;left:10.4cqw;transform:translateY(-50%);font:700 1.5cqh/1 var(--mono);opacity:.8}
 .tlab.hi{opacity:1}
 .knob{position:absolute;left:.2cqw;width:9cqw;height:1.2cqh;margin-top:-.6cqh;border-radius:1cqh;background:var(--k);box-shadow:0 .4cqh 1cqh #0003;transform:translateY(-50%)}
 .swcol{display:flex;flex-direction:column;gap:1.4cqh;min-width:0}
@@ -76,15 +76,16 @@
 .brow .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:1cqh;background:var(--k);width:0}
 .brow.you .bar i{background:#fff;box-shadow:inset 0 0 0 .25cqh var(--k)}
 .brow b{font:900 2.4cqh/1 var(--display);text-align:right}
+.board.big{flex:1;justify-content:center;gap:3cqh}.board.big .brow .nm{font-size:2cqh}.board.big .brow .bar{height:3cqh;border-radius:1.5cqh}.board.big .brow .bar i{border-radius:1.5cqh}.board.big .brow b{font-size:4.4cqh}.board.big .brow{grid-template-columns:24cqw 1fr 16cqw}
 
 /* ---- te: the tumours ---- */
 .thead{display:flex;align-items:baseline;gap:3cqw}
 .thead b{font:900 5.4cqh/.9 var(--display);letter-spacing:-.02em;min-width:13cqw}
 .thead span{font:600 1.9cqh/1.25 var(--body)}
 .thead .mono{margin-left:auto;text-align:right;opacity:.75}
-.tum{position:relative;flex:1.35;min-height:0}
+.tum{position:relative;flex:1.6;min-height:0}
 .tum canvas,.chart svg{position:absolute;inset:0;width:100%;height:100%}
-.chart{position:relative;flex:1;min-height:0;border-radius:2.4cqh;background:color-mix(in srgb,var(--k) 12%,transparent)}
+.chart{position:relative;flex:1;min-height:9cqh;border-radius:2.4cqh;background:color-mix(in srgb,var(--k) 12%,transparent)}
 .doses{display:flex;gap:2.2cqw;align-items:center}
 .dose{padding:1.6cqh 3.4cqw;font-size:1.9cqh}
 .dose.on{background:var(--k);color:var(--c)}
@@ -136,7 +137,7 @@
     <article class="card" id="bl" style="--c:#00E5A0;--k:#10100c;--edge:#00835b" data-kind="Turn up the heat · live wash">
       <div class="in">
         <div class="label"><span class="t">Science</span><span class="tag">SLIDE</span></div>
-        <h2 class="q">Your powder whitens at 40 °C, but its bleach barely works below 60 °C. What closes the gap?</h2>
+        <h2 class="q">Your powder whitens at 40&nbsp;°C, but its bleach barely works below 60&nbsp;°C. What closes the gap?</h2>
         <div class="stagebox">
           <div class="wash">
             <div class="thermo" id="blTh" role="slider" tabindex="0" aria-label="Water temperature" aria-valuemin="20" aria-valuemax="90" aria-valuenow="40">
@@ -167,7 +168,7 @@
         <h2 class="q">Five numbers flash for 0.21 seconds, then hide. Tap them in order. A young chimp gets 4 rounds in 5.</h2>
         <div class="stagebox">
           <div class="screen" id="ayScr" aria-label="Touch screen"><div class="cue" id="ayCue">Press Flash.<br>Eyes here.</div></div>
-          <div class="board">
+          <div class="board" id="ayBoard">
             <div class="brow you"><span class="nm">You</span><span class="bar"><i id="ayYouBar"></i></span><b class="num" id="ayYou">0/0</b></div>
             <div class="brow"><span class="nm">Ayumu</span><span class="bar"><i style="width:80%"></i></span><b class="num">80%</b></div>
             <div class="brow"><span class="nm">Students</span><span class="bar"><i style="width:40%"></i></span><b class="num">40%</b></div>
@@ -198,7 +199,7 @@
     </article>
 
     <!-- 5 · Pop culture: zoom out the bill (infinite zoom) -->
-    <article class="card" id="rd" style="--c:#FF3D7F;--k:#ffffff;--edge:#a3204d" data-kind="Zoom out the bill · one tap to one year">
+    <article class="card" id="rd" style="--c:#FF3D7F;--k:#ffffff;--edge:#a3204d" data-kind="Zoom out the bill">
       <div class="in">
         <div class="label"><span class="t">Pop culture</span><span class="tag">ZOOM OUT</span></div>
         <h2 class="q">In 2023 Reddit charged apps $0.24 per 1,000 requests, a fortieth of a cent a tap. What would a year cost one app?</h2>
@@ -256,7 +257,7 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
   function geo() {
     const {x, W, H} = Kit.fitCanvas(cv);
     if (H < 60 || W < 60) { g = null; return; }
-    const hb = cv.parentNode.querySelector('.hud'), top = Math.max(H * .3, hb.offsetTop + hb.offsetHeight + H * .05), bot = H - Math.max(14, H * .06), band = (bot - top) / (ROWS * 2 + 1), m = W * .07, pitch = (W - 2 * m) / COLS;
+    const hb = cv.parentNode.querySelector('.hud'), top = Math.max(H * .3, hb.offsetTop + hb.offsetHeight + H * .08), bot = H - Math.max(14, H * .06), band = (bot - top) / (ROWS * 2 + 1), m = W * .07, pitch = (W - 2 * m) / COLS;
     g = {x, W, H, top, bot, band, m, pitch, r: Math.min(pitch, band) * .3};
   }
   const shear = () => ss((v - 4.45) / .15);
@@ -480,9 +481,9 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
     const pct = Math.round(wins / ROUNDS * 100);
     $('ayRound').textContent = 'Done'; go.textContent = 'Play again';
     say.innerHTML = `You: <b>${pct}%</b>. But Ayumu had years of practice, and in 2009 people who trained at this speed <b>caught up</b> with him.`;
-    Kit.show('ayKeep');
+    Kit.show('ayKeep'); scr.classList.add('gone'); $('ayBoard').classList.add('big');
   }
-  function restart() { round = 0; wins = 0; score(); clear(); Kit.hide('ayKeep'); go.textContent = 'Flash'; $('ayRound').textContent = `Round 1 / ${ROUNDS}`; $('ayCue').innerHTML = 'Press Flash.<br>Eyes here.'; $('ayCue').classList.remove('gone'); say.innerHTML = 'Kyoto, 2007. Ayumu the chimp against university students, at the same screen and the same speed.'; }
+  function restart() { scr.classList.remove('gone'); $('ayBoard').classList.remove('big'); round = 0; wins = 0; score(); clear(); Kit.hide('ayKeep'); go.textContent = 'Flash'; $('ayRound').textContent = `Round 1 / ${ROUNDS}`; $('ayCue').innerHTML = 'Press Flash.<br>Eyes here.'; $('ayCue').classList.remove('gone'); say.innerHTML = 'Kyoto, 2007. Ayumu the chimp against university students, at the same screen and the same speed.'; }
   go.onclick = flash;
   score();
   Kit.play.ay = async () => {
@@ -527,7 +528,7 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
     svg.innerHTML = ''; const {W, H, f} = Kit.fitSvg(svg), fs = Math.max(10, Math.min(H / 9, W / 26));
     const L = fs * 2.6, R = W - fs * 1.2, Tp = fs * 1.1, B = H - fs * 2.1;
     const X = d => L + (R - L) * d / 100, Y = n => B - (B - Tp) * n / 100, ink = '#fff';
-    const T_ = (x, y, s, a = {}) => { const t = Kit.mk('text', Object.assign({x, y, fill: ink, 'font-family': 'JetBrains Mono', 'font-weight': 700, 'font-size': fs * .82, 'letter-spacing': '.04em'}, a), svg); t.textContent = s; return t; };
+    const T_ = (x, y, s, a = {}) => { const t = Kit.mk('text', Object.assign({x, y, fill: ink, 'font-family': 'JetBrains Mono, ui-monospace, monospace', 'font-weight': 700, 'font-size': fs * .82, 'letter-spacing': '.04em'}, a), svg); t.textContent = s; return t; };
     Kit.mk('line', {x1: L, y1: B, x2: R, y2: B, stroke: ink, 'stroke-width': 2, opacity: .6}, svg);
     Kit.mk('line', {x1: L, y1: B, x2: L, y2: Tp, stroke: ink, 'stroke-width': 2, opacity: .6}, svg);
     T_(L - fs * .5, Y(100) + fs * .3, '100', {'text-anchor': 'end'});
@@ -537,7 +538,7 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
     const pts = [[0, 100], ...Object.entries(tried).map(([d, n]) => [+d, n])].sort((a, b) => a[0] - b[0]);
     if (tried[100] != null) {
       Kit.mk('line', {x1: L, y1: Y(12), x2: R, y2: Y(12), stroke: '#FFE600', 'stroke-width': 2.4, 'stroke-dasharray': '6 6'}, svg);
-      T_(X(50), Y(12) - fs * .6, '12 NEVER STOP: ALT', {'text-anchor': 'middle', fill: '#FFE600'});
+      T_(L + fs * .6, Y(12) - fs * .6, '12 NEVER STOP: ALT', {fill: '#FFE600'});
     }
     Kit.mk('polyline', {points: pts.map(([d, n]) => X(d) + ',' + Y(n)).join(' '), fill: 'none', stroke: ink, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
     for (const [d, n] of pts) Kit.mk('circle', {cx: X(d), cy: Y(n), r: fs * .42, fill: d === dose ? '#FFE600' : ink}, svg);
@@ -581,27 +582,27 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
   LV[0].w = LV[0].h = 1;
   for (let k = 1; k < LV.length; k++) { const L = LV[k], c = LV[k - 1]; L.px = c.w * (1 + L.gap); L.py = c.h * (1 + L.gap); L.w = L.cols * L.px - c.w * L.gap; L.h = L.rows * L.py - c.h * L.gap; }
   let u = 0, bet = null, g, tw = null;
-  const view = k => { const L = LV[k], fw = k ? .82 : .14; return {cx: L.w / 2, cy: L.h / 2, z: Math.min(g.W * fw / L.w, g.H * (k ? .5 : .14) / L.h)}; };
+  const view = k => { const L = LV[k], fw = k ? .82 : .14; return {cx: L.w / 2, cy: L.h / 2, z: Math.min(g.W * fw / L.w, g.ah * (k ? .92 : .3) / L.h)}; };
   function cam() {
     const k = Math.min(LV.length - 2, Math.floor(u)), f = u - k, a = view(k), b = view(k + 1);
     const z = Math.exp(Math.log(a.z) + (Math.log(b.z) - Math.log(a.z)) * f);
     const w = (1 / z - 1 / a.z) / (1 / b.z - 1 / a.z);
     return {z, cx: a.cx + (b.cx - a.cx) * w, cy: a.cy + (b.cy - a.cy) * w, k, f};
   }
-  function geo() { const {x, W, H} = Kit.fitCanvas(cv); g = {x, W, H}; }
+  function geo() { const {x, W, H} = Kit.fitCanvas(cv); const hb = box.querySelector('.zhud'); const top = hb.offsetTop + hb.offsetHeight + 10, bot = H - Math.max(26, H * .1); g = {x, W, H, top, bot, ah: Math.max(20, bot - top), my: (top + bot) / 2}; }
   const money = v => v < .01 ? '$' + v.toFixed(5) : v < 1000 ? '$' + v.toFixed(2) : '$' + Math.round(v).toLocaleString('en-US');
   function draw() {
     if (!g) return; const {x, W, H} = g, c = cam(), oy = H * .12;
     x.clearRect(0, 0, W, H);
-    const sx = wx => (wx - c.cx) * c.z + W / 2, sy = wy => (wy - c.cy) * c.z + H / 2 + oy;
+    const sx = wx => (wx - c.cx) * c.z + W / 2, sy = wy => (wy - c.cy) * c.z + g.my;
     const pink = '#FF3D7F';
     let budget = 60000;
     function tile(k, wx, wy, mine) {
       const L = LV[k], x0 = sx(wx), y0 = sy(wy), pw = L.w * c.z, ph = L.h * c.z;
       if (x0 > W || y0 > H || x0 + pw < 0 || y0 + ph < 0 || budget-- < 0) return;
       if (k === 0) { const r = Math.max(.6, pw * .36); if (mine) { x.fillStyle = '#fff'; } else x.fillStyle = pink; if (r < 2) x.fillRect(x0 + pw / 2 - r, y0 + ph / 2 - r, r * 2, r * 2); else { x.beginPath(); x.arc(x0 + pw / 2, y0 + ph / 2, r, 0, 7); x.fill(); } return; }
-      if (pw < 3) { x.fillStyle = mine ? '#fff' : pink; x.globalAlpha = mine ? 1 : .55 * (L.n / (L.cols * L.rows)); x.fillRect(x0, y0, Math.max(1, pw), Math.max(1, ph)); x.globalAlpha = 1; return; }
       const cpw = L.px * c.z, cph = L.py * c.z;
+      if (pw < 3 || cpw < 1.2) { x.fillStyle = mine && pw < 3 ? '#fff' : pink; x.globalAlpha = mine && pw < 3 ? 1 : .7 * (L.n / (L.cols * L.rows)); x.fillRect(x0, y0, Math.max(1, pw), Math.max(1, ph)); x.globalAlpha = 1; if (mine && pw >= 3) { x.fillStyle = '#fff'; x.fillRect(x0, y0, 2.5, 2.5); if (pw > 14 && k < LV.length - 1) { x.strokeStyle = '#fff'; x.lineWidth = 1.5; x.strokeRect(x0 - 3, y0 - 3, pw + 6, ph + 6); } } return; }
       const c0 = Math.max(0, Math.floor(-x0 / cpw)), c1 = Math.min(L.cols - 1, Math.floor((W - x0) / cpw));
       const r0 = Math.max(0, Math.floor(-y0 / cph)), r1 = Math.min(L.rows - 1, Math.floor((H - y0) / cph));
       for (let r = r0; r <= r1; r++) for (let q = c0; q <= c1; q++) { const i = r * L.cols + q; if (i >= L.n) break; tile(k - 1, wx + q * L.px, wy + r * L.py, mine && i === 0); }
