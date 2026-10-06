@@ -82,6 +82,17 @@
 .tally span{font:700 1.3cqh/1 var(--mono);letter-spacing:.06em;padding:.8cqh 2.2cqw;border-radius:99px;background:#10100c;color:#00D9D9;display:flex;gap:1.4cqw;align-items:center}
 .tally span.dead{background:transparent;color:#10100c;box-shadow:inset 0 0 0 .22cqh #10100c;text-decoration:line-through}
 .tally span.todo{background:transparent;color:#10100c99;box-shadow:inset 0 0 0 .2cqh #10100c55;border:0}
+.piles{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;gap:4cqw;align-content:start}
+.pile{display:flex;flex-direction:column}
+.ph{display:flex;justify-content:space-between;align-items:baseline;border-bottom:.3cqh solid #10100c;padding-bottom:.8cqh;margin-bottom:1.4cqh}
+.ph b{font:900 3.6cqh/1 var(--display);letter-spacing:-.02em}.ph .num{font:900 3.6cqh/1 var(--display)}
+.ph i{display:block;font:700 1.15cqh/1 var(--mono);font-style:normal;letter-spacing:.12em;opacity:.65;margin-top:.5cqh}
+.mini{position:relative;background:#f7f1e1;color:#1d1a14;border-radius:1.1cqh;padding:1.5cqh 3.2cqw 4.2cqh;box-shadow:0 .7cqh 1.4cqh #00454555;margin-top:-1.2cqh}
+.mini:first-of-type{margin-top:0}
+.mini small{display:block;font:700 .95cqh/1 var(--mono);letter-spacing:.1em;opacity:.5;margin-bottom:.6cqh}
+.mini .mw{font:900 italic 2.9cqh/1 var(--display);letter-spacing:-.01em;white-space:nowrap}
+.pile.died .mini{background:#e4ddc9}.pile.died .mw{text-decoration:line-through;text-decoration-thickness:.3cqh;opacity:.5}
+.mstamp{position:absolute;right:2.4cqw;bottom:1cqh;transform:rotate(-6deg);font:800 1.2cqh/1 var(--mono);letter-spacing:.08em;color:#c42b2b;border:.28cqh solid #c42b2b;border-radius:.6cqh;padding:.45cqh 1.2cqw;text-align:center;opacity:.9;background:#f7f1e1cc}
 .score{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:1.6cqh}
 .srow{display:flex;align-items:center;gap:4cqw;border-bottom:.25cqh solid #10100c33;padding-bottom:1.4cqh}
 .srow b{font:900 7cqh/1 var(--display);letter-spacing:-.03em;flex:none;width:24cqw}
@@ -109,6 +120,7 @@
 .vote .vl b{font:900 2.4cqh/1 var(--display)}
 .vbar{height:2.4cqh;border-radius:.6cqh;background:#1b1a1618;overflow:hidden;display:flex}
 .vbar i{display:block;height:100%;background:#1b1a16;width:0}
+.odds{display:flex;gap:2cqw;margin-top:.6cqh}.odds span{flex:1;display:grid;place-items:center;aspect-ratio:3/4;max-height:7cqh;border-radius:.6cqh;background:#1b1a16;color:#FFE600;font:900 3cqh/1 var(--display)}.odds span.e{background:transparent;color:#1b1a16;box-shadow:inset 0 0 0 .25cqh #1b1a16}
 .rwrap{position:absolute;inset:0;display:flex;flex-direction:column;gap:1.6cqh}
 .rack{display:grid;grid-template-columns:repeat(10,1fr);gap:2cqh 1.6cqw;padding-top:1.2cqh}
 .slot{position:relative;aspect-ratio:1;perspective:40cqh}
@@ -244,11 +256,11 @@
                 </div>
               </div>
               <div class="rear">
-                <div class="tcm"><span>MID-1946 · PLANT VOTE</span><span>RESULT</span></div>
-                <div class="tct">Most chose six</div>
-                <div class="vote"><div class="vl"><span>Women</span><b class="num">87%</b></div><div class="vbar"><i data-w="87"></i></div></div>
-                <div class="vote"><div class="vl"><span>Men</span><b class="num">71%</b></div><div class="vbar"><i data-w="71"></i></div></div>
-                <div class="tcm" style="margin-top:auto"><span id="kelYou">YOU: 6 HOURS</span><span>FOR SIX HOURS</span></div>
+                <div class="tcm"><span>PLANT-WIDE VOTES</span><span>1930s–40s</span></div>
+                <div class="tct">Six won, 3 to 1</div>
+                <div class="vote"><div class="vl"><span>Even the men</span><b class="num">about 3 : 1</b></div><div class="vbar"><i data-w="75"></i></div></div>
+                <div class="odds"><span>6</span><span>6</span><span>6</span><span class="e">8</span></div>
+                <div class="tcm" style="margin-top:auto"><span id="kelYou">YOU: 6 HOURS</span><span>YOUR VOTE</span></div>
               </div>
             </div>
             <div class="gone rwrap" id="kelRackWrap">
@@ -710,10 +722,18 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     busy = false;
   }
   function finish() {
-    deck.innerHTML = `<div class="score"><div class="srow"><b class="num">${right}/7</b><span>of your calls were right</span></div><div class="srow"><b class="num">4/7</b><span>of the words Swift said were spoiling English are plain English today</span></div></div>`;
-    if (!calm) gsap.from('#tatDeck .srow', {opacity: 0, y: 16, stagger: .18, duration: .45, ease: EO});
-    say.innerHTML = 'Struck out: the words that died. Swift was right that English was changing, and wrong about which changes would stick. A clipped slang word like <b>mob</b> is now the plain one.';
-    Kit.hide('tatBtns'); Kit.show('tatKeep'); Kit.$('tatTag').textContent = 'SCORE';
+    Kit.hide('tatTally');
+    const mini = d => `<div class="mini"><div class="mw">${d.w}</div><div class="mstamp">CONDEMNED · 1710</div></div>`;
+    const lived = WORDS.filter(d => d.alive), died = WORDS.filter(d => !d.alive);
+    deck.innerHTML = `<div class="piles"><div class="pile"><div class="ph"><span><b>Lived</b><i>IN USE TODAY</i></span><span class="num">${lived.length}</span></div>${lived.map(mini).join('')}</div><div class="pile died"><div class="ph"><span><b>Died</b><i>GONE</i></span><span class="num">${died.length}</span></div>${died.map(mini).join('')}</div></div>`;
+    if (!calm) {
+      const tl = gsap.timeline();
+      tl.from('#tatDeck .ph', {opacity: 0, y: -8, duration: .3, ease: EO})
+        .from('#tatDeck .mini', {opacity: 0, y: -50, x: (i, el) => el.closest('.died') ? -30 : 30, rotation: i => (i % 2 ? 8 : -8), duration: .45, stagger: .1, ease: 'back.out(1.4)'}, '-=.1')
+        .from('#tatDeck .mstamp', {opacity: 0, scale: 1.8, duration: .2, stagger: .07, ease: 'power3.in'}, '+=.15');
+    }
+    say.innerHTML = `Swift condemned all seven. Four outlived him, and <b>mob</b> became the plain word. You called <b>${right} of 7</b>.`;
+    Kit.hide('tatBtns'); Kit.show('tatKeep'); Kit.$('tatTag').textContent = 'THE VERDICT';
   }
   Kit.$('tatDead').onclick = () => decide(false);
   Kit.$('tatAlive').onclick = () => decide(true);
@@ -733,7 +753,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     await wait(calm ? 0 : 450);
     await gsap.to(card, {rotationY: 180, duration: D(.8), ease: EIO}).then();
     card.querySelectorAll('.vbar i').forEach((i, k) => gsap.to(i, {width: i.dataset.w + '%', duration: D(.8), delay: D(k * .15), ease: EO}));
-    say.innerHTML = `${vote === 6 ? 'You voted with the plant.' : 'You were in the minority.'} In mid-1946 most workers voted to <b>keep six hours</b>: 87% of women, 71% of men.`;
+    say.innerHTML = `${vote === 6 ? 'You voted with the plant.' : 'You were in the minority.'} In plant-wide votes through the 1930s and ’40s, even the men backed <b>six hours</b> about three to one.`;
     Kit.$('kelTag').textContent = 'TRUE STORY'; Kit.show('kelCtl');
   }
   Kit.$('kelPunch').querySelectorAll('button').forEach(b => b.onclick = () => punch(b));

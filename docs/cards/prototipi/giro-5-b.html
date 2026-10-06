@@ -41,15 +41,22 @@
 .scope canvas{position:absolute;inset:0;width:100%;height:100%}
 .scope .mono{position:absolute;top:1.5cqh;color:#fff;opacity:.8}
 .scope .l{left:5cqw}.scope .r{right:5cqw}
-.cc{position:absolute;left:50%;bottom:1.6cqh;transform:translateX(-50%);font:700 1.7cqh/1 var(--body);background:#000;color:#fff;border-radius:.6cqh;padding:.8cqh 2.6cqw;white-space:nowrap}
+.cc{position:absolute;left:50%;bottom:1.2cqh;transform:translateX(-50%);font:700 1.7cqh/1 var(--body);background:#000;color:#fff;border-radius:.6cqh;padding:.8cqh 2.6cqw;white-space:nowrap}
 .subs{display:flex;align-items:center;gap:2.2cqw}
 .flockb{margin-right:auto;padding:1.5cqh 4.5cqw;font-size:1.8cqh}
 .sub{font:800 2.5cqh/1 var(--display);width:7.2cqh;height:5.6cqh;border-radius:99px;border:0;cursor:pointer;background:transparent;color:var(--k);box-shadow:inset 0 0 0 .28cqh var(--k)}
 .sub[aria-pressed=true]{background:var(--k);color:var(--c)}
-.wire{position:relative;flex:1;min-height:0;touch-action:none;cursor:pointer}
+.wire{position:relative;flex:1;min-height:0;touch-action:none;cursor:pointer;border-radius:2.2cqh;background:#2a0b3d;overflow:hidden}
 
 /* 3 · where does it block */
-.diag{position:relative;flex:1;min-height:0}
+.diag{position:relative;flex:1;min-height:0;border-radius:2.2cqh;background:#2a0907;overflow:hidden}
+.meter{position:absolute;right:3cqw;top:1.4cqh;width:47%;display:flex;flex-direction:column;gap:.8cqh;padding:1.1cqh 3cqw;border-radius:1.4cqh;box-shadow:inset 0 0 0 .2cqh #ffffff40;background:#1a0504}
+.meter .site b{display:block;font:800 1.7cqh/1.1 var(--body)}
+.meter .site span{font:600 1.3cqh/1.2 var(--body);opacity:.8}
+.mrow{display:grid;grid-template-columns:5.8cqh 1fr 7.4cqh;gap:1.4cqw;align-items:center;font:700 1.05cqh/1 var(--mono);letter-spacing:.05em}
+.mrow i{display:block;height:.9cqh;border-radius:1cqh;background:#ffffff26;overflow:hidden}
+.mrow u{display:block;height:100%;transform-origin:left;transition:transform .5s cubic-bezier(.23,1,.32,1)}
+.mrow em{font-style:normal;text-align:right;opacity:.9}
 .drugs{display:grid;grid-template-columns:1fr 1fr;gap:1.1cqh 3cqw;flex:none}
 .drug{display:flex;align-items:baseline;justify-content:space-between;gap:1.5cqw;text-align:left;border:0;cursor:pointer;border-radius:1.6cqh;padding:1.4cqh 3.4cqw;background:color-mix(in srgb,var(--k) 14%,transparent);color:var(--k)}
 .drug b{font:800 2cqh/1 var(--body)}
@@ -116,14 +123,14 @@
         <div class="label"><span class="t">Music</span><span class="tag">SOUND ON</span></div>
         <h2 class="q">Hitchcock’s <em>The Birds</em> has no music score. Most of its screaming flock was played on a wire.</h2>
         <div class="stagebox">
-          <div class="scope"><canvas id="birdCv"></canvas><span class="mono l">Our synthesis</span><span class="mono r num" id="birdHz">880 Hz</span><span class="cc" id="birdCc">[silence]</span></div>
+          <div class="scope"><canvas id="birdCv"></canvas><span class="mono l num" id="birdHz">880 Hz</span><span class="cc" id="birdCc">[silence]</span></div>
           <div class="subs" role="group" aria-label="Subharmonics"><button class="btn flockb" id="birdFlock">Play the flock</button>
             <button class="sub" data-k="2" aria-pressed="false" aria-label="Add one half">½</button><button class="sub" data-k="3" aria-pressed="false" aria-label="Add one third">⅓</button><button class="sub" data-k="4" aria-pressed="false" aria-label="Add one quarter">¼</button></div>
           <div class="wire" id="birdWire" tabindex="0" role="slider" aria-label="Press the wire onto the rail to play" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><svg class="full" id="birdSvg" aria-hidden="true"></svg></div>
         </div>
         <p class="say" id="birdSay">Press the wire onto the rail and slide. Then switch on the fractions and play again.</p>
         <div class="keep gone" id="birdKeep"><b>WHAT TO KEEP</b>The most convincing version of a thing is often built, not captured.</div>
-        <div class="foot"><span class="src">Source · <i>The Birds</i> (1963), credits: electronic sound by Remi Gassmann and Oskar Sala; Bernard Herrmann, sound consultant</span></div>
+        <div class="foot"><span class="src">Source · <i>The Birds</i> (1963), credits: electronic sound by Remi Gassmann and Oskar Sala; Bernard Herrmann, sound consultant. Sound here: our synthesis</span></div>
       </div>
     </article>
 
@@ -133,7 +140,10 @@
         <div class="label"><span class="t">Medicine</span><span class="tag">TAP A DRUG</span></div>
         <h2 class="q qs" id="painQ">Stub your toe. The signal runs up a nerve, up the spine, to the brain. Where does each painkiller cut it?</h2>
         <div class="stagebox">
-          <div class="diag"><svg class="full" id="painSvg" role="img" aria-label="The pain route from toe to brain"></svg></div>
+          <div class="diag"><svg class="full" id="painSvg" role="img" aria-label="The pain route from toe to brain"></svg>
+            <div class="meter" aria-live="polite"><div class="site"><b id="pmDrug">No drug</b><span id="pmSite">Both signals arrive</span></div>
+              <div class="mrow"><span style="color:#FFE600">PAIN</span><i><u id="pmPain" style="background:#FFE600"></u></i><em id="pmPainW">FULL</em></div>
+              <div class="mrow"><span style="color:#8fe3ff">TOUCH</span><i><u id="pmTouch" style="background:#8fe3ff"></u></i><em id="pmTouchW">FULL</em></div></div></div>
           <div class="drugs" id="painDrugs">
             <button class="drug" data-d="ibu"><b>Ibuprofen</b><span>NSAID</span></button>
             <button class="drug" data-d="lido"><b>Lidocaine</b><span>numbing</span></button>
@@ -301,34 +311,53 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
   let f = 880, pressX = null, playing = false, phase = 0, raf = 0, voices = null, played = new Set();
   const subs = () => Object.keys(on).filter(k => on[k]).map(Number);
   const caption = () => { const n = subs().length; return n === 0 ? '[a thin electronic whistle]' : n === 1 ? '[a whistle with a growl underneath]' : '[a harsh, crowded shriek]'; };
-  // waveform: the main tone plus its active subharmonics, drawn from the maths so it shows even with sound off
+  // the scope shows what you built: each tone on its own lane, then their sum, the sound you hear
   function scope() {
-    const {x, W, H} = Kit.fitCanvas(cv), ks = [1, ...subs()], lowest = Math.max(...ks);
+    const {x, W, H} = Kit.fitCanvas(cv), ks = [1, ...subs()], fs = Math.max(9, H * .075);
     x.clearRect(0, 0, W, H);
-    x.strokeStyle = '#ffffff22'; x.lineWidth = 1;
-    for (let i = 1; i < 4; i++) { x.beginPath(); x.moveTo(0, H * i / 4); x.lineTo(W, H * i / 4); x.stroke(); }
-    const saw = p => 2 * (p - Math.floor(p + .5));
-    const amp = H * .26 / Math.sqrt(ks.length), mid = H * .52, periods = 2 * lowest;
-    x.beginPath(); x.lineWidth = 2.4; x.strokeStyle = playing ? '#FFE600' : '#fff'; x.lineJoin = 'round';
-    for (let i = 0; i <= W; i++) { const p = i / W * periods + phase; let y = 0; for (const k of ks) y += saw(p / k) * (k === 1 ? 1 : .8); x.lineTo(i, mid - y * amp); }
+    const saw = p => 2 * (p - Math.floor(p + .5)), periods = 4, padL = fs * 2.2;
+    const lane0 = H * .2, laneH = H * .3 / ks.length, NAME = {1: 'f', 2: '½', 3: '⅓', 4: '¼'};
+    x.font = `700 ${fs}px ${MONO}`; x.textBaseline = 'middle';
+    ks.forEach((k, i) => {
+      const mid = lane0 + laneH * (i + .5), a = laneH * .32;
+      x.fillStyle = '#ffffffb0'; x.fillText(NAME[k], fs * .6, mid);
+      x.beginPath(); x.strokeStyle = '#ffffff99'; x.lineWidth = 1.3;
+      for (let j = 0; j <= W - padL - fs * .6; j++) { const p = j / (W - padL) * periods + phase; x.lineTo(padL + j, mid - saw(p / k) * a); }
+      x.stroke();
+    });
+    const mid = H * .67, amp = H * .13 / Math.sqrt(ks.length);
+    x.fillStyle = '#fff'; x.font = `800 ${fs * 1.5}px Figtree`; x.fillText('=', fs * .5, mid);
+    x.beginPath(); x.lineWidth = 2.6; x.strokeStyle = playing || ks.length > 1 ? '#FFE600' : '#fff'; x.lineJoin = 'round';
+    for (let j = 0; j <= W - padL - fs * .6; j++) { const p = j / (W - padL) * periods + phase; let y = 0; for (const k of ks) y += saw(p / k) * (k === 1 ? 1 : .8); x.lineTo(padL + j, mid - y * amp); }
     x.stroke();
-    Kit.$('birdHz').textContent = Math.round(f).toLocaleString('en') + ' Hz' + (subs().length ? ' + ' + subs().length + ' below' : '');
+    Kit.$('birdHz').textContent = ks.map(k => Math.round(f / k).toLocaleString('en')).join(' + ') + ' Hz';
   }
   function loop() { phase += .05; scope(); raf = playing ? requestAnimationFrame(loop) : 0; }
+  // the instrument: a wire above a metal rail; your finger presses one onto the other
   function wire() {
     wsvg.innerHTML = '';
-    const {W, H} = Kit.fitSvg(wsvg), fs = Math.max(10, H * .13), x0 = W * .04, x1 = W * .96, ry = H * .66, wy = H * .3;
-    Kit.mk('rect', {x: x0, y: ry, width: x1 - x0, height: H * .12, rx: H * .06, fill: '#fff', opacity: .92}, wsvg);
-    for (let i = 0; i <= 12; i++) { const xx = x0 + (x1 - x0) * i / 12; Kit.mk('line', {x1: xx, y1: ry + H * .17, x2: xx, y2: ry + H * (i % 3 ? .21 : .25), stroke: '#fff', 'stroke-width': 1.5, opacity: .7}, wsvg); }
-    for (const xx of [x0, x1]) Kit.mk('rect', {x: xx - 4, y: wy - H * .08, width: 8, height: ry - wy + H * .08, rx: 3, fill: '#fff', opacity: .55}, wsvg);
-    const px = pressX === null ? null : x0 + (x1 - x0) * pressX;
-    Kit.mk('polyline', {points: px === null ? `${x0},${wy} ${x1},${wy}` : `${x0},${wy} ${px},${ry} ${x1},${wy}`, fill: 'none', stroke: '#fff', 'stroke-width': 2.4}, wsvg);
-    if (px === null) { Kit.mk('circle', {cx: W * .5, cy: wy, r: H * .09, fill: 'none', stroke: '#FFE600', 'stroke-width': 2.5, 'stroke-dasharray': '4 4'}, wsvg); T(wsvg, W * .5, (wy + ry) / 2 + fs * .35, 'PRESS AND SLIDE', {'text-anchor': 'middle', fill: '#FFE600'}, fs * .8); }
-    if (px !== null) { Kit.mk('circle', {cx: px, cy: ry - 2, r: H * .09, fill: '#FFE600', opacity: playing ? 1 : .8}, wsvg); }
-    T(wsvg, x0, H * .14, 'WIRE', {opacity: .85}, fs * .8);
-    T(wsvg, x1, H * .14, 'METAL RAIL BELOW', {'text-anchor': 'end', opacity: .85}, fs * .8);
-    T(wsvg, x0, H * .99, 'LOW', {opacity: .75, 'font-family': MONO, 'font-weight': 700}, fs * .7);
-    T(wsvg, x1, H * .99, 'HIGH', {'text-anchor': 'end', opacity: .75, 'font-family': MONO, 'font-weight': 700}, fs * .7);
+    const {W, H} = Kit.fitSvg(wsvg), fs = Math.max(10, Math.min(H * .1, W / 24)), x0 = W * .08, x1 = W * .92, wy = H * .4, ry = H * .62, rh = H * .12;
+    const gr = Kit.mk('linearGradient', {id: 'birdRail', x1: 0, y1: 0, x2: 0, y2: 1}, Kit.mk('defs', {}, wsvg));
+    Kit.mk('stop', {offset: 0, 'stop-color': '#f4f3f8'}, gr); Kit.mk('stop', {offset: 1, 'stop-color': '#8d8a9e'}, gr);
+    Kit.mk('rect', {x: x0, y: ry, width: x1 - x0, height: rh, rx: rh / 2, fill: 'url(#birdRail)'}, wsvg);
+    for (const xx of [x0, x1]) { Kit.mk('line', {x1: xx, y1: wy, x2: xx, y2: ry, stroke: '#8d8a9e', 'stroke-width': 3}, wsvg); Kit.mk('circle', {cx: xx, cy: wy, r: fs * .4, fill: '#d8d6e2'}, wsvg); }
+    const pressed = pressX !== null, px = pressed ? x0 + (x1 - x0) * pressX : W * .5;
+    Kit.mk('polyline', {points: pressed ? `${x0},${wy} ${px},${ry} ${x1},${wy}` : `${x0},${wy} ${x1},${wy}`, fill: 'none', stroke: '#fff', 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, wsvg);
+    if (pressed) Kit.mk('circle', {cx: px, cy: ry, r: fs * .55, fill: '#FFE600', opacity: playing ? 1 : .85}, wsvg);
+    // the finger
+    const fw = fs * 1.5, tip = pressed ? ry - fs * .1 : wy - fs * 1.1;
+    const fg = Kit.mk('g', {}, wsvg);
+    Kit.mk('rect', {x: px - fw / 2, y: -fw, width: fw, height: tip + fw, rx: fw / 2, fill: '#f3c7a5'}, fg);
+    Kit.mk('rect', {x: px - fw * .3, y: tip - fw * .85, width: fw * .6, height: fw * .62, rx: fw * .25, fill: '#fbe2cf'}, fg);
+    if (!pressed) Kit.mk('path', {d: `M${px - fs * .4},${wy - fs * .75} l${fs * .4},${fs * .4} l${fs * .4},${-fs * .4}`, fill: 'none', stroke: '#FFE600', 'stroke-width': 2.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, wsvg);
+    // labels with leaders
+    const lab = (x, y, txt, anchor, col = '#fff') => T(wsvg, x, y, txt, {'text-anchor': anchor, fill: col}, fs * .78);
+    const wl = x0 + (x1 - x0) * .12;
+    lab(x0, wy - fs * 1.5, 'WIRE', 'start'); Kit.mk('line', {x1: x0 + fs * 1.5, y1: wy - fs * 1.3, x2: wl, y2: wy - 3, stroke: '#fff', 'stroke-width': 1.3, opacity: .7}, wsvg);
+    lab(W * .5, ry + rh + fs * 1.45, 'METAL RAIL', 'middle');
+    T(wsvg, x0, ry + rh + fs * 1.45, 'LOW', {opacity: .75, 'font-family': MONO, 'font-weight': 700}, fs * .66);
+    T(wsvg, x1, ry + rh + fs * 1.45, 'HIGH', {'text-anchor': 'end', opacity: .75, 'font-family': MONO, 'font-weight': 700}, fs * .66);
+    lab(x1, wy - fs * 1.5, pressed ? 'TOUCHING: SOUND' : 'PRESS AND SLIDE', 'end', '#FFE600');
   }
   // sound
   async function audio() {
@@ -400,68 +429,92 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
 (() => {
   const svg = Kit.$('painSvg'), say = Kit.$('painSay');
   let drug = null, geo = null, tl = null; const seen = new Set();
+  const PAIN = '#FFE600', TOUCHC = '#8fe3ff';
   const INFO = {
     ibu: '<b>Ibuprofen: at the injury.</b> It calms the chemicals that make pain nerves fire harder. The signal still runs, weaker.',
     lido: '<b>Lidocaine: on the nerve.</b> It blocks every nerve it reaches, so touch goes numb too. The dentist’s numb lip.',
     morph: '<b>Morphine: in the spine and brain.</b> It turns the signal down on arrival, and brings the high and the risk of addiction.',
     suz: '<b>Suzetrigine: pain nerves only.</b> It blocks NaV1.8, a channel found mainly there. Touch passes, no high. In trials it beat placebo, not an opioid pill.'
   };
-  // where each drug stops each line: fraction of the route from toe to brain (null = gets through), and how strong what arrives is
-  const STOP = {ibu: {pain: null, touch: null, weak: true}, lido: {pain: .13, touch: .13}, morph: {pain: .8, touch: null}, suz: {pain: .34, touch: null}};
+  // where each drug stops each line (fraction of the route from toe to brain; null = gets through) and what reaches the brain
+  const STOP = {ibu: {pain: null, touch: null, weak: true}, lido: {pain: .12, touch: .12}, morph: {pain: .8, touch: null, weak: true}, suz: {pain: .3, touch: null}};
+  const METER = {
+    none: ['No drug', 'Both signals arrive', 1, 'FULL', 1, 'FULL'],
+    ibu: ['Ibuprofen', 'Acts at the injury', .5, 'WEAKER', 1, 'FULL'],
+    lido: ['Lidocaine', 'Acts on every nerve', 0, 'BLOCKED', 0, 'BLOCKED'],
+    morph: ['Morphine', 'Acts in spine and brain', .3, 'DIMMED', 1, 'FULL'],
+    suz: ['Suzetrigine', 'Acts on pain nerves only', 0, 'BLOCKED', 1, 'FULL']
+  };
+  function meter() {
+    const [n, site, p, pw, t, tw] = METER[drug || 'none'];
+    Kit.$('pmDrug').textContent = n; Kit.$('pmSite').textContent = site;
+    Kit.$('pmPain').style.transform = `scaleX(${Math.max(.02, p)})`; Kit.$('pmTouch').style.transform = `scaleX(${Math.max(.02, t)})`;
+    Kit.$('pmPainW').textContent = pw; Kit.$('pmTouchW').textContent = tw;
+  }
   function draw() {
     svg.innerHTML = ''; tl && tl.kill();
     const {W, H} = Kit.fitSvg(svg), f = Math.max(10, Math.min(H / 17, W / 21));
-    const bx = W * .2, by = H * .14, rx = W * .14, ry = H * .09, jy = H * .56, toe = [W * .9, H * .87];
-    // brain
-    const brain = Kit.mk('ellipse', {cx: bx, cy: by, rx, ry, fill: '#fff', opacity: .22, stroke: '#fff', 'stroke-width': 2.4}, svg);
-    for (const [a, b] of [[-.55, -.1], [-.15, .35], [.25, .7]]) Kit.mk('path', {d: `M${bx + rx * a},${by - ry * .55} Q${bx + rx * (a + .25)},${by} ${bx + rx * b},${by + ry * .55}`, fill: 'none', stroke: '#fff', 'stroke-width': 1.6, opacity: .7}, svg);
-    // spinal cord
-    Kit.mk('line', {x1: bx, y1: by + ry * .9, x2: bx, y2: H * .64, stroke: '#fff', 'stroke-width': f * .7, 'stroke-linecap': 'round', opacity: .3}, svg);
-    for (let y = by + ry * 1.3; y < H * .62; y += f * .9) Kit.mk('rect', {x: bx - f * .55, y, width: f * 1.1, height: f * .5, rx: f * .2, fill: 'none', stroke: '#fff', 'stroke-width': 1.4, opacity: .55}, svg);
-    // foot
-    Kit.mk('path', {d: `M${W * .62},${H * .97} Q${W * .6},${H * .84} ${W * .7},${H * .83} L${W * .86},${H * .83} Q${W * .97},${H * .83} ${W * .97},${H * .9} Q${W * .97},${H * .97} ${W * .88},${H * .97} Z`, fill: '#fff', opacity: .9}, svg);
-    // the two routes: pain (solid) and touch (dashed), toe → junction → up the cord → brain
-    const c1 = [W * .62, H * .92], c2 = [W * .34, H * .74];
-    const dPain = `M${toe} C${c1} ${c2} ${bx + f * .25},${jy} L${bx + f * .25},${by + ry * .4}`;
-    const dTouch = `M${toe} C${W * .66},${H * .8} ${W * .42},${H * .62} ${bx - f * .25},${jy - f} L${bx - f * .25},${by + ry * .4}`;
-    const touch = Kit.mk('path', {d: dTouch, fill: 'none', stroke: '#fff', 'stroke-width': 1.8, 'stroke-dasharray': '5 5', opacity: .8}, svg);
-    const pain = Kit.mk('path', {d: dPain, fill: 'none', stroke: '#fff', 'stroke-width': 3.4, 'stroke-linecap': 'round'}, svg);
-    Kit.mk('circle', {cx: toe[0], cy: toe[1], r: f * .55, fill: '#FFE600', stroke: '#9e1c14', 'stroke-width': 2}, svg);
-    // boxed labels, flat and few
-    const box = (x, y, txt, anchor = 'start', fs = f * .78) => { const t = T(svg, x, y, txt, {'text-anchor': anchor, fill: '#9e1c14'}, fs); const b = t.getBBox(); const r = Kit.mk('rect', {x: b.x - fs * .45, y: b.y - fs * .3, width: b.width + fs * .9, height: b.height + fs * .6, rx: fs * .4, fill: '#fff'}, svg); svg.insertBefore(r, t); return t; };
-    box(bx + rx + f * .5, by + f * .3, 'BRAIN');
-    box(bx + f * 1.1, H * .4, 'SPINAL CORD');
-    box(W * .97, H * .76, 'TOE', 'end');
-    T(svg, W * .52, H * .64, 'TOUCH', {opacity: .9}, f * .75);
-    // the measure, as on a technical drawing
-    const m = T(svg, f * .5, H - f * .55, 'PAIN NERVE ≈ 1 M', {fill: '#10100c'}, f * .82), mb = m.getBBox();
-    svg.insertBefore(Kit.mk('rect', {x: mb.x - f * .4, y: mb.y - f * .3, width: mb.width + f * .8, height: mb.height + f * .6, rx: f * .4, fill: '#FFE600'}, svg), m);
-    geo = {pain, touch, brain, f, bx, by, ry};
+    const sx = W * .2, r = Math.min(W * .13, H * .1), bcy = H * .05 + r * .95, top = bcy + r * .75, jy = H * .6;
+    // brain: one flat shape, two lobes and a cerebellum
+    const brain = Kit.mk('g', {}, svg);
+    const glow = Kit.mk('circle', {cx: sx, cy: bcy, r: r * 1.5, fill: PAIN, opacity: 0}, brain);
+    Kit.mk('circle', {cx: sx + r * .55, cy: bcy + r * .55, r: r * .38, fill: '#f0a39c'}, brain);
+    for (const [dx, dy, rr] of [[-.55, .12, .5], [-.2, -.3, .58], [.3, -.28, .55], [.6, .1, .45], [.12, .22, .58], [-.3, .38, .42]]) Kit.mk('circle', {cx: sx + dx * r, cy: bcy + dy * r, r: rr * r, fill: '#ffd3cf'}, brain);
+    for (const d of [`M${sx - r * .7},${bcy} q${r * .3},${-r * .35} ${r * .55},${-r * .05}`, `M${sx - r * .1},${bcy - r * .55} q${r * .1},${r * .45} ${r * .45},${r * .4}`, `M${sx + r * .25},${bcy + r * .15} q${r * .3},${-r * .2} ${r * .6},${r * .05}`]) Kit.mk('path', {d, fill: 'none', stroke: '#d9615a', 'stroke-width': 1.6, 'stroke-linecap': 'round'}, brain);
+    // the spine: vertebrae, the cord running beside them
+    const vw = r * .62, vh = Math.max(4, f * .5);
+    for (let y = top + vh * .4; y < jy + vh; y += vh * 1.45) Kit.mk('rect', {x: sx - vw / 2, y, width: vw, height: vh, rx: vh * .35, fill: '#fff', opacity: .88}, svg);
+    // the foot, side view, toes to the right
+    const fx0 = W * .6, fy0 = H * .79, fw = W * .37, fh = H * .17, F = (u, v) => `${fx0 + u * fw},${fy0 + v * fh}`;
+    Kit.mk('path', {d: `M${F(.1, 1)} C${F(0, 1)} ${F(0, .72)} ${F(.06, .58)} L${F(.1, -.6)} L${F(.34, -.6)} L${F(.36, .05)} C${F(.4, .35)} ${F(.55, .45)} ${F(.72, .53)} C${F(.88, .6)} ${F(1, .66)} ${F(1, .84)} C${F(1, .97)} ${F(.95, 1)} ${F(.88, 1)} Z`, fill: '#ffd3cf'}, svg);
+    for (const u of [.8, .87, .94]) Kit.mk('line', {x1: fx0 + u * fw, y1: fy0 + fh * .72, x2: fx0 + u * fw, y2: fy0 + fh * .98, stroke: '#d9615a', 'stroke-width': 1.3, opacity: .7}, svg);
+    const toe = [fx0 + fw * .9, fy0 + fh * .8];
+    // two nerves from the toe to the brain: pain (bright) and touch (thin)
+    const o1 = vw * .5 + f * .45, o2 = vw * .5 + f * .95;
+    const dPain = `M${toe} C${W * .62},${H * .97} ${W * .4},${H * .74} ${sx + o1},${jy} L${sx + o1},${top}`;
+    const dTouch = `M${toe} C${W * .66},${H * .82} ${W * .46},${H * .62} ${sx + o2},${jy - f * .8} L${sx + o2},${top}`;
+    Kit.mk('path', {d: dPain, fill: 'none', stroke: PAIN, 'stroke-width': f * .7, opacity: .18, 'stroke-linecap': 'round'}, svg);
+    const pain = Kit.mk('path', {d: dPain, fill: 'none', stroke: PAIN, 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
+    const touch = Kit.mk('path', {d: dTouch, fill: 'none', stroke: TOUCHC, 'stroke-width': 1.6, 'stroke-dasharray': '5 4', opacity: .9}, svg);
+    // the injury
+    for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3 - Math.PI / 2; Kit.mk('line', {x1: toe[0] + Math.cos(a) * f * .55, y1: toe[1] + Math.sin(a) * f * .55, x2: toe[0] + Math.cos(a) * f * .95, y2: toe[1] + Math.sin(a) * f * .95, stroke: PAIN, 'stroke-width': 2, 'stroke-linecap': 'round'}, svg); }
+    Kit.mk('circle', {cx: toe[0], cy: toe[1], r: f * .32, fill: PAIN}, svg);
+    // labels in outlined boxes, as on a technical drawing
+    const box = (x, y, txt, anchor = 'start', col = '#fff', fs = f * .72) => { const t = T(svg, x, y, txt, {'text-anchor': anchor, fill: col}, fs); const b = t.getBBox(); svg.insertBefore(Kit.mk('rect', {x: b.x - fs * .5, y: b.y - fs * .3, width: b.width + fs, height: b.height + fs * .6, rx: fs * .45, fill: '#1a0504', stroke: col, 'stroke-width': 1.5}, svg), t); return t; };
+    box(sx + r * 1.05, bcy + r * 1.05, 'BRAIN');
+    box(sx + o2 + f * .7, H * .5, 'SPINAL CORD');
+    box(W * .97, fy0 - fh * .85, 'YOUR TOE', 'end');
+    T(svg, W * .5, H * .66, 'TOUCH', {fill: TOUCHC, 'font-family': MONO, 'font-weight': 700}, f * .6);
+    box(f * .6, H - f * .6, 'PAIN NERVE ≈ 1 M', 'start', PAIN, f * .8);
+    geo = {pain, touch, glow, f};
     marks();
   }
   function marks() {
     if (!geo) return;
     svg.querySelectorAll('.blk').forEach(e => e.remove());
+    meter();
     if (!drug) { pulse(); return; }
-    const s = STOP[drug], {f} = geo, bar = (path, fr, len, col = '#FFE600') => { const L = path.getTotalLength(), p = path.getPointAtLength(L * fr), q = path.getPointAtLength(L * Math.min(1, fr + .01)), a = Math.atan2(q.y - p.y, q.x - p.x) + Math.PI / 2; return Kit.mk('line', {class: 'blk', x1: p.x - Math.cos(a) * len, y1: p.y - Math.sin(a) * len, x2: p.x + Math.cos(a) * len, y2: p.y + Math.sin(a) * len, stroke: col, 'stroke-width': f * .42, 'stroke-linecap': 'round'}, svg); };
-    if (drug === 'ibu') { const c = Kit.mk('circle', {class: 'blk', cx: geo.pain.getPointAtLength(0).x, cy: geo.pain.getPointAtLength(0).y, r: f * 1.25, fill: 'none', stroke: '#FFE600', 'stroke-width': f * .3, 'stroke-dasharray': `${f * .5} ${f * .35}`}, svg); if (!calm) gsap.from(c, {scale: .6, opacity: 0, transformOrigin: '50% 50%', duration: .35}); }
-    if (drug === 'lido') bar(geo.pain, s.pain, f * 1.6);
-    if (drug === 'suz') bar(geo.pain, s.pain, f * .9);
-    if (drug === 'morph') { bar(geo.pain, s.pain, f * .9); const b = Kit.mk('ellipse', {class: 'blk', cx: geo.bx, cy: geo.by, rx: geo.ry * 1.7, ry: geo.ry * 1.2, fill: 'none', stroke: '#FFE600', 'stroke-width': f * .3, 'stroke-dasharray': `${f * .5} ${f * .35}`}, svg); }
+    const s = STOP[drug], {f} = geo, at = (path, fr) => { const L = path.getTotalLength(), p = path.getPointAtLength(L * fr), q = path.getPointAtLength(L * Math.min(1, fr + .01)); return {p, a: Math.atan2(q.y - p.y, q.x - p.x) + Math.PI / 2}; };
+    const bar = (path, fr, len) => { const {p, a} = at(path, fr); return Kit.mk('line', {class: 'blk', x1: p.x - Math.cos(a) * len, y1: p.y - Math.sin(a) * len, x2: p.x + Math.cos(a) * len, y2: p.y + Math.sin(a) * len, stroke: '#fff', 'stroke-width': f * .4, 'stroke-linecap': 'round'}, svg); };
+    const ring = (x, y, rr) => { const c = Kit.mk('circle', {class: 'blk', cx: x, cy: y, r: rr, fill: 'none', stroke: '#fff', 'stroke-width': f * .22, 'stroke-dasharray': `${f * .45} ${f * .3}`}, svg); if (!calm) gsap.from(c, {scale: .6, opacity: 0, transformOrigin: '50% 50%', duration: .35}); };
+    if (drug === 'ibu') { const p = geo.pain.getPointAtLength(0); ring(p.x, p.y, f * 1.3); }
+    if (drug === 'lido') bar(geo.pain, s.pain, f * 1.5);
+    if (drug === 'suz') bar(geo.pain, s.pain, f * .75);
+    if (drug === 'morph') { bar(geo.pain, s.pain, f * .7); ring(+geo.glow.getAttribute('cx'), +geo.glow.getAttribute('cy'), +geo.glow.getAttribute('r') * .9); }
     if (!calm) gsap.from(svg.querySelectorAll('line.blk'), {drawSVG: '50% 50%', duration: .35, ease: 'power2.out'});
     pulse();
   }
-  // a signal leaves the toe; where the drug sits, it dies
+  // a signal leaves the toe every few seconds; where the drug sits, it dies
   function pulse() {
     tl && tl.kill(); svg.querySelectorAll('.dot').forEach(e => e.remove());
     const {f} = geo, s = drug ? STOP[drug] : {pain: null, touch: null};
     const mkDot = (path, r, col) => ({path, el: Kit.mk('circle', {class: 'dot', r, fill: col, cx: -99, cy: -99}, svg)});
-    const P = mkDot(geo.pain, f * .5 * (s.weak ? .6 : 1), '#FFE600'), Q = mkDot(geo.touch, f * .3, '#fff');
+    const P = mkDot(geo.pain, f * .45 * (s.weak ? .65 : 1), PAIN), Q = mkDot(geo.touch, f * .28, TOUCHC);
     const run = (d, stop) => { const L = d.path.getTotalLength(), end = stop ?? 1, o = {u: 0}; return gsap.to(o, {u: end, duration: 1.6 * end, ease: 'none', onUpdate: () => { const p = d.path.getPointAtLength(L * o.u); d.el.setAttribute('cx', p.x); d.el.setAttribute('cy', p.y); }}); };
     if (calm) return;
     tl = gsap.timeline({repeat: -1, repeatDelay: .7});
     tl.add(run(P, s.pain), 0).add(run(Q, s.touch), 0);
-    if (s.pain === null) tl.fromTo(geo.brain, {opacity: .22}, {opacity: s.weak ? .45 : .95, duration: .15, yoyo: true, repeat: 1}, 1.6);
+    if (s.pain === null) tl.fromTo(geo.glow, {opacity: 0}, {opacity: s.weak ? .25 : .55, duration: .15, yoyo: true, repeat: 1}, 1.6);
     tl.to([P.el, Q.el], {opacity: 0, duration: .2}).set([P.el, Q.el], {opacity: 1, attr: {cx: -99, cy: -99}});
   }
   function pick(d) {

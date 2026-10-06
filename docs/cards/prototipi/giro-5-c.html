@@ -43,7 +43,7 @@
 .hold{touch-action:none;user-select:none;-webkit-user-select:none;position:relative;overflow:hidden;min-width:44cqw}
 
 /* ---- bl: the wash ---- */
-.wash{flex:1;min-height:0;display:grid;grid-template-columns:20cqw 1fr;gap:4cqw}
+.wash{flex:1;min-height:0;display:grid;grid-template-columns:22cqw 1fr;gap:3cqw}
 .thermo{position:relative;touch-action:none;cursor:ns-resize;user-select:none}
 .tube{position:absolute;left:1.5cqw;width:6.4cqw;top:1.5cqh;bottom:7.5cqw;border-radius:9cqw;box-shadow:inset 0 0 0 .32cqh var(--k);background:#ffffff59}
 .merc{position:absolute;left:1.6cqw;right:1.6cqw;bottom:1.4cqw;border-radius:9cqw;background:#d4161c}
@@ -86,11 +86,7 @@
 .thead .mono{margin-left:auto;text-align:right;opacity:.75}
 .tum{position:relative;flex:1.6;min-height:0}
 .tum canvas,.chart svg{position:absolute;inset:0;width:100%;height:100%}
-.chart{position:relative;flex:1;min-height:9cqh;border-radius:2.4cqh;background:color-mix(in srgb,var(--k) 12%,transparent)}
-.doses{display:flex;gap:2.2cqw;align-items:center}
-.dose{padding:1.6cqh 3.4cqw;font-size:1.9cqh}
-.dose.on{background:var(--k);color:var(--c)}
-.dose.done{box-shadow:inset 0 0 0 .28cqh var(--k);opacity:.6}
+.chart{position:relative;flex:.75;min-height:9cqh;border-radius:2.4cqh;background:color-mix(in srgb,var(--k) 12%,transparent)}
 
 /* ---- rd: the zoom ---- */
 .bets{display:flex;gap:2.4cqw}
@@ -141,10 +137,8 @@
         <h2 class="q">Your powder whitens at 40&nbsp;°C, but its bleach barely works below 60&nbsp;°C. What closes the gap?</h2>
         <div class="stagebox">
           <div class="wash">
-            <div class="thermo" id="blTh" role="slider" tabindex="0" aria-label="Water temperature" aria-valuemin="20" aria-valuemax="90" aria-valuenow="40">
-              <div class="tube"><div class="merc" id="blMerc"></div></div><div class="bulb"></div>
-              <div id="blTicks"></div>
-              <div class="knob" id="blKnob"></div>
+            <div class="thermo" id="blTh" role="slider" tabindex="0" aria-label="Wash programme, degrees" aria-valuemin="20" aria-valuemax="90" aria-valuenow="40">
+              <svg class="full" id="blThSvg" aria-hidden="true"></svg>
             </div>
             <div class="swcol">
               <div class="lens"><canvas id="blCv" role="img" aria-label="A tea stain on cotton, magnified, with bleach molecules moving over it"></canvas></div>
@@ -155,8 +149,8 @@
             </div>
           </div>
         </div>
-        <p class="say" id="blSay">Drag the thermometer. Each wash runs a few seconds: watch the <span class="dot5" style="background:#1d5fae"></span>peroxide eat the tea stain, or not.</p>
-        <div class="ctl"><button class="btn ghost taed gone" id="blTaed">+ Add TAED</button><span class="mono" id="blHint">One wash per drag</span></div>
+        <p class="say" id="blSay">Pick a programme on the thermometer. Watch the <span class="dot5" style="background:#1d5fae"></span>peroxide molecules work on a tea stain, under the lens.</p>
+        <div class="ctl"><button class="btn ghost taed gone" id="blTaed">+ Add TAED</button><span class="mono" id="blHint">One wash per pick</span></div>
         <div class="keep gone" id="blKeep"><b>WHAT TO KEEP</b>When a process needs heat, look for a helper that lowers the bar.</div>
         <div class="foot"><span class="src">Source · Smulders, <i>Laundry Detergents</i> (Wiley-VCH, 2002). Rates in the wash are a simple model of that chemistry</span></div>
       </div>
@@ -184,19 +178,19 @@
     </article>
 
     <!-- 4 · Human body: dose the tumours (dose-response) -->
-    <article class="card" id="te" style="--c:#FF2D5F;--k:#ffffff;--edge:#9e1638" data-kind="Pick a dose · watch 100 tumours">
+    <article class="card" id="te" style="--c:#FF2D5F;--k:#ffffff;--edge:#9e1638" data-kind="Dose 100 tumours · watch the lag">
       <div class="in">
         <div class="label"><span class="t">Human body</span><span class="tag">DOSE</span></div>
-        <h2 class="q">Most cancers rebuild their chromosome tips with telomerase. Block it: how many of 100 tumours stop?</h2>
+        <h2 class="q">Most cancers rebuild their chromosome tips with telomerase. A drug blocks it completely. What happens to 100 tumours?</h2>
         <div class="stagebox">
-          <div class="thead"><b class="num" id="teN">100</b><span style="white-space:nowrap">tumours still growing</span><span class="mono" id="teDose">no drug yet</span></div>
-          <div class="tum"><canvas id="teCv" role="img" aria-label="One hundred tumours"></canvas></div>
-          <div class="chart"><svg id="teSvg" role="img" aria-label="Dose against tumours still growing"></svg></div>
+          <div class="thead"><b class="num" id="teN">100</b><span style="white-space:nowrap">still growing</span><span class="mono" id="teDiv">division 0</span></div>
+          <div class="tum"><canvas id="teCv" role="img" aria-label="One hundred tumours, each with a bar for the length of its chromosome tips"></canvas></div>
+          <div class="chart"><svg id="teSvg" role="img" aria-label="Tumours still growing, division by division"></svg></div>
         </div>
-        <p class="say" id="teSay">Pick a dose: how much of the telomerase the drug blocks. Then try a bigger one.</p>
-        <div class="doses" id="teDoses"><button class="btn ghost dose" data-d="25">25%</button><button class="btn ghost dose" data-d="50">50%</button><button class="btn ghost dose" data-d="75">75%</button><button class="btn ghost dose" data-d="100">100%</button></div>
+        <p class="say" id="teSay">Under each tumour, a bar: the length of its chromosome tips. Give the drug and watch the divisions go by.</p>
+        <div class="ctl" id="teCtl"><button class="btn" id="teGo">Give the drug</button><span class="mono" id="teHint">full dose</span></div>
         <div class="keep gone" id="teKeep"><b>WHAT TO KEEP</b>A barrier with two doors is not closed by shutting one.</div>
-        <div class="foot"><span class="src">Source · Cesare &amp; Reddel, <i>Nature Reviews Genetics</i> (2010). The 100 tumours are a model; 12 use ALT</span></div>
+        <div class="foot"><span class="src">Source · Cesare &amp; Reddel, <i>Nature Reviews Genetics</i> (2010). The 100 tumours are a model: 12 use ALT</span></div>
       </div>
     </article>
 
@@ -350,102 +344,145 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
 
 /* ================= 2 · bl: the wash ================= */
 (() => {
-  const cv = $('blCv'), th = $('blTh'), say = $('blSay');
-  const T0 = 20, T1 = 90, WASH = 5.5, NP = 70;
-  let T = 40, taed = false, stage = 0, g, stains, parts, grid, clock = 0, start = 0, rnd;
-  // Fraction of contacts that bleach, by temperature: peroxide needs heat, peracetic acid does not.
-  const qPer = T => .9 / (1 + Math.exp(-(T - 60) / 3.5));
+  const cv = $('blCv'), th = $('blTh'), tsvg = $('blThSvg'), say = $('blSay');
+  const T0 = 15, T1 = 97, PROG = [20, 30, 40, 60, 90], WASH = 5.5, NP = 46;
+  let T = 40, taed = false, stage = 0, g, field, I0 = 1, parts, clock = 0, rnd, tg;
+  // Share of contacts that bleach, by temperature: peroxide needs heat, peracetic acid does not. A simple model.
+  const qPer = T => .9 / (1 + Math.exp(-(T - 58) / 3.5));
   const qAcid = T => .9 / (1 + Math.exp(-(T - 31) / 4));
   const q = () => taed ? qAcid(T) : qPer(T);
-  function ticksUI() {
-    const el = $('blTicks'); el.innerHTML = '';
-    for (const t of [20, 40, 60, 80]) { const s = document.createElement('span'); s.className = 'tlab' + (t === 40 || t === 60 ? ' hi' : ''); s.textContent = t + '°'; s.dataset.t = t; el.appendChild(s); }
+  /* --- the thermometer, with the machine's programmes as wash-tub symbols --- */
+  function drawTh() {
+    tsvg.innerHTML = ''; const {W, H} = Kit.fitSvg(tsvg), f = Math.max(9, Math.min(W / 5.2, H / 18)), ink = '#10100c', red = '#d4161c';
+    const tw = Math.min(W * .26, f * 1.5), tx = W * .06, br = tw * .95, top = f * .9, bot = H - br * 2.1, by = H - br * 1.08, cxT = tx + tw / 2;
+    const Y = t => bot - (t - T0) / (T1 - T0) * (bot - top);
+    tg = {top: Y(T1), bot: Y(T0), Y};
+    Kit.mk('rect', {x: tx, y: top - tw / 2, width: tw, height: by - top + tw / 2, rx: tw / 2, fill: '#ffffffa6', stroke: ink, 'stroke-width': 2.2}, tsvg);
+    Kit.mk('circle', {cx: cxT, cy: by, r: br, fill: red, stroke: ink, 'stroke-width': 2.2}, tsvg);
+    Kit.mk('rect', {x: cxT - tw * .22, y: by - br * .4, width: tw * .44, height: br * .8, fill: red}, tsvg);
+    const my = Y(T); Kit.mk('rect', {x: cxT - tw * .22, y: my, width: tw * .44, height: by - my, rx: tw * .22, fill: red, class: 'merc'}, tsvg);
+    Kit.mk('line', {x1: tx + tw * .22, y1: top, x2: tx + tw * .22, y2: by - br, stroke: '#fff', 'stroke-width': 1.6, 'stroke-linecap': 'round', opacity: .9}, tsvg);
+    Kit.mk('circle', {cx: cxT - br * .38, cy: by - br * .35, r: br * .2, fill: '#ffffff99'}, tsvg);
+    for (let t = 20; t <= 95; t += 5) { const y = Y(t), L = t % 10 ? tw * .28 : tw * .5; Kit.mk('line', {x1: tx + tw + 2, y1: y, x2: tx + tw + 2 + L, y2: y, stroke: ink, 'stroke-width': t % 10 ? 1 : 1.6, opacity: .7}, tsvg); }
+    // wash-tub care symbols at the programme temperatures
+    const ux = tx + tw + tw * .75, uw = Math.min(W - ux - 2, f * 2.6), uh = Math.min(f * 1.7, (Y(20) - Y(30)) * .86);
+    for (const p of PROG) {
+      const y = Y(p), on = Math.abs(T - p) < .5, x0 = ux, x1 = ux + uw, yt = y - uh / 2, yb = y + uh / 2, sl = uw * .1;
+      const wave = `M${x0},${yt + uh * .16} q${uw / 6},${-uh * .22} ${uw / 3},0 t${uw / 3},0 t${uw / 3},0`;
+      Kit.mk('path', {d: `M${x0},${yt + uh * .16} L${x0 + sl},${yb} L${x1 - sl},${yb} L${x1},${yt + uh * .16}`, fill: on ? ink : 'none', stroke: ink, 'stroke-width': 1.6, 'stroke-linejoin': 'round'}, tsvg);
+      Kit.mk('path', {d: wave, fill: 'none', stroke: ink, 'stroke-width': 1.6}, tsvg);
+      const tx_ = Kit.mk('text', {x: (x0 + x1) / 2, y: yb - uh * .17, 'text-anchor': 'middle', 'font-family': 'Figtree, system-ui, sans-serif', 'font-weight': 800, 'font-size': Math.min(uh * .62, f * 1.05), fill: on ? '#00E5A0' : ink}, tsvg);
+      tx_.textContent = p;
+    }
+    $('blT').textContent = T + ' °C'; th.setAttribute('aria-valuenow', T);
   }
-  function tubeGeo() { const tb = th.querySelector('.tube'), r = th.getBoundingClientRect(), b = tb.getBoundingClientRect(); return {top: b.top - r.top + b.width * .5, bot: b.bottom - r.top - b.width * .5, rect: r}; }
-  function placeT() {
-    const {top, bot} = tubeGeo(), f = (T - T0) / (T1 - T0), y = bot - f * (bot - top);
-    $('blKnob').style.top = y + 'px';
-    $('blMerc').style.height = `calc(${f * 100}% * .86 + 6%)`;
-    th.querySelectorAll('.tlab').forEach(s => s.style.top = (bot - (s.dataset.t - T0) / (T1 - T0) * (bot - top)) + 'px');
-    $('blT').textContent = Math.round(T) + ' °C'; th.setAttribute('aria-valuenow', Math.round(T));
-  }
+  const snap = t => PROG.reduce((b, p) => Math.abs(p - t) < Math.abs(b - t) ? p : b, PROG[0]);
+  function setY(y) { const t = snap(T0 + (tg.bot - y) / (tg.bot - tg.top) * (T1 - T0)); if (t !== T) { T = t; drawTh(); wash(); was = true; } }
+  /* --- the lens: cotton plain weave, a tea stain, and the bleach molecules --- */
   function geo() {
     const {x, W, H} = Kit.fitCanvas(cv);
-    const R = Math.min(W, H) / 2 - 4; if (R < 20) { g = null; return; } g = {x, W, H, R, cx: W / 2, cy: H / 2, d: Math.max(2, R / 58)};
+    const R = Math.min(W, H) / 2 - 4; if (R < 20) { g = null; return; }
+    g = {x, W, H, R, cx: W / 2, cy: H / 2, d: Math.max(2, R / 60), p: R / 6.5};
+    g.cloth = weave(); g.res = Math.max(2, g.d * 1.4); g.fw = Math.ceil(2 * R / g.res); g.fc = document.createElement('canvas'); g.fc.width = g.fc.height = g.fw;
+  }
+  function weave() {
+    const {W, H, R, cx, cy, p} = g, c = document.createElement('canvas'), dpr = devicePixelRatio; c.width = W * dpr; c.height = H * dpr;
+    const x = c.getContext('2d'); x.scale(dpr, dpr); const r = seeded(3);
+    x.fillStyle = '#9d968a'; x.fillRect(0, 0, W, H);
+    const yarn = (x0, y0, w, h, vert) => {
+      const gr = vert ? x.createLinearGradient(x0, 0, x0 + w, 0) : x.createLinearGradient(0, y0, 0, y0 + h);
+      gr.addColorStop(0, '#c9c2b2'); gr.addColorStop(.35, '#f7f4ec'); gr.addColorStop(.6, '#fffdf7'); gr.addColorStop(1, '#bdb5a4');
+      x.fillStyle = gr; x.beginPath(); x.roundRect(x0, y0, w, h, Math.min(w, h) * .45); x.fill();
+      x.strokeStyle = 'rgba(120,110,95,.28)'; x.lineWidth = .7;
+      for (let k = 0; k < 5; k++) { const o = .2 + .6 * r(); x.beginPath(); if (vert) { const xx = x0 + w * o; x.moveTo(xx, y0 + h * .1); x.lineTo(xx + w * (r() - .5) * .5, y0 + h * .9); } else { const yy = y0 + h * o; x.moveTo(x0 + w * .1, yy); x.lineTo(x0 + w * .9, yy + h * (r() - .5) * .5); } x.stroke(); }
+    };
+    const n = Math.ceil(R * 2 / p) + 2, ox = cx - R - p, oy = cy - R - p, yw = p * .84;
+    for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
+      const X = ox + i * p, Y = oy + j * p;
+      if ((i + j) % 2) { yarn(X + (p - yw) / 2, Y - p * .08, yw, p * 1.16, true); yarn(X - p * .08, Y + (p - yw) / 2, p * 1.16, yw, false); }
+      else { yarn(X - p * .08, Y + (p - yw) / 2, p * 1.16, yw, false); yarn(X + (p - yw) / 2, Y - p * .08, yw, p * 1.16, true); }
+    }
+    return c;
   }
   function wash() {
     if (!g) geo(); if (!g) return;
-    rnd = seeded(7); const {R, cx, cy, d} = g;
-    stains = []; const blobs = [[-.18, -.12, .34], [.22, .1, .26], [-.05, .3, .2]];
-    for (const [bx, by, br] of blobs) for (let i = 0; i < 260 * br / .3; i++) {
-      const a = rnd() * 6.283, rr = Math.sqrt(rnd()) * br * R * (1 + .25 * Math.sin(a * 3 + bx * 9)), x = cx + bx * R + Math.cos(a) * rr, y = cy + by * R + Math.sin(a) * rr;
-      if (Math.hypot(x - cx, y - cy) < R - d * 2) stains.push({x, y, on: true, s: .7 + rnd() * .6});
+    rnd = seeded(7); const {R, cx, cy, d, res, fw} = g;
+    // the stain: a tea splash with darker rims, held as a field of strengths
+    field = new Float32Array(fw * fw); I0 = 0;
+    const blobs = [[-.2, -.1, .36], [.24, .14, .24], [-.02, .36, .17], [.32, -.34, .09]];
+    for (let j = 0; j < fw; j++) for (let i = 0; i < fw; i++) {
+      const px = (i + .5) * res - R, py = (j + .5) * res - R; let v = 0;
+      for (const [bx, by, br] of blobs) { const a = Math.atan2(py - by * R, px - bx * R), rr = br * R * (1 + .16 * Math.sin(a * 5 + bx * 7) + .08 * Math.sin(a * 11)), dd = Math.hypot(px - bx * R, py - by * R) / rr; if (dd < 1) v = Math.max(v, .55 + .45 * Math.pow(dd, 6)); }
+      if (Math.hypot(px, py) > R) v = 0;
+      field[j * fw + i] = v; I0 += v;
     }
-    const cell = d * 5; grid = new Map();
-    stains.forEach((s, i) => { const k = Math.floor(s.x / cell) + ',' + Math.floor(s.y / cell); (grid.get(k) || grid.set(k, []).get(k)).push(i); });
-    g.cell = cell;
-    parts = [...Array(NP)].map(() => { const a = rnd() * 6.283, rr = Math.sqrt(rnd()) * (R - d * 3); return {x: cx + Math.cos(a) * rr, y: cy + Math.sin(a) * rr, a: rnd() * 6.283}; });
-    clock = 0; start = stains.length;
+    parts = [...Array(NP)].map(() => { const a = rnd() * 6.283, rr = Math.sqrt(rnd()) * (R - d * 3); return {x: cx + Math.cos(a) * rr, y: cy + Math.sin(a) * rr, a: rnd() * 6.283, s: rnd() * 6.283}; });
+    clock = 0;
   }
-  const left = () => stains.filter(s => s.on).length / start;
+  const left = () => { let s = 0; for (const v of field) s += v; return s / I0; };
   function step(dt) {
-    if (!g || clock >= WASH) return false;
+    if (!g || !field || clock >= WASH) return false;
     clock += dt;
-    const {R, cx, cy, d, cell} = g, sp = R * .55, rc = d * 3.2, p = q() * dt * 9;
+    const {R, cx, cy, d, res, fw} = g, sp = R * .5, rc = Math.ceil(d * 3.4 / res), k = q() * dt * 3.4;
     for (const o of parts) {
-      o.a += (rnd() - .5) * 1.4; o.x += Math.cos(o.a) * sp * dt; o.y += Math.sin(o.a) * sp * dt;
+      o.a += (rnd() - .5) * 1.4; o.s += dt * 3; o.x += Math.cos(o.a) * sp * dt; o.y += Math.sin(o.a) * sp * dt;
       if (Math.hypot(o.x - cx, o.y - cy) > R - d * 3) { o.a += Math.PI; o.x += Math.cos(o.a) * 2; o.y += Math.sin(o.a) * 2; }
-      const gx = Math.floor(o.x / cell), gy = Math.floor(o.y / cell);
-      for (let i = -1; i <= 1; i++) for (let j = -1; j <= 1; j++) { const l = grid.get((gx + i) + ',' + (gy + j)); if (l) for (const k of l) { const s = stains[k]; if (s.on && Math.abs(s.x - o.x) < rc && Math.abs(s.y - o.y) < rc && rnd() < p) s.on = false; } }
+      const gi = Math.floor((o.x - cx + R) / res), gj = Math.floor((o.y - cy + R) / res);
+      for (let j = gj - rc; j <= gj + rc; j++) for (let i = gi - rc; i <= gi + rc; i++) { if (i < 0 || j < 0 || i >= fw || j >= fw) continue; const n = j * fw + i; if (field[n] > 0) field[n] = Math.max(0, field[n] - k * (.6 + .8 * rnd())); }
     }
     return true;
   }
+  function molecule(x, o, d) {
+    d *= .85; const a = o.s, ux = Math.cos(a) * d * 1.05, uy = Math.sin(a) * d * 1.05;
+    x.fillStyle = taed ? '#e2650b' : '#1d5fae'; x.strokeStyle = '#10100c'; x.lineWidth = Math.max(.8, d * .35);
+    const atoms = taed ? [[-ux, -uy, 1.05], [ux, uy, 1.05], [ux * 2.6 - uy * 1.1, uy * 2.6 + ux * 1.1, .8]] : [[-ux, -uy, 1.05], [ux, uy, 1.05]];
+    for (const [dx, dy, s] of atoms) { x.beginPath(); x.arc(o.x + dx, o.y + dy, d * 1.05 * s, 0, 7); x.fill(); x.stroke(); }
+  }
   function draw() {
-    if (!g || !stains) return;
-    const {x, W, H, R, cx, cy, d} = g; x.clearRect(0, 0, W, H);
+    if (!g || !field) return;
+    const {x, W, H, R, cx, cy, d, fw, fc} = g; x.clearRect(0, 0, W, H);
     x.save(); x.beginPath(); x.arc(cx, cy, R, 0, 7); x.clip();
-    x.fillStyle = '#fbfbf6'; x.fillRect(0, 0, W, H);
-    x.strokeStyle = '#10100c12'; x.lineWidth = d * .9;
-    for (let k = -R; k < R; k += d * 2.6) { x.beginPath(); x.moveTo(cx - R, cy + k); x.lineTo(cx + R, cy + k); x.stroke(); x.beginPath(); x.moveTo(cx + k, cy - R); x.lineTo(cx + k, cy + R); x.stroke(); }
-    x.fillStyle = '#8a5524';
-    for (const s of stains) if (s.on) { x.globalAlpha = .55 + .3 * s.s; x.beginPath(); x.arc(s.x, s.y, d * 1.15 * s.s, 0, 7); x.fill(); }
-    x.globalAlpha = 1;
-    x.fillStyle = taed ? '#e2650b' : '#1d5fae';
-    for (const o of parts) { x.beginPath(); x.arc(o.x, o.y, d * (taed ? 1.25 : 1.05), 0, 7); x.fill(); }
+    x.drawImage(g.cloth, 0, 0, W, H);
+    // tea stain, multiplied into the cotton so the weave shows through as it fades
+    const fx = fc.getContext('2d'), img = fx.createImageData(fw, fw);
+    for (let n = 0; n < field.length; n++) { const v = field[n]; img.data[n * 4] = 128; img.data[n * 4 + 1] = 62; img.data[n * 4 + 2] = 14; img.data[n * 4 + 3] = Math.round(Math.min(1, v * 1.1) * 240); }
+    fx.putImageData(img, 0, 0);
+    x.globalCompositeOperation = 'multiply'; x.imageSmoothingEnabled = true; x.drawImage(fc, cx - R, cy - R, 2 * R, 2 * R); x.globalCompositeOperation = 'source-over';
+    for (const o of parts) molecule(x, o, d);
+    // a soft lens vignette
+    const vg = x.createRadialGradient(cx, cy, R * .7, cx, cy, R); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(16,16,12,.22)'); x.fillStyle = vg; x.fillRect(cx - R, cy - R, 2 * R, 2 * R);
     x.restore();
     // the lens rim doubles as the wash clock
-    x.lineWidth = d * 1.6; x.strokeStyle = '#10100c'; x.beginPath(); x.arc(cx, cy, R, 0, 7); x.stroke();
-    x.lineWidth = d * 1.6; x.strokeStyle = '#ffffff'; x.lineCap = 'round';
+    x.lineWidth = d * 2.4; x.strokeStyle = '#10100c'; x.beginPath(); x.arc(cx, cy, R, 0, 7); x.stroke();
+    x.lineWidth = d * 1.2; x.strokeStyle = '#ffffff'; x.lineCap = 'round';
     x.beginPath(); x.arc(cx, cy, R, -Math.PI / 2, -Math.PI / 2 + 6.283 * clamp(clock / WASH)); x.stroke();
     $('blLeft').textContent = Math.round(left() * 100) + '%';
   }
   function verdict() {
     const l = left();
-    if (stage === 0 && !taed && T >= 56 && l < .35) {
-      stage = 1; Kit.show('blTaed'); $('blHint').textContent = 'Then cool it to 40°';
-      say.innerHTML = 'Around <b>60 °C</b> the peroxide bleaches. Now add a scoop of <b>TAED</b> and drag the water back down to 40 °C.';
-    } else if (stage === 1 && taed && T <= 45 && l < .35) {
+    if (stage === 0 && !taed && T >= 60 && l < .35) {
+      stage = 1; Kit.show('blTaed'); $('blHint').textContent = 'Then back to 40';
+      say.innerHTML = 'At <b>60 °C</b> the peroxide bleaches. Now add a scoop of <b>TAED</b> and turn the wash back down to 40.';
+    } else if (stage === 1 && taed && T <= 40 && l < .35) {
       stage = 2; Kit.show('blKeep'); $('blHint').textContent = 'Same powder, cooler wash';
       say.innerHTML = 'TAED turns peroxide into <span class="dot5" style="background:#e2650b"></span><b>peracetic acid</b>, which bleaches at <b>40 °C</b>. Liquids skip both: peroxide won’t keep in water.';
-    } else if (stage === 0 && T < 56 && clock >= WASH) say.innerHTML = `At ${Math.round(T)} °C the peroxide barely touches the stain. Hotter.`;
-    else if (stage === 1 && !taed && T < 56 && clock >= WASH) say.innerHTML = 'Without help, cool water leaves the stain. Add <b>TAED</b>.';
+    } else if (stage === 0 && T < 60 && clock >= WASH) say.innerHTML = `At ${T} °C the peroxide barely touches the stain. Try hotter.`;
+    else if (stage === 1 && !taed && T < 60 && clock >= WASH) say.innerHTML = 'Without help, a cool wash leaves the stain. Add <b>TAED</b>.';
   }
   let was = true;
-  ticks.bl = dt => { if (!stains) return; const run = step(dt); if (was && !run) verdict(); was = run; draw(); };
-  function setT(y) { const {top, bot} = tubeGeo(); T = clamp(Math.round(T0 + (bot - y) / (bot - top) * (T1 - T0)), T0, T1); placeT(); }
+  ticks.bl = dt => { if (!field) return; const run = step(dt); if (was && !run) verdict(); was = run; draw(); };
   th.addEventListener('pointerdown', e => {
-    th.setPointerCapture(e.pointerId); const r = th.getBoundingClientRect(); setT(e.clientY - r.top); wash(); was = true;
-    th.onpointermove = ev => setT(ev.clientY - r.top);
+    th.setPointerCapture(e.pointerId); const r = th.getBoundingClientRect(); setY(e.clientY - r.top);
+    th.onpointermove = ev => setY(ev.clientY - r.top);
     th.onpointerup = th.onpointercancel = () => { th.onpointermove = null; };
   });
-  th.addEventListener('keydown', e => { const k = {ArrowUp: 5, ArrowRight: 5, ArrowDown: -5, ArrowLeft: -5}[e.key]; if (!k) return; e.preventDefault(); T = clamp(T + k, T0, T1); placeT(); wash(); was = true; });
+  th.addEventListener('keydown', e => { const k = {ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1}[e.key]; if (!k) return; e.preventDefault(); const i = clamp(PROG.indexOf(T) + k, 0, PROG.length - 1); T = PROG[i]; drawTh(); wash(); was = true; });
   $('blTaed').onclick = () => { taed = !taed; $('blTaed').classList.toggle('on', taed); $('blTaed').textContent = taed ? 'TAED added' : '+ Add TAED'; wash(); was = true; };
-  ticksUI();
-  watch(cv, () => { geo(); if (g && stains) { const keep = stains.map(s => s.on), c = clock; wash(); stains.forEach((s, i) => s.on = keep[i] ?? true); clock = c; } draw(); });
-  watch(th, placeT);
-  Kit.onShow.bl = () => { geo(); placeT(); if (!stains) { wash(); } draw(); };
+  watch(cv, () => { const had = field && g ? {f: field, c: clock, fw: g.fw} : null; geo(); if (g) { wash(); if (had && had.fw === g.fw) { field = had.f; clock = had.c; } } draw(); });
+  watch(th, drawTh);
+  Kit.onShow.bl = () => { geo(); drawTh(); if (!field) wash(); draw(); };
   const run = () => { geo(); wash(); while (step(1 / 60)); verdict(); was = false; draw(); };
-  Kit.play.bl = async () => { T = 65; placeT(); run(); await wait(400); $('blTaed').click(); T = 40; placeT(); run(); };
+  Kit.play.bl = async () => { T = 60; drawTh(); run(); await wait(400); $('blTaed').click(); T = 40; drawTh(); run(); };
 })();
 
 /* ================= 3 · ay: beat the chimp ================= */
@@ -498,75 +535,79 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
   };
 })();
 
-/* ================= 4 · te: dose the tumours ================= */
+/* ================= 4 · te: dose the tumours, watch the lag ================= */
 (() => {
-  const cv = $('teCv'), svg = $('teSvg'), say = $('teSay'), rnd = seeded(23);
-  // A model, not data: 100 tumours, 12 use ALT. Each telomerase tumour stops once the dose blocks more than it can make up for.
-  const T = [...Array(100).keys()].map(i => ({alt: false, th: 0, s: 1, stop: null, ph: rnd() * 6.28}));
-  const altIdx = [...Array(100).keys()].sort(() => rnd() - .5).slice(0, 12);
-  altIdx.forEach(i => T[i].alt = true);
-  let k = 0; T.forEach(t => { if (!t.alt) t.th = .1 + .88 * ((k++ + rnd()) / 88); });
+  const cv = $('teCv'), svg = $('teSvg'), say = $('teSay'), go = $('teGo'), rnd = seeded(23), MAX = 70;
+  // A model, not data. 88 tumours rely on telomerase: once it is blocked, each division trims their tips
+  // until they hit crisis and stop. 12 use ALT: they copy tips between chromosomes, so their length wanders but never runs out.
+  const altIdx = new Set([...Array(100).keys()].sort(() => rnd() - .5).slice(0, 12));
+  const T = [...Array(100).keys()].map(i => ({alt: altIdx.has(i), L0: .62 + .38 * rnd(), loss: .02 * (.85 + .3 * rnd()), ph: rnd() * 6.28, ph2: rnd() * 6.28}));
+  T.forEach(t => { t.stopAt = t.alt ? Infinity : Math.ceil((t.L0 - .08) / t.loss); t.stopT = null; });
   const shapes = T.map(() => [...Array(7)].map(() => .82 + rnd() * .3));
-  let dose = null, tried = {}, t0 = 0, g, showAlt = false;
-  function geo() { const {x, W, H} = Kit.fitCanvas(cv); const cols = [10, 20, 25].reduce((b, n) => Math.min(W / n, H / (100 / n)) > Math.min(W / b, H / (100 / b)) ? n : b, 10), rows = 100 / cols, c = Math.min(W / cols, H / rows); g = {x, W, H, c, cols, ox: (W - c * cols) / 2, oy: (H - c * rows) / 2}; }
-  function growing(now) { return T.filter(t => t.stop == null || now < t.stop).length; }
+  const first = Math.min(...T.map(t => t.stopAt));
+  let div = 0, running = false, done = false, hist = [[0, 100]], g, speed = 1, lastN = -1;
+  const len = t => t.alt ? clamp(.55 + .22 * Math.sin(div * .45 + t.ph) + .14 * Math.sin(div * 1.3 + t.ph2), .25, 1) : clamp(t.L0 - (running || done ? t.loss * Math.min(div, t.stopAt) : 0), .06, 1);
+  const growing = () => T.filter(t => div < t.stopAt).length;
+  function geo() { const {x, W, H} = Kit.fitCanvas(cv); const fit = n => Math.min(W / n, H / (100 / n * 1.15)); const cols = [10, 20, 25].reduce((b, n) => fit(n) > fit(b) ? n : b, 10), rows = 100 / cols, c = fit(cols); g = {x, W, H, c, cols, ox: (W - c * cols) / 2, oy: (H - c * rows * 1.15) / 2}; }
   ticks.te = (dt, now) => {
+    if (running) {
+      div = Math.min(MAX, div + dt * 10 * speed);
+      const n = Math.floor(div); if (n !== lastN) { lastN = n; hist.push([div, growing()]); T.forEach(t => { if (div >= t.stopAt && t.stopT == null) t.stopT = now; }); narrate(n); chart(); }
+      if (div >= MAX) finish();
+    }
     if (!g) return; const {x, W, H, c, cols, ox, oy} = g; x.clearRect(0, 0, W, H);
     T.forEach((t, i) => {
-      const cx = ox + c * (i % cols + .5), cy = oy + c * (Math.floor(i / cols) + .5);
-      const dead = t.stop != null && now >= t.stop, f = t.stop != null ? clamp((now - t.stop) / 600) : 0;
-      const breathe = dead ? 0 : Math.sin(now / 420 + t.ph) * .05;
-      const r = c * .38 * (1 + breathe) * (1 - .35 * ss(f)), sh = shapes[i];
+      const cx = ox + c * (i % cols + .5), cy = oy + c * 1.15 * Math.floor(i / cols) + c * .44;
+      const f = t.stopT != null ? clamp((now - t.stopT) / 600) : 0, alive = div < t.stopAt;
+      const pulse = alive ? Math.max(0, Math.sin((div % 1) * Math.PI)) * (running ? .1 : 0) + Math.sin(now / 420 + t.ph) * .04 : 0;
+      const r = c * .3 * (1 + pulse) * (1 - .3 * ss(f)), sh = shapes[i];
       x.beginPath();
       for (let a = 0; a <= 28; a++) { const ang = a / 28 * 6.283, w = sh[a % 7] * .5 + sh[(a + 1) % 7] * .5, rr = r * (1 + (w - 1) * .6); a ? x.lineTo(cx + Math.cos(ang) * rr, cy + Math.sin(ang) * rr) : x.moveTo(cx + Math.cos(ang) * rr, cy + Math.sin(ang) * rr); }
       x.closePath();
-      if (f > 0) { x.strokeStyle = `rgba(255,255,255,${.85 - .45 * f})`; x.lineWidth = Math.max(1.2, c * .05); x.fillStyle = `rgba(255,255,255,${.95 * (1 - f)})`; x.fill(); x.stroke(); }
+      if (f > 0) { x.fillStyle = `rgba(255,255,255,${.95 * (1 - f) + .12})`; x.fill(); x.strokeStyle = 'rgba(255,255,255,.5)'; x.lineWidth = Math.max(1, c * .04); x.stroke(); }
       else { x.fillStyle = '#fff'; x.fill(); }
-      if (showAlt && t.alt) { x.strokeStyle = '#FFE600'; x.lineWidth = Math.max(2, c * .09); x.beginPath(); x.arc(cx, cy, c * .47, 0, 7); x.stroke(); }
+      if (done && t.alt) { x.strokeStyle = '#FFE600'; x.lineWidth = Math.max(2, c * .08); x.beginPath(); x.arc(cx, cy, c * .44, 0, 7); x.stroke(); }
+      // the tip-length bar
+      const bw = c * .8, by = cy + c * .44, bh = Math.max(2.5, c * .16);
+      x.fillStyle = 'rgba(255,255,255,.25)'; x.fillRect(cx - bw / 2, by, bw, bh);
+      x.fillStyle = done && t.alt ? '#FFE600' : alive ? '#fff' : 'rgba(255,255,255,.45)'; x.fillRect(cx - bw / 2, by, bw * len(t), bh);
     });
-    if (dose != null) $('teN').textContent = growing(now);
+    $('teN').textContent = growing(); $('teDiv').textContent = 'division ' + Math.floor(div);
   };
+  function narrate(n) {
+    if (n < first) say.innerHTML = `Division <b>${n}</b>. All 100 still growing. The bars shrink, a little each time. Has the drug failed?`;
+    else if (growing() > 12) say.innerHTML = 'Now they crash. Every division trimmed the tips, and without telomerase nothing rebuilt them. The drug works <b>late</b>.';
+  }
   function chart() {
-    svg.innerHTML = ''; const {W, H, f} = Kit.fitSvg(svg), fs = Math.max(10, Math.min(H / 9, W / 26));
+    svg.innerHTML = ''; const {W, H} = Kit.fitSvg(svg), fs = Math.max(10, Math.min(H / 9, W / 26));
     const L = fs * 2.6, R = W - fs * 1.2, Tp = fs * 1.1, B = H - fs * 2.1;
-    const X = d => L + (R - L) * d / 100, Y = n => B - (B - Tp) * n / 100, ink = '#fff';
+    const X = d => L + (R - L) * d / MAX, Y = n => B - (B - Tp) * n / 100, ink = '#fff';
     const T_ = (x, y, s, a = {}) => { const t = Kit.mk('text', Object.assign({x, y, fill: ink, 'font-family': 'JetBrains Mono, ui-monospace, monospace', 'font-weight': 700, 'font-size': fs * .82, 'letter-spacing': '.04em'}, a), svg); t.textContent = s; return t; };
+    if (div >= first) { Kit.mk('rect', {x: L, y: Tp, width: X(first) - L, height: B - Tp, fill: '#ffffff', opacity: .14}, svg); T_(L + fs * .4, Y(100) + fs * 1.6, 'LAG', {opacity: .9}); }
     Kit.mk('line', {x1: L, y1: B, x2: R, y2: B, stroke: ink, 'stroke-width': 2, opacity: .6}, svg);
     Kit.mk('line', {x1: L, y1: B, x2: L, y2: Tp, stroke: ink, 'stroke-width': 2, opacity: .6}, svg);
     T_(L - fs * .5, Y(100) + fs * .3, '100', {'text-anchor': 'end'});
     T_(L - fs * .5, B + fs * .3, '0', {'text-anchor': 'end'});
-    T_(L, B + fs * 1.5, 'NO DRUG', {opacity: .8});
-    T_(R, B + fs * 1.5, 'ALL BLOCKED', {'text-anchor': 'end', opacity: .8});
-    const pts = [[0, 100], ...Object.entries(tried).map(([d, n]) => [+d, n])].sort((a, b) => a[0] - b[0]);
-    if (tried[100] != null) {
-      Kit.mk('line', {x1: L, y1: Y(12), x2: R, y2: Y(12), stroke: '#FFE600', 'stroke-width': 2.4, 'stroke-dasharray': '6 6'}, svg);
-      T_(L + fs * .6, Y(12) - fs * .6, '12 NEVER STOP: ALT', {fill: '#FFE600'});
-    }
-    Kit.mk('polyline', {points: pts.map(([d, n]) => X(d) + ',' + Y(n)).join(' '), fill: 'none', stroke: ink, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
-    for (const [d, n] of pts) Kit.mk('circle', {cx: X(d), cy: Y(n), r: fs * .42, fill: d === dose ? '#FFE600' : ink}, svg);
-    if (pts.length === 1) T_(X(50), Y(60), 'DOSE → TUMOURS STILL GROWING', {'text-anchor': 'middle', opacity: .7});
+    T_(L, B + fs * 1.5, 'DRUG ON', {opacity: .8});
+    T_(R, B + fs * 1.5, MAX + ' DIVISIONS', {'text-anchor': 'end', opacity: .8});
+    if (done) { Kit.mk('line', {x1: L, y1: Y(12), x2: R, y2: Y(12), stroke: '#FFE600', 'stroke-width': 2.4, 'stroke-dasharray': '6 6'}, svg); T_(R, Y(12) - fs * .7, 'ALT: 12 NEVER STOP', {'text-anchor': 'end', fill: '#FFE600'}); }
+    Kit.mk('polyline', {points: hist.map(([d, n]) => X(d) + ',' + Y(n)).join(' '), fill: 'none', stroke: ink, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+    const [ld, ln] = hist[hist.length - 1]; Kit.mk('circle', {cx: X(ld), cy: Y(ln), r: fs * .42, fill: '#FFE600'}, svg);
   }
-  function give(d) {
-    dose = d; const now = performance.now(); t0 = now;
-    T.forEach((t, i) => { t.stop = !t.alt && t.th < d / 100 ? now + D(300 + (i * 37 % 100) / 100 * 1500) : null; });
-    tried[d] = T.filter(t => t.stop == null).length;
-    document.querySelectorAll('#teDoses .dose').forEach(b => { b.classList.toggle('on', +b.dataset.d === d); if (tried[b.dataset.d] != null && +b.dataset.d !== d) b.classList.add('done'); });
-    $('teDose').textContent = d + '% blocked';
-    const all = tried[100] != null;
-    if (!all) say.innerHTML = `At ${d}%, <b>${tried[d]}</b> keep growing: the tips of the others wear down after enough divisions. Try a bigger dose.`;
-    setTimeout(() => {
-      chart();
-      if (all && d === 100) {
-        showAlt = true; Kit.show('teKeep'); Kit.hide('teDoses');
-        say.innerHTML = 'Even at full dose, the ringed ones go on. About <b>10 to 15%</b> of cancers use a second route, <b>ALT</b>: they copy tip DNA from one chromosome onto another.';
-      }
-    }, D(1900));
-    chart();
+  function finish() {
+    running = false; done = true; div = MAX; go.disabled = false; chart(); Kit.show('teKeep'); Kit.hide('teCtl'); go.textContent = 'Again'; $('teHint').textContent = 'same drug, same dose';
+    say.innerHTML = '<b>12 never stop</b>, and their bars never ran down. About <b>10 to 15%</b> of cancers use a second route, <b>ALT</b>: they copy tip DNA from one chromosome onto another.';
   }
-  document.querySelectorAll('#teDoses .dose').forEach(b => b.onclick = () => give(+b.dataset.d));
+  function reset() { div = 0; lastN = -1; running = false; done = false; hist = [[0, 100]]; T.forEach(t => t.stopT = null); Kit.hide('teKeep'); Kit.show('teCtl'); go.textContent = 'Give the drug'; $('teHint').textContent = 'full dose'; chart(); }
+  function start() {
+    if (done) { reset(); return; } if (running) return;
+    running = true; go.textContent = 'Dividing…'; go.disabled = true;
+    if (calm) { const now = performance.now(); for (let n = 1; n <= MAX; n++) { div = n; hist.push([n, growing()]); } T.forEach(t => { if (t.stopAt <= MAX) t.stopT = now - 1000; }); finish(); }
+  }
+  go.onclick = start;
   watch(cv, geo); watch(svg, chart);
   Kit.onShow.te = () => { geo(); chart(); };
-  Kit.play.te = async () => { for (const d of [25, 50, 75, 100]) { give(d); await wait(2100); } };
+  Kit.play.te = async () => { speed = 4; start(); while (!done) await wait(50); speed = 1; };
 })();
 
 /* ================= 5 · rd: zoom out the bill ================= */
