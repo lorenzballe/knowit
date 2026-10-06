@@ -766,6 +766,8 @@ class _SortSceneViewState extends State<SortSceneView>
                   child: _Mini(
                     text: item.text,
                     textSize: textSize,
+                    // Only a pile that overlaps needs its word at the top.
+                    centred: calledPitch >= miniH,
                     // Room for a second line: what the reader had said.
                     said: wrong && miniH >= 56
                         ? '${context.l10n.sceneYou}: ${_s.nameOf(call).toUpperCase()}'
@@ -1170,6 +1172,7 @@ class _Mini extends StatelessWidget {
   final String text;
   final String? said;
   final double textSize;
+  final bool centred;
   final bool wrong;
   final double mark;
   final Color ink;
@@ -1179,6 +1182,7 @@ class _Mini extends StatelessWidget {
     required this.textSize,
     required this.wrong,
     this.said,
+    this.centred = false,
     required this.mark,
     required this.ink,
     required this.ground,
@@ -1212,6 +1216,9 @@ class _Mini extends StatelessWidget {
                   padding: EdgeInsets.fromLTRB(12, textSize * 0.32, 6, 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: centred
+                        ? MainAxisAlignment.center
+                        : MainAxisAlignment.start,
                     children: [
                       SizedBox(
                         height: textSize * 1.2,
@@ -1254,8 +1261,8 @@ class _Mini extends StatelessWidget {
                 Container(
                   width: (textSize + 12) * mark.clamp(0.0, 1.2),
                   color: ink,
-                  alignment: Alignment.topCenter,
-                  padding: EdgeInsets.only(top: textSize * 0.4),
+                  alignment: centred ? Alignment.center : Alignment.topCenter,
+                  padding: EdgeInsets.only(top: centred ? 0 : textSize * 0.4),
                   child: mark > 0.4
                       ? Transform.scale(
                           scale: mark,

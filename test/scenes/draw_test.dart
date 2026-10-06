@@ -13,7 +13,6 @@ import 'dart:typed_data';
 import 'package:astuto/data/card_json.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
-import 'package:astuto/models/scene.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/pill_card.dart';
 import 'package:astuto/widgets/scenes/draw_view.dart';
@@ -333,10 +332,9 @@ void main() {
       );
       final chart = find.bySemanticsLabel(RegExp('^Training compute'));
       expect(chart, findsOneWidget);
-      final id = tester.getSemantics(chart).id;
-      final owner = tester.binding.pipelineOwner.semanticsOwner!;
       for (var k = 0; k < 6; k++) {
-        owner.performAction(id, SemanticsAction.increase);
+        final node = tester.getSemantics(chart);
+        node.owner!.performAction(node.id, SemanticsAction.increase);
         await tester.pump();
       }
       expect(tester.getSemantics(chart).value, startsWith('Yr 5: ×'));
