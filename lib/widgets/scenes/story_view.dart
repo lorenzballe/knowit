@@ -251,8 +251,8 @@ class _StorySceneViewState extends State<StorySceneView>
                 toGlyph: _glyphOf(_at),
                 fromRect: was?.glyph,
                 toRect: to.glyph,
-                fromAngle: from == null ? null : _angleOf(from),
-                toAngle: _angleOf(_at),
+                fromAngle: was == null ? null : _angleOf(from!, was, size),
+                toAngle: _angleOf(_at, to, size),
                 morph: from == null ? 1 : morph,
                 drawOn: from == null
                     ? part(0.0, 0.8, Curves.easeInOutCubic)
@@ -375,10 +375,13 @@ class _StorySceneViewState extends State<StorySceneView>
   }
 
   /// Where the disc sits round the drawing: a little further round at
-  /// every stop, so the page seems to turn under it.
-  /// Always to the right of it, where the page has room.
-  static double _angleOf(int stop) =>
-      const [-0.4, 0.4, 1.0, 0.05, 0.7][stop % 5];
+  /// every stop, so the page seems to turn under it, and always on the side
+  /// where the scene has room.
+  static double _angleOf(int stop, _Plan p, Size size) {
+    final a = const [-0.4, 0.4, 1.0, 0.05, 0.7][stop % 5];
+    // A drawing on the right of the scene has its disc on its left.
+    return p.glyph.center.dx > size.width / 2 ? math.pi - a : a;
+  }
 
   String _spoken(BuildContext context) {
     final s = _s;
@@ -956,11 +959,14 @@ class _Plan {
     if (glyph == Rect.zero) {
       // No room above: the question mark stands beside the question, as
       // tall as it, and the question takes the rest of the width.
-      final side = math.min(w * 0.22, 84.0);
+      final gapAbove = short ? 12 : 18;
+      final room = optionsTop - gapAbove - stageTop;
+      final side = math.min(math.min(w * 0.3, 104.0), room);
       ask = askAt(w - side - 12);
       final block = math.max(ask.height, side);
-      final top = optionsTop - (short ? 12 : 18) - block;
-      ask = ask.at(top + (block - ask.height) / 2);
+      final top = optionsTop - gapAbove - block;
+      // The question sits on the buttons; the mark stands over its end.
+      ask = ask.at(top + block - ask.height);
       glyph = side < 40 || top < stageTop
           ? Rect.zero
           : Rect.fromLTWH(w - side, top + (block - side) / 2, side, side);
