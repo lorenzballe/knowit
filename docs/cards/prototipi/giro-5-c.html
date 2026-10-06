@@ -371,7 +371,7 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
     const R = Math.min(W, H) / 2 - 4; if (R < 20) { g = null; return; } g = {x, W, H, R, cx: W / 2, cy: H / 2, d: Math.max(2, R / 58)};
   }
   function wash() {
-    if (!g) geo();
+    if (!g) geo(); if (!g) return;
     rnd = seeded(7); const {R, cx, cy, d} = g;
     stains = []; const blobs = [[-.18, -.12, .34], [.22, .1, .26], [-.05, .3, .2]];
     for (const [bx, by, br] of blobs) for (let i = 0; i < 260 * br / .3; i++) {
@@ -386,7 +386,7 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
   }
   const left = () => stains.filter(s => s.on).length / start;
   function step(dt) {
-    if (clock >= WASH) return false;
+    if (!g || clock >= WASH) return false;
     clock += dt;
     const {R, cx, cy, d, cell} = g, sp = R * .55, rc = d * 3.2, p = q() * dt * 9;
     for (const o of parts) {
@@ -438,10 +438,10 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
   th.addEventListener('keydown', e => { const k = {ArrowUp: 5, ArrowRight: 5, ArrowDown: -5, ArrowLeft: -5}[e.key]; if (!k) return; e.preventDefault(); T = clamp(T + k, T0, T1); placeT(); wash(); was = true; });
   $('blTaed').onclick = () => { taed = !taed; $('blTaed').classList.toggle('on', taed); $('blTaed').textContent = taed ? 'TAED added' : '+ Add TAED'; wash(); was = true; };
   ticksUI();
-  watch(cv, () => { geo(); if (stains) { const keep = stains.map(s => s.on), c = clock; wash(); stains.forEach((s, i) => s.on = keep[i] ?? true); clock = c; } draw(); });
+  watch(cv, () => { geo(); if (g && stains) { const keep = stains.map(s => s.on), c = clock; wash(); stains.forEach((s, i) => s.on = keep[i] ?? true); clock = c; } draw(); });
   watch(th, placeT);
   Kit.onShow.bl = () => { geo(); placeT(); if (!stains) { wash(); } draw(); };
-  const run = () => { wash(); while (step(1 / 60)); verdict(); was = false; draw(); };
+  const run = () => { geo(); wash(); while (step(1 / 60)); verdict(); was = false; draw(); };
   Kit.play.bl = async () => { T = 65; placeT(); run(); await wait(400); $('blTaed').click(); T = 40; placeT(); run(); };
 })();
 

@@ -563,7 +563,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
   const sk = {v: 0}; let x, W, H, ps = [], sea = [], phase = 'idle', t0 = 0, raf = 0, bet = null, scoop = 0, G = null, tilt = 0;
   function layout() {
     ({x, W, H} = Kit.fitCanvas(cv));
-    const k = sk.v, Rb = Math.min(W * .36, H * .38), Rs = Math.min(W * .24, H * .2), R = Rb + (Rs - Rb) * k;
+    const k = sk.v, Rb = Math.min(W * .4, H * .4), Rs = Math.min(W * .24, H * .2), R = Rb + (Rs - Rb) * k;
     G = {ph: phase, k, cx: W * .42 + (Rs + 4 - W * .42) * k, cy: H * .48 + (Rs + 4 - H * .48) * k, R, gx: W * .86, gy: H * .04, gw: W * .13, gh: W * .17};
     let s = 3; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
     sea = []; for (let i = 0; i < 900; i++) { const a = r() * 7, d = Math.sqrt(r()) * G.R * .97; sea.push([G.cx + Math.cos(a) * d, G.cy + Math.sin(a) * d * .98, r()]); }
@@ -586,7 +586,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     x.fillStyle = '#2B5CFF'; for (const [sx, sy, k] of sea) { x.globalAlpha = .35 + k * .4; x.fillRect(sx, sy, 1.6, 1.6); }
     x.globalAlpha = 1; x.strokeStyle = '#2B5CFF'; x.lineWidth = 1.2; x.beginPath(); x.arc(cx, cy, R, 0, 7); x.stroke();
     x.font = `700 ${Math.max(10, H * .028)}px "JetBrains Mono", monospace`; x.fillStyle = '#8fa6ff'; x.textAlign = 'center';
-    if (phase !== 'mixed') x.fillText('ALL THE OCEANS', cx, cy + R + H * .055); x.textAlign = 'left';
+    if (phase === 'idle' || phase === 'pour') x.fillText('ALL THE OCEANS', cx, cy + R + H * .055); x.textAlign = 'left';
     // the glass, pouring
     const pour = phase === 'pour' ? Math.min(1, t / 3.2) : phase === 'idle' ? 0 : 1;
     tilt = phase === 'pour' ? Math.min(1, t / .6) * -1.9 * (pour < .92 ? 1 : (1 - pour) / .08) : 0;
@@ -604,7 +604,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
       const e = 1 - Math.pow(1 - local, 3);
       px = mouth[0] + (tx - mouth[0]) * e + Math.sin(local * Math.PI) * -R * .3 * (p.j - .5);
       py = mouth[1] + (ty - mouth[1]) * e - Math.sin(local * Math.PI) * R * .25;
-      al = phase === 'scoop' ? .28 : .9;
+      al = phase === 'scoop' ? .14 : phase === 'mixed' ? .5 : .9;
       x.globalAlpha = al; x.fillRect(px, py, 1.7, 1.7);
     }
     x.globalAlpha = 1;
