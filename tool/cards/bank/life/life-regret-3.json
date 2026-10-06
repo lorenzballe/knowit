@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Two travellers miss the same flight, one by 30 minutes, one by five. Why does the second hurt more?",
-  "answer": "Because it is easier to imagine making it. Kahneman and Tversky asked people which traveller would be more upset, and 96% chose the one who missed by five minutes. The loss is identical; what differs is how easily the mind builds the version where it went right.",
+  "question": "Two travellers miss the same flight, one by 30 minutes, one by five. Which of them is more upset?",
+  "answer": "The loss is identical; what differs is how easily the mind builds the version where it went right. Kahneman and Tversky called it the simulation heuristic. It is also why silver medallists often look less happy than bronze: one nearly won gold, the other nearly went home with nothing.",
   "move": "Measure a loss by what was lost, not by how near it came.",
   "ask": "Which near miss am I still replaying, and would it hurt less if I judged it by what I lost?",
   "keywords": [
@@ -27,8 +27,29 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "Students, Kahneman & Tversky 1982",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "Missed by 5 minutes",
+            "share": 96,
+            "mirror": "Like 96% of those asked. A near miss is easy to undo in the mind, so it hurts more."
+          },
+          {
+            "label": "Missed by 30 minutes",
+            "share": 4,
+            "mirror": "Like 4%. You judge by the loss itself, and it is the same for both: one missed flight."
+          }
+        ]
+      }
+    ],
+    "why": "The closer we came, the easier it is to picture making it, and the pictured win is what hurts."
+  },
   "source": "Kahneman and Tversky, The Simulation Heuristic, 1982",
   "source_kind": "book",
   "reference": "Kahneman and Tversky, The simulation heuristic, in Kahneman, Slovic and Tversky (eds), Judgment under Uncertainty, Cambridge University Press, 1982",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

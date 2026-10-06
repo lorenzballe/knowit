@@ -65,7 +65,7 @@ void main() {
     return (jsonDecode(f.readAsStringSync()) as Map).cast<String, Object?>();
   }
 
-  Widget frame(Map<String, Object?> card) => MaterialApp(
+  Widget frame(Map<String, Object?> card, {bool flipped = false}) => MaterialApp(
     debugShowCheckedModeBanner: false,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,
@@ -75,7 +75,7 @@ void main() {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(14, 60, 14, 96),
-          child: PillCard(pill: cardFromJson(card)),
+          child: PillCard(pill: cardFromJson(card), flipped: flipped),
         ),
       ),
     ),
@@ -118,6 +118,10 @@ void main() {
       )) {
         expect(rp.didExceedMaxLines, isFalse, reason: '$id: ${rp.text.toPlainText()}');
       }
+      await tester.pumpWidget(frame(card, flipped: true));
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+      await shoot('back');
     });
   }
 }

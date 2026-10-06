@@ -6,29 +6,65 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did envelopes bearing photos of their children help Indian labourers save more?",
-  "answer": "They made the money feel spoken for. Soman and Cheema gave construction workers' households their savings in sealed envelopes; splitting the cash into separate envelopes, some printed with the children's pictures, raised what was saved. Opening one meant breaking a seal marked with a purpose. A child's photo guarded the money better than willpower.",
-  "move": "Give money a name and a place, and it becomes harder to spend.",
-  "ask": "Which savings goal of mine would last longer if I gave it its own account and a name?",
+  "question": "You arrive at the theatre to buy a $10 ticket, and find something has gone missing. Do you still pay?",
+  "answer": "People keep money in mental accounts. A lost note comes out of general cash, but a lost ticket is charged to the play, which now seems to cost $20. The habit can be put to work: Soman and Cheema's labourers saved more when their cash went into envelopes marked for their children.",
+  "move": "Money lost is gone; ask only whether the next spend is worth it.",
+  "ask": "Which loss am I charging to the wrong account in my head?",
   "keywords": [
-    "earmarking",
-    "savings",
-    "envelopes",
-    "india",
-    "labourers"
+    "mental accounting",
+    "theatre ticket",
+    "lost money",
+    "earmarking"
   ],
-  "era": "recent",
-  "region": "asia",
-  "hook": "story",
-  "mood": "wonder",
-  "numeracy": 0,
+  "era": "twentieth",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Soman and Cheema, Journal of Marketing Research, 2011",
+  "scene": {
+    "type": "poll",
+    "who": "Students, Tversky & Kahneman 1981",
+    "questions": [
+      {
+        "prompt": "You find you have lost a $10 note on the way. Buy a ticket?",
+        "tag": "Lost a $10 note",
+        "options": [
+          {
+            "label": "Buy a ticket",
+            "share": 88
+          },
+          {
+            "label": "Go home",
+            "share": 12
+          }
+        ]
+      },
+      {
+        "prompt": "This time you bought the ticket earlier, and have lost it. Buy another?",
+        "tag": "Lost the $10 ticket",
+        "options": [
+          {
+            "label": "Buy another",
+            "share": 46
+          },
+          {
+            "label": "Go home",
+            "share": 54
+          }
+        ]
+      }
+    ],
+    "why": "A lost ticket is billed to the play, so it seems to cost $20; a lost note goes to another account.",
+    "same": "You held steady. The crowd didn't: buying fell from 88% to 46%.",
+    "switched": "You switched, like many. Either way you are $10 down and the play costs $10."
+  },
+  "source": "Tversky & Kahneman, Science, 1981; Soman & Cheema, 2011",
   "source_kind": "paper",
-  "reference": "Soman & Cheema, Earmarking and Partitioning: Increasing Saving by Low-Income Households, Journal of Marketing Research, 2011",
-  "written": "2026-10-03"
+  "reference": "Tversky & Kahneman, The framing of decisions and the psychology of choice, Science 211 (1981): 453-458; Soman & Cheema, Earmarking and Partitioning: Increasing Saving by Low-Income Households, Journal of Marketing Research, 2011",
+  "written": "2026-10-06"
 }
