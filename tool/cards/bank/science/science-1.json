@@ -6,27 +6,62 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did we know what a kilogram was?",
-  "answer": "Until 2019, a kilogram was a metal cylinder in a vault near Paris. Its official copies drifted apart by around 50 micrograms over a century — and nobody could say which had changed, because the cylinder was the definition. It is now fixed to a constant of nature instead.",
-  "move": "For 130 years the kilogram could not be wrong, only different.",
-  "ask": "What do I treat as fixed that is really just a convention we agreed on?",
+  "question": "Where would a bathroom scale read highest: on Earth, on Mars, or at the cloud tops of Saturn, Uranus or Neptune?",
+  "answer": "Neptune, then Earth. Surface gravity grows with a planet's mass but shrinks with the square of its radius. Saturn has 95 times Earth's mass yet is about nine times as wide, so at its cloud tops it pulls 9.0 metres per second squared, against Earth's 9.8. Its mass is spread thin.",
+  "move": "Big is not heavy; ask how much is packed into how much room.",
+  "ask": "Where do I judge something by its size when what counts is how tightly it is packed?",
   "keywords": [
-    "kilogram",
-    "le grand k",
-    "si units",
-    "planck constant"
+    "surface gravity",
+    "saturn",
+    "neptune",
+    "planets",
+    "weight"
   ],
-  "era": "recent",
-  "region": "europe",
-  "hook": "story",
-  "mood": "wonder",
-  "numeracy": 1,
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
-  "source": "BIPM, 2019 redefinition of the SI",
-  "source_kind": "standard",
-  "reference": "BIPM, The International System of Units (SI Brochure), 9th edition, 2019"
+  "figure": "bars",
+  "source": "NASA Planetary Fact Sheet",
+  "source_kind": "institution",
+  "reference": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+  "scene": {
+    "type": "rank",
+    "quantity": "Gravity at the surface",
+    "most": "Heaviest",
+    "unit": "m/s²",
+    "items": [
+      {
+        "label": "Saturn",
+        "value": 9.0,
+        "note": "95 Earths of mass, spread so wide that its cloud tops pull less than Earth."
+      },
+      {
+        "label": "Mars",
+        "value": 3.7,
+        "note": "Just over a third of Earth's pull: 70 kg would feel like 26."
+      },
+      {
+        "label": "Earth",
+        "value": 9.8,
+        "note": "Small, but rocky and dense: it beats two giant planets."
+      },
+      {
+        "label": "Uranus",
+        "value": 8.7,
+        "note": "Over 14 Earths of mass, yet a scale would read a little less than at home."
+      },
+      {
+        "label": "Neptune",
+        "value": 11.0,
+        "note": "Smaller than Uranus but denser: the strongest pull of the five."
+      }
+    ]
+  },
+  "written": "2026-10-06"
 }

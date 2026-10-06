@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do many record contracts signed since the 2000s take a cut of the artist's concerts and T-shirts?",
-  "answer": "Because recorded music stopped paying for itself. As CD sales collapsed after 2000, labels began taking a share of touring, merchandise and sponsorship too, in 360 deals, named for taking from every side. Robbie Williams's 2002 contract with EMI is often named as the first big one. The label became a partner in the career.",
+  "question": "American recorded music earned $14.6 billion in 1999. What happened to that money, and why did labels start taking a cut of concerts?",
+  "answer": "It halved, so labels reached for the rest of the career. US recorded revenue fell to about $7 billion by 2011. In 360 deals, labels took shares of touring, merchandise and sponsorship; Robbie Williams's 2002 EMI contract is often named as the first big one. Streaming brought sales back later, but the deals stayed.",
   "move": "When a firm's product stops paying, it reaches for the customer's other income.",
   "ask": "When a company I use loses money on its main product, where will it start charging me instead?",
   "keywords": [
@@ -21,14 +21,49 @@
   "region": "world",
   "hook": "mechanism",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Marshall, European Journal of Cultural Studies, 2013",
+  "scene": {
+    "type": "draw",
+    "label": "US recorded music, $ billion",
+    "unit": "$",
+    "columns": [
+      "1999",
+      "2005",
+      "2011",
+      "2017",
+      "2023"
+    ],
+    "values": [
+      14.6,
+      12.27,
+      7.01,
+      8.7,
+      17.1
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 20,
+    "decimals": 1,
+    "judge": 2,
+    "verdict": {
+      "under": "Lower than the truth, but the right fall: by 2011 sales had about halved.",
+      "near": "Right: by 2011 sales had halved. That hole is what the 360 deal was built to fill.",
+      "over": "Not that gentle: by 2011 recorded music earned less than half its 1999 total."
+    },
+    "notes": [
+      {
+        "at": 4,
+        "text": "2023: a record $17.1bn"
+      }
+    ]
+  },
+  "source": "RIAA revenue data; Marshall, 2013",
   "source_kind": "paper",
-  "reference": "Marshall, The 360 deal and the new music industry, European Journal of Cultural Studies, 2013",
+  "reference": "RIAA, U.S. Music Revenue Database, https://www.riaa.com/u-s-music-revenue-database/ (1999 $14.6bn, 2005 $12.27bn, 2011 $7.01bn, 2017 $8.7bn, 2023 $17.1bn); Marshall, The 360 deal and the new music industry, European Journal of Cultural Studies, 2013",
   "written": "2026-09-26"
 }

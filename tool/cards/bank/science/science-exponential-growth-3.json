@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does an exponential curve always look as if the explosion is only just starting?",
-  "answer": "Because each doubling outweighs all the ones before it. At any moment, the latest doubling holds as much as all earlier history combined, so the curve looks flat behind and steep ahead. The physicist Albert Bartlett showed that at 7% yearly growth, each decade consumes more than every previous decade put together.",
+  "question": "Oil use once grew about 7% a year. After each decade, what share of all oil ever burned went in that decade?",
+  "answer": "About half, every decade, however long the history. At 7% a year use doubles roughly every ten years, so each new decade burns about as much as all earlier decades combined. Albert Bartlett pressed this in 1978: under steady growth the past never looks large, because the present always matches it.",
   "move": "When growth is steady, expect the latest stretch to outweigh everything before it.",
   "ask": "Which steady habit of mine looks harmless only because I'm judging it by its past?",
   "keywords": [
@@ -20,13 +20,54 @@
   "region": "none",
   "hook": "paradox",
   "mood": "wonder",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "abstract",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Bartlett, American Journal of Physics, 1978",
+  "scene": {
+    "type": "draw",
+    "label": "Last decade's share of all use",
+    "unit": "%",
+    "columns": [
+      "10 yrs",
+      "20 yrs",
+      "30 yrs",
+      "40 yrs",
+      "50 yrs",
+      "60 yrs",
+      "70 yrs"
+    ],
+    "values": [
+      100,
+      66.3,
+      56.6,
+      52.7,
+      50.9,
+      50.0,
+      49.6
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 110,
+    "verdict": {
+      "under": "Too low. History never catches up: each decade at 7% uses about as much as all before.",
+      "near": "Right: it settles at about half. Each new decade matches all of history before it.",
+      "over": "Lower than that, but not by much: it settles at about half and stays there."
+    },
+    "notes": [
+      {
+        "at": 2,
+        "text": "30 years in: 57%"
+      },
+      {
+        "at": 4,
+        "text": "50 years in: 51%"
+      }
+    ]
+  },
+  "source": "Arithmetic; Bartlett, Am J Phys, 1978",
   "source_kind": "paper",
   "reference": "Bartlett, Forgotten fundamentals of the energy crisis, American Journal of Physics 46:876–888, 1978",
   "written": "2026-09-26"

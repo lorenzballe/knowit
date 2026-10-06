@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did container freight rates rise about sevenfold in 2021 while the volume of trade grew only modestly?",
-  "answer": "Because ships take years to build and port queues trapped the ones afloat. With part of the fleet idle at anchor, extra demand met no extra ships, so price adjusted instead: Drewry's index rose from about $1,420 in 2019 to $10,377 in September 2021. The ships ordered then arrived from 2023, into a slump.",
+  "question": "Container freight rates rose sevenfold by September 2021, because new ships take years to build. Where were they two years later?",
+  "answer": "Back below 2019. The spike came from ships that could not be added fast enough; the orders it set off arrived from 2023, just as demand cooled. Drewry's index fell from $10,377 a box to $1,382 by December 2023. Supply that cannot move quickly overshoots both ways: first too little, then too much.",
   "move": "When supply cannot move, a small shift in demand moves the price enormously.",
   "ask": "What do I buy where a small rise in demand makes the price jump?",
   "keywords": [
@@ -27,7 +27,50 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "source": "Drewry World Container Index",
+  "scene": {
+    "type": "draw",
+    "label": "Freight, $ per 40-foot box",
+    "unit": "$",
+    "columns": [
+      "2019",
+      "Jan 21",
+      "Sep 21",
+      "Jan 22",
+      "Jul 22",
+      "Jan 23",
+      "Jul 23",
+      "Dec 23"
+    ],
+    "values": [
+      1420,
+      5245,
+      10377,
+      9545,
+      7051,
+      2132,
+      1537,
+      1382
+    ],
+    "given": 3,
+    "min": 0,
+    "max": 12000,
+    "verdict": {
+      "under": "Lower than the truth, but you saw the crash: rates fell back below 2019.",
+      "near": "Right: by late 2023 a box cost less than in 2019, as the new ships arrived.",
+      "over": "Higher than the truth. The new ships landed in a slump: by December 2023, below 2019."
+    },
+    "notes": [
+      {
+        "at": 3,
+        "text": "Jan 2022: still $9,545"
+      },
+      {
+        "at": 5,
+        "text": "Jan 2023: down 79%"
+      }
+    ]
+  },
+  "source": "Drewry World Container Index, 2019-2023",
   "source_kind": "company",
   "reference": "Drewry Supply Chain Advisors, World Container Index, weekly composite assessments 2019-2023, 2023",
   "written": "2026-09-27"

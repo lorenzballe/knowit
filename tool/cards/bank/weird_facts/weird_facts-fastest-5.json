@@ -6,28 +6,53 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does a mantis shrimp's strike hit its prey twice?",
-  "answer": "Because the water tears open. The club swings out at up to about 23 m/s, so fast that pressure behind it drops and a vapour bubble forms. Its collapse against the shell lands a second blow, with a sharp crack of sound. A snail is struck by the club, then by the water.",
-  "move": "Past a certain speed, the medium itself becomes part of the blow.",
-  "ask": "When I push something hard, what else around it starts to change?",
+  "question": "The mantis shrimp's punch is famous for its speed. Which accelerates hardest: its club, a fungus spore or a hydra's sting?",
+  "answer": "The hydra's sting, by far: over 5.4 million g. Acceleration favours the tiny, since the spring has only a trace of mass to fling. The shrimp swings a whole limb through water, still hard enough to tear the water behind its club into vapour bubbles that strike the prey a second time.",
+  "move": "The smaller the thing being moved, the harder it can be flung.",
+  "ask": "Where am I impressed by the big, famous example while a smaller one goes unnoticed?",
   "keywords": [
     "mantis shrimp",
-    "cavitation",
-    "strike speed",
-    "snails"
+    "hydra",
+    "pilobolus",
+    "acceleration",
+    "cavitation"
   ],
   "era": "recent",
   "region": "none",
-  "hook": "mechanism",
+  "hook": "misconception",
   "mood": "wonder",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
-  "source": "Patek, Korff & Caldwell, Nature, 2004",
-  "source_kind": "primary_document",
-  "reference": "Patek, Korff & Caldwell, Deadly strike mechanism of a mantis shrimp, Nature, 2004",
-  "written": "2026-09-26"
+  "figure": "bars",
+  "source": "Patek 2004; Yafetto 2008; Nüchter 2006",
+  "source_kind": "paper",
+  "reference": "Patek, Korff & Caldwell, Deadly strike mechanism of a mantis shrimp, Nature, 2004; Yafetto et al., The fastest flights in nature, PLoS ONE 3(9): e3237, 2008; Nüchter et al., Nanosecond-scale kinetics of nematocyst discharge, Current Biology, 2006",
+  "written": "2026-10-06",
+  "scene": {
+    "type": "rank",
+    "quantity": "Peak acceleration",
+    "most": "Hardest",
+    "unit": "g",
+    "log": true,
+    "items": [
+      {
+        "label": "Mantis shrimp club",
+        "value": 10400,
+        "note": "Over 10,400 g, enough to tear the water behind it into vapour."
+      },
+      {
+        "label": "Hydra stinging cell",
+        "value": 5410000,
+        "note": "Over five million g, in 700 billionths of a second: a harpoon inside a cell."
+      },
+      {
+        "label": "Pilobolus fungus spore",
+        "value": 20000,
+        "note": "A dung fungus that fires its spores 2 m, at twice the shrimp's g."
+      }
+    ]
+  }
 }

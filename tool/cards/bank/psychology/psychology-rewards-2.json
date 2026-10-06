@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Pupils collected charity donations door to door. Who collected the most: the unpaid ones or those on commission?",
-  "answer": "The unpaid ones. Gneezy and Rustichini offered some Israeli pupils 1% of what they raised and others 10%. The 1% group collected far less than the unpaid, and the 10% group did not catch up with them. Once paid, the outing was judged as a job, and as a job it paid badly.",
+  "question": "Pupils went door to door for charity: some unpaid, some on 1% commission, some on 10%. Which pairs raised the most?",
+  "answer": "The unpaid pairs. In Gneezy and Rustichini's field experiment, about 180 Israeli pupils collected for good causes. Pay turned a good deed into a job, and judged as a job, 1% was an insult: takings fell by a third. Ten times the rate won most of it back, but not all.",
   "move": "Pay properly or not at all; a token fee is judged as a poor wage.",
   "ask": "Where am I offering someone a token payment for something they might happily have done for free?",
   "keywords": [
@@ -20,14 +20,37 @@
   "region": "middle_east",
   "hook": "paradox",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
   "source": "Gneezy & Rustichini, Quarterly Journal of Economics, 2000",
   "source_kind": "paper",
-  "reference": "Gneezy & Rustichini, Pay enough or don't pay at all, Quarterly Journal of Economics, 2000",
-  "written": "2026-10-03"
+  "reference": "Gneezy & Rustichini, Pay enough or don't pay at all, Quarterly Journal of Economics 115(3), 2000, doi:10.1162/003355300554917",
+  "written": "2026-10-06",
+  "scene": {
+    "type": "rank",
+    "quantity": "Raised per pair of pupils",
+    "most": "Most",
+    "unit": "NIS",
+    "items": [
+      {
+        "label": "Paid 1%",
+        "value": 154,
+        "note": "A third less than the unpaid: the token fee made charity a badly paid job."
+      },
+      {
+        "label": "Unpaid",
+        "value": 239,
+        "note": "Working for nothing, the outing stayed a good deed, and they worked hardest."
+      },
+      {
+        "label": "Paid 10%",
+        "value": 219,
+        "note": "Ten times the commission still did not beat working for free."
+      }
+    ]
+  }
 }

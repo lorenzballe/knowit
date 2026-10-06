@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Where along its circuit does blood move most slowly?",
-  "answer": "In the capillaries, the narrowest vessels. There are billions side by side, so their combined cross-section is roughly a thousand times the aorta's. The same flow, spread that wide, slows from about 30 cm a second in the aorta to under 1 mm a second: just long enough to trade oxygen for waste.",
+  "question": "Blood leaves the heart through the aorta at about 33 cm a second. How does its speed change on the way round the body?",
+  "answer": "It slows a thousandfold, then speeds up again. The same flow passes every stage, so speed falls as the total cross-section grows: some 2,500 cm² of capillaries against 2.5 cm² of aorta. There blood crawls at about 0.3 mm a second, long enough to trade oxygen for waste. As veins merge, it speeds back up.",
   "move": "Split one stream into many channels and each one slows down.",
   "ask": "Where in my week does one big job get split into so many pieces that everything slows down?",
   "keywords": [
@@ -26,8 +26,49 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "source": "Levick, Introduction to Cardiovascular Physiology, 2010",
+  "scene": {
+    "type": "draw",
+    "label": "Blood speed, mm per second",
+    "columns": [
+      "Aorta",
+      "Arteries",
+      "Smaller",
+      "Smallest",
+      "Veins",
+      "Big vein"
+    ],
+    "values": [
+      330,
+      41,
+      21,
+      0.33,
+      10,
+      103
+    ],
+    "given": 1,
+    "min": 0.1,
+    "max": 1000,
+    "log": true,
+    "decimals": 1,
+    "judge": 3,
+    "verdict": {
+      "under": "Even lower than the truth. Capillaries run at 0.3 mm a second, a thousandth of the aorta.",
+      "near": "Right: a thousand times slower in the capillaries, then faster as veins merge.",
+      "over": "Slower than that: in the capillaries blood crawls at 0.3 mm a second."
+    },
+    "notes": [
+      {
+        "at": 1,
+        "text": "Arteries: 41 mm a second"
+      },
+      {
+        "at": 5,
+        "text": "Back up to 103 mm/s"
+      }
+    ]
+  },
+  "source": "Guyton and Hall, Textbook of Medical Physiology",
   "source_kind": "book",
-  "reference": "Levick, An Introduction to Cardiovascular Physiology, 5th edition, Hodder Arnold, 2010",
+  "reference": "Hall, Guyton and Hall Textbook of Medical Physiology, 14th edition, Elsevier, 2020, chapter 14: aortic velocity about 33 cm/s; cross-sections aorta 2.5, small arteries 20, arterioles 40, capillaries 2,500, small veins 80, venae cavae 8 cm²; speeds here are flow divided by area",
   "written": "2026-09-26"
 }

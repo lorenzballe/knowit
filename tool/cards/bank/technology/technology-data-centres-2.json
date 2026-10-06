@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How much extra power does a typical data centre spend just on cooling and power conversion?",
-  "answer": "About half as much again. The Uptime Institute's 2024 survey found an average power usage effectiveness, total power divided by the power reaching the IT equipment, of about 1.56, a figure that has barely improved in years. Google reports about 1.10 across its fleet: per 100 watts of computing, 10 of overhead, not 56.",
+  "question": "In 2007 a typical data centre spent 1.5 extra watts on cooling and power for every watt of computing. How far did that fall?",
+  "answer": "Fast at first, then hardly at all. In the Uptime Institute's surveys, power usage effectiveness, total power divided by the power reaching the computers, fell from 2.5 in 2007 to 1.7 by 2014, then stalled near 1.55. Google reports about 1.10 across its fleet: per 100 watts of computing, 10 of overhead, not 56.",
   "move": "Ask what share of the energy reaches the task, not just the total.",
   "ask": "How much of what I spend in time, money or energy really reaches the thing I care about?",
   "keywords": [
@@ -26,8 +26,41 @@
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "source": "Uptime Institute Global Data Center Survey, 2024",
+  "scene": {
+    "type": "draw",
+    "label": "Total watts per watt of computing",
+    "columns": [
+      "2007",
+      "2014",
+      "2018",
+      "2022",
+      "2024"
+    ],
+    "values": [
+      2.5,
+      1.7,
+      1.58,
+      1.55,
+      1.56
+    ],
+    "given": 1,
+    "min": 1,
+    "max": 3,
+    "decimals": 2,
+    "verdict": {
+      "under": "Lower than the truth. The average stalled near 1.55, well above Google's 1.10.",
+      "near": "Right: big gains to 2014, then a plateau around 1.55 for a decade.",
+      "over": "Higher than the truth: it fell to about 1.6, then stopped improving."
+    },
+    "notes": [
+      {
+        "at": 1,
+        "text": "2014: most of the gain"
+      }
+    ]
+  },
+  "source": "Uptime Institute Global Data Center Surveys",
   "source_kind": "institution",
-  "reference": "https://uptimeinstitute.com/resources/research-and-reports/uptime-institute-global-data-center-survey-results-2024",
+  "reference": "Uptime Institute, Global Data Center Survey results, 2007-2024 (average PUE 2.5 in 2007, 1.7 in 2014, 1.58 in 2018, 1.55 in 2022, 1.56 in 2024), https://uptimeinstitute.com/resources/research-and-reports/uptime-institute-global-data-center-survey-results-2024",
   "written": "2026-09-26"
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "In 1901 Mario Lazzarini dropped a needle on ruled lines 3,408 times and got π right to six places. Could honest drops do that?",
-  "answer": "No: the result was too good. Honest runs of 3,408 drops miss π by about 0.05. With his needle, 355/113 can only come out when the drops are a multiple of 213, and 3,408 is exactly 16 × 213: he seems to have stopped the moment it matched.",
+  "question": "In 1901 Mario Lazzarini dropped a needle on ruled lines 3,408 times and got pi right to six places. Could honest drops do that?",
+  "answer": "No: the result was too good. Honest runs of 3,408 drops miss pi by about 0.05. With his needle, 355/113 can only come out when the drops are a multiple of 213, and 3,408 is exactly 16 × 213: he seems to have stopped the moment it matched.",
   "move": "When a result is better than the method allows, ask how it stopped.",
   "ask": "When a result looks better than the method allows, do I ask how it stopped?",
   "keywords": [
@@ -29,7 +29,7 @@
   "figure": "none",
   "source": "Badger, Mathematics Magazine, 1994",
   "source_kind": "paper",
-  "reference": "Badger, Lazzarini's Lucky Approximation of π, Mathematics Magazine 67(2):83–91, 1994",
+  "reference": "Badger, Lazzarini's Lucky Approximation of π, Mathematics Magazine, 1994",
   "written": "2026-09-26",
   "scene": {
     "type": "sample",
@@ -46,11 +46,11 @@
     "seed": 2,
     "button": "Drop more",
     "notes": [
-      "34 drops, 23 crossings: 67.6%. Turned into π, that makes it 2.46.",
-      "341 drops: 54.8% crossed, so π comes out 3.04.",
-      "3,408 drops, as many as Lazzarini's: π = 3.10. His said 3.1415929.",
-      "34,080 drops: π = 3.13. Ten times his work, one decimal right.",
-      "340,800 drops: π = 3.138. Six true places would take tens of trillions."
+      "34 drops, 23 crossings: 67.6%. Turned into pi, that makes it 2.46.",
+      "341 drops: 54.8% crossed, so pi comes out 3.04.",
+      "3,408 drops, as many as Lazzarini's: pi = 3.10. His said 3.1415929.",
+      "34,080 drops: pi = 3.13. Ten times his work, one decimal right.",
+      "340,800 drops: pi = 3.138. Six true places would take tens of trillions."
     ]
   }
 }

@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "A famous 1965 study found a third of patients diagnosed with hysteria later proved to have physical disease. What did later studies find?",
-  "answer": "Far fewer: about 4%. A 2005 review of 27 studies by Jon Stone and colleagues found that misdiagnosis of such functional symptoms, real but without structural damage, fell from 29% in the 1950s to about 4% from the 1970s on. That is no worse than for other neurological and psychiatric diagnoses.",
+  "answer": "About 4%, and it got there fast. Jon Stone's 2005 review of 27 studies found misdiagnosis of such functional symptoms fell from 29% in the 1950s to 4% from the 1970s on. The authors put the drop down mostly to better-designed studies, not to brain scans: the old error rate measured old methods.",
   "move": "An old error rate can outlive the conditions that produced it.",
   "ask": "Which old error rate do I still quote even though the conditions have changed?",
   "keywords": [
@@ -27,6 +27,39 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "scene": {
+    "type": "draw",
+    "label": "Later found to have a disease",
+    "unit": "%",
+    "columns": [
+      "1950s",
+      "1960s",
+      "1970s",
+      "1980s",
+      "1990s"
+    ],
+    "values": [
+      29,
+      17,
+      4,
+      4,
+      4
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 40,
+    "verdict": {
+      "under": "Just under the truth: since the 1970s it has held at about 4%.",
+      "near": "Right: it fell to about 4% by the 1970s and stayed, no worse than other diagnoses.",
+      "over": "Too high. Since the 1970s only about 4% have turned out to have a missed disease."
+    },
+    "notes": [
+      {
+        "at": 2,
+        "text": "Down to 4% by the 1970s"
+      }
+    ]
+  },
   "source": "Stone et al., BMJ, 2005",
   "source_kind": "paper",
   "reference": "Stone et al., Systematic review of misdiagnosis of conversion symptoms and hysteria, BMJ, 2005",

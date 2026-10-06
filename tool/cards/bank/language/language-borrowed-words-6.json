@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Pronouns are among the words languages almost never borrow. Why did English take they from Norse?",
-  "answer": "Because Norse and English speakers lived side by side in the Danelaw for generations, often in mixed households, and the English form had worn thin: hīe, they, sounded much like hē, he. Norse þeir was clearer and spread south slowly. Chaucer's London, around 1390, said they but still hem and here for them and their.",
+  "question": "English took its word they from the Vikings. Which of these everyday words came the same way?",
+  "answer": "Daily life moved them, not conquest. In the Danelaw, Norse and English speakers shared homes and markets for generations, and the two tongues were close enough to swap basic words. A borrowed pronoun is the rarest kind, which makes they the giveaway. Chaucer, around 1390, still wrote hem and here for them and their.",
   "move": "The hardest things to borrow move only when people share daily life.",
   "ask": "What stubborn habit of mine only changes when I spend real time with different people?",
   "keywords": [
@@ -27,6 +27,62 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Norse",
+    "right": "Old English",
+    "tag": "Words in the Danelaw",
+    "items": [
+      {
+        "text": "They",
+        "note": "The plural pronoun.",
+        "pile": "left",
+        "verdict": "Norse þeir. The English hīe sounded too much like hē, he."
+      },
+      {
+        "text": "Mother",
+        "note": "The first word for a parent.",
+        "pile": "right",
+        "verdict": "Old English mōdor, cousin of German Mutter. Always here."
+      },
+      {
+        "text": "Sky",
+        "note": "What is over your head.",
+        "pile": "left",
+        "verdict": "Norse ský meant cloud. English kept heaven for the religious sense."
+      },
+      {
+        "text": "Egg",
+        "note": "What a hen lays.",
+        "pile": "left",
+        "verdict": "Norse egg beat English ey. In 1490 Caxton still met a wife who said eyren."
+      },
+      {
+        "text": "House",
+        "note": "Where a family lives.",
+        "pile": "right",
+        "verdict": "Old English hūs. The Norse gave English husband, not house."
+      },
+      {
+        "text": "Window",
+        "note": "A hole in the wall for light.",
+        "pile": "left",
+        "verdict": "Norse vindauga, wind-eye. It pushed out English eye-thurl, eye-hole."
+      },
+      {
+        "text": "Husband",
+        "note": "The man of the house.",
+        "pile": "left",
+        "verdict": "Norse húsbóndi: house plus the one who dwells in it."
+      },
+      {
+        "text": "Bread",
+        "note": "What a baker sells.",
+        "pile": "right",
+        "verdict": "Old English brēad. It first meant a morsel; loaf was the word for bread."
+      }
+    ]
+  },
   "source": "Townend, Language and History in Viking Age England",
   "source_kind": "book",
   "reference": "Townend, Language and History in Viking Age England: Linguistic Relations between Speakers of Old Norse and Old English, Brepols, 2002",

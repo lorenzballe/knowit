@@ -6,28 +6,55 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Where did the idea that humans have a feeble sense of smell come from?",
-  "answer": "From brain anatomy, not smell tests. In 1879 the anatomist Paul Broca classed humans as non-smellers because their olfactory bulbs are small beside large frontal lobes. Yet the bulbs hold similar numbers of neurons across mammals, and blindfolded volunteers crawling on all fours have tracked a chocolate scent trail through grass.",
+  "question": "Each smell-receptor gene builds one kind of odour sensor. Which has the most working ones: dogs, humans, elephants or orangutans?",
+  "answer": "Elephants, with about 1,948, five times a human's 396. A count of genes is not a nose, though. Broca's 1879 verdict that humans smell poorly rested on small olfactory bulbs, not tests; McGann's review finds our bulbs hold neuron numbers like other mammals', and people beat dogs on some odours.",
   "move": "Ask whether a famous weakness was ever measured, or only assumed.",
   "ask": "What do I believe I am bad at that I have never actually tested?",
   "keywords": [
+    "olfactory receptor genes",
+    "elephants",
+    "dogs",
     "paul broca",
-    "olfactory bulb",
-    "scent tracking",
     "human olfaction"
   ],
   "era": "nineteenth",
   "region": "europe",
-  "hook": "origin",
+  "hook": "misconception",
   "mood": "playful",
-  "numeracy": 0,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
-  "source": "McGann, Science, 2017",
+  "figure": "bars",
+  "source": "Niimura, Genome Research 2014; McGann, Science 2017",
   "source_kind": "paper",
-  "reference": "McGann, Poor human olfaction is a 19th-century myth, Science, 2017",
-  "written": "2026-09-26"
+  "reference": "Niimura, Matsui & Touhara, Extreme expansion of the olfactory receptor gene repertoire in African elephants, Genome Research, 2014; McGann, Poor human olfaction is a 19th-century myth, Science, 2017",
+  "written": "2026-10-06",
+  "scene": {
+    "type": "rank",
+    "quantity": "Working smell-receptor genes",
+    "most": "Most",
+    "items": [
+      {
+        "label": "Dog",
+        "value": 811,
+        "note": "Only about twice a human's count, far from the gap the legend suggests."
+      },
+      {
+        "label": "Human",
+        "value": 396,
+        "note": "Fewer than a dog, yet people match or beat dogs on some odours in tests."
+      },
+      {
+        "label": "Orangutan",
+        "value": 296
+      },
+      {
+        "label": "African elephant",
+        "value": 1948,
+        "note": "About 2,000, the most of 13 mammals compared: over twice a dog's."
+      }
+    ]
+  }
 }

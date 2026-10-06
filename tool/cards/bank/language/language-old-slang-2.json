@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Which ordinary English word did Jonathan Swift attack in 1710 as a vulgar new clipping?",
-  "answer": "Mob. Short for mobile vulgus, the fickle crowd, it was only a few decades old when Swift, writing in The Tatler, listed it with rep, pozz and phizz among the abbreviations spoiling the language. Mob became plain English; pozz, for positive, vanished. The complaint is remembered mostly because one of its targets survived.",
+  "question": "In 1710 Jonathan Swift named the new words he said were spoiling English. Which of them are still alive?",
+  "answer": "Most of the ones he hated most. Mob, rep, banter and bamboozle were short, new and handy, so speakers kept reaching for them; pozz, hipps and country put had rivals that did the job better. Swift was right that the words were new. He was wrong that newness was the problem.",
   "move": "Today's sloppy shortcut is often tomorrow's dictionary word.",
   "ask": "What sloppy shortcut today could be tomorrow's normal?",
   "keywords": [
@@ -26,6 +26,56 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Dead",
+    "right": "Alive",
+    "tag": "The Tatler · No. 230",
+    "items": [
+      {
+        "text": "Mobb",
+        "note": "Short for mobile vulgus, the fickle crowd.",
+        "pile": "right",
+        "verdict": "Mob is the plain word now. Nobody hears the Latin in it."
+      },
+      {
+        "text": "Pozz",
+        "note": "Short for positive, as in sure.",
+        "pile": "left",
+        "verdict": "Nobody has been pozz of anything for three hundred years."
+      },
+      {
+        "text": "Banter",
+        "note": "A new word for teasing talk.",
+        "pile": "right",
+        "verdict": "In every dictionary, and in every pub."
+      },
+      {
+        "text": "Hipps",
+        "note": "Short for hypochondria: low spirits.",
+        "pile": "left",
+        "verdict": "Gone. Nobody gets the hipps any more."
+      },
+      {
+        "text": "Bamboozle",
+        "note": "A new word for tricking someone.",
+        "pile": "right",
+        "verdict": "You can still be bamboozled, and you still are."
+      },
+      {
+        "text": "Country put",
+        "note": "A country bumpkin.",
+        "pile": "left",
+        "verdict": "Bumpkin won. Country put did not make it out of the 1700s."
+      },
+      {
+        "text": "Rep",
+        "note": "Short for reputation.",
+        "pile": "right",
+        "verdict": "A bad rep is still a bad rep."
+      }
+    ]
+  },
   "source": "Swift, The Tatler, No. 230, 1710",
   "source_kind": "primary_document",
   "reference": "Swift, The Tatler No. 230 (1710), in Davis (ed.), The Prose Works of Jonathan Swift, vol. 2, Blackwell, 1939",

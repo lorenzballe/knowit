@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Under a statute from the 1320s, who owns a whale or sturgeon taken off the English coast?",
-  "answer": "The Crown. De Prerogativa Regis, a statute usually dated to about 1324, makes whales and sturgeon royal fish, and it has never been repealed. Strandings and catches are reported to the Receiver of Wreck, the official who handles wreck and royal claims. A carcass on the sand belongs, in law, to the King.",
+  "question": "Whales and sturgeon off England's coast still belong to the Crown, by a statute of the 1320s. Which of these English laws are real?",
+  "answer": "Old laws last when keeping them costs nobody anything. De Prerogativa Regis, usually dated to about 1324, makes whales and sturgeon royal fish, and nobody has troubled to repeal it; strandings still go to the Receiver of Wreck. The funny old laws that circulate are mostly invented, so nobody can cite them.",
   "move": "Old rules survive when keeping them costs nobody anything.",
   "keywords": [
     "royal fish",
@@ -26,6 +26,56 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Myth",
+    "right": "Still law",
+    "tag": "Laws of England",
+    "items": [
+      {
+        "text": "Royal fish",
+        "note": "Whales and sturgeon caught off the coast go to the Crown.",
+        "pile": "right",
+        "verdict": "From a statute of about 1324, never repealed."
+      },
+      {
+        "text": "Shooting Welshmen",
+        "note": "In Chester you may shoot a Welshman with a longbow.",
+        "pile": "left",
+        "verdict": "No such law has ever been traced, in Chester or anywhere else."
+      },
+      {
+        "text": "Statute of Marlborough",
+        "note": "1267: limits on seizing a debtor's goods.",
+        "pile": "right",
+        "verdict": "A few chapters still in force, 750 years on."
+      },
+      {
+        "text": "A policeman's helmet",
+        "note": "A pregnant woman may relieve herself in one.",
+        "pile": "left",
+        "verdict": "No law, old or new, says so."
+      },
+      {
+        "text": "Armour in Parliament",
+        "note": "Coming to Parliament in armour is banned.",
+        "pile": "right",
+        "verdict": "A statute of 1313, still in force."
+      },
+      {
+        "text": "Christmas mince pies",
+        "note": "Eating them on Christmas Day is illegal.",
+        "pile": "left",
+        "verdict": "Puritan bans on Christmas lapsed in 1660."
+      },
+      {
+        "text": "Suspicious salmon",
+        "note": "Handling salmon in suspicious circumstances.",
+        "pile": "right",
+        "verdict": "An offence under the Salmon Act 1986, aimed at poached fish."
+      }
+    ]
+  },
   "source": "Blackstone, Commentaries, Book 1",
   "source_kind": "reference_work",
   "reference": "Blackstone, Commentaries on the Laws of England, Book 1, ed. Lemmings, Oxford University Press, 2016",

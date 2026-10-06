@@ -6,27 +6,59 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Is there a human fingerprint on the ice cores before industry?",
-  "answer": "There is a dip. Atmospheric CO2 fell in the early 1600s, and the timing matches the collapse of the Americas' population after 1492. Tens of millions of hectares of farmland reverted to forest, and the regrowth pulled down enough carbon to show up in ice.",
-  "move": "A population collapse is visible in the ice, two centuries before the factories.",
-  "ask": "What am I blaming on something recent when the real cause began long before?",
+  "question": "At its greatest extent, which empire ruled the most land: the Mongol, Russian, Spanish, French or British?",
+  "answer": "The British, at about 35.5 million km² around 1920, nearly a quarter of the world's land. It was built by sea: ships let one island hold coasts on every continent, and territories taken after the First World War pushed it to its peak. The Mongols' larger unbroken block came second.",
+  "move": "Whoever holds the routes can end up holding more than whoever holds the ground.",
+  "ask": "What do I assume is the biggest only because its story is the most dramatic?",
   "keywords": [
-    "ice cores",
-    "carbon dioxide",
-    "columbian exchange",
-    "depopulation"
+    "british empire",
+    "mongol empire",
+    "russian empire",
+    "territory",
+    "1920"
   ],
-  "era": "early_modern",
-  "region": "americas",
-  "hook": "number",
-  "mood": "dark",
-  "numeracy": 1,
-  "abstraction": "mixed",
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
-  "source": "Koch et al., Quaternary Science Reviews, 2019",
+  "figure": "bars",
+  "source": "Taagepera, International Studies Quarterly, 1997",
   "source_kind": "paper",
-  "reference": "Koch, Brierley, Maslin & Lewis, Earth system impacts of the European arrival and Great Dying in the Americas after 1492, Quaternary Science Reviews, 2019"
+  "reference": "Taagepera, Expansion and contraction patterns of large polities: context for Russia, International Studies Quarterly 41(3), 1997",
+  "scene": {
+    "type": "rank",
+    "quantity": "Peak area, million km²",
+    "most": "Largest",
+    "items": [
+      {
+        "label": "Mongol",
+        "value": 24.0,
+        "note": "The largest single unbroken block of land ever ruled, won on horseback."
+      },
+      {
+        "label": "Spanish",
+        "value": 13.7
+      },
+      {
+        "label": "British",
+        "value": 35.5,
+        "note": "About a quarter of the world's land in 1920, held together by ships."
+      },
+      {
+        "label": "French",
+        "value": 11.5
+      },
+      {
+        "label": "Russian",
+        "value": 22.8,
+        "note": "Nearly the Mongols' size, all of it joined by land."
+      }
+    ]
+  },
+  "written": "2026-10-06"
 }

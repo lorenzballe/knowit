@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Where does the claim that looking down at a phone puts 27 kg on the neck come from?",
-  "answer": "From a 2014 computer model, not a measurement of harm. It calculated the force on the neck when the head tilts 60 degrees forward, and neck muscles and discs routinely handle such loads. When researchers in Brazil examined 150 young adults, they found no link between their texting posture and neck pain.",
+  "question": "Looking down at a phone is said to put 27 kg on the neck. Which of these claims about bones and posture hold up?",
+  "answer": "The 27 kg came from a 2014 computer model of a head tipped 60 degrees forward, not from measuring harm. Neck muscles and discs handle such loads every day, as leg bones handle running. When researchers in Brazil examined 150 young adults, their texting posture showed no link to neck pain.",
   "move": "A big force on paper is not the same as damage in a body.",
   "ask": "Which scary number have I repeated without checking whether it ever hurt anyone?",
   "keywords": [
@@ -26,8 +26,46 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Damasceno et al., European Spine Journal, 2018",
+  "scene": {
+    "type": "sort",
+    "left": "Myth",
+    "right": "True",
+    "tag": "Sit up straight",
+    "items": [
+      {
+        "text": "Text neck",
+        "note": "Looking down at a phone damages the neck.",
+        "pile": "left",
+        "verdict": "Among 150 young adults, texting posture was not linked to neck pain."
+      },
+      {
+        "text": "Cracking knuckles",
+        "note": "It causes arthritis in the hands.",
+        "pile": "left",
+        "verdict": "Among 215 people, crackers had no more hand arthritis than others."
+      },
+      {
+        "text": "Morning height",
+        "note": "You are taller when you wake up.",
+        "pile": "right",
+        "verdict": "Discs flatten over the day; you lose about 1% of your height by evening."
+      },
+      {
+        "text": "Heavy school bags",
+        "note": "They cause scoliosis.",
+        "pile": "left",
+        "verdict": "Bags can make backs ache, but they are not a cause of scoliosis."
+      },
+      {
+        "text": "A new skeleton",
+        "note": "Your bones rebuild themselves completely.",
+        "pile": "right",
+        "verdict": "Bone is constantly remodelled; the adult skeleton turns over in about ten years."
+      }
+    ]
+  },
+  "source": "Damasceno et al., 2018; deWeber et al., 2011",
   "source_kind": "paper",
-  "reference": "Damasceno GM, Ferreira AS, Nogueira LAC et al., Text neck and neck pain in 18-21-year-old young adults, European Spine Journal, 2018",
+  "reference": "Damasceno et al., European Spine Journal, 2018; deWeber, Olszewski & Ortolano, J Am Board Fam Med 24:169, 2011; US Surgeon General, Bone Health and Osteoporosis, 2004",
   "written": "2026-09-26"
 }

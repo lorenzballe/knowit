@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do surgeons still sometimes put live leeches on a reattached finger or ear?",
-  "answer": "To drain blood the tiny veins cannot yet carry away. Surgeons can reconnect a small artery more easily than its veins, so blood flows in but pools, and the tissue swells and dies. A leech draws it off, and its saliva keeps the wound oozing for hours. The ancient cure survived in one narrow job.",
+  "question": "Surgeons still put live leeches on reattached fingers. Which of these old remedies are still used, and which were dropped?",
+  "answer": "Old remedies come back when a narrow job fits them. A leech solves one problem: a reattached finger whose artery works but whose veins cannot yet drain it, so blood pools and the tissue dies. Its saliva keeps the wound oozing for hours. Arsenic and maggots returned the same way, each for one condition.",
   "move": "A discredited tool may still be the best one for a narrow job.",
   "ask": "Which tool or habit did I throw out entirely that might still be perfect for one small job?",
   "keywords": [
@@ -26,6 +26,62 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Dropped",
+    "right": "Still used",
+    "tag": "The old pharmacy",
+    "items": [
+      {
+        "text": "Leeches",
+        "note": "Live leeches on the skin.",
+        "pile": "right",
+        "verdict": "Cleared by the US FDA in 2004, to drain blood from reattached parts."
+      },
+      {
+        "text": "Maggots",
+        "note": "Fly larvae placed in a wound.",
+        "pile": "right",
+        "verdict": "Cleared in 2004 too. They eat dead tissue and leave live tissue alone."
+      },
+      {
+        "text": "Arsenic",
+        "note": "The poison, as a medicine.",
+        "pile": "right",
+        "verdict": "Arsenic trioxide treats a rare leukaemia. US approval came in 2000."
+      },
+      {
+        "text": "Mercury",
+        "note": "Rubbed on or swallowed for syphilis.",
+        "pile": "left",
+        "verdict": "Penicillin replaced it in the 1940s. Mercury poisoned the patients."
+      },
+      {
+        "text": "Bloodletting",
+        "note": "Opening a vein to drain blood.",
+        "pile": "right",
+        "verdict": "Still the main treatment when the body stores too much iron."
+      },
+      {
+        "text": "Smoke enema",
+        "note": "Tobacco smoke blown into a drowned person.",
+        "pile": "left",
+        "verdict": "Thames rescue kits carried the bellows in the 1780s. Rescue breaths won."
+      },
+      {
+        "text": "Radium water",
+        "note": "A radioactive tonic sold as a pick-me-up.",
+        "pile": "left",
+        "verdict": "A US tycoon who drank about 1,400 bottles died of it in 1932."
+      },
+      {
+        "text": "Honey",
+        "note": "Smeared on wounds.",
+        "pile": "right",
+        "verdict": "Medical-grade honey dressings were cleared in the US in 2007."
+      }
+    ]
+  },
   "source": "Whitaker et al., Br J Oral Surg, 2004",
   "source_kind": "paper",
   "reference": "Whitaker et al., Hirudo medicinalis: ancient origins of, and trends in the use of medicinal leeches throughout history, British Journal of Oral and Maxillofacial Surgery, 2004",

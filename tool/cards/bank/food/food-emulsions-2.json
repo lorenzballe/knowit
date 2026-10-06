@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How does homogenisation stop cream from rising to the top of a bottle of milk?",
-  "answer": "By shrinking the fat droplets. Forcing milk through a narrow gap at high pressure breaks globules of about 4 micrometres into ones under 1. Rising speed goes with the square of the radius, so a quarter of the size rises sixteen times slower: too slow to reach the top before the milk is drunk.",
+  "question": "Homogenising milk shrinks its fat droplets from about 4 micrometres across to under 1. How much slower do they float up to make cream?",
+  "answer": "Sixteen times slower. By Stokes's law, a droplet's rising speed grows with the square of its radius, so a quarter of the size rises at a sixteenth of the speed. Forcing milk through a narrow gap makes the globules that small: too slow to reach the top before the milk is drunk.",
   "move": "When speed scales with a square, a modest shrink is a huge slowdown.",
   "ask": "What am I attacking with brute force when making it smaller would work better?",
   "keywords": [
@@ -27,7 +27,44 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Walstra et al., Dairy Science and Technology, 2006",
+  "scene": {
+    "type": "draw",
+    "label": "Rising speed, % of a 4 µm drop",
+    "unit": "%",
+    "columns": [
+      "4 µm",
+      "3.5 µm",
+      "3 µm",
+      "2.5 µm",
+      "2 µm",
+      "1.5 µm",
+      "1 µm"
+    ],
+    "values": [
+      100,
+      76.6,
+      56.3,
+      39.1,
+      25,
+      14.1,
+      6.3
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 110,
+    "verdict": {
+      "under": "Close to the floor, and nearly right: at 1 µm a drop rises at 1/16 of the speed.",
+      "near": "Right: speed goes with the square of size, so a quarter the size is 1/16 the speed.",
+      "over": "Too fast. Halve the size and speed drops to a quarter; quarter it and to 1/16."
+    },
+    "notes": [
+      {
+        "at": 4,
+        "text": "Half the size: 25%"
+      }
+    ]
+  },
+  "source": "Stokes's law; Walstra et al., 2006",
   "source_kind": "book",
   "reference": "Walstra, Wouters & Geurts, Dairy Science and Technology, 2nd edition, CRC Press, 2006",
   "written": "2026-09-26"

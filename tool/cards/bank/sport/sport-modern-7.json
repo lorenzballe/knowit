@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did the Olympics stop awarding medals for painting, music and literature after 1948?",
-  "answer": "Because the artists were professionals. Art contests ran from 1912 to 1948, but Olympic rules then barred anyone who earned a living from their event, and painters, composers and writers lived by selling their work. The IOC swapped the contests for exhibitions without medals. The art medals no longer appear in national medal totals.",
+  "question": "Painters once won Olympic medals. Which of these have been Olympic medal events, and which never have?",
+  "answer": "The art medals ended because the artists were professionals. Olympic rules then barred anyone who earned a living from their event, and painters, composers and writers lived by selling their work. After 1948 the IOC swapped the contests for exhibitions without medals, and the art medals no longer appear in national medal totals.",
   "move": "A rule written for one kind of competitor can shut out another by accident.",
   "ask": "Which rule I live by shuts out someone it was never meant to?",
   "keywords": [
@@ -26,6 +26,62 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Never",
+    "right": "Olympic",
+    "tag": "On the programme?",
+    "items": [
+      {
+        "text": "Painting",
+        "note": "Medals for pictures of sport.",
+        "pile": "right",
+        "verdict": "Art contests gave medals from 1912 to 1948."
+      },
+      {
+        "text": "Tug of war",
+        "note": "Two teams, one rope.",
+        "pile": "right",
+        "verdict": "On the programme from 1900 to 1920."
+      },
+      {
+        "text": "Chess",
+        "note": "The board game.",
+        "pile": "left",
+        "verdict": "Recognised by the IOC since 1999, never on the programme."
+      },
+      {
+        "text": "Motorboat racing",
+        "note": "Powered boats round a course.",
+        "pile": "right",
+        "verdict": "Three races at London 1908, and never again."
+      },
+      {
+        "text": "Darts",
+        "note": "Three arrows at a board.",
+        "pile": "left",
+        "verdict": "Never on any Olympic programme."
+      },
+      {
+        "text": "Solo synchro",
+        "note": "One swimmer, synchronised with music.",
+        "pile": "right",
+        "verdict": "Medals from 1984 to 1992, then dropped."
+      },
+      {
+        "text": "Ten-pin bowling",
+        "note": "Strikes and spares.",
+        "pile": "left",
+        "verdict": "Only a demonstration, at Seoul in 1988. Those medals did not count."
+      },
+      {
+        "text": "Cricket",
+        "note": "Bat and ball, eleven a side.",
+        "pile": "right",
+        "verdict": "One match, Paris 1900: Britain beat France. It returns in 2028."
+      }
+    ]
+  },
   "source": "Stanton, The Forgotten Olympic Art Competitions",
   "source_kind": "book",
   "reference": "Stanton, The Forgotten Olympic Art Competitions, Trafford, 2000",

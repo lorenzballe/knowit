@@ -11,10 +11,10 @@
     "Yes, some can",
     "No, it is noise"
   ],
-  "answer": "Death records keep showing dips before meaningful dates and bumps after them. Phillips and King found fewer Jewish deaths in the week before Passover and more in the week after. Hospice staff describe patients waiting for a wedding or a grandchild. A goal plausibly works through appetite, effort and choices about treatment.",
+  "answer": "Some records show it. In about 1,900 Jewish deaths in California, Phillips and King found fewer in the week before Passover and more in the week after. Hospice staff describe patients who seem to wait for a wedding or a grandchild. A goal could plausibly act through appetite, effort and choices about treatment.",
   "move": "Whichever side you took, it turns on counting every date, not the chosen ones.",
   "ask": "What do I believe because I remember the times it happened and forget the times it didn't?",
-  "counterpoint": "Ohio's death certificates for 1989 to 2000, nearly 310,000 cancer deaths, showed no fewer deaths in the week before Christmas, Thanksgiving or a birthday than in the week after. The early studies were small and examined many occasions, so some dips were bound to appear. A patient who waits is remembered; one who dies the night before is not.",
+  "counterpoint": "The largest test found nothing. Ohio's 309,221 cancer deaths from 1989 to 2000 showed no fewer in the week before Christmas, Thanksgiving or a birthday than after; the few small gaps ran the other way. A few thousand deaths can draw a dip by chance. A patient who waits is remembered; one who dies the night before is not.",
   "keywords": [
     "death dates",
     "holidays",
@@ -26,14 +26,14 @@
   "region": "americas",
   "hook": "paradox",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Young and Hade, JAMA, 2004",
-  "source_kind": "statistics",
-  "reference": "Young and Hade, Holidays, birthdays, and postponement of cancer death, JAMA, 2004",
+  "source": "Phillips & King 1988; Young & Hade 2004",
+  "source_kind": "paper",
+  "reference": "Phillips & King, Death takes a holiday: mortality surrounding major social occasions, The Lancet, 1988; Young & Hade, Holidays, birthdays, and postponement of cancer death, JAMA 292(24):3012-3016, 2004",
   "written": "2026-09-26"
 }

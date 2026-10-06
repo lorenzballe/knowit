@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did the Otis company lose escalator, a word it had owned as a trademark?",
-  "answer": "Partly by its own hand. When the US Patent Office cancelled the registration in 1950, the evidence included Otis's own advertising and patents, using escalator for any moving staircase. A trademark has to point to one maker; Otis had used it to name the machine. Rivals could now sell escalators as escalators.",
+  "question": "Otis lost its trademark on escalator in 1950. Which of these brand names are still owned, and which went generic?",
+  "answer": "A name survives only while it points to one maker. Once buyers, rivals and even the owner use it for the thing itself, a court can rule it generic. Owners fight with nouns after the name: Kleenex tissues, Velcro fasteners. Otis lost partly because its own patents called every moving staircase an escalator.",
   "move": "The way an owner talks about a name teaches everyone else how to use it.",
   "ask": "What do my own casual words teach others to expect from me, my work or my name?",
   "keywords": [
@@ -26,6 +26,56 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Generic",
+    "right": "Trademark",
+    "tag": "Brand or word?",
+    "items": [
+      {
+        "text": "Escalator",
+        "note": "A moving staircase, named by its inventor in 1900.",
+        "pile": "left",
+        "verdict": "Cancelled in 1950. Otis's own adverts used it for any moving stair."
+      },
+      {
+        "text": "Kleenex",
+        "note": "A paper tissue.",
+        "pile": "right",
+        "verdict": "Still Kimberly-Clark's registered trademark, a century after launch."
+      },
+      {
+        "text": "Yo-yo",
+        "note": "A spool that climbs its own string.",
+        "pile": "left",
+        "verdict": "A US court ruled it common speech in 1965. Duncan went bankrupt."
+      },
+      {
+        "text": "Jacuzzi",
+        "note": "A whirlpool bath.",
+        "pile": "right",
+        "verdict": "Still the Jacuzzi company's. Everyone else sells hot tubs."
+      },
+      {
+        "text": "Aspirin",
+        "note": "A painkiller, named by Bayer in 1899.",
+        "pile": "left",
+        "verdict": "Generic in the US since 1921, yet still Bayer's mark in Germany and Canada."
+      },
+      {
+        "text": "Velcro",
+        "note": "A hook-and-loop fastener.",
+        "pile": "right",
+        "verdict": "Still owned. In 2017 the firm made a song begging people not to say velcro."
+      },
+      {
+        "text": "Frisbee",
+        "note": "A flying disc.",
+        "pile": "right",
+        "verdict": "Still Wham-O's. Ultimate players throw discs for that reason."
+      }
+    ]
+  },
   "source": "Haughton Elevator Co. v. Seeberger, 1950",
   "source_kind": "primary_document",
   "reference": "Haughton Elevator Co. v. Seeberger, 85 USPQ 80 (Commissioner of Patents, 1950)",

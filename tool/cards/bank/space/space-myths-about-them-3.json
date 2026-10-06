@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did physicists show that tiny black holes made in a particle collider could not swallow Earth, before switching it on?",
-  "answer": "By pointing to experiments nature had already run. Cosmic rays hit the Earth, and far denser stars, at higher energies than any collider, and have done so for billions of years. If such collisions made black holes that grow, white dwarfs and neutron stars would have been eaten. They are still there.",
+  "question": "Some feared a particle collider would make a black hole that swallowed Earth. Which of these black hole claims are true?",
+  "answer": "The collider fear failed a test nature had already run. Cosmic rays strike the Earth, and far denser white dwarfs and neutron stars, harder than any collider, and have done for billions of years. If such hits made black holes that grow, those stars would be gone. They are still there.",
   "move": "Before fearing something new, check whether nature has already run the test.",
   "ask": "Which new step am I afraid of that other people have quietly taken many times already?",
   "keywords": [
@@ -27,6 +27,50 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Myth",
+    "right": "True",
+    "tag": "Black holes",
+    "items": [
+      {
+        "text": "Collider black holes",
+        "note": "A collider could make one that eats Earth.",
+        "pile": "left",
+        "verdict": "Cosmic rays hit dense stars harder, for aeons. The stars are still there."
+      },
+      {
+        "text": "Cosmic vacuums",
+        "note": "They suck in everything around them.",
+        "pile": "left",
+        "verdict": "From far off, a black hole pulls like any star of the same mass."
+      },
+      {
+        "text": "A black Sun",
+        "note": "If the Sun became one, Earth's orbit would not change.",
+        "pile": "right",
+        "verdict": "Same mass, same pull at our distance. It would just be dark and cold."
+      },
+      {
+        "text": "The Sun's fate",
+        "note": "The Sun will end as a black hole.",
+        "pile": "left",
+        "verdict": "It is far too light. It will end as a white dwarf."
+      },
+      {
+        "text": "Crossing the edge",
+        "note": "You could fall into a giant one and feel nothing at first.",
+        "pile": "right",
+        "verdict": "At a huge black hole's edge the stretching is gentle. It comes later."
+      },
+      {
+        "text": "A photograph",
+        "note": "We have a picture of one.",
+        "pile": "right",
+        "verdict": "In 2019 a telescope network imaged M87's: a ring of light round a shadow."
+      }
+    ]
+  },
   "source": "Giddings & Mangano, Physical Review D, 2008",
   "source_kind": "paper",
   "reference": "doi:10.1103/PhysRevD.78.035009",

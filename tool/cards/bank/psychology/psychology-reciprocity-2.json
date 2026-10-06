@@ -6,9 +6,9 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What made a waiter's after-dinner mint raise tips most: the sweet itself, the number, or how it was given?",
-  "answer": "How it was given. One mint with the bill lifted tips by about 3%, two mints by about 14%. One mint, a pause, then a second offered as if specially for that table, raised them about 23%. A gift that seems personal triggers the strongest urge to repay, and the extra sweet cost pennies.",
-  "move": "A gift that feels personal pulls harder than a bigger one.",
+  "question": "A waiter leaves mints with the bill: one, two, or one and then, coming back, a second. Which lifts tips most?",
+  "answer": "The mint that came back. In Strohmetz and colleagues' restaurant study, two mints at once beat one, but the same two split by a pause did best: the second looked chosen for that table, not routine. Diners repay a favour as it feels, not as it costs, and the extra sweet cost pennies.",
+  "move": "A favour that feels chosen for you pulls harder than a bigger routine one.",
   "ask": "When a seller treats me as special, can I pause and ask what the gesture is for?",
   "keywords": [
     "reciprocity",
@@ -25,9 +25,32 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
-  "source": "Strohmetz et al., J Applied Social Psychology, 2002",
+  "figure": "bars",
+  "source": "Strohmetz et al., Applied Social Psychology, 2002",
   "source_kind": "paper",
-  "reference": "Strohmetz, Rind, Fisher & Lynn, Sweetening the till: The use of candy to increase restaurant tipping, Journal of Applied Social Psychology, 2002",
-  "written": "2026-10-03"
+  "reference": "Strohmetz, Rind, Fisher & Lynn, Sweetening the till: the use of candy to increase restaurant tipping, Journal of Applied Social Psychology 32(2): 300-309, 2002",
+  "written": "2026-10-06",
+  "scene": {
+    "type": "rank",
+    "quantity": "Rise in tips",
+    "most": "Biggest",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Two mints",
+        "value": 14.1,
+        "note": "Twice the sweets, more than four times the effect of one."
+      },
+      {
+        "label": "One, then one more",
+        "value": 23,
+        "note": "The same two mints. The pause made the second feel meant for this table."
+      },
+      {
+        "label": "One mint",
+        "value": 3.3,
+        "note": "One sweet on the plate with the bill barely registered."
+      }
+    ]
+  }
 }

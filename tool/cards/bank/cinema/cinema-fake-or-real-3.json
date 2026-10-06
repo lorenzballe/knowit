@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Did the first audiences of the Lumière train film really flee their seats in panic?",
-  "answer": "There is no evidence they did. Martin Loiperdinger searched the newspapers and police reports of 1896 and found no account of panic at L'Arrivée d'un train. The tale grew later, partly from jokes about gullible country folk. Cinema's favourite origin story is about how easily fooled other people were.",
+  "question": "An 1896 audience fleeing a filmed train is cinema's favourite legend. Which of these film stories are true?",
+  "answer": "No 1896 source records a panic. Martin Loiperdinger searched the newspapers and police reports of the year and found none; the tale grew later, partly out of jokes about gullible country folk. Film legends spread when they flatter the teller, and this one is about how easily other audiences were fooled.",
   "move": "Stories about how gullible others were are often the gullible part.",
   "ask": "Which story about how foolish people used to be do I repeat without ever checking it?",
   "keywords": [
@@ -26,6 +26,50 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Myth",
+    "right": "True",
+    "tag": "Behind the screen",
+    "items": [
+      {
+        "text": "The train panic",
+        "note": "Lumière's first audience fled the oncoming train.",
+        "pile": "left",
+        "verdict": "No newspaper or police report of 1896 mentions any panic."
+      },
+      {
+        "text": "Psycho's blood",
+        "note": "The shower scene's blood was chocolate syrup.",
+        "pile": "right",
+        "verdict": "In black and white, chocolate syrup looked more like blood than stage blood."
+      },
+      {
+        "text": "Oz's hanging man",
+        "note": "A suicide is visible in The Wizard of Oz.",
+        "pile": "left",
+        "verdict": "The shape in the trees is a large bird, one of several loaned to the set."
+      },
+      {
+        "text": "Jaws' shark",
+        "note": "The mechanical shark broke so often it was barely shown.",
+        "pile": "right",
+        "verdict": "Spielberg filmed around the broken shark and let suspense do the work."
+      },
+      {
+        "text": "The Wilhelm scream",
+        "note": "One stock scream recurs in hundreds of films.",
+        "pile": "right",
+        "verdict": "Recorded in 1951, it has been reused in hundreds of films since."
+      },
+      {
+        "text": "The first cartoon film",
+        "note": "Snow White was the first animated feature.",
+        "pile": "left",
+        "verdict": "Argentina's El Apóstol ran 70 minutes in 1917, twenty years earlier."
+      }
+    ]
+  },
   "source": "Loiperdinger, The Moving Image, 2004",
   "source_kind": "paper",
   "reference": "Martin Loiperdinger, Lumière's Arrival of the Train: Cinema's Founding Myth, The Moving Image, 4(1), 2004",

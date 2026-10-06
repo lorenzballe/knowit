@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Where does the popular claim that the brain finishes maturing at 25 really come from?",
-  "answer": "Mostly from where the studies stopped. The big scanning projects of the 1990s and 2000s followed children into their early twenties, and their curves were still changing at the final scan. Later studies found the brain's wiring still changing into the thirties. Twenty-five marks the end of the data, not of the brain.",
+  "question": "The brain finishes maturing at 25, people say. Which of these brain claims are myths, and which are true?",
+  "answer": "Brain myths last because each grew from something real. One hemisphere does lead on language; some areas are busier at times; and maturation curves did run to the mid-twenties, because that is where the big 1990s scanning studies stopped following people. Later scans found the brain's wiring still changing into the thirties.",
   "move": "Before trusting a cut-off, ask where the measurements ran out.",
   "ask": "Which limit do I believe about myself that may just mark where someone stopped looking?",
   "keywords": [
@@ -29,8 +29,52 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Somerville, Neuron, 2016",
+  "scene": {
+    "type": "sort",
+    "left": "Myth",
+    "right": "True",
+    "tag": "Heard about the brain",
+    "items": [
+      {
+        "text": "Done at 25",
+        "note": "The brain finishes maturing at 25.",
+        "pile": "left",
+        "verdict": "The studies stopped near 25. Its wiring keeps changing into the thirties."
+      },
+      {
+        "text": "Ten per cent",
+        "note": "We use only a tenth of our brain.",
+        "pile": "left",
+        "verdict": "Scans show activity all over, and damage almost anywhere costs something."
+      },
+      {
+        "text": "Energy hog",
+        "note": "It burns a fifth of the body's energy.",
+        "pile": "right",
+        "verdict": "About 2% of body weight, about 20% of the energy used at rest."
+      },
+      {
+        "text": "Left or right",
+        "note": "People are left-brained or right-brained.",
+        "pile": "left",
+        "verdict": "Scans of 1,011 people found nobody with a stronger whole side."
+      },
+      {
+        "text": "Learning styles",
+        "note": "Teaching to a visual or auditory style helps.",
+        "pile": "left",
+        "verdict": "Tests matching teaching to style found no gain (Pashler et al., 2008)."
+      },
+      {
+        "text": "No pain inside",
+        "note": "Brain tissue itself cannot feel pain.",
+        "pile": "right",
+        "verdict": "It has no pain sensors, so surgeons can operate on awake patients."
+      }
+    ]
+  },
+  "source": "Somerville, 2016; Nielsen et al., 2013; Raichle, 2002",
   "source_kind": "paper",
-  "reference": "Somerville LH, Searching for signatures of brain maturity: what are we searching for?, Neuron, 2016",
+  "reference": "Somerville, Neuron 92:1164, 2016; Nielsen et al., PLOS ONE, 2013, doi:10.1371/journal.pone.0071275; Raichle & Gusnard, PNAS 99:10237, 2002",
   "written": "2026-09-26"
 }

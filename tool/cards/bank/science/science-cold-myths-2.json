@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "In a cold room, why does a metal spoon feel colder than a wooden one at exactly the same temperature?",
-  "answer": "Because skin senses heat leaving it, not temperature. Metal conducts heat hundreds of times faster than wood, so it drains warmth from a fingertip and the skin cools; wood lets a thin warm layer build up at the contact. Both sit at room temperature. The hand is a heat-flow meter that reports like a thermometer.",
+  "question": "In a cold room a metal spoon feels colder than a wooden one. Which of these beliefs about cold are true?",
+  "answer": "Skin measures heat flow, not temperature, and that misleads both ways. Metal drains warmth from a fingertip hundreds of times faster than wood, so at the same temperature it feels colder. A drink does the reverse: it sends warm blood to the skin, so the nerves report warmth while the body's core is losing it.",
   "move": "Ask what an instrument really measures before trusting what it reports.",
   "ask": "What do I judge by how it feels, when the feeling measures something else?",
   "keywords": [
@@ -27,8 +27,46 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Incropera, Fundamentals of Heat and Mass Transfer",
+  "scene": {
+    "type": "sort",
+    "left": "Myth",
+    "right": "True",
+    "tag": "Wrap up warm",
+    "items": [
+      {
+        "text": "The metal spoon",
+        "note": "Metal in a cold room is colder than wood.",
+        "pile": "left",
+        "verdict": "Both sit at room temperature. Metal just pulls heat from skin faster."
+      },
+      {
+        "text": "Hats",
+        "note": "Most body heat escapes through the head.",
+        "pile": "left",
+        "verdict": "About 10%. The old army test left only the heads uncovered."
+      },
+      {
+        "text": "A stiff drink",
+        "note": "Alcohol warms you up in the cold.",
+        "pile": "left",
+        "verdict": "It opens skin vessels: you feel warm while your core cools faster."
+      },
+      {
+        "text": "Snow walls",
+        "note": "Snow keeps a shelter warm.",
+        "pile": "right",
+        "verdict": "Fresh snow is mostly trapped air. Igloos can be tens of degrees warmer inside."
+      },
+      {
+        "text": "Wet clothes",
+        "note": "Damp clothes chill you faster than dry.",
+        "pile": "right",
+        "verdict": "Water carries heat away about 20 times better than air."
+      }
+    ]
+  },
+  "source": "Incropera, Heat Transfer; Vreeman & Carroll, BMJ, 2008",
   "source_kind": "book",
-  "reference": "Incropera, DeWitt, Bergman & Lavine, Fundamentals of Heat and Mass Transfer, 6th ed., Wiley, 2007",
+  "reference": "Incropera, DeWitt, Bergman & Lavine, Fundamentals of Heat and Mass Transfer, 6th ed., Wiley, 2007; Vreeman & Carroll, Festive medical myths, BMJ 337:a2769, 2008",
   "written": "2026-09-26"
 }

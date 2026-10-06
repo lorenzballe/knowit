@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Past how many daily steps did extra walking stop lowering the risk of death, in pooled data from 15 studies?",
-  "answer": "About 6,000 to 8,000 for people over 60, and 8,000 to 10,000 for younger adults. Paluch's meta-analysis of 15 cohorts found risk fell steeply from the lowest counts, then flattened. The biggest gain belongs to the least active. The first extra thousand steps off the sofa is worth more than the twelfth.",
+  "question": "In pooled data from 15 studies, the least active adults walked about 3,500 steps a day. How did the risk of death fall with more?",
+  "answer": "Steeply, then barely. In Amanda Paluch's meta-analysis of 47,471 adults, the group averaging 5,800 steps a day had 40% lower risk than the 3,550 group; doubling to 10,900 cut it only 13 points more. Gains levelled off around 6,000 to 8,000 steps past 60. The first thousand off the sofa counts most.",
   "move": "Gains are biggest where the starting point is lowest.",
   "ask": "Where would a small first step help me far more than polishing what I already do well?",
   "keywords": [
@@ -26,8 +26,39 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "draw",
+    "label": "Risk of death, by daily steps",
+    "unit": "%",
+    "columns": [
+      "3,553",
+      "5,801",
+      "7,842",
+      "10,901"
+    ],
+    "values": [
+      100,
+      60,
+      55,
+      47
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 120,
+    "verdict": {
+      "under": "Steeper than the truth: past about 6,000 steps the gains shrink to a few points.",
+      "near": "Right: the first extra 2,000 steps do most of the work; then the curve flattens.",
+      "over": "Higher than the truth: the biggest drop, 40%, comes from the first 2,000 extra steps."
+    },
+    "notes": [
+      {
+        "at": 1,
+        "text": "+2,250 steps: risk -40%"
+      }
+    ]
+  },
   "source": "Paluch et al., Lancet Public Health, 2022",
   "source_kind": "paper",
-  "reference": "https://www.thelancet.com/journals/lanpub/article/PIIS2468-2667(21)00302-9/fulltext",
+  "reference": "Paluch et al., Daily steps and all-cause mortality: a meta-analysis of 15 international cohorts, Lancet Public Health 7(3):e219-e228, 2022",
   "written": "2026-09-26"
 }
