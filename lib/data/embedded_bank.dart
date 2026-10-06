@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 1,
- "version": 202610041434,
- "built": "2026-10-04T14:34:06Z",
+ "version": 202610061430,
+ "built": "2026-10-06T14:30:30Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -187158,7 +187158,8 @@ const String kEmbeddedBank = r'''
    "figure": "dots",
    "source": "Multiple comparisons problem",
    "source_kind": "paper",
-   "reference": "Ioannidis, Why Most Published Research Findings Are False, PLOS Medicine, 2005"
+   "reference": "Ioannidis, Why Most Published Research Findings Are False, PLOS Medicine, 2005",
+   "disabled": true
   },
   {
    "id": "thinking-f5",
@@ -197767,7 +197768,7 @@ const String kEmbeddedBank = r'''
   "78": "thinking-z20",
   "79": "thinking-h1",
   "80": "thinking-h6",
-  "81": "thinking-f4",
+  "81": "thinking-12",
   "82": "thinking-h15",
   "83": "thinking-f1",
   "84": "thinking-h18",
@@ -197864,7 +197865,7 @@ const String kEmbeddedBank = r'''
   "175": "thinking-z8",
   "176": "thinking-f1",
   "177": "thinking-b2",
-  "178": "thinking-f4",
+  "178": "thinking-h15",
   "179": "thinking-x1",
   "180": "thinking-f2",
   "181": "thinking-h21",
@@ -197949,7 +197950,7 @@ const String kEmbeddedBank = r'''
   "260": "thinking-h4",
   "261": "thinking-z6",
   "262": "thinking-e2",
-  "263": "thinking-f4",
+  "263": "thinking-h20",
   "264": "thinking-h19",
   "265": "thinking-z15",
   "266": "thinking-x1",
@@ -198076,7 +198077,7 @@ const String kEmbeddedBank = r'''
   "387": "thinking-z10",
   "388": "thinking-z24",
   "389": "thinking-n6",
-  "390": "thinking-f4",
+  "390": "thinking-11",
   "391": "thinking-f3",
   "392": "thinking-z23",
   "393": "thinking-f5",
@@ -198120,7 +198121,9 @@ const String kEmbeddedBank = r'''
   "431": "thinking-12",
   "432": "thinking-z34",
   "433": "thinking-1",
-  "434": "thinking-z31"
+  "434": "thinking-z31",
+  "435": "thinking-u1",
+  "436": "thinking-h18"
  },
  "commons": {
   "1": [
@@ -202462,6 +202465,26 @@ const String kEmbeddedBank = r'''
    "philosophy-what-is-real-1",
    "space-odds-of-life-1",
    "language-dialects-2"
+  ],
+  "435": [
+   "art-stolen-art-2",
+   "life-kindness-3",
+   "space-astrology-or-astronomy-3",
+   "medicine-herd-immunity-1",
+   "weird_facts-oldest-1",
+   "human_body-heart-rate-2",
+   "music-hearing-3",
+   "economics-bubbles-1"
+  ],
+  "436": [
+   "pop_culture-fan-theories-3",
+   "life-listening-1",
+   "philosophy-enough-1",
+   "medicine-getting-a-second-opinion-2",
+   "food-maillard-7",
+   "art-composition-3",
+   "music-music-therapy-1",
+   "nature-insect-decline-2"
   ]
  }
 }
