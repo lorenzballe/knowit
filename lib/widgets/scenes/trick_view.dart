@@ -829,7 +829,7 @@ class _TrickLayout {
         ...TrickScene.ticks(s.shown).map((v) => f.tick(v, s.shown)),
         ...TrickScene.ticks(s.fair).map((v) => f.tick(v, s.fair)),
       ];
-      final left = widest(ticks) + 8;
+      final left = widest(ticks) + 12;
       var right = 0.0;
       if (s.trick == TrickSceneKind.dual) {
         right =
@@ -862,7 +862,7 @@ class _TrickLayout {
       boxes[TrickSceneRegion.yaxis] = Rect.fromLTRB(
         chart.left - 6,
         plot.top - 12,
-        plot.left - 3,
+        plot.left - 1,
         plot.bottom - 1,
       );
       boxes[TrickSceneRegion.xaxis] = Rect.fromLTRB(
@@ -1162,7 +1162,7 @@ class _TrickChartPainter extends CustomPainter {
         canvas,
         f.tick(v, labelRange),
         tickStyle,
-        Offset(plot.left - 8, y),
+        Offset(plot.left - 12, y),
         ax: 1,
         ay: .5,
         alpha: alpha * up.abs(),

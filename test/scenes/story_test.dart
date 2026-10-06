@@ -357,9 +357,25 @@ void main() {
           await _tapScene(tester);
           await _play(tester);
         }
+        if (_shots) {
+          await expectLater(
+            find.byType(MaterialApp),
+            matchesGoldenFile(
+              '../../tool/shots/cards/story-band-${pill.id}-ask.png',
+            ),
+          );
+        }
         await tester.tap(find.text(s.options.last));
         await _play(tester);
         expect(tester.takeException(), isNull);
+        if (_shots) {
+          await expectLater(
+            find.byType(MaterialApp),
+            matchesGoldenFile(
+              '../../tool/shots/cards/story-band-${pill.id}-end.png',
+            ),
+          );
+        }
         expect(find.text(s.outcome.fact.toUpperCase()), findsOneWidget);
         // Nothing is set outside the band.
         final band = tester.getRect(find.byType(SceneView));

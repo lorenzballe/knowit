@@ -61,12 +61,13 @@ class _TranslateSceneViewState extends State<TranslateSceneView>
   /// The phrase being retyped, until its flip lands.
   int? _typing;
 
-  late final AnimationController _flip = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 1000),
-  )..addStatusListener((s) {
-      if (s == AnimationStatus.completed) _landed();
-    });
+  late final AnimationController _flip =
+      AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 1000),
+      )..addStatusListener((s) {
+        if (s == AnimationStatus.completed) _landed();
+      });
 
   // On arrival each marker brightens in turn, so the phrases are seen to be
   // things to touch. The first part of the clock is the wait; no Timer,
@@ -78,14 +79,15 @@ class _TranslateSceneViewState extends State<TranslateSceneView>
 
   // Once the last phrase lands its note stays a while before the stub moves
   // on to what to watch for: long enough to be read.
-  late final AnimationController _settle = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 2800),
-  )..addStatusListener((s) {
-      if (s == AnimationStatus.completed && mounted) {
-        setState(() => _active = null);
-      }
-    });
+  late final AnimationController _settle =
+      AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 2800),
+      )..addStatusListener((s) {
+        if (s == AnimationStatus.completed && mounted) {
+          setState(() => _active = null);
+        }
+      });
 
   bool _started = false;
   bool _calm = false;
@@ -433,7 +435,9 @@ class _TranslateSceneViewState extends State<TranslateSceneView>
             _body = body;
             // The previous layout is let go after this frame has painted.
             if (old != null) {
-              WidgetsBinding.instance.addPostFrameCallback((_) => old.dispose());
+              WidgetsBinding.instance.addPostFrameCallback(
+                (_) => old.dispose(),
+              );
             }
             return Stack(
               clipBehavior: Clip.none,
@@ -528,7 +532,9 @@ class _TranslateSceneViewState extends State<TranslateSceneView>
       } else if (p.isCatch) {
         band = 0.3 + 0.7 * _solidness(i, _typing, t);
       } else {
-        band = flipping ? 0.3 - 0.16 * ((t - 0.86) / 0.14).clamp(0.0, 1.0) : 0.14;
+        band = flipping
+            ? 0.3 - 0.16 * ((t - 0.86) / 0.14).clamp(0.0, 1.0)
+            : 0.14;
       }
       marks.add(
         _TranslateMark(
@@ -538,7 +544,9 @@ class _TranslateSceneViewState extends State<TranslateSceneView>
           dotted: !_plain[i] || (flipping && t < _sweepEnd),
           selected: _active == i,
           handles: _active == i
-              ? (flipping ? Curves.easeOutBack.transform(math.min(1, t * 4)) : 1)
+              ? (flipping
+                    ? Curves.easeOutBack.transform(math.min(1, t * 4))
+                    : 1)
               : 0,
           caret: caret,
         ),
@@ -658,14 +666,15 @@ class _TranslateSceneViewState extends State<TranslateSceneView>
             padding: const EdgeInsets.only(left: 14),
             child: Text(
               l.sceneTryAgain,
-              style: AppText.body(
-                size: big ? 14 : 13,
-                weight: FontWeight.w700,
-                color: ink,
-              ).copyWith(
-                decoration: TextDecoration.underline,
-                decorationColor: ink.withValues(alpha: 0.5),
-              ),
+              style:
+                  AppText.body(
+                    size: big ? 14 : 13,
+                    weight: FontWeight.w700,
+                    color: ink,
+                  ).copyWith(
+                    decoration: TextDecoration.underline,
+                    decorationColor: ink.withValues(alpha: 0.5),
+                  ),
             ),
           ),
         ),
@@ -940,8 +949,7 @@ class _TranslateBodyPainter extends CustomPainter {
   }
 
   @override
-  bool? hitTest(Offset position) =>
-      claimAll || body.hit(position) != null;
+  bool? hitTest(Offset position) => claimAll || body.hit(position) != null;
 
   @override
   bool shouldRepaint(_TranslateBodyPainter old) =>
@@ -1000,6 +1008,10 @@ class _TranslatePaperPainter extends CustomPainter {
     // The perforation: a notch on each edge and a row of short dashes.
     final y = sheet.bottom - stub;
     const notch = 8.0;
+    // Bitten out of the sheet only: the notch must not cover the shadow
+    // that falls on the card beside it.
+    canvas.save();
+    canvas.clipRect(sheet);
     for (final x in [sheet.left, sheet.right]) {
       final c = Offset(x, y);
       _fill.color = ground;
@@ -1012,6 +1024,7 @@ class _TranslatePaperPainter extends CustomPainter {
         _stroke,
       );
     }
+    canvas.restore();
     _stroke
       ..color = ink.withValues(alpha: 0.45)
       ..strokeWidth = 1.5;

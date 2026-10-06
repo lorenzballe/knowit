@@ -131,7 +131,9 @@ class TranslateScene extends Scene {
     var at = 0;
     for (var i = 0; i < phrases.length; i++) {
       final p = phrases[i];
-      if (p.start > at) out.add((text: body.substring(at, p.start), phrase: -1));
+      if (p.start > at) {
+        out.add((text: body.substring(at, p.start), phrase: -1));
+      }
       out.add((text: p.text, phrase: i));
       at = p.end;
     }

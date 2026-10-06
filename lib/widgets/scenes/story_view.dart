@@ -187,7 +187,14 @@ class _StorySceneViewState extends State<StorySceneView>
     }
     return _plans.putIfAbsent(
       stop,
-      () => _Plan.lay(_s, stop, size, widget.ink, _scaler),
+      () => _Plan.lay(
+        _s,
+        stop,
+        size,
+        widget.ink,
+        _scaler,
+        context.l10n.sceneNOfM(_s.stops, _s.stops).toUpperCase(),
+      ),
     );
   }
 
@@ -222,14 +229,18 @@ class _StorySceneViewState extends State<StorySceneView>
     // The share of each part of the change, on its own clock.
     double part(double a, double b, [Curve c = Curves.easeOutCubic]) =>
         c.transform(((t - a) / (b - a)).clamp(0.0, 1.0));
-    final late = landing && from != null;
+    final toOutcome = landing && from != null;
     final morph = part(
-      late ? 0.14 : 0,
-      late ? 0.62 : 0.7,
+      toOutcome ? 0.14 : 0,
+      toOutcome ? 0.62 : 0.7,
       Curves.easeInOutCubic,
     );
-    final leave = part(late ? 0.1 : 0, late ? 0.38 : 0.3, Curves.easeInCubic);
-    final arrive = late ? 0.32 : 0.16;
+    final leave = part(
+      toOutcome ? 0.1 : 0,
+      toOutcome ? 0.38 : 0.3,
+      Curves.easeInCubic,
+    );
+    final arrive = toOutcome ? 0.32 : 0.16;
 
     final l10n = context.l10n;
     final children = <Widget>[
@@ -298,15 +309,7 @@ class _StorySceneViewState extends State<StorySceneView>
     }
 
     // The stop arriving, part by part.
-    final incoming = _texts(
-      to,
-      _at,
-      ink,
-      ground,
-      from == null ? t : t,
-      size,
-      arriveAt: arrive,
-    );
+    final incoming = _texts(to, _at, ink, ground, t, size, arriveAt: arrive);
     children.add(
       Positioned.fill(
         child: Semantics(
@@ -848,6 +851,7 @@ class _Plan {
     Size size,
     Color ink,
     TextScaler scaler,
+    String counterText,
   ) {
     final w = size.width;
     final h = size.height;
@@ -855,10 +859,7 @@ class _Plan {
     final stageTop = stripH + (short ? 12 : 22);
 
     final counter = TextPainter(
-      text: TextSpan(
-        text: '${s.stops} OF ${s.stops}',
-        style: counterStyle(ink),
-      ),
+      text: TextSpan(text: counterText, style: counterStyle(ink)),
       textDirection: TextDirection.ltr,
       textScaler: scaler,
     )..layout();
@@ -883,7 +884,7 @@ class _Plan {
       final room = bottom - top;
       final side = math.min(room, math.min(w * 0.58, 250.0));
       if (side < 64) return Rect.zero;
-      return Rect.fromLTWH(4, top + (room - side) * 0.7, side, side);
+      return Rect.fromLTWH(4, top + (room - side) * 0.85, side, side);
     }
 
     if (stop < s.askAt || stop == s.outcomeAt) {

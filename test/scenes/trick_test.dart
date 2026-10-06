@@ -394,6 +394,8 @@ void main() {
         expect(find.text('If Bush tax cuts expire'), findsOneWidget);
         expect(find.text('Tap your pick'), findsOneWidget);
         expect(find.text('Show me'), findsNothing);
+        final slug = name.replaceAll(' ', '-');
+        await _shoot(tester, 'play-$slug-0');
 
         // The bars: innocent, and they say why.
         await tester.tapAt(_part(tester, 'Now 35.0%, Jan 1, 2013 39.6%'));
@@ -426,6 +428,7 @@ void main() {
         expect(find.text('Show me'), findsNothing);
         // The axis now runs from zero, and says so.
         expect(find.bySemanticsLabel('0% – 40%'), findsOneWidget);
+        await _shoot(tester, 'play-$slug-1');
         handle.dispose();
       });
     }

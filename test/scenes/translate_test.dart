@@ -69,9 +69,8 @@ Widget _host(
     supportedLocales: AppLocalizations.supportedLocales,
     home: Builder(
       builder: (context) => MediaQuery(
-        data: MediaQuery.of(
-          context,
-        ).copyWith(disableAnimations: calm, accessibleNavigation: reader),
+        data: MediaQuery.of(context)
+            .copyWith(disableAnimations: calm, accessibleNavigation: reader),
         child: Scaffold(
           backgroundColor: Colors.black,
           body: Center(
@@ -109,7 +108,11 @@ void _setPhone(WidgetTester tester, Size phone) {
 Offset _on(WidgetTester tester, int i) =>
     tester.getCenter(find.byKey(ValueKey('translate-phrase-$i')).last);
 
-Future<void> _tapPhrase(WidgetTester tester, int i, {bool settle = true}) async {
+Future<void> _tapPhrase(
+  WidgetTester tester,
+  int i, {
+  bool settle = true,
+}) async {
   await tester.tapAt(_on(tester, i));
   if (settle) await tester.pumpAndSettle();
 }
@@ -176,12 +179,25 @@ void main() {
       bad(_raw(body, [_ph('Alpha'), _ph('omega')]));
       bad(_raw('Alpha beta Alpha.', [_ph('Alpha'), _ph('beta')]));
       bad(_raw(body, [_ph('Alpha beta'), _ph('beta gamma')]));
-      bad(_raw(body, [_ph('Alpha', isCatch: true), _ph('beta', isCatch: true)]));
+      bad(
+        _raw(body, [_ph('Alpha', isCatch: true), _ph('beta', isCatch: true)]),
+      );
       bad(_raw(body, [_ph('Alpha', isCatch: 'yes'), _ph('beta')]));
-      bad(_raw(body, [_ph('Alpha'), {'text': 'beta', 'plain': 'b'}]));
+      bad(
+        _raw(body, [
+          _ph('Alpha'),
+          {'text': 'beta', 'plain': 'b'},
+        ]),
+      );
       bad(_raw(body, [_ph('Alpha'), 'beta']));
-      bad({..._raw(body, [_ph('Alpha'), _ph('beta')]), 'watch': ''});
-      bad({..._raw(body, [_ph('Alpha'), _ph('beta')]), 'head': null});
+      bad({
+        ..._raw(body, [_ph('Alpha'), _ph('beta')]),
+        'watch': '',
+      });
+      bad({
+        ..._raw(body, [_ph('Alpha'), _ph('beta')]),
+        'head': null,
+      });
     });
 
     test('an unknown field does not break it', () {
@@ -202,84 +218,83 @@ void main() {
         // font, a square a full em wide, sets text far wider than the real
         // faces do, and the tight band on the back is played with one.
         if (!_shots && sample > 0 && phone.key == 'back') continue;
-        testWidgets(
-          'played to the end on ${phone.key}, $tone, sample $sample',
-          (tester) async {
-            _setPhone(tester, size);
-            final scene = _scene(sample);
-            await tester.pumpWidget(
-              _host(scene, phone: size, height: height, colours: colours),
+        testWidgets('played to the end on ${phone.key}, $tone, sample $sample', (
+          tester,
+        ) async {
+          _setPhone(tester, size);
+          final scene = _scene(sample);
+          await tester.pumpWidget(
+            _host(scene, phone: size, height: height, colours: colours),
+          );
+          await tester.pumpAndSettle();
+          String shot(String step) =>
+              '../../tool/shots/cards/translate-$sample-${phone.key}-$tone-$step.png';
+          if (_shots) {
+            await expectLater(
+              find.byType(TranslateSceneView),
+              matchesGoldenFile(shot('0-start')),
             );
-            await tester.pumpAndSettle();
-            String shot(String step) =>
-                '../../tool/shots/cards/translate-$sample-${phone.key}-$tone-$step.png';
-            if (_shots) {
-              await expectLater(
-                find.byType(TranslateSceneView),
-                matchesGoldenFile(shot('0-start')),
-              );
-            }
-            expect(find.text(scene.ask), findsOneWidget);
-            expect(find.text('TAP YOUR PICK'), findsOneWidget);
+          }
+          expect(find.text(scene.ask), findsOneWidget);
+          expect(find.text('TAP YOUR PICK'), findsOneWidget);
 
-            // The first tap is the guess, on the first phrase printed.
-            await _tapPhrase(tester, 0, settle: false);
+          // The first tap is the guess, on the first phrase printed.
+          await _tapPhrase(tester, 0, settle: false);
+          await tester.pump();
+          if (_shots) {
+            await tester.pump(const Duration(milliseconds: 140));
+            await expectLater(
+              find.byType(TranslateSceneView),
+              matchesGoldenFile(shot('1-select')),
+            );
+            await tester.pump(const Duration(milliseconds: 380));
+            await expectLater(
+              find.byType(TranslateSceneView),
+              matchesGoldenFile(shot('2-typing')),
+            );
+          }
+          await tester.pumpAndSettle();
+          expect(find.text(scene.phrases[0].why), findsOneWidget);
+          expect(find.text('1 OF ${scene.phrases.length}'), findsOneWidget);
+
+          for (var i = 1; i < scene.phrases.length; i++) {
+            await _tapPhrase(tester, i, settle: false);
             await tester.pump();
-            if (_shots) {
-              await tester.pump(const Duration(milliseconds: 140));
+            await tester.pump(const Duration(milliseconds: 1100));
+            expect(find.text(scene.phrases[i].why), findsOneWidget);
+            if (_shots && i == scene.phrases.length - 1) {
               await expectLater(
                 find.byType(TranslateSceneView),
-                matchesGoldenFile(shot('1-select')),
-              );
-              await tester.pump(const Duration(milliseconds: 380));
-              await expectLater(
-                find.byType(TranslateSceneView),
-                matchesGoldenFile(shot('2-typing')),
+                matchesGoldenFile(shot('3-last')),
               );
             }
-            await tester.pumpAndSettle();
-            expect(find.text(scene.phrases[0].why), findsOneWidget);
-            expect(find.text('1 OF ${scene.phrases.length}'), findsOneWidget);
+          }
+          await tester.pumpAndSettle();
+          expect(tester.takeException(), isNull);
 
-            for (var i = 1; i < scene.phrases.length; i++) {
-              await _tapPhrase(tester, i, settle: false);
-              await tester.pump();
-              await tester.pump(const Duration(milliseconds: 1100));
-              expect(find.text(scene.phrases[i].why), findsOneWidget);
-              if (_shots && i == scene.phrases.length - 1) {
-                await expectLater(
-                  find.byType(TranslateSceneView),
-                  matchesGoldenFile(shot('3-last')),
-                );
-              }
-            }
-            await tester.pumpAndSettle();
-            expect(tester.takeException(), isNull);
+          // The note has been read; the stub moves on to the line to keep.
+          expect(find.text(scene.watch), findsOneWidget);
+          expect(find.text('YOUR GUESS'), findsOneWidget);
+          expect(find.text('Try again'), findsOneWidget);
+          if (_shots) {
+            await expectLater(
+              find.byType(TranslateSceneView),
+              matchesGoldenFile(shot('4-end')),
+            );
+          }
 
-            // The note has been read; the stub moves on to the line to keep.
-            expect(find.text(scene.watch), findsOneWidget);
-            expect(find.text('YOUR GUESS'), findsOneWidget);
-            expect(find.text('Try again'), findsOneWidget);
-            if (_shots) {
-              await expectLater(
-                find.byType(TranslateSceneView),
-                matchesGoldenFile(shot('4-end')),
-              );
-            }
+          // A phrase can be read again, and a second tap lets go of it.
+          await _tapPhrase(tester, 1);
+          expect(find.text(scene.phrases[1].why), findsOneWidget);
+          await _tapPhrase(tester, 1);
+          expect(find.text(scene.watch), findsOneWidget);
 
-            // A phrase can be read again, and a second tap lets go of it.
-            await _tapPhrase(tester, 1);
-            expect(find.text(scene.phrases[1].why), findsOneWidget);
-            await _tapPhrase(tester, 1);
-            expect(find.text(scene.watch), findsOneWidget);
-
-            // Try again puts the jargon back.
-            await tester.tap(find.text('Try again'));
-            await tester.pumpAndSettle();
-            expect(find.text(scene.ask), findsOneWidget);
-            expect(find.text('YOUR GUESS'), findsNothing);
-          },
-        );
+          // Try again puts the jargon back.
+          await tester.tap(find.text('Try again'));
+          await tester.pumpAndSettle();
+          expect(find.text(scene.ask), findsOneWidget);
+          expect(find.text('YOUR GUESS'), findsNothing);
+        });
       }
     }
   }
@@ -297,20 +312,14 @@ void main() {
     for (final p in scene.phrases) {
       final node = tester.getSemantics(find.bySemanticsLabel(p.text));
       expect(node.getSemanticsData().hasAction(SemanticsAction.tap), isTrue);
-      tester.binding.pipelineOwner.semanticsOwner!.performAction(
-        node.id,
-        SemanticsAction.tap,
-      );
+      node.owner!.performAction(node.id, SemanticsAction.tap);
       await tester.pumpAndSettle();
       expect(find.bySemanticsLabel('${p.plain}. ${p.why}'), findsOneWidget);
     }
     // Nothing moved on by itself, but the sheet is done: the line to keep
     // is there to be read, and the whole document reads in plain words.
     expect(find.text(scene.watch), findsOneWidget);
-    expect(
-      find.bySemanticsLabel(scene.reading({0, 1, 2})),
-      findsOneWidget,
-    );
+    expect(find.bySemanticsLabel(scene.reading({0, 1, 2})), findsOneWidget);
     handle.dispose();
   });
 
@@ -433,7 +442,11 @@ void main() {
 
         for (var i = 0; i < scene.phrases.length; i++) {
           await _tapPhrase(tester, i);
-          expect(answer(), findsNothing, reason: 'a phrase tap turned the card');
+          expect(
+            answer(),
+            findsNothing,
+            reason: 'a phrase tap turned the card',
+          );
         }
         // A tap on the letterhead, mid-play, is kept too.
         expect(advanced(), 0);

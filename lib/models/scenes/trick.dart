@@ -64,7 +64,7 @@
 ///   `totals` chart `honestUnit` is the rate's.
 /// - `decimals`: 0, 1 or 2, for the values printed. Default 0. On `totals`,
 ///   `honestDecimals` for the rates; default 1.
-/// - `columns`: the labels along the bottom. Bars: 2 to 8, up to 10
+/// - `columns`: the labels along the bottom. Bars: 2 to 8, up to 12
 ///   characters each. Line: 2 to 60, up to 6 characters each (only as many
 ///   are printed as fit). Pie: the answers, 2 to 6, up to 18 characters.
 /// - `values`: one number per column. A pie's are percentages.
