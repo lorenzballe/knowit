@@ -477,10 +477,16 @@ class _TruthTag extends StatelessWidget {
       children: [
         CustomPaint(size: const Size(17, 10), painter: _DashPainter(ink)),
         const SizedBox(width: 6),
-        Text(
-          '${context.l10n.sceneTruth} $text',
-          maxLines: 1,
-          style: AppText.label(size: 10.5, weight: FontWeight.w800, color: ink),
+        Flexible(
+          child: Text(
+            '${context.l10n.sceneTruth} $text',
+            maxLines: 2,
+            style: AppText.label(
+              size: 10.5,
+              weight: FontWeight.w800,
+              color: ink,
+            ),
+          ),
         ),
       ],
     );

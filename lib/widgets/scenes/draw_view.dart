@@ -901,7 +901,7 @@ class _Chart {
     );
     final notes = [
       for (final m in s.notes)
-        _text(m.text, noteStyle, scaler, width: plot.width * 0.5, lines: 2),
+        _text(m.text, noteStyle, scaler, width: plot.width * 0.52, lines: 2),
     ];
 
     TextPainter tag(String t, Color c) => _text(
@@ -1260,31 +1260,39 @@ class _DrawPainter extends CustomPainter {
       final w = tp.width + _notePadX * 2, h = tp.height + _notePadY * 2;
       Rect? best;
       var cost = double.infinity;
-      for (final gap in const [14.0, 30.0]) {
-        for (final top in [p.dy - gap - h, p.dy + gap]) {
-          for (final left in [p.dx - 12, p.dx + 12 - w, p.dx - w / 2]) {
-            final box = Rect.fromLTWH(
-              left.clamp(6.0, math.max(6.0, c.size.width - 6 - w)).toDouble(),
-              top.clamp(plot.top - 6, math.max(plot.top, plot.bottom - h))
-                  .toDouble(),
-              w,
-              h,
-            );
-            var score = gap * 0.5 + (box.center - p).distance * 0.2;
-            if (box.inflate(5).contains(p)) score += 1e6;
-            for (final r in taken) {
-              final i = r.intersect(box);
-              if (i.width > 0 && i.height > 0) score += 50 * i.width * i.height;
-            }
-            final near = box.inflate(3);
-            for (final q in samples) {
-              if (near.contains(q)) score += 60;
-            }
-            if (score < cost) {
-              cost = score;
-              best = box;
-            }
-          }
+      // Above or below at a few distances, and level with the point on
+      // either side; never over the axis numbers on the left.
+      final spots = <Offset>[
+        for (final gap in const [14.0, 30.0, 50.0])
+          for (final top in [p.dy - gap - h, p.dy + gap])
+            for (final left in [p.dx - 12, p.dx + 12 - w, p.dx - w / 2])
+              Offset(left, top),
+        for (final left in [p.dx - 16 - w, p.dx + 16])
+          for (final dy in const [0.0, -0.8, 0.8])
+            Offset(left, p.dy - h / 2 + dy * h),
+      ];
+      final minLeft = plot.left + 2;
+      for (final o in spots) {
+        final box = Rect.fromLTWH(
+          o.dx.clamp(minLeft, math.max(minLeft, c.size.width - 6 - w)).toDouble(),
+          o.dy.clamp(plot.top - 6, math.max(plot.top, plot.bottom - h))
+              .toDouble(),
+          w,
+          h,
+        );
+        var score = (box.center - p).distance * 0.3;
+        if (box.inflate(5).contains(p)) score += 1e6;
+        for (final r in taken) {
+          final i = r.intersect(box);
+          if (i.width > 0 && i.height > 0) score += 50 * i.width * i.height;
+        }
+        final near = box.inflate(3);
+        for (final q in samples) {
+          if (near.contains(q)) score += 60;
+        }
+        if (score < cost) {
+          cost = score;
+          best = box;
         }
       }
       out.add(best!);
@@ -1296,10 +1304,12 @@ class _DrawPainter extends CustomPainter {
   /// A note pinned to [p]: a small ring on the line, the words in a tag,
   /// and a hairline between them.
   void _paintNote(Canvas canvas, TextPainter tp, Offset p, Rect box, double o) {
-    final edge = Offset(
-      p.dx.clamp(box.left + 8, box.right - 8).toDouble(),
-      p.dy < box.top ? box.top : box.bottom,
-    );
+    final edge = p.dy < box.top || p.dy > box.bottom
+        ? Offset(
+            p.dx.clamp(box.left + 8, box.right - 8).toDouble(),
+            p.dy < box.top ? box.top : box.bottom,
+          )
+        : Offset(p.dx < box.left ? box.left : box.right, p.dy);
     canvas.drawLine(
       p,
       edge,
