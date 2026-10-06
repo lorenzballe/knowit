@@ -6,16 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did China's 1958 campaign to kill sparrows end with more crops lost, not fewer?",
-  "answer": "Because sparrows eat insects as well as grain. Millions of people banged pots until exhausted birds dropped dead, and sparrow numbers collapsed. With a predator gone, locusts and other insects swarmed the fields. By 1960 bedbugs replaced sparrows on the official list of pests, and crop losses fed a famine already under way.",
+  "question": "Four times people fixed nature's pests by bringing in or wiping out an animal or plant. What went wrong each time?",
+  "answer": "The mongoose is the one people miss, because the plan looked perfect on paper. Mongooses were shipped to Hawaii's cane fields in 1883 to eat rats, but mongooses hunt by day and rats come out at night. They ate ground birds' eggs instead. Each fix met a system with a job nobody had listed.",
   "move": "Before removing a nuisance, ask what else it was quietly doing.",
   "ask": "What irritating thing in my life might be doing a job I have never noticed?",
   "keywords": [
     "four pests campaign",
     "sparrows",
-    "china",
-    "locusts",
-    "famine"
+    "cane toads",
+    "mongoose",
+    "kudzu"
   ],
   "era": "twentieth",
   "region": "asia",
@@ -27,8 +27,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "The fix",
+    "rightTitle": "What went wrong",
+    "pairs": [
+      {
+        "left": "Kill the sparrows",
+        "right": "Locusts with nothing left to eat them",
+        "note": "China, 1958. Sparrows ate insects too, and a famine was already starting."
+      },
+      {
+        "left": "Bring in cane toads",
+        "right": "Toads that ignored the beetle and spread",
+        "note": "Australia, 1935. The beetles lived high on the cane, out of reach."
+      },
+      {
+        "left": "Bring in mongooses",
+        "right": "Rat-hunters awake while the rats slept",
+        "note": "Hawaii, 1883. Mongooses hunt by day, rats by night.",
+        "missed": true
+      },
+      {
+        "left": "Plant kudzu",
+        "right": "A vine meant to hold soil that took over",
+        "note": "US farmers were paid to plant it against erosion. It now smothers trees."
+      }
+    ]
+  },
   "source": "Shapiro, Mao's War against Nature, 2001",
   "source_kind": "book",
   "reference": "Shapiro, Mao's War against Nature: Politics and the Environment in Revolutionary China, Cambridge University Press, 2001",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

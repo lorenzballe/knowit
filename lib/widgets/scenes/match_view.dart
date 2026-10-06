@@ -558,9 +558,7 @@ class _MatchSceneViewState extends State<MatchSceneView>
         );
       }
       final g = _guess![e.i]!;
-      final verdict = g == e.i
-          ? ''
-          : ' ${l10n.sceneYou}: ${s.pairs[g].right}.';
+      final verdict = g == e.i ? '' : ' ${l10n.sceneYou}: ${s.pairs[g].right}.';
       return Semantics(
         button: true,
         selected: _focus == e.i,
@@ -604,16 +602,31 @@ class _MatchSceneViewState extends State<MatchSceneView>
       for (var i = 0; i < _n; i++) {
         final weight = i == missed ? 2.6 + 1.6 * _settle : 2.6;
         if (guess[i] == i) {
-          lines.add((a: leftDot(i), b: rightDot(i), draw: 1, weight: weight,
-              alpha: 1));
+          lines.add((
+            a: leftDot(i),
+            b: rightDot(i),
+            draw: 1,
+            weight: weight,
+            alpha: 1,
+          ));
         } else {
           if (_retract < 1) {
-            lines.add((a: leftDot(i), b: rightDot(guess[i]!),
-                draw: 1 - _retract, weight: 2.6, alpha: 1 - _retract * .5));
+            lines.add((
+              a: leftDot(i),
+              b: rightDot(guess[i]!),
+              draw: 1 - _retract,
+              weight: 2.6,
+              alpha: 1 - _retract * .5,
+            ));
           }
           if (_redraw > 0) {
-            lines.add((a: leftDot(i), b: rightDot(i), draw: _redraw,
-                weight: weight, alpha: 1));
+            lines.add((
+              a: leftDot(i),
+              b: rightDot(i),
+              draw: _redraw,
+              weight: weight,
+              alpha: 1,
+            ));
           }
         }
         final b = _badge(i);

@@ -6,15 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Whom is the English offence of handling salmon in suspicious circumstances aimed at?",
-  "answer": "Buyers of poached fish. Section 32 of the Salmon Act 1986 makes it an offence to receive or dispose of salmon believed to be caught illegally. Like handling stolen goods, it follows the money: poaching pays only if someone buys. It targets the back door of a restaurant kitchen, not the riverbank.",
+  "question": "Four British and Singapore laws that sound absurd today. What real problem was each one written to stop?",
+  "answer": "The salmon law is the one people miss: it targets buyers, not anglers. Section 32 of the Salmon Act 1986 makes it an offence to receive or dispose of salmon believed to be caught illegally. Like handling stolen goods, it follows the money: poaching pays only if someone buys.",
   "move": "To stop a theft, make the buyer as liable as the thief.",
   "ask": "Do I go after the one who does the harm, or also the one who pays for it?",
   "keywords": [
     "salmon act 1986",
     "poaching",
-    "handling offence",
-    "england and wales"
+    "chewing gum ban",
+    "red flag act",
+    "licensing act 1872"
   ],
   "era": "twentieth",
   "region": "europe",
@@ -26,8 +27,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "The law",
+    "rightTitle": "Aimed at",
+    "pairs": [
+      {
+        "left": "Handling salmon",
+        "right": "Kitchens buying poached fish",
+        "note": "Salmon Act 1986: buying a suspect salmon is an offence, like stolen goods.",
+        "missed": true
+      },
+      {
+        "left": "No gum for sale",
+        "right": "Gum jamming train door sensors",
+        "note": "Singapore, 1992, after gum was stuck on the new metro's doors."
+      },
+      {
+        "left": "A man with a red flag",
+        "right": "Steam engines on roads full of horses",
+        "note": "Locomotive Act 1865: a man walked ahead of road engines, flag in hand."
+      },
+      {
+        "left": "Drunk with cattle",
+        "right": "Drovers drunk on the road with a herd",
+        "note": "Licensing Act 1872. It also covers horses, carriages and steam engines."
+      }
+    ]
+  },
   "source": "Salmon Act 1986, section 32",
   "source_kind": "primary_document",
   "reference": "Salmon Act 1986, c. 62, section 32, United Kingdom Parliament, 1986",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

@@ -50,9 +50,9 @@
     ],
     "guess": {
       "options": [
-        "The salt helps in dry air",
-        "Airlines push it: it's cheap",
-        "Noise boosts its savoury taste"
+        "Salt helps in dry air",
+        "Airlines push it",
+        "Noise boosts savoury taste"
       ],
       "answer": 2
     }

@@ -9,15 +9,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does almost any cold remedy seem to work for the person who took it?",
-  "answer": "Because colds end on their own, usually within a week to ten days. People reach for a remedy when they feel worst, close to the peak, and improvement follows whatever they took. The remedy gets credit owed to time. Without a comparison, a zinc lozenge and a lucky sock look equally effective.",
+  "question": "Four reasons a remedy that does nothing can still seem to work. Which reason explains each grateful customer?",
+  "answer": "The bracelet is the one people miss. Pain that comes and goes, like arthritis, is treated at a flare, and flares fade on their own. The next day is better whatever was done, so the last thing tried takes the credit. Only a comparison group shows what time alone would have done.",
   "move": "Credit a remedy only after asking how long the trouble lasts untreated.",
   "ask": "What fix do I swear by that I only ever tried when things were about to improve anyway?",
   "keywords": [
+    "regression to the mean",
+    "natural course",
+    "testimonials",
     "common cold",
-    "remedies",
-    "natural recovery",
-    "self-limiting illness"
+    "remedies"
   ],
   "era": "timeless",
   "region": "none",
@@ -29,8 +30,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "Why it 'worked'",
+    "rightTitle": "The story",
+    "pairs": [
+      {
+        "left": "It ends anyway",
+        "right": "'My cold was gone in a week, with zinc'",
+        "note": "Colds clear in a week to ten days, whatever you take."
+      },
+      {
+        "left": "Taken at the worst",
+        "right": "Joint pain at its peak, then a copper bracelet",
+        "note": "Pain that comes and goes is usually going when people reach for help.",
+        "missed": true
+      },
+      {
+        "left": "Only the cured write",
+        "right": "Thousands of grateful letters",
+        "note": "The people it failed rarely write in, and some cannot."
+      },
+      {
+        "left": "Something else too",
+        "right": "'I took it with rest, soup and paracetamol'",
+        "note": "With five things at once, the credit goes to the one you believe in."
+      }
+    ]
+  },
   "source": "Heikkinen and Järvinen, The Lancet, 2003",
   "source_kind": "paper",
   "reference": "Heikkinen T, Järvinen A, The common cold, The Lancet, 2003",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

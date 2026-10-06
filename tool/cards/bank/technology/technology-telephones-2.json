@@ -9,16 +9,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How does a landline keep a man's voice deep when it cuts every sound below 300 hertz?",
-  "answer": "The listener's brain puts it back. A man's voice has its lowest note, the fundamental, near 120 hertz, plus harmonics at whole multiples: 240, 360, 480 and up. The brain reads their spacing and hears the missing note. The deepest sound in the call never travels down the wire.",
+  "question": "Four sounds the ear gets wrong, from a phone call to a seashell. What is really happening in each?",
+  "answer": "The phone is the one people miss. Landlines cut everything below about 300 hertz, yet a man's voice, with its lowest note near 120, still sounds deep. That note's harmonics at 240, 360 and 480 arrive intact, and the brain reads their even spacing and supplies the missing fundamental.",
   "move": "Sometimes the most important part of a signal is inferred, not sent.",
   "ask": "What important thing does the other person work out for themselves, without my saying it?",
   "keywords": [
     "missing fundamental",
-    "telephone bandwidth",
-    "pitch",
-    "harmonics",
-    "hearing"
+    "telephone",
+    "bone conduction",
+    "helium voice",
+    "seashell"
   ],
   "era": "timeless",
   "region": "none",
@@ -30,8 +30,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "What you hear",
+    "rightTitle": "The real cause",
+    "pairs": [
+      {
+        "left": "A deep voice by phone",
+        "right": "Your brain rebuilds a note never sent",
+        "note": "The low note is cut, but the spacing of its harmonics implies it.",
+        "missed": true
+      },
+      {
+        "left": "Your recorded voice",
+        "right": "Missing the bass your skull adds",
+        "note": "You hear yourself partly through bone, which boosts low tones."
+      },
+      {
+        "left": "Helium voice",
+        "right": "Sound running faster in the throat",
+        "note": "The vocal cords hum as usual; the throat's resonances shift up."
+      },
+      {
+        "left": "The sea in a shell",
+        "right": "Room noise ringing in a hollow",
+        "note": "A cup or a cupped hand does the same: the cavity amplifies the room."
+      }
+    ]
+  },
   "source": "Plack, The Sense of Hearing, 2018",
   "source_kind": "book",
   "reference": "Plack, The Sense of Hearing, 3rd edition, Routledge, 2018",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

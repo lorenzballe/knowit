@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "The Perfect Storm shows a lost fishing crew's last hours at sea. Who could have known what they said?",
-  "answer": "Nobody. The Andrea Gail vanished in 1991 with all six men aboard, and no one heard their final hours. Sebastian Junger's book left them out; the film wrote them. Families of two crew sued over the invented scenes and lost in Florida's Supreme Court in 2005. The label covered the gaps.",
+  "question": "The Perfect Storm shows a lost fishing crew's last hours. Its opening card is worded like many. Which phrase covers those hours?",
+  "answer": "The fictionalised scenes. The Andrea Gail vanished in 1991 with all six men aboard, and no one heard their final hours. Sebastian Junger's book left them out; the film wrote them. Families of two crew sued over the invented scenes and lost in Florida's Supreme Court in 2005. The label covered the gaps.",
   "move": "Ask which parts of a true story anyone could have witnessed.",
   "ask": "In the true stories I repeat, which details could nobody actually have known?",
   "keywords": [
@@ -26,8 +26,34 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Opening title card",
+    "ref": "Typical text",
+    "body": "Based on a true story. Some names have been changed, and certain characters, events and dialogue have been fictionalised for dramatic purposes.",
+    "phrases": [
+      {
+        "text": "Based on a true story",
+        "plain": "Starting from real events",
+        "why": "A label about where the story began, not about any one scene."
+      },
+      {
+        "text": "certain characters, events and dialogue",
+        "plain": "any scene no witness lived to tell",
+        "why": "All six aboard died. Their last hours on screen had to be written.",
+        "catch": true
+      },
+      {
+        "text": "for dramatic purposes",
+        "plain": "to make a better film",
+        "why": "The aim is the story working, not the record being right."
+      }
+    ],
+    "ask": "One phrase covers the scenes nobody survived to tell. Which?",
+    "watch": "Count the scenes with a living witness. The rest were written."
+  },
   "source": "Tyne v. Time Warner, Florida Supreme Court",
   "source_kind": "primary_document",
   "reference": "https://caselaw.findlaw.com/court/fl-supreme-court/1239122.html",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

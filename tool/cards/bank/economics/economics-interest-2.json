@@ -38,12 +38,12 @@
         "text": "The bank chose its home state for one law: its cap on interest."
       },
       {
-        "text": "South Dakota scrapped its rate cap in 1980; Citibank moved in."
-      },
-      {
         "text": "A 1978 ruling let a bank charge anyone its home state's rate.",
         "figure": "1978",
         "unit": "Supreme Court, Marquette"
+      },
+      {
+        "text": "South Dakota scrapped its rate cap in 1980; Citibank moved in."
       },
       {
         "text": "So one loose state can set the rules for a whole country."
@@ -51,7 +51,7 @@
     ],
     "guess": {
       "options": [
-        "Its law travels with the bank",
+        "Its law follows the bank",
         "Taxes are lower there",
         "Land and staff are cheap"
       ],

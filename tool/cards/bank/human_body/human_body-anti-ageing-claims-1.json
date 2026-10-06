@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why can collagen in a face cream not top up the collagen in the skin?",
-  "answer": "Because the molecule is far too big to get in. The skin's outer layer lets through almost nothing heavier than about 500 daltons, a unit of molecular weight, and collagen weighs around 300,000. Bos and Meinardi set out this 500-dalton rule. Collagen cream stays on the surface: a moisturiser with a grand name.",
+  "question": "A jar of anti-ageing night cream, worded the way many are. What can its collagen do for your skin's own?",
+  "answer": "Nothing; it never gets there. The skin's outer layer lets through almost nothing heavier than about 500 daltons, a unit of molecular weight, and collagen weighs around 300,000. It stays on the surface, holding water like any moisturiser. Hence the careful wording: a cosmetic may change how skin looks, not how it works.",
   "move": "Ask how an ingredient would reach the place it is meant to work.",
   "ask": "Which product do I pay for without asking how it could reach where it is meant to work?",
   "keywords": [
@@ -26,8 +26,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Night cream",
+    "ref": "Typical text",
+    "title": "Collagen renew",
+    "body": "Enriched with collagen to boost your skin's own. Visibly reduces the appearance of fine lines in just 4 weeks.",
+    "phrases": [
+      {
+        "text": "Enriched with collagen",
+        "plain": "Contains collagen, far too big to enter skin",
+        "why": "Skin lets in little over 500 daltons. Collagen weighs about 300,000.",
+        "catch": true
+      },
+      {
+        "text": "to boost your skin's own",
+        "plain": "which stays on top, holding water",
+        "why": "On the surface it works like any moisturiser: plumper skin for a few hours."
+      },
+      {
+        "text": "Visibly reduces the appearance of",
+        "plain": "Makes you see fewer, for a while,",
+        "why": "Appearance is the legal escape. A cosmetic may change how skin looks, not how it works."
+      }
+    ],
+    "ask": "One ingredient can't reach where the jar implies. Which?",
+    "watch": "On a cosmetic, appearance means looks, not changes. Read it as a ceiling."
+  },
   "source": "Bos and Meinardi, Experimental Dermatology, 2000",
   "source_kind": "paper",
   "reference": "Bos JD, Meinardi MM, The 500 Dalton rule for the skin penetration of chemical compounds and drugs, Experimental Dermatology, 2000",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Volunteers were told cold-water tolerance reveals heart health. What did they then do with their hand in icy water?",
-  "answer": "They changed how long they held it there. Those told a healthy heart means longer tolerance held on longer; those told it means shorter tolerance pulled out sooner. Most denied trying to influence the result, and many concluded their hearts were fine. They rigged a test of their own body and believed the reading.",
+  "question": "Volunteers learned that cold-water tolerance reveals heart health, then took the cold-water test again. What changed?",
+  "answer": "Holding on longer cannot change a heart; it can only change the reading. Most volunteers denied trying to influence the result, and many concluded their hearts were fine. Quattrone and Tversky saw the same logic in voters who turn out because people like them vote, as if one ballot could cause the others.",
   "move": "A test you can steer only tells you what you hoped.",
   "ask": "Where do I measure my own progress in a way I can nudge without noticing?",
   "keywords": [
@@ -26,8 +26,52 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "A psychology lab",
+        "glyph": "clock",
+        "line": "Volunteers hold an arm in icy water for as long as they can."
+      },
+      {
+        "fact": "A short talk",
+        "glyph": "book",
+        "line": "They hear that cold tolerance shows what kind of heart you have."
+      },
+      {
+        "fact": "Half the group",
+        "glyph": "rise",
+        "line": "Told: a healthy heart means lasting longer in the cold."
+      },
+      {
+        "fact": "The other half",
+        "glyph": "fall",
+        "line": "Told: a healthy heart means giving up sooner."
+      }
+    ],
+    "ask": "They do the test again. What happens?",
+    "options": [
+      {
+        "label": "Same times as before"
+      },
+      {
+        "label": "All last longer"
+      },
+      {
+        "label": "Each moves to healthy"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "Quattrone and Tversky, 1984",
+      "glyph": "eye",
+      "line": "Each group shifted its time towards the healthy heart."
+    },
+    "why": "They wanted the good diagnosis, so they quietly produced it, then believed it."
+  },
   "source": "Quattrone & Tversky, JPSP, 1984",
   "source_kind": "paper",
   "reference": "Quattrone & Tversky, Causal versus diagnostic contingencies: On self-deception and on the voter's illusion, Journal of Personality and Social Psychology, 1984",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

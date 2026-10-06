@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did a garden shed in south London become TripAdvisor's top-rated restaurant in the city?",
-  "answer": "With reviews written by friends. In 2017 the journalist Oobah Butler listed his shed as an appointment-only restaurant, had acquaintances post glowing fake reviews, and told callers it was fully booked. Scarcity read as exclusivity, and the shed climbed to first place among thousands of London restaurants before it had served a single meal.",
+  "question": "In 2017 a London restaurant's listing climbed to first place on TripAdvisor. What was behind these words?",
+  "answer": "A garden shed. The journalist Oobah Butler listed his shed in south London as an appointment-only restaurant, had friends post glowing reviews, and told every caller it was fully booked. A table nobody could get read as exclusivity, and the shed rose to first place before it had served a single meal.",
   "move": "Praise nobody can check, plus scarcity, can build a reputation from nothing.",
   "ask": "When I pick a place by its rating, how many of the reviews could I actually check?",
   "keywords": [
@@ -26,8 +26,40 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Restaurant listing",
+    "ref": "London, 2017",
+    "title": "The Shed at Dulwich",
+    "body": "Ranked first of all restaurants in London. By appointment only. Fully booked for weeks. Guests say: an unforgettable experience.",
+    "phrases": [
+      {
+        "text": "Ranked first of all restaurants in London",
+        "plain": "Top of a ranking built on unchecked reviews",
+        "why": "The ranking counts praise. It cannot tell whether anyone ever ate there."
+      },
+      {
+        "text": "By appointment only",
+        "plain": "There is nowhere to walk into",
+        "why": "It explained why no one had seen the place. Mystery passed for exclusivity."
+      },
+      {
+        "text": "Fully booked for weeks",
+        "plain": "Never open; every caller is told this",
+        "why": "Scarcity read as demand. Each refused booking made the place more wanted.",
+        "catch": true
+      },
+      {
+        "text": "an unforgettable experience",
+        "plain": "words written by the owner's friends",
+        "why": "None of the reviewers had eaten there. There was nothing to eat."
+      }
+    ],
+    "ask": "One phrase did most to make it famous. Which?",
+    "watch": "Praise nobody can check, plus a place nobody can visit: two warnings, not two stars."
+  },
   "source": "Butler, Vice, December 2017",
   "source_kind": "news_archive",
   "reference": "Oobah Butler, I Made My Shed the Top Rated Restaurant on TripAdvisor, Vice, December 2017",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

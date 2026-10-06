@@ -51,9 +51,9 @@
     ],
     "guess": {
       "options": [
-        "Batteries were cheaper than mains",
-        "Calls had to survive emergencies",
-        "Houses had few sockets then"
+        "Batteries were cheaper",
+        "It had to work in a crisis",
+        "Houses had few sockets"
       ],
       "answer": 1
     }

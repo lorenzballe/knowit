@@ -39,22 +39,22 @@
         "unit": "of water per m³ of cloud"
       },
       {
-        "text": "It is split into droplets about a fiftieth of a millimetre across."
-      },
-      {
-        "text": "Drops that small meet huge drag for their weight and barely sink.",
+        "text": "Tiny droplets meet huge drag for their weight and sink very slowly.",
         "figure": "~1 cm/s",
         "unit": "a droplet's fall speed"
       },
       {
-        "text": "Gently rising air outpaces that fall, so the cloud stays up."
+        "text": "Air rising even gently inside a cloud moves faster than that."
+      },
+      {
+        "text": "The cloud is falling, just slower than the air lifts it."
       }
     ],
     "guess": {
       "options": [
-        "Rising air beats a very slow fall",
+        "Rising air beats the fall",
         "Vapour is lighter than air",
-        "Static charge holds drops up"
+        "Static holds drops up"
       ],
       "answer": 0
     }

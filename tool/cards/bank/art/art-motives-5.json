@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did Eric Hebborn insist that his drawings in the manner of old masters were not forgeries?",
-  "answer": "Because he never signed them. Hebborn drew in the manner of masters from Mantegna to Van Dyck on old paper and let experts supply the names; a wrong attribution, he argued, was their error. Suspicion began in 1978, when a curator found two supposed old drawings on the same paper. He later claimed 1,000 fakes.",
+  "question": "Three lots in an auction catalogue, worded by a house's own glossary. Which ones claim the master drew it?",
+  "answer": "Only the first, and even that is an opinion. Auction houses grade their confidence in small words before a name. Eric Hebborn exploited that: he drew in old masters' manners on old paper, never signed, and let experts supply the names; a wrong attribution, he argued, was their error. He later claimed 1,000 fakes.",
   "move": "A claim can mislead even when nobody wrote a false word.",
   "ask": "Where have I misled someone lately without saying anything false?",
   "keywords": [
@@ -27,8 +27,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Hebborn, Drawn to Trouble, 1991",
+  "scene": {
+    "type": "translate",
+    "head": "Old master drawings",
+    "ref": "Sale catalogue",
+    "title": "Three heads of a man",
+    "body": "Lot 41: Anthony van Dyck, Head of a man. Lot 42: Attributed to Anthony van Dyck, Head of a man. Lot 43: Manner of Anthony van Dyck, Head of a man.",
+    "phrases": [
+      {
+        "text": "Lot 41: Anthony van Dyck",
+        "plain": "Lot 41: by van Dyck, in our opinion",
+        "why": "The bare name is the strongest claim a catalogue makes, and still an opinion."
+      },
+      {
+        "text": "Attributed to",
+        "plain": "Probably by, in whole or in part,",
+        "why": "The house's glossary says probably. A hedge you can see in the estimate."
+      },
+      {
+        "text": "Manner of",
+        "plain": "Not by him, and of a later date:",
+        "why": "In his style, made later. It names the master without claiming him.",
+        "catch": true
+      }
+    ],
+    "ask": "One phrase names the master and says he didn't draw it. Which?",
+    "watch": "In a catalogue the claim is the small words before the name."
+  },
+  "source": "Hebborn, 1991; Christie's cataloguing glossary",
   "source_kind": "book",
   "reference": "Eric Hebborn, Drawn to Trouble: The Forging of an Artist, Mainstream Publishing, 1991",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

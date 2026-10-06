@@ -9,28 +9,66 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do central banks aim for inflation of about 2% a year rather than for prices that never rise?",
-  "answer": "Partly because pay is rarely cut. Employers find it very hard to lower wages in cash terms, so with zero inflation a struggling firm sheds jobs instead. A little inflation lets pay adjust quietly: a 1% raise in a year of 2% inflation is a 1% cut that nobody has to announce.",
-  "move": "Change that arrives disguised is often easier to accept than change announced.",
+  "question": "A firm making a small profit, in a town with many jobless, changes everyone's pay. Is it fair?",
+  "answer": "This is part of why central banks aim for about 2% inflation, not zero. People resent a cut in money far more than the same loss through rising prices, so firms almost never cut pay. With no inflation, a struggling firm sheds jobs instead. A little inflation lets real pay adjust without a cut announced.",
+  "move": "Judge pay by what it buys, not by the number on the slip.",
   "ask": "If my pay rose less than prices this year, did I notice the cut?",
   "keywords": [
     "inflation target",
     "central banks",
     "wage cuts",
-    "real wages"
+    "money illusion",
+    "fairness"
   ],
   "era": "timeless",
   "region": "world",
-  "hook": "mechanism",
+  "hook": "paradox",
   "mood": "wonder",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Akerlof, Dickens and Perry, Brookings Papers, 1996",
+  "scene": {
+    "type": "poll",
+    "who": "Canadians by phone, Kahneman et al. 1986",
+    "questions": [
+      {
+        "prompt": "No inflation. The firm cuts everyone's pay by 7%.",
+        "tag": "A cut, no inflation",
+        "options": [
+          {
+            "label": "Acceptable",
+            "share": 38
+          },
+          {
+            "label": "Unfair",
+            "share": 62
+          }
+        ]
+      },
+      {
+        "prompt": "Prices are rising 12% a year. The firm raises pay by only 5%.",
+        "tag": "A 5% raise, 12% inflation",
+        "options": [
+          {
+            "label": "Acceptable",
+            "share": 78
+          },
+          {
+            "label": "Unfair",
+            "share": 22
+          }
+        ]
+      }
+    ],
+    "why": "We judge pay by the number on the payslip, not by what it buys, so a cut stings and a lag hides.",
+    "same": "You held steady. The crowd didn't: unfair fell from 62% to 22% for much the same loss.",
+    "switched": "You switched, like most. Both leave your pay buying about 6 to 7% less."
+  },
+  "source": "Kahneman, Knetsch & Thaler, AER, 1986",
   "source_kind": "paper",
-  "reference": "Akerlof, Dickens & Perry, The Macroeconomics of Low Inflation, Brookings Papers on Economic Activity, 1996",
-  "written": "2026-10-03"
+  "reference": "Kahneman, Knetsch & Thaler, Fairness as a constraint on profit seeking, American Economic Review 76 (1986): 728-741; Akerlof, Dickens & Perry, Brookings Papers on Economic Activity, 1996",
+  "written": "2026-10-06"
 }

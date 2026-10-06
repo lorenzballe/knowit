@@ -51,8 +51,8 @@
     ],
     "guess": {
       "options": [
-        "Demand keeps outrunning supply",
-        "The measuring stick is shrinking",
+        "Demand outruns supply",
+        "The ruler is shrinking",
         "Economies always grow"
       ],
       "answer": 1

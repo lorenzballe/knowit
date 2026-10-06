@@ -223,8 +223,7 @@ class _PollSceneViewState extends State<PollSceneView>
       if (need + rows * 30 <= h) break;
     }
     final f = fit!;
-    final fixed =
-        (f.header ? _hintH + 12 : 0) + groups + rowGaps + f.footer;
+    final fixed = (f.header ? _hintH + 12 : 0) + groups + rowGaps + f.footer;
     // Two bars alone may be fat; more stay a list.
     final most = s.twice ? 64.0 : (rows == 2 ? 84.0 : 64.0);
     final rowH = ((h - fixed) / rows).clamp(26.0, most);
@@ -278,9 +277,7 @@ class _PollSceneViewState extends State<PollSceneView>
             height: h,
             child: Stack(
               clipBehavior: Clip.none,
-              children: _revealed
-                  ? _revealing(w, h)
-                  : _choosing(w, h),
+              children: _revealed ? _revealing(w, h) : _choosing(w, h),
             ),
           ),
         ),
@@ -501,9 +498,7 @@ class _PollSceneViewState extends State<PollSceneView>
         final top = moving
             ? from.tops[i] + (to.tops[q][i] - from.tops[i]) * m
             : to.tops[q][i];
-        final height = moving
-            ? from.rowH + (to.rowH - from.rowH) * m
-            : to.rowH;
+        final height = moving ? from.rowH + (to.rowH - from.rowH) * m : to.rowH;
         final font = moving ? from.font + (to.font - from.font) * m : to.font;
         final k = q * 2 + i;
         final grow = _span(.36 + k * .06, .74 + k * .06);

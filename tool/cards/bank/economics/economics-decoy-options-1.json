@@ -6,15 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What did the first study of decoy options, in 1982, show that choice theory had ruled out?",
-  "answer": "An added option raising the share of an existing one. Standard models held that a newcomer can only take buyers away, a property called regularity. Huber, Payne and Puto added options clearly worse than one of the existing choices, and that choice gained share. An option almost nobody picked sold its neighbour.",
+  "question": "Four prices built to steer what you buy, including a popcorn size almost nobody orders. Which trick is behind each?",
+  "answer": "The popcorn is the one people miss, because nobody buys the medium. That is its job. In 1982 Huber, Payne and Puto showed that adding an option clearly worse than another raises the share of the one that beats it, which choice theory had ruled out. An option almost nobody picked sold its neighbour.",
   "move": "More choice can change the winner, not just split the vote.",
   "ask": "Could an option I'd never pick be deciding which one I do pick?",
   "keywords": [
     "decoy effect",
-    "asymmetric dominance",
-    "regularity",
-    "choice theory"
+    "drip pricing",
+    "shrinkflation",
+    "charm prices",
+    "popcorn"
   ],
   "era": "twentieth",
   "region": "none",
@@ -26,8 +27,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "The trick",
+    "rightTitle": "The price",
+    "pairs": [
+      {
+        "left": "Decoy",
+        "right": "A £4.50 medium popcorn beside a £5 large",
+        "note": "The medium exists to make the large look like a bargain.",
+        "missed": true
+      },
+      {
+        "left": "Drip pricing",
+        "right": "A £19 flight that is £64 at the checkout",
+        "note": "Fees arrive step by step, after you have already decided to buy."
+      },
+      {
+        "left": "Shrinking pack",
+        "right": "Same price, same wrapper, 10% less chocolate",
+        "note": "Shoppers watch prices closely and weights hardly at all."
+      },
+      {
+        "left": "Charm price",
+        "right": "£9.99 instead of £10",
+        "note": "We read left to right, and the 9 lands before the pennies do."
+      }
+    ]
+  },
   "source": "Huber, Payne & Puto, J. Consumer Research, 1982",
   "source_kind": "paper",
   "reference": "doi:10.1086/208899",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

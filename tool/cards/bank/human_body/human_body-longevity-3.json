@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What did Japanese officials discover in 2010 when they went looking for registered centenarians?",
-  "answer": "That many were long dead. The man listed as Tokyo's oldest, Sogen Kato, supposedly 111, was found mummified in his bedroom; he had probably died in 1978, and relatives had kept drawing his pension. A nationwide check of family registers then found about 230,000 people aged 100 or more whose whereabouts nobody could confirm.",
+  "question": "In 2010 Tokyo officials went to honour the city's oldest man, aged 111. What did they find?",
+  "answer": "A nationwide check followed and found about 230,000 people aged 100 or more on family registers whose whereabouts nobody could confirm. Extreme ages are where record errors and fraud pile up, because nobody expects a centenarian to turn up in person, and every missing death keeps a birthday on the books.",
   "move": "The oldest ages in any record are where record errors pile up.",
   "ask": "Which impressive record or number I repeat might simply be a mistake nobody checked?",
   "keywords": [
@@ -27,8 +27,47 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "Tokyo, July 2010",
+        "glyph": "house",
+        "line": "Officials want to visit Sogen Kato, the city's oldest man."
+      },
+      {
+        "fact": "Aged 111",
+        "glyph": "family",
+        "line": "His family turns them away: he wants no visitors."
+      },
+      {
+        "fact": "Every month",
+        "glyph": "coin",
+        "line": "His pension is still paid into the family's account."
+      }
+    ],
+    "ask": "What do police find in his room?",
+    "options": [
+      {
+        "label": "A frail old man"
+      },
+      {
+        "label": "An empty room"
+      },
+      {
+        "label": "Remains, decades old"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "He probably died in 1978",
+      "glyph": "cross",
+      "line": "His mummified body. The family kept drawing his pension."
+    },
+    "why": "The register counted pensions paid, not people seen, so a payment passed for proof of life."
+  },
   "source": "Newman, bioRxiv, 2019",
   "source_kind": "paper",
   "reference": "Newman, Supercentenarians and the oldest-old are concentrated into regions with no birth certificates and short lifespans, bioRxiv, 2019",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

@@ -40,9 +40,7 @@
         "text": "Daily caffeine makes the brain add receptors to make up for it."
       },
       {
-        "text": "Overnight the caffeine fades, and those extra receptors leave you dull.",
-        "figure": "~5 h",
-        "unit": "half-life in the blood"
+        "text": "Overnight the caffeine fades, and the extra receptors leave you dull."
       },
       {
         "text": "The first cup mostly cancels a withdrawal the habit created."
@@ -50,8 +48,8 @@
     ],
     "guess": {
       "options": [
-        "Caffeine works best on waking",
-        "Morning is when we're most tired",
+        "Caffeine works best early",
+        "Mornings are most tiring",
         "It ends a small withdrawal"
       ],
       "answer": 2

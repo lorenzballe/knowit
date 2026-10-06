@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "When quiet quitting swept the news in 2022, what did Gallup's long-running survey of workers show?",
-  "answer": "A new name for an old number. Gallup put quiet quitters, people doing no more than their job asks, at about half the US workforce; but that group was its long-standing not engaged category, which had hovered around half for years. The trend was in the headlines more than in the offices.",
+  "question": "Be honest about your job right now. Which of these sounds most like you?",
+  "answer": "Half of US workers do what is asked and no more, and they always have. When quiet quitting swept the news in 2022, Gallup pointed out that the group was its old not engaged category, which had hovered around half for years. The trend was in the headlines more than in the offices.",
   "move": "Before believing a new trend, ask whether only the name is new.",
   "ask": "Which new trend have I worried about that may just be an old thing with a new name?",
   "keywords": [
@@ -26,8 +26,34 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "US workers, Gallup 2022",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "I go beyond the job",
+            "share": 32,
+            "mirror": "Like about a third of US workers. Gallup calls you engaged, a share that has barely moved."
+          },
+          {
+            "label": "I do what's asked",
+            "share": 50,
+            "mirror": "Like half of US workers. In 2022 the news named you quiet quitters; you were always there."
+          },
+          {
+            "label": "I'm fed up with it",
+            "share": 18,
+            "mirror": "Like nearly 1 in 5. Gallup calls this actively disengaged: unhappy, and showing it."
+          }
+        ]
+      }
+    ],
+    "why": "Most jobs ask for the job. Going beyond takes a good manager, a purpose, or a reason to care."
+  },
   "source": "Gallup, Is Quiet Quitting Real?, 2022",
   "source_kind": "statistics",
   "reference": "Jim Harter, Is Quiet Quitting Real?, Gallup, September 2022",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

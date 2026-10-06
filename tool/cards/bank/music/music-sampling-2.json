@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did hip hop albums built from dozens of samples, like the Beastie Boys' Paul's Boutique, almost vanish after 1991?",
-  "answer": "Because a court put a price on every sample. In Grand Upright v Warner, 1991, a judge ruled that Biz Markie's unlicensed use of Gilbert O'Sullivan's Alone Again (Naturally) was theft and referred the case for criminal prosecution. Labels began clearing every sample, and a collage of dozens became dozens of negotiations.",
+  "question": "Hip hop albums once stitched together dozens of samples from old records. What happened after one court case?",
+  "answer": "Each sample now needed its own licence, and one owner saying no or asking too much could sink a track. A collage of dozens became dozens of negotiations, and labels stopped approving them. Producers turned to a few cleared loops, or hired players to replay a riff so only the song needed clearing.",
   "move": "When each ingredient needs its own permission, the recipe changes, not just the price.",
   "ask": "What would I make differently if one permission I need became easier, or harder, to get?",
   "keywords": [
@@ -30,8 +30,47 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "1989",
+        "glyph": "book",
+        "line": "Albums like Paul's Boutique are built from dozens of samples."
+      },
+      {
+        "fact": "A collage of records",
+        "glyph": "check",
+        "line": "One track can stack a dozen bits of other people's songs."
+      },
+      {
+        "fact": "Grand Upright v Warner, 1991",
+        "glyph": "ban",
+        "line": "A judge rules an unlicensed sample is theft."
+      }
+    ],
+    "ask": "What happens to sample-collage albums?",
+    "options": [
+      {
+        "label": "Same, but with fees"
+      },
+      {
+        "label": "Nobody checks"
+      },
+      {
+        "label": "They almost vanish"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "The 1990s",
+      "glyph": "fall",
+      "line": "Labels cleared every sample. The dense collages died out."
+    },
+    "why": "A price on each piece multiplies: one refusal among dozens kills the whole track."
+  },
   "source": "McLeod & DiCola, Creative License, 2011",
   "source_kind": "book",
   "reference": "McLeod & DiCola, Creative License: The Law and Culture of Digital Sampling, Duke University Press, 2011",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

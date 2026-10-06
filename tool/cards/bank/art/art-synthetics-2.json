@@ -6,16 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How could green wallpaper poison a Victorian room without anyone touching it?",
-  "answer": "Through the air, with help from mould. Scheele's green and emerald green were cheap copper-arsenic pigments. In damp rooms, moulds feeding on the paste turn arsenic into a volatile gas, later identified as trimethylarsine, which smells of garlic. How many it sickened is still argued; the garlic smell in damp bedrooms is not.",
-  "move": "A stable substance can still move if something living digests it.",
-  "ask": "What looks harmless in my home or work but could turn harmful if something living got at it?",
+  "question": "Four colours painters once prized, one of them probably in your fridge today. What was each made from?",
+  "answer": "Carmine is the one people miss, because it never left: crushed cochineal insects still colour some sweets, drinks and yoghurts, listed as E120. The others are history. Scheele's green was copper and arsenic, and in damp rooms mould feeding on wallpaper paste released the arsenic as a garlic-smelling gas.",
+  "move": "Ask what a pretty thing is made of, not only how it looks.",
+  "ask": "Which colourful thing I eat or own have I never asked what it is made of?",
   "keywords": [
     "scheele's green",
     "arsenic",
-    "wallpaper",
-    "mould",
-    "trimethylarsine"
+    "carmine",
+    "mummy brown",
+    "ultramarine"
   ],
   "era": "nineteenth",
   "region": "europe",
@@ -27,8 +27,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "Colour",
+    "rightTitle": "Made from",
+    "pairs": [
+      {
+        "left": "Scheele's green",
+        "right": "Copper and arsenic",
+        "note": "In damp rooms, mould turned it into a garlic-smelling poison gas."
+      },
+      {
+        "left": "Mummy brown",
+        "right": "Ground-up Egyptian mummies",
+        "note": "Sold until the 1960s, when a London maker ran out of mummies."
+      },
+      {
+        "left": "Ultramarine",
+        "right": "Lapis lazuli from Afghan mines",
+        "note": "Dearer than gold, so painters saved it for the Virgin's robe."
+      },
+      {
+        "left": "Carmine",
+        "right": "Crushed insects",
+        "note": "Cochineal bugs, and still in some sweets and yoghurts today as E120.",
+        "missed": true
+      }
+    ]
+  },
   "source": "Hawksley, Bitten by Witch Fever, 2016",
   "source_kind": "book",
   "reference": "Lucinda Hawksley, Bitten by Witch Fever: Wallpaper and Arsenic in the Victorian Home, Thames & Hudson, 2016",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

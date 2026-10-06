@@ -6,16 +6,17 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did pink disease in babies, common in Britain for decades, nearly vanish after 1954?",
-  "answer": "Because mercury came out of teething powders. Calomel, a mercury salt, was sold to soothe teething. Only a small minority of exposed babies reacted, with pink, peeling hands and feet and great misery, so the link stayed hidden for decades. Once the powders were withdrawn in 1954, the disease all but disappeared.",
+  "question": "Four medicines once sold over the counter for everyday complaints. What was each one meant to treat?",
+  "answer": "The teething powder is the one people miss, because only a few babies reacted. Calomel, a mercury salt, gave a small minority pink, peeling hands and feet and great misery, so the link stayed hidden for decades. Once the powders were withdrawn in 1954, pink disease all but disappeared.",
   "move": "A harm that strikes only a few users can hide inside a popular product.",
   "ask": "Is there something everyone around me uses happily that might quietly harm a few, including me?",
   "keywords": [
     "pink disease",
-    "acrodynia",
-    "teething powders",
+    "calomel",
     "mercury",
-    "calomel"
+    "heroin",
+    "thalidomide",
+    "radithor"
   ],
   "era": "twentieth",
   "region": "europe",
@@ -27,8 +28,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "The remedy",
+    "rightTitle": "Sold for",
+    "pairs": [
+      {
+        "left": "Calomel powder",
+        "right": "A baby's teething",
+        "note": "Mercury. Withdrawn in Britain in 1954, and pink disease vanished.",
+        "missed": true
+      },
+      {
+        "left": "Heroin",
+        "right": "A cough",
+        "note": "Bayer sold it from 1898 as a safer cough medicine than morphine."
+      },
+      {
+        "left": "Thalidomide",
+        "right": "Morning sickness",
+        "note": "Late 1950s. Thousands of babies were born with shortened limbs."
+      },
+      {
+        "left": "Radium water",
+        "right": "Energy and vigour",
+        "note": "Radithor. A US industrialist who drank it daily died of it in 1932."
+      }
+    ]
+  },
   "source": "Dally, Social History of Medicine, 1997",
   "source_kind": "paper",
   "reference": "Dally, The rise and fall of pink disease, Social History of Medicine, 1997",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

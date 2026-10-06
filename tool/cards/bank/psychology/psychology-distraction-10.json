@@ -51,9 +51,9 @@
     ],
     "guess": {
       "options": [
-        "Phone talkers speak louder",
-        "We're nosy about private talk",
-        "The missing half can't be guessed"
+        "Phone talkers are louder",
+        "We're nosy about others",
+        "The gaps are unpredictable"
       ],
       "answer": 2
     }

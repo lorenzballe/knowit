@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do most heart attacks strike people whose blood pressure and cholesterol are only average?",
+  "question": "Why do most heart attacks strike people with average blood pressure and cholesterol?",
   "answer": "Because risk is a rate and disease is a count. Geoffrey Rose called it the prevention paradox in 1985: a measure that brings large benefits to a community offers little to each person in it. It is the case for trimming salt in everyone's bread, not only treating the few at the top.",
   "move": "Many people at small risk can matter more than few at high risk.",
   "ask": "Which small risk do I dismiss because it is small, when it applies to my everyday life all the time?",
@@ -50,8 +50,8 @@
     "guess": {
       "options": [
         "Their tests were wrong",
-        "Stress matters more than numbers",
-        "The middle is where people are"
+        "Stress matters more",
+        "That's where people are"
       ],
       "answer": 2
     }

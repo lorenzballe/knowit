@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What did Edo Japan's rich merchants do when the law barred them from showy silks?",
-  "answer": "They made restraint the luxury. Sumptuary edicts barred townsmen from the most splendid fabrics, so merchants and kabuki actors set a new taste, iki, prizing subtlety. The display moved inward: sober colours and fine stripes outside, lavish silk linings within.",
+  "question": "Edo Japan banned its rich merchants from wearing showy silk. What did the merchants do?",
+  "answer": "The hidden luxury became a style of its own. Iki prized understatement that only the knowing could read: a muted grey or brown cut from costly cloth, a flash of brilliant lining as a sleeve turned. Status did not disappear; it learned to whisper, and whispering became the fashion that townsmen and actors set.",
   "move": "Ban a display and the display moves somewhere the ban cannot reach.",
   "ask": "When a rule blocks something I want, where does that wanting go instead?",
   "keywords": [
@@ -27,8 +27,47 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "Edo Japan, 1600s",
+        "glyph": "coin",
+        "line": "Merchants grow rich, yet the law ranks them below farmers."
+      },
+      {
+        "fact": "Sumptuary edicts",
+        "glyph": "ban",
+        "line": "Townsmen are barred from the finest silks and boldest colours."
+      },
+      {
+        "fact": "Officials watching",
+        "glyph": "eye",
+        "line": "A merchant family that dresses too grandly risks ruin."
+      }
+    ],
+    "ask": "What do the rich merchants do?",
+    "options": [
+      {
+        "label": "Give up luxury"
+      },
+      {
+        "label": "Defy the law openly"
+      },
+      {
+        "label": "Hide it in the lining"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "The taste called iki",
+      "glyph": "check",
+      "line": "Sober stripes outside. Lavish silk linings within."
+    },
+    "why": "The law could police what was seen, so the spending moved where it couldn't look."
+  },
   "source": "Shively, Harvard Journal of Asiatic Studies, 1964",
   "source_kind": "paper",
   "reference": "Shively, Sumptuary Regulation and Status in Early Tokugawa Japan, Harvard Journal of Asiatic Studies, vol. 25, 1964–65",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

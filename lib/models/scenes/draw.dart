@@ -169,9 +169,8 @@ class DrawScene extends Scene {
     if (vals is! List || vals.any((v) => v is! num || !v.isFinite)) {
       bad('values must be a list of numbers');
     }
-    final values = [
-      for (final v in vals) (v as num).toDouble(),
-    ].toList(growable: false);
+    final values = [for (final v in vals) (v as num).toDouble()]
+        .toList(growable: false);
     if (values.length != columns.length) {
       bad('values: one per column');
     }
@@ -192,7 +191,10 @@ class DrawScene extends Scene {
     }
 
     final min = number('min', log ? _decadeBelow(lo) : math.min(0, lo));
-    final max = number('max', log ? _decadeBelow(hi * 1.5) * 10 : _roundUp(hi * 1.25));
+    final max = number(
+      'max',
+      log ? _decadeBelow(hi * 1.5) * 10 : _roundUp(hi * 1.25),
+    );
     if (max <= min) bad('max must be above min');
     if (log && (min <= 0 || lo <= 0)) bad('log needs min and values above 0');
     if (lo < min || hi > max) bad('values must lie between min and max');
@@ -209,8 +211,7 @@ class DrawScene extends Scene {
     if (near <= 0 || near >= 1) bad('near: between 0 and 1');
 
     final v = raw['verdict'];
-    String say(String k) =>
-        v is Map && v[k] is String ? (v[k] as String) : '';
+    String say(String k) => v is Map && v[k] is String ? (v[k] as String) : '';
 
     final notes = <DrawNote>[];
     for (final m in (raw['notes'] as List? ?? const [])) {

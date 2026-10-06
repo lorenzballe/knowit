@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How can the same survey find majorities agreeing with a statement and with its exact opposite?",
-  "answer": "People lean towards agreeing with whatever they are asked. In an American survey reported in 1981, about 60% agreed that individuals are more to blame than social conditions for crime; asked the reversed statement, about 57% agreed with that too. Pollsters call it acquiescence. Making people choose between the two sides removes most of it.",
+  "question": "A pollster reads you two statements about crime, one after the other. Do you agree with each?",
+  "answer": "About 60% agreed with the first and, asked the reverse, about 57% agreed again, so many people agreed with both. Pollsters call it acquiescence: agreeing is easier and politer than arguing with the asker. Asking people which of the two is more to blame removes most of it.",
   "move": "Offer both sides of a question, or the asker's side wins by default.",
   "ask": "When I ask a yes-or-no question, am I offering a real choice or inviting a yes?",
   "keywords": [
@@ -26,8 +26,45 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "US survey, Schuman & Presser 1981",
+    "questions": [
+      {
+        "prompt": "Individuals are more to blame than social conditions for crime.",
+        "tag": "Blame put on individuals",
+        "options": [
+          {
+            "label": "Agree",
+            "share": 60
+          },
+          {
+            "label": "Disagree",
+            "share": 40
+          }
+        ]
+      },
+      {
+        "prompt": "Social conditions are more to blame than individuals for crime.",
+        "tag": "Blame put on society",
+        "options": [
+          {
+            "label": "Disagree",
+            "share": 43
+          },
+          {
+            "label": "Agree",
+            "share": 57
+          }
+        ]
+      }
+    ],
+    "why": "Agreeing is the polite, easy answer, so whichever side a statement takes gets a head start.",
+    "same": "You kept your view. The country didn't: majorities agreed with both opposite statements.",
+    "switched": "You gave the same answer to opposite statements. Many did: the wording won, not the view."
+  },
   "source": "Schuman & Presser, Questions and Answers in Attitude Surveys, 1981",
   "source_kind": "book",
   "reference": "Schuman & Presser, Questions and Answers in Attitude Surveys, Academic Press, 1981",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

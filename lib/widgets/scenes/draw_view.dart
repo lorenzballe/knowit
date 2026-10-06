@@ -63,15 +63,16 @@ class _DrawSceneViewState extends State<DrawSceneView>
 
   // The truth drawing itself, left to right, at a pace set by how much of
   // it there is to draw.
-  late final AnimationController _reveal = AnimationController(
-    vsync: this,
-    duration: Duration(
-      milliseconds: (500 + 260 * (widget.scene.count - widget.scene.anchor))
-          .clamp(900, 1900),
-    ),
-  )..addStatusListener((s) {
-      if (s == AnimationStatus.completed) setState(() {});
-    });
+  late final AnimationController _reveal =
+      AnimationController(
+        vsync: this,
+        duration: Duration(
+          milliseconds: (500 + 260 * (widget.scene.count - widget.scene.anchor))
+              .clamp(900, 1900),
+        ),
+      )..addStatusListener((s) {
+        if (s == AnimationStatus.completed) setState(() {});
+      });
   late final CurvedAnimation _tip = CurvedAnimation(
     parent: _reveal,
     curve: Curves.easeInOutCubic,
@@ -163,9 +164,9 @@ class _DrawSceneViewState extends State<DrawSceneView>
   }
 
   void _lift() => setState(() {
-        _pen = null;
-        _lastCol = null;
-      });
+    _pen = null;
+    _lastCol = null;
+  });
 
   /// For a screen reader: the whole guess as a straight line from where the
   /// given stretch ends to [end], moved a twentieth of the chart at a time.
@@ -236,17 +237,16 @@ class _DrawSceneViewState extends State<DrawSceneView>
     return '$n $unit';
   }
 
-  static String _commas(String digits) => digits.replaceAllMapped(
-        RegExp(r'\B(?=(\d{3})+(?!\d))'),
-        (_) => ',',
-      );
+  static String _commas(String digits) =>
+      digits.replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (_) => ',');
 
   /// A value the reader reads: exact to the card's decimals, thousands
   /// marked, in words past a million.
   static String value(double v, int decimals, String unit) {
     if (v.abs() >= 1e6) return _withUnit(roughNumber(v.abs()), unit);
     final fixed = v.abs().toStringAsFixed(decimals).split('.');
-    final n = '${v < 0 ? '−' : ''}${_commas(fixed[0])}'
+    final n =
+        '${v < 0 ? '−' : ''}${_commas(fixed[0])}'
         '${fixed.length > 1 ? '.${fixed[1]}' : ''}';
     return _withUnit(n, unit);
   }
@@ -279,7 +279,8 @@ class _DrawSceneViewState extends State<DrawSceneView>
                 compact: compact,
                 you: _youNow(),
                 truth: _truthNow(),
-                youCaption: '${l10n.sceneYou} · ${s.columns[_youCol()].toUpperCase()}',
+                youCaption:
+                    '${l10n.sceneYou} · ${s.columns[_youCol()].toUpperCase()}',
                 truthCaption:
                     '${l10n.sceneTruth} · ${s.columns[s.judge].toUpperCase()}',
               ),
@@ -431,7 +432,7 @@ class _DrawSceneViewState extends State<DrawSceneView>
           slider: !_locked,
           label: _locked
               ? '${s.label}. ${l10n.sceneYou}: ${_youNow() ?? ''}. '
-                  '${l10n.sceneTruth}: ${value(s.values[s.judge], s.decimals, s.unit)}.'
+                    '${l10n.sceneTruth}: ${value(s.values[s.judge], s.decimals, s.unit)}.'
               : '${s.label}. ${l10n.sceneDrawHint}',
           value: _locked ? null : _spoken(_guess),
           increasedValue: _locked ? null : _spoken(_straight(0.05)),
@@ -444,17 +445,18 @@ class _DrawSceneViewState extends State<DrawSceneView>
                 : RawGestureDetector(
                     behavior: HitTestBehavior.opaque,
                     gestures: {
-                      _EagerPan: GestureRecognizerFactoryWithHandlers<_EagerPan>(
-                        _EagerPan.new,
-                        (r) => r
-                          ..dragStartBehavior = DragStartBehavior.down
-                          ..onStart = ((d) =>
-                              _draw(d.localPosition, start: true))
-                          ..onUpdate = ((d) =>
-                              _draw(d.localPosition, start: false))
-                          ..onEnd = ((_) => _lift())
-                          ..onCancel = _lift,
-                      ),
+                      _EagerPan:
+                          GestureRecognizerFactoryWithHandlers<_EagerPan>(
+                            _EagerPan.new,
+                            (r) => r
+                              ..dragStartBehavior = DragStartBehavior.down
+                              ..onStart = ((d) =>
+                                  _draw(d.localPosition, start: true))
+                              ..onUpdate = ((d) =>
+                                  _draw(d.localPosition, start: false))
+                              ..onEnd = ((_) => _lift())
+                              ..onCancel = _lift,
+                          ),
                     },
                     child: paint,
                   ),
@@ -503,38 +505,38 @@ class _Readouts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget block(String caption, String? n, {required bool strong}) => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              caption,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppText.label(
-                size: 10.5,
-                weight: FontWeight.w800,
-                color: ink.withValues(alpha: 0.6),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          caption,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: AppText.label(
+            size: 10.5,
+            weight: FontWeight.w800,
+            color: ink.withValues(alpha: 0.6),
+          ),
+        ),
+        const SizedBox(height: 2),
+        FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.centerLeft,
+          child: Text(
+            n ?? '?',
+            maxLines: 1,
+            style: AppText.display(
+              size: compact ? 30 : 42,
+              weight: FontWeight.w800,
+              height: 1.05,
+              spacing: compact ? -0.8 : -1.4,
+              color: ink.withValues(
+                alpha: n == null ? 0.25 : (strong ? 1 : 0.62),
               ),
             ),
-            const SizedBox(height: 2),
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.centerLeft,
-              child: Text(
-                n ?? '?',
-                maxLines: 1,
-                style: AppText.display(
-                  size: compact ? 30 : 42,
-                  weight: FontWeight.w800,
-                  height: 1.05,
-                  spacing: compact ? -0.8 : -1.4,
-                  color: ink.withValues(
-                    alpha: n == null ? 0.25 : (strong ? 1 : 0.62),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        );
+          ),
+        ),
+      ],
+    );
 
     return ExcludeSemantics(
       child: Row(
@@ -756,8 +758,7 @@ class _Chart {
   static const double pad = 14;
 
   double yAt(double share) => plot.bottom - share * plot.height;
-  double shareAt(double y) =>
-      ((plot.bottom - y) / plot.height).clamp(0.0, 1.0);
+  double shareAt(double y) => ((plot.bottom - y) / plot.height).clamp(0.0, 1.0);
 
   int colAt(double x) {
     final step = xs.length > 1 ? xs[1] - xs[0] : 1;
@@ -775,14 +776,13 @@ class _Chart {
     TextScaler scaler, {
     double? width,
     int? lines,
-  }) =>
-      TextPainter(
-        text: TextSpan(text: s, style: style),
-        textDirection: TextDirection.ltr,
-        textScaler: scaler,
-        maxLines: lines,
-        ellipsis: lines == null ? null : '…',
-      )..layout(maxWidth: width ?? double.infinity);
+  }) => TextPainter(
+    text: TextSpan(text: s, style: style),
+    textDirection: TextDirection.ltr,
+    textScaler: scaler,
+    maxLines: lines,
+    ellipsis: lines == null ? null : '…',
+  )..layout(maxWidth: width ?? double.infinity);
 
   factory _Chart.build({
     required Size size,
@@ -819,8 +819,8 @@ class _Chart {
     } else {
       final raw = (s.max - s.min) / 4;
       final mag = math.pow(10, (math.log(raw) / math.ln10).floor()).toDouble();
-      final step = [1.0, 2.0, 2.5, 5.0, 10.0]
-              .firstWhere((k) => k * mag >= raw - 1e-9) *
+      final step =
+          [1.0, 2.0, 2.5, 5.0, 10.0].firstWhere((k) => k * mag >= raw - 1e-9) *
           mag;
       for (var v = (s.min / step).ceil() * step; v <= s.max + 1e-9; v += step) {
         tickValues.add(v);
@@ -850,10 +850,7 @@ class _Chart {
       pad + tickWidth + 10,
       pad + label.height + 14,
       size.width - pad - 4,
-      math.max(
-        pad + label.height + 40,
-        size.height - pad - colH - 8,
-      ),
+      math.max(pad + label.height + 40, size.height - pad - colH - 8),
     );
     const inset = 10.0;
     final n = s.count;
@@ -882,8 +879,8 @@ class _Chart {
     ];
     if (cols.last == null) {
       final prev = (n - 1) ~/ every * every;
-      final gap = (xs.last - xs[prev]) -
-          (colText[prev].width + colText.last.width) / 2;
+      final gap =
+          (xs.last - xs[prev]) - (colText[prev].width + colText.last.width) / 2;
       if (gap < 8) cols[prev] = null;
       cols[n - 1] = colText.last;
     }
@@ -905,10 +902,10 @@ class _Chart {
     ];
 
     TextPainter tag(String t, Color c) => _text(
-          t,
-          AppText.label(size: 9.5, weight: FontWeight.w800, spacing: 1, color: c),
-          scaler,
-        );
+      t,
+      AppText.label(size: 9.5, weight: FontWeight.w800, spacing: 1, color: c),
+      scaler,
+    );
 
     return _Chart._(
       size: size,
@@ -1279,8 +1276,11 @@ class _DrawPainter extends CustomPainter {
       final minLeft = plot.left + 2;
       for (final o in spots) {
         final box = Rect.fromLTWH(
-          o.dx.clamp(minLeft, math.max(minLeft, c.size.width - 6 - w)).toDouble(),
-          o.dy.clamp(plot.top - 6, math.max(plot.top, plot.bottom - h))
+          o.dx
+              .clamp(minLeft, math.max(minLeft, c.size.width - 6 - w))
+              .toDouble(),
+          o.dy
+              .clamp(plot.top - 6, math.max(plot.top, plot.bottom - h))
               .toDouble(),
           w,
           h,
@@ -1315,11 +1315,7 @@ class _DrawPainter extends CustomPainter {
             p.dy < box.top ? box.top : box.bottom,
           )
         : Offset(p.dx < box.left ? box.left : box.right, p.dy);
-    canvas.drawLine(
-      p,
-      edge,
-      _stroke(ink.withValues(alpha: 0.5 * o), 1.2),
-    );
+    canvas.drawLine(p, edge, _stroke(ink.withValues(alpha: 0.5 * o), 1.2));
     canvas.drawRRect(
       RRect.fromRectAndRadius(box, const Radius.circular(7)),
       _solid(ground.withValues(alpha: 0.94 * o)),

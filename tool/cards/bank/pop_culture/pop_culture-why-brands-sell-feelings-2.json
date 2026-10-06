@@ -6,15 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did De Beers want buyers to feel that a diamond is forever, beyond selling more stones?",
-  "answer": "To stop them ever selling. Vast numbers of diamonds already sat in drawers; if owners resold them, prices would sag. A gift meant to be kept for life stays off the market, and Edward Jay Epstein found in 1982 that dealers would buy a ring back for a fraction of what it had cost.",
+  "question": "Four ideas that feel like common sense were written by advertisers. What was each one really meant to do?",
+  "answer": "The diamond is the one people miss: it was meant to stop owners ever selling. Vast numbers of stones already sat in drawers, and resale would have shown how little they fetched. Edward Jay Epstein found in 1982 that dealers bought rings back for a fraction of their price. Forever kept the market small.",
   "move": "When a seller praises keeping forever, ask what resale would reveal.",
   "ask": "Is there something I keep for sentimental reasons whose sentiment was sold to me?",
   "keywords": [
     "de beers",
-    "diamonds",
-    "advertising slogan",
-    "resale"
+    "listerine",
+    "edward bernays",
+    "advertising",
+    "halitosis"
   ],
   "era": "twentieth",
   "region": "world",
@@ -26,8 +27,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "The idea",
+    "rightTitle": "What it was for",
+    "pairs": [
+      {
+        "left": "Diamonds are forever",
+        "right": "Stop owners ever reselling the stones",
+        "note": "Kept stones never flood the market. Dealers buy rings back for a fraction.",
+        "missed": true
+      },
+      {
+        "left": "Halitosis",
+        "right": "Make bad breath a condition to treat",
+        "note": "Listerine put an obscure medical word at the heart of its 1920s ads."
+      },
+      {
+        "left": "A hearty breakfast",
+        "right": "Sell more bacon",
+        "note": "Edward Bernays had doctors endorse bacon and eggs for a meat packer."
+      },
+      {
+        "left": "Torches of freedom",
+        "right": "Get women smoking in public",
+        "note": "1929: Bernays had young women light up at New York's Easter parade."
+      }
+    ]
+  },
   "source": "Epstein, The Atlantic, February 1982",
   "source_kind": "news_archive",
   "reference": "Edward Jay Epstein, Have You Ever Tried to Sell a Diamond?, The Atlantic, February 1982",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

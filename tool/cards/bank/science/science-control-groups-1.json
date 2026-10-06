@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did taking teenage offenders on frightening prison visits look, for years, like it worked?",
-  "answer": "Because teenagers caught at their worst usually calm down anyway, and early programmes measured them only before and after. When randomised trials compared them with similar teenagers left alone, the visited group offended more, not less: a 2013 review of nine trials found the visits raised the odds of offending by about two thirds.",
+  "question": "Programmes took teenage offenders into prisons to be shouted at by inmates. Did it scare them straight?",
+  "answer": "Why it backfired is still argued over: perhaps prison looked survivable, perhaps the teenagers met others in trouble. What is clear is why it looked good for years. Teenagers caught at their worst tend to calm down anyway, and before-and-after figures handed that calming to the programme.",
   "move": "Compare with people left alone before crediting any intervention.",
   "ask": "What did I try at my lowest point that only looked like it worked because things improved anyway?",
   "keywords": [
@@ -26,8 +26,52 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "Rahway State Prison, 1978",
+        "glyph": "crowd",
+        "line": "Lifers shout at teenage offenders about life inside."
+      },
+      {
+        "fact": "Before and after",
+        "glyph": "check",
+        "line": "Organisers report most of the teenagers go straight."
+      },
+      {
+        "fact": "A hit film",
+        "glyph": "rise",
+        "line": "The idea spreads across the US and to other countries."
+      },
+      {
+        "fact": "Randomised trials",
+        "glyph": "walker",
+        "line": "Some teenagers are sent; similar ones are left alone."
+      }
+    ],
+    "ask": "Who offends more afterwards?",
+    "options": [
+      {
+        "label": "The teens sent"
+      },
+      {
+        "label": "No real difference"
+      },
+      {
+        "label": "The teens left alone"
+      }
+    ],
+    "answer": 0,
+    "outcome": {
+      "fact": "Review of 9 trials, 2013",
+      "glyph": "rise",
+      "line": "The teens sent offended more: odds up by about two thirds."
+    },
+    "why": "Teens at their worst calm down anyway. Only a group left alone shows how much."
+  },
   "source": "Petrosino et al., Campbell Systematic Reviews, 2013",
   "source_kind": "paper",
   "reference": "Petrosino, Turpin-Petrosino, Hollis-Peel & Lavenberg, 'Scared Straight' and other juvenile awareness programs for preventing juvenile delinquency, Campbell Systematic Reviews 9(5), 2013",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

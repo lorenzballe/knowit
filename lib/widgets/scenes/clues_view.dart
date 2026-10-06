@@ -370,6 +370,8 @@ class _CluesSceneViewState extends State<CluesSceneView>
             ? _s.clues[c].rulesOut.length
             : 0,
         rowH: rowH,
+        // A sliver too thin for its name shows only the card's edge.
+        named: isFront || edge >= rowH * 0.8,
         turned: decisive,
         front: isFront,
         ink: ink,
@@ -664,6 +666,7 @@ class _CluesCard extends StatelessWidget {
   /// Options this card ruled out, marked once the reveal has struck them.
   final int outs;
   final double rowH;
+  final bool named;
 
   /// 0 → 1: the decisive card turning to solid ink.
   final double turned;
@@ -676,6 +679,7 @@ class _CluesCard extends StatelessWidget {
     required this.text,
     required this.outs,
     required this.rowH,
+    required this.named,
     required this.turned,
     required this.front,
     required this.ink,
@@ -709,46 +713,48 @@ class _CluesCard extends StatelessWidget {
             children: [
               SizedBox(
                 height: math.min(rowH, box.maxHeight),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: pad),
-                  child: Row(
-                    children: [
-                      Text(
-                        '$number',
-                        style: AppText.display(
-                          size: rowH * 0.6,
-                          weight: FontWeight.w800,
-                          height: 1,
-                          color: face,
-                        ),
-                      ),
-                      SizedBox(width: rowH * 0.32),
-                      Expanded(
-                        child: Text(
-                          tag,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppText.body(
-                            size: rowH * 0.44,
-                            weight: FontWeight.w700,
-                            height: 1,
-                            color: face.withValues(alpha: 0.72),
-                          ),
-                        ),
-                      ),
-                      for (var i = 0; i < outs; i++)
-                        Padding(
-                          padding: const EdgeInsets.only(left: 4),
-                          child: SizedBox.square(
-                            dimension: rowH * 0.36,
-                            child: CustomPaint(
-                              painter: _CluesCrossPainter(face, 2),
+                child: !named
+                    ? null
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: pad),
+                        child: Row(
+                          children: [
+                            Text(
+                              '$number',
+                              style: AppText.display(
+                                size: rowH * 0.6,
+                                weight: FontWeight.w800,
+                                height: 1,
+                                color: face,
+                              ),
                             ),
-                          ),
+                            SizedBox(width: rowH * 0.32),
+                            Expanded(
+                              child: Text(
+                                tag,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppText.body(
+                                  size: rowH * 0.44,
+                                  weight: FontWeight.w700,
+                                  height: 1,
+                                  color: face.withValues(alpha: 0.72),
+                                ),
+                              ),
+                            ),
+                            for (var i = 0; i < outs; i++)
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4),
+                                child: SizedBox.square(
+                                  dimension: rowH * 0.36,
+                                  child: CustomPaint(
+                                    painter: _CluesCrossPainter(face, 2),
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
-                    ],
-                  ),
-                ),
+                      ),
               ),
               if (box.maxHeight > rowH + 20)
                 Expanded(
@@ -756,8 +762,8 @@ class _CluesCard extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(pad, 0, pad, 12),
                     child: _CluesFit(
                       text: text,
-                      min: 12.5,
-                      max: 24,
+                      min: 11.5,
+                      max: 36,
                       style: (s) => AppText.display(
                         size: s,
                         weight: FontWeight.w600,
@@ -889,8 +895,7 @@ class _CluesChip extends StatelessWidget {
         Positioned.fill(
           child: Opacity(
             opacity: fade,
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 140),
+            child: Container(
               decoration: BoxDecoration(
                 color: fill,
                 borderRadius: r,

@@ -6,16 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What is the gut doing when an empty stomach growls a couple of hours after a meal?",
-  "answer": "Housekeeping. Between meals a wave of strong contractions, the migrating motor complex, sweeps from the stomach to the end of the small intestine roughly every 90 to 120 minutes, clearing leftover food and bacteria. Pushing gas and fluid ahead of it makes the noise; eating stops it at once.",
-  "move": "A noisy system at rest may simply be cleaning itself.",
-  "ask": "What noise in my life is just tidying up and not a sign that something is wrong?",
+  "question": "Five things your body does that seem to have obvious causes. What is really behind each one?",
+  "answer": "Wrinkled fingers are the one people miss. They look like skin soaking up water, but fingers whose nerve has been cut stay smooth. The nervous system narrows blood vessels in the fingertips and the skin puckers, which doctors once used as a bedside test of nerve damage.",
+  "move": "Ask what the body is doing, not what is being done to it.",
+  "ask": "Which of my body's signals have I been explaining with the obvious cause?",
   "keywords": [
     "migrating motor complex",
-    "stomach growling",
-    "small intestine",
-    "fasting",
-    "bacteria"
+    "finger wrinkling",
+    "muscle soreness",
+    "fever",
+    "pins and needles"
   ],
   "era": "timeless",
   "region": "none",
@@ -27,8 +27,41 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Deloose et al., Nat Rev Gastroenterol Hepatol, 2012",
+  "scene": {
+    "type": "match",
+    "leftTitle": "The signal",
+    "rightTitle": "The real cause",
+    "pairs": [
+      {
+        "left": "Stomach growls",
+        "right": "A cleaning wave sweeping the gut",
+        "note": "Between meals, a wave clears leftovers every 90 to 120 minutes."
+      },
+      {
+        "left": "Wrinkly bath fingers",
+        "right": "Nerves squeezing blood vessels",
+        "note": "Fingers with a cut nerve stay smooth. The body does it; water doesn't.",
+        "missed": true
+      },
+      {
+        "left": "Aching two days later",
+        "right": "Tiny damage in muscle fibres",
+        "note": "Not lactic acid: that is cleared within an hour or so of exercise."
+      },
+      {
+        "left": "Pins and needles",
+        "right": "A squashed nerve misfiring",
+        "note": "Pressure starves the nerve. As it recovers it fires at random."
+      },
+      {
+        "left": "Fever chills",
+        "right": "The brain raising its thermostat",
+        "note": "The set point jumps, so normal body heat suddenly feels cold."
+      }
+    ]
+  },
+  "source": "Deloose et al., 2012; Wilder-Smith, 2004",
   "source_kind": "paper",
   "reference": "Deloose, Janssen, Depoortere & Tack, The migrating motor complex: control mechanisms and its role in health and disease, Nature Reviews Gastroenterology & Hepatology, 2012",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

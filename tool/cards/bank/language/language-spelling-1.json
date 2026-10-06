@@ -51,9 +51,9 @@
     ],
     "guess": {
       "options": [
-        "Letters show a French origin",
-        "Scribes added letters for show",
-        "We spell how people once spoke"
+        "It shows French origin",
+        "Scribes added letters",
+        "We spell old speech"
       ],
       "answer": 2
     }

@@ -6,16 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did football stop goalkeepers from picking up a deliberate pass from a team-mate's foot in 1992?",
-  "answer": "Because teams had learned to kill games with it. A side in front could pass back to its keeper, who picked the ball up, waited, and rolled it out again, over and over. The 1990 World Cup averaged 2.21 goals a game, still the lowest ever, and within two years the law was changed.",
+  "question": "Four rules of sport that seem to have always been there. Which match or game forced each one?",
+  "answer": "The 19–18 game is the one people miss. In 1950 Fort Wayne beat Minneapolis by holding the ball instead of shooting, and the NBA's answer, in 1954, was a 24-second clock. Each rule here closed a loophole teams were using legally, which is why blaming players never fixed it.",
   "move": "When everyone exploits a rule the same way, fix the rule, not the players.",
   "ask": "Which rule at work or at home is being gamed so well that people blame each other instead of it?",
   "keywords": [
     "back-pass rule",
-    "goalkeepers",
-    "time-wasting",
-    "1990 world cup",
-    "laws of the game"
+    "shot clock",
+    "penalty kick",
+    "underarm bowling",
+    "rule changes"
   ],
   "era": "twentieth",
   "region": "world",
@@ -27,8 +27,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "The rule",
+    "rightTitle": "Written after",
+    "pairs": [
+      {
+        "left": "Back-pass rule",
+        "right": "A World Cup of 2.2 goals a game",
+        "note": "Italia 90: teams in front passed back to the keeper to kill time."
+      },
+      {
+        "left": "Shot clock",
+        "right": "An NBA game that ended 19–18",
+        "note": "1950: Fort Wayne held the ball and won. The 24-second clock came in 1954.",
+        "missed": true
+      },
+      {
+        "left": "Penalty kick",
+        "right": "A handball on the goal line in a cup tie",
+        "note": "Notts County v Stoke, 1891. The penalty kick arrived that same year."
+      },
+      {
+        "left": "No underarm",
+        "right": "A last ball rolled along the ground",
+        "note": "Australia v New Zealand, 1981: six needed to tie, and the ball was rolled."
+      }
+    ]
+  },
   "source": "FIFA, official report, World Cup Italia 1990",
   "source_kind": "primary_document",
   "reference": "FIFA, Official Report: FIFA World Cup Italia '90, FIFA, 1990",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

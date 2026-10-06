@@ -6,15 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do air-traffic controllers avoid saying take-off until the moment they clear a plane to go?",
-  "answer": "Because of Tenerife in 1977. A KLM crew radioed that they were now at take-off, already rolling. The controller's OK came through; his stand by for take-off was blocked by a simultaneous call. The jumbo struck a Pan Am 747 in fog and 583 people died. Since then, other messages say departure instead.",
+  "question": "Five words from a cockpit radio, each chosen with care. What does each one really mean?",
+  "answer": "Departure is the one people miss, because it looks like a synonym. At Tenerife in 1977 a KLM crew radioed that they were at take-off, already rolling; the controller's stand by was blocked by another call. The jumbo hit a Pan Am 747 in fog and 583 died. Take-off now means only go.",
   "move": "Jargon earns its place when it removes a doubt, not when it adds one.",
   "ask": "Which word in my work means two things, and who might act on the wrong one?",
   "keywords": [
-    "tenerife disaster",
-    "air traffic control",
-    "radio phraseology",
-    "ambiguity"
+    "tenerife",
+    "radiotelephony",
+    "mayday",
+    "roger",
+    "pan-pan"
   ],
   "era": "twentieth",
   "region": "europe",
@@ -26,8 +27,41 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "Radio word",
+    "rightTitle": "What it says",
+    "pairs": [
+      {
+        "left": "Mayday",
+        "right": "Come and help me: a life is at risk",
+        "note": "From French m'aider. Chosen because it carries clearly on a bad line."
+      },
+      {
+        "left": "Pan-pan",
+        "right": "Urgent, but no life in danger yet",
+        "note": "From French panne, a breakdown: one step below mayday."
+      },
+      {
+        "left": "Roger",
+        "right": "The letter R, for received",
+        "note": "R was Roger in the old radio alphabet. It means heard, not will do."
+      },
+      {
+        "left": "Departure",
+        "right": "What you say so take-off means only go",
+        "note": "Tenerife, 1977: at take-off was heard as permission. 583 people died.",
+        "missed": true
+      },
+      {
+        "left": "Over and out",
+        "right": "Nonsense: reply, and do not reply",
+        "note": "Over means your turn, out means finished. Real crews never say both."
+      }
+    ]
+  },
   "source": "ICAO, Manual of Radiotelephony, Doc 9432",
   "source_kind": "primary_document",
   "reference": "International Civil Aviation Organization, Manual of Radiotelephony, Doc 9432, 4th ed., 2007",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

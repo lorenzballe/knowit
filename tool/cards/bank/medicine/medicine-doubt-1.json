@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What happened in Britain after a 1974 report linked the whooping cough vaccine to brain damage?",
-  "answer": "Uptake fell from about 80% to about 30% by 1978, and the disease came back. Between 1977 and 1979 more than 100,000 cases and 36 deaths were reported in large epidemics. Parliament answered with the Vaccine Damage Payments Act of 1979, a no-fault compensation scheme that still pays out today.",
+  "question": "In 1974 a British report linked a children's vaccine to brain damage, and parents stopped using it. Then what?",
+  "answer": "The feared harm was rare and later studies did not confirm it; the harm prevented was common but invisible, because most children had been protected. Whooping cough had faded thanks to the vaccine, and its absence was mistaken for safety. Parliament passed a no-fault compensation law in 1979, and uptake slowly recovered.",
   "move": "When a protection is dropped, count what it was quietly holding back.",
   "ask": "What did I give up that was quietly holding something back, and what came back since?",
   "keywords": [
@@ -27,8 +27,47 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "Britain, 1974",
+        "glyph": "book",
+        "line": "A report links the whooping cough jab to brain damage."
+      },
+      {
+        "fact": "Papers and television",
+        "glyph": "eye",
+        "line": "The story spreads. Parents and even doctors hesitate."
+      },
+      {
+        "fact": "By 1978",
+        "glyph": "fall",
+        "line": "Vaccination falls from about 80% of children to about 30%."
+      }
+    ],
+    "ask": "What happens to whooping cough?",
+    "options": [
+      {
+        "label": "Little change"
+      },
+      {
+        "label": "A few more cases"
+      },
+      {
+        "label": "Big epidemics return"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "1977 to 1979",
+      "glyph": "rise",
+      "line": "Over 100,000 cases and 36 deaths in a wave of epidemics."
+    },
+    "why": "A disease you no longer see feels gone. It was only being held back."
+  },
   "source": "Baker, Vaccine, 2003",
   "source_kind": "paper",
   "reference": "Baker, The pertussis vaccine controversy in Great Britain, 1974-1986, Vaccine, 2003",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

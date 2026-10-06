@@ -112,8 +112,9 @@ class CluesScene extends Scene {
     final clues = <CluesClue>[];
     for (var i = 0; i < list.length; i++) {
       final m = list[i];
-      if (m is! Map)
+      if (m is! Map) {
         throw FormatException('scene.clues[$i]: not an object', id);
+      }
       final out = m['rulesOut'] ?? const [];
       if (out is! List) {
         throw FormatException('scene.clues[$i].rulesOut: a list', id);

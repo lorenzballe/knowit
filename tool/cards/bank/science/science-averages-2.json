@@ -51,9 +51,9 @@
     ],
     "guess": {
       "options": [
-        "People exaggerate their friends",
-        "Popular people get counted more",
-        "Social media inflates numbers"
+        "People overstate friends",
+        "Popular people count more",
+        "Social media inflates"
       ],
       "answer": 1
     }

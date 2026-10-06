@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Does the number inside the recycling arrows on a plastic pot mean it can be recycled?",
-  "answer": "No. The number, 1 to 7, only says which plastic it is; the arrows were a 1988 industry design, not a promise. Bottles marked 1 and 2 are widely recycled; most items marked 3 to 7 have no buyer and are landfilled or burned. In 2013 the standard swapped the arrows for a plain triangle.",
+  "question": "The bottom of a yoghurt pot. What does the mark in the plastic promise about where it ends up?",
+  "answer": "Nothing. The number, 1 to 7, says only which plastic it is, and the arrows were a 1988 industry design, not a promise. Bottles marked 1 and 2 are widely recycled; most items marked 3 to 7 have no buyer and are landfilled or burned. In 2013 the standard swapped the arrows for a triangle.",
   "move": "A symbol that looks like a promise may only be a label.",
   "ask": "Which reassuring symbol do I trust without knowing who put it there or what it promises?",
   "keywords": [
@@ -26,8 +26,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Bottom of a yoghurt pot",
+    "ref": "Moulded in",
+    "title": "Plastic code 6",
+    "body": "Chasing arrows around a 6, PS beneath. Recyclable where facilities exist. Please rinse before recycling.",
+    "phrases": [
+      {
+        "text": "Chasing arrows around a 6",
+        "plain": "A code for plastic type 6",
+        "why": "The number names the plastic. The arrows were a 1988 industry design, not a promise.",
+        "catch": true
+      },
+      {
+        "text": "PS",
+        "plain": "polystyrene",
+        "why": "A plastic that few recycling plants want. Its code is not a ticket in."
+      },
+      {
+        "text": "Recyclable where facilities exist",
+        "plain": "Recyclable in theory; most places don't take it",
+        "why": "Items marked 3 to 7 mostly have no buyer. They are landfilled or burned."
+      }
+    ],
+    "ask": "One mark looks like a promise and is a name tag. Which?",
+    "watch": "Check your council's list, not the pot. The pot only says what it is made of."
+  },
   "source": "ASTM D7611, Resin Identification Code",
   "source_kind": "standard",
   "reference": "ASTM D7611/D7611M, Standard Practice for Coding Plastic Manufactured Articles for Resin Identification, ASTM International, 2013",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

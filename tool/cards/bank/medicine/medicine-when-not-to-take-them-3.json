@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "When a doctor hands over an antibiotic prescription to use only if things get worse, how many people end up taking it?",
-  "answer": "About a third. In the trials pooled by Cochrane, about 30% of patients given a delayed prescription used it, against over 90% given one to take straight away, and satisfaction was almost the same. Most such infections turn the corner within days. The slip in the drawer reassures, and the illness settles first.",
+  "question": "Your cough is a week old. The doctor gives you an antibiotic prescription to use only if you get worse. Do you use it?",
+  "answer": "Most people never do, and fare just as well. Coughs, sore throats and earaches are mostly viral or settle within days, so the slip mainly buys time. In the trials Cochrane pooled, over 90% of those given a prescription to take at once took it. The reassurance did the work; the pills mostly did not.",
   "move": "A safety net you may never use can be worth more than acting now.",
   "ask": "Where could a backup plan in my pocket let me wait and see, instead of acting out of worry?",
   "keywords": [
@@ -26,8 +26,29 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "Patients in trials, Cochrane 2017",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "I'd end up taking it",
+            "share": 30,
+            "mirror": "Like about 3 in 10 given a delayed prescription. Most of those who waited got better anyway."
+          },
+          {
+            "label": "I'd leave it unused",
+            "share": 70,
+            "mirror": "Like about 7 in 10. They were nearly as satisfied as people told to start the pills at once."
+          }
+        ]
+      }
+    ],
+    "why": "Worry pushes us to act now. A prescription in the drawer lets the worry wait while the body heals."
+  },
   "source": "Spurling et al., Cochrane Review, 2017",
   "source_kind": "paper",
   "reference": "Spurling et al., Delayed antibiotic prescriptions for respiratory infections, Cochrane Database of Systematic Reviews, 2017",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

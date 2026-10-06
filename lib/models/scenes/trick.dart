@@ -301,9 +301,8 @@ class TrickScene extends Scene {
     if (cols is! List || cols.any((c) => c is! String || c.trim().isEmpty)) {
       bad('columns must be a list of labels');
     }
-    final columns = [
-      for (final c in cols) (c as String).trim(),
-    ].toList(growable: false);
+    final columns = [for (final c in cols) (c as String).trim()]
+        .toList(growable: false);
     final (lo, hi) = switch (form) {
       TrickSceneForm.bars => (2, 8),
       TrickSceneForm.line => (2, 60),
@@ -317,7 +316,10 @@ class TrickScene extends Scene {
 
     final decimals = whole('decimals', 0);
     final honestDecimals = whole('honestDecimals', 1);
-    if (decimals < 0 || decimals > 2 || honestDecimals < 0 || honestDecimals > 2) {
+    if (decimals < 0 ||
+        decimals > 2 ||
+        honestDecimals < 0 ||
+        honestDecimals > 2) {
       bad('decimals: 0, 1 or 2');
     }
 
@@ -333,7 +335,10 @@ class TrickScene extends Scene {
     TrickSceneRange fairOf(List<double> vs) {
       final a = vs.reduce(math.min), b = vs.reduce(math.max);
       if (bars || a >= 0 && a < (b - a) * 0.6) {
-        return (lo: math.min(0, tidyFloor(a, b)), hi: tidyCeil(math.min(0, a), b));
+        return (
+          lo: math.min(0, tidyFloor(a, b)),
+          hi: tidyCeil(math.min(0, a), b),
+        );
       }
       return (lo: tidyFloor(a, b), hi: tidyCeil(a, b));
     }
@@ -396,7 +401,9 @@ class TrickScene extends Scene {
         shown = fairOf([0, ...values]);
         fair = fairOf([0, ...rates]);
       case TrickSceneKind.flipped:
-        shown = from != null && to != null ? (lo: from, hi: to) : fairOf(values);
+        shown = from != null && to != null
+            ? (lo: from, hi: to)
+            : fairOf(values);
         fair = shown;
       case TrickSceneKind.dual:
         values2 = numbers('values2');
@@ -408,10 +415,13 @@ class TrickScene extends Scene {
         if (to2 <= from2) bad('to2 must be above from2');
         shown2 = (lo: from2, hi: to2);
         final s = raw['series'];
-        if (s is! List || s.length != 2 || s.any((e) => e is! String || e.trim().isEmpty)) {
+        if (s is! List ||
+            s.length != 2 ||
+            s.any((e) => e is! String || e.trim().isEmpty)) {
           bad('series: the two series\' names');
         }
-        series = [for (final e in s) (e as String).trim()].toList(growable: false);
+        series = [for (final e in s) (e as String).trim()]
+            .toList(growable: false);
         shown = (lo: from, hi: to);
         fair = fairOf([0, ...values, ...values2]);
         if (values2.any((v) => v < from2 || v > to2)) {
@@ -453,7 +463,10 @@ class TrickScene extends Scene {
         TrickSceneKind.flipped => {TrickSceneRegion.yaxis},
         TrickSceneKind.window => {TrickSceneRegion.xaxis},
         TrickSceneKind.totals => {TrickSceneRegion.label},
-        TrickSceneKind.dual => {TrickSceneRegion.yaxis, TrickSceneRegion.yaxis2},
+        TrickSceneKind.dual => {
+          TrickSceneRegion.yaxis,
+          TrickSceneRegion.yaxis2,
+        },
         TrickSceneKind.pie => {TrickSceneRegion.marks},
       },
       final List l when l.isNotEmpty => {for (final e in l) region(e)},
@@ -480,9 +493,13 @@ class TrickScene extends Scene {
           ? text('honestLabel', need: true)
           : text('label'),
       unit: text('unit'),
-      honestUnit: trick == TrickSceneKind.totals ? text('honestUnit') : text('unit'),
+      honestUnit: trick == TrickSceneKind.totals
+          ? text('honestUnit')
+          : text('unit'),
       decimals: decimals,
-      honestDecimals: trick == TrickSceneKind.totals ? honestDecimals : decimals,
+      honestDecimals: trick == TrickSceneKind.totals
+          ? honestDecimals
+          : decimals,
       columns: columns,
       values: values,
       values2: values2,

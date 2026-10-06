@@ -416,7 +416,8 @@ class _TrickSceneViewState extends State<TrickSceneView>
             ? [for (var i = a; i <= b; i++) i]
             : [a, b];
         return [
-          for (final i in idx) '${s.columns[i]} ${f.value(vs[i], honest: after)}',
+          for (final i in idx)
+            '${s.columns[i]} ${f.value(vs[i], honest: after)}',
           if (s.trick == TrickSceneKind.dual)
             for (final i in idx)
               '${s.series[1]}, ${s.columns[i]} ${f.value(s.values2[i], honest: after)}',
@@ -637,7 +638,9 @@ class _TrickFormat {
     }
     final unit = scene.unit;
     final short =
-        unit == '%' || unit.startsWith('°') || const {'€', r'$', '£', '¥'}.contains(unit);
+        unit == '%' ||
+        unit.startsWith('°') ||
+        const {'€', r'$', '£', '¥'}.contains(unit);
     return short ? withUnit(n, unit) : n;
   }
 
@@ -718,8 +721,12 @@ class _TrickLayout {
     color: ink.withValues(alpha: 0.62),
   );
 
-  static TextStyle tickStyle(Color ink) =>
-      AppText.label(size: 10.5, weight: FontWeight.w700, spacing: 0.2, color: ink);
+  static TextStyle tickStyle(Color ink) => AppText.label(
+    size: 10.5,
+    weight: FontWeight.w700,
+    spacing: 0.2,
+    color: ink,
+  );
 
   factory _TrickLayout.of({
     required TrickScene scene,
@@ -785,7 +792,12 @@ class _TrickLayout {
     Rect inflateTo(Rect r, {double minW = 44, double minH = 44}) {
       final dx = math.max(0.0, (minW - r.width) / 2);
       final dy = math.max(0.0, (minH - r.height) / 2);
-      return Rect.fromLTRB(r.left - dx, r.top - dy, r.right + dx, r.bottom + dy);
+      return Rect.fromLTRB(
+        r.left - dx,
+        r.top - dy,
+        r.right + dx,
+        r.bottom + dy,
+      );
     }
 
     // What is drawn round a part when it is tapped: hugging what the part
@@ -810,13 +822,13 @@ class _TrickLayout {
 
     if (s.form == TrickSceneForm.pie) {
       final d = math.min(chart.height, chart.width * 0.42);
-      pie = Rect.fromLTWH(
-        chart.left,
-        chart.top + (chart.height - d) / 2,
-        d,
-        d,
+      pie = Rect.fromLTWH(chart.left, chart.top + (chart.height - d) / 2, d, d);
+      rows = Rect.fromLTRB(
+        pie.right + 16,
+        chart.top,
+        chart.right,
+        chart.bottom,
       );
-      rows = Rect.fromLTRB(pie.right + 16, chart.top, chart.right, chart.bottom);
       regions[TrickSceneRegion.label] = Rect.fromLTRB(
         rows.left - 6,
         label.top - 6,
@@ -889,10 +901,20 @@ class _TrickLayout {
         );
       }
       regions[TrickSceneRegion.yaxis] = inflateTo(
-        Rect.fromLTRB(chart.left - 6, plot.top - 8, plot.left + 8, plot.bottom + 8),
+        Rect.fromLTRB(
+          chart.left - 6,
+          plot.top - 8,
+          plot.left + 8,
+          plot.bottom + 8,
+        ),
       );
       regions[TrickSceneRegion.xaxis] = inflateTo(
-        Rect.fromLTRB(plot.left - 2, plot.bottom - 6, plot.right + 2, chart.bottom + 6),
+        Rect.fromLTRB(
+          plot.left - 2,
+          plot.bottom - 6,
+          plot.right + 2,
+          chart.bottom + 6,
+        ),
         minH: 40,
       );
       regions[TrickSceneRegion.marks] = Rect.fromLTRB(
@@ -903,7 +925,12 @@ class _TrickLayout {
       );
       if (right > 0) {
         regions[TrickSceneRegion.yaxis2] = inflateTo(
-          Rect.fromLTRB(plot.right - 8, plot.top - 8, chart.right + 6, plot.bottom + 8),
+          Rect.fromLTRB(
+            plot.right - 8,
+            plot.top - 8,
+            chart.right + 6,
+            plot.bottom + 8,
+          ),
         );
       }
     }
@@ -963,17 +990,18 @@ class _TrickTextCache {
         '$maxLines|${align.index}|$text';
     return _m.putIfAbsent(
       key,
-      () => TextPainter(
-        text: TextSpan(text: text, style: style),
-        maxLines: maxLines,
-        ellipsis: '…',
-        textAlign: align,
-        textDirection: TextDirection.ltr,
-        textScaler: scaler,
-      )..layout(
-        minWidth: align == TextAlign.center ? maxWidth ?? 0 : 0,
-        maxWidth: maxWidth ?? double.infinity,
-      ),
+      () =>
+          TextPainter(
+            text: TextSpan(text: text, style: style),
+            maxLines: maxLines,
+            ellipsis: '…',
+            textAlign: align,
+            textDirection: TextDirection.ltr,
+            textScaler: scaler,
+          )..layout(
+            minWidth: align == TextAlign.center ? maxWidth ?? 0 : 0,
+            maxWidth: maxWidth ?? double.infinity,
+          ),
     );
   }
 
@@ -1101,7 +1129,9 @@ class _TrickChartPainter extends CustomPainter {
       maxLines: maxLines,
       align: align,
     );
-    final w = maxWidth != null && align == TextAlign.center ? maxWidth : tp.width;
+    final w = maxWidth != null && align == TextAlign.center
+        ? maxWidth
+        : tp.width;
     tp.paint(canvas, at - Offset(w * ax, tp.height * ay));
   }
 
@@ -1173,7 +1203,8 @@ class _TrickChartPainter extends CustomPainter {
       );
     }
 
-    final same = s.trick == TrickSceneKind.flipped || s.trick == TrickSceneKind.pie;
+    final same =
+        s.trick == TrickSceneKind.flipped || s.trick == TrickSceneKind.pie;
     for (final v in oldTicks) {
       final both = newTicks.any((n) => (n - v).abs() < 1e-9);
       tickRow(v, same && both ? 1 : oldAlpha, s.shown);
@@ -1228,8 +1259,12 @@ class _TrickChartPainter extends CustomPainter {
     // The marks, kept inside the plot (a little wider, for the end dots).
     canvas.save();
     canvas.clipRect(
-      Rect.fromLTRB(plot.left - 1, layout.chart.top, plot.right + 1, plot.bottom + 1)
-          .inflate(bars ? 0 : 6),
+      Rect.fromLTRB(
+        plot.left - 1,
+        layout.chart.top,
+        plot.right + 1,
+        plot.bottom + 1,
+      ).inflate(bars ? 0 : 6),
     );
     final values = second ? s.honestValues : s.values;
     final grow = s.refills ? (second ? fill : 1 - drain) : 1.0;
@@ -1562,7 +1597,13 @@ class _TrickChartPainter extends CustomPainter {
       for (var i = 0; i < s.count; i++) {
         final sweep = s.values[i] / total * math.pi * 2 * (1 - drain);
         _fill.color = ink.withValues(alpha: shade(i) * (1 - drain));
-        canvas.drawArc(Rect.fromCircle(center: c, radius: r), a, sweep, true, _fill);
+        canvas.drawArc(
+          Rect.fromCircle(center: c, radius: r),
+          a,
+          sweep,
+          true,
+          _fill,
+        );
         _stroke
           ..color = ground.withValues(alpha: 1 - drain)
           ..strokeWidth = 2;
@@ -1701,7 +1742,10 @@ class _TrickBoxPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     // Arrival: each part outlined in turn, dashed and light.
-    if (!frame.solved && frame.tried.isEmpty && frame.nudge > 0 && frame.nudge < 1) {
+    if (!frame.solved &&
+        frame.tried.isEmpty &&
+        frame.nudge > 0 &&
+        frame.nudge < 1) {
       final parts = scene.regions;
       for (var k = 0; k < parts.length; k++) {
         final start = .25 + k * (.55 / parts.length);
@@ -1737,12 +1781,12 @@ class _TrickBoxPainter extends CustomPainter {
           width: full.width * lerpDouble(1.12, 1, grow)!,
           height: full.height * lerpDouble(1.12, 1, grow)!,
         );
-        final a0 = (frame.found ? frame.pop * 3 : frame.settle * 2 + frame.morph).clamp(
-          0.0,
-          1.0,
-        );
+        final a0 =
+            (frame.found ? frame.pop * 3 : frame.settle * 2 + frame.morph)
+                .clamp(0.0, 1.0);
         // A pie's box goes with the pie it marked.
-        final gone = scene.form == TrickSceneForm.pie && r == TrickSceneRegion.marks
+        final gone =
+            scene.form == TrickSceneForm.pie && r == TrickSceneRegion.marks
             ? 1 - frame.morph
             : 1.0;
         final a = a0 * gone;
@@ -1813,8 +1857,16 @@ class _TrickBoxPainter extends CustomPainter {
         _stroke,
       );
     } else {
-      canvas.drawLine(at + const Offset(-3, -3), at + const Offset(3, 3), _stroke);
-      canvas.drawLine(at + const Offset(3, -3), at + const Offset(-3, 3), _stroke);
+      canvas.drawLine(
+        at + const Offset(-3, -3),
+        at + const Offset(3, 3),
+        _stroke,
+      );
+      canvas.drawLine(
+        at + const Offset(3, -3),
+        at + const Offset(-3, 3),
+        _stroke,
+      );
     }
   }
 
@@ -1831,7 +1883,11 @@ class _TrickBadge extends StatelessWidget {
   final Color ink;
   final Color ground;
   final bool right;
-  const _TrickBadge({required this.ink, required this.ground, required this.right});
+  const _TrickBadge({
+    required this.ink,
+    required this.ground,
+    required this.right,
+  });
 
   @override
   Widget build(BuildContext context) => SizedBox.square(
@@ -1867,8 +1923,16 @@ class _BadgePainter extends CustomPainter {
         _stroke,
       );
     } else {
-      canvas.drawLine(c + const Offset(-3, -3), c + const Offset(3, 3), _stroke);
-      canvas.drawLine(c + const Offset(3, -3), c + const Offset(-3, 3), _stroke);
+      canvas.drawLine(
+        c + const Offset(-3, -3),
+        c + const Offset(3, 3),
+        _stroke,
+      );
+      canvas.drawLine(
+        c + const Offset(3, -3),
+        c + const Offset(-3, 3),
+        _stroke,
+      );
     }
   }
 

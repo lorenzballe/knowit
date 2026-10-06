@@ -6,20 +6,20 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How large must the possible win in an even coin toss be before most people accept a possible loss?",
-  "answer": "About twice as large. In Tversky and Kahneman's median estimate, losses weigh about 2.25 times as much as equal gains, so someone risking 100 on a coin toss typically wants a possible win near 225. Later estimates vary by person and setting.",
-  "move": "Check whether fear of losing is pricing a bet, not its odds.",
-  "ask": "When I decline a fair bet, is it the odds I am pricing or my fear of losing?",
+  "question": "Two choices, each between a sure thing and a gamble with the same odds. Which would you take each time?",
+  "answer": "Most people play safe with gains and gamble with losses. Kahneman and Tversky called it the reflection effect: a loss hurts about twice as much as an equal gain pleases, so a sure loss feels unbearable. It is why investors sell winning shares early and cling to losers, hoping to get back to even.",
+  "move": "When losing, ask whether you would take this gamble starting fresh.",
+  "ask": "When I am behind, am I gambling just to get back to even?",
   "keywords": [
+    "reflection effect",
     "loss aversion",
     "prospect theory",
-    "kahneman",
-    "coin toss",
-    "gambles"
+    "gambles",
+    "risk"
   ],
   "era": "twentieth",
   "region": "world",
-  "hook": "number",
+  "hook": "paradox",
   "mood": "practical",
   "numeracy": 2,
   "abstraction": "mixed",
@@ -27,8 +27,45 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Tversky and Kahneman, J. Risk and Uncertainty, 1992",
+  "scene": {
+    "type": "poll",
+    "who": "95 people, Kahneman & Tversky 1979",
+    "questions": [
+      {
+        "prompt": "Which would you rather have?",
+        "tag": "A win",
+        "options": [
+          {
+            "label": "3,000 for sure",
+            "share": 80
+          },
+          {
+            "label": "80% chance of 4,000",
+            "share": 20
+          }
+        ]
+      },
+      {
+        "prompt": "And which would you rather face?",
+        "tag": "A loss",
+        "options": [
+          {
+            "label": "Lose 3,000 for sure",
+            "share": 8
+          },
+          {
+            "label": "80% risk of losing 4,000",
+            "share": 92
+          }
+        ]
+      }
+    ],
+    "why": "A sure gain is worth locking in. A sure loss hurts so much that any gamble to dodge it looks good.",
+    "same": "You held steady. The crowd didn't: the sure thing fell from 80% to 8%.",
+    "switched": "You switched, like most: careful with a win, a gambler with a loss. The odds never moved."
+  },
+  "source": "Kahneman & Tversky, Econometrica, 1979",
   "source_kind": "paper",
-  "reference": "Tversky and Kahneman, Advances in Prospect Theory: Cumulative Representation of Uncertainty, Journal of Risk and Uncertainty, 1992",
-  "written": "2026-09-29"
+  "reference": "Kahneman & Tversky, Prospect Theory: An Analysis of Decision under Risk, Econometrica 47 (1979): 263-291",
+  "written": "2026-10-06"
 }

@@ -37,12 +37,12 @@
         "text": "Flying east shrinks the day: bedtime comes before your clock is ready."
       },
       {
-        "text": "Flying west stretches it: you only have to stay up a bit later."
-      },
-      {
         "text": "Kept from daylight, the human body clock runs a little long.",
         "figure": "24.2 h",
         "unit": "the inner clock's day"
+      },
+      {
+        "text": "So it must be nudged earlier every day just to keep time."
       },
       {
         "text": "A clock that runs slow finds waiting easier than hurrying."
@@ -50,9 +50,9 @@
     ],
     "guess": {
       "options": [
-        "Eastbound flights are at night",
-        "Earth's spin works against you",
-        "The inner day is over 24 hours"
+        "Flights east are overnight",
+        "Earth's spin fights you",
+        "The inner clock runs slow"
       ],
       "answer": 2
     }

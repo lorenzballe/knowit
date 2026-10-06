@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What happened to sales of a $14.99 film when not buying was described as keeping $14.99 for other things?",
-  "answer": "They fell from 75% of people to 55%. In Frederick and colleagues' experiment, the only change was a reminder of what else the money could do. Everyone knew that $14.99 unspent could buy something else, yet a fifth of buyers changed their minds once the alternative was named out loud.",
+  "question": "A film you have wanted to see is on sale on DVD for $14.99. Would you buy it?",
+  "answer": "Naming the alternative moved a fifth of buyers. Everyone knows unspent money can buy something else, but at the till the thought rarely arrives by itself. In Frederick and colleagues' study, only saying it aloud, keep the $14.99 for other purchases, cut buying from 75% to 55%.",
   "move": "Before buying, name one other thing the same money would get.",
   "ask": "Before my next purchase, can I name one other thing that money would buy me?",
   "keywords": [
@@ -18,7 +18,7 @@
   ],
   "era": "recent",
   "region": "americas",
-  "hook": "number",
+  "hook": "paradox",
   "mood": "practical",
   "numeracy": 2,
   "abstraction": "concrete",
@@ -26,8 +26,45 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "Students, Frederick et al. 2009",
+    "questions": [
+      {
+        "prompt": "Buy it, or not?",
+        "tag": "Not buying, said plainly",
+        "options": [
+          {
+            "label": "Buy it",
+            "share": 75
+          },
+          {
+            "label": "Don't buy it",
+            "share": 25
+          }
+        ]
+      },
+      {
+        "prompt": "Same film. Buy it, or keep the $14.99 for other things?",
+        "tag": "Not buying, as $14.99 kept",
+        "options": [
+          {
+            "label": "Buy the film",
+            "share": 55
+          },
+          {
+            "label": "Keep the $14.99",
+            "share": 45
+          }
+        ]
+      }
+    ],
+    "why": "A price names what you get. What else the money could buy stays silent unless someone says it.",
+    "same": "You held steady. The students didn't: buying fell from 75% to 55%.",
+    "switched": "You switched, like a fifth of buyers. Nothing new was said; an obvious thing was said aloud."
+  },
   "source": "Frederick et al., Journal of Consumer Research, 2009",
   "source_kind": "paper",
   "reference": "Frederick, Novemsky, Wang, Dhar & Nowlis, Opportunity Cost Neglect, Journal of Consumer Research, 2009",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

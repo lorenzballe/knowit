@@ -51,9 +51,9 @@
     ],
     "guess": {
       "options": [
-        "Buyers would not forget it",
-        "The shovels were bought cheap",
-        "Head office fixes all prices"
+        "Buyers would not forget",
+        "Shovels were bought cheap",
+        "Head office sets prices"
       ],
       "answer": 0
     }

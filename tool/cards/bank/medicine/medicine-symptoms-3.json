@@ -49,9 +49,9 @@
     ],
     "guess": {
       "options": [
-        "The appendix moves as it swells",
+        "The appendix moves",
         "The brain misfiles gut pain",
-        "Gas spreads the pain around"
+        "Gas spreads the pain"
       ],
       "answer": 1
     }

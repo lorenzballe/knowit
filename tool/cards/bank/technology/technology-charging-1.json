@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do fast-charging claims for phones and cars so often stop at 80%, not 100%?",
+  "question": "Why do fast-charging claims so often stop at 80%, not 100%?",
   "answer": "Because the last fifth is slow by design. A charger pushes constant current until the cell reaches its voltage limit, often around 80% full, then holds that voltage while the current tapers off. Those last 20% can take as long as the first 80%. So the headline stops where the speed stops.",
   "move": "When a figure stops at a round number, ask what happens after it.",
   "ask": "Which number do I trust that stops at a round figure, and what happens after it?",
@@ -49,9 +49,9 @@
     ],
     "guess": {
       "options": [
-        "Chargers overheat after 80%",
-        "A full cell can't take a rush",
-        "Adverts round the number down"
+        "Chargers overheat past 80%",
+        "Full cells can't be rushed",
+        "Adverts round it down"
       ],
       "answer": 1
     }

@@ -35,25 +35,25 @@
     },
     "levels": [
       {
-        "text": "Dry sand looks pale because each grain's surface bounces light back."
+        "text": "Dry sand looks pale: every grain's surface bounces light back."
       },
       {
-        "text": "Light bounces where it crosses from air into a grain."
-      },
-      {
-        "text": "Water bends light almost as much as sand, so that edge nearly vanishes.",
+        "text": "Water bends light almost as much as sand, so those edges nearly vanish.",
         "figure": "1.33",
         "unit": "water; air 1.00, sand 1.54"
       },
       {
-        "text": "Light goes deeper, bounces less, and more of it is absorbed."
+        "text": "Light no longer bounces out early; it travels deeper among the grains."
+      },
+      {
+        "text": "Deeper light gets absorbed, and less comes back to the eye."
       }
     ],
     "guess": {
       "options": [
-        "Water hides the bright edges",
+        "Water hides bright edges",
         "Water is slightly grey",
-        "The grains swell and darken"
+        "Wet grains swell"
       ],
       "answer": 0
     }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did one firm's workers raise their pension savings from 3.5% to 13.6% of pay without feeling poorer?",
-  "answer": "By promising now to save from future pay rises. In Thaler and Benartzi's Save More Tomorrow plan, part of each raise went into the pension, so take-home pay never fell. Workers who had refused to save signed up easily, because the sacrifice belonged to a later self. The rate nearly quadrupled in 40 months.",
+  "question": "Workers who refused to save more for retirement were offered a different deal. What changed their minds?",
+  "answer": "The plan never asked anyone to give up money they could already see. Present pain was zero; the cost belonged to a later self who would never see a smaller pay packet. Then inertia, which usually blocks saving, worked for it: almost nobody opted out, so each raise stepped the rate up again.",
   "move": "Commit today to a sacrifice that only starts later, and it gets done.",
   "ask": "Which good habit could I sign up for now that only starts with my next pay rise?",
   "keywords": [
@@ -26,8 +26,47 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "A US manufacturer, late 1990s",
+        "glyph": "coin",
+        "line": "Workers save about 3.5% of pay. An adviser urges far more."
+      },
+      {
+        "fact": "Most say no",
+        "glyph": "cross",
+        "line": "They can't face a smaller pay packet today."
+      },
+      {
+        "fact": "Save More Tomorrow",
+        "glyph": "calendar",
+        "line": "Offer: nothing now. Part of each future raise goes to savings."
+      }
+    ],
+    "ask": "How many of those who said no sign up?",
+    "options": [
+      {
+        "label": "Hardly any"
+      },
+      {
+        "label": "About a third"
+      },
+      {
+        "label": "Most of them"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "78% joined",
+      "glyph": "rise",
+      "line": "After four raises, their saving rate rose from 3.5% to 13.6%."
+    },
+    "why": "The cost landed on a future self, and because it came out of raises, take-home pay never fell."
+  },
   "source": "Thaler and Benartzi, Journal of Political Economy, 2004",
   "source_kind": "paper",
   "reference": "Thaler & Benartzi, Save More Tomorrow: Using Behavioral Economics to Increase Employee Saving, Journal of Political Economy, 2004",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

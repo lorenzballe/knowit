@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What happened when Max von Pettenkofer drank a culture of cholera bacteria in 1892?",
-  "answer": "He got mild diarrhoea and declared Robert Koch refuted. The Munich hygienist, 73, held that the germ alone could not cause cholera without local soil conditions, and drank it during Hamburg's epidemic. Stomach acid, a weakened culture or partial immunity may explain his luck. Healthy carriers later showed a germ can infect without sickening.",
+  "question": "In 1892 a famous professor tested the cholera germ on his own body. What did his test prove?",
+  "answer": "Nothing, and Koch was right anyway. The germ causes cholera, but not in everyone it reaches: stomach acid kills much of a dose, and many infected people never fall ill. Pettenkofer's survival was one draw from a lottery that killed thousands that autumn in Hamburg, which drank unfiltered river water.",
   "move": "One person who got away with it proves nothing about the rest.",
   "ask": "Which belief do I defend because one person got away with it?",
   "keywords": [
@@ -27,8 +27,47 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "Hamburg, 1892",
+        "glyph": "crowd",
+        "line": "Cholera kills thousands. Koch blames a germ in the water."
+      },
+      {
+        "fact": "Munich, Max von Pettenkofer",
+        "glyph": "book",
+        "line": "A rival, 73, says the germ alone can't do it: soil matters."
+      },
+      {
+        "fact": "October 1892",
+        "glyph": "eye",
+        "line": "To prove it, he swallows a culture of the cholera germ."
+      }
+    ],
+    "ask": "What happens to him?",
+    "options": [
+      {
+        "label": "He dies of cholera"
+      },
+      {
+        "label": "Severe cholera"
+      },
+      {
+        "label": "Mild diarrhoea"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "Within days",
+      "glyph": "check",
+      "line": "Mild diarrhoea. He declares Koch refuted."
+    },
+    "why": "One body is a sample of one: acid, dose or luck can spare a person and not a city."
+  },
   "source": "Evans, Death in Hamburg, 1987",
   "source_kind": "book",
   "reference": "Evans, Death in Hamburg: Society and Politics in the Cholera Years 1830-1910, Oxford University Press, 1987",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

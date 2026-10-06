@@ -6,28 +6,66 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "When patients facing planned surgery use decision aids that set out the options and odds, what happens to surgery rates?",
-  "answer": "They fall a little. A Cochrane review of 105 trials found that patients using decision aids knew more, expected outcomes more accurately, and chose major elective surgery somewhat less often, in favour of gentler options. Patients given the full picture turned out more cautious than the system had assumed for them.",
-  "move": "People given the full picture often choose less, not more.",
-  "ask": "Before I agree to something big, have I seen all the options, including doing less?",
+  "question": "You have lung cancer and two treatments to choose from. Here are their odds, told two ways. Which do you choose?",
+  "answer": "The odds were identical; the wording moved a quarter of people. McNeil and colleagues found it among patients, students and experienced doctors alike. That is why good decision aids give both frames, as counts out of 100. When a choice depends on how it is said, ask to hear it both ways.",
+  "move": "Hear the odds as survivors and as deaths before you choose.",
+  "ask": "When a choice hangs on its wording, have I heard it said both ways?",
   "keywords": [
-    "decision aids",
-    "elective surgery",
-    "cochrane review",
-    "patient choice"
+    "framing",
+    "lung cancer",
+    "surgery",
+    "radiation",
+    "decision aids"
   ],
-  "era": "recent",
-  "region": "world",
-  "hook": "misconception",
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
   "mood": "practical",
-  "numeracy": 1,
-  "abstraction": "mixed",
+  "numeracy": 2,
+  "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Stacey et al., Cochrane Review, 2017",
+  "scene": {
+    "type": "poll",
+    "who": "Patients & doctors, McNeil et al. 1982",
+    "questions": [
+      {
+        "prompt": "Surgery: 90% survive it, 34% are alive at 5 years. Radiation: 100% and 22%.",
+        "tag": "Told as survival",
+        "options": [
+          {
+            "label": "Surgery",
+            "share": 82
+          },
+          {
+            "label": "Radiation",
+            "share": 18
+          }
+        ]
+      },
+      {
+        "prompt": "Surgery: 10% die of it, 66% are dead by 5 years. Radiation: 0% and 78%.",
+        "tag": "Told as deaths",
+        "options": [
+          {
+            "label": "Surgery",
+            "share": 56
+          },
+          {
+            "label": "Radiation",
+            "share": 44
+          }
+        ]
+      }
+    ],
+    "why": "A 10% chance of dying on the table looms larger than a 90% chance of living through it.",
+    "same": "You held steady. The crowd didn't: radiation rose from 18% to 44%.",
+    "switched": "You switched, like many patients and doctors. The odds were the same; only the words moved."
+  },
+  "source": "McNeil et al., NEJM, 1982",
   "source_kind": "paper",
-  "reference": "Stacey et al., Decision aids for people facing health treatment or screening decisions, Cochrane Database of Systematic Reviews, 2017",
-  "written": "2026-10-03"
+  "reference": "McNeil, Pauker, Sox & Tversky, On the elicitation of preferences for alternative therapies, New England Journal of Medicine 306 (1982): 1259-1262",
+  "written": "2026-10-06"
 }

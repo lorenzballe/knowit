@@ -266,8 +266,9 @@ void main() {
           findsOneWidget,
         );
         // Each struck suspect carries the number of the clue that ruled it
-        // out: two by clue 2, one by clue 3.
-        expect(find.text('2'), findsNWidgets(2 + 1));
+        // out: two by clue 2, one by clue 3. Card 2 shows its number too,
+        // unless its edge is a sliver.
+        expect(find.text('2'), findsNWidgets(height >= 300 ? 3 : 2));
       });
     }
 
@@ -429,6 +430,11 @@ void main() {
       }
     }
 
+    // Real file reads hang inside a widget test's fake clock: load first.
+    setUpAll(() async {
+      if (_shots) await fonts();
+    });
+
     final samples = _shots
         ? (jsonDecode(
             File('tool/cards/samples/clues.json').readAsStringSync(),
@@ -459,7 +465,6 @@ void main() {
     ]) {
       for (final card in samples) {
         testWidgets('${card['id']} on $phoneName', (tester) async {
-          await fonts();
           tester.view.physicalSize = size * 3;
           tester.view.devicePixelRatio = 3;
           addTearDown(tester.view.resetPhysicalSize);

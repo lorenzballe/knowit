@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did hormone replacement therapy seem to protect women's hearts until a randomised trial tested it?",
-  "answer": "Because the women who chose it were healthier to begin with: richer, slimmer, more active. Observational studies credited the pills. The Women's Health Initiative assigned 16,608 women by lot and in 2002 found slightly more heart disease on the hormones, not less. The healthy habits came with the prescription, not from it.",
+  "question": "Women on hormone therapy had fewer heart attacks. Did the hormones protect their hearts?",
+  "answer": "The pills had been credited with what their users brought along. Women who seek out a preventive treatment and stick with it tend to look after themselves in every way, so the studies compared healthy women with less healthy ones. Only drawing lots breaks that link, because the lot does not know who jogs.",
   "move": "Ask who chooses a treatment before crediting it with their health.",
   "ask": "Which habit do I credit for my health that people like me tend to have anyway?",
   "keywords": [
@@ -26,8 +26,52 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "1980s and 1990s",
+        "glyph": "eye",
+        "line": "Big studies follow women on and off hormones after menopause."
+      },
+      {
+        "fact": "The pattern",
+        "glyph": "fall",
+        "line": "Women taking hormones have far fewer heart attacks."
+      },
+      {
+        "fact": "Millions of prescriptions",
+        "glyph": "rise",
+        "line": "Doctors prescribe it, partly to protect the heart."
+      },
+      {
+        "fact": "Women's Health Initiative",
+        "glyph": "coin",
+        "line": "A trial gives 16,608 women hormones or dummy pills, by lot."
+      }
+    ],
+    "ask": "What happens to heart disease?",
+    "options": [
+      {
+        "label": "Far less on hormones"
+      },
+      {
+        "label": "No difference"
+      },
+      {
+        "label": "More on hormones"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "Stopped early, 2002",
+      "glyph": "cross",
+      "line": "Slightly more heart disease on hormones, not less."
+    },
+    "why": "The women who chose hormones were already healthier: richer, slimmer, more active."
+  },
   "source": "Writing Group for the WHI, JAMA, 2002",
   "source_kind": "paper",
   "reference": "Writing Group for the Women's Health Initiative Investigators, Risks and benefits of estrogen plus progestin in healthy postmenopausal women, JAMA 288:321–333, 2002",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

@@ -48,9 +48,9 @@
     ],
     "guess": {
       "options": [
-        "Dogs track by smell, not sight",
-        "Red is picked for human eyes",
-        "Dogs see in black and white"
+        "Dogs track by smell",
+        "Red suits human eyes",
+        "Dogs see in grey"
       ],
       "answer": 1
     }

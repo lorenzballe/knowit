@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why can an ibuprofen taken before a daily low-dose aspirin cancel the aspirin's heart protection?",
+  "question": "Why can an ibuprofen taken before a daily aspirin cancel its heart protection?",
   "answer": "Because aspirin's effect is permanent and ibuprofen's is not. Aspirin locks the platelet enzyme COX-1 for the platelet's whole life, which is why a tiny daily dose is enough. Ibuprofen only sits there for a while. The FDA's 2006 advice: ibuprofen at least 30 minutes after immediate-release aspirin, or over 8 hours before.",
   "move": "Two harmless habits can cancel each other when they compete for one door.",
   "ask": "Which two harmless habits of mine could be cancelling each other out?",
@@ -52,8 +52,8 @@
     "guess": {
       "options": [
         "Ibuprofen destroys aspirin",
-        "It blocks the spot aspirin needs",
-        "Together they thin blood too much"
+        "It blocks aspirin's spot",
+        "The blood gets too thin"
       ],
       "answer": 1
     }

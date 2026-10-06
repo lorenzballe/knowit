@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why can a US supplement say it supports immune health without ever proving it?",
-  "answer": "Because a 1994 law treats supplements more like food than medicine. Makers need no approval before selling, and may claim a product supports a body function, provided the label adds that the statement has not been evaluated by the Food and Drug Administration. That small print is where the missing evidence is declared.",
+  "question": "The label of a vitamin bottle sold in the US. Which line, in the smallest print, matters most?",
+  "answer": "The asterisk. Under a 1994 US law, supplements are sold without approval and may claim to support a body function, as long as this disclaimer sits beside the claim. They may not claim to treat a disease. So a label can sound medical while saying, in law, that nobody checked.",
   "move": "Read the small print first; it says what nobody checked.",
   "ask": "Which health claim did I believe this year without noticing who, if anyone, checked it?",
   "keywords": [
@@ -26,8 +26,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Dietary supplement",
+    "ref": "US label",
+    "title": "Immune support",
+    "body": "Supports a healthy immune system.* Clinically researched ingredients. *These statements have not been evaluated by the Food and Drug Administration.",
+    "phrases": [
+      {
+        "text": "Supports a healthy immune system.*",
+        "plain": "Claims to help a body function, no proof needed.*",
+        "why": "A structure-function claim: the maker only has to notify the FDA, not show it works."
+      },
+      {
+        "text": "Clinically researched ingredients",
+        "plain": "Ingredients someone has studied, for something",
+        "why": "Researched is not proven. It doesn't say for what, at what dose, or with what result."
+      },
+      {
+        "text": "have not been evaluated",
+        "plain": "were never checked",
+        "why": "The law makes the maker print this beside the claim. It is where the evidence is missing.",
+        "catch": true
+      }
+    ],
+    "ask": "One line is the law saying nobody checked. Which?",
+    "watch": "Follow the asterisk. Where a claim leads to small print, the evidence stops."
+  },
   "source": "US FDA, supplement claims guidance",
   "source_kind": "institution",
   "reference": "US Food and Drug Administration, Structure/function claims for dietary supplements under the Dietary Supplement Health and Education Act of 1994",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

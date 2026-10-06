@@ -49,9 +49,9 @@
     ],
     "guess": {
       "options": [
-        "Bigger fruit dilutes the flavour",
-        "It shut down the fruit's own sugar",
-        "Thicker skins trap the aroma"
+        "Bigger fruit, less flavour",
+        "It cut the fruit's sugar",
+        "Thicker skins trap aroma"
       ],
       "answer": 1
     }

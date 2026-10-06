@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Ask each partner what share of the housework they do. Why do the two answers add up past 100%?",
+  "question": "Why do two partners' shares of the housework add up to more than 100%?",
   "answer": "Because memory keeps a lopsided ledger. Ross and Sicoly asked married couples for their share of everyday activities, from shopping to planning outings, and the two estimates tended to total more than 100%. The same arithmetic runs in teams and group projects. Before arguing about fairness, list what the other person did.",
   "move": "Count the work you did not see before you weigh your share.",
   "ask": "In my home or team, what does the other person do that I rarely see happening?",
@@ -49,8 +49,8 @@
     "guess": {
       "options": [
         "Each wants to look good",
-        "Our own work is easier to recall",
-        "People are bad at fractions"
+        "Own work comes to mind",
+        "People are bad at maths"
       ],
       "answer": 1
     }
