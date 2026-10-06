@@ -28,12 +28,12 @@
   "figure": "none",
   "scene": {
     "type": "sort",
-    "left": "Fell apart",
+    "left": "Failed",
     "right": "Held up",
     "tag": "Repeated in many labs",
     "items": [
       {
-        "text": "Sugar for willpower",
+        "text": "Willpower fuel",
         "note": "Self-control runs down, and glucose refills it.",
         "pile": "left",
         "verdict": "23 labs, 2,141 people: the depletion effect was close to zero."

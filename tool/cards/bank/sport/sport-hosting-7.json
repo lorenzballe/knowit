@@ -27,7 +27,7 @@
   "figure": "none",
   "scene": {
     "type": "sort",
-    "left": "Not listed",
+    "left": "Clear",
     "right": "Listed",
     "tag": "Olympics Act 2006",
     "items": [
@@ -62,10 +62,10 @@
         "verdict": "London and summer are both second-list words."
       },
       {
-        "text": "Twenty twelve sale",
+        "text": "2012 sale",
         "note": "A shop's new-year offer.",
         "pile": "left",
-        "verdict": "Twenty twelve alone, with no second word from either list."
+        "verdict": "2012 alone, with no second word from either list."
       },
       {
         "text": "Bronze 2012",

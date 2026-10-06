@@ -29,7 +29,7 @@
   "scene": {
     "type": "sort",
     "left": "Myth",
-    "right": "Real decree",
+    "right": "Real",
     "tag": "Dying is forbidden",
     "items": [
       {
@@ -51,8 +51,8 @@
         "verdict": "Another full cemetery. The protest won it room to expand."
       },
       {
-        "text": "Houses of Parliament",
-        "note": "It is illegal to die in them.",
+        "text": "Westminster",
+        "note": "The Houses of Parliament: it is illegal to die in them.",
         "pile": "left",
         "verdict": "In 2013 the Law Commission could find no such law."
       },
@@ -63,8 +63,8 @@
         "verdict": "About a hundred plots were left in its two cemeteries."
       },
       {
-        "text": "Falciano del Massico",
-        "note": "An Italian village, 2012.",
+        "text": "Falciano",
+        "note": "Falciano del Massico, an Italian village, 2012.",
         "pile": "right",
         "verdict": "Its dead had to be buried in the next town over."
       }

@@ -29,7 +29,7 @@
   "figure": "none",
   "scene": {
     "type": "sort",
-    "left": "Abolished",
+    "left": "Ended",
     "right": "Still held",
     "tag": "Old England",
     "items": [
@@ -64,8 +64,8 @@
         "verdict": "Six horseshoes and 61 nails, counted out every year since 1211."
       },
       {
-        "text": "Benefit of clergy",
-        "note": "Read a Bible verse and escape the noose.",
+        "text": "Neck verse",
+        "note": "Benefit of clergy: read a Bible verse, escape the noose.",
         "pile": "left",
         "verdict": "Abolished in 1827."
       },

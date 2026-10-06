@@ -57,14 +57,14 @@
         "verdict": "It raises the boiling point a fraction. The salt is there for taste."
       },
       {
-        "text": "Bread in the fridge",
+        "text": "Fridge bread",
         "note": "It goes stale faster than on the counter.",
         "pile": "right",
         "verdict": "Starch recrystallises fastest in the cold. Freeze it or leave it out."
       },
       {
-        "text": "Tomatoes in the fridge",
-        "note": "Cold dulls their flavour.",
+        "text": "Cold tomatoes",
+        "note": "The fridge dulls their flavour.",
         "pile": "right",
         "verdict": "Chilled at 5 °C they stop making flavour compounds, and some never restart."
       }

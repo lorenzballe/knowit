@@ -28,7 +28,7 @@
   "scene": {
     "type": "sort",
     "left": "Gone",
-    "right": "Found alive",
+    "right": "Alive",
     "tag": "Missing, presumed extinct",
     "items": [
       {
@@ -56,8 +56,8 @@
         "verdict": "The last known one died in a Hobart zoo in 1936."
       },
       {
-        "text": "Lord Howe stick insect",
-        "note": "A giant insect wiped out by rats in the 1920s.",
+        "text": "Stick insect",
+        "note": "A giant Lord Howe Island insect, wiped out by rats in the 1920s.",
         "pile": "right",
         "verdict": "In 2001, 24 were found on Ball's Pyramid, a sea stack 23 km away."
       },

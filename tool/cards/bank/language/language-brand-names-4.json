@@ -29,7 +29,7 @@
   "scene": {
     "type": "sort",
     "left": "Generic",
-    "right": "Trademark",
+    "right": "Owned",
     "tag": "Brand or word?",
     "items": [
       {

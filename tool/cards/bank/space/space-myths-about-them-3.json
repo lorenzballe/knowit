@@ -34,14 +34,14 @@
     "tag": "Black holes",
     "items": [
       {
-        "text": "Collider black holes",
-        "note": "A collider could make one that eats Earth.",
+        "text": "Collider",
+        "note": "A particle collider could make a black hole that eats Earth.",
         "pile": "left",
         "verdict": "Cosmic rays hit dense stars harder, for aeons. The stars are still there."
       },
       {
-        "text": "Cosmic vacuums",
-        "note": "They suck in everything around them.",
+        "text": "Suction",
+        "note": "Black holes suck in everything around them.",
         "pile": "left",
         "verdict": "From far off, a black hole pulls like any star of the same mass."
       },
@@ -58,7 +58,7 @@
         "verdict": "It is far too light. It will end as a white dwarf."
       },
       {
-        "text": "Crossing the edge",
+        "text": "The edge",
         "note": "You could fall into a giant one and feel nothing at first.",
         "pile": "right",
         "verdict": "At a huge black hole's edge the stretching is gentle. It comes later."
