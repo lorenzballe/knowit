@@ -473,5 +473,7 @@
   "successFootRenews": "Odnawia się {date} · anuluj w każdej chwili",
   "tryToday": "WYPRÓBUJ DZIŚ",
   "minutesShort": "{n} MIN",
-  "sideOr": "czy"
+  "sideOr": "czy",
+  "nextStep": "Następny krok",
+  "showAllSteps": "Pokaż wszystko"
 }

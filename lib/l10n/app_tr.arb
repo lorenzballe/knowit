@@ -473,5 +473,7 @@
   "successFootRenews": "{date} tarihinde yenilenir · istediğin zaman iptal et",
   "tryToday": "BUGÜN DENE",
   "minutesShort": "{n} DK",
-  "sideOr": "ya da"
+  "sideOr": "ya da",
+  "nextStep": "Sonraki adım",
+  "showAllSteps": "Tümünü göster"
 }

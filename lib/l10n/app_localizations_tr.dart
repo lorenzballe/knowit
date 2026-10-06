@@ -1972,4 +1972,10 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get sideOr => 'ya da';
+
+  @override
+  String get nextStep => 'Sonraki adım';
+
+  @override
+  String get showAllSteps => 'Tümünü göster';
 }

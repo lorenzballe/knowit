@@ -473,5 +473,7 @@
   "successFootRenews": "{date}에 갱신 · 언제든 해지 가능",
   "tryToday": "오늘 해 보기",
   "minutesShort": "{n}분",
-  "sideOr": "또는"
+  "sideOr": "또는",
+  "nextStep": "다음 단계",
+  "showAllSteps": "모두 보기"
 }

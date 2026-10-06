@@ -1988,4 +1988,10 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get sideOr => 'of';
+
+  @override
+  String get nextStep => 'Volgende stap';
+
+  @override
+  String get showAllSteps => 'Alles tonen';
 }

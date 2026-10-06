@@ -473,5 +473,7 @@
   "successFootRenews": "{date}に更新 · いつでも解約可能",
   "tryToday": "今日やってみる",
   "minutesShort": "{n}分",
-  "sideOr": "または"
+  "sideOr": "または",
+  "nextStep": "次のステップ",
+  "showAllSteps": "すべて表示"
 }

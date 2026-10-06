@@ -2963,6 +2963,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'or'**
   String get sideOr;
+
+  /// Button under a worked solution: show its next step.
+  ///
+  /// In en, this message translates to:
+  /// **'Next step'**
+  String get nextStep;
+
+  /// Button under a worked solution: show every step at once.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all'**
+  String get showAllSteps;
 }
 
 class _AppLocalizationsDelegate

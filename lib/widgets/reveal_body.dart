@@ -5,6 +5,7 @@ import '../l10n/l10n.dart';
 import '../models/pill.dart';
 import '../theme.dart';
 import 'diagram_view.dart';
+import 'motion.dart';
 
 /// Everything a card says once it is turned over: the reasoning, the trap,
 /// the plain-words retelling and the other side of a debate.
@@ -24,12 +25,17 @@ class RevealBody extends StatefulWidget {
   final Color wash;
   final Color washEdge;
 
+  /// A worked solution one step at a time, the first time it is turned
+  /// over; whole, when it is looked at again from the archive.
+  final bool stepByStep;
+
   const RevealBody({
     super.key,
     required this.pill,
     required this.ink,
     required this.wash,
     required this.washEdge,
+    this.stepByStep = false,
   });
 
   /// The version that sits on a coloured card.
@@ -39,6 +45,7 @@ class RevealBody extends StatefulWidget {
     ink: pill.ink,
     wash: pill.wash,
     washEdge: pill.washEdge,
+    stepByStep: true,
   );
 
   /// The version that sits on the page rather than on a card, so it takes
@@ -69,7 +76,7 @@ class _RevealBodyState extends State<RevealBody> {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (pill.hasSteps)
-          _Steps(pill: pill, ink: widget.ink)
+          _Steps(pill: pill, ink: widget.ink, stepByStep: widget.stepByStep)
         else
           Text(
             pill.answer,
@@ -164,47 +171,151 @@ class _RevealBodyState extends State<RevealBody> {
   }
 }
 
-/// The solution, one move per line, so a long derivation stays followable.
-class _Steps extends StatelessWidget {
+/// The solution, one move at a time: the first step is shown, and each tap
+/// brings the next one in under it, joined by a line, so a derivation is
+/// followed rather than skimmed. "Show all" is there for the reader who
+/// would rather see it whole.
+class _Steps extends StatefulWidget {
   final Pill pill;
   final Color ink;
-  const _Steps({required this.pill, required this.ink});
+  final bool stepByStep;
+  const _Steps({
+    required this.pill,
+    required this.ink,
+    required this.stepByStep,
+  });
+
+  @override
+  State<_Steps> createState() => _StepsState();
+}
+
+class _StepsState extends State<_Steps> {
+  late int _shown = widget.stepByStep ? 1 : widget.pill.steps.length;
 
   @override
   Widget build(BuildContext context) {
+    final steps = widget.pill.steps;
+    final ink = widget.ink;
+    final all = _shown >= steps.length;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: List.generate(pill.steps.length, (i) {
-        return Padding(
-          padding: EdgeInsets.only(bottom: i == pill.steps.length - 1 ? 0 : 10),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (int i = 0; i < _shown && i < steps.length; i++)
+          RiseIn(
+            key: ValueKey('step-$i'),
+            child: IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(
+                    width: 30,
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 22,
+                          height: 22,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: i == _shown - 1 && !all
+                                ? ink
+                                : ink.withValues(alpha: 0.14),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            '${i + 1}',
+                            style: AppText.label(
+                              size: 10.5,
+                              spacing: 0,
+                              color: i == _shown - 1 && !all
+                                  ? widget.pill.color
+                                  : ink.withValues(alpha: 0.75),
+                            ),
+                          ),
+                        ),
+                        if (i < _shown - 1)
+                          Expanded(
+                            child: Container(
+                              width: 2,
+                              margin: const EdgeInsets.symmetric(vertical: 3),
+                              color: ink.withValues(alpha: 0.2),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: 1,
+                        bottom: i == _shown - 1 ? 0 : 14,
+                      ),
+                      child: Text(
+                        steps[i],
+                        style: AppText.body(
+                          size: 15,
+                          height: 1.45,
+                          color: ink.withValues(alpha: 0.92),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        if (!all) ...[
+          const SizedBox(height: 14),
+          Wrap(
+            spacing: 14,
+            runSpacing: 8,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              SizedBox(
-                width: 20,
-                child: Text(
-                  '${i + 1}',
-                  style: AppText.label(
-                    size: 11,
-                    height: 1.55,
-                    color: ink.withValues(alpha: 0.5),
+              Semantics(
+                button: true,
+                child: GestureDetector(
+                  key: const ValueKey('next-step'),
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => setState(() => _shown++),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      color: ink,
+                      borderRadius: BorderRadius.circular(999),
+                    ),
+                    child: Text(
+                      '${context.l10n.nextStep}  ${_shown + 1}/${steps.length}',
+                      style: AppText.body(
+                        size: 13.5,
+                        weight: FontWeight.w700,
+                        color: widget.pill.color,
+                      ),
+                    ),
                   ),
                 ),
               ),
-              Expanded(
-                child: Text(
-                  pill.steps[i],
-                  style: AppText.body(
-                    size: 15,
-                    height: 1.45,
-                    color: ink.withValues(alpha: 0.92),
+              Semantics(
+                button: true,
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => setState(() => _shown = steps.length),
+                  child: Text(
+                    context.l10n.showAllSteps,
+                    style: AppText.body(
+                      size: 13.5,
+                      weight: FontWeight.w600,
+                      color: ink.withValues(alpha: 0.7),
+                    ),
                   ),
                 ),
               ),
             ],
           ),
-        );
-      }),
+        ],
+      ],
     );
   }
 }

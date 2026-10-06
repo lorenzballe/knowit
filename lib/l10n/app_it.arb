@@ -473,5 +473,7 @@
   "successFootRenews": "Si rinnova il {date} · disdici quando vuoi",
   "tryToday": "PROVALO OGGI",
   "minutesShort": "{n} MIN",
-  "sideOr": "o"
+  "sideOr": "o",
+  "nextStep": "Passo successivo",
+  "showAllSteps": "Mostra tutto"
 }

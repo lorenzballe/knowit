@@ -2052,4 +2052,10 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get sideOr => 'czy';
+
+  @override
+  String get nextStep => 'Następny krok';
+
+  @override
+  String get showAllSteps => 'Pokaż wszystko';
 }

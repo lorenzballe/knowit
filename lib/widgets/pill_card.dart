@@ -11,6 +11,7 @@ import 'hold_to_keep.dart';
 import 'motion.dart';
 import 'place_it.dart';
 import 'scene_view.dart';
+import 'stamp.dart';
 import 'reveal_body.dart';
 import 'scaled_text.dart';
 import 'subject_icon.dart';
@@ -198,12 +199,21 @@ class PillCard extends StatelessWidget {
                       pill: pill,
                       onAnswer: onAnswer,
                       given: given,
-                      input: (commit) => _PickInput(
-                        pill: pill,
-                        options: options,
-                        onAnswer: commit,
-                        taken: int.tryParse(given?.response ?? ''),
-                      ),
+                      // True or false is answered with a stamp.
+                      input: (commit) => pill.isTrueOrFalse
+                          ? StampInput(
+                              pill: pill,
+                              onAnswer: commit,
+                              taken: onAnswer == null
+                                  ? int.tryParse(given?.response ?? '')
+                                  : null,
+                            )
+                          : _PickInput(
+                              pill: pill,
+                              options: options,
+                              onAnswer: commit,
+                              taken: int.tryParse(given?.response ?? ''),
+                            ),
                     ),
                     TakeASide(:final positions) => _AskFace(
                       pill: pill,
@@ -390,8 +400,27 @@ class _BackFace extends StatelessWidget {
                 ),
                 const SizedBox(height: 14),
               ],
+              if (pill.isTrueOrFalse) ...[
+                // The answer, stamped: what the claim actually is.
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: PopIn(
+                    delay: const Duration(milliseconds: 420),
+                    child: Stamp(
+                      label:
+                          (pill.challenge as PickOne).correct == pill.trueIndex
+                          ? 'TRUE'
+                          : 'FALSE',
+                      ink: pill.ink,
+                      size: 17,
+                      angle: 0.1,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+              ],
               Text(
-                pill.question,
+                pill.claim,
                 style: AppText.display(
                   size: pill.asksSomething ? 18 : 20,
                   weight: FontWeight.w600,
@@ -556,18 +585,40 @@ class _AskFaceState extends State<_AskFace> {
               // card instead of inventing one per question length.
               SizedBox(
                 height: constraints.maxHeight * 0.48,
-                child: ScaledText(
-                  text: pill.question,
-                  min: 18,
-                  max: 28,
-                  alignment: Alignment.bottomLeft,
-                  styleFor: (size) => AppText.display(
-                    size: size,
-                    weight: FontWeight.w600,
-                    height: 1.14,
-                    spacing: -0.3 - size * 0.018,
-                    color: pill.ink,
-                  ),
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: ScaledText(
+                        text: pill.claim,
+                        min: 18,
+                        max: 28,
+                        alignment: Alignment.bottomLeft,
+                        styleFor: (size) => AppText.display(
+                          size: size,
+                          weight: FontWeight.w600,
+                          height: 1.14,
+                          spacing: -0.3 - size * 0.018,
+                          color: pill.ink,
+                        ),
+                      ),
+                    ),
+                    // The stamp brought down stays on the card while the
+                    // reader says how sure they are.
+                    if (_pending != null && pill.isTrueOrFalse)
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: PopIn(
+                          child: Stamp(
+                            label: _pending == '${pill.trueIndex}'
+                                ? 'TRUE'
+                                : 'FALSE',
+                            ink: pill.ink,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
               const SizedBox(height: 22),
