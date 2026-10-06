@@ -49,7 +49,7 @@
 /* 3 · where does it block */
 .diag{position:relative;flex:1;min-height:0}
 .drugs{display:grid;grid-template-columns:1fr 1fr;gap:1.1cqh 3cqw;flex:none}
-.drug{display:flex;flex-direction:column;align-items:flex-start;gap:.7cqh;text-align:left;border:0;cursor:pointer;border-radius:1.8cqh;padding:1.2cqh 4cqw;background:color-mix(in srgb,var(--k) 14%,transparent);color:var(--k)}
+.drug{display:flex;flex-direction:column;align-items:flex-start;gap:.6cqh;text-align:left;border:0;cursor:pointer;border-radius:1.6cqh;padding:1cqh 4cqw;background:color-mix(in srgb,var(--k) 14%,transparent);color:var(--k)}
 .drug b{font:800 2cqh/1 var(--body)}
 .drug span{font:700 1.15cqh/1 var(--mono);letter-spacing:.06em;opacity:.8;text-transform:uppercase}
 .drug.on{background:var(--k);color:var(--c)}
@@ -63,9 +63,11 @@
 /* 5 · kinetic type */
 .kin{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;overflow:hidden}
 .kl{position:relative;display:flex;align-items:baseline;gap:3cqw;white-space:nowrap}
-.kw{font:900 11cqh/.86 var(--display);letter-spacing:-.045em}
+.kw{font:900 14cqh/.86 var(--display);letter-spacing:-.045em}
+.krow{display:flex;align-items:center;justify-content:space-between;gap:3cqw;margin-bottom:1.6cqh}
+.ktop{font:800 1.5cqh/1.2 var(--body);letter-spacing:.12em;text-transform:uppercase;border-bottom:.3cqh solid var(--k);padding-bottom:1.2cqh;margin-bottom:1cqh}
 .kmeta{display:flex;flex-direction:column;gap:.5cqh;font:700 1.3cqh/1.1 var(--mono);letter-spacing:.06em;text-transform:uppercase}
-.stamp{position:absolute;right:0;top:50%;font:900 2.5cqh/1 var(--body);letter-spacing:.08em;padding:.8cqh 2.6cqw;border-radius:.8cqh;transform:translateY(-50%) rotate(-6deg)}
+.stamp{font:900 2.4cqh/1 var(--body);letter-spacing:.08em;padding:.8cqh 2.6cqw;border-radius:.8cqh;transform:rotate(-5deg)}
 .stamp.ok{background:var(--k);color:var(--c)}
 .stamp.no{box-shadow:inset 0 0 0 .35cqh var(--k)}
 .big2{display:flex;flex-direction:column;gap:.6cqh}
@@ -110,7 +112,7 @@
         <div class="label"><span class="t">Music</span><span class="tag">SOUND ON</span></div>
         <h2 class="q">Hitchcock’s <em>The Birds</em> has no music score. Most of its screaming flock was played on a wire.</h2>
         <div class="stagebox">
-          <div class="scope"><canvas id="birdCv"></canvas><span class="mono l">Mixtur-Trautonium · our synthesis</span><span class="mono r num" id="birdHz">880 Hz</span><span class="cc" id="birdCc">[silence]</span></div>
+          <div class="scope"><canvas id="birdCv"></canvas><span class="mono l">Our synthesis</span><span class="mono r num" id="birdHz">880 Hz</span><span class="cc" id="birdCc">[silence]</span></div>
           <div class="subs" role="group" aria-label="Subharmonics"><span class="mono">Add<br>subharmonics</span>
             <button class="sub" data-k="2" aria-pressed="false" aria-label="Add one half">½</button><button class="sub" data-k="3" aria-pressed="false" aria-label="Add one third">⅓</button><button class="sub" data-k="4" aria-pressed="false" aria-label="Add one quarter">¼</button></div>
           <div class="wire" id="birdWire" tabindex="0" role="slider" aria-label="Press the wire onto the rail to play" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><svg class="full" id="birdSvg" aria-hidden="true"></svg></div>
@@ -126,7 +128,7 @@
     <article class="card" id="pain" style="--c:#FF3B30;--k:#ffffff;--edge:#9e1c14" data-kind="Where does it block? · diagram">
       <div class="in">
         <div class="label"><span class="t">Medicine</span><span class="tag">TAP A DRUG</span></div>
-        <h2 class="q qs">Stub your toe: the signal runs up a nerve, up the spine, to the brain. Where does each painkiller cut it?</h2>
+        <h2 class="q qs">Stub your toe. The signal runs up a nerve, up the spine, to the brain. Where does each painkiller cut it?</h2>
         <div class="stagebox">
           <div class="diag"><svg class="full" id="painSvg" role="img" aria-label="The pain route from toe to brain"></svg></div>
           <div class="drugs" id="painDrugs">
@@ -146,7 +148,7 @@
     <article class="card" id="newc" style="--c:#4C6FFF;--k:#ffffff;--edge:#2a3fa3" data-kind="Debate · branching paths">
       <div class="in">
         <div class="label"><span class="t">Philosophy</span><span class="tag">PICK A SIDE</span></div>
-        <h2 class="q qs">A predictor that is almost never wrong filled the boxes yesterday. The glass one holds $1,000. Take only the closed box, or both?</h2>
+        <h2 class="q qs">A predictor that is almost never wrong filled the boxes yesterday. Glass box: $1,000. Take the closed box only, or both?</h2>
         <div class="stagebox">
           <div class="tree"><svg class="full" id="newcSvg" role="img" aria-label="Every way the game can go"></svg></div>
           <div class="row pick" id="newcPick"><button class="btn" data-s="one">Only the closed box</button><button class="btn ghost" data-s="two">Both boxes</button></div>
@@ -163,7 +165,7 @@
       <div class="in">
         <div class="label"><span class="t">Food</span><span class="tag">DEBATE</span></div>
         <div class="stagebox"><div class="kin" id="chzKin"></div></div>
-        <h2 class="q qs" id="chzQ">In the US, cheese made from raw milk must age at least 60 days. Is a calendar a safety test?</h2>
+        <h2 class="q" id="chzQ">So is a calendar a good safety test?</h2>
         <div class="row pick" id="chzPick"><button class="btn" data-s="drop">Drop the rule</button><button class="btn ghost" data-s="keep">Keep it</button></div>
         <div class="ctl gone" id="chzCtl"><button class="btn" id="chzNext">Now the other side</button></div>
         <p class="say gone" id="chzSay"></p>
@@ -179,6 +181,7 @@
 gsap.registerPlugin(SplitText, DrawSVGPlugin);
 const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const D = s => calm ? 0 : s;
+const MONO = "'JetBrains Mono', ui-monospace, monospace";
 const wait = ms => new Promise(r => setTimeout(r, ms));
 const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': f, fill: '#fff', 'letter-spacing': '.06em'}, a), svg); t.textContent = txt; return t; };
 
@@ -247,7 +250,7 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
     const you = X(held), yl = Kit.mk('line', {x1: you, y1: ay - H * .26, x2: you, y2: ay + H * .26, stroke: '#FFE600', 'stroke-width': 4, 'stroke-linecap': 'round'}, rs);
     const anchor = you < W * .2 ? 'start' : you > W * .8 ? 'end' : 'middle';
     T(rs, you, H * .98, 'YOU ' + held.toFixed(1) + ' S', {fill: '#FFE600', 'text-anchor': anchor}, f * .82);
-    if (Math.abs(you - X(max)) > W * .3) T(rs, X(max), H * .98, max + ' S', {'text-anchor': 'end', opacity: .7, 'font-family': 'JetBrains Mono', 'font-weight': 700}, f * .7);
+    if (Math.abs(you - X(max)) > W * .3) T(rs, X(max), H * .98, max + ' S', {'text-anchor': 'end', opacity: .7, 'font-family': MONO, 'font-weight': 700}, f * .7);
     if (!calm) { gsap.from(band, {scaleY: 0, transformOrigin: '50% 50%', duration: .4}); gsap.from(yl, {opacity: 0, duration: .3, delay: .2}); }
   }
   // Fifteen seconds of three films. Cut times are illustrative, spaced at each film's real average.
@@ -305,7 +308,7 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
     x.beginPath(); x.lineWidth = 2.4; x.strokeStyle = playing ? '#FFE600' : '#fff'; x.lineJoin = 'round';
     for (let i = 0; i <= W; i++) { const p = i / W * periods + phase; let y = 0; for (const k of ks) y += saw(p / k) * (k === 1 ? 1 : .8); x.lineTo(i, mid - y * amp); }
     x.stroke();
-    Kit.$('birdHz').textContent = Math.round(f).toLocaleString('en') + ' Hz' + (subs().length ? ' + ' + subs().map(k => Math.round(f / k)).join(', ') : '');
+    Kit.$('birdHz').textContent = Math.round(f).toLocaleString('en') + ' Hz' + (subs().length ? ' + ' + subs().length + ' below' : '');
   }
   function loop() { phase += .05; scope(); raf = playing ? requestAnimationFrame(loop) : 0; }
   function wire() {
@@ -319,8 +322,8 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
     if (px !== null) { Kit.mk('circle', {cx: px, cy: ry - 2, r: H * .09, fill: '#FFE600', opacity: playing ? 1 : .8}, wsvg); }
     T(wsvg, x0, H * .14, 'WIRE', {opacity: .85}, fs * .8);
     T(wsvg, x1, H * .14, 'METAL RAIL BELOW', {'text-anchor': 'end', opacity: .85}, fs * .8);
-    T(wsvg, x0, H * .99, 'LOW', {opacity: .75, 'font-family': 'JetBrains Mono', 'font-weight': 700}, fs * .7);
-    T(wsvg, x1, H * .99, 'HIGH', {'text-anchor': 'end', opacity: .75, 'font-family': 'JetBrains Mono', 'font-weight': 700}, fs * .7);
+    T(wsvg, x0, H * .99, 'LOW', {opacity: .75, 'font-family': MONO, 'font-weight': 700}, fs * .7);
+    T(wsvg, x1, H * .99, 'HIGH', {'text-anchor': 'end', opacity: .75, 'font-family': MONO, 'font-weight': 700}, fs * .7);
   }
   // sound
   async function audio() {
@@ -361,7 +364,7 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
   });
   function check() {
     if (played.has(0) && [...played].some(n => n >= 2) || played.has('flock')) {
-      say.innerHTML = 'Oskar Sala’s Mixtur-Trautonium added <b>subharmonics</b>: tones at ½, ⅓, ¼ of the note pressed. A thin whistle grows a rough, crowded body underneath. That is the sound of the attack.';
+      say.innerHTML = 'Oskar Sala’s Mixtur-Trautonium added <b>subharmonics</b>, tones at ½, ⅓, ¼ of the note. They turn a thin whistle into a crowded shriek.';
       Kit.show('birdKeep');
     }
   }
@@ -393,10 +396,10 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
   const svg = Kit.$('painSvg'), say = Kit.$('painSay');
   let drug = null, geo = null, tl = null; const seen = new Set();
   const INFO = {
-    ibu: '<b>Ibuprofen works at the injury.</b> It cuts prostaglandins, the chemicals that make pain nerves fire harder. The signal still travels, only weaker.',
-    lido: '<b>Lidocaine plugs the nerve itself.</b> It blocks sodium channels in every nerve it reaches, so touch goes too. That is the numb lip after the dentist.',
-    morph: '<b>Morphine works in the spine and brain.</b> It turns the signal down where it arrives, and brings the high, slowed breathing and the risk of addiction.',
-    suz: '<b>Suzetrigine blocks NaV1.8</b>, a channel found mainly in pain nerves. Pain stops before the spine, touch still gets through, no high. In trials it beat a placebo, but not a standard opioid pill.'
+    ibu: '<b>Ibuprofen: at the injury.</b> It calms the chemicals that make pain nerves fire harder. The signal still runs, weaker.',
+    lido: '<b>Lidocaine: on the nerve.</b> It blocks every nerve it reaches, so touch goes numb too. The dentist’s numb lip.',
+    morph: '<b>Morphine: in the spine and brain.</b> It turns the signal down on arrival, and brings the high and the risk of addiction.',
+    suz: '<b>Suzetrigine: on pain nerves only.</b> It blocks NaV1.8, a channel found mainly there. Touch gets through, no high. In trials it beat placebo, but not an opioid pill.'
   };
   // where each drug stops each line: fraction of the route from toe to brain (null = gets through), and how strong what arrives is
   const STOP = {ibu: {pain: null, touch: null, weak: true}, lido: {pain: .13, touch: .13}, morph: {pain: .8, touch: null}, suz: {pain: .34, touch: null}};
@@ -426,7 +429,8 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
     box(W * .97, H * .76, 'TOE', 'end');
     T(svg, W * .52, H * .64, 'TOUCH', {opacity: .9}, f * .75);
     // the measure, as on a technical drawing
-    const m = T(svg, W * .36, H * .9, 'PAIN NERVE ≈ 1 M', {}, f * .82);
+    const m = T(svg, f * .5, H - f * .55, 'PAIN NERVE ≈ 1 M', {fill: '#10100c'}, f * .82), mb = m.getBBox();
+    svg.insertBefore(Kit.mk('rect', {x: mb.x - f * .4, y: mb.y - f * .3, width: mb.width + f * .8, height: mb.height + f * .6, rx: f * .4, fill: '#FFE600'}, svg), m);
     geo = {pain, touch, brain, f, bx, by, ry};
     marks();
   }
@@ -491,21 +495,21 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
     S.lock = Kit.mk('g', {opacity: 0}, svg);
     Kit.mk('rect', {x: rx - f * .55, y: ry - f * .35, width: f * 1.1, height: f * .9, rx: f * .15, fill: Y}, S.lock);
     Kit.mk('path', {d: `M${rx - f * .32},${ry - f * .35} v${-f * .3} a${f * .32},${f * .32} 0 0 1 ${f * .64},0 v${f * .3}`, fill: 'none', stroke: Y, 'stroke-width': f * .16}, S.lock);
-    T(svg, rx - f * .45, ry + f * 1.5, 'PREDICTION', {'font-family': 'JetBrains Mono', 'font-weight': 700, opacity: .8}, f * .6);
-    S.rootNote = T(svg, rx - f * .45, ry + f * 2.4, 'ALREADY MADE', {'font-family': 'JetBrains Mono', 'font-weight': 700, fill: Y, opacity: 0}, f * .6);
+    T(svg, rx - f * .45, ry + f * 1.5, 'PREDICTION', {'font-family': MONO, 'font-weight': 700, opacity: .8}, f * .6);
+    S.rootNote = T(svg, rx - f * .45, ry + f * 2.4, 'ALREADY MADE', {'font-family': MONO, 'font-weight': 700, fill: Y, opacity: 0}, f * .6);
     T(svg, A[0] - f * .2, A[1] - f * .75, 'BOX: $1M', {'text-anchor': 'middle', 'font-size': f * .66}, f * .66);
     T(svg, B[0] - f * .2, B[1] + f * 1.25, 'BOX: EMPTY', {'text-anchor': 'middle'}, f * .66);
     const leaf = (id, take, pay) => {
       const p = L[id], g = Kit.mk('g', {class: 'leaf'}, svg);
-      T(g, p[0] + f * .5, p[1] - f * .15, take, {'font-family': 'JetBrains Mono', 'font-weight': 700, opacity: .75}, f * .55);
-      S[id + 'p'] = T(g, p[0] + f * .5, p[1] + f * .85, pay, {'font-family': 'Fraunces', 'font-weight': 900, 'letter-spacing': '-.01em'}, f * 1.05);
+      T(g, p[0] + f * .5, p[1] + f * 1.25, take, {'font-family': MONO, 'font-weight': 700, opacity: .75}, f * .55);
+      S[id + 'p'] = T(g, p[0] + f * .5, p[1] + f * .38, pay, {'font-family': 'Fraunces', 'font-weight': 900, 'letter-spacing': '-.01em'}, f * 1.05);
       S[id + 'g'] = g;
     };
     leaf('a1', 'ONE BOX', '$1,000,000'); leaf('a2', 'BOTH', '$1,001,000'); leaf('b1', 'ONE BOX', '$0'); leaf('b2', 'BOTH', '$1,000');
     S.plus = [];
-    for (const id of ['a2', 'b2']) { const p = L[id], t = T(svg, W - f * .3, p[1] + f * .85, '+$1,000', {'text-anchor': 'end', fill: Y, opacity: 0}, f * .7); S.plus.push(t); }
+    for (const id of ['a2', 'b2']) { const p = L[id], t = T(svg, p[0] + f * 3.4, p[1] + f * 1.25, '+$1,000', {fill: Y, opacity: 0, 'font-family': MONO, 'font-weight': 700}, f * .55); S.plus.push(t); }
     S.rare = [];
-    for (const id of ['a2', 'b1']) { const p = L[id], q = id === 'a2' ? A : B; const t = T(svg, (p[0] + q[0]) / 2 + f * .2, (p[1] + q[1]) / 2 + (id === 'a2' ? f * .1 : f * .5), 'RARE', {'text-anchor': 'middle', 'font-family': 'JetBrains Mono', 'font-weight': 700, fill: Y, opacity: 0}, f * .5); S.rare.push(t); }
+    for (const id of ['a2', 'b1']) { const p = L[id], q = id === 'a2' ? A : B; const t = T(svg, (p[0] + q[0]) / 2 + f * .2, (p[1] + q[1]) / 2 + (id === 'a2' ? f * .1 : f * .5), 'RARE', {'text-anchor': 'middle', 'font-family': MONO, 'font-weight': 700, fill: Y, opacity: 0}, f * .5); S.rare.push(t); }
     S.f = f;
     apply(true);
   }
@@ -556,14 +560,16 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
   };
   function intro() {
     step = 0; side = null;
-    kin.innerHTML = `<div class="kl"><span class="kw">Cheddar</span><span class="stamp ok">LEGAL</span></div><div class="kmeta"><span>raw milk · aged 61 days</span></div>
-      <div class="kl"><span class="kw">Brie</span><span class="stamp no">BANNED</span></div><div class="kmeta"><span>raw milk · aged 30 days</span></div>`;
+    kin.innerHTML = `<div class="ktop">US rule since 1950: raw-milk cheese must age 60 days</div>
+      <div class="kl"><span class="kw">Cheddar</span></div><div class="krow"><span class="kmeta">raw milk · aged 61 days</span><span class="stamp ok">LEGAL</span></div>
+      <div class="kl"><span class="kw">Brie</span></div><div class="krow"><span class="kmeta">raw milk · aged 30 days</span><span class="stamp no">BANNED</span></div>`;
+    kin.querySelectorAll('.kw').forEach(w => { let z = parseFloat(getComputedStyle(w).fontSize); while (w.scrollWidth > kin.clientWidth && z > 10) { z *= .95; w.style.fontSize = z + 'px'; } });
     ['chzCtl', 'chzSay', 'chzKeep'].forEach(Kit.hide); Kit.$('chzPick').classList.remove('gone'); Kit.$('chzQ').classList.remove('gone');
     if (calm) return;
     const words = [...kin.querySelectorAll('.kw')];
-    words.forEach((w, i) => { const sp = SplitText.create(w, {type: 'chars'}); gsap.from(sp.chars, {yPercent: 90, skewX: -14, opacity: 0, duration: .55, stagger: .035, ease: 'power4.out', delay: i * .55, onComplete: () => sp.revert()}); });
-    gsap.from(kin.querySelectorAll('.kmeta'), {opacity: 0, x: -10, duration: .4, stagger: .55, delay: .35});
-    gsap.from(kin.querySelectorAll('.stamp'), {scale: 2.2, opacity: 0, duration: .35, stagger: .55, delay: .5, ease: 'power3.in'});
+    words.forEach((w, i) => { const sp = SplitText.create(w, {type: 'chars'}); gsap.from(sp.chars, {yPercent: 90, skewX: -14, opacity: 0, duration: .5, stagger: .03, ease: 'power4.out', delay: .1 + i * .25, onComplete: () => sp.revert()}); });
+    gsap.from(kin.querySelectorAll('.krow .kmeta'), {opacity: 0, x: -10, duration: .3, stagger: .25, delay: .3});
+    gsap.from(kin.querySelectorAll('.stamp'), {scale: 1.8, opacity: 0, duration: .22, stagger: .2, delay: .5, ease: 'power3.in'});
   }
   function block(k) {
     const a = ARG[k];
@@ -593,7 +599,7 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
     kin.querySelectorAll('.big2').forEach(fit);
     if (!calm) gsap.from(first, {y: 30, duration: .5, ease: 'power3.out'});
     slam(second);
-    say.innerHTML = ARG[o].say.replace(/<\/b>/, '</b> ') + '';
+    say.innerHTML = ARG[o].say;
     Kit.hide('chzCtl');
     setTimeout(() => { say.innerHTML = 'Both numbers are real. What decides it: does a calendar control the risk, or would <b>testing the milk</b> control it better?'; Kit.show('chzKeep'); }, calm ? 0 : 2600);
   }
