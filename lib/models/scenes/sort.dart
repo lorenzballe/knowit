@@ -118,7 +118,10 @@ class SortScene extends Scene {
     // A pile nobody can be right about is a deck with one answer.
     for (final side in SortSide.values) {
       if (!items.any((it) => it.pile == side)) {
-        throw FormatException('scene.items: no slip in the ${side.name} pile', id);
+        throw FormatException(
+          'scene.items: no slip in the ${side.name} pile',
+          id,
+        );
       }
     }
     return SortScene(

@@ -315,7 +315,8 @@ class _SortSceneViewState extends State<SortSceneView>
       size.width - inset * 2,
       math.max(0, deckH - peek * 2 - edge),
     );
-    final fade = 1 - Curves.easeIn.transform((_settle.value / 0.22).clamp(0, 1));
+    final fade =
+        1 - Curves.easeIn.transform((_settle.value / 0.22).clamp(0, 1));
 
     // Where the step is: 0..1 within the stamp and turn, then the drop.
     final st = _step.value;
@@ -329,7 +330,12 @@ class _SortSceneViewState extends State<SortSceneView>
         : ((st - _dropStart) / (1 - _dropStart)).clamp(0.0, 1.0);
 
     final trays = <SortSide, Rect>{
-      SortSide.left: Rect.fromLTWH(0, size.height - trayH, (size.width - 10) / 2, trayH),
+      SortSide.left: Rect.fromLTWH(
+        0,
+        size.height - trayH,
+        (size.width - 10) / 2,
+        trayH,
+      ),
       SortSide.right: Rect.fromLTWH(
         (size.width + 10) / 2,
         size.height - trayH,
@@ -357,7 +363,14 @@ class _SortSceneViewState extends State<SortSceneView>
 
     if (!_done) {
       out.add(
-        _topSlip(context, slip, trays[_pending ?? SortSide.right]!, turnT, dropT, fade),
+        _topSlip(
+          context,
+          slip,
+          trays[_pending ?? SortSide.right]!,
+          turnT,
+          dropT,
+          fade,
+        ),
       );
     }
 
@@ -380,9 +393,7 @@ class _SortSceneViewState extends State<SortSceneView>
                 lit: lit(side),
                 ink: ink,
                 ground: ground,
-                onTap: _pending == null && !_done
-                    ? () => _decide(side)
-                    : _skip,
+                onTap: _pending == null && !_done ? () => _decide(side) : _skip,
               ),
             ),
           ),
@@ -421,11 +432,7 @@ class _SortSceneViewState extends State<SortSceneView>
               // The next slip's face shows as it comes up to the top.
               child: Opacity(
                 opacity: (1 - d).clamp(0.0, 1.0),
-                child: _Front(
-                  scene: _s,
-                  index: i,
-                  ink: widget.ink,
-                ),
+                child: _Front(scene: _s, index: i, ink: widget.ink),
               ),
             ),
           ),
@@ -449,7 +456,9 @@ class _SortSceneViewState extends State<SortSceneView>
 
     // Stamp first, then the turn: the first third of the turn the slip
     // sits still under the stamp, the rest it rotates over.
-    final rot = Curves.easeInOutCubic.transform(((turnT - 0.32) / 0.68).clamp(0, 1));
+    final rot = Curves.easeInOutCubic.transform(
+      ((turnT - 0.32) / 0.68).clamp(0, 1),
+    );
     final angle = rot * math.pi;
     final showBack = angle > math.pi / 2;
 
@@ -458,7 +467,8 @@ class _SortSceneViewState extends State<SortSceneView>
       dx = _shownDx();
     } else {
       final sign = pending == SortSide.right ? 1.0 : -1.0;
-      dx = _releaseDx * (1 - Curves.easeOutCubic.transform(turnT)) +
+      dx =
+          _releaseDx * (1 - Curves.easeOutCubic.transform(turnT)) +
           sign * _width * 0.05 * math.sin(turnT * math.pi);
     }
     final tilt = dx * 0.0011;
@@ -486,7 +496,13 @@ class _SortSceneViewState extends State<SortSceneView>
               ink: ink,
               ground: ink,
               edge: Color.lerp(ink, ground, 0.45)!,
-              child: _Back(scene: _s, index: _at, call: pending!, ink: ink, ground: ground),
+              child: _Back(
+                scene: _s,
+                index: _at,
+                call: pending!,
+                ink: ink,
+                ground: ground,
+              ),
             ),
           )
         : _Paper(
@@ -517,7 +533,9 @@ class _SortSceneViewState extends State<SortSceneView>
     return Positioned.fromRect(
       rect: slip,
       child: Opacity(
-        opacity: fade * (1 - Curves.easeIn.transform(((dropT - 0.55) / 0.45).clamp(0, 1))),
+        opacity:
+            fade *
+            (1 - Curves.easeIn.transform(((dropT - 0.55) / 0.45).clamp(0, 1))),
         child: Transform(
           alignment: Alignment.center,
           transform: Matrix4.identity()
@@ -597,9 +615,7 @@ class _SortSceneViewState extends State<SortSceneView>
         : math.min(miniH + 8, (avail - miniH) / (most - 1));
     final pitch = pitchFor(mostTrue);
     final calledPitch = pitchFor(mostCalled);
-    final textSize = math
-        .min(miniH * 0.42, calledPitch - 9)
-        .clamp(12.0, 26.0);
+    final textSize = math.min(miniH * 0.42, calledPitch - 9).clamp(12.0, 26.0);
 
     double ease(double a, double b, [Curve c = Curves.easeOutCubic]) =>
         c.transform(((t - a) / (b - a)).clamp(0.0, 1.0));
@@ -645,10 +661,16 @@ class _SortSceneViewState extends State<SortSceneView>
                   behavior: HitTestBehavior.opaque,
                   onTap: t >= 1 ? _restart : null,
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(minHeight: 44, minWidth: 44),
+                    constraints: const BoxConstraints(
+                      minHeight: 44,
+                      minWidth: 44,
+                    ),
                     child: Center(
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 8,
+                        ),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(99),
                           border: Border.all(color: ink, width: 2),
@@ -743,7 +765,9 @@ class _SortSceneViewState extends State<SortSceneView>
       var at = Offset.lerp(from, mid, rise)!;
       if (wrong) {
         // Lifted a little as it crosses, so it reads as carried over.
-        at = Offset.lerp(mid, end, cross)! + Offset(0, -math.sin(cross * math.pi) * 14);
+        at =
+            Offset.lerp(mid, end, cross)! +
+            Offset(0, -math.sin(cross * math.pi) * 14);
         if (cross == 0) at = Offset.lerp(from, mid, rise)!;
       } else if (rise >= 1) {
         at = Offset.lerp(mid, end, repack)!;
@@ -757,10 +781,13 @@ class _SortSceneViewState extends State<SortSceneView>
           child: Opacity(
             opacity: rise.clamp(0.0, 1.0),
             child: Transform.rotate(
-              angle: (1 - rise) * (i.isOdd ? 0.12 : -0.12) +
-                  math.sin(cross * math.pi) * (item.pile == SortSide.right ? 0.06 : -0.06),
+              angle:
+                  (1 - rise) * (i.isOdd ? 0.12 : -0.12) +
+                  math.sin(cross * math.pi) *
+                      (item.pile == SortSide.right ? 0.06 : -0.06),
               child: Semantics(
-                label: '${item.text}: ${_s.nameOf(item.pile)}'
+                label:
+                    '${item.text}: ${_s.nameOf(item.pile)}'
                     '${wrong ? '. ${context.l10n.sceneYou}: ${_s.nameOf(call)}' : ''}',
                 child: ExcludeSemantics(
                   child: _Mini(
@@ -865,7 +892,9 @@ class _Front extends StatelessWidget {
                 ),
               ),
               Text(
-                context.l10n.sceneNOfM(index + 1, scene.items.length).toUpperCase(),
+                context.l10n
+                    .sceneNOfM(index + 1, scene.items.length)
+                    .toUpperCase(),
                 style: small.copyWith(fontWeight: FontWeight.w800, color: ink),
               ),
             ],
@@ -949,7 +978,10 @@ class _Back extends StatelessWidget {
   Widget build(BuildContext context) {
     final item = scene.items[index];
     final right = call == item.pile;
-    final small = AppText.label(size: 10.5, color: ground.withValues(alpha: 0.7));
+    final small = AppText.label(
+      size: 10.5,
+      color: ground.withValues(alpha: 0.7),
+    );
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 12, 14, 14),
       child: Column(
@@ -963,7 +995,10 @@ class _Back extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.fade,
                   softWrap: false,
-                  style: small.copyWith(fontWeight: FontWeight.w800, color: ground),
+                  style: small.copyWith(
+                    fontWeight: FontWeight.w800,
+                    color: ground,
+                  ),
                 ),
               ),
               _Mark(right: right, color: ground, size: 26),
@@ -1112,7 +1147,12 @@ class _Tray extends StatelessWidget {
     final left = side == SortSide.left;
     final arrow = Text(
       left ? '←' : '→',
-      style: AppText.body(size: 20, weight: FontWeight.w700, height: 1, color: fg),
+      style: AppText.body(
+        size: 20,
+        weight: FontWeight.w700,
+        height: 1,
+        color: fg,
+      ),
     );
     final label = Expanded(
       child: _FitText(
@@ -1156,8 +1196,20 @@ class _Tray extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Row(
               children: left
-                  ? [arrow, const SizedBox(width: 8), label, const SizedBox(width: 8), tally]
-                  : [tally, const SizedBox(width: 8), label, const SizedBox(width: 8), arrow],
+                  ? [
+                      arrow,
+                      const SizedBox(width: 8),
+                      label,
+                      const SizedBox(width: 8),
+                      tally,
+                    ]
+                  : [
+                      tally,
+                      const SizedBox(width: 8),
+                      label,
+                      const SizedBox(width: 8),
+                      arrow,
+                    ],
             ),
           ),
         ),
@@ -1196,7 +1248,11 @@ class _Mini extends StatelessWidget {
         color: ink,
         borderRadius: r,
         boxShadow: const [
-          BoxShadow(color: Color(0x22000000), blurRadius: 8, offset: Offset(0, 4)),
+          BoxShadow(
+            color: Color(0x22000000),
+            blurRadius: 8,
+            offset: Offset(0, 4),
+          ),
         ],
       ),
       padding: const EdgeInsets.only(bottom: 3),
@@ -1244,13 +1300,14 @@ class _Mini extends StatelessWidget {
                             maxLines: 1,
                             overflow: TextOverflow.fade,
                             softWrap: false,
-                            style: AppText.label(
-                              size: 9.5,
-                              color: ink.withValues(alpha: 0.7),
-                            ).copyWith(
-                              decoration: TextDecoration.lineThrough,
-                              decorationColor: ink.withValues(alpha: 0.7),
-                            ),
+                            style:
+                                AppText.label(
+                                  size: 9.5,
+                                  color: ink.withValues(alpha: 0.7),
+                                ).copyWith(
+                                  decoration: TextDecoration.lineThrough,
+                                  decorationColor: ink.withValues(alpha: 0.7),
+                                ),
                           ),
                         ),
                     ],
@@ -1323,7 +1380,9 @@ class _MarkPainter extends CustomPainter {
     _pen
       ..color = color
       ..strokeWidth = s * (ring ? 0.09 : 0.16);
-    if (ring) canvas.drawCircle(size.center(Offset.zero), s / 2 - s * 0.05, _pen);
+    if (ring) {
+      canvas.drawCircle(size.center(Offset.zero), s / 2 - s * 0.05, _pen);
+    }
     final k = ring ? 0.3 : 0.12;
     _pen.strokeWidth = s * (ring ? 0.11 : 0.18);
     if (right) {

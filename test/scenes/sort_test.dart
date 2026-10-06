@@ -9,7 +9,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:astuto/data/card_json.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
-import 'package:astuto/models/scene.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/scenes/sort_view.dart';
 
@@ -18,9 +17,9 @@ import 'package:astuto/widgets/scenes/sort_view.dart';
 const _shots = bool.fromEnvironment('SHOTS');
 
 List<Map<String, Object?>> _samples() => [
-  for (final c
-      in jsonDecode(File('tool/cards/samples/sort.json').readAsStringSync())
-          as List)
+  for (final c in jsonDecode(
+    File('tool/cards/samples/sort.json').readAsStringSync(),
+  ) as List)
     (c as Map).cast<String, Object?>(),
 ];
 
@@ -66,9 +65,8 @@ Widget _host(
     supportedLocales: AppLocalizations.supportedLocales,
     home: Builder(
       builder: (context) => MediaQuery(
-        data: MediaQuery.of(
-          context,
-        ).copyWith(disableAnimations: calm, accessibleNavigation: reader),
+        data: MediaQuery.of(context)
+            .copyWith(disableAnimations: calm, accessibleNavigation: reader),
         child: Scaffold(
           backgroundColor: Colors.black,
           body: Center(
@@ -119,7 +117,9 @@ Future<void> _loadFonts() async {
   for (final e in fonts.entries) {
     final loader = FontLoader(e.key);
     final bytes = await File(e.value).readAsBytes();
-    loader.addFont(Future.value(ByteData.view(Uint8List.fromList(bytes).buffer)));
+    loader.addFont(
+      Future.value(ByteData.view(Uint8List.fromList(bytes).buffer)),
+    );
     await loader.load();
   }
 }
@@ -152,16 +152,22 @@ void main() {
     });
 
     test('refuses bad data', () {
-      void bad(Map<String, Object?> raw) => expect(
-        () => SortScene.parse(raw, 'x'),
-        throwsFormatException,
-      );
+      void bad(Map<String, Object?> raw) =>
+          expect(() => SortScene.parse(raw, 'x'), throwsFormatException);
       bad({'type': 'sort', 'left': 'A', 'right': 'B'});
       bad(_raw([_item('A', 'left')]));
       bad(_raw([_item('A', 'left'), _item('B', 'up')]));
       bad(_raw([_item('A', 'left'), _item('B', 'left')]));
-      bad({..._raw([_item('A', 'left'), _item('B', 'right')]), 'left': ''});
-      bad(_raw([_item('A', 'left'), {'text': 'B', 'pile': 'right'}]));
+      bad({
+        ..._raw([_item('A', 'left'), _item('B', 'right')]),
+        'left': '',
+      });
+      bad(
+        _raw([
+          _item('A', 'left'),
+          {'text': 'B', 'pile': 'right'},
+        ]),
+      );
       bad(_raw([_item('A', 'left'), 'B']));
     });
 
