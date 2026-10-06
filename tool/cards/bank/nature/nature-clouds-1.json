@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does a cloud holding hundreds of tonnes of water not fall out of the sky?",
-  "answer": "Its droplets do fall, too slowly to see. A droplet 0.02 mm across sinks about 1 cm a second, so the gentlest rising air holds it. The water is a tiny share: about half a gram per cubic metre, inside a kilogram of air. A cloud is air with a faint mist in it.",
+  "question": "Why doesn't a cloud holding hundreds of tonnes of water fall out of the sky?",
+  "answer": "Because it is falling, only more slowly than the air is rising. As a drop shrinks, its weight drops much faster than the drag on it, so the smallest barely sink. Rain begins only when droplets merge into drops about a million times bigger by volume, heavy enough to beat the updraft.",
   "move": "Before asking why something stays up, check how fast it is coming down.",
   "ask": "What do I wonder why it is still up, without noticing how fast it is coming down?",
   "keywords": [
@@ -26,6 +26,39 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "A small, fluffy cloud holds hundreds of tonnes of water."
+    },
+    "levels": [
+      {
+        "text": "The water is spread thin: half a gram in each cubic metre.",
+        "figure": "0.5 g",
+        "unit": "of water per m³ of cloud"
+      },
+      {
+        "text": "It is split into droplets about a fiftieth of a millimetre across."
+      },
+      {
+        "text": "Drops that small meet huge drag for their weight and barely sink.",
+        "figure": "~1 cm/s",
+        "unit": "a droplet's fall speed"
+      },
+      {
+        "text": "Gently rising air outpaces that fall, so the cloud stays up."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Rising air beats a very slow fall",
+        "Vapour is lighter than air",
+        "Static charge holds drops up"
+      ],
+      "answer": 0
+    }
+  },
   "source": "Wallace & Hobbs, Atmospheric Science, 2006",
   "source_kind": "book",
   "reference": "Wallace & Hobbs, Atmospheric Science: An Introductory Survey, 2nd edition, Academic Press, 2006",

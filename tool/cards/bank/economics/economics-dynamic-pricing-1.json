@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why don't hardware shops raise the price of snow shovels the morning after a blizzard?",
-  "answer": "Because customers would punish them. In a 1986 survey, 82% called raising a shovel from $15 to $20 after a snowstorm unfair or very unfair. Buyers judge a price against the one they feel entitled to. Firms that raise prices in a rush tend to dress it up as a fee or a surge.",
+  "question": "A blizzard, and everyone needs a shovel. Why doesn't the hardware shop raise the price?",
+  "answer": "Because a price is judged against a reference, not against demand. In Kahneman, Knetsch and Thaler's 1986 survey, 82% called raising a shovel from $15 to $20 after a snowstorm unfair. The same people accepted rises passed on from higher costs. That is why sudden price jumps arrive dressed as fees or surges.",
   "move": "A price people call unfair can cost more than the profit it brings.",
   "ask": "When a price makes me angry, is it the amount, or that it broke what I expected?",
   "keywords": [
@@ -27,6 +27,37 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "The morning after a blizzard, shovels cost the same."
+    },
+    "levels": [
+      {
+        "text": "Demand has leapt: at a higher price, every shovel would still sell."
+      },
+      {
+        "text": "Yet buyers judge a price against the one they feel entitled to.",
+        "figure": "82%",
+        "unit": "called a $5 rise unfair"
+      },
+      {
+        "text": "A shop that profits from a storm is remembered as the one that gouged."
+      },
+      {
+        "text": "It sells to the same town all year, and the town remembers."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Buyers would not forget it",
+        "The shovels were bought cheap",
+        "Head office fixes all prices"
+      ],
+      "answer": 0
+    }
+  },
   "source": "Kahneman, Knetsch and Thaler, AER, 1986",
   "source_kind": "paper",
   "reference": "https://faculty.chicagobooth.edu/-/media/research/cdr/docs/thaler/fairness-as-a-constraint-on-profit-seeking.pdf",

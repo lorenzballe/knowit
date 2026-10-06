@@ -866,7 +866,7 @@ class _TrickLayout {
         chart.left - 6,
         plot.top - 12,
         plot.left - 1,
-        plot.bottom - 1,
+        plot.bottom + 10,
       );
       boxes[TrickSceneRegion.xaxis] = Rect.fromLTRB(
         plot.left - 4,
@@ -885,7 +885,7 @@ class _TrickLayout {
           plot.right + 3,
           plot.top - 12,
           chart.right + 6,
-          plot.bottom - 1,
+          plot.bottom + 10,
         );
       }
       regions[TrickSceneRegion.yaxis] = inflateTo(
@@ -1474,8 +1474,14 @@ class _TrickChartPainter extends CustomPainter {
           canvas.drawCircle(p, 4.5 * alpha, _fill);
           _fill.color = ground;
           canvas.drawCircle(p, 2 * alpha, _fill);
-          final text = f.value(vs[i], honest: honest);
-          final w = texts.get(text, valueStyle, layout.scaler).width;
+          // Two lines carry their names at the start and their values at
+          // the end, so four labels never crowd one edge.
+          final named = dual && i == a;
+          final text = named
+              ? s.series[series].toUpperCase()
+              : f.value(vs[i], honest: honest);
+          final style = named ? nameStyle : valueStyle;
+          final w = texts.get(text, style, layout.scaler).width;
           final left = i == a ? p.dx : p.dx - w;
           // How far the series' own line reaches up and down under the
           // label's width, so the label clears it on either side.
@@ -1491,8 +1497,7 @@ class _TrickChartPainter extends CustomPainter {
               bottom = math.max(bottom, y);
             }
           }
-          final fs = valueStyle.fontSize! * 1.1;
-          final block = fs + (dual && i == a ? 18 : 0);
+          final block = style.fontSize! * 1.1;
           final roomAbove = top - 9 - block >= layout.chart.top;
           final roomBelow = bottom + 9 + block <= plot.bottom;
           // Above the point by default, the side nearer the point otherwise;
@@ -1514,22 +1519,12 @@ class _TrickChartPainter extends CustomPainter {
           _text(
             canvas,
             text,
-            valueStyle,
+            style,
             Offset(p.dx, ly),
             ax: i == a ? 0 : 1,
             ay: above ? 1 : 0,
             alpha: alpha,
           );
-          if (dual && i == a) {
-            _text(
-              canvas,
-              s.series[series].toUpperCase(),
-              nameStyle,
-              Offset(p.dx, ly + (above ? -18 : 18)),
-              ay: above ? 1 : 0,
-              alpha: alpha,
-            );
-          }
         }
       }
     }
@@ -1759,13 +1754,29 @@ class _TrickBoxPainter extends CustomPainter {
           ..color = ink.withValues(alpha: a)
           ..strokeWidth = 2;
         canvas.drawRRect(rr, _stroke);
-        for (final c in [box.topLeft, box.bottomRight]) {
+        // Handles on two corners, as an editor marks a selection; an axis
+        // keeps them on its outer side, clear of the columns' names.
+        final corners = switch (r) {
+          TrickSceneRegion.yaxis => [box.topLeft, box.bottomLeft],
+          TrickSceneRegion.yaxis2 => [box.topRight, box.bottomRight],
+          _ => [box.topLeft, box.bottomRight],
+        };
+        for (final c in corners) {
           _fill.color = ground;
           canvas.drawCircle(c, 5.5, _fill);
           _stroke.strokeWidth = 2;
           canvas.drawCircle(c, 5.5, _stroke);
         }
-        if (frame.found) _badge(canvas, box.topRight, true, a);
+        if (frame.found) {
+          _badge(
+            canvas,
+            r == TrickSceneRegion.yaxis2
+                ? box.topLeft + const Offset(6, 0)
+                : box.topRight,
+            true,
+            a,
+          );
+        }
       }
     }
   }

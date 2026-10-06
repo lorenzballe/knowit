@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do house prices, wages and tax takes hit record highs almost every year?",
-  "answer": "Because they are counted in money, and money keeps losing value. With prices rising 2% a year, a figure flat in real terms still sets a new money record most years. Take inflation out and many records vanish; some become falls. A record pay packet can buy less bread than last year's.",
+  "question": "Why do house prices, wages and tax takes seem to break records almost every year?",
+  "answer": "Because the ruler shrinks. Central banks aim for about 2% inflation, so almost any figure counted in money drifts upward even when nothing real has changed. Take inflation out and many records vanish. A pay rise of 2% in a year of 3% inflation is a record that buys less bread.",
   "move": "Before cheering a record, ask whether it was counted in shrinking money.",
   "ask": "When my pay or my savings hit a new high, does it buy more than before?",
   "keywords": [
@@ -27,6 +27,37 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "Headline: house prices hit a record high. Again."
+    },
+    "levels": [
+      {
+        "text": "They are counted in money, and money buys a bit less each year."
+      },
+      {
+        "text": "At 2% a year, the price level doubles in about 35 years.",
+        "figure": "~35 yrs",
+        "unit": "to double, at 2% a year"
+      },
+      {
+        "text": "So a figure flat in real terms still sets a money record most years."
+      },
+      {
+        "text": "A record in shrinking money can be a fall in what it buys."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Demand keeps outrunning supply",
+        "The measuring stick is shrinking",
+        "Economies always grow"
+      ],
+      "answer": 1
+    }
+  },
   "source": "Bank of England, inflation calculator",
   "source_kind": "institution",
   "reference": "https://www.bankofengland.co.uk/monetary-policy/inflation/inflation-calculator",

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did breeding tomatoes that turn evenly red make many of them taste worse?",
-  "answer": "Because the trait cost the fruit its sugar factories. Growers chose a mutation that removes the green shoulders of unripe tomatoes, so the fruit reddens evenly. In 2012 researchers found it disables a gene that builds chloroplasts in the fruit, which add sugar. Evenly red tomatoes ended up with less sugar and less flavour.",
+  "question": "Supermarket tomatoes are bred to turn evenly red. Why did that make them taste worse?",
+  "answer": "Because the green was working. Powell and colleagues showed in 2012 that the even-ripening trait disables a gene, GLK2, that builds chloroplasts in the fruit, which let a tomato make some of its own sugar. With the gene restored, fruit had more sugar. Growers chose the look and lost the taste.",
   "move": "Select for what you can see, and you may lose what you cannot.",
   "ask": "What do I judge by its looks that I should really judge by how it works?",
   "keywords": [
@@ -27,6 +27,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "Shop tomatoes are perfectly red and taste of little."
+    },
+    "levels": [
+      {
+        "text": "Breeders made them ripen evenly, with no green shoulders."
+      },
+      {
+        "text": "That trait comes from one faulty gene, now in most modern varieties."
+      },
+      {
+        "text": "The gene builds chloroplasts, the green sugar-makers, in the fruit."
+      },
+      {
+        "text": "Those green shoulders made sugar. Even red meant less sweet."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Bigger fruit dilutes the flavour",
+        "It shut down the fruit's own sugar",
+        "Thicker skins trap the aroma"
+      ],
+      "answer": 1
+    }
+  },
   "source": "Powell et al., Science, 2012",
   "source_kind": "paper",
   "reference": "Powell, Nguyen, Hill et al., Uniform ripening encodes a Golden 2-like transcription factor regulating tomato fruit chloroplast development, Science, 2012",

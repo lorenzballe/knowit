@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do most heart attacks happen to people with only average blood pressure and cholesterol?",
-  "answer": "Because there are so many of them. A small high-risk group has the highest rate, but a huge crowd at modest risk produces more cases in total. Geoffrey Rose called this the prevention paradox: lowering a whole population's blood pressure a little prevents more disease than treating only the few at the top.",
+  "question": "Why do most heart attacks strike people whose blood pressure and cholesterol are only average?",
+  "answer": "Because risk is a rate and disease is a count. Geoffrey Rose called it the prevention paradox in 1985: a measure that brings large benefits to a community offers little to each person in it. It is the case for trimming salt in everyone's bread, not only treating the few at the top.",
   "move": "Many people at small risk can matter more than few at high risk.",
   "ask": "Which small risk do I dismiss because it is small, when it applies to my everyday life all the time?",
   "keywords": [
@@ -27,6 +27,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "Most heart attacks hit people whose numbers looked average."
+    },
+    "levels": [
+      {
+        "text": "People with very high readings do run the highest risk, each."
+      },
+      {
+        "text": "But they are a small slice; most people sit near the middle."
+      },
+      {
+        "text": "A modest risk times a huge crowd beats a high risk times a few."
+      },
+      {
+        "text": "So the biggest gains come from shifting everyone a little."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Their tests were wrong",
+        "Stress matters more than numbers",
+        "The middle is where people are"
+      ],
+      "answer": 2
+    }
+  },
   "source": "Rose, Int J Epidemiol, 1985",
   "source_kind": "paper",
   "reference": "Rose, Sick individuals and sick populations, International Journal of Epidemiology, 1985",

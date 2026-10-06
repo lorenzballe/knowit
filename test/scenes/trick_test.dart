@@ -16,7 +16,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:astuto/data/card_json.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
-import 'package:astuto/models/scene.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/pill_card.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';

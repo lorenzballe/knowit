@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does appendicitis pain usually start around the navel before settling low on the right?",
-  "answer": "Because two nerve systems report it in turn. Early swelling stretches the appendix, whose gut nerves enter the spinal cord at the same level as the skin around the navel, so the brain places the pain vaguely there. Later it irritates the lining of the abdominal wall, which has precise nerves, and the pain moves.",
+  "question": "Why does appendicitis pain usually start around the navel, then move low on the right?",
+  "answer": "Because the body keeps two pain maps. First the brain places the stretched appendix on the skin sharing its nerve, around the navel. Hours later the inflamed appendix touches the lining of the belly wall, which has precise nerves, and the pain lands where the trouble is. Doctors read the move itself as a clue.",
   "move": "Where it hurts and where the trouble is are two separate questions.",
   "ask": "Where it hurts and where the problem sits: which have I mixed up lately?",
   "keywords": [
@@ -27,6 +27,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "Appendicitis often starts as a dull ache around the navel."
+    },
+    "levels": [
+      {
+        "text": "Yet the appendix sits low on the right, nowhere near the navel."
+      },
+      {
+        "text": "Gut nerves sense stretch, not place, and report it vaguely."
+      },
+      {
+        "text": "They enter the spine at the level that also serves the navel's skin."
+      },
+      {
+        "text": "The brain files gut pain under the skin that shares its nerve."
+      }
+    ],
+    "guess": {
+      "options": [
+        "The appendix moves as it swells",
+        "The brain misfiles gut pain",
+        "Gas spreads the pain around"
+      ],
+      "answer": 1
+    }
+  },
   "source": "Bailey & Love's Short Practice of Surgery",
   "source_kind": "reference_work",
   "reference": "Williams, O'Connell & McCaskie (eds), Bailey & Love's Short Practice of Surgery, 27th edition, CRC Press, 2018",

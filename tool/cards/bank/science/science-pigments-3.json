@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does a splash of water make a T-shirt or a patch of sand look darker?",
-  "answer": "Water hides the surfaces that scatter light. In dry cloth or sand, every boundary between air and solid bounces light back. Water bends light nearly as much as the solids, so when it fills the gaps those boundaries barely reflect, and light travels deeper and is absorbed. Pigment ground in oil darkens the same way.",
+  "question": "Water is clear. Why does a splash of it make sand or a T-shirt look darker?",
+  "answer": "Because brightness lives at boundaries. A grain or a fibre reflects light where its surface meets air; fill the gaps with water and the jump is small, so light travels deeper and more is absorbed. Lekner and Dorf worked it out in 1988. Grease does the same to paper: the spot turns see-through.",
   "move": "What happens at the edges can matter more than what things are made of.",
   "ask": "What looks different to me only because of the surface it lands on?",
   "keywords": [
@@ -27,8 +27,39 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "Wet sand is darker than dry sand, though water is clear."
+    },
+    "levels": [
+      {
+        "text": "Dry sand looks pale because each grain's surface bounces light back."
+      },
+      {
+        "text": "Light bounces where it crosses from air into a grain."
+      },
+      {
+        "text": "Water bends light almost as much as sand, so that edge nearly vanishes.",
+        "figure": "1.33",
+        "unit": "water; air 1.00, sand 1.54"
+      },
+      {
+        "text": "Light goes deeper, bounces less, and more of it is absorbed."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Water hides the bright edges",
+        "Water is slightly grey",
+        "The grains swell and darken"
+      ],
+      "answer": 0
+    }
+  },
   "source": "Lekner and Dorf, Applied Optics, 1988",
   "source_kind": "paper",
-  "reference": "Lekner and Dorf, Why some things are darker when wet, Applied Optics 27, 1278, 1988",
+  "reference": "Lekner and Dorf, Why some things are darker when wet, Applied Optics 27, 1278, 1988; Hecht, Optics, 5th edition, Pearson, 2017 (refractive indices)",
   "written": "2026-09-26"
 }

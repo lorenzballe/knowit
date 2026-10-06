@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why does English write knight with a k and a gh that nobody pronounces?",
-  "answer": "Because both were once pronounced. In Chaucer's day knight began with a k sound and had a throaty gh, as in Scottish loch. Printing arrived in England in 1476 and helped fix spellings just as the sounds were shifting. The letters stayed; speech moved on. Much of English spelling records late medieval pronunciation.",
+  "answer": "Because English spelling records sounds that later fell silent. In Chaucer's day knight began with a k and had a throaty middle, as Scottish loch and German Knecht still do. Printers helped fix spellings just as pronunciation shifted. Some silent letters really were added for show, like the b in debt; knight's were not.",
   "move": "A rule written down while things are moving soon describes the past.",
   "ask": "Which of my rules was written for a version of my life that no longer exists?",
   "keywords": [
@@ -27,6 +27,37 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "Knight: six letters, and three of them are silent."
+    },
+    "levels": [
+      {
+        "text": "Both were once spoken: a k, and a throaty gh as in loch."
+      },
+      {
+        "text": "Print spread fixed spellings while those sounds were changing.",
+        "figure": "1476",
+        "unit": "first press in England"
+      },
+      {
+        "text": "Then speech kept moving, and the printed spellings stayed put."
+      },
+      {
+        "text": "Our spelling is a record of how English sounded long ago."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Letters show a French origin",
+        "Scribes added letters for show",
+        "We spell how people once spoke"
+      ],
+      "answer": 2
+    }
+  },
   "source": "Crystal, Spell It Out, 2012",
   "source_kind": "book",
   "reference": "Crystal, Spell It Out: The Singular Story of English Spelling, Profile Books, 2012",

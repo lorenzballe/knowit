@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do so many pop songs still last about three minutes, when streaming has no time limit at all?",
-  "answer": "Because the shellac record set the habit. A 10-inch disc spinning at 78 rpm held only about three minutes a side, so songs were written to fit it. The 7-inch single and radio playlists kept the length long after. The limit vanished decades ago; the shape stayed in songwriters' hands.",
+  "question": "Why do so many pop songs still last about three minutes, when streaming has no time limit?",
+  "answer": "Because a disc set the mould. Songwriters fitted their songs to the shellac record, and singles and radio playlists kept the shape long after the limit was gone. Streaming adds a squeeze of its own: a play counts once it passes 30 seconds, so shorter songs earn more plays per hour of listening.",
   "move": "A limit can outlive the technology that imposed it by a century.",
   "ask": "Which of my habits was set by a limit that no longer exists?",
   "keywords": [
@@ -27,8 +27,39 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "Most pop songs still end at around three minutes."
+    },
+    "levels": [
+      {
+        "text": "Radio and the 7-inch single kept songs short for decades."
+      },
+      {
+        "text": "Those formats inherited the length from the old shellac 78."
+      },
+      {
+        "text": "A 10-inch disc at 78 rpm held only about three minutes a side.",
+        "figure": "~3 min",
+        "unit": "per side of a 10-inch 78"
+      },
+      {
+        "text": "Songs were cut to fit a disc, and the habit outlived the disc."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Old records held three minutes",
+        "Attention spans peak at three",
+        "Radio pays by the song"
+      ],
+      "answer": 0
+    }
+  },
   "source": "Katz, Capturing Sound, 2004",
   "source_kind": "book",
-  "reference": "Katz, Capturing Sound: How Technology Has Changed Music, University of California Press, 2004",
+  "reference": "Katz, Capturing Sound: How Technology Has Changed Music, University of California Press, 2004; https://support.spotify.com/artists/article/streams-and-listeners/",
   "written": "2026-09-26"
 }

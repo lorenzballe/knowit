@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why does a dog so often lose sight of a red ball thrown onto green grass?",
-  "answer": "Because to a dog, red and green look much alike. Dogs have two kinds of colour cone where most people have three, so they tell blue from yellow but not red from green. Colour tests confirmed it. A red ball on a lawn is dull on dull; a blue one stands out.",
+  "answer": "Because the toy was designed for the person paying for it. Neitz, Geist and Jacobs tested dogs in 1989 and found two-cone vision, much like a red-green colour-blind person's: not black and white, just fewer colours. A red ball on a lawn is dull on dull; a blue or yellow one stands out.",
   "move": "What is obvious to you may be invisible to someone wired differently.",
   "ask": "What am I sure is obvious that the people around me may simply not be able to see?",
   "keywords": [
@@ -26,6 +26,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "The dog runs straight past the red ball on the lawn."
+    },
+    "levels": [
+      {
+        "text": "To a dog, the red ball and the green grass look much alike."
+      },
+      {
+        "text": "Dogs have two kinds of colour cone; most people have three."
+      },
+      {
+        "text": "With two, they tell blue from yellow but not red from green."
+      },
+      {
+        "text": "Red toys are chosen for the buyer's eyes, not the dog's."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Dogs track by smell, not sight",
+        "Red is picked for human eyes",
+        "Dogs see in black and white"
+      ],
+      "answer": 1
+    }
+  },
   "source": "Neitz, Geist & Jacobs, Visual Neuroscience, 1989",
   "source_kind": "paper",
   "reference": "Neitz, Geist & Jacobs, Color vision in the dog, Visual Neuroscience, 1989",

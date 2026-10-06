@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does a habitual coffee drinker's first cup of the morning feel so powerful?",
-  "answer": "Mostly because it ends a small withdrawal. Overnight, a regular drinker's brain, used to caffeine, starts to run dull. In a 2010 Bristol study of 379 people kept off caffeine for 16 hours, regular drinkers given caffeine ended up about as alert as non-drinkers given a placebo. The cup returns them to normal.",
+  "question": "Why does a regular coffee drinker's first cup of the morning feel so powerful?",
+  "answer": "Mostly relief, not a boost. Rogers and colleagues kept 379 people off caffeine for 16 hours. Given caffeine, regular drinkers ended up about as alert as non-drinkers given a dummy pill: the cup bought back normal. Non-drinkers, who never pay the overnight toll, start the day where the coffee drinker ends up.",
   "move": "Relief from a habit can feel exactly like a benefit of it.",
   "ask": "Which of my daily habits mostly fixes a problem that the habit itself created?",
   "keywords": [
@@ -26,8 +26,39 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "The first coffee of the day feels like switching on."
+    },
+    "levels": [
+      {
+        "text": "Caffeine blocks adenosine, the brain's slow build-up of sleepiness."
+      },
+      {
+        "text": "Daily caffeine makes the brain add receptors to make up for it."
+      },
+      {
+        "text": "Overnight the caffeine fades, and those extra receptors leave you dull.",
+        "figure": "~5 h",
+        "unit": "half-life in the blood"
+      },
+      {
+        "text": "The first cup mostly cancels a withdrawal the habit created."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Caffeine works best on waking",
+        "Morning is when we're most tired",
+        "It ends a small withdrawal"
+      ],
+      "answer": 2
+    }
+  },
   "source": "Rogers et al., Neuropsychopharmacology, 2010",
   "source_kind": "paper",
-  "reference": "Rogers, Hohoff, Heatherley, Mullings, Maxfield, Evershed, Deckert & Nutt, Association of the anxiogenic and alerting effects of caffeine with ADORA2A and ADORA1 polymorphisms and habitual level of caffeine consumption, Neuropsychopharmacology, 2010",
+  "reference": "Rogers, Hohoff, Heatherley, Mullings, Maxfield, Evershed, Deckert & Nutt, Association of the anxiogenic and alerting effects of caffeine with ADORA2A and ADORA1 polymorphisms and habitual level of caffeine consumption, Neuropsychopharmacology, 2010; Fredholm et al., Actions of caffeine in the brain, Pharmacological Reviews 51(1), 1999",
   "written": "2026-10-03"
 }

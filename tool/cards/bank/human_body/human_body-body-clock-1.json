@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why is flying east usually harder on the body clock than flying west?",
-  "answer": "Because the inner clock runs slightly long. Czeisler's team, isolating volunteers from the cues of day and night, measured the human cycle at about 24.2 hours. Flying west lengthens the day, which the clock does easily; flying east shortens it, against its natural drift. A clock that runs slow finds waiting easier than hurrying.",
+  "answer": "Because the inner clock's day is a touch longer than Earth's. Czeisler's team measured it at about 24.2 hours in volunteers shielded from daylight, so morning light must nudge it earlier every day just to keep time. A westward trip asks for a delay, the way it drifts anyway; an eastward one asks the opposite.",
   "move": "Work with the direction a system already drifts, not against it.",
   "ask": "Which change in my routine fights my natural drift, and could I make it the other way?",
   "keywords": [
@@ -26,6 +26,37 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "Jet lag hits harder flying east than flying west."
+    },
+    "levels": [
+      {
+        "text": "Flying east shrinks the day: bedtime comes before your clock is ready."
+      },
+      {
+        "text": "Flying west stretches it: you only have to stay up a bit later."
+      },
+      {
+        "text": "Kept from daylight, the human body clock runs a little long.",
+        "figure": "24.2 h",
+        "unit": "the inner clock's day"
+      },
+      {
+        "text": "A clock that runs slow finds waiting easier than hurrying."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Eastbound flights are at night",
+        "Earth's spin works against you",
+        "The inner day is over 24 hours"
+      ],
+      "answer": 2
+    }
+  },
   "source": "Czeisler et al., Science, 1999",
   "source_kind": "paper",
   "reference": "Czeisler CA, Duffy JF, Shanahan TL et al., Stability, precision, and near-24-hour period of the human circadian pacemaker, Science, 1999",
