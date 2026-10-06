@@ -681,3 +681,13 @@ Written without the web, from memory: every figure and reference on
 `life-*` cards still wants a reader to open its source. The writer flagged
 these first: life-purpose-2, life-gratitude-2, life-limits-2,
 life-risk-taking-1, life-regret-2, life-failure-2, life-spending-2.
+
+## Scene cards (October 2026)
+
+- psychology-reciprocity-2 | rank: one-then-a-second mint raised tips 23% (some summaries say 21%); one mint 3.3%, two 14.1% | Strohmetz Rind Fisher Lynn 2002 Sweetening the till abstract percentages
+- weird_facts-fastest-5 | rank: Space Shuttle launch peaked at about 3 g | NASA Space Shuttle launch maximum acceleration 3 g
+- history-1 | rank: peak areas British 35.5, Mongol 24.0, Russian 22.8, Spanish 13.7, French 11.5 million km², attributed to Taagepera 1997 | Taagepera 1997 International Studies Quarterly largest polities table
+- science-risk-in-numbers-1 | rank: scuba dive about 5 micromorts, general anaesthetic about 10, marathon 7 (UK figures) | Norm Chronicles micromorts scuba anaesthetic marathon
+- nature-3 | rank: livestock 0.1 Gt C (one summary says 0.11), humans 0.06, wild mammals 0.007 | Bar-On Phillips Milo 2018 PNAS livestock biomass Gt C
+- food-meat-1 | rank (from the food-emissions sample): kg CO2e per kg dark chocolate 47, coffee 29, cheese 24, chicken 10 | Our World in Data ghg-per-kg-poore table
+- human_body-smell-3 | people beat dogs on some odours in threshold tests (McGann 2017) | McGann 2017 Science human dogs odor sensitivity thresholds
