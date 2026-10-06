@@ -1,0 +1,653 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute Cards, Round Five C</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,700&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="../kit/astute-card.css">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<style>
+/* Round five, page C. One technique per card, none shared:
+   li  generative growth (cracks branch through a crystal you charge by holding)
+   bl  a slider driving a live population (oxidant molecules eating a stain)
+   ay  a timed memory game against a chimpanzee
+   te  a dose-response simulation (100 tumours, you pick the dose)
+   rd  an infinite zoom (one tap out to one year) */
+.stagebox{display:flex;flex-direction:column;gap:1.4cqh}
+.ctl{display:flex;align-items:center;gap:4cqw}
+.ctl .mono{opacity:.7}
+.btn:active{transform:scale(.97)}
+.btn[disabled]{opacity:.35;cursor:default}
+
+/* ---- li: the crystal ---- */
+.xtal{position:relative;flex:1;min-height:0;border-radius:3cqh;background:color-mix(in srgb,var(--k) 9%,transparent);overflow:hidden}
+.xtal canvas{position:absolute;inset:0;width:100%;height:100%}
+.hud{position:absolute;left:4.5cqw;top:2cqh;display:flex;flex-direction:column;gap:.9cqh;pointer-events:none}
+.volt{font:900 5.2cqh/1 var(--display);letter-spacing:-.02em}
+.legend5{display:flex;gap:3.4cqw;align-items:center;font:700 1.25cqh/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;opacity:.75}
+.legend5 i{display:inline-block;vertical-align:middle;margin-right:1.2cqw}
+.legend5 .d{width:1.5cqh;height:1.5cqh;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 .2cqh var(--k)}
+.legend5 .s{width:4cqw;height:1.1cqh;border-radius:1cqh;background:var(--k)}
+.batt{position:absolute;right:4.5cqw;top:2.2cqh;display:flex;align-items:center;gap:.6cqw;pointer-events:none}
+.batt .shell{position:relative;width:17cqw;height:4.6cqh;border-radius:1.3cqh;box-shadow:inset 0 0 0 .32cqh var(--k);overflow:hidden}
+.batt .fill{position:absolute;left:.7cqh;top:.7cqh;bottom:.7cqh;width:0;max-width:calc(100% - 1.4cqh);border-radius:.7cqh;background:var(--k)}
+.batt .nub{width:.9cqw;height:1.8cqh;border-radius:0 .5cqh .5cqh 0;background:var(--k)}
+.batt b{position:absolute;inset:0;display:grid;place-items:center;font:800 1.9cqh/1 var(--body);color:var(--k);mix-blend-mode:normal}
+.batt b span{background:var(--c);padding:.2cqh 1.2cqw;border-radius:.6cqh}
+.batt.hot .fill{background:#d4161c}
+.meter{display:flex;flex-direction:column;gap:.9cqh}
+.meter .row1{display:flex;justify-content:space-between;align-items:baseline}
+.meter .row1 b{font:900 3.2cqh/1 var(--display)}
+.track{position:relative;height:1.6cqh;border-radius:1cqh;background:color-mix(in srgb,var(--k) 14%,transparent)}
+.track .f{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:1cqh;background:var(--k)}
+.track .tk{position:absolute;top:-.5cqh;bottom:-.5cqh;width:.45cqw;background:var(--k);opacity:.55}
+.ticks{position:relative;height:1.4cqh;font:700 1.2cqh/1 var(--mono);opacity:.7}
+.ticks span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.hold{touch-action:none;user-select:none;-webkit-user-select:none;position:relative;overflow:hidden;min-width:44cqw}
+
+/* ---- bl: the wash ---- */
+.wash{flex:1;min-height:0;display:grid;grid-template-columns:20cqw 1fr;gap:4cqw}
+.thermo{position:relative;touch-action:none;cursor:ns-resize;user-select:none}
+.tube{position:absolute;left:1.5cqw;width:6.4cqw;top:1.5cqh;bottom:5.5cqh;border-radius:9cqw;box-shadow:inset 0 0 0 .32cqh var(--k);background:#ffffff59}
+.merc{position:absolute;left:1.6cqw;right:1.6cqw;bottom:1.4cqw;border-radius:9cqw;background:#d4161c}
+.bulb{position:absolute;left:-.4cqw;bottom:-.2cqh;width:10.4cqw;aspect-ratio:1;transform:translateY(40%);border-radius:50%;background:#d4161c;box-shadow:0 0 0 .32cqh var(--k)}
+.tlab{position:absolute;left:10.4cqw;transform:translateY(50%);font:700 1.3cqh/1 var(--mono);opacity:.7}
+.tlab.hi{opacity:1}
+.knob{position:absolute;left:.2cqw;width:9cqw;height:1.2cqh;margin-top:-.6cqh;border-radius:1cqh;background:var(--k);box-shadow:0 .4cqh 1cqh #0003;transform:translateY(-50%)}
+.swcol{display:flex;flex-direction:column;gap:1.4cqh;min-width:0}
+.lens{position:relative;flex:1;min-height:0}
+.lens canvas{position:absolute;inset:0;width:100%;height:100%}
+.stats{display:flex;gap:6cqw}
+.stat{display:flex;flex-direction:column;gap:.7cqh}
+.stat b{font:900 3.6cqh/1 var(--display);letter-spacing:-.01em}
+.dot5{display:inline-block;width:1.3cqh;height:1.3cqh;border-radius:50%;vertical-align:-.1cqh;margin:0 .6cqw}
+.taed.on{background:var(--k);color:var(--c)}
+
+/* ---- ay: the touch screen ---- */
+.screen{flex:1;min-height:0;border-radius:3cqh;background:#10100c;padding:2cqh 4cqw;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(6,1fr);gap:1cqh 2cqw;box-shadow:0 1.2cqh 2.6cqh #0003;position:relative}
+.cell{border:0;background:transparent;padding:0;display:grid;place-items:center;cursor:pointer;font:800 4.6cqh/1 var(--body);color:#fff;border-radius:1.2cqh;-webkit-tap-highlight-color:transparent}
+.cell i{font-style:normal}
+.cell.mask{background:#fff;color:transparent}
+.cell.ok{background:#00D451;color:#10100c}
+.cell.bad{background:#ff3b30;color:#fff}
+.cell.miss{background:#ffffff26;color:#fff}
+.cue{position:absolute;inset:0;display:grid;place-items:center;font:700 1.6cqh/1.3 var(--mono);letter-spacing:.1em;color:#ffffffb3;text-transform:uppercase;pointer-events:none;text-align:center}
+.board{display:flex;flex-direction:column;gap:1cqh}
+.brow{display:grid;grid-template-columns:20cqw 1fr 12cqw;align-items:center;gap:2.4cqw}
+.brow .nm{font:800 1.5cqh/1 var(--body);letter-spacing:.12em;text-transform:uppercase}
+.brow .bar{height:1.5cqh;border-radius:1cqh;background:color-mix(in srgb,var(--k) 14%,transparent);position:relative}
+.brow .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:1cqh;background:var(--k);width:0}
+.brow.you .bar i{background:#fff;box-shadow:inset 0 0 0 .25cqh var(--k)}
+.brow b{font:900 2.4cqh/1 var(--display);text-align:right}
+
+/* ---- te: the tumours ---- */
+.thead{display:flex;align-items:baseline;gap:3cqw}
+.thead b{font:900 5.4cqh/.9 var(--display);letter-spacing:-.02em;min-width:13cqw}
+.thead span{font:600 1.9cqh/1.25 var(--body)}
+.thead .mono{margin-left:auto;text-align:right;opacity:.75}
+.tum{position:relative;flex:1.35;min-height:0}
+.tum canvas,.chart svg{position:absolute;inset:0;width:100%;height:100%}
+.chart{position:relative;flex:1;min-height:0;border-radius:2.4cqh;background:color-mix(in srgb,var(--k) 12%,transparent)}
+.doses{display:flex;gap:2.2cqw;align-items:center}
+.dose{padding:1.6cqh 3.4cqw;font-size:1.9cqh}
+.dose.on{background:var(--k);color:var(--c)}
+.dose.done{box-shadow:inset 0 0 0 .28cqh var(--k);opacity:.6}
+
+/* ---- rd: the zoom ---- */
+.bets{display:flex;gap:2.4cqw}
+.bet{padding:1.5cqh 3.6cqw;font-size:1.9cqh}
+.bet.on{background:var(--k);color:var(--c)}
+.zoom{position:relative;flex:1;min-height:0;border-radius:3cqh;background:#16080e;overflow:hidden;touch-action:none;cursor:grab;box-shadow:0 1.2cqh 2.6cqh #0003}
+.zoom canvas{position:absolute;inset:0;width:100%;height:100%}
+.zhud{position:absolute;left:5cqw;right:5cqw;top:2.4cqh;display:flex;flex-direction:column;gap:1cqh;pointer-events:none;color:#fff}
+.zamt{font:900 6.2cqh/1 var(--display);letter-spacing:-.02em;text-shadow:0 .4cqh 2cqh #16080e}
+.zlab{font:700 1.4cqh/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#FF3D7F}
+.zreq{position:absolute;left:5cqw;bottom:2.2cqh;font:700 1.35cqh/1 var(--mono);letter-spacing:.08em;color:#ffffffb3;text-transform:uppercase;pointer-events:none;text-shadow:0 0 1cqh #16080e}
+.ybet{position:absolute;right:5cqw;bottom:2cqh;font:800 1.35cqh/1 var(--body);letter-spacing:.1em;text-transform:uppercase;background:#fff;color:#16080e;border-radius:99px;padding:.9cqh 2.6cqw;pointer-events:none}
+</style>
+
+<div class="app">
+  <div class="top"><h1>Today</h1><div class="dots" id="dots"></div><div class="kind" id="kind"></div></div>
+  <div class="stage">
+    <button class="nav" id="prev" aria-label="Previous card">←</button>
+    <button class="nav" id="next" aria-label="Next card">→</button>
+
+    <!-- 1 · Technology: charge the crystal (generative growth) -->
+    <article class="card" id="li" style="--c:#00A6FF;--k:#10100c;--edge:#005e91" data-kind="Charge it · watch the crystal">
+      <div class="in">
+        <div class="label"><span class="t">Technology</span><span class="tag">HOLD</span></div>
+        <h2 class="q">Your phone says 100%. How much of the lithium has actually left its positive electrode?</h2>
+        <div class="stagebox">
+          <div class="xtal" id="liBox"><canvas id="liCv" role="img" aria-label="Layers of cobalt oxide with lithium ions between them"></canvas>
+            <div class="hud"><span class="volt num" id="liV">3.00 V</span><span class="legend5"><span><i class="d"></i>lithium</span><span><i class="s"></i>cobalt oxide</span></span></div>
+            <div class="batt" id="liBatt"><div class="shell"><div class="fill" id="liFill"></div><b><span id="liPct">0%</span></b></div><div class="nub"></div></div>
+          </div>
+          <div class="meter">
+            <div class="row1"><span class="mono">Lithium pulled out</span><b class="num" id="liOut">0%</b></div>
+            <div class="track"><div class="f" id="liBar"></div><div class="tk" style="left:50%"></div><div class="tk" style="left:66%"></div></div>
+            <div class="ticks"><span style="left:50%">4.2 V</span><span style="left:66%">4.4 V</span></div>
+          </div>
+        </div>
+        <p class="say" id="liSay">Press and hold to charge. Each white dot is a lithium ion parked between layers of cobalt oxide.</p>
+        <div class="ctl"><button class="btn hold" id="liHold">Hold to charge</button><span class="mono" id="liStep">1 / 3</span></div>
+        <div class="keep gone" id="liKeep"><b>WHAT TO KEEP</b>Full usually means as far as is safe, not as far as possible.</div>
+        <div class="foot"><span class="src">Source · Manthiram, <i>Nature Communications</i> (2020). LiCoO₂ holds 274 mAh/g in theory; about 140 is used at 4.2 V, about 180 at 4.4 V</span></div>
+      </div>
+    </article>
+
+    <!-- 2 · Science: the wash (slider drives a live population) -->
+    <article class="card" id="bl" style="--c:#00E5A0;--k:#10100c;--edge:#00835b" data-kind="Turn up the heat · live wash">
+      <div class="in">
+        <div class="label"><span class="t">Science</span><span class="tag">SLIDE</span></div>
+        <h2 class="q">Your washing powder whitens at 40 °C. Its bleach, hydrogen peroxide, barely works below 60 °C. So what does the work?</h2>
+        <div class="stagebox">
+          <div class="wash">
+            <div class="thermo" id="blTh" role="slider" tabindex="0" aria-label="Water temperature" aria-valuemin="20" aria-valuemax="90" aria-valuenow="40">
+              <div class="tube"><div class="merc" id="blMerc"></div></div><div class="bulb"></div>
+              <div id="blTicks"></div>
+              <div class="knob" id="blKnob"></div>
+            </div>
+            <div class="swcol">
+              <div class="lens"><canvas id="blCv" role="img" aria-label="A tea stain on cotton, magnified, with bleach molecules moving over it"></canvas></div>
+              <div class="stats">
+                <div class="stat"><span class="mono">Water</span><b class="num" id="blT">40 °C</b></div>
+                <div class="stat"><span class="mono">Stain left</span><b class="num" id="blLeft">100%</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="say" id="blSay">Drag the thermometer. Each wash runs a few seconds: watch the <span class="dot5" style="background:#1d5fae"></span>peroxide eat the tea stain, or not.</p>
+        <div class="ctl"><button class="btn ghost taed gone" id="blTaed">+ Add TAED</button><span class="mono" id="blHint">One wash per drag</span></div>
+        <div class="keep gone" id="blKeep"><b>WHAT TO KEEP</b>When a process needs heat, look for a helper that lowers the bar.</div>
+        <div class="foot"><span class="src">Source · Smulders, <i>Laundry Detergents</i> (Wiley-VCH, 2002). Rates in the wash are a simple model of that chemistry</span></div>
+      </div>
+    </article>
+
+    <!-- 3 · Nature: beat the chimp (timed memory game) -->
+    <article class="card" id="ay" style="--c:#00D451;--k:#10100c;--edge:#007a2f" data-kind="Beat the chimp · memory game">
+      <div class="in">
+        <div class="label"><span class="t">Nature</span><span class="tag">PLAY</span></div>
+        <h2 class="q">Five numbers flash for a fifth of a second, then hide. Tap where they were, smallest first. A young chimp gets 4 rounds in 5.</h2>
+        <div class="stagebox">
+          <div class="screen" id="ayScr" aria-label="Touch screen"><div class="cue" id="ayCue">Press Flash.<br>Eyes here.</div></div>
+          <div class="board">
+            <div class="brow you"><span class="nm">You</span><span class="bar"><i id="ayYouBar"></i></span><b class="num" id="ayYou">0/0</b></div>
+            <div class="brow"><span class="nm">Ayumu</span><span class="bar"><i style="width:80%"></i></span><b class="num">80%</b></div>
+            <div class="brow"><span class="nm">Students</span><span class="bar"><i style="width:40%"></i></span><b class="num">40%</b></div>
+          </div>
+        </div>
+        <p class="say" id="aySay">Kyoto, 2007. Ayumu the chimp against university students, at the same screen and the same speed.</p>
+        <div class="ctl"><button class="btn" id="ayGo">Flash</button><span class="mono" id="ayRound">Round 1 / 5</span></div>
+        <div class="keep gone" id="ayKeep"><b>WHAT TO KEEP</b>A skill you lack may be one you never practised, or one your species traded away.</div>
+        <div class="foot"><span class="src">Source · Inoue &amp; Matsuzawa, <i>Current Biology</i> (2007); Silberberg &amp; Kearns, <i>Animal Cognition</i> (2009)</span></div>
+      </div>
+    </article>
+
+    <!-- 4 · Human body: dose the tumours (dose-response) -->
+    <article class="card" id="te" style="--c:#FF2D5F;--k:#ffffff;--edge:#9e1638" data-kind="Pick a dose · watch 100 tumours">
+      <div class="in">
+        <div class="label"><span class="t">Human body</span><span class="tag">DOSE</span></div>
+        <h2 class="q">Most cancers rebuild their chromosome tips with one enzyme, telomerase. Block it, and how many of 100 tumours stop?</h2>
+        <div class="stagebox">
+          <div class="thead"><b class="num" id="teN">100</b><span>tumours<br>still growing</span><span class="mono" id="teDose">no drug yet</span></div>
+          <div class="tum"><canvas id="teCv" role="img" aria-label="One hundred tumours"></canvas></div>
+          <div class="chart"><svg id="teSvg" role="img" aria-label="Dose against tumours still growing"></svg></div>
+        </div>
+        <p class="say" id="teSay">Pick a dose: how much of the telomerase the drug blocks. Then try a bigger one.</p>
+        <div class="doses" id="teDoses"><button class="btn ghost dose" data-d="25">25%</button><button class="btn ghost dose" data-d="50">50%</button><button class="btn ghost dose" data-d="75">75%</button><button class="btn ghost dose" data-d="100">100%</button></div>
+        <div class="keep gone" id="teKeep"><b>WHAT TO KEEP</b>A barrier with two doors is not closed by shutting one.</div>
+        <div class="foot"><span class="src">Source · Cesare &amp; Reddel, <i>Nature Reviews Genetics</i> (2010). The 100 tumours are a model; 12 use ALT</span></div>
+      </div>
+    </article>
+
+    <!-- 5 · Pop culture: zoom out the bill (infinite zoom) -->
+    <article class="card" id="rd" style="--c:#FF3D7F;--k:#ffffff;--edge:#a3204d" data-kind="Zoom out the bill · one tap to one year">
+      <div class="in">
+        <div class="label"><span class="t">Pop culture</span><span class="tag">ZOOM OUT</span></div>
+        <h2 class="q">In 2023 Reddit began charging apps $0.24 per 1,000 requests: a fortieth of a cent a tap. What would a year cost Apollo, a popular app?</h2>
+        <div class="stagebox">
+          <div class="bets" id="rdBets"><button class="btn ghost bet" data-b="0.2">$200,000</button><button class="btn ghost bet" data-b="2">$2 million</button><button class="btn ghost bet" data-b="20">$20 million</button></div>
+          <div class="zoom" id="rdBox"><canvas id="rdCv" role="img" aria-label="Requests drawn as dots, zooming out from one tap to one year"></canvas>
+            <div class="zhud"><span class="zamt num" id="rdAmt">$0.00024</span><span class="zlab" id="rdLab">One tap</span></div>
+            <span class="zreq num" id="rdReq">1 request</span>
+            <span class="ybet gone" id="rdYour">your bet</span>
+          </div>
+        </div>
+        <p class="say" id="rdSay">Place your bet, then zoom out. Every dot is one request: a refresh, a comment, a scroll.</p>
+        <div class="ctl"><button class="btn" id="rdGo" disabled>Zoom out</button><span class="mono" id="rdStep">1 / 5</span></div>
+        <div class="keep gone" id="rdKeep"><b>WHAT TO KEEP</b>Multiply a tiny unit price by the real volume before calling it cheap.</div>
+        <div class="foot"><span class="src">Source · Christian Selig, r/apolloapp, 31 May 2023: 7 billion requests a month, 344 per user per day</span></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<script src="../kit/astute-card.js"></script>
+<script>
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const D = s => calm ? 0 : s;
+const $ = Kit.$;
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const ss = t => { t = clamp(t); return t * t * (3 - 2 * t); };
+// One seeded generator per card, so each card looks the same on every phone.
+const seeded = s => () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+// One animation clock for the page: only the card on screen ticks.
+const ticks = {};
+let last = performance.now();
+(function loop(now) { const dt = Math.min(.05, (now - last) / 1000); last = now; const id = document.querySelector('.card.on')?.id; if (id && ticks[id]) ticks[id](dt, now); requestAnimationFrame(loop); })(last);
+const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
+
+/* ================= 1 · li: charge the crystal ================= */
+(() => {
+  const cv = $('liCv'), box = $('liBox'), btn = $('liHold'), say = $('liSay');
+  const STOP = [4.2, 4.4, 4.6], RATE = [.5, .16, .12], ROWS = 4, COLS = 9;
+  const SAYS = [
+    'The phone says <b>100%</b>. Only <b>half</b> the lithium has left. The rest stays in the crystal, on purpose. Hold again to push on.',
+    'Newer phones call about <b>4.4 V</b> full and pull out <b>two-thirds</b>. More hours per charge, but the crystal wears faster. Keep pushing.',
+    'Past about 4.5 V the emptied layers <b>slide and crack</b>, and the oxide can give off <b>oxygen</b>, which feeds a fire. So 100% stops near half.'
+  ];
+  let g, v, phase, holding, li, cracks, tips, oxy, rnd, speed = 1, crackLen;
+  const xOf = v => v <= 4.2 ? .5 * (v - 3) / 1.2 : v <= 4.4 ? .5 + .16 * (v - 4.2) / .2 : .66 + .09 * clamp((v - 4.4) / .2);
+  function reset() {
+    rnd = seeded(41); v = 3; phase = 0; holding = false; cracks = []; tips = []; oxy = []; crackLen = 0;
+    const order = [...Array(ROWS * COLS).keys()].sort(() => rnd() - .5);
+    li = order.map(i => ({r: Math.floor(i / COLS), c: i % COLS, out: null}));
+    say.innerHTML = 'Press and hold to charge. Each white dot is a lithium ion parked between layers of cobalt oxide.';
+    btn.textContent = 'Hold to charge'; $('liStep').textContent = '1 / 3'; Kit.hide('liKeep'); $('liBatt').classList.remove('hot');
+    hud();
+  }
+  function geo() {
+    const {x, W, H} = Kit.fitCanvas(cv);
+    const top = H * .3, bot = H - Math.max(14, H * .06), band = (bot - top) / (ROWS * 2 + 1), m = W * .07, pitch = (W - 2 * m) / COLS;
+    g = {x, W, H, top, bot, band, m, pitch, r: Math.min(pitch, band) * .3};
+  }
+  const shear = () => ss((v - 4.45) / .15);
+  const slabDx = s => (s % 2 ? 1 : -1) * shear() * g.pitch * .32;
+  const slabY = s => g.top + g.band * (s * 2 + .5);
+  function hud() {
+    const x = xOf(v);
+    $('liV').textContent = v.toFixed(2) + ' V';
+    $('liOut').textContent = Math.round(x * 100) + '%';
+    $('liBar').style.width = x * 100 + '%';
+    const pct = Math.min(100, Math.round(x / .5 * 100));
+    $('liPct').textContent = pct + '%'; $('liFill').style.width = pct + '%';
+  }
+  function grow(dt) {
+    const target = shear() * g.W * g.H / 95;
+    let guard = 0;
+    while (crackLen < target && guard++ < 400) {
+      if (!tips.length) { const s = Math.floor(rnd() * 5); tips.push({x: g.m + rnd() * (g.W - 2 * g.m), y: slabY(s), a: Math.PI / 2 * (rnd() < .5 ? 1 : -1) + (rnd() - .5) * 1.2, life: 1}); }
+      const i = Math.floor(rnd() * tips.length), t = tips[i], st = Math.max(3, g.band * .16);
+      t.a += (rnd() - .5) * .8;
+      const nx = t.x + Math.cos(t.a) * st, ny = t.y + Math.sin(t.a) * st;
+      cracks.push([t.x, t.y, nx, ny, t.life]); crackLen += st; t.x = nx; t.y = ny;
+      if (rnd() < .09) tips.push({x: nx, y: ny, a: t.a + (rnd() < .5 ? .9 : -.9), life: t.life * .7});
+      if (nx < 0 || nx > g.W || ny < g.top - g.band || ny > g.bot || rnd() < .02) tips.splice(i, 1);
+    }
+    if (shear() > 0 && rnd() < shear() * dt * 14) { const s = Math.floor(rnd() * 5); oxy.push({x: g.m + rnd() * (g.W - 2 * g.m) + slabDx(s), y: slabY(s), t: 0}); }
+    oxy.forEach(o => { o.t += dt; o.y -= dt * g.band * 1.8; o.x += Math.sin(o.t * 5 + o.y) * .3; });
+    oxy = oxy.filter(o => o.t < 1.6);
+  }
+  function draw(now) {
+    if (!g) return;
+    const {x, W, H, band, m, pitch, r} = g; x.clearRect(0, 0, W, H);
+    const sh = shear(), wob = sh * band * .22;
+    // the layers of cobalt oxide
+    for (let s = 0; s < 5; s++) {
+      const y = slabY(s), dx = slabDx(s);
+      x.fillStyle = '#10100c';
+      x.beginPath();
+      for (let k = 0; k <= 24; k++) { const px = m * .4 + dx + (W - m * .8) * k / 24, py = y - band * .26 + Math.sin(k * .9 + s) * wob; k ? x.lineTo(px, py) : x.moveTo(px, py); }
+      for (let k = 24; k >= 0; k--) { const px = m * .4 + dx + (W - m * .8) * k / 24, py = y + band * .26 + Math.sin(k * .9 + s) * wob; x.lineTo(px, py); }
+      x.closePath(); x.fill();
+      x.fillStyle = '#00A6FF';
+      for (let c = 0; c < COLS; c++) { const px = m + pitch * (c + .5) + dx; x.beginPath(); x.arc(px, y + Math.sin((px - dx - m * .4) / (W - m * .8) * 24 * .9 + s) * wob, band * .11, 0, 7); x.fill(); }
+    }
+    // the cracks, growing as the layers are pushed too far
+    x.lineCap = 'round';
+    for (const [a, b, c, d, l] of cracks) { x.strokeStyle = '#d4161c'; x.lineWidth = 1 + 1.8 * l; x.beginPath(); x.moveTo(a, b); x.lineTo(c, d); x.stroke(); }
+    // lithium
+    for (const p of li) {
+      const dx = (slabDx(p.r) + slabDx(p.r + 1)) / 2;
+      let px = m + pitch * (p.c + .5) + dx, py = g.top + band * (p.r * 2 + 1.5), a = 1;
+      if (p.out != null) { const t = clamp((now - p.out) / 650); if (t >= 1) continue; px -= (px + r * 3) * t * t; py += Math.sin(t * 6) * band * .1; a = 1 - t * .6; }
+      x.globalAlpha = a; x.fillStyle = '#fff'; x.strokeStyle = '#10100c'; x.lineWidth = 1.6;
+      x.beginPath(); x.arc(px, py, r, 0, 7); x.fill(); x.stroke(); x.globalAlpha = 1;
+    }
+    // oxygen escaping
+    for (const o of oxy) { x.globalAlpha = 1 - o.t / 1.6; x.fillStyle = '#d4161c'; x.beginPath(); x.arc(o.x, o.y, r * .62, 0, 7); x.fill(); x.fillStyle = '#fff'; x.font = `800 ${r * .8}px Figtree`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText('O', o.x, o.y + .5); }
+    x.globalAlpha = 1;
+  }
+  function endPhase() {
+    holding = false; say.innerHTML = SAYS[phase]; phase++;
+    $('liStep').textContent = Math.min(phase + 1, 3) + ' / 3';
+    if (phase === 1) btn.textContent = 'Hold to push on';
+    if (phase === 2) btn.textContent = 'Keep pushing';
+    if (phase === 3) { btn.textContent = 'Start again'; Kit.show('liKeep'); $('liStep').textContent = '3 / 3'; }
+    if (!calm) gsap.fromTo(say, {opacity: 0, y: 6}, {opacity: 1, y: 0, duration: .4, ease: 'power2.out'});
+  }
+  ticks.li = (dt, now) => {
+    if (holding && phase < 3) {
+      v = Math.min(STOP[phase], v + RATE[phase] * dt * speed);
+      const n = Math.round(xOf(v) * li.length); li.forEach((p, i) => { if (i < n && p.out == null) p.out = now; });
+      if (phase === 2) { $('liBatt').classList.add('hot'); }
+      hud(); if (v >= STOP[phase] - 1e-6) endPhase();
+    }
+    if (g) grow(dt);
+    draw(now);
+  };
+  const down = e => { e.preventDefault(); if (phase === 3) { reset(); return; } holding = true; };
+  const up = () => { holding = false; };
+  btn.addEventListener('pointerdown', down); ['pointerup', 'pointerleave', 'pointercancel'].forEach(k => btn.addEventListener(k, up));
+  btn.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) down(e); });
+  btn.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') up(); });
+  watch(box, () => { geo(); draw(performance.now()); });
+  reset();
+  Kit.onShow.li = () => { geo(); draw(performance.now()); };
+  Kit.play.li = async () => { speed = 4; for (let p = 0; p < 3; p++) { holding = true; while (phase === p) await wait(50); } speed = 1; };
+})();
+
+/* ================= 2 · bl: the wash ================= */
+(() => {
+  const cv = $('blCv'), th = $('blTh'), say = $('blSay');
+  const T0 = 20, T1 = 90, WASH = 5.5, NP = 70;
+  let T = 40, taed = false, stage = 0, g, stains, parts, grid, clock = 0, start = 0, rnd;
+  // Fraction of contacts that bleach, by temperature: peroxide needs heat, peracetic acid does not.
+  const qPer = T => .9 / (1 + Math.exp(-(T - 60) / 3.5));
+  const qAcid = T => .9 / (1 + Math.exp(-(T - 31) / 4));
+  const q = () => taed ? qAcid(T) : qPer(T);
+  function ticksUI() {
+    const el = $('blTicks'); el.innerHTML = '';
+    for (const t of [20, 40, 60, 80]) { const s = document.createElement('span'); s.className = 'tlab' + (t === 40 || t === 60 ? ' hi' : ''); s.textContent = t + '°'; s.dataset.t = t; el.appendChild(s); }
+  }
+  function tubeGeo() { const tb = th.querySelector('.tube'), r = th.getBoundingClientRect(), b = tb.getBoundingClientRect(); return {top: b.top - r.top + b.width * .5, bot: b.bottom - r.top - b.width * .5, rect: r}; }
+  function placeT() {
+    const {top, bot} = tubeGeo(), f = (T - T0) / (T1 - T0), y = bot - f * (bot - top);
+    $('blKnob').style.top = y + 'px';
+    $('blMerc').style.height = `calc(${f * 100}% * .86 + 6%)`;
+    th.querySelectorAll('.tlab').forEach(s => s.style.top = (bot - (s.dataset.t - T0) / (T1 - T0) * (bot - top)) + 'px');
+    $('blT').textContent = Math.round(T) + ' °C'; th.setAttribute('aria-valuenow', Math.round(T));
+  }
+  function geo() {
+    const {x, W, H} = Kit.fitCanvas(cv);
+    const R = Math.min(W, H) / 2 - 4; g = {x, W, H, R, cx: W / 2, cy: H / 2, d: Math.max(2, R / 58)};
+  }
+  function wash() {
+    if (!g) geo();
+    rnd = seeded(7); const {R, cx, cy, d} = g;
+    stains = []; const blobs = [[-.18, -.12, .34], [.22, .1, .26], [-.05, .3, .2]];
+    for (const [bx, by, br] of blobs) for (let i = 0; i < 260 * br / .3; i++) {
+      const a = rnd() * 6.283, rr = Math.sqrt(rnd()) * br * R * (1 + .25 * Math.sin(a * 3 + bx * 9)), x = cx + bx * R + Math.cos(a) * rr, y = cy + by * R + Math.sin(a) * rr;
+      if (Math.hypot(x - cx, y - cy) < R - d * 2) stains.push({x, y, on: true, s: .7 + rnd() * .6});
+    }
+    const cell = d * 5; grid = new Map();
+    stains.forEach((s, i) => { const k = Math.floor(s.x / cell) + ',' + Math.floor(s.y / cell); (grid.get(k) || grid.set(k, []).get(k)).push(i); });
+    g.cell = cell;
+    parts = [...Array(NP)].map(() => { const a = rnd() * 6.283, rr = Math.sqrt(rnd()) * (R - d * 3); return {x: cx + Math.cos(a) * rr, y: cy + Math.sin(a) * rr, a: rnd() * 6.283}; });
+    clock = 0; start = stains.length;
+  }
+  const left = () => stains.filter(s => s.on).length / start;
+  function step(dt) {
+    if (clock >= WASH) return false;
+    clock += dt;
+    const {R, cx, cy, d, cell} = g, sp = R * .55, rc = d * 3.2, p = q() * dt * 9;
+    for (const o of parts) {
+      o.a += (rnd() - .5) * 1.4; o.x += Math.cos(o.a) * sp * dt; o.y += Math.sin(o.a) * sp * dt;
+      if (Math.hypot(o.x - cx, o.y - cy) > R - d * 3) { o.a += Math.PI; o.x += Math.cos(o.a) * 2; o.y += Math.sin(o.a) * 2; }
+      const gx = Math.floor(o.x / cell), gy = Math.floor(o.y / cell);
+      for (let i = -1; i <= 1; i++) for (let j = -1; j <= 1; j++) { const l = grid.get((gx + i) + ',' + (gy + j)); if (l) for (const k of l) { const s = stains[k]; if (s.on && Math.abs(s.x - o.x) < rc && Math.abs(s.y - o.y) < rc && rnd() < p) s.on = false; } }
+    }
+    return true;
+  }
+  function draw() {
+    if (!g || !stains) return;
+    const {x, W, H, R, cx, cy, d} = g; x.clearRect(0, 0, W, H);
+    x.save(); x.beginPath(); x.arc(cx, cy, R, 0, 7); x.clip();
+    x.fillStyle = '#fbfbf6'; x.fillRect(0, 0, W, H);
+    x.strokeStyle = '#10100c12'; x.lineWidth = d * .9;
+    for (let k = -R; k < R; k += d * 2.6) { x.beginPath(); x.moveTo(cx - R, cy + k); x.lineTo(cx + R, cy + k); x.stroke(); x.beginPath(); x.moveTo(cx + k, cy - R); x.lineTo(cx + k, cy + R); x.stroke(); }
+    x.fillStyle = '#8a5524';
+    for (const s of stains) if (s.on) { x.globalAlpha = .55 + .3 * s.s; x.beginPath(); x.arc(s.x, s.y, d * 1.15 * s.s, 0, 7); x.fill(); }
+    x.globalAlpha = 1;
+    x.fillStyle = taed ? '#e2650b' : '#1d5fae';
+    for (const o of parts) { x.beginPath(); x.arc(o.x, o.y, d * (taed ? 1.25 : 1.05), 0, 7); x.fill(); }
+    x.restore();
+    // the lens rim doubles as the wash clock
+    x.lineWidth = d * 1.6; x.strokeStyle = '#10100c'; x.beginPath(); x.arc(cx, cy, R, 0, 7); x.stroke();
+    x.lineWidth = d * 1.6; x.strokeStyle = '#ffffff'; x.lineCap = 'round';
+    x.beginPath(); x.arc(cx, cy, R, -Math.PI / 2, -Math.PI / 2 + 6.283 * clamp(clock / WASH)); x.stroke();
+    $('blLeft').textContent = Math.round(left() * 100) + '%';
+  }
+  function verdict() {
+    const l = left();
+    if (stage === 0 && !taed && T >= 56 && l < .35) {
+      stage = 1; Kit.show('blTaed'); $('blHint').textContent = 'Then cool it to 40°';
+      say.innerHTML = 'Around <b>60 °C</b> the peroxide bleaches. Now add a scoop of <b>TAED</b> and drag the water back down to 40 °C.';
+    } else if (stage === 1 && taed && T <= 45 && l < .35) {
+      stage = 2; Kit.show('blKeep'); $('blHint').textContent = 'Same powder, cooler wash';
+      say.innerHTML = 'TAED turns peroxide into <b>peracetic acid</b>, which bleaches at <b>40 °C</b> and below. Liquid detergents carry neither: peroxide won’t keep in water.';
+    } else if (stage === 0 && T < 56 && clock >= WASH) say.innerHTML = `At ${Math.round(T)} °C the peroxide barely touches the stain. Hotter.`;
+    else if (stage === 1 && !taed && T < 56 && clock >= WASH) say.innerHTML = 'Without help, cool water leaves the stain. Add <b>TAED</b>.';
+  }
+  let was = true;
+  ticks.bl = dt => { if (!stains) return; const run = step(dt); if (was && !run) verdict(); was = run; draw(); };
+  function setT(y) { const {top, bot} = tubeGeo(); T = clamp(Math.round(T0 + (bot - y) / (bot - top) * (T1 - T0)), T0, T1); placeT(); }
+  th.addEventListener('pointerdown', e => {
+    th.setPointerCapture(e.pointerId); const r = th.getBoundingClientRect(); setT(e.clientY - r.top); wash(); was = true;
+    th.onpointermove = ev => setT(ev.clientY - r.top);
+    th.onpointerup = th.onpointercancel = () => { th.onpointermove = null; };
+  });
+  th.addEventListener('keydown', e => { const k = {ArrowUp: 5, ArrowRight: 5, ArrowDown: -5, ArrowLeft: -5}[e.key]; if (!k) return; e.preventDefault(); T = clamp(T + k, T0, T1); placeT(); wash(); was = true; });
+  $('blTaed').onclick = () => { taed = !taed; $('blTaed').classList.toggle('on', taed); $('blTaed').textContent = taed ? 'TAED added' : '+ Add TAED'; wash(); was = true; };
+  ticksUI();
+  watch(cv, () => { geo(); if (stains) { const keep = stains.map(s => s.on), c = clock; wash(); stains.forEach((s, i) => s.on = keep[i] ?? true); clock = c; } draw(); });
+  watch(th, placeT);
+  Kit.onShow.bl = () => { geo(); placeT(); if (!stains) { wash(); } draw(); };
+  const run = () => { wash(); while (step(1 / 60)); verdict(); was = false; draw(); };
+  Kit.play.bl = async () => { T = 65; placeT(); run(); await wait(400); $('blTaed').click(); T = 40; placeT(); run(); };
+})();
+
+/* ================= 3 · ay: beat the chimp ================= */
+(() => {
+  const scr = $('ayScr'), go = $('ayGo'), say = $('aySay'), N = 30, ROUNDS = 5;
+  let cells = [], round = 0, wins = 0, busy = false, seq = [], at = 0, rnd = seeded(5);
+  for (let i = 0; i < N; i++) { const b = document.createElement('button'); b.className = 'cell'; b.setAttribute('aria-label', 'Square ' + (i + 1)); b.innerHTML = '<i></i>'; b.onclick = () => tap(i); scr.appendChild(b); cells.push(b); }
+  function clear() { cells.forEach(c => { c.className = 'cell'; c.firstChild.textContent = ''; }); }
+  function score() { $('ayYou').textContent = wins + '/' + round; $('ayYouBar').style.width = (round ? wins / round * 100 : 0) + '%'; }
+  async function flash() {
+    if (busy) return; if (round >= ROUNDS) return restart();
+    busy = true; go.disabled = true; clear(); $('ayCue').classList.add('gone');
+    // five numerals from 1 to 9, in five random squares
+    const nums = [...Array(9).keys()].map(i => i + 1).sort(() => rnd() - .5).slice(0, 5).sort((a, b) => a - b);
+    const spots = [...Array(N).keys()].sort(() => rnd() - .5).slice(0, 5);
+    seq = nums.map((n, i) => ({n, at: spots[i]})); at = 0;
+    $('ayCue').textContent = '+'; $('ayCue').classList.remove('gone');
+    await wait(650); $('ayCue').classList.add('gone');
+    seq.forEach(s => cells[s.at].firstChild.textContent = s.n);
+    await wait(210);
+    seq.forEach(s => cells[s.at].classList.add('mask'));
+    busy = 'tap';
+  }
+  function tap(i) {
+    if (busy !== 'tap') return;
+    const want = seq[at];
+    if (i === want.at) { cells[i].className = 'cell ok'; at++; if (at === seq.length) end(true); }
+    else if (seq.some(s => s.at === i) || true) { cells[i].className = 'cell bad'; if (!seq.some(s => s.at === i)) cells[i].firstChild.textContent = '×'; end(false); }
+  }
+  function end(ok) {
+    busy = false; round++; if (ok) wins++; score();
+    seq.forEach((s, k) => { const c = cells[s.at]; if (!c.classList.contains('ok') && !c.classList.contains('bad')) c.className = 'cell miss'; c.firstChild.textContent = s.n; });
+    go.disabled = false;
+    if (round < ROUNDS) { go.textContent = 'Next round'; $('ayRound').textContent = `Round ${round + 1} / ${ROUNDS}`; say.innerHTML = ok ? 'All five. Again, same speed.' : 'Gone before your eyes could move. That is the point: 0.21 s is about one glance.'; return; }
+    const pct = Math.round(wins / ROUNDS * 100);
+    $('ayRound').textContent = 'Done'; go.textContent = 'Play again';
+    say.innerHTML = `You: <b>${pct}%</b>. Ayumu had years of practice. In 2009, people who trained at this speed for weeks <b>caught up</b> with him. Matsuzawa still thinks our ancestors traded snapshot memory for language.`;
+    Kit.show('ayKeep');
+  }
+  function restart() { round = 0; wins = 0; score(); clear(); Kit.hide('ayKeep'); go.textContent = 'Flash'; $('ayRound').textContent = `Round 1 / ${ROUNDS}`; $('ayCue').innerHTML = 'Press Flash.<br>Eyes here.'; $('ayCue').classList.remove('gone'); say.innerHTML = 'Kyoto, 2007. Ayumu the chimp against university students, at the same screen and the same speed.'; }
+  go.onclick = flash;
+  score();
+  Kit.play.ay = async () => {
+    for (let r = 0; r < ROUNDS; r++) {
+      await flash(); while (busy !== 'tap') await wait(30);
+      const good = r !== 2 && r !== 4;
+      for (let k = 0; k < 5 && busy === 'tap'; k++) { await wait(120); tap(good || k < 2 ? seq[at].at : (seq[at].at + 1) % N); }
+      await wait(250);
+    }
+  };
+})();
+
+/* ================= 4 · te: dose the tumours ================= */
+(() => {
+  const cv = $('teCv'), svg = $('teSvg'), say = $('teSay'), rnd = seeded(23);
+  // A model, not data: 100 tumours, 12 use ALT. Each telomerase tumour stops once the dose blocks more than it can make up for.
+  const T = [...Array(100).keys()].map(i => ({alt: false, th: 0, s: 1, stop: null, ph: rnd() * 6.28}));
+  const altIdx = [...Array(100).keys()].sort(() => rnd() - .5).slice(0, 12);
+  altIdx.forEach(i => T[i].alt = true);
+  let k = 0; T.forEach(t => { if (!t.alt) t.th = .1 + .88 * ((k++ + rnd()) / 88); });
+  const shapes = T.map(() => [...Array(7)].map(() => .82 + rnd() * .3));
+  let dose = null, tried = {}, t0 = 0, g, showAlt = false;
+  function geo() { const {x, W, H} = Kit.fitCanvas(cv); const c = Math.min(W / 10, H / 10); g = {x, W, H, c, ox: (W - c * 10) / 2, oy: (H - c * 10) / 2}; }
+  function growing(now) { return T.filter(t => t.stop == null || now < t.stop).length; }
+  ticks.te = (dt, now) => {
+    if (!g) return; const {x, W, H, c, ox, oy} = g; x.clearRect(0, 0, W, H);
+    T.forEach((t, i) => {
+      const cx = ox + c * (i % 10 + .5), cy = oy + c * (Math.floor(i / 10) + .5);
+      const dead = t.stop != null && now >= t.stop, f = t.stop != null ? clamp((now - t.stop) / 600) : 0;
+      const breathe = dead ? 0 : Math.sin(now / 420 + t.ph) * .05;
+      const r = c * .38 * (1 + breathe) * (1 - .35 * ss(f)), sh = shapes[i];
+      x.beginPath();
+      for (let a = 0; a <= 28; a++) { const ang = a / 28 * 6.283, w = sh[a % 7] * .5 + sh[(a + 1) % 7] * .5, rr = r * (1 + (w - 1) * .6); a ? x.lineTo(cx + Math.cos(ang) * rr, cy + Math.sin(ang) * rr) : x.moveTo(cx + Math.cos(ang) * rr, cy + Math.sin(ang) * rr); }
+      x.closePath();
+      if (f > 0) { x.strokeStyle = `rgba(255,255,255,${.85 - .45 * f})`; x.lineWidth = Math.max(1.2, c * .05); x.fillStyle = `rgba(255,255,255,${.95 * (1 - f)})`; x.fill(); x.stroke(); }
+      else { x.fillStyle = '#fff'; x.fill(); }
+      if (showAlt && t.alt) { x.strokeStyle = '#FFE600'; x.lineWidth = Math.max(2, c * .09); x.beginPath(); x.arc(cx, cy, c * .47, 0, 7); x.stroke(); }
+    });
+    if (dose != null) $('teN').textContent = growing(now);
+  };
+  function chart() {
+    svg.innerHTML = ''; const {W, H, f} = Kit.fitSvg(svg), fs = Math.max(10, Math.min(H / 9, W / 26));
+    const L = fs * 2.6, R = W - fs * 1.2, Tp = fs * 1.1, B = H - fs * 2.1;
+    const X = d => L + (R - L) * d / 100, Y = n => B - (B - Tp) * n / 100, ink = '#fff';
+    const T_ = (x, y, s, a = {}) => { const t = Kit.mk('text', Object.assign({x, y, fill: ink, 'font-family': 'JetBrains Mono', 'font-weight': 700, 'font-size': fs * .82, 'letter-spacing': '.04em'}, a), svg); t.textContent = s; return t; };
+    Kit.mk('line', {x1: L, y1: B, x2: R, y2: B, stroke: ink, 'stroke-width': 2, opacity: .6}, svg);
+    Kit.mk('line', {x1: L, y1: B, x2: L, y2: Tp, stroke: ink, 'stroke-width': 2, opacity: .6}, svg);
+    T_(L - fs * .5, Y(100) + fs * .3, '100', {'text-anchor': 'end'});
+    T_(L - fs * .5, B + fs * .3, '0', {'text-anchor': 'end'});
+    T_(L, B + fs * 1.5, 'NO DRUG', {opacity: .8});
+    T_(R, B + fs * 1.5, 'ALL BLOCKED', {'text-anchor': 'end', opacity: .8});
+    const pts = [[0, 100], ...Object.entries(tried).map(([d, n]) => [+d, n])].sort((a, b) => a[0] - b[0]);
+    if (tried[100] != null) {
+      Kit.mk('line', {x1: L, y1: Y(12), x2: R, y2: Y(12), stroke: '#FFE600', 'stroke-width': 2.4, 'stroke-dasharray': '6 6'}, svg);
+      T_(X(50), Y(12) - fs * .6, '12 NEVER STOP: ALT', {'text-anchor': 'middle', fill: '#FFE600'});
+    }
+    Kit.mk('polyline', {points: pts.map(([d, n]) => X(d) + ',' + Y(n)).join(' '), fill: 'none', stroke: ink, 'stroke-width': 3, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+    for (const [d, n] of pts) Kit.mk('circle', {cx: X(d), cy: Y(n), r: fs * .42, fill: d === dose ? '#FFE600' : ink}, svg);
+    if (pts.length === 1) T_(X(50), Y(60), 'DOSE → TUMOURS STILL GROWING', {'text-anchor': 'middle', opacity: .7});
+  }
+  function give(d) {
+    dose = d; const now = performance.now(); t0 = now;
+    T.forEach((t, i) => { t.stop = !t.alt && t.th < d / 100 ? now + D(300 + (i * 37 % 100) / 100 * 1500) : null; });
+    tried[d] = T.filter(t => t.stop == null).length;
+    document.querySelectorAll('#teDoses .dose').forEach(b => { b.classList.toggle('on', +b.dataset.d === d); if (tried[b.dataset.d] != null && +b.dataset.d !== d) b.classList.add('done'); });
+    $('teDose').textContent = d + '% of telomerase blocked';
+    const all = tried[100] != null;
+    if (!all) say.innerHTML = `At ${d}%, <b>${tried[d]}</b> keep growing: the tips of the others wear down after enough divisions. Try a bigger dose.`;
+    setTimeout(() => {
+      chart();
+      if (all && d === 100) {
+        showAlt = true; Kit.show('teKeep');
+        say.innerHTML = 'Even at full dose, the ringed ones go on. About <b>10 to 15 in 100</b> cancers use a second route, <b>ALT</b>: they copy tip DNA from one chromosome onto another. It’s commonest in bone, soft-tissue and some brain tumours.';
+      }
+    }, D(1900));
+    chart();
+  }
+  document.querySelectorAll('#teDoses .dose').forEach(b => b.onclick = () => give(+b.dataset.d));
+  watch(cv, geo); watch(svg, chart);
+  Kit.onShow.te = () => { geo(); chart(); };
+  Kit.play.te = async () => { for (const d of [25, 50, 75, 100]) { give(d); await wait(2100); } };
+})();
+
+/* ================= 5 · rd: zoom out the bill ================= */
+(() => {
+  const cv = $('rdCv'), box = $('rdBox'), go = $('rdGo'), say = $('rdSay');
+  const PRICE = .24 / 1000;
+  // Each level is a grid of the level below. Request counts: one tap; 344 a day; x30 a month; 7 billion a month for all of Apollo; x12 a year.
+  const LV = [
+    {lab: 'One tap', req: 1},
+    {lab: 'One person, one day', req: 344, cols: 19, rows: 19, n: 344, gap: 0},
+    {lab: 'One person, one month', req: 344 * 30, cols: 6, rows: 5, n: 30, gap: .25},
+    {lab: 'Everyone on Apollo, one month', req: 7e9, cols: 824, rows: 824, n: Math.round(7e9 / (344 * 30)), gap: .25},
+    {lab: 'Everyone, one year', req: 84e9, cols: 4, rows: 3, n: 12, gap: .1}
+  ];
+  LV[0].w = LV[0].h = 1;
+  for (let k = 1; k < LV.length; k++) { const L = LV[k], c = LV[k - 1]; L.px = c.w * (1 + L.gap); L.py = c.h * (1 + L.gap); L.w = L.cols * L.px - c.w * L.gap; L.h = L.rows * L.py - c.h * L.gap; }
+  let u = 0, bet = null, g, tw = null;
+  const view = k => { const L = LV[k], fw = k ? .82 : .14; return {cx: L.w / 2, cy: L.h / 2, z: Math.min(g.W * fw / L.w, g.H * (k ? .5 : .14) / L.h)}; };
+  function cam() {
+    const k = Math.min(LV.length - 2, Math.floor(u)), f = u - k, a = view(k), b = view(k + 1);
+    const z = Math.exp(Math.log(a.z) + (Math.log(b.z) - Math.log(a.z)) * f);
+    const w = (1 / z - 1 / a.z) / (1 / b.z - 1 / a.z);
+    return {z, cx: a.cx + (b.cx - a.cx) * w, cy: a.cy + (b.cy - a.cy) * w, k, f};
+  }
+  function geo() { const {x, W, H} = Kit.fitCanvas(cv); g = {x, W, H}; }
+  const money = v => v < .01 ? '$' + v.toFixed(5) : v < 1000 ? '$' + v.toFixed(2) : '$' + Math.round(v).toLocaleString('en-US');
+  function draw() {
+    if (!g) return; const {x, W, H} = g, c = cam(), oy = H * .12;
+    x.clearRect(0, 0, W, H);
+    const sx = wx => (wx - c.cx) * c.z + W / 2, sy = wy => (wy - c.cy) * c.z + H / 2 + oy;
+    const pink = '#FF3D7F';
+    let budget = 60000;
+    function tile(k, wx, wy, mine) {
+      const L = LV[k], x0 = sx(wx), y0 = sy(wy), pw = L.w * c.z, ph = L.h * c.z;
+      if (x0 > W || y0 > H || x0 + pw < 0 || y0 + ph < 0 || budget-- < 0) return;
+      if (k === 0) { const r = Math.max(.6, pw * .36); if (mine) { x.fillStyle = '#fff'; } else x.fillStyle = pink; if (r < 2) x.fillRect(x0 + pw / 2 - r, y0 + ph / 2 - r, r * 2, r * 2); else { x.beginPath(); x.arc(x0 + pw / 2, y0 + ph / 2, r, 0, 7); x.fill(); } return; }
+      if (pw < 3) { x.fillStyle = mine ? '#fff' : pink; x.globalAlpha = mine ? 1 : .55 * (L.n / (L.cols * L.rows)); x.fillRect(x0, y0, Math.max(1, pw), Math.max(1, ph)); x.globalAlpha = 1; return; }
+      const cpw = L.px * c.z, cph = L.py * c.z;
+      const c0 = Math.max(0, Math.floor(-x0 / cpw)), c1 = Math.min(L.cols - 1, Math.floor((W - x0) / cpw));
+      const r0 = Math.max(0, Math.floor(-y0 / cph)), r1 = Math.min(L.rows - 1, Math.floor((H - y0) / cph));
+      for (let r = r0; r <= r1; r++) for (let q = c0; q <= c1; q++) { const i = r * L.cols + q; if (i >= L.n) break; tile(k - 1, wx + q * L.px, wy + r * L.py, mine && i === 0); }
+      if (mine && pw > 14 && k < LV.length - 1) { x.strokeStyle = '#ffffff'; x.globalAlpha = .9; x.lineWidth = 1.5; x.strokeRect(x0 - 3, y0 - 3, pw + 6, ph + 6); x.globalAlpha = 1; }
+    }
+    tile(LV.length - 1, 0, 0, true);
+    // the readout follows the zoom
+    const req = Math.exp(Math.log(LV[c.k].req) + (Math.log(LV[c.k + 1].req) - Math.log(LV[c.k].req)) * c.f);
+    $('rdAmt').textContent = money(req * PRICE);
+    const lvl = Math.round(u); $('rdLab').textContent = LV[lvl].lab;
+    $('rdReq').textContent = (req < 2 ? '1 request' : Math.round(req).toLocaleString('en-US') + ' requests');
+  }
+  ticks.rd = () => draw();
+  function to(target, dur = 1.7) {
+    tw && tw.kill(); const o = {u};
+    return new Promise(res => { tw = gsap.to(o, {u: target, duration: D(dur), ease: 'power2.inOut', onUpdate: () => { u = o.u; }, onComplete: () => { u = target; done(); res(); }}); });
+  }
+  function done() {
+    const lvl = Math.round(u); $('rdStep').textContent = (lvl + 1) + ' / 5';
+    const lines = [
+      null,
+      'One person scrolling for a day: <b>344 requests</b>, about 8 cents.',
+      'A month of that: about <b>$2.50</b> per user. Still sounds small.',
+      'Now everyone who used Apollo: <b>7 billion requests</b> in a month. <b>$1.68 million.</b>',
+      `<b>$20 million a year.</b> ${bet == null ? '' : bet === 20 ? 'You bet right. ' : 'Your bet was ' + (bet < 1 ? '$200,000' : '$' + bet + ' million') + '. '}The developer ran this sum in May 2023. Apollo shut down on 30 June.`
+    ];
+    if (lines[lvl]) say.innerHTML = lines[lvl];
+    if (lvl === 4) { go.textContent = 'Start again'; Kit.show('rdKeep'); }
+    else go.textContent = 'Zoom out';
+  }
+  document.querySelectorAll('#rdBets .bet').forEach(b => b.onclick = () => {
+    bet = +b.dataset.b; document.querySelectorAll('#rdBets .bet').forEach(x => x.classList.toggle('on', x === b));
+    go.disabled = false; const yb = $('rdYour'); yb.textContent = 'Your bet ' + b.textContent; Kit.show('rdYour');
+    say.innerHTML = `Your bet: <b>${b.textContent}</b> a year. Now zoom out, one step at a time.`;
+  });
+  go.onclick = () => { if (Math.round(u) >= 4) { u = 0; Kit.hide('rdKeep'); go.textContent = 'Zoom out'; $('rdStep').textContent = '1 / 5'; say.innerHTML = 'Again from one tap. Every dot is one request.'; return; } to(Math.round(u) + 1); };
+  // drag up to zoom out by hand
+  box.addEventListener('pointerdown', e => {
+    if (bet == null) return; box.setPointerCapture(e.pointerId); tw && tw.kill(); const y0 = e.clientY, u0 = u, h = box.clientHeight;
+    box.onpointermove = ev => { u = clamp(u0 + (y0 - ev.clientY) / h * 2.5, 0, 4); };
+    box.onpointerup = box.onpointercancel = () => { box.onpointermove = null; to(Math.round(u), .4); };
+  });
+  watch(cv, () => { geo(); draw(); });
+  Kit.onShow.rd = () => { geo(); draw(); };
+  Kit.play.rd = async () => { document.querySelector('#rdBets [data-b="2"]').click(); for (let k = 1; k <= 4; k++) await to(k, .5); };
+})();
+
+Kit.deck();
+</script>
