@@ -60,7 +60,7 @@
 .zrow b{font:700 2.15cqh/1 var(--mono);letter-spacing:-.02em;white-space:nowrap}
 .zrow b em{font-style:normal;color:#FFD23F}
 .zrow span{font:700 1.3cqh/1 var(--mono);letter-spacing:.18em;opacity:.7}
-.giant{position:absolute;left:0;bottom:0;display:flex;flex-direction:column;gap:.6cqh}
+.giant{position:absolute;left:0;bottom:0;display:flex;flex-direction:column;gap:1.4cqh}
 .giant b{font:900 11cqh/.9 var(--display);letter-spacing:-.03em;color:#FFD23F;text-shadow:0 0 3cqh #ffb40066}
 .giant span{font:700 1.4cqh/1.35 var(--mono);letter-spacing:.32em;opacity:.85}
 .night .chip2{color:#fff;box-shadow:inset 0 0 0 .25cqh #ffffff88}
@@ -478,7 +478,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     const {x, W, H} = Kit.fitCanvas(cv), g = eng._g, {gx, gy, bw, bh, n} = g;
     const f = Math.max(10, Math.min(H / 30, W / 26)), sc = Math.min(W / g.W, H / g.H);
     x.setTransform(devicePixelRatio * sc, 0, 0, devicePixelRatio * sc, devicePixelRatio * (W - g.W * sc) / 2, devicePixelRatio * (H - g.H * sc));
-    x.save(); x.translate(gx, gy); x.rotate(-tilt); x.translate(-gx, -gy);
+    x.save(); x.translate(gx, gy); x.rotate(tilt); x.translate(-gx, -gy);
     x.fillStyle = 'rgba(16,16,12,.16)'; x.fillRect(-W, gy, W * 3, H);
     x.fillStyle = STEEL; x.fillRect(-W, gy, W * 3, 3);
     // footprint
@@ -487,10 +487,10 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     x.restore();
     // weight line: from the centre of mass straight down (true vertical on screen)
     let cxm = 0, cym = 0; bodies.forEach(b => { cxm += b.position.x; cym += b.position.y; }); cxm /= bodies.length; cym /= bodies.length;
-    const rot = (px, py) => { const dx = px - gx, dy = py - gy, c = Math.cos(-tilt), s = Math.sin(-tilt); return [gx + dx * c - dy * s, gy + dx * s + dy * c]; };
+    const rot = (px, py) => { const dx = px - gx, dy = py - gy, c = Math.cos(tilt), s = Math.sin(tilt); return [gx + dx * c - dy * s, gy + dx * s + dy * c]; };
     const [mx, my] = rot(cxm, cym), [ex] = rot(gx + bw / 2, gy), [lx] = rot(gx - bw / 2, gy);
     const out = mx < Math.min(lx, ex) || mx > Math.max(lx, ex);
-    const footY = gy + (mx - gx) * Math.tan(-tilt);
+    const footY = gy + (mx - gx) * Math.tan(tilt);
     if (!fell) {
       x.strokeStyle = out ? RED : STEEL; x.lineWidth = 2; x.setLineDash([5, 5]); x.beginPath(); x.moveTo(mx, my); x.lineTo(mx, footY + 6); x.stroke(); x.setLineDash([]);
       x.fillStyle = out ? RED : STEEL; x.beginPath(); x.arc(mx, my, 5, 0, 7); x.fill();
@@ -639,7 +639,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     if (step === 0) {
       step = 1; phase = 'mixed'; gsap.to(sk, {v: 1, duration: D(.7), ease: 'power2.inOut'}); Kit.show('seaZeros');
       const z1 = '8,400,000,000,000,000,000,000,000', z2 = '5,300,000,000,000,000,000,000';
-      Kit.$('seaZ1').innerHTML = '<em>8,4</em>' + z1.slice(3); Kit.$('seaZ2').textContent = z2;
+      Kit.$('seaZ1').innerHTML = '<em>8,400,</em>' + z1.slice(6); Kit.$('seaZ2').textContent = z2;
       if (!calm) gsap.from('#seaZeros .zrow', {opacity: 0, x: 20, stagger: .25, duration: .5, ease: EO});
       say.innerHTML = 'Line them up. A glass holds <b>three more zeros</b> of molecules than the oceans hold glasses. Each glassful of sea gets your share.';
       btn.textContent = 'Scoop a glass';
