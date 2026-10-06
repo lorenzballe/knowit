@@ -45,9 +45,9 @@
 /* ---- bl: the wash ---- */
 .wash{flex:1;min-height:0;display:grid;grid-template-columns:20cqw 1fr;gap:4cqw}
 .thermo{position:relative;touch-action:none;cursor:ns-resize;user-select:none}
-.tube{position:absolute;left:1.5cqw;width:6.4cqw;top:1.5cqh;bottom:5.5cqh;border-radius:9cqw;box-shadow:inset 0 0 0 .32cqh var(--k);background:#ffffff59}
+.tube{position:absolute;left:1.5cqw;width:6.4cqw;top:1.5cqh;bottom:7.5cqw;border-radius:9cqw;box-shadow:inset 0 0 0 .32cqh var(--k);background:#ffffff59}
 .merc{position:absolute;left:1.6cqw;right:1.6cqw;bottom:1.4cqw;border-radius:9cqw;background:#d4161c}
-.bulb{position:absolute;left:-.4cqw;bottom:-.2cqh;width:10.4cqw;aspect-ratio:1;transform:translateY(40%);border-radius:50%;background:#d4161c;box-shadow:0 0 0 .32cqh var(--k)}
+.bulb{position:absolute;left:-.5cqw;bottom:.4cqw;width:10.4cqw;aspect-ratio:1;border-radius:50%;background:#d4161c;box-shadow:0 0 0 .32cqh var(--k)}
 .tlab{position:absolute;left:10.4cqw;transform:translateY(50%);font:700 1.3cqh/1 var(--mono);opacity:.7}
 .tlab.hi{opacity:1}
 .knob{position:absolute;left:.2cqw;width:9cqw;height:1.2cqh;margin-top:-.6cqh;border-radius:1cqh;background:var(--k);box-shadow:0 .4cqh 1cqh #0003;transform:translateY(-50%)}
@@ -61,7 +61,7 @@
 .taed.on{background:var(--k);color:var(--c)}
 
 /* ---- ay: the touch screen ---- */
-.screen{flex:1;min-height:0;border-radius:3cqh;background:#10100c;padding:2cqh 4cqw;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(6,1fr);gap:1cqh 2cqw;box-shadow:0 1.2cqh 2.6cqh #0003;position:relative}
+.screen{flex:1;min-height:24cqh;border-radius:3cqh;background:#10100c;padding:2cqh 4cqw;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(6,1fr);gap:1cqh 2cqw;box-shadow:0 1.2cqh 2.6cqh #0003;position:relative}
 .cell{border:0;background:transparent;padding:0;display:grid;place-items:center;cursor:pointer;font:800 4.6cqh/1 var(--body);color:#fff;border-radius:1.2cqh;-webkit-tap-highlight-color:transparent}
 .cell i{font-style:normal}
 .cell.mask{background:#fff;color:transparent}
@@ -100,7 +100,7 @@
 .zamt{font:900 6.2cqh/1 var(--display);letter-spacing:-.02em;text-shadow:0 .4cqh 2cqh #16080e}
 .zlab{font:700 1.4cqh/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:#FF3D7F}
 .zreq{position:absolute;left:5cqw;bottom:2.2cqh;font:700 1.35cqh/1 var(--mono);letter-spacing:.08em;color:#ffffffb3;text-transform:uppercase;pointer-events:none;text-shadow:0 0 1cqh #16080e}
-.ybet{position:absolute;right:5cqw;bottom:2cqh;font:800 1.35cqh/1 var(--body);letter-spacing:.1em;text-transform:uppercase;background:#fff;color:#16080e;border-radius:99px;padding:.9cqh 2.6cqw;pointer-events:none}
+.zrow{display:flex;justify-content:space-between;align-items:center;gap:2cqw}.ybet{flex:none;font:800 1.35cqh/1 var(--body);letter-spacing:.1em;text-transform:uppercase;background:#fff;color:#16080e;border-radius:99px;padding:.9cqh 2.6cqw;pointer-events:none}
 </style>
 
 <div class="app">
@@ -113,7 +113,7 @@
     <article class="card" id="li" style="--c:#00A6FF;--k:#10100c;--edge:#005e91" data-kind="Charge it · watch the crystal">
       <div class="in">
         <div class="label"><span class="t">Technology</span><span class="tag">HOLD</span></div>
-        <h2 class="q">Your phone says 100%. How much of the lithium has actually left its positive electrode?</h2>
+        <h2 class="q">Your phone says 100%. How much of its lithium has actually moved?</h2>
         <div class="stagebox">
           <div class="xtal" id="liBox"><canvas id="liCv" role="img" aria-label="Layers of cobalt oxide with lithium ions between them"></canvas>
             <div class="hud"><span class="volt num" id="liV">3.00 V</span><span class="legend5"><span><i class="d"></i>lithium</span><span><i class="s"></i>cobalt oxide</span></span></div>
@@ -125,7 +125,7 @@
             <div class="ticks"><span style="left:50%">4.2 V</span><span style="left:66%">4.4 V</span></div>
           </div>
         </div>
-        <p class="say" id="liSay">Press and hold to charge. Each white dot is a lithium ion parked between layers of cobalt oxide.</p>
+        <p class="say" id="liSay">Hold to charge. Each white dot is a lithium ion in the positive electrode, parked between layers of cobalt oxide.</p>
         <div class="ctl"><button class="btn hold" id="liHold">Hold to charge</button><span class="mono" id="liStep">1 / 3</span></div>
         <div class="keep gone" id="liKeep"><b>WHAT TO KEEP</b>Full usually means as far as is safe, not as far as possible.</div>
         <div class="foot"><span class="src">Source · Manthiram, <i>Nature Communications</i> (2020). LiCoO₂ holds 274 mAh/g in theory; about 140 is used at 4.2 V, about 180 at 4.4 V</span></div>
@@ -136,7 +136,7 @@
     <article class="card" id="bl" style="--c:#00E5A0;--k:#10100c;--edge:#00835b" data-kind="Turn up the heat · live wash">
       <div class="in">
         <div class="label"><span class="t">Science</span><span class="tag">SLIDE</span></div>
-        <h2 class="q">Your washing powder whitens at 40 °C. Its bleach, hydrogen peroxide, barely works below 60 °C. So what does the work?</h2>
+        <h2 class="q">Your powder whitens at 40 °C, but its bleach barely works below 60 °C. What closes the gap?</h2>
         <div class="stagebox">
           <div class="wash">
             <div class="thermo" id="blTh" role="slider" tabindex="0" aria-label="Water temperature" aria-valuemin="20" aria-valuemax="90" aria-valuenow="40">
@@ -164,7 +164,7 @@
     <article class="card" id="ay" style="--c:#00D451;--k:#10100c;--edge:#007a2f" data-kind="Beat the chimp · memory game">
       <div class="in">
         <div class="label"><span class="t">Nature</span><span class="tag">PLAY</span></div>
-        <h2 class="q">Five numbers flash for a fifth of a second, then hide. Tap where they were, smallest first. A young chimp gets 4 rounds in 5.</h2>
+        <h2 class="q">Five numbers flash for 0.21 seconds, then hide. Tap them in order. A young chimp gets 4 rounds in 5.</h2>
         <div class="stagebox">
           <div class="screen" id="ayScr" aria-label="Touch screen"><div class="cue" id="ayCue">Press Flash.<br>Eyes here.</div></div>
           <div class="board">
@@ -175,7 +175,7 @@
         </div>
         <p class="say" id="aySay">Kyoto, 2007. Ayumu the chimp against university students, at the same screen and the same speed.</p>
         <div class="ctl"><button class="btn" id="ayGo">Flash</button><span class="mono" id="ayRound">Round 1 / 5</span></div>
-        <div class="keep gone" id="ayKeep"><b>WHAT TO KEEP</b>A skill you lack may be one you never practised, or one your species traded away.</div>
+        <div class="keep gone" id="ayKeep"><b>WHAT TO KEEP</b>A skill you lack may just be one you never practised.</div>
         <div class="foot"><span class="src">Source · Inoue &amp; Matsuzawa, <i>Current Biology</i> (2007); Silberberg &amp; Kearns, <i>Animal Cognition</i> (2009)</span></div>
       </div>
     </article>
@@ -184,9 +184,9 @@
     <article class="card" id="te" style="--c:#FF2D5F;--k:#ffffff;--edge:#9e1638" data-kind="Pick a dose · watch 100 tumours">
       <div class="in">
         <div class="label"><span class="t">Human body</span><span class="tag">DOSE</span></div>
-        <h2 class="q">Most cancers rebuild their chromosome tips with one enzyme, telomerase. Block it, and how many of 100 tumours stop?</h2>
+        <h2 class="q">Most cancers rebuild their chromosome tips with telomerase. Block it: how many of 100 tumours stop?</h2>
         <div class="stagebox">
-          <div class="thead"><b class="num" id="teN">100</b><span>tumours<br>still growing</span><span class="mono" id="teDose">no drug yet</span></div>
+          <div class="thead"><b class="num" id="teN">100</b><span style="white-space:nowrap">tumours still growing</span><span class="mono" id="teDose">no drug yet</span></div>
           <div class="tum"><canvas id="teCv" role="img" aria-label="One hundred tumours"></canvas></div>
           <div class="chart"><svg id="teSvg" role="img" aria-label="Dose against tumours still growing"></svg></div>
         </div>
@@ -201,13 +201,12 @@
     <article class="card" id="rd" style="--c:#FF3D7F;--k:#ffffff;--edge:#a3204d" data-kind="Zoom out the bill · one tap to one year">
       <div class="in">
         <div class="label"><span class="t">Pop culture</span><span class="tag">ZOOM OUT</span></div>
-        <h2 class="q">In 2023 Reddit began charging apps $0.24 per 1,000 requests: a fortieth of a cent a tap. What would a year cost Apollo, a popular app?</h2>
+        <h2 class="q">In 2023 Reddit charged apps $0.24 per 1,000 requests, a fortieth of a cent a tap. What would a year cost one app?</h2>
         <div class="stagebox">
           <div class="bets" id="rdBets"><button class="btn ghost bet" data-b="0.2">$200,000</button><button class="btn ghost bet" data-b="2">$2 million</button><button class="btn ghost bet" data-b="20">$20 million</button></div>
           <div class="zoom" id="rdBox"><canvas id="rdCv" role="img" aria-label="Requests drawn as dots, zooming out from one tap to one year"></canvas>
-            <div class="zhud"><span class="zamt num" id="rdAmt">$0.00024</span><span class="zlab" id="rdLab">One tap</span></div>
+            <div class="zhud"><span class="zamt num" id="rdAmt">$0.00024</span><span class="zrow"><span class="zlab" id="rdLab">One tap</span><span class="ybet gone" id="rdYour">your bet</span></span></div>
             <span class="zreq num" id="rdReq">1 request</span>
-            <span class="ybet gone" id="rdYour">your bet</span>
           </div>
         </div>
         <p class="say" id="rdSay">Place your bet, then zoom out. Every dot is one request: a refresh, a comment, a scroll.</p>
@@ -242,7 +241,7 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
   const SAYS = [
     'The phone says <b>100%</b>. Only <b>half</b> the lithium has left. The rest stays in the crystal, on purpose. Hold again to push on.',
     'Newer phones call about <b>4.4 V</b> full and pull out <b>two-thirds</b>. More hours per charge, but the crystal wears faster. Keep pushing.',
-    'Past about 4.5 V the emptied layers <b>slide and crack</b>, and the oxide can give off <b>oxygen</b>, which feeds a fire. So 100% stops near half.'
+    'Past about 4.5 V the emptied layers <b>slide and crack</b> and can release <b>oxygen</b>, fuel for a fire. So 100% stops near half.'
   ];
   let g, v, phase, holding, li, cracks, tips, oxy, rnd, speed = 1, crackLen;
   const xOf = v => v <= 4.2 ? .5 * (v - 3) / 1.2 : v <= 4.4 ? .5 + .16 * (v - 4.2) / .2 : .66 + .09 * clamp((v - 4.4) / .2);
@@ -250,13 +249,14 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
     rnd = seeded(41); v = 3; phase = 0; holding = false; cracks = []; tips = []; oxy = []; crackLen = 0;
     const order = [...Array(ROWS * COLS).keys()].sort(() => rnd() - .5);
     li = order.map(i => ({r: Math.floor(i / COLS), c: i % COLS, out: null}));
-    say.innerHTML = 'Press and hold to charge. Each white dot is a lithium ion parked between layers of cobalt oxide.';
+    say.innerHTML = 'Hold to charge. Each white dot is a lithium ion in the positive electrode, parked between layers of cobalt oxide.';
     btn.textContent = 'Hold to charge'; $('liStep').textContent = '1 / 3'; Kit.hide('liKeep'); $('liBatt').classList.remove('hot');
     hud();
   }
   function geo() {
     const {x, W, H} = Kit.fitCanvas(cv);
-    const top = H * .3, bot = H - Math.max(14, H * .06), band = (bot - top) / (ROWS * 2 + 1), m = W * .07, pitch = (W - 2 * m) / COLS;
+    if (H < 60 || W < 60) { g = null; return; }
+    const hb = cv.parentNode.querySelector('.hud'), top = Math.max(H * .3, hb.offsetTop + hb.offsetHeight + H * .05), bot = H - Math.max(14, H * .06), band = (bot - top) / (ROWS * 2 + 1), m = W * .07, pitch = (W - 2 * m) / COLS;
     g = {x, W, H, top, bot, band, m, pitch, r: Math.min(pitch, band) * .3};
   }
   const shear = () => ss((v - 4.45) / .15);
@@ -368,7 +368,7 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
   }
   function geo() {
     const {x, W, H} = Kit.fitCanvas(cv);
-    const R = Math.min(W, H) / 2 - 4; g = {x, W, H, R, cx: W / 2, cy: H / 2, d: Math.max(2, R / 58)};
+    const R = Math.min(W, H) / 2 - 4; if (R < 20) { g = null; return; } g = {x, W, H, R, cx: W / 2, cy: H / 2, d: Math.max(2, R / 58)};
   }
   function wash() {
     if (!g) geo();
@@ -423,7 +423,7 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
       say.innerHTML = 'Around <b>60 °C</b> the peroxide bleaches. Now add a scoop of <b>TAED</b> and drag the water back down to 40 °C.';
     } else if (stage === 1 && taed && T <= 45 && l < .35) {
       stage = 2; Kit.show('blKeep'); $('blHint').textContent = 'Same powder, cooler wash';
-      say.innerHTML = 'TAED turns peroxide into <b>peracetic acid</b>, which bleaches at <b>40 °C</b> and below. Liquid detergents carry neither: peroxide won’t keep in water.';
+      say.innerHTML = 'TAED turns peroxide into <b>peracetic acid</b>, which bleaches at <b>40 °C</b>. Liquids skip both: peroxide won’t keep in water.';
     } else if (stage === 0 && T < 56 && clock >= WASH) say.innerHTML = `At ${Math.round(T)} °C the peroxide barely touches the stain. Hotter.`;
     else if (stage === 1 && !taed && T < 56 && clock >= WASH) say.innerHTML = 'Without help, cool water leaves the stain. Add <b>TAED</b>.';
   }
@@ -479,7 +479,7 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
     if (round < ROUNDS) { go.textContent = 'Next round'; $('ayRound').textContent = `Round ${round + 1} / ${ROUNDS}`; say.innerHTML = ok ? 'All five. Again, same speed.' : 'Gone before your eyes could move. That is the point: 0.21 s is about one glance.'; return; }
     const pct = Math.round(wins / ROUNDS * 100);
     $('ayRound').textContent = 'Done'; go.textContent = 'Play again';
-    say.innerHTML = `You: <b>${pct}%</b>. Ayumu had years of practice. In 2009, people who trained at this speed for weeks <b>caught up</b> with him. Matsuzawa still thinks our ancestors traded snapshot memory for language.`;
+    say.innerHTML = `You: <b>${pct}%</b>. But Ayumu had years of practice, and in 2009 people who trained at this speed <b>caught up</b> with him.`;
     Kit.show('ayKeep');
   }
   function restart() { round = 0; wins = 0; score(); clear(); Kit.hide('ayKeep'); go.textContent = 'Flash'; $('ayRound').textContent = `Round 1 / ${ROUNDS}`; $('ayCue').innerHTML = 'Press Flash.<br>Eyes here.'; $('ayCue').classList.remove('gone'); say.innerHTML = 'Kyoto, 2007. Ayumu the chimp against university students, at the same screen and the same speed.'; }
@@ -548,14 +548,14 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
     T.forEach((t, i) => { t.stop = !t.alt && t.th < d / 100 ? now + D(300 + (i * 37 % 100) / 100 * 1500) : null; });
     tried[d] = T.filter(t => t.stop == null).length;
     document.querySelectorAll('#teDoses .dose').forEach(b => { b.classList.toggle('on', +b.dataset.d === d); if (tried[b.dataset.d] != null && +b.dataset.d !== d) b.classList.add('done'); });
-    $('teDose').textContent = d + '% of telomerase blocked';
+    $('teDose').textContent = d + '% blocked';
     const all = tried[100] != null;
     if (!all) say.innerHTML = `At ${d}%, <b>${tried[d]}</b> keep growing: the tips of the others wear down after enough divisions. Try a bigger dose.`;
     setTimeout(() => {
       chart();
       if (all && d === 100) {
-        showAlt = true; Kit.show('teKeep');
-        say.innerHTML = 'Even at full dose, the ringed ones go on. About <b>10 to 15 in 100</b> cancers use a second route, <b>ALT</b>: they copy tip DNA from one chromosome onto another. It’s commonest in bone, soft-tissue and some brain tumours.';
+        showAlt = true; Kit.show('teKeep'); Kit.hide('teDoses');
+        say.innerHTML = 'Even at full dose, the ringed ones go on. About <b>10 to 15%</b> of cancers use a second route, <b>ALT</b>: they copy tip DNA from one chromosome onto another.';
       }
     }, D(1900));
     chart();
@@ -626,10 +626,10 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
       'One person scrolling for a day: <b>344 requests</b>, about 8 cents.',
       'A month of that: about <b>$2.50</b> per user. Still sounds small.',
       'Now everyone who used Apollo: <b>7 billion requests</b> in a month. <b>$1.68 million.</b>',
-      `<b>$20 million a year.</b> ${bet == null ? '' : bet === 20 ? 'You bet right. ' : 'Your bet was ' + (bet < 1 ? '$200,000' : '$' + bet + ' million') + '. '}The developer ran this sum in May 2023. Apollo shut down on 30 June.`
+      `<b>$20 million a year</b> for Apollo. ${bet == null ? '' : bet === 20 ? 'You bet right. ' : 'You bet ' + (bet < 1 ? '$200,000' : '$' + bet + ' million') + '. '}Its developer ran this sum in May 2023; it shut on 30 June.`
     ];
     if (lines[lvl]) say.innerHTML = lines[lvl];
-    if (lvl === 4) { go.textContent = 'Start again'; Kit.show('rdKeep'); }
+    if (lvl === 4) { go.textContent = 'Start again'; Kit.show('rdKeep'); Kit.hide('rdBets'); }
     else go.textContent = 'Zoom out';
   }
   document.querySelectorAll('#rdBets .bet').forEach(b => b.onclick = () => {
@@ -637,7 +637,7 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
     go.disabled = false; const yb = $('rdYour'); yb.textContent = 'Your bet ' + b.textContent; Kit.show('rdYour');
     say.innerHTML = `Your bet: <b>${b.textContent}</b> a year. Now zoom out, one step at a time.`;
   });
-  go.onclick = () => { if (Math.round(u) >= 4) { u = 0; Kit.hide('rdKeep'); go.textContent = 'Zoom out'; $('rdStep').textContent = '1 / 5'; say.innerHTML = 'Again from one tap. Every dot is one request.'; return; } to(Math.round(u) + 1); };
+  go.onclick = () => { if (Math.round(u) >= 4) { u = 0; Kit.hide('rdKeep'); Kit.show('rdBets'); go.textContent = 'Zoom out'; $('rdStep').textContent = '1 / 5'; say.innerHTML = 'Again from one tap. Every dot is one request.'; return; } to(Math.round(u) + 1); };
   // drag up to zoom out by hand
   box.addEventListener('pointerdown', e => {
     if (bet == null) return; box.setPointerCapture(e.pointerId); tw && tw.kill(); const y0 = e.clientY, u0 = u, h = box.clientHeight;

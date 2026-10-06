@@ -44,8 +44,8 @@
 .grid{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr);gap:1.3cqh 2.6cqw}
 .tile{position:relative;background:#fbfbf4;color:#10100c;border-radius:1.8cqh;padding:1.3cqh 3cqw;display:flex;flex-direction:column;gap:.55cqh;overflow:hidden;box-shadow:0 .5cqh 0 #5f940055}
 .tile .who{font:800 2.05cqh/1.05 var(--display);letter-spacing:-.01em}
-.tile .what{font:600 1.32cqh/1.25 var(--body);opacity:.62}
-.md{display:flex;align-items:center;gap:1.6cqw;font:700 1.42cqh/1.2 var(--body);position:relative}
+.tile .what{font:600 1.45cqh/1.22 var(--body);opacity:.62}
+.md{display:flex;align-items:center;gap:1.6cqw;font:700 1.55cqh/1.2 var(--body);position:relative}
 .md i{flex:none;width:1.7cqh;height:1.7cqh;border-radius:50%;box-shadow:inset 0 0 0 .22cqh #10100c55}
 .md i.g{background:#E8B931}.md i.s{background:#C3C8CE}
 .md s{text-decoration:none;position:relative}
@@ -53,8 +53,8 @@
 .struck .md.art s::after,.stripped .md.ath s::after{transform:scaleX(1)}
 .struck .md.art,.stripped .md.ath{opacity:.55;transition:opacity .45s ease}
 .back .md.ath{opacity:1}.back .md.ath s::after{transform:scaleX(0)}
-.what.hit{opacity:1;color:#c41d14;font:800 1.32cqh/1.25 var(--body);letter-spacing:.01em}
-.what.ok{opacity:1;color:#2a7a12;font:800 1.32cqh/1.25 var(--body)}
+.what.hit{opacity:1;color:#c41d14;font:800 1.45cqh/1.22 var(--body);letter-spacing:.01em}
+.what.ok{opacity:1;color:#2a7a12;font:800 1.45cqh/1.22 var(--body)}
 .tile{transition:box-shadow .3s ease}.tile.hit{box-shadow:inset 0 0 0 .3cqh #c41d14,0 .5cqh 0 #5f940055}
 .gh{display:flex;justify-content:space-between;align-items:baseline}
 .gh .mono{opacity:.7}
@@ -312,7 +312,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     const labs = [
       tx(ex[0] - fs * 1.2, ex[1] + fs * .4, '≈ ×10', {'text-anchor': 'end', 'font-family': 'Fraunces', 'font-weight': 900, 'font-size': fs * 2}),
       tx(sx[0] + fs * 1.4, sx[1] - fs * .9, '×1', {'font-family': 'Fraunces', 'font-weight': 900, 'font-size': fs * 1.5}),
-      tx(geo.x0 + (geo.x1 - geo.x0) * .5, uy({v: real(.5)}) + fs * 2.6, 'THE STUDY', {'text-anchor': 'start', 'font-size': fs * .85})
+      tx(geo.x0 + (geo.x1 - geo.x0) * .5, uy({v: real(.5)}) + fs * 2.6, 'THE STUDY’S TREND', {'text-anchor': 'start', 'font-size': fs * .85})
     ];
     if (animate && !calm) {
       gsap.from([band, line], {drawSVG: '0%', duration: 1.1, ease: 'power2.inOut'});
@@ -400,7 +400,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
       grid.querySelectorAll('.tile').forEach(t => t.classList.add('hit'));
       swap(whats, 'b', 'hit');
       Kit.$('artCount').textContent = 'Medals left: 2';
-      say.innerHTML = 'The rule: <b>no pay for your sport</b>. Written for athletes, it took Thorpe’s golds. Artists live by selling their work, so in 1949 the IOC dropped the contests.';
+      say.innerHTML = 'The rule: <b>no pay for your sport</b>. Written for athletes, it took Thorpe’s golds. Artists live by selling their work, so in 1949 the IOC judged them pros and ended the contests.';
       go.textContent = 'And today?'; lab.textContent = '2 / 3';
     } else if (step === 1) {
       step = 2; grid.classList.add('back');

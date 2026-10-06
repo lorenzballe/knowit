@@ -17,7 +17,9 @@
 
 /* 1 · snow and the eyedropper */
 .scene{position:relative;flex:1;min-height:0;border-radius:3cqh;overflow:hidden;touch-action:none;cursor:crosshair;box-shadow:0 1.2cqh 2.8cqh #5a003c55}
-.scene canvas{position:absolute;inset:0;width:100%;height:100%}
+.scene canvas{position:absolute;inset:0;width:100%;height:100%;filter:grayscale(1) contrast(.9);transition:filter .9s cubic-bezier(0.23,1,0.32,1)}
+.scene.col canvas{filter:none}
+.scene .cover{position:absolute;left:3cqw;bottom:1.6cqh;font:700 1.3cqh/1 var(--mono);letter-spacing:.12em;background:#10100c;color:#fff;border-radius:99px;padding:.8cqh 2.4cqw}
 .dropper{position:absolute;left:0;top:0;width:0;height:0;pointer-events:none}
 .dropper .tip{position:absolute;left:-1.1cqh;top:-1.1cqh;width:2.2cqh;height:2.2cqh;border-radius:50%;box-shadow:0 0 0 .3cqh #fff,0 0 0 .55cqh #10100c66}
 .dropper .stem{position:absolute;left:-.15cqh;top:-6.4cqh;width:.3cqh;height:5.2cqh;background:#fff;box-shadow:0 0 .4cqh #0006}
@@ -79,15 +81,14 @@
 .tally{display:flex;flex-wrap:wrap;gap:1cqh 1.8cqw;margin-top:1.2cqh;min-height:6.6cqh;align-content:flex-start}
 .tally span{font:700 1.3cqh/1 var(--mono);letter-spacing:.06em;padding:.8cqh 2.2cqw;border-radius:99px;background:#10100c;color:#00D9D9;display:flex;gap:1.4cqw;align-items:center}
 .tally span.dead{background:transparent;color:#10100c;box-shadow:inset 0 0 0 .22cqh #10100c;text-decoration:line-through}
-.tally span i{font-style:normal;text-decoration:none;display:inline-block}
-.score{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:2.4cqh}
-.srow{display:flex;align-items:baseline;gap:4cqw;border-bottom:.25cqh solid #10100c33;padding-bottom:1.8cqh}
-.srow b{font:900 9cqh/.9 var(--display);letter-spacing:-.03em;min-width:28cqw}
-.srow span{font:600 2cqh/1.3 var(--body)}
-.srow span em{font-style:normal;font:700 1.3cqh/1 var(--mono);letter-spacing:.14em;display:block;opacity:.65;margin-bottom:.6cqh}
+.tally span.todo{background:transparent;color:#10100c99;box-shadow:inset 0 0 0 .2cqh #10100c55;border:0}
+.score{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;gap:1.6cqh}
+.srow{display:flex;align-items:center;gap:4cqw;border-bottom:.25cqh solid #10100c33;padding-bottom:1.4cqh}
+.srow b{font:900 7cqh/1 var(--display);letter-spacing:-.03em;flex:none;width:24cqw}
+.srow span{font:600 1.9cqh/1.3 var(--body)}
 
 /* 5 · the time card */
-.tcbox{position:relative;flex:1;min-height:0}
+.tcbox{position:relative;flex:1;min-height:27cqh}
 .tc{position:absolute;left:50%;top:50%;width:min(72cqw,42cqh);height:min(100%,64cqh);background:#fbf6e6;color:#1b1a16;border-radius:1.2cqh;box-shadow:0 1.4cqh 3cqh #6b5f0055,0 .3cqh .6cqh #0002;padding:2.4cqh 5cqw;display:flex;flex-direction:column;gap:1.3cqh;box-sizing:border-box;transform-style:preserve-3d}
 .tc::before{content:"";position:absolute;left:50%;top:1.1cqh;width:5cqh;height:1.4cqh;margin-left:-2.5cqh;border-radius:1cqh;background:#e8dfc4}
 .tc .face,.tc .rear{position:absolute;inset:0;padding:3.6cqh 5cqw 2.4cqh;display:flex;flex-direction:column;gap:1.3cqh;backface-visibility:hidden;-webkit-backface-visibility:hidden}
@@ -108,10 +109,10 @@
 .vote .vl b{font:900 2.4cqh/1 var(--display)}
 .vbar{height:2.4cqh;border-radius:.6cqh;background:#1b1a1618;overflow:hidden;display:flex}
 .vbar i{display:block;height:100%;background:#1b1a16;width:0}
-.rack{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);gap:1cqh 2cqw;align-content:start;padding-top:8cqh}
+.rack{position:absolute;left:0;right:0;top:8cqh;display:grid;grid-template-columns:repeat(10,1fr);gap:1.2cqh 1.6cqw}
 .slot{position:relative;aspect-ratio:3/4;perspective:40cqh}
 .slot .cd{position:absolute;inset:0;transform-style:preserve-3d}
-.slot .cd b{position:absolute;inset:0;display:grid;place-items:center;border-radius:.6cqh;background:#fbf6e6;color:#1b1a16;font:900 3.2cqh/1 var(--display);box-shadow:0 .4cqh .8cqh #6b5f0040;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.slot .cd b{position:absolute;inset:0;display:grid;place-items:center;border-radius:.5cqh;background:#fbf6e6;color:#1b1a16;font:900 2.2cqh/1 var(--display);box-shadow:0 .4cqh .8cqh #6b5f0040;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .slot .cd b+b{transform:rotateY(180deg);background:#1b1a16;color:#FFE600}
 .slot.you .cd b{box-shadow:0 0 0 .45cqh #1b1a16}
 .slot.you::after{content:"YOU";position:absolute;left:0;right:0;bottom:-2.1cqh;text-align:center;font:800 1.15cqh/1 var(--mono);letter-spacing:.1em}
@@ -134,7 +135,7 @@
         <h2 class="q">Low sun on fresh snow, and a fence’s shadow across it. What colour is that shadow?</h2>
         <div class="stagebox">
           <div class="scene" id="snowScene" aria-label="A snowy field with a fence and its shadow. Drag to sample a colour.">
-            <canvas id="snowCv"></canvas>
+            <canvas id="snowCv"></canvas><span class="cover" id="snowCover">COLOUR HIDDEN UNTIL YOU PICK</span>
             <div class="dropper gone" id="snowDrop"><div class="stem"></div><div class="tip" id="snowTip"></div><div class="lens"><i id="snowLens"></i></div><span class="hex" id="snowHex">#FFFFFF</span></div>
           </div>
           <div class="sw" id="snowSw">
@@ -173,7 +174,7 @@
         <div class="chips" id="colGuess"><button class="chip2" data-g="100">100 m</button><button class="chip2" data-g="500">500 m</button><button class="chip2" data-g="2000">2 km</button><button class="chip2" data-g="10000">10 km</button></div>
         <div class="ctl gone" id="colCtl"><button class="btn" id="colGo">Build it</button><span class="mono" id="colStep"></span></div>
         <div class="keep gone" id="colKeep"><b>WHAT TO KEEP</b>When a strong structure fails, suspect its shape before its material.</div>
-        <div class="foot"><span class="src">Source · Jacques Heyman, “Why ancient cathedrals stand up”, <i>Ingenia</i>, Royal Academy of Engineering; sandstone: 20 kN/m³, crushes at 40 N/mm²</span></div>
+        <div class="foot"><span class="src">Source · Jacques Heyman, “Why ancient cathedrals stand up”, <i>Ingenia</i> (Royal Academy of Engineering)</span></div>
       </div>
     </article>
 
@@ -219,7 +220,7 @@
     <article class="card" id="kel" style="--c:#FFE600;--k:#10100c;--edge:#9c8d00" data-kind="Punch the card · it changes">
       <div class="in">
         <div class="label"><span class="t">Economics</span><span class="tag" id="kelTag">YOUR VOTE</span></div>
-        <h2 class="q">Battle Creek, 1946. You make cereal at Kellogg’s on six-hour shifts. Keep them, or go to eight hours for more pay?</h2>
+        <h2 class="q">Kellogg’s cereal plant, 1946. Your shift is six hours. Keep it, or work eight for more pay?</h2>
         <div class="stagebox">
           <div class="tcbox" id="kelBox">
             <div class="tc" id="kelCard">
@@ -230,8 +231,11 @@
                   <div><span>MON</span><span>06:00 – 12:00</span></div>
                   <div><span>TUE</span><span>06:00 – 12:00</span></div>
                   <div><span>WED</span><span>06:00 – 12:00</span></div>
+                  <div><span>THU</span><span>06:00 – 12:00</span></div>
+                  <div><span>FRI</span><span>06:00 – 12:00</span></div>
+                  <div><span>WEEK</span><span>30 HRS</span></div>
                 </div>
-                <div class="tcm"><span>SHIFTS SINCE 1930</span><span>4 × 6 HOURS</span></div>
+                <div class="tcm"><span>SIX-HOUR SHIFTS</span><span>SINCE 1930</span></div>
                 <div class="punch" id="kelPunch">
                   <button data-v="6"><span>Keep 6 hours<small>more time, today’s pay</small></span><i></i></button>
                   <button data-v="8"><span>Go to 8 hours<small>a bigger pay packet</small></span><i></i></button>
@@ -272,7 +276,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
 (() => {
   const cv = Kit.$('snowCv'), scene = Kit.$('snowScene'), drop = Kit.$('snowDrop'), say = Kit.$('snowSay');
   let sunOn = 1, skyOn = 1, picked = null, found = false, W = 0, H = 0, x = null, tipX = 0, tipY = 0;
-  const SUN = [1, .93, .78].map(v => v * .8), SKY = [.30, .45, .85].map(v => v * .5);
+  const SUN = [1, .93, .78].map(v => v * .8), SKY = [.40, .50, .72].map(v => v * .6);
   const lit = (alb, s = 1, k = 1) => alb.map((a, i) => a * (s * SUN[i] * sunOn + k * SKY[i] * skyOn));
   const enc = v => Math.round(255 * Math.min(1, Math.pow(Math.max(0, v), 1 / 2.2)));
   const rgb = lin => `rgb(${lin.map(enc).join(',')})`;
@@ -280,7 +284,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
   let geo = null;
   function draw() {
     ({x, W, H} = Kit.fitCanvas(cv));
-    const hy = H * .30, fy = H * .47, fh = H * .11, sx = -.55, sy = 2.05;
+    const hy = H * .30, fy = H * .47, fh = H * .11, sx = -.5, sy = 1.6;
     geo = {hy, fy, fh, sx, sy};
     // sky
     const g = x.createLinearGradient(0, 0, 0, hy);
@@ -349,14 +353,15 @@ const EO = 'power3.out', EIO = 'power2.inOut';
   function reveal(c) {
     found = true; Kit.$('snowTag').textContent = 'SWITCH THE LIGHTS';
     const pc = Kit.$('snowSw').querySelector('.on')?.dataset.c || '#8e8e8e';
-    say.innerHTML = `You picked <span class="cmp" style="background:${pc}"></span>${NAMES[picked] || 'grey'}. The shadow is <span class="cmp" style="background:rgb(${c})"></span><b>blue</b>: out of the sun, the snow is lit only by the blue sky. Painters were taught that shadows are brown or grey. Monet painted them blue in <i>The Magpie</i>, and the 1869 Salon jury turned it down.`;
+    say.innerHTML = `You picked <span class="cmp" style="background:${pc}"></span>${NAMES[picked] || 'grey'}. The shadow is <span class="cmp" style="background:rgb(${c})"></span><b>blue</b>: out of the sun, the snow is lit only by the blue sky. Painters were taught grey or brown shadows; Monet painted blue ones in <i>The Magpie</i>, and the 1869 Salon jury rejected it.`;
     Kit.hide('snowSw'); Kit.show('snowLights'); Kit.show('snowKeep');
   }
   function pick(b) {
     if (found) return;
     picked = b.dataset.n; Kit.$('snowSw').querySelectorAll('button').forEach(o => o.classList.toggle('on', o === b));
     Kit.$('snowTag').textContent = 'SAMPLE IT';
-    say.innerHTML = 'Now drag the dropper onto the shadow and read its real colour.';
+    say.innerHTML = 'Here is the real colour. Does the shadow still look like your pick? Drag the dropper onto it and read the pixel.';
+    scene.classList.add('col'); Kit.hide('snowCover');
     if (drop.classList.contains('gone')) { drop.classList.remove('gone'); placeDrop(W * .8, H * .9); if (!calm) gsap.fromTo(drop, {opacity: 0}, {opacity: 1, duration: .3}); }
   }
   Kit.$('snowSw').querySelectorAll('button').forEach(b => b.onclick = () => pick(b));
@@ -396,7 +401,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     Kit.$('colBar').classList.toggle('red', !!red);
   }
   const LM = [
-    {n: 'BEAUVAIS VAULT', h: 48, x: .47, w: .16, kind: 'church'},
+    {n: 'BEAUVAIS VAULT', h: 48, x: .5, w: .26, kind: 'church'},
     {n: 'EIFFEL TOWER', h: 330, x: .66, w: .13, kind: 'eiffel'},
     {n: 'BURJ KHALIFA', h: 828, x: .86, w: .07, kind: 'burj'}
   ];
@@ -416,9 +421,18 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     // landmarks
     for (const L of LM) {
       const lh = L.h * px; if (L.h > view * 1.05) continue;
-      const cx = W * L.x, w = Math.max(3, Math.min(W * L.w, lh * (L.kind === 'church' ? 1.4 : L.kind === 'eiffel' ? .38 : .12)));
+      const cx = W * L.x, w = Math.max(3, Math.min(W * L.w, lh * (L.kind === 'church' ? 1.3 : L.kind === 'eiffel' ? .38 : .12)));
       x.fillStyle = 'rgba(16,16,12,.22)'; x.beginPath();
-      if (L.kind === 'church') { x.rect(cx - w / 2, gy - lh * .62, w, lh * .62); x.moveTo(cx - w / 2, gy - lh * .62); x.lineTo(cx, gy - lh); x.lineTo(cx + w / 2, gy - lh * .62); }
+      if (L.kind === 'church') {
+        // a Gothic cross-section: two piers, a pointed vault, flying buttresses
+        const pw = w * .1, sp = lh * .66, a = w * .32;
+        x.rect(cx - a - pw, gy - sp, pw, sp); x.rect(cx + a, gy - sp, pw, sp);
+        x.fill(); x.beginPath(); x.lineWidth = Math.max(2, pw * .6); x.strokeStyle = 'rgba(16,16,12,.3)';
+        x.moveTo(cx - a - pw / 2, gy - sp); x.quadraticCurveTo(cx - a * .35, gy - lh * .98, cx, gy - lh); x.quadraticCurveTo(cx + a * .35, gy - lh * .98, cx + a + pw / 2, gy - sp);
+        x.moveTo(cx - a - pw, gy - sp * .82); x.lineTo(cx - w / 2, gy - sp * .45); x.lineTo(cx - w / 2, gy);
+        x.moveTo(cx + a + pw, gy - sp * .82); x.lineTo(cx + w / 2, gy - sp * .45); x.lineTo(cx + w / 2, gy);
+        x.stroke(); x.beginPath();
+      }
       else if (L.kind === 'eiffel') { x.moveTo(cx - w / 2, gy); x.quadraticCurveTo(cx - w * .08, gy - lh * .45, cx - w * .02, gy - lh); x.lineTo(cx + w * .02, gy - lh); x.quadraticCurveTo(cx + w * .08, gy - lh * .45, cx + w / 2, gy); }
       else { x.moveTo(cx - w / 2, gy); x.lineTo(cx - w * .3, gy - lh * .5); x.lineTo(cx - w * .12, gy - lh * .82); x.lineTo(cx, gy - lh); x.lineTo(cx + w * .12, gy - lh * .82); x.lineTo(cx + w * .3, gy - lh * .5); x.lineTo(cx + w / 2, gy); }
       x.closePath(); x.fill();
@@ -450,7 +464,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
   function buildPier() {
     const M = Matter, r = cv.getBoundingClientRect(), W = r.width, H = r.height;
     eng = M.Engine.create({positionIterations: 30, velocityIterations: 20}); eng.gravity.scale = .0012;
-    const bw = Math.min(W * .14, H * .1), n = 8, bh = (H * .66) / n, gx = W * .5, gy = H * .86;
+    const bw = Math.min(W * .16, H * .11), n = 8, bh = (H * .62) / n, gx = W * .5, gy = H * .84;
     const ground = M.Bodies.rectangle(gx, gy + 20, W * 3, 40, {isStatic: true, friction: 1});
     bodies = [];
     for (let i = 0; i < n; i++) bodies.push(M.Bodies.rectangle(gx, gy - bh * (i + .5), bw, bh, {friction: 1, frictionStatic: 4, restitution: 0, density: .004, slop: .01}));
@@ -459,8 +473,9 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     tilt = 0; fell = false;
   }
   function drawPier() {
-    const {x, W, H} = Kit.fitCanvas(cv), {gx, gy, bw, bh, n} = eng._g;
-    const f = Math.max(10, Math.min(H / 30, W / 26));
+    const {x, W, H} = Kit.fitCanvas(cv), g = eng._g, {gx, gy, bw, bh, n} = g;
+    const f = Math.max(10, Math.min(H / 30, W / 26)), sc = Math.min(W / g.W, H / g.H);
+    x.setTransform(devicePixelRatio * sc, 0, 0, devicePixelRatio * sc, devicePixelRatio * (W - g.W * sc) / 2, devicePixelRatio * (H - g.H * sc));
     x.save(); x.translate(gx, gy); x.rotate(-tilt); x.translate(-gx, -gy);
     x.fillStyle = 'rgba(16,16,12,.16)'; x.fillRect(-W, gy, W * 3, H);
     x.fillStyle = STEEL; x.fillRect(-W, gy, W * 3, 3);
@@ -477,8 +492,9 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     if (!fell) {
       x.strokeStyle = out ? RED : STEEL; x.lineWidth = 2; x.setLineDash([5, 5]); x.beginPath(); x.moveTo(mx, my); x.lineTo(mx, footY + 6); x.stroke(); x.setLineDash([]);
       x.fillStyle = out ? RED : STEEL; x.beginPath(); x.arc(mx, my, 5, 0, 7); x.fill();
-      x.font = `800 ${f * .72}px Figtree, sans-serif`; x.fillText('WEIGHT LINE', mx + 9, my + 4);
+      x.font = `800 ${f * .72 / sc}px Figtree, sans-serif`; x.fillText('WEIGHT LINE', mx + 9, my + 4);
     }
+    x.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
     x.fillStyle = STEEL; x.font = `700 ${f * .78}px "JetBrains Mono", monospace`; x.fillText('GROUND TILT ' + (tilt * 180 / Math.PI).toFixed(1) + '°', 0, f);
     return out;
   }
@@ -491,8 +507,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
   function setTilt(t) { tilt = Math.max(0, Math.min(.3, t)); eng.gravity.x = Math.sin(tilt); eng.gravity.y = Math.cos(tilt); bodies.forEach(b => Matter.Sleeping.set(b, false)); }
   function afterFall() {
     const deg = (tilt * 180 / Math.PI).toFixed(0);
-    setTilt(tilt + .05);
-    say.innerHTML = `It went over at about <b>${deg}°</b>, with the stone at its base working at just <b>2%</b> of its strength. Beauvais’s 48 m choir vault fell in 1284 the same way: stone almost never crushes; it falls when the weight’s path slips outside it.`;
+    say.innerHTML = `Over at <b>${deg}°</b>, with its base stone at about <b>2%</b> of its strength. Beauvais’s 48 m choir vault fell in 1284 with its stone far from crushing: masonry falls when the weight’s path slips outside it.`;
     Kit.show('colKeep'); btn.textContent = 'Again'; Kit.$('colTag').textContent = 'THE SHAPE FAILED';
   }
   function setGuess(b) {
@@ -510,9 +525,9 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     btn.disabled = false; btn.textContent = 'So why do vaults fall?'; Kit.$('colTag').textContent = 'CRUSHED'; busy = false;
   }
   function lean() {
-    mode = 'pier'; Kit.$('colQ').textContent = 'The stone is far from crushing. So how did Beauvais’s 48 m vault fall? Tilt the ground under a 48 m pier.';
+    mode = 'pier'; Kit.$('colQ').textContent = 'So how does a 48\u00a0m pier fall? Tilt the ground under it.';
     Kit.$('colHl').textContent = 'pier height'; Kit.$('colH').textContent = '48 m'; gauge(960); Kit.$('colTag').textContent = 'TILT IT';
-    say.innerHTML = 'Drag sideways on the picture to tilt the ground. Watch the dashed weight line.';
+    say.innerHTML = 'Drag sideways on the picture. Watch the dashed weight line.';
     btn.classList.add('gone'); Kit.$('colStep').textContent = '';
     buildPier(); cancelAnimationFrame(raf); loop();
   }
@@ -545,14 +560,14 @@ const EO = 'power3.out', EIO = 'power2.inOut';
 (() => {
   const cv = Kit.$('seaCv'), say = Kit.$('seaSay'), btn = Kit.$('seaGo');
   const GOLD = '#FFD23F', N = 2600;
-  let x, W, H, ps = [], sea = [], phase = 'idle', t0 = 0, raf = 0, bet = null, scoop = 0, G = null, tilt = 0;
+  const sk = {v: 0}; let x, W, H, ps = [], sea = [], phase = 'idle', t0 = 0, raf = 0, bet = null, scoop = 0, G = null, tilt = 0;
   function layout() {
     ({x, W, H} = Kit.fitCanvas(cv));
-    const R = Math.min(W * .33, H * .3);
-    G = {cx: W * .4, cy: R + H * .04, R, gx: W * .84, gy: H * .06, gw: W * .13, gh: W * .17};
+    const k = sk.v, Rb = Math.min(W * .36, H * .38), Rs = Math.min(W * .24, H * .2), R = Rb + (Rs - Rb) * k;
+    G = {ph: phase, k, cx: W * .42 + (Rs + 4 - W * .42) * k, cy: H * .48 + (Rs + 4 - H * .48) * k, R, gx: W * .86, gy: H * .04, gw: W * .13, gh: W * .17};
     let s = 3; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
     sea = []; for (let i = 0; i < 900; i++) { const a = r() * 7, d = Math.sqrt(r()) * G.R * .97; sea.push([G.cx + Math.cos(a) * d, G.cy + Math.sin(a) * d * .98, r()]); }
-    if (!ps.length) { s = 9; for (let i = 0; i < N; i++) { const a = r() * 7, d = Math.sqrt(r()) * G.R * .95; ps.push({a, d, w: (.2 + r()) * (r() < .5 ? -1 : 1) * .25, delay: r(), sx: 0, sy: 0, k: 0, j: r()}); } }
+    if (!ps.length) { s = 9; for (let i = 0; i < N; i++) { const a = r() * 7, d = Math.sqrt(r()) * .95; ps.push({a, d, w: (.2 + r()) * (r() < .5 ? -1 : 1) * .25, delay: r(), sx: 0, sy: 0, k: 0, j: r()}); } }
   }
   function glass(gx, gy, gw, gh, ang, fill) {
     x.save(); x.translate(gx, gy + gh); x.rotate(ang);
@@ -562,7 +577,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     x.restore();
   }
   function frame(now) {
-    if (!G) layout();
+    if (!G || Math.abs(cv.clientWidth - W) > 1 || Math.abs(cv.clientHeight - H) > 1 || G.ph !== phase || G.k !== sk.v) layout();
     x.clearRect(0, 0, W, H);
     const {cx, cy, R} = G, t = (now - t0) / 1000;
     // the ocean as a dotted globe
@@ -571,7 +586,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     x.fillStyle = '#2B5CFF'; for (const [sx, sy, k] of sea) { x.globalAlpha = .35 + k * .4; x.fillRect(sx, sy, 1.6, 1.6); }
     x.globalAlpha = 1; x.strokeStyle = '#2B5CFF'; x.lineWidth = 1.2; x.beginPath(); x.arc(cx, cy, R, 0, 7); x.stroke();
     x.font = `700 ${Math.max(10, H * .028)}px "JetBrains Mono", monospace`; x.fillStyle = '#8fa6ff'; x.textAlign = 'center';
-    x.fillText('ALL THE OCEANS', cx, cy + R + H * .055); x.textAlign = 'left';
+    if (phase !== 'mixed') x.fillText('ALL THE OCEANS', cx, cy + R + H * .055); x.textAlign = 'left';
     // the glass, pouring
     const pour = phase === 'pour' ? Math.min(1, t / 3.2) : phase === 'idle' ? 0 : 1;
     tilt = phase === 'pour' ? Math.min(1, t / .6) * -1.9 * (pour < .92 ? 1 : (1 - pour) / .08) : 0;
@@ -584,7 +599,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
       if (phase === 'idle') continue;
       const local = phase === 'pour' ? Math.max(0, Math.min(1, (t - .5 - p.delay * 2.2) / 1.2)) : 1;
       const ang = p.a + p.w * (phase === 'pour' ? t : (now - t0) / 1000 + 4);
-      const tx = cx + Math.cos(ang) * p.d, ty = cy + Math.sin(ang) * p.d * .98;
+      const tx = cx + Math.cos(ang) * p.d * R, ty = cy + Math.sin(ang) * p.d * R * .98;
       if (local <= 0) continue;
       const e = 1 - Math.pow(1 - local, 3);
       px = mouth[0] + (tx - mouth[0]) * e + Math.sin(local * Math.PI) * -R * .3 * (p.j - .5);
@@ -595,7 +610,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     x.globalAlpha = 1;
     // the scoop
     if (phase === 'scoop') {
-      const sw = W * .2, sh = W * .26, sx = W * .8, sy = cy + R * .15;
+      const sw = W * .2, sh = W * .26, sx = W * .78, sy = cy - R * .2;
       glass(sx, sy, sw, sh, 0, 0);
       x.fillStyle = 'rgba(43,92,255,.25)'; x.beginPath(); x.moveTo(sx - sw * .48, sy + sh * .12); x.lineTo(sx - sw * .4, sy + sh); x.lineTo(sx + sw * .4, sy + sh); x.lineTo(sx + sw * .48, sy + sh * .12); x.closePath(); x.fill();
       let s = 21; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
@@ -620,7 +635,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
   let step = 0;
   async function go() {
     if (step === 0) {
-      step = 1; phase = 'mixed'; Kit.show('seaZeros');
+      step = 1; phase = 'mixed'; gsap.to(sk, {v: 1, duration: D(.7), ease: 'power2.inOut'}); Kit.show('seaZeros');
       const z1 = '8,400,000,000,000,000,000,000,000', z2 = '5,300,000,000,000,000,000,000';
       Kit.$('seaZ1').innerHTML = '<em>8,4</em>' + z1.slice(3); Kit.$('seaZ2').textContent = z2;
       if (!calm) gsap.from('#seaZeros .zrow', {opacity: 0, x: 20, stagger: .25, duration: .5, ease: EO});
@@ -631,10 +646,10 @@ const EO = 'power3.out', EIO = 'power2.inOut';
       const o = {v: 0}; await new Promise(res => gsap.to(o, {v: 1500, duration: D(1.8), ease: 'power2.out', onUpdate() { scoop = o.v; Kit.$('seaN').textContent = Math.round(o.v / 10) * 10 >= 1500 ? '1,500' : Math.round(o.v).toLocaleString('en-US'); }, onComplete: res}));
       scoop = 1500; Kit.$('seaN').textContent = '1,500';
       const right = bet === '1000';
-      say.innerHTML = `${right ? 'You bet right' : 'Not ' + BETS[bet]}: about <b>1,500</b>. 8.4 trillion trillion molecules ÷ 5.3 billion trillion glasses ≈ 1,570. The ocean is huge; a molecule is far smaller.`;
+      say.innerHTML = `${right ? 'You bet right' : 'You bet ' + BETS[bet]}. It’s about <b>1,500</b>. 8.4 trillion trillion molecules ÷ 5.3 billion trillion glasses ≈ 1,570. The ocean is huge; a molecule is far smaller.`;
       Kit.show('seaKeep'); btn.textContent = 'Again';
     } else {
-      step = 0; phase = 'idle'; scoop = 0; ps = []; Kit.hide('seaGiant'); Kit.hide('seaKeep'); Kit.hide('seaCtl'); Kit.show('seaBets');
+      step = 0; phase = 'idle'; scoop = 0; ps = []; sk.v = 0; Kit.hide('seaGiant'); Kit.hide('seaKeep'); Kit.hide('seaCtl'); Kit.show('seaBets');
       Kit.$('seaBets').querySelectorAll('.chip2').forEach(o => o.classList.remove('on')); Kit.$('seaTag').textContent = 'YOUR BET'; btn.textContent = 'Count the zeros';
       say.innerHTML = 'Bet first.'; draw();
     }
@@ -659,6 +674,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
   const deck = Kit.$('tatDeck'), tally = Kit.$('tatTally'), say = Kit.$('tatSay');
   let at = 0, right = 0, busy = false;
   const slip = (d, i) => `<div class="slip" data-i="${i}"><div class="hd2"><span>THE TATLER · No. 230</span><span>${i + 1} / ${WORDS.length}</span></div><div class="w">${d.w}</div><p class="g">${d.g}</p><div class="hint"><span>← DEAD</span><span>ALIVE →</span></div><div class="stamp alive">ALIVE</div><div class="stamp dead">DEAD</div></div>`;
+  function pills() { tally.innerHTML = WORDS.map(() => '<span class="todo">? ? ?</span>').join(''); }
   function render() {
     deck.innerHTML = '';
     for (let i = Math.min(WORDS.length - 1, at + 2); i >= at; i--) deck.insertAdjacentHTML('beforeend', slip(WORDS[i], i));
@@ -683,8 +699,8 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     const d = WORDS[at], top = deck.querySelector(`.slip[data-i="${at}"]`), ok = alive === d.alive; if (ok) right++;
     top.querySelector(alive ? '.stamp.alive' : '.stamp.dead').style.opacity = 1;
     await gsap.to(top, {x: (alive ? 1 : -1) * deck.clientWidth * 1.3, rotation: alive ? 22 : -22, duration: D(.38), ease: 'power2.in'}).then();
-    tally.insertAdjacentHTML('beforeend', `<span class="${d.alive ? '' : 'dead'}">${d.w.toUpperCase()}<i>${ok ? '✓' : '✗'}</i></span>`);
-    if (!calm) gsap.from(tally.lastElementChild, {scale: .8, opacity: 0, duration: .25, ease: EO});
+    const pill = tally.children[at]; pill.className = d.alive ? '' : 'dead'; pill.textContent = d.w.toUpperCase();
+    if (!calm) gsap.from(pill, {scale: .8, opacity: 0, duration: .25, ease: EO});
     say.innerHTML = (ok ? '' : 'No. ') + d.v;
     at++;
     if (at < WORDS.length) { render(); if (!calm) gsap.from(deck.querySelector(`.slip[data-i="${at}"]`), {y: 14, duration: .3, ease: EO}); }
@@ -692,14 +708,14 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     busy = false;
   }
   function finish() {
-    deck.innerHTML = `<div class="score"><div class="srow"><b class="num">${right}/7</b><span><em>YOU</em>right about which words lived</span></div><div class="srow"><b class="num">3/7</b><span><em>SWIFT</em>wanted all seven gone. Four won.</span></div></div>`;
+    deck.innerHTML = `<div class="score"><div class="srow"><b class="num">${right}/7</b><span>of your calls were right</span></div><div class="srow"><b class="num">4/7</b><span>of the words Swift said were spoiling English are plain English today</span></div></div>`;
     if (!calm) gsap.from('#tatDeck .srow', {opacity: 0, y: 16, stagger: .18, duration: .45, ease: EO});
-    say.innerHTML = 'Swift was right that English was changing, and wrong about which changes would stick. The slang he hated most became <b>mob</b>, a word you use without a second thought.';
+    say.innerHTML = 'Filled: alive. Struck out: dead. Swift was right that English was changing, and wrong about which changes would stick.';
     Kit.hide('tatBtns'); Kit.show('tatKeep'); Kit.$('tatTag').textContent = 'SCORE';
   }
   Kit.$('tatDead').onclick = () => decide(false);
   Kit.$('tatAlive').onclick = () => decide(true);
-  Kit.onShow.tat = () => { if (!deck.children.length) render(); };
+  Kit.onShow.tat = () => { if (!deck.children.length) { pills(); render(); } };
   Kit.play.tat = async () => { const guesses = [true, true, true, false, true, false, false]; for (const g of guesses) { await decide(g); await wait(60); } };
 })();
 
@@ -742,7 +758,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
     if (vote === 6) tl.add(() => {}, 6);
     if (calm) { tl.progress(1); gsap.set([...slots].filter((_, i) => i !== you).map(sl => sl.firstElementChild), {rotationY: 180}); } else { tl.play(); await wait(6400); }
     yr.textContent = '1985'; yl.innerHTML = 'THE LAST 530 WORKERS<br>GO TO EIGHT HOURS';
-    say.innerHTML = 'Department by department, workers took eight hours and the bigger pay, <b>men’s departments first</b>. The last six-hour holdouts, mostly women, were pushed off in <b>1985</b> when Kellogg’s threatened to move their jobs.';
+    say.innerHTML = 'One department at a time took eight hours and the bigger pay, <b>men’s first</b>. The last 530 holdouts, mostly women, lost six hours in <b>1985</b>, when Kellogg’s threatened to move their jobs.';
     Kit.show('kelKeep'); btn.disabled = false; btn.textContent = 'Again'; stage = 2;
   }
   function reset() {

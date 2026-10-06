@@ -27,7 +27,9 @@
 .srow .nm{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;font:700 1.9cqh/1.1 var(--body)}
 .srow .nm .mono{opacity:.8;font-size:1.3cqh}
 .sw{height:7cqh;border-radius:1cqh;position:relative;overflow:hidden}
-.sw i{position:absolute;inset:0;background:#fff;opacity:0}
+.sw i{position:absolute;inset:0;background:#fff;opacity:0;z-index:1}
+.sw .fig{position:absolute;left:50%;bottom:0;width:38%;height:52%;background:#0f0c14;border-radius:50% 50% 0 0/40% 40% 0 0;transform-origin:50% 100%;transform:translateX(-50%)}
+.sw .fig::before{content:"";position:absolute;left:50%;top:-58%;width:62%;aspect-ratio:1;border-radius:50%;background:#0f0c14;transform:translateX(-50%)}
 .trk2{position:relative;height:7cqh;border-radius:1cqh;background:#ffffff1c;overflow:hidden}
 .trk2 .fill{position:absolute;inset:0;background:#ffffff2e;transform-origin:left;transform:scaleX(0)}
 .trk2 .cut{position:absolute;top:0;bottom:0;width:.5cqh;margin-left:-.25cqh;background:#fff;opacity:.35;border-radius:1cqh}
@@ -41,7 +43,7 @@
 .scope .l{left:5cqw}.scope .r{right:5cqw}
 .cc{position:absolute;left:50%;bottom:1.6cqh;transform:translateX(-50%);font:700 1.7cqh/1 var(--body);background:#000;color:#fff;border-radius:.6cqh;padding:.8cqh 2.6cqw;white-space:nowrap}
 .subs{display:flex;align-items:center;gap:2.2cqw}
-.subs .mono{opacity:.85;margin-right:auto;line-height:1.25}
+.flockb{margin-right:auto;padding:1.5cqh 4.5cqw;font-size:1.8cqh}
 .sub{font:800 2.5cqh/1 var(--display);width:7.2cqh;height:5.6cqh;border-radius:99px;border:0;cursor:pointer;background:transparent;color:var(--k);box-shadow:inset 0 0 0 .28cqh var(--k)}
 .sub[aria-pressed=true]{background:var(--k);color:var(--c)}
 .wire{position:relative;flex:1;min-height:0;touch-action:none;cursor:pointer}
@@ -113,12 +115,11 @@
         <h2 class="q">Hitchcock’s <em>The Birds</em> has no music score. Most of its screaming flock was played on a wire.</h2>
         <div class="stagebox">
           <div class="scope"><canvas id="birdCv"></canvas><span class="mono l">Our synthesis</span><span class="mono r num" id="birdHz">880 Hz</span><span class="cc" id="birdCc">[silence]</span></div>
-          <div class="subs" role="group" aria-label="Subharmonics"><span class="mono">Add<br>subharmonics</span>
+          <div class="subs" role="group" aria-label="Subharmonics"><button class="btn flockb" id="birdFlock">Play the flock</button>
             <button class="sub" data-k="2" aria-pressed="false" aria-label="Add one half">½</button><button class="sub" data-k="3" aria-pressed="false" aria-label="Add one third">⅓</button><button class="sub" data-k="4" aria-pressed="false" aria-label="Add one quarter">¼</button></div>
           <div class="wire" id="birdWire" tabindex="0" role="slider" aria-label="Press the wire onto the rail to play" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><svg class="full" id="birdSvg" aria-hidden="true"></svg></div>
         </div>
-        <p class="say" id="birdSay">Press the wire down onto the rail and slide. Then add the fractions and play again.</p>
-        <div class="ctl"><button class="btn" id="birdFlock">Play the flock</button></div>
+        <p class="say" id="birdSay">Press the wire onto the rail and slide. Then switch on the fractions and play again.</p>
         <div class="keep gone" id="birdKeep"><b>WHAT TO KEEP</b>The most convincing version of a thing is often built, not captured.</div>
         <div class="foot"><span class="src">Source · <i>The Birds</i> (1963), credits: electronic sound by Remi Gassmann and Oskar Sala; Bernard Herrmann, sound consultant</span></div>
       </div>
@@ -128,7 +129,7 @@
     <article class="card" id="pain" style="--c:#FF3B30;--k:#ffffff;--edge:#9e1c14" data-kind="Where does it block? · diagram">
       <div class="in">
         <div class="label"><span class="t">Medicine</span><span class="tag">TAP A DRUG</span></div>
-        <h2 class="q qs">Stub your toe. The signal runs up a nerve, up the spine, to the brain. Where does each painkiller cut it?</h2>
+        <h2 class="q qs" id="painQ">Stub your toe. The signal runs up a nerve, up the spine, to the brain. Where does each painkiller cut it?</h2>
         <div class="stagebox">
           <div class="diag"><svg class="full" id="painSvg" role="img" aria-label="The pain route from toe to brain"></svg></div>
           <div class="drugs" id="painDrugs">
@@ -148,7 +149,7 @@
     <article class="card" id="newc" style="--c:#4C6FFF;--k:#ffffff;--edge:#2a3fa3" data-kind="Debate · branching paths">
       <div class="in">
         <div class="label"><span class="t">Philosophy</span><span class="tag">PICK A SIDE</span></div>
-        <h2 class="q qs">A predictor that is almost never wrong filled the boxes yesterday. Glass box: $1,000. Take the closed box only, or both?</h2>
+        <h2 class="q qs" id="newcQ">A predictor that is almost never wrong filled the boxes yesterday. Glass box: $1,000. Take the closed box only, or both?</h2>
         <div class="stagebox">
           <div class="tree"><svg class="full" id="newcSvg" role="img" aria-label="Every way the game can go"></svg></div>
           <div class="row pick" id="newcPick"><button class="btn" data-s="one">Only the closed box</button><button class="btn ghost" data-s="two">Both boxes</button></div>
@@ -259,9 +260,10 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
     {nm: 'A 2000s feature', m: '3–5 s a shot', cuts: [2.2, 6.1, 9.8, 13.9], tones: ['#4b5a7a', '#7a5a4b', '#3f6b5c', '#8a7a52', '#5b4b7a']},
     {nm: 'Armageddon, 1998', m: '2.3 s a shot', cuts: [1.6, 3.7, 6.2, 8.4, 10.5, 12.9, 14.7], tones: ['#a8572e', '#2e4fa8', '#c9a227', '#3a3a3a', '#a82e3a', '#2e8aa8', '#7a2ea8', '#d06a1a']}
   ];
+  const FRAMES = ['translateX(-50%)', 'translateX(-20%) scale(1.7)', 'translateX(-95%) scale(.75)', 'translateX(-40%) scale(1.25)', 'translateX(-5%) scale(.9)'];
   function buildStrips() {
     const box = Kit.$('shotStrips');
-    box.innerHTML = FILMS.map((F, i) => `<div class="srow" data-i="${i}"><div class="nm"><span>${F.nm}</span><span class="mono">${F.m}</span></div><div class="sw" style="background:${F.tones[0]}"><i></i></div><div class="trk2"><div class="fill"></div>${F.cuts.map(c => `<span class="cut" style="left:${c / 15 * 100}%"></span>`).join('')}</div></div>`).join('') + `<div class="secs"><span>0 s</span><span>5</span><span>10</span><span>15 s</span></div>`;
+    box.innerHTML = FILMS.map((F, i) => `<div class="srow" data-i="${i}"><div class="nm"><span>${F.nm}</span><span class="mono">${F.m}</span></div><div class="sw" style="background:${F.tones[0]}"><b class="fig"></b><i></i></div><div class="trk2"><div class="fill"></div>${F.cuts.map(c => `<span class="cut" style="left:${c / 15 * 100}%"></span>`).join('')}</div></div>`).join('') + `<div class="secs"><span>0 s</span><span>5</span><span>10</span><span>15 s</span></div>`;
   }
   function setT(t) {
     document.querySelectorAll('#shotStrips .srow').forEach(r => {
@@ -269,14 +271,14 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
       r.querySelector('.fill').style.transform = `scaleX(${t / 15})`;
       r.querySelectorAll('.cut').forEach((c, k) => c.classList.toggle('on', k < n));
       const sw = r.querySelector('.sw');
-      if (+sw.dataset.n !== n) { sw.dataset.n = n; sw.style.background = F.tones[n % F.tones.length]; if (n && !calm) gsap.fromTo(sw.querySelector('i'), {opacity: .9}, {opacity: 0, duration: .25}); }
+      if (+sw.dataset.n !== n) { sw.dataset.n = n; sw.style.background = F.tones[n % F.tones.length]; sw.querySelector('.fig').style.transform = FRAMES[(n + +r.dataset.i) % FRAMES.length]; if (n && !calm) gsap.fromTo(sw.querySelector('i'), {opacity: .9}, {opacity: 0, duration: .25}); }
     });
   }
   function strips(fast) {
     Kit.hide('shotReel'); Kit.hide('shotRuler'); Kit.hide('shotCtl'); Kit.show('shotStrips'); buildStrips(); setT(0);
     say.innerHTML = 'Fifteen seconds of each, cut by cut. Old films feel slow because actors move inside long shots, not because the cuts are rare.';
     const o = {t: 0}; stripsTl && stripsTl.kill();
-    const done = () => { Kit.show('shotKeep'); say.innerHTML = 'Same fifteen seconds: <b>2 cuts</b>, then <b>4</b>, then <b>7</b>. Old films feel slow because actors move inside long shots, not because they cut rarely.'; };
+    const done = () => { Kit.show('shotKeep'); say.innerHTML = `Fifteen seconds: <b>2 cuts</b>, then <b>4</b>, then <b>7</b>${held ? ` (you held ${held.toFixed(1)} s)` : ''}. Old films feel slow because actors move inside long shots, not because cuts are rare.`; };
     if (fast || calm) { setT(15); done(); return; }
     stripsTl = gsap.to(o, {t: 15, duration: 15, ease: 'none', onUpdate: () => setT(o.t), onComplete: done});
   }
@@ -462,7 +464,7 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
   function pick(d) {
     drug = d; seen.add(d);
     document.querySelectorAll('#painDrugs .drug').forEach(b => { b.classList.toggle('on', b.dataset.d === d); b.classList.toggle('seen', seen.has(b.dataset.d)); });
-    say.innerHTML = INFO[d]; marks();
+    say.innerHTML = INFO[d]; Kit.$('painQ').textContent = 'Where each painkiller cuts the signal'; marks();
     if (seen.has('suz') && seen.size >= 2) Kit.show('painKeep');
   }
   document.querySelectorAll('#painDrugs .drug').forEach(b => b.onclick = () => pick(b.dataset.d));
@@ -536,11 +538,13 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
     side = s; step = 1; view = s; apply(false);
     Kit.hide('newcPick'); Kit.show('newcCtl'); Kit.$('newcNext').textContent = 'Hear the other side'; Kit.$('newcStep').textContent = '1 / 3';
     say.innerHTML = CASE[s];
+    Kit.$('newcQ').dataset.q ??= Kit.$('newcQ').textContent;
+    Kit.$('newcQ').textContent = s === 'one' ? 'You took only the closed box.' : 'You took both boxes.';
   }
   function next() {
     if (step === 1) { step = 2; view = side === 'one' ? 'two' : 'one'; apply(false); say.innerHTML = CASE[view]; Kit.$('newcNext').textContent = 'So who is right?'; Kit.$('newcStep').textContent = '2 / 3'; }
     else if (step === 2) { step = 3; say.innerHTML = 'Nobody has settled it. In a 2020 survey of philosophers, <b>39%</b> took both boxes and <b>31%</b> one. Among decision theorists, <b>73%</b> took both.'; Kit.show('newcKeep'); Kit.$('newcNext').textContent = 'Start again'; Kit.$('newcStep').textContent = '3 / 3'; }
-    else { step = 0; side = null; view = 'all'; apply(false); Kit.hide('newcCtl'); Kit.hide('newcKeep'); Kit.show('newcPick'); say.innerHTML = 'Every way it can go, from the prediction to your pay. Pick before you think too long.'; }
+    else { step = 0; side = null; view = 'all'; apply(false); Kit.hide('newcCtl'); Kit.hide('newcKeep'); Kit.show('newcPick'); Kit.$('newcQ').textContent = Kit.$('newcQ').dataset.q; say.innerHTML = 'Every way it can go, from the prediction to your pay. Pick before you think too long.'; }
   }
   document.querySelectorAll('#newcPick .btn').forEach(b => b.onclick = () => choose(b.dataset.s));
   Kit.$('newcNext').onclick = next;
