@@ -468,7 +468,7 @@ void main() {
         // A tap between the slabs is not a flip either.
         final a = tester.getRect(find.text('Better than half'));
         final b = tester.getRect(find.text('Not better than half'));
-        await tester.tapAt(Offset(a.left, (a.bottom + b.top) / 2 + 30));
+        await tester.tapAt(Offset(a.left, (a.bottom + b.top) / 2));
         await tester.pumpAndSettle();
         expect(find.text('TAP YOUR PICK'), findsOneWidget);
 

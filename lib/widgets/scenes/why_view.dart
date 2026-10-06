@@ -325,7 +325,7 @@ class _WhySceneViewState extends State<WhySceneView>
       final emphasis = 1 - 0.42 * behind;
       texts.add(
         Positioned(
-          left: l.textLeft,
+          left: _WhyLayout.textLeft,
           width: l.textW,
           top: l.textTop(k) - offset + (1 - shown) * 12,
           child: Opacity(
@@ -352,7 +352,7 @@ class _WhySceneViewState extends State<WhySceneView>
       final appear = _guessing ? chipsIn : 1.0;
       texts.add(
         Positioned(
-          left: l.textLeft,
+          left: _WhyLayout.textLeft,
           width: l.textW,
           top: l.guessLabelY - offset,
           child: Opacity(
@@ -403,7 +403,7 @@ class _WhySceneViewState extends State<WhySceneView>
     if (_done) {
       texts.add(
         Positioned(
-          left: l.textLeft,
+          left: _WhyLayout.textLeft,
           width: l.textW,
           top: l.textTop(_n) - offset + (1 - rise) * 16,
           child: Opacity(
@@ -425,7 +425,7 @@ class _WhySceneViewState extends State<WhySceneView>
       if (g != null && _picked != null) {
         texts.add(
           Positioned(
-            left: l.textLeft,
+            left: _WhyLayout.textLeft,
             width: l.textW,
             top: l.verdictY - offset + (1 - line) * 8,
             child: Opacity(
@@ -546,7 +546,7 @@ class _WhyLayout {
   /// Where the rope passes: 0 the pulley over the hole, k the node of
   /// layer k.
   final List<double> nodeY;
-  final List<double> _textTop;
+  final List<double> _textTops;
   final List<Rect> chips;
   final double guessLabelY;
   final double verdictY;
@@ -573,12 +573,12 @@ class _WhyLayout {
     required this.chips,
     required this.guessLabelY,
     required this.verdictY,
-  }) : _textTop = textTop;
+  }) : _textTops = textTop;
 
   double get textW => size.width - textLeft - rightPad;
   double get groundY => bandTop[1];
   double get contentH => bandTop[n] + bandH[n];
-  double textTop(int k) => _textTop[k];
+  double textTop(int k) => _textTops[k];
   double bottom(int k) => bandTop[k] + bandH[k];
 
   TextStyle textStyle(int k, Color color) => k == n
