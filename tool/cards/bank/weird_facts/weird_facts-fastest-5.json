@@ -39,17 +39,17 @@
     "log": true,
     "items": [
       {
-        "label": "Mantis shrimp club",
+        "label": "Shrimp",
         "value": 10400,
         "note": "Over 10,400 g, enough to tear the water behind it into vapour."
       },
       {
-        "label": "Hydra stinging cell",
+        "label": "Hydra",
         "value": 5410000,
         "note": "Over five million g, in 700 billionths of a second: a harpoon inside a cell."
       },
       {
-        "label": "Pilobolus fungus spore",
+        "label": "Fungus",
         "value": 20000,
         "note": "A dung fungus that fires its spores 2 m, at twice the shrimp's g."
       }

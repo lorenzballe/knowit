@@ -33,7 +33,7 @@
   "written": "2026-10-06",
   "scene": {
     "type": "rank",
-    "quantity": "Working smell-receptor genes",
+    "quantity": "Smell-receptor genes",
     "most": "Most",
     "items": [
       {
@@ -51,7 +51,7 @@
         "value": 296
       },
       {
-        "label": "African elephant",
+        "label": "Elephant",
         "value": 1948,
         "note": "About 2,000, the most of 13 mammals compared: over twice a dog's."
       }

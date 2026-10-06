@@ -37,17 +37,17 @@
     "unit": "%",
     "items": [
       {
-        "label": "Two mints",
+        "label": "Two",
         "value": 14.1,
         "note": "Twice the sweets, more than four times the effect of one."
       },
       {
-        "label": "One, then one more",
+        "label": "1, then 1",
         "value": 23,
         "note": "The same two mints. The pause made the second feel meant for this table."
       },
       {
-        "label": "One mint",
+        "label": "One",
         "value": 3.3,
         "note": "One sweet on the plate with the bill barely registered."
       }
