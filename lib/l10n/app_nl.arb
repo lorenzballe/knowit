@@ -473,5 +473,7 @@
   "successFootRenews": "Verlengt op {date} · altijd opzegbaar",
   "tryToday": "PROBEER HET VANDAAG",
   "minutesShort": "{n} MIN",
-  "sideOr": "of"
+  "sideOr": "of",
+  "nextStep": "Volgende stap",
+  "showAllSteps": "Alles tonen"
 }

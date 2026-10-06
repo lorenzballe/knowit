@@ -473,5 +473,7 @@
   "successFootRenews": "{date} 续订 · 随时取消",
   "tryToday": "今天就试试",
   "minutesShort": "{n} 分钟",
-  "sideOr": "还是"
+  "sideOr": "还是",
+  "nextStep": "下一步",
+  "showAllSteps": "全部显示"
 }

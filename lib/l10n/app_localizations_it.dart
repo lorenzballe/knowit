@@ -1992,4 +1992,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get sideOr => 'o';
+
+  @override
+  String get nextStep => 'Passo successivo';
+
+  @override
+  String get showAllSteps => 'Mostra tutto';
 }

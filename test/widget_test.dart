@@ -42,6 +42,7 @@ import 'package:astuto/widgets/share_day.dart';
 import 'package:astuto/widgets/motion.dart';
 import 'package:astuto/widgets/pill_card.dart';
 import 'package:astuto/widgets/place_it.dart';
+import 'package:astuto/widgets/stamp.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/ui.dart';
 
@@ -3616,6 +3617,25 @@ void main() {
       await tester.tap(find.text('Tap to reveal'));
       await tester.pumpAndSettle();
       expect(find.text('WHAT TO KEEP'), findsOneWidget);
+    });
+
+    testWidgets('true or false is answered with a stamp, and stamped back', (
+      tester,
+    ) async {
+      final claim = PillBank.cards.firstWhere((p) => p.isTrueOrFalse);
+      final given = <String, Answer>{};
+      await tester.pumpWidget(host([claim], given));
+      await tester.pumpAndSettle();
+
+      // The claim without its "True or false:", and two stamps to bring down.
+      expect(find.text('TRUE'), findsOneWidget);
+      expect(find.text('FALSE'), findsOneWidget);
+      await tester.tap(find.text('TRUE'));
+      await tester.pumpAndSettle();
+      expect(find.text('How sure are you?'), findsOneWidget);
+      await tester.tap(find.text('60%'));
+      await tester.pumpAndSettle();
+      expect(given[claim.id]?.response, '${claim.trueIndex}');
     });
 
     testWidgets('a card that asks will not turn over until you commit', (

@@ -473,5 +473,7 @@
   "successFootRenews": "Продление {date} · отмена в любой момент",
   "tryToday": "ПОПРОБУЙ СЕГОДНЯ",
   "minutesShort": "{n} МИН",
-  "sideOr": "или"
+  "sideOr": "или",
+  "nextStep": "Следующий шаг",
+  "showAllSteps": "Показать всё"
 }

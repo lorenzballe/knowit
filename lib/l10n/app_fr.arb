@@ -473,5 +473,7 @@
   "successFootRenews": "Renouvellement le {date} · résiliable à tout moment",
   "tryToday": "À ESSAYER AUJOURD’HUI",
   "minutesShort": "{n} MIN",
-  "sideOr": "ou"
+  "sideOr": "ou",
+  "nextStep": "Étape suivante",
+  "showAllSteps": "Tout voir"
 }

@@ -1929,4 +1929,10 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get sideOr => '또는';
+
+  @override
+  String get nextStep => '다음 단계';
+
+  @override
+  String get showAllSteps => '모두 보기';
 }

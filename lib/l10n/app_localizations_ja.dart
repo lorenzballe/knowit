@@ -1917,4 +1917,10 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get sideOr => 'または';
+
+  @override
+  String get nextStep => '次のステップ';
+
+  @override
+  String get showAllSteps => 'すべて表示';
 }

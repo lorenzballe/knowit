@@ -1918,4 +1918,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get sideOr => '还是';
+
+  @override
+  String get nextStep => '下一步';
+
+  @override
+  String get showAllSteps => '全部显示';
 }

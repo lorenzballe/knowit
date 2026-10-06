@@ -176,7 +176,13 @@ void main() {
             TakeASide(:final positions) => positions,
             _ => const <String>[],
           };
-          await tester.tap(find.text(options.first).first);
+          // A true-or-false card is answered with its stamp.
+          final stamp = find.text('TRUE');
+          await tester.tap(
+            stamp.evaluate().isNotEmpty
+                ? stamp.first
+                : find.text(options.first).first,
+          );
           await settle();
         } else if (pill.challenge is NoChallenge) {
           await tester.tap(find.byType(PillCard));
@@ -194,6 +200,15 @@ void main() {
           await settle();
         }
         await shoot('end');
+        // A worked solution, walked two steps further.
+        final next = find.byKey(const ValueKey('next-step'));
+        if (next.evaluate().isNotEmpty) {
+          for (var k = 0; k < 2 && next.evaluate().isNotEmpty; k++) {
+            await tester.tap(next);
+            await settle();
+          }
+          await shoot('steps');
+        }
       });
     }
   }

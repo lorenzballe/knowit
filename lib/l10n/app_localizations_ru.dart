@@ -2054,4 +2054,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get sideOr => 'или';
+
+  @override
+  String get nextStep => 'Следующий шаг';
+
+  @override
+  String get showAllSteps => 'Показать всё';
 }
