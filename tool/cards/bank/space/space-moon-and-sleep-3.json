@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does a sleepless night under a full moon feel like proof, when other sleepless nights do not?",
-  "answer": "Because only the full moon gives the night a label. Wake at 3 a.m., see a bright moon, and the night is filed as moon-made; a bad night under a thin crescent is just a bad night. A 1985 review of dozens of studies found no reliable link between moon phase and behaviour.",
+  "question": "A month has about 29.5 nights, three of them around the full moon. What share of bad nights should land there by chance?",
+  "answer": "About one in ten, and memory keeps more. A sleepless night under a bright moon gets a label; a bad night under a crescent is just a bad night, and ten remembered nights can easily hold three. A 1985 review of 37 studies found no reliable link between moon phase and behaviour.",
   "move": "Count the times nothing happened, not only the times the story fitted.",
   "ask": "Which of my beliefs rests on the times I noticed, while the times I didn't went unrecorded?",
   "keywords": [
@@ -23,7 +23,7 @@
   "region": "none",
   "hook": "misconception",
   "mood": "practical",
-  "numeracy": 0,
+  "numeracy": 2,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
@@ -31,6 +31,27 @@
   "figure": "none",
   "source": "Rotton & Kelly, Psychological Bulletin, 1985",
   "source_kind": "paper",
-  "reference": "Rotton & Kelly, Much ado about the full moon: a meta-analysis of lunar-lunacy research, Psychological Bulletin, 1985",
-  "written": "2026-10-03"
+  "reference": "Rotton & Kelly, Much ado about the full moon: a meta-analysis of lunar-lunacy research, Psychological Bulletin 97:286–306, 1985",
+  "written": "2026-10-03",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated bad nights",
+    "hit": "Near a full moon",
+    "rate": 0.1016,
+    "steps": [
+      10,
+      50,
+      365,
+      3650
+    ],
+    "seed": 81,
+    "button": "More bad nights",
+    "notes": [
+      "Ten bad nights, three near a full moon: 30%. Three times what chance gives.",
+      "50 bad nights: 16%. Still enough to swear by.",
+      "A year of bad nights: 10.4%.",
+      "Ten years: 10.1%, next to 3 in 29.5. No moon effect is built in."
+    ],
+    "max": 0.4
+  }
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does noise destroy human hearing for good, when a chicken's ear can grow its lost cells back?",
-  "answer": "Because mammal ears lost the knack of replacing hair cells, the sensors that turn vibration into nerve signals. In birds, supporting cells around them divide or turn into new hair cells after damage, as Corwin and Cotanche showed in chicks in 1988. Each human cochlea's roughly 15,000 hair cells are all it will ever have.",
+  "question": "Every sound you hear is turned into nerve signals by hair cells in the inner ear. How many does each ear get, for life?",
+  "answer": "About 15,500: some 3,500 inner and 12,000 outer hair cells, all made before birth. Mammal ears lost the knack of replacing them. In birds, supporting cells divide or turn into new hair cells after damage, as Corwin and Cotanche showed in chicks in 1988. In humans each one that loud noise kills stays dead.",
   "move": "Find which of your resources can never be replaced, and guard those first.",
   "ask": "What do I have only one supply of, like my hearing, that I treat as if it would grow back?",
   "keywords": [
@@ -19,16 +19,46 @@
   ],
   "era": "timeless",
   "region": "none",
-  "hook": "mechanism",
+  "hook": "number",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "count",
+    "unit": "hair cells in each ear, for life",
+    "answer": 15500,
+    "each": 10,
+    "eachLabel": "1 dot = 10 hair cells",
+    "compare": "A chick grows lost ones back. You can't",
+    "options": [
+      {
+        "label": "About 150",
+        "value": 150,
+        "note": "Two zeros short. About 15,500, in rows along the coiled cochlea."
+      },
+      {
+        "label": "About 1,500",
+        "value": 1500,
+        "note": "One zero short. About 15,500, and noise destroys them for good."
+      },
+      {
+        "label": "About 15,000",
+        "value": 15000,
+        "note": "Right: about 15,500, all made before birth and never replaced."
+      },
+      {
+        "label": "1.5 million",
+        "value": 1500000,
+        "note": "Two zeros too many. An eye has over 100 million light sensors; an ear, 15,500."
+      }
+    ]
+  },
   "source": "Corwin & Cotanche, Science, 1988",
   "source_kind": "paper",
-  "reference": "Corwin & Cotanche, Regeneration of sensory hair cells after acoustic trauma, Science, 1988",
-  "written": "2026-09-26"
+  "reference": "Corwin & Cotanche, Regeneration of sensory hair cells after acoustic trauma, Science, 1988; R. Pujol, Journey into the World of Hearing, cochlea.eu (about 3,500 inner and 12,000 outer hair cells)",
+  "written": "2026-10-06"
 }

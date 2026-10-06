@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How long were London's surgeons legally in the same company as its barbers?",
-  "answer": "Just over two centuries. An Act of 1540 merged the Barbers' Company and the Guild of Surgeons, barring each trade from the other's work. The surgeons broke away only in 1745 as the Company of Surgeons, which became the Royal College of Surgeons in 1800. The barbers kept the hall.",
+  "question": "Surgeons and barbers once shared a trade. When do you think London's surgeons finally broke away?",
+  "answer": "An Act of 1540 joined the Barbers' Company and the Guild of Surgeons, and barred each trade from the other's work: barbers kept shaving and pulling teeth, surgeons the cutting. As new London hospitals made surgeons richer and prouder, they pressed Parliament for a split, granted in 1745. The barbers kept the hall.",
   "move": "Old partnerships often outlast the reasons they were formed.",
   "keywords": [
     "barber-surgeons",
@@ -28,10 +28,39 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
-  "source": "Cope, Royal College of Surgeons history, 1959",
+  "figure": "timeline",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1500,
+    "to": 1850,
+    "events": [
+      {
+        "label": "Barbers and surgeons merge",
+        "year": 1540
+      },
+      {
+        "label": "Harvey: blood circulates",
+        "year": 1628
+      },
+      {
+        "label": "Newton dies",
+        "year": 1727
+      },
+      {
+        "label": "Surgeons leave barbers",
+        "year": 1745,
+        "note": "Surgeons shared a company with barbers until 1745, 18 years after Newton died."
+      },
+      {
+        "label": "Royal College of Surgeons",
+        "year": 1800
+      }
+    ]
+  },
+  "source": "Cope, 1959; Royal College of Surgeons",
   "source_kind": "book",
   "reference": "Cope, The Royal College of Surgeons of England: A History, Anthony Blond, 1959",
-  "written": "2026-09-26",
+  "written": "2026-10-06",
   "disabled": true
 }

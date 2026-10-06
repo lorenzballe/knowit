@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What was unremarkable about Usain Bolt's 9.58-second 100 m world record in Berlin in 2009?",
-  "answer": "His start. His reaction to the gun, 0.146 seconds, was slower than that of some of the men he beat. The record was built later: laser measurements put his top speed at 12.34 m/s, about 44 km/h, reached between 60 and 80 m, well past halfway.",
+  "question": "Usain Bolt ran the 100 m in 9.58 seconds in Berlin in 2009. How long did he take to react to the gun?",
+  "answer": "0.146 seconds, slower than Tyson Gay, second, at 0.144, and Asafa Powell, third, at 0.134. Under 0.100 counts as a false start: too fast to be a reaction to the sound. Bolt gained nothing at the gun; laser measurements show he built the record later, at top speed well past halfway.",
   "move": "Find where a winner gained the time before praising the obvious part.",
   "ask": "When someone wins, do I look at where the time was really gained?",
   "keywords": [
@@ -27,8 +27,24 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Graubner & Nixdorf, New Studies in Athletics, 2011",
+  "source": "Graubner & Nixdorf, 2011",
   "source_kind": "paper",
   "reference": "Graubner & Nixdorf, Biomechanical analysis of the sprint and hurdles events at the 2009 IAAF World Championships in Athletics, New Studies in Athletics, 2011",
-  "written": "2026-09-26"
+  "written": "2026-10-06",
+  "scene": {
+    "type": "hold",
+    "what": "Bolt's reaction to the gun",
+    "seconds": 0.146,
+    "display": "ms",
+    "comparisons": [
+      {
+        "label": "Powell, third",
+        "seconds": 0.134
+      },
+      {
+        "label": "False-start limit",
+        "seconds": 0.1
+      }
+    ]
+  }
 }

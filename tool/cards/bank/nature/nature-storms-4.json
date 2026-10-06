@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How much of the heat a hurricane releases ends up driving its winds?",
-  "answer": "About a quarter of one percent. NOAA's hurricane researchers put the heat released by condensing rain at around 600 terawatts, some 200 times the world's electricity-generating capacity. Keeping the winds going takes about 1.5 terawatts. Most of the heat is carried aloft and radiated to space: a vast furnace turning a modest fan.",
+  "question": "A hurricane's rain releases heat as water vapour condenses. How many times the world's electricity-generating capacity is that?",
+  "answer": "About 200 times: some 600 terawatts, NOAA's hurricane researchers estimate. Only about 1.5 terawatts, a quarter of one percent, keeps the winds going. The rest is carried aloft in the clouds and radiated to space. A hurricane is a vast furnace turning a modest fan.",
   "move": "Judge an engine by what reaches the wheels, not by what it burns.",
   "ask": "Do I judge my effort by what reaches the result, or by how much I burn?",
   "keywords": [
@@ -42,8 +42,38 @@
     ],
     "caption": "Of 600 terawatts of heat, 1.5 drive the winds: a quarter of one percent."
   },
+  "scene": {
+    "type": "count",
+    "unit": "times all the power stations on Earth",
+    "answer": 200,
+    "each": 1,
+    "eachLabel": "1 dot = every power plant on Earth",
+    "compare": "Yet only 0.25% of it drives the wind",
+    "options": [
+      {
+        "label": "A tenth",
+        "value": 0.1,
+        "note": "Three zeros short. One hurricane outpowers every plant on Earth combined."
+      },
+      {
+        "label": "About 2",
+        "value": 2,
+        "note": "Two zeros short. About 600 terawatts of heat, from vapour turning to rain."
+      },
+      {
+        "label": "About 200",
+        "value": 200,
+        "note": "Right: about 200 times. Yet the winds take only a quarter of one percent."
+      },
+      {
+        "label": "About 20,000",
+        "value": 20000,
+        "note": "Two zeros too many. Still, 600 terawatts, from rain forming in clouds."
+      }
+    ]
+  },
   "source": "NOAA Hurricane Research Division",
   "source_kind": "institution",
   "reference": "https://www.aoml.noaa.gov/hrd-faq/",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How was the temperature of the cosmic background measured in 1941, 24 years before its discovery?",
-  "answer": "Through a molecule in space. In 1941 Andrew McKellar in Canada found cyanogen, a carbon-nitrogen molecule seen in starlight, slightly more excited than empty space should allow, as if bathed in radiation about 2 degrees above absolute zero. Nobody knew what was warming it until the cosmic background was found in 1965.",
+  "question": "Drag each to the year you think: when was the Big Bang's afterglow predicted, found and first measured?",
+  "answer": "Andrew McKellar saw cyanogen molecules in starlight slightly more excited than empty space should allow, as if bathed in warmth about 2.3 degrees above absolute zero. Nobody connected it to the Big Bang. The 1948 prediction said about 5 degrees. McKellar's number, the closer one, sat unread in an observatory journal.",
   "move": "An unexplained number in an old paper may be tomorrow's discovery.",
   "ask": "What odd, unexplained number in an old record of mine might be a discovery waiting?",
   "keywords": [
@@ -27,8 +27,33 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "source": "McKellar, Publications of the Dominion Astrophysical Observatory, 1941",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1920,
+    "to": 2000,
+    "events": [
+      {
+        "label": "McKellar measures 2.3 K",
+        "year": 1941,
+        "note": "Its temperature was measured in 1941, seven years before anyone predicted it."
+      },
+      {
+        "label": "Afterglow predicted",
+        "year": 1948
+      },
+      {
+        "label": "Penzias and Wilson find it",
+        "year": 1965
+      },
+      {
+        "label": "Nobel Prize for the find",
+        "year": 1978
+      }
+    ]
+  },
+  "source": "McKellar, 1941; Alpher & Herman, Nature, 1948",
   "source_kind": "paper",
   "reference": "McKellar, Molecular Lines from the Lowest States of Diatomic Molecules Composed of Atoms Probably Present in Interstellar Space, Publications of the Dominion Astrophysical Observatory 7, 251, 1941",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

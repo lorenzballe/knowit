@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What did an Athenian who won at Olympia receive back home, beyond the olive wreath?",
-  "answer": "Cash, and later free meals for life. Plutarch reports that Solon's laws paid an Olympic victor 500 drachmas and an Isthmian victor 100, when a sheep was valued at one drachma. By the fifth century BC, Olympic victors could also dine at public expense in the city's town hall, the prytaneion.",
+  "question": "Solon's Athens paid Olympic champions in cash, and valued a sheep at one drachma. How many sheep was a win worth?",
+  "answer": "500. Plutarch reports that Solon's laws paid an Olympic victor 500 drachmas and an Isthmian victor 100, when a sheep was reckoned at one drachma. By the fifth century BC, Olympic victors could also dine at public expense in the city's town hall. The wreath was only the part the crowd saw.",
   "move": "A prize that looks symbolic may sit on top of one that is not.",
   "ask": "What reward do I call just symbolic that is quietly worth a lot?",
   "keywords": [
@@ -19,7 +19,7 @@
   ],
   "era": "ancient",
   "region": "europe",
-  "hook": "misconception",
+  "hook": "number",
   "mood": "wonder",
   "numeracy": 2,
   "abstraction": "concrete",
@@ -27,8 +27,38 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "count",
+    "unit": "sheep, for one Olympic win",
+    "answer": 500,
+    "each": 1,
+    "eachLabel": "1 dot = 1 sheep",
+    "compare": "An Isthmian win: 100 sheep",
+    "options": [
+      {
+        "label": "About 5",
+        "value": 5,
+        "note": "Two zeros short. The olive wreath came with 500 drachmas at home."
+      },
+      {
+        "label": "About 50",
+        "value": 50,
+        "note": "One zero short. Even an Isthmian win paid 100 drachmas."
+      },
+      {
+        "label": "About 500",
+        "value": 500,
+        "note": "Right: 500 drachmas, a flock of 500 sheep, for one win."
+      },
+      {
+        "label": "About 5,000",
+        "value": 5000,
+        "note": "One zero too many. 500 sheep was already a fortune for a farmer."
+      }
+    ]
+  },
   "source": "Plutarch, Life of Solon, 23",
   "source_kind": "primary_document",
   "reference": "Plutarch, Lives, Volume I: Solon, trans. Bernadotte Perrin, Loeb Classical Library, Harvard, 1914",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

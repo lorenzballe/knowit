@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why may a rocket not launch through a cloud that has produced no lightning at all?",
-  "answer": "Because the rocket can make the lightning. A tall conductor trailing a long, ionised exhaust plume distorts the electric field in a charged cloud enough to trigger a strike. Apollo 12 was hit twice within its first minute in 1969, with no storm reported; in 1987 triggered lightning destroyed an Atlas-Centaur rocket.",
+  "question": "Apollo 12 lifted off in rain in 1969, with no thunderstorm reported nearby. How long after liftoff did lightning strike it?",
+  "answer": "36.5 seconds, and again at 52. The rocket made the lightning: a tall conductor trailing an ionised exhaust plume distorts the electric field in a charged cloud enough to trigger a strike. The fuel cells dropped offline and the crew rode on batteries. In 1987 triggered lightning destroyed an Atlas-Centaur rocket.",
   "move": "Check whether your own action creates the danger you are watching for.",
   "ask": "Could my own action be creating the danger I am watching out for?",
   "keywords": [
@@ -30,8 +30,19 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "NASA, Apollo 12 Mission Report, 1970",
+  "source": "NASA, Apollo 12 Mission Report",
   "source_kind": "institution",
   "reference": "NASA Manned Spacecraft Center, Apollo 12 Mission Report, MSC-01855, 1970",
-  "written": "2026-09-26"
+  "written": "2026-10-06",
+  "scene": {
+    "type": "hold",
+    "what": "Liftoff to the first strike",
+    "seconds": 36.5,
+    "comparisons": [
+      {
+        "label": "The second strike",
+        "seconds": 52
+      }
+    ]
+  }
 }

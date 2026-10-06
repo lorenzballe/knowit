@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did a young chimpanzee in Kyoto beat university students at a memory test?",
-  "answer": "By taking in a whole screen at a glance. Numerals 1 to 9 flashed in random spots, then turned into blank squares, and Ayumu touched them in order. Given about a fifth of a second to look, he stayed accurate while students faltered. Inoue and Matsuzawa suggest people traded such snapshot memory for other skills.",
+  "question": "A young chimpanzee in Kyoto saw numerals scattered on a screen, then blank squares to touch in order. How long did he get to look?",
+  "answer": "210 milliseconds, too short to move the eyes from one numeral to the next. Ayumu still recalled positions and order far better than untrained students. Later, two researchers who practised the task for weeks matched him, so much of the gap was training.",
   "move": "Do not rank minds on one ladder; each is built for its own job.",
   "ask": "Whose skill have I underrated because it is not the kind of clever I happen to have?",
   "keywords": [
@@ -26,8 +26,14 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Inoue & Matsuzawa, Current Biology, 2007",
+  "source": "Inoue & Matsuzawa, 2007",
   "source_kind": "paper",
-  "reference": "Inoue & Matsuzawa, Working memory of numerals in chimpanzees, Current Biology, 2007",
-  "written": "2026-10-03"
+  "reference": "Inoue & Matsuzawa, Working memory of numerals in chimpanzees, Current Biology 17(23), 2007; Silberberg & Kearns, Memory for the order of briefly presented numerals in humans as a function of practice, Animal Cognition 12, 2009",
+  "written": "2026-10-06",
+  "scene": {
+    "type": "hold",
+    "what": "Ayumu's glimpse of the numbers",
+    "seconds": 0.21,
+    "display": "ms"
+  }
 }

@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do so many dance and pop tracks sit close to 120 beats per minute?",
-  "answer": "Because that is close to the pace of human walking. MacDougall and Moore tracked volunteers through whole days and found steps clustered tightly around two per second, which is 120 a minute. Tapping and dancing tend to settle near the same rate. A dance floor runs at the tempo of a brisk stroll.",
+  "question": "Many dance and pop tracks sit close to 120 beats a minute. How long does one step of a person's everyday walk take?",
+  "answer": "About half a second: 120 steps a minute. MacDougall and Moore tracked volunteers' head movements through whole days and found one sharp peak at two a second. Tapping and dancing settle near the same rate. A dance floor runs at the tempo of a stroll.",
   "move": "When many people converge on one number, look for the body behind it.",
   "ask": "Which of my preferences might really be set by my body's own natural pace?",
   "keywords": [
@@ -29,8 +29,19 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "MacDougall & Moore, J Applied Physiology, 2005",
+  "source": "MacDougall & Moore, 2005",
   "source_kind": "paper",
   "reference": "MacDougall & Moore, Marching to the beat of the same drummer: the spontaneous tempo of human locomotion, Journal of Applied Physiology, 2005",
-  "written": "2026-09-26"
+  "written": "2026-10-06",
+  "scene": {
+    "type": "hold",
+    "what": "One step of an everyday walk",
+    "seconds": 0.5,
+    "comparisons": [
+      {
+        "label": "A heartbeat, 70 a minute",
+        "seconds": 0.857
+      }
+    ]
+  }
 }

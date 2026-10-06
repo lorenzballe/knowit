@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How long did the Roman Senate go on meeting after the last western emperor was deposed?",
-  "answer": "More than a century. Under Odoacer and the Gothic kings the Senate still sat, and its leading men still held the consulship. Its last known collective act came in 603, when it acclaimed portraits of the eastern emperor Phocas in Rome. Around 630 its meeting house, the Curia, was turned into the church of Sant'Adriano.",
+  "question": "The last western Roman emperor was deposed in 476. When do you think the Roman Senate last met?",
+  "answer": "Kings replaced emperors, but Italy's new rulers needed the old elite to run Rome, so Odoacer and the Gothic kings kept the Senate sitting and its leaders still took the consulship. Its last known act, in 603, was to acclaim portraits of the eastern emperor Phocas. Around 630 its meeting house became a church.",
   "move": "Institutions often outlive the power that once gave them meaning.",
   "ask": "What do I still keep going after the power behind it has gone?",
   "keywords": [
@@ -27,8 +27,33 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 350,
+    "to": 700,
+    "events": [
+      {
+        "label": "Last western emperor out",
+        "year": 476
+      },
+      {
+        "label": "Hagia Sophia completed",
+        "year": 537
+      },
+      {
+        "label": "Senate's last known act",
+        "year": 603,
+        "note": "The Senate still met in 603, 127 years after the last western emperor fell."
+      },
+      {
+        "label": "Muhammad goes to Medina",
+        "year": 622
+      }
+    ]
+  },
   "source": "Cambridge Ancient History, vol. 14",
   "source_kind": "reference_work",
   "reference": "Humphries, Italy, A.D. 425-605, in Cameron, Ward-Perkins and Whitby (eds.), The Cambridge Ancient History, vol. 14, Cambridge University Press, 2000",
-  "written": "2026-09-27"
+  "written": "2026-10-06"
 }

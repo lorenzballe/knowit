@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "In 1901 a mathematician estimated π by dropping a needle on ruled lines 3,408 times. What was wrong with his result?",
-  "answer": "It was too good. Mario Lazzarini's 1,808 crossings gave 355/113, π to six places, when honest runs that long miss by about 0.05. And with his needle length, 355/113 can only come out if the drops number a multiple of 213. He made 3,408: exactly 16 × 213, as if he stopped when it matched.",
+  "question": "In 1901 Mario Lazzarini dropped a needle on ruled lines 3,408 times and got π right to six places. Could honest drops do that?",
+  "answer": "No: the result was too good. Honest runs of 3,408 drops miss π by about 0.05. With his needle, 355/113 can only come out when the drops are a multiple of 213, and 3,408 is exactly 16 × 213: he seems to have stopped the moment it matched.",
   "move": "When a result is better than the method allows, ask how it stopped.",
   "ask": "When a result looks better than the method allows, do I ask how it stopped?",
   "keywords": [
@@ -21,7 +21,7 @@
   "region": "europe",
   "hook": "story",
   "mood": "playful",
-  "numeracy": 2,
+  "numeracy": 3,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
@@ -29,6 +29,28 @@
   "figure": "none",
   "source": "Badger, Mathematics Magazine, 1994",
   "source_kind": "paper",
-  "reference": "Badger, Lazzarini's Lucky Approximation of π, Mathematics Magazine, 1994",
-  "written": "2026-09-26"
+  "reference": "Badger, Lazzarini's Lucky Approximation of π, Mathematics Magazine 67(2):83–91, 1994",
+  "written": "2026-09-26",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated needle drops",
+    "hit": "Needle crossed a line",
+    "rate": 0.530516,
+    "steps": [
+      34,
+      341,
+      3408,
+      34080,
+      340800
+    ],
+    "seed": 2,
+    "button": "Drop more",
+    "notes": [
+      "34 drops, 23 crossings: 67.6%. Turned into π, that makes it 2.46.",
+      "341 drops: 54.8% crossed, so π comes out 3.04.",
+      "3,408 drops, as many as Lazzarini's: π = 3.10. His said 3.1415929.",
+      "34,080 drops: π = 3.13. Ten times his work, one decimal right.",
+      "340,800 drops: π = 3.138. Six true places would take tens of trillions."
+    ]
+  }
 }

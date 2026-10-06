@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "In a German back pain trial, how did real acupuncture compare with shallow needles placed at random?",
-  "answer": "About the same, and both beat usual care. After six months, about 47% improved with real acupuncture, 44% with sham needling and 27% with standard drugs and physiotherapy. Where the needles went made little difference. The ritual of sessions, attention and expectation did much of the work.",
+  "question": "A German trial gave back-pain patients real acupuncture or shallow needles placed at random. Grow the trial: which does better?",
+  "answer": "Neither, much, and both beat usual care. After six months 47.6% improved with real acupuncture and 44.2% with sham needling, but only 27.4% with drugs and physiotherapy. Where the needles went made little difference across 1,162 patients; the sessions, attention and expectation did much of the work.",
   "move": "When the fake works as well as the real, the active part is elsewhere.",
   "ask": "In something that helps me, is it the thing itself or the ritual and attention around it?",
   "keywords": [
@@ -28,6 +28,35 @@
   "figure": "none",
   "source": "Haake et al., Archives of Internal Medicine, 2007",
   "source_kind": "paper",
-  "reference": "Haake et al., German Acupuncture Trials (GERAC) for chronic low back pain, Archives of Internal Medicine, 2007",
-  "written": "2026-10-03"
+  "reference": "Haake et al., German Acupuncture Trials (GERAC) for chronic low back pain, Archives of Internal Medicine 167(17):1892–1898, 2007",
+  "written": "2026-10-03",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated patients",
+    "hit": "Improved after six months",
+    "groups": [
+      {
+        "label": "Sham needles",
+        "rate": 0.442
+      },
+      {
+        "label": "Real needles",
+        "rate": 0.476
+      }
+    ],
+    "steps": [
+      20,
+      200,
+      774,
+      7740
+    ],
+    "seed": 166,
+    "button": "Add patients",
+    "notes": [
+      "Ten each: sham needles 70%, real ones 30%. Chance can crown the fake.",
+      "100 each: real needles lead, 51% to 39%. A result you could publish.",
+      "774 patients, two-thirds of the trial: 43.4% against 47.8%.",
+      "Ten times that: 43.2% against 46.7%. Built in: 44.2% and 47.6%."
+    ]
+  }
 }

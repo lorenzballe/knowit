@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "In the 1916 film The Battle of the Somme, which famous shot of soldiers going over the top was staged?",
-  "answer": "The best-known one. The sequence of men climbing from a trench into the smoke, one sliding back as if hit, was filmed at a training ground behind the lines. About 20 million Britons saw the film in its first six weeks. The image people remember of the battle was rehearsed.",
+  "question": "The 1916 film The Battle of the Somme showed British troops going over the top. How many Britons saw it in its first six weeks?",
+  "answer": "About 20 million, nearly half the population. Many believed they were watching men die. But the best-known sequence, soldiers climbing out of a trench into the smoke and one sliding back as if hit, was filmed at a training ground behind the lines. The image the country kept of the battle had been rehearsed.",
   "move": "The most iconic shot is the one most worth checking.",
   "ask": "Which picture of a real event shapes my opinion, and do I know how it was made?",
   "keywords": [
@@ -18,16 +18,46 @@
   ],
   "era": "twentieth",
   "region": "europe",
-  "hook": "story",
+  "hook": "number",
   "mood": "dark",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "count",
+    "unit": "Britons who saw it in six weeks",
+    "answer": 20000000,
+    "each": 10000,
+    "eachLabel": "1 dot = 10,000 viewers",
+    "compare": "Out of about 43 million Britons",
+    "options": [
+      {
+        "label": "About 50,000",
+        "value": 50000,
+        "note": "Far too few. Cinemas across Britain ran it for weeks on end."
+      },
+      {
+        "label": "About 500,000",
+        "value": 500000,
+        "note": "Two zeros short. About 20 million saw it, nearly half the country."
+      },
+      {
+        "label": "2 million",
+        "value": 2000000,
+        "note": "One zero short. About 20 million, out of some 43 million Britons."
+      },
+      {
+        "label": "20 million",
+        "value": 20000000,
+        "note": "Right: about 20 million, nearly half of Britain, in six weeks."
+      }
+    ]
+  },
   "source": "Imperial War Museums, Malins and the Somme film",
   "source_kind": "institution",
   "reference": "https://www.iwm.org.uk/history/geoffrey-malins-and-the-battle-of-the-somme-film",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

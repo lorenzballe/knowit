@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does a stubbed toe hurt in two waves, a sharp jab and then a deep ache?",
-  "answer": "Because two kinds of nerve fibre carry the news at different speeds. Fibres wrapped in insulating myelin send the sharp first pain at 5 to 30 metres a second; bare C fibres crawl at under 2 metres a second and bring the dull, lasting ache. From toe to brain, that is about a second apart.",
+  "question": "You stub your toe. The deep ache travels to the brain on slow, bare nerve fibres. How long does it take to arrive?",
+  "answer": "Between about 0.8 and 3 seconds; the sharp jab takes about a tenth. Fibres wrapped in myelin carry the first pain at 5 to 30 metres a second, bare C fibres the ache at 0.5 to 2. Over roughly 1.6 m of nerve, the hopping starts before the throbbing arrives.",
   "move": "One event can arrive as two messages; wait for the second.",
   "ask": "When something hurts me, in body or mood, do I react before the full message has arrived?",
   "keywords": [
@@ -20,7 +20,7 @@
   "region": "none",
   "hook": "mechanism",
   "mood": "wonder",
-  "numeracy": 2,
+  "numeracy": 3,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
@@ -29,5 +29,18 @@
   "source": "Purves et al., Neuroscience, 2018",
   "source_kind": "book",
   "reference": "Purves D, Augustine GJ, Fitzpatrick D et al., Neuroscience, 6th edition, Oxford University Press, 2018",
-  "written": "2026-09-26"
+  "written": "2026-10-06",
+  "scene": {
+    "type": "hold",
+    "what": "The ache, toe to brain",
+    "seconds": 1.6,
+    "low": 0.8,
+    "high": 3.2,
+    "comparisons": [
+      {
+        "label": "The sharp jab",
+        "seconds": 0.1
+      }
+    ]
+  }
 }

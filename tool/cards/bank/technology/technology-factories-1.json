@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did electrifying factories barely raise their productivity until the 1920s?",
-  "answer": "Because owners first kept the old layout. Early factories swapped the steam engine for one big motor still turning the same shafts and belts, in the same multi-storey buildings. The gains came when each machine got its own motor and plants were rebuilt as single-storey lines arranged around the work, not the driveshaft.",
+  "question": "Edison opened his first power station in 1882. When do you think electric motors drove most American factory machinery?",
+  "answer": "Owners first swapped the steam engine for one big motor turning the same shafts and belts in the same multi-storey mills. The gains came when each machine got its own motor and plants were rebuilt as single-storey lines around the work. In 1990 Paul David argued that computers were on the same slow path.",
   "move": "A new tool pays off only after the work is rearranged around it.",
   "ask": "Which new tool am I using without having rearranged my work around it?",
   "keywords": [
@@ -30,8 +30,33 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1870,
+    "to": 2000,
+    "events": [
+      {
+        "label": "Edison's first station",
+        "year": 1882
+      },
+      {
+        "label": "Motors: 5% of power",
+        "year": 1899
+      },
+      {
+        "label": "Motors pass half",
+        "year": 1920,
+        "note": "Electric motors passed half of US factory power only around 1920, 38 years on."
+      },
+      {
+        "label": "Solow's computer quip",
+        "year": 1987
+      }
+    ]
+  },
   "source": "David, American Economic Review, 1990",
   "source_kind": "paper",
   "reference": "David, The Dynamo and the Computer: An Historical Perspective on the Modern Productivity Paradox, American Economic Review 80(2), 1990",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Where did the multi-finger gestures on the first iPhone come from?",
-  "answer": "Largely from a PhD born of hand pain. Wayne Westerman, whose repetitive strain injury made typing hard, wrote his 1999 University of Delaware thesis on tracking many fingers on a touch surface. With his adviser John Elias he founded FingerWorks to sell gesture keyboards. Apple bought the company in 2005, two years before the iPhone.",
+  "question": "The iPhone made pinching and swiping famous in 2007. When do you think touchscreens and multi-touch were invented?",
+  "answer": "Eric Johnson built a touch display for British air traffic control in the 1960s, and a Toronto student, Nimish Mehta, read several fingers at once in 1982. The iPhone's gestures came largely from Wayne Westerman, whose hand pain led to a 1999 thesis on tracking many fingers. Apple bought his company in 2005.",
   "move": "Tools built for people with a limitation often end up serving everyone.",
   "ask": "What did someone build for a limitation that ended up helping everyone, including me?",
   "keywords": [
@@ -26,9 +26,34 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
-  "source": "Westerman, PhD thesis, University of Delaware, 1999",
-  "source_kind": "paper",
-  "reference": "Westerman, Hand Tracking, Finger Identification, and Chordic Manipulation on a Multi-Touch Surface, PhD thesis, University of Delaware, 1999",
-  "written": "2026-09-26"
+  "figure": "timeline",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1950,
+    "to": 2025,
+    "events": [
+      {
+        "label": "First touchscreen",
+        "year": 1965
+      },
+      {
+        "label": "First multi-touch tablet",
+        "year": 1982,
+        "note": "Multi-touch was 25 years old when the iPhone arrived."
+      },
+      {
+        "label": "Westerman's thesis",
+        "year": 1999
+      },
+      {
+        "label": "iPhone launched",
+        "year": 2007
+      }
+    ]
+  },
+  "source": "Buxton, Multi-Touch Systems; Westerman, 1999",
+  "source_kind": "reference_work",
+  "reference": "https://www.billbuxton.com/multitouchOverview.html",
+  "written": "2026-10-06"
 }

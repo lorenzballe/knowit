@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did athletics have no official marathon world record until 2004?",
-  "answer": "Because no two courses are alike. Hills, bends and weather differ from city to city, so fast times were listed only as world bests. From 1 January 2004 records were ratified, but only on courses measured with a calibrated bicycle, plus one extra metre per kilometre so that no approved course can turn out short.",
+  "question": "Marathon runners have raced since 1896. When do you think the first official marathon world record was ratified?",
+  "answer": "No two courses are alike: hills, bends and weather differ from city to city, so fast times were listed only as world bests. From 1 January 2004 records counted, but only on courses measured with a calibrated bicycle, plus one metre per kilometre so that no approved course can turn out short.",
   "move": "A ranking means little until everyone has faced the same test.",
   "ask": "Am I comparing results that were never run on the same course?",
   "keywords": [
@@ -26,9 +26,34 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
-  "source": "IAAF/AIMS, The Measurement of Road Race Courses",
+  "figure": "timeline",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1880,
+    "to": 2025,
+    "events": [
+      {
+        "label": "First Olympic marathon",
+        "year": 1896
+      },
+      {
+        "label": "Athletics body founded",
+        "year": 1912
+      },
+      {
+        "label": "42.195 km made standard",
+        "year": 1921
+      },
+      {
+        "label": "First official record",
+        "year": 2004,
+        "note": "Marathon records became official only in 2004, 108 years after the first Olympic race."
+      }
+    ]
+  },
+  "source": "IAAF & AIMS, Road Race Courses, 2004",
   "source_kind": "standard",
   "reference": "IAAF & AIMS, The Measurement of Road Race Courses, 2nd edition, 2004",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

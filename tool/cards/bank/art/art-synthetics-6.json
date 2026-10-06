@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did Japanese woodblock prints turn suddenly and intensely blue around 1830?",
-  "answer": "Because Prussian blue became cheap. Made in Europe since the early 1700s, it had reached Japan only in small, costly amounts; from about 1829 Chinese makers supplied it in bulk through Canton. Printers seized a blue that stayed bright where dayflower blue faded. Hokusai's Great Wave, of about 1831, rides that glut.",
+  "question": "Hokusai's Great Wave is the image of Japanese art. When do you think its famous blue was invented?",
+  "answer": "Prussian blue reached Japan only in small, costly amounts until about 1829, when Chinese makers began supplying it cheaply through Canton. Printers seized a blue that stayed bright where the old dayflower blue faded, and Hokusai's Fuji series was advertised with it for New Year 1831. An icon of Japan rides a German chemical.",
   "move": "A style can begin with a drop in the price of one material.",
   "ask": "What big change around me started simply because one ingredient got cheap?",
   "keywords": [
@@ -26,9 +26,34 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
-  "source": "Smith, Hokusai and His Age, 2005",
+  "figure": "timeline",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1650,
+    "to": 1900,
+    "events": [
+      {
+        "label": "Prussian blue, Berlin",
+        "year": 1706,
+        "note": "The Great Wave's blue was invented in Berlin, 125 years before the print."
+      },
+      {
+        "label": "The Great Wave printed",
+        "year": 1831
+      },
+      {
+        "label": "Perry's ships reach Japan",
+        "year": 1853
+      },
+      {
+        "label": "Van Gogh copies Hiroshige",
+        "year": 1887
+      }
+    ]
+  },
+  "source": "Smith, Hokusai and His Age, 2005; Met Museum",
   "source_kind": "book",
   "reference": "Henry D. Smith II, Hokusai and the Blue Revolution in Edo Prints, in John T. Carpenter (ed.), Hokusai and His Age, Hotei Publishing, 2005",
-  "written": "2026-09-27"
+  "written": "2026-10-06"
 }

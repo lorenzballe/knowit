@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How old is the difference between blood groups A and B?",
-  "answer": "Tens of millions of years, older than our species. The same two amino-acid changes separate A from B in humans, gibbons and Old World monkeys, and a 2012 study found the variants were inherited from a shared ancestor, not reinvented. Someone can share a blood group with a gibbon yet differ from a sibling.",
+  "question": "How old is the difference between blood groups A and B, next to our species and our split from chimps?",
+  "answer": "The two amino-acid changes that separate A from B are the same in humans, gibbons and Old World monkeys, and a 2012 study found the variants were inherited from a shared ancestor, not reinvented. Selection has kept both alive ever since. Someone can share a blood group with a gibbon but not with a sibling.",
   "move": "Ask how old a difference is before explaining it by recent history.",
   "ask": "Before I explain a difference between people, have I asked how long it has been there?",
   "keywords": [
@@ -27,8 +27,34 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "source": "Ségurel et al., PNAS, 2012",
+  "scene": {
+    "type": "timeline",
+    "axis": "ago",
+    "from": 100000000,
+    "to": 1000,
+    "unit": "years ago",
+    "events": [
+      {
+        "label": "A/B blood split",
+        "ago": 20000000,
+        "note": "A and B are at least 20 million years old: older than our split from chimps."
+      },
+      {
+        "label": "Chimps split",
+        "ago": 7000000
+      },
+      {
+        "label": "Our species",
+        "ago": 300000
+      },
+      {
+        "label": "Farming",
+        "ago": 12000
+      }
+    ]
+  },
+  "source": "Ségurel et al., PNAS, 2012; Smithsonian",
   "source_kind": "paper",
-  "reference": "doi:10.1073/pnas.1210603109",
-  "written": "2026-09-26"
+  "reference": "doi:10.1073/pnas.1210603109; Smithsonian National Museum of Natural History, Human Origins, https://humanorigins.si.edu/",
+  "written": "2026-10-06"
 }

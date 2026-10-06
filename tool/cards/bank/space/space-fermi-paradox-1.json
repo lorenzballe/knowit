@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does the silence from aliens puzzle scientists, instead of simply showing that space is big?",
-  "answer": "The galaxy is old enough to have been filled many times. A species spreading at just 1% of light speed could cross the 100,000 light-year disc in about 10 million years, or tens of millions with stops: under 1% of the galaxy's age. One such species should have reached everywhere, including here.",
+  "question": "Suppose a species spreads from star to star at 1% of the speed of light. How long would it take to cross our galaxy?",
+  "answer": "About 10 million years for the 100,000 light-year disc, or tens of millions with stops to settle. The galaxy is over 13 billion years old, so it could have been crossed a thousand times. That is the puzzle Michael Hart pressed in 1975: one patient species should have reached everywhere, including here.",
   "move": "If a thing could easily have happened, its absence is a clue.",
   "ask": "Which thing that should have happened by now in my life hasn't, and what is that telling me?",
   "keywords": [
@@ -18,7 +18,7 @@
   ],
   "era": "twentieth",
   "region": "none",
-  "hook": "paradox",
+  "hook": "number",
   "mood": "wonder",
   "numeracy": 2,
   "abstraction": "mixed",
@@ -26,8 +26,38 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "count",
+    "unit": "years to cross the Milky Way",
+    "answer": 10000000,
+    "each": 5000,
+    "eachLabel": "1 dot = 5,000 years",
+    "compare": "Under 1% of the galaxy's age",
+    "options": [
+      {
+        "label": "About 10,000",
+        "value": 10000,
+        "note": "Three zeros short. At 1% of light speed, each light-year takes a century."
+      },
+      {
+        "label": "A million",
+        "value": 1000000,
+        "note": "One zero short. 100,000 light-years at a hundredth of light speed: 10 million."
+      },
+      {
+        "label": "10 million",
+        "value": 10000000,
+        "note": "Right: about 10 million years, a blink beside the galaxy's 13 billion."
+      },
+      {
+        "label": "A billion",
+        "value": 1000000000,
+        "note": "Two zeros too many. Even with long stops, it takes tens of millions."
+      }
+    ]
+  },
   "source": "Hart, Quarterly Journal of the RAS, 1975",
   "source_kind": "paper",
   "reference": "Hart, An Explanation for the Absence of Extraterrestrials on Earth, Quarterly Journal of the Royal Astronomical Society, 1975",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

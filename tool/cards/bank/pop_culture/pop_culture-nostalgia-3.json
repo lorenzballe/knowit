@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did Netflix pay about $100 million to keep a 1990s sitcom for just one more year?",
-  "answer": "Because old comfort shows stop subscribers leaving. Friends, which ended in 2004, was among Netflix's most watched titles, replayed by many viewers again and again. Losing it risked cancellations, so in late 2018 Netflix paid roughly $100 million for 2019 alone; then its owner, WarnerMedia, took it back for its own service.",
+  "question": "Friends ended in 2004. In late 2018, how much did Netflix pay to keep streaming it in the US for one more year?",
+  "answer": "About $100 million, The New York Times reported, more than triple the roughly $30 million a year it had been paying. Friends was among Netflix's most watched titles, replayed again and again by viewers who might cancel without it. In 2020 its owner, WarnerMedia, took it back for its own service.",
   "move": "Price a thing by what losing it would cost, not by its age.",
   "ask": "What do I return to again and again for comfort, and what would I miss without it?",
   "keywords": [
@@ -20,14 +20,45 @@
   "region": "americas",
   "hook": "number",
   "mood": "playful",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "count",
+    "prefix": "$",
+    "unit": "for one more year of Friends",
+    "answer": 100000000,
+    "each": 50000,
+    "eachLabel": "1 dot = $50,000",
+    "compare": "Triple the $30 million it paid before",
+    "options": [
+      {
+        "label": "$1 million",
+        "value": 1000000,
+        "note": "Two zeros short. Old comfort shows keep subscribers from leaving."
+      },
+      {
+        "label": "$10 million",
+        "value": 10000000,
+        "note": "One zero short. Netflix had been paying about $30 million a year."
+      },
+      {
+        "label": "$100 million",
+        "value": 100000000,
+        "note": "Right: about $100 million, triple the old price, for 2019 alone."
+      },
+      {
+        "label": "$1 billion",
+        "value": 1000000000,
+        "note": "One zero too many, though $100 million for a 15-year-old sitcom is plenty."
+      }
+    ]
+  },
   "source": "The New York Times, December 2018",
   "source_kind": "news_archive",
   "reference": "The New York Times, report on Netflix's renewal of Friends for 2019, December 2018",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why could the man who recorded a voice singing a French folk song in 1860 never hear his recording?",
-  "answer": "His machine only drew sound. Édouard-Léon Scott de Martinville's phonautograph traced vibrations as wavy lines on soot-blackened paper, to be read by eye. His 1860 tracing of Au clair de la lune, the oldest recognisable recording of a human voice, was first played back in 2008, from scans of the lines.",
+  "question": "When was the oldest recording of a human voice made, and when could anyone first hear it?",
+  "answer": "Édouard-Léon Scott de Martinville's phonautograph was never meant to play anything back. It traced sound waves as wavy lines on soot-blackened paper, to be studied by eye. In 2008 researchers scanned his tracing of Au clair de la lune and turned the lines into sound: a man, probably Scott, singing slowly.",
   "move": "An old record may hold more than its makers could read.",
   "ask": "What from my past might mean more now than I could understand then?",
   "keywords": [
@@ -25,9 +25,34 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1840,
+    "to": 2025,
+    "events": [
+      {
+        "label": "Voice recorded in Paris",
+        "year": 1860,
+        "note": "Recorded in 1860, 17 years before Edison's phonograph, but first heard in 2008."
+      },
+      {
+        "label": "Edison's phonograph",
+        "year": 1877
+      },
+      {
+        "label": "Moon landing",
+        "year": 1969
+      },
+      {
+        "label": "First heard by anyone",
+        "year": 2008
+      }
+    ]
+  },
   "source": "Rosen, The New York Times, 2008",
   "source_kind": "news_archive",
   "reference": "Rosen, Researchers Play Tune Recorded Before Edison, The New York Times, 27 March 2008",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

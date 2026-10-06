@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How many machine failures did Google expect in a new server cluster's first year?",
-  "answer": "About a thousand, plus thousands of failed hard drives. Jeff Dean's 2009 list for a typical new cluster also counted about 20 whole racks failing, a power unit dropping hundreds of machines at once, and a chance of overheating. At that scale something breaks every few hours, and the software simply routes around the gap.",
+  "question": "Google builds a new cluster of servers. In its first year, how many individual machine failures does it plan for?",
+  "answer": "About a thousand, Jeff Dean said in 2009, plus thousands of failed hard drives, some 20 whole racks and a power unit dropping hundreds of machines at once. So Google stopped trying to make each machine reliable. Its software expects the failures and routes around them, every few hours, without waking anyone.",
   "move": "At large enough scale, rare failures become a schedule to plan for.",
   "ask": "What rare failure becomes certain at my scale, so that I should plan for it?",
   "keywords": [
@@ -21,14 +21,44 @@
   "region": "world",
   "hook": "number",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "count",
+    "unit": "machine failures in year one",
+    "answer": 1000,
+    "each": 1,
+    "eachLabel": "1 dot = 1 machine failing",
+    "compare": "Plus thousands of dead hard drives",
+    "options": [
+      {
+        "label": "About 10",
+        "value": 10,
+        "note": "Two zeros short. At this scale, something breaks every few hours."
+      },
+      {
+        "label": "About 100",
+        "value": 100,
+        "note": "One zero short. About 1,000: roughly three machines lost every day."
+      },
+      {
+        "label": "About 1,000",
+        "value": 1000,
+        "note": "Right. About 1,000 machines, and thousands of hard drives too."
+      },
+      {
+        "label": "About 10,000",
+        "value": 10000,
+        "note": "One zero too many, though thousands of hard drives did fail as well."
+      }
+    ]
+  },
   "source": "Dean, LADIS keynote, 2009",
   "source_kind": "company",
   "reference": "Dean, Designs, Lessons and Advice from Building Large Distributed Systems, LADIS keynote, 2009",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What does the oldest statute still in force in England deal with?",
-  "answer": "Seizing goods for debt, and tenants spoiling land. The Statute of Marlborough, passed in 1267 after a civil war, still has a few chapters in force. Most curb distress, taking a debtor's goods without a court's order; one forbids tenants to waste the land they farm. Its clauses have outlived the barons by 750 years.",
+  "question": "England's oldest statute still in force deals with debts. When do you think it was passed?",
+  "answer": "The Statute of Marlborough followed a civil war between Henry III and his barons. A few chapters survive: most curb distress, taking a debtor's goods without a court order; one forbids tenants to waste the land they farm. Statutes go only when someone repeals them, so a law can quietly outlive its whole world.",
   "move": "Rules written to end a crisis tend to outlast the crisis by centuries.",
   "ask": "Which rule do I follow that was written for a crisis long over?",
   "keywords": [
@@ -26,9 +26,34 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
-  "source": "Baker, An Introduction to English Legal History",
+  "figure": "timeline",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1150,
+    "to": 2025,
+    "events": [
+      {
+        "label": "Magna Carta sealed",
+        "year": 1215
+      },
+      {
+        "label": "Statute of Marlborough",
+        "year": 1267,
+        "note": "Its clauses on seizing goods for debt date from 1267 and are still law in England."
+      },
+      {
+        "label": "Columbus sails",
+        "year": 1492
+      },
+      {
+        "label": "US Constitution signed",
+        "year": 1787
+      }
+    ]
+  },
+  "source": "Baker, English Legal History; legislation.gov.uk",
   "source_kind": "reference_work",
-  "reference": "Baker, An Introduction to English Legal History, 5th edition, Oxford University Press, 2019",
-  "written": "2026-09-26"
+  "reference": "Baker, An Introduction to English Legal History, 5th edition, Oxford University Press, 2019; https://www.legislation.gov.uk/aep/Hen3cc1415/52/1",
+  "written": "2026-10-06"
 }

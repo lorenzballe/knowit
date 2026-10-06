@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did the first randomised trial of faecal transplants against recurrent gut infection end?",
-  "answer": "Early, because the comparison had become lopsided. In the Dutch trial published in 2013, one infusion of donor faeces cured 13 of 16 patients with recurrent Clostridioides difficile, against 4 of 13 on the antibiotic vancomycin. An interim analysis halted the trial, and relapsing patients from the antibiotic arms got donor faeces too.",
+  "question": "A Dutch trial of faecal transplants for a recurring gut infection was stopped after 43 of its planned 120 patients. Why so soon?",
+  "answer": "The answer had already arrived. One infusion of donor faeces cured 13 of 16 patients with recurrent Clostridioides difficile, against 4 of 13 on the antibiotic vancomycin. With a gap that wide, more patients would only have meant more people denied the better treatment, so the antibiotic groups were offered donor faeces too.",
   "move": "A test can end early because the answer arrived early.",
   "ask": "When did I last stop something early because the answer was already clear?",
   "keywords": [
@@ -29,5 +29,32 @@
   "source": "van Nood et al., NEJM, 2013",
   "source_kind": "paper",
   "reference": "doi:10.1056/NEJMoa1205037",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated patients",
+    "hit": "Cured",
+    "groups": [
+      {
+        "label": "Vancomycin",
+        "rate": 0.308
+      },
+      {
+        "label": "Donor faeces",
+        "rate": 0.813
+      }
+    ],
+    "steps": [
+      8,
+      29,
+      290
+    ],
+    "seed": 16,
+    "button": "Add patients",
+    "notes": [
+      "Four each: none cured on vancomycin, 75% on donor faeces. A gap this big shows at once.",
+      "29, like the trial's two compared arms: 26.7% against 85.7%. Real: 30.8% against 81.3%.",
+      "Ten times as many: 40% against 83.4%. Nothing new, at the patients' cost."
+    ]
+  }
 }

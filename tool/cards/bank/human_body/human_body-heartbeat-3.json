@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How can a ball striking the chest stop a healthy heart without damaging it?",
-  "answer": "Timing. In animal experiments a blow set off fibrillation only if it landed in a 15-millisecond window on the upstroke of the T wave, while heart muscle recovers unevenly from the last beat. The same blow a moment earlier or later did nothing. Victims are mostly young, with springy chests; the heart is sound.",
+  "question": "A baseball to the chest can stop a healthy heart, but only at one moment of the beat. How long is that moment?",
+  "answer": "About 15 milliseconds. In Link's experiments on pigs, 9 of 10 blows landing 30 to 15 ms before the peak of the T wave set off fibrillation; blows at any other moment did not. In that sliver the muscle is recovering unevenly, so one jolt can start a chaotic circuit. The heart is undamaged.",
   "move": "The same push can do nothing or everything, depending on when it lands.",
   "ask": "Where might a small thing hurt me badly just because it lands at the wrong moment?",
   "keywords": [
@@ -20,7 +20,7 @@
   "region": "none",
   "hook": "mechanism",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
@@ -29,5 +29,17 @@
   "source": "Link et al., NEJM, 1998",
   "source_kind": "paper",
   "reference": "doi:10.1056/NEJM199806183382504",
-  "written": "2026-09-26"
+  "written": "2026-10-06",
+  "scene": {
+    "type": "hold",
+    "what": "The deadly moment in one beat",
+    "seconds": 0.015,
+    "display": "ms",
+    "comparisons": [
+      {
+        "label": "One beat, at 70 a minute",
+        "seconds": 0.857
+      }
+    ]
+  }
 }

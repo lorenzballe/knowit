@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What did the first Korean book to mention chilli, in 1614, say about the plant?",
-  "answer": "That it was highly poisonous. The encyclopedia Jibong yuseol called it Japanese mustard, since it had arrived from Japan, and warned of its toxicity. For centuries before, kimchi was pale, salted vegetables flavoured with garlic, ginger or brine. Chilli appears in kimchi recipes only in the 1700s, and red kimchi spread through the 1800s.",
+  "question": "Kimchi feels as old as Korea itself. When do you think chilli, its red heat, first reached it?",
+  "answer": "Chilli is an American plant that Portuguese traders carried to Asia, and a Korean encyclopedia of 1614 called it Japanese mustard and warned it was highly poisonous. For centuries before, kimchi was pale: salted vegetables with garlic, ginger or brine. Red kimchi spread only in the 1800s, younger than Shakespeare's plays.",
   "move": "Date a tradition by its ingredients, not by how old it feels.",
   "ask": "What tradition do I think is ancient that depends on something quite new?",
   "keywords": [
@@ -30,8 +30,33 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1400,
+    "to": 2000,
+    "events": [
+      {
+        "label": "Korean alphabet created",
+        "year": 1443
+      },
+      {
+        "label": "Chilli reaches Europe",
+        "year": 1493
+      },
+      {
+        "label": "Korean book notes chilli",
+        "year": 1614
+      },
+      {
+        "label": "Chilli in a kimchi recipe",
+        "year": 1766,
+        "note": "The first kimchi recipe with chilli dates from 1766; red kimchi spread in the 1800s."
+      }
+    ]
+  },
   "source": "Journal of Ethnic Foods, 2025",
   "source_kind": "paper",
   "reference": "https://journalofethnicfoods.biomedcentral.com/articles/10.1186/s42779-025-00271-9",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

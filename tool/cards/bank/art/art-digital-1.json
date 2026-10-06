@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why was the first photograph scanned into a computer, in 1957, so small and coarse?",
-  "answer": "Because the machine could hold no more. At the US National Bureau of Standards, Russell Kirsch fed a photograph of his three-month-old son into a drum scanner linked to SEAC, an early stored-program computer. The image it could store was 176 pixels on a side, about 31,000 dots in all: enough for one small face.",
+  "question": "In 1957 a scientist scanned a photograph of his baby son into a computer: the first digital image. How many pixels did it have?",
+  "answer": "30,976: 176 pixels on a side. Russell Kirsch fed the photo of his three-month-old son through a drum scanner into SEAC, an early computer at the US National Bureau of Standards, and the picture was as large as the machine could hold. It was enough for one small face.",
   "move": "Early versions of a technology are shaped by what the machine could hold.",
   "ask": "What limits in my tools are shaping how my first attempts look?",
   "keywords": [
@@ -22,7 +22,7 @@
   ],
   "era": "twentieth",
   "region": "americas",
-  "hook": "origin",
+  "hook": "number",
   "mood": "wonder",
   "numeracy": 2,
   "abstraction": "concrete",
@@ -30,8 +30,38 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "count",
+    "unit": "pixels in the whole picture",
+    "answer": 30976,
+    "each": 16,
+    "eachLabel": "1 dot = 16 pixels",
+    "compare": "A 12 MP phone photo has 390 times more",
+    "options": [
+      {
+        "label": "About 300",
+        "value": 300,
+        "note": "Two zeros short. It was 176 pixels on a side: about 31,000 in all."
+      },
+      {
+        "label": "About 3,000",
+        "value": 3000,
+        "note": "One zero short. 176 by 176 makes 30,976, all the machine could hold."
+      },
+      {
+        "label": "About 30,000",
+        "value": 30000,
+        "note": "Right: 176 by 176, 30,976 pixels, enough for one small face."
+      },
+      {
+        "label": "3 million",
+        "value": 3000000,
+        "note": "Two zeros too many. That is a camera of around 2000, not 1957."
+      }
+    ]
+  },
   "source": "NIST, First Digital Image",
   "source_kind": "institution",
   "reference": "https://www.nist.gov/mathematics-statistics/first-digital-image",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }
