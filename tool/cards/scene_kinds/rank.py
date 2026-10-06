@@ -15,6 +15,7 @@ import math
 
 QUANTITY_CHARS = 34   # the small heading over the list
 MOST_CHARS = 16       # the word for the top of the list
+HEADING_CHARS = 32   # quantity and most share one line over the list
 UNIT_CHARS = 10       # printed beside every value in a row
 LABEL_CHARS = 22      # one line of a row, beside its value
 NOTE_CHARS = 90       # two lines under the list
@@ -34,6 +35,10 @@ def check(scene: dict) -> list[str]:
             p.append(f"scene.{key}: missing")
         elif len(v) > limit:
             p.append(f"scene.{key}: {len(v)} chars, over {limit}")
+    q, m = scene.get("quantity"), scene.get("most")
+    if isinstance(q, str) and isinstance(m, str) and len(q) + len(m) > HEADING_CHARS:
+        p.append(f"scene.quantity + scene.most: {len(q) + len(m)} chars, over "
+                 f"{HEADING_CHARS} on their shared line")
     unit = scene.get("unit", "")
     if not isinstance(unit, str) or len(unit) > UNIT_CHARS:
         p.append(f"scene.unit: a string of at most {UNIT_CHARS} chars")

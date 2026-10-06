@@ -288,7 +288,7 @@ class _DrawSceneViewState extends State<DrawSceneView>
             Expanded(child: _chartArea(context)),
             SizedBox(height: compact ? 8 : 12),
             SizedBox(
-              height: compact ? 46 : 58,
+              height: compact ? 54 : 58,
               child: Row(
                 children: [
                   Expanded(
@@ -313,7 +313,7 @@ class _DrawSceneViewState extends State<DrawSceneView>
                           alignment: Alignment.centerLeft,
                           child: Text(
                             done ? verdict : l10n.sceneDrawHint,
-                            maxLines: compact ? 2 : 3,
+                            maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                             style: AppText.body(
                               size: compact ? 13 : 14,
@@ -894,14 +894,14 @@ class _Chart {
     ]);
 
     final noteStyle = AppText.body(
-      size: 12,
+      size: 11.5,
       weight: FontWeight.w700,
       height: 1.2,
       color: ink,
     );
     final notes = [
       for (final m in s.notes)
-        _text(m.text, noteStyle, scaler, width: plot.width * 0.58, lines: 2),
+        _text(m.text, noteStyle, scaler, width: plot.width * 0.5, lines: 2),
     ];
 
     TextPainter tag(String t, Color c) => _text(
@@ -953,6 +953,7 @@ class _Chart {
       n = a < 1 ? a.toStringAsPrecision(1) : a.toStringAsFixed(1);
     }
     if (v < 0) n = '−$n';
+    if (v == 0) return n;
     if (unit.length == 1 || unit.startsWith('°')) {
       return _DrawSceneViewState._withUnit(n, unit);
     }
@@ -1138,13 +1139,20 @@ class _DrawPainter extends CustomPainter {
     if (!locked) return;
 
     // Notes on the truth: the given ones from the start, the rest as the
-    // tip passes them.
+    // tip passes them. Where each sits is worked out against the final
+    // picture, so a note does not jump when the tags arrive.
+    final tags = mine == null
+        ? null
+        : _tagRects(xs[s.judge], truth.at(xs[s.judge]), mine.at(xs[s.judge]));
+    final boxes = _placeNotes(mine, tags);
     for (var k = 0; k < s.notes.length; k++) {
       final x = xs[s.notes[k].at];
       final o = x <= c.anchorX + 0.5
           ? 1.0
           : ((tipX - x) / (c.colWidth * 0.6)).clamp(0.0, 1.0);
-      if (o > 0) _paintNote(canvas, c.notes[k], Offset(x, truth.at(x)), o);
+      if (o > 0) {
+        _paintNote(canvas, c.notes[k], Offset(x, truth.at(x)), boxes[k], o);
+      }
     }
 
     // The tip, travelling.
@@ -1176,7 +1184,7 @@ class _DrawPainter extends CustomPainter {
         _stroke(ink.withValues(alpha: end), 2.5),
       );
       canvas.drawCircle(Offset(x, ty), 7, _solid(ink.withValues(alpha: end)));
-      _paintTags(canvas, x, ty, my, end);
+      _paintTags(canvas, tags!, end);
     }
   }
 
@@ -1228,20 +1236,73 @@ class _DrawPainter extends CustomPainter {
 
   /// A note pinned to [p]: a small ring on the line, the words in a tag on
   /// whichever side has room, and a hairline between them.
-  void _paintNote(Canvas canvas, TextPainter tp, Offset p, double o) {
-    final plot = chart.plot;
-    const px = 7.0, py = 4.0, gap = 14.0;
-    final w = tp.width + px * 2, h = tp.height + py * 2;
-    final above = p.dy - plot.top > plot.bottom - p.dy;
-    final top = above ? p.dy - gap - h : p.dy + gap;
-    var left = p.dx - 12;
-    if (left + w > chart.size.width - 6) left = p.dx + 12 - w;
-    left = left.clamp(6.0, math.max(6.0, chart.size.width - 6 - w)).toDouble();
-    final box = Rect.fromLTWH(left, top, w, h);
+  static const double _notePadX = 7, _notePadY = 4;
 
+  /// A place for each note: beside its point, clear of the other notes,
+  /// the YOU and TRUTH tags and, as far as it can be, both lines. Each
+  /// candidate is scored by what it would cover; the cheapest wins.
+  List<Rect> _placeNotes(_Curve? mine, (Rect, Rect)? tags) {
+    final c = chart;
+    final plot = c.plot;
+    final samples = <Offset>[
+      for (var x = c.xs.first; x <= c.xs.last; x += 5) Offset(x, c.truth.at(x)),
+      if (mine != null)
+        for (var x = mine.start; x <= mine.end; x += 5) Offset(x, mine.at(x)),
+    ];
+    final taken = <Rect>[
+      if (tags != null) ...[tags.$1.inflate(4), tags.$2.inflate(4)],
+    ];
+    final out = <Rect>[];
+    for (var k = 0; k < scene.notes.length; k++) {
+      final tp = c.notes[k];
+      final x = c.xs[scene.notes[k].at];
+      final p = Offset(x, c.truth.at(x));
+      final w = tp.width + _notePadX * 2, h = tp.height + _notePadY * 2;
+      Rect? best;
+      var cost = double.infinity;
+      for (final gap in const [14.0, 30.0]) {
+        for (final top in [p.dy - gap - h, p.dy + gap]) {
+          for (final left in [p.dx - 12, p.dx + 12 - w, p.dx - w / 2]) {
+            final box = Rect.fromLTWH(
+              left.clamp(6.0, math.max(6.0, c.size.width - 6 - w)).toDouble(),
+              top.clamp(plot.top - 6, math.max(plot.top, plot.bottom - h))
+                  .toDouble(),
+              w,
+              h,
+            );
+            var score = gap * 0.5 + (box.center - p).distance * 0.2;
+            if (box.inflate(5).contains(p)) score += 1e6;
+            for (final r in taken) {
+              final i = r.intersect(box);
+              if (i.width > 0 && i.height > 0) score += 50 * i.width * i.height;
+            }
+            final near = box.inflate(3);
+            for (final q in samples) {
+              if (near.contains(q)) score += 60;
+            }
+            if (score < cost) {
+              cost = score;
+              best = box;
+            }
+          }
+        }
+      }
+      out.add(best!);
+      taken.add(best.inflate(4));
+    }
+    return out;
+  }
+
+  /// A note pinned to [p]: a small ring on the line, the words in a tag,
+  /// and a hairline between them.
+  void _paintNote(Canvas canvas, TextPainter tp, Offset p, Rect box, double o) {
+    final edge = Offset(
+      p.dx.clamp(box.left + 8, box.right - 8).toDouble(),
+      p.dy < box.top ? box.top : box.bottom,
+    );
     canvas.drawLine(
       p,
-      Offset(p.dx, above ? box.bottom : box.top),
+      edge,
       _stroke(ink.withValues(alpha: 0.5 * o), 1.2),
     );
     canvas.drawRRect(
@@ -1256,17 +1317,17 @@ class _DrawPainter extends CustomPainter {
     canvas.drawCircle(p, 5.5, _stroke(ink.withValues(alpha: o), 2));
     if (o < 1) {
       canvas.saveLayer(box.inflate(2), _solid(Color.fromRGBO(0, 0, 0, o)));
-      tp.paint(canvas, box.topLeft + const Offset(px, py));
+      tp.paint(canvas, box.topLeft + const Offset(_notePadX, _notePadY));
       canvas.restore();
     } else {
-      tp.paint(canvas, box.topLeft + const Offset(px, py));
+      tp.paint(canvas, box.topLeft + const Offset(_notePadX, _notePadY));
     }
   }
 
   /// TRUTH, filled, beside the real end; YOU, outlined, beside the
   /// reader's. On the inward side of the column, pushed apart when the two
   /// ends nearly meet.
-  void _paintTags(Canvas canvas, double x, double ty, double my, double o) {
+  (Rect, Rect) _tagRects(double x, double ty, double my) {
     final plot = chart.plot;
     final inward = x > plot.center.dx ? -1.0 : 1.0;
     final tt = chart.truthTag, yt = chart.you;
@@ -1289,7 +1350,14 @@ class _DrawPainter extends CustomPainter {
       return Rect.fromLTWH(left, cy - h / 2, w, h);
     }
 
-    final rt = at(a, tt, th), ry = at(b, yt, yh);
+    return (at(a, tt, th), at(b, yt, yh));
+  }
+
+  void _paintTags(Canvas canvas, (Rect, Rect) tags, double o) {
+    final (rt, ry) = tags;
+    final tt = chart.truthTag, yt = chart.you;
+    const px = 7.0, py = 3.5;
+    final th = rt.height, yh = ry.height;
     canvas.drawRRect(
       RRect.fromRectAndRadius(rt, Radius.circular(th / 2)),
       _solid(ink.withValues(alpha: o)),

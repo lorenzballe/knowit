@@ -62,7 +62,7 @@
     "figure": "none",
     "scene": {
       "type": "rank",
-      "quantity": "Litres of water per kilogram",
+      "quantity": "Litres per kilogram",
       "most": "Thirstiest",
       "unit": "L",
       "items": [

@@ -36,7 +36,7 @@
 ///   Default 0.1.
 /// - `verdict`: `{under, near, over}`, the line shown when the real one has
 ///   drawn itself, chosen by where the reader's line ended at `judge`: below
-///   the truth, near it, or above it. Each up to 100 characters.
+///   the truth, near it, or above it. Each up to 90 characters.
 /// - `notes`: up to 3 `{at, text}` labels pinned to the real line at column
 ///   `at` once it has drawn past it. Up to 40 characters; never at `judge`,
 ///   which carries the YOU and TRUTH tags.

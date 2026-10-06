@@ -397,11 +397,18 @@ void main() {
       expect(find.text('Mosquitoes'), findsOneWidget);
 
       final before = tester.getCenter(find.text('Mosquitoes')).dy;
-      await tester.drag(find.text('Mosquitoes'), const Offset(-260, -30));
+      final pitch =
+          tester.getCenter(find.text('Dogs')).dy -
+          tester.getCenter(find.text('Sharks')).dy;
+      // Mostly sideways, a place up: the row moves, the deck stays.
+      await tester.drag(find.text('Mosquitoes'), Offset(-260, -pitch * 1.2));
       await tester.pumpAndSettle();
       expect(advanced, 0);
       expect(find.text('Mosquitoes'), findsOneWidget);
-      expect(tester.getCenter(find.text('Mosquitoes')).dy, lessThan(before));
+      expect(
+        tester.getCenter(find.text('Mosquitoes')).dy,
+        closeTo(before - pitch, 1),
+      );
 
       // A tap among the rows does not turn the card over.
       await tester.tap(find.text('Dogs'));

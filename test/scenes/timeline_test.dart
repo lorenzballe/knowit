@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart' show SemanticsAction;
 import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
 
@@ -151,7 +150,7 @@ void main() {
   group('parse', () {
     test('a calendar axis counts across BC and AD the way time passed', () {
       final s = _parse(_calendar);
-      expect(s.axis, TimelineAxis.years);
+      expect(s.axis, TimelineSceneAxis.years);
       expect(s.events, hasLength(4));
       // 30 BC is astronomical −29; 1969 − (−29) = 1998 years.
       expect(s.events[3].at - s.events[2].at, 1998);
@@ -182,7 +181,7 @@ void main() {
 
     test('deep time is drawn in powers of ten and said in rough numbers', () {
       final s = _parse(_deep);
-      expect(s.axis, TimelineAxis.ago);
+      expect(s.axis, TimelineSceneAxis.ago);
       expect(s.t(1e10), 0);
       expect(s.t(1e3), 1);
       expect(s.t(1e6), closeTo(4 / 7, 1e-9));
@@ -328,7 +327,7 @@ void main() {
       });
     }
 
-    for (final (name, height) in [('deep', 360.0), ('deep-back', 270.0)])
+    for (final (name, height) in [('deep', 360.0), ('deep-back', 270.0)]) {
       testWidgets('$name: deep time on white ink and a dark card', (
         tester,
       ) async {
@@ -356,6 +355,7 @@ void main() {
         expect(find.text('Our species is 300,000 years old.'), findsOneWidget);
         expect(tester.takeException(), isNull);
       });
+    }
 
     testWidgets('with animations off the truth is there at once', (
       tester,
@@ -382,16 +382,14 @@ void main() {
       final s = _parse(_calendar);
       await tester.pumpWidget(_host(s, height: 340));
       await tester.pump(const Duration(seconds: 3));
-      final owner = tester.binding.pipelineOwner.semanticsOwner!;
       for (final e in s.events) {
-        final node = tester.getSemantics(find.bySemanticsLabel(e.label));
-        expect(node.getSemanticsData().value, '?');
-        owner.performAction(node.id, SemanticsAction.increase);
+        final lane = find.bySemanticsLabel(e.label);
+        expect(tester.getSemantics(lane).getSemanticsData().value, '?');
+        tester.semantics.increase(find.semantics.byLabel(e.label));
         await tester.pump();
       }
       expect(find.text('4 of 4'), findsOneWidget);
-      final lock = tester.getSemantics(find.bySemanticsLabel('LOCK IT IN'));
-      owner.performAction(lock.id, SemanticsAction.tap);
+      tester.semantics.tap(find.semantics.byLabel('LOCK IT IN'));
       await tester.pumpAndSettle();
       final node = tester.getSemantics(find.bySemanticsLabel('Cleopatra dies'));
       expect(node.getSemanticsData().value, startsWith('30 BC'));

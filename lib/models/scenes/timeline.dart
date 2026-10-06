@@ -51,27 +51,27 @@ import 'dart:math' as math;
 import '../../widgets/place_it.dart' show roughNumber;
 import '../scene.dart';
 
-enum TimelineAxis { years, ago }
+enum TimelineSceneAxis { years, ago }
 
-class TimelineItem {
+class TimelineSceneEvent {
   final String label;
 
   /// Where it truly sits, in axis units: an astronomical year on `years`
   /// (AD 1 is 1, 1 BC is 0, 2 BC is −1) or years ago on `ago`.
   final double at;
   final String note;
-  const TimelineItem(this.label, this.at, this.note);
+  const TimelineSceneEvent(this.label, this.at, this.note);
 }
 
 /// Place it in time.
 class TimelineScene extends Scene {
-  final TimelineAxis axis;
+  final TimelineSceneAxis axis;
 
-  /// The axis ends, in the same units as [TimelineItem.at].
+  /// The axis ends, in the same units as [TimelineSceneEvent.at].
   final double from;
   final double to;
   final String unit;
-  final List<TimelineItem> events;
+  final List<TimelineSceneEvent> events;
 
   const TimelineScene(
     super.raw, {
@@ -85,11 +85,11 @@ class TimelineScene extends Scene {
   static TimelineScene parse(Map<String, Object?> raw, Object? id) {
     Never bad(String why) => throw FormatException('scene.$why', id);
     final axis = switch (raw['axis'] ?? 'years') {
-      'years' => TimelineAxis.years,
-      'ago' => TimelineAxis.ago,
+      'years' => TimelineSceneAxis.years,
+      'ago' => TimelineSceneAxis.ago,
       _ => bad('axis must be "years" or "ago"'),
     };
-    final years = axis == TimelineAxis.years;
+    final years = axis == TimelineSceneAxis.years;
     num n(Object? v, String what) => v is num && v.isFinite ? v : bad(what);
 
     final from = n(raw['from'], 'from must be a number').toDouble();
@@ -104,7 +104,7 @@ class TimelineScene extends Scene {
       bad('events must be three to five');
     }
     final key = years ? 'year' : 'ago';
-    final events = <TimelineItem>[];
+    final events = <TimelineSceneEvent>[];
     for (final e in list) {
       if (e is! Map ||
           e['label'] is! String ||
@@ -120,7 +120,7 @@ class TimelineScene extends Scene {
       final note = e['note'];
       if (note != null && note is! String) bad('a note must be text');
       events.add(
-        TimelineItem(e['label'] as String, at, (note ?? '') as String),
+        TimelineSceneEvent(e['label'] as String, at, (note ?? '') as String),
       );
     }
     if (events.every((e) => e.note.isEmpty)) bad('one event needs a note');
@@ -137,7 +137,7 @@ class TimelineScene extends Scene {
     );
   }
 
-  bool get _years => axis == TimelineAxis.years;
+  bool get _years => axis == TimelineSceneAxis.years;
 
   /// A calendar year as a count with a zero in it, so that subtracting two
   /// years gives the time between them across BC and AD.

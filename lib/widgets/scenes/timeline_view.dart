@@ -342,7 +342,11 @@ class _TimelineSceneViewState extends State<TimelineSceneView>
       builder: (context, _) {
         final shown =
             _locked && _phase(_reveal.value, i, s.events.length) > .55;
-        final dim = _locked && _lit != null && _lit != i;
+        // The lit lane stands out only once every truth has landed, so the
+        // reveal does not give away which miss the note is about.
+        final settled =
+            _reveal.value >= 1 - _noteTail / _revealMs(s.events.length);
+        final dim = _locked && settled && _lit != null && _lit != i;
         final value = !_locked
             ? (guess == null ? '?' : s.say(guess))
             : '${s.say(e.at)}, ${context.l10n.sceneYou.toLowerCase()} '
@@ -718,7 +722,8 @@ class _LanesPainter extends CustomPainter {
       final ph = _phase(reveal.value, i, n);
       final eased = Curves.easeOutCubic.transform(ph);
       final tx = g.x(guess + (picture.truths[i] - guess) * eased);
-      final lit = picture.lit == i;
+      final lit =
+          picture.lit == i && reveal.value >= 1 - _noteTail / _revealMs(n);
       final h = g.r * 1.5;
       _fill.color = ink.withValues(alpha: lit ? 0.26 : 0.17);
       canvas.drawRRect(

@@ -637,7 +637,10 @@ class _RankTile extends StatelessWidget {
               ),
             )
           else
-            _Grip(color: color.withValues(alpha: 0.45), size: font * 0.9),
+            _Grip(
+              color: color.withValues(alpha: 0.45),
+              size: math.max(font * 0.9, 18),
+            ),
         ],
       ),
     );

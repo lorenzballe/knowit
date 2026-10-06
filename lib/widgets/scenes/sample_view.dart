@@ -167,7 +167,7 @@ class _SampleSceneViewState extends State<SampleSceneView>
         // figures shrink and the gauge goes: the dots already show the rate,
         // and they need the room more.
         final compact = box.maxHeight < 330;
-        final gauge = box.maxHeight >= 360;
+        final gauge = !compact;
         final big = compact ? 30.0 : 42.0;
         _width = math.max(1, box.maxWidth);
 
@@ -356,7 +356,9 @@ class _SampleSceneViewState extends State<SampleSceneView>
     final w = (box.maxWidth - _Field.gap * (k - 1)) / k;
     final fits = (w * h / (_Field.finest * _Field.finest)).floor();
     final cap = math.max(40, math.min(k == 1 ? 400 : 220, fits));
-    final most = _draws.sizeOf(n, 0);
+    // Only the share up to the gauge's top is on show, so that is what
+    // must fit.
+    final most = (_draws.sizeOf(n, 0) * s.top).ceil();
     for (var u = 1; ; u *= 10) {
       for (final m in const [1, 2, 5]) {
         if ((most / (u * m)).ceil() <= cap) return u * m;
@@ -648,7 +650,12 @@ class _Field extends StatelessWidget {
     return RepaintBoundary(
       child: CustomPaint(
         size: Size.infinite,
-        painter: _FieldPainter(piles: piles, ink: ink, ground: ground),
+        painter: _FieldPainter(
+          piles: piles,
+          top: scene.top,
+          ink: ink,
+          ground: ground,
+        ),
       ),
     );
   }
@@ -677,27 +684,38 @@ class _Pile {
 /// dashed line across the pile is where the truth would have put it.
 class _FieldPainter extends CustomPainter {
   final List<_Pile> piles;
+
+  /// The share the field shows up to, as the gauge does: rare events
+  /// (one death in ten) would be a sliver at the foot of a whole pile, so
+  /// the pile is seen through a window running from none to [top], and
+  /// fades out where it carries on above.
+  final double top;
   final Color ink;
   final Color ground;
-  _FieldPainter({required this.piles, required this.ink, required this.ground})
-    : _solid = Paint()
-        ..color = ink
-        ..strokeCap = StrokeCap.round,
-      _faint = Paint()
-        ..color = ink.withValues(alpha: 0.2)
-        ..strokeCap = StrokeCap.round,
-      _halo = Paint()
-        ..color = ground
-        ..strokeWidth = 5,
-      _dash = Paint()
-        ..color = ink
-        ..strokeWidth = 2.5
-        ..strokeCap = StrokeCap.round;
+  _FieldPainter({
+    required this.piles,
+    required this.top,
+    required this.ink,
+    required this.ground,
+  }) : _solid = Paint()
+         ..color = ink
+         ..strokeCap = StrokeCap.round,
+       _faint = Paint()
+         ..color = ink.withValues(alpha: 0.2)
+         ..strokeCap = StrokeCap.round,
+       _halo = Paint()
+         ..color = ground
+         ..strokeWidth = 5,
+       _dash = Paint()
+         ..color = ink
+         ..strokeWidth = 2.5
+         ..strokeCap = StrokeCap.round;
 
   final Paint _solid;
   final Paint _faint;
   final Paint _halo;
   final Paint _dash;
+  final Paint _fade = Paint();
 
   /// Biggest dots that lay [count] of them in a [w] × [h] box, full rows,
   /// no bigger than [most] apart.
@@ -718,27 +736,34 @@ class _FieldPainter extends CustomPainter {
     // Leave room over the pile for the truth's label.
     final h = size.height - 2;
     // One pitch for both piles, so equal counts stand equally high.
-    final most = piles.map((p) => p.dots).reduce(math.max);
+    final most = piles.map((p) => (p.dots * top).ceil()).reduce(math.max);
     final p = pitchFor(most, w, h);
     final cols = math.max(1, (w / p).floor());
+    // Whole rows in the window, never more than the field holds.
+    final window = math.min(
+      (most / cols).ceil() * cols,
+      (h / p).floor() * cols,
+    );
     final r = p * (p > 14 ? 0.82 : 0.78);
 
     for (var g = 0; g < k; g++) {
       final pile = piles[g];
       final left = g * (w + _Field.gap);
       final x0 = left + (w - cols * p) / 2;
-      final solid = Float32List(pile.solid * 2);
-      final faint = Float32List((pile.dots - pile.solid) * 2);
-      for (var i = 0; i < pile.dots; i++) {
+      final shown = top < 1 ? math.min(pile.dots, window) : pile.dots;
+      final solidShown = math.min(pile.solid, shown);
+      final solid = Float32List(solidShown * 2);
+      final faint = Float32List((shown - solidShown) * 2);
+      for (var i = 0; i < shown; i++) {
         final row = i ~/ cols;
         final col = i % cols;
         final x = x0 + (col + 0.5) * p;
         final y = size.height - (row + 0.5) * p;
-        if (i < pile.solid) {
+        if (i < solidShown) {
           solid[i * 2] = x;
           solid[i * 2 + 1] = y;
         } else {
-          final j = i - pile.solid;
+          final j = i - solidShown;
           faint[j * 2] = x;
           faint[j * 2 + 1] = y;
         }
@@ -747,6 +772,25 @@ class _FieldPainter extends CustomPainter {
       _solid.strokeWidth = r;
       canvas.drawRawPoints(PointMode.points, faint, _faint);
       canvas.drawRawPoints(PointMode.points, solid, _solid);
+
+      // Where the window cuts a bigger pile, it fades into the card.
+      if (top < 1 && pile.dots > shown) {
+        final band = Rect.fromLTWH(
+          left - 2,
+          size.height - (shown / cols) * p - 1,
+          w + 4,
+          p * 2.2,
+        );
+        canvas.drawRect(
+          band,
+          _fade
+            ..shader = LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [ground, ground.withValues(alpha: 0)],
+            ).createShader(band),
+        );
+      }
 
       if (pile.dots == 0) continue;
       // The truth: as high as the solid dots would stand if the sample hit
@@ -764,7 +808,10 @@ class _FieldPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_FieldPainter old) =>
-      !_same(old.piles, piles) || old.ink != ink || old.ground != ground;
+      !_same(old.piles, piles) ||
+      old.top != top ||
+      old.ink != ink ||
+      old.ground != ground;
 
   static bool _same(List<_Pile> a, List<_Pile> b) {
     if (a.length != b.length) return false;

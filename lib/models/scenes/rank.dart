@@ -16,7 +16,8 @@
 /// - `quantity` (string, ≤ 34 chars): what the items are compared by, read
 ///   as a small heading over the list ("People killed each year").
 /// - `most` (string, ≤ 16 chars): the word for the top of the list, where
-///   the largest value goes ("Most", "Thirstiest").
+///   the largest value goes ("Most", "Thirstiest"). It shares one line with
+///   `quantity`: the two together stay within 32 chars.
 /// - `unit` (string, ≤ 10 chars, optional): printed with every value. A
 ///   currency sign goes in front (`$`, `€`, `£`, `¥`); anything else
 ///   follows the number ("L", "kg", "km/h").
@@ -141,11 +142,10 @@ class RankScene extends Scene {
     final hi = values.reduce((a, b) => a > b ? a : b);
     if (hi <= 0) return 0;
     if (!log) return items[i].value / hi;
-    double l(double v) => _log10(v);
-    final lo = l(values.reduce((a, b) => a < b ? a : b));
-    final span = l(hi) - lo;
+    final lo = _log10(values.reduce((a, b) => a < b ? a : b));
+    final span = _log10(hi) - lo;
     final floor = lo - (span * 0.14).clamp(0.4, double.infinity);
-    return (l(items[i].value) - floor) / (l(hi) - floor);
+    return (_log10(items[i].value) - floor) / (_log10(hi) - floor);
   }
 
   /// The row that surprises most, given the reader's order (item indices,

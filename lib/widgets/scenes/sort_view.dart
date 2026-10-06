@@ -585,17 +585,21 @@ class _SortSceneViewState extends State<SortSceneView>
         trueCount[items[i].pile] = trueSlot[i] + 1;
       }
     }
-    final most = [
-      ...chosenCount.values,
-      ...trueCount.values,
-    ].reduce(math.max);
+    // Sized for the piles as they end, up to a slip you could pick up.
+    // On the way, the pile the reader threw most on may be fuller than
+    // that; there they overlap like a real pile, each word still clear.
     final avail = size.height - y0;
-    const fullH = 34.0;
-    final pitch = most <= 1
-        ? fullH + 6
-        : math.min(fullH + 6, (avail - fullH) / (most - 1));
-    final miniH = math.min(fullH, math.max(pitch, 26.0));
-    final textSize = (pitch - 8).clamp(12.0, 16.0);
+    final mostTrue = trueCount.values.reduce(math.max);
+    final mostCalled = chosenCount.values.reduce(math.max);
+    final miniH = (avail / mostTrue - 8).clamp(34.0, 66.0);
+    double pitchFor(int most) => most <= 1
+        ? miniH + 8
+        : math.min(miniH + 8, (avail - miniH) / (most - 1));
+    final pitch = pitchFor(mostTrue);
+    final calledPitch = pitchFor(mostCalled);
+    final textSize = math
+        .min(miniH * 0.42, calledPitch - 9)
+        .clamp(12.0, 22.0);
 
     double ease(double a, double b, [Curve c = Curves.easeOutCubic]) =>
         c.transform(((t - a) / (b - a)).clamp(0.0, 1.0));
@@ -734,7 +738,7 @@ class _SortSceneViewState extends State<SortSceneView>
       final mark = wrong ? ease(0.82, 0.92, Curves.easeOutBack) : 0.0;
 
       final from = Offset(colX(call), trayTop);
-      final mid = Offset(colX(call), y0 + chosenSlot[i] * pitch);
+      final mid = Offset(colX(call), y0 + chosenSlot[i] * calledPitch);
       final end = Offset(colX(item.pile), y0 + trueSlot[i] * pitch);
       var at = Offset.lerp(from, mid, rise)!;
       if (wrong) {
@@ -762,6 +766,10 @@ class _SortSceneViewState extends State<SortSceneView>
                   child: _Mini(
                     text: item.text,
                     textSize: textSize,
+                    // Room for a second line: what the reader had said.
+                    said: wrong && miniH >= 56
+                        ? '${context.l10n.sceneYou}: ${_s.nameOf(call).toUpperCase()}'
+                        : null,
                     wrong: wrong,
                     mark: mark,
                     ink: ink,
@@ -862,55 +870,40 @@ class _Front extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Container(height: 1.5, color: ink.withValues(alpha: 0.2)),
+          const SizedBox(height: 8),
           Expanded(
-            child: LayoutBuilder(
-              builder: (context, box) {
-                final noteStyle = AppText.body(
-                  size: box.maxHeight < 110 ? 13.5 : 15,
-                  weight: FontWeight.w500,
-                  height: 1.3,
-                  color: ink.withValues(alpha: 0.82),
-                );
-                final noteH = item.note.isEmpty
-                    ? 0.0
-                    : _measure(item.note, noteStyle, box.maxWidth, 2).height + 8;
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: math.max(0, box.maxHeight - noteH - 8),
-                      child: Align(
-                        alignment: Alignment.bottomLeft,
-                        child: _FitText(
-                          text: item.text,
-                          max: 54,
-                          min: 22,
-                          lines: 2,
-                          style: (s) => AppText.display(
-                            size: s,
-                            weight: FontWeight.w800,
-                            height: 1.0,
-                            spacing: -s * 0.025,
-                            color: ink,
-                          ),
-                        ),
-                      ),
-                    ),
-                    if (item.note.isNotEmpty) ...[
-                      const SizedBox(height: 8),
-                      Text(
-                        item.note,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: noteStyle,
-                      ),
-                    ],
-                  ],
-                );
-              },
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: _FitText(
+                text: item.text,
+                max: 54,
+                min: 20,
+                lines: 2,
+                align: Alignment.bottomLeft,
+                style: (s) => AppText.display(
+                  size: s,
+                  weight: FontWeight.w800,
+                  height: 1.0,
+                  spacing: -s * 0.025,
+                  color: ink,
+                ),
+              ),
             ),
           ),
+          if (item.note.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(
+              item.note,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: AppText.body(
+                size: 14.5,
+                weight: FontWeight.w500,
+                height: 1.3,
+                color: ink.withValues(alpha: 0.82),
+              ),
+            ),
+          ],
           const SizedBox(height: 10),
           Row(
             children: [
@@ -970,59 +963,50 @@ class _Back extends StatelessWidget {
           Container(height: 1.5, color: ground.withValues(alpha: 0.25)),
           Expanded(
             child: LayoutBuilder(
-              builder: (context, box) {
-                final verdictStyle = AppText.body(
-                  size: box.maxHeight < 110 ? 14 : 15.5,
-                  weight: FontWeight.w600,
-                  height: 1.3,
-                  color: ground,
-                );
-                final vH = _measure(item.verdict, verdictStyle, box.maxWidth, 3).height;
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: math.max(0, box.maxHeight - vH - 10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          if (!right)
-                            Text(
-                              '${context.l10n.sceneYou}: ${scene.nameOf(call).toUpperCase()}',
-                              maxLines: 1,
-                              style: small.copyWith(
-                                decoration: TextDecoration.lineThrough,
-                                decorationColor: ground,
-                              ),
-                            ),
-                          Flexible(
-                            child: _FitText(
-                              text: '${scene.nameOf(item.pile)}.',
-                              max: 52,
-                              min: 20,
-                              style: (s) => AppText.display(
-                                size: s,
-                                weight: FontWeight.w800,
-                                height: 1.05,
-                                spacing: -s * 0.025,
-                                color: ground,
-                              ),
-                            ),
-                          ),
-                        ],
+              // The wrong call is said in words only where there is room
+              // for it above the pile's name; the mark says it anyway.
+              builder: (context, box) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  if (!right && box.maxHeight >= 56)
+                    Text(
+                      '${context.l10n.sceneYou}: ${scene.nameOf(call).toUpperCase()}',
+                      maxLines: 1,
+                      style: small.copyWith(
+                        decoration: TextDecoration.lineThrough,
+                        decorationColor: ground,
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    Text(
-                      item.verdict,
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: verdictStyle,
+                  Flexible(
+                    child: _FitText(
+                      text: '${scene.nameOf(item.pile)}.',
+                      max: 52,
+                      min: 18,
+                      align: Alignment.bottomLeft,
+                      style: (s) => AppText.display(
+                        size: s,
+                        weight: FontWeight.w800,
+                        height: 1.05,
+                        spacing: -s * 0.025,
+                        color: ground,
+                      ),
                     ),
-                  ],
-                );
-              },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            item.verdict,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: AppText.body(
+              size: 15,
+              weight: FontWeight.w600,
+              height: 1.3,
+              color: ground,
             ),
           ),
         ],
@@ -1108,8 +1092,10 @@ class _Tray extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // The fill comes up with the drag; the type flips at once at half way,
+    // so it is never a mid-tone on a mid-tone.
     final fill = Color.lerp(ground, ink, lit)!;
-    final fg = Color.lerp(ink, ground, lit)!;
+    final fg = lit > 0.5 ? ground : ink;
     final left = side == SortSide.left;
     final arrow = Text(
       left ? '←' : '→',
@@ -1171,6 +1157,7 @@ class _Tray extends StatelessWidget {
 /// cross, so it is told by shape and not only by where it moved.
 class _Mini extends StatelessWidget {
   final String text;
+  final String? said;
   final double textSize;
   final bool wrong;
   final double mark;
@@ -1180,6 +1167,7 @@ class _Mini extends StatelessWidget {
     required this.text,
     required this.textSize,
     required this.wrong,
+    this.said,
     required this.mark,
     required this.ink,
     required this.ground,
@@ -1210,32 +1198,62 @@ class _Mini extends StatelessWidget {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 5, 6, 0),
-                  child: _FitText(
-                    text: text,
-                    max: textSize,
-                    min: 10,
-                    align: Alignment.topLeft,
-                    style: (s) => AppText.display(
-                      size: s,
-                      weight: FontWeight.w700,
-                      height: 1.15,
-                      spacing: -0.2,
-                      color: ink,
-                    ),
+                  padding: EdgeInsets.fromLTRB(12, textSize * 0.32, 6, 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: textSize * 1.2,
+                        child: _FitText(
+                          text: text,
+                          max: textSize,
+                          min: 10,
+                          align: Alignment.topLeft,
+                          style: (s) => AppText.display(
+                            size: s,
+                            weight: FontWeight.w700,
+                            height: 1.15,
+                            spacing: -0.2,
+                            color: ink,
+                          ),
+                        ),
+                      ),
+                      if (said != null)
+                        Opacity(
+                          opacity: mark.clamp(0.0, 1.0),
+                          child: Text(
+                            said!,
+                            maxLines: 1,
+                            overflow: TextOverflow.fade,
+                            softWrap: false,
+                            style: AppText.label(
+                              size: 9.5,
+                              color: ink.withValues(alpha: 0.7),
+                            ).copyWith(
+                              decoration: TextDecoration.lineThrough,
+                              decorationColor: ink.withValues(alpha: 0.7),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               ),
               if (wrong)
                 Container(
-                  width: 26 * mark.clamp(0.0, 1.2),
+                  width: (textSize + 12) * mark.clamp(0.0, 1.2),
                   color: ink,
                   alignment: Alignment.topCenter,
-                  padding: const EdgeInsets.only(top: 5),
+                  padding: EdgeInsets.only(top: textSize * 0.4),
                   child: mark > 0.4
                       ? Transform.scale(
                           scale: mark,
-                          child: _Mark(right: false, color: ground, size: 15, ring: false),
+                          child: _Mark(
+                            right: false,
+                            color: ground,
+                            size: textSize * 0.8,
+                            ring: false,
+                          ),
                         )
                       : null,
                 ),

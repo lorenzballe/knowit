@@ -393,7 +393,12 @@ void main() {
           final s = pill.scene! as DrawScene;
           final box = tester.getRect(find.byKey(const ValueKey('draw-chart')));
           final x0 = (s.anchor + 0.5) / (s.count - 0.4);
-          await _sweep(tester, (u) => 0.55 - 0.3 * u, from: x0);
+          final falls = s.values.first > s.values.last;
+          await _sweep(
+            tester,
+            falls ? (u) => 0.9 - 0.45 * u : (u) => 0.05 + 0.5 * u * u,
+            from: x0,
+          );
           await shoot('drawn');
           await tester.tap(find.text('LOCK IT IN'));
           await tester.pump(const Duration(milliseconds: 700));

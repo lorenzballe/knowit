@@ -214,6 +214,7 @@ void main() {
             );
             await g.moveBy(const Offset(-60, 0));
             await g.up();
+            await tester.pump();
             await tester.pump(const Duration(milliseconds: 900));
             await expectLater(
               find.byType(SortSceneView),

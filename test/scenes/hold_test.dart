@@ -14,6 +14,10 @@ import 'package:astuto/widgets/pill_card_stack.dart';
 import 'package:astuto/widgets/scene_view.dart';
 
 /// `hold`: press for as long as you think it lasts, let go, see the truth.
+
+/// Photographs only on request: `--dart-define=SHOTS=true --update-goldens`.
+const _shots = bool.fromEnvironment('SHOTS');
+
 void main() {
   // Real type, so overflow and the pictures are what a phone shows.
   setUpAll(() async {
@@ -191,7 +195,7 @@ void main() {
         expect(find.text('ONE SHOT, 1940S HOLLYWOOD'), findsOneWidget);
         expect(find.text('00:00:00'), findsOneWidget);
 
-        if (name != 'large phone') {
+        if (_shots && name != 'large phone') {
           // Mid-hold, for the picture: the dial in ink, the hand sweeping.
           final g = await tester.startGesture(
             tester.getCenter(find.text('Press and hold')),
@@ -231,12 +235,14 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.text('00:03:12'), findsOneWidget);
 
-        await expectLater(
-          find.byType(SceneView),
-          matchesGoldenFile(
-            '../../tool/shots/scenes/hold_result_${name.replaceAll(' ', '_')}_${dark ? 'white' : 'dark'}.png',
-          ),
-        );
+        if (_shots) {
+          await expectLater(
+            find.byType(SceneView),
+            matchesGoldenFile(
+              '../../tool/shots/scenes/hold_result_${name.replaceAll(' ', '_')}_${dark ? 'white' : 'dark'}.png',
+            ),
+          );
+        }
 
         // Try again: back to the dial and a clock at zero.
         await tester.tap(find.text('Try again'));
