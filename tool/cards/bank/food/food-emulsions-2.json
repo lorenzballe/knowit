@@ -53,7 +53,7 @@
     "min": 0,
     "max": 110,
     "verdict": {
-      "under": "Close to the floor, and nearly right: at 1 µm a drop rises at 1/16 of the speed.",
+      "under": "Close to the floor, and nearly right: a 1-micron drop rises at 1/16 of the speed.",
       "near": "Right: speed goes with the square of size, so a quarter the size is 1/16 the speed.",
       "over": "Too fast. Halve the size and speed drops to a quarter; quarter it and to 1/16."
     },
