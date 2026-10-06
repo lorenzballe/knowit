@@ -4,6 +4,14 @@ import 'package:flutter/services.dart';
 import '../models/scene.dart';
 import '../theme.dart';
 import 'place_it.dart' show roughNumber;
+import 'scenes/count_view.dart';
+import 'scenes/draw_view.dart';
+import 'scenes/hold_view.dart';
+import 'scenes/rank_view.dart';
+import 'scenes/sample_view.dart';
+import 'scenes/sort_view.dart';
+import 'scenes/timeline_view.dart';
+
 
 /// Draws a [Scene] and lets the reader play with it.
 ///
@@ -23,6 +31,14 @@ class SceneView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => switch (scene) {
     final SliderScene s => _SliderSceneView(scene: s, ink: ink, ground: ground),
+    final CountScene s => CountSceneView(scene: s, ink: ink, ground: ground),
+    final DrawScene s => DrawSceneView(scene: s, ink: ink, ground: ground),
+    final HoldScene s => HoldSceneView(scene: s, ink: ink, ground: ground),
+    final RankScene s => RankSceneView(scene: s, ink: ink, ground: ground),
+    final SampleScene s => SampleSceneView(scene: s, ink: ink, ground: ground),
+    final SortScene s => SortSceneView(scene: s, ink: ink, ground: ground),
+    final TimelineScene s => TimelineSceneView(scene: s, ink: ink, ground: ground),
+    _ => const SizedBox.shrink(),
   };
 }
 

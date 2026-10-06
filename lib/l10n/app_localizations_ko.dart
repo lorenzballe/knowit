@@ -1935,4 +1935,39 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get showAllSteps => '모두 보기';
+
+  @override
+  String get sceneLockIn => '확정';
+
+  @override
+  String get sceneYou => '나';
+
+  @override
+  String get sceneTruth => '정답';
+
+  @override
+  String get sceneTryAgain => '다시 하기';
+
+  @override
+  String get sceneDrawHint => '손가락으로 예상을 그려 보세요';
+
+  @override
+  String get sceneHoldHint => '길게 누르기';
+
+  @override
+  String get sceneSwipeHint => '밀거나 누르기';
+
+  @override
+  String get sceneTapToPick => '골라서 누르기';
+
+  @override
+  String get sceneShowMe => '보여 줘';
+
+  @override
+  String get sceneYourGuess => '내 예상';
+
+  @override
+  String sceneNOfM(int n, int m) {
+    return '$m개 중 $n개';
+  }
 }

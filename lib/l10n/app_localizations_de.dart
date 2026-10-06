@@ -1996,4 +1996,39 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get showAllSteps => 'Alle zeigen';
+
+  @override
+  String get sceneLockIn => 'FESTLEGEN';
+
+  @override
+  String get sceneYou => 'DU';
+
+  @override
+  String get sceneTruth => 'WAHRHEIT';
+
+  @override
+  String get sceneTryAgain => 'Nochmal';
+
+  @override
+  String get sceneDrawHint => 'Zeichne deine Vermutung mit dem Finger';
+
+  @override
+  String get sceneHoldHint => 'Gedrückt halten';
+
+  @override
+  String get sceneSwipeHint => 'Wischen oder tippen';
+
+  @override
+  String get sceneTapToPick => 'Tippe deine Wahl';
+
+  @override
+  String get sceneShowMe => 'Zeig es mir';
+
+  @override
+  String get sceneYourGuess => 'Deine Vermutung';
+
+  @override
+  String sceneNOfM(int n, int m) {
+    return '$n von $m';
+  }
 }

@@ -1924,4 +1924,39 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get showAllSteps => '全部显示';
+
+  @override
+  String get sceneLockIn => '确定';
+
+  @override
+  String get sceneYou => '你';
+
+  @override
+  String get sceneTruth => '真相';
+
+  @override
+  String get sceneTryAgain => '再试一次';
+
+  @override
+  String get sceneDrawHint => '用手指画出你的猜测';
+
+  @override
+  String get sceneHoldHint => '按住';
+
+  @override
+  String get sceneSwipeHint => '滑动或点击';
+
+  @override
+  String get sceneTapToPick => '点选你的答案';
+
+  @override
+  String get sceneShowMe => '给我看';
+
+  @override
+  String get sceneYourGuess => '你的猜测';
+
+  @override
+  String sceneNOfM(int n, int m) {
+    return '$m个中的$n个';
+  }
 }

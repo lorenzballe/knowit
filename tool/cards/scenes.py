@@ -18,7 +18,7 @@ import math
 import sys
 from pathlib import Path
 
-KINDS = ("slider",)
+KINDS = ("slider", "count", "draw", "hold", "rank", "sample", "sort", "timeline")
 LABEL_CHARS = 34   # control and readout, on one line at phone width
 UNIT_CHARS = 14
 NOTE_CHARS = 90    # two lines under the slider
@@ -36,6 +36,10 @@ def check_scene(scene) -> list[str]:
     kind = scene.get("type")
     if kind not in KINDS:
         return [f"scene: unknown type {kind!r}"]
+    if kind != "slider":
+        import importlib
+        sys.path.insert(0, str(Path(__file__).parent))
+        return importlib.import_module(f"scene_kinds.{kind}").check(scene)
     p: list[str] = []
     for key in ("control", "readout"):
         v = scene.get(key)

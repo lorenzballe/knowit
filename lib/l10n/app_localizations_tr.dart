@@ -1978,4 +1978,39 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get showAllSteps => 'Tümünü göster';
+
+  @override
+  String get sceneLockIn => 'ONAYLA';
+
+  @override
+  String get sceneYou => 'SEN';
+
+  @override
+  String get sceneTruth => 'GERÇEK';
+
+  @override
+  String get sceneTryAgain => 'Tekrar';
+
+  @override
+  String get sceneDrawHint => 'Tahminini parmağınla çiz';
+
+  @override
+  String get sceneHoldHint => 'Basılı tut';
+
+  @override
+  String get sceneSwipeHint => 'Kaydır ya da dokun';
+
+  @override
+  String get sceneTapToPick => 'Seçimine dokun';
+
+  @override
+  String get sceneShowMe => 'Göster';
+
+  @override
+  String get sceneYourGuess => 'Tahminin';
+
+  @override
+  String sceneNOfM(int n, int m) {
+    return '$m içinde $n';
+  }
 }

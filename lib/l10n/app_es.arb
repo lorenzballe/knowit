@@ -475,5 +475,16 @@
   "minutesShort": "{n} MIN",
   "sideOr": "o",
   "nextStep": "Siguiente paso",
-  "showAllSteps": "Ver todo"
+  "showAllSteps": "Ver todo",
+  "sceneLockIn": "CONFIRMAR",
+  "sceneYou": "TÚ",
+  "sceneTruth": "REAL",
+  "sceneTryAgain": "Otra vez",
+  "sceneDrawHint": "Dibuja tu apuesta con el dedo",
+  "sceneHoldHint": "Mantén pulsado",
+  "sceneSwipeHint": "Desliza o toca",
+  "sceneTapToPick": "Toca tu elección",
+  "sceneShowMe": "Muéstramelo",
+  "sceneYourGuess": "Tu apuesta",
+  "sceneNOfM": "{n} de {m}"
 }

@@ -1994,4 +1994,39 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get showAllSteps => 'Alles tonen';
+
+  @override
+  String get sceneLockIn => 'VASTLEGGEN';
+
+  @override
+  String get sceneYou => 'JIJ';
+
+  @override
+  String get sceneTruth => 'ECHT';
+
+  @override
+  String get sceneTryAgain => 'Opnieuw';
+
+  @override
+  String get sceneDrawHint => 'Teken je gok met je vinger';
+
+  @override
+  String get sceneHoldHint => 'Ingedrukt houden';
+
+  @override
+  String get sceneSwipeHint => 'Veeg of tik';
+
+  @override
+  String get sceneTapToPick => 'Tik je keuze';
+
+  @override
+  String get sceneShowMe => 'Laat zien';
+
+  @override
+  String get sceneYourGuess => 'Jouw gok';
+
+  @override
+  String sceneNOfM(int n, int m) {
+    return '$n van $m';
+  }
 }

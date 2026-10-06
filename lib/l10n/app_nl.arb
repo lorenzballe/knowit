@@ -475,5 +475,16 @@
   "minutesShort": "{n} MIN",
   "sideOr": "of",
   "nextStep": "Volgende stap",
-  "showAllSteps": "Alles tonen"
+  "showAllSteps": "Alles tonen",
+  "sceneLockIn": "VASTLEGGEN",
+  "sceneYou": "JIJ",
+  "sceneTruth": "ECHT",
+  "sceneTryAgain": "Opnieuw",
+  "sceneDrawHint": "Teken je gok met je vinger",
+  "sceneHoldHint": "Ingedrukt houden",
+  "sceneSwipeHint": "Veeg of tik",
+  "sceneTapToPick": "Tik je keuze",
+  "sceneShowMe": "Laat zien",
+  "sceneYourGuess": "Jouw gok",
+  "sceneNOfM": "{n} van {m}"
 }

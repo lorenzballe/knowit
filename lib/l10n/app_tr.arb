@@ -475,5 +475,16 @@
   "minutesShort": "{n} DK",
   "sideOr": "ya da",
   "nextStep": "Sonraki adım",
-  "showAllSteps": "Tümünü göster"
+  "showAllSteps": "Tümünü göster",
+  "sceneLockIn": "ONAYLA",
+  "sceneYou": "SEN",
+  "sceneTruth": "GERÇEK",
+  "sceneTryAgain": "Tekrar",
+  "sceneDrawHint": "Tahminini parmağınla çiz",
+  "sceneHoldHint": "Basılı tut",
+  "sceneSwipeHint": "Kaydır ya da dokun",
+  "sceneTapToPick": "Seçimine dokun",
+  "sceneShowMe": "Göster",
+  "sceneYourGuess": "Tahminin",
+  "sceneNOfM": "{m} içinde {n}"
 }
