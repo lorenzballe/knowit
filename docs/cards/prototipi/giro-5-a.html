@@ -65,7 +65,7 @@
 .giant span{font:700 1.4cqh/1.35 var(--mono);letter-spacing:.32em;opacity:.85}
 .night .chip2{color:#fff;box-shadow:inset 0 0 0 .25cqh #ffffff88}
 .night .chip2.on{background:#FFD23F;color:#060a1c;box-shadow:none}
-.night .btn{background:#2B5CFF;color:#fff}
+.night .btn{background:#00E5A0;color:#060a1c}
 
 /* 4 · the Tatler slips */
 .deck{position:relative;flex:1;min-height:0}
@@ -181,9 +181,9 @@
     </article>
 
     <!-- 3 · Particle cloud, one giant number -->
-    <article class="card night" id="sea" style="--c:#060a1c;--k:#ffffff;--edge:#152f8f" data-kind="Pour it in, scoop it out · particles">
+    <article class="card night" id="sea" style="--c:#060a1c;--k:#ffffff;--edge:#00835b" data-kind="Pour it in, scoop it out · particles">
       <div class="in">
-        <div class="label"><span class="t">Space</span><span class="tag" id="seaTag" style="background:#2B5CFF;color:#fff">YOUR BET</span></div>
+        <div class="label"><span class="t">Science</span><span class="tag" id="seaTag" style="background:#00E5A0;color:#060a1c">YOUR BET</span></div>
         <h2 class="q">Pour a glass of water into the sea. Let it mix through every ocean, then scoop a glass. How many of your molecules come back?</h2>
         <div class="stagebox">
           <div class="seabox" id="seaBox"><canvas id="seaCv"></canvas>
@@ -254,7 +254,7 @@
             <div class="gone rwrap" id="kelRackWrap">
               <div class="yr"><b class="num" id="kelYr">1947</b><span id="kelYrl">EACH DEPARTMENT<br>NOW CHOOSES</span></div>
               <div class="rack" id="kelRack"></div>
-              <div class="rnote"><span class="lg"><i style="background:#fbf6e6"></i>6 HOURS <i style="background:#1b1a16"></i>8 HOURS</span><span>PACE ILLUSTRATIVE</span></div>
+              <div class="rnote"><span class="lg"><i style="background:#fbf6e6;box-shadow:inset 0 0 0 .2cqh #1b1a16"></i>6 HOURS <i style="background:#1b1a16"></i>8 HOURS</span><span>PACE ILLUSTRATIVE</span></div>
             </div>
           </div>
         </div>
@@ -508,7 +508,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
   }
   function setTilt(t) { tilt = Math.max(0, Math.min(.3, t)); eng.gravity.x = Math.sin(tilt); eng.gravity.y = Math.cos(tilt); bodies.forEach(b => Matter.Sleeping.set(b, false)); }
   function afterFall() {
-    const deg = (tilt * 180 / Math.PI).toFixed(0);
+    const deg = (tilt * 180 / Math.PI).toFixed(1);
     say.innerHTML = `Over at <b>${deg}°</b>, with its base stone at about <b>2%</b> of its strength. Beauvais’s 48 m choir vault fell in 1284 with its stone far from crushing: masonry falls when the weight’s path slips outside it.`;
     Kit.show('colKeep'); btn.textContent = 'Again'; Kit.$('colTag').textContent = 'THE SHAPE FAILED';
   }
@@ -648,7 +648,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
       const o = {v: 0}; await new Promise(res => gsap.to(o, {v: 1500, duration: D(1.8), ease: 'power2.out', onUpdate() { scoop = o.v; Kit.$('seaN').textContent = Math.round(o.v / 10) * 10 >= 1500 ? '1,500' : Math.round(o.v).toLocaleString('en-US'); }, onComplete: res}));
       scoop = 1500; Kit.$('seaN').textContent = '1,500';
       const right = bet === '1000';
-      say.innerHTML = `${right ? 'You bet right' : 'You bet ' + BETS[bet]}. It’s about <b>1,500</b>. 8.4 trillion trillion molecules ÷ 5.3 billion trillion glasses ≈ 1,570. The ocean is huge; a molecule is far smaller.`;
+      say.innerHTML = `${right ? 'You bet right' : 'You bet ' + BETS[bet]}. It’s about <b>1,500</b>. 8.4 trillion trillion molecules ÷ 5.3 billion trillion glasses ≈ 1,570. A glass holds more molecules than all the seas hold glasses, so some of your water is in every glass of sea on Earth.`;
       Kit.show('seaKeep'); btn.textContent = 'Again';
     } else {
       step = 0; phase = 'idle'; scoop = 0; ps = []; sk.v = 0; Kit.hide('seaGiant'); Kit.hide('seaKeep'); Kit.hide('seaCtl'); Kit.show('seaBets');
@@ -712,7 +712,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
   function finish() {
     deck.innerHTML = `<div class="score"><div class="srow"><b class="num">${right}/7</b><span>of your calls were right</span></div><div class="srow"><b class="num">4/7</b><span>of the words Swift said were spoiling English are plain English today</span></div></div>`;
     if (!calm) gsap.from('#tatDeck .srow', {opacity: 0, y: 16, stagger: .18, duration: .45, ease: EO});
-    say.innerHTML = 'Filled: alive. Struck out: dead. Swift was right that English was changing, and wrong about which changes would stick.';
+    say.innerHTML = 'Struck out: the words that died. Swift was right that English was changing, and wrong about which changes would stick. A clipped slang word like <b>mob</b> is now the plain one.';
     Kit.hide('tatBtns'); Kit.show('tatKeep'); Kit.$('tatTag').textContent = 'SCORE';
   }
   Kit.$('tatDead').onclick = () => decide(false);

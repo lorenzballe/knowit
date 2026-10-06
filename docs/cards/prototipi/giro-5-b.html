@@ -77,6 +77,8 @@
 .big2 .n{font:900 12cqh/.85 var(--display);letter-spacing:-.05em;white-space:nowrap}
 .big2 .n small{font-size:.32em;letter-spacing:0;margin-left:2cqw}
 .big2 .cap{font:600 2.05cqh/1.3 var(--body);max-width:72cqw}
+.big2+.big2{border-top:.25cqh solid var(--k);padding-top:1.6cqh}
+.kin:has(.big2+.big2){justify-content:space-evenly}
 .q.qs{font-size:2.9cqh}
 </style>
 
@@ -276,9 +278,9 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
   }
   function strips(fast) {
     Kit.hide('shotReel'); Kit.hide('shotRuler'); Kit.hide('shotCtl'); Kit.show('shotStrips'); buildStrips(); setT(0);
-    say.innerHTML = 'Fifteen seconds of each, cut by cut. Old films feel slow because actors move inside long shots, not because the cuts are rare.';
+    say.innerHTML = 'Fifteen seconds of each film, cut by cut. Count the yellow marks.';
     const o = {t: 0}; stripsTl && stripsTl.kill();
-    const done = () => { Kit.show('shotKeep'); say.innerHTML = `Fifteen seconds: <b>2 cuts</b>, then <b>4</b>, then <b>7</b>${held ? ` (you held ${held.toFixed(1)} s)` : ''}. Old films feel slow because actors move inside long shots, not because cuts are rare.`; };
+    const done = () => { Kit.show('shotKeep'); say.innerHTML = `In fifteen seconds: <b>2 cuts</b>, then <b>4</b>, then <b>7</b>. Old films did cut less, but every ten seconds or so, not every minute${held && held > 14 ? ` (you held ${held.toFixed(1)} s)` : ''}. The long takes we remember, like Hitchcock’s <i>Rope</i>, were the exceptions.`; };
     if (fast || calm) { setT(15); done(); return; }
     stripsTl = gsap.to(o, {t: 15, duration: 15, ease: 'none', onUpdate: () => setT(o.t), onComplete: done});
   }
@@ -559,9 +561,9 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
   const kin = Kit.$('chzKin'), say = Kit.$('chzSay');
   let side = null, step = 0;
   const ARG = {
-    drop: {side: 'Drop it', n: '270+', u: 'days', cap: 'E. coli O157 was still found in raw-milk cheddar and gouda aged this long.',
+    drop: {side: 'The case to drop it', n: '270+', u: 'days', cap: 'E. coli O157 was still found in raw-milk cheddar and gouda aged this long.',
       say: '<b>Drop it.</b> The rule rests on 1940s tests of typhoid in cheddar. Ageing gives hard cheese false comfort and bans every young cheese outright. Test the milk, inspect the dairy.'},
-    keep: {side: 'Keep it', n: '50–160×', u: '', cap: 'the listeriosis risk per serving of raw-milk soft cheese, against pasteurised.',
+    keep: {side: 'The case to keep it', n: '50–160×', u: '', cap: 'the listeriosis risk per serving of raw-milk soft cheese, against pasteurised.',
       say: '<b>Keep it.</b> Listeria hits pregnant women and the elderly hardest. The rule keeps exactly the riskiest cheeses, young and soft, off the shelf. An imperfect barrier still blocks the worst.'}
   };
   function intro() {

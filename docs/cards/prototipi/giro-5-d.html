@@ -81,7 +81,7 @@
     <button class="nav" id="next" aria-label="Next card">→</button>
 
     <!-- 1 · Bet your confidence: calibration curve -->
-    <article class="card" id="edge" style="--c:#FFC49B;--k:#10100c;--edge:#a8714a" data-kind="Bet your confidence · your calibration curve">
+    <article class="card" id="edge" style="--c:#FFC49B;--k:#10100c;--edge:#a8714a" data-kind="Bet your confidence · calibration">
       <div class="in">
         <div class="label"><span class="t">Life</span><span class="tag">YOUR BET</span></div>
         <h2 class="q">Buffett: the size of what you know matters little. Knowing <em>where it ends</em> is vital. Where does yours end?</h2>
@@ -150,7 +150,7 @@
         <div class="label"><span class="t">Weird facts</span><span class="tag">PICK A SIDE</span></div>
         <h2 class="q">Can dying people hold on until a birthday or a holiday has passed?</h2>
         <div class="stagebox" style="gap:1.2cqh">
-          <div class="counter"><span class="n num" id="dieN">200</span><span class="lab"><span class="mono">deaths around a date</span><span class="mono" id="dieUnit">1 dot = 1 death</span></span></div>
+          <div class="counter"><span class="n num" id="dieN">200</span><span class="lab"><span class="mono">simulated deaths</span><span class="mono" id="dieUnit">1 dot = 1 death</span></span></div>
           <div class="cv"><canvas class="full" id="dieCv" aria-label="Deaths per day in the week before and the week after a date"></canvas></div>
           <div class="stats"><div class="stat"><span class="mono">Week before</span><b class="num" id="dieB">82</b></div><div class="stat"><span class="mono">Week after</span><b class="num" id="dieA">118</b></div><div class="stat gap"><span class="mono">Gap</span><b class="num" id="dieG">+44%</b></div></div>
         </div>
@@ -247,7 +247,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     if (!calm) gsap.from('#edgeMiss .mrow', {opacity: 0, y: 10, duration: .35, stagger: .1, delay: 1, ease: 'power3.out'});
     const right = ans.filter(a => a.right).length;
     say.innerHTML = sure.length
-      ? `When you were <b>90% sure or more</b>, you were right <b>${sr} of ${sure.length}</b>. ${sr / sure.length < .8 ? 'Red marks your edge.' : 'Your edge is well marked.'}`
+      ? `When you were <b>90% sure or more</b>, you were right <b>${sr} of ${sure.length}</b>. ${sr / sure.length < .8 ? 'A red dot means you were surer than you were right: that is where your knowledge ends.' : 'Your sure answers held up. You know where your edge is.'}`
       : `You got ${right} of 6 and never bet above 70%. Most people are surest on the hard ones.`;
     requestAnimationFrame(() => draw(true));
   }
@@ -310,8 +310,8 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     const fs = geo.fs, tx = (x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs, fill: yel, 'letter-spacing': '.05em'}, a), g); e.textContent = s; return e; };
     const ex = P[N], sx = P[0];
     const labs = [
-      tx(ex[0] - fs * 1.2, ex[1] + fs * .4, '≈ ×10', {'text-anchor': 'end', 'font-family': 'Fraunces', 'font-weight': 900, 'font-size': fs * 2}),
-      tx(sx[0] + fs * 1.4, sx[1] - fs * .9, '×1', {'font-family': 'Fraunces', 'font-weight': 900, 'font-size': fs * 1.5}),
+      tx(ex[0], ex[1] + fs * 3, '≈ ×10', {'text-anchor': 'end', 'font-family': 'Fraunces', 'font-weight': 900, 'font-size': fs * 1.6}),
+      tx(sx[0] + fs * .2, sx[1] - fs * 1.7, '×1', {'font-family': 'Fraunces', 'font-weight': 900, 'font-size': fs * 1.5}),
       tx(geo.x0 + (geo.x1 - geo.x0) * .5, uy({v: real(.5)}) + fs * 2.6, 'THE STUDY’S TREND', {'text-anchor': 'start', 'font-size': fs * .85})
     ];
     if (animate && !calm) {
@@ -408,7 +408,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
       swap([th.querySelector('.what')], 'c', 'ok');
       const cp = grid.querySelector('[data-t="copley"] .what'); swap([cp], 'c', 'hit');
       Kit.$('artCount').textContent = 'Medals left: 4';
-      say.innerHTML = 'Thorpe’s golds came back in 2022. The <b>151 art medals</b> never did: they count in no nation’s total.';
+      say.innerHTML = 'Thorpe’s golds came back in 2022. The <b>151 art medals</b>, removed because artists sell their work, never did: they count in no nation’s total.';
       Kit.hide('artCtl'); Kit.show('artKeep');
     }
   }
@@ -466,7 +466,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     null,
     'Ten times the data. The dip <b>shrinks</b>, and wobbles shift to other days.',
     'Twenty thousand deaths. Before and after are <b>nearly level</b>.',
-    'Ohio’s real count. Its records showed <b>no dip</b> before Christmas, Thanksgiving or birthdays.'
+    'Now as many as Ohio’s real study: <b>309,221</b> cancer deaths. The gap is gone. The real records agreed: <b>no dip</b> before Christmas, Thanksgiving or birthdays.'
   ];
   function step() {
     if (si >= 3) { reset(); return; }

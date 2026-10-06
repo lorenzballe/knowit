@@ -76,6 +76,7 @@
 .brow .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:1cqh;background:var(--k);width:0}
 .brow.you .bar i{background:#fff;box-shadow:inset 0 0 0 .25cqh var(--k)}
 .brow b{font:900 2.4cqh/1 var(--display);text-align:right}
+.board .bnote{display:none}.board.big .bnote{display:block;border-top:.2cqh solid color-mix(in srgb,var(--k) 30%,transparent);padding-top:1.4cqh;font:700 1.3cqh/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;opacity:.75}
 .board.big{flex:1;justify-content:center;gap:3cqh}.board.big .brow .nm{font-size:2cqh}.board.big .brow .bar{height:3cqh;border-radius:1.5cqh}.board.big .brow .bar i{border-radius:1.5cqh}.board.big .brow b{font-size:4.4cqh}.board.big .brow{grid-template-columns:24cqw 1fr 16cqw}
 
 /* ---- te: the tumours ---- */
@@ -172,6 +173,7 @@
             <div class="brow you"><span class="nm">You</span><span class="bar"><i id="ayYouBar"></i></span><b class="num" id="ayYou">0/0</b></div>
             <div class="brow"><span class="nm">Ayumu</span><span class="bar"><i style="width:80%"></i></span><b class="num">80%</b></div>
             <div class="brow"><span class="nm">Students</span><span class="bar"><i style="width:40%"></i></span><b class="num">40%</b></div>
+            <div class="bnote mono">Rounds with all five in order · 5 numbers · 0.21 s</div>
           </div>
         </div>
         <p class="say" id="aySay">Kyoto, 2007. Ayumu the chimp against university students, at the same screen and the same speed.</p>
@@ -242,7 +244,7 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
   const SAYS = [
     'The phone says <b>100%</b>. Only <b>half</b> the lithium has left. The rest stays in the crystal, on purpose. Hold again to push on.',
     'Newer phones call about <b>4.4 V</b> full and pull out <b>two-thirds</b>. More hours per charge, but the crystal wears faster. Keep pushing.',
-    'Past about 4.5 V the emptied layers <b>slide and crack</b> and can release <b>oxygen</b>, fuel for a fire. So 100% stops near half.'
+    'Past about 4.5 V the emptied layers <b>slide and crack</b> and can release <b>oxygen</b>, fuel for a fire. That is why your 100% stops between a half and two-thirds.'
   ];
   let g, v, phase, holding, li, cracks, tips, oxy, rnd, speed = 1, crackLen;
   const xOf = v => v <= 4.2 ? .5 * (v - 3) / 1.2 : v <= 4.4 ? .5 + .16 * (v - 4.2) / .2 : .66 + .09 * clamp((v - 4.4) / .2);
@@ -424,7 +426,7 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
       say.innerHTML = 'Around <b>60 °C</b> the peroxide bleaches. Now add a scoop of <b>TAED</b> and drag the water back down to 40 °C.';
     } else if (stage === 1 && taed && T <= 45 && l < .35) {
       stage = 2; Kit.show('blKeep'); $('blHint').textContent = 'Same powder, cooler wash';
-      say.innerHTML = 'TAED turns peroxide into <b>peracetic acid</b>, which bleaches at <b>40 °C</b>. Liquids skip both: peroxide won’t keep in water.';
+      say.innerHTML = 'TAED turns peroxide into <span class="dot5" style="background:#e2650b"></span><b>peracetic acid</b>, which bleaches at <b>40 °C</b>. Liquids skip both: peroxide won’t keep in water.';
     } else if (stage === 0 && T < 56 && clock >= WASH) say.innerHTML = `At ${Math.round(T)} °C the peroxide barely touches the stain. Hotter.`;
     else if (stage === 1 && !taed && T < 56 && clock >= WASH) say.innerHTML = 'Without help, cool water leaves the stain. Add <b>TAED</b>.';
   }
@@ -479,7 +481,7 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
     go.disabled = false;
     if (round < ROUNDS) { go.textContent = 'Next round'; $('ayRound').textContent = `Round ${round + 1} / ${ROUNDS}`; say.innerHTML = ok ? 'All five. Again, same speed.' : 'Gone before your eyes could move. That is the point: 0.21 s is about one glance.'; return; }
     const pct = Math.round(wins / ROUNDS * 100);
-    $('ayRound').textContent = 'Done'; go.textContent = 'Play again';
+    $('ayRound').textContent = ''; go.textContent = 'Play again'; $('ayYou').textContent = pct + '%';
     say.innerHTML = `You: <b>${pct}%</b>. But Ayumu had years of practice, and in 2009 people who trained at this speed <b>caught up</b> with him.`;
     Kit.show('ayKeep'); scr.classList.add('gone'); $('ayBoard').classList.add('big');
   }
@@ -506,12 +508,12 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
   let k = 0; T.forEach(t => { if (!t.alt) t.th = .1 + .88 * ((k++ + rnd()) / 88); });
   const shapes = T.map(() => [...Array(7)].map(() => .82 + rnd() * .3));
   let dose = null, tried = {}, t0 = 0, g, showAlt = false;
-  function geo() { const {x, W, H} = Kit.fitCanvas(cv); const c = Math.min(W / 10, H / 10); g = {x, W, H, c, ox: (W - c * 10) / 2, oy: (H - c * 10) / 2}; }
+  function geo() { const {x, W, H} = Kit.fitCanvas(cv); const cols = [10, 20, 25].reduce((b, n) => Math.min(W / n, H / (100 / n)) > Math.min(W / b, H / (100 / b)) ? n : b, 10), rows = 100 / cols, c = Math.min(W / cols, H / rows); g = {x, W, H, c, cols, ox: (W - c * cols) / 2, oy: (H - c * rows) / 2}; }
   function growing(now) { return T.filter(t => t.stop == null || now < t.stop).length; }
   ticks.te = (dt, now) => {
-    if (!g) return; const {x, W, H, c, ox, oy} = g; x.clearRect(0, 0, W, H);
+    if (!g) return; const {x, W, H, c, cols, ox, oy} = g; x.clearRect(0, 0, W, H);
     T.forEach((t, i) => {
-      const cx = ox + c * (i % 10 + .5), cy = oy + c * (Math.floor(i / 10) + .5);
+      const cx = ox + c * (i % cols + .5), cy = oy + c * (Math.floor(i / cols) + .5);
       const dead = t.stop != null && now >= t.stop, f = t.stop != null ? clamp((now - t.stop) / 600) : 0;
       const breathe = dead ? 0 : Math.sin(now / 420 + t.ph) * .05;
       const r = c * .38 * (1 + breathe) * (1 - .35 * ss(f)), sh = shapes[i];
@@ -627,7 +629,7 @@ const watch = (el, f) => new ResizeObserver(() => f()).observe(el);
       'One person scrolling for a day: <b>344 requests</b>, about 8 cents.',
       'A month of that: about <b>$2.50</b> per user. Still sounds small.',
       'Now everyone who used Apollo: <b>7 billion requests</b> in a month. <b>$1.68 million.</b>',
-      `<b>$20 million a year</b> for Apollo. ${bet == null ? '' : bet === 20 ? 'You bet right. ' : 'You bet ' + (bet < 1 ? '$200,000' : '$' + bet + ' million') + '. '}Its developer ran this sum in May 2023; it shut on 30 June.`
+      `<b>$20 million a year</b> for Apollo. ${bet == null ? '' : bet === 20 ? 'You bet right. ' : 'You bet ' + (bet < 1 ? '$200,000' : '$' + bet + ' million') + '. '}Apollo’s developer did this sum in public in May 2023. The app shut down on 30 June.`
     ];
     if (lines[lvl]) say.innerHTML = lines[lvl];
     if (lvl === 4) { go.textContent = 'Start again'; Kit.show('rdKeep'); Kit.hide('rdBets'); }
