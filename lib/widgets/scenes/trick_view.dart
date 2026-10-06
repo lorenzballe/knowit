@@ -621,7 +621,12 @@ class _TrickFormat {
 
   /// A mark on the value axis: as many decimals as the step needs, large
   /// numbers shortened, the unit only when it is short enough to sit there.
-  String tick(double v, TrickSceneRange range, [int parts = 4]) {
+  String tick(
+    double v,
+    TrickSceneRange range, [
+    int parts = 4,
+    bool honest = false,
+  ]) {
     final step = TrickScene.tidyStep(range.hi - range.lo, parts);
     final big = math.max(range.hi.abs(), range.lo.abs());
     String n;
@@ -636,7 +641,9 @@ class _TrickFormat {
     } else {
       n = plain(v, _decimalsOf(step));
     }
-    final unit = scene.unit;
+    // The honest view of a totals chart counts something else (a rate), so
+    // its marks carry the rate's unit, not the totals'.
+    final unit = honest ? scene.honestUnit : scene.unit;
     final short =
         unit == '%' ||
         unit.startsWith('°') ||
@@ -741,9 +748,11 @@ class _TrickLayout {
     var y = inner.top;
 
     Rect? outlet;
-    if (s.outlet.isNotEmpty && !tight) {
+    // Kept even when space is tight: it is where a chart says it was
+    // redrawn rather than reproduced.
+    if (s.outlet.isNotEmpty) {
       outlet = Rect.fromLTWH(inner.left, y, inner.width, scaler.scale(13));
-      y = outlet.bottom + 5;
+      y = outlet.bottom + (tight ? 2 : 5);
     }
 
     final hs = tight ? 18.0 : (inner.width * 0.072).clamp(20.0, 26.0);
@@ -842,7 +851,7 @@ class _TrickLayout {
     } else {
       final ticks = [
         ...TrickScene.ticks(s.shown).map((v) => f.tick(v, s.shown)),
-        ...TrickScene.ticks(s.fair).map((v) => f.tick(v, s.fair)),
+        ...TrickScene.ticks(s.fair).map((v) => f.tick(v, s.fair, 4, true)),
       ];
       final left = widest(ticks) + 12;
       var right = 0.0;
@@ -850,7 +859,8 @@ class _TrickLayout {
         right =
             widest([
               ...TrickScene.ticks(s.shown2).map((v) => f.tick(v, s.shown2)),
-              ...TrickScene.ticks(s.fair).map((v) => f.tick(v, s.fair)),
+              ...TrickScene.ticks(s.fair)
+                  .map((v) => f.tick(v, s.fair, 4, true)),
             ]) +
             8;
       }
@@ -1184,7 +1194,12 @@ class _TrickChartPainter extends CustomPainter {
     canvas.clipRect(
       Rect.fromLTRB(0, plot.top - 8, layout.size.width, plot.bottom + 8),
     );
-    void tickRow(double v, double alpha, TrickSceneRange labelRange) {
+    void tickRow(
+      double v,
+      double alpha,
+      TrickSceneRange labelRange, {
+      bool honest = false,
+    }) {
       final y = yOf(v, range);
       if (y < plot.top - 6 || y > plot.bottom + 6) return;
       _stroke
@@ -1194,7 +1209,7 @@ class _TrickChartPainter extends CustomPainter {
       // A flipping axis folds flat halfway; its labels fade as it does.
       _text(
         canvas,
-        f.tick(v, labelRange, layout.parts),
+        f.tick(v, labelRange, layout.parts, honest),
         tickStyle,
         Offset(plot.left - 12, y),
         ax: 1,
@@ -1211,7 +1226,7 @@ class _TrickChartPainter extends CustomPainter {
     }
     if (!same) {
       for (final v in newTicks) {
-        tickRow(v, newAlpha, s.fair);
+        tickRow(v, newAlpha, s.fair, honest: true);
       }
     }
 
@@ -1222,12 +1237,13 @@ class _TrickChartPainter extends CustomPainter {
         (TrickScene.ticks(s.shown2, layout.parts), 1 - e, s.shown2),
         (newTicks, e, s.fair),
       ]) {
+        final honest = identical(r, s.fair);
         for (final v in set) {
           final y = yOf(v, range2);
           if (y < plot.top - 6 || y > plot.bottom + 6) continue;
           _text(
             canvas,
-            f.tick(v, r, layout.parts),
+            f.tick(v, r, layout.parts, honest),
             tickStyle,
             Offset(plot.right + 8, y),
             ay: .5,
