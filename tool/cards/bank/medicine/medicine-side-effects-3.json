@@ -54,10 +54,10 @@
     "seed": 94,
     "button": "Add patients",
     "notes": [
-      "20 each: muscle pain in 15% on placebo, 55% on the statin. A gap made by chance.",
+      "20 each: muscle pain in 15% on placebo, 55% on the statin. Chance did that.",
       "200 each: 24.5% against 31%. A side effect anyone would list.",
       "4,000 patients: 25.5% against 26.6%. The gap is shrinking.",
-      "123,940, as in 19 pooled trials: 26.6% against 27.1%. Nearly all was there anyway."
+      "123,940, as in 19 trials: 26.6% against 27.1%. Nearly all was there anyway."
     ]
   }
 }

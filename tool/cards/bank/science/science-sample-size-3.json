@@ -55,9 +55,9 @@
     "button": "Add patients",
     "notes": [
       "130 patients, one small trial: 6.2% died without magnesium, 1.5% with it.",
-      "1,300, as many as the pooled small trials: 9.1% against 4.5%. Deaths halved, by chance.",
+      "1,300, like the pooled small trials: 9.1% against 4.5%. Halved, by chance.",
       "13,000 patients: 7.2% against 7.7%. The cure is gone.",
-      "58,050, as in ISIS-4. Its real deaths: 7.2% without magnesium, 7.6% with it."
+      "58,050, as in ISIS-4. Its real deaths: 7.2% without, 7.6% with magnesium."
     ]
   }
 }

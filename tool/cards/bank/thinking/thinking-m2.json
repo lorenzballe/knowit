@@ -57,7 +57,7 @@
     "seed": 34,
     "button": "Widen the slice",
     "notes": [
-      "A slice of 120: 2% bought without the campaign, 15% with it. No effect is built in.",
+      "A slice of 120: 2% bought without the campaign, 15% with it. Pure chance.",
       "1,200: 5% against 4%. Now the campaign looks harmful.",
       "12,000: 4% against 5%.",
       "120,000, the whole market: 5% and 5%. The slice's success was luck."

@@ -52,8 +52,8 @@
     "seed": 16,
     "button": "Add patients",
     "notes": [
-      "Four each: none cured on vancomycin, 75% on donor faeces. A gap this big shows at once.",
-      "29, like the trial's two compared arms: 26.7% against 85.7%. Real: 30.8% against 81.3%.",
+      "Four each: none cured on vancomycin, 75% on donor faeces. It shows at once.",
+      "29 patients: 26.7% against 85.7%. The trial's own: 30.8% against 81.3%.",
       "Ten times as many: 40% against 83.4%. Nothing new, at the patients' cost."
     ]
   }
