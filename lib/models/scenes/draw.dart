@@ -38,7 +38,7 @@
 ///   drawn itself, chosen by where the reader's line ended at `judge`: below
 ///   the truth, near it, or above it. Each up to 90 characters.
 /// - `notes`: up to 3 `{at, text}` labels pinned to the real line at column
-///   `at` once it has drawn past it. Up to 40 characters; never at `judge`,
+///   `at` once it has drawn past it. Up to 28 characters; never at `judge`,
 ///   which carries the YOU and TRUTH tags.
 ///
 /// A full example:
@@ -59,8 +59,8 @@
 ///     "over": "Higher than the truth. Five years at ×4.5 is ×1,845: steep, but not endless."
 ///   },
 ///   "notes": [
-///     {"at": 2, "text": "×20 after two years"},
-///     {"at": 4, "text": "×410, a year from the end"}
+///     {"at": 2, "text": "Only ×20 after 2 years"},
+///     {"at": 4, "text": "×410 after 4 years"}
 ///   ]
 /// }
 /// ```

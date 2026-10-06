@@ -1251,6 +1251,11 @@ class _DrawPainter extends CustomPainter {
     ];
     final taken = <Rect>[
       if (tags != null) ...[tags.$1.inflate(4), tags.$2.inflate(4)],
+      for (final m in scene.notes)
+        Rect.fromCircle(
+          center: Offset(c.xs[m.at], c.truth.at(c.xs[m.at])),
+          radius: 9,
+        ),
     ];
     final out = <Rect>[];
     for (var k = 0; k < scene.notes.length; k++) {

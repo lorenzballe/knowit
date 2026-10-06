@@ -42,8 +42,8 @@
         "over": "Higher than the truth. Five years at ×4.5 is ×1,845: steep, but not endless."
       },
       "notes": [
-        {"at": 2, "text": "Two years in: only ×20"},
-        {"at": 4, "text": "×410, a year from the end"}
+        {"at": 2, "text": "Only ×20 after 2 years"},
+        {"at": 4, "text": "×410 after 4 years"}
       ]
     },
     "source": "Epoch AI, Training compute of frontier AI models grows by 4-5x per year, 2024",

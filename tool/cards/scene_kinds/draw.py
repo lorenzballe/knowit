@@ -18,7 +18,7 @@ UNIT_CHARS = 8
 COLUMN_CHARS = 8    # under a column, thinned when they crowd
 COLUMNS = (3, 10)
 VERDICT_CHARS = 90   # three lines beside the button on a small phone
-NOTE_CHARS = 40      # a two-line tag inside the chart
+NOTE_CHARS = 28      # a short tag inside the chart, one line on most phones
 NOTES = (0, 3)
 NUMBER_CHARS = 9     # "×1,845", "414 ppm": one big number in half the width
 

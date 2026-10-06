@@ -591,7 +591,7 @@ class _SortSceneViewState extends State<SortSceneView>
     final avail = size.height - y0;
     final mostTrue = trueCount.values.reduce(math.max);
     final mostCalled = chosenCount.values.reduce(math.max);
-    final miniH = (avail / mostTrue - 8).clamp(34.0, 66.0);
+    final miniH = (avail / mostTrue - 8).clamp(34.0, 76.0);
     double pitchFor(int most) => most <= 1
         ? miniH + 8
         : math.min(miniH + 8, (avail - miniH) / (most - 1));
@@ -599,7 +599,7 @@ class _SortSceneViewState extends State<SortSceneView>
     final calledPitch = pitchFor(mostCalled);
     final textSize = math
         .min(miniH * 0.42, calledPitch - 9)
-        .clamp(12.0, 22.0);
+        .clamp(12.0, 26.0);
 
     double ease(double a, double b, [Curve c = Curves.easeOutCubic]) =>
         c.transform(((t - a) / (b - a)).clamp(0.0, 1.0));
@@ -870,40 +870,48 @@ class _Front extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Container(height: 1.5, color: ink.withValues(alpha: 0.2)),
-          const SizedBox(height: 8),
+          // The word and its note as one block in the middle of the slip,
+          // the word as large as the room allows: a poster on a tall phone.
           Expanded(
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: _FitText(
-                text: item.text,
-                max: 54,
-                min: 20,
-                lines: 2,
-                align: Alignment.bottomLeft,
-                style: (s) => AppText.display(
-                  size: s,
-                  weight: FontWeight.w800,
-                  height: 1.0,
-                  spacing: -s * 0.025,
-                  color: ink,
-                ),
+            child: LayoutBuilder(
+              builder: (context, box) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Flexible(
+                    child: _FitText(
+                      text: item.text,
+                      max: (box.maxHeight * 0.3).clamp(40.0, 84.0),
+                      min: 20,
+                      lines: 2,
+                      shrink: true,
+                      style: (s) => AppText.display(
+                        size: s,
+                        weight: FontWeight.w800,
+                        height: 1.0,
+                        spacing: -s * 0.025,
+                        color: ink,
+                      ),
+                    ),
+                  ),
+                  if (item.note.isNotEmpty) ...[
+                    SizedBox(height: box.maxHeight > 220 ? 14 : 8),
+                    Text(
+                      item.note,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.body(
+                        size: box.maxHeight > 220 ? 17 : 14.5,
+                        weight: FontWeight.w500,
+                        height: 1.3,
+                        color: ink.withValues(alpha: 0.82),
+                      ),
+                    ),
+                  ],
+                ],
               ),
             ),
           ),
-          if (item.note.isNotEmpty) ...[
-            const SizedBox(height: 8),
-            Text(
-              item.note,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: AppText.body(
-                size: 14.5,
-                weight: FontWeight.w500,
-                height: 1.3,
-                color: ink.withValues(alpha: 0.82),
-              ),
-            ),
-          ],
           const SizedBox(height: 10),
           Row(
             children: [
@@ -965,48 +973,51 @@ class _Back extends StatelessWidget {
             child: LayoutBuilder(
               // The wrong call is said in words only where there is room
               // for it above the pile's name; the mark says it anyway.
-              builder: (context, box) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  if (!right && box.maxHeight >= 56)
-                    Text(
-                      '${context.l10n.sceneYou}: ${scene.nameOf(call).toUpperCase()}',
-                      maxLines: 1,
-                      style: small.copyWith(
-                        decoration: TextDecoration.lineThrough,
-                        decorationColor: ground,
+              builder: (context, box) {
+                final tall = box.maxHeight > 220;
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (!right && box.maxHeight >= 110)
+                      Text(
+                        '${context.l10n.sceneYou}: ${scene.nameOf(call).toUpperCase()}',
+                        maxLines: 1,
+                        style: small.copyWith(
+                          decoration: TextDecoration.lineThrough,
+                          decorationColor: ground,
+                        ),
+                      ),
+                    Flexible(
+                      child: _FitText(
+                        text: '${scene.nameOf(item.pile)}.',
+                        max: (box.maxHeight * 0.3).clamp(40.0, 80.0),
+                        min: 18,
+                        shrink: true,
+                        style: (s) => AppText.display(
+                          size: s,
+                          weight: FontWeight.w800,
+                          height: 1.05,
+                          spacing: -s * 0.025,
+                          color: ground,
+                        ),
                       ),
                     ),
-                  Flexible(
-                    child: _FitText(
-                      text: '${scene.nameOf(item.pile)}.',
-                      max: 52,
-                      min: 18,
-                      align: Alignment.bottomLeft,
-                      style: (s) => AppText.display(
-                        size: s,
-                        weight: FontWeight.w800,
-                        height: 1.05,
-                        spacing: -s * 0.025,
+                    SizedBox(height: tall ? 12 : 8),
+                    Text(
+                      item.verdict,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppText.body(
+                        size: tall ? 17.5 : 15,
+                        weight: FontWeight.w600,
+                        height: 1.3,
                         color: ground,
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            item.verdict,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: AppText.body(
-              size: 15,
-              weight: FontWeight.w600,
-              height: 1.3,
-              color: ground,
+                  ],
+                );
+              },
             ),
           ),
         ],
@@ -1336,8 +1347,13 @@ class _FitText extends StatelessWidget {
   final double min;
   final int lines;
   final Alignment align;
+
+  /// Sized to the text rather than filling the box, so it can sit in a
+  /// block that is centred as a whole.
+  final bool shrink;
   final TextStyle Function(double size) style;
   const _FitText({
+    this.shrink = false,
     required this.text,
     required this.max,
     required this.min,
@@ -1382,16 +1398,14 @@ class _FitText extends StatelessWidget {
             size = lo;
           }
         }
-        return Align(
-          alignment: align,
-          child: Text(
-            text,
-            maxLines: lines,
-            overflow: TextOverflow.ellipsis,
-            textAlign: align.x > 0 ? TextAlign.right : TextAlign.left,
-            style: style(size),
-          ),
+        final shown = Text(
+          text,
+          maxLines: lines,
+          overflow: TextOverflow.ellipsis,
+          textAlign: align.x > 0 ? TextAlign.right : TextAlign.left,
+          style: style(size),
         );
+        return shrink ? shown : Align(alignment: align, child: shown);
       },
     );
   }
