@@ -1,4 +1,4 @@
-// Throwaway: photographs the bank's story cards. Delete after use.
+// Throwaway: photographs the bank's poll cards. Delete after use.
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -13,7 +13,7 @@ import 'package:astuto/models/pill.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/pill_card.dart';
 import 'package:astuto/widgets/scene_view.dart';
-import 'package:astuto/widgets/scenes/story_view.dart';
+import 'package:astuto/models/scene.dart';
 
 const _ids = String.fromEnvironment('IDS');
 
@@ -52,11 +52,6 @@ Future<void> _play(WidgetTester tester) async {
   }
 }
 
-Future<void> _tapScene(WidgetTester tester) async {
-  final strip = tester.getTopLeft(find.byType(StorySceneView));
-  await tester.tapAt(strip + const Offset(40, 6));
-}
-
 void main() {
   setUpAll(_loadFonts);
   for (final id in _ids.split(',')) {
@@ -68,37 +63,27 @@ void main() {
           .whereType<File>().firstWhere((f) => f.path.endsWith('/$id.json'));
       final json = (jsonDecode(path.readAsStringSync()) as Map).cast<String, Object?>();
       final pill = cardFromJson(json);
-      if (pill.scene == null) {
-        await tester.pumpWidget(_card(pill, flipped: true));
-        await _play(tester);
-        await expectLater(find.byType(MaterialApp), matchesGoldenFile('../../tool/shots/cards/story-bank-$id-back.png'));
-        return;
-      }
-      final s = pill.scene! as StoryScene;
+      final s = pill.scene! as PollScene;
       Future<void> shoot(String stage) => expectLater(
         find.byType(MaterialApp),
-        matchesGoldenFile('../../tool/shots/cards/story-bank-$id-$stage.png'),
+        matchesGoldenFile('../../tool/shots/cards/poll-bank-$id-$stage.png'),
       );
       await tester.pumpWidget(_card(pill));
       await _play(tester);
-      await shoot('s0');
-      for (var i = 1; i < s.scenes.length; i++) {
-        await _tapScene(tester);
+      await shoot('a-before');
+      await tester.tap(find.text(s.questions[0].options[0].label).first);
+      await _play(tester);
+      if (s.twice) {
         await _play(tester);
-        await shoot('s$i');
+        await shoot('b-second');
+        await tester.tap(find.text(s.questions[1].options[1].label).last);
+        await _play(tester);
       }
-      await _tapScene(tester);
       await _play(tester);
-      await shoot('ask');
-      final wrong = s.answer == 0 ? 1 : 0;
-      await tester.tap(find.text(s.options[wrong]));
-      await tester.pump();
-      await _play(tester);
-      await _play(tester);
-      await shoot('end');
+      await shoot('c-end');
       await tester.pumpWidget(_card(pill, flipped: true));
       await _play(tester);
-      await shoot('back');
+      await shoot('d-back');
       expect(tester.takeException(), isNull);
     });
   }

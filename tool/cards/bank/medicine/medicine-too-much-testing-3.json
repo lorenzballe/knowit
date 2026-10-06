@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Someone offers you a choice: a free full-body CT scan, or $1,000 in cash. Which do you take?",
+  "question": "A free full-body CT scan, or $1,000 in cash. Which would you take?",
   "answer": "The scan is free; what it finds is not. A CT shows everything in its slices, wanted or not: about 4% of abdominal scans reveal a lump on an adrenal gland, nearly always harmless. Each can start years of tests, worry and more radiation. The scanner answers questions nobody asked.",
   "move": "The more closely you look, the more harmless oddities you have to explain.",
   "ask": "Where am I looking so closely, at my body or my relationships, that I find trouble that was never there?",
@@ -45,7 +45,7 @@
         ]
       }
     ],
-    "why": "Looking feels like protecting yourself; what a search can cost you only shows up later."
+    "why": "Looking feels like safety; the cost of a search shows up only later."
   },
   "source": "Schwartz et al., JAMA, 2004; Bovio et al., 2006",
   "source_kind": "paper",

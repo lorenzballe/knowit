@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do charities ask for a small sum a day rather than the same total once a year?",
-  "answer": "Because a daily amount gets compared with petty daily spending, like a coffee, while a yearly total gets compared with big purchases. In experiments, describing the same annual donation as pennies a day made people more willing to give. The money is identical; only the yardstick changes. Less than a coffee sounds like nothing.",
+  "question": "A charity advert, worded the way many are. Why does it give a price per day rather than per year?",
+  "answer": "Because a daily sum gets compared with petty daily spending, and a yearly one with big purchases. In Gourville's experiments, describing the same yearly donation as pennies a day made people more willing to give. The money is identical; only the yardstick changes. Fifty pence sounds like nothing; £182.50 sounds like a decision.",
   "move": "Convert a small repeated price into its yearly total before agreeing.",
   "ask": "Which of my subscriptions would I still choose if I saw its full yearly price?",
   "keywords": [
@@ -27,8 +27,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Charity appeal",
+    "ref": "Typical text",
+    "title": "Clean water for a child",
+    "body": "For just 50p a day, less than the price of a coffee, you can help give a child clean water. Set up a monthly gift today.",
+    "phrases": [
+      {
+        "text": "just 50p a day",
+        "plain": "£182.50 a year",
+        "why": "Same money, smaller unit. Daily sums get weighed against pocket change.",
+        "catch": true
+      },
+      {
+        "text": "less than the price of a coffee",
+        "plain": "next to something you already spend without thinking",
+        "why": "The coffee is the yardstick chosen for you: small, daily, easy to give up."
+      },
+      {
+        "text": "monthly gift",
+        "plain": "standing order",
+        "why": "A gift sounds one-off. This one repeats until you stop it."
+      }
+    ],
+    "ask": "One phrase picks what you compare the cost with. Which?",
+    "watch": "The unit a price is quoted in chooses what you compare it with."
+  },
   "source": "Gourville, Journal of Consumer Research, 1998",
   "source_kind": "paper",
   "reference": "Gourville, Pennies-a-day: The effect of temporal reframing on transaction evaluation, Journal of Consumer Research, 1998",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

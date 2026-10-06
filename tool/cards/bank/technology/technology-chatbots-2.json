@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "An airline's chatbot promised a grieving customer a refund the real policy didn't allow. Who pays?",
+  "question": "An airline's chatbot invented a refund policy. Who pays for its promise?",
   "answer": "The tribunal saw no reason a customer should trust one part of a company's website less than another. Air Canada put the bot there, so it owned the bot's words, as it would own a mistake by an agent at the counter. Its claim that the bot answered for itself was called remarkable.",
   "move": "Whoever deploys a tool answers for what the tool says.",
   "ask": "When I share what a tool told me, am I ready to answer for it?",

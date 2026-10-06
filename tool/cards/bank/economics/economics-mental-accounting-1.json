@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "You arrive at the theatre to buy a $10 ticket, and find something has gone missing. Do you still pay?",
+  "question": "At the theatre door, about to pay $10 for a ticket, you find something is missing. Do you still pay?",
   "answer": "People keep money in mental accounts. A lost note comes out of general cash, but a lost ticket is charged to the play, which now seems to cost $20. The habit can be put to work: Soman and Cheema's labourers saved more when their cash went into envelopes marked for their children.",
   "move": "Money lost is gone; ask only whether the next spend is worth it.",
   "ask": "Which loss am I charging to the wrong account in my head?",
@@ -59,7 +59,7 @@
         ]
       }
     ],
-    "why": "A lost ticket is billed to the play, so it seems to cost $20; a lost note goes to another account.",
+    "why": "A lost ticket is billed to the play, making it cost $20; a lost note is not.",
     "same": "You held steady. The crowd didn't: buying fell from 88% to 46%.",
     "switched": "You switched, like many. Either way you are $10 down and the play costs $10."
   },

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did the US Department of Agriculture withdraw its own table ranking foods by antioxidant power?",
-  "answer": "Because the scores meant little inside a body. The ORAC test measured how well a food extract mopped up reactive molecules in a test tube. Little of that survives digestion, and the body sets its own antioxidant levels. Juice makers printed ORAC numbers as proof of health; in 2012 the table was pulled.",
+  "question": "A bottle of berry juice, labelled the way many were before 2012. What does its scientific-sounding score measure?",
+  "answer": "Little that happens inside you. ORAC was a lab test of how well a food extract mopped up reactive molecules in a test tube. Little of that survives digestion, and the body sets its own antioxidant levels. Juice makers printed the scores anyway; in 2012 the US Department of Agriculture withdrew its own table.",
   "move": "A score that works in a test tube may mean nothing in you.",
   "ask": "Which number on a label have I trusted without asking what it really measures?",
   "keywords": [
@@ -27,8 +27,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Berry juice",
+    "ref": "Typical text",
+    "title": "Antioxidant power",
+    "body": "Packed with antioxidants, with a high ORAC score. Fights free radicals. A superfood blend for your body's natural defences.",
+    "phrases": [
+      {
+        "text": "a high ORAC score",
+        "plain": "a score from a test tube, not from a body",
+        "why": "ORAC measured an extract in the lab. Its own makers at the USDA withdrew the table in 2012.",
+        "catch": true
+      },
+      {
+        "text": "Fights free radicals",
+        "plain": "Did so in a test tube",
+        "why": "The body sets its own antioxidant levels. Little of the juice's survives digestion."
+      },
+      {
+        "text": "superfood",
+        "plain": "food, with a marketing word",
+        "why": "No scientific category is called superfood. It is a word for selling."
+      }
+    ],
+    "ask": "One phrase sounds like science and was later withdrawn. Which?",
+    "watch": "A score from a test tube says nothing until someone measures it in people."
+  },
   "source": "USDA Agricultural Research Service, 2012",
   "source_kind": "institution",
   "reference": "US Department of Agriculture Agricultural Research Service, Oxygen Radical Absorbance Capacity (ORAC) of Selected Foods, Release 2 (2010), withdrawn 2012",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }
