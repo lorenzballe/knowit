@@ -691,3 +691,11 @@ life-risk-taking-1, life-regret-2, life-failure-2, life-spending-2.
 - nature-3 | rank: livestock 0.1 Gt C (one summary says 0.11), humans 0.06, wild mammals 0.007 | Bar-On Phillips Milo 2018 PNAS livestock biomass Gt C
 - food-meat-1 | rank (from the food-emissions sample): kg CO2e per kg dark chocolate 47, coffee 29, cheese 24, chicken 10 | Our World in Data ghg-per-kg-poore table
 - human_body-smell-3 | people beat dogs on some odours in threshold tests (McGann 2017) | McGann 2017 Science human dogs odor sensitivity thresholds
+- language-borrowed-words-6 | sort: Caxton (Eneydos prologue, 1490) tells of a woman who knew eggs only as eyren | Caxton Eneydos prologue 1490 eggys eyren mercer
+- language-brand-names-4 | sort: Velcro released a song asking people not to say velcro (2017); Kleenex, Jacuzzi, Frisbee still registered marks; Aspirin still Bayer's mark in Germany and Canada | Velcro "Don't Say Velcro" 2017; Bayer Aspirin trademark Canada Germany
+- medicine-folk-remedies-3 | sort: medical honey dressings cleared in the US in 2007; Radithor drinker (Eben Byers) about 1,400 bottles, died 1932 | FDA Medihoney 2007 510(k); Eben Byers Radithor bottles
+- human_body-posture-myths-2 | sort: about 1% of height lost by evening; adult skeleton turns over in about ten years; heavy bags not a cause of scoliosis | Tyrrell Reilly Troup 1985 Spine circadian stature; Surgeon General 2004 bone remodelling 10 years; Scoliosis Research Society backpacks
+- cinema-fake-or-real-3 | sort: Psycho used chocolate syrup because it read better than stage blood in black and white; Wilhelm scream first recorded 1951 | BFI Psycho shower chocolate syrup; Wilhelm scream Distant Drums 1951
+- cinema-destroyed-3 | sort: Cleopatra (1917) survives only as seconds of fragments; The Mountain Eagle is Hitchcock's only feature with no known copy | Cleopatra 1917 surviving fragments; BFI Most Wanted Mountain Eagle
+- technology-dns-7 | sort: .gb still delegated in the root but unused; .yu removed 2010 | IANA root zone database gb yu
+- science-cold-myths-2 | sort: igloos heated by bodies alone can be tens of degrees warmer than outside | igloo interior temperature body heat study
