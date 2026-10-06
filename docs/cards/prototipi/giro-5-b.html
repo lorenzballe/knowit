@@ -1,0 +1,674 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute Cards, Round Five B</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,700&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="../kit/astute-card.css">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/DrawSVGPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tone@15.0.4/build/Tone.js"></script>
+<style>
+/* Round five, page B. One technique per card: a hold that measures your sense of time,
+   an instrument you play (Tone.js), a flat diagram with hotspots and a measure,
+   branching lines that re-weight themselves, kinetic type for a debate. */
+.stagebox{display:flex;flex-direction:column;gap:1.4cqh}
+.ctl{display:flex;align-items:center;gap:4cqw}
+.ctl .mono{opacity:.7}
+
+/* 1 · hold the shot */
+.reel{position:relative;flex:1;min-height:0;border-radius:2.2cqh;overflow:hidden;background:#17131f;touch-action:none;cursor:pointer;user-select:none;-webkit-user-select:none;box-shadow:0 1.2cqh 2.4cqh #1a0b4d55}
+.reel.hold{box-shadow:0 0 0 .5cqh #FFE600,0 1.2cqh 2.4cqh #1a0b4d55}
+.reel .tc{position:absolute;left:7cqw;top:1.6cqh;font:700 2.2cqh/1 var(--mono);letter-spacing:.04em;color:#fff}
+.reel .rec{position:absolute;right:7cqw;top:1.9cqh;font:700 1.25cqh/1 var(--mono);letter-spacing:.1em;color:#fff;opacity:.75}
+.reel .hint{position:absolute;left:50%;bottom:2cqh;transform:translateX(-50%);font:800 1.5cqh/1 var(--body);letter-spacing:.14em;background:#fff;color:#17131f;border-radius:99px;padding:1.1cqh 4cqw;white-space:nowrap}
+.reel .flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.ruler{height:10cqh;position:relative;flex:none}
+.strips{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:space-around}
+.srow{display:grid;grid-template-columns:11cqh 1fr;gap:.9cqh 3cqw;align-items:center}
+.srow .nm{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;font:700 1.9cqh/1.1 var(--body)}
+.srow .nm .mono{opacity:.8;font-size:1.3cqh}
+.sw{height:7cqh;border-radius:1cqh;position:relative;overflow:hidden}
+.sw i{position:absolute;inset:0;background:#fff;opacity:0;z-index:1}
+.sw .fig{position:absolute;left:50%;bottom:0;width:38%;height:52%;background:#0f0c14;border-radius:50% 50% 0 0/40% 40% 0 0;transform-origin:50% 100%;transform:translateX(-50%)}
+.sw .fig::before{content:"";position:absolute;left:50%;top:-58%;width:62%;aspect-ratio:1;border-radius:50%;background:#0f0c14;transform:translateX(-50%)}
+.trk2{position:relative;height:7cqh;border-radius:1cqh;background:#ffffff1c;overflow:hidden}
+.trk2 .fill{position:absolute;inset:0;background:#ffffff2e;transform-origin:left;transform:scaleX(0)}
+.trk2 .cut{position:absolute;top:0;bottom:0;width:.5cqh;margin-left:-.25cqh;background:#fff;opacity:.35;border-radius:1cqh}
+.trk2 .cut.on{opacity:1;background:#FFE600}
+.secs{display:flex;justify-content:space-between;font:700 1.25cqh/1 var(--mono);opacity:.75;padding-left:calc(11cqh + 3cqw)}
+
+/* 2 · the wire */
+.scope{position:relative;flex:1.15;min-height:0;border-radius:2.2cqh;background:#2a0b3d;overflow:hidden}
+.scope canvas{position:absolute;inset:0;width:100%;height:100%}
+.scope .mono{position:absolute;top:1.5cqh;color:#fff;opacity:.8}
+.scope .l{left:5cqw}.scope .r{right:5cqw}
+.cc{position:absolute;left:50%;bottom:1.2cqh;transform:translateX(-50%);font:700 1.7cqh/1 var(--body);background:#000;color:#fff;border-radius:.6cqh;padding:.8cqh 2.6cqw;white-space:nowrap}
+.subs{display:flex;align-items:center;gap:2.2cqw}
+.flockb{margin-right:auto;padding:1.5cqh 4.5cqw;font-size:1.8cqh}
+.sub{font:800 2.5cqh/1 var(--display);width:7.2cqh;height:5.6cqh;border-radius:99px;border:0;cursor:pointer;background:transparent;color:var(--k);box-shadow:inset 0 0 0 .28cqh var(--k)}
+.sub[aria-pressed=true]{background:var(--k);color:var(--c)}
+.wire{position:relative;flex:1;min-height:0;touch-action:none;cursor:pointer;border-radius:2.2cqh;background:#2a0b3d;overflow:hidden}
+
+/* 3 · where does it block */
+.diag{position:relative;flex:1;min-height:0;border-radius:2.2cqh;background:#2a0907;overflow:hidden}
+.meter{position:absolute;right:2.6cqw;top:1.2cqh;width:41%;display:flex;flex-direction:column;gap:.8cqh;padding:1.1cqh 3cqw;border-radius:1.4cqh;box-shadow:inset 0 0 0 .2cqh #ffffff40;background:#1a0504}
+.meter .site b{display:block;font:800 1.7cqh/1.1 var(--body)}
+.meter .site span{font:600 1.3cqh/1.2 var(--body);opacity:.8}
+.mrow{display:grid;grid-template-columns:1fr auto;gap:.5cqh 1.4cqw;align-items:center;font:700 1.05cqh/1 var(--mono);letter-spacing:.05em}
+.mrow i{grid-column:1/-1}
+.mrow i{display:block;height:.9cqh;border-radius:1cqh;background:#ffffff26;overflow:hidden}
+.mrow u{display:block;height:100%;transform-origin:left;transition:transform .5s cubic-bezier(.23,1,.32,1)}
+.mrow em{font-style:normal;text-align:right;opacity:.9}
+.drugs{display:grid;grid-template-columns:1fr 1fr;gap:1.1cqh 3cqw;flex:none}
+.drug{display:flex;align-items:baseline;justify-content:space-between;gap:1.5cqw;text-align:left;border:0;cursor:pointer;border-radius:1.6cqh;padding:1.4cqh 3.4cqw;background:color-mix(in srgb,var(--k) 14%,transparent);color:var(--k)}
+.drug b{font:800 2cqh/1 var(--body)}
+.drug span{font:700 1.15cqh/1 var(--mono);letter-spacing:.06em;opacity:.8;text-transform:uppercase}
+.drug.on{background:var(--k);color:var(--c)}
+.drug.seen:not(.on){box-shadow:inset 0 0 0 .25cqh var(--k)}
+
+/* 4 · branches */
+.tree{position:relative;flex:1;min-height:0;border-radius:2.2cqh;background:#16205c;overflow:hidden}
+.pick{flex:none}
+.pick .btn{flex:1;padding-inline:3cqw}
+
+/* 5 · kinetic type */
+.kin{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:1.2cqh;overflow:hidden}
+.kl{position:relative;display:flex;align-items:baseline;gap:3cqw;white-space:nowrap}
+.kw{font:900 14cqh/.86 var(--display);letter-spacing:-.045em}
+.krow{display:flex;align-items:center;justify-content:space-between;gap:3cqw;margin-bottom:1.6cqh}
+.ktop{font:800 1.5cqh/1.2 var(--body);letter-spacing:.12em;text-transform:uppercase;border-bottom:.3cqh solid var(--k);padding-bottom:1.2cqh;margin-bottom:1cqh}
+.kmeta{display:flex;flex-direction:column;gap:.5cqh;font:700 1.3cqh/1.1 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.stamp{font:900 2.4cqh/1 var(--body);letter-spacing:.08em;padding:.8cqh 2.6cqw;border-radius:.8cqh;transform:rotate(-5deg)}
+.stamp.ok{background:var(--k);color:var(--c)}
+.stamp.no{box-shadow:inset 0 0 0 .35cqh var(--k)}
+.big2{display:flex;flex-direction:column;gap:.6cqh}
+.big2 .side{font:800 1.4cqh/1 var(--body);letter-spacing:.14em;text-transform:uppercase}
+.big2 .n{font:900 12cqh/.85 var(--display);letter-spacing:-.05em;white-space:nowrap}
+.big2 .n small{font-size:.32em;letter-spacing:0;margin-left:2cqw}
+.big2 .cap{font:600 2.05cqh/1.3 var(--body);max-width:72cqw}
+.big2+.big2{border-top:.25cqh solid var(--k);padding-top:1.6cqh}
+.kin:has(.big2+.big2){justify-content:space-evenly}
+.q.qs{font-size:2.9cqh}
+</style>
+
+<div class="app">
+  <div class="top"><h1>Today</h1><div class="dots" id="dots"></div><div class="kind" id="kind"></div></div>
+  <div class="stage">
+    <button class="nav" id="prev" aria-label="Previous card">←</button>
+    <button class="nav" id="next" aria-label="Next card">→</button>
+
+    <!-- 1 · Hold the shot: your own sense of time -->
+    <article class="card" id="shot" style="--c:#6E3AFF;--k:#ffffff;--edge:#3d1e99" data-kind="Hold the shot · your sense of time">
+      <div class="in">
+        <div class="label"><span class="t">Cinema</span><span class="tag">HOLD</span></div>
+        <h2 class="q">A 1940s Hollywood film. Hold the frame for as long as you think one shot lasted.</h2>
+        <div class="stagebox">
+          <div class="reel" id="shotReel" tabindex="0" role="button" aria-label="Press and hold for as long as one shot lasted">
+            <svg class="full" id="shotSvg" aria-hidden="true"></svg>
+            <div class="flash" id="shotFlash"></div>
+            <span class="tc num" id="shotTc">00:00:00</span><span class="rec" id="shotRec">SHOT 1 · 24 FPS</span>
+            <span class="hint" id="shotHint">PRESS AND HOLD</span>
+          </div>
+          <div class="ruler gone" id="shotRuler"><svg class="full" id="shotRulerSvg" role="img" aria-label="Your guess against the real average"></svg></div>
+          <div class="strips gone" id="shotStrips"></div>
+        </div>
+        <p class="say" id="shotSay">Let go where you think the editor cut to the next shot.</p>
+        <div class="ctl gone" id="shotCtl"><button class="btn" id="shotGo">Play 15 seconds of three films</button></div>
+        <div class="keep gone" id="shotKeep"><b>WHAT TO KEEP</b>The famous exception is the one you remember, not the one that was typical.</div>
+        <div class="foot"><span class="src">Source · David Bordwell, “Intensified Continuity”, <i>Film Quarterly</i> 55(3), 2002; Armageddon: Cinemetrics</span></div>
+      </div>
+    </article>
+
+    <!-- 2 · Play the wire (Tone.js) -->
+    <article class="card" id="birds" style="--c:#C13AFF;--k:#ffffff;--edge:#6e1a99" data-kind="Play it · sound">
+      <div class="in">
+        <div class="label"><span class="t">Music</span><span class="tag">SOUND ON</span></div>
+        <h2 class="q">Hitchcock’s <em>The Birds</em> has no music score. Most of its screaming flock was played on a wire.</h2>
+        <div class="stagebox">
+          <div class="scope"><canvas id="birdCv"></canvas><span class="mono l num" id="birdHz">880 Hz</span><span class="cc" id="birdCc">[silence]</span></div>
+          <div class="subs" role="group" aria-label="Subharmonics"><button class="btn flockb" id="birdFlock">Play the flock</button>
+            <button class="sub" data-k="2" aria-pressed="false" aria-label="Add one half">½</button><button class="sub" data-k="3" aria-pressed="false" aria-label="Add one third">⅓</button><button class="sub" data-k="4" aria-pressed="false" aria-label="Add one quarter">¼</button></div>
+          <div class="wire" id="birdWire" tabindex="0" role="slider" aria-label="Press the wire onto the rail to play" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><svg class="full" id="birdSvg" aria-hidden="true"></svg></div>
+        </div>
+        <p class="say" id="birdSay">Press the wire onto the rail and slide. Then switch on the fractions and play again.</p>
+        <div class="keep gone" id="birdKeep"><b>WHAT TO KEEP</b>The most convincing version of a thing is often built, not captured.</div>
+        <div class="foot"><span class="src">Source · <i>The Birds</i> (1963), credits: electronic sound by Remi Gassmann and Oskar Sala; Bernard Herrmann, sound consultant. Sound here: our synthesis</span></div>
+      </div>
+    </article>
+
+    <!-- 3 · Flat diagram with hotspots and a measure -->
+    <article class="card" id="pain" style="--c:#FF3B30;--k:#ffffff;--edge:#9e1c14" data-kind="Where does it block? · diagram">
+      <div class="in">
+        <div class="label"><span class="t">Medicine</span><span class="tag">TAP A DRUG</span></div>
+        <h2 class="q qs" id="painQ">Stub your toe. The signal runs up a nerve, up the spine, to the brain. Where does each painkiller cut it?</h2>
+        <div class="stagebox">
+          <div class="diag"><svg class="full" id="painSvg" role="img" aria-label="The pain route from toe to brain"></svg>
+            <div class="meter" aria-live="polite"><div class="site"><b id="pmDrug">No drug</b><span id="pmSite">Both signals arrive</span></div>
+              <div class="mrow"><span style="color:#FFE600">PAIN</span><em id="pmPainW">FULL</em><i><u id="pmPain" style="background:#FFE600"></u></i></div>
+              <div class="mrow"><span style="color:#8fe3ff">TOUCH</span><em id="pmTouchW">FULL</em><i><u id="pmTouch" style="background:#8fe3ff"></u></i></div></div></div>
+          <div class="drugs" id="painDrugs">
+            <button class="drug" data-d="ibu"><b>Ibuprofen</b><span>NSAID</span></button>
+            <button class="drug" data-d="lido"><b>Lidocaine</b><span>numbing</span></button>
+            <button class="drug" data-d="morph"><b>Morphine</b><span>opioid</span></button>
+            <button class="drug" data-d="suz"><b>Suzetrigine</b><span>2025</span></button>
+          </div>
+        </div>
+        <p class="say" id="painSay">Every few seconds the toe sends a signal. Tap a drug to see where it stops.</p>
+        <div class="keep gone" id="painKeep"><b>WHAT TO KEEP</b>Stopping a message at its source spares everything downstream.</div>
+        <div class="foot"><span class="src">Source · FDA approval of Journavx (suzetrigine), 30 Jan 2025; phase 3 trials, <i>The Medical Letter</i> 2025</span></div>
+      </div>
+    </article>
+
+    <!-- 4 · Branching lines -->
+    <article class="card" id="newc" style="--c:#4C6FFF;--k:#ffffff;--edge:#2a3fa3" data-kind="Debate · branching paths">
+      <div class="in">
+        <div class="label"><span class="t">Philosophy</span><span class="tag">PICK A SIDE</span></div>
+        <h2 class="q qs" id="newcQ">A predictor that is almost never wrong filled the boxes yesterday. Glass box: $1,000. Take the closed box only, or both?</h2>
+        <div class="stagebox">
+          <div class="tree"><svg class="full" id="newcSvg" role="img" aria-label="Every way the game can go"></svg></div>
+          <div class="row pick" id="newcPick"><button class="btn" data-s="one">Only the closed box</button><button class="btn ghost" data-s="two">Both boxes</button></div>
+          <div class="ctl gone" id="newcCtl"><button class="btn" id="newcNext">Hear the other side</button><span class="mono" id="newcStep">2 / 3</span></div>
+        </div>
+        <p class="say" id="newcSay">Every way it can go, from the prediction to your pay. Pick before you think too long.</p>
+        <div class="keep gone" id="newcKeep"><b>WHAT TO KEEP</b>It turns on whether a choice should cause good outcomes, or only signal them.</div>
+        <div class="foot"><span class="src">Source · Nozick (1969); David Lewis, “Why Ain’cha Rich?”, <i>Noûs</i> (1981); PhilPapers Survey (2020)</span></div>
+      </div>
+    </article>
+
+    <!-- 5 · Kinetic type debate -->
+    <article class="card" id="chz" style="--c:#FF7A1A;--k:#10100c;--edge:#a3470a" data-kind="Debate · kinetic type">
+      <div class="in">
+        <div class="label"><span class="t">Food</span><span class="tag">DEBATE</span></div>
+        <div class="stagebox" style="gap:0"><div class="ktop">US rule since 1950: raw-milk cheese must age 60 days</div><div class="kin" id="chzKin"></div></div>
+        <h2 class="q" id="chzQ">So is a calendar a good safety test?</h2>
+        <div class="row pick" id="chzPick"><button class="btn" data-s="drop">Drop the rule</button><button class="btn ghost" data-s="keep">Keep it</button></div>
+        <div class="ctl gone" id="chzCtl"><button class="btn" id="chzNext">Now the other side</button></div>
+        <p class="say gone" id="chzSay"></p>
+        <div class="keep gone" id="chzKeep"><b>WHAT TO KEEP</b>Judge a safety rule by the risk it controls, not by how old it is.</div>
+        <div class="foot"><span class="src">Source · 21 CFR 133 (since 1950); D’Amico, Druart &amp; Donnelly, <i>J. Food Protection</i> (2010); FDA &amp; Health Canada risk assessment (2015)</span></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<script src="../kit/astute-card.js"></script>
+<script>
+gsap.registerPlugin(SplitText, DrawSVGPlugin);
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const D = s => calm ? 0 : s;
+const MONO = "'JetBrains Mono', ui-monospace, monospace";
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': f, fill: '#fff', 'letter-spacing': '.06em'}, a), svg); t.textContent = txt; return t; };
+
+/* ---------- 1 · Hold the shot ---------- */
+(() => {
+  const reel = Kit.$('shotReel'), svg = Kit.$('shotSvg'), tc = Kit.$('shotTc'), say = Kit.$('shotSay');
+  let t0 = 0, raf = 0, held = null, scene = 'wide', zoom = null, stripsTl = null;
+  const fmt = s => '00:' + String(Math.floor(s)).padStart(2, '0') + ':' + String(Math.floor((s % 1) * 24)).padStart(2, '0');
+  function draw() {
+    svg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(svg), g = Kit.mk('g', {id: 'shotCam'}, svg);
+    const wall = Kit.mk('linearGradient', {id: 'shotWall', x1: 0, y1: 0, x2: 0, y2: 1}, Kit.mk('defs', {}, svg));
+    Kit.mk('stop', {offset: 0, 'stop-color': '#4a4456'}, wall); Kit.mk('stop', {offset: 1, 'stop-color': '#2b2633'}, wall);
+    Kit.mk('rect', {x: 0, y: 0, width: W, height: H, fill: 'url(#shotWall)'}, g);
+    const fy = H * .74;
+    if (scene === 'wide') {
+      // a window with blinds, its light falling across the wall, two figures
+      const wx = W * .56, wy = H * .16, ww = W * .3, wh = H * .38;
+      for (let i = 0; i < 6; i++) Kit.mk('polygon', {points: `${wx},${wy + i * wh / 6} ${wx + ww},${wy + i * wh / 6} ${wx - W * .5},${fy + i * H * .02 - H * .05} ${wx - W * .62},${fy + i * H * .02 - H * .05}`, fill: '#fff', opacity: .05}, g);
+      Kit.mk('rect', {x: wx, y: wy, width: ww, height: wh, fill: '#d9d3c6', opacity: .9}, g);
+      for (let i = 0; i < 7; i++) Kit.mk('rect', {x: wx, y: wy + i * wh / 7 + wh / 14, width: ww, height: wh / 18, fill: '#2b2633'}, g);
+      Kit.mk('rect', {x: 0, y: fy, width: W, height: H - fy, fill: '#1d1924'}, g);
+      const fig = (x, s, hat) => { const h = H * .17 * s; Kit.mk('path', {d: `M${x - h * .55},${fy} L${x - h * .5},${fy - h * 1.5} Q${x},${fy - h * 1.85} ${x + h * .5},${fy - h * 1.5} L${x + h * .55},${fy} Z`, fill: '#0f0c14'}, g); Kit.mk('circle', {cx: x, cy: fy - h * 1.95, r: h * .3, fill: '#0f0c14'}, g); if (hat) { Kit.mk('rect', {x: x - h * .5, y: fy - h * 2.2, width: h, height: h * .08, rx: h * .04, fill: '#0f0c14'}, g); Kit.mk('rect', {x: x - h * .26, y: fy - h * 2.44, width: h * .52, height: h * .26, rx: h * .06, fill: '#0f0c14'}, g); } };
+      fig(W * .28, 1, true); fig(W * .72, .86, false);
+    } else {
+      // close-up: one face in the light of the blinds
+      const cx = W * .5, cy = H * .62, r = H * .2;
+      Kit.mk('path', {d: `M${cx - r * 2.1},${H} Q${cx - r * 1.9},${cy + r * 1.1} ${cx},${cy + r * 1.05} Q${cx + r * 1.9},${cy + r * 1.1} ${cx + r * 2.1},${H} Z`, fill: '#0f0c14'}, g);
+      Kit.mk('ellipse', {cx, cy, rx: r * .82, ry: r, fill: '#0f0c14'}, g);
+      Kit.mk('rect', {x: cx - r * 1.6, y: cy - r * 1.02, width: r * 3.2, height: r * .16, rx: r * .08, fill: '#0f0c14'}, g);
+      Kit.mk('path', {d: `M${cx - r * .8},${cy - r * .98} Q${cx - r * .78},${cy - r * 1.75} ${cx},${cy - r * 1.75} Q${cx + r * .78},${cy - r * 1.75} ${cx + r * .8},${cy - r * .98} Z`, fill: '#0f0c14'}, g);
+      for (let i = 0; i < 4; i++) Kit.mk('rect', {x: cx - r * .9, y: cy - r * .55 + i * r * .32, width: r * 1.8, height: r * .12, fill: '#fff', opacity: .14, transform: `rotate(-8 ${cx} ${cy})`}, g);
+    }
+    // sprocket holes: it is film
+    for (const x of [W * .03, W * .97]) for (let y = H * .06; y < H; y += H * .12) Kit.mk('rect', {x: x - W * .012, y, width: W * .024, height: H * .06, rx: W * .006, fill: '#000', opacity: .45}, svg);
+  }
+  function startZoom() { const cam = Kit.$('shotCam'); if (calm || !cam) return; zoom = gsap.fromTo(cam, {scale: 1}, {scale: 1.16, duration: 40, ease: 'none', transformOrigin: '50% 60%'}); }
+  function down(e) {
+    if (held !== null || t0) return; if (e) e.preventDefault();
+    t0 = performance.now(); reel.classList.add('hold'); Kit.$('shotHint').textContent = 'HOLDING…';
+    startZoom();
+    const tick = () => { tc.textContent = fmt((performance.now() - t0) / 1000); raf = requestAnimationFrame(tick); }; tick();
+  }
+  function up() {
+    if (!t0) return; cancelAnimationFrame(raf); reel.classList.remove('hold');
+    const s = (performance.now() - t0) / 1000; t0 = 0;
+    if (s < .4) { Kit.$('shotHint').textContent = 'PRESS AND HOLD'; tc.textContent = '00:00:00'; zoom && zoom.kill(); gsap.set('#shotCam', {scale: 1}); return; }
+    release(s);
+  }
+  function release(s) {
+    held = s; zoom && zoom.kill(); tc.textContent = fmt(s);
+    // the cut, at the moment you let go
+    scene = 'close'; draw(); Kit.$('shotRec').textContent = 'SHOT 2';
+    gsap.fromTo('#shotFlash', {opacity: .85}, {opacity: 0, duration: D(.35), ease: 'power2.out'});
+    Kit.hide('shotHint'); Kit.show('shotRuler'); ruler(); Kit.show('shotCtl');
+    const verdict = s > 14 ? ' The long takes you remember were the exceptions.' : s < 6 ? ' That is closer to how films cut today.' : ' Close.';
+    say.innerHTML = `You held <b>${s.toFixed(1)} s</b>. Timed with a stopwatch, most studio-era features averaged <b>8 to 11 seconds</b> a shot.${verdict}`;
+  }
+  function ruler() {
+    const rs = Kit.$('shotRulerSvg'); rs.innerHTML = '';
+    const {W, H} = Kit.fitSvg(rs), f = Math.max(10, H * .2), max = Math.min(60, Math.max(30, Math.ceil((held + 4) / 5) * 5)), X = s => f * .3 + (W - f * .6) * Math.min(s, max) / max, ay = H * .52;
+    Kit.mk('line', {x1: X(0), y1: ay, x2: X(max), y2: ay, stroke: '#fff', 'stroke-width': 2, opacity: .6}, rs);
+    for (let s = 0; s <= max; s += 5) Kit.mk('line', {x1: X(s), y1: ay - 4, x2: X(s), y2: ay + 4, stroke: '#fff', 'stroke-width': 1.5, opacity: .6}, rs);
+    const band = Kit.mk('rect', {x: X(8), y: ay - H * .2, width: X(11) - X(8), height: H * .4, rx: 3, fill: '#fff'}, rs);
+    T(rs, X(8), H * .17, 'STUDIO ERA: 8–11 S', {}, f * .82);
+    const you = X(held), yl = Kit.mk('line', {x1: you, y1: ay - H * .26, x2: you, y2: ay + H * .26, stroke: '#FFE600', 'stroke-width': 4, 'stroke-linecap': 'round'}, rs);
+    const anchor = you < W * .2 ? 'start' : you > W * .8 ? 'end' : 'middle';
+    T(rs, you, H * .98, 'YOU ' + held.toFixed(1) + ' S', {fill: '#FFE600', 'text-anchor': anchor}, f * .82);
+    if (Math.abs(you - X(max)) > W * .3) T(rs, X(max), H * .98, max + ' S', {'text-anchor': 'end', opacity: .7, 'font-family': MONO, 'font-weight': 700}, f * .7);
+    if (!calm) { gsap.from(band, {scaleY: 0, transformOrigin: '50% 50%', duration: .4}); gsap.from(yl, {opacity: 0, duration: .3, delay: .2}); }
+  }
+  // Fifteen seconds of three films. Cut times are illustrative, spaced at each film's real average.
+  const FILMS = [
+    {nm: 'A 1940s feature', m: '≈ 10 s a shot', cuts: [3.4, 13.2], tones: ['#5a5266', '#3a3445', '#6e6578']},
+    {nm: 'A 2000s feature', m: '3–5 s a shot', cuts: [2.2, 6.1, 9.8, 13.9], tones: ['#4b5a7a', '#7a5a4b', '#3f6b5c', '#8a7a52', '#5b4b7a']},
+    {nm: 'Armageddon, 1998', m: '2.3 s a shot', cuts: [1.6, 3.7, 6.2, 8.4, 10.5, 12.9, 14.7], tones: ['#a8572e', '#2e4fa8', '#c9a227', '#3a3a3a', '#a82e3a', '#2e8aa8', '#7a2ea8', '#d06a1a']}
+  ];
+  const FRAMES = ['translateX(-50%)', 'translateX(-20%) scale(1.7)', 'translateX(-95%) scale(.75)', 'translateX(-40%) scale(1.25)', 'translateX(-5%) scale(.9)'];
+  function buildStrips() {
+    const box = Kit.$('shotStrips');
+    box.innerHTML = FILMS.map((F, i) => `<div class="srow" data-i="${i}"><div class="nm"><span>${F.nm}</span><span class="mono">${F.m}</span></div><div class="sw" style="background:${F.tones[0]}"><b class="fig"></b><i></i></div><div class="trk2"><div class="fill"></div>${F.cuts.map(c => `<span class="cut" style="left:${c / 15 * 100}%"></span>`).join('')}</div></div>`).join('') + `<div class="secs"><span>0 s</span><span>5</span><span>10</span><span>15 s</span></div>`;
+  }
+  function setT(t) {
+    document.querySelectorAll('#shotStrips .srow').forEach(r => {
+      const F = FILMS[+r.dataset.i], n = F.cuts.filter(c => c <= t).length;
+      r.querySelector('.fill').style.transform = `scaleX(${t / 15})`;
+      r.querySelectorAll('.cut').forEach((c, k) => c.classList.toggle('on', k < n));
+      const sw = r.querySelector('.sw');
+      if (+sw.dataset.n !== n) { sw.dataset.n = n; sw.style.background = F.tones[n % F.tones.length]; sw.querySelector('.fig').style.transform = FRAMES[(n + +r.dataset.i) % FRAMES.length]; if (n && !calm) gsap.fromTo(sw.querySelector('i'), {opacity: .9}, {opacity: 0, duration: .25}); }
+    });
+  }
+  function strips(fast) {
+    Kit.hide('shotReel'); Kit.hide('shotRuler'); Kit.hide('shotCtl'); Kit.show('shotStrips'); buildStrips(); setT(0);
+    say.innerHTML = 'Fifteen seconds of each film, cut by cut. Count the yellow marks.';
+    const o = {t: 0}; stripsTl && stripsTl.kill();
+    const done = () => { Kit.show('shotKeep'); say.innerHTML = `${held ? `You held <b>${held.toFixed(1)} s</b>. ` : ''}In fifteen seconds: <b>2 cuts</b>, then <b>4</b>, then <b>7</b>. Old films did cut less, but about every ten seconds, not every minute. Long takes like Hitchcock’s <i>Rope</i> were the exceptions.`; };
+    if (fast || calm) { setT(15); done(); return; }
+    stripsTl = gsap.to(o, {t: 15, duration: 15, ease: 'none', onUpdate: () => setT(o.t), onComplete: done});
+  }
+  reel.addEventListener('pointerdown', e => { reel.setPointerCapture(e.pointerId); down(e); });
+  reel.addEventListener('pointerup', up); reel.addEventListener('pointercancel', up);
+  reel.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) down(e); });
+  reel.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') up(); });
+  Kit.$('shotGo').onclick = () => strips(false);
+  Kit.onShow.shot = () => { if (!Kit.$('shotReel').classList.contains('gone')) draw(); if (held !== null && !Kit.$('shotRuler').classList.contains('gone')) ruler(); };
+  Kit.onHide.shot = () => { stripsTl && stripsTl.pause(); };
+  Kit.play.shot = async () => { release(21.4); await wait(1200); strips(true); };
+})();
+
+/* ---------- 2 · The wire: subharmonics with Tone.js ---------- */
+(() => {
+  const cv = Kit.$('birdCv'), wireBox = Kit.$('birdWire'), wsvg = Kit.$('birdSvg'), cc = Kit.$('birdCc'), say = Kit.$('birdSay');
+  const on = {2: false, 3: false, 4: false};
+  let f = 880, pressX = null, playing = false, phase = 0, raf = 0, voices = null, played = new Set();
+  const subs = () => Object.keys(on).filter(k => on[k]).map(Number);
+  const caption = () => { const n = subs().length; return n === 0 ? '[a thin electronic whistle]' : n === 1 ? '[a whistle with a growl underneath]' : '[a harsh, crowded shriek]'; };
+  // the scope shows what you built: each tone on its own lane, then their sum, the sound you hear
+  function scope() {
+    const {x, W, H} = Kit.fitCanvas(cv), ks = [1, ...subs()], fs = Math.max(9, H * .075);
+    x.clearRect(0, 0, W, H);
+    const saw = p => 2 * (p - Math.floor(p + .5)), periods = 4, padL = fs * 2.2;
+    const lane0 = H * .2, laneH = H * .3 / ks.length, NAME = {1: 'f', 2: '½', 3: '⅓', 4: '¼'};
+    x.font = `700 ${fs}px ${MONO}`; x.textBaseline = 'middle';
+    ks.forEach((k, i) => {
+      const mid = lane0 + laneH * (i + .5), a = laneH * .32;
+      x.fillStyle = '#ffffffb0'; x.fillText(NAME[k], fs * .6, mid);
+      x.beginPath(); x.strokeStyle = '#ffffff99'; x.lineWidth = 1.3;
+      for (let j = 0; j <= W - padL - fs * .6; j++) { const p = j / (W - padL) * periods + phase; x.lineTo(padL + j, mid - saw(p / k) * a); }
+      x.stroke();
+    });
+    const mid = H * .67, amp = H * .13 / Math.sqrt(ks.length);
+    x.fillStyle = '#fff'; x.font = `800 ${fs * 1.5}px Figtree`; x.fillText('=', fs * .5, mid);
+    x.beginPath(); x.lineWidth = 2.6; x.strokeStyle = playing || ks.length > 1 ? '#FFE600' : '#fff'; x.lineJoin = 'round';
+    for (let j = 0; j <= W - padL - fs * .6; j++) { const p = j / (W - padL) * periods + phase; let y = 0; for (const k of ks) y += saw(p / k) * (k === 1 ? 1 : .8); x.lineTo(padL + j, mid - y * amp); }
+    x.stroke();
+    Kit.$('birdHz').textContent = ks.map(k => Math.round(f / k).toLocaleString('en')).join(' + ') + ' Hz';
+  }
+  function loop() { phase += .05; scope(); raf = playing ? requestAnimationFrame(loop) : 0; }
+  // the instrument: a wire above a metal rail; your finger presses one onto the other
+  function wire() {
+    wsvg.innerHTML = '';
+    const {W, H} = Kit.fitSvg(wsvg), fs = Math.max(10, Math.min(H * .1, W / 24)), x0 = W * .08, x1 = W * .92, wy = H * .4, ry = H * .62, rh = H * .12;
+    const gr = Kit.mk('linearGradient', {id: 'birdRail', x1: 0, y1: 0, x2: 0, y2: 1}, Kit.mk('defs', {}, wsvg));
+    Kit.mk('stop', {offset: 0, 'stop-color': '#f4f3f8'}, gr); Kit.mk('stop', {offset: 1, 'stop-color': '#8d8a9e'}, gr);
+    Kit.mk('rect', {x: x0, y: ry, width: x1 - x0, height: rh, rx: rh / 2, fill: 'url(#birdRail)'}, wsvg);
+    for (const xx of [x0, x1]) { Kit.mk('line', {x1: xx, y1: wy, x2: xx, y2: ry, stroke: '#8d8a9e', 'stroke-width': 3}, wsvg); Kit.mk('circle', {cx: xx, cy: wy, r: fs * .4, fill: '#d8d6e2'}, wsvg); }
+    const pressed = pressX !== null, px = pressed ? x0 + (x1 - x0) * pressX : W * .5;
+    Kit.mk('polyline', {points: pressed ? `${x0},${wy} ${px},${ry} ${x1},${wy}` : `${x0},${wy} ${x1},${wy}`, fill: 'none', stroke: '#fff', 'stroke-width': 2.4, 'stroke-linejoin': 'round'}, wsvg);
+    if (pressed) Kit.mk('circle', {cx: px, cy: ry, r: fs * .55, fill: '#FFE600', opacity: playing ? 1 : .85}, wsvg);
+    // the finger
+    const fw = fs * 1.5, tip = pressed ? ry - fs * .1 : wy - fs * 1.1;
+    const fg = Kit.mk('g', {}, wsvg);
+    Kit.mk('rect', {x: px - fw / 2, y: -fw, width: fw, height: tip + fw, rx: fw / 2, fill: '#f3c7a5'}, fg);
+    Kit.mk('rect', {x: px - fw * .3, y: tip - fw * .85, width: fw * .6, height: fw * .62, rx: fw * .25, fill: '#fbe2cf'}, fg);
+    if (!pressed) Kit.mk('path', {d: `M${px - fs * .4},${wy - fs * .75} l${fs * .4},${fs * .4} l${fs * .4},${-fs * .4}`, fill: 'none', stroke: '#FFE600', 'stroke-width': 2.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, wsvg);
+    // labels with leaders
+    const lab = (x, y, txt, anchor, col = '#fff') => T(wsvg, x, y, txt, {'text-anchor': anchor, fill: col}, fs * .78);
+    const wl = x0 + (x1 - x0) * .12;
+    lab(x0, wy - fs * 1.5, 'WIRE', 'start'); Kit.mk('line', {x1: x0 + fs * 1.5, y1: wy - fs * 1.3, x2: wl, y2: wy - 3, stroke: '#fff', 'stroke-width': 1.3, opacity: .7}, wsvg);
+    lab(W * .5, ry + rh + fs * 1.45, 'METAL RAIL', 'middle');
+    T(wsvg, x0, ry + rh + fs * 1.45, 'LOW', {opacity: .75, 'font-family': MONO, 'font-weight': 700}, fs * .66);
+    T(wsvg, x1, ry + rh + fs * 1.45, 'HIGH', {'text-anchor': 'end', opacity: .75, 'font-family': MONO, 'font-weight': 700}, fs * .66);
+    if (!pressed) lab(x1, wy - fs * 1.5, 'PRESS AND SLIDE', 'end', '#FFE600');
+  }
+  // sound
+  async function audio() {
+    if (voices) return voices;
+    await Tone.start();
+    const out = new Tone.Gain(.55).toDestination();
+    const mk = (detune, pan) => {
+      const env = new Tone.Gain(0), lp = new Tone.Filter(5200, 'lowpass'), dist = new Tone.Distortion(.35), vib = new Tone.Vibrato(19, .12), p = new Tone.Panner(pan);
+      const mix = new Tone.Gain(.3); mix.chain(vib, dist, lp, env, p, out);
+      const osc = {1: new Tone.Oscillator(f, 'sawtooth')}, g = {1: new Tone.Gain(1)};
+      for (const k of [2, 3, 4]) { osc[k] = new Tone.Oscillator(f / k, 'sawtooth'); g[k] = new Tone.Gain(0); }
+      for (const k in osc) { osc[k].detune.value = detune; osc[k].connect(g[k]); g[k].connect(mix); osc[k].start(); }
+      return {env, osc, g};
+    };
+    voices = [mk(0, 0), mk(14, -.5), mk(-11, .5)];
+    gains(); return voices;
+  }
+  function gains() { if (!voices) return; for (const v of voices) for (const k of [2, 3, 4]) v.g[k].gain.rampTo(on[k] ? .8 : 0, .05); }
+  function setF(v, freq, at) { for (const k in v.osc) v.osc[k].frequency.setValueAtTime(freq / k, at); }
+  function fx(r) { return 520 * Math.pow(2, 2.4 * r); }
+  async function press(e) {
+    const b = wireBox.getBoundingClientRect(), r = Math.max(0, Math.min(1, (e.clientX - b.left) / b.width));
+    pressX = r; f = fx(r); playing = true; wire(); if (!raf) loop();
+    cc.textContent = caption();
+    try { const v = (await audio())[0]; setF(v, f, Tone.now()); v.env.gain.cancelScheduledValues(Tone.now()); v.env.gain.rampTo(.9, .02); } catch (err) {}
+    played.add(subs().length); check();
+  }
+  function move(e) { if (!playing) return; const b = wireBox.getBoundingClientRect(); pressX = Math.max(0, Math.min(1, (e.clientX - b.left) / b.width)); f = fx(pressX); wire(); wireBox.setAttribute('aria-valuenow', Math.round(pressX * 100)); if (voices) { const now = Tone.now(); for (const k in voices[0].osc) voices[0].osc[k].frequency.rampTo(f / k, .03, now); } }
+  function release() { if (!playing) return; playing = false; wire(); scope(); if (voices) voices[0].env.gain.rampTo(0, .12); }
+  wireBox.addEventListener('pointerdown', e => { wireBox.setPointerCapture(e.pointerId); press(e); });
+  wireBox.addEventListener('pointermove', move);
+  wireBox.addEventListener('pointerup', release); wireBox.addEventListener('pointercancel', release);
+  wireBox.addEventListener('keydown', e => { if (e.repeat) return; if (e.key === ' ' || e.key === 'Enter') { const b = wireBox.getBoundingClientRect(); press({clientX: b.left + b.width * (pressX ?? .5)}); } });
+  wireBox.addEventListener('keyup', e => { if (e.key === ' ' || e.key === 'Enter') release(); });
+  document.querySelectorAll('#birds .sub').forEach(b => b.onclick = () => {
+    const k = +b.dataset.k; on[k] = !on[k]; b.setAttribute('aria-pressed', on[k]); gains(); scope(); cc.textContent = caption();
+    if (!calm) gsap.fromTo(b, {scale: .9}, {scale: 1, duration: .25, ease: 'back.out(3)'});
+  });
+  function check() {
+    if (played.has(0) && [...played].some(n => n >= 2) || played.has('flock')) {
+      say.innerHTML = 'Oskar Sala’s Mixtur-Trautonium added <b>subharmonics</b>, tones at ½, ⅓, ¼ of the note. They turn a thin whistle into a crowded shriek.';
+      Kit.show('birdKeep');
+    }
+  }
+  // the flock: overlapping shrieks that glide down, every subharmonic on
+  async function flock(silent) {
+    for (const k of [2, 3, 4]) { on[k] = true; document.querySelector(`#birds .sub[data-k="${k}"]`).setAttribute('aria-pressed', true); }
+    gains(); played.add('flock'); cc.textContent = '[shrieks, overlapping, closing in]'; check();
+    f = 1500; pressX = .63; scope(); wire();
+    if (silent) return;
+    let vs; try { vs = await audio(); } catch (e) { return; }
+    gains();
+    const t = Tone.now() + .05; Kit.rnd();
+    for (let i = 0; i < 16; i++) {
+      const v = vs[i % 3], at = t + i * .19 + Kit.rnd() * .12, d = .22 + Kit.rnd() * .2, f0 = 1100 + Kit.rnd() * 1300;
+      for (const k in v.osc) { v.osc[k].frequency.setValueAtTime(f0 * 1.25 / k, at); v.osc[k].frequency.exponentialRampToValueAtTime(f0 * .62 / k, at + d); }
+      v.env.gain.setValueAtTime(0, at); v.env.gain.linearRampToValueAtTime(.85, at + .02); v.env.gain.linearRampToValueAtTime(0, at + d);
+    }
+    playing = true; if (!raf) loop();
+    setTimeout(() => { playing = false; scope(); cc.textContent = caption(); }, 3600);
+  }
+  Kit.$('birdFlock').onclick = () => flock(false);
+  Kit.onShow.birds = () => { scope(); wire(); };
+  Kit.onHide.birds = () => { release(); };
+  Kit.play.birds = async () => { await flock(true); };
+})();
+
+/* ---------- 3 · Where does it block? ---------- */
+(() => {
+  const svg = Kit.$('painSvg'), say = Kit.$('painSay');
+  let drug = null, geo = null, tl = null; const seen = new Set();
+  const PAIN = '#FFE600', TOUCHC = '#8fe3ff';
+  const INFO = {
+    ibu: '<b>Ibuprofen: at the injury.</b> It calms the chemicals that make pain nerves fire harder. The signal still runs, weaker.',
+    lido: '<b>Lidocaine: on the nerve.</b> It blocks every nerve it reaches, so touch goes numb too. The dentist’s numb lip.',
+    morph: '<b>Morphine: in the spine and brain.</b> It turns the signal down on arrival, and brings the high and the risk of addiction.',
+    suz: '<b>Suzetrigine: pain nerves only.</b> It blocks NaV1.8, a channel found mainly there. Touch passes, no high. In trials it beat placebo, not an opioid pill.'
+  };
+  // where each drug stops each line (fraction of the route from toe to brain; null = gets through) and what reaches the brain
+  const STOP = {ibu: {pain: null, touch: null, weak: true}, lido: {pain: .12, touch: .12}, morph: {pain: .8, touch: null, weak: true}, suz: {pain: .3, touch: null}};
+  const METER = {
+    none: ['No drug', 'Both signals arrive', 1, 'FULL', 1, 'FULL'],
+    ibu: ['Ibuprofen', 'Acts at the injury', .5, 'WEAKER', 1, 'FULL'],
+    lido: ['Lidocaine', 'Acts on every nerve', 0, 'BLOCKED', 0, 'BLOCKED'],
+    morph: ['Morphine', 'Acts in spine and brain', .3, 'DIMMED', 1, 'FULL'],
+    suz: ['Suzetrigine', 'Acts on pain nerves only', 0, 'BLOCKED', 1, 'FULL']
+  };
+  function meter() {
+    const [n, site, p, pw, t, tw] = METER[drug || 'none'];
+    Kit.$('pmDrug').textContent = n; Kit.$('pmSite').textContent = site;
+    Kit.$('pmPain').style.transform = `scaleX(${Math.max(.02, p)})`; Kit.$('pmTouch').style.transform = `scaleX(${Math.max(.02, t)})`;
+    Kit.$('pmPainW').textContent = pw; Kit.$('pmTouchW').textContent = tw;
+  }
+  function draw() {
+    svg.innerHTML = ''; tl && tl.kill();
+    const {W, H} = Kit.fitSvg(svg), f = Math.max(10, Math.min(H / 17, W / 21));
+    const sx = W * .2, r = Math.min(W * .13, H * .1), bcy = H * .05 + r * .95, top = bcy + r * .75, jy = H * .6;
+    // brain: one flat shape, two lobes and a cerebellum
+    const brain = Kit.mk('g', {}, svg);
+    const glow = Kit.mk('circle', {cx: sx, cy: bcy, r: r * 1.5, fill: PAIN, opacity: 0}, brain);
+    Kit.mk('circle', {cx: sx + r * .55, cy: bcy + r * .55, r: r * .38, fill: '#f0a39c'}, brain);
+    for (const [dx, dy, rr] of [[-.55, .12, .5], [-.2, -.3, .58], [.3, -.28, .55], [.6, .1, .45], [.12, .22, .58], [-.3, .38, .42]]) Kit.mk('circle', {cx: sx + dx * r, cy: bcy + dy * r, r: rr * r, fill: '#ffd3cf'}, brain);
+    for (const d of [`M${sx - r * .7},${bcy} q${r * .3},${-r * .35} ${r * .55},${-r * .05}`, `M${sx - r * .1},${bcy - r * .55} q${r * .1},${r * .45} ${r * .45},${r * .4}`, `M${sx + r * .25},${bcy + r * .15} q${r * .3},${-r * .2} ${r * .6},${r * .05}`]) Kit.mk('path', {d, fill: 'none', stroke: '#d9615a', 'stroke-width': 1.6, 'stroke-linecap': 'round'}, brain);
+    // the spine: vertebrae, the cord running beside them
+    const vw = r * .62, vh = Math.max(4, f * .5);
+    for (let y = top + vh * .4; y < jy + vh; y += vh * 1.45) Kit.mk('rect', {x: sx - vw / 2, y, width: vw, height: vh, rx: vh * .35, fill: '#fff', opacity: .88}, svg);
+    // the foot, side view, toes to the right
+    const fx0 = W * .6, fy0 = H * .79, fw = W * .37, fh = H * .17, F = (u, v) => `${fx0 + u * fw},${fy0 + v * fh}`;
+    Kit.mk('path', {d: `M${F(.1, 1)} C${F(0, 1)} ${F(0, .72)} ${F(.06, .58)} L${F(.1, -.6)} L${F(.34, -.6)} L${F(.36, .05)} C${F(.4, .35)} ${F(.55, .45)} ${F(.72, .53)} C${F(.88, .6)} ${F(1, .66)} ${F(1, .84)} C${F(1, .97)} ${F(.95, 1)} ${F(.88, 1)} Z`, fill: '#ffd3cf'}, svg);
+    for (const u of [.8, .87, .94]) Kit.mk('line', {x1: fx0 + u * fw, y1: fy0 + fh * .72, x2: fx0 + u * fw, y2: fy0 + fh * .98, stroke: '#d9615a', 'stroke-width': 1.3, opacity: .7}, svg);
+    const toe = [fx0 + fw * .9, fy0 + fh * .8];
+    // two nerves from the toe to the brain: pain (bright) and touch (thin)
+    const o1 = vw * .5 + f * .45, o2 = vw * .5 + f * .95;
+    const dPain = `M${toe} C${W * .62},${H * .97} ${W * .4},${H * .74} ${sx + o1},${jy} L${sx + o1},${top}`;
+    const dTouch = `M${toe} C${W * .66},${H * .82} ${W * .46},${H * .62} ${sx + o2},${jy - f * .8} L${sx + o2},${top}`;
+    Kit.mk('path', {d: dPain, fill: 'none', stroke: PAIN, 'stroke-width': f * .7, opacity: .18, 'stroke-linecap': 'round'}, svg);
+    const pain = Kit.mk('path', {d: dPain, fill: 'none', stroke: PAIN, 'stroke-width': 3, 'stroke-linecap': 'round'}, svg);
+    const touch = Kit.mk('path', {d: dTouch, fill: 'none', stroke: TOUCHC, 'stroke-width': 1.6, 'stroke-dasharray': '5 4', opacity: .9}, svg);
+    // the injury
+    for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3 - Math.PI / 2; Kit.mk('line', {x1: toe[0] + Math.cos(a) * f * .55, y1: toe[1] + Math.sin(a) * f * .55, x2: toe[0] + Math.cos(a) * f * .95, y2: toe[1] + Math.sin(a) * f * .95, stroke: PAIN, 'stroke-width': 2, 'stroke-linecap': 'round'}, svg); }
+    Kit.mk('circle', {cx: toe[0], cy: toe[1], r: f * .32, fill: PAIN}, svg);
+    // labels in outlined boxes, as on a technical drawing
+    const box = (x, y, txt, anchor = 'start', col = '#fff', fs = f * .72) => { const t = T(svg, x, y, txt, {'text-anchor': anchor, fill: col}, fs); const b = t.getBBox(); svg.insertBefore(Kit.mk('rect', {x: b.x - fs * .5, y: b.y - fs * .3, width: b.width + fs, height: b.height + fs * .6, rx: fs * .45, fill: '#1a0504', stroke: col, 'stroke-width': 1.5}, svg), t); return t; };
+    box(sx + r * 1.05, bcy + r * 1.05, 'BRAIN');
+    box(sx + o2 + f * .7, H * .5, 'SPINAL CORD');
+    box(W * .97, fy0 - fh * .85, 'YOUR TOE', 'end');
+    T(svg, W * .5, H * .66, 'TOUCH', {fill: TOUCHC, 'font-family': MONO, 'font-weight': 700}, f * .6);
+    box(f * .6, H - f * .6, 'PAIN NERVE ≈ 1 M', 'start', PAIN, f * .8);
+    geo = {pain, touch, glow, f};
+    marks();
+  }
+  function marks() {
+    if (!geo) return;
+    svg.querySelectorAll('.blk').forEach(e => e.remove());
+    meter();
+    if (!drug) { pulse(); return; }
+    const s = STOP[drug], {f} = geo, at = (path, fr) => { const L = path.getTotalLength(), p = path.getPointAtLength(L * fr), q = path.getPointAtLength(L * Math.min(1, fr + .01)); return {p, a: Math.atan2(q.y - p.y, q.x - p.x) + Math.PI / 2}; };
+    const bar = (path, fr, len) => { const {p, a} = at(path, fr); return Kit.mk('line', {class: 'blk', x1: p.x - Math.cos(a) * len, y1: p.y - Math.sin(a) * len, x2: p.x + Math.cos(a) * len, y2: p.y + Math.sin(a) * len, stroke: '#fff', 'stroke-width': f * .4, 'stroke-linecap': 'round'}, svg); };
+    const ring = (x, y, rr) => { const c = Kit.mk('circle', {class: 'blk', cx: x, cy: y, r: rr, fill: 'none', stroke: '#fff', 'stroke-width': f * .22, 'stroke-dasharray': `${f * .45} ${f * .3}`}, svg); if (!calm) gsap.from(c, {scale: .6, opacity: 0, transformOrigin: '50% 50%', duration: .35}); };
+    if (drug === 'ibu') { const p = geo.pain.getPointAtLength(0); ring(p.x, p.y, f * 1.3); }
+    if (drug === 'lido') bar(geo.pain, s.pain, f * 1.5);
+    if (drug === 'suz') bar(geo.pain, s.pain, f * .75);
+    if (drug === 'morph') { bar(geo.pain, s.pain, f * .7); ring(+geo.glow.getAttribute('cx'), +geo.glow.getAttribute('cy'), +geo.glow.getAttribute('r') * .9); }
+    if (!calm) gsap.from(svg.querySelectorAll('line.blk'), {drawSVG: '50% 50%', duration: .35, ease: 'power2.out'});
+    pulse();
+  }
+  // a signal leaves the toe every few seconds; where the drug sits, it dies
+  function pulse() {
+    tl && tl.kill(); svg.querySelectorAll('.dot').forEach(e => e.remove());
+    const {f} = geo, s = drug ? STOP[drug] : {pain: null, touch: null};
+    const mkDot = (path, r, col) => ({path, el: Kit.mk('circle', {class: 'dot', r, fill: col, cx: -99, cy: -99}, svg)});
+    const P = mkDot(geo.pain, f * .45 * (s.weak ? .65 : 1), PAIN), Q = mkDot(geo.touch, f * .28, TOUCHC);
+    const run = (d, stop) => { const L = d.path.getTotalLength(), end = stop ?? 1, o = {u: 0}; return gsap.to(o, {u: end, duration: 1.6 * end, ease: 'none', onUpdate: () => { const p = d.path.getPointAtLength(L * o.u); d.el.setAttribute('cx', p.x); d.el.setAttribute('cy', p.y); }}); };
+    if (calm) return;
+    tl = gsap.timeline({repeat: -1, repeatDelay: .7});
+    tl.add(run(P, s.pain), 0).add(run(Q, s.touch), 0);
+    if (s.pain === null) tl.fromTo(geo.glow, {opacity: 0}, {opacity: s.weak ? .25 : .55, duration: .15, yoyo: true, repeat: 1}, 1.6);
+    tl.to([P.el, Q.el], {opacity: 0, duration: .2}).set([P.el, Q.el], {opacity: 1, attr: {cx: -99, cy: -99}});
+  }
+  function pick(d) {
+    drug = d; seen.add(d);
+    document.querySelectorAll('#painDrugs .drug').forEach(b => { b.classList.toggle('on', b.dataset.d === d); b.classList.toggle('seen', seen.has(b.dataset.d)); });
+    say.innerHTML = INFO[d]; Kit.$('painQ').textContent = 'Where each painkiller cuts the signal'; marks();
+    if (seen.has('suz') && seen.size >= 2) Kit.show('painKeep');
+  }
+  document.querySelectorAll('#painDrugs .drug').forEach(b => b.onclick = () => pick(b.dataset.d));
+  Kit.onShow.pain = () => draw();
+  Kit.onHide.pain = () => tl && tl.pause();
+  Kit.play.pain = async () => { for (const d of ['ibu', 'lido', 'morph', 'suz']) { pick(d); await wait(700); } };
+})();
+
+/* ---------- 4 · Branching lines: Newcomb ---------- */
+(() => {
+  const svg = Kit.$('newcSvg'), say = Kit.$('newcSay');
+  let side = null, step = 0, view = 'all', S = {};
+  const Y = '#FFE600';
+  const CASE = {
+    one: '<b>The case for one box.</b> The predictor is almost never wrong, so only the two bold paths really happen. One-boxers leave with a million, two-boxers with a thousand. A rule that keeps its followers poor has a problem.',
+    two: '<b>The case for both.</b> The boxes were filled yesterday: the million is there or it isn’t. On either branch, taking both adds $1,000. David Lewis: one-boxers get rich because the game rewards their kind of mind, not their choice.'
+  };
+  function draw() {
+    svg.innerHTML = ''; S = {};
+    const {W, H} = Kit.fitSvg(svg), f = Math.max(10, Math.min(H / 15, W / 21));
+    const rx = f * 1.2, ry = H * .5, nx = W * .3, lx = W * .52, pad = H * .1;
+    const A = [nx, pad + (H - 2 * pad) * .22], B = [nx, pad + (H - 2 * pad) * .78];
+    const L = {a1: [lx, pad], a2: [lx, pad + (H - 2 * pad) * .36], b1: [lx, pad + (H - 2 * pad) * .64], b2: [lx, H - pad]};
+    const curve = (p, q) => `M${p} C${(p[0] + q[0]) / 2},${p[1]} ${(p[0] + q[0]) / 2},${q[1]} ${q}`;
+    const seg = (id, p, q) => S[id] = Kit.mk('path', {d: curve(p, q), fill: 'none', stroke: '#fff', 'stroke-width': 2, 'stroke-linecap': 'round', class: 'br'}, svg);
+    seg('A', [rx, ry], A); seg('B', [rx, ry], B);
+    seg('a1', A, L.a1); seg('a2', A, L.a2); seg('b1', B, L.b1); seg('b2', B, L.b2);
+    Kit.mk('circle', {cx: rx, cy: ry, r: f * .45, fill: '#fff'}, svg);
+    for (const p of [A, B]) Kit.mk('circle', {cx: p[0], cy: p[1], r: f * .3, fill: '#fff'}, svg);
+    S.lock = Kit.mk('g', {opacity: 0}, svg);
+    Kit.mk('rect', {x: rx - f * .55, y: ry - f * .35, width: f * 1.1, height: f * .9, rx: f * .15, fill: Y}, S.lock);
+    Kit.mk('path', {d: `M${rx - f * .32},${ry - f * .35} v${-f * .3} a${f * .32},${f * .32} 0 0 1 ${f * .64},0 v${f * .3}`, fill: 'none', stroke: Y, 'stroke-width': f * .16}, S.lock);
+    S.rootLbl = T(svg, f * .5, H - f * .6, 'PREDICTED YESTERDAY', {'font-family': MONO, 'font-weight': 700, opacity: .8}, f * .55);
+    S.rootNote = Kit.mk('g', {}, svg);
+    T(svg, A[0] + f * .2, A[1] - f * .8, 'BOX: $1M', {'text-anchor': 'end'}, f * .66);
+    T(svg, B[0] + f * .2, B[1] + f * 1.35, 'BOX: EMPTY', {'text-anchor': 'end'}, f * .66);
+    const leaf = (id, take, pay) => {
+      const p = L[id], g = Kit.mk('g', {class: 'leaf'}, svg);
+      T(g, p[0] + f * .5, p[1] + f * 1.25, take, {'font-family': MONO, 'font-weight': 700, opacity: .75}, f * .55);
+      S[id + 'p'] = T(g, p[0] + f * .5, p[1] + f * .38, pay, {'font-family': 'Fraunces', 'font-weight': 900, 'letter-spacing': '-.01em'}, f * 1.05);
+      S[id + 'g'] = g;
+    };
+    leaf('a1', 'ONE BOX', '$1,000,000'); leaf('a2', 'BOTH', '$1,001,000'); leaf('b1', 'ONE BOX', '$0'); leaf('b2', 'BOTH', '$1,000');
+    S.plus = [];
+    for (const id of ['a2', 'b2']) { const p = L[id], t = T(svg, p[0] + f * 3.4, p[1] + f * 1.25, '+$1,000', {fill: Y, opacity: 0, 'font-family': MONO, 'font-weight': 700}, f * .55); S.plus.push(t); }
+    S.rare = [];
+    for (const id of ['a2', 'b1']) { const p = L[id], q = id === 'a2' ? A : B; const t = T(svg, (p[0] + q[0]) / 2 + f * .2, (p[1] + q[1]) / 2 + (id === 'a2' ? f * .1 : f * .5), 'RARE', {'text-anchor': 'middle', 'font-family': MONO, 'font-weight': 700, fill: Y, opacity: 0}, f * .5); S.rare.push(t); }
+    S.f = f;
+    apply(true);
+  }
+  // the same tree, read two ways
+  function apply(instant) {
+    const d = instant || calm ? 0 : .6, f = S.f, br = svg.querySelectorAll('.br');
+    const W = (ids, w, o, dash) => ids.forEach(id => gsap.to(S[id], {attr: {'stroke-width': w, 'stroke-dasharray': dash || 'none'}, opacity: o, duration: d}));
+    const pays = (ids, col, o) => ids.forEach(id => gsap.to(S[id + 'g'], {opacity: o, duration: d}) && gsap.to(S[id + 'p'], {attr: {fill: col}, duration: d}));
+    S.rootLbl.textContent = view === 'two' ? 'FILLED YESTERDAY: FIXED' : 'PREDICTED YESTERDAY'; S.rootLbl.setAttribute('fill', view === 'two' ? Y : '#fff');
+    if (view === 'all') { W(['A', 'B', 'a1', 'a2', 'b1', 'b2'], 2, 1); pays(['a1', 'a2', 'b1', 'b2'], '#fff', 1); gsap.to([S.lock, S.rootNote, ...S.plus, ...S.rare], {opacity: 0, duration: d}); }
+    if (view === 'one') {
+      W(['A', 'a1', 'B', 'b2'], f * .42, 1); W(['a2', 'b1'], 1.2, .45, '3 5');
+      pays(['a1'], Y, 1); pays(['b2'], '#fff', 1); pays(['a2', 'b1'], '#fff', .4);
+      gsap.to([S.lock, S.rootNote, ...S.plus], {opacity: 0, duration: d}); gsap.to(S.rare, {opacity: 1, duration: d});
+    }
+    if (view === 'two') {
+      W(['A', 'B'], f * .42, 1); W(['a1', 'b1'], 2, .8); W(['a2', 'b2'], f * .3, 1);
+      pays(['a2', 'b2'], Y, 1); pays(['a1', 'b1'], '#fff', .8);
+      gsap.to([S.lock, S.rootNote, ...S.plus], {opacity: 1, duration: d}); gsap.to(S.rare, {opacity: 0, duration: d});
+      if (!instant && !calm) gsap.from(S.lock, {y: -10, duration: .4, ease: 'back.out(3)'});
+    }
+  }
+  function enter() { if (calm) return; gsap.from(svg.querySelectorAll('.br'), {drawSVG: '0%', duration: .7, stagger: .1, ease: 'power2.inOut'}); gsap.from(svg.querySelectorAll('.leaf'), {opacity: 0, x: -6, duration: .4, stagger: .08, delay: .5}); }
+  function choose(s) {
+    side = s; step = 1; view = s; apply(false);
+    Kit.hide('newcPick'); Kit.show('newcCtl'); Kit.$('newcNext').textContent = 'Hear the other side'; Kit.$('newcStep').textContent = '1 / 3';
+    say.innerHTML = CASE[s];
+    Kit.$('newcQ').dataset.q ??= Kit.$('newcQ').textContent;
+    Kit.$('newcQ').textContent = s === 'one' ? 'You took only the closed box.' : 'You took both boxes.';
+  }
+  function next() {
+    if (step === 1) { step = 2; view = side === 'one' ? 'two' : 'one'; apply(false); say.innerHTML = CASE[view]; Kit.$('newcNext').textContent = 'So who is right?'; Kit.$('newcStep').textContent = '2 / 3'; }
+    else if (step === 2) { step = 3; say.innerHTML = 'Nobody has settled it. In a 2020 survey of philosophers, <b>39%</b> took both boxes and <b>31%</b> one. Among decision theorists, <b>73%</b> took both.'; Kit.show('newcKeep'); Kit.$('newcNext').textContent = 'Start again'; Kit.$('newcStep').textContent = '3 / 3'; }
+    else { step = 0; side = null; view = 'all'; apply(false); Kit.hide('newcCtl'); Kit.hide('newcKeep'); Kit.show('newcPick'); Kit.$('newcQ').textContent = Kit.$('newcQ').dataset.q; say.innerHTML = 'Every way it can go, from the prediction to your pay. Pick before you think too long.'; }
+  }
+  document.querySelectorAll('#newcPick .btn').forEach(b => b.onclick = () => choose(b.dataset.s));
+  Kit.$('newcNext').onclick = next;
+  Kit.onShow.newc = () => { const first = !svg.childNodes.length; draw(); if (first || step === 0) enter(); };
+  Kit.play.newc = async () => { choose('one'); await wait(900); next(); await wait(900); next(); };
+})();
+
+/* ---------- 5 · Kinetic type: the 60-day rule ---------- */
+(() => {
+  const kin = Kit.$('chzKin'), say = Kit.$('chzSay');
+  let side = null, step = 0;
+  const ARG = {
+    drop: {side: 'The case to drop it', n: '270+', u: 'days', cap: 'E. coli O157 was still found in raw-milk cheddar and gouda aged this long.',
+      say: '<b>Drop it.</b> The rule rests on 1940s tests of typhoid in cheddar. Ageing gives hard cheese false comfort and bans every young cheese outright. Test the milk, inspect the dairy.'},
+    keep: {side: 'The case to keep it', n: '50–160×', u: '', cap: 'the listeriosis risk per serving of raw-milk soft cheese, against pasteurised.',
+      say: '<b>Keep it.</b> Listeria hits pregnant women and the elderly hardest. The rule keeps exactly the riskiest cheeses, young and soft, off the shelf. An imperfect barrier still blocks the worst.'}
+  };
+  function intro() {
+    step = 0; side = null;
+    kin.innerHTML = `<div class="kl"><span class="kw">Cheddar</span></div><div class="krow"><span class="kmeta">raw milk · aged 61 days</span><span class="stamp ok">LEGAL</span></div>
+      <div class="kl"><span class="kw">Brie</span></div><div class="krow"><span class="kmeta">raw milk · aged 30 days</span><span class="stamp no">BANNED</span></div>`;
+    kin.querySelectorAll('.kw').forEach(w => { let z = parseFloat(getComputedStyle(w).fontSize); while (w.scrollWidth > kin.clientWidth && z > 10) { z *= .95; w.style.fontSize = z + 'px'; } });
+    ['chzCtl', 'chzSay', 'chzKeep'].forEach(Kit.hide); Kit.$('chzPick').classList.remove('gone'); Kit.$('chzQ').classList.remove('gone');
+    if (calm) return;
+    const words = [...kin.querySelectorAll('.kw')];
+    words.forEach((w, i) => { const sp = SplitText.create(w, {type: 'chars'}); gsap.from(sp.chars, {yPercent: 90, skewX: -14, opacity: 0, duration: .5, stagger: .03, ease: 'power4.out', delay: .1 + i * .25, onComplete: () => sp.revert()}); });
+    gsap.from(kin.querySelectorAll('.krow .kmeta'), {opacity: 0, x: -10, duration: .3, stagger: .25, delay: .3});
+    gsap.from(kin.querySelectorAll('.stamp'), {scale: 1.8, opacity: 0, duration: .22, stagger: .2, delay: .5, ease: 'power3.in'});
+  }
+  function block(k) {
+    const a = ARG[k];
+    return `<div class="big2" data-k="${k}"><span class="side">${a.side}</span><span class="n">${a.n}${a.u ? `<small>${a.u}</small>` : ''}</span><span class="cap">${a.cap}</span></div>`;
+  }
+  function fit(el) { const n = el.querySelector('.n'); n.style.fontSize = ''; let s = parseFloat(getComputedStyle(n).fontSize); while (n.scrollWidth > kin.clientWidth && s > 10) { s *= .94; n.style.fontSize = s + 'px'; } }
+  function slam(el) {
+    fit(el); if (calm) return;
+    const n = el.querySelector('.n'), sp = SplitText.create(n, {type: 'chars'});
+    gsap.from(sp.chars, {yPercent: 110, opacity: 0, skewY: 8, duration: .6, stagger: .05, ease: 'power4.out', onComplete: () => sp.revert()});
+    gsap.from(el.querySelectorAll('.side, .cap'), {opacity: 0, y: 8, duration: .4, delay: .35, stagger: .1});
+  }
+  function choose(k) {
+    side = k; step = 1;
+    Kit.hide('chzPick'); Kit.hide('chzQ'); Kit.show('chzCtl'); Kit.show('chzSay'); say.innerHTML = ARG[k].say;
+    const go = () => { kin.innerHTML = block(k); slam(kin.firstElementChild); };
+    if (calm) go(); else gsap.to(kin.children, {xPercent: -110, opacity: 0, duration: .35, stagger: .04, ease: 'power3.in', onComplete: go});
+  }
+  function other() {
+    const o = side === 'drop' ? 'keep' : 'drop'; step = 2;
+    const first = kin.firstElementChild;
+    first.insertAdjacentHTML('afterend', block(o));
+    const second = kin.lastElementChild;
+    kin.querySelectorAll('.big2').forEach(fit);
+    // both cases now share the stage, smaller
+    kin.querySelectorAll('.big2 .n').forEach(n => n.style.fontSize = Math.min(parseFloat(getComputedStyle(n).fontSize), kin.clientHeight * .2) + 'px');
+    kin.querySelectorAll('.big2').forEach(fit);
+    if (!calm) gsap.from(first, {y: 30, duration: .5, ease: 'power3.out'});
+    slam(second);
+    say.innerHTML = ARG[o].say;
+    Kit.hide('chzCtl');
+    setTimeout(() => { say.innerHTML = 'Both numbers are real. What decides it: does a calendar control the risk, or would <b>testing the milk</b> control it better?'; Kit.show('chzKeep'); }, calm ? 0 : 2600);
+  }
+  document.querySelectorAll('#chzPick .btn').forEach(b => b.onclick = () => choose(b.dataset.s));
+  Kit.$('chzNext').onclick = other;
+  Kit.onShow.chz = () => { if (step === 0) intro(); else kin.querySelectorAll('.big2').forEach(fit); };
+  Kit.play.chz = async () => { choose('drop'); await wait(1200); other(); await wait(2800); };
+})();
+
+Kit.deck();
+</script>

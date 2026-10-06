@@ -1,0 +1,502 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Astute Cards, Round Five D</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,800;0,9..144,900;1,9..144,700&family=Figtree:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="../kit/astute-card.css">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/DrawSVGPlugin.min.js"></script>
+<style>
+/* Round five, page D. Four techniques, four layouts:
+   a confidence bet that ends in your own calibration curve, a chart you draw before the
+   study draws its own, an editorial grid of six medallists, and a sample that grows dot by dot. */
+.stagebox{display:flex;flex-direction:column}
+.ctl{display:flex;align-items:center;gap:4cqw}
+.ctl .mono{opacity:.7}
+.btn:disabled{opacity:.35;cursor:default}
+
+/* ---------- 1 · calibration ---------- */
+.quiz{flex:1;min-height:0;display:flex;flex-direction:column;padding:2.4cqh 5cqw 2.4cqh;gap:1.6cqh}
+.qhead{display:flex;justify-content:space-between;align-items:center;color:#111}
+.qhead .mono{opacity:.6}
+.ticks{display:flex;gap:1.2cqw}.ticks i{flex:1;height:.5cqh;border-radius:1cqh;background:#10100c22}.ticks i.on{background:#10100c}
+.qq{font:800 3.1cqh/1.15 var(--display);color:#10100c;margin:.6cqh 0 0;letter-spacing:-.01em;text-wrap:balance}
+.opts{display:flex;flex-direction:column;gap:1.2cqh}
+.opt{font:700 2.1cqh/1.2 var(--body);text-align:left;border:0;border-radius:1.6cqh;padding:1.7cqh 4.5cqw;background:#10100c0d;color:#10100c;box-shadow:inset 0 0 0 .25cqh #10100c26;cursor:pointer;transition:background-color .16s ease,color .16s ease}
+.opt.on{background:#10100c;color:#FFC49B;box-shadow:none}
+.conf{margin-top:auto;display:flex;flex-direction:column;gap:1cqh}
+.conf .mono{color:#111;opacity:.6}
+.chips{display:flex;gap:1.4cqw}
+.cf{flex:1;font:800 1.85cqh/1 var(--body);border:0;border-radius:1.2cqh;padding:1.5cqh 0;background:#FFC49B;color:#10100c;cursor:pointer;transition:transform .14s cubic-bezier(.23,1,.32,1)}
+.cf:active{transform:scale(.96)}
+.cf:disabled{opacity:.35;cursor:default}
+.ends{display:flex;justify-content:space-between;font:600 1.4cqh/1 var(--body);color:#10100c;opacity:.55}
+.res{flex:1;min-height:0;display:flex;flex-direction:column;gap:1.2cqh}
+.res .plot{flex:1;min-height:0;position:relative}
+.miss{display:flex;flex-direction:column;gap:.8cqh}
+.mrow{display:flex;align-items:center;gap:3cqw;background:#10100c;color:#FFC49B;border-radius:1.4cqh;padding:1cqh 3.6cqw}
+.mrow b{font:900 2.6cqh/1 var(--display);min-width:11cqw;color:#ff8a7a}
+.mrow span{font:600 1.55cqh/1.25 var(--body)}
+.mrow span i{font-style:normal;opacity:.7}
+
+/* ---------- 2 · draw it ---------- */
+#wardSvg{touch-action:none;cursor:crosshair}
+
+/* ---------- 3 · editorial grid ---------- */
+.grid{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,1fr);gap:1.3cqh 2.6cqw}
+.tile{position:relative;background:#fbfbf4;color:#10100c;border-radius:1.8cqh;padding:1.3cqh 3cqw;display:flex;flex-direction:column;gap:.55cqh;overflow:hidden;box-shadow:0 .5cqh 0 #5f940055}
+.tile .who{font:800 2.05cqh/1.05 var(--display);letter-spacing:-.01em}
+.tile .what{font:600 1.45cqh/1.22 var(--body);opacity:.62}
+.md{display:flex;align-items:center;gap:1.6cqw;font:700 1.55cqh/1.2 var(--body);position:relative}
+.md i{flex:none;width:1.7cqh;height:1.7cqh;border-radius:50%;box-shadow:inset 0 0 0 .22cqh #10100c55}
+.md i.g{background:#E8B931}.md i.s{background:#C3C8CE}
+.md s{text-decoration:none;position:relative}
+.md s::after{content:"";position:absolute;left:-1cqw;right:-1cqw;top:55%;height:.32cqh;background:#d4241b;transform:scaleX(0);transform-origin:left center;transition:transform .45s cubic-bezier(.23,1,.32,1)}
+.struck .md.art s::after,.stripped .md.ath s::after{transform:scaleX(1)}
+.struck .md.art,.stripped .md.ath{opacity:.55;transition:opacity .45s ease}
+.back .md.ath{opacity:1}.back .md.ath s::after{transform:scaleX(0)}
+.what.hit{opacity:1;color:#c41d14;font:800 1.45cqh/1.22 var(--body);letter-spacing:.01em}
+.what.ok{opacity:1;color:#2a7a12;font:800 1.45cqh/1.22 var(--body)}
+.tile{transition:box-shadow .3s ease}.tile.hit{box-shadow:inset 0 0 0 .3cqh #c41d14,0 .5cqh 0 #5f940055}
+.gh{display:flex;justify-content:space-between;align-items:baseline}
+.gh .mono{opacity:.7}
+
+/* ---------- 4 · sample ---------- */
+.counter{display:flex;align-items:flex-end;justify-content:space-between;gap:3cqw}
+.counter .n{font:900 6.2cqh/.9 var(--display);letter-spacing:-.02em}
+.counter .lab{display:flex;flex-direction:column;align-items:flex-end;gap:.6cqh;text-align:right}
+.counter .lab .mono{opacity:.8}
+.cv{flex:1;min-height:0;position:relative}
+.stats{display:flex;gap:2.6cqw}
+.stat{flex:1;border-radius:1.6cqh;padding:1.1cqh 3cqw;background:#ffffff1f;display:flex;flex-direction:column;gap:.5cqh}
+.stat .mono{opacity:.8}
+.stat b{font:900 3cqh/1 var(--display)}
+.stat.gap{background:#fff;color:#82208f}
+.stat.gap .mono{opacity:.75}
+.side{flex:1;padding:1.6cqh 2cqw;font-size:1.85cqh}
+</style>
+
+<div class="app">
+  <div class="top"><h1>Today</h1><div class="dots" id="dots"></div><div class="kind" id="kind"></div></div>
+  <div class="stage">
+    <button class="nav" id="prev" aria-label="Previous card">←</button>
+    <button class="nav" id="next" aria-label="Next card">→</button>
+
+    <!-- 1 · Bet your confidence: calibration curve -->
+    <article class="card" id="edge" style="--c:#FFC49B;--k:#10100c;--edge:#a8714a" data-kind="Bet your confidence · calibration">
+      <div class="in">
+        <div class="label"><span class="t">Life</span><span class="tag">YOUR BET</span></div>
+        <h2 class="q">Buffett: the size of what you know matters little. Knowing <em>where it ends</em> is vital. Where does yours end?</h2>
+        <div class="stagebox" id="edgeBox">
+          <div class="quiz float" id="edgeQuiz">
+            <div class="qhead"><span class="mono" id="edgeN">1 / 6</span><span class="mono" id="edgeF">PHYSICS</span></div>
+            <div class="ticks" id="edgeTicks"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <p class="qq" id="edgeQ"></p>
+            <div class="opts" id="edgeOpts"></div>
+            <div class="conf">
+              <span class="mono">How sure are you?</span>
+              <div class="chips" id="edgeChips"></div>
+              <div class="ends"><span>coin flip</span><span>certain</span></div>
+            </div>
+          </div>
+          <div class="res gone" id="edgeRes">
+            <div class="plot"><svg class="full" id="edgeSvg" role="img" aria-label="Your calibration: how sure you were against how often you were right"></svg></div>
+            <div class="miss" id="edgeMiss"></div>
+          </div>
+        </div>
+        <p class="say" id="edgeSay">Six fields. Pick an answer, then bet how sure you are.</p>
+        <div class="keep gone" id="edgeKeep"><b>WHAT TO KEEP</b>Before trusting a hunch, ask where your knowledge stops. The worst mistakes sit just past that line.</div>
+        <div class="foot"><span class="src">Source · Buffett, Berkshire Hathaway letter (1996); Lichtenstein &amp; Fischhoff, <i>Org. Behavior &amp; Human Performance</i> (1977)</span></div>
+      </div>
+    </article>
+
+    <!-- 2 · Draw it yourself -->
+    <article class="card" id="ward" style="--c:#9B5CFF;--k:#ffffff;--edge:#5a2ea6" data-kind="Draw it · then see the study">
+      <div class="in">
+        <div class="label"><span class="t">Psychology</span><span class="tag">DRAW</span></div>
+        <h2 class="q">Eight hospital units, from worst-led to best-led. How many drug errors did each record? Draw the line.</h2>
+        <div class="stagebox"><svg class="full" id="wardSvg" role="img" aria-label="Chart to draw on: leadership of the unit against drug errors recorded"></svg></div>
+        <p class="say" id="wardSay">Drag your finger across the chart, left to right.</p>
+        <div class="ctl" id="wardCtl"><button class="btn" id="wardGo" disabled>Show the study</button><span class="mono" id="wardStep">1 / 3</span></div>
+        <div class="keep gone" id="wardKeep"><b>WHAT TO KEEP</b>A low count of problems may measure silence, not success.</div>
+        <div class="foot"><span class="src">Source · Edmondson, “Learning from mistakes is easier said than done”, <i>J. Applied Behavioral Science</i> (1996)</span></div>
+      </div>
+    </article>
+
+    <!-- 3 · Editorial grid -->
+    <article class="card" id="art" style="--c:#A6FF00;--k:#10100c;--edge:#5f9400" data-kind="Six cases side by side · one rule">
+      <div class="in">
+        <div class="label"><span class="t">Sport</span><span class="tag">COMPARE</span></div>
+        <h2 class="q">Gold for a poem. Silver for a stadium plan. Why did the Olympics <em>stop</em> giving art medals?</h2>
+        <div class="stagebox" style="gap:1cqh">
+          <div class="gh"><span class="mono">Olympic medallists, 1896–1948</span><span class="mono" id="artCount">Medals: 10 · art: 6</span></div>
+          <div class="grid" id="artGrid">
+            <div class="tile" data-t="thorpe"><span class="who">Jim Thorpe</span><span class="what" data-b="Stripped 1913: paid for baseball" data-c="Restored in full, 2022">Athlete · paid $2 a game for baseball</span><div class="md ath"><i class="g"></i><s>Decathlon 1912</s></div><div class="md ath"><i class="g"></i><s>Pentathlon 1912</s></div></div>
+            <div class="tile" data-t="hajos"><span class="who">Alfréd Hajós</span><span class="what" data-b="Art medal off the books">Swimmer, then architect</span><div class="md ath"><i class="g"></i><s>Swimming 1896</s></div><div class="md art"><i class="s"></i><s>Architecture 1924</s></div></div>
+            <div class="tile" data-t="winans"><span class="who">Walter Winans</span><span class="what" data-b="Art medal off the books">Marksman and sculptor</span><div class="md ath"><i class="g"></i><s>Shooting 1908</s></div><div class="md art"><i class="g"></i><s>Sculpture 1912</s></div></div>
+            <div class="tile" data-t="coub"><span class="who">Pierre de Coubertin</span><span class="what" data-b="Off the books">Founder of the Games, under a false name</span><div class="md art"><i class="g"></i><s>Literature 1912</s></div></div>
+            <div class="tile" data-t="jacoby"><span class="who">Jean Jacoby</span><span class="what" data-b="Off the books">Illustrator, Luxembourg</span><div class="md art"><i class="g"></i><s>Painting 1924</s></div><div class="md art"><i class="g"></i><s>Drawing 1928</s></div></div>
+            <div class="tile" data-t="copley"><span class="who">John Copley</span><span class="what" data-b="Off the books" data-c="Oldest Olympic medallist ever, if art counted">Engraver, aged 73</span><div class="md art"><i class="s"></i><s>Engraving 1948</s></div></div>
+          </div>
+        </div>
+        <p class="say" id="artSay">From 1912 to 1948 the Games gave medals for painting, sculpture, music, writing and architecture. Six winners, side by side.</p>
+        <div class="ctl" id="artCtl"><button class="btn" id="artGo">Apply the amateur rule</button><span class="mono" id="artStep">1 / 3</span></div>
+        <div class="keep gone" id="artKeep"><b>WHAT TO KEEP</b>A rule written for one kind of competitor can shut out another by accident.</div>
+        <div class="foot"><span class="src">Source · Stanton, <i>The Forgotten Olympic Art Competitions</i> (2000); Olympedia; IOC on Thorpe (2022)</span></div>
+      </div>
+    </article>
+
+    <!-- 4 · Grow the sample -->
+    <article class="card" id="die" style="--c:#E040FB;--k:#ffffff;--edge:#82208f" data-kind="Pick a side · grow the sample">
+      <div class="in">
+        <div class="label"><span class="t">Weird facts</span><span class="tag">PICK A SIDE</span></div>
+        <h2 class="q">Can dying people hold on until a birthday or a holiday has passed?</h2>
+        <div class="stagebox" style="gap:1.2cqh">
+          <div class="counter"><span class="n num" id="dieN">200</span><span class="lab"><span class="mono">simulated deaths</span><span class="mono" id="dieUnit">1 dot = 1 death</span></span></div>
+          <div class="cv"><canvas class="full" id="dieCv" aria-label="Deaths per day in the week before and the week after a date"></canvas></div>
+          <div class="stats"><div class="stat"><span class="mono">Week before</span><b class="num" id="dieB">82</b></div><div class="stat"><span class="mono">Week after</span><b class="num" id="dieA">118</b></div><div class="stat gap"><span class="mono">Gap</span><b class="num" id="dieG">+44%</b></div></div>
+        </div>
+        <p class="say" id="dieSay">A dip before the date, a bump after. This is a <b>simulation with no effect built in</b>: just chance. Which side are you on?</p>
+        <div class="ctl" id="dieSides"><button class="btn ghost side" data-s="yes">Yes, some can</button><button class="btn ghost side" data-s="no">No, it’s noise</button></div>
+        <div class="ctl gone" id="dieCtl"><button class="btn" id="dieGo">Grow the sample ×10</button><span class="mono" id="dieStep">1 / 4</span></div>
+        <div class="keep gone" id="dieKeep"><b>WHAT TO KEEP</b>A small sample can draw any pattern. Count every date, not just the ones that make a story.</div>
+        <div class="foot"><span class="src">Source · Young &amp; Hade, <i>JAMA</i> (2004), 309,221 Ohio cancer deaths; Phillips &amp; King, <i>The Lancet</i> (1988)</span></div>
+      </div>
+    </article>
+  </div>
+</div>
+
+<script src="../kit/astute-card.js"></script>
+<script>
+gsap.registerPlugin(DrawSVGPlugin);
+const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const D = s => calm ? 0 : s;
+const wait = ms => new Promise(r => setTimeout(r, ms));
+
+/* ---------- 1 · Where does your knowledge end? ---------- */
+(() => {
+  const Q = [
+    {f: 'Physics', q: 'High up a mountain, water boils at…', a: ['a lower temperature', 'a higher temperature'], c: 0, why: 'lower: less air pressing down'},
+    {f: 'Space', q: 'Which planet is hotter?', a: ['Mercury, nearest the Sun', 'Venus, second from the Sun'], c: 1, why: 'Venus, about 465 °C: its thick air traps heat'},
+    {f: 'History', q: 'Which is older?', a: ['Oxford University', 'The Aztec Empire'], c: 0, why: 'Oxford taught by 1096; Tenochtitlan was founded in 1325'},
+    {f: 'Inventions', q: 'Which came first?', a: ['The telephone', 'The fax machine'], c: 1, why: 'the fax: patented 1843, the phone 1876'},
+    {f: 'Nature', q: 'Which appeared on Earth first?', a: ['Trees', 'Sharks'], c: 1, why: 'sharks, over 400 million years ago; trees about 385'},
+    {f: 'Geography', q: 'Which city lies further west?', a: ['Los Angeles', 'Reno, Nevada'], c: 1, why: 'Reno, about 1.5° of longitude west of LA'}
+  ];
+  const quiz = Kit.$('edgeQuiz'), res = Kit.$('edgeRes'), opts = Kit.$('edgeOpts'), chipsEl = Kit.$('edgeChips'), say = Kit.$('edgeSay');
+  let i = 0, pick = null, ans = [];
+  const LV = [50, 60, 70, 80, 90, 100];
+  chipsEl.innerHTML = LV.map(v => `<button class="cf" data-v="${v}" disabled>${v}%</button>`).join('');
+  function showQ() {
+    const q = Q[i]; pick = null;
+    Kit.$('edgeN').textContent = (i + 1) + ' / 6'; Kit.$('edgeF').textContent = q.f.toUpperCase();
+    [...Kit.$('edgeTicks').children].forEach((t, k) => t.classList.toggle('on', k <= i));
+    Kit.$('edgeQ').textContent = q.q;
+    opts.innerHTML = q.a.map((t, k) => `<button class="opt" data-k="${k}">${t}</button>`).join('');
+    chipsEl.querySelectorAll('.cf').forEach(c => c.disabled = true);
+    if (!calm) gsap.fromTo(['#edgeQ', ...opts.children], {opacity: 0, x: 14}, {opacity: 1, x: 0, duration: .32, stagger: .05, ease: 'power3.out'});
+  }
+  opts.addEventListener('click', e => {
+    const b = e.target.closest('.opt'); if (!b) return;
+    pick = +b.dataset.k; opts.querySelectorAll('.opt').forEach(o => o.classList.toggle('on', o === b));
+    chipsEl.querySelectorAll('.cf').forEach(c => c.disabled = false);
+    say.innerHTML = 'Now bet: <b>how sure</b> are you?';
+  });
+  chipsEl.addEventListener('click', e => { const c = e.target.closest('.cf'); if (!c || c.disabled || pick === null) return; answer(+c.dataset.v); });
+  function answer(v) {
+    ans.push({right: pick === Q[i].c, v, q: Q[i]}); i++;
+    if (i < Q.length) { showQ(); say.innerHTML = i === 5 ? 'Last one.' : 'No answers yet. They all come at the end.'; }
+    else reveal();
+  }
+  function reset() { i = 0; ans = []; Kit.hide('edgeRes'); Kit.hide('edgeKeep'); quiz.classList.remove('gone'); say.innerHTML = 'Six fields. Pick an answer, then bet how sure you are.'; showQ(); }
+  function draw(animate) {
+    const svg = Kit.$('edgeSvg'); svg.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(svg), ink = '#10100c', red = '#c8331f'; svg._wh = W + 'x' + H;
+    const fs = Math.max(10, Math.min(f * .78, 13));
+    const L = fs * 3.1, R = fs * .8, T = fs * 1.6, B = fs * 3.4;
+    const X = v => L + (v - 50) / 50 * (W - L - R), Y = p => T + (1 - p / 100) * (H - T - B);
+    const t = (x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs, fill: ink, 'letter-spacing': '.05em'}, a), svg); e.textContent = s; return e; };
+    // overconfident zone: below the diagonal
+    Kit.mk('path', {d: `M${X(50)},${Y(50)} L${X(100)},${Y(100)} L${X(100)},${Y(0)} L${X(50)},${Y(0)} Z`, fill: red, opacity: .13}, svg);
+    for (const p of [0, 50, 100]) { Kit.mk('line', {x1: L, x2: W - R, y1: Y(p), y2: Y(p), stroke: ink, 'stroke-opacity': .18, 'stroke-width': 1}, svg); t(L - fs * .5, Y(p) + fs * .35, p + '%', {'text-anchor': 'end', 'font-weight': 700, opacity: .7}); }
+    for (const v of [50, 75, 100]) t(X(v), H - B + fs * 1.3, v + '%', {'text-anchor': v === 50 ? 'start' : v === 100 ? 'end' : 'middle', 'font-weight': 700, opacity: .7});
+    t(X(75), H - fs * .2, 'HOW SURE YOU WERE', {'text-anchor': 'middle', 'font-size': fs * .85, opacity: .75});
+    t(L, T - fs * .55, 'HOW OFTEN YOU WERE RIGHT', {'font-size': fs * .85, opacity: .75});
+    const diag = Kit.mk('line', {x1: X(50), y1: Y(50), x2: X(100), y2: Y(100), stroke: ink, 'stroke-width': 2.5, 'stroke-dasharray': '6 6'}, svg);
+    t(X(58), Y(58) - fs * .7, 'SAID = GOT', {'font-size': fs * .8, opacity: .7, transform: `rotate(${-Math.atan2(Y(50) - Y(100), X(100) - X(50)) * 180 / Math.PI} ${X(58)} ${Y(58) - fs * .7})`});
+    t(X(98), Y(6), 'OVERCONFIDENT', {'text-anchor': 'end', fill: red, 'font-size': fs * .85});
+    // bins
+    const bins = [[50, 60], [70, 80], [90, 100]].map(([a, b]) => { const s = ans.filter(x => x.v >= a && x.v <= b); return s.length ? {x: s.reduce((m, x) => m + x.v, 0) / s.length, y: 100 * s.filter(x => x.right).length / s.length, n: s.length, k: s.filter(x => x.right).length} : null; }).filter(Boolean);
+    const curve = Kit.mk('polyline', {points: bins.map(b => X(b.x) + ',' + Y(b.y)).join(' '), fill: 'none', stroke: ink, 'stroke-width': 3.5, 'stroke-linejoin': 'round', 'stroke-linecap': 'round'}, svg);
+    const marks = bins.map(b => {
+      const g = Kit.mk('g', {}, svg), over = b.y < b.x - 5;
+      Kit.mk('circle', {cx: X(b.x), cy: Y(b.y), r: fs * (.55 + b.n * .17), fill: over ? red : ink, stroke: '#FFC49B', 'stroke-width': 2.5}, g);
+      const up = b.y < 50, lx = Math.min(W - R - fs * 3.2, Math.max(L + fs * 3.2, X(b.x)));
+      const e = t(lx, up ? Y(b.y) - fs * 1.5 : Y(b.y) + fs * 2.1, `${b.k} OF ${b.n}`, {'text-anchor': 'middle', fill: over ? red : ink, 'font-size': fs * .9}, g);
+      g.appendChild(e); return g;
+    });
+    if (animate && !calm) {
+      gsap.from(diag, {opacity: 0, duration: .5, ease: 'power2.out'});
+      gsap.from(curve, {drawSVG: '0%', duration: .8, delay: .5, ease: 'power2.inOut'});
+      gsap.from(marks, {opacity: 0, scale: .9, transformOrigin: 'center', duration: .35, stagger: .15, delay: .6, ease: 'power3.out'});
+    }
+  }
+  function reveal() {
+    quiz.classList.add('gone'); res.classList.remove('gone'); Kit.show('edgeKeep');
+    const sure = ans.filter(a => a.v >= 90), sr = sure.filter(a => a.right).length;
+    const miss = ans.filter(a => !a.right && a.v >= 70).sort((a, b) => b.v - a.v).slice(0, 1);
+    Kit.$('edgeMiss').innerHTML = miss.map(m => `<div class="mrow"><b>${m.v}%</b><span>${m.q.q.replace('…', '')} You bet wrong. <i>It’s ${m.q.why}.</i></span></div>`).join('');
+    if (!calm) gsap.from('#edgeMiss .mrow', {opacity: 0, y: 10, duration: .35, stagger: .1, delay: 1, ease: 'power3.out'});
+    const right = ans.filter(a => a.right).length;
+    say.innerHTML = sure.length
+      ? `When you were <b>90% sure or more</b>, you were right <b>${sr} of ${sure.length}</b>. ${sr / sure.length < .8 ? 'A red dot: you were surer than you were right. That is where your knowledge ends.' : 'Your sure answers held up. You know where your edge is.'}`
+      : `You got ${right} of 6 and never bet above 70%. Most people are surest on the hard ones.`;
+    requestAnimationFrame(() => draw(true));
+  }
+  const same = e => { const b = e.getBoundingClientRect(); return !b.width || e._wh === b.width + 'x' + b.height; };
+  new ResizeObserver(() => { const e = Kit.$('edgeSvg'); if (i >= Q.length && !res.classList.contains('gone') && !same(e)) draw(false); }).observe(Kit.$('edgeSvg'));
+  Kit.onShow.edge = () => { if (!ans.length && i === 0) showQ(); else if (i >= Q.length) draw(false); };
+  Kit.play.edge = async () => {
+    reset(); const plan = [[0, 100], [1, 80], [1, 90], [0, 70], [0, 90], [0, 60]];
+    for (const [k, v] of plan) { opts.children[k].click(); answer(v); }
+  };
+})();
+
+/* ---------- 2 · Draw the line, then see the study ---------- */
+(() => {
+  const svg = Kit.$('wardSvg'), say = Kit.$('wardSay'), go = Kit.$('wardGo'), lab = Kit.$('wardStep');
+  let step = 0, pts = [], geo = null, drawing = false;
+  const yel = '#FFE600';
+  function frame() {
+    svg.innerHTML = '';
+    const {W, H, f} = Kit.fitSvg(svg), fs = Math.max(10, Math.min(f * .78, 13)); svg._wh = W + 'x' + H;
+    const L = fs * 1.2, R = fs * .6, T = fs * 2.6, B = fs * 3.4;
+    geo = {W, H, fs, L, R, T, B, x0: L, x1: W - R, y0: H - B, y1: T};
+    const t = (x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs, fill: '#fff', 'letter-spacing': '.06em'}, a), svg); e.textContent = s; return e; };
+    Kit.mk('rect', {x: L, y: T, width: W - L - R, height: H - T - B, rx: fs * .8, fill: '#ffffff12'}, svg);
+    // y label: what is counted
+    const yl = Kit.mk('g', {id: 'wardYl'}, svg);
+    const y1 = t(L, T - fs * 1, 'DRUG ERRORS', {'font-size': fs * .95}); yl.appendChild(y1);
+    const rec = t(L + y1.getComputedTextLength() + fs * .5, T - fs * 1, 'RECORDED', {'font-size': fs * .95, id: 'wardRec'}); yl.appendChild(rec);
+    t(W - R - fs * .5, H - B - fs * .7, 'FEW', {'text-anchor': 'end', 'font-size': fs * .8, opacity: .6});
+    // eight units along the bottom
+    for (let k = 0; k < 8; k++) { const x = L + (k + .5) / 8 * (W - L - R); Kit.mk('rect', {x: x - fs * .45, y: H - B + fs * .6, width: fs * .9, height: fs * .9, rx: fs * .2, fill: '#fff', opacity: .35 + k * .09}, svg); }
+    t(L, H - fs * .4, '← WORST-LED', {'font-size': fs * .85});
+    t(W - R, H - fs * .4, 'BEST-LED →', {'text-anchor': 'end', 'font-size': fs * .85});
+    paintUser();
+    if (step >= 1) paintReal(false);
+    if (step >= 2) relabel(false);
+    svg.querySelector('#wardReal')?.parentNode.appendChild(svg.querySelector('#wardReal'));
+    if (!pts.length && step === 0) hint();
+  }
+  const ux = p => geo.x0 + p.u * (geo.x1 - geo.x0), uy = p => geo.y0 - p.v * (geo.y0 - geo.y1);
+  function hint() {
+    const g = Kit.mk('g', {id: 'wardHint'}, svg), y = (geo.y0 + geo.y1) / 2;
+    Kit.mk('circle', {cx: geo.x0 + geo.fs * .9, cy: y, r: geo.fs * .55, fill: '#fff'}, g);
+    Kit.mk('path', {d: `M${geo.x0 + geo.fs * 2},${y} h${geo.fs * 4}`, stroke: '#fff', 'stroke-width': 2.5, 'stroke-dasharray': '3 6', 'stroke-linecap': 'round'}, g);
+    const tx = Kit.mk('text', {x: geo.x0 + geo.fs * 7, y: y + geo.fs * .35, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': geo.fs, fill: '#fff', 'letter-spacing': '.06em'}, g); tx.textContent = 'DRAW FROM HERE';
+    if (!calm) gsap.fromTo(g, {opacity: .45}, {opacity: 1, duration: .8, yoyo: true, repeat: -1, ease: 'sine.inOut'});
+  }
+  function paintUser() {
+    svg.querySelector('#wardUser')?.remove();
+    if (pts.length < 2) return;
+    Kit.mk('polyline', {id: 'wardUser', points: pts.map(p => ux(p) + ',' + uy(p)).join(' '), fill: 'none', stroke: '#fff', 'stroke-width': 4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, svg);
+  }
+  // The study: the best-led units recorded roughly ten times the drug errors of the worst.
+  const real = u => .09 + .82 * Math.pow(u, 1.15);
+  function paintReal(animate) {
+    const g = Kit.mk('g', {id: 'wardReal'}, svg), N = 40, P = [];
+    for (let k = 0; k <= N; k++) { const u = k / N; P.push([ux({u}), uy({v: real(u)})]); }
+    const band = Kit.mk('polyline', {points: P.map(p => p.join(',')).join(' '), fill: 'none', stroke: yel, 'stroke-opacity': .28, 'stroke-width': geo.fs * 1.4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round'}, g);
+    const line = Kit.mk('polyline', {points: P.map(p => p.join(',')).join(' '), fill: 'none', stroke: yel, 'stroke-width': 4.5, 'stroke-linecap': 'round'}, g);
+    const fs = geo.fs, tx = (x, y, s, a = {}) => { const e = Kit.mk('text', Object.assign({x, y, 'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs, fill: yel, 'letter-spacing': '.05em'}, a), g); e.textContent = s; return e; };
+    const ex = P[N], sx = P[0];
+    const labs = [
+      tx(ex[0], ex[1] + fs * 3, '≈ ×10', {'text-anchor': 'end', 'font-family': 'Fraunces', 'font-weight': 900, 'font-size': fs * 1.6}),
+      tx(sx[0] + fs * .2, sx[1] - fs * 1.7, '×1', {'font-family': 'Fraunces', 'font-weight': 900, 'font-size': fs * 1.5}),
+      tx(geo.x0 + (geo.x1 - geo.x0) * .5, uy({v: real(.5)}) + fs * 2.6, 'THE STUDY’S TREND', {'text-anchor': 'start', 'font-size': fs * .85})
+    ];
+    if (animate && !calm) {
+      gsap.from([band, line], {drawSVG: '0%', duration: 1.1, ease: 'power2.inOut'});
+      gsap.from(labs, {opacity: 0, duration: .4, stagger: .12, delay: .9});
+    }
+  }
+  function relabel(animate) {
+    const rec = svg.querySelector('#wardRec'); if (!rec) return;
+    const bb = rec.getBBox(), fs = geo.fs;
+    const strike = Kit.mk('line', {x1: bb.x - 2, x2: bb.x + bb.width + 2, y1: bb.y + bb.height * .55, y2: bb.y + bb.height * .55, stroke: yel, 'stroke-width': 2.5}, svg);
+    const nw = Kit.mk('text', {x: bb.x + bb.width + fs * .5, y: +rec.getAttribute('y'), 'font-family': 'Figtree', 'font-weight': 800, 'font-size': fs * .95, fill: yel, 'letter-spacing': '.06em'}, svg); nw.textContent = 'OWNED UP TO';
+    rec.setAttribute('opacity', .5);
+    if (animate && !calm) { gsap.from(strike, {drawSVG: '0%', duration: .4, ease: 'power2.out'}); gsap.from(nw, {opacity: 0, x: -8, duration: .4, delay: .3, ease: 'power3.out'}); }
+  }
+  function at(e) {
+    const r = svg.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    const u = Math.max(0, Math.min(1, (x - geo.x0) / (geo.x1 - geo.x0))), v = Math.max(0, Math.min(1, (geo.y0 - y) / (geo.y0 - geo.y1)));
+    return {u, v};
+  }
+  function add(p) {
+    if (!pts.length) { pts.push({u: 0, v: p.v}); }
+    const last = pts[pts.length - 1];
+    if (p.u <= last.u) { // redraw backwards: keep the line a function of x
+      pts = pts.filter(q => q.u < p.u); pts.push(p);
+    } else {
+      const n = Math.ceil((p.u - last.u) / .01);
+      for (let k = 1; k <= n; k++) pts.push({u: last.u + (p.u - last.u) * k / n, v: last.v + (p.v - last.v) * k / n});
+    }
+    svg.querySelector('#wardHint')?.remove();
+    paintUser();
+    if (pts[pts.length - 1].u > .85 && step === 0) { go.disabled = false; say.innerHTML = 'Got it. Now see what the study found.'; }
+  }
+  svg.addEventListener('pointerdown', e => { if (step > 0) return; drawing = true; svg.setPointerCapture(e.pointerId); add(at(e)); });
+  svg.addEventListener('pointermove', e => { if (drawing) add(at(e)); });
+  svg.addEventListener('pointerup', () => drawing = false);
+  svg.addEventListener('pointercancel', () => drawing = false);
+  function next() {
+    if (step === 0) {
+      if (pts.length < 2) return;
+      frame(); step = 1; paintReal(true);
+      const vy = u => { let best = pts[0]; for (const p of pts) if (Math.abs(p.u - u) < Math.abs(best.u - u)) best = p; return best.v; };
+      const slope = vy(.95) - vy(.05);
+      say.innerHTML = (slope < -.08 ? 'You drew it falling, as Edmondson expected: good teams, fewer errors. ' : slope > .08 ? 'You drew it rising. Edmondson expected the opposite. ' : 'You drew it flat. ') +
+        'The <b>best-led units recorded about ten times as many</b> drug errors as the worst.';
+      go.textContent = 'Why?'; lab.textContent = '2 / 3';
+    } else if (step === 1) {
+      step = 2; Kit.show('wardKeep'); go.textContent = 'Draw again'; lab.textContent = '3 / 3';
+      say.innerHTML = 'An observer sat in on the units. In the best, nurses felt safe owning up. In the worst, they feared blame, and slips stayed hidden. The count measured <b>honesty</b> too.';
+      requestAnimationFrame(() => { step = 1; frame(); step = 2; relabel(true); });
+    } else {
+      step = 0; pts = []; go.disabled = true; go.textContent = 'Show the study'; lab.textContent = '1 / 3'; Kit.hide('wardKeep');
+      say.innerHTML = 'Drag your finger across the chart, left to right.'; frame();
+    }
+  }
+  go.onclick = next;
+  Kit.onShow.ward = () => frame();
+  new ResizeObserver(() => { const b = svg.getBoundingClientRect(); if (b.width && geo && svg._wh !== b.width + 'x' + b.height) frame(); }).observe(svg);
+  Kit.play.ward = async () => {
+    pts = []; for (let k = 0; k <= 30; k++) { const u = k / 30; add({u, v: .78 - .55 * u + .05 * Math.sin(u * 7)}); }
+    next(); await wait(1400); next();
+  };
+})();
+
+/* ---------- 3 · Six medallists, one rule ---------- */
+(() => {
+  const grid = Kit.$('artGrid'), say = Kit.$('artSay'), go = Kit.$('artGo'), lab = Kit.$('artStep');
+  const whats = [...grid.querySelectorAll('.what')];
+  whats.forEach(w => w.dataset.a = w.textContent);
+  let step = 0;
+  const swap = (els, key, cls) => {
+    els.forEach(w => { w.classList.remove('hit', 'ok'); w.textContent = w.dataset[key]; if (cls) w.classList.add(cls); });
+    if (!calm) gsap.fromTo(els, {opacity: 0, y: 4}, {opacity: 1, y: 0, duration: .3, stagger: .08, ease: 'power3.out'});
+  };
+  function reset() {
+    step = 0; grid.classList.remove('struck', 'stripped', 'back');
+    grid.querySelectorAll('.tile').forEach(t => t.classList.remove('hit'));
+    whats.forEach(w => { w.classList.remove('hit', 'ok'); w.textContent = w.dataset.a; });
+    Kit.$('artCount').textContent = 'Medals: 10 · art: 6'; Kit.hide('artKeep'); Kit.show('artCtl');
+    say.innerHTML = 'From 1912 to 1948 the Games gave medals for painting, sculpture, music, writing and architecture. Six winners, side by side.';
+    go.textContent = 'Apply the amateur rule'; lab.textContent = '1 / 3';
+  }
+  function next() {
+    if (step === 0) {
+      step = 1; grid.classList.add('stripped', 'struck');
+      grid.querySelectorAll('.tile').forEach(t => t.classList.add('hit'));
+      swap(whats, 'b', 'hit');
+      Kit.$('artCount').textContent = 'Medals left: 2';
+      say.innerHTML = 'The rule: <b>no pay for your sport</b>. Written for athletes, it took Thorpe’s golds. Artists live by selling their work, so in 1949 the IOC judged them pros and ended the contests.';
+      go.textContent = 'And today?'; lab.textContent = '2 / 3';
+    } else if (step === 1) {
+      step = 2; grid.classList.add('back');
+      const th = grid.querySelector('[data-t="thorpe"]'); th.classList.remove('hit');
+      swap([th.querySelector('.what')], 'c', 'ok');
+      const cp = grid.querySelector('[data-t="copley"] .what'); swap([cp], 'c', 'hit');
+      Kit.$('artCount').textContent = 'Medals left: 4';
+      say.innerHTML = 'Thorpe’s golds came back in 2022. The <b>151 art medals</b>, removed because artists sell their work, never did: they count in no nation’s total.';
+      Kit.hide('artCtl'); Kit.show('artKeep');
+    }
+  }
+  go.onclick = next;
+  Kit.onShow.art = () => { if (step === 0 && !calm) gsap.from('#artGrid .tile', {opacity: 0, y: 10, duration: .35, stagger: .05, ease: 'power3.out'}); };
+  Kit.play.art = async () => { reset(); next(); await wait(900); next(); };
+  reset();
+})();
+
+/* ---------- 4 · Grow the sample ---------- */
+(() => {
+  const cv = Kit.$('dieCv'), say = Kit.$('dieSay'), go = Kit.$('dieGo');
+  const STEPS = [200, 2000, 20000, 309221];
+  let x = 4800; const r = () => (x = (x * 16807) % 2147483647) / 2147483647;
+  let counts, n, si, side = null, anim = null;
+  function init() { x = 4800; r(); r(); counts = new Array(14).fill(0); n = 0; si = 0; grow(200); }
+  function grow(to) { while (n < to) { counts[Math.floor(r() * 14)]++; n++; } }
+  function paint() {
+    const {x: c, W, H} = Kit.fitCanvas(cv);
+    const fs = Math.max(10, Math.min(H / 16, 12.5));
+    const base = H - fs * 2.2, top = fs * .6, colW = W / 14;
+    const per = 2, d = Math.min(colW / (per + .6), 11), gap = d * .18;
+    const rows = Math.floor((base - top) / (d + gap));
+    const exp = n / 14, unit = Math.max(1, Math.round(exp / (rows * per * .72)));
+    Kit.$('dieUnit').textContent = unit === 1 ? '1 dot = 1 death' : `1 dot = ${unit.toLocaleString('en')} deaths`;
+    c.clearRect(0, 0, W, H);
+    // the date
+    const mid = W / 2;
+    c.strokeStyle = '#fff'; c.lineWidth = 2; c.setLineDash([]); c.beginPath(); c.moveTo(mid, top - 4); c.lineTo(mid, base + 4); c.stroke();
+    for (let k = 0; k < 14; k++) {
+      const m = Math.round(counts[k] / unit), cx = k * colW + colW / 2;
+      c.fillStyle = k < 7 ? '#ffffff' : '#ffffff';
+      c.globalAlpha = k < 7 ? .95 : .78;
+      for (let j = 0; j < m; j++) {
+        const row = Math.floor(j / per), col = j % per;
+        const px = cx + (col - (per - 1) / 2) * (d + gap), py = base - d / 2 - row * (d + gap);
+        if (py < top) break;
+        c.beginPath(); c.arc(px, py, d / 2, 0, 7); c.fill();
+      }
+    }
+    c.globalAlpha = 1;
+    // what no effect looks like
+    const ey = base - (exp / unit / per) * (d + gap);
+    c.strokeStyle = '#10100c'; c.lineWidth = 2; c.setLineDash([5, 5]); c.beginPath(); c.moveTo(0, ey); c.lineTo(W, ey); c.stroke(); c.setLineDash([]);
+    c.font = `800 ${fs}px Figtree, system-ui, sans-serif`; c.fillStyle = '#fff'; c.textBaseline = 'alphabetic';
+    c.textAlign = 'left'; c.fillText('WEEK BEFORE', 0, H - fs * .4);
+    c.textAlign = 'right'; c.fillText('WEEK AFTER', W, H - fs * .4);
+    c.textAlign = 'center'; c.fillText('THE DATE', mid, H - fs * .4);
+    const b = counts.slice(0, 7).reduce((a, v) => a + v, 0), a = counts.slice(7).reduce((s, v) => s + v, 0), g = (a - b) / b * 100;
+    Kit.$('dieN').textContent = n.toLocaleString('en');
+    Kit.$('dieB').textContent = b.toLocaleString('en'); Kit.$('dieA').textContent = a.toLocaleString('en');
+    Kit.$('dieG').textContent = (g >= 0 ? '+' : '−') + (Math.abs(g) < 1 ? Math.abs(g).toFixed(1) : Math.round(Math.abs(g))) + '%';
+  }
+  const SAYS = [
+    null,
+    'Ten times the data. The dip <b>shrinks</b>, and wobbles shift to other days.',
+    'Twenty thousand deaths. Before and after are <b>nearly level</b>.',
+    'Now as many as Ohio’s real study: <b>309,221</b> cancer deaths. The gap is gone. The real records agreed: <b>no dip</b> before Christmas, Thanksgiving or birthdays.'
+  ];
+  function step() {
+    if (si >= 3) { reset(); return; }
+    si++; const to = STEPS[si];
+    if (anim) anim.kill();
+    const o = {v: n};
+    if (calm) { grow(to); paint(); } else anim = gsap.to(o, {v: to, duration: 1.4, ease: 'power2.inOut', onUpdate: () => { grow(Math.round(o.v)); paint(); }, onComplete: () => { grow(to); paint(); }});
+    Kit.$('dieStep').textContent = (si + 1) + ' / 4';
+    let s = SAYS[si];
+    if (si === 3) {
+      s += side === 'yes' ? ' We remember the patient who waited, not the one who didn’t.' : ' Early studies were small and tested many dates. Some had to dip.';
+      Kit.hide('dieCtl'); Kit.show('dieKeep');
+    }
+    say.innerHTML = s;
+  }
+  function reset() {
+    if (anim) anim.kill(); init(); paint(); side = null;
+    Kit.show('dieSides'); Kit.hide('dieCtl'); Kit.hide('dieKeep');
+    document.querySelectorAll('#dieSides .side').forEach(b => b.classList.remove('on'));
+    go.textContent = 'Grow the sample ×10'; Kit.$('dieStep').textContent = '1 / 4';
+    say.innerHTML = 'A dip before the date, a bump after. This is a <b>simulation with no effect built in</b>: just chance. Which side are you on?';
+  }
+  document.querySelectorAll('#dieSides .side').forEach(b => b.onclick = () => {
+    side = b.dataset.s; Kit.hide('dieSides'); Kit.show('dieCtl');
+    say.innerHTML = `You said <b>${side === 'yes' ? 'some can' : 'it’s noise'}</b>. Small samples are where such dips come from. Grow this one.`;
+  });
+  go.onclick = step;
+  Kit.onShow.die = () => { if (!counts) init(); paint(); };
+  Kit.play.die = async () => { reset(); document.querySelector('#dieSides [data-s="yes"]').click(); for (let k = 0; k < 3; k++) { step(); await wait(1600); } };
+})();
+
+Kit.deck();
+</script>
