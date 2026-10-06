@@ -317,7 +317,9 @@ class _RankSceneViewState extends State<RankSceneView>
   Widget _list(double rowH, double pitch, double inset) {
     final ink = widget.ink;
     final numW = (rowH * 0.5).clamp(22.0, 40.0);
-    final font = (rowH * 0.36).clamp(14.0, 26.0);
+    // Capped so a short list's tall rows don't set labels too big to fit
+    // beside their values.
+    final font = (rowH * 0.36).clamp(14.0, 22.0);
     final reduce = MediaQuery.disableAnimationsOf(context);
     final t = _reveal.value;
     final move = Curves.easeInOutCubic.transform((t / .35).clamp(0, 1));
@@ -615,7 +617,7 @@ class _RankTile extends StatelessWidget {
             Opacity(
               opacity: valueOpacity,
               child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: width * 0.62),
+                constraints: BoxConstraints(maxWidth: width * 0.5),
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   alignment: Alignment.centerRight,
