@@ -176,13 +176,7 @@ void main() {
             TakeASide(:final positions) => positions,
             _ => const <String>[],
           };
-          // A true-or-false card is answered with its stamp.
-          final stamp = find.text('TRUE');
-          await tester.tap(
-            stamp.evaluate().isNotEmpty
-                ? stamp.first
-                : find.text(options.first).first,
-          );
+          await tester.tap(find.text(options.first).first);
           await settle();
         } else if (pill.challenge is NoChallenge) {
           await tester.tap(find.byType(PillCard));
