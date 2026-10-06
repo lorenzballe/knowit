@@ -6,10 +6,10 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How was the likely starting point of the Black Death pinned down?",
-  "answer": "By gravestones in Kyrgyzstan. Headstones near Lake Issyk-Kul, dated 1338 and 1339, give 'pestilence' as the cause of death. In 2022, ancient DNA from people buried there yielded a plague strain sitting at the root of the pandemic's family tree, some eight years before plague reached the Black Sea.",
-  "move": "Trust a finding more when two unrelated kinds of evidence point to it.",
-  "ask": "Which of my beliefs rests on two unrelated kinds of evidence, and which on one?",
+  "question": "In 1347 the Black Death came ashore in Sicily with dying sailors. Where did the outbreak actually begin?",
+  "answer": "In Central Asia, most likely near Lake Issyk-Kul in today's Kyrgyzstan. Headstones there, dated 1338 and 1339, name 'pestilence' as the cause of death, and in 2022 ancient DNA from those graves gave a plague strain at the root of the Black Death's family tree.",
+  "move": "Where trouble is first noticed is rarely where it began.",
+  "ask": "When a problem lands on my desk, do I ask where it really started?",
   "keywords": [
     "black death",
     "yersinia pestis",
@@ -19,7 +19,7 @@
   ],
   "era": "medieval",
   "region": "asia",
-  "hook": "origin",
+  "hook": "puzzle",
   "mood": "dark",
   "numeracy": 1,
   "abstraction": "concrete",
@@ -27,8 +27,44 @@
   "mature": false,
   "language": "en",
   "figure": "map",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Italy",
+      "Crimea",
+      "Central Asia"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Autumn 1347: Genoese galleys bring plague into Sicily from the Black Sea.",
+        "tag": "Came in by ship",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "At Kaffa in Crimea, a besieging army is said to hurl its dead over the walls.",
+        "tag": "Bodies over the walls",
+        "rulesOut": []
+      },
+      {
+        "text": "Plague was already killing in the Volga lands, further east, in 1346.",
+        "tag": "Volga lands first",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "Gravestones of 1338 and 1339 by Lake Issyk-Kul give 'pestilence' as the cause.",
+        "tag": "Gravestones of 1338",
+        "rulesOut": []
+      }
+    ],
+    "why": "It was killing in the Volga lands before Kaffa: Crimea was a stop on the road, not the start."
+  },
   "source": "Spyrou et al., Nature, 2022",
   "source_kind": "paper",
   "reference": "doi:10.1038/s41586-022-04800-3",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

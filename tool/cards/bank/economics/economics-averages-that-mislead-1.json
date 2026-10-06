@@ -6,10 +6,10 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "If American funds returned 7.3% a year over a decade, why did the people invested in them earn only 6.3%?",
-  "answer": "Because they bought after rises and sold after falls. A fund's return assumes money stayed put for the whole decade; investors' money came and went. Morningstar measured the gap at about a point a year over the ten years to 2023, roughly 15% of what the funds earned.",
+  "question": "Over the ten years to 2023, US funds returned 7.3% a year, but the people invested in them earned 6.3%. Where did the point go?",
+  "answer": "Into timing. A fund's return assumes money sat still for ten years. Investors' money arrived after good runs and left after bad ones, so more of it was in for the falls. Same funds, same fees, same tax: the missing point is behaviour, roughly 15% of what the funds earned.",
   "move": "Ask whose average a figure is: the product's or the people's.",
-  "ask": "Have I ever bought something after it rose and sold it after it fell?",
+  "ask": "When did I last buy something because it had just gone up?",
   "keywords": [
     "investor returns",
     "fund returns",
@@ -18,7 +18,7 @@
   ],
   "era": "recent",
   "region": "americas",
-  "hook": "paradox",
+  "hook": "puzzle",
   "mood": "practical",
   "numeracy": 2,
   "abstraction": "mixed",
@@ -26,8 +26,44 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Fees",
+      "Taxes",
+      "Bad timing"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "The gap is about one point a year, every year, for a decade.",
+        "tag": "One point a year",
+        "rulesOut": []
+      },
+      {
+        "text": "The funds' 7.3% is already counted after their fees.",
+        "tag": "Fees already deducted",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "Both figures are before tax, so tax cannot open a gap between them.",
+        "tag": "Both before tax",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "Money poured in after rises and fled after falls.",
+        "tag": "In late, out early",
+        "rulesOut": []
+      }
+    ],
+    "why": "Fees and tax hit both numbers alike. Only one thing differs: when people's money was in."
+  },
   "source": "Morningstar, Mind the Gap, 2024",
   "source_kind": "company",
   "reference": "https://www.morningstar.com/personal-finance/fund-investors-who-kept-it-simple-captured-more-return",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

@@ -9,29 +9,73 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What made Vienna's two maternity clinics of the 1840s such a powerful experiment for Ignaz Semmelweis?",
-  "answer": "Admission alternated by day, so chance, not choice, decided which clinic a woman entered. The clinic run by doctors, who came from dissecting corpses, lost about 10% of mothers to childbed fever; the midwives' clinic, about 4%. With similar women on both sides, only the care differed. Chlorine handwashing then cut the doctors' rate sharply.",
-  "move": "Look for places where chance has already done the sorting.",
-  "ask": "Where in my own life has chance already run a fair comparison I could learn from?",
+  "question": "Vienna, 1846. Mothers die of fever far more often in one clinic than in the one next door. What is killing them?",
+  "answer": "The doctors' hands. Ignaz Semmelweis struck off every rival he could test: the air, the crowding, the priest's bell. What was left was the one difference between the clinics: the doctors came from dissecting corpses, the midwives did not. From May 1847 they washed in chlorine; deaths fell to 13 in 1,000.",
+  "move": "Strike off every suspect you can test; the one left standing is your lead.",
+  "ask": "When something goes wrong at home or at work, do I test the rival explanations, or chase the most vivid one?",
   "keywords": [
     "semmelweis",
-    "natural experiments",
     "childbed fever",
     "vienna",
-    "handwashing"
+    "handwashing",
+    "elimination"
   ],
   "era": "nineteenth",
   "region": "europe",
   "hook": "story",
   "mood": "sober",
-  "numeracy": 2,
+  "numeracy": 1,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Semmelweis, The Etiology of Childbed Fever",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Bad air",
+      "Overcrowding",
+      "Priest's bell",
+      "Doctors' hands"
+    ],
+    "answer": 3,
+    "clues": [
+      {
+        "text": "In the doctors' clinic about 1 mother in 10 dies; next door, with midwives, 1 in 30.",
+        "tag": "1 in 10 against 1 in 30",
+        "rulesOut": []
+      },
+      {
+        "text": "Both clinics share one building, one city's air, and take mothers on alternate days.",
+        "tag": "Same building, same air",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "The midwives' clinic is the more crowded: women beg to be sent there.",
+        "tag": "More crowded, yet safer",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "The priest stops ringing his bell through the doctors' wards. Deaths don't fall.",
+        "tag": "Bell silenced, no change",
+        "rulesOut": [
+          2
+        ]
+      },
+      {
+        "text": "A doctor cut by a student's scalpel during an autopsy dies of the same fever.",
+        "tag": "Scalpel cut, same fever",
+        "rulesOut": []
+      }
+    ],
+    "why": "The silent bell struck off the last rival. One difference was left: the doctors came from corpses."
+  },
+  "source": "Semmelweis, The Etiology of Childbed Fever; Loudon, James Lind Library, 2013",
   "source_kind": "book",
-  "reference": "Semmelweis, The Etiology, Concept, and Prophylaxis of Childbed Fever, trans. Carter, University of Wisconsin Press, 1983",
-  "written": "2026-09-26"
+  "reference": "Semmelweis, The Etiology, Concept, and Prophylaxis of Childbed Fever, trans. Carter, University of Wisconsin Press, 1983; https://www.jameslindlibrary.org/articles/ignaz-phillip-semmelweis-studies-of-death-in-childbirth/",
+  "written": "2026-10-06"
 }

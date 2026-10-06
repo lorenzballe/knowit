@@ -72,8 +72,8 @@
       "options": ["Bad air", "Overcrowding", "Priest's bell", "Doctors' hands"],
       "answer": 3,
       "clues": [
-        {"text": "In the doctors' clinic 99 mothers in 1,000 die; next door, with midwives, 39.",
-         "tag": "99 against 39", "rulesOut": []},
+        {"text": "In the doctors' clinic about 1 mother in 10 dies; next door, with midwives, 1 in 30.",
+         "tag": "1 in 10 against 1 in 30", "rulesOut": []},
         {"text": "Both clinics share one building, one city's air, and take mothers on alternate days.",
          "tag": "Same building, same air", "rulesOut": [0]},
         {"text": "The midwives' clinic is the more crowded: women beg to be sent there.",

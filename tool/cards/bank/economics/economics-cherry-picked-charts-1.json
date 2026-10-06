@@ -6,19 +6,19 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How could the same share index, in March 2013, be fairly reported both as up 130% and as flat?",
-  "answer": "By choosing the start. The S&P 500 closed at 676 on 9 March 2009, its crisis low, and at 1,569 on 28 March 2013: up about 132%. Start from its October 2007 peak of 1,565 and five and a half years had earned nothing. Same index, same end; only the chart's left edge moved.",
-  "move": "Ask why a chart starts where it does before reading its slope.",
-  "ask": "When someone shows me a chart of how well something went, do I ask why it starts there?",
+  "question": "In 2013 charts like this one did the rounds: America's S&P 500 share index, up 58% in four years. Where's the trick?",
+  "answer": "In the years left out. The chart starts at the end of 2008, in the crash. Show every year from 1999 and the index closed 2012 below where it began. Both are true; the start picked the story. Measured from the March 2009 low, 676, March 2013's 1,569 was up 132%.",
+  "move": "Before trusting a gain, ask what it is measured from.",
+  "ask": "When I judge how well something went, do I pick the starting point that flatters it?",
   "keywords": [
     "s&p 500",
     "start date",
-    "charts",
+    "time window",
     "share prices"
   ],
   "era": "recent",
   "region": "americas",
-  "hook": "paradox",
+  "hook": "misconception",
   "mood": "sober",
   "numeracy": 2,
   "abstraction": "concrete",
@@ -26,8 +26,60 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "trick",
+    "trick": "window",
+    "outlet": "Money page, 2013 (redrawn)",
+    "headline": "Shares up 58% in four years",
+    "honest": "13 years on: below its 1999 level",
+    "label": "S&P 500 at the end of each year",
+    "columns": [
+      "1999",
+      "2000",
+      "2001",
+      "2002",
+      "2003",
+      "2004",
+      "2005",
+      "2006",
+      "2007",
+      "2008",
+      "2009",
+      "2010",
+      "2011",
+      "2012"
+    ],
+    "values": [
+      1469,
+      1320,
+      1148,
+      880,
+      1112,
+      1212,
+      1248,
+      1418,
+      1468,
+      903,
+      1115,
+      1258,
+      1258,
+      1426
+    ],
+    "window": [
+      9,
+      13
+    ],
+    "found": "Yes: it starts at the end of 2008, in the crash.",
+    "miss": "That part is honest. Ask why the chart starts where it does.",
+    "misses": {
+      "yaxis": "The scale is fair for these years. The question is which years.",
+      "marks": "Those are the real year-end closes. What's missing is the years before."
+    },
+    "name": "The chosen start",
+    "lesson": "Start a chart in a hole and anything looks like a climb. Ask what came before the first year."
+  },
   "source": "S&P Dow Jones Indices, S&P 500 closing levels",
   "source_kind": "statistics",
   "reference": "https://www.spglobal.com/spdji/en/indices/equity/sp-500/",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

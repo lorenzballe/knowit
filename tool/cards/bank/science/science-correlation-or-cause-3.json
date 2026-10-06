@@ -6,29 +6,72 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did leaving a light on at night seem, in 1999, to make babies short-sighted?",
-  "answer": "Because short-sighted parents were the ones leaving lights on. A 1999 study found short sight in 55% of children who had slept with a room light before age two, against 10% in darkness. Within a year, two larger studies found no effect of the light. Short sight runs in families, and so did the lamp.",
-  "move": "When a habit and an outcome travel together, ask what both inherit.",
-  "ask": "What do I blame on a habit when it might come from where I started?",
+  "question": "A post blamed smartphones for American obesity, with this chart: two lines rising in perfect step. Where's the trick?",
+  "answer": "In the two scales, each stretched until the lines matched. On one axis, phone owners rose 42 points and obesity 7. Obesity had already climbed from about 23% to 31% of adults in the 1990s, before any smartphone. Anything that grew in the 2010s tracks anything else that grew: a shared calendar, not a cause.",
+  "move": "When two rising lines match, ask what else rose over those years.",
+  "ask": "What do I blame on something new that was already happening before it arrived?",
   "keywords": [
-    "myopia",
-    "night lights",
-    "confounding",
-    "children",
-    "heredity"
+    "dual axis",
+    "spurious correlation",
+    "smartphones",
+    "obesity"
   ],
-  "era": "twentieth",
+  "era": "recent",
   "region": "americas",
-  "hook": "story",
+  "hook": "misconception",
   "mood": "practical",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Zadnik et al., Nature, 2000",
-  "source_kind": "paper",
-  "reference": "Zadnik et al., Myopia and ambient night-time lighting, Nature 404:143–144, 2000",
-  "written": "2026-09-26"
+  "scene": {
+    "type": "trick",
+    "trick": "dual",
+    "outlet": "Viral post (redrawn)",
+    "headline": "Smartphones are making America fat",
+    "honest": "Phones up 42 points, obesity up 7",
+    "label": "US adults, %",
+    "unit": "%",
+    "decimals": 0,
+    "columns": [
+      "2011",
+      "2013",
+      "2015",
+      "2017"
+    ],
+    "values": [
+      35,
+      56,
+      68,
+      77
+    ],
+    "values2": [
+      34.9,
+      37.7,
+      39.6,
+      42.4
+    ],
+    "series": [
+      "Own a phone",
+      "Obese"
+    ],
+    "from": 30,
+    "to": 80,
+    "from2": 34,
+    "to2": 43,
+    "found": "Yes: each line has its own scale, set to make them match.",
+    "miss": "That part is fair. Compare the numbers on the two sides of the chart.",
+    "misses": {
+      "marks": "Both lines are real survey figures. It's how they were lined up that persuades.",
+      "headline": "That's the claim. The drawing is what makes it look proven."
+    },
+    "name": "Two axes, one story",
+    "lesson": "Two scales can make any two rising lines move as one. Put them on one axis first."
+  },
+  "source": "CDC NHANES obesity data; Pew smartphone surveys",
+  "source_kind": "statistics",
+  "reference": "https://www.cdc.gov/nchs/products/databriefs/db360.htm",
+  "written": "2026-10-06"
 }

@@ -4,34 +4,75 @@
   "genre": "psychology.emotions",
   "strand": "psychology.emotions.fear",
   "also": [
-    "human_body.the_brain.neurons"
+    "economics.read_money_news.cherry_picked_charts"
   ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Does the amygdala produce the conscious feeling of being afraid?",
-  "answer": "Probably not, argues Joseph LeDoux, who mapped its threat circuits. Shown snakes or angry faces too briefly to be seen, people still sweat and the amygdala responds, yet they report no fear. On his view it runs the defence; cortical circuits build the feeling. The palms can brace for a snake the eyes never saw.",
-  "move": "A body reacting and a person feeling are two measurements, not one.",
-  "ask": "When my body panics, am I confusing the reaction with what I actually feel?",
+  "question": "In most years since 1993, most Americans have told Gallup that crime is rising. Charts like this help. Where's the trick?",
+  "answer": "In the frame: two years, on an axis that starts at 4. The rise was real, but from near the lowest rate in decades, and still about half the 1991 rate. A rise makes news and a slow fall never does, so most Americans felt crime climbing through years it was falling.",
+  "move": "Before you feel a trend, ask to see the long run.",
+  "ask": "Which danger do I feel growing because I hear about it more, not because it is?",
   "keywords": [
-    "amygdala",
-    "joseph ledoux",
-    "threat circuits",
-    "conscious fear",
-    "masked faces"
+    "fear of crime",
+    "murder rate",
+    "gallup",
+    "time window"
   ],
   "era": "recent",
-  "region": "none",
+  "region": "americas",
   "hook": "misconception",
-  "mood": "wonder",
-  "numeracy": 0,
-  "abstraction": "mixed",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "LeDoux & Pine, American Journal of Psychiatry, 2016",
-  "source_kind": "paper",
-  "reference": "LeDoux & Pine, Using neuroscience to help understand fear and anxiety: a two-system framework, American Journal of Psychiatry, 2016",
-  "written": "2026-09-27"
+  "scene": {
+    "type": "trick",
+    "trick": "window",
+    "chart": "bars",
+    "outlet": "News graphic, 2017 (redrawn)",
+    "headline": "US murders soar 20% in two years",
+    "honest": "Still about half the 1991 rate",
+    "label": "US murders per 100,000 people",
+    "decimals": 1,
+    "columns": [
+      "1991",
+      "2000",
+      "2010",
+      "2014",
+      "2016"
+    ],
+    "values": [
+      9.8,
+      5.5,
+      4.8,
+      4.4,
+      5.3
+    ],
+    "window": [
+      3,
+      4
+    ],
+    "from": 4,
+    "to": 5.5,
+    "spot": [
+      "xaxis",
+      "yaxis"
+    ],
+    "found": "Yes: two years picked, on an axis that starts at 4.",
+    "miss": "That part is honest. Look at which years made it in, and where the bars start.",
+    "misses": {
+      "marks": "Those are the FBI's real rates. What's missing is the years around them.",
+      "headline": "The rise was real. Ask what it was a rise from."
+    },
+    "name": "Two years, cut short",
+    "lesson": "Before a scary rise, ask for the long run, drawn from zero."
+  },
+  "source": "FBI Uniform Crime Reports; Gallup crime polls",
+  "source_kind": "statistics",
+  "reference": "https://news.gallup.com/poll/1603/crime.aspx",
+  "written": "2026-10-06"
 }

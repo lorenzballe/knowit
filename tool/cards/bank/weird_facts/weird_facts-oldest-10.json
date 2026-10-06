@@ -6,9 +6,9 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why were the ancient human footprints at White Sands, New Mexico, dated a second time?",
-  "answer": "Because the first dates came from water plants. Ditch-grass seeds in the layers gave 21,000 to 23,000 years, and critics argued that aquatic plants absorb old carbon from dissolved rock, making them look older. In 2023 pollen from land plants and quartz grains gave consistent ages. The oldest footprints in the Americas passed the retest.",
-  "move": "When a date rests on one material, ask what that material absorbs.",
+  "question": "Human footprints at White Sands, New Mexico, could change when people first reached the Americas. How old are they?",
+  "answer": "About 21,000 to 23,000 years, from the depth of the last ice age, thousands of years before people were long thought to have arrived. The first dates rested on one material with a known flaw. Two unrelated methods, with different weaknesses, landing on the same answer is what settled it.",
+  "move": "One method can be fooled; two unrelated methods rarely fail the same way.",
   "ask": "What do I believe that rests on one source I never questioned?",
   "keywords": [
     "white sands",
@@ -19,7 +19,7 @@
   ],
   "era": "recent",
   "region": "americas",
-  "hook": "story",
+  "hook": "puzzle",
   "mood": "wonder",
   "numeracy": 1,
   "abstraction": "concrete",
@@ -27,8 +27,49 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "About 4,000 yrs",
+      "About 13,000 yrs",
+      "About 22,000 yrs"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "The human prints cross tracks of mammoths, gone for over 10,000 years.",
+        "tag": "Beside mammoth tracks",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "Seeds of a pond plant in the layers radiocarbon-date to 21,000-23,000 years.",
+        "tag": "Seeds: 22,000 years",
+        "rulesOut": []
+      },
+      {
+        "text": "Pond plants soak up old carbon from groundwater, so they can look too old.",
+        "tag": "Pond plants look old",
+        "rulesOut": []
+      },
+      {
+        "text": "Pollen of land conifers, which take carbon from the air, gives the same age.",
+        "tag": "Land pollen agrees",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "Quartz grains, dated by when they last saw sunlight, agree too.",
+        "tag": "Quartz agrees",
+        "rulesOut": []
+      }
+    ],
+    "why": "The seeds alone could not decide. Pollen that took its carbon from air gave the same 22,000 years."
+  },
   "source": "Pigati et al., Science, 2023",
   "source_kind": "primary_document",
   "reference": "Pigati et al., Independent age estimates resolve the controversy of ancient human footprints at White Sands, Science, 2023",
-  "written": "2026-09-27"
+  "written": "2026-10-06"
 }

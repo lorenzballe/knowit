@@ -6,24 +6,68 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Whose laughter is on old sitcoms?",
-  "answer": "Often people who died decades before the show aired. Most canned laughter came from a single machine, the Laff Box, built and jealously guarded by one engineer who recorded audiences in the 1950s. The same chuckles recur across hundreds of programmes.",
-  "move": "That laugh track is a recording of an audience from the 1950s.",
+  "question": "In 2025 the Super Bowl became the most-watched broadcast in American history, again. Here it is against TV's biggest sitcom finales. Where's the trick?",
+  "answer": "In what is counted: heads, in a country that keeps growing. America had 234 million people in 1983 and about 340 million in 2025, so big events set records almost by default. Per 100 Americans, the last M*A*S*H drew 45 and the Super Bowl 38, and Nielsen now counts bars and streams too.",
+  "move": "Before cheering a record, ask whether the crowd it was drawn from grew.",
+  "ask": "Which record of mine is just a bigger crowd, not a bigger share?",
   "keywords": [
-    "laugh track",
-    "laff box",
-    "charley douglass",
-    "canned laughter"
+    "tv ratings",
+    "super bowl",
+    "sitcom finales",
+    "population",
+    "records"
   ],
-  "era": "twentieth",
+  "era": "recent",
   "region": "americas",
-  "hook": "story",
+  "hook": "misconception",
   "mood": "playful",
-  "numeracy": 0,
+  "numeracy": 2,
   "abstraction": "concrete",
-  "shelf_life": "evergreen",
+  "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "source": "Charles Douglass and the Laff Box",
+  "figure": "none",
+  "scene": {
+    "type": "trick",
+    "trick": "totals",
+    "outlet": "TV ratings, 1983–2025",
+    "headline": "Super Bowl: most-watched broadcast ever",
+    "honest": "Per American, M*A*S*H's finale still wins",
+    "label": "US viewers, million",
+    "honestLabel": "Viewers per 100 Americans",
+    "decimals": 0,
+    "honestDecimals": 0,
+    "columns": [
+      "M*A*S*H",
+      "Seinfeld",
+      "Friends",
+      "Super Bowl"
+    ],
+    "values": [
+      106.0,
+      76.3,
+      52.5,
+      127.7
+    ],
+    "per": [
+      234,
+      276,
+      293,
+      340
+    ],
+    "perScale": 100,
+    "found": "Yes: viewers in total, from a country 100 million people bigger.",
+    "miss": "The counts are right. Read what they count, one line above the bars.",
+    "misses": {
+      "yaxis": "The axis starts at zero, so the bars are fair lengths. Of what?",
+      "headline": "True, in heads. But were there as many heads in 1983?"
+    },
+    "name": "A bigger crowd",
+    "lesson": "In a growing country, records in totals come by themselves. Ask for the share."
+  },
+  "source": "Nielsen audience estimates; US Census population",
+  "source_kind": "statistics",
+  "reference": "Nielsen Media Research audience estimates: M*A*S*H finale (1983), Seinfeld finale (1998), Friends finale (2004), Super Bowl LIX (2025)",
+  "written": "2026-10-06",
   "disabled": true
 }

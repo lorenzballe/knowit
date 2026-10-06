@@ -6,19 +6,19 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did the stomach bacterium behind most ulcers refuse to grow in the lab until Easter 1982?",
-  "answer": "Because the plates were thrown away too soon. Robin Warren had seen curved bacteria in stomach biopsies, but Barry Marshall's cultures in Perth were discarded after two days, the routine for throat swabs. Over the long Easter weekend one batch sat for five days, and colonies of Helicobacter pylori appeared. It simply grew slowly.",
-  "move": "A search that stops too early reports that nothing is there.",
-  "ask": "What did I decide was not there because I stopped looking too soon?",
+  "question": "Perth, early 1980s. Stomach ulcers heal on acid-blocking pills, then come back. What really causes most of them?",
+  "answer": "A bacterium, Helicobacter pylori. It grew in the lab only in 1982, when Easter left a plate in the incubator for five days instead of the usual two. Barry Marshall drinking a culture made headlines but proved little. The trials did: kill the germ and the ulcers stop returning. Nobel Prize, 2005.",
+  "move": "A treatment that works only while you take it may be hiding the cause.",
+  "ask": "What problem in my life do I keep treating without ever asking what causes it?",
   "keywords": [
     "helicobacter pylori",
     "stomach ulcers",
     "barry marshall",
-    "bacterial culture"
+    "antibiotics"
   ],
   "era": "twentieth",
   "region": "oceania",
-  "hook": "story",
+  "hook": "puzzle",
   "mood": "wonder",
   "numeracy": 1,
   "abstraction": "concrete",
@@ -26,8 +26,43 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Stress",
+      "Too much acid",
+      "A bacterium"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Ulcers heal while patients take acid-blocking pills; most return when they stop.",
+        "tag": "Heal, then come back",
+        "rulesOut": []
+      },
+      {
+        "text": "Curved bacteria turn up in the stomach lining of nearly every ulcer patient.",
+        "tag": "Bacteria in the lining",
+        "rulesOut": []
+      },
+      {
+        "text": "A doctor drinks a flask of the bacteria. Within days his stomach is inflamed.",
+        "tag": "The doctor drinks it",
+        "rulesOut": []
+      },
+      {
+        "text": "After two weeks of antibiotics, ulcers stay healed. Stress and acid are unchanged.",
+        "tag": "Antibiotics: no return",
+        "rulesOut": [
+          0,
+          1
+        ]
+      }
+    ],
+    "why": "The drink gave inflammation, not an ulcer. The cure decided: kill the germ, and ulcers stay away."
+  },
   "source": "Marshall, Nobel Lecture, 2005",
   "source_kind": "primary_document",
   "reference": "Marshall, Helicobacter connections, Nobel Lecture, Nobel Foundation, 2005",
-  "written": "2026-09-27"
+  "written": "2026-10-06"
 }

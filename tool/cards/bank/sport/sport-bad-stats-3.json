@@ -6,28 +6,69 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why can an ordinary basketball player post one of the best plus-minus scores on his team?",
-  "answer": "Because plus-minus counts the score while he is on court, not what he did. Share the floor with the team's stars, against tired reserves, and points pile up around him. Analysts built adjusted versions that compare lineups with and without each player, and even those need several seasons of data to settle.",
-  "move": "A number earned in company says little about one member of it.",
-  "ask": "Am I taking credit, or giving it, for results that came from the team around one person?",
+  "question": "Every Olympics ends with this table. At Paris 2024 the United States topped it with 126 medals. Where's the trick?",
+  "answer": "In what is counted. A medal table adds medals, so it mostly ranks how many people, and how much money, a country has. Per person, New Zealand won about ten times as many as the United States, and China came last of these five. Britain won 65 with a fifth of America's people.",
+  "move": "Before crowning a winner, divide by what each one started with.",
+  "ask": "When I compare my results with someone else's, have I allowed for how much more they had to start with?",
   "keywords": [
-    "plus-minus",
-    "basketball",
-    "lineups",
-    "player ratings"
+    "olympic medals",
+    "medal table",
+    "per capita",
+    "paris 2024"
   ],
   "era": "recent",
-  "region": "americas",
-  "hook": "mechanism",
-  "mood": "sober",
-  "numeracy": 0,
-  "abstraction": "abstract",
-  "shelf_life": "evergreen",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Winston, Mathletics, 2009",
-  "source_kind": "book",
-  "reference": "Wayne L. Winston, Mathletics, Princeton University Press, 2009",
-  "written": "2026-09-26"
+  "scene": {
+    "type": "trick",
+    "trick": "totals",
+    "outlet": "Medal table, Paris 2024",
+    "headline": "USA tops the Paris 2024 medal table",
+    "honest": "Per person, New Zealand won ten times more",
+    "label": "Medals won at Paris 2024",
+    "honestLabel": "Medals per 10 million people",
+    "decimals": 0,
+    "honestDecimals": 1,
+    "columns": [
+      "USA",
+      "CHN",
+      "GBR",
+      "AUS",
+      "NZL"
+    ],
+    "values": [
+      126,
+      91,
+      65,
+      53,
+      20
+    ],
+    "per": [
+      340,
+      1410,
+      68,
+      27,
+      5.3
+    ],
+    "perScale": 10,
+    "found": "Yes: these are totals, for countries of very different sizes.",
+    "miss": "The counts are right. Read what they count, one line above the bars.",
+    "misses": {
+      "yaxis": "The axis starts at zero, so the bars are fair lengths. Of what, though?",
+      "headline": "True, in total. But is a total the right yardstick here?"
+    },
+    "name": "Totals, not per person",
+    "lesson": "A big country tops every total. Divide by its people before calling it the best."
+  },
+  "source": "IOC Paris 2024 medal table; national population estimates",
+  "source_kind": "institution",
+  "reference": "https://olympics.com/en/olympic-games/paris-2024/medals",
+  "written": "2026-10-06"
 }
