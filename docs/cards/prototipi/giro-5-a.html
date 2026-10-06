@@ -61,7 +61,7 @@
 .zrow b em{font-style:normal;color:#FFD23F}
 .zrow span{font:700 1.3cqh/1 var(--mono);letter-spacing:.18em;opacity:.7}
 .giant{position:absolute;left:0;bottom:0;display:flex;flex-direction:column;gap:1.4cqh}
-.giant b{font:900 11cqh/.9 var(--display);letter-spacing:-.03em;color:#FFD23F;text-shadow:0 0 3cqh #ffb40066}
+.giant b{font:900 10cqh/.9 var(--display);letter-spacing:-.03em;color:#FFD23F;text-shadow:0 0 3cqh #ffb40066}
 .giant span{font:700 1.4cqh/1.35 var(--mono);letter-spacing:.32em;opacity:.85}
 .night .chip2{color:#fff;box-shadow:inset 0 0 0 .25cqh #ffffff88}
 .night .chip2.on{background:#FFD23F;color:#060a1c;box-shadow:none}
@@ -565,7 +565,7 @@ const EO = 'power3.out', EIO = 'power2.inOut';
   const sk = {v: 0}; let x, W, H, ps = [], sea = [], phase = 'idle', t0 = 0, raf = 0, bet = null, scoop = 0, G = null, tilt = 0;
   function layout() {
     ({x, W, H} = Kit.fitCanvas(cv));
-    const k = sk.v, Rb = Math.min(W * .4, H * .4), Rs = Math.min(W * .24, H * .2), R = Rb + (Rs - Rb) * k;
+    const k = sk.v, Rb = Math.min(W * .4, H * .4), Rs = Math.min(W * .17, H * .13), R = Rb + (Rs - Rb) * k;
     G = {ph: phase, k, cx: W * .42 + (Rs + 4 - W * .42) * k, cy: H * .48 + (Rs + 4 - H * .48) * k, R, gx: W * .86, gy: H * .04, gw: W * .13, gh: W * .17};
     let s = 3; const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
     sea = []; for (let i = 0; i < 900; i++) { const a = r() * 7, d = Math.sqrt(r()) * G.R * .97; sea.push([G.cx + Math.cos(a) * d, G.cy + Math.sin(a) * d * .98, r()]); }

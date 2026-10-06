@@ -221,7 +221,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     t(X(75), H - fs * .2, 'HOW SURE YOU WERE', {'text-anchor': 'middle', 'font-size': fs * .85, opacity: .75});
     t(L, T - fs * .55, 'HOW OFTEN YOU WERE RIGHT', {'font-size': fs * .85, opacity: .75});
     const diag = Kit.mk('line', {x1: X(50), y1: Y(50), x2: X(100), y2: Y(100), stroke: ink, 'stroke-width': 2.5, 'stroke-dasharray': '6 6'}, svg);
-    t(X(56), Y(50) - fs * 2.9, 'SAID = GOT', {'font-size': fs * .8, opacity: .7, transform: `rotate(${-Math.atan2(Y(50) - Y(100), X(100) - X(50)) * 180 / Math.PI} ${X(56)} ${Y(50) - fs * 2.9})`});
+    t(X(58), Y(58) - fs * .7, 'SAID = GOT', {'font-size': fs * .8, opacity: .7, transform: `rotate(${-Math.atan2(Y(50) - Y(100), X(100) - X(50)) * 180 / Math.PI} ${X(58)} ${Y(58) - fs * .7})`});
     t(X(98), Y(6), 'OVERCONFIDENT', {'text-anchor': 'end', fill: red, 'font-size': fs * .85});
     // bins
     const bins = [[50, 60], [70, 80], [90, 100]].map(([a, b]) => { const s = ans.filter(x => x.v >= a && x.v <= b); return s.length ? {x: s.reduce((m, x) => m + x.v, 0) / s.length, y: 100 * s.filter(x => x.right).length / s.length, n: s.length, k: s.filter(x => x.right).length} : null; }).filter(Boolean);
@@ -247,7 +247,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
     if (!calm) gsap.from('#edgeMiss .mrow', {opacity: 0, y: 10, duration: .35, stagger: .1, delay: 1, ease: 'power3.out'});
     const right = ans.filter(a => a.right).length;
     say.innerHTML = sure.length
-      ? `When you were <b>90% sure or more</b>, you were right <b>${sr} of ${sure.length}</b>. ${sr / sure.length < .8 ? 'A red dot means you were surer than you were right: that is where your knowledge ends.' : 'Your sure answers held up. You know where your edge is.'}`
+      ? `When you were <b>90% sure or more</b>, you were right <b>${sr} of ${sure.length}</b>. ${sr / sure.length < .8 ? 'A red dot: you were surer than you were right. That is where your knowledge ends.' : 'Your sure answers held up. You know where your edge is.'}`
       : `You got ${right} of 6 and never bet above 70%. Most people are surest on the hard ones.`;
     requestAnimationFrame(() => draw(true));
   }

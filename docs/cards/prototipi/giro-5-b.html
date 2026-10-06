@@ -280,7 +280,7 @@ const T = (svg, x, y, txt, a = {}, f = 12) => { const t = Kit.mk('text', Object.
     Kit.hide('shotReel'); Kit.hide('shotRuler'); Kit.hide('shotCtl'); Kit.show('shotStrips'); buildStrips(); setT(0);
     say.innerHTML = 'Fifteen seconds of each film, cut by cut. Count the yellow marks.';
     const o = {t: 0}; stripsTl && stripsTl.kill();
-    const done = () => { Kit.show('shotKeep'); say.innerHTML = `In fifteen seconds: <b>2 cuts</b>, then <b>4</b>, then <b>7</b>. Old films did cut less, but every ten seconds or so, not every minute${held && held > 14 ? ` (you held ${held.toFixed(1)} s)` : ''}. The long takes we remember, like Hitchcock’s <i>Rope</i>, were the exceptions.`; };
+    const done = () => { Kit.show('shotKeep'); say.innerHTML = `${held ? `You held <b>${held.toFixed(1)} s</b>. ` : ''}In fifteen seconds: <b>2 cuts</b>, then <b>4</b>, then <b>7</b>. Old films did cut less, but about every ten seconds, not every minute. Long takes like Hitchcock’s <i>Rope</i> were the exceptions.`; };
     if (fast || calm) { setT(15); done(); return; }
     stripsTl = gsap.to(o, {t: 15, duration: 15, ease: 'none', onUpdate: () => setT(o.t), onComplete: done});
   }
