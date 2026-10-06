@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Which is the oldest living plant ever brought back: a Masada date palm, a Chinese lotus or a Siberian campion?",
-  "answer": "The campion, at about 31,800 years, but only by changing the rules. Russian scientists grew it in 2012 by laboratory culture from fruit tissue frozen in an Ice Age squirrel burrow. For a seed sprouting on its own, the record is still the Masada date palm, about 2,000 years old.",
+  "question": "Which is the oldest living plant ever brought back: a Masada date palm, a Chinese lotus or Silene, a Siberian wildflower?",
+  "answer": "Silene, at about 31,800 years, but only by changing the rules. Russian scientists grew it in 2012 by laboratory culture from fruit tissue frozen in an Ice Age squirrel burrow. For a seed sprouting on its own, the record is still the Masada date palm, about 2,000 years old.",
   "move": "Read how a record was defined before comparing it with another.",
   "ask": "Before I compare two records, did they use the same definition?",
   "keywords": [
@@ -42,7 +42,7 @@
         "note": "The oldest seed to sprout, planted in 2005: a tree now called Methuselah."
       },
       {
-        "label": "Campion",
+        "label": "Silene",
         "value": 31.8,
         "note": "Grown from fruit tissue in a frozen squirrel burrow, not from a seed."
       },

@@ -51,15 +51,10 @@
     "judge": 2,
     "verdict": {
       "under": "Even lower than the truth. Capillaries run at 0.3 mm a second, a thousandth of the aorta.",
-      "near": "Right: a thousand times slower in the capillaries, then faster as veins merge.",
+      "near": "Right: a thousand times slower in the capillaries, then back up to 103 in the big veins.",
       "over": "Slower than that: in the capillaries blood crawls at 0.3 mm a second."
     },
-    "notes": [
-      {
-        "at": 4,
-        "text": "Back up to 103"
-      }
-    ]
+    "notes": []
   },
   "source": "Guyton and Hall, Textbook of Medical Physiology",
   "source_kind": "book",
