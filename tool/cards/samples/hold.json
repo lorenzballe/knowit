@@ -1,0 +1,141 @@
+[
+  {
+    "id": "cinema-editing-hold-1",
+    "topic": "cinema",
+    "genre": "cinema.how_films_are_made",
+    "strand": "cinema.how_films_are_made.editing",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "availability",
+    "question": "A Hollywood film from the 1940s. Hold for as long as you think one shot lasted before the cut.",
+    "answer": "About 10 seconds. David Bordwell's counts put most studio-era features between 8 and 11 seconds a shot. The long takes people remember were the exceptions; the slowness lies in the staging, not the cutting. By 2000 many features averaged 3 to 6 seconds a shot, and Armageddon cut every 2.3.",
+    "move": "The famous exception is the one you remember, not the one that was typical.",
+    "ask": "Which famous example am I treating as typical when it is the exception?",
+    "keywords": [
+      "average shot length",
+      "david bordwell",
+      "studio era",
+      "cutting pace"
+    ],
+    "era": "twentieth",
+    "region": "americas",
+    "hook": "misconception",
+    "mood": "playful",
+    "numeracy": 2,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "hold",
+      "what": "One shot, 1940s Hollywood",
+      "seconds": 10,
+      "low": 8,
+      "high": 11,
+      "display": "timecode",
+      "comparisons": [
+        {"label": "A 2000s feature", "seconds": 4},
+        {"label": "Armageddon, 1998", "seconds": 2.3}
+      ]
+    },
+    "source": "Bordwell, Film Quarterly, 2002",
+    "source_kind": "paper",
+    "reference": "Bordwell, Intensified Continuity: Visual Style in Contemporary American Film, Film Quarterly 55(3), 2002",
+    "written": "2026-10-06"
+  },
+  {
+    "id": "space-moonlight-hold-1",
+    "topic": "space",
+    "genre": "space.stars_and_light",
+    "strand": "space.stars_and_light.light_years",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Light leaves the Moon's surface. Hold for as long as you think it takes to reach your eyes.",
+    "answer": "About 1.3 seconds. The Moon is 384,400 km away on average and light covers 299,792 km a second, so the Moon you see is the Moon of a second and a bit ago. At its closest the trip takes 1.21 s, at its farthest 1.35 s. Light could circle the Equator nearly ten times in that wait.",
+    "move": "Everything you see is already in the past; distance only sets how far.",
+    "ask": "What am I treating as live that reached me late?",
+    "keywords": [
+      "speed of light",
+      "moon",
+      "distance",
+      "light delay"
+    ],
+    "era": "timeless",
+    "region": "none",
+    "hook": "number",
+    "mood": "wonder",
+    "numeracy": 2,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "hold",
+      "what": "Moonlight, Moon to your eye",
+      "seconds": 1.28,
+      "low": 1.21,
+      "high": 1.35,
+      "display": "seconds",
+      "comparisons": [
+        {"label": "TV satellite and back", "seconds": 0.24},
+        {"label": "Once round the Equator", "seconds": 0.13}
+      ]
+    },
+    "source": "NASA Moon Fact Sheet",
+    "source_kind": "institution",
+    "reference": "NASA Goddard Space Flight Center, Moon Fact Sheet (mean, perigee and apogee distance), nssdc.gsfc.nasa.gov",
+    "written": "2026-10-06"
+  },
+  {
+    "id": "human-body-heart-rate-hold-1",
+    "topic": "human_body",
+    "genre": "human_body.your_body_in_numbers",
+    "strand": "human_body.your_body_in_numbers.heart_rate",
+    "kind": "pickOne",
+    "difficulty": "medium",
+    "principle": "none",
+    "question": "A blue-throated hummingbird's heart was measured at its fastest. How long did one beat last?",
+    "options": [
+      "About half a second",
+      "About a fifth of a second",
+      "About a twentieth of a second"
+    ],
+    "correct": 2,
+    "answer": "About a twentieth of a second. Measured at up to 1,260 beats a minute, the heart of a blue-throated hummingbird beats 21 times a second, once every 48 milliseconds. A mouse's heart, near 600 a minute, takes twice as long. Yours, at rest, takes eighteen times as long.",
+    "move": "Small bodies live fast: heart rate climbs as size falls.",
+    "ask": "What do I measure against my own pace without noticing?",
+    "keywords": [
+      "hummingbird",
+      "heart rate",
+      "metabolism",
+      "body size"
+    ],
+    "era": "timeless",
+    "region": "americas",
+    "hook": "number",
+    "mood": "wonder",
+    "numeracy": 2,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "hold",
+      "what": "One hummingbird heartbeat",
+      "seconds": 0.048,
+      "display": "ms",
+      "comparisons": [
+        {"label": "A mouse's heartbeat", "seconds": 0.1},
+        {"label": "Yours, at 70 a minute", "seconds": 0.86}
+      ]
+    },
+    "source": "Lasiewski, Physiological Zoology, 1964",
+    "source_kind": "paper",
+    "reference": "Lasiewski, Body Temperatures, Heart and Breathing Rate, and Evaporative Water Loss in Hummingbirds, Physiological Zoology 37(2), 1964",
+    "written": "2026-10-06"
+  }
+]

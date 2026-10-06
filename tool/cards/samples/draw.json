@@ -1,0 +1,160 @@
+[
+  {
+    "id": "technology-compute-draw-1",
+    "topic": "technology",
+    "genre": "technology.ai",
+    "strand": "technology.ai.training",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "The computing power used to train the top AI models grows about 4.5 times a year. Where does it get to in five years?",
+    "answer": "To about 1,800 times today's. Epoch AI found the compute behind frontier models grew four to five times a year from 2010 to 2024. Multiply by 4.5 five times and you reach 1,845. The first two years barely leave the floor; the last one adds more than the four before it together. Steady multiplication hides its size until the end.",
+    "move": "When something multiplies each year, work out the last year before trusting the picture in your head.",
+    "ask": "What in my life grows by a multiple rather than by a step, and have I pictured where it ends up?",
+    "keywords": [
+      "training compute",
+      "exponential growth",
+      "epoch ai",
+      "scaling"
+    ],
+    "era": "recent",
+    "region": "world",
+    "hook": "number",
+    "mood": "wonder",
+    "numeracy": 2,
+    "abstraction": "mixed",
+    "shelf_life": "years",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "draw",
+      "label": "Training compute, × today",
+      "unit": "×",
+      "columns": ["Today", "Yr 1", "Yr 2", "Yr 3", "Yr 4", "Yr 5"],
+      "values": [1, 4.5, 20.25, 91.1, 410, 1845],
+      "given": 1,
+      "min": 0,
+      "max": 2000,
+      "verdict": {
+        "under": "Too low, like most guesses. ×4.5 a year looks flat for years, then takes off.",
+        "near": "Close. You felt it: almost all of the climb comes in the last two years.",
+        "over": "Higher than the truth. Five years at ×4.5 is ×1,845: steep, but not endless."
+      },
+      "notes": [
+        {"at": 2, "text": "Two years in: only ×20"},
+        {"at": 4, "text": "×410, a year from the end"}
+      ]
+    },
+    "source": "Epoch AI, Training compute of frontier AI models grows by 4-5x per year, 2024",
+    "source_kind": "institution",
+    "reference": "Sevilla & Roldán, Training Compute of Frontier AI Models Grows by 4-5x per Year, Epoch AI, May 2024",
+    "written": "2026-10-06"
+  },
+  {
+    "id": "nature-keeling-draw-1",
+    "topic": "nature",
+    "genre": "nature.climate",
+    "strand": "nature.climate.greenhouse_effect",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Carbon dioxide in the air has been measured on Mauna Loa since 1958. Here are 1960 to 1980: how did the next forty years go?",
+    "answer": "It sped up. The 1960s added about 9 parts per million, the 1980s about 16, the 2010s about 24. Each decade burned more fuel than the last, so the climb steepens instead of holding a steady slope. By 2020 the air held 414 ppm, more than at any time in at least 800,000 years of ice-core records.",
+    "move": "Before extending a trend with a ruler, check whether its steps are growing.",
+    "ask": "Which numbers I watch do I extend in a straight line, and are their yearly steps actually getting bigger?",
+    "keywords": [
+      "carbon dioxide",
+      "keeling curve",
+      "mauna loa",
+      "climate change"
+    ],
+    "era": "recent",
+    "region": "world",
+    "hook": "number",
+    "mood": "sober",
+    "numeracy": 2,
+    "abstraction": "concrete",
+    "shelf_life": "years",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "draw",
+      "label": "CO₂ in the air, parts per million",
+      "unit": "ppm",
+      "columns": ["1960", "1970", "1980", "1990", "2000", "2010", "2020"],
+      "values": [317, 326, 339, 354, 370, 390, 414],
+      "given": 3,
+      "min": 300,
+      "max": 440,
+      "near": 0.08,
+      "verdict": {
+        "under": "You kept the old pace. The climb sped up: the 2010s added 24 ppm, the 1960s 9.",
+        "near": "Right: not a straight line but a steepening one. Every decade adds more.",
+        "over": "Too steep, but the right instinct: the climb did speed up, decade by decade."
+      },
+      "notes": [
+        {"at": 1, "text": "+9 in the 1960s"},
+        {"at": 5, "text": "+20 in the 2000s"}
+      ]
+    },
+    "source": "NOAA Global Monitoring Laboratory, Mauna Loa CO₂ annual mean data",
+    "source_kind": "statistics",
+    "reference": "Lan, Tans & Thoning, Trends in globally-averaged CO2 determined from NOAA Global Monitoring Laboratory measurements; Mauna Loa annual means, NOAA GML",
+    "written": "2026-10-06"
+  },
+  {
+    "id": "psychology-forgetting-draw-1",
+    "topic": "psychology",
+    "genre": "psychology.memory",
+    "strand": "psychology.memory.forgetting_curve",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Ebbinghaus learned lists of nonsense syllables, then relearned them after a wait. How much of the first effort did the memory still save?",
+    "answer": "Most of the loss came in the first hour. After 20 minutes relearning saved 58% of the original work, after an hour 44%, after a day 34%. Then the curve nearly flattens: a month later it still saved 21%. Forgetting is fast, then slow, and it rarely reaches zero.",
+    "move": "Review new material within the hour; that is when most of it slips.",
+    "ask": "What did I learn today that I should go over again before tonight?",
+    "keywords": [
+      "ebbinghaus",
+      "forgetting curve",
+      "method of savings",
+      "memory"
+    ],
+    "era": "nineteenth",
+    "region": "europe",
+    "hook": "number",
+    "mood": "wonder",
+    "numeracy": 1,
+    "abstraction": "mixed",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "draw",
+      "label": "Effort saved when relearning",
+      "unit": "%",
+      "columns": ["0", "20 min", "1 hr", "9 hr", "1 day", "2 days", "6 days", "31 days"],
+      "values": [100, 58.2, 44.2, 35.8, 33.7, 27.8, 25.4, 21.1],
+      "given": 1,
+      "min": 0,
+      "max": 100,
+      "judge": 2,
+      "verdict": {
+        "under": "Steeper than the truth, but you saw it coming: the fall is fast, then almost flat.",
+        "near": "Close. Over half is gone within the hour; after that the curve barely moves.",
+        "over": "Memory leaks faster than that: after one hour, more than half of the work was lost."
+      },
+      "notes": [
+        {"at": 4, "text": "A day on: 34% saved"},
+        {"at": 7, "text": "A month on, still 21%"}
+      ]
+    },
+    "source": "Ebbinghaus, Memory, 1885, English edition 1913",
+    "source_kind": "book",
+    "reference": "Ebbinghaus, Memory: A Contribution to Experimental Psychology, trans. Ruger & Bussenius, Teachers College, Columbia University, 1913",
+    "written": "2026-10-06"
+  }
+]

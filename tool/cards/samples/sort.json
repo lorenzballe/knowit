@@ -1,0 +1,236 @@
+[
+  {
+    "id": "sample-sort-swift-words",
+    "topic": "language",
+    "genre": "language.slang",
+    "strand": "language.slang.words_that_lasted",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "In 1710 Jonathan Swift named the new words he said were spoiling English. Which ones are still alive?",
+    "answer": "Most of them. In The Tatler Swift attacked clipped words like mobb, rep and pozz, and new slang like banter and bamboozle. Mob, rep, banter and bamboozle are now ordinary English; pozz, hipps and country put died. The words he hated most were the ones people found most useful, which is why they lasted.",
+    "move": "Today's sloppy shortcut is often tomorrow's dictionary word.",
+    "ask": "Which word I wince at today will my grandchildren use without noticing?",
+    "keywords": [
+      "Jonathan Swift",
+      "slang",
+      "clipped words",
+      "language change"
+    ],
+    "era": "early_modern",
+    "region": "europe",
+    "hook": "misconception",
+    "mood": "playful",
+    "numeracy": 0,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "sort",
+      "left": "Dead",
+      "right": "Alive",
+      "tag": "The Tatler · No. 230",
+      "items": [
+        {
+          "text": "Mobb",
+          "note": "Short for mobile vulgus, the fickle crowd.",
+          "pile": "right",
+          "verdict": "Mob is the plain word now. Nobody hears the Latin in it."
+        },
+        {
+          "text": "Pozz",
+          "note": "Short for positive, as in sure.",
+          "pile": "left",
+          "verdict": "Nobody has been pozz of anything for three hundred years."
+        },
+        {
+          "text": "Banter",
+          "note": "A new word for teasing talk.",
+          "pile": "right",
+          "verdict": "In every dictionary, and in every pub."
+        },
+        {
+          "text": "Hipps",
+          "note": "Short for hypochondria: low spirits.",
+          "pile": "left",
+          "verdict": "Gone. Nobody gets the hipps any more."
+        },
+        {
+          "text": "Bamboozle",
+          "note": "A new word for tricking someone.",
+          "pile": "right",
+          "verdict": "You can still be bamboozled, and you still are."
+        },
+        {
+          "text": "Country put",
+          "note": "A country bumpkin.",
+          "pile": "left",
+          "verdict": "Bumpkin won. Country put did not make it out of the 1700s."
+        },
+        {
+          "text": "Rep",
+          "note": "Short for reputation.",
+          "pile": "right",
+          "verdict": "A bad rep is still a bad rep."
+        }
+      ]
+    },
+    "source": "Jonathan Swift, The Tatler No. 230, 28 September 1710",
+    "source_kind": "primary_document",
+    "reference": "The Tatler, No. 230, 28 September 1710"
+  },
+  {
+    "id": "sample-sort-pyramid",
+    "topic": "history",
+    "genre": "history.everyday_life",
+    "strand": "history.everyday_life.deep_time",
+    "kind": "read",
+    "difficulty": "medium",
+    "principle": "none",
+    "question": "The Great Pyramid of Giza was finished around 2560 BC. Which of these came before it, and which after?",
+    "answer": "The pyramid sits later in history than it feels. Writing in Sumer and the first circle at Stonehenge are older; the last woolly mammoths, on Wrangel Island, were still alive about five centuries after it was finished. Rome would not be founded for another 1,800 years, and Cleopatra lived closer in time to the Moon landing than to its building.",
+    "move": "Ancient is not one era: the pyramids had their own deep past.",
+    "ask": "When I picture 'ancient times', which thousand years am I squashing together?",
+    "keywords": [
+      "Great Pyramid",
+      "chronology",
+      "woolly mammoth",
+      "Stonehenge"
+    ],
+    "era": "ancient",
+    "region": "world",
+    "hook": "misconception",
+    "mood": "wonder",
+    "numeracy": 1,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "sort",
+      "left": "Before",
+      "right": "After",
+      "tag": "Giza · c. 2560 BC",
+      "items": [
+        {
+          "text": "Writing",
+          "note": "The first written signs, in Sumer.",
+          "pile": "left",
+          "verdict": "Around 3200 BC: more than six centuries before the pyramid."
+        },
+        {
+          "text": "Stonehenge",
+          "note": "The first ditch and bank on Salisbury Plain.",
+          "pile": "left",
+          "verdict": "Begun around 3000 BC. The big stones came about when Giza did."
+        },
+        {
+          "text": "The last mammoth",
+          "note": "The final woolly mammoths die out.",
+          "pile": "right",
+          "verdict": "On Wrangel Island they lived until about 2000 BC."
+        },
+        {
+          "text": "Rome",
+          "note": "The city is founded, as the Romans told it.",
+          "pile": "right",
+          "verdict": "753 BC: eighteen centuries after the pyramid."
+        },
+        {
+          "text": "The wheel",
+          "note": "Wheels under carts, in Mesopotamia.",
+          "pile": "left",
+          "verdict": "Around 3500 BC, a thousand years before Giza."
+        },
+        {
+          "text": "Cleopatra",
+          "note": "The last pharaoh of Egypt is born.",
+          "pile": "right",
+          "verdict": "69 BC. She is closer in time to us than to the pyramid's builders."
+        }
+      ]
+    },
+    "source": "Smithsonian; English Heritage; Vartanyan et al., Nature 1993",
+    "source_kind": "paper",
+    "reference": "Vartanyan, Garutt & Sher, Nature 362, 337–340 (1993); English Heritage, History of Stonehenge"
+  },
+  {
+    "id": "sample-sort-animal-myths",
+    "topic": "nature",
+    "genre": "nature.animal_senses",
+    "strand": "nature.animal_senses.myths",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Six things everyone has heard about animals. Which are myths, and which are true?",
+    "answer": "Four of the six are myths. Goldfish remember for months, every bat can see, ostriches don't hide their heads, and a camel's hump is fat, not water. The two that sound made up are real: an octopus has three hearts, and wombats leave cube-shaped droppings, shaped by the walls of their gut.",
+    "move": "The animal fact that sounds invented is often the true one.",
+    "ask": "Do I believe this because I checked it, or because it is a good story?",
+    "keywords": [
+      "animal myths",
+      "goldfish memory",
+      "octopus",
+      "wombat"
+    ],
+    "era": "timeless",
+    "region": "world",
+    "hook": "misconception",
+    "mood": "playful",
+    "numeracy": 0,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "sort",
+      "left": "Myth",
+      "right": "True",
+      "tag": "Heard it somewhere",
+      "items": [
+        {
+          "text": "Goldfish",
+          "note": "Their memory lasts about three seconds.",
+          "pile": "left",
+          "verdict": "Goldfish can be trained, and remember the trick for months."
+        },
+        {
+          "text": "Octopus",
+          "note": "It has three hearts.",
+          "pile": "right",
+          "verdict": "Two pump blood through the gills, one through the rest of the body."
+        },
+        {
+          "text": "Bats",
+          "note": "They are blind.",
+          "pile": "left",
+          "verdict": "Every bat can see. Many hunt by sound as well, not instead."
+        },
+        {
+          "text": "Wombats",
+          "note": "Their droppings come out as cubes.",
+          "pile": "right",
+          "verdict": "Stiff and soft bands in the gut wall square them off."
+        },
+        {
+          "text": "Ostriches",
+          "note": "They bury their heads in sand when scared.",
+          "pile": "left",
+          "verdict": "They lie flat to hide, or turn their eggs in the nest."
+        },
+        {
+          "text": "Camels",
+          "note": "Their humps are full of water.",
+          "pile": "left",
+          "verdict": "A hump is a store of fat. The water is in the blood."
+        }
+      ]
+    },
+    "source": "Yang et al., Soft Matter, 2021; Natural History Museum, London",
+    "source_kind": "paper",
+    "reference": "doi:10.1039/D0SM01230K"
+  }
+]
