@@ -33,7 +33,7 @@
     "type": "translate",
     "head": "For sale",
     "ref": "Typical text",
-    "title": "Charming one-bedroom flat",
+    "title": "Charming flat",
     "body": "Cosy one-bedroom flat with huge potential, in a vibrant area moments from excellent transport links. Early viewing highly recommended.",
     "phrases": [
       {
@@ -49,7 +49,7 @@
       },
       {
         "text": "vibrant area",
-        "plain": "lively street, at 2 a.m. too",
+        "plain": "lively street, at 2 a.m. too,",
         "why": "Vibrant is true of busy places. It leaves out the hours you'll be trying to sleep."
       },
       {

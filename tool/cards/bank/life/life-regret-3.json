@@ -34,12 +34,12 @@
       {
         "options": [
           {
-            "label": "Missed by 5 minutes",
+            "label": "Missed by 5 min",
             "share": 96,
             "mirror": "Like 96% of those asked. A near miss is easy to undo in the mind, so it hurts more."
           },
           {
-            "label": "Missed by 30 minutes",
+            "label": "Missed by 30 min",
             "share": 4,
             "mirror": "Like 4%. You judge by the loss itself, and it is the same for both: one missed flight."
           }

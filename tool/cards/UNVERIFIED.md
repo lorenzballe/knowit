@@ -684,6 +684,14 @@ life-risk-taking-1, life-regret-2, life-failure-2, life-spending-2.
 
 ## Scene cards (October 2026)
 
+- philosophy-trolley-problems-6 | poll: Moral Sense Test web sample judged the switch permissible 85% and pushing the man 12% | Hauser Cushman Young Jin Mikhail 2007 Mind & Language Denise Frank 85% 12% permissible
+- philosophy-newcomb-1 | poll: about 31,000 Guardian readers, 53.5% chose one box (rounded 54/46); philosophers who pick a side lean two boxes | Alex Bellos Guardian 2016 Newcomb's problem poll results 53.5% one box; PhilPapers survey Newcomb two boxes
+- medicine-too-much-testing-3 | poll: 73% of US adults would take a free total-body CT scan over $1,000 cash | Schwartz Woloshin Fowler Welch 2004 JAMA enthusiasm for cancer screening total-body CT $1000
+- sport-penalty-kicks-2 | poll: 286 penalties; keepers dived 94%, stayed centre 6%; centre stops about 33% vs about 13-14% for dives; about 29% of kicks to the centre | Bar-Eli 2007 action bias goalkeepers penalty kicks 6.3% centre 33.3% stopping
+- science-optical-illusions-1 | poll: 1,401 respondents saw blue/black 57%, white/gold 30%, blue/brown 11% | Lafer-Sousa Hermann Conway 2015 Current Biology dress percentages 57% 30% 11%
+- pop_culture-trends-2 | poll: Gallup 2022 US workforce engaged 32%, actively disengaged 18%, not engaged about 50% | Gallup Harter 2022 quiet quitting engaged 32% actively disengaged 18%
+- life-comparison-2 | poll: "about half" chose $50k/others $25k, shown as 50/50 | Solnick Hemenway 1998 positional income share choosing positional option
+- economics-inflation-2 | poll: 7% pay cut with no inflation: 38% acceptable / 62% unfair; 5% raise with 12% inflation: 78% / 22% | Kahneman Knetsch Thaler 1986 fairness wage cut 7% inflation 12% raise 5% acceptable unfair
 - psychology-reciprocity-2 | rank: one-then-a-second mint raised tips 23% (some summaries say 21%); one mint 3.3%, two 14.1% | Strohmetz Rind Fisher Lynn 2002 Sweetening the till abstract percentages
 - weird_facts-fastest-5 | rank: Space Shuttle launch peaked at about 3 g | NASA Space Shuttle launch maximum acceleration 3 g
 - history-1 | rank: peak areas British 35.5, Mongol 24.0, Russian 22.8, Spanish 13.7, French 11.5 million km², attributed to Taagepera 1997 | Taagepera 1997 International Studies Quarterly largest polities table
@@ -720,3 +728,24 @@ life-risk-taking-1, life-regret-2, life-failure-2, life-spending-2.
 - food-taste-and-smell-1 | why: dry, thin cabin air dulls the sense of smell | aircraft cabin humidity pressure smell taste perception study
 - economics-interest-2 | why: South Dakota lifted its rate cap in 1980 and Citibank moved its card business to Sioux Falls (1981) | Citibank Sioux Falls 1981 South Dakota usury law 1980
 - music-song-length-1 | why: a stream counts once it passes 30 seconds | Spotify stream counted after 30 seconds
+- economics-loyalty-traps-1 | translate: the FCA banned charging renewing home and motor insurance customers more than new ones from 1 January 2022, and its own term was price walking | FCA PS21/5 general insurance pricing practices price walking 1 January 2022
+- economics-2008-1 | translate: Britain dropped the 90% co-insurance band of deposit protection soon after the Northern Rock run (October 2007) | FSA October 2007 deposit protection 100% £35,000 co-insurance removed
+- psychology-scarcity-tricks-2 | translate: the CMA said counts of people looking could include people searching other dates | CMA online hotel booking 2019 undertakings other people looking different dates
+- art-motives-5 | translate: auction glossaries define Attributed to as probably by the artist in whole or in part, and Manner of as in the artist's style but of a later date | Christie's explanation of cataloguing practice attributed to manner of
+- medicine-reading-results-2 | translate: CKD stage 3a is an eGFR of 45 to 59 that must persist for more than 3 months | KDIGO 2012 CKD definition G3a 45-59 three months
+- medicine-getting-a-second-opinion-2 | translate: atypical ductal hyperplasia on a core biopsy is usually followed by surgical excision | atypical ductal hyperplasia core needle biopsy excision recommended upgrade
+- economics-corruption-2 | story: Kuwait, Egypt and Chad diplomats each ran up over 100 unpaid tickets; Norway, Sweden, Japan almost none; after Nov 2002 plate removals violations "almost stopped" (often quoted as about 98% down) | Fisman Miguel 2007 diplomatic parking tickets Kuwait 246 enforcement decline
+- economics-present-bias-1 | story: 78% of those who declined the adviser's advice joined Save More Tomorrow; their rate went 3.5% to 13.6% after four raises; the firm a midsize US manufacturer, late 1990s | Thaler Benartzi 2004 SMarT 78 percent joined 13.6
+- life-saving-1 | story: default contribution was 3% in a money market fund, switch in April 1998 | Madrian Shea 2001 automatic enrollment 3 percent money market April 1998
+- life-failure-1 | story: near-misses' advantage survived the authors' conservative test for attrition | Wang Jones Wang 2019 near misses conservative removal screening
+- medicine-doctors-who-were-right-1 | story: lemon juice ration from 1795; switch to West Indian limes mid-1800s; Nares expedition 1875-76 had lime juice on board | Carpenter History of Scurvy Nares 1875 lime juice West Indian limes
+- medicine-germ-theory-3 | story: Pettenkofer drank the culture in October 1892, aged 73; Hamburg drank unfiltered Elbe water | Pettenkofer 7 October 1892 cholera self-experiment
+- sport-doping-1 | story: riders' own centrifuges and saline before controls; typical male haematocrit low to mid 40s | USADA reasoned decision haematocrit centrifuge saline 50 percent
+- sport-moneyball-1 | story: Oakland's 2002 payroll about a third of the Yankees' | 2002 MLB payrolls Athletics Yankees
+- space-reusable-boosters-6 | story: January 1985 launch about 12 °C (53 °F), 28 Jan 1986 about 2 °C (36 °F); managers asked Thiokol to prove launch unsafe | Rogers Commission 53 degrees 51-C 36 degrees Thiokol prove unsafe
+- history-clothes-4 | story: a merchant family that dressed too grandly risked ruin (e.g. Ishikawa Rokubei's wife, 1681) | Shively 1964 sumptuary Ishikawa Rokubei 1681 confiscated
+- pop_culture-sitcoms-10 | story: by season two pay was unequal among the six | Friends season 2 salaries Schwimmer Aniston unequal
+- cinema-unfinished-6 | story: shooting abandoned in 1964 after the lead left and Clouzot's heart attack | L'Enfer Clouzot 1964 Reggiani heart attack abandoned
+- nature-recent-losses-7 | story: some Partula species since returned to the islands from zoos | Partula reintroduction Tahiti Moorea zoo 2016
+- life-big-choices-1 | story: coin-toss site ran from 2013; effect largest for quitting a job or ending a relationship | Levitt Heads or Tails 2021 job quitting breakup largest effect
+- music-sampling-2 | story: after Grand Upright (1991) labels cleared every sample and dense collage albums died out | Grand Upright v Warner 1991 sample clearance Paul's Boutique

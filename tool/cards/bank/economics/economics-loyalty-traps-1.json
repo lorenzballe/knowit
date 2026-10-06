@@ -28,19 +28,19 @@
   "figure": "none",
   "scene": {
     "type": "translate",
-    "head": "Home insurance renewal",
+    "head": "Insurance renewal",
     "ref": "Typical text",
-    "title": "Your cover renews on 1 March",
-    "body": "Thank you for being a valued customer. To keep you protected, your policy will renew automatically. Your new premium reflects our latest pricing. No action is needed.",
+    "title": "Your renewal",
+    "body": "Thank you for being a valued customer. Your policy will renew automatically. Your new premium reflects our latest pricing. No action is needed.",
     "phrases": [
       {
         "text": "valued customer",
-        "plain": "customer we expect not to shop around",
+        "plain": "customer we expect not to compare",
         "why": "Staying is read as a sign you won't compare. That is worth money to the insurer."
       },
       {
         "text": "renew automatically",
-        "plain": "renew at whatever price we set, unless you stop it",
+        "plain": "renew at our new price unless you stop it",
         "why": "Doing nothing counts as yes. The default does the selling."
       },
       {
@@ -51,7 +51,7 @@
       },
       {
         "text": "No action is needed",
-        "plain": "Nothing to do, if you're happy to pay more",
+        "plain": "Do nothing, and pay more",
         "why": "The best price usually goes to whoever asks. Silence is the profitable answer."
       }
     ],

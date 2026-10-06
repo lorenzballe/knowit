@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Prices stay just as they are today. In which of these two worlds would you rather live?",
+  "question": "Prices stay as they are today. Would you rather earn $50k while others earn $25k, or $100k while others earn $200k?",
   "answer": "Half chose to be poorer but ahead. Solnick and Hemenway found the pull of rank strong for income and weak for holidays: most chose more weeks off even when others got more. People rank themselves on what others can see. A salary shows; an extra week at home does not.",
   "move": "Notice which of your wants are about having, and which about outranking.",
   "ask": "Which of my goals would I drop if nobody around me could see whether I reached it?",
@@ -33,12 +33,12 @@
       {
         "options": [
           {
-            "label": "$50k; others earn $25k",
+            "label": "$50k, and ahead",
             "share": 50,
             "mirror": "So did about half. You'd give up half your money to stay ahead; rank feels like safety."
           },
           {
-            "label": "$100k; others earn $200k",
+            "label": "$100k, but behind",
             "share": 50,
             "mirror": "So did about half. You'd take twice the money at the bottom; you count what it buys."
           }

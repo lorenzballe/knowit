@@ -9,7 +9,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "A tube of homeopathic pills from a chemist's shelf. What does its active ingredient line actually describe?",
+  "question": "A tube of homeopathic pills from a chemist's shelf, labelled the way many are. What is actually in them?",
   "answer": "Sugar, in practice. 30C means diluted a hundredfold, thirty times over: one part in a 1 followed by 60 zeros, far past the point where a single molecule is likely to remain. In 2015 Australia's national medical research council reviewed homeopathy for 61 conditions and found no reliable evidence it worked for any.",
   "move": "Weigh studies by how well they were run, not by how many.",
   "ask": "When I count the evidence for something I like, do I weigh the careful studies more than the rest?",
@@ -34,13 +34,8 @@
     "head": "Homeopathic medicine",
     "ref": "Typical text",
     "title": "Arnica 30C",
-    "body": "Active ingredient: Arnica montana 30C. Homeopathic remedy for bruises and muscle aches. Gentle, with no known side effects.",
+    "body": "Arnica montana 30C. Homeopathic remedy for bruises and aches. Gentle, with no known side effects.",
     "phrases": [
-      {
-        "text": "Active ingredient",
-        "plain": "Ingredient in name only",
-        "why": "Labels must list it. Diluted this far, it is a name, not a dose."
-      },
       {
         "text": "30C",
         "plain": "diluted 1 in 100, thirty times over",
@@ -49,7 +44,7 @@
       },
       {
         "text": "Homeopathic remedy",
-        "plain": "Sugar pill, shown to work no better than placebo",
+        "plain": "Sugar pill, no better than a dummy in good trials,",
         "why": "Australia's NHMRC reviewed 61 conditions in 2015 and found no reliable evidence for any."
       },
       {

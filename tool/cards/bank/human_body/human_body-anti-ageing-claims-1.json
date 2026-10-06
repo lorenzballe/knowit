@@ -31,7 +31,7 @@
     "head": "Night cream",
     "ref": "Typical text",
     "title": "Collagen renew",
-    "body": "Enriched with collagen to boost your skin's own. Visibly reduces the appearance of fine lines in just 4 weeks.",
+    "body": "Enriched with collagen to boost your skin's own. Visibly reduces the appearance of fine lines.",
     "phrases": [
       {
         "text": "Enriched with collagen",
@@ -46,7 +46,7 @@
       },
       {
         "text": "Visibly reduces the appearance of",
-        "plain": "Makes you see fewer, for a while,",
+        "plain": "For a while, makes you see fewer",
         "why": "Appearance is the legal escape. A cosmetic may change how skin looks, not how it works."
       }
     ],
