@@ -1,0 +1,182 @@
+[
+  {
+    "id": "sample-translate-xray-report",
+    "topic": "medicine",
+    "genre": "medicine.talk_to_your_doctor",
+    "strand": "medicine.talk_to_your_doctor.reading_results",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Your chest X-ray report lands in the app before the doctor calls. What is it actually telling you?",
+    "answer": "That something is wrong. 'Unremarkable' is the good news: nothing worth a remark. 'Impressive' is the bad news: a large, striking finding. 'Occult' only means hidden. In a 2022 survey of 215 adults at the Minnesota State Fair, many read phrases like these the opposite way round.",
+    "move": "In a medical report, a word that sounds like praise may be a measurement.",
+    "ask": "Which words in my own test results have I read the wrong way round?",
+    "keywords": [
+      "medical jargon",
+      "radiology report",
+      "patient understanding",
+      "health literacy"
+    ],
+    "era": "recent",
+    "region": "world",
+    "hook": "misconception",
+    "mood": "sober",
+    "numeracy": 0,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "translate",
+      "head": "Radiology report",
+      "ref": "Chest X-ray",
+      "title": "Findings",
+      "body": "Heart size is normal and the lungs are unremarkable. The opacity in the left lower lobe is impressive and suggests an occult infection. Follow-up advised.",
+      "phrases": [
+        {
+          "text": "unremarkable",
+          "plain": "normal, nothing worth a remark",
+          "why": "Written for other doctors. Finding nothing to remark on is the best news a scan can give."
+        },
+        {
+          "text": "impressive",
+          "plain": "large, and a real worry",
+          "why": "It means striking on the image. Radiologists use it for size and severity, never for praise.",
+          "catch": true
+        },
+        {
+          "text": "an occult infection",
+          "plain": "an infection the X-ray cannot show directly",
+          "why": "Occult is just Latin for hidden. Nothing supernatural about it."
+        }
+      ],
+      "ask": "One word sounds like praise and is the worst news here. Which?",
+      "watch": "When a report seems to praise you, ask what the word is measuring."
+    },
+    "source": "Gotlieb et al., JAMA Network Open, 2022",
+    "source_kind": "paper",
+    "reference": "doi:10.1001/jamanetworkopen.2022.42972",
+    "written": "2026-10-06"
+  },
+  {
+    "id": "sample-translate-gym-contract",
+    "topic": "economics",
+    "genre": "economics.spot_a_bad_deal",
+    "strand": "economics.spot_a_bad_deal.fine_print",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "You join a gym in January. This is the clause about leaving, worded the way many are. Where does the gym make its money?",
+    "answer": "On the months you don't come. The contract never ends unless you end it, and ending it takes a letter. In a study of 7,752 members of three US gyms, people on monthly contracts kept paying for over two months, on average, after their last visit.",
+    "move": "Before you read the price, read how to leave.",
+    "ask": "What am I still paying for only because leaving takes effort?",
+    "keywords": [
+      "gym membership",
+      "automatic renewal",
+      "inertia",
+      "contracts"
+    ],
+    "era": "recent",
+    "region": "world",
+    "hook": "mechanism",
+    "mood": "playful",
+    "numeracy": 1,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "translate",
+      "head": "Membership agreement",
+      "ref": "§ 7.2",
+      "title": "Term and cancellation",
+      "body": "This Agreement is subject to a minimum term of 12 months and thereafter renews automatically every month. The Member may cancel only by giving the Club 30 days' written notice.",
+      "phrases": [
+        {
+          "text": "subject to a minimum term of 12 months",
+          "plain": "locked for a full year, whatever happens,",
+          "why": "Term sounds like a timetable. It is a lock: twelve payments, used or not."
+        },
+        {
+          "text": "renews automatically every month",
+          "plain": "never ends unless you end it",
+          "why": "Sold as convenience. It makes paying the default, so every forgotten month is income.",
+          "catch": true
+        },
+        {
+          "text": "30 days' written notice",
+          "plain": "a posted letter and one more month's fee",
+          "why": "Each extra step between you and the exit keeps a few more people paying."
+        }
+      ],
+      "ask": "One phrase is where the gym makes most of its money. Which?",
+      "watch": "Before you read the price, find out how you leave. That is where the money is."
+    },
+    "source": "DellaVigna & Malmendier, American Economic Review, 2006",
+    "source_kind": "paper",
+    "reference": "doi:10.1257/aer.96.3.694",
+    "written": "2026-10-06"
+  },
+  {
+    "id": "sample-translate-moisturiser-label",
+    "topic": "human_body",
+    "genre": "human_body.health_claims",
+    "strand": "human_body.health_claims.wellness_trends",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "The back of a moisturiser, the kind you buy without reading. What does it actually promise you?",
+    "answer": "Almost nothing you can hold it to. The US FDA says 'hypoallergenic' has no federal definition. 'Dermatologist tested' says a test happened, not how it went. And 'up to' is the best result anyone got: in a 2012 FTC study, almost half of readers took an 'up to' figure as what nearly every buyer gets.",
+    "move": "'Up to' is a ceiling dressed as a promise.",
+    "ask": "Which claim did I trust today without asking who checked it?",
+    "keywords": [
+      "hypoallergenic",
+      "product labels",
+      "up to claims",
+      "marketing language"
+    ],
+    "era": "recent",
+    "region": "americas",
+    "hook": "misconception",
+    "mood": "practical",
+    "numeracy": 0,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "translate",
+      "head": "Daily moisturiser · 50 ml",
+      "ref": "Back of pack",
+      "title": "For sensitive skin",
+      "body": "Hypoallergenic. Dermatologist tested. Up to 48h hydration. Fragrance free, with shea butter and glycerin.",
+      "phrases": [
+        {
+          "text": "Hypoallergenic",
+          "plain": "We call it gentle, and no law says what that means",
+          "why": "The FDA says the word has no federal definition. It means what the company wants.",
+          "catch": true
+        },
+        {
+          "text": "Dermatologist tested",
+          "plain": "A skin doctor tried it; we don't say what they found",
+          "why": "It borrows a doctor's authority without the doctor's verdict."
+        },
+        {
+          "text": "Up to 48h hydration",
+          "plain": "48 hours for our best tester, maybe far less for you",
+          "why": "'Up to' is a ceiling. Most people read it as what they will get."
+        }
+      ],
+      "ask": "One of these claims has no legal meaning at all. Which?",
+      "watch": "On a label, ask who checked each claim, and what exactly they promised."
+    },
+    "source": "US FDA, Hypoallergenic Cosmetics; FTC, 'Up To' Claims study, 2012",
+    "source_kind": "institution",
+    "reference": "https://www.fda.gov/cosmetics/cosmetics-labeling-claims/hypoallergenic-cosmetics",
+    "written": "2026-10-06"
+  }
+]

@@ -203,7 +203,9 @@ class _PollSceneViewState extends State<PollSceneView>
     ]) {
       final lineH = _measure(line, _lineStyle(lineSize), w, 4);
       final whyH = why ? _measure(s.why, _whyStyle(whySize), w, 4) : 0.0;
-      final footer = 16 + lineH + (why ? 6 + whyH : 0);
+      // A few points of slack: a measured paragraph and the laid-out one
+      // can differ by a rounding of each line.
+      final footer = 20 + lineH + (why ? 6 + whyH : 0);
       final need = (header ? _hintH + 12 : 0) + groups + rowGaps + footer;
       fit = (
         lineSize: lineSize,
