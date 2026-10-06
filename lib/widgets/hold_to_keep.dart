@@ -60,10 +60,15 @@ class _HoldToKeepState extends State<HoldToKeep> with TickerProviderStateMixin {
   );
 
   /// The beat after: the heart lands, swells and goes.
-  late final AnimationController _done = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 620),
-  );
+  late final AnimationController _done =
+      AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 620),
+      )..addStatusListener((status) {
+        // Once it has gone, it is gone: the mark leaves the card entirely
+        // rather than staying on it, faded to nothing.
+        if (status == AnimationStatus.completed) _done.value = 0;
+      });
 
   /// What the finished mark says — a heart, or a heart let go.
   bool _letting = false;
@@ -83,88 +88,112 @@ class _HoldToKeepState extends State<HoldToKeep> with TickerProviderStateMixin {
     _done.forward(from: 0);
   }
 
+  /// Where the finger went down, to tell a hold from the start of a scroll.
+  Offset? _downAt;
+
+  /// The finger left, or the press was taken by something else — a scroll
+  /// on the back of a card, which wins the gesture without the long press
+  /// ever hearing that it lost. Either way the mark unwinds; it used to stay
+  /// up, full, on a turned card.
+  void _letGo() {
+    _downAt = null;
+    if (_hold.value > 0 && _hold.status != AnimationStatus.reverse) {
+      _hold.reverse();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return RawGestureDetector(
-      // The card underneath keeps its tap and its throw: a quick tap never
-      // reaches this, and a card dragged away takes the pointer with it.
-      gestures: {
-        LongPressGestureRecognizer:
-            GestureRecognizerFactoryWithHandlers<LongPressGestureRecognizer>(
-              () => LongPressGestureRecognizer(duration: _press),
-              (r) => r
-                ..onLongPressDown = ((_) => _hold.forward())
-                ..onLongPressCancel = (() => _hold.reverse())
-                ..onLongPressStart = ((_) => _fire())
-                ..onLongPressEnd = ((_) => _hold.reverse()),
-            ),
+    return Listener(
+      behavior: HitTestBehavior.translucent,
+      onPointerDown: (e) => _downAt = e.position,
+      onPointerMove: (e) {
+        final at = _downAt;
+        if (at != null && (e.position - at).distance > kTouchSlop) _letGo();
       },
-      child: AnimatedBuilder(
-        animation: Listenable.merge([_hold, _done]),
-        builder: (context, child) {
-          // The quiet stretch first, then the whole mark in what is left.
-          final double hold = Curves.easeOut.transform(
-            ((_hold.value - _quiet) / (1 - _quiet)).clamp(0.0, 1.0),
-          );
-          final double done = _done.value;
-          return Transform.scale(
-            scale: 1 - 0.02 * hold,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                child!,
-                if (hold > 0 || done > 0)
-                  IgnorePointer(
-                    child: CustomPaint(
-                      size: const Size(112, 112),
-                      painter: _Mark(
-                        hold: hold,
-                        done: done,
-                        letting: _letting,
-                        ink: widget.ink,
-                        ground: widget.ground,
-                      ),
-                      child: SizedBox(
-                        width: 112,
-                        height: 112,
-                        child: Center(
-                          child: Opacity(
-                            opacity: done > 0
-                                ? (1 -
-                                          Curves.easeIn.transform(
-                                            (done - 0.45).clamp(0.0, 1.0) /
-                                                0.55,
-                                          ))
-                                      .clamp(0.0, 1.0)
-                                : hold,
-                            child: Transform.scale(
-                              scale: done > 0
-                                  ? 1 +
-                                        0.35 *
-                                            Curves.easeOutBack.transform(
-                                              (done / 0.45).clamp(0.0, 1.0),
-                                            )
-                                  : 0.7 + 0.3 * hold,
-                              child: Icon(
-                                done > 0 && _letting
-                                    ? Icons.heart_broken_rounded
-                                    : done > 0
-                                    ? Icons.favorite_rounded
-                                    : Icons.favorite_border_rounded,
-                                size: 38,
-                                color: widget.ink.withValues(alpha: 0.85),
+      onPointerUp: (_) => _letGo(),
+      onPointerCancel: (_) => _letGo(),
+      child: RawGestureDetector(
+        // The card underneath keeps its tap and its throw: a quick tap never
+        // reaches this, and a card dragged away takes the pointer with it.
+        gestures: {
+          LongPressGestureRecognizer:
+              GestureRecognizerFactoryWithHandlers<LongPressGestureRecognizer>(
+                () => LongPressGestureRecognizer(duration: _press),
+                (r) => r
+                  ..onLongPressDown = ((_) => _hold.forward())
+                  ..onLongPressCancel = (() => _hold.reverse())
+                  ..onLongPressStart = ((_) => _fire())
+                  ..onLongPressEnd = ((_) => _hold.reverse()),
+              ),
+        },
+        child: AnimatedBuilder(
+          animation: Listenable.merge([_hold, _done]),
+          builder: (context, child) {
+            // The quiet stretch first, then the whole mark in what is left.
+            final double hold = Curves.easeOut.transform(
+              ((_hold.value - _quiet) / (1 - _quiet)).clamp(0.0, 1.0),
+            );
+            final double done = _done.value;
+            return Transform.scale(
+              scale: 1 - 0.02 * hold,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  child!,
+                  if (hold > 0 || done > 0)
+                    IgnorePointer(
+                      child: CustomPaint(
+                        size: const Size(112, 112),
+                        painter: _Mark(
+                          hold: hold,
+                          done: done,
+                          letting: _letting,
+                          ink: widget.ink,
+                          ground: widget.ground,
+                        ),
+                        child: SizedBox(
+                          width: 112,
+                          height: 112,
+                          child: Center(
+                            child: Opacity(
+                              opacity: done > 0
+                                  ? (1 -
+                                            Curves.easeIn.transform(
+                                              (done - 0.45).clamp(0.0, 1.0) /
+                                                  0.55,
+                                            ))
+                                        .clamp(0.0, 1.0)
+                                  : hold,
+                              child: Transform.scale(
+                                scale: done > 0
+                                    ? 1 +
+                                          0.35 *
+                                              Curves.easeOutBack.transform(
+                                                (done / 0.45).clamp(0.0, 1.0),
+                                              )
+                                    : 0.7 + 0.3 * hold,
+                                child: Icon(
+                                  done > 0 && _letting
+                                      ? Icons.heart_broken_rounded
+                                      : done > 0
+                                      ? Icons.favorite_rounded
+                                      : Icons.favorite_border_rounded,
+                                  size: 38,
+                                  color: widget.ink.withValues(alpha: 0.85),
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-              ],
-            ),
-          );
-        },
-        child: widget.child,
+                ],
+              ),
+            );
+          },
+          child: widget.child,
+        ),
       ),
     );
   }
