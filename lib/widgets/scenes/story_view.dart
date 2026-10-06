@@ -1374,12 +1374,7 @@ class _StoryPainter extends CustomPainter {
     // The disc stays under the dashes and inside the scene.
     canvas.save();
     canvas.clipRect(
-      Rect.fromLTRB(
-        -8,
-        _Plan.stripH + 6,
-        size.width,
-        box.bottom + box.height * 0.06,
-      ),
+      Rect.fromLTRB(-8, _Plan.stripH + 6, size.width, size.height),
     );
     _disc(canvas, box, angle, fade * drawOn.clamp(0.0, 1.0));
     canvas.restore();
@@ -1410,8 +1405,10 @@ class _StoryPainter extends CustomPainter {
     if (alpha <= 0) return;
     final side = box.width;
     final r = side * 0.5;
-    final c =
+    var c =
         box.center + Offset(math.cos(angle), math.sin(angle)) * (side * 0.3);
+    // It may lean out to the side, but not down into the words below.
+    c = Offset(c.dx, math.min(c.dy, box.bottom + side * 0.06 - r));
     final key = r.round();
     final sets = _halftones.putIfAbsent(key, () => _lay(key.toDouble()));
     canvas.save();

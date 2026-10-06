@@ -863,11 +863,11 @@ class _TrickLayout {
         chart.left - 6,
         plot.top - 12,
         plot.left - 3,
-        plot.bottom + 10,
+        plot.bottom - 1,
       );
       boxes[TrickSceneRegion.xaxis] = Rect.fromLTRB(
         plot.left - 4,
-        plot.bottom + 3,
+        plot.bottom - 12,
         plot.right + 4,
         chart.bottom + 4,
       );
@@ -882,7 +882,7 @@ class _TrickLayout {
           plot.right + 3,
           plot.top - 12,
           chart.right + 6,
-          plot.bottom + 10,
+          plot.bottom - 1,
         );
       }
       regions[TrickSceneRegion.yaxis] = inflateTo(
@@ -1157,6 +1157,7 @@ class _TrickChartPainter extends CustomPainter {
         ..color = ink.withValues(alpha: 0.13 * alpha)
         ..strokeWidth = 1;
       canvas.drawLine(Offset(plot.left, y), Offset(plot.right, y), _stroke);
+      // A flipping axis folds flat halfway; its labels fade as it does.
       _text(
         canvas,
         f.tick(v, labelRange),
@@ -1164,7 +1165,7 @@ class _TrickChartPainter extends CustomPainter {
         Offset(plot.left - 8, y),
         ax: 1,
         ay: .5,
-        alpha: alpha,
+        alpha: alpha * up.abs(),
       );
     }
 
@@ -1530,7 +1531,12 @@ class _TrickChartPainter extends CustomPainter {
     }
 
     if (s.first == 0 && s.last == s.count - 1) {
-      ends(0, s.count - 1, 1);
+      // A flipping chart folds flat halfway; its labels fade as it does.
+      ends(
+        0,
+        s.count - 1,
+        s.trick == TrickSceneKind.flipped ? (2 * e - 1).abs() : 1,
+      );
     } else {
       ends(s.first, s.last, 1 - e);
       ends(0, s.count - 1, e);
