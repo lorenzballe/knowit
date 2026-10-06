@@ -1,4 +1,8 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:astuto/data/card_json.dart';
@@ -16,6 +20,20 @@ const _shots = bool.fromEnvironment('SHOTS');
 /// themself, with one question or two, and reach the crowd's answers on any
 /// phone, in any height the card gives the scene.
 void main() {
+  // Real type for the photographs; a plain run keeps the test font.
+  setUpAll(() async {
+    if (!_shots) return;
+    for (final (family, path) in [
+      ('Fraunces', 'assets/fonts/Fraunces.ttf'),
+      ('Figtree', 'assets/fonts/Figtree.ttf'),
+    ]) {
+      final bytes = await File(path).readAsBytes();
+      await (FontLoader(
+        family,
+      )..addFont(Future.value(ByteData.sublistView(bytes)))).load();
+    }
+  });
+
   Map<String, Object?> driver() => {
     'type': 'poll',
     'who': '81 US students, Svenson 1981',
@@ -218,10 +236,13 @@ void main() {
                 child: SizedBox(
                   height: height,
                   child: RepaintBoundary(
-                    child: SceneView(
-                      scene: parse(raw),
-                      ink: ink,
-                      ground: ground,
+                    child: ColoredBox(
+                      color: ground,
+                      child: SceneView(
+                        scene: parse(raw),
+                        ink: ink,
+                        ground: ground,
+                      ),
                     ),
                   ),
                 ),
@@ -265,7 +286,8 @@ void main() {
         await shot(tester, 'four-${height.round()}-before');
 
         await tester.tap(find.text('Go with my gut'));
-        await tester.pump(const Duration(milliseconds: 900));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 380));
         await shot(tester, 'four-${height.round()}-mid');
         await tester.pumpAndSettle();
         expect(tester.takeException(), isNull);
@@ -298,7 +320,8 @@ void main() {
         await shot(tester, 'twice-${height.round()}-first');
 
         await tester.tap(find.text('200 saved for sure'));
-        await tester.pump(const Duration(milliseconds: 600));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 640));
         await shot(tester, 'twice-${height.round()}-turn');
         await tester.pumpAndSettle();
         expect(find.text('2 OF 2'), findsOneWidget);
@@ -465,10 +488,8 @@ void main() {
       tester,
     ) async {
       final advanced = await deck(tester, () async {
-        // A tap between the slabs is not a flip either.
-        final a = tester.getRect(find.text('Better than half'));
-        final b = tester.getRect(find.text('Not better than half'));
-        await tester.tapAt(Offset(a.left, (a.bottom + b.top) / 2));
+        // A tap on the scene beside the slabs is not a flip either.
+        await tester.tap(find.text('TAP YOUR PICK'));
         await tester.pumpAndSettle();
         expect(find.text('TAP YOUR PICK'), findsOneWidget);
 

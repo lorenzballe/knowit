@@ -62,14 +62,14 @@ class _PollSceneViewState extends State<PollSceneView>
   /// second question is not yet tappable.
   late final AnimationController _turn = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 950),
+    duration: const Duration(milliseconds: 820),
   );
 
   /// Slabs to bars, bars growing, the lines arriving: one clock, so a test
   /// can run it to the end and the parts stay in step.
   late final AnimationController _reveal = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 2100),
+    duration: const Duration(milliseconds: 1600),
   );
 
   bool get _revealed => _picks.every((p) => p != null);
@@ -114,18 +114,24 @@ class _PollSceneViewState extends State<PollSceneView>
 
   // ---- type ----
 
+  /// Set to the room: a tall scene gets a larger question.
+  double _promptSize = 19;
+
   TextStyle get _promptStyle => AppText.display(
-    size: 19,
+    size: _promptSize,
     weight: FontWeight.w600,
     height: 1.18,
     spacing: -0.3,
     color: widget.ink,
   );
 
-  TextStyle _lineStyle(double size) => AppText.body(
+  /// The reader's own line is in the voice of the card, a size up from
+  /// the line on why people split.
+  TextStyle _lineStyle(double size) => AppText.display(
     size: size,
-    weight: FontWeight.w700,
-    height: 1.3,
+    weight: FontWeight.w600,
+    height: 1.2,
+    spacing: -0.2,
     color: widget.ink,
   );
 
@@ -196,10 +202,10 @@ class _PollSceneViewState extends State<PollSceneView>
     ({double lineSize, double whySize, bool header, bool why, double footer})?
     fit;
     for (final (lineSize, whySize, header, why) in [
-      (15.0, 14.0, true, true),
-      (14.0, 13.0, true, true),
-      (14.0, 13.0, false, true),
-      (14.0, 13.0, false, false),
+      (18.0, 14.0, true, true),
+      (16.0, 13.0, true, true),
+      (16.0, 13.0, false, true),
+      (16.0, 13.0, false, false),
     ]) {
       final lineH = _measure(line, _lineStyle(lineSize), w, 4);
       final whyH = why ? _measure(s.why, _whyStyle(whySize), w, 4) : 0.0;
@@ -219,7 +225,9 @@ class _PollSceneViewState extends State<PollSceneView>
     final f = fit!;
     final fixed =
         (f.header ? _hintH + 12 : 0) + groups + rowGaps + f.footer;
-    final rowH = ((h - fixed) / rows).clamp(26.0, s.twice ? 52.0 : 64.0);
+    // Two bars alone may be fat; more stay a list.
+    final most = s.twice ? 64.0 : (rows == 2 ? 84.0 : 64.0);
+    final rowH = ((h - fixed) / rows).clamp(26.0, most);
     final total = fixed + rowH * rows;
     var y = math.max(0.0, (h - total) / 2);
     final headerTop = y;
@@ -257,6 +265,7 @@ class _PollSceneViewState extends State<PollSceneView>
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, box) {
       final w = box.maxWidth, h = box.maxHeight;
+      _promptSize = (h * 0.042).clamp(18.0, 23.0);
       return GestureDetector(
         // Until the crowd is in, a tap between the slabs is a near miss at
         // one, not a request to turn the card over.
@@ -283,6 +292,7 @@ class _PollSceneViewState extends State<PollSceneView>
     final l10n = context.l10n;
     final out = <Widget>[
       Positioned(
+        key: const ValueKey('hint'),
         top: 0,
         left: 0,
         right: 0,
@@ -298,11 +308,13 @@ class _PollSceneViewState extends State<PollSceneView>
     if (turning) {
       // A beat on the solid pick, then the first question leaves to the
       // left as the second comes in from the right.
-      final e = Curves.easeInOutCubic.transform(
-        ((_turn.value - .38) / .62).clamp(0.0, 1.0),
-      );
-      out.addAll(_question(0, w, h, dx: -w * .22 * e, opacity: 1 - e));
-      out.addAll(_question(1, w, h, dx: w * .22 * (1 - e), opacity: e));
+      // One leaves, then the other arrives: never two questions on top of
+      // each other.
+      final a = ((_turn.value - .38) / .62).clamp(0.0, 1.0);
+      final leave = Curves.easeInCubic.transform((a * 2).clamp(0.0, 1.0));
+      final come = Curves.easeOutCubic.transform((a * 2 - 1).clamp(0.0, 1.0));
+      out.addAll(_question(0, w, h, dx: -w * .16 * leave, opacity: 1 - leave));
+      out.addAll(_question(1, w, h, dx: w * .16 * (1 - come), opacity: come));
     } else {
       out.addAll(_question(_q, w, h));
     }
@@ -323,6 +335,7 @@ class _PollSceneViewState extends State<PollSceneView>
     return [
       if (qq.prompt.isNotEmpty)
         Positioned(
+          key: ValueKey('prompt-$q'),
           top: c.promptTop,
           left: dx,
           width: w,
@@ -334,6 +347,7 @@ class _PollSceneViewState extends State<PollSceneView>
         ),
       for (var i = 0; i < qq.options.length; i++)
         Positioned(
+          key: ValueKey('row-$q-$i'),
           top: c.tops[i],
           left: dx,
           width: w,
@@ -393,20 +407,24 @@ class _PollSceneViewState extends State<PollSceneView>
     final last = s.questions.length - 1;
     final from = _choice(last, w, h);
     final to = _result(w, h);
-    final m = _span(0, .32, Curves.easeInOutCubic);
-    final rest = _span(.12, .4);
+    // The hint and the prompt clear first, then the slabs travel, then the
+    // study's name and the other wording arrive in the room they left.
+    final gone = _span(0, .1, Curves.linear);
+    final m = _span(.06, .38, Curves.easeInOutCubic);
+    final rest = _span(.3, .5);
     final out = <Widget>[];
 
     // The hint and the prompt give way to the study and the wordings.
-    if (m < 1) {
+    if (gone < 1) {
       out.add(
         Positioned(
+          key: const ValueKey('hint'),
           top: 0,
           left: 0,
           right: 0,
           height: _hintH,
           child: Opacity(
-            opacity: 1 - m,
+            opacity: 1 - gone,
             child: _Hint(
               left: l10n.sceneTapToPick,
               right: s.twice ? l10n.sceneNOfM(2, 2) : null,
@@ -419,12 +437,13 @@ class _PollSceneViewState extends State<PollSceneView>
       if (prompt.isNotEmpty) {
         out.add(
           Positioned(
+            key: ValueKey('prompt-$last'),
             top: from.promptTop,
             left: 0,
             width: w,
             height: from.promptH,
             child: Opacity(
-              opacity: 1 - m,
+              opacity: 1 - gone,
               child: ExcludeSemantics(
                 child: Text(prompt, maxLines: 3, style: _promptStyle),
               ),
@@ -436,6 +455,7 @@ class _PollSceneViewState extends State<PollSceneView>
     if (to.header) {
       out.add(
         Positioned(
+          key: const ValueKey('header'),
           top: to.headerTop,
           left: 0,
           right: 0,
@@ -451,6 +471,7 @@ class _PollSceneViewState extends State<PollSceneView>
       if (s.twice) {
         out.add(
           Positioned(
+            key: ValueKey('tag-$q'),
             top: to.tagTops[q],
             left: 0,
             right: 0,
@@ -485,11 +506,12 @@ class _PollSceneViewState extends State<PollSceneView>
             : to.rowH;
         final font = moving ? from.font + (to.font - from.font) * m : to.font;
         final k = q * 2 + i;
-        final grow = _span(.3 + k * .07, .7 + k * .07);
+        final grow = _span(.36 + k * .06, .74 + k * .06);
         final you = _picks[q] == i;
         final share = opts[i].share;
         out.add(
           Positioned(
+            key: ValueKey('row-$q-$i'),
             top: top,
             left: 0,
             width: w,
@@ -525,9 +547,10 @@ class _PollSceneViewState extends State<PollSceneView>
       }
     }
 
-    final fade = _span(.72, 1);
+    final fade = _span(.74, 1);
     out.add(
       Positioned(
+        key: const ValueKey('footer'),
         top: to.footerTop,
         left: 0,
         right: 0,
@@ -684,8 +707,7 @@ class _PollRow extends StatelessWidget {
     final pad = (height * 0.2).clamp(12.0, 20.0);
     final ringSize = (font * 1.05).clamp(18.0, 26.0);
 
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 120),
+    return DecoratedBox(
       decoration: BoxDecoration(borderRadius: radius, color: slab),
       child: ClipRRect(
         borderRadius: radius,

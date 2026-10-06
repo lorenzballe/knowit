@@ -480,6 +480,7 @@ class _MatchSceneViewState extends State<MatchSceneView>
               linked: _isLinked(e) || _locked,
               hover: _hover == e,
               lifted: _picked == e || _from == e,
+              flying: false,
               ink: ink,
               ground: ground,
             ),
@@ -508,7 +509,8 @@ class _MatchSceneViewState extends State<MatchSceneView>
             solid: _solidOf(e, settle),
             linked: _isLinked(e) || _locked,
             hover: _hover == e,
-            lifted: _picked == e || _from == e || inFlight,
+            lifted: _picked == e || _from == e,
+            flying: inFlight,
             ink: ink,
             ground: ground,
           ),
@@ -745,7 +747,7 @@ class _MatchGeometry {
   static TextStyle _right(double size, Color ink) => AppText.body(
     size: size,
     weight: FontWeight.w600,
-    height: 1.22,
+    height: 1.16,
     color: ink,
   );
 
@@ -807,63 +809,71 @@ class _MatchGeometry {
     final pitch = board.height / n;
     // Tiles grow with the room up to a comfortable slab; any height left
     // over goes to the gaps between rows, which gives the lines room.
-    final gap = (pitch * 0.16).clamp(5.0, 26.0);
+    final gap = (pitch * 0.12).clamp(4.0, 22.0);
     final tileH = math.max(24.0, math.min(pitch - gap, 104.0));
     final padH = w < 300 ? 10.0 : 13.0;
-    const padV = 5.0;
-    final colGap = (w * 0.16).clamp(40.0, 72.0);
+    const padV = 4.0;
+    final colGap = (w * 0.14).clamp(38.0, 60.0);
     final avail = w - colGap;
+    final innerH = tileH - padV * 2;
 
-    // The left column is as wide as its longest word asks at a generous
-    // size, within limits; the right column takes the rest.
     final lefts = [for (final p in scene.pairs) p.left];
     final rights = [for (final p in scene.pairs) p.right];
-    final probe = _left(math.min(22, tileH * 0.4), const Color(0xFF000000));
-    var need = 0.0;
-    for (final t in lefts) {
-      for (final word in t.split(' ')) {
-        final tp = _lay(word, probe, scaler);
-        need = math.max(need, tp.width);
-        tp.dispose();
-      }
-    }
-    final leftMax = (need + padH * 2 + 2).clamp(avail * 0.34, avail * 0.46);
-    final rightW = avail - leftMax;
-
-    final innerH = tileH - padV * 2;
-    final leftSize = _fit(
+    const black = Color(0xFF000000);
+    double fitLeft(double width) => _fit(
       lefts,
-      (s) => _left(s, const Color(0xFF000000)),
+      (s) => _left(s, black),
       scaler,
-      leftMax - padH * 2,
+      width - padH * 2,
       innerH,
       2,
       math.min(24, tileH * 0.42),
       12,
     );
     // Right: as many lines as the tile holds, at most three.
-    final rightLines = 3;
-    final rightSize = _fit(
+    const rightLines = 3;
+    double fitRight(double width) => _fit(
       rights,
-      (s) => _right(s, const Color(0xFF000000)),
+      (s) => _right(s, black),
       scaler,
-      rightW - padH * 2,
+      width - padH * 2,
       innerH,
       rightLines,
-      math.min(16, tileH * 0.34),
+      math.min(17, tileH * 0.36),
       10.5,
     );
 
+    // The split between the columns is the one that lets the smaller of
+    // the two type sizes, each against what it would like to be, be
+    // largest: short ideas give their width to long explanations.
+    var best = -1.0;
+    var leftMax = avail * 0.4;
+    var leftSize = 12.0;
+    for (var share = 0.28; share <= 0.5; share += 0.02) {
+      final lw = avail * share;
+      final ls = fitLeft(lw);
+      final rs = fitRight(avail - lw);
+      final score = math.min(ls / 21, rs / 14.5) + rs / 1000;
+      if (score > best) {
+        best = score;
+        leftMax = lw;
+        leftSize = ls;
+      }
+    }
+
     // Every left tile as wide as the widest needs, so the dots stand in
-    // one line and no curve passes over a tile.
+    // one line and no curve passes over a tile; what the left column does
+    // not use goes to the right one.
     var hug = 0.0;
-    final st = _left(leftSize, const Color(0xFF000000));
+    final st = _left(leftSize, black);
     for (final t in lefts) {
       final tp = _lay(t, st, scaler, lines: 2, maxWidth: leftMax - padH * 2);
       hug = math.max(hug, tp.width);
       tp.dispose();
     }
     final leftW = math.min(leftMax, hug + padH * 2 + 4);
+    final rightW = avail - leftW;
+    final rightSize = fitRight(rightW);
 
     return _MatchGeometry(
       n: n,
@@ -1111,6 +1121,9 @@ class _MatchTile extends StatelessWidget {
   final bool linked;
   final bool hover;
   final bool lifted;
+
+  /// Sliding past the others during the reveal: raised, not turned over.
+  final bool flying;
   final Color ink;
   final Color ground;
   const _MatchTile({
@@ -1122,14 +1135,21 @@ class _MatchTile extends StatelessWidget {
     required this.linked,
     required this.hover,
     required this.lifted,
+    required this.flying,
     required this.ink,
     required this.ground,
   });
 
   @override
   Widget build(BuildContext context) {
+    final raised = lifted || flying;
     final turn = lifted ? 1.0 : solid;
-    final rest = ink.withValues(alpha: linked ? 0.14 : 0.08);
+    // Opaque, mixed onto the ground, so a tile sliding past another
+    // during the reveal covers it instead of showing both texts at once.
+    final rest = Color.alphaBlend(
+      ink.withValues(alpha: linked ? 0.14 : 0.08),
+      ground,
+    );
     final face = Color.lerp(ink, ground, turn)!;
     return LayoutBuilder(
       builder: (context, box) {
@@ -1137,7 +1157,7 @@ class _MatchTile extends StatelessWidget {
           (box.maxHeight * 0.28).clamp(10.0, 18.0),
         );
         return AnimatedScale(
-          scale: lifted ? 1.03 : 1,
+          scale: raised ? 1.03 : 1,
           duration: const Duration(milliseconds: 140),
           curve: Curves.easeOutCubic,
           child: DecoratedBox(
@@ -1147,7 +1167,7 @@ class _MatchTile extends StatelessWidget {
               border: hover
                   ? Border.all(color: ink, width: 2)
                   : Border.all(color: const Color(0x00000000), width: 2),
-              boxShadow: lifted
+              boxShadow: raised
                   ? const [
                       BoxShadow(
                         color: Color(0x33000000),

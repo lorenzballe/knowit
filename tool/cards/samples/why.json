@@ -1,0 +1,196 @@
+[
+  {
+    "id": "economics-why-airport-coffee",
+    "topic": "economics",
+    "genre": "economics.everyday_costs",
+    "strand": "economics.everyday_costs.hidden_costs",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "The same coffee from the same chain costs more at the gate than in town. Why?",
+    "answer": "Because the buyers can't leave. Behind security there is no café across the street, so the airport lets its few spots to the highest bidder and takes a cut of every sale. Where an airport forbids the mark-up, it goes: Portland, Oregon, has required 'street pricing' since 1988.",
+    "move": "When a price looks unfair, ask who can't walk away.",
+    "ask": "Where am I paying more simply because I can't easily go elsewhere?",
+    "keywords": [
+      "airport prices",
+      "captive market",
+      "concession fees",
+      "street pricing"
+    ],
+    "era": "recent",
+    "region": "world",
+    "hook": "mechanism",
+    "mood": "playful",
+    "numeracy": 1,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "why",
+      "ask": "And why?",
+      "start": {
+        "text": "Same coffee, same chain: dearer at the gate."
+      },
+      "levels": [
+        {
+          "text": "The café hands the airport a cut of every sale, on top of rent.",
+          "figure": "10–20%",
+          "unit": "of sales, typically"
+        },
+        {
+          "text": "Airports live off shops and parking almost as much as off flights.",
+          "figure": "~40%",
+          "unit": "of airport income"
+        },
+        {
+          "text": "A café can pay that cut because its buyers have nowhere else to go."
+        },
+        {
+          "text": "Security turns the terminal into a closed town: no next street."
+        }
+      ],
+      "guess": {
+        "options": [
+          "Beans cost more to fly in",
+          "Buyers can't go elsewhere",
+          "Airport staff earn more"
+        ],
+        "answer": 1
+      }
+    },
+    "source": "ACI World, Airport Economics Report; Port of Portland concessions policy",
+    "source_kind": "institution",
+    "reference": "Airports Council International, Airport Economics Report (non-aeronautical revenue about 40% of airport income); Port of Portland, PDX street pricing policy, in place since 1988",
+    "written": "2026-10-06"
+  },
+  {
+    "id": "science-why-plane-ears",
+    "topic": "science",
+    "genre": "science.materials",
+    "strand": "science.materials.why_things_break",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Your ears pop as the plane climbs, even though the cabin is pressurised. Why isn't it kept at ground level?",
+    "answer": "To spare the metal. Holding ground-level air at cruise would push on the hull about 40% harder, flight after flight, and metal tires with every stretch: in 1954 two Comet jets broke apart from fatigue cracks. So rules allow a cabin as thin as air at 2,400 metres.",
+    "move": "A design that seems stingy is often paying for something you can't see.",
+    "ask": "What hidden cost is that annoying limit paying for?",
+    "keywords": [
+      "cabin pressure",
+      "metal fatigue",
+      "de havilland comet",
+      "pressurisation"
+    ],
+    "era": "twentieth",
+    "region": "world",
+    "hook": "mechanism",
+    "mood": "wonder",
+    "numeracy": 1,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "why",
+      "ask": "And why?",
+      "start": {
+        "text": "Your ears pop as the plane climbs."
+      },
+      "levels": [
+        {
+          "text": "The cabin air thins as you climb; the air behind your eardrum lags."
+        },
+        {
+          "text": "The cabin is only kept as dense as the air on a mountain.",
+          "figure": "2,400 m",
+          "unit": "cabin altitude, at most"
+        },
+        {
+          "text": "Ground-level air inside would push on the hull 40% harder, every flight."
+        },
+        {
+          "text": "Metal tires each time it is stretched. Less push, longer life."
+        }
+      ],
+      "guess": {
+        "options": [
+          "It keeps passengers calm",
+          "Full pressure would tire the hull",
+          "The oxygen would run out"
+        ],
+        "answer": 1
+      }
+    },
+    "source": "FAA, 14 CFR §25.841; UK Ministry of Transport, Comet inquiry report (1955)",
+    "source_kind": "institution",
+    "reference": "14 CFR §25.841 Pressurized cabins (cabin pressure altitude not more than 8,000 ft); Report of the Court of Inquiry into the accidents to Comet G-ALYP and G-ALYY, HMSO 1955",
+    "written": "2026-10-06"
+  },
+  {
+    "id": "science-why-stale-bread",
+    "topic": "science",
+    "genre": "science.chemistry_at_home",
+    "strand": "science.chemistry_at_home.kitchen_myths",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Bread goes stale even sealed in its bag. If it isn't drying out, what is happening?",
+    "answer": "Its starch is turning back into crystals. Baking melts the starch into a soft, disordered gel; as the loaf cools, the long molecules slowly line up again and stiffen the crumb. Cold speeds this up and heat undoes it, so a stale roll revives in a hot oven. Freeze bread; don't chill it.",
+    "move": "Stale isn't dry; it's starch going back into order.",
+    "ask": "Which 'obvious' cause have I never actually checked?",
+    "keywords": [
+      "staling",
+      "starch retrogradation",
+      "bread",
+      "fridge"
+    ],
+    "era": "timeless",
+    "region": "world",
+    "hook": "misconception",
+    "mood": "practical",
+    "numeracy": 0,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "why",
+      "ask": "And why?",
+      "start": {
+        "text": "Bread goes stale even sealed in its bag."
+      },
+      "levels": [
+        {
+          "text": "Stale isn't dry: sealed bread keeps nearly all its water."
+        },
+        {
+          "text": "The crumb stiffens instead, and heat makes it soft again."
+        },
+        {
+          "text": "Cold makes it worse: bread stales faster in the fridge."
+        },
+        {
+          "text": "Baked starch is a soft jumble; cooled, it packs into crystals.",
+          "figure": "~60 °C",
+          "unit": "reheat past it to undo"
+        }
+      ],
+      "guess": {
+        "options": [
+          "It slowly dries out",
+          "Its starch crystallises again",
+          "The yeast keeps working"
+        ],
+        "answer": 1
+      }
+    },
+    "source": "Gray & BeMiller, Comprehensive Reviews in Food Science and Food Safety (2003); McGee, On Food and Cooking",
+    "source_kind": "paper",
+    "reference": "Gray, J.A. & BeMiller, J.N. (2003) Bread staling: molecular basis and control, Comprehensive Reviews in Food Science and Food Safety 2(1): 1–21; Harold McGee, On Food and Cooking (2004)",
+    "written": "2026-10-06"
+  }
+]

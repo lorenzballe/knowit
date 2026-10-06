@@ -301,6 +301,7 @@ class _WhySceneViewState extends State<WhySceneView>
       viewH: viewH,
       along: along,
       dip: dip,
+      uncovered: _from + (_stage - _from) * rise,
       flood: flood,
       branches: _hasGuess ? branches * (1 - chipsOut) : 0,
       right: s.guess?.answer ?? -1,
@@ -548,6 +549,11 @@ class _WhyLayout {
   final List<double> nodeY;
   final List<double> _textTops;
   final List<Rect> chips;
+
+  /// The lines of every layer still buried, as (top, width) bars: the
+  /// shape of the words before the words, so a stratum reads as holding
+  /// something.
+  final List<List<Rect>> ghosts;
   final double guessLabelY;
   final double verdictY;
 
@@ -571,6 +577,7 @@ class _WhyLayout {
     required this.nodeY,
     required List<double> textTop,
     required this.chips,
+    this.ghosts = const [],
     required this.guessLabelY,
     required this.verdictY,
   }) : _textTops = textTop;
@@ -581,14 +588,16 @@ class _WhyLayout {
   double textTop(int k) => _textTops[k];
   double bottom(int k) => bandTop[k] + bandH[k];
 
+  static TextStyle _rootStyle(double size, Color color) => AppText.display(
+    size: size,
+    weight: FontWeight.w800,
+    height: 1.12,
+    spacing: -0.3 - size * 0.012,
+    color: color,
+  );
+
   TextStyle textStyle(int k, Color color) => k == n
-      ? AppText.display(
-          size: rootFont,
-          weight: FontWeight.w800,
-          height: 1.12,
-          spacing: -0.3 - rootFont * 0.012,
-          color: color,
-        )
+      ? _rootStyle(rootFont, color)
       : AppText.display(
           size: font,
           weight: k == 0 ? FontWeight.w700 : FontWeight.w600,
@@ -633,7 +642,6 @@ class _WhyLayout {
     var font = (size.height * 0.044).clamp(18.0, 23.0);
     late _WhyLayout out;
     while (true) {
-      final rootFont = font * 1.2;
       final figFont = font * 1.06;
       final chipFont = (font * 0.74).clamp(14.0, 16.0);
 
@@ -649,7 +657,7 @@ class _WhyLayout {
         size: size,
         n: n,
         font: font,
-        rootFont: rootFont,
+        rootFont: font * 1.2,
         figFont: figFont,
         chipFont: chipFont,
         footerH: footerH,
@@ -680,8 +688,27 @@ class _WhyLayout {
       nodeY.add(y - 13); // the pulley, on top of its tripod
 
       const padTop = 16.0, padBottom = 20.0;
+      final ghosts = <List<Rect>>[const []];
+      List<Rect> ghost(String text, TextStyle style, double top) {
+        final tp = paint(text, style, textW);
+        final bars = [
+          for (final m in tp.computeLineMetrics())
+            Rect.fromLTWH(
+              textLeft,
+              top + m.baseline - m.ascent * 0.78,
+              m.width,
+              m.ascent * 0.78,
+            ),
+        ];
+        tp.dispose();
+        return bars;
+      }
+
       for (var k = 1; k < n; k++) {
         final st = s.levels[k - 1];
+        ghosts.add(
+          ghost(st.text, probe.textStyle(k, Colors.black), y + padTop),
+        );
         bandTop.add(y);
         textTop.add(y + padTop);
         nodeY.add(y + padTop + firstLine / 2);
@@ -694,17 +721,10 @@ class _WhyLayout {
       // before that, the candidate roots: whichever is taller.
       final rootTop = y;
       const rootPad = 26.0;
-      final rootTextH = stepH(
-        s.root,
-        probe.textStyle(n, Colors.black),
-        figFont * 1.08,
-      );
-      final verdictH = s.guess == null ? 0.0 : 14 + 18.0 * scaler.scale(1);
-      final rootH = rootPad + rootTextH + verdictH + rootPad;
-
       final chips = <Rect>[];
       var guessH = 0.0;
       var labelY = 0.0;
+      var verdictH = 0.0;
       if (s.guess != null) {
         labelY = rootTop + 16;
         var cy = labelY + 13 * scaler.scale(1) + 10;
@@ -721,7 +741,37 @@ class _WhyLayout {
           cy += h + (tight ? 7 : 9);
         }
         guessH = cy - (tight ? 7 : 9) + 18 - rootTop;
+        // The verdict: a label, then the reader's option and its mark.
+        var longest = 0.0;
+        for (final o in s.guess!.options) {
+          final tp = paint(o, _verdictStyle(Colors.black), textW - 24, 2);
+          longest = math.max(longest, tp.height);
+          tp.dispose();
+        }
+        verdictH = 16 + 13 * scaler.scale(1) + 5 + longest;
       }
+
+      // The root is set larger than every layer, and larger still when the
+      // band has room for it: it is what the descent was for.
+      var rootFont = font * 1.2;
+      double rootTextH(double rf) =>
+          stepH(s.root, _rootStyle(rf, Colors.black), figFont * 1.08);
+      final room = math.max(guessH, size.height * 0.42);
+      while (rootFont + 1 <= font * 1.5 &&
+          rootPad * 2 + rootTextH(rootFont + 1) + verdictH <= room) {
+        rootFont += 1;
+      }
+      final rootText = rootTextH(rootFont);
+      final rootH = rootPad + rootText + verdictH + rootPad;
+      ghosts.add(
+        s.guess != null
+            ? const []
+            : ghost(
+                s.root.text,
+                _rootStyle(rootFont, Colors.black),
+                rootTop + rootPad,
+              ),
+      );
       bandTop.add(rootTop);
       textTop.add(rootTop + rootPad);
       nodeY.add(rootTop + rootPad + rootFont * 1.12 * scaler.scale(1) / 2);
@@ -742,8 +792,9 @@ class _WhyLayout {
         nodeY: nodeY,
         textTop: textTop,
         chips: chips,
+        ghosts: ghosts,
         guessLabelY: labelY,
-        verdictY: rootTop + rootPad + rootTextH + 14,
+        verdictY: rootTop + rootPad + rootText + 16,
       );
 
       var fits = rootH <= size.height * 0.86;
@@ -831,15 +882,16 @@ class _StepText extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(8.2, 4.2, 8.2, 4.2),
                     child: Text(
                       step.figure,
-                      style: AppText.display(
-                        size: figFont,
-                        weight: FontWeight.w800,
-                        height: 1,
-                        spacing: -0.4,
-                        color: color,
-                      ).copyWith(
-                        fontFeatures: const [FontFeature.tabularFigures()],
-                      ),
+                      style:
+                          AppText.display(
+                            size: figFont,
+                            weight: FontWeight.w800,
+                            height: 1,
+                            spacing: -0.4,
+                            color: color,
+                          ).copyWith(
+                            fontFeatures: const [FontFeature.tabularFigures()],
+                          ),
                     ),
                   ),
                 ),
@@ -975,38 +1027,48 @@ class _Verdict extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Semantics(
     checked: right,
-    child: Row(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           label,
           style: AppText.label(
             size: 10.5,
             weight: FontWeight.w800,
+            height: 1.2,
             color: color.withValues(alpha: 0.7),
           ),
         ),
-        const SizedBox(width: 8),
-        Flexible(
-          child: Text(
-            option,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppText.body(
-              size: 13.5,
-              weight: FontWeight.w700,
-              color: color,
+        const SizedBox(height: 5),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Flexible(
+              child: Text(
+                option,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: _verdictStyle(color),
+              ),
             ),
-          ),
-        ),
-        const SizedBox(width: 7),
-        SizedBox.square(
-          dimension: 13,
-          child: CustomPaint(painter: _MarkPainter(right, color)),
+            const SizedBox(width: 9),
+            Padding(
+              padding: const EdgeInsets.only(top: 2.5),
+              child: SizedBox.square(
+                dimension: 13,
+                child: CustomPaint(painter: _MarkPainter(right, color)),
+              ),
+            ),
+          ],
         ),
       ],
     ),
   );
 }
+
+TextStyle _verdictStyle(Color color) =>
+    AppText.body(size: 14, weight: FontWeight.w700, height: 1.25, color: color);
 
 class _MarkPainter extends CustomPainter {
   final bool tick;
@@ -1032,8 +1094,16 @@ class _MarkPainter extends CustomPainter {
         _stroke,
       );
     } else {
-      canvas.drawLine(Offset(w * .15, h * .15), Offset(w * .85, h * .85), _stroke);
-      canvas.drawLine(Offset(w * .85, h * .15), Offset(w * .15, h * .85), _stroke);
+      canvas.drawLine(
+        Offset(w * .15, h * .15),
+        Offset(w * .85, h * .85),
+        _stroke,
+      );
+      canvas.drawLine(
+        Offset(w * .85, h * .15),
+        Offset(w * .15, h * .85),
+        _stroke,
+      );
     }
   }
 
@@ -1147,6 +1217,9 @@ class _WhyPicture {
   /// The arrival dip of the weight below the pulley.
   final double dip;
 
+  /// How far the words have surfaced: layer k is fully read at k.
+  final double uncovered;
+
   /// 0 → 1: bedrock spreading from the point of impact.
   final double flood;
 
@@ -1165,6 +1238,7 @@ class _WhyPicture {
     required this.viewH,
     required this.along,
     required this.dip,
+    required this.uncovered,
     required this.flood,
     required this.branches,
     required this.right,
@@ -1181,6 +1255,7 @@ class _WhyPicture {
       other.viewH == viewH &&
       other.along == along &&
       other.dip == dip &&
+      other.uncovered == uncovered &&
       other.flood == flood &&
       other.branches == branches &&
       other.right == right &&
@@ -1195,6 +1270,7 @@ class _WhyPicture {
     viewH,
     along,
     dip,
+    uncovered,
     flood,
     branches,
     right,
@@ -1221,9 +1297,8 @@ class _WhyPainter extends CustomPainter {
 
   /// The soft top edge of stratum [k]: a hand-drawn wave, straight for the
   /// ground line.
-  double _wave(double x, int k, double w) => k <= 1
-      ? 0
-      : 2.4 * math.sin(2 * math.pi * (x / w) * 1.15 + k * 1.9);
+  double _wave(double x, int k, double w) =>
+      k <= 1 ? 0 : 2.4 * math.sin(2 * math.pi * (x / w) * 1.15 + k * 1.9);
 
   Path _band(int k, double top, double bottom, double w) {
     final path = Path()..moveTo(0, top + _wave(0, k, w));
@@ -1255,7 +1330,8 @@ class _WhyPainter extends CustomPainter {
     final sway = k == l.n - 1 ? 0.0 : (k.isEven ? 6.0 : -6.0);
     final u = 1 - f;
     final dx = 3 * u * u * f * sway + 3 * u * f * f * -sway;
-    final dy = u * u * u * y0 +
+    final dy =
+        u * u * u * y0 +
         3 * u * u * f * (y0 + (y1 - y0) * .33) +
         3 * u * f * f * (y0 + (y1 - y0) * .66) +
         f * f * f * y1;
@@ -1286,8 +1362,12 @@ class _WhyPainter extends CustomPainter {
       _fill.color = hole;
       canvas.drawCircle(at, 2.4, _fill);
     }
-    final bob = end == 0 ? o + Offset(0, 9 + p.dip) : _ropeAt(end);
-    if (end == 0) {
+    // At rest the weight hangs just under the ground; it never rises
+    // above that while the rope pays out.
+    final rest = o.dy + 30 + p.dip;
+    var bob = _ropeAt(end);
+    if (bob.dy < rest) {
+      bob = Offset(o.dx, rest);
       canvas.drawLine(o, bob, _line);
     }
     _fill.color = c;
@@ -1319,6 +1399,20 @@ class _WhyPainter extends CustomPainter {
           ..color = ink.withValues(alpha: 0.13)
           ..strokeWidth = 1;
         canvas.drawPath(edge, _line);
+      }
+    }
+
+    // Words still buried: soft bars the shape of their lines, which melt
+    // as the real words rise into the stratum.
+    for (var k = 1; k < l.ghosts.length; k++) {
+      final a = (k - p.uncovered).clamp(0.0, 1.0);
+      if (a <= 0) continue;
+      _fill.color = ink.withValues(alpha: 0.075 * a);
+      for (final r in l.ghosts[k]) {
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(r, Radius.circular(r.height / 2)),
+          _fill,
+        );
       }
     }
 
@@ -1364,8 +1458,8 @@ class _WhyPainter extends CustomPainter {
         final path = Path()
           ..moveTo(from.dx, from.dy)
           ..cubicTo(
-            from.dx,
-            from.dy + (to.dy - from.dy) * .62,
+            from.dx + 4.0 * i,
+            from.dy + (to.dy - from.dy) * (.5 - .06 * i),
             from.dx + (to.dx - from.dx) * .2,
             to.dy,
             to.dx,
@@ -1395,9 +1489,7 @@ class _WhyPainter extends CustomPainter {
     if (p.flood > 0) {
       final hit = _ropeAt(l.n.toDouble());
       final rootTop = l.bandTop[l.n];
-      final reach = math.sqrt(
-        math.pow(w, 2) + math.pow(bottom - rootTop, 2),
-      );
+      final reach = math.sqrt(math.pow(w, 2) + math.pow(bottom - rootTop, 2));
       canvas.save();
       canvas.clipPath(_band(l.n, rootTop, bottom, w));
       canvas.clipPath(

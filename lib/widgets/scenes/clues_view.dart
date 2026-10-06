@@ -250,10 +250,7 @@ class _CluesSceneViewState extends State<CluesSceneView>
         final footerH = tight ? 50.0 : 54.0;
         final gap = tight ? 8.0 : 14.0;
         final chipsH = rows * chipH + (rows - 1) * chipGap;
-        final tableH = math.max(
-          0.0,
-          h - headerH - chipsH - footerH - gap * 3,
-        );
+        final tableH = math.max(0.0, h - headerH - chipsH - footerH - gap * 3);
 
         return GestureDetector(
           // A tap that misses a control is still a tap at the evidence, not
@@ -350,14 +347,12 @@ class _CluesSceneViewState extends State<CluesSceneView>
     final edge = _n > 1
         ? ((height - minFront) / (_n - 1)).clamp(6.0, rowH)
         : 0.0;
-    final frontH = math.max(0.0, height - edge * (_n - 1));
-    final cardW = width - 10;
+    // The front card takes whatever the edges behind it leave, so the first
+    // clue is set large and each new card makes room for one more edge.
+    final frontH = math.max(0.0, height - edge * behind.length);
+    final cardW = width - 8;
 
-    final children = <Widget>[
-      Positioned.fill(
-        child: CustomPaint(painter: _CluesTablePainter(ink: ink)),
-      ),
-    ];
+    final children = <Widget>[];
     for (final c in [...behind, front]) {
       final isFront = c == front;
       final top = isFront
@@ -365,13 +360,15 @@ class _CluesSceneViewState extends State<CluesSceneView>
           : height - frontH - (behind.length - behind.indexOf(c)) * edge;
       final land = _landed(c);
       // Each card lies a few points off true, as a hand would leave it.
-      const jitter = [1.0, 7.0, 3.0, 8.0, 0.0];
+      const jitter = [0.0, 6.0, 2.0, 7.0, 4.0];
       final decisive = _locked && c == _s.decisive ? _turn : 0.0;
       final card = _CluesCard(
         number: c + 1,
         tag: _s.clues[c].tag,
         text: _s.clues[c].text,
-        outs: _locked && _reveal.value >= 0.46 ? _s.clues[c].rulesOut.length : 0,
+        outs: _locked && _reveal.value >= 0.46
+            ? _s.clues[c].rulesOut.length
+            : 0,
         rowH: rowH,
         turned: decisive,
         front: isFront,
@@ -640,10 +637,7 @@ class _CluesMeterPainter extends CustomPainter {
     final full = Paint()..color = ink;
     for (var i = 0; i < segments; i++) {
       final x = i * (w + gap);
-      canvas.drawRRect(
-        RRect.fromLTRBR(x, 0, x + w, size.height, r),
-        empty,
-      );
+      canvas.drawRRect(RRect.fromLTRBR(x, 0, x + w, size.height, r), empty);
       final f = (filled - i).clamp(0.0, 1.0);
       if (f > 0) {
         canvas.drawRRect(
@@ -657,33 +651,6 @@ class _CluesMeterPainter extends CustomPainter {
   @override
   bool shouldRepaint(_CluesMeterPainter old) =>
       old.filled != filled || old.segments != segments || old.ink != ink;
-}
-
-/// The table: a dashed outline where the evidence goes.
-class _CluesTablePainter extends CustomPainter {
-  final Color ink;
-  _CluesTablePainter({required this.ink});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (size.height < 20) return;
-    final rect = RRect.fromRectAndRadius(
-      Offset.zero & size,
-      const Radius.circular(18),
-    );
-    final paint = Paint()
-      ..color = ink.withValues(alpha: 0.2)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.4;
-    for (final m in (Path()..addRRect(rect)).computeMetrics()) {
-      for (var d = 0.0; d < m.length; d += 10) {
-        canvas.drawPath(m.extractPath(d, d + 5), paint);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(_CluesTablePainter old) => old.ink != ink;
 }
 
 /// One evidence card: its number and short name along the top edge, which
@@ -717,11 +684,7 @@ class _CluesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final paper = Color.lerp(
-      Color.lerp(ground, ink, 0.05)!,
-      ink,
-      turned,
-    )!;
+    final paper = Color.lerp(Color.lerp(ground, ink, 0.05)!, ink, turned)!;
     final face = Color.lerp(ink, ground, turned)!;
     const pad = 14.0;
 
