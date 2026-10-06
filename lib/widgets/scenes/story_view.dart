@@ -829,10 +829,13 @@ class _Plan {
     color: ink,
   );
 
+  // Spacing is set, never inherited: the text is measured here and must
+  // break the same way where the theme sets its own.
   static TextStyle whyStyle(double size, Color ink) => AppText.body(
     size: size,
     weight: FontWeight.w600,
     height: 1.35,
+    spacing: 0,
     color: ink.withValues(alpha: 0.92),
   );
 
@@ -981,7 +984,7 @@ class _Plan {
 // ------------------------------------------------------------------ glyphs
 
 /// Every glyph as strokes resampled to the same number of points, longest
-/// stroke first, so any glyph can turn into any other point by point.
+/// stroke first: the order a pen draws them in, and takes them back.
 class _Strokes {
   static const points = 48;
   static final Map<StoryGlyph, List<Float32List>> _cache = {};
@@ -1014,24 +1017,6 @@ class _Strokes {
     }
     out.sort((a, b) => b.$1.compareTo(a.$1));
     return [for (final o in out) o.$2];
-  }
-
-  /// A stroke shrunk to a point: where a stroke the other glyph lacks
-  /// grows from, or vanishes to.
-  static Float32List collapsed(Float32List s) {
-    var x = 0.0, y = 0.0;
-    for (var k = 0; k < points; k++) {
-      x += s[k * 2];
-      y += s[k * 2 + 1];
-    }
-    x /= points;
-    y /= points;
-    final out = Float32List(points * 2);
-    for (var k = 0; k < points; k++) {
-      out[k * 2] = x;
-      out[k * 2 + 1] = y;
-    }
-    return out;
   }
 
   // The drawings, in a 100 × 100 box. Line art only: every stroke is a

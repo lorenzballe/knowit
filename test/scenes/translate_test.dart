@@ -198,9 +198,10 @@ void main() {
     for (final colours in [_light, _dark]) {
       final tone = colours == _light ? 'light' : 'dark';
       for (final sample in [0, 1, 2]) {
-        // Every sample on every phone in the photo run; one is enough to
-        // prove the play-through otherwise.
-        if (!_shots && sample > 0 && phone.key != 'back') continue;
+        // Every sample on every phone in the photo run. Otherwise the test
+        // font, a square a full em wide, sets text far wider than the real
+        // faces do, and the tight band on the back is played with one.
+        if (!_shots && sample > 0 && phone.key == 'back') continue;
         testWidgets(
           'played to the end on ${phone.key}, $tone, sample $sample',
           (tester) async {
