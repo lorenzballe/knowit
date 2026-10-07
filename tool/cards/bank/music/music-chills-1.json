@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Take out the kick and bass, add the snare roll, then bring them back. Did listeners' dopamine rise in the build or the drop?",
+  "question": "Cut the kick, add the snare roll, then bring kick and bass in. Did listeners' dopamine rise in the build or the drop?",
   "answer": "In both, in different places. Valorie Salimpoor's team scanned people hearing their favourite music: dopamine rose in the caudate while they anticipated the peak, and in the nucleus accumbens when the chill arrived. The build is a pleasure of its own: half the thrill is the wait.",
   "move": "Expectation is not the queue for pleasure; it is part of the pleasure.",
   "ask": "What am I rushing to get to, when looking forward to it is half the joy?",
@@ -32,7 +32,7 @@
     "mode": "layers",
     "bpm": 125,
     "steps": 32,
-    "hint": "Take the kick and bass out, add the build, then bring them back for the drop.",
+    "hint": "Cut the kick and add the build. Then bring kick and bass in for the drop.",
     "tracks": [
       {
         "name": "Kick",
