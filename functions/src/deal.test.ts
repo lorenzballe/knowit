@@ -118,7 +118,7 @@ test('a strand looked at this week comes round less; every other day one read ex
   assert.ok(viewed.recentStrands.has(strand));
   assert.ok(viewed.metStrands.has(strand));
   let withView = 0, without = 0;
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 200; i++) {
     const date = shiftDate(DAY, i);
     withView += dealDay(bank, viewed, date, 'r').own.filter((id) => bank.byId.get(id)?.strand === strand).length;
     without += dealDay(bank, p, date, 'r').own.filter((id) => bank.byId.get(id)?.strand === strand).length;

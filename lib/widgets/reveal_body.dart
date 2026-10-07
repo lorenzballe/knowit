@@ -601,7 +601,6 @@ class _Fit {
     this.tuckSteps = false,
     this.pictureScale = 1,
     this.shortLead = false,
-    this.noLead = false,
     this.scrolls = false,
   });
 
@@ -638,10 +637,6 @@ class _Fit {
   /// The reader's own line said in one paragraph rather than three.
   final bool shortLead;
 
-  /// The reader's line left off altogether: the last thing given up, and
-  /// only while the other side's case is open on one of the longest debates.
-  final bool noLead;
-
   /// True when even the tightest setting does not fit — only at a large
   /// text size — and the back scrolls rather than shrink the reader's type.
   final bool scrolls;
@@ -663,7 +658,6 @@ class _Fit {
     tuckSteps: tuckSteps,
     pictureScale: pictureScale,
     shortLead: shortLead,
-    noLead: noLead,
     scrolls: scrolls ?? this.scrolls,
   );
 }
@@ -784,7 +778,7 @@ class _CardRevealState extends State<CardReveal> {
         aside == _Aside.scene ||
         aside == _Aside.picture ||
         aside == _Aside.working;
-    if (widget.lead != null && !visual && !f.noLead) {
+    if (widget.lead != null && !visual) {
       final short = f.shortLead && widget.shortLead != null;
       out.add(
         _Block(
@@ -1123,7 +1117,6 @@ class _CardRevealState extends State<CardReveal> {
       bool tuckSteps = false,
       double pictureScale = 1,
       bool shortLead = false,
-      bool noLead = false,
     }) => _Fit(
       question: question,
       questionSize: 17,
@@ -1134,7 +1127,6 @@ class _CardRevealState extends State<CardReveal> {
       tuckSteps: tuckSteps,
       pictureScale: pictureScale,
       shortLead: shortLead,
-      noLead: noLead,
     );
 
     Iterable<double> band(double from, double to) sync* {
@@ -1201,7 +1193,11 @@ class _CardRevealState extends State<CardReveal> {
       );
       // Then the reader's line, run together into one paragraph.
       if (widget.shortLead != null) {
-        for (final b in band(15, 13)) {
+        // The other side's case on the longest debates may go half a point
+        // further: it is read once, and the reader's own line has to stay
+        // in view beside it — that is the whole point of having asked.
+        final least = aside == _Aside.counter ? 12.5 : 13.0;
+        for (final b in band(15, least)) {
           yield at(
             b,
             question: false,
@@ -1210,11 +1206,6 @@ class _CardRevealState extends State<CardReveal> {
             tuckSteps: stepsTucks.last,
             shortLead: true,
           );
-        }
-      }
-      if (aside == _Aside.counter || aside == _Aside.simply) {
-        for (final b in [13.5, 13.0]) {
-          yield at(b, question: false, gap: 0.6, noLead: true);
         }
       }
       if (aside == _Aside.picture) {
