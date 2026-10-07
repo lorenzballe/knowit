@@ -1,9 +1,11 @@
-// Photographs the top of Your journey — today, and two weeks in — on a
-// reader with three months behind them.
+// Photographs the top of Your journey — how sure against how right — on a
+// reader with a few weeks of answers behind them.
 //
 //   flutter test tool/journey_shots.dart --update-goldens
 //
 // A camera, not a check: it lives outside test/ so CI never runs it.
+// SHOTS (a folder), LANG_SHOT (a language) and TALL (a phone height) move
+// it for a one-off picture.
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -37,85 +39,53 @@ Future<void> _loadFonts() async {
   }
 }
 
-/// Eighty-six days of a reader who got surer and more right: early on, sure
-/// and often wrong; lately, sure about as often as right.
-Map<String, Object> journeyed() {
+/// A reader five weeks in who has got less sure of what they did not know:
+/// level by level, how many answers and how many right, before the last
+/// week and in it.
+Map<String, Object> measured() {
   final DateTime now = DateTime.now();
   String ago(int days) => dateKey(now.subtract(Duration(days: days)));
   final graded = PillBank.cards.where((p) => p.isGraded).toList();
+  const plan = {
+    50: [(5, 3), (3, 2)],
+    60: [(7, 4), (4, 2)],
+    70: [(9, 5), (5, 4)],
+    80: [(10, 6), (5, 4)],
+    90: [(9, 5), (5, 5)],
+  };
   final judgements = <Map<String, Object>>[];
   var n = 0;
-  // Level by level: how many answers, and how many right, in the first two
-  // weeks and in the months since.
-  const plan = {
-    50: [(20, 12), (60, 34)],
-    60: [(20, 11), (60, 35)],
-    70: [(20, 10), (60, 40)],
-    80: [(20, 11), (60, 43)],
-    90: [(20, 10), (60, 48)],
-  };
   for (final MapEntry<int, List<(int, int)>> level in plan.entries) {
     for (final (int part, (int count, int right)) in level.value.indexed) {
       for (var i = 0; i < count; i++) {
-        // Two weeks in is days 85 to 72; after that, days 71 to 1.
-        final int day = part == 0 ? 85 - i % 14 : 71 - i % 71;
         judgements.add({
           'c': level.key,
           'k': i < right,
           'p': graded[n++ % graded.length].id,
-          'd': ago(day),
+          'd': ago(part == 0 ? 34 - i * 3 : 6 - i),
         });
       }
     }
   }
-  judgements.sort(
-    (a, b) => (b['d'] as String).compareTo(a['d'] as String) * -1,
-  );
-  final read = PillBank.cards.take(312).map((p) => p.id).toList();
-  final answers = {
-    for (final p in graded.take(104))
-      p.id: {
-        'r': '0',
-        'c': 70,
-        'd': ago(-20),
-        's': graded.indexOf(p) < 41 ? 3 : 1,
-      },
-  };
+  judgements.sort((a, b) => (a['d'] as String).compareTo(b['d'] as String));
   return {
     'knowit.onboarded': true,
     'knowit.plus': true,
-    'knowit.streak': 13,
-    'knowit.bestStreak': 21,
+    'knowit.streak': 6,
     'knowit.lastCompletionDate': ago(1),
     'knowit.completedDates': [
-      for (var d = 85; d >= 1; d--)
-        if (d % 7 != 3) ago(d),
+      for (var d = 34; d >= 1; d--)
+        if (d % 6 != 2) ago(d),
     ],
-    'knowit.seenIds': read,
+    'knowit.seenIds': PillBank.cards.take(172).map((p) => p.id).toList(),
     'knowit.judgements': jsonEncode(judgements),
-    'knowit.answersJson': jsonEncode(answers),
-    'knowit.rungDates': jsonEncode({
-      'day_one': ago(85),
-      'reading': ago(81),
-      'answering': ago(77),
-      'saying_how_sure': ago(60),
-      'calibrated': ago(40),
-      'holding': ago(12),
-    }),
-    'knowit.recordDays': jsonEncode({
-      ago(85): [5, 0, 0],
-      ago(78): [40, 0, 0],
-      ago(73): [62, 0, 0],
-      ago(40): [170, 12, 5],
-      ago(1): [312, 41, 9],
-    }),
   };
 }
 
 void main() {
   setUpAll(_loadFonts);
 
-  testWidgets('the top of the journey, today and two weeks in', (tester) async {
+  testWidgets('the top of the journey', (tester) async {
     final Size phone = Size(
       402,
       double.tryParse(Platform.environment['TALL'] ?? '') ?? 874,
@@ -127,7 +97,7 @@ void main() {
     final String out = Platform.environment['SHOTS'] ?? 'shots';
     for (final Brightness b in [Brightness.dark, Brightness.light]) {
       // ignore: invalid_use_of_visible_for_testing_member
-      SharedPreferences.setMockInitialValues(journeyed());
+      SharedPreferences.setMockInitialValues(measured());
       final app = AppState();
       await app.init();
       await tester.pumpWidget(
@@ -152,13 +122,15 @@ void main() {
         matchesGoldenFile('$out/journey-top$tag.png'),
       );
       if (b == Brightness.dark) {
-        await tester.tap(find.byKey(const ValueKey('journey-then')));
+        // A level picked under the curve: the ring moves, and so does the
+        // sentence.
+        await tester.tap(find.byKey(const ValueKey('journey-level-70')));
         for (int f = 0; f < 6; f++) {
           await tester.pump(const Duration(milliseconds: 100));
         }
         await expectLater(
           find.byType(JourneyScreen),
-          matchesGoldenFile('$out/journey-top-then.png'),
+          matchesGoldenFile('$out/journey-top-70.png'),
         );
       }
     }

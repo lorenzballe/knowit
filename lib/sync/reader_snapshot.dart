@@ -24,7 +24,6 @@ class ReaderSnapshot {
     this.dislikedIds = const [],
     this.friendCodes = const [],
     this.rungDates = const {},
-    this.recordDays = const {},
     this.saidIds = const [],
     this.seenIds = const [],
     this.pillsRead = 0,
@@ -55,10 +54,6 @@ class ReaderSnapshot {
 
   /// The day each rung of the ladder was first reached, by rung id.
   final Map<String, String> rungDates;
-
-  /// Cards read, cards still with the reader and moves they could spot, at
-  /// the end of each day they used the app, by date key.
-  final Map<String, List<int>> recordDays;
 
   /// Cards the reader has said out loud to somebody.
   final List<String> saidIds;
@@ -101,7 +96,6 @@ class ReaderSnapshot {
     'dislikedIds': dislikedIds,
     'friendCodes': friendCodes,
     'rungDates': rungDates,
-    'recordDays': recordDays,
     'saidIds': saidIds,
     'seenIds': seenIds,
     'pillsRead': pillsRead,
@@ -156,21 +150,6 @@ class ReaderSnapshot {
       }
     }
 
-    final recordRaw = raw['recordDays'];
-    final record = <String, List<int>>{};
-    if (recordRaw is Map) {
-      for (final entry in recordRaw.entries) {
-        final key = entry.key;
-        final value = entry.value;
-        if (key is String && value is List) {
-          record[key] = [
-            for (final Object? n in value)
-              if (n is num) n.round(),
-          ];
-        }
-      }
-    }
-
     final levelsRaw = raw['topicLevels'];
     final levels = <String, int>{};
     if (levelsRaw is Map) {
@@ -194,7 +173,6 @@ class ReaderSnapshot {
       dislikedIds: strings(raw['dislikedIds']),
       friendCodes: strings(raw['friendCodes']),
       rungDates: dates,
-      recordDays: record,
       saidIds: strings(raw['saidIds']),
       seenIds: strings(raw['seenIds']),
       pillsRead: raw['pillsRead'] is int ? raw['pillsRead'] as int : 0,
@@ -264,26 +242,6 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
     }
   }
 
-  // A day's counts only ever grow on the phone that wrote them, so where
-  // both phones wrote the same day, the larger of each is the truer.
-  final Map<String, List<int>> recordDays = {...remote.recordDays};
-  for (final entry in local.recordDays.entries) {
-    final List<int>? theirs = recordDays[entry.key];
-    recordDays[entry.key] = theirs == null
-        ? entry.value
-        : [
-            for (
-              var i = 0;
-              i < math.max(theirs.length, entry.value.length);
-              i++
-            )
-              math.max(
-                i < theirs.length ? theirs[i] : 0,
-                i < entry.value.length ? entry.value[i] : 0,
-              ),
-          ];
-  }
-
   // The mix is a decision, not a score: the one made most recently wins, and
   // this phone is where the reader just was.
   final bool localChoseMix = local.topicWeights.isNotEmpty;
@@ -303,7 +261,6 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
     dislikedIds: union(local.dislikedIds, remote.dislikedIds),
     friendCodes: union(local.friendCodes, remote.friendCodes),
     rungDates: rungDates,
-    recordDays: recordDays,
     saidIds: union(local.saidIds, remote.saidIds),
     seenIds: union(local.seenIds, remote.seenIds),
     pillsRead: math.max(local.pillsRead, remote.pillsRead),

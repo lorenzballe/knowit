@@ -5,13 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart' hide TextDirection;
 
 import '../data/genres.dart';
-import '../data/pills_repository.dart' show dateKey;
 import '../data/pill_bank.dart';
+import '../data/pills_repository.dart' show dateKey;
 import '../data/topics.dart';
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
-import '../state/journey_record.dart';
 import '../state/progress.dart';
 import '../theme.dart';
 import '../widgets/share_day.dart';
@@ -25,14 +24,12 @@ import 'progress_text.dart';
 /// Your journey: the numbers first, the card to say last.
 ///
 /// Everything on it is counted from what the app already writes down. The
-/// order is the argument. At the top (artboard 134b) what the reading has
-/// come to — the level with what it claims about the reader, the ladder it
-/// stands on, five numbers and how sure the reader says they are against
-/// how often they are right — and, once there is a past to show, the same
-/// reader two weeks in, a tap away. Then where the reading has gone (by
-/// subject), and at the foot the one thing to do with it tonight: a card
-/// to say out loud to somebody. A page of statistics that ends in an
-/// action.
+/// order is the argument: at the top (artboard 134e) how sure the reader
+/// says they are against how often they are right, then what the reading
+/// has come to (the week, the level, the four numbers, what it is about),
+/// then where it has gone (by subject), and at the foot the one thing to do
+/// with it tonight — a card to say out loud to somebody. A page of
+/// statistics that ends in an action.
 class JourneyScreen extends StatefulWidget {
   const JourneyScreen({super.key, required this.app, required this.onBack});
 
@@ -50,8 +47,8 @@ class _JourneyScreenState extends State<JourneyScreen> {
   /// The subject open to its strands, if one is.
   String? _openSubject;
 
-  /// Whether the top shows the reader two weeks in rather than today.
-  bool _then = false;
+  /// The confidence level picked under the curve at the top, if one is.
+  int? _sureLevel;
 
   AppState get app => widget.app;
 
@@ -120,13 +117,17 @@ class _JourneyScreenState extends State<JourneyScreen> {
                     ListView(
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
                       children: [
-                        _Top(
+                        _SureAndRight(
                           app: app,
-                          then: _then,
-                          onThen: (then) => setState(() => _then = then),
+                          chosen: _sureLevel,
+                          onChoose: (said) => setState(() => _sureLevel = said),
                         ),
-                        const SizedBox(height: 22),
+                        const SizedBox(height: 24),
                         _Week(app: app),
+                        const SizedBox(height: 20),
+                        _Level(app: app),
+                        const SizedBox(height: 18),
+                        _Tiles(app: app),
                         const SizedBox(height: 18),
                         if (app.seenIds.length >= _IsAbout.kWorthSaying) ...[
                           _IsAbout(app: app),
@@ -204,8 +205,8 @@ class _JourneyScreenState extends State<JourneyScreen> {
   }
 }
 
-/// The record as one number, in a pill beside the title: what the score
-/// is, without taking the page from what it is made of.
+/// The record as one number, in a pill beside the title, now that the top
+/// of the page is how sure against how right.
 class _Points extends StatelessWidget {
   const _Points({required this.app});
 
@@ -236,476 +237,285 @@ class _Points extends StatelessWidget {
   }
 }
 
-/// The top of the journey: the reader today — or, once there is a past to
-/// show, two weeks in — as a level, the ladder, five numbers and the curve
-/// of how sure against how right.
-class _Top extends StatelessWidget {
-  const _Top({required this.app, required this.then, required this.onThen});
+/// Sure, and right — artboard 134e, the top of the page: how many points
+/// the reader's confidence runs off their results, which way it has gone
+/// since last week, and the curve level by level, with the levels under it
+/// to pick one and a sentence that says how that one went.
+class _SureAndRight extends StatelessWidget {
+  const _SureAndRight({
+    required this.app,
+    required this.chosen,
+    required this.onChoose,
+  });
 
   final AppState app;
 
-  /// Showing two weeks in rather than today.
-  final bool then;
-  final ValueChanged<bool> onThen;
+  /// The confidence level picked under the curve, or null for the default.
+  final int? chosen;
+  final ValueChanged<int> onChoose;
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final String locale = Localizations.localeOf(context).toString();
-    final String start =
-        journeyStart(app.rungDates, app.completedDates) ?? dateKey(app.today);
-    final bool compare = canCompare(start, app.today);
-    final String thenDay = twoWeeksIn(start);
-    final String thenLabel = DateFormat.MMMMd(locale)
-        .format(DateTime.parse(thenDay));
-    final RecordAt now = recordNow(app);
-    final RecordAt? past = compare ? recordOn(app, thenDay) : null;
-    final bool showingThen = then && past != null;
-    final RecordAt shown = showingThen ? past : now;
+    final Color ink = context.p.ink;
+    final double? gap = app.confidenceGap;
+    final double? before = app.confidenceGapOn(
+      dateKey(app.today.subtract(const Duration(days: 7))),
+    );
+    final List<CalibrationBucket> buckets = app.calibration.toList();
+    final int toGo = kCalibrationFloor - app.judgements.length;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (past != null) ...[
-          _When(
-            thenLabel: thenLabel,
-            nowLabel: l.journeyNow,
-            then: showingThen,
-            onThen: onThen,
-          ),
-          const SizedBox(height: 22),
-        ],
-        _Standing(
-          app: app,
-          level: shown.level,
-          kicker: showingThen
-              ? l.journeyKickerThen(shown.level + 1, kRungs.length)
-              : l.journeyKickerNow(
-                  dayOf(start, app.today),
-                  shown.level + 1,
-                  kRungs.length,
-                ),
-        ),
-        const SizedBox(height: 20),
-        _Rows(now: now, past: past, then: showingThen),
-        if (now.gap != null) ...[
-          const SizedBox(height: 14),
-          _Curve(
-            now: now,
-            past: past?.gap == null ? null : past,
-            then: showingThen,
-            thenLabel: thenLabel,
-          ),
-        ],
-      ],
-    );
-  }
-}
-
-/// Two weeks in, or today: one switch, two halves.
-class _When extends StatelessWidget {
-  const _When({
-    required this.thenLabel,
-    required this.nowLabel,
-    required this.then,
-    required this.onThen,
-  });
-
-  final String thenLabel;
-  final String nowLabel;
-  final bool then;
-  final ValueChanged<bool> onThen;
-
-  @override
-  Widget build(BuildContext context) {
-    final Color ink = context.p.ink;
-    Widget half(String label, bool on, bool value, String key) => Expanded(
-      child: Semantics(
-        button: true,
-        selected: on,
-        child: GestureDetector(
-          key: ValueKey(key),
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            if (on) return;
-            HapticFeedback.selectionClick();
-            onThen(value);
-          },
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 180),
-            height: 34,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: on ? context.p.inverse : Colors.transparent,
-              borderRadius: BorderRadius.circular(9),
-            ),
-            child: Text(
-              label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppText.body(
-                size: 13,
-                weight: FontWeight.w600,
-                height: 1,
-                color: on ? context.p.onInverse : ink.withValues(alpha: 0.62),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-    return Container(
-      padding: const EdgeInsets.all(3),
-      decoration: BoxDecoration(
-        color: ink.withValues(alpha: 0.07),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          half(thenLabel, then, true, 'journey-then'),
-          half(nowLabel, !then, false, 'journey-now'),
-        ],
-      ),
-    );
-  }
-}
-
-/// The level, set large, what it says about the reader, and the ladder it
-/// stands on — first rung to last, the one they are on lit. Tapping it
-/// opens the whole path.
-class _Standing extends StatelessWidget {
-  const _Standing({
-    required this.app,
-    required this.level,
-    required this.kicker,
-  });
-
-  final AppState app;
-  final int level;
-  final String kicker;
-
-  /// The ladder's steps, first to last, in points: they climb.
-  static const List<double> steps = [14, 22, 30, 38, 46, 56, 70];
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final Color ink = context.p.ink;
-    final Rung rung = kRungs[level.clamp(0, kRungs.length - 1)];
-    return Semantics(
-      button: true,
-      key: const ValueKey('journey-level'),
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (routeContext) => PathScreen(
-              app: app,
-              onBack: () => Navigator.of(routeContext).pop(),
-            ),
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        // The number and the week beside it, on one line where they fit
+        // and the week under it where they do not.
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 10,
+          runSpacing: 10,
           children: [
-            Text(
-              kicker,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppText.label(
-                size: 10,
-                weight: FontWeight.w700,
-                spacing: 1.4,
-                color: ink.withValues(alpha: 0.42),
-              ),
-            ),
-            const SizedBox(height: 12),
-            // One line, however long the level's name is in this language:
-            // a long one comes down in size rather than over two lines.
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.centerLeft,
-              child: Text(
-                rungName(context, rung),
-                maxLines: 1,
-                style: AppText.display(
-                  size: 58,
-                  weight: FontWeight.w600,
-                  height: 0.95,
-                  spacing: -2.6,
-                  color: ink,
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              l.rungClaim(rung.id),
-              style: AppText.body(
-                size: 15,
-                height: 1.4,
-                color: ink.withValues(alpha: 0.7),
-              ),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              height: steps.last,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  for (var i = 0; i < kRungs.length; i++) ...[
-                    if (i > 0) const SizedBox(width: 5),
-                    Expanded(
-                      child: AnimatedContainer(
-                        duration: const Duration(milliseconds: 260),
-                        curve: Curves.easeOutCubic,
-                        height: steps[i.clamp(0, steps.length - 1)],
-                        decoration: BoxDecoration(
-                          color: i == level
-                              ? ink
-                              : ink.withValues(alpha: i < level ? 0.4 : 0.1),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-            const SizedBox(height: 8),
             Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
               children: [
-                Expanded(
-                  child: Text(
-                    rungName(context, kRungs.first),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.body(
-                      size: 10.5,
-                      weight: FontWeight.w600,
-                      color: ink.withValues(alpha: 0.4),
-                    ),
+                Text(
+                  gap == null ? '—' : '${gap.round()}',
+                  key: const ValueKey('journey-gap'),
+                  style: AppText.display(
+                    size: 80,
+                    weight: FontWeight.w600,
+                    height: 0.84,
+                    spacing: -3.6,
+                    color: ink,
                   ),
                 ),
-                const SizedBox(width: 12),
-                Text(
-                  rungName(context, kRungs.last),
-                  style: AppText.body(
-                    size: 10.5,
-                    weight: FontWeight.w600,
-                    color: ink.withValues(alpha: 0.4),
+                const SizedBox(width: 10),
+                Flexible(
+                  child: Text(
+                    l.journeyPointsOff,
+                    style: AppText.body(
+                      size: 15,
+                      weight: FontWeight.w600,
+                      height: 1.2,
+                      color: ink.withValues(alpha: 0.5),
+                    ),
                   ),
                 ),
               ],
             ),
+            if (gap != null && before != null)
+              _LastWeek(now: gap.round(), before: before.round()),
           ],
         ),
-      ),
-    );
-  }
-}
-
-/// Five numbers, today's with how far each has come since two weeks in —
-/// or, switched, as they stood then.
-class _Rows extends StatelessWidget {
-  const _Rows({required this.now, required this.past, required this.then});
-
-  final RecordAt now;
-  final RecordAt? past;
-  final bool then;
-
-  static String _signed(int n) => n > 0 ? '+$n' : '−${n.abs()}';
-
-  @override
-  Widget build(BuildContext context) {
-    final l = context.l10n;
-    final String locale = Localizations.localeOf(context).toString();
-    final NumberFormat number = NumberFormat.decimalPattern(locale);
-    String percent(double? v) => v == null ? '—' : '${v.round()}%';
-    String points(double? v) => v == null ? '—' : '${v.round()}';
-    String count(int? v) => v == null ? '—' : number.format(v);
-    int? diff(num? a, num? b) =>
-        a == null || b == null ? null : a.round() - b.round();
-
-    final RecordAt shown = then && past != null ? past! : now;
-    final rows = <(String, String, String, int?)>[
-      (
-        'sure',
-        l.journeyRowSure,
-        percent(shown.sureRight),
-        diff(now.sureRight, past?.sureRight),
-      ),
-      ('off', l.journeyRowOff, points(shown.gap), diff(now.gap, past?.gap)),
-      (
-        'moves',
-        l.journeyRowMoves,
-        count(shown.moves),
-        diff(now.moves, past?.moves),
-      ),
-      ('held', l.journeyRowHeld, count(shown.held), diff(now.held, past?.held)),
-      ('read', l.journeyRowRead, count(shown.read), diff(now.read, past?.read)),
-    ];
-    final Color ink = context.p.ink;
-    return Column(
-      children: [
-        for (final (key, label, value, delta) in rows)
-          Container(
-            key: ValueKey('journey-row-$key'),
-            padding: const EdgeInsets.symmetric(vertical: 13),
-            decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(color: ink.withValues(alpha: 0.08)),
-              ),
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    label,
-                    style: AppText.body(
-                      size: 13.5,
-                      weight: FontWeight.w500,
-                      height: 1.3,
-                      color: ink.withValues(alpha: 0.7),
-                    ),
-                  ),
-                ),
-                // How far it has come, on today only: then is where it
-                // came from.
-                if (!then && past != null && delta != null && delta != 0) ...[
-                  const SizedBox(width: 12),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 5,
-                    ),
-                    decoration: BoxDecoration(
-                      color: ink.withValues(alpha: 0.08),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(
-                      _signed(delta),
-                      style: AppText.body(
-                        size: 11,
-                        weight: FontWeight.w700,
-                        height: 1,
-                        color: ink,
-                      ),
-                    ),
-                  ),
-                ],
-                const SizedBox(width: 12),
-                ConstrainedBox(
-                  constraints: const BoxConstraints(minWidth: 60),
-                  child: Text(
-                    value,
-                    textAlign: TextAlign.right,
-                    style: AppText.display(
-                      size: 26,
-                      weight: FontWeight.w600,
-                      height: 1,
-                      spacing: -0.8,
-                      color: ink,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+        const SizedBox(height: 14),
+        Text(
+          gap == null && toGo > 0
+              ? '${l.journeyOffExplain} ${l.journeyOffNotYet(toGo)}'
+              : l.journeyOffExplain,
+          style: AppText.body(
+            size: 13.5,
+            height: 1.45,
+            color: ink.withValues(alpha: 0.6),
           ),
+        ),
+        if (buckets.isNotEmpty) ...[
+          const SizedBox(height: 20),
+          _SureCurve(buckets: buckets, chosen: chosen, onChoose: onChoose),
+        ],
       ],
     );
   }
 }
 
-/// How sure the reader said they were, against how often they were right,
-/// level by level — today's line, two weeks in under it, and the diagonal
-/// where the two would be the same.
-class _Curve extends StatelessWidget {
-  const _Curve({
-    required this.now,
-    required this.past,
-    required this.then,
-    required this.thenLabel,
+/// Where the gap stood a week ago, and which way it has gone since: down
+/// is the good way.
+class _LastWeek extends StatelessWidget {
+  const _LastWeek({required this.now, required this.before});
+
+  final int now;
+  final int before;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final bool dark = Theme.of(context).brightness == Brightness.dark;
+    final Color ink = context.p.ink;
+    final Color green = dark
+        ? const Color(0xFF3BE07A)
+        : const Color(0xFF0B8A3E);
+    final Color pink = dark ? const Color(0xFFFF7AA8) : const Color(0xFFC2185B);
+    final (Color colour, Color fill, IconData? icon, String text) = now < before
+        ? (
+            green,
+            green.withValues(alpha: 0.14),
+            Icons.arrow_downward_rounded,
+            l.journeyLastWeek(before),
+          )
+        : now > before
+        ? (
+            pink,
+            pink.withValues(alpha: 0.14),
+            Icons.arrow_upward_rounded,
+            l.journeyLastWeek(before),
+          )
+        : (
+            ink.withValues(alpha: 0.6),
+            ink.withValues(alpha: 0.07),
+            null,
+            l.journeyLastWeekSame,
+          );
+    return Container(
+      key: const ValueKey('journey-last-week'),
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
+      decoration: BoxDecoration(
+        color: fill,
+        borderRadius: BorderRadius.circular(9),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null) ...[
+            Icon(icon, size: 12, color: colour),
+            const SizedBox(width: 5),
+          ],
+          Text(
+            text,
+            style: AppText.body(
+              size: 11.5,
+              weight: FontWeight.w700,
+              height: 1,
+              color: colour,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The curve, the levels under it to pick from, and what the picked one
+/// came to.
+class _SureCurve extends StatelessWidget {
+  const _SureCurve({
+    required this.buckets,
+    required this.chosen,
+    required this.onChoose,
   });
 
-  final RecordAt now;
-  final RecordAt? past;
-  final bool then;
-  final String thenLabel;
+  final List<CalibrationBucket> buckets;
+  final int? chosen;
+  final ValueChanged<int> onChoose;
 
-  /// Two weeks in, in the colour the design gives the past.
-  static const Color pastColour = Color(0xFFFF3D7F);
+  /// The level shown: the one picked, or the surest one answered — that is
+  /// where being sure costs the most when it is wrong.
+  CalibrationBucket get _shown {
+    for (final CalibrationBucket b in buckets) {
+      if (b.said == chosen) return b;
+    }
+    return buckets.reduce((a, b) => b.said > a.said ? b : a);
+  }
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final Color ink = context.p.ink;
-    Widget legend(Color colour, String text) => Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: 16,
-          height: 3,
-          decoration: BoxDecoration(
-            color: colour,
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-        const SizedBox(width: 7),
-        Text(
-          text,
-          style: AppText.body(
-            size: 11.5,
-            weight: FontWeight.w600,
-            height: 1,
-            color: ink.withValues(alpha: 0.7),
-          ),
-        ),
-      ],
+    final bool dark = Theme.of(context).brightness == Brightness.dark;
+    final CalibrationBucket shown = _shown;
+    final Set<int> answered = {for (final b in buckets) b.said};
+    final TextStyle caption = AppText.body(
+      size: 10.5,
+      weight: FontWeight.w600,
+      height: 1,
+      color: ink.withValues(alpha: 0.4),
     );
     return Container(
       key: const ValueKey('journey-curve'),
-      padding: const EdgeInsets.fromLTRB(14, 16, 14, 14),
+      padding: const EdgeInsets.fromLTRB(14, 16, 14, 16),
       decoration: BoxDecoration(
         color: ink.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(22),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(
-            l.journeyCurveTitle,
-            style: AppText.body(
-              size: 13,
-              weight: FontWeight.w600,
-              height: 1.3,
-              color: ink,
-            ),
-          ),
-          const SizedBox(height: 12),
           AspectRatio(
             aspectRatio: 342 / 230,
             child: CustomPaint(
-              painter: _CurvePainter(
-                now: now.curve,
-                past: past?.curve,
-                then: then,
+              painter: _SurePainter(
+                buckets: buckets,
+                shown: shown.said,
                 ink: ink,
+                ground: Color.alphaBlend(
+                  ink.withValues(alpha: 0.05),
+                  context.p.surface,
+                ),
+                pink: dark ? const Color(0xFFFF3D7F) : const Color(0xFFE0245E),
+                pinkText: dark
+                    ? const Color(0xFFFF7AA8)
+                    : const Color(0xFFC2185B),
                 spotOn: l.journeyCurveSpotOn,
+                tooSure: l.journeyTooSure,
                 textStyle: AppText.body(size: 10, weight: FontWeight.w600),
               ),
             ),
           ),
           const SizedBox(height: 12),
-          Wrap(
-            spacing: 16,
-            runSpacing: 8,
+          Row(
             children: [
-              if (past?.gap != null)
-                legend(
-                  pastColour,
-                  l.journeyCurveLegend(thenLabel, past!.gap!.round()),
+              Expanded(child: Text(l.journeyAxisSure, style: caption)),
+              const SizedBox(width: 10),
+              Text(l.journeyAxisRight, style: caption),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              for (final (int i, int said) in kConfidenceLevels.indexed) ...[
+                if (i > 0) const SizedBox(width: 5),
+                Expanded(
+                  child: _LevelChip(
+                    said: said,
+                    on: said == shown.said,
+                    answered: answered.contains(said),
+                    onTap: () => onChoose(said),
+                  ),
                 ),
-              legend(ink, l.journeyCurveLegend(l.journeyNow, now.gap!.round())),
+              ],
+            ],
+          ),
+          const SizedBox(height: 16),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                child: Text(
+                  l.journeyWhenYouSaid(
+                    '${shown.said}%',
+                    '${shown.actual.round()}%',
+                  ),
+                  key: const ValueKey('journey-when'),
+                  style: AppText.display(
+                    size: 17,
+                    weight: FontWeight.w600,
+                    height: 1.25,
+                    spacing: -0.3,
+                    color: ink,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                l.journeyNAnswers(shown.count),
+                style: AppText.body(
+                  size: 11.5,
+                  weight: FontWeight.w600,
+                  height: 1.3,
+                  color: ink.withValues(alpha: 0.45),
+                ),
+              ),
             ],
           ),
         ],
@@ -714,23 +524,86 @@ class _Curve extends StatelessWidget {
   }
 }
 
-/// The curve itself, on the design's own grid (342 by 230) scaled to the
-/// card: confidence from 50% to 90% across, how often right up the side.
-class _CurvePainter extends CustomPainter {
-  _CurvePainter({
-    required this.now,
-    required this.past,
-    required this.then,
+/// One confidence level under the curve: picked, pickable, or never said.
+class _LevelChip extends StatelessWidget {
+  const _LevelChip({
+    required this.said,
+    required this.on,
+    required this.answered,
+    required this.onTap,
+  });
+
+  final int said;
+  final bool on;
+  final bool answered;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color ink = context.p.ink;
+    return Semantics(
+      button: answered,
+      selected: on,
+      child: GestureDetector(
+        key: ValueKey('journey-level-$said'),
+        behavior: HitTestBehavior.opaque,
+        onTap: answered && !on
+            ? () {
+                HapticFeedback.selectionClick();
+                onTap();
+              }
+            : null,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 160),
+          height: 32,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: on ? context.p.inverse : ink.withValues(alpha: 0.07),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Text(
+            '$said%',
+            maxLines: 1,
+            style: AppText.body(
+              size: 12,
+              weight: FontWeight.w600,
+              height: 1,
+              color: on
+                  ? context.p.onInverse
+                  : ink.withValues(alpha: answered ? 0.62 : 0.25),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The curve on the design's own grid (342 by 230), scaled to the card:
+/// how sure across, from 50% to 90%, how often right up the side. Where the
+/// reader was surer than right, the space between the curve and the
+/// diagonal is shaded and called what it is.
+class _SurePainter extends CustomPainter {
+  _SurePainter({
+    required this.buckets,
+    required this.shown,
     required this.ink,
+    required this.ground,
+    required this.pink,
+    required this.pinkText,
     required this.spotOn,
+    required this.tooSure,
     required this.textStyle,
   });
 
-  final List<CalibrationBucket> now;
-  final List<CalibrationBucket>? past;
-  final bool then;
+  final List<CalibrationBucket> buckets;
+  final int shown;
   final Color ink;
+  final Color ground;
+  final Color pink;
+  final Color pinkText;
   final String spotOn;
+  final String tooSure;
   final TextStyle textStyle;
 
   @override
@@ -741,6 +614,9 @@ class _CurvePainter extends CustomPainter {
     final int lo = _floor();
     double x(num said) => 36 + (said - 50) / 40 * 294;
     double y(num right) => 200 - (right - lo) / (100 - lo) * 186;
+    final List<Offset> points = [
+      for (final b in buckets) Offset(x(b.said), y(b.actual)),
+    ];
 
     final Paint grid = Paint()
       ..color = ink.withValues(alpha: 0.07)
@@ -757,9 +633,32 @@ class _CurvePainter extends CustomPainter {
         ..strokeWidth = 1 / k,
     );
 
-    // Spot on: right as often as sure.
+    // Too sure: between the curve and the diagonal, wherever the curve
+    // runs under it — the space between the two, kept below the diagonal.
     final Offset from = Offset(x(50), y(50));
     final Offset to = Offset(x(90), y(90));
+    if (points.length > 1) {
+      final Path between = Path()..moveTo(points.first.dx, points.first.dy);
+      for (final Offset p in points.skip(1)) {
+        between.lineTo(p.dx, p.dy);
+      }
+      for (final b in buckets.reversed) {
+        between.lineTo(x(b.said), y(b.said));
+      }
+      between.close();
+      final Path under = Path()
+        ..moveTo(from.dx, from.dy)
+        ..lineTo(to.dx, to.dy)
+        ..lineTo(to.dx, 230)
+        ..lineTo(from.dx, 230)
+        ..close();
+      canvas.save();
+      canvas.clipPath(under);
+      canvas.drawPath(between, Paint()..color = pink.withValues(alpha: 0.17));
+      canvas.restore();
+    }
+
+    // Spot on: right as often as sure.
     final Paint dash = Paint()
       ..color = ink.withValues(alpha: 0.38)
       ..strokeWidth = 1.5;
@@ -772,44 +671,107 @@ class _CurvePainter extends CustomPainter {
         dash,
       );
     }
-    _text(
+    final Offset spotAt =
+        from + unit * (length * 0.8) + Offset(unit.dy, -unit.dx) * 7;
+    final double angle = math.atan2(unit.dy, unit.dx);
+    final Rect spotRect = _text(
       canvas,
       spotOn,
       ink.withValues(alpha: 0.45),
-      at: from + unit * (length * 0.78) + Offset(unit.dy, -unit.dx) * 7,
-      angle: math.atan2(unit.dy, unit.dx),
+      at: spotAt,
+      angle: angle,
       align: 0.5,
     );
 
-    void line(List<CalibrationBucket> buckets, Color colour, double width) {
-      if (buckets.isEmpty) return;
-      final points = [for (final b in buckets) Offset(x(b.said), y(b.actual))];
-      final Paint stroke = Paint()
-        ..color = colour
-        ..strokeWidth = width
-        ..style = PaintingStyle.stroke
-        ..strokeJoin = StrokeJoin.round
-        ..strokeCap = StrokeCap.round;
-      if (points.length == 1) {
-        canvas.drawCircle(points.single, width * 1.4, stroke);
-        return;
+    // The words for the shading: inside it, beside the level where it is
+    // widest, clear of the diagonal's own label — or not at all.
+    if (points.length > 1) {
+      final TextPainter words = _measure(
+        tooSure,
+        pinkText,
+        weight: FontWeight.w700,
+        scale: 1.1,
+      );
+      double? curveAt(double px) {
+        for (var i = 0; i + 1 < points.length; i++) {
+          final Offset a = points[i], b = points[i + 1];
+          if (px >= a.dx && px <= b.dx) {
+            return a.dy + (px - a.dx) / (b.dx - a.dx) * (b.dy - a.dy);
+          }
+        }
+        return null;
       }
-      final Path path = Path()..moveTo(points.first.dx, points.first.dy);
-      for (final Offset p in points.skip(1)) {
-        path.lineTo(p.dx, p.dy);
+
+      double diagonalAt(double px) =>
+          from.dy + (px - from.dx) / (to.dx - from.dx) * (to.dy - from.dy);
+      Offset? ring;
+      for (final b in buckets) {
+        if (b.said == shown) ring = Offset(x(b.said), y(b.actual));
       }
-      canvas.drawPath(path, stroke);
+
+      // Every place along the band where the words fit between the
+      // diagonal above and the curve below; the roomiest one wins.
+      Rect? place;
+      double best = -1;
+      for (double left = 40; left + words.width <= 326; left += 4) {
+        final double right = left + words.width;
+        final List<double> xs = [
+          left,
+          left + words.width / 2,
+          right,
+          for (final Offset p in points)
+            if (p.dx > left && p.dx < right) p.dx,
+        ];
+        final List<double?> under = [for (final px in xs) curveAt(px)];
+        if (under.contains(null)) continue;
+        final double top = xs.map(diagonalAt).reduce(math.max) + 3;
+        final double bottom = under.whereType<double>().reduce(math.min) - 3;
+        final double slack = bottom - top - words.height;
+        if (slack < 0 || slack <= best) continue;
+        final Rect r = Rect.fromLTWH(
+          left,
+          top + slack / 2,
+          words.width,
+          words.height,
+        );
+        if (r.overlaps(spotRect.inflate(3))) continue;
+        if (ring != null &&
+            r.overlaps(Rect.fromCircle(center: ring, radius: 14))) {
+          continue;
+        }
+        best = slack;
+        place = r;
+      }
+      if (place != null) words.paint(canvas, place.topLeft);
+      words.dispose();
     }
 
-    final List<CalibrationBucket>? before = past;
-    if (before != null) {
-      line(
-        before,
-        _Curve.pastColour.withValues(alpha: then ? 1 : 0.45),
-        then ? 2.5 : 1.5,
-      );
+    final Paint stroke = Paint()
+      ..color = ink
+      ..strokeWidth = 2.5
+      ..style = PaintingStyle.stroke
+      ..strokeJoin = StrokeJoin.round
+      ..strokeCap = StrokeCap.round;
+    if (points.length > 1) {
+      final Path curve = Path()..moveTo(points.first.dx, points.first.dy);
+      for (final Offset p in points.skip(1)) {
+        curve.lineTo(p.dx, p.dy);
+      }
+      canvas.drawPath(curve, stroke);
     }
-    line(now, ink.withValues(alpha: then ? 0.3 : 1), then ? 1.5 : 2.5);
+    for (final Offset p in points) {
+      canvas.drawCircle(p, 3.5, Paint()..color = ground);
+      canvas.drawCircle(p, 3.5, stroke..strokeWidth = 2);
+    }
+
+    // The level picked, ringed.
+    for (final b in buckets) {
+      if (b.said != shown) continue;
+      final Offset at = Offset(x(b.said), y(b.actual));
+      canvas.drawCircle(at, 12, Paint()..color = pink);
+      canvas.drawCircle(at, 10, Paint()..color = ground);
+      canvas.drawCircle(at, 6, Paint()..color = pink);
+    }
 
     final Color label = ink.withValues(alpha: 0.4);
     for (final said in [50, 70, 90]) {
@@ -829,16 +791,33 @@ class _CurvePainter extends CustomPainter {
 
   /// The bottom of the scale: 40, unless a level went lower.
   int _floor() {
-    final values = [...now, ...?past].map((b) => b.actual);
-    if (values.isEmpty) return 40;
-    final double least = values.reduce(math.min);
+    if (buckets.isEmpty) return 40;
+    final double least = buckets.map((b) => b.actual).reduce(math.min);
     if (least >= 40) return 40;
     return (least / 10).floor() * 10;
   }
 
+  /// A label laid out in the chart's type.
+  TextPainter _measure(
+    String text,
+    Color colour, {
+    FontWeight? weight,
+    double scale = 1,
+  }) => TextPainter(
+    text: TextSpan(
+      text: text,
+      style: textStyle.copyWith(
+        color: colour,
+        fontWeight: weight,
+        fontSize: (textStyle.fontSize ?? 10) * scale,
+      ),
+    ),
+    textDirection: TextDirection.ltr,
+  )..layout();
+
   /// A label with its baseline at [at]; [align] 0 starts it there, 0.5
-  /// centres it, 1 ends it.
-  void _text(
+  /// centres it, 1 ends it. Returns the box it covers, turned or not.
+  Rect _text(
     Canvas canvas,
     String text,
     Color colour, {
@@ -846,27 +825,144 @@ class _CurvePainter extends CustomPainter {
     double align = 0,
     double angle = 0,
   }) {
-    final TextPainter painter = TextPainter(
-      text: TextSpan(
-        text: text,
-        style: textStyle.copyWith(color: colour),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
+    final TextPainter painter = _measure(text, colour);
     final double baseline = painter.computeDistanceToActualBaseline(
       TextBaseline.alphabetic,
     );
+    final Offset origin = Offset(-painter.width * align, -baseline);
     canvas.save();
     canvas.translate(at.dx, at.dy);
     canvas.rotate(angle);
-    painter.paint(canvas, Offset(-painter.width * align, -baseline));
+    painter.paint(canvas, origin);
     canvas.restore();
+    final double c = math.cos(angle), sn = math.sin(angle);
+    final corners = [
+      for (final Offset o in [
+        origin,
+        origin + Offset(painter.width, 0),
+        origin + Offset(0, painter.height),
+        origin + Offset(painter.width, painter.height),
+      ])
+        at + Offset(o.dx * c - o.dy * sn, o.dx * sn + o.dy * c),
+    ];
     painter.dispose();
+    return Rect.fromLTRB(
+      corners.map((o) => o.dx).reduce(math.min),
+      corners.map((o) => o.dy).reduce(math.min),
+      corners.map((o) => o.dx).reduce(math.max),
+      corners.map((o) => o.dy).reduce(math.max),
+    );
   }
 
   @override
-  bool shouldRepaint(_CurvePainter old) =>
-      old.then != then || old.ink != ink || old.now != now || old.past != past;
+  bool shouldRepaint(_SurePainter old) =>
+      old.shown != shown ||
+      old.ink != ink ||
+      old.ground != ground ||
+      old.buckets != buckets;
+}
+
+/// The rung as a level: where the reader stands, what stands between them
+/// and the next one, and a bar. Tapping it opens the whole path.
+class _Level extends StatelessWidget {
+  const _Level({required this.app});
+
+  final AppState app;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final Color ink = context.p.ink;
+    final Standing standing = app.standing;
+    final Rung? next = standing.next;
+    final String? step = stepText(context, standing);
+
+    return Semantics(
+      button: true,
+      key: const ValueKey('journey-level'),
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (routeContext) => PathScreen(
+              app: app,
+              onBack: () => Navigator.of(routeContext).pop(),
+            ),
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Expanded(
+                  child: Text(
+                    l.levelNamed(
+                      standing.at + 1,
+                      rungName(context, standing.rung),
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.body(
+                      size: 13,
+                      weight: FontWeight.w600,
+                      color: ink,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(9),
+              child: SizedBox(
+                height: 6,
+                child: Stack(
+                  children: [
+                    Container(color: ink.withValues(alpha: 0.1)),
+                    FractionallySizedBox(
+                      widthFactor: standing.toNext.clamp(0.02, 1.0),
+                      child: Container(color: ink),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 7),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    next == null
+                        ? l.topLevel
+                        : (step == null
+                              ? l.nextRung(rungName(context, next))
+                              : l.stepThenRung(step, rungName(context, next))),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.body(
+                      size: 11.5,
+                      weight: FontWeight.w500,
+                      height: 1.35,
+                      color: ink.withValues(alpha: 0.45),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Icon(
+                  Icons.chevron_right_rounded,
+                  size: 17,
+                  color: ink.withValues(alpha: 0.3),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 /// The week: seven bars and how many were kept, under the score and above
@@ -958,6 +1054,116 @@ class _Week extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// The four numbers, two by two.
+class _Tiles extends StatelessWidget {
+  const _Tiles({required this.app});
+
+  final AppState app;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final int answered = app.answers.length;
+    final int held = app.heldCards;
+    final double? gap = app.confidenceGap;
+    final int moves = app.movesDown;
+
+    return Column(
+      children: [
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: _Tile(
+                  value: answered == 0
+                      ? '—'
+                      : '${(held / answered * 100).round()}%',
+                  label: answered == 0
+                      ? l.stillWithYouNothing
+                      : l.stillWithYouOf(held, answered),
+                ),
+              ),
+              const SizedBox(width: 6),
+              Expanded(
+                child: _Tile(
+                  value: gap == null ? '—' : '${gap.round()}',
+                  label: gap == null
+                      ? l.calibrationNotMeasured
+                      : l.calibrationPointsOff,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 6),
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: _Tile(
+                  value: '${app.liveStreak}',
+                  label: l.inARowBest(app.bestStreak),
+                ),
+              ),
+              const SizedBox(width: 6),
+              Expanded(
+                child: _Tile(value: '$moves', label: l.movesYouCanSpot(moves)),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _Tile extends StatelessWidget {
+  const _Tile({required this.value, required this.label});
+
+  final String value;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color ink = context.p.ink;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 13),
+      decoration: BoxDecoration(
+        color: ink.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            value,
+            maxLines: 1,
+            style: AppText.body(
+              size: 26,
+              weight: FontWeight.w700,
+              height: 1,
+              spacing: -1,
+              color: ink,
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            label,
+            style: AppText.body(
+              size: 10.5,
+              weight: FontWeight.w500,
+              height: 1.2,
+              color: ink.withValues(alpha: 0.45),
+            ),
+          ),
+        ],
       ),
     );
   }

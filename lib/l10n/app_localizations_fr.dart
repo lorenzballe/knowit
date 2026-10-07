@@ -2096,47 +2096,55 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get journeyNow => 'Aujourd\'hui';
+  String get journeyPointsOff => 'points d\'écart';
 
   @override
-  String journeyKickerNow(int day, int level, int levels) {
-    return 'JOUR $day · NIVEAU $level SUR $levels';
+  String journeyLastWeek(int n) {
+    return '$n la semaine dernière';
   }
 
   @override
-  String journeyKickerThen(int level, int levels) {
-    return 'APRÈS DEUX SEMAINES · NIVEAU $level SUR $levels';
+  String get journeyLastWeekSame => 'comme la semaine dernière';
+
+  @override
+  String get journeyOffExplain =>
+      'L\'écart entre la certitude que tu annonces et la fréquence où tu as raison. Zéro voudrait dire que chaque réponse à 70 % était juste sept fois sur dix.';
+
+  @override
+  String journeyOffNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Encore $n réponses avec ta certitude, et on le mesure.',
+      one: 'Encore une réponse avec ta certitude, et on le mesure.',
+    );
+    return '$_temp0';
   }
 
   @override
-  String get journeyRowSure => 'Juste quand tu étais sûr';
+  String get journeyAxisSure => 'ta certitude annoncée →';
 
   @override
-  String get journeyRowOff => 'Points d\'écart, en moyenne';
-
-  @override
-  String get journeyRowMoves => 'Pièges que tu repères';
-
-  @override
-  String get journeyRowHeld => 'Cartes encore avec toi';
-
-  @override
-  String get journeyRowRead => 'Cartes lues';
-
-  @override
-  String get journeyCurveTitle =>
-      'Ta certitude annoncée, face à la fréquence où tu avais raison';
+  String get journeyAxisRight => '↑ à quel point juste';
 
   @override
   String get journeyCurveSpotOn => 'pile juste';
 
   @override
-  String journeyCurveLegend(String when, int n) {
+  String get journeyTooSure => 'trop sûr';
+
+  @override
+  String journeyWhenYouSaid(String sure, String right) {
+    return 'Quand tu disais $sure de certitude, tu avais raison $right du temps.';
+  }
+
+  @override
+  String journeyNAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$when · $n points d\'écart',
-      one: '$when · 1 point d\'écart',
+      other: '$n réponses',
+      one: '1 réponse',
     );
     return '$_temp0';
   }

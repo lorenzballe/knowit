@@ -2028,45 +2028,53 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get journeyNow => '오늘';
+  String get journeyPointsOff => '점 어긋남';
 
   @override
-  String journeyKickerNow(int day, int level, int levels) {
-    return '$day일째 · 레벨 $level/$levels';
+  String journeyLastWeek(int n) {
+    return '지난주 $n';
   }
 
   @override
-  String journeyKickerThen(int level, int levels) {
-    return '2주 차 · 레벨 $level/$levels';
+  String get journeyLastWeekSame => '지난주와 같음';
+
+  @override
+  String get journeyOffExplain =>
+      '말한 확신과 실제로 맞히는 비율의 차이예요. 0이면 70%라고 한 답이 열 번 중 일곱 번 맞았다는 뜻이에요.';
+
+  @override
+  String journeyOffNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '확신을 말하며 $n번 더 답하면 측정돼요.',
+    );
+    return '$_temp0';
   }
 
   @override
-  String get journeyRowSure => '확신했을 때 맞힌 비율';
+  String get journeyAxisSure => '말한 확신 →';
 
   @override
-  String get journeyRowOff => '평균 어긋난 점수';
-
-  @override
-  String get journeyRowMoves => '알아채는 수';
-
-  @override
-  String get journeyRowHeld => '아직 기억하는 카드';
-
-  @override
-  String get journeyRowRead => '읽은 카드';
-
-  @override
-  String get journeyCurveTitle => '말한 확신과 실제로 맞힌 비율';
+  String get journeyAxisRight => '↑ 맞힌 비율';
 
   @override
   String get journeyCurveSpotOn => '딱 맞음';
 
   @override
-  String journeyCurveLegend(String when, int n) {
+  String get journeyTooSure => '과신';
+
+  @override
+  String journeyWhenYouSaid(String sure, String right) {
+    return '$sure 확신한다고 했을 때, $right 맞혔어요.';
+  }
+
+  @override
+  String journeyNAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$when · $n점 어긋남',
+      other: '답 $n개',
     );
     return '$_temp0';
   }

@@ -132,31 +132,6 @@ void main() {
       );
     });
 
-    test('a day\'s counts are the larger of what either phone wrote', () {
-      const local = ReaderSnapshot(
-        recordDays: {
-          '2026-09-01': [5, 0, 0],
-          '2026-09-03': [20, 1, 0],
-        },
-      );
-      const remote = ReaderSnapshot(
-        recordDays: {
-          '2026-09-01': [7, 0],
-          '2026-09-02': [12, 0, 1],
-        },
-      );
-      final merged = mergeSnapshots(local, remote);
-      expect(merged.recordDays, {
-        '2026-09-01': [7, 0, 0],
-        '2026-09-02': [12, 0, 1],
-        '2026-09-03': [20, 1, 0],
-      });
-      expect(
-        ReaderSnapshot.fromJson(merged.toJson()).recordDays['2026-09-03'],
-        [20, 1, 0],
-      );
-    });
-
     test('survives a round trip through JSON', () {
       const before = ReaderSnapshot(
         name: 'Marco',

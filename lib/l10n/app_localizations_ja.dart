@@ -2016,46 +2016,50 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get journeyNow => '今日';
+  String get journeyPointsOff => 'ポイントのずれ';
 
   @override
-  String journeyKickerNow(int day, int level, int levels) {
-    return '$day日目 · レベル$level/$levels';
+  String journeyLastWeek(int n) {
+    return '先週は$n';
   }
 
   @override
-  String journeyKickerThen(int level, int levels) {
-    return '2週間目 · レベル$level/$levels';
+  String get journeyLastWeekSame => '先週と同じ';
+
+  @override
+  String get journeyOffExplain =>
+      'あなたの言う確信度と、実際に正解する割合のずれです。0なら、70%と答えた問題は10回中7回正解していたことになります。';
+
+  @override
+  String journeyOffNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'あと$n回、確信度つきで答えると測れます。',
+    );
+    return '$_temp0';
   }
 
   @override
-  String get journeyRowSure => '確信したときの正答率';
+  String get journeyAxisSure => '言った確信度 →';
 
   @override
-  String get journeyRowOff => '平均のずれ（ポイント）';
-
-  @override
-  String get journeyRowMoves => '見抜ける型';
-
-  @override
-  String get journeyRowHeld => 'まだ覚えているカード';
-
-  @override
-  String get journeyRowRead => '読んだカード';
-
-  @override
-  String get journeyCurveTitle => '言った確信度と、実際に正解した割合';
+  String get journeyAxisRight => '↑ 正解した割合';
 
   @override
   String get journeyCurveSpotOn => 'ぴったり';
 
   @override
-  String journeyCurveLegend(String when, int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$when · $nポイントのずれ',
-    );
+  String get journeyTooSure => '自信過剰';
+
+  @override
+  String journeyWhenYouSaid(String sure, String right) {
+    return '確信度$sureと言ったとき、正解は$rightでした。';
+  }
+
+  @override
+  String journeyNAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n回答');
     return '$_temp0';
   }
 }

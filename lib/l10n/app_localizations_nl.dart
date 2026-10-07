@@ -2089,47 +2089,55 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get journeyNow => 'Vandaag';
+  String get journeyPointsOff => 'punten ernaast';
 
   @override
-  String journeyKickerNow(int day, int level, int levels) {
-    return 'DAG $day · NIVEAU $level VAN $levels';
+  String journeyLastWeek(int n) {
+    return '$n vorige week';
   }
 
   @override
-  String journeyKickerThen(int level, int levels) {
-    return 'NA TWEE WEKEN · NIVEAU $level VAN $levels';
+  String get journeyLastWeekSame => 'zelfde als vorige week';
+
+  @override
+  String get journeyOffExplain =>
+      'Hoe ver de zekerheid die je geeft afligt van hoe vaak je gelijk hebt. Nul zou betekenen dat elk antwoord van 70% zeven van de tien keer goed was.';
+
+  @override
+  String journeyOffNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Nog $n antwoorden met hoe zeker, en het wordt gemeten.',
+      one: 'Nog één antwoord met hoe zeker, en het wordt gemeten.',
+    );
+    return '$_temp0';
   }
 
   @override
-  String get journeyRowSure => 'Goed als je zeker was';
+  String get journeyAxisSure => 'hoe zeker je zei →';
 
   @override
-  String get journeyRowOff => 'Punten ernaast, gemiddeld';
-
-  @override
-  String get journeyRowMoves => 'Trucs die je herkent';
-
-  @override
-  String get journeyRowHeld => 'Kaarten die nog bij je zijn';
-
-  @override
-  String get journeyRowRead => 'Gelezen kaarten';
-
-  @override
-  String get journeyCurveTitle =>
-      'Hoe zeker je zei te zijn, tegen hoe vaak je gelijk had';
+  String get journeyAxisRight => '↑ hoe vaak goed';
 
   @override
   String get journeyCurveSpotOn => 'precies goed';
 
   @override
-  String journeyCurveLegend(String when, int n) {
+  String get journeyTooSure => 'te zeker';
+
+  @override
+  String journeyWhenYouSaid(String sure, String right) {
+    return 'Als je $sure zeker zei, had je $right van de keren gelijk.';
+  }
+
+  @override
+  String journeyNAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$when · $n punten ernaast',
-      one: '$when · 1 punt ernaast',
+      other: '$n antwoorden',
+      one: '1 antwoord',
     );
     return '$_temp0';
   }

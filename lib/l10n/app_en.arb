@@ -1873,72 +1873,68 @@
    }
   }
  },
- "journeyNow": "Today",
- "@journeyNow": {
-  "description": "The right half of the journey's switch: the reader as they are today."
+ "journeyPointsOff": "points off",
+ "@journeyPointsOff": {
+  "description": "Beside the big number at the top of Your journey: how many points the reader's confidence runs off their results."
  },
- "journeyKickerNow": "DAY {day} · LEVEL {level} OF {levels}",
- "@journeyKickerNow": {
-  "description": "Small caps over the level on the journey: which day of the journey and which level.",
+ "journeyLastWeek": "{n} last week",
+ "@journeyLastWeek": {
+  "description": "Chip beside the points off: what they were a week ago (an arrow says which way they went).",
   "placeholders": {
-   "day": {
-    "type": "int"
-   },
-   "level": {
-    "type": "int"
-   },
-   "levels": {
+   "n": {
     "type": "int"
    }
   }
  },
- "journeyKickerThen": "TWO WEEKS IN · LEVEL {level} OF {levels}",
- "@journeyKickerThen": {
-  "description": "Small caps over the level when the journey shows the reader two weeks in.",
+ "journeyLastWeekSame": "same as last week",
+ "@journeyLastWeekSame": {
+  "description": "Chip beside the points off when they are what they were a week ago."
+ },
+ "journeyOffExplain": "How far the sureness you give is from how often you turn out right. Zero would mean every 70% answer was right seven times in ten.",
+ "@journeyOffExplain": {
+  "description": "Line under the points off, saying what they measure."
+ },
+ "journeyOffNotYet": "{n, plural, =1{One more answer with how sure, and it is measured.} other{{n} more answers with how sure, and it is measured.}}",
+ "@journeyOffNotYet": {
+  "description": "Added to that line until there are enough answers with a confidence to measure it.",
   "placeholders": {
-   "level": {
-    "type": "int"
-   },
-   "levels": {
+   "n": {
     "type": "int"
    }
   }
  },
- "journeyRowSure": "Right when you were sure",
- "@journeyRowSure": {
-  "description": "Row label: how often the reader was right when they said they were 80% sure or more."
+ "journeyAxisSure": "how sure you said →",
+ "@journeyAxisSure": {
+  "description": "Caption under the chart, left: the across axis."
  },
- "journeyRowOff": "Points off, on average",
- "@journeyRowOff": {
-  "description": "Row label: how far the reader's confidence is from their results, in points."
- },
- "journeyRowMoves": "Moves you can spot",
- "@journeyRowMoves": {
-  "description": "Row label: reasoning moves the reader can now spot."
- },
- "journeyRowHeld": "Cards still with you",
- "@journeyRowHeld": {
-  "description": "Row label: cards that came back and the reader still knew."
- },
- "journeyRowRead": "Cards read",
- "@journeyRowRead": {
-  "description": "Row label: cards read."
- },
- "journeyCurveTitle": "How sure you said, against how often you were right",
- "@journeyCurveTitle": {
-  "description": "Title of the chart of stated confidence against accuracy."
+ "journeyAxisRight": "↑ how often right",
+ "@journeyAxisRight": {
+  "description": "Caption under the chart, right: the up axis."
  },
  "journeyCurveSpotOn": "spot on",
  "@journeyCurveSpotOn": {
   "description": "Label on the chart's diagonal, where confidence equals accuracy."
  },
- "journeyCurveLegend": "{n, plural, =1{{when} · 1 point off} other{{when} · {n} points off}}",
- "@journeyCurveLegend": {
-  "description": "Legend line under the chart: a day, and how many points off the reader was then.",
+ "journeyTooSure": "too sure",
+ "@journeyTooSure": {
+  "description": "Label on the shaded part of the chart where the reader was surer than right."
+ },
+ "journeyWhenYouSaid": "When you said {sure} sure, you were right {right} of the time.",
+ "@journeyWhenYouSaid": {
+  "description": "Under the chart, for the level picked: e.g. When you said 90% sure, you were right 72% of the time.",
   "placeholders": {
-   "when": {
+   "sure": {
     "type": "String"
    },
+   "right": {
+    "type": "String"
+   }
+  }
+ },
+ "journeyNAnswers": "{n, plural, =1{1 answer} other{{n} answers}}",
+ "@journeyNAnswers": {
+  "description": "How many answers the sentence above rests on.",
+  "placeholders": {
    "n": {
     "type": "int"
    }

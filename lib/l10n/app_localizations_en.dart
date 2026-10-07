@@ -2082,47 +2082,55 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get journeyNow => 'Today';
+  String get journeyPointsOff => 'points off';
 
   @override
-  String journeyKickerNow(int day, int level, int levels) {
-    return 'DAY $day · LEVEL $level OF $levels';
+  String journeyLastWeek(int n) {
+    return '$n last week';
   }
 
   @override
-  String journeyKickerThen(int level, int levels) {
-    return 'TWO WEEKS IN · LEVEL $level OF $levels';
+  String get journeyLastWeekSame => 'same as last week';
+
+  @override
+  String get journeyOffExplain =>
+      'How far the sureness you give is from how often you turn out right. Zero would mean every 70% answer was right seven times in ten.';
+
+  @override
+  String journeyOffNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n more answers with how sure, and it is measured.',
+      one: 'One more answer with how sure, and it is measured.',
+    );
+    return '$_temp0';
   }
 
   @override
-  String get journeyRowSure => 'Right when you were sure';
+  String get journeyAxisSure => 'how sure you said →';
 
   @override
-  String get journeyRowOff => 'Points off, on average';
-
-  @override
-  String get journeyRowMoves => 'Moves you can spot';
-
-  @override
-  String get journeyRowHeld => 'Cards still with you';
-
-  @override
-  String get journeyRowRead => 'Cards read';
-
-  @override
-  String get journeyCurveTitle =>
-      'How sure you said, against how often you were right';
+  String get journeyAxisRight => '↑ how often right';
 
   @override
   String get journeyCurveSpotOn => 'spot on';
 
   @override
-  String journeyCurveLegend(String when, int n) {
+  String get journeyTooSure => 'too sure';
+
+  @override
+  String journeyWhenYouSaid(String sure, String right) {
+    return 'When you said $sure sure, you were right $right of the time.';
+  }
+
+  @override
+  String journeyNAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$when · $n points off',
-      one: '$when · 1 point off',
+      other: '$n answers',
+      one: '1 answer',
     );
     return '$_temp0';
   }

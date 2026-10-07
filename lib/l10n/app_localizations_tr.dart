@@ -2073,46 +2073,53 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get journeyNow => 'Bugün';
+  String get journeyPointsOff => 'puan sapma';
 
   @override
-  String journeyKickerNow(int day, int level, int levels) {
-    return '$day. GÜN · SEVİYE $level/$levels';
+  String journeyLastWeek(int n) {
+    return 'geçen hafta $n';
   }
 
   @override
-  String journeyKickerThen(int level, int levels) {
-    return 'İKİ HAFTA SONRA · SEVİYE $level/$levels';
+  String get journeyLastWeekSame => 'geçen haftayla aynı';
+
+  @override
+  String get journeyOffExplain =>
+      'Söylediğin eminlik ile ne sıklıkla haklı çıktığın arasındaki fark. Sıfır, %70 dediğin her cevabın on seferde yedisinde doğru çıktığı anlamına gelirdi.';
+
+  @override
+  String journeyOffNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Eminliğini söyleyerek $n cevap daha ver, ölçülsün.',
+    );
+    return '$_temp0';
   }
 
   @override
-  String get journeyRowSure => 'Emin olduğunda doğru';
+  String get journeyAxisSure => 'söylediğin eminlik →';
 
   @override
-  String get journeyRowOff => 'Ortalama puan sapması';
-
-  @override
-  String get journeyRowMoves => 'Fark ettiğin numaralar';
-
-  @override
-  String get journeyRowHeld => 'Hâlâ aklındaki kartlar';
-
-  @override
-  String get journeyRowRead => 'Okunan kartlar';
-
-  @override
-  String get journeyCurveTitle =>
-      'Ne kadar emin olduğun ve ne sıklıkla haklı çıktığın';
+  String get journeyAxisRight => '↑ ne sıklıkla doğru';
 
   @override
   String get journeyCurveSpotOn => 'tam isabet';
 
   @override
-  String journeyCurveLegend(String when, int n) {
+  String get journeyTooSure => 'fazla emin';
+
+  @override
+  String journeyWhenYouSaid(String sure, String right) {
+    return '$sure emin olduğunu söylediğinde, zamanın $right kadarında haklıydın.';
+  }
+
+  @override
+  String journeyNAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$when · $n puan sapma',
+      other: '$n cevap',
     );
     return '$_temp0';
   }
