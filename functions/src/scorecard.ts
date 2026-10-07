@@ -578,7 +578,8 @@ export async function currentWithheld(db: Firestore, nowMs = Date.now()): Promis
   if (nowMs - withheldAt < WITHHELD_FRESH_MS) return withheldIds;
   withheldAt = nowMs;
   try {
-    const snap = await db.collection('quality').doc('latest').get();
+    // The list alone: the numbers beside it are most of the document.
+    const [snap] = await db.getAll(db.collection('quality').doc('latest'), { fieldMask: ['quarantined'] });
     const ids = snap.get('quarantined');
     withheldIds = new Set(Array.isArray(ids) ? ids.filter((v): v is string => typeof v === 'string') : []);
   } catch {

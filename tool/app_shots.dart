@@ -352,8 +352,11 @@ void main() {
     // "Report a problem" sits under the source a card would be checked
     // against; the sheet takes a reason and a line, and the card then says
     // it was reported. A read card first, so one tap turns it over.
+    final first = PillBank.cards.firstWhere(
+      (p) => !p.asksSomething && p.answer.length < 260,
+    );
     final List<String> deck = [
-      PillBank.cards.firstWhere((p) => !p.asksSomething && p.answer.length < 260).id,
+      first.id,
       ...pickedPills(seed: 'shot', count: 4).map((p) => p.id),
     ];
     // ignore: invalid_use_of_visible_for_testing_member
@@ -365,7 +368,7 @@ void main() {
     });
     await tester.pumpWidget(const AstutoApp());
     await settle(tester);
-    await tester.tap(find.byType(PillCardStack), warnIfMissed: false);
+    await tester.tap(find.text(first.question));
     await settle(tester);
     final Finder link = find.text('Report a problem');
     await tester.ensureVisible(link);
