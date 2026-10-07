@@ -1,0 +1,33 @@
+{
+  "id": "science-headlines-and-papers-4",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.headlines_and_papers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where do most exaggerated health headlines first get exaggerated?",
+  "answer": "In the universities' own press releases. Sumner and colleagues compared 462 press releases with their papers and the news: about a third of the releases already overstated causes or advice, or stretched animal results to humans. When a release exaggerated, the news usually did too; when it stayed accurate, so mostly did the news.",
+  "move": "Trace a claim back one step before blaming the last messenger.",
+  "ask": "When I'm annoyed at how something was reported, have I checked where the spin began?",
+  "keywords": [
+    "press releases",
+    "science news",
+    "exaggeration",
+    "universities"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sumner et al., BMJ, 2014",
+  "source_kind": "paper",
+  "reference": "Sumner et al., The association between exaggeration in health related science news and academic press releases, BMJ 349:g7015, 2014",
+  "written": "2026-09-26"
+}

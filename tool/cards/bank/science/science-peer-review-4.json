@@ -1,0 +1,33 @@
+{
+  "id": "science-peer-review-4",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.peer_review",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How was the physicist Jan Hendrik Schön, whose faked results passed review at top journals, finally caught?",
+  "answer": "By readers who noticed the same graph twice. In 2002 other physicists spotted identical noise, the random wiggles of measurement, in figures meant to show different experiments. Reviewers had judged whether his results were plausible, not whether his data existed. A Bell Labs inquiry upheld 16 of 24 allegations of misconduct.",
+  "move": "Ask whether anyone checked the evidence itself, not only its story.",
+  "ask": "When I believe a polished story, have I looked at any of the raw evidence myself?",
+  "keywords": [
+    "jan hendrik schön",
+    "scientific fraud",
+    "peer review",
+    "bell labs"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Beasley et al., Bell Labs inquiry report, 2002",
+  "source_kind": "institution",
+  "reference": "Beasley et al., Report of the Investigation Committee on the Possibility of Scientific Misconduct in the Work of Hendrik Schön and Coauthors, Lucent Technologies, 2002",
+  "written": "2026-09-26"
+}

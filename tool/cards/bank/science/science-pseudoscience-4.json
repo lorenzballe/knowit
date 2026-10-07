@@ -1,0 +1,36 @@
+{
+  "id": "science-pseudoscience-4",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.pseudoscience",
+  "also": [
+    "medicine.judge_a_treatment.alternative_medicine"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Australia's national medical research council find when it reviewed homeopathy for 61 health conditions?",
+  "answer": "No reliable evidence that it worked for any of them. The 2015 review weighed studies by quality: positive results came from small or poorly designed trials, while well-run ones found homeopathy no better than a placebo. The most diluted remedies are unlikely to hold a single molecule of the substance they started from.",
+  "move": "Weigh studies by how well they were run, not by how many.",
+  "ask": "When I count the evidence for something I like, do I weigh the careful studies more than the rest?",
+  "keywords": [
+    "homeopathy",
+    "nhmrc",
+    "placebo",
+    "evidence reviews"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "number",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "NHMRC Information Paper on Homeopathy, 2015",
+  "source_kind": "institution",
+  "reference": "National Health and Medical Research Council, NHMRC Information Paper: Evidence on the effectiveness of homeopathy for treating health conditions, Canberra, 2015",
+  "written": "2026-09-26"
+}

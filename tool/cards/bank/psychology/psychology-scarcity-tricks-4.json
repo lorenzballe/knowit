@@ -1,0 +1,33 @@
+{
+  "id": "psychology-scarcity-tricks-4",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.scarcity_tricks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What did Britain's competition regulator find wrong with hotel sites' claims that only one room was left?",
+  "answer": "That they could mislead. In 2019 the Competition and Markets Authority found that such claims, along with counts of other people looking and countdowns on prices, could give a false impression of availability and rush bookings. Six large sites agreed to change them. The last room was sometimes only that site's last room.",
+  "move": "Urgency claimed by the seller is a sales tool until proven otherwise.",
+  "ask": "When a site tells me to hurry, what happens if I simply close it and come back tomorrow?",
+  "keywords": [
+    "hotel booking sites",
+    "pressure selling",
+    "scarcity claims",
+    "consumer law"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Competition and Markets Authority, online hotel booking",
+  "source_kind": "institution",
+  "reference": "https://www.gov.uk/cma-cases/online-hotel-booking",
+  "written": "2026-10-03"
+}

@@ -1,0 +1,35 @@
+{
+  "id": "history-7",
+  "topic": "history",
+  "genre": "history.maps_and_borders",
+  "strand": "history.maps_and_borders.old_maps",
+  "also": [
+    "art.forgeries.detection"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How do you date something from the last seventy years?",
+  "answer": "By the bomb. Atmospheric nuclear testing from 1955 to 1963 nearly doubled carbon-14 in the air, then it declined on a known curve. Anything alive during that window carries a datable signature, accurate to a year or two — used on forged paintings, wine and human remains.",
+  "move": "Nuclear testing accidentally left the world a precise clock.",
+  "ask": "What around me holds a hidden clue about its own past, if I looked closely?",
+  "keywords": [
+    "carbon-14",
+    "bomb pulse",
+    "nuclear tests",
+    "dating"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Levin & Kromer, Radiocarbon, bomb-pulse dating",
+  "source_kind": "paper",
+  "reference": "Levin & Kromer, The tropospheric 14CO2 level in mid-latitudes of the Northern Hemisphere (1959-2003), Radiocarbon, 2004"
+}

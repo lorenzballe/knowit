@@ -1,0 +1,33 @@
+{
+  "id": "language-words-that-changed-meaning-4",
+  "topic": "language",
+  "genre": "language.word_origins",
+  "strand": "language.word_origins.words_that_changed_meaning",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When a 14th-century English writer called someone nice, what was he accusing them of?",
+  "answer": "Being foolish. Nice came through French from Latin nescius, not knowing, and in Middle English meant silly or ignorant. It then drifted to fussy, then to precise, which survives in a nice distinction, and only in the 1700s to pleasant. Each step was small; added up, they turned an insult into a compliment.",
+  "move": "Small shifts, each one harmless, can add up to the opposite.",
+  "ask": "What in my life has drifted, one small step at a time, into the opposite of how it started?",
+  "keywords": [
+    "nice",
+    "semantic change",
+    "middle english",
+    "latin nescius"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Online Etymology Dictionary, nice",
+  "source_kind": "reference_work",
+  "reference": "https://www.etymonline.com/word/nice",
+  "written": "2026-10-03"
+}

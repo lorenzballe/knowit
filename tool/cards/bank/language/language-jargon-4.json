@@ -1,0 +1,33 @@
+{
+  "id": "language-jargon-4",
+  "topic": "language",
+  "genre": "language.slang",
+  "strand": "language.slang.jargon",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do air-traffic controllers avoid saying take-off until the moment they clear a plane to go?",
+  "answer": "Because of Tenerife in 1977. A KLM crew radioed that they were now at take-off, already rolling. The controller's OK came through; his stand by for take-off was blocked by a simultaneous call. The jumbo struck a Pan Am 747 in fog and 583 people died. Since then, other messages say departure instead.",
+  "move": "Jargon earns its place when it removes a doubt, not when it adds one.",
+  "ask": "Which word in my work means two things, and who might act on the wrong one?",
+  "keywords": [
+    "tenerife disaster",
+    "air traffic control",
+    "radio phraseology",
+    "ambiguity"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "ICAO, Manual of Radiotelephony, Doc 9432",
+  "source_kind": "primary_document",
+  "reference": "International Civil Aviation Organization, Manual of Radiotelephony, Doc 9432, 4th ed., 2007",
+  "written": "2026-10-03"
+}

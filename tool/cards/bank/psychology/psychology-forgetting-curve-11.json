@@ -1,0 +1,33 @@
+{
+  "id": "psychology-forgetting-curve-11",
+  "topic": "psychology",
+  "genre": "psychology.memory",
+  "strand": "psychology.memory.forgetting_curve",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "How did Ebbinghaus measure a memory he could no longer recall at all?",
+  "answer": "By timing how fast he relearned it. Lists of nonsense syllables that he could no longer recite a day later took about a third less effort to learn again; a month later, about a fifth less. Material that felt entirely gone still left a trace a stopwatch could find.",
+  "move": "Being unable to recall something is not the same as having lost it.",
+  "ask": "What have I decided I forgot that would come back quickly if I relearned it?",
+  "keywords": [
+    "ebbinghaus",
+    "method of savings",
+    "nonsense syllables",
+    "relearning"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Ebbinghaus, Memory, 1885, English edition 1913",
+  "source_kind": "book",
+  "reference": "Ebbinghaus, Memory: A Contribution to Experimental Psychology, trans. Ruger & Bussenius, Teachers College, Columbia University, 1913",
+  "written": "2026-09-26"
+}

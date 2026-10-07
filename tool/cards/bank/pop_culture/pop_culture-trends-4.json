@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-trends-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.trends",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When quiet quitting swept the news in 2022, what did Gallup's long-running survey of workers show?",
+  "answer": "A new name for an old number. Gallup put quiet quitters, people doing no more than their job asks, at about half the US workforce; but that group was its long-standing not engaged category, which had hovered around half for years. The trend was in the headlines more than in the offices.",
+  "move": "Before believing a new trend, ask whether only the name is new.",
+  "ask": "Which new trend have I worried about that may just be an old thing with a new name?",
+  "keywords": [
+    "quiet quitting",
+    "gallup",
+    "employee engagement",
+    "workplace trends"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Gallup, Is Quiet Quitting Real?, 2022",
+  "source_kind": "statistics",
+  "reference": "Jim Harter, Is Quiet Quitting Real?, Gallup, September 2022",
+  "written": "2026-09-26"
+}

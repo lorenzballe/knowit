@@ -1,0 +1,33 @@
+{
+  "id": "medicine-risk-numbers-4",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.risk_numbers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why do some medical papers give a drug's benefit as a percentage cut, but its harms as raw counts?",
+  "answer": "Because the mix flatters the drug. A 33% cut in risk sounds big; two extra bleeds per 100 patients sounds small, though the harm may be larger. A review of leading medical journals found about one article in three reported benefits and harms in such mismatched formats. Readers need both per 100 people.",
+  "move": "Put the good news and the bad news in the same units before comparing.",
+  "ask": "When someone shows me pros and cons, are both in the same kind of number?",
+  "keywords": [
+    "mismatched framing",
+    "relative risk",
+    "absolute risk",
+    "medical journals"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Sedrakyan & Shih, Medical Care, 2007",
+  "source_kind": "paper",
+  "reference": "Sedrakyan & Shih, Improving depiction of benefits and harms: analyses of studies of well-known therapeutics and review of high-impact medical journals, Medical Care, 2007",
+  "written": "2026-10-03"
+}

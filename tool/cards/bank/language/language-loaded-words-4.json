@@ -1,0 +1,33 @@
+{
+  "id": "language-loaded-words-4",
+  "topic": "language",
+  "genre": "language.words_that_persuade",
+  "strand": "language.words_that_persuade.loaded_words",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What does the word natural on an American food label legally guarantee about the food?",
+  "answer": "Very little. The FDA has never formally defined it; its long-standing policy means only that nothing artificial or synthetic was added that would not normally be expected in the food. It says nothing about pesticides, processing methods or nutrition. The word reassures without promising.",
+  "move": "When a word sells, ask who defines it and who checks.",
+  "ask": "Which reassuring word on something I buy have I never looked up?",
+  "keywords": [
+    "natural label",
+    "fda",
+    "food labelling",
+    "marketing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "US FDA, Use of the Term Natural on Food Labeling",
+  "source_kind": "institution",
+  "reference": "https://www.fda.gov/food/food-labeling-nutrition/use-term-natural-food-labeling",
+  "written": "2026-10-03"
+}

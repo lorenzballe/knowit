@@ -1,0 +1,33 @@
+{
+  "id": "space-spinoffs-4",
+  "topic": "space",
+  "genre": "space.space_and_life_on_earth",
+  "strand": "space.space_and_life_on_earth.spinoffs",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What part of almost every phone camera grew out of a NASA lab's need to shrink cameras for spacecraft?",
+  "answer": "The image sensor. In the early 1990s Eric Fossum's team at NASA's Jet Propulsion Laboratory built a camera on a single chip, made with the same cheap process as ordinary computer chips, to cut the power and weight of cameras in space. That design, the CMOS sensor, now sits in billions of phones.",
+  "move": "Hard limits breed inventions that easy conditions never ask for.",
+  "ask": "Which limit I'm stuck with could push me to a better solution than plenty would?",
+  "keywords": [
+    "cmos image sensor",
+    "eric fossum",
+    "jet propulsion laboratory",
+    "phone cameras"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Fossum, IEEE Transactions on Electron Devices, 1997",
+  "source_kind": "paper",
+  "reference": "Fossum, CMOS image sensors: electronic camera-on-a-chip, IEEE Transactions on Electron Devices, 1997",
+  "written": "2026-10-03"
+}

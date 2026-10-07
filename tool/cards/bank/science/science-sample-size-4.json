@@ -1,0 +1,40 @@
+{
+  "id": "science-sample-size-4",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.sample_size",
+  "kind": "pickOne",
+  "difficulty": "medium",
+  "principle": "sampling",
+  "question": "On a restaurant review site, which places crowd both the top and the bottom of the rankings?",
+  "options": [
+    "Long-established, popular places",
+    "New places with only a few reviews",
+    "Places with hundreds of reviews"
+  ],
+  "correct": 1,
+  "answer": "New places with only a few reviews. An average of five ratings swings wildly: two delighted friends make a perfect score, one bad night a terrible one. Hundreds of reviews pull the average towards the middle. Howard Wainer found the same with American schools: the smallest filled both the best and the worst lists.",
+  "move": "Distrust extremes that come from few measurements, in either direction.",
+  "ask": "Which strong opinion of mine rests on just a handful of experiences?",
+  "trap": "Long-established places, because fame seems to stir extreme reactions.",
+  "keywords": [
+    "sample size",
+    "online reviews",
+    "ratings",
+    "small schools"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Wainer, American Scientist, 2007",
+  "source_kind": "paper",
+  "reference": "Wainer, The most dangerous equation, American Scientist 95:249–256, 2007",
+  "written": "2026-09-26"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "human_body-smell-11",
+  "topic": "human_body",
+  "genre": "human_body.senses",
+  "strand": "human_body.senses.smell",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where did the idea that humans have a feeble sense of smell come from?",
+  "answer": "From brain anatomy, not smell tests. In 1879 the anatomist Paul Broca classed humans as non-smellers because their olfactory bulbs are small beside large frontal lobes. Yet the bulbs hold similar numbers of neurons across mammals, and blindfolded volunteers crawling on all fours have tracked a chocolate scent trail through grass.",
+  "move": "Ask whether a famous weakness was ever measured, or only assumed.",
+  "ask": "What do I believe I am bad at that I have never actually tested?",
+  "keywords": [
+    "paul broca",
+    "olfactory bulb",
+    "scent tracking",
+    "human olfaction"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "origin",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "McGann, Science, 2017",
+  "source_kind": "paper",
+  "reference": "McGann, Poor human olfaction is a 19th-century myth, Science, 2017",
+  "written": "2026-09-26"
+}

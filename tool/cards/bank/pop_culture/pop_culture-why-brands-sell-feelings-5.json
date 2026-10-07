@@ -1,0 +1,33 @@
+{
+  "id": "pop_culture-why-brands-sell-feelings-5",
+  "topic": "pop_culture",
+  "genre": "pop_culture.logos_and_brands",
+  "strand": "pop_culture.logos_and_brands.why_brands_sell_feelings",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did De Beers want buyers to feel that a diamond is forever, beyond selling more stones?",
+  "answer": "To stop them ever selling. Vast numbers of diamonds already sat in drawers; if owners resold them, prices would sag. A gift meant to be kept for life stays off the market, and Edward Jay Epstein found in 1982 that dealers would buy a ring back for a fraction of what it had cost.",
+  "move": "When a seller praises keeping forever, ask what resale would reveal.",
+  "ask": "Is there something I keep for sentimental reasons whose sentiment was sold to me?",
+  "keywords": [
+    "de beers",
+    "diamonds",
+    "advertising slogan",
+    "resale"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Epstein, The Atlantic, February 1982",
+  "source_kind": "news_archive",
+  "reference": "Edward Jay Epstein, Have You Ever Tried to Sell a Diamond?, The Atlantic, February 1982",
+  "written": "2026-09-26"
+}

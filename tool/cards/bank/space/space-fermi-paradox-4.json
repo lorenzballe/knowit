@@ -1,0 +1,33 @@
+{
+  "id": "space-fermi-paradox-4",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.fermi_paradox",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does the silence from aliens puzzle scientists, instead of simply showing that space is big?",
+  "answer": "The galaxy is old enough to have been filled many times. A species spreading at just 1% of light speed could cross the 100,000 light-year disc in about 10 million years, or tens of millions with stops: under 1% of the galaxy's age. One such species should have reached everywhere, including here.",
+  "move": "If a thing could easily have happened, its absence is a clue.",
+  "ask": "Which thing that should have happened by now in my life hasn't, and what is that telling me?",
+  "keywords": [
+    "fermi paradox",
+    "galactic colonisation",
+    "michael hart",
+    "milky way"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hart, Quarterly Journal of the RAS, 1975",
+  "source_kind": "paper",
+  "reference": "Hart, An Explanation for the Absence of Extraterrestrials on Earth, Quarterly Journal of the Royal Astronomical Society, 1975",
+  "written": "2026-10-03"
+}

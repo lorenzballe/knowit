@@ -1,0 +1,33 @@
+{
+  "id": "human_body-breathing-4",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.breathing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why does breathing too fast and deep make the fingers tingle and the head swim?",
+  "answer": "Because it blows off too much carbon dioxide. Low carbon dioxide makes the blood more alkaline, narrows the brain's blood vessels so less blood reaches it, and makes nerves fire too easily, causing pins and needles. The person feels short of air while short of carbon dioxide, not oxygen.",
+  "move": "The feeling of a shortage can come from having too much of something else.",
+  "ask": "When I feel I am running out of something, could I in fact have too much of something else?",
+  "keywords": [
+    "hyperventilation",
+    "carbon dioxide",
+    "dizziness",
+    "tingling"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Hall and Hall, Guyton and Hall Textbook, 2021",
+  "source_kind": "book",
+  "reference": "Hall JE, Hall ME, Guyton and Hall Textbook of Medical Physiology, 14th edition, Elsevier, 2021",
+  "written": "2026-09-26"
+}

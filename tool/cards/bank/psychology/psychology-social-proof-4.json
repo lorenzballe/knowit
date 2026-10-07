@@ -1,0 +1,33 @@
+{
+  "id": "psychology-social-proof-4",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.social_proof",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Why did a sign saying many visitors steal petrified wood make theft worse than a plain request not to?",
+  "answer": "Because it told visitors that taking wood was normal. In Arizona's Petrified Forest, paths with a sign saying many past visitors had removed wood lost 7.92% of the marked pieces, against 1.67% with a sign simply asking people not to. A warning that stresses how common a wrong is can advertise it.",
+  "move": "Never advertise how many people are doing the thing you want stopped.",
+  "ask": "When I complain that everyone does something, could I be making it seem more normal?",
+  "keywords": [
+    "social norms",
+    "signs",
+    "petrified forest",
+    "theft"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Cialdini, Current Directions in Psychological Science, 2003",
+  "source_kind": "paper",
+  "reference": "Cialdini, Crafting normative messages to protect the environment, Current Directions in Psychological Science, 2003",
+  "written": "2026-10-03"
+}

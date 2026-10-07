@@ -1,0 +1,33 @@
+{
+  "id": "economics-fees-that-grow-4",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.fees_that_grow",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Before 2020, how could a small unarranged overdraft at a British bank compare with a payday loan?",
+  "answer": "It could cost more than ten times as much. Banks charged flat daily and monthly fees for going past a limit, so a small sum borrowed for a few weeks could cost far more than from payday lenders, whose prices had been capped since 2015. The regulator then made banks charge one simple interest rate.",
+  "move": "Turn every fee into a yearly rate before comparing two kinds of borrowing.",
+  "ask": "Which small charges on my account would shock me if I saw them as a yearly rate?",
+  "keywords": [
+    "overdrafts",
+    "payday loans",
+    "bank charges",
+    "financial conduct authority"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "FCA, High-cost credit review, 2018",
+  "source_kind": "institution",
+  "reference": "Financial Conduct Authority, CP18/42 High-cost Credit Review: Overdrafts consultation paper and policy statement, December 2018",
+  "written": "2026-10-03"
+}

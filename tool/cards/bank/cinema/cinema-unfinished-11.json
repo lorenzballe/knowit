@@ -1,0 +1,33 @@
+{
+  "id": "cinema-unfinished-11",
+  "topic": "cinema",
+  "genre": "cinema.lost_films",
+  "strand": "cinema.lost_films.unfinished",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What stopped Henri-Georges Clouzot's L'Enfer in 1964, despite a budget with no ceiling?",
+  "answer": "Partly the missing ceiling itself. Columbia, impressed by his tests, gave Clouzot unlimited money, and he shot experiment after experiment with light, colour and distortion while the schedule slid. His lead actor left, ill; then Clouzot had a heart attack, and the shoot stopped for good. The footage lay in cans until a 2009 documentary.",
+  "move": "Remove every limit and a piece of work may lose its reason to end.",
+  "ask": "Where would a limit give my work a reason to end?",
+  "keywords": [
+    "henri-georges clouzot",
+    "l'enfer",
+    "serge bromberg",
+    "columbia pictures"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Bromberg and Medrea, L'Enfer d'Henri-Georges Clouzot",
+  "source_kind": "primary_document",
+  "reference": "Bromberg and Medrea (directors), L'Enfer d'Henri-Georges Clouzot, Lobster Films, 2009",
+  "written": "2026-09-27"
+}

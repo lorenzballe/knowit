@@ -1,0 +1,33 @@
+{
+  "id": "cinema-fake-or-real-4",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.fake_or_real",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Did the first audiences of the Lumière train film really flee their seats in panic?",
+  "answer": "There is no evidence they did. Martin Loiperdinger searched the newspapers and police reports of 1896 and found no account of panic at L'Arrivée d'un train. The tale grew later, partly from jokes about gullible country folk. Cinema's favourite origin story is about how easily fooled other people were.",
+  "move": "Stories about how gullible others were are often the gullible part.",
+  "ask": "Which story about how foolish people used to be do I repeat without ever checking it?",
+  "keywords": [
+    "lumière brothers",
+    "arrival of a train",
+    "film myths",
+    "early cinema"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Loiperdinger, The Moving Image, 2004",
+  "source_kind": "paper",
+  "reference": "Martin Loiperdinger, Lumière's Arrival of the Train: Cinema's Founding Myth, The Moving Image, 4(1), 2004",
+  "written": "2026-10-03"
+}
