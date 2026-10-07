@@ -486,5 +486,18 @@
   "sceneTapToPick": "Tik je keuze",
   "sceneShowMe": "Laat zien",
   "sceneYourGuess": "Jouw gok",
-  "sceneNOfM": "{n} van {m}"
+  "sceneNOfM": "{n} van {m}",
+  "reportProblem": "Een probleem melden",
+  "reportedThanks": "Gemeld. Bedankt.",
+  "reportTitle": "Wat klopt er niet aan deze kaart?",
+  "reportLead": "We controleren elke melding aan de hand van de bronnen en verbeteren de kaart.",
+  "reportFact": "Een feit klopt niet",
+  "reportAnswer": "Het als goed gemarkeerde antwoord is fout",
+  "reportSource": "De bron onderbouwt het niet",
+  "reportUnclear": "Het is onduidelijk",
+  "reportTypo": "Een typfout of een kapotte regel",
+  "reportOther": "Iets anders",
+  "reportNoteHint": "Alles wat ons helpt het te controleren (optioneel)",
+  "reportSend": "Versturen",
+  "reportSentToast": "Bedankt. We kijken ernaar."
 }

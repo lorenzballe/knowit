@@ -486,5 +486,18 @@
   "sceneTapToPick": "Dotknij swój wybór",
   "sceneShowMe": "Pokaż",
   "sceneYourGuess": "Twój typ",
-  "sceneNOfM": "{n} z {m}"
+  "sceneNOfM": "{n} z {m}",
+  "reportProblem": "Zgłoś problem",
+  "reportedThanks": "Zgłoszono. Dziękujemy.",
+  "reportTitle": "Co jest nie tak z tą kartą?",
+  "reportLead": "Każde zgłoszenie sprawdzamy w źródłach i poprawiamy kartę.",
+  "reportFact": "Fakt jest błędny",
+  "reportAnswer": "Odpowiedź oznaczona jako poprawna jest błędna",
+  "reportSource": "Źródło tego nie potwierdza",
+  "reportUnclear": "Jest niejasne",
+  "reportTypo": "Literówka lub rozjechana linijka",
+  "reportOther": "Coś innego",
+  "reportNoteHint": "Coś, co pomoże nam to sprawdzić (opcjonalnie)",
+  "reportSend": "Wyślij",
+  "reportSentToast": "Dziękujemy. Sprawdzimy to."
 }

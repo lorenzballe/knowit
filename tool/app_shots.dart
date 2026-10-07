@@ -348,6 +348,49 @@ void main() {
     await shoot(tester, 'today-done');
   });
 
+  testWidgets('a card reported, from its back', (tester) async {
+    // "Report a problem" sits under the source a card would be checked
+    // against; the sheet takes a reason and a line, and the card then says
+    // it was reported. A read card first, so one tap turns it over.
+    final first = PillBank.cards.firstWhere(
+      (p) => !p.asksSomething && p.answer.length < 260,
+    );
+    final List<String> deck = [
+      first.id,
+      ...pickedPills(seed: 'shot', count: 4).map((p) => p.id),
+    ];
+    // ignore: invalid_use_of_visible_for_testing_member
+    SharedPreferences.setMockInitialValues({
+      'knowit.onboarded': true,
+      'knowit.todayDate': dateKey(DateTime.now()),
+      'knowit.todayDeckIds': deck,
+      'knowit.todayIndex': 0,
+    });
+    await tester.pumpWidget(const AstutoApp());
+    await settle(tester);
+    await tester.tap(find.text(first.question));
+    await settle(tester);
+    final Finder link = find.text('Report a problem');
+    await tester.ensureVisible(link);
+    await settle(tester);
+    await shoot(tester, 'card-report');
+
+    await tester.tap(link);
+    await settle(tester);
+    await tester.tap(find.byKey(const ValueKey('report-reason-fact')));
+    await tester.enterText(
+      find.byKey(const ValueKey('report-note')),
+      'The figure is from 2019; the 2024 report says 41%.',
+    );
+    FocusManager.instance.primaryFocus?.unfocus();
+    await settle(tester);
+    await shoot(tester, 'report-sheet');
+
+    await tester.tap(find.byKey(const ValueKey('report-send')));
+    await settle(tester);
+    await shoot(tester, 'card-reported');
+  });
+
   testWidgets('the card that leaves', (tester) async {
     // The share sheet, opened from the finished day. This is the one free
     // channel the app has, and it had never been photographed — which is how

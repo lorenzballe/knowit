@@ -135,6 +135,7 @@
     "source": { "type": "string", "minLength": 1, "description": "The short label the reader sees: institution and document, or the name of the result." },
     "reference": { "type": "string", "description": "Where the claim can be checked: a URL, a DOI, or a book and page. Required on every generated card." },
     "written": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "The day the card was generated." },
+    "checked": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "The day a person, or the monthly re-check, last confirmed the card against its source (tool/quality). Readers' reports from before it count as answered." },
     "disabled": { "type": "boolean", "description": "Retired: never dealt again, still opens in a deck that already holds it." }
   }
 }

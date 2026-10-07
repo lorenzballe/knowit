@@ -486,5 +486,18 @@
   "sceneTapToPick": "Tocca la tua scelta",
   "sceneShowMe": "Fammi vedere",
   "sceneYourGuess": "La tua ipotesi",
-  "sceneNOfM": "{n} su {m}"
+  "sceneNOfM": "{n} su {m}",
+  "reportProblem": "Segnala un problema",
+  "reportedThanks": "Segnalata. Grazie.",
+  "reportTitle": "Cosa non va in questa carta?",
+  "reportLead": "Controlliamo ogni segnalazione sulle fonti e correggiamo la carta.",
+  "reportFact": "Un fatto è sbagliato",
+  "reportAnswer": "La risposta data per giusta è sbagliata",
+  "reportSource": "La fonte non lo conferma",
+  "reportUnclear": "Non si capisce",
+  "reportTypo": "Un refuso o una riga rotta",
+  "reportOther": "Altro",
+  "reportNoteHint": "Qualcosa che ci aiuti a controllare (facoltativo)",
+  "reportSend": "Invia",
+  "reportSentToast": "Grazie. La controlliamo."
 }

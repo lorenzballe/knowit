@@ -2032,4 +2032,44 @@ class AppLocalizationsEs extends AppLocalizations {
   String sceneNOfM(int n, int m) {
     return '$n de $m';
   }
+
+  @override
+  String get reportProblem => 'Informar de un problema';
+
+  @override
+  String get reportedThanks => 'Enviado. Gracias.';
+
+  @override
+  String get reportTitle => '¿Qué falla en esta tarjeta?';
+
+  @override
+  String get reportLead =>
+      'Revisamos cada aviso con las fuentes y corregimos la tarjeta.';
+
+  @override
+  String get reportFact => 'Un dato es incorrecto';
+
+  @override
+  String get reportAnswer => 'La respuesta marcada como correcta está mal';
+
+  @override
+  String get reportSource => 'La fuente no lo respalda';
+
+  @override
+  String get reportUnclear => 'Es confuso';
+
+  @override
+  String get reportTypo => 'Una errata o una línea rota';
+
+  @override
+  String get reportOther => 'Otra cosa';
+
+  @override
+  String get reportNoteHint => 'Algo que nos ayude a comprobarlo (opcional)';
+
+  @override
+  String get reportSend => 'Enviar';
+
+  @override
+  String get reportSentToast => 'Gracias. Lo revisaremos.';
 }

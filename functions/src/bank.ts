@@ -37,6 +37,8 @@ export interface Card {
   shelf_life?: string;
   builds_on?: string[];
   disabled?: boolean;
+  /** The day a person or the re-check last confirmed the card against its source: reports from before it are answered. */
+  checked?: string;
   [key: string]: unknown;
 }
 

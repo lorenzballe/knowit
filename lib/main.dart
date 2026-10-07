@@ -22,6 +22,7 @@ import 'screens/today_screen.dart';
 import 'state/app_state.dart';
 import 'sync/account.dart';
 import 'sync/push.dart';
+import 'sync/reports.dart';
 import 'sync/subscription.dart';
 import 'sync/served.dart';
 import 'sync/tally.dart';
@@ -306,6 +307,9 @@ class _AstutoRootState extends State<AstutoRoot> {
     _identify();
     // Signed in, even anonymously, is what the counts ask of a reader.
     Tallies.instance.refresh();
+    // And what a report waits for, when one was made before there was an
+    // account or a signal.
+    Reports.instance.flush();
     await _sayWidgets();
     final Subscription store = Subscription.instance
       ..addListener(_onEntitlementChanged);

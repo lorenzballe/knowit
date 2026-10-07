@@ -89,7 +89,7 @@ gate holds to a vocabulary (`schema.json`; the rules for choosing are §19 of
 | `mood` | wonder, practical, sober, dark, playful | the taste |
 | `numeracy` | 0 none, 1 a figure, 2 a ratio, 3 a calculation | the taste; a `number` or `estimate` is at least 2 |
 | `abstraction` | concrete, mixed, abstract | the taste |
-| `shelf_life` | evergreen, years, months | the re-check, when there is one — nothing re-checks a card yet |
+| `shelf_life` | evergreen, years, months | the monthly re-check (`tool/quality/recheck.py`): months, after three months; years, after a year |
 | `mature` | sex, drugs, violence, gambling, death in detail | a family setting, when there is one |
 | `language` | what the card is written in | the translation pass, when there is one |
 | `builds_on` | ids a reader should meet first | the dealer, which holds the card back until they have |

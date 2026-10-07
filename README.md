@@ -521,7 +521,8 @@ mid-day, so a deck on the table is not re-dealt under the reader. A phone
 with no signal keeps what it has. `PillBank` is that one static.
 
 The bank grows at night. `.github/workflows/cards.yml` borrows a machine at
-03:00, and `tool/cards/generate.py` asks for what the bank is short of —
+02:17 UTC, once a nightly count is set (`CARDS_PER_NIGHT`, with a budget
+in dollars beside it), and `tool/cards/generate.py` asks for what the bank is short of —
 every strand towards two cards, every subject towards forty reads, twenty
 graded questions and three debates, every principle towards eight — with
 `tool/cards/RULES.md` as the whole of the writer's instructions. A card is
@@ -536,11 +537,26 @@ blacklist, a reference that is not the page, a site cited twice on one
 strand; the critic, with the opposite brief, search and the page, redoes
 the numbers against the passage and tries to defend the wrong options.
 What survives arrives as a pull request, one file per card, with the
-cards, their sites and the receipt in its body. **Merging is the review.**
-The deploy then publishes the new `cards.json`, and every phone picks it
-up. Every stage runs through the Batches API at half the token price.
-`tool/cards/README.md` has the loop in full, the cost of a card, and how
-to retire one.
+cards, their sites and the receipt in its body. The deploy then publishes
+the new `cards.json`, and every phone picks it up. Every stage runs through
+the Batches API at half the token price. `tool/cards/README.md` has the
+loop in full, the cost of a card, and how to retire one.
+
+**How good they are** (`tool/quality/`). Not every card waits for a
+person, and not every card goes out without one. Each new card is scored on
+how it got through — the critic passing it first time, the quote found on
+the page by a program, a fact that will not change — and the doubtful ones,
+with one in ten of the rest, leave the bank for `tool/cards/review/`, listed
+in an issue with **Publish** and **Drop** under each; a tick does the rest.
+Readers can say a card is wrong (*Report a problem*, under every card's
+source); the server adds up every day how each card does — right and wrong
+and how surely, the options picked, likes, throws, reports — flags a card
+far easier or harder than its label, or whose marked answer the crowd
+overwhelmingly rejects, and takes a card three readers say is untrue out of
+the deal until it is checked. Once a month the cards that are out are
+checked again, the reported ones first and then the ones whose answer can
+change; and the critic itself is measured on good cards and cards with an
+error planted in them. `tool/quality/README.md` has the loop and the knobs.
 
 **Tags.** Every card carries what it is about and like, beyond what it
 asks: its genre and strand (`space.the_moon.tides`), three to six keywords,
@@ -1410,6 +1426,16 @@ for each reader (`readers/{uid}/explore/current`: the subject that is theirs,
 and *For you* — what the profile puts first, one card per strand, at most
 two per subject). The search runs on the server over the newest bank; the
 phone answers from its own first and swaps in the server's.
+
+**The scorecard** (`functions/src/scorecard.ts`). Once a day the server
+adds a closed day of everybody's trace to each card's totals — answers right
+and wrong and how surely, the options picked, the time on it, kept and
+thrown — reads the reports readers made (`readers/{uid}/reports/{card}`),
+and writes the flags and the quarantine to `quality/latest`: a card three
+readers say is untrue is dealt, searched and listed by nobody until a
+person or the monthly re-check has checked it. The numbers go to the tools
+through `cardStats`, per card and nothing about who; readers' notes stay in
+Firestore. `functions/README.md` has every threshold.
 
 **The hashes are the phone's, bit for bit.** The crowd under the top list
 and the order the shelves turn in are computed on both sides from the

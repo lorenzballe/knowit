@@ -80,6 +80,33 @@ service cloud.firestore {
         allow read: if isOwner(uid);
         allow write: if false;
       }
+
+      // What the reader said is wrong with a card: one document per card,
+      // the last thing they said (see lib/sync/reports.dart). Theirs to
+      // write and to read back; the server's nightly scorecard reads them
+      // with admin rights, so a card enough readers say is wrong stops
+      // being dealt until somebody has looked.
+      match /reports/{card} {
+        allow read, delete: if isOwner(uid);
+        allow create, update: if isOwner(uid)
+          && isCardId(card)
+          && request.resource.data.keys().hasOnly(
+               ['card', 'reason', 'note', 'locale', 'bank', 'os', 'at'])
+          && request.resource.data.card == card
+          && request.resource.data.reason in
+               ['fact', 'answer', 'source', 'unclear', 'typo', 'other']
+          && request.resource.data.note is string
+          && request.resource.data.note.size() <= 500
+          && request.resource.data.at == request.time
+          && (!('locale' in request.resource.data)
+              || (request.resource.data.locale is string
+                  && request.resource.data.locale.size() <= 35))
+          && (!('bank' in request.resource.data)
+              || request.resource.data.bank is int)
+          && (!('os' in request.resource.data)
+              || (request.resource.data.os is string
+                  && request.resource.data.os.size() <= 16));
+      }
     }
 
     // When the reader was last here and what their clock's offset is: how

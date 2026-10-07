@@ -1,0 +1,86 @@
+name: Measure the critic
+
+# How often the critic stops a card with an error in it, and how often it
+# throws out a good one (tool/quality/evals.py): cards from the bank as they
+# are, and the same kind of card with one error planted in each — a figure
+# off by ten, the wrong option marked right, a year moved, a source from
+# another card. Run when the rules change, once a month, and by hand. The
+# score is in the run's summary; every verdict is in its artifact.
+#
+# Needs the ANTHROPIC_API_KEY secret; without it, the run says so and stops.
+
+on:
+  schedule:
+    - cron: "11 4 1 * *"
+  push:
+    branches: [main]
+    paths:
+      - "tool/cards/RULES.md"
+  workflow_dispatch:
+    inputs:
+      per_kind:
+        description: Planted cards per kind of error (six kinds, and as many clean cards)
+        default: "4"
+      offline:
+        description: Without the web tools — what the critic catches from the card alone
+        type: boolean
+        default: false
+      fake:
+        description: A canned critic instead of the API — no key, no cost
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: evals
+  cancel-in-progress: false
+
+jobs:
+  evals:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Is there a key?
+        id: go
+        env:
+          KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PER_KIND: ${{ github.event.inputs.per_kind }}
+        run: |
+          if [ -z "$KEY" ] && [ "${{ inputs.fake }}" != "true" ]; then
+            echo "No ANTHROPIC_API_KEY secret is set, so the critic was not measured." >> "$GITHUB_STEP_SUMMARY"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          n="${PER_KIND:-4}"
+          case "$n" in *[!0-9]*) echo "per_kind has to be a whole number." >&2; exit 1;; esac
+          echo "per_kind=$n" >> "$GITHUB_OUTPUT"
+          echo "run=true" >> "$GITHUB_OUTPUT"
+
+      - run: pip install -q -r tool/cards/requirements.txt
+        if: steps.go.outputs.run == 'true'
+
+      - name: Ask the critic
+        if: steps.go.outputs.run == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python3 tool/quality/evals.py --batch \
+            --per-kind "${{ steps.go.outputs.per_kind }}" \
+            ${{ inputs.offline == true && '--offline' || '' }} \
+            ${{ inputs.fake == true && '--fake' || '' }} \
+            --report evals.md --json evals.json
+          cat evals.md >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        if: steps.go.outputs.run == 'true'
+        with:
+          name: evals
+          path: evals.json

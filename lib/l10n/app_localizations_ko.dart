@@ -1970,4 +1970,43 @@ class AppLocalizationsKo extends AppLocalizations {
   String sceneNOfM(int n, int m) {
     return '$m개 중 $n개';
   }
+
+  @override
+  String get reportProblem => '문제 신고';
+
+  @override
+  String get reportedThanks => '신고했어요. 고마워요.';
+
+  @override
+  String get reportTitle => '이 카드의 어떤 점이 잘못됐나요?';
+
+  @override
+  String get reportLead => '모든 신고를 출처와 대조해 확인하고 카드를 고쳐요.';
+
+  @override
+  String get reportFact => '사실이 틀렸어요';
+
+  @override
+  String get reportAnswer => '정답으로 표시된 답이 틀렸어요';
+
+  @override
+  String get reportSource => '출처가 뒷받침하지 않아요';
+
+  @override
+  String get reportUnclear => '헷갈려요';
+
+  @override
+  String get reportTypo => '오타나 깨진 줄';
+
+  @override
+  String get reportOther => '기타';
+
+  @override
+  String get reportNoteHint => '확인에 도움이 될 내용 (선택)';
+
+  @override
+  String get reportSend => '보내기';
+
+  @override
+  String get reportSentToast => '고마워요. 확인할게요.';
 }

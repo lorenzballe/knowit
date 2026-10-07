@@ -130,6 +130,38 @@ await check('what the server dealt is read by its reader and written by nobody',
   await assertFails(stranger().doc('explore/latest').get());
 });
 
+const now = () => firebase.firestore.FieldValue.serverTimestamp();
+const report = (extra = {}) => ({ card: 'science-1', reason: 'fact', note: 'The date is wrong.', locale: 'it', bank: 42, os: 'iOS', at: now(), ...extra });
+
+await check('a reader reports a card, says it again, and reads it back', async () => {
+  const me = env.authenticatedContext('alice').firestore();
+  await assertSucceeds(me.doc('readers/alice/reports/science-1').set(report()));
+  await assertSucceeds(me.doc('readers/alice/reports/science-1').set(report({ reason: 'answer', note: '' })));
+  await assertSucceeds(me.doc('readers/alice/reports/thinking-d14').set({ card: 'thinking-d14', reason: 'other', note: '', at: now() }));
+  await assertSucceeds(me.doc('readers/alice/reports/science-1').get());
+  await assertSucceeds(me.doc('readers/alice/reports/science-1').delete());
+});
+
+await check('nobody else reads or writes a reader\'s reports', async () => {
+  await env.authenticatedContext('alice').firestore().doc('readers/alice/reports/science-1').set(report());
+  await assertFails(env.authenticatedContext('bob').firestore().doc('readers/alice/reports/science-1').get());
+  await assertFails(env.authenticatedContext('bob').firestore().doc('readers/alice/reports/science-1').set(report()));
+  await assertFails(stranger().doc('readers/alice/reports/science-1').get());
+});
+
+await check('a report is a card, a reason from the list and a short note', async () => {
+  const me = env.authenticatedContext('alice').firestore();
+  await assertFails(me.doc('readers/alice/reports/science-1').set(report({ card: 'science-2' })));
+  await assertFails(me.doc('readers/alice/reports/science-1').set(report({ reason: 'boring' })));
+  await assertFails(me.doc('readers/alice/reports/science-1').set(report({ note: 'x'.repeat(501) })));
+  await assertSucceeds(me.doc('readers/alice/reports/science-1').set(report({ note: 'x'.repeat(500) })));
+  await assertFails(me.doc('readers/alice/reports/science-1').set(report({ note: 7 })));
+  await assertFails(me.doc('readers/alice/reports/science-1').set(report({ email: 'a@b.c' })));
+  await assertFails(me.doc('readers/alice/reports/science-1').set(report({ at: new Date(2020, 0, 1) })));
+  await assertFails(me.doc('readers/alice/reports/science-1').set(report({ bank: 'forty' })));
+  await assertFails(me.doc('readers/alice/reports/Science%201').set(report({ card: 'Science%201' })));
+});
+
 await check('the rest of the rules still stand', async () => {
   await assertSucceeds(env.authenticatedContext('alice').firestore().doc('readers/alice').set({ a: 1 }));
   await assertFails(env.authenticatedContext('bob').firestore().doc('readers/alice').get());

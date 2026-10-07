@@ -60,3 +60,13 @@ jobs:
         working-directory: tool/rules
       - run: npm test
         working-directory: tool/rules
+      # The scorecard's reads and writes (functions/src/scorecard.ts),
+      # against the same emulator: a day counted once, reports turned into
+      # a quarantine, no note in what the tools read.
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci && npm run build
+        working-directory: functions
+      - run: npx firebase emulators:exec --only firestore --project astuto-scorecard-test "node --test ../../functions/lib/scorecard.emulator.test.js"
+        working-directory: tool/rules

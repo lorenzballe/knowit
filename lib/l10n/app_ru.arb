@@ -486,5 +486,18 @@
   "sceneTapToPick": "Нажмите свой вариант",
   "sceneShowMe": "Покажите",
   "sceneYourGuess": "Ваша догадка",
-  "sceneNOfM": "{n} из {m}"
+  "sceneNOfM": "{n} из {m}",
+  "reportProblem": "Сообщить о проблеме",
+  "reportedThanks": "Отправлено. Спасибо.",
+  "reportTitle": "Что не так с этой карточкой?",
+  "reportLead": "Мы сверяем каждое сообщение с источниками и исправляем карточку.",
+  "reportFact": "Неверный факт",
+  "reportAnswer": "Ответ, отмеченный как верный, неверен",
+  "reportSource": "Источник этого не подтверждает",
+  "reportUnclear": "Непонятно",
+  "reportTypo": "Опечатка или сбитая строка",
+  "reportOther": "Другое",
+  "reportNoteHint": "Что поможет нам проверить (необязательно)",
+  "reportSend": "Отправить",
+  "reportSentToast": "Спасибо. Мы проверим."
 }
