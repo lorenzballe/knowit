@@ -1,0 +1,45 @@
+{
+  "id": "cinema-cgi-11",
+  "topic": "cinema",
+  "genre": "cinema.special_effects",
+  "strand": "cinema.special_effects.cgi",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "The bat swarms in Batman Returns were never animated bat by bat. So who decided where each bat flew?",
+  "answer": "The other bats. In 1987 Craig Reynolds published Boids, a program in which each simulated bird sees only its nearby flockmates and obeys three rules: don't crowd them, head where they head, stay near them. Lifelike flocks appear with no one steering. Batman Returns (1992) used the idea for its bats and its marching penguins.",
+  "move": "Before scripting a crowd, find the rule each member follows.",
+  "ask": "Which group I belong to is steered by a few rules nobody says aloud?",
+  "keywords": [
+    "boids",
+    "craig reynolds",
+    "batman returns",
+    "flocking",
+    "computer animation"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "origin",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "beauty",
+    "piece": "flock",
+    "caption": "Three rules for every bird: don't crowd, head where your neighbours head, stay near.",
+    "hint": "Touch to break the flock",
+    "reveal": "Nobody scripted that split. It came out of the three rules, as it does every time.",
+    "params": {
+      "birds": 260
+    },
+    "seed": 1992
+  },
+  "source": "Reynolds, SIGGRAPH, 1987",
+  "source_kind": "paper",
+  "reference": "Reynolds, Flocks, herds and schools: a distributed behavioral model, Computer Graphics 21(4):25-34 (SIGGRAPH 1987); https://www.red3d.com/cwr/boids/",
+  "written": "2026-10-07"
+}

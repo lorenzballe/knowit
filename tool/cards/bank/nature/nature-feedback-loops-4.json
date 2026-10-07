@@ -1,0 +1,54 @@
+{
+  "id": "nature-feedback-loops-4",
+  "topic": "nature",
+  "genre": "nature.systems_thinking",
+  "strand": "nature.systems_thinking.feedback_loops",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Streams fed by springs in a Florida forest fork at almost the same angle, over and over. What sets it?",
+  "answer": "The water in the ground. Each stream grows at its head, eating into the sand where seeping water gathers. That seepage obeys the same mathematics as spreading heat, and for a head that splits it predicts 72°, a fifth of a turn. Devauchelle and colleagues measured the forks: they cluster around 72°.",
+  "move": "When one shape keeps repeating, look for the force that keeps drawing it.",
+  "ask": "Which shape in my days keeps recurring because the same pressure draws it?",
+  "keywords": [
+    "river networks",
+    "groundwater",
+    "stream branching",
+    "florida",
+    "erosion"
+  ],
+  "era": "timeless",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "beauty",
+    "piece": "fractal",
+    "caption": "Each stream splits in two, each arm 36° off its line: 72° between them. Again and again.",
+    "hint": "Drag sideways to change the fork",
+    "reveal": "Narrow forks crowd, wide ones sprawl. The ground's water picks a fifth of a turn.",
+    "dial": {
+      "label": "Each arm off the line",
+      "unit": "°",
+      "value": 36,
+      "from": 5,
+      "to": 85,
+      "decimals": 0
+    },
+    "params": {
+      "ratio": 0.7,
+      "depth": 9
+    },
+    "seed": 72
+  },
+  "source": "Devauchelle et al., PNAS, 2012",
+  "source_kind": "paper",
+  "reference": "Devauchelle, Petroff, Seybold & Rothman, Ramification of stream networks, PNAS 109(51):20832-20836, 2012",
+  "written": "2026-10-07"
+}

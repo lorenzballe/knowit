@@ -1,0 +1,47 @@
+{
+  "id": "music-silence-11",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.silence",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Noise-cancelling headphones erase a plane's drone but let through the clink of a glass. Why that difference?",
+  "answer": "The headphone plays the noise flipped, crest for trough, and the two cancel only where they meet exactly out of step: a zone about a tenth of a wavelength across. A 100-hertz drone has waves 3.4 metres long, so the zone swallows the ear. A 3,000-hertz clink has 11 cm waves; its zone is a centimetre.",
+  "move": "A fix that works at one spot may fail a hand's width away.",
+  "ask": "Which of my fixes works only where I first tested it?",
+  "keywords": [
+    "noise cancelling",
+    "headphones",
+    "interference",
+    "wavelength",
+    "anti-noise"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "beauty",
+    "piece": "waves",
+    "caption": "Two sources of one sound. Where a crest meets a trough, silence; beside it, louder.",
+    "hint": "Drag a source to move it",
+    "reveal": "Move a source a little and the silent lane swings away. Quiet lives in a sliver.",
+    "params": {
+      "wavelength": 0.2,
+      "gap": 0.26
+    },
+    "accent": "#FFE600",
+    "seed": 343
+  },
+  "source": "Elliott & Nelson, IEEE Signal Processing, 1993",
+  "source_kind": "paper",
+  "reference": "Elliott & Nelson, Active noise control, IEEE Signal Processing Magazine 10(4):12-35, 1993; speed of sound 343 m/s at 20 °C",
+  "written": "2026-10-07"
+}

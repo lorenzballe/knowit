@@ -1,0 +1,46 @@
+{
+  "id": "nature-natural-selection-4",
+  "topic": "nature",
+  "genre": "nature.evolution",
+  "strand": "nature.evolution.natural_selection",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A predator charging a shoal of look-alike fish often comes away with nothing. Which fish does it catch?",
+  "answer": "The one that looks different. Faced with dozens of identical fish swerving together, a predator struggles to lock on to any one: the confusion effect. When Landeau and Terborgh let largemouth bass hunt shoals of minnows, bigger shoals meant fewer catches, until some minnows were dyed. The bass went straight for the odd ones.",
+  "move": "Safety in numbers holds only while you look like the numbers.",
+  "ask": "Where am I safe only because I blend in?",
+  "keywords": [
+    "shoals",
+    "confusion effect",
+    "oddity effect",
+    "predation",
+    "minnows"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "beauty",
+    "piece": "flock",
+    "caption": "Each fish follows only its nearest neighbours: keep close, swim alike, don't collide.",
+    "hint": "Touch to send a predator",
+    "reveal": "It can't fix on one fish in the swirl. The fish you can follow is the one it takes.",
+    "params": {
+      "birds": 300
+    },
+    "accent": "#FFFFFF",
+    "seed": 4242
+  },
+  "source": "Landeau & Terborgh, Animal Behaviour, 1986",
+  "source_kind": "paper",
+  "reference": "Landeau & Terborgh, Oddity and the 'confusion effect' in predation, Animal Behaviour 34(5):1372-1380, 1986",
+  "written": "2026-10-07"
+}

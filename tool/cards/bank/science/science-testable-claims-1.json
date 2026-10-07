@@ -1,0 +1,60 @@
+{
+  "id": "science-testable-claims-1",
+  "topic": "science",
+  "genre": "science.think_like_a_scientist",
+  "strand": "science.think_like_a_scientist.testable_claims",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In March 1979, before any spacecraft had looked closely, three scientists said Jupiter's moon Io must be volcanic. What told them?",
+  "answer": "A rhythm. Io circles Jupiter twice for every orbit of Europa, so Europa tugs it at the same point again and again and keeps its orbit slightly oval. Swinging nearer and farther, Io is squeezed and relaxed by Jupiter's pull, which heats its rock. Peale, Cassen and Reynolds published that week; days later Voyager 1 photographed a plume erupting.",
+  "move": "Trust a theory more when it predicted something nobody had yet seen.",
+  "ask": "What do I believe that has never made a risky prediction?",
+  "keywords": [
+    "io",
+    "europa",
+    "orbital resonance",
+    "tidal heating",
+    "voyager 1"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "beauty",
+    "piece": "orbits",
+    "caption": "Io goes round Jupiter twice for each orbit of Europa. A line joins them every hour.",
+    "hint": "Drag to change Io's orbit",
+    "reveal": "Off the 2 to 1 beat the figure smears, and Europa's tugs would no longer add up.",
+    "dial": {
+      "label": "Io's orbit",
+      "unit": "hours",
+      "value": 42.46,
+      "from": 36,
+      "to": 50,
+      "decimals": 1
+    },
+    "params": {
+      "outer": 85.23,
+      "radii": [
+        4.217,
+        6.711
+      ],
+      "every": 1,
+      "span": 682
+    },
+    "accent": "#FFE600",
+    "seed": 1979
+  },
+  "source": "Peale, Cassen & Reynolds, Science, 1979",
+  "source_kind": "paper",
+  "reference": "Peale, Cassen & Reynolds, Melting of Io by tidal dissipation, Science 203(4383):892-894, 2 March 1979; Morabito et al., Discovery of currently active extraterrestrial volcanism, Science 204:972, 1979",
+  "written": "2026-10-07"
+}

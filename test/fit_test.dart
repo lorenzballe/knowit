@@ -318,19 +318,11 @@ void main() {
       await settle(tester);
       note(locale, 'today', tester);
       for (var i = 0; i < 5; i++) {
-        await tester.fling(
-          find.byType(PillCardStack),
-          const Offset(-320, 0),
-          900,
-        );
+        await tester.flingFrom(deckTop(tester), const Offset(-320, 0), 900);
         await settle(tester);
       }
       note(locale, 'sixth card', tester);
-      await tester.fling(
-        find.byType(PillCardStack),
-        const Offset(-320, 0),
-        900,
-      );
+      await tester.flingFrom(deckTop(tester), const Offset(-320, 0), 900);
       await settle(tester);
       note(locale, 'shelf', tester);
       for (var i = 0; i < 5; i++) {
@@ -348,4 +340,11 @@ void main() {
     }
     expect(findings, isEmpty, reason: '${findings.length} places cut text');
   });
+}
+
+/// Where a reader throws a card from: the question, above any scene that
+/// keeps its own gestures.
+Offset deckTop(WidgetTester tester) {
+  final deck = tester.getRect(find.byType(PillCardStack));
+  return Offset(deck.center.dx, deck.top + 90);
 }

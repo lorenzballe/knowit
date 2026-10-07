@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do heavily distorted rock guitars favour two-note power chords over full major chords?",
-  "answer": "Because distortion invents notes: clipping adds tones at the sums and differences of the frequencies going in. A tempered fifth is almost exactly 3:2, so those new tones line up with the root's family. The tempered major third sits about 14 cents off a pure 5:4, so its products land off and beat: mud.",
+  "question": "Through a fuzz pedal, rock guitarists play two-note power chords, not full major chords. What goes wrong with the third note?",
+  "answer": "Distortion invents notes at the sums and differences of the frequencies going in. A guitar's fifth is a fiftieth of a semitone from a pure 3:2, so the new tones join the root's family. Its major third is a seventh of a semitone off 5:4, so its new tones land off and beat: mud.",
   "move": "An ingredient that works alone can spoil once the heat is turned up.",
   "ask": "What works well in small doses in my life but turns to noise when I turn it up?",
   "keywords": [
@@ -27,8 +27,60 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "music",
+    "mode": "chord",
+    "readout": "Frequency ratio",
+    "keys": [
+      "E2",
+      "E3"
+    ],
+    "start": [
+      "E2",
+      "B2",
+      "E3"
+    ],
+    "hint": "Tap keys to build chords, then picture each one through a fuzz pedal.",
+    "moments": [
+      {
+        "notes": [
+          "E2",
+          "B2",
+          "E3"
+        ],
+        "name": "Power chord",
+        "text": "Distortion adds B minus E, 41 Hz: an E an octave lower. It fits the chord."
+      },
+      {
+        "notes": [
+          "E2",
+          "B2"
+        ],
+        "name": "Bare fifth",
+        "text": "Almost exactly 3 : 2, so every tone distortion adds is a cousin of E."
+      },
+      {
+        "notes": [
+          "E2",
+          "G#2",
+          "B2"
+        ],
+        "name": "Major chord",
+        "text": "This G# is a seventh of a semitone sharp of 5 : 4. Through fuzz, it beats."
+      },
+      {
+        "notes": [
+          "E2",
+          "G2",
+          "B2"
+        ],
+        "name": "Minor chord",
+        "text": "Its third misses 6 : 5 by about as much. Through fuzz, mud again."
+      }
+    ]
+  },
   "source": "Lilja, Modern Heavy Metal conference, 2015",
   "source_kind": "paper",
-  "reference": "Esa Lilja, Dealing with the 3rd: Anatomy of distorted chords and subsequent compositional features in classic heavy metal, in Karjalainen & Kärki (eds), Modern Heavy Metal: Markets, Practices and Cultures, Aalto University, 2015, pp. 393–403",
+  "reference": "Esa Lilja, Dealing with the 3rd: Anatomy of distorted chords and subsequent compositional features in classic heavy metal, in Karjalainen & Kärki (eds), Modern Heavy Metal: Markets, Practices and Cultures, Aalto University, 2015, pp. 393-403; equal-tempered fifth 700 cents against 702, major third 400 against 386 (arithmetic)",
   "written": "2026-09-26"
 }

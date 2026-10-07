@@ -1,0 +1,55 @@
+{
+  "id": "human_body-breathing-5",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.breathing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Your windpipe is a single tube. How does it reach hundreds of millions of tiny air sacs without a tangle?",
+  "answer": "By splitting in two, about 23 times. Each split makes two narrower tubes, and 23 doublings give 2 to the 23rd, some 8 million ends, which bud into the air sacs. In 1926 Cecil Murray worked out the cheapest split for a branching vessel: daughters about four fifths as wide, each 37.5° off line. Arteries and airways come close.",
+  "move": "When a design repeats at every scale, ask what it is saving.",
+  "ask": "What do I build again and again that a simpler rule could grow?",
+  "keywords": [
+    "lungs",
+    "airways",
+    "branching",
+    "murray's law",
+    "alveoli"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "beauty",
+    "piece": "fractal",
+    "caption": "Each tube splits in two, each about 4/5 its size and 37.5° off line. Ten splits shown.",
+    "hint": "Drag sideways to change the split",
+    "reveal": "Narrower and the branches crowd; wider and they waste tube. 37.5° costs least.",
+    "dial": {
+      "label": "Turn at each split",
+      "unit": "°",
+      "value": 37.5,
+      "from": 5,
+      "to": 85,
+      "decimals": 1
+    },
+    "params": {
+      "ratio": 0.79,
+      "depth": 10
+    },
+    "accent": "#FF3D7F",
+    "seed": 23
+  },
+  "source": "Murray, J Gen Physiol, 1926; Weibel, 1963",
+  "source_kind": "paper",
+  "reference": "Murray, The physiological principle of minimum work applied to the angle of branching of arteries, Journal of General Physiology 9(6):835-841, 1926; Weibel, Morphometry of the Human Lung, Springer, 1963",
+  "written": "2026-10-07"
+}

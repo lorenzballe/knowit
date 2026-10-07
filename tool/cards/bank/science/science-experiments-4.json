@@ -1,0 +1,47 @@
+{
+  "id": "science-experiments-4",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.experiments",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Shine light through two narrow slits and the wall shows dark stripes. Why did that darkness prove light is a wave?",
+  "answer": "Because particles can't cancel. Add a second stream of grains to a spot and it only gets brighter. With two slits open, Thomas Young saw spots go dark, where a crest from one slit met a trough from the other. Only waves do that. The stripes' spacing even let him measure the wave: under a thousandth of a millimetre.",
+  "move": "Ask what only one explanation could produce, then go and look for it.",
+  "ask": "What result would prove my favourite explanation wrong?",
+  "keywords": [
+    "thomas young",
+    "double slit",
+    "interference",
+    "light",
+    "wavelength"
+  ],
+  "era": "nineteenth",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "beauty",
+    "piece": "waves",
+    "caption": "Two sources, one wave. Where a crest meets a trough, nothing: lanes that never move.",
+    "hint": "Drag a source to move it",
+    "reveal": "Spread the sources and the dark lanes crowd in. Young measured light by them.",
+    "params": {
+      "wavelength": 0.08,
+      "gap": 0.3
+    },
+    "accent": "#FFE600",
+    "seed": 1803
+  },
+  "source": "Young, Phil. Trans. Royal Society, 1804",
+  "source_kind": "paper",
+  "reference": "Young, The Bakerian Lecture: Experiments and calculations relative to physical optics, Philosophical Transactions of the Royal Society 94:1-16, 1804; Young, A Course of Lectures on Natural Philosophy, 1807",
+  "written": "2026-10-07"
+}

@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
@@ -303,46 +305,63 @@ class _SceneFront extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle styleFor(double size) => AppText.display(
+      size: size,
+      weight: FontWeight.w600,
+      height: 1.12,
+      spacing: -0.3 - size * 0.018,
+      color: pill.ink,
+    );
     return LayoutBuilder(
-      builder: (context, box) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 12),
-          SizedBox(
-            height: box.maxHeight * 0.27,
-            child: ScaledText(
-              text: pill.question,
-              min: 18,
-              max: 27,
-              alignment: Alignment.topLeft,
-              styleFor: (size) => AppText.display(
-                size: size,
-                weight: FontWeight.w600,
-                height: 1.12,
-                spacing: -0.3 - size * 0.018,
-                color: pill.ink,
+      builder: (context, box) {
+        // A share of the card, or what the question needs at its smallest
+        // size when that is more: a question that has to scroll keeps the
+        // card's vertical throw for itself, so less like this stops working.
+        final needed =
+            (TextPainter(
+              text: TextSpan(text: pill.question, style: styleFor(16)),
+              textDirection: Directionality.of(context),
+              textScaler: MediaQuery.textScalerOf(context),
+            )..layout(maxWidth: box.maxWidth)).height +
+            2;
+        final room = math.min(
+          math.max(box.maxHeight * 0.27, needed),
+          box.maxHeight * 0.42,
+        );
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 12),
+            SizedBox(
+              height: room,
+              child: ScaledText(
+                text: pill.question,
+                min: 16,
+                max: 27,
+                alignment: Alignment.topLeft,
+                styleFor: styleFor,
               ),
             ),
-          ),
-          const SizedBox(height: 14),
-          Expanded(
-            child: SceneView(
-              scene: pill.scene!,
-              ink: pill.ink,
-              ground: pill.color,
+            const SizedBox(height: 14),
+            Expanded(
+              child: SceneView(
+                scene: pill.scene!,
+                ink: pill.ink,
+                ground: pill.color,
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            context.l10n.tapToReveal,
-            style: AppText.body(
-              size: 13,
-              weight: FontWeight.w500,
-              color: pill.ink.withValues(alpha: 0.6),
+            const SizedBox(height: 10),
+            Text(
+              context.l10n.tapToReveal,
+              style: AppText.body(
+                size: 13,
+                weight: FontWeight.w500,
+                color: pill.ink.withValues(alpha: 0.6),
+              ),
             ),
-          ),
-        ],
-      ),
+          ],
+        );
+      },
     );
   }
 }
