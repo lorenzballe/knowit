@@ -118,9 +118,16 @@ Map<String, Object> _installed({bool plus = false, List<String>? saved}) => {
 };
 
 /// Throws the top card off the deck, which is how a reader moves on now that
-/// the button that did it has gone.
+/// the button that did it has gone. The throw starts on the question at the
+/// top: on a card with a scene, the middle belongs to the scene and keeps
+/// the finger.
 Future<void> _swipeCardAway(WidgetTester tester) async {
-  await tester.fling(find.byType(PillCardStack), const Offset(-320, 0), 900);
+  final deck = tester.getRect(find.byType(PillCardStack));
+  await tester.flingFrom(
+    Offset(deck.center.dx, deck.top + 90),
+    const Offset(-320, 0),
+    900,
+  );
   await _settle(tester);
 }
 
@@ -3591,7 +3598,7 @@ void main() {
       tester,
     ) async {
       final played = PillBank.cards.firstWhere(
-        (p) => p.scene != null && p.challenge is NoChallenge,
+        (p) => p.scene is SliderScene && p.challenge is NoChallenge,
       );
       final scene = played.scene! as SliderScene;
       await tester.pumpWidget(host([played], {}));
