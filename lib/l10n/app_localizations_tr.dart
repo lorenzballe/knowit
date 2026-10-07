@@ -2066,4 +2066,54 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get reportSentToast => 'Teşekkürler. Kontrol edeceğiz.';
+
+  @override
+  String journeyPoints(String n) {
+    return '$n puan';
+  }
+
+  @override
+  String get journeyNow => 'Bugün';
+
+  @override
+  String journeyKickerNow(int day, int level, int levels) {
+    return '$day. GÜN · SEVİYE $level/$levels';
+  }
+
+  @override
+  String journeyKickerThen(int level, int levels) {
+    return 'İKİ HAFTA SONRA · SEVİYE $level/$levels';
+  }
+
+  @override
+  String get journeyRowSure => 'Emin olduğunda doğru';
+
+  @override
+  String get journeyRowOff => 'Ortalama puan sapması';
+
+  @override
+  String get journeyRowMoves => 'Fark ettiğin numaralar';
+
+  @override
+  String get journeyRowHeld => 'Hâlâ aklındaki kartlar';
+
+  @override
+  String get journeyRowRead => 'Okunan kartlar';
+
+  @override
+  String get journeyCurveTitle =>
+      'Ne kadar emin olduğun ve ne sıklıkla haklı çıktığın';
+
+  @override
+  String get journeyCurveSpotOn => 'tam isabet';
+
+  @override
+  String journeyCurveLegend(String when, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$when · $n puan sapma',
+    );
+    return '$_temp0';
+  }
 }

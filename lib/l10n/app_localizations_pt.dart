@@ -2082,4 +2082,55 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get reportSentToast => 'Obrigado. Vamos verificar.';
+
+  @override
+  String journeyPoints(String n) {
+    return '$n pts';
+  }
+
+  @override
+  String get journeyNow => 'Hoje';
+
+  @override
+  String journeyKickerNow(int day, int level, int levels) {
+    return 'DIA $day · NÍVEL $level DE $levels';
+  }
+
+  @override
+  String journeyKickerThen(int level, int levels) {
+    return 'ÀS DUAS SEMANAS · NÍVEL $level DE $levels';
+  }
+
+  @override
+  String get journeyRowSure => 'Certas quando estavas seguro';
+
+  @override
+  String get journeyRowOff => 'Pontos ao lado, em média';
+
+  @override
+  String get journeyRowMoves => 'Truques que apanhas';
+
+  @override
+  String get journeyRowHeld => 'Cartões ainda contigo';
+
+  @override
+  String get journeyRowRead => 'Cartões lidos';
+
+  @override
+  String get journeyCurveTitle =>
+      'Quão seguro dizias estar, contra quantas vezes acertavas';
+
+  @override
+  String get journeyCurveSpotOn => 'em cheio';
+
+  @override
+  String journeyCurveLegend(String when, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$when · $n pontos ao lado',
+      one: '$when · 1 ponto ao lado',
+    );
+    return '$_temp0';
+  }
 }

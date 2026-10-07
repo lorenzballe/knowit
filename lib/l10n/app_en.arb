@@ -1863,5 +1863,85 @@
  "reportSentToast": "Thanks. We'll check it.",
  "@reportSentToast": {
   "description": "Brief message after a report is sent."
+ },
+ "journeyPoints": "{n} pts",
+ "@journeyPoints": {
+  "description": "The reader's score in a pill beside Your journey's title.",
+  "placeholders": {
+   "n": {
+    "type": "String"
+   }
+  }
+ },
+ "journeyNow": "Today",
+ "@journeyNow": {
+  "description": "The right half of the journey's switch: the reader as they are today."
+ },
+ "journeyKickerNow": "DAY {day} · LEVEL {level} OF {levels}",
+ "@journeyKickerNow": {
+  "description": "Small caps over the level on the journey: which day of the journey and which level.",
+  "placeholders": {
+   "day": {
+    "type": "int"
+   },
+   "level": {
+    "type": "int"
+   },
+   "levels": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyKickerThen": "TWO WEEKS IN · LEVEL {level} OF {levels}",
+ "@journeyKickerThen": {
+  "description": "Small caps over the level when the journey shows the reader two weeks in.",
+  "placeholders": {
+   "level": {
+    "type": "int"
+   },
+   "levels": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyRowSure": "Right when you were sure",
+ "@journeyRowSure": {
+  "description": "Row label: how often the reader was right when they said they were 80% sure or more."
+ },
+ "journeyRowOff": "Points off, on average",
+ "@journeyRowOff": {
+  "description": "Row label: how far the reader's confidence is from their results, in points."
+ },
+ "journeyRowMoves": "Moves you can spot",
+ "@journeyRowMoves": {
+  "description": "Row label: reasoning moves the reader can now spot."
+ },
+ "journeyRowHeld": "Cards still with you",
+ "@journeyRowHeld": {
+  "description": "Row label: cards that came back and the reader still knew."
+ },
+ "journeyRowRead": "Cards read",
+ "@journeyRowRead": {
+  "description": "Row label: cards read."
+ },
+ "journeyCurveTitle": "How sure you said, against how often you were right",
+ "@journeyCurveTitle": {
+  "description": "Title of the chart of stated confidence against accuracy."
+ },
+ "journeyCurveSpotOn": "spot on",
+ "@journeyCurveSpotOn": {
+  "description": "Label on the chart's diagonal, where confidence equals accuracy."
+ },
+ "journeyCurveLegend": "{n, plural, =1{{when} · 1 point off} other{{when} · {n} points off}}",
+ "@journeyCurveLegend": {
+  "description": "Legend line under the chart: a day, and how many points off the reader was then.",
+  "placeholders": {
+   "when": {
+    "type": "String"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
  }
 }

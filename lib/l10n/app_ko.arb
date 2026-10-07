@@ -503,5 +503,17 @@
   "reportOther": "기타",
   "reportNoteHint": "확인에 도움이 될 내용 (선택)",
   "reportSend": "보내기",
-  "reportSentToast": "고마워요. 확인할게요."
+  "reportSentToast": "고마워요. 확인할게요.",
+  "journeyPoints": "{n}점",
+  "journeyNow": "오늘",
+  "journeyKickerNow": "{day}일째 · 레벨 {level}/{levels}",
+  "journeyKickerThen": "2주 차 · 레벨 {level}/{levels}",
+  "journeyRowSure": "확신했을 때 맞힌 비율",
+  "journeyRowOff": "평균 어긋난 점수",
+  "journeyRowMoves": "알아채는 수",
+  "journeyRowHeld": "아직 기억하는 카드",
+  "journeyRowRead": "읽은 카드",
+  "journeyCurveTitle": "말한 확신과 실제로 맞힌 비율",
+  "journeyCurveSpotOn": "딱 맞음",
+  "journeyCurveLegend": "{n, plural, other{{when} · {n}점 어긋남}}"
 }

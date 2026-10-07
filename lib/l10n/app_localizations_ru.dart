@@ -2147,4 +2147,57 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get reportSentToast => 'Спасибо. Мы проверим.';
+
+  @override
+  String journeyPoints(String n) {
+    return '$n очк.';
+  }
+
+  @override
+  String get journeyNow => 'Сегодня';
+
+  @override
+  String journeyKickerNow(int day, int level, int levels) {
+    return 'ДЕНЬ $day · УРОВЕНЬ $level ИЗ $levels';
+  }
+
+  @override
+  String journeyKickerThen(int level, int levels) {
+    return 'ЧЕРЕЗ ДВЕ НЕДЕЛИ · УРОВЕНЬ $level ИЗ $levels';
+  }
+
+  @override
+  String get journeyRowSure => 'Верно, когда вы были уверены';
+
+  @override
+  String get journeyRowOff => 'Отклонение, в среднем';
+
+  @override
+  String get journeyRowMoves => 'Приёмы, которые вы замечаете';
+
+  @override
+  String get journeyRowHeld => 'Карточки, что ещё с вами';
+
+  @override
+  String get journeyRowRead => 'Прочитано карточек';
+
+  @override
+  String get journeyCurveTitle =>
+      'Насколько вы были уверены — и как часто оказывались правы';
+
+  @override
+  String get journeyCurveSpotOn => 'в точку';
+
+  @override
+  String journeyCurveLegend(String when, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$when · $n пункта отклонения',
+      many: '$when · $n пунктов отклонения',
+      few: '$when · $n пункта отклонения',
+      one: '$when · $n пункт отклонения',
+    );
+    return '$_temp0';
+  }
 }

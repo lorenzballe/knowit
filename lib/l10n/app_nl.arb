@@ -503,5 +503,17 @@
   "reportOther": "Iets anders",
   "reportNoteHint": "Alles wat ons helpt het te controleren (optioneel)",
   "reportSend": "Versturen",
-  "reportSentToast": "Bedankt. We kijken ernaar."
+  "reportSentToast": "Bedankt. We kijken ernaar.",
+  "journeyPoints": "{n} ptn",
+  "journeyNow": "Vandaag",
+  "journeyKickerNow": "DAG {day} · NIVEAU {level} VAN {levels}",
+  "journeyKickerThen": "NA TWEE WEKEN · NIVEAU {level} VAN {levels}",
+  "journeyRowSure": "Goed als je zeker was",
+  "journeyRowOff": "Punten ernaast, gemiddeld",
+  "journeyRowMoves": "Trucs die je herkent",
+  "journeyRowHeld": "Kaarten die nog bij je zijn",
+  "journeyRowRead": "Gelezen kaarten",
+  "journeyCurveTitle": "Hoe zeker je zei te zijn, tegen hoe vaak je gelijk had",
+  "journeyCurveSpotOn": "precies goed",
+  "journeyCurveLegend": "{n, plural, =1{{when} · 1 punt ernaast} other{{when} · {n} punten ernaast}}"
 }

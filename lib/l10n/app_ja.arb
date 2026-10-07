@@ -503,5 +503,17 @@
   "reportOther": "その他",
   "reportNoteHint": "確認に役立つこと（任意）",
   "reportSend": "送信",
-  "reportSentToast": "ありがとうございます。確認します。"
+  "reportSentToast": "ありがとうございます。確認します。",
+  "journeyPoints": "{n}ポイント",
+  "journeyNow": "今日",
+  "journeyKickerNow": "{day}日目 · レベル{level}/{levels}",
+  "journeyKickerThen": "2週間目 · レベル{level}/{levels}",
+  "journeyRowSure": "確信したときの正答率",
+  "journeyRowOff": "平均のずれ（ポイント）",
+  "journeyRowMoves": "見抜ける型",
+  "journeyRowHeld": "まだ覚えているカード",
+  "journeyRowRead": "読んだカード",
+  "journeyCurveTitle": "言った確信度と、実際に正解した割合",
+  "journeyCurveSpotOn": "ぴったり",
+  "journeyCurveLegend": "{n, plural, other{{when} · {n}ポイントのずれ}}"
 }
