@@ -39,7 +39,7 @@
       {
         "label": "Stranger",
         "value": 0.115,
-        "note": "About 115: the case on the news, and the rarest by far."
+        "note": "About 115: the kidnapping that makes the news, and the rarest by far."
       },
       {
         "label": "Relative",
@@ -50,6 +50,11 @@
         "label": "Ran away",
         "value": 1700,
         "note": "About 1.7 million: the commonest way a child goes missing."
+      },
+      {
+        "label": "Non-family",
+        "value": 58.2,
+        "note": "About 58,000, mostly brief, by acquaintances; the 115 kidnappings are among them."
       }
     ]
   }
