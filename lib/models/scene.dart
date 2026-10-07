@@ -37,6 +37,9 @@ import 'scenes/story.dart';
 import 'scenes/translate.dart';
 import 'scenes/match.dart';
 import 'scenes/clues.dart';
+import 'scenes/beauty.dart';
+import 'scenes/music.dart';
+import 'scenes/news.dart';
 
 export 'scenes/count.dart';
 export 'scenes/draw.dart';
@@ -52,6 +55,9 @@ export 'scenes/story.dart';
 export 'scenes/translate.dart';
 export 'scenes/match.dart';
 export 'scenes/clues.dart';
+export 'scenes/beauty.dart';
+export 'scenes/music.dart';
+export 'scenes/news.dart';
 
 abstract class Scene {
   final Map<String, Object?> raw;
@@ -125,6 +131,12 @@ abstract class Scene {
         return MatchScene.parse(raw, id);
       case 'clues':
         return CluesScene.parse(raw, id);
+      case 'beauty':
+        return BeautyScene.parse(raw, id);
+      case 'music':
+        return MusicScene.parse(raw, id);
+      case 'news':
+        return NewsScene.parse(raw, id);
       default:
         return null;
     }

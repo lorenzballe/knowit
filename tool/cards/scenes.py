@@ -18,7 +18,7 @@ import math
 import sys
 from pathlib import Path
 
-KINDS = ("slider", "count", "draw", "hold", "rank", "sample", "sort", "timeline", "trick", "why", "poll", "story", "translate", "match", "clues")
+KINDS = ("slider", "count", "draw", "hold", "rank", "sample", "sort", "timeline", "trick", "why", "poll", "story", "translate", "match", "clues", "beauty", "music", "news")
 LABEL_CHARS = 34   # control and readout, on one line at phone width
 UNIT_CHARS = 14
 NOTE_CHARS = 90    # two lines under the slider
