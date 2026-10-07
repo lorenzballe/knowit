@@ -2238,8 +2238,9 @@ void main() {
 
       // Hard and straight down: the one heading no card is sent in by
       // accident.
-      await tester.fling(
-        find.byType(PillCardStack),
+      final deck = tester.getRect(find.byType(PillCardStack));
+      await tester.flingFrom(
+        Offset(deck.center.dx, deck.top + 90),
         const Offset(0, 300),
         1400,
       );
