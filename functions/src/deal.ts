@@ -11,7 +11,7 @@
 // the calendar's question and cards are kept, the same on both sides, but
 // no day deals them.
 
-import { Bank, Card, asks, graded, isDebate, editionOf, genreOf, strandsOf, traitsOf } from './bank.js';
+import { Bank, Card, asks, graded, isDebate, editionOf, expiredOn, genreOf, strandsOf, traitsOf } from './bank.js';
 import { Profile, dayNumberOf, reviewsDue, streakOn, weightsOn, readOnboarding } from './profile.js';
 import { rng, seedOf, shuffle } from './rng.js';
 
@@ -118,6 +118,8 @@ export interface OwnOptions {
   strandsDealt: Set<string>;
   /** Whether one read may be an explorer today. */
   explore?: boolean;
+  /** The day dealt, `yyyy-mm-dd`: a card past its expiry is left out. */
+  date?: string;
 }
 
 /** Whether [date] is an explorer's day for the reader: the same coin on every server. */
@@ -139,7 +141,7 @@ export function ownCards(bank: Bank, profile: Profile, weights: Record<string, n
 /** The reader's own cards, with the explorer named apart so the day can record it. */
 export function dealOwn(bank: Bank, profile: Profile, weights: Record<string, number>, o: OwnOptions): { cards: Card[]; explorer: Card | null } {
   const next = rng(seedOf(o.seed));
-  const pool = shuffle([...bank.live], next);
+  const pool = shuffle(o.date ? bank.liveOn(o.date) : [...bank.live], next);
   const wanted = new Set(profile.topics);
   const onTopic = (c: Card) => wanted.size === 0 || wanted.has(c.topic);
   const strandOn = (s: string) => !profile.strandsOff.has(s) && !profile.genresOff.has(genreOf(s));
@@ -236,6 +238,8 @@ export interface RandomOptions {
   /** Subjects and strands the day already holds. */
   topicsDealt: Set<string>;
   strandsDealt: Set<string>;
+  /** The day dealt, `yyyy-mm-dd`: a card past its expiry is left out. */
+  date?: string;
 }
 
 /**
@@ -254,7 +258,7 @@ export interface RandomOptions {
 export function dealRandom(bank: Bank, profile: Profile, o: RandomOptions): Card[] {
   if (o.count <= 0) return [];
   const next = rng(seedOf(o.seed));
-  const pool = shuffle([...bank.live], next);
+  const pool = shuffle(o.date ? bank.liveOn(o.date) : [...bank.live], next);
   const wanted = profile.topics;
   const onTopic = (c: Card) => wanted.size === 0 || wanted.has(c.topic);
   const strandOn = (s: string) => !profile.strandsOff.has(s) && !profile.genresOff.has(genreOf(s));
@@ -361,7 +365,7 @@ export function dealDay(bank: Bank, profile: Profile, date: string, uid: string)
   // A review is the reader's own, coming back: one at most, so a day always
   // has one question it has never asked. On Astute+ only, as on the phone.
   const reviews = profile.plus
-    ? reviewsDue(profile, bank, date).slice(0, Math.max(0, Math.min(ownCount, asking - 1)))
+    ? reviewsDue(profile, bank, date).filter((c) => !expiredOn(c, date)).slice(0, Math.max(0, Math.min(ownCount, asking - 1)))
     : [];
   const taken = new Set<string>([...profile.seen, ...reviews.map((c) => c.id)]);
 
@@ -372,6 +376,7 @@ export function dealDay(bank: Bank, profile: Profile, date: string, uid: string)
   const weights = weightsOn(reading, day, profile.weights);
   const { cards: rest, explorer } = dealOwn(bank, profile, weights, {
     seed: `${uid}:${date}`,
+    date,
     explore: !whole && explorerDay(uid, date),
     count: Math.max(0, ownCount - reviews.length),
     asking: Math.max(0, ownAsks - reviews.length),
@@ -383,6 +388,7 @@ export function dealDay(bank: Bank, profile: Profile, date: string, uid: string)
   // What the reader's own leave, at random from the mix as it was set.
   const chance = dealRandom(bank, profile, {
     seed: `random:${uid}:${date}`,
+    date,
     count: Math.max(0, count - mine.length),
     asking: Math.max(0, asking - mine.filter(asks).length),
     exclude: new Set([...taken, ...mine.map((c) => c.id)]),

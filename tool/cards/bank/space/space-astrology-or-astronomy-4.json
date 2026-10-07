@@ -1,0 +1,60 @@
+{
+  "id": "space-astrology-or-astronomy-4",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.astrology_or_astronomy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "For about two centuries at a time, the meetings of Jupiter and Saturn fall in the signs of one astrological element. Why?",
+  "answer": "Because Jupiter goes round about 5 times while Saturn goes round 2. They meet every 20 years, each time two thirds of the way round the sky from the last, so three meetings mark out a triangle. The fit is a little off, so the triangle slowly turns. Kepler drew it in 1596; it is two clocks, not a message.",
+  "move": "A pattern in the sky is two clocks lining up, not a sign.",
+  "ask": "Which omens I notice are just two cycles meeting?",
+  "keywords": [
+    "jupiter",
+    "saturn",
+    "great conjunction",
+    "kepler",
+    "astrology"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "beauty",
+    "piece": "orbits",
+    "caption": "Jupiter laps the Sun 5 times while Saturn laps it twice. A line joins them every 30 days.",
+    "hint": "Drag to change Jupiter's year",
+    "reveal": "Three petals: they meet every 20 years at three points a third of a turn apart.",
+    "dial": {
+      "label": "Jupiter's year",
+      "unit": "days",
+      "value": 4332.59,
+      "from": 3800,
+      "to": 4900,
+      "decimals": 0
+    },
+    "params": {
+      "outer": 10759.22,
+      "radii": [
+        5.203,
+        9.537
+      ],
+      "every": 30,
+      "span": 21900
+    },
+    "accent": "#FFE600",
+    "seed": 1596
+  },
+  "source": "NASA Planetary Fact Sheet; Kepler, 1596",
+  "source_kind": "institution",
+  "reference": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/ (sidereal periods: Jupiter 4,332.59 days, Saturn 10,759.22 days); Kepler, Mysterium Cosmographicum, 1596, great-conjunction trigon figure",
+  "written": "2026-10-07"
+}

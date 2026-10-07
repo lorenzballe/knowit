@@ -1,0 +1,85 @@
+{
+  "id": "music-music-and-mood-4",
+  "topic": "music",
+  "genre": "music.why_we_like_what_we_like",
+  "strand": "music.why_we_like_what_we_like.music_and_mood",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "C major to C minor moves one note down by one key. Who hears that single step as sad?",
+  "answer": "Mostly people raised on Western music. In Dalla Bella's tests, 3- and 4-year-olds could not tell happy music from sad, 5-year-olds went by tempo alone, and mode counted only from 6 to 8. In a Papua New Guinea valley with little Western music, minor cadences were not heard as sadder.",
+  "move": "Before calling a reaction natural, ask when you first learned it.",
+  "ask": "Which of my gut reactions did I actually learn as a child?",
+  "keywords": [
+    "minor key",
+    "major key",
+    "mode",
+    "children",
+    "papua new guinea"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "music",
+    "mode": "chord",
+    "readout": "Frequency ratio",
+    "keys": [
+      "C4",
+      "C5"
+    ],
+    "start": [
+      "C4",
+      "E4",
+      "G4"
+    ],
+    "hint": "Tap keys to change the chord. Every tap plays it.",
+    "moments": [
+      {
+        "notes": [
+          "C4",
+          "E4",
+          "G4"
+        ],
+        "name": "Major chord",
+        "text": "Bright, to ears raised on pop and hymns. Now lower the E by one key, to Eb."
+      },
+      {
+        "notes": [
+          "C4",
+          "Eb4",
+          "G4"
+        ],
+        "name": "Minor chord",
+        "text": "One note, one key lower. Sad? Under age 6, children mostly can't hear it."
+      },
+      {
+        "notes": [
+          "C4",
+          "G4"
+        ],
+        "name": "No third",
+        "text": "Take the middle note out: neither happy nor sad. The third sets the mood."
+      },
+      {
+        "notes": [
+          "C4",
+          "Eb4"
+        ],
+        "name": "Minor third",
+        "text": "The step that decides, on its own. To Western ears it already leans dark."
+      }
+    ]
+  },
+  "source": "Dalla Bella et al., Cognition, 2001",
+  "source_kind": "paper",
+  "reference": "Dalla Bella, Peretz, Rousseau & Gosselin, A developmental study of the affective value of tempo and mode in music, Cognition 80, B1-B10, 2001; Smit, Milne, Sarvasy & Dean, Emotional responses in Papua New Guinea show negligible evidence for a universal effect of major versus minor music, PLOS ONE 17: e0269597, 2022",
+  "written": "2026-10-07"
+}

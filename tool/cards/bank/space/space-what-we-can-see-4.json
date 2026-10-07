@@ -1,0 +1,47 @@
+{
+  "id": "space-what-we-can-see-4",
+  "topic": "space",
+  "genre": "space.black_holes",
+  "strand": "space.black_holes.what_we_can_see",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "To photograph a black hole 55 million light years away, astronomers needed a dish as wide as the Earth. How did they get one?",
+  "answer": "They spread telescopes across the planet and combined their signals. Two dishes catch the same wave slightly out of step, and where crest meets trough it cancels. The farther apart the dishes, the finer those stripes and the smaller the detail. In 2019 the Event Horizon Telescope, dishes from Hawaii to the South Pole, showed M87's black hole.",
+  "move": "Two viewpoints far apart see detail that neither sees alone.",
+  "ask": "Whose distant view would sharpen what I can't make out?",
+  "keywords": [
+    "event horizon telescope",
+    "m87",
+    "interferometry",
+    "black hole",
+    "radio telescopes"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "beauty",
+    "piece": "waves",
+    "caption": "Two receivers, one wave. Where crest meets trough it cancels, in lanes that never move.",
+    "hint": "Drag a dish to move it",
+    "reveal": "Pull the two apart and the lanes crowd closer: finer stripes, finer detail.",
+    "params": {
+      "wavelength": 0.055,
+      "gap": 0.36
+    },
+    "accent": "#FFE600",
+    "seed": 2019
+  },
+  "source": "Event Horizon Telescope, ApJ Letters, 2019",
+  "source_kind": "paper",
+  "reference": "Event Horizon Telescope Collaboration, First M87 Event Horizon Telescope Results. I. The Shadow of the Supermassive Black Hole, Astrophysical Journal Letters 875:L1, 2019, doi:10.3847/2041-8213/ab0ec7",
+  "written": "2026-10-07"
+}

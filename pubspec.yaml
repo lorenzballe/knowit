@@ -74,6 +74,10 @@ dependencies:
   # requires beside a subscription (lib/legal.dart).
   url_launcher: ^6.3.2
   cloud_functions: ^6.5.0
+  # The `music` scene's voice. The sound is synthesized in Dart and handed
+  # over as WAV bytes (lib/widgets/scenes/music_view.dart), so no audio file
+  # ships and no permission is asked: playback only, and only on a tap.
+  audioplayers: ^6.8.1
 
 dev_dependencies:
   flutter_test:

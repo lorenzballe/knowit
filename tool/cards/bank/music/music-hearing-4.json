@@ -1,0 +1,88 @@
+{
+  "id": "music-hearing-4",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.hearing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A phone speaker barely plays the 55 Hz low A of a bass guitar. Why do you still hear the bass line?",
+  "answer": "Because the brain puts it back. A bass note is a stack of harmonics, all multiples of 55 Hz, and together they repeat 55 times a second even with the bottom one gone. The ear takes that repetition as the pitch. Bass enhancers such as Waves' MaxxBass add harmonics a small speaker can play.",
+  "move": "Your senses report the pattern they infer, not only what arrives.",
+  "ask": "Where am I hearing or seeing something the signal never carried?",
+  "keywords": [
+    "missing fundamental",
+    "bass",
+    "phone speaker",
+    "harmonics",
+    "pitch"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "music",
+    "mode": "harmonics",
+    "readout": "Pitch you hear",
+    "fundamental": 55,
+    "harmonics": 8,
+    "start": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "hint": "A bass guitar's low A, in eight harmonics. Tap the 55 Hz bar, the one a phone can't play.",
+    "moments": [
+      {
+        "on": [
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "name": "No 55 Hz in it",
+        "text": "The bottom tone is gone, yet the wave still repeats every 18 ms. Same note."
+      },
+      {
+        "on": [
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
+        "name": "Phone speaker",
+        "text": "Only 220 to 440 Hz left, the range a phone plays well. Still a 55 Hz note."
+      },
+      {
+        "on": [
+          2,
+          4,
+          6,
+          8
+        ],
+        "name": "Evens only",
+        "text": "Now they are 110 Hz apart, and the pitch jumps an octave. The ear reads the gaps."
+      }
+    ]
+  },
+  "source": "Plack & Oxenham, Pitch, Springer, 2005",
+  "source_kind": "book",
+  "reference": "Plack, Oxenham, Fay & Popper (eds), Pitch: Neural Coding and Perception, Springer Handbook of Auditory Research 24, 2005; Waves Audio, MaxxBass: harmonics generated so the ear perceives bass below the speaker's limit",
+  "written": "2026-10-07"
+}

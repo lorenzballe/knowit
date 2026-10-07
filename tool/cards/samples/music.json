@@ -1,0 +1,271 @@
+[
+  {
+    "id": "music-consonance-music-1",
+    "topic": "music",
+    "genre": "music.sound_itself",
+    "strand": "music.sound_itself.frequencies",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Some notes blend, some clash. Build chords on the keys and watch the numbers: what makes two notes sound smooth together?",
+    "answer": "Simple ratios. At 3 : 2 or 5 : 4 many harmonics coincide and the wave repeats fast. At 15 : 16 they nearly meet and beat: a wobble heard as rough. That roughness is physics. Liking smooth is partly learned: the Tsimane' of Bolivia rated dissonant chords as pleasant as consonant ones.",
+    "move": "Split what the world does from what you learned to like.",
+    "ask": "Which of my tastes do I call natural when I actually learned them?",
+    "keywords": [
+      "consonance",
+      "dissonance",
+      "frequency ratio",
+      "roughness",
+      "tsimane"
+    ],
+    "era": "timeless",
+    "region": "world",
+    "hook": "mechanism",
+    "mood": "wonder",
+    "numeracy": 2,
+    "abstraction": "mixed",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "music",
+      "mode": "chord",
+      "readout": "Frequency ratio",
+      "keys": [
+        "C4",
+        "E5"
+      ],
+      "start": [
+        "C4",
+        "G4"
+      ],
+      "tuning": "just",
+      "hint": "Tap keys to add or take away notes. Every tap plays the chord.",
+      "moments": [
+        {
+          "notes": [
+            "C4",
+            "G4"
+          ],
+          "name": "Fifth",
+          "text": "G vibrates 3 times for every 2 of C, so the summed wave repeats every 7.6 ms."
+        },
+        {
+          "notes": [
+            "C4",
+            "C5"
+          ],
+          "name": "Octave",
+          "text": "1 : 2. The pair repeats as often as C alone, so the two fuse into one."
+        },
+        {
+          "notes": [
+            "C4",
+            "E4",
+            "G4"
+          ],
+          "name": "Major chord",
+          "text": "4 : 5 : 6. Small whole numbers: the three waves line up again every 15 ms."
+        },
+        {
+          "notes": [
+            "C4",
+            "Eb4",
+            "G4"
+          ],
+          "name": "Minor chord",
+          "text": "10 : 12 : 15. Bigger numbers, a longer repeat: still smooth, but darker."
+        },
+        {
+          "notes": [
+            "C4",
+            "Db4"
+          ],
+          "name": "Semitone",
+          "text": "15 : 16. So close they beat against each other: that wobble is roughness."
+        },
+        {
+          "notes": [
+            "C4",
+            "F#4"
+          ],
+          "name": "Tritone",
+          "text": "32 : 45. The wave takes ages to repeat, and hardly any harmonics meet."
+        }
+      ]
+    },
+    "source": "McDermott et al., Nature, 2016",
+    "source_kind": "paper",
+    "reference": "McDermott, Schultz, Undurraga & Godoy, Indifference to dissonance in native Amazonians reveals cultural variation in music perception, Nature 535, 547–550, 2016; Plomp & Levelt, Tonal consonance and critical bandwidth, JASA 38, 548–560, 1965",
+    "written": "2026-10-07"
+  },
+  {
+    "id": "music-missing-fundamental-music-1",
+    "topic": "music",
+    "genre": "music.sound_itself",
+    "strand": "music.sound_itself.hearing",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "A phone's tiny speaker can barely move enough air to play a bass note. So why do you still hear the bass line on it?",
+    "answer": "Your brain puts it back. A bass note is a stack of harmonics, all multiples of the lowest, and together they repeat at the lowest one's rate. Remove that tone and the repeat rate, and so the pitch, stays. This is the missing fundamental, and bass enhancers for small speakers exploit it.",
+    "move": "What you perceive is the brain's best reading of a pattern, not the raw input.",
+    "ask": "Where am I hearing something the signal never actually carried?",
+    "keywords": [
+      "missing fundamental",
+      "harmonics",
+      "pitch perception",
+      "phone speaker",
+      "virtual pitch"
+    ],
+    "era": "timeless",
+    "region": "world",
+    "hook": "mechanism",
+    "mood": "wonder",
+    "numeracy": 2,
+    "abstraction": "mixed",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "music",
+      "mode": "harmonics",
+      "readout": "Pitch you hear",
+      "fundamental": 110,
+      "harmonics": 8,
+      "start": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "hint": "A bass A, built from eight harmonics. Tap the lowest bar, 110 Hz, to take it away.",
+      "moments": [
+        {
+          "on": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "name": "No 110 Hz in it",
+          "text": "The 110 Hz is gone, yet the wave still repeats every 9.1 ms. Same pitch."
+        },
+        {
+          "on": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "name": "Two gone",
+          "text": "Still 110 Hz. The ear follows how often the wave repeats, not its lowest part."
+        },
+        {
+          "on": [
+            2,
+            4,
+            6,
+            8
+          ],
+          "name": "Evens only",
+          "text": "All multiples of 220 Hz now: the wave repeats twice as fast, an octave up."
+        }
+      ]
+    },
+    "source": "Plack & Oxenham, Pitch, Springer, 2005",
+    "source_kind": "book",
+    "reference": "Plack, Oxenham, Fay & Popper (eds), Pitch: Neural Coding and Perception, Springer Handbook of Auditory Research 24, 2005",
+    "written": "2026-10-07"
+  },
+  {
+    "id": "music-groove-music-1",
+    "topic": "music",
+    "genre": "music.why_songs_work",
+    "strand": "music.why_songs_work.rhythm",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Switch the layers on one at a time. At which one does the loop start making you want to move?",
+    "answer": "Usually the bass, the layer that lands between beats. Witek and colleagues played listeners 50 drum breaks: the urge to move rose with syncopation up to a medium amount, then fell as rhythms grew too complex. The body predicts the next beat; a little surprise keeps it busy, too much and it gives up.",
+    "move": "Pleasure often peaks at medium surprise, not at none and not at most.",
+    "ask": "Where would a little surprise make something I do better, and where would too much ruin it?",
+    "keywords": [
+      "groove",
+      "syncopation",
+      "rhythm",
+      "prediction",
+      "wanting to move"
+    ],
+    "era": "recent",
+    "region": "world",
+    "hook": "mechanism",
+    "mood": "playful",
+    "numeracy": 1,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "music",
+      "mode": "layers",
+      "bpm": 104,
+      "steps": 16,
+      "hint": "Tap a track to switch it on or off. The loop starts when you add one.",
+      "tracks": [
+        {
+          "name": "Kick",
+          "sound": "kick",
+          "on": true,
+          "pattern": "X . . . x . . . X . . . x . . .",
+          "text": "Four on the floor: steady, predictable, and on its own a little dull."
+        },
+        {
+          "name": "Hat",
+          "sound": "hat",
+          "pattern": ". . x . . . x . . . x . . . x x",
+          "text": "The hats tick between the kicks. Still no surprise: every gap is filled evenly."
+        },
+        {
+          "name": "Clap",
+          "sound": "clap",
+          "pattern": ". . . . X . . . . . . . X . . .",
+          "text": "Claps on beats 2 and 4: the backbeat. Solid, still expected."
+        },
+        {
+          "name": "Bass",
+          "sound": "bass",
+          "pattern": ". . A1 . . . A2 - . . A1 . . G1 - .",
+          "text": "The bass lands off the beat, where you don't expect it. That is syncopation."
+        }
+      ],
+      "moments": [
+        {
+          "on": [
+            "Kick",
+            "Hat",
+            "Clap",
+            "Bass"
+          ],
+          "text": "Mostly predictable, a little off: in tests, that middle amount made people want to move."
+        }
+      ]
+    },
+    "source": "Witek et al., PLOS ONE, 2014",
+    "source_kind": "paper",
+    "reference": "Witek, Clarke, Wallentin, Kringelbach & Vuust, Syncopation, body-movement and pleasure in groove music, PLOS ONE 9(4): e94446, 2014",
+    "written": "2026-10-07"
+  }
+]

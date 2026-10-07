@@ -77,6 +77,17 @@ export function strandsOf(c: Card): string[] {
   return [c.strand ?? '', ...(c.also ?? [])].filter((s) => s.length > 0);
 }
 
+/**
+ * Whether a card is stale on [date] (`yyyy-mm-dd`): a card about the news
+ * carries the last day it is current in its scene's `expires`
+ * (lib/models/scenes/news.dart), and from the day after it is never dealt.
+ * Date keys compare as strings.
+ */
+export function expiredOn(c: Card, date: string): boolean {
+  const scene = c.scene as { type?: unknown; expires?: unknown } | undefined;
+  return scene?.type === 'news' && typeof scene.expires === 'string' && scene.expires < date;
+}
+
 /** The card's traits as the taste is keyed: the same list as Pill.traits. */
 export function traitsOf(c: Card): string[] {
   const out: string[] = [];
@@ -112,6 +123,11 @@ export class Bank {
   /** The cards still dealt: a retired card answers by id but is never dealt again. */
   get live(): Card[] {
     return this.cards.filter((c) => !c.disabled);
+  }
+
+  /** The cards that may be dealt on [date]: live, and not past their expiry. */
+  liveOn(date: string): Card[] {
+    return this.live.filter((c) => !expiredOn(c, date));
   }
 
   static parse(text: string): Bank {

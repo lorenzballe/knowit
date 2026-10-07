@@ -1,0 +1,87 @@
+{
+  "id": "music-voice-4",
+  "topic": "music",
+  "genre": "music.instruments",
+  "strand": "music.instruments.voice",
+  "also": [
+    "music.sound_itself.frequencies"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A singer and a violinist play the same G, 196 Hz. Same pitch, so what makes them sound nothing alike?",
+  "answer": "The recipe of harmonics. Both make a stack of multiples of 196 Hz, so both repeat 196 times a second: that is the pitch. What differs is how loud each harmonic is. A violin's wooden body boosts fixed bands; a singer's throat and mouth reshape theirs with every vowel.",
+  "move": "Two things that measure the same can still be made differently.",
+  "ask": "Which two things do I lump together because one number matches?",
+  "keywords": [
+    "timbre",
+    "harmonics",
+    "violin",
+    "singing voice",
+    "resonance"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "music",
+    "mode": "harmonics",
+    "readout": "Pitch you hear",
+    "fundamental": 196,
+    "harmonics": 5,
+    "start": [
+      1,
+      2,
+      3
+    ],
+    "hint": "A G at 196 Hz, the violin's lowest string. Change the recipe: the pitch stays.",
+    "moments": [
+      {
+        "on": [
+          1
+        ],
+        "name": "Pure tone",
+        "text": "One sine wave, near what a tuning fork makes: plain, and hard to place."
+      },
+      {
+        "on": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "name": "Full stack",
+        "text": "Every harmonic strong: the bright buzz of a bowed string before the wood shapes it."
+      },
+      {
+        "on": [
+          3,
+          4,
+          5
+        ],
+        "name": "Top only",
+        "text": "Only higher harmonics: thin and nasal. The pitch is still 196 Hz."
+      },
+      {
+        "on": [
+          1,
+          2
+        ],
+        "name": "Low two",
+        "text": "Only the two lowest: soft and round, nearer a flute or a hum."
+      }
+    ]
+  },
+  "source": "Fletcher & Rossing; Sundberg, 1987",
+  "source_kind": "book",
+  "reference": "Fletcher & Rossing, The Physics of Musical Instruments, 2nd edn, Springer, 1998 (violin body resonances); Sundberg, The Science of the Singing Voice, Northern Illinois University Press, 1987 (formants)",
+  "written": "2026-10-07"
+}

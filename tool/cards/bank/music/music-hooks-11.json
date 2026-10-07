@@ -1,0 +1,92 @@
+{
+  "id": "music-hooks-11",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.hooks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Maria, from West Side Story, opens on the so-called devil's interval. Why does it sound restless rather than evil?",
+  "answer": "Because it sits half an octave up, between two stable intervals, and leans towards both. Maria's third note steps one key up to a fifth, and the tension lets go. Inside G7, B and F form it and pull to C and E. The devil tag dates from 1702, not from a medieval ban.",
+  "move": "A tension that points somewhere is a promise, not a flaw.",
+  "ask": "Which tension in my life is pointing to where it wants to go?",
+  "keywords": [
+    "tritone",
+    "west side story",
+    "dominant seventh",
+    "resolution",
+    "diabolus in musica"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "music",
+    "mode": "chord",
+    "readout": "Frequency ratio",
+    "keys": [
+      "G3",
+      "B4"
+    ],
+    "start": [
+      "C4",
+      "F#4"
+    ],
+    "hint": "Tap keys to add or take away notes. Every tap plays the chord.",
+    "moments": [
+      {
+        "notes": [
+          "C4",
+          "F#4"
+        ],
+        "name": "Tritone",
+        "text": "Ma-ri-: half an octave, and it hangs. Swap F# for G, one key up, to end the name."
+      },
+      {
+        "notes": [
+          "C4",
+          "G4"
+        ],
+        "name": "Fifth",
+        "text": "-a. A fifth, 2 : 3. One key's move, and the pull lets go."
+      },
+      {
+        "notes": [
+          "G3",
+          "B3",
+          "D4",
+          "F4"
+        ],
+        "name": "G7",
+        "text": "The chord before home in countless songs. Inside it, B and F make a tritone."
+      },
+      {
+        "notes": [
+          "B3",
+          "F4"
+        ],
+        "name": "Tritone in G7",
+        "text": "Each note sits one key from rest: B below C, F above E. Now try C with E."
+      },
+      {
+        "notes": [
+          "C4",
+          "E4"
+        ],
+        "name": "Resolved",
+        "text": "B rose to C, F fell to E. Both moved one key, and the spring let go."
+      }
+    ]
+  },
+  "source": "Aldwell & Schachter; Werckmeister, 1702",
+  "source_kind": "book",
+  "reference": "Aldwell & Schachter, Harmony and Voice Leading, 4th edn, Schirmer, 2011 (the tritone of V7 and its resolution); Andreas Werckmeister, Harmonologia Musica, 1702, earliest written 'mi contra fa est diabolus in musica' (Store norske leksikon, tritonus); Maria's opening C-F#-G figure, transposed: Saskatoon Symphony programme note",
+  "written": "2026-10-07"
+}

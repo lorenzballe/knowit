@@ -1,0 +1,79 @@
+{
+  "id": "music-rhythm-11",
+  "topic": "music",
+  "genre": "music.why_songs_work",
+  "strand": "music.why_songs_work.rhythm",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Clap along to almost any pop song and your hands land on beats 2 and 4. Why not on 1 and 3?",
+  "answer": "Because the kick already owns 1 and 3. A snare on the weak beats answers each low thump with a high crack, so every bar pushes away from where its weight lies. Earl Palmer, the drummer on Little Richard's hits, said he learned to clap on 2 and 4 behind New Orleans parade bands.",
+  "move": "Put the accent where nothing else is already pushing.",
+  "ask": "Where would my effort count more if I put it where nobody else is?",
+  "keywords": [
+    "backbeat",
+    "snare",
+    "earl palmer",
+    "rock and roll",
+    "new orleans"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "music",
+    "mode": "layers",
+    "bpm": 100,
+    "steps": 16,
+    "hint": "Kick and hat are playing. Add a snare on 1 and 3, then swap it for 2 and 4.",
+    "tracks": [
+      {
+        "name": "Kick",
+        "sound": "kick",
+        "on": true,
+        "pattern": "X . . . . . . . X . . . . . . ."
+      },
+      {
+        "name": "Hat",
+        "sound": "hat",
+        "on": true,
+        "pattern": "x . x . x . x . x . x . x . x ."
+      },
+      {
+        "name": "1 + 3",
+        "sound": "snare",
+        "pattern": "X . . . . . . . X . . . . . . .",
+        "text": "Snare on top of the kick: every hit lands on the strong beat. A march."
+      },
+      {
+        "name": "2 + 4",
+        "sound": "snare",
+        "pattern": ". . . . X . . . . . . . X . . .",
+        "text": "Low thump, high crack, low thump, high crack: the backbeat. Now it rocks."
+      }
+    ],
+    "moments": [
+      {
+        "on": [
+          "Kick",
+          "Hat",
+          "1 + 3",
+          "2 + 4"
+        ],
+        "name": "Every beat",
+        "text": "Snare on all four: the crack loses its contrast, and the push goes flat."
+      }
+    ]
+  },
+  "source": "Scherman, Backbeat: Earl Palmer's Story, 1999",
+  "source_kind": "book",
+  "reference": "Tony Scherman, Backbeat: Earl Palmer's Story, Smithsonian Institution Press, 1999; 64 Parishes, Earl Palmer (clapping on 2 and 4 behind Treme brass bands)",
+  "written": "2026-10-07"
+}

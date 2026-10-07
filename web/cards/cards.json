@@ -1,7 +1,7 @@
 {
  "format": 1,
- "version": 202610071808,
- "built": "2026-10-07T18:08:53Z",
+ "version": 202610072011,
+ "built": "2026-10-07T20:11:16Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -12001,6 +12001,51 @@
    "source_kind": "primary_document",
    "reference": "California Assembly Bill 1836, Use of Likeness: Digital Replica, 2024",
    "written": "2026-09-27"
+  },
+  {
+   "id": "cinema-cgi-11",
+   "topic": "cinema",
+   "genre": "cinema.special_effects",
+   "strand": "cinema.special_effects.cgi",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "The bat swarms in Batman Returns were never animated bat by bat. So who decided where each bat flew?",
+   "answer": "The other bats. In 1987 Craig Reynolds published Boids, a program in which each simulated bird sees only its nearby flockmates and obeys three rules: don't crowd them, head where they head, stay near them. Lifelike flocks appear with no one steering. Batman Returns (1992) used the idea for its bats and its marching penguins.",
+   "move": "Before scripting a crowd, find the rule each member follows.",
+   "ask": "Which group I belong to is steered by a few rules nobody says aloud?",
+   "keywords": [
+    "boids",
+    "craig reynolds",
+    "batman returns",
+    "flocking",
+    "computer animation"
+   ],
+   "era": "twentieth",
+   "region": "americas",
+   "hook": "origin",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "beauty",
+    "piece": "flock",
+    "caption": "Three rules for every bird: don't crowd, head where your neighbours head, stay near.",
+    "hint": "Touch to break the flock",
+    "reveal": "Nobody scripted that split. It came out of the three rules, as it does every time.",
+    "params": {
+     "birds": 260
+    },
+    "seed": 1992
+   },
+   "source": "Reynolds, SIGGRAPH, 1987",
+   "source_kind": "paper",
+   "reference": "Reynolds, Flocks, herds and schools: a distributed behavioral model, Computer Graphics 21(4):25-34 (SIGGRAPH 1987); https://www.red3d.com/cwr/boids/",
+   "written": "2026-10-07"
   },
   {
    "id": "cinema-critics-or-crowds-1",
@@ -58076,6 +58121,61 @@
    "written": "2026-09-26"
   },
   {
+   "id": "human_body-breathing-5",
+   "topic": "human_body",
+   "genre": "human_body.your_body_your_choices",
+   "strand": "human_body.your_body_your_choices.breathing",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Your windpipe is a single tube. How does it reach hundreds of millions of tiny air sacs without a tangle?",
+   "answer": "By splitting in two, about 23 times. Each split makes two narrower tubes, and 23 doublings give 2 to the 23rd, some 8 million ends, which bud into the air sacs. In 1926 Cecil Murray worked out the cheapest split for a branching vessel: daughters about four fifths as wide, each 37.5° off line. Arteries and airways come close.",
+   "move": "When a design repeats at every scale, ask what it is saving.",
+   "ask": "What do I build again and again that a simpler rule could grow?",
+   "keywords": [
+    "lungs",
+    "airways",
+    "branching",
+    "murray's law",
+    "alveoli"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "beauty",
+    "piece": "fractal",
+    "caption": "Each tube splits in two, each about 4/5 its size and 37.5° off line. Ten splits shown.",
+    "hint": "Drag sideways to change the split",
+    "reveal": "Narrower and the branches crowd; wider and they waste tube. 37.5° costs least.",
+    "dial": {
+     "label": "Turn at each split",
+     "unit": "°",
+     "value": 37.5,
+     "from": 5,
+     "to": 85,
+     "decimals": 1
+    },
+    "params": {
+     "ratio": 0.79,
+     "depth": 10
+    },
+    "accent": "#FF3D7F",
+    "seed": 23
+   },
+   "source": "Murray, J Gen Physiol, 1926; Weibel, 1963",
+   "source_kind": "paper",
+   "reference": "Murray, The physiological principle of minimum work applied to the angle of branching of arteries, Journal of General Physiology 9(6):835-841, 1926; Weibel, Morphometry of the Human Lung, Springer, 1963",
+   "written": "2026-10-07"
+  },
+  {
    "id": "human_body-burnout-1",
    "topic": "human_body",
    "genre": "human_body.stress_and_the_body",
@@ -99872,8 +99972,8 @@
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What does the brain release in the seconds before a musical chill, and not only during it?",
-   "answer": "Dopamine, the brain's wanting signal. Valorie Salimpoor and colleagues scanned listeners hearing their favourite pieces: dopamine rose in one region, the caudate, while they anticipated the peak, and in another, the nucleus accumbens, when the chill arrived. The build-up is a pleasure of its own. Half the thrill is waiting for the drop.",
+   "question": "Cut the kick, add the snare roll, then bring kick and bass in. Did listeners' dopamine rise in the build or the drop?",
+   "answer": "In both, in different places. Valorie Salimpoor's team scanned people hearing their favourite music: dopamine rose in the caudate while they anticipated the peak, and in the nucleus accumbens when the chill arrived. The build is a pleasure of its own: half the thrill is the wait.",
    "move": "Expectation is not the queue for pleasure; it is part of the pleasure.",
    "ask": "What am I rushing to get to, when looking forward to it is half the joy?",
    "keywords": [
@@ -99893,6 +99993,57 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "music",
+    "mode": "layers",
+    "bpm": 125,
+    "steps": 32,
+    "hint": "Cut the kick and add the build. Then bring kick and bass in for the drop.",
+    "tracks": [
+     {
+      "name": "Kick",
+      "sound": "kick",
+      "on": true,
+      "pattern": "X . . . x . . . X . . . x . . . X . . . x . . . X . . . x . . ."
+     },
+     {
+      "name": "Bass",
+      "sound": "bass",
+      "pattern": ". . A1 - . . A1 - . . A1 - . . A1 - . . A1 - . . A1 - . . A1 - . . A1 -"
+     },
+     {
+      "name": "Keys",
+      "sound": "keys",
+      "on": true,
+      "pattern": "A3+C4+E4 - - - - - - - - - - - - - - - F3+A3+C4 - - - - - - - - - - - - - - -"
+     },
+     {
+      "name": "Build",
+      "sound": "snare",
+      "pattern": "x . . . x . . . x . . . x . . . x . x . x . x . x x x x X X X X",
+      "text": "A roll that speeds up: the brain starts predicting the moment it ends."
+     }
+    ],
+    "moments": [
+     {
+      "on": [
+       "Keys",
+       "Build"
+      ],
+      "name": "The build",
+      "text": "No kick, no bass, a roll speeding up: the wait. Dopamine rose in the caudate."
+     },
+     {
+      "on": [
+       "Kick",
+       "Bass",
+       "Keys"
+      ],
+      "name": "The drop",
+      "text": "Everything back. At the peak, dopamine came in another place, the accumbens."
+     }
+    ]
+   },
    "source": "Salimpoor et al., Nature Neuroscience, 2011",
    "source_kind": "paper",
    "reference": "Salimpoor, Benovoy, Larcher, Dagher & Zatorre, Anatomically distinct dopamine release during anticipation and experience of peak emotion to music, Nature Neuroscience, 2011",
@@ -99986,8 +100137,8 @@
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How can the same four chords sound hopeful in Let It Be and bleak in Zombie?",
-   "answer": "By starting the loop on a different chord. Let It Be cycles C, G, A minor, F; Zombie cycles roughly E minor, C, G, D, which is the same circle entered at its minor chord. A loop has no fixed beginning, so wherever the ear lands first becomes home. Same circle, different front door.",
+   "question": "Let It Be and Zombie loop the same four chords. Why does one sound hopeful and the other bleak?",
+   "answer": "Because each enters the loop at a different chord. Let It Be cycles C, G, A minor, F; Zombie cycles roughly E minor, C, G, D, the same circle entered at its minor chord. A loop has no fixed beginning, so the chord heard first becomes home. Same circle, different front door.",
    "move": "Where a cycle begins can decide what it seems to mean.",
    "ask": "Where I start the story of my life, does that decide whether it feels hopeful or bleak?",
    "keywords": [
@@ -100007,6 +100158,50 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "music",
+    "mode": "layers",
+    "bpm": 100,
+    "steps": 32,
+    "hint": "Switch on one loop, then swap it for the other. Same four chords, another start.",
+    "tracks": [
+     {
+      "name": "Kick",
+      "sound": "kick",
+      "on": true,
+      "pattern": "X . . . x . . . X . . . x . . . X . . . x . . . X . . . x . . ."
+     },
+     {
+      "name": "Clap",
+      "sound": "clap",
+      "on": true,
+      "pattern": ". . . . X . . . . . . . X . . . . . . . X . . . . . . . X . . ."
+     },
+     {
+      "name": "Hope",
+      "sound": "keys",
+      "pattern": "C3+E4+G4+C5 - - - - - - - G2+D4+G4+B4 - - - - - - - A2+C4+E4+A4 - - - - - - - F2+C4+F4+A4 - - - - - - -",
+      "text": "Let It Be: C, G, Am, F. The loop starts on C, so C feels like home."
+     },
+     {
+      "name": "Bleak",
+      "sound": "keys",
+      "pattern": "A2+C4+E4+A4 - - - - - - - F2+C4+F4+A4 - - - - - - - C3+E4+G4+C5 - - - - - - - G2+D4+G4+B4 - - - - - - -",
+      "text": "Zombie: Am, F, C, G. The same four chords, entered at A minor. It aches."
+     }
+    ],
+    "moments": [
+     {
+      "on": [
+       "Kick",
+       "Clap",
+       "Hope",
+       "Bleak"
+      ],
+      "text": "Both at once clash on every beat: the order really is the whole difference."
+     }
+    ]
+   },
    "source": "Everett, The Foundations of Rock, 2009",
    "source_kind": "book",
    "reference": "Everett, The Foundations of Rock: From Blue Suede Shoes to Suite: Judy Blue Eyes, Oxford University Press, 2009",
@@ -101704,8 +101899,8 @@
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does a clarinet jump a twelfth, not an octave, when the player opens its register key?",
-   "answer": "Because its bore is a cylinder closed at the reed end, and such a pipe resonates mainly at odd multiples of its lowest frequency: 1, 3, 5 times. The next resonance up is three times the fundamental, an octave plus a fifth. The same physics leaves its low notes hollow, weak in the even harmonics.",
+   "question": "Overblow a flute or a saxophone and it jumps an octave. Why does a clarinet jump an octave and a fifth?",
+   "answer": "Because its bore is a cylinder closed at the reed end, and such a pipe resonates mainly at odd multiples of its lowest frequency: 1, 3, 5 times. Open the register key and the next resonance up is three times the fundamental. The missing even harmonics are also why its low notes sound hollow.",
    "move": "The shape of the container picks which notes it can hold.",
    "ask": "Which of my limits comes from the shape of what I am working in, not from me?",
    "keywords": [
@@ -101725,6 +101920,47 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "music",
+    "mode": "harmonics",
+    "readout": "Pitch you hear",
+    "fundamental": 147,
+    "harmonics": 6,
+    "start": [
+     1,
+     3,
+     5
+    ],
+    "hint": "A clarinet's low D: odd harmonics only. Tap bars to add or take them away.",
+    "moments": [
+     {
+      "on": [
+       1,
+       2,
+       3,
+       4,
+       5,
+       6
+      ],
+      "name": "Evens added",
+      "text": "Every harmonic: nearer a saxophone, whose cone resonates at all of them."
+     },
+     {
+      "on": [
+       3
+      ],
+      "name": "Register key",
+      "text": "The key spoils the lowest resonance. Next up is 3 times: 441 Hz, a twelfth."
+     },
+     {
+      "on": [
+       2
+      ],
+      "name": "Where a sax goes",
+      "text": "Twice the frequency, an octave up: a resonance the clarinet's tube lacks."
+     }
+    ]
+   },
    "source": "Fletcher & Rossing, Physics of Musical Instruments, 1998",
    "source_kind": "book",
    "reference": "Fletcher and Rossing, The Physics of Musical Instruments, 2nd edition, Springer, 1998",
@@ -102128,6 +102364,88 @@
    "written": "2026-10-07"
   },
   {
+   "id": "music-frequencies-12",
+   "topic": "music",
+   "genre": "music.sound_itself",
+   "strand": "music.sound_itself.frequencies",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Two guitar strings almost in tune make a slow wah-wah-wah. What is that wobble counting?",
+   "answer": "The gap between their frequencies. Two waves a few cycles apart drift in and out of step: where peaks meet the sound swells, where they cancel it dips. Strings at 55 and 58 Hz swell 3 times a second. Players turn the peg until the wobble slows to nothing; piano tuners count it.",
+   "move": "To match two things closely, watch their mismatch, not either one.",
+   "ask": "Where could I spot a small difference by watching two things drift apart?",
+   "keywords": [
+    "beats",
+    "tuning",
+    "frequency",
+    "guitar strings",
+    "piano tuners"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "music",
+    "mode": "chord",
+    "readout": "Frequency ratio",
+    "keys": [
+     "A1",
+     "C3"
+    ],
+    "start": [
+     "A1",
+     "Bb1"
+    ],
+    "hint": "Tap two keys a step apart, low down, and listen for the wobble.",
+    "moments": [
+     {
+      "notes": [
+       "A1",
+       "Bb1"
+      ],
+      "name": "3 swells a second",
+      "text": "55 and 58.3 Hz, heard as one note swelling 3 times a second: the gap."
+     },
+     {
+      "notes": [
+       "A2",
+       "Bb2"
+      ],
+      "name": "6.5 a second",
+      "text": "The same step an octave up, 110 and 116.5 Hz: twice the gap, twice the wobble."
+     },
+     {
+      "notes": [
+       "A1",
+       "A2"
+      ],
+      "name": "No wobble",
+      "text": "An octave, 1 : 2. The high wave fits the low one exactly; nothing drifts."
+     },
+     {
+      "notes": [
+       "A1",
+       "E2"
+      ],
+      "name": "One every 5 s",
+      "text": "A piano's fifth: harmonics at 165 and 164.8 Hz swell once every 5 seconds."
+     }
+    ]
+   },
+   "source": "Rossing et al., The Science of Sound, 2002",
+   "source_kind": "book",
+   "reference": "Rossing, Moore & Wheeler, The Science of Sound, 3rd edn, Addison-Wesley, 2002, ch. 8 (beats: the beat rate is the difference of the two frequencies); equal-tempered A1 55 Hz, Bb1 58.27 Hz, E2 82.41 Hz",
+   "written": "2026-10-07"
+  },
+  {
    "id": "music-guitar-1",
    "topic": "music",
    "genre": "music.instruments",
@@ -102168,8 +102486,8 @@
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do heavily distorted rock guitars favour two-note power chords over full major chords?",
-   "answer": "Because distortion invents notes: clipping adds tones at the sums and differences of the frequencies going in. A tempered fifth is almost exactly 3:2, so those new tones line up with the root's family. The tempered major third sits about 14 cents off a pure 5:4, so its products land off and beat: mud.",
+   "question": "Through a fuzz pedal, rock guitarists play two-note power chords, not full major chords. What goes wrong with the third note?",
+   "answer": "Distortion invents notes at the sums and differences of the frequencies going in. A guitar's fifth is a fiftieth of a semitone from a pure 3:2, so the new tones join the root's family. Its major third is a seventh of a semitone off 5:4, so its new tones land off and beat: mud.",
    "move": "An ingredient that works alone can spoil once the heat is turned up.",
    "ask": "What works well in small doses in my life but turns to noise when I turn it up?",
    "keywords": [
@@ -102189,9 +102507,61 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "music",
+    "mode": "chord",
+    "readout": "Frequency ratio",
+    "keys": [
+     "E2",
+     "E3"
+    ],
+    "start": [
+     "E2",
+     "B2",
+     "E3"
+    ],
+    "hint": "Tap keys to build chords, then picture each one through a fuzz pedal.",
+    "moments": [
+     {
+      "notes": [
+       "E2",
+       "B2",
+       "E3"
+      ],
+      "name": "Power chord",
+      "text": "Distortion adds B minus E, 41 Hz: an E an octave lower. It fits the chord."
+     },
+     {
+      "notes": [
+       "E2",
+       "B2"
+      ],
+      "name": "Bare fifth",
+      "text": "Almost exactly 3 : 2, so every tone distortion adds is a cousin of E."
+     },
+     {
+      "notes": [
+       "E2",
+       "G#2",
+       "B2"
+      ],
+      "name": "Major chord",
+      "text": "This G# is a seventh of a semitone sharp of 5 : 4. Through fuzz, it beats."
+     },
+     {
+      "notes": [
+       "E2",
+       "G2",
+       "B2"
+      ],
+      "name": "Minor chord",
+      "text": "Its third misses 6 : 5 by about as much. Through fuzz, mud again."
+     }
+    ]
+   },
    "source": "Lilja, Modern Heavy Metal conference, 2015",
    "source_kind": "paper",
-   "reference": "Esa Lilja, Dealing with the 3rd: Anatomy of distorted chords and subsequent compositional features in classic heavy metal, in Karjalainen & Kärki (eds), Modern Heavy Metal: Markets, Practices and Cultures, Aalto University, 2015, pp. 393–403",
+   "reference": "Esa Lilja, Dealing with the 3rd: Anatomy of distorted chords and subsequent compositional features in classic heavy metal, in Karjalainen & Kärki (eds), Modern Heavy Metal: Markets, Practices and Cultures, Aalto University, 2015, pp. 393-403; equal-tempered fifth 700 cents against 702, major third 400 against 386 (arithmetic)",
    "written": "2026-09-26"
   },
   {
@@ -102753,6 +103123,180 @@
    "written": "2026-10-06"
   },
   {
+   "id": "music-hearing-4",
+   "topic": "music",
+   "genre": "music.sound_itself",
+   "strand": "music.sound_itself.hearing",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "A phone speaker barely plays the 55 Hz low A of a bass guitar. Why do you still hear the bass line?",
+   "answer": "Because the brain puts it back. A bass note is a stack of harmonics, all multiples of 55 Hz, and together they repeat 55 times a second even with the bottom one gone. The ear takes that repetition as the pitch. Bass enhancers such as Waves' MaxxBass add harmonics a small speaker can play.",
+   "move": "Your senses report the pattern they infer, not only what arrives.",
+   "ask": "Where am I hearing or seeing something the signal never carried?",
+   "keywords": [
+    "missing fundamental",
+    "bass",
+    "phone speaker",
+    "harmonics",
+    "pitch"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "music",
+    "mode": "harmonics",
+    "readout": "Pitch you hear",
+    "fundamental": 55,
+    "harmonics": 8,
+    "start": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8
+    ],
+    "hint": "A bass guitar's low A, in eight harmonics. Tap the 55 Hz bar, the one a phone can't play.",
+    "moments": [
+     {
+      "on": [
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "name": "No 55 Hz in it",
+      "text": "The bottom tone is gone, yet the wave still repeats every 18 ms. Same note."
+     },
+     {
+      "on": [
+       4,
+       5,
+       6,
+       7,
+       8
+      ],
+      "name": "Phone speaker",
+      "text": "Only 220 to 440 Hz left, the range a phone plays well. Still a 55 Hz note."
+     },
+     {
+      "on": [
+       2,
+       4,
+       6,
+       8
+      ],
+      "name": "Evens only",
+      "text": "Now they are 110 Hz apart, and the pitch jumps an octave. The ear reads the gaps."
+     }
+    ]
+   },
+   "source": "Plack & Oxenham, Pitch, Springer, 2005",
+   "source_kind": "book",
+   "reference": "Plack, Oxenham, Fay & Popper (eds), Pitch: Neural Coding and Perception, Springer Handbook of Auditory Research 24, 2005; Waves Audio, MaxxBass: harmonics generated so the ear perceives bass below the speaker's limit",
+   "written": "2026-10-07"
+  },
+  {
+   "id": "music-hearing-5",
+   "topic": "music",
+   "genre": "music.sound_itself",
+   "strand": "music.sound_itself.hearing",
+   "also": [
+    "music.sound_itself.frequencies"
+   ],
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "A man and a child sing Happy Birthday together, an octave apart. Why does it sound like one tune, not two?",
+   "answer": "Because every harmonic of the higher note is already in the lower one, so the pair fuses. Whether that makes them the same note is partly learned: Jacoby's team had Tsimane' villagers in Bolivia sing back high tones, and they did not land an octave down on the same note, as Western singers did.",
+   "move": "Two things that blend perfectly are not, for that reason, the same.",
+   "ask": "Which things do I treat as identical only because they fit together?",
+   "keywords": [
+    "octave",
+    "harmonics",
+    "tsimane",
+    "pitch perception",
+    "singing"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "misconception",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "music",
+    "mode": "chord",
+    "readout": "Frequency ratio",
+    "keys": [
+     "C3",
+     "E4"
+    ],
+    "start": [
+     "C3"
+    ],
+    "tuning": "just",
+    "hint": "C alone. Tap the next C up, then try other keys with the low C.",
+    "moments": [
+     {
+      "notes": [
+       "C3",
+       "C4"
+      ],
+      "name": "Octave",
+      "text": "1 : 2. Every harmonic of the top C is already in the low one: they fuse."
+     },
+     {
+      "notes": [
+       "C3",
+       "G3"
+      ],
+      "name": "Fifth",
+      "text": "2 : 3. Only every other harmonic of G lands on one of C's: blended, but two."
+     },
+     {
+      "notes": [
+       "C3",
+       "B3"
+      ],
+      "name": "One key short",
+      "text": "8 : 15. One key below the octave, almost nothing shared, and it grates."
+     },
+     {
+      "notes": [
+       "C3",
+       "G3",
+       "C4"
+      ],
+      "name": "Add the octave",
+      "text": "2 : 3 : 4. The top C brings nothing new: only more of the low C."
+     }
+    ]
+   },
+   "source": "Jacoby et al., Current Biology, 2019",
+   "source_kind": "paper",
+   "reference": "Jacoby, Undurraga, McPherson, Valdés, Ossandón & McDermott, Universal and non-universal features of musical pitch perception revealed by singing, Current Biology 29, 3229-3243, 2019, doi:10.1016/j.cub.2019.08.020",
+   "written": "2026-10-07"
+  },
+  {
    "id": "music-hip-hop-1",
    "topic": "music",
    "genre": "music.genres",
@@ -103258,6 +103802,98 @@
    "source_kind": "book",
    "reference": "Seabrook, The Song Machine: Inside the Hit Factory, W. W. Norton, 2015",
    "written": "2026-09-27"
+  },
+  {
+   "id": "music-hooks-11",
+   "topic": "music",
+   "genre": "music.why_songs_work",
+   "strand": "music.why_songs_work.hooks",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Maria, from West Side Story, opens on the so-called devil's interval. Why does it sound restless rather than evil?",
+   "answer": "Because it sits half an octave up, between two stable intervals, and leans towards both. Maria's third note steps one key up to a fifth, and the tension lets go. Inside G7, B and F form it and pull to C and E. The devil tag dates from 1702, not from a medieval ban.",
+   "move": "A tension that points somewhere is a promise, not a flaw.",
+   "ask": "Which tension in my life is pointing to where it wants to go?",
+   "keywords": [
+    "tritone",
+    "west side story",
+    "dominant seventh",
+    "resolution",
+    "diabolus in musica"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "misconception",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "music",
+    "mode": "chord",
+    "readout": "Frequency ratio",
+    "keys": [
+     "G3",
+     "B4"
+    ],
+    "start": [
+     "C4",
+     "F#4"
+    ],
+    "hint": "Tap keys to add or take away notes. Every tap plays the chord.",
+    "moments": [
+     {
+      "notes": [
+       "C4",
+       "F#4"
+      ],
+      "name": "Tritone",
+      "text": "Ma-ri-: half an octave, and it hangs. Swap F# for G, one key up, to end the name."
+     },
+     {
+      "notes": [
+       "C4",
+       "G4"
+      ],
+      "name": "Fifth",
+      "text": "-a. A fifth, 2 : 3. One key's move, and the pull lets go."
+     },
+     {
+      "notes": [
+       "G3",
+       "B3",
+       "D4",
+       "F4"
+      ],
+      "name": "G7",
+      "text": "The chord before home in countless songs. Inside it, B and F make a tritone."
+     },
+     {
+      "notes": [
+       "B3",
+       "F4"
+      ],
+      "name": "Tritone in G7",
+      "text": "Each note sits one key from rest: B below C, F above E. Now try C with E."
+     },
+     {
+      "notes": [
+       "C4",
+       "E4"
+      ],
+      "name": "Resolved",
+      "text": "B rose to C, F fell to E. Both moved one key, and the spring let go."
+     }
+    ]
+   },
+   "source": "Aldwell & Schachter; Werckmeister, 1702",
+   "source_kind": "book",
+   "reference": "Aldwell & Schachter, Harmony and Voice Leading, 4th edn, Schirmer, 2011 (the tritone of V7 and its resolution); Andreas Werckmeister, Harmonologia Musica, 1702, earliest written 'mi contra fa est diabolus in musica' (Store norske leksikon, tritonus); Maria's opening C-F#-G figure, transposed: Saskatoon Symphony programme note",
+   "written": "2026-10-07"
   },
   {
    "id": "music-jazz-1",
@@ -105256,6 +105892,91 @@
    "written": "2026-09-26"
   },
   {
+   "id": "music-music-and-mood-4",
+   "topic": "music",
+   "genre": "music.why_we_like_what_we_like",
+   "strand": "music.why_we_like_what_we_like.music_and_mood",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "C major to C minor moves one note down by one key. Who hears that single step as sad?",
+   "answer": "Mostly people raised on Western music. In Dalla Bella's tests, 3- and 4-year-olds could not tell happy music from sad, 5-year-olds went by tempo alone, and mode counted only from 6 to 8. In a Papua New Guinea valley with little Western music, minor cadences were not heard as sadder.",
+   "move": "Before calling a reaction natural, ask when you first learned it.",
+   "ask": "Which of my gut reactions did I actually learn as a child?",
+   "keywords": [
+    "minor key",
+    "major key",
+    "mode",
+    "children",
+    "papua new guinea"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "misconception",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "music",
+    "mode": "chord",
+    "readout": "Frequency ratio",
+    "keys": [
+     "C4",
+     "C5"
+    ],
+    "start": [
+     "C4",
+     "E4",
+     "G4"
+    ],
+    "hint": "Tap keys to change the chord. Every tap plays it.",
+    "moments": [
+     {
+      "notes": [
+       "C4",
+       "E4",
+       "G4"
+      ],
+      "name": "Major chord",
+      "text": "Bright, to ears raised on pop and hymns. Now lower the E by one key, to Eb."
+     },
+     {
+      "notes": [
+       "C4",
+       "Eb4",
+       "G4"
+      ],
+      "name": "Minor chord",
+      "text": "One note, one key lower. Sad? Under age 6, children mostly can't hear it."
+     },
+     {
+      "notes": [
+       "C4",
+       "G4"
+      ],
+      "name": "No third",
+      "text": "Take the middle note out: neither happy nor sad. The third sets the mood."
+     },
+     {
+      "notes": [
+       "C4",
+       "Eb4"
+      ],
+      "name": "Minor third",
+      "text": "The step that decides, on its own. To Western ears it already leans dark."
+     }
+    ]
+   },
+   "source": "Dalla Bella et al., Cognition, 2001",
+   "source_kind": "paper",
+   "reference": "Dalla Bella, Peretz, Rousseau & Gosselin, A developmental study of the affective value of tempo and mode in music, Cognition 80, B1-B10, 2001; Smit, Milne, Sarvasy & Dean, Emotional responses in Papua New Guinea show negligible evidence for a universal effect of major versus minor music, PLOS ONE 17: e0269597, 2022",
+   "written": "2026-10-07"
+  },
+  {
    "id": "music-music-therapy-1",
    "topic": "music",
    "genre": "music.music_and_the_brain",
@@ -106861,8 +107582,8 @@
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What do the Cuban tresillo rhythm and a particle accelerator's timing system have in common?",
-   "answer": "The same algorithm. Spreading 3 beats as evenly as possible over 8 pulses gives 3+3+2, the tresillo under the habanera and countless pop grooves. Godfried Toussaint showed in 2005 that this rule, used by Eric Bjorklund to space pulses at a neutron source, generates dozens of traditional rhythms. Five over eight gives the Cuban cinquillo.",
+   "question": "Spread 3 claps as evenly as you can over 8 pulses. Why does the result sound like a groove you already know?",
+   "answer": "Because it is one: 3+3+2, the tresillo, under the habanera and countless pop grooves. Godfried Toussaint showed in 2005 that this rule, used by Eric Bjorklund to space pulses at a neutron source, generates dozens of traditional rhythms. Five over eight gives the Cuban cinquillo.",
    "move": "When a pattern feels natural, look for the simple rule that makes it.",
    "ask": "Which pattern in my life feels natural but comes from one simple rule?",
    "keywords": [
@@ -106882,6 +107603,50 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "music",
+    "mode": "layers",
+    "bpm": 96,
+    "steps": 16,
+    "hint": "The kick marks the beat. Add one pattern at a time over it.",
+    "tracks": [
+     {
+      "name": "Beat",
+      "sound": "kick",
+      "on": true,
+      "pattern": "X . . . x . . . X . . . x . . ."
+     },
+     {
+      "name": "3+3+2",
+      "sound": "bass",
+      "pattern": "A1 - - A1 - - A1 - A1 - - A1 - - A1 -",
+      "text": "The tresillo: three notes spread as evenly as 8 pulses allow, 3, 3, then 2."
+     },
+     {
+      "name": "Five",
+      "sound": "snare",
+      "pattern": "X . x x . x x . X . x x . x x .",
+      "text": "Five spread as evenly as 8 allow: the Cuban cinquillo. Same rule."
+     },
+     {
+      "name": "Clave",
+      "sound": "clap",
+      "pattern": "X . . x . . x . . . x . x . . .",
+      "text": "Son clave: the same 3, 3, 2 to open, then two hits to answer it."
+     }
+    ],
+    "moments": [
+     {
+      "on": [
+       "Beat",
+       "3+3+2",
+       "Clave"
+      ],
+      "name": "Locked",
+      "text": "Bass and clave open together, then the clave answers alone. That is the groove."
+     }
+    ]
+   },
    "source": "Toussaint, Proceedings of Bridges, 2005",
    "source_kind": "paper",
    "reference": "Toussaint, The Euclidean algorithm generates traditional musical rhythms, Proceedings of BRIDGES: Mathematical Connections in Art, Music and Science, 2005",
@@ -107239,6 +108004,85 @@
    "source_kind": "paper",
    "reference": "Brochard, Abecasis, Potter, Ragot & Drake, The ticktock of our internal clock: Direct brain evidence of subjective accents in isochronous sequences, Psychological Science, 2003",
    "written": "2026-09-27"
+  },
+  {
+   "id": "music-rhythm-11",
+   "topic": "music",
+   "genre": "music.why_songs_work",
+   "strand": "music.why_songs_work.rhythm",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Clap along to almost any pop song and your hands land on beats 2 and 4. Why not on 1 and 3?",
+   "answer": "Because the kick already owns 1 and 3. A snare on the weak beats answers each low thump with a high crack, so every bar pushes away from where its weight lies. Earl Palmer, the drummer on Little Richard's hits, said he learned to clap on 2 and 4 behind New Orleans parade bands.",
+   "move": "Put the accent where nothing else is already pushing.",
+   "ask": "Where would my effort count more if I put it where nobody else is?",
+   "keywords": [
+    "backbeat",
+    "snare",
+    "earl palmer",
+    "rock and roll",
+    "new orleans"
+   ],
+   "era": "twentieth",
+   "region": "americas",
+   "hook": "mechanism",
+   "mood": "playful",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "music",
+    "mode": "layers",
+    "bpm": 100,
+    "steps": 16,
+    "hint": "Kick and hat are playing. Add a snare on 1 and 3, then swap it for 2 and 4.",
+    "tracks": [
+     {
+      "name": "Kick",
+      "sound": "kick",
+      "on": true,
+      "pattern": "X . . . . . . . X . . . . . . ."
+     },
+     {
+      "name": "Hat",
+      "sound": "hat",
+      "on": true,
+      "pattern": "x . x . x . x . x . x . x . x ."
+     },
+     {
+      "name": "1 + 3",
+      "sound": "snare",
+      "pattern": "X . . . . . . . X . . . . . . .",
+      "text": "Snare on top of the kick: every hit lands on the strong beat. A march."
+     },
+     {
+      "name": "2 + 4",
+      "sound": "snare",
+      "pattern": ". . . . X . . . . . . . X . . .",
+      "text": "Low thump, high crack, low thump, high crack: the backbeat. Now it rocks."
+     }
+    ],
+    "moments": [
+     {
+      "on": [
+       "Kick",
+       "Hat",
+       "1 + 3",
+       "2 + 4"
+      ],
+      "name": "Every beat",
+      "text": "Snare on all four: the crack loses its contrast, and the push goes flat."
+     }
+    ]
+   },
+   "source": "Scherman, Backbeat: Earl Palmer's Story, 1999",
+   "source_kind": "book",
+   "reference": "Tony Scherman, Backbeat: Earl Palmer's Story, Smithsonian Institution Press, 1999; 64 Parishes, Earl Palmer (clapping on 2 and 4 behind Treme brass bands)",
+   "written": "2026-10-07"
   },
   {
    "id": "music-rhythm-in-the-body-1",
@@ -107892,6 +108736,53 @@
    "source_kind": "paper",
    "reference": "Heller and Bergman, Tinnitus Aurium in Normally Hearing Persons, Annals of Otology, Rhinology and Laryngology, 1953",
    "written": "2026-09-27"
+  },
+  {
+   "id": "music-silence-11",
+   "topic": "music",
+   "genre": "music.sound_itself",
+   "strand": "music.sound_itself.silence",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Noise-cancelling headphones erase a plane's drone but let through the clink of a glass. Why that difference?",
+   "answer": "The headphone plays the noise flipped, crest for trough, and the two cancel only where they meet exactly out of step: a zone about a tenth of a wavelength across. A 100-hertz drone has waves 3.4 metres long, so the zone swallows the ear. A 3,000-hertz clink has 11 cm waves; its zone is a centimetre.",
+   "move": "A fix that works at one spot may fail a hand's width away.",
+   "ask": "Which of my fixes works only where I first tested it?",
+   "keywords": [
+    "noise cancelling",
+    "headphones",
+    "interference",
+    "wavelength",
+    "anti-noise"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "practical",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "beauty",
+    "piece": "waves",
+    "caption": "Two sources of one sound. Where a crest meets a trough, silence; beside it, louder.",
+    "hint": "Drag a source to move it",
+    "reveal": "Move a source a little and the silent lane swings away. Quiet lives in a sliver.",
+    "params": {
+     "wavelength": 0.2,
+     "gap": 0.26
+    },
+    "accent": "#FFE600",
+    "seed": 343
+   },
+   "source": "Elliott & Nelson, IEEE Signal Processing, 1993",
+   "source_kind": "paper",
+   "reference": "Elliott & Nelson, Active noise control, IEEE Signal Processing Magazine 10(4):12-35, 1993; speed of sound 343 m/s at 20 °C",
+   "written": "2026-10-07"
   },
   {
    "id": "music-song-length-1",
@@ -109154,6 +110045,93 @@
    "source_kind": "paper",
    "reference": "Titze, Švec & Popolo, Vocal dose measures: quantifying accumulated vibration exposure in vocal fold tissues, Journal of Speech, Language, and Hearing Research, 2003",
    "written": "2026-09-26"
+  },
+  {
+   "id": "music-voice-4",
+   "topic": "music",
+   "genre": "music.instruments",
+   "strand": "music.instruments.voice",
+   "also": [
+    "music.sound_itself.frequencies"
+   ],
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "A singer and a violinist play the same G, 196 Hz. Same pitch, so what makes them sound nothing alike?",
+   "answer": "The recipe of harmonics. Both make a stack of multiples of 196 Hz, so both repeat 196 times a second: that is the pitch. What differs is how loud each harmonic is. A violin's wooden body boosts fixed bands; a singer's throat and mouth reshape theirs with every vowel.",
+   "move": "Two things that measure the same can still be made differently.",
+   "ask": "Which two things do I lump together because one number matches?",
+   "keywords": [
+    "timbre",
+    "harmonics",
+    "violin",
+    "singing voice",
+    "resonance"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "music",
+    "mode": "harmonics",
+    "readout": "Pitch you hear",
+    "fundamental": 196,
+    "harmonics": 5,
+    "start": [
+     1,
+     2,
+     3
+    ],
+    "hint": "A G at 196 Hz, the violin's lowest string. Change the recipe: the pitch stays.",
+    "moments": [
+     {
+      "on": [
+       1
+      ],
+      "name": "Pure tone",
+      "text": "One sine wave, near what a tuning fork makes: plain, and hard to place."
+     },
+     {
+      "on": [
+       1,
+       2,
+       3,
+       4,
+       5
+      ],
+      "name": "Full stack",
+      "text": "Every harmonic strong: the bright buzz of a bowed string before the wood shapes it."
+     },
+     {
+      "on": [
+       3,
+       4,
+       5
+      ],
+      "name": "Top only",
+      "text": "Only higher harmonics: thin and nasal. The pitch is still 196 Hz."
+     },
+     {
+      "on": [
+       1,
+       2
+      ],
+      "name": "Low two",
+      "text": "Only the two lowest: soft and round, nearer a flute or a hum."
+     }
+    ]
+   },
+   "source": "Fletcher & Rossing; Sundberg, 1987",
+   "source_kind": "book",
+   "reference": "Fletcher & Rossing, The Physics of Musical Instruments, 2nd edn, Springer, 1998 (violin body resonances); Sundberg, The Science of the Singing Voice, Northern Illinois University Press, 1987 (formants)",
+   "written": "2026-10-07"
   },
   {
    "id": "nature-1",
@@ -111756,6 +112734,50 @@
    "source_kind": "paper",
    "reference": "Kauffman, Brodie & Jules, Are wolves saving Yellowstone's aspen? A landscape-level test of a behaviorally mediated trophic cascade, Ecology, 2010; Ripple & Beschta, Trophic cascades in Yellowstone: the first 15 years after wolf reintroduction, Biological Conservation, 2012",
    "written": "2026-10-03"
+  },
+  {
+   "id": "nature-chain-reactions-4",
+   "topic": "nature",
+   "genre": "nature.systems_thinking",
+   "strand": "nature.systems_thinking.chain_reactions",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "A starling flock stretches thin, then packs tight, and never falls apart. What is each bird keeping track of?",
+   "answer": "Six or seven neighbours, however far away they are. Filming flocks over Rome in 3D, Ballerini's team found each starling follows a fixed number of birds, not every bird within a set distance. So a bird on a thinned edge still has its seven, and the flock holds. A falcon's dive spreads the same way, neighbour to neighbour.",
+   "move": "When a crowd moves as one, look for simple local rules before a leader.",
+   "ask": "Where do I see a leader that is really neighbours copying neighbours?",
+   "keywords": [
+    "starlings",
+    "murmuration",
+    "flocking",
+    "nearest neighbours"
+   ],
+   "era": "timeless",
+   "region": "europe",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "beauty",
+    "piece": "flock",
+    "caption": "Each bird watches only its 7 nearest neighbours: stay close, match them, don't collide.",
+    "hint": "Touch to send a falcon",
+    "reveal": "No bird sees the whole dive. The swerve passes from neighbour to neighbour.",
+    "params": {
+     "birds": 340
+    },
+    "seed": 1986
+   },
+   "source": "Ballerini et al., PNAS, 2008",
+   "source_kind": "paper",
+   "reference": "Ballerini et al., Interaction ruling animal collective behavior depends on topological rather than metric distance: evidence from a field study, PNAS 105(4):1232-1237, 2008",
+   "written": "2026-10-07"
   },
   {
    "id": "nature-climate-myths-1",
@@ -114926,6 +115948,60 @@
    "written": "2026-10-03"
   },
   {
+   "id": "nature-feedback-loops-4",
+   "topic": "nature",
+   "genre": "nature.systems_thinking",
+   "strand": "nature.systems_thinking.feedback_loops",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Streams fed by springs in a Florida forest fork at almost the same angle, over and over. What sets it?",
+   "answer": "The water in the ground. Each stream grows at its head, eating into the sand where seeping water gathers. That seepage obeys the same mathematics as spreading heat, and for a head that splits it predicts 72°, a fifth of a turn. Devauchelle and colleagues measured the forks: they cluster around 72°.",
+   "move": "When one shape keeps repeating, look for the force that keeps drawing it.",
+   "ask": "Which shape in my days keeps recurring because the same pressure draws it?",
+   "keywords": [
+    "river networks",
+    "groundwater",
+    "stream branching",
+    "florida",
+    "erosion"
+   ],
+   "era": "timeless",
+   "region": "americas",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "beauty",
+    "piece": "fractal",
+    "caption": "Each stream splits in two, each arm 36° off its line: 72° between them. Again and again.",
+    "hint": "Drag sideways to change the fork",
+    "reveal": "Narrow forks crowd, wide ones sprawl. The ground's water picks a fifth of a turn.",
+    "dial": {
+     "label": "Each arm off the line",
+     "unit": "°",
+     "value": 36,
+     "from": 5,
+     "to": 85,
+     "decimals": 0
+    },
+    "params": {
+     "ratio": 0.7,
+     "depth": 9
+    },
+    "seed": 72
+   },
+   "source": "Devauchelle et al., PNAS, 2012",
+   "source_kind": "paper",
+   "reference": "Devauchelle, Petroff, Seybold & Rothman, Ramification of stream networks, PNAS 109(51):20832-20836, 2012",
+   "written": "2026-10-07"
+  },
+  {
    "id": "nature-forecast-odds-1",
    "topic": "nature",
    "genre": "nature.weather",
@@ -117401,6 +118477,52 @@
    "source_kind": "paper",
    "reference": "Haldane, A mathematical theory of natural and artificial selection, Part I, Transactions of the Cambridge Philosophical Society, 1924",
    "written": "2026-10-03"
+  },
+  {
+   "id": "nature-natural-selection-4",
+   "topic": "nature",
+   "genre": "nature.evolution",
+   "strand": "nature.evolution.natural_selection",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "A predator charging a shoal of look-alike fish often comes away with nothing. Which fish does it catch?",
+   "answer": "The one that looks different. Faced with dozens of identical fish swerving together, a predator struggles to lock on to any one: the confusion effect. When Landeau and Terborgh let largemouth bass hunt shoals of minnows, bigger shoals meant fewer catches, until some minnows were dyed. The bass went straight for the odd ones.",
+   "move": "Safety in numbers holds only while you look like the numbers.",
+   "ask": "Where am I safe only because I blend in?",
+   "keywords": [
+    "shoals",
+    "confusion effect",
+    "oddity effect",
+    "predation",
+    "minnows"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "beauty",
+    "piece": "flock",
+    "caption": "Each fish follows only its nearest neighbours: keep close, swim alike, don't collide.",
+    "hint": "Touch to send a predator",
+    "reveal": "It can't fix on one fish in the swirl. The fish you can follow is the one it takes.",
+    "params": {
+     "birds": 300
+    },
+    "accent": "#FFFFFF",
+    "seed": 4242
+   },
+   "source": "Landeau & Terborgh, Animal Behaviour, 1986",
+   "source_kind": "paper",
+   "reference": "Landeau & Terborgh, Oddity and the 'confusion effect' in predation, Animal Behaviour 34(5):1372-1380, 1986",
+   "written": "2026-10-07"
   },
   {
    "id": "nature-night-vision-1",
@@ -160617,6 +161739,53 @@
    "written": "2026-10-06"
   },
   {
+   "id": "science-experiments-4",
+   "topic": "science",
+   "genre": "science.how_science_knows",
+   "strand": "science.how_science_knows.experiments",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Shine light through two narrow slits and the wall shows dark stripes. Why did that darkness prove light is a wave?",
+   "answer": "Because particles can't cancel. Add a second stream of grains to a spot and it only gets brighter. With two slits open, Thomas Young saw spots go dark, where a crest from one slit met a trough from the other. Only waves do that. The stripes' spacing even let him measure the wave: under a thousandth of a millimetre.",
+   "move": "Ask what only one explanation could produce, then go and look for it.",
+   "ask": "What result would prove my favourite explanation wrong?",
+   "keywords": [
+    "thomas young",
+    "double slit",
+    "interference",
+    "light",
+    "wavelength"
+   ],
+   "era": "nineteenth",
+   "region": "europe",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "beauty",
+    "piece": "waves",
+    "caption": "Two sources, one wave. Where a crest meets a trough, nothing: lanes that never move.",
+    "hint": "Drag a source to move it",
+    "reveal": "Spread the sources and the dark lanes crowd in. Young measured light by them.",
+    "params": {
+     "wavelength": 0.08,
+     "gap": 0.3
+    },
+    "accent": "#FFE600",
+    "seed": 1803
+   },
+   "source": "Young, Phil. Trans. Royal Society, 1804",
+   "source_kind": "paper",
+   "reference": "Young, The Bakerian Lecture: Experiments and calculations relative to physical optics, Philosophical Transactions of the Royal Society 94:1-16, 1804; Young, A Course of Lectures on Natural Philosophy, 1807",
+   "written": "2026-10-07"
+  },
+  {
    "id": "science-experts-disagree-1",
    "topic": "science",
    "genre": "science.spot_bad_science",
@@ -163142,6 +164311,59 @@
    "reference": "Mandelbrot, The Fractal Geometry of Nature, W. H. Freeman, 1982",
    "written": "2026-09-27",
    "disabled": true
+  },
+  {
+   "id": "science-infinity-11",
+   "topic": "science",
+   "genre": "science.maths_curios",
+   "strand": "science.maths_curios.infinity",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "A sunflower's spirals come in Fibonacci numbers, often 34 one way and 55 the other. How does a plant count?",
+   "answer": "It doesn't. Each new seed sprouts 137.5° round from the last, the golden angle, a turn that never lines a seed up behind an earlier one. The spirals the eye picks out join seeds that land almost in line, and at this angle those are 21, 34 or 55 seeds apart. The Fibonacci numbers fall out of the angle.",
+   "move": "A pattern can be a side effect of a rule that never mentions it.",
+   "ask": "Which pattern in my life is a by-product rather than a plan?",
+   "keywords": [
+    "sunflower",
+    "golden angle",
+    "fibonacci numbers",
+    "phyllotaxis",
+    "spirals"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "beauty",
+    "piece": "phyllotaxis",
+    "caption": "Each new seed grows 137.5° round from the last. That one turn is the plant's whole rule.",
+    "hint": "Drag sideways to change the turn",
+    "reveal": "Off 137.5° the spirals snap into straight spokes, with gaps between.",
+    "dial": {
+     "label": "Turn between seeds",
+     "unit": "°",
+     "value": 137.508,
+     "from": 125,
+     "to": 150,
+     "decimals": 1
+    },
+    "params": {
+     "seeds": 700
+    },
+    "seed": 7
+   },
+   "source": "Vogel, Mathematical Biosciences, 1979",
+   "source_kind": "paper",
+   "reference": "Vogel, A better way to construct the sunflower head, Mathematical Biosciences 44(3-4):179-189, 1979; Douady & Couder, Phyllotaxis as a physical self-organized growth process, Physical Review Letters 68:2098, 1992",
+   "written": "2026-10-07"
   },
   {
    "id": "science-insulation-1",
@@ -169417,6 +170639,66 @@
    "disabled": true
   },
   {
+   "id": "science-testable-claims-1",
+   "topic": "science",
+   "genre": "science.think_like_a_scientist",
+   "strand": "science.think_like_a_scientist.testable_claims",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "In March 1979, before any spacecraft had looked closely, three scientists said Jupiter's moon Io must be volcanic. What told them?",
+   "answer": "A rhythm. Io circles Jupiter twice for every orbit of Europa, so Europa tugs it at the same point again and again and keeps its orbit slightly oval. Swinging nearer and farther, Io is squeezed and relaxed by Jupiter's pull, which heats its rock. Peale, Cassen and Reynolds published that week; days later Voyager 1 photographed a plume erupting.",
+   "move": "Trust a theory more when it predicted something nobody had yet seen.",
+   "ask": "What do I believe that has never made a risky prediction?",
+   "keywords": [
+    "io",
+    "europa",
+    "orbital resonance",
+    "tidal heating",
+    "voyager 1"
+   ],
+   "era": "twentieth",
+   "region": "none",
+   "hook": "story",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "beauty",
+    "piece": "orbits",
+    "caption": "Io goes round Jupiter twice for each orbit of Europa. A line joins them every hour.",
+    "hint": "Drag to change Io's orbit",
+    "reveal": "Off the 2 to 1 beat the figure smears, and Europa's tugs would no longer add up.",
+    "dial": {
+     "label": "Io's orbit",
+     "unit": "hours",
+     "value": 42.46,
+     "from": 36,
+     "to": 50,
+     "decimals": 1
+    },
+    "params": {
+     "outer": 85.23,
+     "radii": [
+      4.217,
+      6.711
+     ],
+     "every": 1,
+     "span": 682
+    },
+    "accent": "#FFE600",
+    "seed": 1979
+   },
+   "source": "Peale, Cassen & Reynolds, Science, 1979",
+   "source_kind": "paper",
+   "reference": "Peale, Cassen & Reynolds, Melting of Io by tidal dissipation, Science 203(4383):892-894, 2 March 1979; Morabito et al., Discovery of currently active extraterrestrial volcanism, Science 204:972, 1979",
+   "written": "2026-10-07"
+  },
+  {
    "id": "science-theories-and-laws-1",
    "topic": "science",
    "genre": "science.how_science_knows",
@@ -170921,6 +172203,66 @@
    "source_kind": "paper",
    "reference": "Forer, The fallacy of personal validation, Journal of Abnormal and Social Psychology, 1949",
    "written": "2026-10-03"
+  },
+  {
+   "id": "space-astrology-or-astronomy-4",
+   "topic": "space",
+   "genre": "space.stars_and_light",
+   "strand": "space.stars_and_light.astrology_or_astronomy",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "For about two centuries at a time, the meetings of Jupiter and Saturn fall in the signs of one astrological element. Why?",
+   "answer": "Because Jupiter goes round about 5 times while Saturn goes round 2. They meet every 20 years, each time two thirds of the way round the sky from the last, so three meetings mark out a triangle. The fit is a little off, so the triangle slowly turns. Kepler drew it in 1596; it is two clocks, not a message.",
+   "move": "A pattern in the sky is two clocks lining up, not a sign.",
+   "ask": "Which omens I notice are just two cycles meeting?",
+   "keywords": [
+    "jupiter",
+    "saturn",
+    "great conjunction",
+    "kepler",
+    "astrology"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "misconception",
+   "mood": "wonder",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "beauty",
+    "piece": "orbits",
+    "caption": "Jupiter laps the Sun 5 times while Saturn laps it twice. A line joins them every 30 days.",
+    "hint": "Drag to change Jupiter's year",
+    "reveal": "Three petals: they meet every 20 years at three points a third of a turn apart.",
+    "dial": {
+     "label": "Jupiter's year",
+     "unit": "days",
+     "value": 4332.59,
+     "from": 3800,
+     "to": 4900,
+     "decimals": 0
+    },
+    "params": {
+     "outer": 10759.22,
+     "radii": [
+      5.203,
+      9.537
+     ],
+     "every": 30,
+     "span": 21900
+    },
+    "accent": "#FFE600",
+    "seed": 1596
+   },
+   "source": "NASA Planetary Fact Sheet; Kepler, 1596",
+   "source_kind": "institution",
+   "reference": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/ (sidereal periods: Jupiter 4,332.59 days, Saturn 10,759.22 days); Kepler, Mysterium Cosmographicum, 1596, great-conjunction trigon figure",
+   "written": "2026-10-07"
   },
   {
    "id": "space-before-the-big-bang-1",
@@ -172763,6 +174105,65 @@
    "source_kind": "institution",
    "reference": "https://pubs.usgs.gov/gip/dynamic/",
    "written": "2026-10-03"
+  },
+  {
+   "id": "space-deep-time-4",
+   "topic": "space",
+   "genre": "space.think_at_scale",
+   "strand": "space.think_at_scale.deep_time",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Join Venus and Earth with a line every three days for eight years. Why does a five-petalled rose appear?",
+   "answer": "Because 13 Venus years almost exactly fill 8 of ours: 2,921 days against 2,922. Venus laps Earth every 584 days, and five laps take eight years, so after five petals the pattern closes where it began. The fit is not quite perfect, so the rose creeps round a couple of degrees every eight years.",
+   "move": "A pattern that repeats often hides two rhythms in a near-whole ratio.",
+   "ask": "Which of my repeating weeks are two cycles quietly lining up?",
+   "keywords": [
+    "venus",
+    "orbits",
+    "resonance",
+    "pentagram"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "beauty",
+    "piece": "orbits",
+    "caption": "Venus circles the Sun 13 times while Earth circles it 8. A line joins them every 3 days.",
+    "hint": "Drag to change Venus's year",
+    "reveal": "A few days off and the rose smears. Only 13 to 8 closes it.",
+    "dial": {
+     "label": "Venus's year",
+     "unit": "days",
+     "value": 224.701,
+     "from": 205,
+     "to": 245,
+     "decimals": 1
+    },
+    "params": {
+     "outer": 365.256,
+     "radii": [
+      0.723,
+      1.0
+     ],
+     "every": 3,
+     "span": 2922
+    },
+    "accent": "#FFE600",
+    "seed": 1
+   },
+   "source": "NASA Planetary Fact Sheet",
+   "source_kind": "institution",
+   "reference": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/ (NASA Planetary Fact Sheet: sidereal orbit periods of Venus 224.701 days and Earth 365.256 days)",
+   "written": "2026-10-07"
   },
   {
    "id": "space-distances-1",
@@ -182332,6 +183733,53 @@
    "source_kind": "paper",
    "reference": "Sahu et al., An Isolated Stellar-mass Black Hole Detected through Astrometric Microlensing, Astrophysical Journal, 2022",
    "written": "2026-10-03"
+  },
+  {
+   "id": "space-what-we-can-see-4",
+   "topic": "space",
+   "genre": "space.black_holes",
+   "strand": "space.black_holes.what_we_can_see",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "To photograph a black hole 55 million light years away, astronomers needed a dish as wide as the Earth. How did they get one?",
+   "answer": "They spread telescopes across the planet and combined their signals. Two dishes catch the same wave slightly out of step, and where crest meets trough it cancels. The farther apart the dishes, the finer those stripes and the smaller the detail. In 2019 the Event Horizon Telescope, dishes from Hawaii to the South Pole, showed M87's black hole.",
+   "move": "Two viewpoints far apart see detail that neither sees alone.",
+   "ask": "Whose distant view would sharpen what I can't make out?",
+   "keywords": [
+    "event horizon telescope",
+    "m87",
+    "interferometry",
+    "black hole",
+    "radio telescopes"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "wonder",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "beauty",
+    "piece": "waves",
+    "caption": "Two receivers, one wave. Where crest meets trough it cancels, in lanes that never move.",
+    "hint": "Drag a dish to move it",
+    "reveal": "Pull the two apart and the lanes crowd closer: finer stripes, finer detail.",
+    "params": {
+     "wavelength": 0.055,
+     "gap": 0.36
+    },
+    "accent": "#FFE600",
+    "seed": 2019
+   },
+   "source": "Event Horizon Telescope, ApJ Letters, 2019",
+   "source_kind": "paper",
+   "reference": "Event Horizon Telescope Collaboration, First M87 Event Horizon Telescope Results. I. The Shadow of the Supermassive Black Hole, Astrophysical Journal Letters 875:L1, 2019, doi:10.3847/2041-8213/ab0ec7",
+   "written": "2026-10-07"
   },
   {
    "id": "space-what-we-do-not-know-1",
