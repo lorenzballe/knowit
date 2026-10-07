@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Plasmodium vivax, a common malaria parasite, thrives across tropical Asia but is nearly absent from West Africa. Why?",
-  "answer": "A blood type. Most West and Central Africans are Duffy-negative: their red cells lack the surface protein vivax grips to get in. Miller and colleagues showed it in 1976 with volunteers. The shield leaks: vivax has since been found infecting Duffy-negative people in Madagascar.",
+  "answer": "A blood type. Most West and Central Africans are Duffy-negative: their red cells lack the protein vivax grips to get in, as Miller showed in 1976. The shield leaks: vivax now infects some Duffy-negative people.",
   "move": "Before crediting the famous cause, check the cases it cannot explain.",
   "keywords": [
     "duffy antigen",
@@ -27,7 +27,7 @@
   "language": "en",
   "figure": "none",
   "disabled": true,
-  "ask": "Which explanation do I trust because it is famous, not because it fits every case?",
+  "ask": "Which famous explanation do I trust without testing?",
   "scene": {
     "type": "clues",
     "options": [

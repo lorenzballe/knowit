@@ -7,9 +7,9 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Mercury's orbit swings round a little more each century than Newton's law allows. What is causing the extra turn?",
-  "answer": "Gravity itself: Newton's law is slightly wrong close to the Sun. Neptune's success made a hidden planet, Vulcan, the obvious bet, and observers even reported seeing it. Every physical suspect then failed a plain measurement. Einstein's relativity, in 1915, produced the missing 43 arcseconds with nothing adjusted to fit.",
+  "answer": "Gravity itself: Newton's law is slightly wrong near the Sun. After Neptune, a hidden planet, Vulcan, was the obvious bet, and some even claimed to see it. Einstein's relativity, in 1915, gave the missing 43 arcseconds with nothing adjusted.",
   "move": "When the trick that worked last time fails, suspect the rule itself.",
-  "ask": "When one of my plans fails, which assumption broke, and how do I know?",
+  "ask": "When my plan fails, which assumption broke?",
   "keywords": [
     "mercury's orbit",
     "vulcan",

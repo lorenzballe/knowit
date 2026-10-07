@@ -7,9 +7,9 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "In 1981 a top medical journal reported that people with pancreatic cancer had drunk more coffee than other patients. Why?",
-  "answer": "Because of who they were compared with. The controls were other patients of the same doctors, many with stomach and gut illnesses that had made them cut down on coffee. That made coffee look commoner among the cancer cases. The authors' own larger follow-up, in 1986, found no clear link.",
+  "answer": "Who they were compared with. The controls were other patients of the same doctors, many with gut illnesses that had made them cut down on coffee. The authors' own larger follow-up, in 1986, found no clear link.",
   "move": "Before trusting a difference, ask who was picked for the comparison.",
-  "ask": "When I compare myself with others, have I picked a fair group to compare with?",
+  "ask": "Who was the comparison group?",
   "keywords": [
     "pancreatic cancer",
     "case-control study",

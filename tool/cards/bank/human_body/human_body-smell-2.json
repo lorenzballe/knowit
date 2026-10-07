@@ -7,9 +7,9 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Covid took away millions of people's sense of smell overnight, often with a clear nose. Which cells did it attack?",
-  "answer": "The support cells. Sustentacular cells wrap the smell neurons in the nose and keep them working, and they carry ACE2, the virus's way in. When they die, the healthy neurons fall silent. Because that layer regrows, most people's smell came back within weeks or months.",
-  "move": "When something fails, check what keeps it running, not only the part itself.",
-  "ask": "When something in my life stops working, have I looked at what supports it?",
+  "answer": "The support cells. They wrap the smell neurons, keep them working, and carry ACE2, the virus's way in. When they die, the healthy neurons fall silent. The layer regrows, so most people's smell returned within weeks or months.",
+  "move": "When a part fails, check what keeps it running, not just the part.",
+  "ask": "When something stops working, what keeps it running?",
   "keywords": [
     "covid-19",
     "anosmia",

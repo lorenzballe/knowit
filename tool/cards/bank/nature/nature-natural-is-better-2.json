@@ -35,9 +35,9 @@
     "body": "Made from organically grown grapes. No synthetic pesticides or fertilisers. Kind to the land.",
     "phrases": [
       {
-        "text": "organically grown",
-        "plain": "grown under EU organic rules, which cap copper",
-        "why": "Since 2019, at most 28 kg of copper per hectare over seven years: 4 kg a year on average."
+        "text": "organically grown grapes",
+        "plain": "grapes grown under EU organic rules",
+        "why": "Organic is a legal list of what may be used. Since 2019 it caps copper at 4 kg/ha a year."
       },
       {
         "text": "No synthetic pesticides",

@@ -54,7 +54,7 @@
     "ask": "What happens to the planthopper?",
     "options": [
       {
-        "label": "It runs riot"
+        "label": "No real change"
       },
       {
         "label": "It comes back worse"
@@ -69,7 +69,7 @@
       "glyph": "fall",
       "line": "Outbreaks faded, spraying fell, and harvests held."
     },
-    "why": "The sprays had been killing the spiders that ate planthoppers, faster than the pest itself."
+    "why": "The sprays killed the spiders that ate planthoppers, and the pest bred back first."
   },
   "source": "Matteson, Annual Review of Entomology, 2000",
   "source_kind": "paper",

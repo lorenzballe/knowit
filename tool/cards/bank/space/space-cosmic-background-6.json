@@ -6,10 +6,10 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "New Jersey, 1964. A radio horn picks up a faint hiss, 3.5 degrees above absolute zero, that will not go away. Where from?",
-  "answer": "The afterglow of the Big Bang, stretched into microwaves. Arno Penzias and Robert Wilson did not know it; physicists at nearby Princeton explained it. Two Soviet physicists had even named this very horn, in 1964, as the instrument able to find it. The 1978 Nobel Prize went to the two who heard it.",
+  "question": "New Jersey, 1964. A radio horn picks up a faint hiss, 3.5 degrees above absolute zero, that will not go away. From where?",
+  "answer": "The afterglow of the Big Bang, stretched into microwaves. Penzias and Wilson did not know it; physicists at nearby Princeton explained it. Two Soviet physicists had named this very horn as able to find it. Nobel Prize, 1978.",
   "move": "If a signal does not change when you move, it is not coming from nearby.",
-  "ask": "When something bothers me everywhere I go, have I stopped blaming the places?",
+  "ask": "What bothers me everywhere I go?",
   "keywords": [
     "penzias and wilson",
     "cosmic background",

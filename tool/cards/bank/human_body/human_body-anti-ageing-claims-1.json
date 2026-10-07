@@ -35,7 +35,7 @@
     "phrases": [
       {
         "text": "Enriched with collagen",
-        "plain": "Contains collagen, far too big to enter skin",
+        "plain": "Contains collagen, far too big to enter skin,",
         "why": "Skin lets in little over 500 daltons. Collagen weighs about 300,000.",
         "catch": true
       },

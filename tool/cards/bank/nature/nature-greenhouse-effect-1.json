@@ -31,7 +31,7 @@
     "type": "why",
     "ask": "And why?",
     "start": {
-      "text": "CO2 is a sliver of the air, yet it warms the planet."
+      "text": "CO₂ is a sliver of the air, yet it warms the planet."
     },
     "levels": [
       {
@@ -44,7 +44,7 @@
         "text": "Nitrogen and oxygen are pairs of identical atoms: charge stays even."
       },
       {
-        "text": "CO2 can bend lopsided. Shape, not amount, decides.",
+        "text": "CO₂ can bend lopsided. Shape, not amount, decides.",
         "figure": "0.04%",
         "unit": "of the air is CO₂"
       }

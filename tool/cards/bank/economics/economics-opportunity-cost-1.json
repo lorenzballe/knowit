@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "A film you have wanted to see is on sale on DVD for $14.99. Would you buy it?",
-  "answer": "Naming the alternative moved a fifth of buyers. Everyone knows unspent money can buy something else, but at the till the thought rarely arrives by itself. In Frederick and colleagues' study, only saying it aloud, keep the $14.99 for other purchases, cut buying from 75% to 55%.",
+  "answer": "Naming the alternative moved a fifth of the students. Everyone knows unspent money can buy something else, but at the till the thought rarely arrives by itself. In Frederick and colleagues' study, only saying it aloud, keep the $14.99 for other purchases, cut buying from 75% to 55%.",
   "move": "Before buying, name one other thing the same money would get.",
   "ask": "Before my next purchase, can I name one other thing that money would buy me?",
   "keywords": [
@@ -61,7 +61,7 @@
     ],
     "why": "A price names what you get. What else the money could buy stays silent unless someone says it.",
     "same": "You held steady. The students didn't: buying fell from 75% to 55%.",
-    "switched": "You switched, like a fifth of buyers. Nothing new was said; an obvious thing was said aloud."
+    "switched": "You switched, like a fifth of the students. Nothing new was said; an obvious thing was said aloud."
   },
   "source": "Frederick et al., Journal of Consumer Research, 2009",
   "source_kind": "paper",

@@ -10,9 +10,9 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Vienna, 1846. Mothers die of fever far more often in one clinic than in the one next door. What is killing them?",
-  "answer": "The doctors' hands. Ignaz Semmelweis struck off every rival he could test: the air, the crowding, the priest's bell. What was left was the one difference between the clinics: the doctors came from dissecting corpses, the midwives did not. From May 1847 they washed in chlorine; deaths fell to 13 in 1,000.",
+  "answer": "The doctors' hands. Semmelweis struck off every rival he could test: the air, the crowding, the priest's bell. One difference was left: the doctors came from dissecting corpses. From May 1847 they washed in chlorine; deaths fell to 13 in 1,000.",
   "move": "Strike off every suspect you can test; the one left standing is your lead.",
-  "ask": "When something goes wrong at home or at work, do I test the rival explanations, or chase the most vivid one?",
+  "ask": "Do I test the rivals, or chase the vivid one?",
   "keywords": [
     "semmelweis",
     "childbed fever",

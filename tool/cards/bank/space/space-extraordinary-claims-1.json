@@ -10,9 +10,9 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "2011: neutrinos fired 730 km from CERN to Italy arrive 60 billionths of a second before light could. What happened?",
-  "answer": "A timing fault: a fibre-optic cable not fully plugged in, plus a clock running slightly off. The team published and asked others to find the flaw, rather than claim a revolution. Repeat runs in 2012 matched the speed of light, and the experiment's leader resigned anyway.",
+  "answer": "A timing fault: a fibre-optic cable not fully plugged in, plus a clock slightly off. The team published and asked others to find the flaw rather than claim a revolution. Repeat runs in 2012 matched the speed of light.",
   "move": "When a result overturns everything, hunt first for the loose cable.",
-  "ask": "When a result looks too good to be true, whose independent check am I waiting for?",
+  "ask": "When a result looks too good, whose independent check am I waiting for?",
   "keywords": [
     "opera experiment",
     "neutrinos",
