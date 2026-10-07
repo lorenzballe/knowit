@@ -296,7 +296,7 @@ def check_card(card: dict, *, strict: bool = False, schema: dict | None = None,
 
     # Something to play with, which the app refuses whole if it is malformed.
     if "scene" in card:
-        problems.extend(check_scene(card["scene"]))
+        problems.extend(check_scene(card["scene"], card.get("written")))
 
     if strict:
         problems.extend(check_strict(card))

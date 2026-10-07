@@ -248,7 +248,10 @@ Deal dealDay({
   final int ownCount = own.clamp(0, count);
   // A review is the reader's own, coming back. One at most, so a day
   // always has one question it has never asked.
-  final review = reviews.take(min(ownCount, max(0, asks - 1))).toList();
+  final review = reviews
+      .where((p) => dealableOn(p, date))
+      .take(min(ownCount, max(0, asks - 1)))
+      .toList();
   final taken = <String>{...exclude, ...review.map((p) => p.id)};
 
   final int ownAsks = min(asks, ownCount);

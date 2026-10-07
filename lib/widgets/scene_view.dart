@@ -18,6 +18,9 @@ import 'scenes/story_view.dart';
 import 'scenes/translate_view.dart';
 import 'scenes/match_view.dart';
 import 'scenes/clues_view.dart';
+import 'scenes/beauty_view.dart';
+import 'scenes/music_view.dart';
+import 'scenes/news_view.dart';
 
 /// Draws a [Scene] and lets the reader play with it.
 ///
@@ -59,6 +62,9 @@ class SceneView extends StatelessWidget {
     ),
     final MatchScene s => MatchSceneView(scene: s, ink: ink, ground: ground),
     final CluesScene s => CluesSceneView(scene: s, ink: ink, ground: ground),
+    final BeautyScene s => BeautySceneView(scene: s, ink: ink, ground: ground),
+    final MusicScene s => MusicSceneView(scene: s, ink: ink, ground: ground),
+    final NewsScene s => NewsSceneView(scene: s, ink: ink, ground: ground),
     _ => const SizedBox.shrink(),
   };
 }

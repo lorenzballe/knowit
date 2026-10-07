@@ -448,7 +448,9 @@ class _PillCardStackState extends State<PillCardStack>
               onPanStart: _onPanStart,
               onPanUpdate: _onPanUpdate,
               onPanEnd: _onPanEnd,
-              child: card,
+              // Only the card on top moves on its own: a living scene on the
+              // card waiting behind it holds still until it rises.
+              child: TickerMode(enabled: isTop, child: card),
             ),
           ),
         ),

@@ -1,0 +1,173 @@
+[
+  {
+    "id": "economics-news-egg-prices",
+    "topic": "economics",
+    "genre": "economics.everyday_costs",
+    "strand": "economics.everyday_costs.groceries",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Bird flu cost American farms a slice of their hens. Why did the price of eggs double?",
+    "answer": "Because almost nobody stops buying eggs. When one bird in a barn tests positive for bird flu, the whole flock is culled: in early 2025, tens of millions of laying hens. Demand barely moved, so a shortfall of under a tenth was settled by price. In March a dozen averaged a record $6.23.",
+    "move": "When people can't do without something, a small shortage makes a big price.",
+    "ask": "What do I buy whatever it costs, and what would a small shortage of it do to my bill?",
+    "keywords": [
+      "egg prices",
+      "bird flu",
+      "inelastic demand",
+      "food inflation"
+    ],
+    "era": "recent",
+    "region": "americas",
+    "hook": "mechanism",
+    "mood": "practical",
+    "numeracy": 1,
+    "abstraction": "concrete",
+    "shelf_life": "months",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "news",
+      "headline": "Egg prices hit a record as bird flu empties henhouses",
+      "outlet": "US Labor Department",
+      "date": "2025-04-10",
+      "panels": [
+        {
+          "label": "What happened",
+          "figure": "$6.23",
+          "text": "The average dozen of eggs in US cities in March, a record: about twice the price of a year before."
+        },
+        {
+          "label": "Why",
+          "text": "When one hen tests positive for bird flu, the whole barn is culled. Tens of millions of laying hens went in a few months."
+        },
+        {
+          "label": "What it means for you",
+          "text": "Few people buy fewer eggs. When buyers can't cut back, a shortage of under a tenth is settled by doubling the price."
+        }
+      ],
+      "expires": "2026-12-31"
+    },
+    "source": "US Bureau of Labor Statistics, average price data; USDA APHIS, bird flu in commercial flocks",
+    "source_kind": "statistics",
+    "reference": "US Bureau of Labor Statistics, average price data, Eggs, grade A, large, per dozen, US city average: $6.23 in March 2025, a record (CPI release of 10 April 2025); USDA APHIS, confirmations of highly pathogenic avian influenza in commercial and backyard flocks",
+    "written": "2026-10-07"
+  },
+  {
+    "id": "economics-news-japan-rice",
+    "topic": "economics",
+    "genre": "economics.think_in_incentives",
+    "strand": "economics.think_in_incentives.unintended_effects",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "For fifty years Japan paid its farmers to grow less rice. What happened when one harvest went wrong?",
+    "answer": "The shelves emptied. Since 1971 Japan has paid farmers to plant less rice, to keep its price up. When the hot summer of 2023 spoiled part of the crop there was no spare, and in 2025 the government opened its disaster stockpile. After the cold summer of 1993, Japan had to buy foreign rice.",
+    "move": "A market kept tight on purpose has nothing to give when a bad year comes.",
+    "ask": "What in my life runs with no spare, and what happens to it in the first bad year?",
+    "keywords": [
+      "rice prices",
+      "japan",
+      "gentan",
+      "stockpile",
+      "supply control"
+    ],
+    "era": "recent",
+    "region": "asia",
+    "hook": "mechanism",
+    "mood": "sober",
+    "numeracy": 0,
+    "abstraction": "mixed",
+    "shelf_life": "months",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "news",
+      "headline": "Japan opens its emergency rice stockpile as prices soar",
+      "outlet": "Japan's farm ministry",
+      "date": "2025-02-07",
+      "panels": [
+        {
+          "label": "What happened",
+          "figure": "210,000 t",
+          "text": "Rice the government keeps for disasters goes on sale, to bring down a price that has soared in a year."
+        },
+        {
+          "label": "Why",
+          "text": "For decades Japan paid farmers to plant less rice, to hold its price up. When the hot 2023 summer spoiled part of the crop, none was spare."
+        }
+      ],
+      "then": {
+        "label": "It happened before",
+        "year": 1993,
+        "headline": "A cold summer, and Japan has to import rice",
+        "line": "Supply kept just tight enough has no cushion: one bad harvest, and the shelves are empty."
+      },
+      "expires": "2026-11-30"
+    },
+    "source": "Japan Ministry of Agriculture, Forestry and Fisheries, release of stockpiled rice, February 2025",
+    "source_kind": "institution",
+    "reference": "Ministry of Agriculture, Forestry and Fisheries of Japan, announcement of the release of 210,000 tonnes of government stockpile rice, February 2025; MAFF, rice production adjustment (gentan) from 1971; 1993 crop index of 74 and the emergency rice imports of 1994",
+    "written": "2026-10-07"
+  },
+  {
+    "id": "science-news-iberian-blackout",
+    "topic": "science",
+    "genre": "science.physics",
+    "strand": "science.physics.energy",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "On 28 April 2025 mainland Spain and Portugal lost all their power within seconds. How can a whole grid fail at once?",
+    "answer": "Because a grid is one machine, and its safety switches are linked. Spain's inquiry found that voltage surged, and power plants, built to cut out to protect themselves, dropped off one after another, each making it worse for the next. Italy went dark the same way in 2003.",
+    "move": "In a tightly linked system, one part's safety switch can be the next part's shock.",
+    "ask": "Where does something I depend on protect itself in a way that could knock over the next thing?",
+    "keywords": [
+      "blackout",
+      "power grid",
+      "cascade failure",
+      "spain",
+      "portugal"
+    ],
+    "era": "recent",
+    "region": "europe",
+    "hook": "mechanism",
+    "mood": "sober",
+    "numeracy": 0,
+    "abstraction": "mixed",
+    "shelf_life": "months",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "news",
+      "headline": "Spain and Portugal lose all their power in seconds",
+      "outlet": "Red Eléctrica",
+      "date": "2025-04-28",
+      "panels": [
+        {
+          "label": "What happened",
+          "figure": "12:33",
+          "text": "Just after midday, the whole grid of mainland Spain and Portugal went dark. Power came back through the night."
+        },
+        {
+          "label": "Why",
+          "text": "Voltage surged. Power plants are built to cut out to protect themselves, and each one that did made it worse for the next."
+        }
+      ],
+      "then": {
+        "label": "It happened before",
+        "year": 2003,
+        "headline": "A tree touches a Swiss line, and Italy goes dark",
+        "line": "A grid is one machine. When one part trips to save itself, it can push the next one over."
+      },
+      "expires": "2026-12-15"
+    },
+    "source": "Government of Spain, report on the blackout of 28 April 2025; UCTE, final report on the Italian blackout of 28 September 2003",
+    "source_kind": "primary_document",
+    "reference": "Government of Spain, Comité para el análisis de las circunstancias que concurrieron en la crisis de electricidad del 28 de abril de 2025, report of June 2025 (overvoltage and the disconnection of generation); UCTE, Final Report of the Investigation Committee on the 28 September 2003 Blackout in Italy, April 2004",
+    "written": "2026-10-07"
+  }
+]
