@@ -32,28 +32,28 @@
   "ask": "Does my cat, or my neighbour's, hunt outdoors, and what does it bring home?",
   "scene": {
     "type": "rank",
-    "quantity": "Birds killed a year, US",
+    "quantity": "US birds killed, millions",
     "most": "Most",
     "log": true,
     "items": [
       {
-        "label": "Wind turbines",
-        "value": 234000,
+        "label": "Turbines",
+        "value": 0.23,
         "note": "About 234,000: one bird for every 10,000 that cats kill."
       },
       {
         "label": "Windows",
-        "value": 600000000,
+        "value": 600,
         "note": "About 600 million, mostly at houses and low buildings, not skyscrapers."
       },
       {
         "label": "Cats",
-        "value": 2400000000,
+        "value": 2400,
         "note": "About 2.4 billion, mostly by strays and ferals, but pet cats too."
       },
       {
         "label": "Cars",
-        "value": 200000000,
+        "value": 200,
         "note": "About 200 million, though estimates run from 89 to 340 million."
       }
     ]

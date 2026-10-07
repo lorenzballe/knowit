@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why can a mouse survive a fall down a deep mine shaft that would kill a horse? Shrink the faller and watch its top speed.",
+  "question": "Shrink a falling body and watch its top speed. Why can a mouse survive a drop down a mine shaft that kills a horse?",
   "answer": "Because weight shrinks faster than surface. Halve a body's length and its weight drops eightfold but its skin only fourfold, so air brakes small bodies far sooner and each kilogram lands with far less energy. Haldane put it in 1926: down a shaft, a mouse walks away, a rat is killed, a man is broken, a horse splashes.",
   "move": "When something grows, ask which parts grow faster than the others.",
   "ask": "What in my life works at a small scale but would break if I simply made it bigger?",

@@ -42,7 +42,7 @@
         "note": "Money promised for sending it back barely moved anyone."
       },
       {
-        "label": "Gift enclosed",
+        "label": "Gift inside",
         "value": 8,
         "note": "A pen or a stamp sent up front beat a promise of real money."
       },
@@ -52,7 +52,7 @@
         "note": "A gift promised for replying did next to nothing."
       },
       {
-        "label": "Cash enclosed",
+        "label": "Cash inside",
         "value": 19,
         "note": "A small note in the envelope, no strings: replies rose most."
       }

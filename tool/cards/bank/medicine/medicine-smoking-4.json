@@ -32,27 +32,27 @@
   "ask": "Which risk in my own life do I treat as normal because it kills slowly?",
   "scene": {
     "type": "rank",
-    "quantity": "US deaths a year",
+    "quantity": "US deaths a year, thousands",
     "most": "Most",
     "items": [
       {
-        "label": "Drug overdoses",
-        "value": 107000,
+        "label": "Overdoses",
+        "value": 107,
         "note": "About 107,000 in 2022, the peak year; most involved fentanyl."
       },
       {
         "label": "Car crashes",
-        "value": 42500,
+        "value": 42.5,
         "note": "About 42,500 in 2022."
       },
       {
         "label": "Smoking",
-        "value": 480000,
+        "value": 480,
         "note": "About 480,000: more than the other three put together."
       },
       {
         "label": "Alcohol",
-        "value": 178000,
+        "value": 178,
         "note": "About 178,000: more than overdoses, and far less talked about."
       }
     ]

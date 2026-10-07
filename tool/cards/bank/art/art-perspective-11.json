@@ -1,0 +1,79 @@
+{
+  "id": "art-perspective-11",
+  "topic": "art",
+  "genre": "art.renaissance",
+  "strand": "art.renaissance.perspective",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Fence posts recede from you: the first 2 metres away, the next 4, then 6, and so on. How tall should each be painted?",
+  "answer": "The second, twice as far, half as tall. Painted height falls with distance, so the 4th post is a quarter and the 8th an eighth: one big drop, then a crowd at the back. Alberti's 1435 construction builds this in. Shrink each post by the same amount and the far ones come out too big.",
+  "move": "Ask whether a quantity falls by subtraction or by division.",
+  "ask": "Where am I expecting steady steps when the change is really a ratio?",
+  "keywords": [
+    "perspective",
+    "foreshortening",
+    "alberti",
+    "vanishing point",
+    "drawing"
+  ],
+  "era": "medieval",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "draw",
+    "label": "Painted height, % of the first",
+    "unit": "%",
+    "columns": [
+      "1st",
+      "2nd",
+      "3rd",
+      "4th",
+      "5th",
+      "6th",
+      "7th",
+      "8th"
+    ],
+    "values": [
+      100,
+      50,
+      33.3,
+      25,
+      20,
+      16.7,
+      14.3,
+      12.5
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 110,
+    "judge": 1,
+    "near": 0.08,
+    "verdict": {
+      "under": "Not that small: the second post, twice as far, is exactly half as tall.",
+      "near": "Right: twice as far, half as tall. Then the posts crowd together at the back.",
+      "over": "Smaller than that: twice as far away means half as tall, already at post two."
+    },
+    "notes": [
+      {
+        "at": 3,
+        "text": "4th: a quarter"
+      },
+      {
+        "at": 7,
+        "text": "8th: an eighth"
+      }
+    ]
+  },
+  "source": "Alberti, De pictura, 1435",
+  "source_kind": "book",
+  "reference": "Alberti, On Painting, trans. John R. Spencer, Yale University Press, 1956; heights from central projection, painted size proportional to 1/distance",
+  "written": "2026-10-07"
+}

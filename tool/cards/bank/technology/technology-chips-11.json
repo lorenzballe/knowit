@@ -1,0 +1,80 @@
+{
+  "id": "technology-chips-11",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.chips",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "One speck on a wafer kills a chip, and specks land at random. If a 1 cm² chip costs 1, what does 8 cm² cost?",
+  "answer": "About 16 times. At 0.1 defects per square centimetre, the chance a chip escapes every speck falls exponentially with its area: 90% of 1 cm² chips work, only 45% of 8 cm² ones. You pay for eight times the silicon and bin over half of it. Hence big processors built from small chiplets.",
+  "move": "When one flaw ruins the whole, build from small parts instead.",
+  "ask": "What am I building as one big piece that a single flaw could ruin?",
+  "keywords": [
+    "chip yield",
+    "defects",
+    "silicon wafers",
+    "chiplets",
+    "semiconductors"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "draw",
+    "label": "Cost per working chip, × 1 cm²",
+    "unit": "×",
+    "columns": [
+      "1 cm²",
+      "2 cm²",
+      "3 cm²",
+      "4 cm²",
+      "5 cm²",
+      "6 cm²",
+      "7 cm²",
+      "8 cm²"
+    ],
+    "values": [
+      1,
+      2.21,
+      3.66,
+      5.4,
+      7.46,
+      9.89,
+      12.75,
+      16.11
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 20,
+    "decimals": 1,
+    "judge": 7,
+    "near": 0.08,
+    "verdict": {
+      "under": "More than that: about 16 times, since over half the big chips fail.",
+      "near": "Right: 8 times the silicon, but only half survive, so about 16 times the cost.",
+      "over": "Less than that: about 16 times. Silicon is 8×; the failures double it again."
+    },
+    "notes": [
+      {
+        "at": 3,
+        "text": "4 cm²: 67% work"
+      },
+      {
+        "at": 5,
+        "text": "6 cm²: ×9.9"
+      }
+    ]
+  },
+  "source": "Hennessy & Patterson, Computer Architecture, 2017",
+  "source_kind": "book",
+  "reference": "Hennessy & Patterson, Computer Architecture: A Quantitative Approach, 6th edition, Morgan Kaufmann, 2017, chapter 1 (die yield); Poisson yield = e^(-defect density × area), defect density 0.1 per cm² assumed",
+  "written": "2026-10-07"
+}

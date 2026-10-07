@@ -33,23 +33,23 @@
   "ask": "Does anyone I know live in a home too cold in winter for their health?",
   "scene": {
     "type": "rank",
-    "quantity": "Deaths a year, worldwide",
+    "quantity": "Deaths a year, thousands",
     "most": "Most",
     "log": true,
     "items": [
       {
         "label": "Heat",
-        "value": 489000,
+        "value": 489,
         "note": "About 490,000 a year, and rising as the world warms."
       },
       {
-        "label": "Natural disasters",
-        "value": 45000,
+        "label": "Disasters",
+        "value": 45,
         "note": "About 45,000 a year on average, though one bad year can top 200,000."
       },
       {
         "label": "Cold",
-        "value": 4590000,
+        "value": 4590,
         "note": "About 4.6 million, mostly on ordinary cool days, not in freezing snaps."
       }
     ]

@@ -34,25 +34,24 @@
     "type": "rank",
     "quantity": "UK units of alcohol",
     "most": "Most",
-    "unit": "units",
     "items": [
       {
-        "label": "25 ml shot of vodka",
+        "label": "Vodka shot",
         "value": 1,
         "note": "One unit: 10 ml of pure alcohol, about what a liver clears in an hour."
       },
       {
-        "label": "Pint of 5% lager",
+        "label": "Pint of lager",
         "value": 2.8,
         "note": "568 ml at 5%: nearly three shots of vodka."
       },
       {
-        "label": "Bottle of 5% beer",
+        "label": "Bottle of beer",
         "value": 1.7,
         "note": "330 ml at 5%: 1.65 units."
       },
       {
-        "label": "Large glass, 13% wine",
+        "label": "Large wine",
         "value": 3.3,
         "note": "250 ml at 13%: more than a pint, in a glass that looks smaller."
       }

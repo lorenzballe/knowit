@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why is Earth's gravity, 9.81 m/s², so close to π squared, 9.87? Lengthen a pendulum and time one swing.",
+  "question": "Lengthen a pendulum and time one swing. Why is Earth's gravity, 9.81 m/s², so close to π squared, 9.87?",
   "answer": "Because the metre nearly was a pendulum. One swing takes π times the square root of length over g, so a one-second swing needs a length of g/π² metres. In 1791 the French Academy weighed that as the new unit, then chose a ten-millionth of the pole-to-equator arc instead; the two landed within 0.6%.",
   "move": "When two numbers match too well, look for a shared history before calling it luck.",
   "ask": "When two things match too neatly, do I look for a shared cause before calling it luck?",

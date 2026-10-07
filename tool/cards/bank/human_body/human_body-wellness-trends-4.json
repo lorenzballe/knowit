@@ -1,0 +1,81 @@
+{
+  "id": "human_body-wellness-trends-4",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.wellness_trends",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "At midnight her blood holds 160 mg of alcohol per 100 ml, twice England's driving limit. What is left by morning?",
+  "answer": "About 55 at 7 am, still over the limit in Scotland and most of Europe. Alcohol does not fade by a share each hour like most drugs: the liver's enzyme is already working flat out, so it clears a fixed amount, roughly 15 mg an hour. Sleep, coffee and cold showers do not hurry it.",
+  "move": "When a process runs at a fixed rate, only time clears the backlog.",
+  "ask": "After a late night, have I ever worked out when I would really be fit to drive?",
+  "keywords": [
+    "blood alcohol",
+    "drink-driving",
+    "liver",
+    "alcohol elimination",
+    "morning after"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "draw",
+    "label": "Alcohol, mg per 100 ml of blood",
+    "unit": "mg",
+    "columns": [
+      "Midnight",
+      "1am",
+      "2am",
+      "3am",
+      "4am",
+      "5am",
+      "6am",
+      "7am",
+      "8am"
+    ],
+    "values": [
+      160,
+      145,
+      130,
+      115,
+      100,
+      85,
+      70,
+      55,
+      40
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 200,
+    "judge": 7,
+    "near": 0.07,
+    "verdict": {
+      "under": "Too fast. The liver clears about 15 an hour, so at 7 am 55 is left: over Scotland's 50.",
+      "near": "Right: a straight line, 15 an hour. At 7 am, 55: still over the limit in Scotland.",
+      "over": "Slower than the truth: it falls a steady 15 an hour, to 55 by 7 am."
+    },
+    "notes": [
+      {
+        "at": 3,
+        "text": "Same 15 off every hour"
+      },
+      {
+        "at": 5,
+        "text": "5 am: still over 80"
+      }
+    ]
+  },
+  "source": "Jones, Legal Medicine, 2010; Widmark, 1932",
+  "source_kind": "paper",
+  "reference": "Jones, Evidence-based survey of the elimination rates of alcohol in humans, Legal Medicine, 2010 (about 15 mg per 100 ml per hour, range 10 to 25); Widmark, Die theoretischen Grundlagen und die praktische Verwendbarkeit der gerichtlich-medizinischen Alkoholbestimmung, 1932; UK limits 80 mg per 100 ml (England and Wales), 50 (Scotland)",
+  "written": "2026-10-07"
+}

@@ -1,0 +1,78 @@
+{
+  "id": "history-industrial-11",
+  "topic": "history",
+  "genre": "history.revolutions",
+  "strand": "history.revolutions.industrial",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 1798 Malthus said America's population doubled every 25 years. Here are the census counts to 1850: where did 2000 land?",
+  "answer": "At about 281 million, a fifth of Malthus's pace. He read the American doubling as what any people does when food allows, and so expected population always to outrun farms. But as families grew richer and fewer children died, they had fewer: growth slowed decade by decade. His law described the moment he wrote in.",
+  "move": "Treat a growth rate as a fact about a moment, not a law.",
+  "ask": "Which trend in my life am I treating as a law when it was just a phase?",
+  "keywords": [
+    "thomas malthus",
+    "population growth",
+    "us census",
+    "doubling",
+    "birth rates"
+  ],
+  "era": "nineteenth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "draw",
+    "label": "US population, millions",
+    "columns": [
+      "1790",
+      "1820",
+      "1850",
+      "1880",
+      "1910",
+      "1940",
+      "1970",
+      "2000"
+    ],
+    "values": [
+      3.9,
+      9.6,
+      23.2,
+      50.2,
+      92.2,
+      132.2,
+      203.2,
+      281.4
+    ],
+    "given": 3,
+    "min": 0,
+    "max": 600,
+    "judge": 7,
+    "near": 0.06,
+    "verdict": {
+      "under": "Higher than that: 281 million in 2000. It grew a lot, just not by doubling.",
+      "near": "Right: about 281 million. Malthus's doubling would have given nearly 1,500.",
+      "over": "Far too high, as Malthus was: doubling every 25 years gives 1,485 million by 2000."
+    },
+    "notes": [
+      {
+        "at": 4,
+        "text": "1910: 92, not 122"
+      },
+      {
+        "at": 6,
+        "text": "1970: 203, not 646"
+      }
+    ]
+  },
+  "source": "US Census Bureau; Malthus, Essay on Population, 1798",
+  "source_kind": "statistics",
+  "reference": "US Census Bureau, decennial census counts 1790-2000 (3.9, 9.6, 23.2, 50.2, 92.2, 132.2, 203.2, 281.4 million); Malthus, An Essay on the Principle of Population, J. Johnson, London, 1798",
+  "written": "2026-10-07"
+}

@@ -43,7 +43,7 @@
         "note": "About a quarter of an hour, and shrinking for two decades."
       },
       {
-        "label": "Watching TV",
+        "label": "TV",
         "value": 160,
         "note": "About 2.7 hours: more than half of all leisure time."
       },
@@ -53,7 +53,7 @@
         "note": "Talking and visiting in person: under a quarter of the TV time."
       },
       {
-        "label": "Eating and drinking",
+        "label": "Eating",
         "value": 66,
         "note": "Counted only when eating is the main thing being done."
       }

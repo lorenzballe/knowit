@@ -1,0 +1,77 @@
+{
+  "id": "economics-interest-13",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.interest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A €200,000 mortgage over 30 years at 5% costs €1,074 a month. Halfway through, how much is still owed?",
+  "answer": "About 68%. Each payment first covers the month's interest on what is still owed, and only the rest repays the loan. Early on the debt is large, so the first payment is about 78% interest; repaying speeds up only as the balance shrinks. Sell after ten years and four-fifths of the loan is still there.",
+  "move": "With a loan, ask what you own today, not what you have paid.",
+  "ask": "If I sold or refinanced in five years, how much of my loan would really be gone?",
+  "keywords": [
+    "mortgage",
+    "amortisation",
+    "interest",
+    "home loan",
+    "repayment"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "draw",
+    "label": "Still owed, % of the loan",
+    "unit": "%",
+    "columns": [
+      "Start",
+      "Yr 5",
+      "Yr 10",
+      "Yr 15",
+      "Yr 20",
+      "Yr 25",
+      "Yr 30"
+    ],
+    "values": [
+      100,
+      91.8,
+      81.3,
+      67.9,
+      50.6,
+      28.4,
+      0
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 110,
+    "judge": 3,
+    "near": 0.07,
+    "verdict": {
+      "under": "More than that: after 15 of 30 years about 68% is still owed, not half.",
+      "near": "Right: halfway through, about two-thirds is still owed. Half goes only at year 20.",
+      "over": "A bit less: about 68% is left at year 15. Repaying speeds up later."
+    },
+    "notes": [
+      {
+        "at": 1,
+        "text": "5 years: 8% repaid"
+      },
+      {
+        "at": 5,
+        "text": "Yr 25: still 28% left"
+      }
+    ]
+  },
+  "source": "Annuity loan arithmetic",
+  "source_kind": "arithmetic",
+  "reference": "Balance after k monthly payments = P(q^n - q^k)/(q^n - 1), with q = 1 + 0.05/12 and n = 360; payment = P(q - 1)/(1 - q^-n) = €1,074 on €200,000",
+  "written": "2026-10-07"
+}

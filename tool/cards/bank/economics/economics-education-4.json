@@ -1,0 +1,66 @@
+{
+  "id": "economics-education-4",
+  "topic": "economics",
+  "genre": "economics.how_countries_get_rich",
+  "strand": "economics.how_countries_get_rich.education",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A chart of US high-school graduation rates, like one the White House posted in 2015. The rise looks huge. Where's the trick?",
+  "answer": "In the axis, which starts at 77%. Drawn from zero the rise is still real: 7 more pupils in every 100 finishing school. No bar shows whether they learned more, and over those years national test scores of final-year pupils did not rise. A diploma counts years in a classroom, not skills.",
+  "move": "When a pass rate climbs, ask whether the bar to pass moved too.",
+  "ask": "When a success rate improves, do I ask whether the test changed as well as the people?",
+  "keywords": [
+    "graduation rates",
+    "high school",
+    "truncated axis",
+    "test scores"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "trick",
+    "trick": "truncated",
+    "outlet": "Typical chart, NCES data",
+    "headline": "Graduation rate soars to a record",
+    "honest": "Up 7 points in eight years: 79% to 86%",
+    "label": "US high-school graduation rate",
+    "unit": "%",
+    "columns": [
+      "2011",
+      "2013",
+      "2015",
+      "2017",
+      "2019"
+    ],
+    "values": [
+      79,
+      81,
+      83,
+      85,
+      86
+    ],
+    "from": 77,
+    "to": 88,
+    "found": "Yes: the axis starts at 77%, so 7 points look like a leap.",
+    "miss": "That part is fair. Look at where the bars begin.",
+    "misses": {
+      "marks": "The rates on the bars are right. Their lengths aren't.",
+      "headline": "It was a record. The drawing makes it look like a rocket."
+    },
+    "name": "Axis cut at 77%",
+    "lesson": "From zero, 79% to 86% is a steady climb. Find where the axis starts before you read it."
+  },
+  "source": "NCES graduation rates; NAEP 12th grade, 2019",
+  "source_kind": "statistics",
+  "reference": "National Center for Education Statistics, Public High School Graduation Rates (adjusted cohort graduation rate, 2010–11 to 2018–19), Condition of Education; NAEP 2019 Mathematics and Reading, Grade 12; Hanushek & Woessmann, The Knowledge Capital of Nations, MIT Press, 2015",
+  "written": "2026-10-07"
+}

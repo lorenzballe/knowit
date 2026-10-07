@@ -33,27 +33,27 @@
   "ask": "Have I been sent a bowel screening kit, and did I send it back?",
   "scene": {
     "type": "rank",
-    "quantity": "Deaths a year, worldwide",
+    "quantity": "Deaths a year, thousands",
     "most": "Most",
     "items": [
       {
         "label": "Breast",
-        "value": 670000,
+        "value": 670,
         "note": "The commonest cancer in women, yet it kills fewer people than bowel cancer."
       },
       {
         "label": "Prostate",
-        "value": 400000,
+        "value": 400,
         "note": "Common in older men, many of whom die with it rather than of it."
       },
       {
         "label": "Lung",
-        "value": 1800000,
+        "value": 1800,
         "note": "More than breast and bowel together, and mostly caused by smoking."
       },
       {
         "label": "Bowel",
-        "value": 900000,
+        "value": 900,
         "note": "Second, and the one a home stool test can catch early."
       }
     ]

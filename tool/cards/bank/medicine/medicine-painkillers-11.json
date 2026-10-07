@@ -1,0 +1,73 @@
+{
+  "id": "medicine-painkillers-11",
+  "topic": "medicine",
+  "genre": "medicine.pain",
+  "strand": "medicine.pain.painkillers",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A news site drew US drug overdose deaths in red, from 2015 to 2023. The line seems to fall. Where's the trick?",
+  "answer": "In the axis: zero sits at the top, so every rise is drawn as a fall. Reuters did this in 2014 with Florida gun deaths, styled as dripping blood, and many readers saw a drop. Right way up, overdose deaths doubled in seven years, driven by opioids, the painkillers' family, now mostly street fentanyl.",
+  "move": "Before reading a slope, find where zero sits on the axis.",
+  "ask": "Do I check which way an axis runs before deciding things got better or worse?",
+  "keywords": [
+    "overdose deaths",
+    "opioids",
+    "fentanyl",
+    "inverted axis"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "dark",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "trick",
+    "trick": "flipped",
+    "outlet": "Typical chart, CDC data",
+    "headline": "Overdose deaths in America",
+    "honest": "Overdose deaths doubled, 2015 to 2022",
+    "label": "US overdose deaths, thousands",
+    "columns": [
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+      "2021",
+      "2022",
+      "2023"
+    ],
+    "values": [
+      52.4,
+      63.6,
+      70.2,
+      67.4,
+      70.6,
+      91.8,
+      106.7,
+      107.9,
+      105.0
+    ],
+    "from": 0,
+    "to": 120,
+    "found": "Yes: zero is at the top, so the line drops as deaths climb.",
+    "miss": "That part is fair. Check which way the axis numbers run.",
+    "misses": {
+      "headline": "A neutral title. The drawing is what says 'falling'.",
+      "marks": "The line is true to its axis. Read the axis itself."
+    },
+    "name": "Upside-down axis",
+    "lesson": "Up is not always more. Find zero on the axis before you read which way a line goes."
+  },
+  "source": "CDC NCHS overdose data; Reuters, 2014",
+  "source_kind": "statistics",
+  "reference": "Garnett & Miniño, Drug Overdose Deaths in the United States, 2003–2023, NCHS Data Brief No. 522, 2024; Chan, Gun deaths in Florida, Reuters graphic, February 2014",
+  "written": "2026-10-07"
+}

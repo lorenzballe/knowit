@@ -9,29 +9,84 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did the gap between men's and women's elite running times stop shrinking in the 1980s?",
-  "answer": "Because much of the earlier narrowing was catch-up, and some was drugs. Seiler, De Koning and Foster studied Olympic and world finals from 1952 to 2006: the gap fell as women gained coaching and races, bottomed out in the 1980s, then widened slightly once out-of-competition drug testing arrived. It now sits around 10 to 12%.",
+  "question": "A running blog charted the marathon world records since 1988, men's and women's. Women look about to overtake. Where's the trick?",
+  "answer": "In the two scales. On one, the gap barely moves: 14 minutes in 1988, 11 in 2023, about a tenth of the time. In 1992 two physiologists in Nature drew straight lines through earlier records and forecast women would catch men by 1998. That early surge was catch-up, as women finally got races and coaching.",
   "move": "When a trend flattens, ask what was driving it before.",
-  "ask": "Is a gap I am trying to close shrinking through real change, or has that change already run out?",
+  "ask": "When a gap seems to be closing, do I check it on one scale before predicting the meeting point?",
   "keywords": [
+    "marathon",
+    "world records",
     "gender gap",
-    "running times",
-    "doping",
-    "drug testing",
-    "women's athletics"
+    "dual axis",
+    "extrapolation"
   ],
   "era": "twentieth",
   "region": "world",
-  "hook": "mechanism",
+  "hook": "misconception",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Seiler, De Koning & Foster, MSSE, 2007",
+  "scene": {
+    "type": "trick",
+    "trick": "dual",
+    "outlet": "Typical chart",
+    "headline": "Women will soon outrun men",
+    "honest": "The gap: about a tenth, for 35 years",
+    "label": "Marathon world record, minutes",
+    "decimals": 1,
+    "columns": [
+      "1988",
+      "1993",
+      "1998",
+      "2003",
+      "2008",
+      "2013",
+      "2018",
+      "2023"
+    ],
+    "values": [
+      126.8,
+      126.8,
+      126.1,
+      124.9,
+      124.0,
+      123.4,
+      121.7,
+      120.6
+    ],
+    "values2": [
+      141.1,
+      141.1,
+      140.8,
+      135.4,
+      135.4,
+      135.4,
+      135.4,
+      131.9
+    ],
+    "series": [
+      "Men",
+      "Women"
+    ],
+    "from": 112,
+    "to": 128,
+    "from2": 125,
+    "to2": 142,
+    "found": "Yes: men and women are drawn on different scales.",
+    "miss": "That part is fair. Compare the numbers on the two sides.",
+    "misses": {
+      "headline": "That's the forecast to test. The drawing is what sells it.",
+      "marks": "Each line is right for its own axis. Do they share one?"
+    },
+    "name": "Two scales, one race",
+    "lesson": "Two scales can make any gap close. Put both lines on one axis before believing a catch-up."
+  },
+  "source": "Whipp & Ward, Nature, 1992; Seiler et al., 2007",
   "source_kind": "paper",
-  "reference": "Stephen Seiler, Jos J. De Koning & Carl Foster, The Fall and Rise of the Gender Difference in Elite Anaerobic Performance 1952–2006, Medicine & Science in Sports & Exercise, 2007",
-  "written": "2026-09-26"
+  "reference": "Whipp & Ward, Will women soon outrun men?, Nature 355:25, 1992; Seiler, De Koning & Foster, The Fall and Rise of the Gender Difference in Elite Anaerobic Performance 1952–2006, Medicine & Science in Sports & Exercise, 2007; World Athletics marathon world record progression",
+  "written": "2026-10-07"
 }

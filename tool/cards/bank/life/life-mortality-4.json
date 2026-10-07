@@ -33,28 +33,28 @@
   "ask": "Which danger do I fear most, and how many people does it kill in a year?",
   "scene": {
     "type": "rank",
-    "quantity": "Deaths a year, worldwide",
+    "quantity": "Deaths a year, thousands",
     "most": "Most",
     "log": true,
     "items": [
       {
         "label": "Terrorism",
-        "value": 8400,
+        "value": 8.4,
         "note": "About 8,400 in 2023: under 2% of the toll from murder."
       },
       {
         "label": "Murder",
-        "value": 458000,
+        "value": 458,
         "note": "About 458,000 in 2021, by the UN's count."
       },
       {
         "label": "Road crashes",
-        "value": 1190000,
+        "value": 1190,
         "note": "About 1.2 million: the top killer of people aged 5 to 29."
       },
       {
         "label": "Suicide",
-        "value": 727000,
+        "value": 727,
         "note": "About 727,000: one and a half times murder, and rarely in the news."
       }
     ]

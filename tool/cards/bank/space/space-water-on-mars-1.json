@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why can't a cup of water stay liquid on Mars, even on a warm afternoon? Climb into thinner air and watch it boil.",
+  "question": "Climb into thinner air and watch water boil. Why can't a cup of water stay liquid on Mars, even on a warm afternoon?",
   "answer": "The air is too thin to hold it. Water boils when its vapour pushes as hard as the air above, so thinner air means a lower boiling point. Mars's surface pressure, about 6 millibars, sits near the 6.1 below which water cannot be liquid at all: ice turns straight to vapour.",
   "move": "Warmth alone does not make a liquid; the pressure has to allow it.",
   "ask": "What second condition besides the obvious one decides whether my plan can work?",
@@ -131,7 +131,7 @@
         "text": "The top of Everest: water boils at about 70 °C."
       },
       {
-        "at": 19,
+        "at": 19.2,
         "text": "About 19 km: it boils at 37 °C, body heat. Pilots call it the Armstrong limit."
       },
       {

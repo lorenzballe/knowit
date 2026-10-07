@@ -1,0 +1,73 @@
+{
+  "id": "psychology-panic-4",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.panic",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "On 5 August 2024 phone apps showed the week on Wall Street like this, and headlines spoke of a crash. Where's the trick?",
+  "answer": "In the axis, drawn from 5,150 to 5,550, so a 6% dip fills the screen as a 90% one would. Most finance apps zoom to fit the wiggle. Within weeks the index had recovered, and 2024 closed up 23%. Anyone who sold at the bottom of that screen sold at the week's low.",
+  "move": "Before reacting to a fall, ask what share of the whole it is.",
+  "ask": "When my savings app shows a drop, do I check its size against the whole?",
+  "keywords": [
+    "stock market",
+    "market panic",
+    "zoomed axis",
+    "pension apps"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "trick",
+    "trick": "stretched",
+    "outlet": "Typical app chart, Aug 2024",
+    "headline": "Global stocks crash",
+    "honest": "S&P 500: down 6% in three days",
+    "label": "S&P 500 at the close",
+    "columns": [
+      "Jul 31",
+      "Aug 1",
+      "Aug 2",
+      "Aug 5",
+      "Aug 6",
+      "Aug 7",
+      "Aug 8",
+      "Aug 9"
+    ],
+    "values": [
+      5522.3,
+      5446.68,
+      5346.56,
+      5186.33,
+      5240.03,
+      5199.5,
+      5319.31,
+      5344.16
+    ],
+    "from": 5150,
+    "to": 5550,
+    "honestFrom": 0,
+    "honestTo": 6000,
+    "found": "Yes: the axis covers only 400 points of a 5,500 index.",
+    "miss": "That part is fair. Look at the range the axis covers.",
+    "misses": {
+      "headline": "The papers did say so. Does the drawing show the size?",
+      "marks": "The closes are right. It's the ruler they hang on."
+    },
+    "name": "The zoomed axis",
+    "lesson": "Apps zoom the axis to fit the wiggle. Compare a fall with the whole before you panic."
+  },
+  "source": "S&P Dow Jones Indices, S&P 500 closes",
+  "source_kind": "statistics",
+  "reference": "S&P Dow Jones Indices, S&P 500 daily closing levels, 31 July to 9 August 2024, and 2024 year-end close (5,881.63, against 4,769.83 at the end of 2023)",
+  "written": "2026-10-07"
+}

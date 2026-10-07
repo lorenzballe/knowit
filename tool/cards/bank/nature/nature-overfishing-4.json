@@ -1,0 +1,83 @@
+{
+  "id": "nature-overfishing-4",
+  "topic": "nature",
+  "genre": "nature.oceans",
+  "strand": "nature.oceans.overfishing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A fish stock grows by breeding. Below, its size as a share of the unfished sea. When does it add the most fish?",
+  "answer": "At half full; a full sea adds almost none. Food and space run short, so births barely replace deaths. In Schaefer's 1954 model, growth peaks at half the unfished stock: plenty of parents, room to spare. That is the logic of maximum sustainable yield: a half-empty sea feeds the most boats.",
+  "move": "Expect growth to peak halfway up, not at the full.",
+  "ask": "What in my life is so full that it has stopped growing?",
+  "keywords": [
+    "overfishing",
+    "maximum sustainable yield",
+    "fish stocks",
+    "logistic growth",
+    "schaefer model"
+  ],
+  "era": "timeless",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "draw",
+    "label": "New fish a year, % of the peak",
+    "unit": "%",
+    "columns": [
+      "10%",
+      "20%",
+      "30%",
+      "40%",
+      "50%",
+      "60%",
+      "70%",
+      "80%",
+      "90%",
+      "Full"
+    ],
+    "values": [
+      36,
+      64,
+      84,
+      96,
+      100,
+      96,
+      84,
+      64,
+      36,
+      0
+    ],
+    "given": 2,
+    "min": 0,
+    "max": 120,
+    "judge": 9,
+    "near": 0.08,
+    "verdict": {
+      "under": "Right at the floor: a full sea adds almost nothing. The peak comes at half full.",
+      "near": "Right: a sea at its natural limit adds almost nothing. Growth peaks at half full.",
+      "over": "Fewer: a full sea adds almost no fish a year. Growth peaks at half full."
+    },
+    "notes": [
+      {
+        "at": 4,
+        "text": "Peak: half full"
+      },
+      {
+        "at": 7,
+        "text": "80% full: down to 64"
+      }
+    ]
+  },
+  "source": "Schaefer, IATTC Bulletin, 1954",
+  "source_kind": "paper",
+  "reference": "Schaefer, Some aspects of the dynamics of populations important to the management of the commercial marine fisheries, Bulletin of the Inter-American Tropical Tuna Commission 1(2):27-56, 1954 (yearly growth proportional to N(1 - N/K))",
+  "written": "2026-10-07"
+}

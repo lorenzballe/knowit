@@ -44,7 +44,7 @@
       "The first five diners: just 1 hunch in 5 favoured B, 20%. So they chose A.",
       "50 hunches: 58% favour B. But after the first few, nobody acts on theirs.",
       "500 hunches: 61%.",
-      "5,000: 60%, the rate built in. Pooled, the hunches pick B; copied, the queue stays at A."
+      "5,000: 60%, as built in. Pooled, hunches pick B; copied, the queue stays at A."
     ]
   },
   "source": "Bikhchandani et al., Journal of Political Economy, 1992",

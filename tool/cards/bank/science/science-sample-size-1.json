@@ -56,9 +56,9 @@
     "seed": 1752,
     "button": "Add pupils",
     "notes": [
-      "Two schools of 25, equally good: 84% pass at one, 44% at the other. Top and bottom.",
+      "Two equal schools of 25: 84% pass at one, 44% at the other. Top and bottom.",
       "250 pupils each: 61% and 56%. The gap is closing.",
-      "2,500 each: 60% and 60%, the rate built into both. Size made the gap, not teaching."
+      "2,500 each: 60% and 60%, as built in. Size made the gap, not teaching."
     ]
   },
   "source": "Wainer, American Scientist, 2007",

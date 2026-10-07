@@ -1,0 +1,74 @@
+{
+  "id": "music-frequencies-11",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.frequencies",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "To raise a string's pitch, you tighten it. How much more pull does it take to go up a whole octave?",
+  "answer": "Four times the pull. Pitch rises with the square root of tension, as Mersenne set out in 1636, so doubling the frequency means quadrupling the force. A guitar string carrying about 7 kg would need nearly 30 and snap first. So low strings are made heavier, not slacker: mass lowers pitch without losing tension.",
+  "move": "Before doubling a result, check whether the effort it needs squares.",
+  "ask": "What am I trying to double where the effort needed would really quadruple?",
+  "keywords": [
+    "string tension",
+    "pitch",
+    "mersenne's laws",
+    "guitar strings",
+    "octave"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "draw",
+    "label": "String tension, × the start",
+    "unit": "×",
+    "columns": [
+      "Start",
+      "+2",
+      "+4",
+      "+6",
+      "+8",
+      "+10",
+      "Octave"
+    ],
+    "values": [
+      1,
+      1.26,
+      1.59,
+      2.0,
+      2.52,
+      3.17,
+      4.0
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 5,
+    "decimals": 2,
+    "judge": 6,
+    "near": 0.08,
+    "verdict": {
+      "under": "More than that: an octave takes 4 times the pull, not double.",
+      "near": "Right: pitch follows the square root of tension, so an octave needs 4 times.",
+      "over": "Less than that: 4 times the pull for an octave. Half an octave already doubles it."
+    },
+    "notes": [
+      {
+        "at": 3,
+        "text": "Half an octave: ×2"
+      }
+    ]
+  },
+  "source": "Mersenne, Harmonie universelle, 1636",
+  "source_kind": "book",
+  "reference": "Mersenne, Harmonie universelle, Paris, 1636 (frequency proportional to the square root of tension); x axis in semitones, tension = 2^(semitones/6)",
+  "written": "2026-10-07"
+}

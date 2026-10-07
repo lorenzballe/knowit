@@ -33,28 +33,28 @@
   "ask": "Before I handle food, do I wash my hands with soap or reach for gel?",
   "scene": {
     "type": "rank",
-    "quantity": "US cases a year",
+    "quantity": "US cases a year, thousands",
     "most": "Most",
     "log": true,
     "items": [
       {
         "label": "Salmonella",
-        "value": 1030000,
+        "value": 1030,
         "note": "A fifth as many cases as norovirus, but it kills more Americans."
       },
       {
         "label": "Listeria",
-        "value": 1600,
+        "value": 1.6,
         "note": "Rare, about 1,600 cases, but about 1 in 6 of them dies."
       },
       {
         "label": "Campylobacter",
-        "value": 845000,
+        "value": 845,
         "note": "Mostly from undercooked chicken."
       },
       {
         "label": "Norovirus",
-        "value": 5460000,
+        "value": 5460,
         "note": "Over half of all cases, often from food handled by someone already ill."
       }
     ]

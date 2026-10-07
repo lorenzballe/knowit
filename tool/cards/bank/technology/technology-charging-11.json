@@ -39,17 +39,17 @@
     "log": true,
     "items": [
       {
-        "label": "Full phone charge",
+        "label": "Phone charge",
         "value": 0.02,
         "note": "A year of daily charges, about 7 kWh, matches a single 14 km drive."
       },
       {
-        "label": "8-minute hot shower",
+        "label": "Hot shower",
         "value": 1.9,
         "note": "64 litres warmed by 25 °C: as much as about 90 phone charges."
       },
       {
-        "label": "LED bulb, 5 hours",
+        "label": "LED evening",
         "value": 0.05,
         "note": "A 10-watt bulb for a whole evening."
       },
@@ -59,7 +59,7 @@
         "note": "0.6 litres of petrol: over 250 phone charges' worth."
       },
       {
-        "label": "Boil 1 litre",
+        "label": "Boil a litre",
         "value": 0.1,
         "note": "Water is slow to heat: one litre to boiling takes about 0.1 kWh."
       }

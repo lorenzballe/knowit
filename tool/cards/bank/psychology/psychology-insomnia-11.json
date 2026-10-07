@@ -1,0 +1,81 @@
+{
+  "id": "psychology-insomnia-11",
+  "topic": "psychology",
+  "genre": "psychology.sleep_and_dreams",
+  "strand": "psychology.sleep_and_dreams.insomnia",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Coffee at 8 am, noon and 4 pm, about 100 mg each, and half clears every 5 hours. How much is left at midnight?",
+  "answer": "About 63 mg, over half a cup. The cups stack: each lands on what is left of the last, so the level peaks near 190 mg at 4 pm. Caffeine blocks adenosine, the signal of sleep pressure; in Drake's 2013 trial, 400 mg six hours before bed cut sleep by over an hour.",
+  "move": "Before adding another dose, count what is still left from the last.",
+  "ask": "When is my last coffee, and how much of it is still awake at bedtime?",
+  "keywords": [
+    "caffeine",
+    "half-life",
+    "sleep",
+    "adenosine",
+    "coffee"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "draw",
+    "label": "Caffeine in the body, mg",
+    "unit": "mg",
+    "columns": [
+      "8am",
+      "10am",
+      "Noon",
+      "2pm",
+      "4pm",
+      "6pm",
+      "8pm",
+      "10pm",
+      "Midnight"
+    ],
+    "values": [
+      100,
+      75.8,
+      157.4,
+      119.3,
+      190.4,
+      144.3,
+      109.4,
+      82.9,
+      62.8
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 250,
+    "judge": 8,
+    "near": 0.08,
+    "verdict": {
+      "under": "More than that: each cup lands on the last one's leftovers, so 63 mg is still there.",
+      "near": "Right: about 63 mg at midnight, with the afternoon cup barely half gone.",
+      "over": "Less than that, but not much: at midnight about 63 mg is still in you."
+    },
+    "notes": [
+      {
+        "at": 4,
+        "text": "4 pm: 190, not 100"
+      },
+      {
+        "at": 6,
+        "text": "8 pm: still 109"
+      }
+    ]
+  },
+  "source": "Drake et al., J Clin Sleep Med, 2013",
+  "source_kind": "paper",
+  "reference": "Drake, Roehrs, Shambroom & Roth, Caffeine effects on sleep taken 0, 3, or 6 hours before going to bed, Journal of Clinical Sleep Medicine 9(11):1195-1200, 2013; levels computed with a 5-hour half-life",
+  "written": "2026-10-07"
+}

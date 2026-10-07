@@ -33,32 +33,32 @@
   "ask": "When did I last have my blood pressure measured, and what was the number?",
   "scene": {
     "type": "rank",
-    "quantity": "Deaths a year, worldwide",
+    "quantity": "Deaths a year, millions",
     "most": "Most",
     "items": [
       {
         "label": "Smoking",
-        "value": 8710000,
+        "value": 8.7,
         "note": "Second-hand smoke included: close behind, but not first."
       },
       {
         "label": "Obesity",
-        "value": 5020000,
+        "value": 5.0,
         "note": "Counted as a high body-mass index; much of its harm runs through blood pressure."
       },
       {
-        "label": "High blood pressure",
-        "value": 10800000,
+        "label": "Blood pressure",
+        "value": 10.8,
         "note": "It has no symptoms: many people only learn they have it from a cuff."
       },
       {
         "label": "Alcohol",
-        "value": 2440000,
+        "value": 2.4,
         "note": "About 2.4 million: under a quarter of the top killer's toll."
       },
       {
         "label": "Air pollution",
-        "value": 6670000,
+        "value": 6.7,
         "note": "Fine particles outdoors, and smoke from cooking fires indoors."
       }
     ]

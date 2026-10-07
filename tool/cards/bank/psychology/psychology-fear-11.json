@@ -32,23 +32,23 @@
   "ask": "Which danger to me or my family do I guard against mainly because of a story?",
   "scene": {
     "type": "rank",
-    "quantity": "US children, in one year",
+    "quantity": "US children, in 1999",
     "most": "Most",
     "log": true,
     "items": [
       {
-        "label": "Kidnapped by stranger",
+        "label": "Stranger",
         "value": 115,
         "note": "About 115: the case on the news, and the rarest by far."
       },
       {
-        "label": "Taken by a relative",
-        "value": 203900,
+        "label": "Relative",
+        "value": 204000,
         "note": "About 204,000, most often by a parent in a custody fight."
       },
       {
-        "label": "Ran away or thrown out",
-        "value": 1682900,
+        "label": "Ran away",
+        "value": 1700000,
         "note": "About 1.7 million: the commonest way a child goes missing."
       }
     ]

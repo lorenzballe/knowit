@@ -1,0 +1,61 @@
+{
+  "id": "psychology-framing-4",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.framing",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 2012 a US business channel aired this: more Americans on welfare than in full-time jobs. Where's the trick?",
+  "answer": "Twice over. The axis starts at 94 million, so a 7% gap looks like double. And the welfare bar counted everyone in a home where anyone got any means-tested help, Medicaid and school lunches included, babies too, against full-time workers only. Widen what a word covers and the same country tells another story.",
+  "move": "When a number shocks, ask exactly who it counts and who it leaves out.",
+  "ask": "When a figure makes me angry, have I checked what its words actually cover?",
+  "keywords": [
+    "welfare",
+    "full-time jobs",
+    "truncated axis",
+    "fox business",
+    "definitions"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "trick",
+    "trick": "truncated",
+    "outlet": "Fox Business, 2012 (redrawn)",
+    "headline": "Welfare vs. full-time jobs",
+    "honest": "Only 7% apart, and counting different things",
+    "label": "Americans, millions",
+    "decimals": 1,
+    "columns": [
+      "On welfare",
+      "Full-time"
+    ],
+    "values": [
+      108.6,
+      101.7
+    ],
+    "from": 94,
+    "to": 110,
+    "found": "Yes: the axis starts at 94 million, not at zero.",
+    "miss": "That part is fair. Look at where the bars begin.",
+    "misses": {
+      "label": "Sharp: these count different people. But the bars lie as well.",
+      "marks": "The numbers are right. It's the heights that shout."
+    },
+    "name": "Cut axis, wide word",
+    "lesson": "Bars must start at zero, and labels need reading: here a 7% gap was drawn as double."
+  },
+  "source": "Media Matters, 2012; US Census Bureau SIPP",
+  "source_kind": "news_archive",
+  "reference": "Media Matters for America, on Fox Business's 'Welfare vs. Full Time Jobs' graphic, 2012; US Census Bureau, Survey of Income and Program Participation, people in households receiving means-tested benefits, 2011",
+  "written": "2026-10-07"
+}
