@@ -503,5 +503,17 @@
   "reportOther": "その他",
   "reportNoteHint": "確認に役立つこと（任意）",
   "reportSend": "送信",
-  "reportSentToast": "ありがとうございます。確認します。"
+  "reportSentToast": "ありがとうございます。確認します。",
+  "journeyPoints": "{n}ポイント",
+  "journeyPointsOff": "ポイントのずれ",
+  "journeyLastWeek": "先週は{n}",
+  "journeyLastWeekSame": "先週と同じ",
+  "journeyOffExplain": "あなたの言う確信度と、実際に正解する割合のずれです。0なら、70%と答えた問題は10回中7回正解していたことになります。",
+  "journeyOffNotYet": "{n, plural, other{あと{n}回、確信度つきで答えると測れます。}}",
+  "journeyAxisSure": "言った確信度 →",
+  "journeyAxisRight": "↑ 正解した割合",
+  "journeyCurveSpotOn": "ぴったり",
+  "journeyTooSure": "自信過剰",
+  "journeyWhenYouSaid": "確信度{sure}と言ったとき、正解は{right}でした。",
+  "journeyNAnswers": "{n, plural, other{{n}回答}}"
 }

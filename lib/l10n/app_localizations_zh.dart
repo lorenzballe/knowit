@@ -2010,4 +2010,61 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get reportSentToast => '谢谢，我们会核实。';
+
+  @override
+  String journeyPoints(String n) {
+    return '$n 分';
+  }
+
+  @override
+  String get journeyPointsOff => '分偏差';
+
+  @override
+  String journeyLastWeek(int n) {
+    return '上周 $n';
+  }
+
+  @override
+  String get journeyLastWeekSame => '与上周相同';
+
+  @override
+  String get journeyOffExplain =>
+      '你说的把握与你实际答对的频率之间的差距。0 表示每个说 70% 的回答，十次中有七次是对的。';
+
+  @override
+  String journeyOffNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '再带把握回答 $n 题，就能测出来。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyAxisSure => '你说的把握 →';
+
+  @override
+  String get journeyAxisRight => '↑ 答对的频率';
+
+  @override
+  String get journeyCurveSpotOn => '正好';
+
+  @override
+  String get journeyTooSure => '过于自信';
+
+  @override
+  String journeyWhenYouSaid(String sure, String right) {
+    return '当你说有 $sure 把握时，你答对了 $right。';
+  }
+
+  @override
+  String journeyNAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 个回答',
+    );
+    return '$_temp0';
+  }
 }

@@ -503,5 +503,17 @@
   "reportOther": "Autre chose",
   "reportNoteHint": "Ce qui peut nous aider à vérifier (facultatif)",
   "reportSend": "Envoyer",
-  "reportSentToast": "Merci. Nous allons vérifier."
+  "reportSentToast": "Merci. Nous allons vérifier.",
+  "journeyPoints": "{n} pts",
+  "journeyPointsOff": "points d'écart",
+  "journeyLastWeek": "{n} la semaine dernière",
+  "journeyLastWeekSame": "comme la semaine dernière",
+  "journeyOffExplain": "L'écart entre la certitude que tu annonces et la fréquence où tu as raison. Zéro voudrait dire que chaque réponse à 70 % était juste sept fois sur dix.",
+  "journeyOffNotYet": "{n, plural, =1{Encore une réponse avec ta certitude, et on le mesure.} other{Encore {n} réponses avec ta certitude, et on le mesure.}}",
+  "journeyAxisSure": "ta certitude annoncée →",
+  "journeyAxisRight": "↑ à quel point juste",
+  "journeyCurveSpotOn": "pile juste",
+  "journeyTooSure": "trop sûr",
+  "journeyWhenYouSaid": "Quand tu disais {sure} de certitude, tu avais raison {right} du temps.",
+  "journeyNAnswers": "{n, plural, =1{1 réponse} other{{n} réponses}}"
 }

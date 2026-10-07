@@ -997,6 +997,30 @@ class AppState extends ChangeNotifier {
     return buckets.fold<double>(0, (a, b) => a + b.gap.abs() * b.count) / n;
   }
 
+  /// The same gap as it stood at the end of [day]: the answers made by
+  /// then, and the ones from before the app dated them, which are older
+  /// than any that are dated. Null when there were too few to say.
+  double? confidenceGapOn(String day) {
+    final made = judgements.where(
+      (j) => j.on == null || j.on!.compareTo(day) <= 0,
+    );
+    var n = 0;
+    var off = 0.0;
+    for (final level in kConfidenceLevels) {
+      final at = made.where((j) => j.confidence == level).toList();
+      if (at.isEmpty) continue;
+      final bucket = CalibrationBucket(
+        level,
+        at.length,
+        at.where((j) => j.correct).length,
+      );
+      n += bucket.count;
+      off += bucket.gap.abs() * bucket.count;
+    }
+    if (n < kCalibrationFloor) return null;
+    return off / n;
+  }
+
   /// Where the reader stands on the ladder, and what the next step is.
   Standing get standing => Standing(
     read: seenIds.length,

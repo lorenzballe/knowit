@@ -2089,4 +2089,63 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reportSentToast => 'Merci. Nous allons vérifier.';
+
+  @override
+  String journeyPoints(String n) {
+    return '$n pts';
+  }
+
+  @override
+  String get journeyPointsOff => 'points d\'écart';
+
+  @override
+  String journeyLastWeek(int n) {
+    return '$n la semaine dernière';
+  }
+
+  @override
+  String get journeyLastWeekSame => 'comme la semaine dernière';
+
+  @override
+  String get journeyOffExplain =>
+      'L\'écart entre la certitude que tu annonces et la fréquence où tu as raison. Zéro voudrait dire que chaque réponse à 70 % était juste sept fois sur dix.';
+
+  @override
+  String journeyOffNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Encore $n réponses avec ta certitude, et on le mesure.',
+      one: 'Encore une réponse avec ta certitude, et on le mesure.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyAxisSure => 'ta certitude annoncée →';
+
+  @override
+  String get journeyAxisRight => '↑ à quel point juste';
+
+  @override
+  String get journeyCurveSpotOn => 'pile juste';
+
+  @override
+  String get journeyTooSure => 'trop sûr';
+
+  @override
+  String journeyWhenYouSaid(String sure, String right) {
+    return 'Quand tu disais $sure de certitude, tu avais raison $right du temps.';
+  }
+
+  @override
+  String journeyNAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n réponses',
+      one: '1 réponse',
+    );
+    return '$_temp0';
+  }
 }

@@ -2021,4 +2021,61 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get reportSentToast => '고마워요. 확인할게요.';
+
+  @override
+  String journeyPoints(String n) {
+    return '$n점';
+  }
+
+  @override
+  String get journeyPointsOff => '점 어긋남';
+
+  @override
+  String journeyLastWeek(int n) {
+    return '지난주 $n';
+  }
+
+  @override
+  String get journeyLastWeekSame => '지난주와 같음';
+
+  @override
+  String get journeyOffExplain =>
+      '말한 확신과 실제로 맞히는 비율의 차이예요. 0이면 70%라고 한 답이 열 번 중 일곱 번 맞았다는 뜻이에요.';
+
+  @override
+  String journeyOffNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '확신을 말하며 $n번 더 답하면 측정돼요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyAxisSure => '말한 확신 →';
+
+  @override
+  String get journeyAxisRight => '↑ 맞힌 비율';
+
+  @override
+  String get journeyCurveSpotOn => '딱 맞음';
+
+  @override
+  String get journeyTooSure => '과신';
+
+  @override
+  String journeyWhenYouSaid(String sure, String right) {
+    return '$sure 확신한다고 했을 때, $right 맞혔어요.';
+  }
+
+  @override
+  String journeyNAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '답 $n개',
+    );
+    return '$_temp0';
+  }
 }

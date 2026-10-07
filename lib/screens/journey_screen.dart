@@ -1,9 +1,12 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart' hide TextDirection;
 
 import '../data/genres.dart';
 import '../data/pill_bank.dart';
+import '../data/pills_repository.dart' show dateKey;
 import '../data/topics.dart';
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
@@ -18,13 +21,15 @@ import 'path_screen.dart';
 import 'week_screen.dart';
 import 'progress_text.dart';
 
-/// Your journey — artboard 83a: the numbers first, the card to say last.
+/// Your journey: the numbers first, the card to say last.
 ///
 /// Everything on it is counted from what the app already writes down. The
-/// order is the argument: what the reading has come to (the level, the
-/// four numbers, what it is about), then where it has gone (by subject),
-/// and at the foot the one thing to do with it tonight — a card to say out
-/// loud to somebody. A page of statistics that ends in an action.
+/// order is the argument: at the top (artboard 134e) how sure the reader
+/// says they are against how often they are right, then what the reading
+/// has come to (the week, the level, the four numbers, what it is about),
+/// then where it has gone (by subject), and at the foot the one thing to do
+/// with it tonight — a card to say out loud to somebody. A page of
+/// statistics that ends in an action.
 class JourneyScreen extends StatefulWidget {
   const JourneyScreen({super.key, required this.app, required this.onBack});
 
@@ -41,6 +46,9 @@ class _JourneyScreenState extends State<JourneyScreen> {
 
   /// The subject open to its strands, if one is.
   String? _openSubject;
+
+  /// The confidence level picked under the curve at the top, if one is.
+  int? _sureLevel;
 
   AppState get app => widget.app;
 
@@ -99,6 +107,7 @@ class _JourneyScreenState extends State<JourneyScreen> {
                         ),
                       ),
                     ),
+                    if (app.score.total > 0) _Points(app: app),
                   ],
                 ),
               ),
@@ -108,8 +117,12 @@ class _JourneyScreenState extends State<JourneyScreen> {
                     ListView(
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 28),
                       children: [
-                        _Score(app: app),
-                        const SizedBox(height: 20),
+                        _SureAndRight(
+                          app: app,
+                          chosen: _sureLevel,
+                          onChoose: (said) => setState(() => _sureLevel = said),
+                        ),
+                        const SizedBox(height: 24),
                         _Week(app: app),
                         const SizedBox(height: 20),
                         _Level(app: app),
@@ -192,132 +205,661 @@ class _JourneyScreenState extends State<JourneyScreen> {
   }
 }
 
-/// The record as one number, set large, with the bar that says where it
-/// came from. A score nobody can see the parts of is a number to distrust.
-class _Score extends StatelessWidget {
-  const _Score({required this.app});
+/// The record as one number, in a pill beside the title, now that the top
+/// of the page is how sure against how right.
+class _Points extends StatelessWidget {
+  const _Points({required this.app});
 
   final AppState app;
 
   @override
   Widget build(BuildContext context) {
+    final String locale = Localizations.localeOf(context).toString();
+    return Container(
+      key: const ValueKey('journey-score'),
+      padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
+      decoration: BoxDecoration(
+        color: context.p.inverse,
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Text(
+        context.l10n.journeyPoints(
+          NumberFormat.decimalPattern(locale).format(app.score.total),
+        ),
+        style: AppText.body(
+          size: 11.5,
+          weight: FontWeight.w700,
+          height: 1,
+          color: context.p.onInverse,
+        ),
+      ),
+    );
+  }
+}
+
+/// Sure, and right — artboard 134e, the top of the page: how many points
+/// the reader's confidence runs off their results, which way it has gone
+/// since last week, and the curve level by level, with the levels under it
+/// to pick one and a sentence that says how that one went.
+class _SureAndRight extends StatelessWidget {
+  const _SureAndRight({
+    required this.app,
+    required this.chosen,
+    required this.onChoose,
+  });
+
+  final AppState app;
+
+  /// The confidence level picked under the curve, or null for the default.
+  final int? chosen;
+  final ValueChanged<int> onChoose;
+
+  @override
+  Widget build(BuildContext context) {
     final l = context.l10n;
     final Color ink = context.p.ink;
-    final Score score = app.score;
-    final int today = app.pointsToday;
-    final String locale = Localizations.localeOf(context).toString();
-    final NumberFormat number = NumberFormat.decimalPattern(locale);
-
-    // Held first: it is worth the most and it is the part that fails.
-    final parts = <(int, Color, String)>[
-      (score.fromHeld, ink, l.nStillWithYou(score.held)),
-      (score.fromRead, ink.withValues(alpha: 0.22), l.nRead(score.read)),
-      (score.fromMoves, context.p.link, l.nMoves(score.moves)),
-      (score.fromWeeks, ink.withValues(alpha: 0.5), l.nWeeksKept(score.weeks)),
-    ];
-    final int total = score.total;
+    final double? gap = app.confidenceGap;
+    final double? before = app.confidenceGapOn(
+      dateKey(app.today.subtract(const Duration(days: 7))),
+    );
+    final List<CalibrationBucket> buckets = app.calibration.toList();
+    final int toGo = kCalibrationFloor - app.judgements.length;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
+        // The number and the week beside it, on one line where they fit
+        // and the week under it where they do not.
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 10,
+          runSpacing: 10,
           children: [
-            Text(
-              number.format(total),
-              key: const ValueKey('journey-score'),
-              style: AppText.display(
-                size: 64,
-                weight: FontWeight.w600,
-                height: 1,
-                spacing: -3,
-                color: ink,
-              ),
-            ),
-            const SizedBox(width: 9),
-            Expanded(
-              child: Text(
-                l.pts,
-                style: AppText.body(
-                  size: 15,
-                  weight: FontWeight.w600,
-                  color: ink.withValues(alpha: 0.45),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Text(
+                  gap == null ? '—' : '${gap.round()}',
+                  key: const ValueKey('journey-gap'),
+                  style: AppText.display(
+                    size: 80,
+                    weight: FontWeight.w600,
+                    height: 0.84,
+                    spacing: -3.6,
+                    color: ink,
+                  ),
                 ),
-              ),
-            ),
-            if (today > 0)
-              Text(
-                l.plusNToday(today),
-                style: AppText.body(
-                  size: 12.5,
-                  weight: FontWeight.w600,
-                  color: ink.withValues(alpha: 0.45),
+                const SizedBox(width: 10),
+                Flexible(
+                  child: Text(
+                    l.journeyPointsOff,
+                    style: AppText.body(
+                      size: 15,
+                      weight: FontWeight.w600,
+                      height: 1.2,
+                      color: ink.withValues(alpha: 0.5),
+                    ),
+                  ),
                 ),
-              ),
+              ],
+            ),
+            if (gap != null && before != null)
+              _LastWeek(now: gap.round(), before: before.round()),
           ],
         ),
-        const SizedBox(height: 12),
-        if (total > 0) ...[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(9),
-            child: SizedBox(
-              height: 8,
-              child: Row(
-                children: [
-                  for (final part in parts)
-                    if (part.$1 > 0)
-                      Expanded(
-                        flex: part.$1,
-                        child: Container(color: part.$2),
-                      ),
-                ],
-              ),
-            ),
+        const SizedBox(height: 14),
+        Text(
+          gap == null && toGo > 0
+              ? '${l.journeyOffExplain} ${l.journeyOffNotYet(toGo)}'
+              : l.journeyOffExplain,
+          style: AppText.body(
+            size: 13.5,
+            height: 1.45,
+            color: ink.withValues(alpha: 0.6),
           ),
-          const SizedBox(height: 10),
-          Wrap(
-            spacing: 14,
-            runSpacing: 6,
-            children: [
-              for (final part in parts)
-                if (part.$1 > 0)
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 7,
-                        height: 7,
-                        decoration: BoxDecoration(
-                          color: part.$2,
-                          borderRadius: BorderRadius.circular(2),
-                        ),
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        part.$3,
-                        style: AppText.body(
-                          size: 11.5,
-                          weight: FontWeight.w500,
-                          color: ink.withValues(alpha: 0.55),
-                        ),
-                      ),
-                    ],
-                  ),
-            ],
-          ),
-        ] else
-          Text(
-            l.scoreStartsToday,
-            style: AppText.body(
-              size: 12.5,
-              height: 1.35,
-              color: ink.withValues(alpha: 0.45),
-            ),
-          ),
+        ),
+        if (buckets.isNotEmpty) ...[
+          const SizedBox(height: 20),
+          _SureCurve(buckets: buckets, chosen: chosen, onChoose: onChoose),
+        ],
       ],
     );
   }
+}
+
+/// Where the gap stood a week ago, and which way it has gone since: down
+/// is the good way.
+class _LastWeek extends StatelessWidget {
+  const _LastWeek({required this.now, required this.before});
+
+  final int now;
+  final int before;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final bool dark = Theme.of(context).brightness == Brightness.dark;
+    final Color ink = context.p.ink;
+    final Color green = dark
+        ? const Color(0xFF3BE07A)
+        : const Color(0xFF0B8A3E);
+    final Color pink = dark ? const Color(0xFFFF7AA8) : const Color(0xFFC2185B);
+    final (Color colour, Color fill, IconData? icon, String text) = now < before
+        ? (
+            green,
+            green.withValues(alpha: 0.14),
+            Icons.arrow_downward_rounded,
+            l.journeyLastWeek(before),
+          )
+        : now > before
+        ? (
+            pink,
+            pink.withValues(alpha: 0.14),
+            Icons.arrow_upward_rounded,
+            l.journeyLastWeek(before),
+          )
+        : (
+            ink.withValues(alpha: 0.6),
+            ink.withValues(alpha: 0.07),
+            null,
+            l.journeyLastWeekSame,
+          );
+    return Container(
+      key: const ValueKey('journey-last-week'),
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
+      decoration: BoxDecoration(
+        color: fill,
+        borderRadius: BorderRadius.circular(9),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null) ...[
+            Icon(icon, size: 12, color: colour),
+            const SizedBox(width: 5),
+          ],
+          Text(
+            text,
+            style: AppText.body(
+              size: 11.5,
+              weight: FontWeight.w700,
+              height: 1,
+              color: colour,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// The curve, the levels under it to pick from, and what the picked one
+/// came to.
+class _SureCurve extends StatelessWidget {
+  const _SureCurve({
+    required this.buckets,
+    required this.chosen,
+    required this.onChoose,
+  });
+
+  final List<CalibrationBucket> buckets;
+  final int? chosen;
+  final ValueChanged<int> onChoose;
+
+  /// The level shown: the one picked, or the surest one answered — that is
+  /// where being sure costs the most when it is wrong.
+  CalibrationBucket get _shown {
+    for (final CalibrationBucket b in buckets) {
+      if (b.said == chosen) return b;
+    }
+    return buckets.reduce((a, b) => b.said > a.said ? b : a);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final Color ink = context.p.ink;
+    final bool dark = Theme.of(context).brightness == Brightness.dark;
+    final CalibrationBucket shown = _shown;
+    final Set<int> answered = {for (final b in buckets) b.said};
+    final TextStyle caption = AppText.body(
+      size: 10.5,
+      weight: FontWeight.w600,
+      height: 1,
+      color: ink.withValues(alpha: 0.4),
+    );
+    return Container(
+      key: const ValueKey('journey-curve'),
+      padding: const EdgeInsets.fromLTRB(14, 16, 14, 16),
+      decoration: BoxDecoration(
+        color: ink.withValues(alpha: 0.05),
+        borderRadius: BorderRadius.circular(22),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          AspectRatio(
+            aspectRatio: 342 / 230,
+            child: CustomPaint(
+              painter: _SurePainter(
+                buckets: buckets,
+                shown: shown.said,
+                ink: ink,
+                ground: Color.alphaBlend(
+                  ink.withValues(alpha: 0.05),
+                  context.p.surface,
+                ),
+                pink: dark ? const Color(0xFFFF3D7F) : const Color(0xFFE0245E),
+                pinkText: dark
+                    ? const Color(0xFFFF7AA8)
+                    : const Color(0xFFC2185B),
+                spotOn: l.journeyCurveSpotOn,
+                tooSure: l.journeyTooSure,
+                textStyle: AppText.body(size: 10, weight: FontWeight.w600),
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(child: Text(l.journeyAxisSure, style: caption)),
+              const SizedBox(width: 10),
+              Text(l.journeyAxisRight, style: caption),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              for (final (int i, int said) in kConfidenceLevels.indexed) ...[
+                if (i > 0) const SizedBox(width: 5),
+                Expanded(
+                  child: _LevelChip(
+                    said: said,
+                    on: said == shown.said,
+                    answered: answered.contains(said),
+                    onTap: () => onChoose(said),
+                  ),
+                ),
+              ],
+            ],
+          ),
+          const SizedBox(height: 16),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                child: Text(
+                  l.journeyWhenYouSaid(
+                    '${shown.said}%',
+                    '${shown.actual.round()}%',
+                  ),
+                  key: const ValueKey('journey-when'),
+                  style: AppText.display(
+                    size: 17,
+                    weight: FontWeight.w600,
+                    height: 1.25,
+                    spacing: -0.3,
+                    color: ink,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 12),
+              Text(
+                l.journeyNAnswers(shown.count),
+                style: AppText.body(
+                  size: 11.5,
+                  weight: FontWeight.w600,
+                  height: 1.3,
+                  color: ink.withValues(alpha: 0.45),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// One confidence level under the curve: picked, pickable, or never said.
+class _LevelChip extends StatelessWidget {
+  const _LevelChip({
+    required this.said,
+    required this.on,
+    required this.answered,
+    required this.onTap,
+  });
+
+  final int said;
+  final bool on;
+  final bool answered;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color ink = context.p.ink;
+    return Semantics(
+      button: answered,
+      selected: on,
+      child: GestureDetector(
+        key: ValueKey('journey-level-$said'),
+        behavior: HitTestBehavior.opaque,
+        onTap: answered && !on
+            ? () {
+                HapticFeedback.selectionClick();
+                onTap();
+              }
+            : null,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 160),
+          height: 32,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: on ? context.p.inverse : ink.withValues(alpha: 0.07),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Text(
+            '$said%',
+            maxLines: 1,
+            style: AppText.body(
+              size: 12,
+              weight: FontWeight.w600,
+              height: 1,
+              color: on
+                  ? context.p.onInverse
+                  : ink.withValues(alpha: answered ? 0.62 : 0.25),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// The curve on the design's own grid (342 by 230), scaled to the card:
+/// how sure across, from 50% to 90%, how often right up the side. Where the
+/// reader was surer than right, the space between the curve and the
+/// diagonal is shaded and called what it is.
+class _SurePainter extends CustomPainter {
+  _SurePainter({
+    required this.buckets,
+    required this.shown,
+    required this.ink,
+    required this.ground,
+    required this.pink,
+    required this.pinkText,
+    required this.spotOn,
+    required this.tooSure,
+    required this.textStyle,
+  });
+
+  final List<CalibrationBucket> buckets;
+  final int shown;
+  final Color ink;
+  final Color ground;
+  final Color pink;
+  final Color pinkText;
+  final String spotOn;
+  final String tooSure;
+  final TextStyle textStyle;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final double k = size.width / 342;
+    canvas.save();
+    canvas.scale(k);
+    final int lo = _floor();
+    double x(num said) => 36 + (said - 50) / 40 * 294;
+    double y(num right) => 200 - (right - lo) / (100 - lo) * 186;
+    final List<Offset> points = [
+      for (final b in buckets) Offset(x(b.said), y(b.actual)),
+    ];
+
+    final Paint grid = Paint()
+      ..color = ink.withValues(alpha: 0.07)
+      ..strokeWidth = 1 / k;
+    for (var i = 0; i < 6; i++) {
+      final double gy = 14 + i * 31.0;
+      canvas.drawLine(Offset(36, gy), Offset(330, gy), grid);
+    }
+    canvas.drawLine(
+      const Offset(36, 200),
+      const Offset(330, 200),
+      Paint()
+        ..color = ink.withValues(alpha: 0.18)
+        ..strokeWidth = 1 / k,
+    );
+
+    // Too sure: between the curve and the diagonal, wherever the curve
+    // runs under it — the space between the two, kept below the diagonal.
+    final Offset from = Offset(x(50), y(50));
+    final Offset to = Offset(x(90), y(90));
+    if (points.length > 1) {
+      final Path between = Path()..moveTo(points.first.dx, points.first.dy);
+      for (final Offset p in points.skip(1)) {
+        between.lineTo(p.dx, p.dy);
+      }
+      for (final b in buckets.reversed) {
+        between.lineTo(x(b.said), y(b.said));
+      }
+      between.close();
+      final Path under = Path()
+        ..moveTo(from.dx, from.dy)
+        ..lineTo(to.dx, to.dy)
+        ..lineTo(to.dx, 230)
+        ..lineTo(from.dx, 230)
+        ..close();
+      canvas.save();
+      canvas.clipPath(under);
+      canvas.drawPath(between, Paint()..color = pink.withValues(alpha: 0.17));
+      canvas.restore();
+    }
+
+    // Spot on: right as often as sure.
+    final Paint dash = Paint()
+      ..color = ink.withValues(alpha: 0.38)
+      ..strokeWidth = 1.5;
+    final double length = (to - from).distance;
+    final Offset unit = (to - from) / length;
+    for (double d = 0; d < length; d += 9) {
+      canvas.drawLine(
+        from + unit * d,
+        from + unit * math.min(d + 4, length),
+        dash,
+      );
+    }
+    final Offset spotAt =
+        from + unit * (length * 0.8) + Offset(unit.dy, -unit.dx) * 7;
+    final double angle = math.atan2(unit.dy, unit.dx);
+    final Rect spotRect = _text(
+      canvas,
+      spotOn,
+      ink.withValues(alpha: 0.45),
+      at: spotAt,
+      angle: angle,
+      align: 0.5,
+    );
+
+    // The words for the shading: inside it, beside the level where it is
+    // widest, clear of the diagonal's own label — or not at all.
+    if (points.length > 1) {
+      final TextPainter words = _measure(
+        tooSure,
+        pinkText,
+        weight: FontWeight.w700,
+        scale: 1.1,
+      );
+      double? curveAt(double px) {
+        for (var i = 0; i + 1 < points.length; i++) {
+          final Offset a = points[i], b = points[i + 1];
+          if (px >= a.dx && px <= b.dx) {
+            return a.dy + (px - a.dx) / (b.dx - a.dx) * (b.dy - a.dy);
+          }
+        }
+        return null;
+      }
+
+      double diagonalAt(double px) =>
+          from.dy + (px - from.dx) / (to.dx - from.dx) * (to.dy - from.dy);
+      Offset? ring;
+      for (final b in buckets) {
+        if (b.said == shown) ring = Offset(x(b.said), y(b.actual));
+      }
+
+      // Every place along the band where the words fit between the
+      // diagonal above and the curve below; the roomiest one wins.
+      Rect? place;
+      double best = -1;
+      for (double left = 40; left + words.width <= 326; left += 4) {
+        final double right = left + words.width;
+        final List<double> xs = [
+          left,
+          left + words.width / 2,
+          right,
+          for (final Offset p in points)
+            if (p.dx > left && p.dx < right) p.dx,
+        ];
+        final List<double?> under = [for (final px in xs) curveAt(px)];
+        if (under.contains(null)) continue;
+        final double top = xs.map(diagonalAt).reduce(math.max) + 3;
+        final double bottom = under.whereType<double>().reduce(math.min) - 3;
+        final double slack = bottom - top - words.height;
+        if (slack < 0 || slack <= best) continue;
+        final Rect r = Rect.fromLTWH(
+          left,
+          top + slack / 2,
+          words.width,
+          words.height,
+        );
+        if (r.overlaps(spotRect.inflate(3))) continue;
+        if (ring != null &&
+            r.overlaps(Rect.fromCircle(center: ring, radius: 14))) {
+          continue;
+        }
+        best = slack;
+        place = r;
+      }
+      if (place != null) words.paint(canvas, place.topLeft);
+      words.dispose();
+    }
+
+    final Paint stroke = Paint()
+      ..color = ink
+      ..strokeWidth = 2.5
+      ..style = PaintingStyle.stroke
+      ..strokeJoin = StrokeJoin.round
+      ..strokeCap = StrokeCap.round;
+    if (points.length > 1) {
+      final Path curve = Path()..moveTo(points.first.dx, points.first.dy);
+      for (final Offset p in points.skip(1)) {
+        curve.lineTo(p.dx, p.dy);
+      }
+      canvas.drawPath(curve, stroke);
+    }
+    for (final Offset p in points) {
+      canvas.drawCircle(p, 3.5, Paint()..color = ground);
+      canvas.drawCircle(p, 3.5, stroke..strokeWidth = 2);
+    }
+
+    // The level picked, ringed.
+    for (final b in buckets) {
+      if (b.said != shown) continue;
+      final Offset at = Offset(x(b.said), y(b.actual));
+      canvas.drawCircle(at, 12, Paint()..color = pink);
+      canvas.drawCircle(at, 10, Paint()..color = ground);
+      canvas.drawCircle(at, 6, Paint()..color = pink);
+    }
+
+    final Color label = ink.withValues(alpha: 0.4);
+    for (final said in [50, 70, 90]) {
+      _text(canvas, '$said%', label, at: Offset(x(said), 219), align: 0.5);
+    }
+    _text(canvas, '100', label, at: const Offset(28, 17.5), align: 1);
+    _text(
+      canvas,
+      '${(lo + 100) ~/ 2}',
+      label,
+      at: const Offset(28, 110.5),
+      align: 1,
+    );
+    _text(canvas, '$lo', label, at: const Offset(28, 203.5), align: 1);
+    canvas.restore();
+  }
+
+  /// The bottom of the scale: 40, unless a level went lower.
+  int _floor() {
+    if (buckets.isEmpty) return 40;
+    final double least = buckets.map((b) => b.actual).reduce(math.min);
+    if (least >= 40) return 40;
+    return (least / 10).floor() * 10;
+  }
+
+  /// A label laid out in the chart's type.
+  TextPainter _measure(
+    String text,
+    Color colour, {
+    FontWeight? weight,
+    double scale = 1,
+  }) => TextPainter(
+    text: TextSpan(
+      text: text,
+      style: textStyle.copyWith(
+        color: colour,
+        fontWeight: weight,
+        fontSize: (textStyle.fontSize ?? 10) * scale,
+      ),
+    ),
+    textDirection: TextDirection.ltr,
+  )..layout();
+
+  /// A label with its baseline at [at]; [align] 0 starts it there, 0.5
+  /// centres it, 1 ends it. Returns the box it covers, turned or not.
+  Rect _text(
+    Canvas canvas,
+    String text,
+    Color colour, {
+    required Offset at,
+    double align = 0,
+    double angle = 0,
+  }) {
+    final TextPainter painter = _measure(text, colour);
+    final double baseline = painter.computeDistanceToActualBaseline(
+      TextBaseline.alphabetic,
+    );
+    final Offset origin = Offset(-painter.width * align, -baseline);
+    canvas.save();
+    canvas.translate(at.dx, at.dy);
+    canvas.rotate(angle);
+    painter.paint(canvas, origin);
+    canvas.restore();
+    final double c = math.cos(angle), sn = math.sin(angle);
+    final corners = [
+      for (final Offset o in [
+        origin,
+        origin + Offset(painter.width, 0),
+        origin + Offset(0, painter.height),
+        origin + Offset(painter.width, painter.height),
+      ])
+        at + Offset(o.dx * c - o.dy * sn, o.dx * sn + o.dy * c),
+    ];
+    painter.dispose();
+    return Rect.fromLTRB(
+      corners.map((o) => o.dx).reduce(math.min),
+      corners.map((o) => o.dy).reduce(math.min),
+      corners.map((o) => o.dx).reduce(math.max),
+      corners.map((o) => o.dy).reduce(math.max),
+    );
+  }
+
+  @override
+  bool shouldRepaint(_SurePainter old) =>
+      old.shown != shown ||
+      old.ink != ink ||
+      old.ground != ground ||
+      old.buckets != buckets;
 }
 
 /// The rung as a level: where the reader stands, what stands between them

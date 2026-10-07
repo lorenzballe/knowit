@@ -759,7 +759,7 @@ void main() {
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getBool('knowit.plus'), isTrue);
       expect(find.byType(JourneyScreen), findsOneWidget);
-      expect(find.byKey(const ValueKey('journey-score')), findsOneWidget);
+      expect(find.byKey(const ValueKey('journey-gap')), findsOneWidget);
     });
   });
 
@@ -2298,17 +2298,28 @@ void main() {
       await tester.tap(find.text('Your journey'));
       await _settle(tester);
 
-      // Artboard 83a, with the score at its head: five cards read is five
-      // points, and the day says what it was worth.
+      // Artboard 134e at its head: how far the reader's confidence runs off
+      // their results — not measured yet, with no answer said how sure —
+      // and the score in a pill beside the title: five cards read is five
+      // points.
       expect(find.byKey(const ValueKey('journey-score')), findsOneWidget);
-      expect(find.text('5'), findsOneWidget);
-      expect(find.text('points'), findsOneWidget);
-      expect(find.text('5 read'), findsOneWidget);
-      // The week sits under the score and above the level: today is the
+      expect(find.text('5 pts'), findsOneWidget);
+      expect(find.byKey(const ValueKey('journey-gap')), findsOneWidget);
+      expect(find.text('—'), findsWidgets);
+      expect(find.text('points off'), findsOneWidget);
+      expect(
+        find.textContaining('12 more answers with how sure'),
+        findsOneWidget,
+      );
+      expect(find.byKey(const ValueKey('journey-curve')), findsNothing);
+      expect(find.byKey(const ValueKey('journey-last-week')), findsNothing);
+      // The week sits under the top and above the level: today is the
       // first day kept, and the strip says so. It opens the week in full.
       expect(find.byKey(const ValueKey('journey-week')), findsOneWidget);
       expect(find.text('1 of 7'), findsOneWidget);
       expect(find.text('1 day of seven. Five keeps the week.'), findsOneWidget);
+      await tester.ensureVisible(find.byKey(const ValueKey('journey-week')));
+      await _settle(tester);
       await tester.tap(find.byKey(const ValueKey('journey-week')));
       await _settle(tester);
       expect(find.text('Your week'), findsOneWidget);
@@ -2318,7 +2329,6 @@ void main() {
       expect(find.byKey(const ValueKey('journey-score')), findsOneWidget);
       expect(find.text('Level 1 · Day one'), findsOneWidget);
       expect(find.textContaining('15 more cards to read'), findsOneWidget);
-      expect(find.textContaining('+5 today'), findsOneWidget);
       expect(
         find.text('still with you · nothing answered yet'),
         findsOneWidget,
@@ -2405,10 +2415,8 @@ void main() {
       await tester.tap(find.text('Your journey'));
       await _settle(tester);
       expect(find.text('Level 2 · Reading'), findsOneWidget);
-      expect(find.text('24 read'), findsOneWidget);
-      // Twenty-four read is twenty-four points, five of them today.
-      expect(find.text('24'), findsWidgets);
-      expect(find.text('+5 today'), findsOneWidget);
+      // Twenty-four read is twenty-four points.
+      expect(find.text('24 pts'), findsOneWidget);
 
       await tester.tap(find.byKey(const ValueKey('journey-level')));
       await _settle(tester);

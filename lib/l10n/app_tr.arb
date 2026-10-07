@@ -503,5 +503,17 @@
   "reportOther": "Başka bir şey",
   "reportNoteHint": "Kontrol etmemize yardımcı olacak bir şey (isteğe bağlı)",
   "reportSend": "Gönder",
-  "reportSentToast": "Teşekkürler. Kontrol edeceğiz."
+  "reportSentToast": "Teşekkürler. Kontrol edeceğiz.",
+  "journeyPoints": "{n} puan",
+  "journeyPointsOff": "puan sapma",
+  "journeyLastWeek": "geçen hafta {n}",
+  "journeyLastWeekSame": "geçen haftayla aynı",
+  "journeyOffExplain": "Söylediğin eminlik ile ne sıklıkla haklı çıktığın arasındaki fark. Sıfır, %70 dediğin her cevabın on seferde yedisinde doğru çıktığı anlamına gelirdi.",
+  "journeyOffNotYet": "{n, plural, other{Eminliğini söyleyerek {n} cevap daha ver, ölçülsün.}}",
+  "journeyAxisSure": "söylediğin eminlik →",
+  "journeyAxisRight": "↑ ne sıklıkla doğru",
+  "journeyCurveSpotOn": "tam isabet",
+  "journeyTooSure": "fazla emin",
+  "journeyWhenYouSaid": "{sure} emin olduğunu söylediğinde, zamanın {right} kadarında haklıydın.",
+  "journeyNAnswers": "{n, plural, other{{n} cevap}}"
 }

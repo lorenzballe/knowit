@@ -503,5 +503,17 @@
   "reportOther": "Iets anders",
   "reportNoteHint": "Alles wat ons helpt het te controleren (optioneel)",
   "reportSend": "Versturen",
-  "reportSentToast": "Bedankt. We kijken ernaar."
+  "reportSentToast": "Bedankt. We kijken ernaar.",
+  "journeyPoints": "{n} ptn",
+  "journeyPointsOff": "punten ernaast",
+  "journeyLastWeek": "{n} vorige week",
+  "journeyLastWeekSame": "zelfde als vorige week",
+  "journeyOffExplain": "Hoe ver de zekerheid die je geeft afligt van hoe vaak je gelijk hebt. Nul zou betekenen dat elk antwoord van 70% zeven van de tien keer goed was.",
+  "journeyOffNotYet": "{n, plural, =1{Nog één antwoord met hoe zeker, en het wordt gemeten.} other{Nog {n} antwoorden met hoe zeker, en het wordt gemeten.}}",
+  "journeyAxisSure": "hoe zeker je zei →",
+  "journeyAxisRight": "↑ hoe vaak goed",
+  "journeyCurveSpotOn": "precies goed",
+  "journeyTooSure": "te zeker",
+  "journeyWhenYouSaid": "Als je {sure} zeker zei, had je {right} van de keren gelijk.",
+  "journeyNAnswers": "{n, plural, =1{1 antwoord} other{{n} antwoorden}}"
 }

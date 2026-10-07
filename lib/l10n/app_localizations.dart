@@ -3143,6 +3143,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Thanks. We\'ll check it.'**
   String get reportSentToast;
+
+  /// The reader's score in a pill beside Your journey's title.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} pts'**
+  String journeyPoints(String n);
+
+  /// Beside the big number at the top of Your journey: how many points the reader's confidence runs off their results.
+  ///
+  /// In en, this message translates to:
+  /// **'points off'**
+  String get journeyPointsOff;
+
+  /// Chip beside the points off: what they were a week ago (an arrow says which way they went).
+  ///
+  /// In en, this message translates to:
+  /// **'{n} last week'**
+  String journeyLastWeek(int n);
+
+  /// Chip beside the points off when they are what they were a week ago.
+  ///
+  /// In en, this message translates to:
+  /// **'same as last week'**
+  String get journeyLastWeekSame;
+
+  /// Line under the points off, saying what they measure.
+  ///
+  /// In en, this message translates to:
+  /// **'How far the sureness you give is from how often you turn out right. Zero would mean every 70% answer was right seven times in ten.'**
+  String get journeyOffExplain;
+
+  /// Added to that line until there are enough answers with a confidence to measure it.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{One more answer with how sure, and it is measured.} other{{n} more answers with how sure, and it is measured.}}'**
+  String journeyOffNotYet(int n);
+
+  /// Caption under the chart, left: the across axis.
+  ///
+  /// In en, this message translates to:
+  /// **'how sure you said →'**
+  String get journeyAxisSure;
+
+  /// Caption under the chart, right: the up axis.
+  ///
+  /// In en, this message translates to:
+  /// **'↑ how often right'**
+  String get journeyAxisRight;
+
+  /// Label on the chart's diagonal, where confidence equals accuracy.
+  ///
+  /// In en, this message translates to:
+  /// **'spot on'**
+  String get journeyCurveSpotOn;
+
+  /// Label on the shaded part of the chart where the reader was surer than right.
+  ///
+  /// In en, this message translates to:
+  /// **'too sure'**
+  String get journeyTooSure;
+
+  /// Under the chart, for the level picked: e.g. When you said 90% sure, you were right 72% of the time.
+  ///
+  /// In en, this message translates to:
+  /// **'When you said {sure} sure, you were right {right} of the time.'**
+  String journeyWhenYouSaid(String sure, String right);
+
+  /// How many answers the sentence above rests on.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 answer} other{{n} answers}}'**
+  String journeyNAnswers(int n);
 }
 
 class _AppLocalizationsDelegate

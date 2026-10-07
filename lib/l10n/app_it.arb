@@ -503,5 +503,17 @@
   "reportOther": "Altro",
   "reportNoteHint": "Qualcosa che ci aiuti a controllare (facoltativo)",
   "reportSend": "Invia",
-  "reportSentToast": "Grazie. La controlliamo."
+  "reportSentToast": "Grazie. La controlliamo.",
+  "journeyPoints": "{n} pt",
+  "journeyPointsOff": "punti fuori",
+  "journeyLastWeek": "{n} la settimana scorsa",
+  "journeyLastWeekSame": "come la settimana scorsa",
+  "journeyOffExplain": "Quanto la sicurezza che dichiari si allontana da quanto spesso hai ragione. Zero vorrebbe dire che ogni risposta al 70% era giusta sette volte su dieci.",
+  "journeyOffNotYet": "{n, plural, =1{Ancora una risposta con quanto sei sicuro, e lo misuriamo.} other{Ancora {n} risposte con quanto sei sicuro, e lo misuriamo.}}",
+  "journeyAxisSure": "quanto ti dicevi sicuro →",
+  "journeyAxisRight": "↑ quanto spesso giusto",
+  "journeyCurveSpotOn": "in linea",
+  "journeyTooSure": "troppo sicuro",
+  "journeyWhenYouSaid": "Quando dicevi {sure} di sicurezza, avevi ragione il {right} delle volte.",
+  "journeyNAnswers": "{n, plural, =1{1 risposta} other{{n} risposte}}"
 }

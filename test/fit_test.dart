@@ -208,8 +208,26 @@ void main() {
         (p) => p.challenge is PickOne,
       );
 
+      // Weeks of answers said how sure, so the top of the journey has its
+      // number, last week's beside it, the curve and a level to pick.
+      final DateTime now = DateTime.now();
+      String ago(int days) => dateKey(now.subtract(Duration(days: days)));
+      final AppState measured = await appWith({
+        ...done,
+        'knowit.judgements': jsonEncode([
+          for (var i = 0; i < 60; i++)
+            {
+              'c': 50 + (i % 5) * 10,
+              'k': i % 3 != 0,
+              'p': PillBank.cards[i].id,
+              'd': ago(i < 30 ? 20 : 2),
+            },
+        ]),
+      });
+
       final screens = <String, Widget>{
         'journey': JourneyScreen(app: app, onBack: () {}),
+        'journey-measured': JourneyScreen(app: measured, onBack: () {}),
         'path': PathScreen(app: app, onBack: () {}),
         'week': WeekScreen(app: app, onBack: () {}),
         'paywall': PaywallScreen(app: app, source: 'audit'),
@@ -256,6 +274,21 @@ void main() {
         await tester.pumpWidget(host(locale, entry.value));
         await settle(tester);
         note(locale, entry.key, tester);
+        // Another level picked under the curve, which has words of its own.
+        if (entry.key == 'journey-measured') {
+          final ScrollableState list = tester.state(
+            find.byType(Scrollable).first,
+          );
+          list.position.jumpTo(320);
+          await settle(tester);
+          await tester.ensureVisible(
+            find.byKey(const ValueKey('journey-level-70')),
+          );
+          await settle(tester);
+          await tester.tap(find.byKey(const ValueKey('journey-level-70')));
+          await settle(tester);
+          note(locale, 'journey at 70%', tester);
+        }
         // The intro is five scenes; the first is not the long one.
         if (entry.key == 'intro') {
           for (var scene = 2; scene <= 5; scene++) {

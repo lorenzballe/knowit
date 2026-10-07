@@ -2082,4 +2082,63 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get reportSentToast => 'Obrigado. Vamos verificar.';
+
+  @override
+  String journeyPoints(String n) {
+    return '$n pts';
+  }
+
+  @override
+  String get journeyPointsOff => 'pontos ao lado';
+
+  @override
+  String journeyLastWeek(int n) {
+    return '$n na semana passada';
+  }
+
+  @override
+  String get journeyLastWeekSame => 'igual à semana passada';
+
+  @override
+  String get journeyOffExplain =>
+      'A distância entre a certeza que dás e a frequência com que acertas. Zero quereria dizer que cada resposta a 70% estava certa sete vezes em dez.';
+
+  @override
+  String journeyOffNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Mais $n respostas com a tua certeza, e fica medido.',
+      one: 'Mais uma resposta com a tua certeza, e fica medido.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyAxisSure => 'quão seguro dizias →';
+
+  @override
+  String get journeyAxisRight => '↑ quantas vezes certo';
+
+  @override
+  String get journeyCurveSpotOn => 'em cheio';
+
+  @override
+  String get journeyTooSure => 'seguro demais';
+
+  @override
+  String journeyWhenYouSaid(String sure, String right) {
+    return 'Quando dizias $sure de certeza, acertavas $right das vezes.';
+  }
+
+  @override
+  String journeyNAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n respostas',
+      one: '1 resposta',
+    );
+    return '$_temp0';
+  }
 }

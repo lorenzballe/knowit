@@ -202,19 +202,29 @@ longest of it to fitting in every language on a small phone.
 
 ## Your journey
 
-Artboard 83a, and the order is the argument: the numbers first, the card
-to say last.
+Artboard 134e at the top, and the order is the argument: the numbers
+first, the card to say last.
 
-`JourneyScreen` opens on **the score**, set large: the record as one
-number, with the bar under it that says where it came from. Four things
-are worth points and they are worth what they cost — a card read is one,
-because reading is the easy part; a card still with you weeks later is
-three, because that is the part that fails; a move you can spot in a
-context you have not seen is ten, because that is the whole promise; and
-a week kept is five, because the habit produces the other three. Nothing
-in it is invented and nothing in it goes down. Beside it, what today has
-added, exact: the score at the start of the day is written down with the
-deck. Then the **level**: the rung in words ("Level 3 · Answering"), the one thing
+`JourneyScreen` opens on **how sure against how right**: how many points
+the reader's confidence runs off their results, set large, with where it
+stood a week ago beside it and an arrow for which way it went (down is the
+good way). Last week counts the answers made by then and the ones from
+before answers were dated, which are older than any that are. Under it,
+**the curve**, level by level: how sure they said they were across, how
+often they were right up the side, the diagonal where the two would be the
+same, and the space between where they were surer than right shaded and
+called *too sure*. Under the curve the five levels, to pick one, and a
+sentence that says how that one went: "When you said 90% sure, you were
+right 72% of the time", with how many answers it rests on. Until there are
+twelve answers said how sure, the number is a dash and the line under it
+says how many more.
+
+**The score** sits in a pill beside the title: the record as one number,
+where four things are worth what they cost — a card read is one, a card
+still with you weeks later three, a move you can spot ten, a week kept
+five. Nothing in it is invented and nothing in it goes down. Then the
+**week**: seven bars and how many were kept, which opens the week read back
+in full. Then the **level**: the rung in words ("Level 3 · Answering"), the one thing
 between the reader and the next one, and a bar. Then **four numbers**,
 two by two: how much of what was answered is still with them, how far off
 their confidence runs, the streak, and how many moves they can spot — a

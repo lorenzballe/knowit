@@ -2082,4 +2082,63 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get reportSentToast => 'Bedankt. We kijken ernaar.';
+
+  @override
+  String journeyPoints(String n) {
+    return '$n ptn';
+  }
+
+  @override
+  String get journeyPointsOff => 'punten ernaast';
+
+  @override
+  String journeyLastWeek(int n) {
+    return '$n vorige week';
+  }
+
+  @override
+  String get journeyLastWeekSame => 'zelfde als vorige week';
+
+  @override
+  String get journeyOffExplain =>
+      'Hoe ver de zekerheid die je geeft afligt van hoe vaak je gelijk hebt. Nul zou betekenen dat elk antwoord van 70% zeven van de tien keer goed was.';
+
+  @override
+  String journeyOffNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Nog $n antwoorden met hoe zeker, en het wordt gemeten.',
+      one: 'Nog één antwoord met hoe zeker, en het wordt gemeten.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyAxisSure => 'hoe zeker je zei →';
+
+  @override
+  String get journeyAxisRight => '↑ hoe vaak goed';
+
+  @override
+  String get journeyCurveSpotOn => 'precies goed';
+
+  @override
+  String get journeyTooSure => 'te zeker';
+
+  @override
+  String journeyWhenYouSaid(String sure, String right) {
+    return 'Als je $sure zeker zei, had je $right van de keren gelijk.';
+  }
+
+  @override
+  String journeyNAnswers(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n antwoorden',
+      one: '1 antwoord',
+    );
+    return '$_temp0';
+  }
 }

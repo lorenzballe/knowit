@@ -503,5 +503,17 @@
   "reportOther": "其他",
   "reportNoteHint": "有助于我们核实的信息（可选）",
   "reportSend": "发送",
-  "reportSentToast": "谢谢，我们会核实。"
+  "reportSentToast": "谢谢，我们会核实。",
+  "journeyPoints": "{n} 分",
+  "journeyPointsOff": "分偏差",
+  "journeyLastWeek": "上周 {n}",
+  "journeyLastWeekSame": "与上周相同",
+  "journeyOffExplain": "你说的把握与你实际答对的频率之间的差距。0 表示每个说 70% 的回答，十次中有七次是对的。",
+  "journeyOffNotYet": "{n, plural, other{再带把握回答 {n} 题，就能测出来。}}",
+  "journeyAxisSure": "你说的把握 →",
+  "journeyAxisRight": "↑ 答对的频率",
+  "journeyCurveSpotOn": "正好",
+  "journeyTooSure": "过于自信",
+  "journeyWhenYouSaid": "当你说有 {sure} 把握时，你答对了 {right}。",
+  "journeyNAnswers": "{n, plural, other{{n} 个回答}}"
 }
