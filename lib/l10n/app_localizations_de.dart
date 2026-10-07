@@ -2090,47 +2090,55 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get journeyNow => 'Heute';
+  String get journeyPointsOff => 'Punkte daneben';
 
   @override
-  String journeyKickerNow(int day, int level, int levels) {
-    return 'TAG $day · STUFE $level VON $levels';
+  String journeyLastWeek(int n) {
+    return '$n letzte Woche';
   }
 
   @override
-  String journeyKickerThen(int level, int levels) {
-    return 'NACH ZWEI WOCHEN · STUFE $level VON $levels';
+  String get journeyLastWeekSame => 'wie letzte Woche';
+
+  @override
+  String get journeyOffExplain =>
+      'Wie weit deine Sicherheit davon entfernt ist, wie oft du richtig liegst. Null hieße: Jede Antwort mit 70 % war sieben von zehn Mal richtig.';
+
+  @override
+  String journeyOffNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Noch $n Antworten mit Sicherheit, dann wird es gemessen.',
+      one: 'Noch eine Antwort mit Sicherheit, dann wird es gemessen.',
+    );
+    return '$_temp0';
   }
 
   @override
-  String get journeyRowSure => 'Richtig, wenn du sicher warst';
+  String get journeyAxisSure => 'wie sicher du warst →';
 
   @override
-  String get journeyRowOff => 'Punkte daneben, im Schnitt';
-
-  @override
-  String get journeyRowMoves => 'Muster, die du erkennst';
-
-  @override
-  String get journeyRowHeld => 'Karten, die noch da sind';
-
-  @override
-  String get journeyRowRead => 'Gelesene Karten';
-
-  @override
-  String get journeyCurveTitle =>
-      'Wie sicher du warst, gegen wie oft du richtig lagst';
+  String get journeyAxisRight => '↑ wie oft richtig';
 
   @override
   String get journeyCurveSpotOn => 'genau richtig';
 
   @override
-  String journeyCurveLegend(String when, int n) {
+  String get journeyTooSure => 'zu sicher';
+
+  @override
+  String journeyWhenYouSaid(String sure, String right) {
+    return 'Wenn du $sure sicher warst, lagst du in $right der Fälle richtig.';
+  }
+
+  @override
+  String journeyNAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$when · $n Punkte daneben',
-      one: '$when · 1 Punkt daneben',
+      other: '$n Antworten',
+      one: '1 Antwort',
     );
     return '$_temp0';
   }

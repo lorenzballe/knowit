@@ -759,7 +759,7 @@ void main() {
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getBool('knowit.plus'), isTrue);
       expect(find.byType(JourneyScreen), findsOneWidget);
-      expect(find.byKey(const ValueKey('journey-level')), findsOneWidget);
+      expect(find.byKey(const ValueKey('journey-gap')), findsOneWidget);
     });
   });
 
@@ -2298,37 +2298,23 @@ void main() {
       await tester.tap(find.text('Your journey'));
       await _settle(tester);
 
-      // Artboard 134b at its head: the score in a pill beside the title —
-      // five cards read is five points — then the level, set large, with
-      // what it says about the reader and the ladder it stands on.
+      // Artboard 134e at its head: how far the reader's confidence runs off
+      // their results — not measured yet, with no answer said how sure —
+      // and the score in a pill beside the title: five cards read is five
+      // points.
       expect(find.byKey(const ValueKey('journey-score')), findsOneWidget);
       expect(find.text('5 pts'), findsOneWidget);
-      expect(find.text('DAY 1 · LEVEL 1 OF 7'), findsOneWidget);
+      expect(find.byKey(const ValueKey('journey-gap')), findsOneWidget);
+      expect(find.text('—'), findsWidgets);
+      expect(find.text('points off'), findsOneWidget);
       expect(
-        find.descendant(
-          of: find.byKey(const ValueKey('journey-level')),
-          matching: find.text('Day one'),
-        ),
-        findsNWidgets(2),
-        reason: 'the level, and the first step of the ladder under it',
+        find.textContaining('12 more answers with how sure'),
+        findsOneWidget,
       );
-      expect(find.text('Everybody starts here.'), findsOneWidget);
-      // On the first day there is no two weeks in to set beside today.
-      expect(find.byKey(const ValueKey('journey-then')), findsNothing);
-      // Five numbers: what has been measured, and a dash for what has not.
-      Finder row(String key, String text) => find.descendant(
-        of: find.byKey(ValueKey('journey-row-$key')),
-        matching: find.text(text),
-      );
-      expect(row('read', 'Cards read'), findsOneWidget);
-      expect(row('read', '5'), findsOneWidget);
-      expect(row('sure', '—'), findsOneWidget);
-      expect(row('off', '—'), findsOneWidget);
-      expect(row('held', '0'), findsOneWidget);
-      // Too few answers for the curve of how sure against how right.
       expect(find.byKey(const ValueKey('journey-curve')), findsNothing);
-      // Under the numbers, the week: today is the first day kept, and the
-      // strip says so. It opens the week in full.
+      expect(find.byKey(const ValueKey('journey-last-week')), findsNothing);
+      // The week sits under the top and above the level: today is the
+      // first day kept, and the strip says so. It opens the week in full.
       expect(find.byKey(const ValueKey('journey-week')), findsOneWidget);
       expect(find.text('1 of 7'), findsOneWidget);
       expect(find.text('1 day of seven. Five keeps the week.'), findsOneWidget);
@@ -2341,6 +2327,14 @@ void main() {
       await tester.tap(find.byType(BackCircle));
       await _settle(tester);
       expect(find.byKey(const ValueKey('journey-score')), findsOneWidget);
+      expect(find.text('Level 1 · Day one'), findsOneWidget);
+      expect(find.textContaining('15 more cards to read'), findsOneWidget);
+      expect(
+        find.text('still with you · nothing answered yet'),
+        findsOneWidget,
+      );
+      expect(find.text('calibration · not measured yet'), findsOneWidget);
+      expect(find.text('in a row · best 1'), findsOneWidget);
       expect(find.text('BY SUBJECT'), findsOneWidget);
       // Five cards is about no books at all, so the comparison waits.
       expect(find.textContaining('is about'), findsNothing);
@@ -2420,16 +2414,7 @@ void main() {
 
       await tester.tap(find.text('Your journey'));
       await _settle(tester);
-      expect(find.text('DAY 1 · LEVEL 2 OF 7'), findsOneWidget);
-      expect(find.text('Reading'), findsOneWidget);
-      expect(find.text('The habit has started.'), findsOneWidget);
-      expect(
-        find.descendant(
-          of: find.byKey(const ValueKey('journey-row-read')),
-          matching: find.text('24'),
-        ),
-        findsOneWidget,
-      );
+      expect(find.text('Level 2 · Reading'), findsOneWidget);
       // Twenty-four read is twenty-four points.
       expect(find.text('24 pts'), findsOneWidget);
 

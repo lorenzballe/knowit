@@ -3150,59 +3150,47 @@ abstract class AppLocalizations {
   /// **'{n} pts'**
   String journeyPoints(String n);
 
-  /// The right half of the journey's switch: the reader as they are today.
+  /// Beside the big number at the top of Your journey: how many points the reader's confidence runs off their results.
   ///
   /// In en, this message translates to:
-  /// **'Today'**
-  String get journeyNow;
+  /// **'points off'**
+  String get journeyPointsOff;
 
-  /// Small caps over the level on the journey: which day of the journey and which level.
+  /// Chip beside the points off: what they were a week ago (an arrow says which way they went).
   ///
   /// In en, this message translates to:
-  /// **'DAY {day} · LEVEL {level} OF {levels}'**
-  String journeyKickerNow(int day, int level, int levels);
+  /// **'{n} last week'**
+  String journeyLastWeek(int n);
 
-  /// Small caps over the level when the journey shows the reader two weeks in.
+  /// Chip beside the points off when they are what they were a week ago.
   ///
   /// In en, this message translates to:
-  /// **'TWO WEEKS IN · LEVEL {level} OF {levels}'**
-  String journeyKickerThen(int level, int levels);
+  /// **'same as last week'**
+  String get journeyLastWeekSame;
 
-  /// Row label: how often the reader was right when they said they were 80% sure or more.
+  /// Line under the points off, saying what they measure.
   ///
   /// In en, this message translates to:
-  /// **'Right when you were sure'**
-  String get journeyRowSure;
+  /// **'How far the sureness you give is from how often you turn out right. Zero would mean every 70% answer was right seven times in ten.'**
+  String get journeyOffExplain;
 
-  /// Row label: how far the reader's confidence is from their results, in points.
+  /// Added to that line until there are enough answers with a confidence to measure it.
   ///
   /// In en, this message translates to:
-  /// **'Points off, on average'**
-  String get journeyRowOff;
+  /// **'{n, plural, =1{One more answer with how sure, and it is measured.} other{{n} more answers with how sure, and it is measured.}}'**
+  String journeyOffNotYet(int n);
 
-  /// Row label: reasoning moves the reader can now spot.
+  /// Caption under the chart, left: the across axis.
   ///
   /// In en, this message translates to:
-  /// **'Moves you can spot'**
-  String get journeyRowMoves;
+  /// **'how sure you said →'**
+  String get journeyAxisSure;
 
-  /// Row label: cards that came back and the reader still knew.
+  /// Caption under the chart, right: the up axis.
   ///
   /// In en, this message translates to:
-  /// **'Cards still with you'**
-  String get journeyRowHeld;
-
-  /// Row label: cards read.
-  ///
-  /// In en, this message translates to:
-  /// **'Cards read'**
-  String get journeyRowRead;
-
-  /// Title of the chart of stated confidence against accuracy.
-  ///
-  /// In en, this message translates to:
-  /// **'How sure you said, against how often you were right'**
-  String get journeyCurveTitle;
+  /// **'↑ how often right'**
+  String get journeyAxisRight;
 
   /// Label on the chart's diagonal, where confidence equals accuracy.
   ///
@@ -3210,11 +3198,23 @@ abstract class AppLocalizations {
   /// **'spot on'**
   String get journeyCurveSpotOn;
 
-  /// Legend line under the chart: a day, and how many points off the reader was then.
+  /// Label on the shaded part of the chart where the reader was surer than right.
   ///
   /// In en, this message translates to:
-  /// **'{n, plural, =1{{when} · 1 point off} other{{when} · {n} points off}}'**
-  String journeyCurveLegend(String when, int n);
+  /// **'too sure'**
+  String get journeyTooSure;
+
+  /// Under the chart, for the level picked: e.g. When you said 90% sure, you were right 72% of the time.
+  ///
+  /// In en, this message translates to:
+  /// **'When you said {sure} sure, you were right {right} of the time.'**
+  String journeyWhenYouSaid(String sure, String right);
+
+  /// How many answers the sentence above rests on.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 answer} other{{n} answers}}'**
+  String journeyNAnswers(int n);
 }
 
 class _AppLocalizationsDelegate

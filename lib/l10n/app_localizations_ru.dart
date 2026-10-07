@@ -2154,49 +2154,59 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get journeyNow => 'Сегодня';
+  String get journeyPointsOff => 'пунктов отклонения';
 
   @override
-  String journeyKickerNow(int day, int level, int levels) {
-    return 'ДЕНЬ $day · УРОВЕНЬ $level ИЗ $levels';
+  String journeyLastWeek(int n) {
+    return '$n на прошлой неделе';
   }
 
   @override
-  String journeyKickerThen(int level, int levels) {
-    return 'ЧЕРЕЗ ДВЕ НЕДЕЛИ · УРОВЕНЬ $level ИЗ $levels';
+  String get journeyLastWeekSame => 'как на прошлой неделе';
+
+  @override
+  String get journeyOffExplain =>
+      'Насколько ваша заявленная уверенность расходится с тем, как часто вы правы. Ноль означал бы, что каждый ответ на 70% был верен семь раз из десяти.';
+
+  @override
+  String journeyOffNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ещё $n ответа с уверенностью — и будет измерено.',
+      many: 'Ещё $n ответов с уверенностью — и будет измерено.',
+      few: 'Ещё $n ответа с уверенностью — и будет измерено.',
+      one: 'Ещё $n ответ с уверенностью — и будет измерено.',
+    );
+    return '$_temp0';
   }
 
   @override
-  String get journeyRowSure => 'Верно, когда вы были уверены';
+  String get journeyAxisSure => 'заявленная уверенность →';
 
   @override
-  String get journeyRowOff => 'Отклонение, в среднем';
-
-  @override
-  String get journeyRowMoves => 'Приёмы, которые вы замечаете';
-
-  @override
-  String get journeyRowHeld => 'Карточки, что ещё с вами';
-
-  @override
-  String get journeyRowRead => 'Прочитано карточек';
-
-  @override
-  String get journeyCurveTitle =>
-      'Насколько вы были уверены — и как часто оказывались правы';
+  String get journeyAxisRight => '↑ как часто верно';
 
   @override
   String get journeyCurveSpotOn => 'в точку';
 
   @override
-  String journeyCurveLegend(String when, int n) {
+  String get journeyTooSure => 'слишком уверен';
+
+  @override
+  String journeyWhenYouSaid(String sure, String right) {
+    return 'Когда вы говорили, что уверены на $sure, вы были правы в $right случаев.';
+  }
+
+  @override
+  String journeyNAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$when · $n пункта отклонения',
-      many: '$when · $n пунктов отклонения',
-      few: '$when · $n пункта отклонения',
-      one: '$when · $n пункт отклонения',
+      other: '$n ответа',
+      many: '$n ответов',
+      few: '$n ответа',
+      one: '$n ответ',
     );
     return '$_temp0';
   }

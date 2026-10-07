@@ -2017,45 +2017,53 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get journeyNow => '今天';
+  String get journeyPointsOff => '分偏差';
 
   @override
-  String journeyKickerNow(int day, int level, int levels) {
-    return '第 $day 天 · 等级 $level/$levels';
+  String journeyLastWeek(int n) {
+    return '上周 $n';
   }
 
   @override
-  String journeyKickerThen(int level, int levels) {
-    return '两周时 · 等级 $level/$levels';
+  String get journeyLastWeekSame => '与上周相同';
+
+  @override
+  String get journeyOffExplain =>
+      '你说的把握与你实际答对的频率之间的差距。0 表示每个说 70% 的回答，十次中有七次是对的。';
+
+  @override
+  String journeyOffNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '再带把握回答 $n 题，就能测出来。',
+    );
+    return '$_temp0';
   }
 
   @override
-  String get journeyRowSure => '有把握时答对的比例';
+  String get journeyAxisSure => '你说的把握 →';
 
   @override
-  String get journeyRowOff => '平均偏差（分）';
-
-  @override
-  String get journeyRowMoves => '能识破的套路';
-
-  @override
-  String get journeyRowHeld => '仍记得的卡片';
-
-  @override
-  String get journeyRowRead => '已读卡片';
-
-  @override
-  String get journeyCurveTitle => '你说的把握，对比你实际答对的比例';
+  String get journeyAxisRight => '↑ 答对的频率';
 
   @override
   String get journeyCurveSpotOn => '正好';
 
   @override
-  String journeyCurveLegend(String when, int n) {
+  String get journeyTooSure => '过于自信';
+
+  @override
+  String journeyWhenYouSaid(String sure, String right) {
+    return '当你说有 $sure 把握时，你答对了 $right。';
+  }
+
+  @override
+  String journeyNAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$when · 偏差 $n 分',
+      other: '$n 个回答',
     );
     return '$_temp0';
   }

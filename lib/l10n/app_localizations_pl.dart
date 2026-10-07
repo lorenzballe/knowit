@@ -2152,49 +2152,59 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get journeyNow => 'Dziś';
+  String get journeyPointsOff => 'punktów obok';
 
   @override
-  String journeyKickerNow(int day, int level, int levels) {
-    return 'DZIEŃ $day · POZIOM $level Z $levels';
+  String journeyLastWeek(int n) {
+    return '$n w zeszłym tygodniu';
   }
 
   @override
-  String journeyKickerThen(int level, int levels) {
-    return 'PO DWÓCH TYGODNIACH · POZIOM $level Z $levels';
+  String get journeyLastWeekSame => 'tak jak w zeszłym tygodniu';
+
+  @override
+  String get journeyOffExplain =>
+      'Jak daleko twoja deklarowana pewność jest od tego, jak często masz rację. Zero znaczyłoby, że każda odpowiedź na 70% była trafna siedem razy na dziesięć.';
+
+  @override
+  String journeyOffNotYet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Jeszcze $n odpowiedzi z pewnością i zmierzymy.',
+      many: 'Jeszcze $n odpowiedzi z pewnością i zmierzymy.',
+      few: 'Jeszcze $n odpowiedzi z pewnością i zmierzymy.',
+      one: 'Jeszcze jedna odpowiedź z pewnością i zmierzymy.',
+    );
+    return '$_temp0';
   }
 
   @override
-  String get journeyRowSure => 'Trafne, gdy byłeś pewny';
+  String get journeyAxisSure => 'jak pewny się mówiłeś →';
 
   @override
-  String get journeyRowOff => 'Punkty obok, średnio';
-
-  @override
-  String get journeyRowMoves => 'Chwyty, które wyłapujesz';
-
-  @override
-  String get journeyRowHeld => 'Karty wciąż z tobą';
-
-  @override
-  String get journeyRowRead => 'Przeczytane karty';
-
-  @override
-  String get journeyCurveTitle =>
-      'Jak pewny się mówiłeś, wobec tego, jak często miałeś rację';
+  String get journeyAxisRight => '↑ jak często trafnie';
 
   @override
   String get journeyCurveSpotOn => 'w punkt';
 
   @override
-  String journeyCurveLegend(String when, int n) {
+  String get journeyTooSure => 'zbyt pewny';
+
+  @override
+  String journeyWhenYouSaid(String sure, String right) {
+    return 'Gdy mówiłeś $sure pewności, miałeś rację w $right przypadków.';
+  }
+
+  @override
+  String journeyNAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$when · $n punktu obok',
-      many: '$when · $n punktów obok',
-      few: '$when · $n punkty obok',
-      one: '$when · 1 punkt obok',
+      other: '$n odpowiedzi',
+      many: '$n odpowiedzi',
+      few: '$n odpowiedzi',
+      one: '1 odpowiedź',
     );
     return '$_temp0';
   }

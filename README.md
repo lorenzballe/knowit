@@ -202,38 +202,35 @@ longest of it to fitting in every language on a small phone.
 
 ## Your journey
 
-Artboard 134b at the top, and the order is the argument: the numbers
+Artboard 134e at the top, and the order is the argument: the numbers
 first, the card to say last.
 
-`JourneyScreen` opens on **the level**, set large — "Holding" — with what
-it says about the reader ("It stays with you weeks later") and the ladder
-under it, seven steps from Day one to Sharp with the one they stand on
-lit. Tapping it opens the path. Beside the title, **the score** in a pill:
-the record as one number, where four things are worth what they cost — a
-card read is one, a card still with you weeks later three, a move you can
-spot ten, a week kept five. Nothing in it is invented and nothing in it
-goes down.
+`JourneyScreen` opens on **how sure against how right**: how many points
+the reader's confidence runs off their results, set large, with where it
+stood a week ago beside it and an arrow for which way it went (down is the
+good way). Last week counts the answers made by then and the ones from
+before answers were dated, which are older than any that are. Under it,
+**the curve**, level by level: how sure they said they were across, how
+often they were right up the side, the diagonal where the two would be the
+same, and the space between where they were surer than right shaded and
+called *too sure*. Under the curve the five levels, to pick one, and a
+sentence that says how that one went: "When you said 90% sure, you were
+right 72% of the time", with how many answers it rests on. Until there are
+twelve answers said how sure, the number is a dash and the line under it
+says how many more.
 
-Under the level, **five numbers**: how often they were right when they
-said they were sure (80% or more), how many points their confidence runs
-off their results, how many moves they can spot — a principle met in at
-least two contexts and got right more often than not — how many cards are
-still with them, and how many they have read. Then **the curve**: how sure
-they said they were against how often they were right, level by level,
-with the diagonal where the two would be the same.
-
-Once **two weeks in** is a week behind them, a switch over the level sets
-it beside today: the rung they stood on then, the five numbers as they
-were, and their curve then under today's — and on today each number says
-how far it has come. All of it is counted from what was written down with
-a date: the day each rung was reached (`rungDates`), every answer with how
-sure (`judgements`), and the day's counts of read, held and moves
-(`recordDays`, in the snapshot, written as the reader goes). What was not
-written down then — the counts, on an install older than them — shows as a
-dash rather than a guess (`lib/state/journey_record.dart`).
-
-Under the top, **the week**: seven bars and how many were kept, which opens
-the week read back in full. Then **what it is about**: the pile of cards in non-fiction
+**The score** sits in a pill beside the title: the record as one number,
+where four things are worth what they cost — a card read is one, a card
+still with you weeks later three, a move you can spot ten, a week kept
+five. Nothing in it is invented and nothing in it goes down. Then the
+**week**: seven bars and how many were kept, which opens the week read back
+in full. Then the **level**: the rung in words ("Level 3 · Answering"), the one thing
+between the reader and the next one, and a bar. Then **four numbers**,
+two by two: how much of what was answered is still with them, how far off
+their confidence runs, the streak, and how many moves they can spot — a
+principle met in at least two contexts and got right more often than not,
+which is what "something you can explain" means here, counted rather than
+claimed. Then **what it is about**: the pile of cards in non-fiction
 books, hours of documentary and lectures, with the hours it took at forty
 seconds a card. It waits until twenty-five cards, because "five cards is
 about zero books" is worse than not asking yet. Then **by subject**: how
