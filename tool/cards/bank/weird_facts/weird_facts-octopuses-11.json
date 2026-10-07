@@ -29,22 +29,23 @@
   "figure": "none",
   "scene": {
     "type": "sample",
-    "dots": "Simulated picks",
-    "hit": "Picked the winner",
-    "rate": 0.5,
+    "dots": "Simulated guessers",
+    "hit": "Picked all eight right",
+    "rate": 0.00390625,
     "steps": [
-      8,
-      80,
-      800,
-      8000
+      16,
+      256,
+      2560,
+      25600
     ],
-    "seed": 2955,
-    "button": "More matches",
+    "seed": 92,
+    "decimals": 1,
+    "button": "More guessers",
     "notes": [
-      "Eight picks, eight right: 100%. Built in: pure guessing, 50%. A 1-in-256 run.",
-      "80 picks: 53%. The gift fades as soon as the guessing goes on.",
-      "800 picks: 51%.",
-      "8,000 picks: 50%, a coin's rate. The fame came from the eight, not the rate."
+      "16 guessers, eight coin-flip picks each: nobody goes eight for eight.",
+      "256 guessers: one perfect run, by luck alone. That is the one the news finds.",
+      "2,560 guessers: ten perfect records, and not one of them knows any football.",
+      "25,600: 100 perfect runs, the 1 in 256 built in. Fame picks one; the misses vanish."
     ]
   },
   "source": "BBC News, 2010; coin-toss arithmetic",

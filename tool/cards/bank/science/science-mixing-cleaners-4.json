@@ -8,7 +8,7 @@
   "principle": "none",
   "question": "Why does pouring bleach into a toilet already dosed with an acidic cleaner fill the room with gas?",
   "answer": "Because acid turns bleach into chlorine gas. Bleach is sodium hypochlorite, kept stable by being strongly alkaline; lower its pH with an acid toilet or limescale cleaner and the hypochlorite gives up chlorine. The gas attacks the moist lining of eyes and lungs, forming acid there: the same chemistry, now inside a throat.",
-  "move": "Check what two safe things become together before combining them.",
+  "move": "When something is safe only under one condition, ask what removes that condition.",
   "ask": "Which two habits or products do I combine without asking what they do to each other?",
   "keywords": [
     "bleach",

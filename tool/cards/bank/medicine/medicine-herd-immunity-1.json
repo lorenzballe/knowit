@@ -35,7 +35,7 @@
     "type": "slider",
     "control": "Immune in the neighbourhood",
     "controlUnit": "%",
-    "readout": "New cases from one in five weeks",
+    "readout": "Modelled cases from one, 5 weeks",
     "readoutUnit": "cases",
     "start": 95,
     "step": 1,
