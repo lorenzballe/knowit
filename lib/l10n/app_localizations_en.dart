@@ -97,11 +97,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String hoursMinutes(int h, int m) {
-    return '$h h $m min';
-  }
-
-  @override
   String tomorrowsFiveOpenIn(String when) {
     return 'Tomorrow\'s five open in $when';
   }
@@ -1442,11 +1437,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String levelNamed(int n, String name) {
-    return 'Level $n · $name';
-  }
-
-  @override
   String get topLevel => 'Top level';
 
   @override
@@ -1455,100 +1445,7 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String stillWithYouOf(int n, int total) {
-    return 'still with you · $n of $total';
-  }
-
-  @override
-  String get stillWithYouNothing => 'still with you · nothing answered yet';
-
-  @override
-  String get calibrationPointsOff => 'calibration · points off';
-
-  @override
-  String get calibrationNotMeasured => 'calibration · not measured yet';
-
-  @override
-  String inARowBest(int n) {
-    return 'in a row · best $n';
-  }
-
-  @override
-  String movesYouCanSpot(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'moves you can spot',
-      one: 'move you can spot',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String nCardsIsAbout(int n) {
-    return '$n cards is about';
-  }
-
-  @override
-  String nonFictionBooks(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'non-fiction books',
-      one: 'non-fiction book',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String hoursOfDocumentaries(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'hours of documentaries',
-      one: 'hour of documentary',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String lectures(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'lectures',
-      one: 'lecture',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String inTotalACard(String time) {
-    return '$time in total · about 40 seconds a card';
-  }
-
-  @override
   String get bySubject => 'By subject';
-
-  @override
-  String get readOfTheShelf => 'read · of the shelf';
-
-  @override
-  String get toSayTonight => 'To say tonight';
-
-  @override
-  String get anotherOne => 'Another one';
-
-  @override
-  String get saidIt => 'Said it';
-
-  @override
-  String get saidAlready => 'Said';
-
-  @override
-  String justMinutes(int m) {
-    return '$m min';
-  }
 
   @override
   String get pts => 'points';
@@ -1655,51 +1552,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get archiveBeforeThisWeek => 'Before this week';
-
-  @override
-  String get whatStays => 'What stays';
-
-  @override
-  String nReadOfN(int read, int total) {
-    return '$read of $total read';
-  }
-
-  @override
-  String nAnswered(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n cards answered',
-      one: '1 card answered',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String nCameBackAgain(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n came back',
-      one: '1 came back',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String nKeptOnReturn(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n still right when they came back',
-      one: '1 still right when it came back',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get nothingBackYet =>
-      'Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.';
 
   @override
   String get weekKeptThreeOwn =>
@@ -2077,24 +1929,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportSentToast => 'Thanks. We\'ll check it.';
 
   @override
-  String journeyPoints(String n) {
-    return '$n pts';
-  }
-
-  @override
   String get journeyPointsOff => 'points off';
-
-  @override
-  String journeyLastWeek(int n) {
-    return '$n last week';
-  }
-
-  @override
-  String get journeyLastWeekSame => 'same as last week';
-
-  @override
-  String get journeyOffExplain =>
-      'How far the sureness you give is from how often you turn out right. Zero would mean every 70% answer was right seven times in ten.';
 
   @override
   String journeyOffNotYet(int n) {
@@ -2103,34 +1938,6 @@ class AppLocalizationsEn extends AppLocalizations {
       locale: localeName,
       other: '$n more answers with how sure, and it is measured.',
       one: 'One more answer with how sure, and it is measured.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get journeyAxisSure => 'how sure you said →';
-
-  @override
-  String get journeyAxisRight => '↑ how often right';
-
-  @override
-  String get journeyCurveSpotOn => 'spot on';
-
-  @override
-  String get journeyTooSure => 'too sure';
-
-  @override
-  String journeyWhenYouSaid(String sure, String right) {
-    return 'When you said $sure sure, you were right $right of the time.';
-  }
-
-  @override
-  String journeyNAnswers(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n answers',
-      one: '1 answer',
     );
     return '$_temp0';
   }
@@ -2450,8 +2257,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get journeyInTime => 'In time';
 
   @override
-  String journeyYears(String n) {
-    return '$n years';
+  String journeyYears(int n) {
+    final intl.NumberFormat nNumberFormat = intl.NumberFormat.decimalPattern(
+      localeName,
+    );
+    final String nString = nNumberFormat.format(n);
+
+    return '$nString years';
   }
 
   @override

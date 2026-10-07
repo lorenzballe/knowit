@@ -97,11 +97,6 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String hoursMinutes(int h, int m) {
-    return '$h h $m min';
-  }
-
-  @override
   String tomorrowsFiveOpenIn(String when) {
     return 'Os cinco de amanhã abrem em $when';
   }
@@ -1448,11 +1443,6 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String levelNamed(int n, String name) {
-    return 'Nível $n · $name';
-  }
-
-  @override
   String get topLevel => 'Nível máximo';
 
   @override
@@ -1461,100 +1451,7 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String stillWithYouOf(int n, int total) {
-    return 'ainda contigo · $n de $total';
-  }
-
-  @override
-  String get stillWithYouNothing => 'ainda contigo · nada respondido';
-
-  @override
-  String get calibrationPointsOff => 'calibração · pontos ao lado';
-
-  @override
-  String get calibrationNotMeasured => 'calibração · por medir';
-
-  @override
-  String inARowBest(int n) {
-    return 'seguidos · recorde $n';
-  }
-
-  @override
-  String movesYouCanSpot(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'truques que apanhas',
-      one: 'truque que apanhas',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String nCardsIsAbout(int n) {
-    return '$n cartas são cerca de';
-  }
-
-  @override
-  String nonFictionBooks(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'livros de não ficção',
-      one: 'livro de não ficção',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String hoursOfDocumentaries(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'horas de documentários',
-      one: 'hora de documentários',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String lectures(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'aulas',
-      one: 'aula',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String inTotalACard(String time) {
-    return '$time no total · cerca de 40 segundos por carta';
-  }
-
-  @override
   String get bySubject => 'Por matéria';
-
-  @override
-  String get readOfTheShelf => 'lidas · da prateleira';
-
-  @override
-  String get toSayTonight => 'Para contar hoje à noite';
-
-  @override
-  String get anotherOne => 'Outra';
-
-  @override
-  String get saidIt => 'Contada';
-
-  @override
-  String get saidAlready => 'Contada';
-
-  @override
-  String justMinutes(int m) {
-    return '$m min';
-  }
 
   @override
   String get pts => 'pontos';
@@ -1661,51 +1558,6 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get archiveBeforeThisWeek => 'Antes desta semana';
-
-  @override
-  String get whatStays => 'O que fica';
-
-  @override
-  String nReadOfN(int read, int total) {
-    return '$read de $total lidas';
-  }
-
-  @override
-  String nAnswered(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n cartas respondidas',
-      one: '1 carta respondida',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String nCameBackAgain(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n voltaram',
-      one: '1 voltou',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String nKeptOnReturn(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n ainda certas ao voltar',
-      one: '1 ainda certa ao voltar',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get nothingBackYet =>
-      'Ainda não voltou nada. Uma carta volta ao fim de três dias, depois uma semana, depois um mês — e o que acertas então é o que sabes mesmo.';
 
   @override
   String get weekKeptThreeOwn =>
@@ -2084,24 +1936,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get reportSentToast => 'Obrigado. Vamos verificar.';
 
   @override
-  String journeyPoints(String n) {
-    return '$n pts';
-  }
-
-  @override
   String get journeyPointsOff => 'pontos ao lado';
-
-  @override
-  String journeyLastWeek(int n) {
-    return '$n na semana passada';
-  }
-
-  @override
-  String get journeyLastWeekSame => 'igual à semana passada';
-
-  @override
-  String get journeyOffExplain =>
-      'A distância entre a certeza que dás e a frequência com que acertas. Zero quereria dizer que cada resposta a 70% estava certa sete vezes em dez.';
 
   @override
   String journeyOffNotYet(int n) {
@@ -2115,24 +1950,89 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get journeyAxisSure => 'quão seguro dizias →';
+  String get journeyYourScore => 'A tua pontuação';
 
   @override
-  String get journeyAxisRight => '↑ quantas vezes certo';
-
-  @override
-  String get journeyCurveSpotOn => 'em cheio';
-
-  @override
-  String get journeyTooSure => 'seguro demais';
-
-  @override
-  String journeyWhenYouSaid(String sure, String right) {
-    return 'Quando dizias $sure de certeza, acertavas $right das vezes.';
+  String journeyPointsUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'pontos',
+      one: 'ponto',
+      zero: 'pontos',
+    );
+    return '$_temp0';
   }
 
   @override
-  String journeyNAnswers(int n) {
+  String journeyGainedIn(String n) {
+    return '+$n em 4 semanas';
+  }
+
+  @override
+  String journeyWeekSoFar(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Esta semana, até agora, ganhaste $n pontos.',
+      one: 'Esta semana, até agora, ganhaste $n ponto.',
+      zero: 'Esta semana, até agora, ganhaste $n pontos.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyWeekOf(int n, String date) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Na semana de $date, ganhaste $n pontos.',
+      one: 'Na semana de $date, ganhaste $n ponto.',
+      zero: 'Na semana de $date, ganhaste $n pontos.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cartões',
+      one: '$n cartão',
+      zero: '$n cartões',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyScoreCaption(String date) {
+    return 'A tua pontuação no fim de cada semana desde $date. Toca num ponto para veres essa semana.';
+  }
+
+  @override
+  String journeyLevelOf(int n, int of) {
+    return 'Nível $n de $of';
+  }
+
+  @override
+  String journeyStepFrom(String what, String rung) {
+    return '$what\npara $rung';
+  }
+
+  @override
+  String journeyToGoCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n cartões',
+      one: '1 cartão',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyToGoAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
@@ -2143,101 +2043,12 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get journeyYourScore => 'Your score';
-
-  @override
-  String journeyPointsUnit(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'points',
-      one: 'point',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String journeyGainedIn(String n) {
-    return '+$n in 4 weeks';
-  }
-
-  @override
-  String journeyWeekSoFar(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'This week so far, you earned $n points.',
-      one: 'This week so far, you earned 1 point.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String journeyWeekOf(int n, String date) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'In the week of $date, you earned $n points.',
-      one: 'In the week of $date, you earned 1 point.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String journeyCards(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n cards',
-      one: '1 card',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String journeyScoreCaption(String date) {
-    return 'Your score at the end of each week since $date. Tap a point to see that week.';
-  }
-
-  @override
-  String journeyLevelOf(int n, int of) {
-    return 'Level $n of $of';
-  }
-
-  @override
-  String journeyStepFrom(String what, String rung) {
-    return '$what\nfrom $rung';
-  }
-
-  @override
-  String journeyToGoCards(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n cards',
-      one: '1 card',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String journeyToGoAnswers(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n answers',
-      one: '1 answer',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String journeyToGoSure(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n answers with how sure',
-      one: '1 answer with how sure',
+      other: '$n respostas com a tua certeza',
+      one: '1 resposta com a tua certeza',
     );
     return '$_temp0';
   }
@@ -2247,8 +2058,8 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n cards held',
-      one: '1 card held',
+      other: '$n cartões retidos',
+      one: '1 cartão retido',
     );
     return '$_temp0';
   }
@@ -2258,29 +2069,29 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n points',
-      one: '1 point',
+      other: '$n pontos',
+      one: '1 ponto',
     );
     return '$_temp0';
   }
 
   @override
-  String get journeyWorth => 'Worth';
+  String get journeyWorth => 'Quanto vale';
 
   @override
   String journeyBooks(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n books',
-      one: '1 book',
+      other: '$n livros',
+      one: '1 livro',
     );
     return '$_temp0';
   }
 
   @override
   String journeyOrDocumentaries(int h) {
-    return 'or $h h of documentaries';
+    return 'ou $h h de documentários';
   }
 
   @override
@@ -2288,60 +2099,61 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n to the first book',
-      one: '1 to the first book',
+      other: 'faltam $n para o primeiro livro',
+      one: 'falta 1 para o primeiro livro',
     );
     return '$_temp0';
   }
 
   @override
-  String get journeyInARow => 'In a row';
+  String get journeyInARow => 'Seguidos';
 
   @override
   String journeyDays(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n days',
-      one: '1 day',
+      other: '$n dias',
+      one: '$n dia',
+      zero: '$n dias',
     );
     return '$_temp0';
   }
 
   @override
   String journeyBestActive(int best, int active, int days) {
-    return 'Best $best · $active of $days';
+    return 'Recorde $best · $active de $days';
   }
 
   @override
   String journeySubjectsOf(int n, int of) {
-    return '$n of $of';
+    return '$n de $of';
   }
 
   @override
   String journeySubjectsDashed(String month) {
-    return 'subjects · dashed: $month';
+    return 'temas · tracejado: $month';
   }
 
   @override
-  String get journeySubjects => 'subjects';
+  String get journeySubjects => 'temas';
 
   @override
-  String get journeyHowHard => 'How hard';
+  String get journeyHowHard => 'Dificuldade';
 
   @override
-  String get journeyOfThree => 'of 3';
+  String get journeyOfThree => 'de 3';
 
   @override
-  String get journeyHardNow => 'The cards you open.';
+  String get journeyHardNow => 'Os cartões que abres.';
 
   @override
   String journeyHardThen(String v, String month) {
-    return 'The cards you open. $v in $month';
+    return 'Os cartões que abres. $v em $month';
   }
 
   @override
-  String get journeyReadingTime => 'Reading time';
+  String get journeyReadingTime => 'Tempo de leitura';
 
   @override
   String journeyHoursMinutes(int h, String m) {
@@ -2355,61 +2167,62 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String journeyMinAWeek(int now, int was) {
-    return '$now min a week, from $was';
+    return '$now min por semana, antes $was';
   }
 
   @override
   String journeyMinThisWeek(int m) {
-    return '$m min this week';
+    return '$m min esta semana';
   }
 
   @override
-  String get journeyTimedFromToday => 'Counted from today';
+  String get journeyTimedFromToday => 'Contado a partir de hoje';
 
   @override
   String journeyPointsOffFrom(int was) {
-    return 'points off, from $was';
+    return 'pontos ao lado, antes $was';
   }
 
   @override
   String journeyRungOrLess(String rung, int n) {
-    return '$rung · $n or less';
+    return '$rung · máx. $n';
   }
 
   @override
-  String get journeyRightWhenSure => 'Right when sure';
+  String get journeyRightWhenSure => 'Certo quando seguro';
 
   @override
   String journeyFromIn(String v, String month) {
-    return 'From $v in $month';
+    return 'Era $v em $month';
   }
 
   @override
-  String get journeySureNone => 'Nothing said at 80% or more yet';
+  String get journeySureNone => 'Ainda não disseste 80% ou mais';
 
   @override
-  String get journeyMovesTitle => 'Moves you can spot';
+  String get journeyMovesTitle => 'Truques que apanhas';
 
   @override
   String journeyOfN(int n) {
-    return 'of $n';
+    return 'de $n';
   }
 
   @override
   String journeyNewest(String name) {
-    return 'Newest: $name';
+    return 'Último: $name';
   }
 
   @override
-  String get journeyNoneYet => 'None yet';
+  String get journeyNoneYet => 'Ainda nada';
 
   @override
   String journeyStillWithYou(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'cards still with you',
-      one: 'card still with you',
+      other: 'cartões ainda contigo',
+      one: 'cartão ainda contigo',
+      zero: 'cartões ainda contigo',
     );
     return '$_temp0';
   }
@@ -2419,10 +2232,10 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       days,
       locale: localeName,
-      other: '$days days',
-      one: 'a day',
+      other: '$days dias',
+      one: 'um dia',
     );
-    return '$right of $of after $_temp0';
+    return '$right de $of após $_temp0';
   }
 
   @override
@@ -2430,121 +2243,144 @@ class AppLocalizationsPt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       weeks,
       locale: localeName,
-      other: '$weeks weeks',
-      one: 'a week',
+      other: '$weeks semanas',
+      one: 'uma semana',
     );
-    return '$right of $of after $_temp0';
+    return '$right de $of após $_temp0';
   }
 
   @override
   String journeyActiveDays(int active, int days) {
-    return '$active of $days days';
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days dias',
+      one: '1 dia',
+    );
+    return '$active de $_temp0';
   }
 
   @override
-  String get journeyMostlyMorning => 'Mostly mornings';
+  String get journeyMostlyMorning => 'Sobretudo de manhã';
 
   @override
-  String get journeyMostlyAfternoon => 'Mostly afternoons';
+  String get journeyMostlyAfternoon => 'Sobretudo à tarde';
 
   @override
-  String get journeyMostlyEvening => 'Mostly evenings';
+  String get journeyMostlyEvening => 'Sobretudo à noite';
 
   @override
-  String get journeyMostlyNight => 'Mostly at night';
+  String get journeyMostlyNight => 'Sobretudo de madrugada';
 
   @override
-  String get journeyInTime => 'In time';
+  String get journeyInTime => 'No tempo';
 
   @override
-  String journeyYears(String n) {
-    return '$n years';
+  String journeyYears(int n) {
+    final intl.NumberFormat nNumberFormat = intl.NumberFormat.decimalPattern(
+      localeName,
+    );
+    final String nString = nNumberFormat.format(n);
+
+    return '$nString anos';
   }
 
   @override
   String journeyFromEra(String era) {
-    return 'from $era to this year';
+    return 'desde $era até hoje';
   }
 
   @override
-  String get journeyEraAncient => 'the ancient world';
+  String get journeyEraAncient => 'a Antiguidade';
 
   @override
-  String get journeyEraMedieval => 'the Middle Ages';
+  String get journeyEraMedieval => 'a Idade Média';
 
   @override
-  String get journeyEraEarlyModern => 'the 1500s';
+  String get journeyEraEarlyModern => 'o século XVI';
 
   @override
-  String get journeyEraNineteenth => 'the 1800s';
+  String get journeyEraNineteenth => 'o século XIX';
 
   @override
-  String get journeyEraTwentieth => 'the 1900s';
+  String get journeyEraTwentieth => 'o século XX';
 
   @override
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => 'nothing dated yet';
+  String get journeyNothingDated => 'ainda nada datado';
 
   @override
-  String get journeyInPlace => 'In place';
+  String get journeyInPlace => 'No mundo';
 
   @override
   String journeyRegions(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n regions',
-      one: '1 region',
+      other: '$n regiões',
+      one: '1 região',
     );
     return '$_temp0';
   }
 
   @override
   String journeyPlacesAndSpace(String list) {
-    return '$list, and space';
+    return '$list e o espaço';
   }
 
   @override
-  String get journeyRegionAmericas => 'the Americas';
+  String get journeyRegionAmericas => 'Américas';
 
   @override
-  String get journeyRegionEurope => 'Europe';
+  String get journeyRegionEurope => 'Europa';
 
   @override
-  String get journeyRegionAsia => 'Asia';
+  String get journeyRegionAsia => 'Ásia';
 
   @override
-  String get journeyRegionOceania => 'Oceania';
+  String get journeyRegionOceania => 'Oceânia';
 
   @override
-  String get journeyRegionAfrica => 'Africa';
+  String get journeyRegionAfrica => 'África';
 
   @override
-  String get journeyRegionMiddleEast => 'the Middle East';
+  String get journeyRegionMiddleEast => 'Médio Oriente';
 
   @override
-  String get journeyNoPlace => 'no place yet';
+  String get journeyNoPlace => 'ainda nenhum lugar';
 
   @override
-  String get journeyTopics => 'Topics';
+  String get journeyTopics => 'Subtemas';
 
   @override
   String journeyMet(int n) {
-    return '$n met';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n descobertos',
+      one: '1 descoberto',
+    );
+    return '$_temp0';
   }
 
   @override
   String journeyTopicsMost(int n, String subject) {
-    return '$n of them in $subject';
+    return '$n deles em $subject';
   }
 
   @override
-  String get journeyWords => 'Words';
+  String get journeyWords => 'Palavras';
 
   @override
   String journeyNew(int n) {
-    return '$n new';
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n novas',
+      one: '1 nova',
+    );
+    return '$_temp0';
   }
 }

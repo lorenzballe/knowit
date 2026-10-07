@@ -97,11 +97,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String hoursMinutes(int h, int m) {
-    return '$h小时$m分';
-  }
-
-  @override
   String tomorrowsFiveOpenIn(String when) {
     return '明天的五张将在 $when 后开启';
   }
@@ -1408,11 +1403,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String levelNamed(int n, String name) {
-    return '等级$n · $name';
-  }
-
-  @override
   String get topLevel => '最高等级';
 
   @override
@@ -1421,92 +1411,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String stillWithYouOf(int n, int total) {
-    return '仍记得 · $total张中$n张';
-  }
-
-  @override
-  String get stillWithYouNothing => '仍记得 · 还没作答';
-
-  @override
-  String get calibrationPointsOff => '自信校准 · 偏差分';
-
-  @override
-  String get calibrationNotMeasured => '自信校准 · 尚未测量';
-
-  @override
-  String inARowBest(int n) {
-    return '连续 · 最高$n天';
-  }
-
-  @override
-  String movesYouCanSpot(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '能识破的套路$n个',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String nCardsIsAbout(int n) {
-    return '$n张卡片大约相当于';
-  }
-
-  @override
-  String nonFictionBooks(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '本非虚构书',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String hoursOfDocumentaries(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '小时纪录片',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String lectures(int n) {
-    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '节讲座');
-    return '$_temp0';
-  }
-
-  @override
-  String inTotalACard(String time) {
-    return '共$time · 每张约40秒';
-  }
-
-  @override
   String get bySubject => '按学科';
-
-  @override
-  String get readOfTheShelf => '已读 · 该书架';
-
-  @override
-  String get toSayTonight => '今晚可以说的';
-
-  @override
-  String get anotherOne => '换一张';
-
-  @override
-  String get saidIt => '说过了';
-
-  @override
-  String get saidAlready => '说过';
-
-  @override
-  String justMinutes(int m) {
-    return '$m分钟';
-  }
 
   @override
   String get pts => '分';
@@ -1608,48 +1513,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get archiveBeforeThisWeek => '本周之前的一切';
-
-  @override
-  String get whatStays => '留下的';
-
-  @override
-  String nReadOfN(int read, int total) {
-    return '已读 $read / $total';
-  }
-
-  @override
-  String nAnswered(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '已回答 $n 张',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String nCameBackAgain(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 张再次出现',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String nKeptOnReturn(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 张再现时仍答对',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get nothingBackYet =>
-      '还没有卡片回来。一张卡片会在三天后、一周后、一个月后再次出现——那时你答对的，才是你真正知道的。';
 
   @override
   String get weekKeptThreeOwn => '坚持了一周：明天五张里有三张是你的。';
@@ -2012,24 +1875,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get reportSentToast => '谢谢，我们会核实。';
 
   @override
-  String journeyPoints(String n) {
-    return '$n 分';
-  }
-
-  @override
   String get journeyPointsOff => '分偏差';
-
-  @override
-  String journeyLastWeek(int n) {
-    return '上周 $n';
-  }
-
-  @override
-  String get journeyLastWeekSame => '与上周相同';
-
-  @override
-  String get journeyOffExplain =>
-      '你说的把握与你实际答对的频率之间的差距。0 表示每个说 70% 的回答，十次中有七次是对的。';
 
   @override
   String journeyOffNotYet(int n) {
@@ -2042,49 +1888,17 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get journeyAxisSure => '你说的把握 →';
-
-  @override
-  String get journeyAxisRight => '↑ 答对的频率';
-
-  @override
-  String get journeyCurveSpotOn => '正好';
-
-  @override
-  String get journeyTooSure => '过于自信';
-
-  @override
-  String journeyWhenYouSaid(String sure, String right) {
-    return '当你说有 $sure 把握时，你答对了 $right。';
-  }
-
-  @override
-  String journeyNAnswers(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n 个回答',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get journeyYourScore => 'Your score';
+  String get journeyYourScore => '你的分数';
 
   @override
   String journeyPointsUnit(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'points',
-      one: 'point',
-    );
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '分');
     return '$_temp0';
   }
 
   @override
   String journeyGainedIn(String n) {
-    return '+$n in 4 weeks';
+    return '4 周内 +$n';
   }
 
   @override
@@ -2092,8 +1906,7 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'This week so far, you earned $n points.',
-      one: 'This week so far, you earned 1 point.',
+      other: '本周到目前为止，你获得了 $n 分。',
     );
     return '$_temp0';
   }
@@ -2103,8 +1916,7 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'In the week of $date, you earned $n points.',
-      one: 'In the week of $date, you earned 1 point.',
+      other: '$date那一周，你获得了 $n 分。',
     );
     return '$_temp0';
   }
@@ -2114,25 +1926,25 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n cards',
-      one: '1 card',
+      other: '$n 张',
+      one: '1 张',
     );
     return '$_temp0';
   }
 
   @override
   String journeyScoreCaption(String date) {
-    return 'Your score at the end of each week since $date. Tap a point to see that week.';
+    return '自$date以来每周结束时的分数。点一个点，查看那一周。';
   }
 
   @override
   String journeyLevelOf(int n, int of) {
-    return 'Level $n of $of';
+    return '等级 $n / $of';
   }
 
   @override
   String journeyStepFrom(String what, String rung) {
-    return '$what\nfrom $rung';
+    return '$what\n即可升至“$rung”';
   }
 
   @override
@@ -2140,8 +1952,7 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n cards',
-      one: '1 card',
+      other: '再读 $n 张',
     );
     return '$_temp0';
   }
@@ -2151,8 +1962,7 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n answers',
-      one: '1 answer',
+      other: '再答 $n 题',
     );
     return '$_temp0';
   }
@@ -2162,8 +1972,7 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n answers with how sure',
-      one: '1 answer with how sure',
+      other: '再带把握答 $n 题',
     );
     return '$_temp0';
   }
@@ -2173,8 +1982,7 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n cards held',
-      one: '1 card held',
+      other: '再记住 $n 张',
     );
     return '$_temp0';
   }
@@ -2184,29 +1992,27 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n points',
-      one: '1 point',
+      other: '再降 $n 分',
     );
     return '$_temp0';
   }
 
   @override
-  String get journeyWorth => 'Worth';
+  String get journeyWorth => '折合';
 
   @override
   String journeyBooks(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n books',
-      one: '1 book',
+      other: '$n 本书',
     );
     return '$_temp0';
   }
 
   @override
   String journeyOrDocumentaries(int h) {
-    return 'or $h h of documentaries';
+    return '或 $h 小时纪录片';
   }
 
   @override
@@ -2214,128 +2020,126 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n to the first book',
-      one: '1 to the first book',
+      other: '距第一本书还差 $n 张',
     );
     return '$_temp0';
   }
 
   @override
-  String get journeyInARow => 'In a row';
+  String get journeyInARow => '连续';
 
   @override
   String journeyDays(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n days',
-      one: '1 day',
+      other: '$n 天',
+      one: '1 天',
     );
     return '$_temp0';
   }
 
   @override
   String journeyBestActive(int best, int active, int days) {
-    return 'Best $best · $active of $days';
+    return '最高 $best 天 · $days 天中 $active 天';
   }
 
   @override
   String journeySubjectsOf(int n, int of) {
-    return '$n of $of';
+    return '$n / $of';
   }
 
   @override
   String journeySubjectsDashed(String month) {
-    return 'subjects · dashed: $month';
+    return '主题 · 虚线：$month';
   }
 
   @override
-  String get journeySubjects => 'subjects';
+  String get journeySubjects => '主题';
 
   @override
-  String get journeyHowHard => 'How hard';
+  String get journeyHowHard => '难度';
 
   @override
-  String get journeyOfThree => 'of 3';
+  String get journeyOfThree => '/ 3';
 
   @override
-  String get journeyHardNow => 'The cards you open.';
+  String get journeyHardNow => '你打开的卡片。';
 
   @override
   String journeyHardThen(String v, String month) {
-    return 'The cards you open. $v in $month';
+    return '你打开的卡片。$month为 $v';
   }
 
   @override
-  String get journeyReadingTime => 'Reading time';
+  String get journeyReadingTime => '阅读时间';
 
   @override
   String journeyHoursMinutes(int h, String m) {
-    return '$h h $m';
+    return '$h 小时 $m 分';
   }
 
   @override
   String journeyMinutes(int m) {
-    return '$m min';
+    return '$m 分钟';
   }
 
   @override
   String journeyMinAWeek(int now, int was) {
-    return '$now min a week, from $was';
+    return '每周 $now 分钟，起初 $was 分钟';
   }
 
   @override
   String journeyMinThisWeek(int m) {
-    return '$m min this week';
+    return '本周 $m 分钟';
   }
 
   @override
-  String get journeyTimedFromToday => 'Counted from today';
+  String get journeyTimedFromToday => '从今天开始计时';
 
   @override
   String journeyPointsOffFrom(int was) {
-    return 'points off, from $was';
+    return '分偏差，起初 $was';
   }
 
   @override
   String journeyRungOrLess(String rung, int n) {
-    return '$rung · $n or less';
+    return '$rung · $n 及以下';
   }
 
   @override
-  String get journeyRightWhenSure => 'Right when sure';
+  String get journeyRightWhenSure => '有把握时的正确率';
 
   @override
   String journeyFromIn(String v, String month) {
-    return 'From $v in $month';
+    return '$month时为 $v';
   }
 
   @override
-  String get journeySureNone => 'Nothing said at 80% or more yet';
+  String get journeySureNone => '还没有 80% 及以上的回答';
 
   @override
-  String get journeyMovesTitle => 'Moves you can spot';
+  String get journeyMovesTitle => '能识破的套路';
 
   @override
   String journeyOfN(int n) {
-    return 'of $n';
+    return '/ $n';
   }
 
   @override
   String journeyNewest(String name) {
-    return 'Newest: $name';
+    return '最新：$name';
   }
 
   @override
-  String get journeyNoneYet => 'None yet';
+  String get journeyNoneYet => '还没有';
 
   @override
   String journeyStillWithYou(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'cards still with you',
-      one: 'card still with you',
+      other: '仍记得的卡片',
     );
     return '$_temp0';
   }
@@ -2345,10 +2149,9 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       days,
       locale: localeName,
-      other: '$days days',
-      one: 'a day',
+      other: '$days 天后',
     );
-    return '$right of $of after $_temp0';
+    return '$_temp0，$of 张中 $right 张';
   }
 
   @override
@@ -2356,121 +2159,124 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       weeks,
       locale: localeName,
-      other: '$weeks weeks',
-      one: 'a week',
+      other: '$weeks 周后',
     );
-    return '$right of $of after $_temp0';
+    return '$_temp0，$of 张中 $right 张';
   }
 
   @override
   String journeyActiveDays(int active, int days) {
-    return '$active of $days days';
+    return '$days 天中 $active 天';
   }
 
   @override
-  String get journeyMostlyMorning => 'Mostly mornings';
+  String get journeyMostlyMorning => '多在上午';
 
   @override
-  String get journeyMostlyAfternoon => 'Mostly afternoons';
+  String get journeyMostlyAfternoon => '多在下午';
 
   @override
-  String get journeyMostlyEvening => 'Mostly evenings';
+  String get journeyMostlyEvening => '多在晚上';
 
   @override
-  String get journeyMostlyNight => 'Mostly at night';
+  String get journeyMostlyNight => '多在深夜';
 
   @override
-  String get journeyInTime => 'In time';
+  String get journeyInTime => '时间跨度';
 
   @override
-  String journeyYears(String n) {
-    return '$n years';
+  String journeyYears(int n) {
+    final intl.NumberFormat nNumberFormat = intl.NumberFormat.decimalPattern(
+      localeName,
+    );
+    final String nString = nNumberFormat.format(n);
+
+    return '$nString 年';
   }
 
   @override
   String journeyFromEra(String era) {
-    return 'from $era to this year';
+    return '从$era到今年';
   }
 
   @override
-  String get journeyEraAncient => 'the ancient world';
+  String get journeyEraAncient => '古代';
 
   @override
-  String get journeyEraMedieval => 'the Middle Ages';
+  String get journeyEraMedieval => '中世纪';
 
   @override
-  String get journeyEraEarlyModern => 'the 1500s';
+  String get journeyEraEarlyModern => '16世纪';
 
   @override
-  String get journeyEraNineteenth => 'the 1800s';
+  String get journeyEraNineteenth => '19世纪';
 
   @override
-  String get journeyEraTwentieth => 'the 1900s';
+  String get journeyEraTwentieth => '20世纪';
 
   @override
   String get journeyEraRecent => '2000';
 
   @override
-  String get journeyNothingDated => 'nothing dated yet';
+  String get journeyNothingDated => '还没有带年代的卡片';
 
   @override
-  String get journeyInPlace => 'In place';
+  String get journeyInPlace => '地域';
 
   @override
   String journeyRegions(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n regions',
-      one: '1 region',
+      other: '$n 个地区',
     );
     return '$_temp0';
   }
 
   @override
   String journeyPlacesAndSpace(String list) {
-    return '$list, and space';
+    return '$list和太空';
   }
 
   @override
-  String get journeyRegionAmericas => 'the Americas';
+  String get journeyRegionAmericas => '美洲';
 
   @override
-  String get journeyRegionEurope => 'Europe';
+  String get journeyRegionEurope => '欧洲';
 
   @override
-  String get journeyRegionAsia => 'Asia';
+  String get journeyRegionAsia => '亚洲';
 
   @override
-  String get journeyRegionOceania => 'Oceania';
+  String get journeyRegionOceania => '大洋洲';
 
   @override
-  String get journeyRegionAfrica => 'Africa';
+  String get journeyRegionAfrica => '非洲';
 
   @override
-  String get journeyRegionMiddleEast => 'the Middle East';
+  String get journeyRegionMiddleEast => '中东';
 
   @override
-  String get journeyNoPlace => 'no place yet';
+  String get journeyNoPlace => '还没有地点';
 
   @override
-  String get journeyTopics => 'Topics';
+  String get journeyTopics => '话题';
 
   @override
   String journeyMet(int n) {
-    return '$n met';
+    return '已接触 $n 个';
   }
 
   @override
   String journeyTopicsMost(int n, String subject) {
-    return '$n of them in $subject';
+    return '其中 $n 个属于$subject';
   }
 
   @override
-  String get journeyWords => 'Words';
+  String get journeyWords => '词汇';
 
   @override
   String journeyNew(int n) {
-    return '$n new';
+    return '新词 $n 个';
   }
 }

@@ -73,17 +73,6 @@
    }
   }
  },
- "hoursMinutes": "{h} h {m} min",
- "@hoursMinutes": {
-  "placeholders": {
-   "h": {
-    "type": "int"
-   },
-   "m": {
-    "type": "int"
-   }
-  }
- },
  "tomorrowsFiveOpenIn": "Tomorrow's five open in {when}",
  "@tomorrowsFiveOpenIn": {
   "placeholders": {
@@ -1332,17 +1321,6 @@
    }
   }
  },
- "levelNamed": "Level {n} · {name}",
- "@levelNamed": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   },
-   "name": {
-    "type": "String"
-   }
-  }
- },
  "topLevel": "Top level",
  "plusNToday": "+{n} today",
  "@plusNToday": {
@@ -1352,90 +1330,7 @@
    }
   }
  },
- "stillWithYouOf": "still with you · {n} of {total}",
- "@stillWithYouOf": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   },
-   "total": {
-    "type": "int"
-   }
-  }
- },
- "stillWithYouNothing": "still with you · nothing answered yet",
- "calibrationPointsOff": "calibration · points off",
- "calibrationNotMeasured": "calibration · not measured yet",
- "inARowBest": "in a row · best {n}",
- "@inARowBest": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "movesYouCanSpot": "{n, plural, =1{move you can spot} other{moves you can spot}}",
- "@movesYouCanSpot": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "nCardsIsAbout": "{n} cards is about",
- "@nCardsIsAbout": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "nonFictionBooks": "{n, plural, =1{non-fiction book} other{non-fiction books}}",
- "hoursOfDocumentaries": "{n, plural, =1{hour of documentary} other{hours of documentaries}}",
- "lectures": "{n, plural, =1{lecture} other{lectures}}",
- "inTotalACard": "{time} in total · about 40 seconds a card",
- "@inTotalACard": {
-  "placeholders": {
-   "time": {
-    "type": "String"
-   }
-  }
- },
  "bySubject": "By subject",
- "readOfTheShelf": "read · of the shelf",
- "toSayTonight": "To say tonight",
- "anotherOne": "Another one",
- "saidIt": "Said it",
- "saidAlready": "Said",
- "justMinutes": "{m} min",
- "@justMinutes": {
-  "placeholders": {
-   "m": {
-    "type": "int"
-   }
-  }
- },
- "@nonFictionBooks": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "@hoursOfDocumentaries": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "@lectures": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
  "pts": "points",
  "nStillWithYou": "{n} still with you",
  "@nStillWithYou": {
@@ -1499,43 +1394,6 @@
  "plusCardLine": "Five cards a day from your mix, at your level. Your journey. Your whole archive.",
  "continueFree": "Continue free",
  "archiveBeforeThisWeek": "Before this week",
- "whatStays": "What stays",
- "nReadOfN": "{read} of {total} read",
- "@nReadOfN": {
-  "placeholders": {
-   "read": {
-    "type": "int"
-   },
-   "total": {
-    "type": "int"
-   }
-  }
- },
- "nAnswered": "{n, plural, =1{1 card answered} other{{n} cards answered}}",
- "@nAnswered": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "nCameBackAgain": "{n, plural, =1{1 came back} other{{n} came back}}",
- "@nCameBackAgain": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "nKeptOnReturn": "{n, plural, =1{1 still right when it came back} other{{n} still right when they came back}}",
- "@nKeptOnReturn": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "nothingBackYet": "Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.",
  "weekKeptThreeOwn": "A week kept: tomorrow three of the five are yours.",
  "perkJourneyLine": "Your level, every subject strand by strand, what stayed, and the card to say tonight.",
  "topOfTheWeek": "Top of the week",
@@ -1864,76 +1722,13 @@
  "@reportSentToast": {
   "description": "Brief message after a report is sent."
  },
- "journeyPoints": "{n} pts",
- "@journeyPoints": {
-  "description": "The reader's score in a pill beside Your journey's title.",
-  "placeholders": {
-   "n": {
-    "type": "String"
-   }
-  }
- },
  "journeyPointsOff": "points off",
  "@journeyPointsOff": {
   "description": "Beside the big number at the top of Your journey: how many points the reader's confidence runs off their results."
  },
- "journeyLastWeek": "{n} last week",
- "@journeyLastWeek": {
-  "description": "Chip beside the points off: what they were a week ago (an arrow says which way they went).",
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "journeyLastWeekSame": "same as last week",
- "@journeyLastWeekSame": {
-  "description": "Chip beside the points off when they are what they were a week ago."
- },
- "journeyOffExplain": "How far the sureness you give is from how often you turn out right. Zero would mean every 70% answer was right seven times in ten.",
- "@journeyOffExplain": {
-  "description": "Line under the points off, saying what they measure."
- },
  "journeyOffNotYet": "{n, plural, =1{One more answer with how sure, and it is measured.} other{{n} more answers with how sure, and it is measured.}}",
  "@journeyOffNotYet": {
   "description": "Added to that line until there are enough answers with a confidence to measure it.",
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "journeyAxisSure": "how sure you said →",
- "@journeyAxisSure": {
-  "description": "Caption under the chart, left: the across axis."
- },
- "journeyAxisRight": "↑ how often right",
- "@journeyAxisRight": {
-  "description": "Caption under the chart, right: the up axis."
- },
- "journeyCurveSpotOn": "spot on",
- "@journeyCurveSpotOn": {
-  "description": "Label on the chart's diagonal, where confidence equals accuracy."
- },
- "journeyTooSure": "too sure",
- "@journeyTooSure": {
-  "description": "Label on the shaded part of the chart where the reader was surer than right."
- },
- "journeyWhenYouSaid": "When you said {sure} sure, you were right {right} of the time.",
- "@journeyWhenYouSaid": {
-  "description": "Under the chart, for the level picked: e.g. When you said 90% sure, you were right 72% of the time.",
-  "placeholders": {
-   "sure": {
-    "type": "String"
-   },
-   "right": {
-    "type": "String"
-   }
-  }
- },
- "journeyNAnswers": "{n, plural, =1{1 answer} other{{n} answers}}",
- "@journeyNAnswers": {
-  "description": "How many answers the sentence above rests on.",
   "placeholders": {
    "n": {
     "type": "int"
@@ -2371,7 +2166,8 @@
   "description": "Big number: years, e.g. 5,000 years.",
   "placeholders": {
    "n": {
-    "type": "String"
+    "type": "int",
+    "format": "decimalPattern"
    }
   }
  },

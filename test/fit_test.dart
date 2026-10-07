@@ -276,6 +276,12 @@ void main() {
         note(locale, entry.key, tester);
         // A past week tapped on the score chart, which has words of its own.
         if (entry.key == 'journey-measured') {
+          // Back to the top: the screen before it was taken down the fold.
+          final ScrollableState list = tester.state(
+            find.byType(Scrollable).first,
+          );
+          list.position.jumpTo(0);
+          await settle(tester);
           await tester.tap(find.byKey(const ValueKey('journey-week-0')));
           await settle(tester);
           note(locale, 'journey, a past week', tester);

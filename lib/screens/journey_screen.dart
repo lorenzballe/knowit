@@ -169,15 +169,42 @@ String _number(BuildContext context, num n) =>
 String _percent(BuildContext context, double share) =>
     NumberFormat.percentPattern(_locale(context)).format(share);
 
-String _date(BuildContext context, DateTime d, String pattern) {
-  String out;
+DateFormat _format(BuildContext context, DateFormat Function(String) make) {
   try {
-    out = DateFormat(pattern, _locale(context)).format(d);
+    return make(_locale(context));
   } catch (_) {
-    out = DateFormat(pattern, 'en').format(d);
+    return make('en');
   }
+}
+
+/// A day of a month, as the phone's language writes it: 14 July, 7月14日.
+String _day(BuildContext context, DateTime d) =>
+    _format(context, (l) => DateFormat.MMMMd(l)).format(d);
+
+/// A month on its own, as it reads inside a sentence.
+String _month(BuildContext context, DateTime d) =>
+    _format(context, (l) => DateFormat.LLLL(l)).format(d);
+
+/// A month as a label under a chart, short and with a capital.
+String _monthLabel(BuildContext context, DateTime d) {
+  final String out = _format(context, (l) => DateFormat.LLL(l)).format(d);
   return out.isEmpty ? out : out[0].toUpperCase() + out.substring(1);
 }
+
+/// Capitals, with Turkish's dotted capital I.
+String _upper(BuildContext context, String text) =>
+    Localizations.localeOf(context).languageCode == 'tr'
+    ? text.replaceAll('i', 'İ').toUpperCase()
+    : text.toUpperCase();
+
+/// Italian runs "del 8 luglio" together as "dell'8 luglio".
+String _elided(BuildContext context, String text) =>
+    Localizations.localeOf(context).languageCode == 'it'
+    ? text.replaceAllMapped(
+        RegExp(r"\b(de|da|a)l (1|8|11)\b"),
+        (m) => "${m[1]}ll'${m[2]}",
+      )
+    : text;
 
 /// The month the reader started in, and its last day — once it is over.
 ({DateTime first, String last})? _firstMonth(JourneyRecord record) {
@@ -233,7 +260,7 @@ class _Kicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Text(
-    text.toUpperCase(),
+    _upper(context, text),
     style: AppText.body(
       size: 9.5,
       weight: FontWeight.w700,
@@ -609,9 +636,12 @@ class _ScoreTile extends StatelessWidget {
                 child: Text(
                   week.current
                       ? l.journeyWeekSoFar(earned)
-                      : l.journeyWeekOf(
-                          earned,
-                          _date(context, dayOfKey(week.first), 'd MMMM'),
+                      : _elided(
+                          context,
+                          l.journeyWeekOf(
+                            earned,
+                            _day(context, dayOfKey(week.first)),
+                          ),
                         ),
                   key: const ValueKey('journey-say'),
                   style: AppText.display(
@@ -637,8 +667,9 @@ class _ScoreTile extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           Text(
-            l.journeyScoreCaption(
-              _date(context, dayOfKey(weeks.first.first), 'd MMMM'),
+            _elided(
+              context,
+              l.journeyScoreCaption(_day(context, dayOfKey(weeks.first.first))),
             ),
             style: AppText.body(
               size: 11,
@@ -695,7 +726,7 @@ class _ScoreChart extends StatelessWidget {
     for (var i = 0; i < weeks.length; i++) {
       final DateTime d = dayOfKey(weeks[i].first);
       if (i == 0 || dayOfKey(weeks[i - 1].first).month != d.month) {
-        labels.add((i, _date(context, d, 'MMM')));
+        labels.add((i, _monthLabel(context, d)));
       }
     }
 
@@ -1288,9 +1319,7 @@ class _SubjectsTile extends StatelessWidget {
                   child: _Unit(
                     month == null
                         ? l.journeySubjects
-                        : l.journeySubjectsDashed(
-                            _date(context, month.first, 'MMMM'),
-                          ),
+                        : l.journeySubjectsDashed(_month(context, month.first)),
                   ),
                 ),
               ],
@@ -1539,10 +1568,7 @@ class _HowHardTile extends StatelessWidget {
       unit: l.journeyOfThree,
       sub: then == null
           ? l.journeyHardNow
-          : l.journeyHardThen(
-              one.format(then),
-              _date(context, month!.first, 'MMMM'),
-            ),
+          : l.journeyHardThen(one.format(then), _month(context, month!.first)),
       foot: _Spark(values: weekly, height: 34, lo: 1, hi: 3),
     );
   }
@@ -1679,9 +1705,10 @@ class _PointsOffTile extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                l
-                    .journeyRungOrLess(rungName(context, top), sharp)
-                    .toUpperCase(),
+                _upper(
+                  context,
+                  l.journeyRungOrLess(rungName(context, top), sharp),
+                ),
                 style: AppText.body(
                   size: 9.5,
                   weight: FontWeight.w700,
@@ -1829,7 +1856,7 @@ class _SureTile extends StatelessWidget {
     } else if (weekly.length >= 2) {
       sub = l.journeyFromIn(
         _percent(context, weekly.first.$2),
-        _date(context, dayOfKey(weekly.first.$1.last), 'MMMM'),
+        _month(context, dayOfKey(weekly.first.$1.last)),
       );
     }
 
@@ -2182,7 +2209,7 @@ class _InTimeTile extends StatelessWidget {
     };
     return _Half(
       label: l.journeyInTime,
-      value: l.journeyYears(_number(context, shown)),
+      value: l.journeyYears(shown),
       sub: l.journeyFromEra(era),
       size: 24,
     );

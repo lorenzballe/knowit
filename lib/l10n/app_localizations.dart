@@ -228,12 +228,6 @@ abstract class AppLocalizations {
   /// **'Card {k} of {n}'**
   String cardOf(int k, int n);
 
-  /// No description provided for @hoursMinutes.
-  ///
-  /// In en, this message translates to:
-  /// **'{h} h {m} min'**
-  String hoursMinutes(int h, int m);
-
   /// No description provided for @tomorrowsFiveOpenIn.
   ///
   /// In en, this message translates to:
@@ -2148,12 +2142,6 @@ abstract class AppLocalizations {
   /// **'{n} read'**
   String nRead(int n);
 
-  /// No description provided for @levelNamed.
-  ///
-  /// In en, this message translates to:
-  /// **'Level {n} · {name}'**
-  String levelNamed(int n, String name);
-
   /// No description provided for @topLevel.
   ///
   /// In en, this message translates to:
@@ -2166,113 +2154,11 @@ abstract class AppLocalizations {
   /// **'+{n} today'**
   String plusNToday(int n);
 
-  /// No description provided for @stillWithYouOf.
-  ///
-  /// In en, this message translates to:
-  /// **'still with you · {n} of {total}'**
-  String stillWithYouOf(int n, int total);
-
-  /// No description provided for @stillWithYouNothing.
-  ///
-  /// In en, this message translates to:
-  /// **'still with you · nothing answered yet'**
-  String get stillWithYouNothing;
-
-  /// No description provided for @calibrationPointsOff.
-  ///
-  /// In en, this message translates to:
-  /// **'calibration · points off'**
-  String get calibrationPointsOff;
-
-  /// No description provided for @calibrationNotMeasured.
-  ///
-  /// In en, this message translates to:
-  /// **'calibration · not measured yet'**
-  String get calibrationNotMeasured;
-
-  /// No description provided for @inARowBest.
-  ///
-  /// In en, this message translates to:
-  /// **'in a row · best {n}'**
-  String inARowBest(int n);
-
-  /// No description provided for @movesYouCanSpot.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{move you can spot} other{moves you can spot}}'**
-  String movesYouCanSpot(int n);
-
-  /// No description provided for @nCardsIsAbout.
-  ///
-  /// In en, this message translates to:
-  /// **'{n} cards is about'**
-  String nCardsIsAbout(int n);
-
-  /// No description provided for @nonFictionBooks.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{non-fiction book} other{non-fiction books}}'**
-  String nonFictionBooks(int n);
-
-  /// No description provided for @hoursOfDocumentaries.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{hour of documentary} other{hours of documentaries}}'**
-  String hoursOfDocumentaries(int n);
-
-  /// No description provided for @lectures.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{lecture} other{lectures}}'**
-  String lectures(int n);
-
-  /// No description provided for @inTotalACard.
-  ///
-  /// In en, this message translates to:
-  /// **'{time} in total · about 40 seconds a card'**
-  String inTotalACard(String time);
-
   /// No description provided for @bySubject.
   ///
   /// In en, this message translates to:
   /// **'By subject'**
   String get bySubject;
-
-  /// No description provided for @readOfTheShelf.
-  ///
-  /// In en, this message translates to:
-  /// **'read · of the shelf'**
-  String get readOfTheShelf;
-
-  /// No description provided for @toSayTonight.
-  ///
-  /// In en, this message translates to:
-  /// **'To say tonight'**
-  String get toSayTonight;
-
-  /// No description provided for @anotherOne.
-  ///
-  /// In en, this message translates to:
-  /// **'Another one'**
-  String get anotherOne;
-
-  /// No description provided for @saidIt.
-  ///
-  /// In en, this message translates to:
-  /// **'Said it'**
-  String get saidIt;
-
-  /// No description provided for @saidAlready.
-  ///
-  /// In en, this message translates to:
-  /// **'Said'**
-  String get saidAlready;
-
-  /// No description provided for @justMinutes.
-  ///
-  /// In en, this message translates to:
-  /// **'{m} min'**
-  String justMinutes(int m);
 
   /// No description provided for @pts.
   ///
@@ -2447,42 +2333,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Before this week'**
   String get archiveBeforeThisWeek;
-
-  /// No description provided for @whatStays.
-  ///
-  /// In en, this message translates to:
-  /// **'What stays'**
-  String get whatStays;
-
-  /// No description provided for @nReadOfN.
-  ///
-  /// In en, this message translates to:
-  /// **'{read} of {total} read'**
-  String nReadOfN(int read, int total);
-
-  /// No description provided for @nAnswered.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{1 card answered} other{{n} cards answered}}'**
-  String nAnswered(int n);
-
-  /// No description provided for @nCameBackAgain.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{1 came back} other{{n} came back}}'**
-  String nCameBackAgain(int n);
-
-  /// No description provided for @nKeptOnReturn.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{1 still right when it came back} other{{n} still right when they came back}}'**
-  String nKeptOnReturn(int n);
-
-  /// No description provided for @nothingBackYet.
-  ///
-  /// In en, this message translates to:
-  /// **'Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.'**
-  String get nothingBackYet;
 
   /// No description provided for @weekKeptThreeOwn.
   ///
@@ -3144,77 +2994,17 @@ abstract class AppLocalizations {
   /// **'Thanks. We\'ll check it.'**
   String get reportSentToast;
 
-  /// The reader's score in a pill beside Your journey's title.
-  ///
-  /// In en, this message translates to:
-  /// **'{n} pts'**
-  String journeyPoints(String n);
-
   /// Beside the big number at the top of Your journey: how many points the reader's confidence runs off their results.
   ///
   /// In en, this message translates to:
   /// **'points off'**
   String get journeyPointsOff;
 
-  /// Chip beside the points off: what they were a week ago (an arrow says which way they went).
-  ///
-  /// In en, this message translates to:
-  /// **'{n} last week'**
-  String journeyLastWeek(int n);
-
-  /// Chip beside the points off when they are what they were a week ago.
-  ///
-  /// In en, this message translates to:
-  /// **'same as last week'**
-  String get journeyLastWeekSame;
-
-  /// Line under the points off, saying what they measure.
-  ///
-  /// In en, this message translates to:
-  /// **'How far the sureness you give is from how often you turn out right. Zero would mean every 70% answer was right seven times in ten.'**
-  String get journeyOffExplain;
-
   /// Added to that line until there are enough answers with a confidence to measure it.
   ///
   /// In en, this message translates to:
   /// **'{n, plural, =1{One more answer with how sure, and it is measured.} other{{n} more answers with how sure, and it is measured.}}'**
   String journeyOffNotYet(int n);
-
-  /// Caption under the chart, left: the across axis.
-  ///
-  /// In en, this message translates to:
-  /// **'how sure you said →'**
-  String get journeyAxisSure;
-
-  /// Caption under the chart, right: the up axis.
-  ///
-  /// In en, this message translates to:
-  /// **'↑ how often right'**
-  String get journeyAxisRight;
-
-  /// Label on the chart's diagonal, where confidence equals accuracy.
-  ///
-  /// In en, this message translates to:
-  /// **'spot on'**
-  String get journeyCurveSpotOn;
-
-  /// Label on the shaded part of the chart where the reader was surer than right.
-  ///
-  /// In en, this message translates to:
-  /// **'too sure'**
-  String get journeyTooSure;
-
-  /// Under the chart, for the level picked: e.g. When you said 90% sure, you were right 72% of the time.
-  ///
-  /// In en, this message translates to:
-  /// **'When you said {sure} sure, you were right {right} of the time.'**
-  String journeyWhenYouSaid(String sure, String right);
-
-  /// How many answers the sentence above rests on.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{1 answer} other{{n} answers}}'**
-  String journeyNAnswers(int n);
 
   /// Small capitals over the big score at the top of Your journey (shown in capitals).
   ///
@@ -3532,7 +3322,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'{n} years'**
-  String journeyYears(String n);
+  String journeyYears(int n);
 
   /// Under it: the oldest time the cards read are set in.
   ///
