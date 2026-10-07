@@ -55,8 +55,10 @@ class _BeautySceneViewState extends State<BeautySceneView>
   bool _asleep = false;
   Duration _last = Duration.zero;
 
-  /// The width of the drawing at the last layout, for the dial's drag.
+  /// The width of the drawing and of the dial's scale at the last layout,
+  /// for the drags across them.
   double _width = 1;
+  double _scaleWidth = 1;
 
   bool get _calm => MediaQuery.disableAnimationsOf(context);
 
@@ -270,41 +272,49 @@ class _BeautySceneViewState extends State<BeautySceneView>
             Expanded(child: art),
             SizedBox(height: compact ? 6 : 12),
             if (dial != null) ...[
+              // The figure on the left; on the right what it is, over the
+              // scale it is dragged along. One band, so the drawing keeps
+              // the height.
               ExcludeSemantics(
                 child: _Readout(
                   dial: dial,
                   value: _value,
                   ink: ink,
-                  size: compact ? 24 : 32,
-                ),
-              ),
-              SizedBox(height: compact ? 2 : 4),
-              ExcludeSemantics(
-                child: RawGestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  gestures: {
-                    _EagerPan: GestureRecognizerFactoryWithHandlers<_EagerPan>(
-                      _EagerPan.new,
-                      (r) => r
-                        ..dragStartBehavior = DragStartBehavior.down
-                        ..onDown = ((d) => _scaleTo(d.localPosition.dx))
-                        ..onUpdate = ((d) => _scaleTo(d.localPosition.dx))
-                        ..onEnd = ((_) => _up())
-                        ..onCancel = _up,
-                    ),
-                  },
-                  child: SizedBox(
-                    height: compact ? 24 : 30,
-                    width: double.infinity,
-                    child: CustomPaint(
-                      painter: _ScalePainter(
-                        from: dial.from,
-                        to: dial.to,
-                        truth: dial.value,
-                        now: _value,
-                        look: look,
-                      ),
-                    ),
+                  size: compact ? 26 : 34,
+                  scale: LayoutBuilder(
+                    builder: (context, box) {
+                      _scaleWidth = math.max(1, box.maxWidth);
+                      return RawGestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        gestures: {
+                          _EagerPan:
+                              GestureRecognizerFactoryWithHandlers<_EagerPan>(
+                                _EagerPan.new,
+                                (r) => r
+                                  ..dragStartBehavior = DragStartBehavior.down
+                                  ..onDown = ((d) =>
+                                      _scaleTo(d.localPosition.dx))
+                                  ..onUpdate = ((d) =>
+                                      _scaleTo(d.localPosition.dx))
+                                  ..onEnd = ((_) => _up())
+                                  ..onCancel = _up,
+                              ),
+                        },
+                        child: SizedBox(
+                          height: compact ? 26 : 30,
+                          width: double.infinity,
+                          child: CustomPaint(
+                            painter: _ScalePainter(
+                              from: dial.from,
+                              to: dial.to,
+                              truth: dial.value,
+                              now: _value,
+                              look: look,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
@@ -312,7 +322,7 @@ class _BeautySceneViewState extends State<BeautySceneView>
             ],
             Text(
               s.caption,
-              maxLines: compact ? 2 : 3,
+              maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: AppText.body(
                 size: compact ? 13.5 : 15,
@@ -338,9 +348,12 @@ class _BeautySceneViewState extends State<BeautySceneView>
                 alignment: Alignment.topLeft,
                 children: [...previous, ?current],
               ),
+              // The hint is for the hand; a screen reader has the drawing's
+              // own actions instead, so it hears only the reveal.
               child: Semantics(
                 key: ValueKey(line),
                 liveRegion: _played,
+                excludeSemantics: line == s.hint,
                 child: SizedBox(
                   width: double.infinity,
                   child: Text(
@@ -367,7 +380,7 @@ class _BeautySceneViewState extends State<BeautySceneView>
   void _scaleTo(double x) {
     final d = widget.scene.dial!;
     const r = _ScalePainter.knob;
-    final t = ((x - r) / math.max(1, _width - r * 2)).clamp(0.0, 1.0);
+    final t = ((x - r) / math.max(1, _scaleWidth - r * 2)).clamp(0.0, 1.0);
     _turnTo(d.from + (d.to - d.from) * t);
   }
 }
@@ -453,27 +466,43 @@ class _Painter extends CustomPainter {
 
 // ---- the readout under a dialled piece ------------------------------------
 
-/// "137.5°" big, and what it is beside it.
+/// "137.5°" big on the left; on the right, what it is, over its scale.
 class _Readout extends StatelessWidget {
   final BeautyDial dial;
   final double value;
   final Color ink;
   final double size;
+  final Widget scale;
   const _Readout({
     required this.dial,
     required this.value,
     required this.ink,
     required this.size,
+    required this.scale,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.baseline,
-      textBaseline: TextBaseline.alphabetic,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text(
-          dial.format(value),
+        // A sign that sits on the figure (°, %) is part of it; a word of
+        // unit ("days") follows small, so the figure keeps its size.
+        Text.rich(
+          TextSpan(
+            text: dial.format(value).split(' ').first,
+            children: [
+              if (dial.format(value).contains(' '))
+                TextSpan(
+                  text: ' ${dial.unit}',
+                  style: AppText.body(
+                    size: size * 0.45,
+                    weight: FontWeight.w700,
+                    color: ink.withValues(alpha: 0.75),
+                  ),
+                ),
+            ],
+          ),
           maxLines: 1,
           style: AppText.display(
             size: size,
@@ -483,14 +512,24 @@ class _Readout extends StatelessWidget {
             color: ink,
           ).copyWith(fontFeatures: const [FontFeature.tabularFigures()]),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 14),
         Expanded(
-          child: Text(
-            dial.label.toUpperCase(),
-            maxLines: 1,
-            textAlign: TextAlign.right,
-            overflow: TextOverflow.ellipsis,
-            style: AppText.label(size: 10.5, color: ink.withValues(alpha: 0.7)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                dial.label.toUpperCase(),
+                maxLines: 1,
+                textAlign: TextAlign.right,
+                overflow: TextOverflow.ellipsis,
+                style: AppText.label(
+                  size: 10.5,
+                  color: ink.withValues(alpha: 0.7),
+                ),
+              ),
+              scale,
+            ],
           ),
         ),
       ],
@@ -716,10 +755,13 @@ class _Flock extends _World {
       final heading = rng.next() * math.pi * 2;
       final cx = size.width / 2, cy = size.height / 2;
       for (var i = 0; i < n; i++) {
+        // A long, leaning cloud along the heading, as a flock in flight.
         final a = rng.next() * math.pi * 2;
         final r = math.sqrt(rng.next());
-        x[i] = cx + math.cos(a) * r * size.width * 0.3;
-        y[i] = cy + math.sin(a) * r * size.height * 0.22;
+        final along = math.cos(a) * r * _s * 0.34;
+        final across = math.sin(a) * r * _s * 0.14;
+        x[i] = cx + along * math.cos(heading) - across * math.sin(heading);
+        y[i] = cy + along * math.sin(heading) + across * math.cos(heading);
         final h = heading + (rng.next() - 0.5) * 0.9;
         vx[i] = math.cos(h) * _s * 0.3;
         vy[i] = math.sin(h) * _s * 0.3;
@@ -727,8 +769,21 @@ class _Flock extends _World {
       }
       fx = -_s;
       fy = cy;
-      for (var i = 0; i < (calm ? 150 : 50); i++) {
+      for (var i = 0; i < (calm ? 150 : 80); i++) {
         _sim();
+      }
+      // Wherever the settling took it, the card opens on the flock in the
+      // middle.
+      var mx = 0.0, my = 0.0;
+      for (var i = 0; i < n; i++) {
+        mx += x[i];
+        my += y[i];
+      }
+      mx = cx - mx / n;
+      my = cy - my / n;
+      for (var i = 0; i < n; i++) {
+        x[i] += mx;
+        y[i] += my;
       }
       return;
     }
@@ -757,7 +812,7 @@ class _Flock extends _World {
   void _sim() {
     final w = size.width, hgt = size.height, s = _s;
     final vmax = s * 0.34, vmin = s * 0.18;
-    final sep = s * 0.045;
+    final sep = s * 0.052;
     final reach = s * 0.3;
     final margin = s * 0.16;
     // The roost's slow pull: a point wandering a Lissajous figure.
@@ -804,8 +859,8 @@ class _Flock extends _World {
       ax = ax / _k - vx[i];
       ay = ay / _k - vy[i];
 
-      var fx2 = cx * 2.2 + ax * 2.6 + sx * vmax * 4 + (px - xi) * 0.8;
-      var fy2 = cy * 2.2 + ay * 2.6 + sy * vmax * 4 + (py - yi) * 0.8;
+      var fx2 = cx * 1.8 + ax * 2.6 + sx * vmax * 4 + (px - xi) * 0.8;
+      var fy2 = cy * 1.8 + ay * 2.6 + sy * vmax * 4 + (py - yi) * 0.8;
 
       // The card's edges, felt as a soft wall.
       if (xi < margin) fx2 += (margin - xi) * 16;
@@ -1123,7 +1178,7 @@ class _Orbits extends _World {
       final age = b / (_shades - 1);
       _line
         ..strokeWidth = 0.9
-        ..color = look.ink.withValues(alpha: (0.55 - 0.47 * age) * e);
+        ..color = look.ink.withValues(alpha: (0.5 - 0.3 * age) * e);
       _bands[b].draw(canvas, PointMode.lines, _line);
     }
 

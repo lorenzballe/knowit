@@ -34,7 +34,7 @@
       "hint": "Touch to send a falcon",
       "reveal": "No bird sees the whole dive. The swerve passes from neighbour to neighbour.",
       "params": {
-        "birds": 320
+        "birds": 360
       },
       "seed": 1986
     },

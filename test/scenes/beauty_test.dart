@@ -213,7 +213,9 @@ Future<void> _shoot(String name) async {
 /// above the caption.
 Offset _middle(WidgetTester tester, String caption) {
   final text = tester.getRect(find.text(caption));
-  final scene = tester.getRect(find.byType(SceneView));
+  final scene = tester.getRect(
+    find.ancestor(of: find.text(caption), matching: find.byType(SceneView)),
+  );
   return Offset(scene.center.dx, (scene.top + text.top) / 2 - 30);
 }
 
@@ -405,7 +407,7 @@ void main() {
     final at = _middle(tester, s.caption);
     // About a degree away, and let go: close enough to click home.
     final g = await tester.startGesture(at);
-    await g.moveBy(const Offset(20, 0));
+    await g.moveBy(const Offset(6, 0));
     await tester.pump();
     expect(find.text('137.5°'), findsNothing);
     await g.up();
@@ -419,12 +421,8 @@ void main() {
     final s = _parse(_tree());
     await _showScene(tester, s, height: 480);
     await _run(tester, 0.5);
-    final readout = tester.getRect(find.text('25°'));
-    final caption = tester.getRect(find.text(s.caption));
-    final scale = Offset(
-      tester.getRect(find.byType(SceneView)).right - 4,
-      (readout.bottom + caption.top) / 2,
-    );
+    final label = tester.getRect(find.text('TURN AT EACH FORK'));
+    final scale = Offset(label.right - 4, label.bottom + 12);
     await tester.tapAt(scale);
     await tester.pump();
     expect(find.text('120°'), findsOneWidget);
@@ -520,7 +518,7 @@ void main() {
     final s = _parse(_sunflower());
     await _showScene(tester, s, height: 480);
     await _run(tester, 0.3);
-    final dial = find.bySemanticsLabel('Turn between seeds');
+    final dial = find.bySemanticsLabel('Turn between seeds').first;
     expect(
       tester.getSemantics(dial),
       isSemantics(
@@ -542,7 +540,7 @@ void main() {
     await _showScene(tester, f, height: 480);
     await _run(tester, 0.3);
     expect(
-      tester.getSemantics(find.bySemanticsLabel(f.hint)),
+      tester.getSemantics(find.bySemanticsLabel(f.hint).first),
       isSemantics(label: f.hint, isButton: true, hasTapAction: true),
     );
     tester.semantics.performAction(
