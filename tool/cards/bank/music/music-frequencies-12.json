@@ -1,0 +1,82 @@
+{
+  "id": "music-frequencies-12",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.frequencies",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Two guitar strings almost in tune make a slow wah-wah-wah. What is that wobble counting?",
+  "answer": "The gap between their frequencies. Two waves a few cycles apart drift in and out of step: where peaks meet the sound swells, where they cancel it dips. Strings at 55 and 58 Hz swell 3 times a second. Players turn the peg until the wobble slows to nothing; piano tuners count it.",
+  "move": "To match two things closely, watch their mismatch, not either one.",
+  "ask": "Where could I spot a small difference by watching two things drift apart?",
+  "keywords": [
+    "beats",
+    "tuning",
+    "frequency",
+    "guitar strings",
+    "piano tuners"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "music",
+    "mode": "chord",
+    "readout": "Frequency ratio",
+    "keys": [
+      "A1",
+      "C3"
+    ],
+    "start": [
+      "A1",
+      "Bb1"
+    ],
+    "hint": "Tap two keys a step apart, low down, and listen for the wobble.",
+    "moments": [
+      {
+        "notes": [
+          "A1",
+          "Bb1"
+        ],
+        "name": "3 swells a second",
+        "text": "55 and 58.3 Hz, heard as one note swelling 3 times a second: the gap."
+      },
+      {
+        "notes": [
+          "A2",
+          "Bb2"
+        ],
+        "name": "6.5 a second",
+        "text": "The same step an octave up, 110 and 116.5 Hz: twice the gap, twice the wobble."
+      },
+      {
+        "notes": [
+          "A1",
+          "A2"
+        ],
+        "name": "No wobble",
+        "text": "An octave, 1 : 2. The high wave fits the low one exactly; nothing drifts."
+      },
+      {
+        "notes": [
+          "A1",
+          "E2"
+        ],
+        "name": "One every 5 s",
+        "text": "A piano's fifth: harmonics at 165 and 164.8 Hz swell once every 5 seconds."
+      }
+    ]
+  },
+  "source": "Rossing et al., The Science of Sound, 2002",
+  "source_kind": "book",
+  "reference": "Rossing, Moore & Wheeler, The Science of Sound, 3rd edn, Addison-Wesley, 2002, ch. 8 (beats: the beat rate is the difference of the two frequencies); equal-tempered A1 55 Hz, Bb1 58.27 Hz, E2 82.41 Hz",
+  "written": "2026-10-07"
+}

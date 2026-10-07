@@ -1,0 +1,53 @@
+{
+  "id": "science-infinity-11",
+  "topic": "science",
+  "genre": "science.maths_curios",
+  "strand": "science.maths_curios.infinity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A sunflower's spirals come in Fibonacci numbers, often 34 one way and 55 the other. How does a plant count?",
+  "answer": "It doesn't. Each new seed sprouts 137.5° round from the last, the golden angle, a turn that never lines a seed up behind an earlier one. The spirals the eye picks out join seeds that land almost in line, and at this angle those are 21, 34 or 55 seeds apart. The Fibonacci numbers fall out of the angle.",
+  "move": "A pattern can be a side effect of a rule that never mentions it.",
+  "ask": "Which pattern in my life is a by-product rather than a plan?",
+  "keywords": [
+    "sunflower",
+    "golden angle",
+    "fibonacci numbers",
+    "phyllotaxis",
+    "spirals"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "beauty",
+    "piece": "phyllotaxis",
+    "caption": "Each new seed grows 137.5° round from the last. That one turn is the plant's whole rule.",
+    "hint": "Drag sideways to change the turn",
+    "reveal": "Off 137.5° the spirals snap into straight spokes, with gaps between.",
+    "dial": {
+      "label": "Turn between seeds",
+      "unit": "°",
+      "value": 137.508,
+      "from": 125,
+      "to": 150,
+      "decimals": 1
+    },
+    "params": {
+      "seeds": 700
+    },
+    "seed": 7
+  },
+  "source": "Vogel, Mathematical Biosciences, 1979",
+  "source_kind": "paper",
+  "reference": "Vogel, A better way to construct the sunflower head, Mathematical Biosciences 44(3-4):179-189, 1979; Douady & Couder, Phyllotaxis as a physical self-organized growth process, Physical Review Letters 68:2098, 1992",
+  "written": "2026-10-07"
+}

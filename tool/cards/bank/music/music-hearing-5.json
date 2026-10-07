@@ -1,0 +1,86 @@
+{
+  "id": "music-hearing-5",
+  "topic": "music",
+  "genre": "music.sound_itself",
+  "strand": "music.sound_itself.hearing",
+  "also": [
+    "music.sound_itself.frequencies"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A man and a child sing Happy Birthday together, an octave apart. Why does it sound like one tune, not two?",
+  "answer": "Because every harmonic of the higher note is already in the lower one, so the pair fuses. Whether that makes them the same note is partly learned: Jacoby's team had Tsimane' villagers in Bolivia sing back high tones, and they did not land an octave down on the same note, as Western singers did.",
+  "move": "Two things that blend perfectly are not, for that reason, the same.",
+  "ask": "Which things do I treat as identical only because they fit together?",
+  "keywords": [
+    "octave",
+    "harmonics",
+    "tsimane",
+    "pitch perception",
+    "singing"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "music",
+    "mode": "chord",
+    "readout": "Frequency ratio",
+    "keys": [
+      "C3",
+      "E4"
+    ],
+    "start": [
+      "C3"
+    ],
+    "tuning": "just",
+    "hint": "C alone. Tap the next C up, then try other keys with the low C.",
+    "moments": [
+      {
+        "notes": [
+          "C3",
+          "C4"
+        ],
+        "name": "Octave",
+        "text": "1 : 2. Every harmonic of the top C is already in the low one: they fuse."
+      },
+      {
+        "notes": [
+          "C3",
+          "G3"
+        ],
+        "name": "Fifth",
+        "text": "2 : 3. Only every other harmonic of G lands on one of C's: blended, but two."
+      },
+      {
+        "notes": [
+          "C3",
+          "B3"
+        ],
+        "name": "One key short",
+        "text": "8 : 15. One key below the octave, almost nothing shared, and it grates."
+      },
+      {
+        "notes": [
+          "C3",
+          "G3",
+          "C4"
+        ],
+        "name": "Add the octave",
+        "text": "2 : 3 : 4. The top C brings nothing new: only more of the low C."
+      }
+    ]
+  },
+  "source": "Jacoby et al., Current Biology, 2019",
+  "source_kind": "paper",
+  "reference": "Jacoby, Undurraga, McPherson, Valdés, Ossandón & McDermott, Universal and non-universal features of musical pitch perception revealed by singing, Current Biology 29, 3229-3243, 2019, doi:10.1016/j.cub.2019.08.020",
+  "written": "2026-10-07"
+}

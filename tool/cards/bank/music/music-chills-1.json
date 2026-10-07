@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What does the brain release in the seconds before a musical chill, and not only during it?",
-  "answer": "Dopamine, the brain's wanting signal. Valorie Salimpoor and colleagues scanned listeners hearing their favourite pieces: dopamine rose in one region, the caudate, while they anticipated the peak, and in another, the nucleus accumbens, when the chill arrived. The build-up is a pleasure of its own. Half the thrill is waiting for the drop.",
+  "question": "Take out the kick and bass, add the snare roll, then bring them back. Did listeners' dopamine rise in the build or the drop?",
+  "answer": "In both, in different places. Valorie Salimpoor's team scanned people hearing their favourite music: dopamine rose in the caudate while they anticipated the peak, and in the nucleus accumbens when the chill arrived. The build is a pleasure of its own: half the thrill is the wait.",
   "move": "Expectation is not the queue for pleasure; it is part of the pleasure.",
   "ask": "What am I rushing to get to, when looking forward to it is half the joy?",
   "keywords": [
@@ -27,6 +27,57 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "music",
+    "mode": "layers",
+    "bpm": 125,
+    "steps": 32,
+    "hint": "Take the kick and bass out, add the build, then bring them back for the drop.",
+    "tracks": [
+      {
+        "name": "Kick",
+        "sound": "kick",
+        "on": true,
+        "pattern": "X . . . x . . . X . . . x . . . X . . . x . . . X . . . x . . ."
+      },
+      {
+        "name": "Bass",
+        "sound": "bass",
+        "pattern": ". . A1 - . . A1 - . . A1 - . . A1 - . . A1 - . . A1 - . . A1 - . . A1 -"
+      },
+      {
+        "name": "Keys",
+        "sound": "keys",
+        "on": true,
+        "pattern": "A3+C4+E4 - - - - - - - - - - - - - - - F3+A3+C4 - - - - - - - - - - - - - - -"
+      },
+      {
+        "name": "Build",
+        "sound": "snare",
+        "pattern": "x . . . x . . . x . . . x . . . x . x . x . x . x x x x X X X X",
+        "text": "A roll that speeds up: the brain starts predicting the moment it ends."
+      }
+    ],
+    "moments": [
+      {
+        "on": [
+          "Keys",
+          "Build"
+        ],
+        "name": "The build",
+        "text": "No kick, no bass, a roll speeding up: the wait. Dopamine rose in the caudate."
+      },
+      {
+        "on": [
+          "Kick",
+          "Bass",
+          "Keys"
+        ],
+        "name": "The drop",
+        "text": "Everything back. At the peak, dopamine came in another place, the accumbens."
+      }
+    ]
+  },
   "source": "Salimpoor et al., Nature Neuroscience, 2011",
   "source_kind": "paper",
   "reference": "Salimpoor, Benovoy, Larcher, Dagher & Zatorre, Anatomically distinct dopamine release during anticipation and experience of peak emotion to music, Nature Neuroscience, 2011",

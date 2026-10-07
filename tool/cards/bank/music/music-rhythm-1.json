@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What do the Cuban tresillo rhythm and a particle accelerator's timing system have in common?",
-  "answer": "The same algorithm. Spreading 3 beats as evenly as possible over 8 pulses gives 3+3+2, the tresillo under the habanera and countless pop grooves. Godfried Toussaint showed in 2005 that this rule, used by Eric Bjorklund to space pulses at a neutron source, generates dozens of traditional rhythms. Five over eight gives the Cuban cinquillo.",
+  "question": "Spread 3 claps as evenly as you can over 8 pulses. Why does the result sound like a groove you already know?",
+  "answer": "Because it is one: 3+3+2, the tresillo, under the habanera and countless pop grooves. Godfried Toussaint showed in 2005 that this rule, used by Eric Bjorklund to space pulses at a neutron source, generates dozens of traditional rhythms. Five over eight gives the Cuban cinquillo.",
   "move": "When a pattern feels natural, look for the simple rule that makes it.",
   "ask": "Which pattern in my life feels natural but comes from one simple rule?",
   "keywords": [
@@ -27,6 +27,50 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "music",
+    "mode": "layers",
+    "bpm": 96,
+    "steps": 16,
+    "hint": "The kick marks the beat. Add one pattern at a time over it.",
+    "tracks": [
+      {
+        "name": "Beat",
+        "sound": "kick",
+        "on": true,
+        "pattern": "X . . . x . . . X . . . x . . ."
+      },
+      {
+        "name": "3+3+2",
+        "sound": "bass",
+        "pattern": "A1 - - A1 - - A1 - A1 - - A1 - - A1 -",
+        "text": "The tresillo: three notes spread as evenly as 8 pulses allow, 3, 3, then 2."
+      },
+      {
+        "name": "Five",
+        "sound": "snare",
+        "pattern": "X . x x . x x . X . x x . x x .",
+        "text": "Five spread as evenly as 8 allow: the Cuban cinquillo. Same rule."
+      },
+      {
+        "name": "Clave",
+        "sound": "clap",
+        "pattern": "X . . x . . x . . . x . x . . .",
+        "text": "Son clave: the same 3, 3, 2 to open, then two hits to answer it."
+      }
+    ],
+    "moments": [
+      {
+        "on": [
+          "Beat",
+          "3+3+2",
+          "Clave"
+        ],
+        "name": "Locked",
+        "text": "Bass and clave open together, then the clave answers alone. That is the groove."
+      }
+    ]
+  },
   "source": "Toussaint, Proceedings of Bridges, 2005",
   "source_kind": "paper",
   "reference": "Toussaint, The Euclidean algorithm generates traditional musical rhythms, Proceedings of BRIDGES: Mathematical Connections in Art, Music and Science, 2005",

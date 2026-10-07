@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How can the same four chords sound hopeful in Let It Be and bleak in Zombie?",
-  "answer": "By starting the loop on a different chord. Let It Be cycles C, G, A minor, F; Zombie cycles roughly E minor, C, G, D, which is the same circle entered at its minor chord. A loop has no fixed beginning, so wherever the ear lands first becomes home. Same circle, different front door.",
+  "question": "Let It Be and Zombie loop the same four chords. Why does one sound hopeful and the other bleak?",
+  "answer": "Because each enters the loop at a different chord. Let It Be cycles C, G, A minor, F; Zombie cycles roughly E minor, C, G, D, the same circle entered at its minor chord. A loop has no fixed beginning, so the chord heard first becomes home. Same circle, different front door.",
   "move": "Where a cycle begins can decide what it seems to mean.",
   "ask": "Where I start the story of my life, does that decide whether it feels hopeful or bleak?",
   "keywords": [
@@ -27,6 +27,50 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "music",
+    "mode": "layers",
+    "bpm": 100,
+    "steps": 32,
+    "hint": "Switch on one loop, then swap it for the other. Same four chords, another start.",
+    "tracks": [
+      {
+        "name": "Kick",
+        "sound": "kick",
+        "on": true,
+        "pattern": "X . . . x . . . X . . . x . . . X . . . x . . . X . . . x . . ."
+      },
+      {
+        "name": "Clap",
+        "sound": "clap",
+        "on": true,
+        "pattern": ". . . . X . . . . . . . X . . . . . . . X . . . . . . . X . . ."
+      },
+      {
+        "name": "Hope",
+        "sound": "keys",
+        "pattern": "C3+E4+G4+C5 - - - - - - - G2+D4+G4+B4 - - - - - - - A2+C4+E4+A4 - - - - - - - F2+C4+F4+A4 - - - - - - -",
+        "text": "Let It Be: C, G, Am, F. The loop starts on C, so C feels like home."
+      },
+      {
+        "name": "Bleak",
+        "sound": "keys",
+        "pattern": "A2+C4+E4+A4 - - - - - - - F2+C4+F4+A4 - - - - - - - C3+E4+G4+C5 - - - - - - - G2+D4+G4+B4 - - - - - - -",
+        "text": "Zombie: Am, F, C, G. The same four chords, entered at A minor. It aches."
+      }
+    ],
+    "moments": [
+      {
+        "on": [
+          "Kick",
+          "Clap",
+          "Hope",
+          "Bleak"
+        ],
+        "text": "Both at once clash on every beat: the order really is the whole difference."
+      }
+    ]
+  },
   "source": "Everett, The Foundations of Rock, 2009",
   "source_kind": "book",
   "reference": "Everett, The Foundations of Rock: From Blue Suede Shoes to Suite: Judy Blue Eyes, Oxford University Press, 2009",

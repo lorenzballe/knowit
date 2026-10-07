@@ -881,3 +881,13 @@ life-risk-taking-1, life-regret-2, life-failure-2, life-spending-2.
 - weird_facts-hoaxes-1 | James Howells, Newport, discarded a drive with about 8,000 bitcoin in 2013 and spent years seeking to dig up the landfill | James Howells bitcoin hard drive Newport landfill 8,000
 - weird_facts-hoaxes-1 | Denmark agreed in 2024 a livestock emissions tax starting 2030 | Denmark green tripartite agreement livestock CO2 tax 2030
 - language-spin-4 | ASA ruled Colgate's "more than 80% of dentists recommend" ad misleading in 2007 | ASA Colgate 80% dentists recommend ruling 2007
+
+## Scene cards (October 2026)
+
+- nature-natural-selection-4 | Landeau & Terborgh 1986: bass caught fewer minnows per attack in larger shoals, and took dyed (odd-coloured) minnows preferentially | "Landeau Terborgh 1986 oddity confusion effect largemouth bass silversides dyed"
+- cinema-cgi-11 | Batman Returns (1992) used Reynolds' boids model for its bat swarms and penguin army | "Batman Returns bat swarms penguins boids Craig Reynolds"
+- science-testable-claims-1 | Peale, Cassen & Reynolds published 2 March 1979; Voyager 1 plume found days later (Morabito, 8-9 March 1979) | "Peale Cassen Reynolds Science 2 March 1979 Io volcanism Voyager plume Morabito"
+- nature-feedback-loops-4 | Devauchelle et al. 2012: groundwater-fed streams in the Florida Panhandle bifurcate at about 72° (2π/5), the angle predicted for Laplacian growth | "Devauchelle Petroff Seybold Rothman 2012 ramification of stream networks 72 degrees"
+- music-silence-11 | the zone of quiet around a single cancellation point is about a tenth of a wavelength across | "Elliott Nelson active noise control zone of quiet tenth of a wavelength 10 dB"
+- human_body-breathing-5 | Murray 1926: minimum-work symmetric branching gives daughters 2^-1/3 (about 0.79) of the parent radius at about 37.5° each from the parent axis; airways (Weibel) about 23 generations | "Murray 1926 angle of branching arteries minimum work 37.5 degrees symmetric; Weibel 23 generations airways"
+- space-astrology-or-astronomy-4 | great conjunctions stay in one triplicity for about two centuries; Kepler's trigon figure appears in Mysterium Cosmographicum (1596) | "great conjunction triplicity 200 years trigon Kepler Mysterium Cosmographicum figure"

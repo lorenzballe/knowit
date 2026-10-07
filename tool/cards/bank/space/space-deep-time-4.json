@@ -1,0 +1,59 @@
+{
+  "id": "space-deep-time-4",
+  "topic": "space",
+  "genre": "space.think_at_scale",
+  "strand": "space.think_at_scale.deep_time",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Join Venus and Earth with a line every three days for eight years. Why does a five-petalled rose appear?",
+  "answer": "Because 13 Venus years almost exactly fill 8 of ours: 2,921 days against 2,922. Venus laps Earth every 584 days, and five laps take eight years, so after five petals the pattern closes where it began. The fit is not quite perfect, so the rose creeps round a couple of degrees every eight years.",
+  "move": "A pattern that repeats often hides two rhythms in a near-whole ratio.",
+  "ask": "Which of my repeating weeks are two cycles quietly lining up?",
+  "keywords": [
+    "venus",
+    "orbits",
+    "resonance",
+    "pentagram"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "beauty",
+    "piece": "orbits",
+    "caption": "Venus circles the Sun 13 times while Earth circles it 8. A line joins them every 3 days.",
+    "hint": "Drag to change Venus's year",
+    "reveal": "A few days off and the rose smears. Only 13 to 8 closes it.",
+    "dial": {
+      "label": "Venus's year",
+      "unit": "days",
+      "value": 224.701,
+      "from": 205,
+      "to": 245,
+      "decimals": 1
+    },
+    "params": {
+      "outer": 365.256,
+      "radii": [
+        0.723,
+        1.0
+      ],
+      "every": 3,
+      "span": 2922
+    },
+    "accent": "#FFE600",
+    "seed": 1
+  },
+  "source": "NASA Planetary Fact Sheet",
+  "source_kind": "institution",
+  "reference": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/ (NASA Planetary Fact Sheet: sidereal orbit periods of Venus 224.701 days and Earth 365.256 days)",
+  "written": "2026-10-07"
+}
