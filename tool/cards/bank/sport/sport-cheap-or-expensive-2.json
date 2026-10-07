@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "For a cyclist on flat roads at 30 km/h, what costs far more speed than a heavy bike?",
-  "answer": "Pushing air, mostly with the rider's own body. On the flat above about 25 km/h, air drag is most of the resistance, and the rider makes most of that drag. Lowering the torso and tucking the elbows saves more than shaving a kilogram, which counts mainly on climbs. The cheapest upgrade is position.",
+  "question": "On a flat road, how much of a cyclist's effort goes into pushing air rather than rolling the bike?",
+  "answer": "Most of it, above a gentle pace. Air drag grows with the square of speed while rolling resistance barely changes: for a typical rider on the hoods, air takes half the effort at 15 km/h and four fifths at 30. The rider's body makes most of that drag, so a lower torso beats a lighter frame.",
   "move": "Find the biggest force against you before paying to shrink a small one.",
   "ask": "Am I spending on the small thing that is easy to buy, instead of the big thing I could change myself?",
   "keywords": [
@@ -21,14 +21,95 @@
   "region": "none",
   "hook": "mechanism",
   "mood": "practical",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Faria, Parker & Faria, Sports Medicine, 2005",
+  "source": "Faria et al., 2005; Martin et al., 1998",
   "source_kind": "paper",
-  "reference": "Faria, Parker & Faria, The science of cycling: factors affecting performance, part 2, Sports Medicine, 2005",
-  "written": "2026-09-26"
+  "reference": "Faria, Parker & Faria, The science of cycling: factors affecting performance, part 2, Sports Medicine, 2005; Martin, Milliken, Cobb, McFadden & Coggan, Validation of a mathematical model for road cycling power, Journal of Applied Biomechanics, 1998",
+  "written": "2026-09-26",
+  "scene": {
+    "type": "slider",
+    "control": "Riding speed",
+    "controlUnit": "km/h",
+    "readout": "Effort spent pushing air",
+    "readoutUnit": "%",
+    "start": 20,
+    "step": 1,
+    "points": [
+      [
+        5,
+        10.2
+      ],
+      [
+        7.5,
+        20.3
+      ],
+      [
+        10,
+        31.2
+      ],
+      [
+        12.5,
+        41.5
+      ],
+      [
+        15,
+        50.5
+      ],
+      [
+        17.5,
+        58.1
+      ],
+      [
+        20,
+        64.5
+      ],
+      [
+        25,
+        73.9
+      ],
+      [
+        30,
+        80.3
+      ],
+      [
+        35,
+        84.7
+      ],
+      [
+        40,
+        87.9
+      ],
+      [
+        45,
+        90.2
+      ],
+      [
+        50,
+        91.9
+      ]
+    ],
+    "notes": [
+      {
+        "at": 5,
+        "text": "Walking pace: the tyres take most of the effort."
+      },
+      {
+        "at": 15,
+        "text": "15 km/h, an easy ride: already half the effort pushes air."
+      },
+      {
+        "at": 30,
+        "text": "30 km/h: four fifths is air. A kilo off the bike saves well under 1%."
+      },
+      {
+        "at": 45,
+        "text": "Racing speed: nine tenths is air, most of it met by the rider's body."
+      }
+    ]
+  }
 }

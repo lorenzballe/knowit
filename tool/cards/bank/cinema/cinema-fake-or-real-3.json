@@ -6,72 +6,73 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "An 1896 audience fleeing a filmed train is cinema's favourite legend. Which of these film stories are true?",
-  "answer": "No 1896 source records a panic. Martin Loiperdinger searched the newspapers and police reports of the year and found none; the tale grew later, partly out of jokes about gullible country folk. Film legends spread when they flatter the teller, and this one is about how easily other audiences were fooled.",
-  "move": "Stories about how gullible others were are often the gullible part.",
-  "ask": "Which story about how foolish people used to be do I repeat without ever checking it?",
+  "question": "Nature films show things no camera could catch by luck. Which of these famous scenes happened as shown, and which were set up?",
+  "answer": "Each set-up was made because the real thing could not be filmed: Nanook no longer hunted with a harpoon, no camera can enter a wild polar bear's den, and a lens far off hears nothing. The real scenes look staged for the opposite reason: they are so rare the eye has nothing to compare them with.",
+  "move": "When a shot looks too perfect, ask how the camera got there.",
+  "ask": "Which viral clip did I believe without asking how the camera got there?",
   "keywords": [
-    "lumière brothers",
-    "arrival of a train",
-    "film myths",
-    "early cinema"
+    "nanook of the north",
+    "frozen planet",
+    "wildlife films",
+    "foley",
+    "documentaries"
   ],
-  "era": "nineteenth",
-  "region": "europe",
+  "era": "twentieth",
+  "region": "world",
   "hook": "misconception",
   "mood": "playful",
   "numeracy": 0,
-  "abstraction": "mixed",
+  "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
   "scene": {
     "type": "sort",
-    "left": "Myth",
-    "right": "True",
-    "tag": "Behind the screen",
+    "left": "Set up",
+    "right": "Real",
+    "tag": "On the nature channel",
     "items": [
       {
-        "text": "Train panic",
-        "note": "Lumière's first audience fled the oncoming train.",
+        "text": "Animal footsteps",
+        "note": "Paws crunching on snow, heard as a long lens watches from afar.",
         "pile": "left",
-        "verdict": "No newspaper or police report of 1896 mentions any panic."
+        "verdict": "Mostly added later by sound artists. A lens far away records no sound."
       },
       {
-        "text": "Psycho",
-        "note": "The shower scene's blood was chocolate syrup.",
+        "text": "Beaching orcas",
+        "note": "Killer whales hurl themselves onto a beach to seize sea-lion pups.",
         "pile": "right",
-        "verdict": "In black and white, chocolate syrup looked more like blood than stage blood."
+        "verdict": "Real. Orcas at Punta Norte, Argentina, do it every year, then wriggle back."
       },
       {
-        "text": "Wizard of Oz",
-        "note": "A suicide is visible in The Wizard of Oz.",
+        "text": "Nanook's harpoon",
+        "note": "Nanook of the North, 1922: an Inuk hunts with a harpoon.",
         "pile": "left",
-        "verdict": "The shape in the trees is a large bird, one of several loaned to the set."
+        "verdict": "Staged. He hunted with a rifle by then; the director asked for the old way."
       },
       {
-        "text": "Jaws' shark",
-        "note": "The mechanical shark broke so often it was barely shown.",
+        "text": "Archerfish",
+        "note": "A fish spits a jet of water to knock insects off leaves.",
         "pile": "right",
-        "verdict": "Spielberg filmed around the broken shark and let suspense do the work."
+        "verdict": "Real. Archerfish shoot down insects resting above the water."
       },
       {
-        "text": "The Wilhelm scream",
-        "note": "One stock scream recurs in hundreds of films.",
-        "pile": "right",
-        "verdict": "Recorded in 1951, it has been reused in hundreds of films since."
-      },
-      {
-        "text": "Snow White",
-        "note": "Snow White was the first animated feature.",
+        "text": "Polar bear cubs",
+        "note": "Frozen Planet, 2011: cubs born in an Arctic snow den.",
         "pile": "left",
-        "verdict": "Argentina's El Apóstol ran 70 minutes in 1917, twenty years earlier."
+        "verdict": "Filmed in a den built at a Dutch zoo. A wild den can't take a camera."
+      },
+      {
+        "text": "Battle at Kruger",
+        "note": "Buffalo save a calf from a pride of lions and a crocodile.",
+        "pile": "right",
+        "verdict": "Real. Tourists on safari filmed it in 2004."
       }
     ]
   },
-  "source": "Loiperdinger, The Moving Image, 2004",
-  "source_kind": "paper",
-  "reference": "Martin Loiperdinger, Lumière's Arrival of the Train: Cinema's Founding Myth, The Moving Image, 4(1), 2004",
-  "written": "2026-10-03"
+  "source": "Barnouw, Documentary, 1993",
+  "source_kind": "book",
+  "reference": "Erik Barnouw, Documentary: A History of the Non-Fiction Film, Oxford University Press, 1993; BBC, Frozen Planet, 2011",
+  "written": "2026-10-07"
 }

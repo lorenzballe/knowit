@@ -6,10 +6,10 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Cycling couldn't detect EPO, so it capped what EPO does. What happened?",
-  "answer": "A test of a side effect is a test you can steer. Riders checked their own red-cell share with small centrifuges and dosed to just below the line, with saline to thin the blood before a control. A typical man sits in the low to mid 40s, so the cap allowed a big boost.",
-  "move": "A limit on a number becomes a target to sit just under.",
-  "ask": "Which limit in my life have I quietly turned into a target to stay just under?",
+  "question": "Cycling capped riders' red-cell share at 50% in 1997. If every rider doped to just under it, would racing be fair?",
+  "answer": "No: a shared ceiling hands most to whoever starts lowest. Doping to 49% lifts a rider whose blood is naturally 40% red cells by over a fifth, and one at 46% by under a fifteenth. Riders checked themselves with small centrifuges and thinned their blood with saline before controls. The drug ranked them by their starting blood, not their training.",
+  "move": "A cap on the finish rewards whoever starts furthest below it.",
+  "ask": "Which rule that looks equal gives the most to whoever starts lowest?",
   "keywords": [
     "epo",
     "haematocrit",
@@ -21,7 +21,7 @@
   "region": "europe",
   "hook": "mechanism",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
@@ -33,41 +33,46 @@
       {
         "fact": "Pro cycling, 1990s",
         "glyph": "rise",
-        "line": "EPO, a hormone, raises red blood cells and endurance."
-      },
-      {
-        "fact": "No test for the drug",
-        "glyph": "cross",
-        "line": "Nobody can detect EPO itself in a rider's sample."
+        "line": "EPO raises the share of red cells in blood, and endurance too."
       },
       {
         "fact": "1997: the 50% rule",
         "glyph": "ban",
-        "line": "Riders with over 50% red cells in their blood are stood down."
+        "line": "EPO can't be detected, so riders over 50% are stood down."
+      },
+      {
+        "fact": "USADA report, 2012",
+        "glyph": "check",
+        "line": "Riders dose to sit just under it, checking with their own kit."
+      },
+      {
+        "fact": "Natural levels differ",
+        "glyph": "crowd",
+        "line": "Rider A is naturally at 40% red cells. Rider B is at 46%."
       }
     ],
-    "ask": "What do the riders do?",
+    "ask": "Both dope up to 49%. Who gains more?",
     "options": [
       {
-        "label": "Most stop using EPO"
+        "label": "Rider B, from 46%"
       },
       {
-        "label": "Dose to sit at 49%"
+        "label": "They gain the same"
       },
       {
-        "label": "Switch to other drugs"
+        "label": "Rider A, from 40%"
       }
     ],
-    "answer": 1,
+    "answer": 2,
     "outcome": {
-      "fact": "USADA report, 2012",
-      "glyph": "check",
-      "line": "They dosed to sit just under 50%, and diluted if too close."
+      "fact": "49 ÷ 40 against 49 ÷ 46",
+      "glyph": "rise",
+      "line": "Rider A gets 22% more red cells. Rider B, under 7%."
     },
-    "why": "Before the cap, riders guessed how far they dared go. The cap told them exactly."
+    "why": "A cap levels where riders finish, so the drug pays most to whoever starts lowest, not to the best."
   },
-  "source": "USADA, Reasoned Decision, Armstrong case, 2012",
+  "source": "USADA, Reasoned Decision, 2012",
   "source_kind": "primary_document",
-  "reference": "U.S. Anti-Doping Agency, Reasoned Decision of the United States Anti-Doping Agency on Disqualification and Ineligibility, Lance Armstrong, 2012",
-  "written": "2026-10-06"
+  "reference": "U.S. Anti-Doping Agency, Reasoned Decision of the United States Anti-Doping Agency on Disqualification and Ineligibility, Lance Armstrong, 2012; arithmetic: 49/40 = 1.225, 49/46 = 1.065",
+  "written": "2026-10-07"
 }

@@ -1,0 +1,67 @@
+{
+  "id": "life-spending-4",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.spending",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Where does most of the average American household's money go: housing, food, transport, health care or entertainment?",
+  "answer": "Housing takes a third, but second place goes to transport, about 17%, ahead of all food at 13%, in the Labor Department's 2023 survey. A car costs money even standing still: it loses value, needs insurance, and is often bought on credit. Food feels bigger because it is paid for every week.",
+  "move": "The costs paid once a year often outweigh the ones noticed every week.",
+  "keywords": [
+    "household budget",
+    "spending",
+    "transport",
+    "housing",
+    "cars"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "US Bureau of Labor Statistics, Consumer Expenditures 2023",
+  "source_kind": "statistics",
+  "reference": "US Bureau of Labor Statistics (2024) Consumer Expenditures in 2023, Consumer Expenditure Surveys annual release",
+  "written": "2026-10-07",
+  "ask": "What did my car cost me last year, counting lost value, insurance and loan interest?",
+  "scene": {
+    "type": "rank",
+    "quantity": "Share of household spending",
+    "most": "Most",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Food",
+        "value": 13,
+        "note": "Groceries and eating out together: about an eighth."
+      },
+      {
+        "label": "Entertainment",
+        "value": 5,
+        "note": "Pets, toys, screens and outings: one dollar in twenty."
+      },
+      {
+        "label": "Transport",
+        "value": 17,
+        "note": "Mostly owning cars: buying, fuel, insurance. More than all food."
+      },
+      {
+        "label": "Housing",
+        "value": 33,
+        "note": "A third: rent or mortgage, plus energy, furniture and upkeep."
+      },
+      {
+        "label": "Health care",
+        "value": 8,
+        "note": "Including health insurance paid by the household itself."
+      }
+    ]
+  }
+}

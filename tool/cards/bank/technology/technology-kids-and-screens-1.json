@@ -1,0 +1,65 @@
+{
+  "id": "technology-kids-and-screens-1",
+  "topic": "technology",
+  "genre": "technology.tech_and_society",
+  "strand": "technology.tech_and_society.kids_and_screens",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A parents' newsletter ran this pie of the apps American teenagers use. YouTube gets under a third. Where's the trick?",
+  "answer": "In the slices, which add up to 315%. Pew asked 1,316 teenagers which apps they used, and most named several, so each share stands alone: 95% use YouTube, nearly every teenager. A pie works only when each person sits in exactly one slice, as in a vote or a household budget.",
+  "move": "Before reading a pie, add up its slices; they must make 100.",
+  "ask": "When I see survey percentages, do I check whether people could give more than one answer?",
+  "keywords": [
+    "pie chart",
+    "teenagers",
+    "social media apps",
+    "pew research",
+    "surveys"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "trick",
+    "trick": "pie",
+    "outlet": "Typical chart, Pew 2022 data",
+    "headline": "The apps US teenagers use",
+    "honest": "95% of teens use YouTube, 67% TikTok",
+    "label": "US teens, 13 to 17, using each",
+    "unit": "%",
+    "columns": [
+      "YouTube",
+      "TikTok",
+      "Instagram",
+      "Snapchat",
+      "Facebook"
+    ],
+    "values": [
+      95,
+      67,
+      62,
+      59,
+      32
+    ],
+    "found": "Yes: the slices add up to 315%. Teens could pick several apps.",
+    "miss": "That part is fair. Add up the numbers on the slices.",
+    "misses": {
+      "headline": "A plain title. It's the drawing that makes the claim.",
+      "label": "A fair question. But how many apps could each teen name?"
+    },
+    "name": "A pie past 100%",
+    "lesson": "A pie is one whole. If its slices add up past 100%, read each one out of 100 instead."
+  },
+  "source": "Pew Research Center, teens and social media, 2022",
+  "source_kind": "statistics",
+  "reference": "Vogels, Gelles-Watnick & Massarat, Teens, Social Media and Technology 2022, Pew Research Center, 10 August 2022",
+  "written": "2026-10-07"
+}

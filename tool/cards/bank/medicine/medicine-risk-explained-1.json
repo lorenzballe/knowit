@@ -6,13 +6,13 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What change in wording made doctors far more often right about what a positive test meant?",
-  "answer": "Counting people instead of quoting percentages: of 1,000 people, 10 have the disease and 8 of them test positive. In a 1998 study of 48 doctors working through diagnostic problems, correct answers rose from about 10% with probabilities to about 46% with such counts. The maths was identical; the format did the thinking.",
+  "question": "A test catches 90% of cases and wrongly flags 9% of healthy people. Someone tests positive. How likely is it real?",
+  "answer": "It depends on who was tested, and counting people shows how. Of 1,000 screened with 10 ill, 9 test positive truly and 89 falsely: a positive is real about one time in 11. In a 1998 study of 48 doctors, correct answers rose from about 10% with probabilities to 46% with such counts.",
   "move": "Turn percentages into counts of people, and hard problems become easy.",
   "ask": "Next time a percentage confuses me, could I picture 1,000 people and count what happens to them?",
   "keywords": [
     "natural frequencies",
-    "probabilities",
+    "false positives",
     "doctors",
     "test results",
     "gerd gigerenzer"
@@ -21,7 +21,7 @@
   "region": "europe",
   "hook": "mechanism",
   "mood": "wonder",
-  "numeracy": 2,
+  "numeracy": 3,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
@@ -29,6 +29,103 @@
   "figure": "none",
   "source": "Hoffrage & Gigerenzer, Academic Medicine, 1998",
   "source_kind": "paper",
-  "reference": "Hoffrage & Gigerenzer, Using natural frequencies to improve diagnostic inferences, Academic Medicine, 1998",
-  "written": "2026-10-03"
+  "reference": "Hoffrage & Gigerenzer, Using natural frequencies to improve diagnostic inferences, Academic Medicine, 1998; Gigerenzer et al., Helping Doctors and Patients Make Sense of Health Statistics, Psychological Science in the Public Interest, 2007",
+  "written": "2026-10-03",
+  "scene": {
+    "type": "slider",
+    "control": "Ill, out of every 1,000 tested",
+    "controlUnit": "",
+    "readout": "Positive results that are real",
+    "readoutUnit": "%",
+    "start": 10,
+    "step": 1,
+    "points": [
+      [
+        1,
+        1.0
+      ],
+      [
+        2,
+        2.0
+      ],
+      [
+        3,
+        2.9
+      ],
+      [
+        5,
+        4.8
+      ],
+      [
+        7,
+        6.6
+      ],
+      [
+        10,
+        9.2
+      ],
+      [
+        15,
+        13.2
+      ],
+      [
+        20,
+        16.9
+      ],
+      [
+        30,
+        23.6
+      ],
+      [
+        40,
+        29.4
+      ],
+      [
+        50,
+        34.5
+      ],
+      [
+        75,
+        44.8
+      ],
+      [
+        100,
+        52.6
+      ],
+      [
+        150,
+        63.8
+      ],
+      [
+        200,
+        71.4
+      ],
+      [
+        250,
+        76.9
+      ],
+      [
+        300,
+        81.1
+      ]
+    ],
+    "notes": [
+      {
+        "at": 1,
+        "text": "1 ill in 1,000: about 1 true positive among 91. Almost every positive is wrong."
+      },
+      {
+        "at": 10,
+        "text": "10 in 1,000, a typical screening: 9 real positives, 89 false. About 1 in 11."
+      },
+      {
+        "at": 100,
+        "text": "100 in 1,000, a group with symptoms, say: now half the positives are real."
+      },
+      {
+        "at": 300,
+        "text": "300 in 1,000: four in five. Same test, different people."
+      }
+    ]
+  }
 }

@@ -1,0 +1,66 @@
+{
+  "id": "human_body-neurons-11",
+  "topic": "human_body",
+  "genre": "human_body.the_brain",
+  "strand": "human_body.the_brain.neurons",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Per kilogram, which burns the most energy at rest: the heart, the brain, the liver, muscle or fat?",
+  "answer": "The heart, then the brain. By Elia's measurements a kilogram of heart burns about 440 kcal a day and of brain about 240, against 13 for resting muscle. The brain, 2% of body weight, takes about a fifth of resting energy, most of it pumping back the ions that cross neurons' membranes at every signal.",
+  "move": "When something is said to burn a lot, ask: per what, and when?",
+  "keywords": [
+    "brain energy",
+    "metabolic rate",
+    "muscle",
+    "organs"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Elia, Energy Metabolism, 1992",
+  "source_kind": "book",
+  "reference": "Elia, M. (1992) Organ and tissue contribution to metabolic rate, in Kinney & Tucker (eds), Energy Metabolism: Tissue Determinants and Cellular Corollaries, Raven Press, 61-79; Wang et al. (2010) American Journal of Clinical Nutrition 92: 1369-1377",
+  "written": "2026-10-07",
+  "ask": "Where did I hear that muscle burns lots of calories at rest, and who was selling something?",
+  "scene": {
+    "type": "rank",
+    "quantity": "kcal per kg a day, at rest",
+    "most": "Most",
+    "log": true,
+    "items": [
+      {
+        "label": "Muscle",
+        "value": 13,
+        "note": "Add 2 kg of muscle and you burn about 26 kcal more a day: less than half a biscuit."
+      },
+      {
+        "label": "Fat",
+        "value": 4.5,
+        "note": "Nearly idle: about 4.5 kcal per kilogram a day."
+      },
+      {
+        "label": "Brain",
+        "value": 240,
+        "note": "2% of body weight, a fifth of resting energy: neurons are costly to keep ready."
+      },
+      {
+        "label": "Liver",
+        "value": 200,
+        "note": "The body's chemical works, busy day and night."
+      },
+      {
+        "label": "Heart",
+        "value": 440,
+        "note": "It never rests: 440 kcal per kilogram, and the kidneys match it."
+      }
+    ]
+  }
+}

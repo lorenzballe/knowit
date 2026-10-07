@@ -1,0 +1,79 @@
+{
+  "id": "medicine-smoking-5",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.smoking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A pro-vaping post shared this chart of American high-school pupils: vapes rising as cigarettes fall, a perfect swap. Where's the trick?",
+  "answer": "In the two scales, which make a 26-point rise look the size of a 10-point fall. On one axis, far more teenagers took up vapes than gave up cigarettes. And smoking was falling before vapes: from 28% of high-school pupils in 2000 to 16% in 2011. A swap needs the same people on both lines.",
+  "move": "Before calling one thing a replacement, check the sizes match on one scale.",
+  "ask": "When something new seems to replace something old, do I check it is not simply adding to it?",
+  "keywords": [
+    "vaping",
+    "e-cigarettes",
+    "teen smoking",
+    "dual axis"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "trick",
+    "trick": "dual",
+    "outlet": "Typical chart, CDC data",
+    "headline": "Vapes are replacing cigarettes",
+    "honest": "Vaping up 26 points, smoking down 10",
+    "label": "US high-school pupils using, %",
+    "columns": [
+      "2011",
+      "2013",
+      "2015",
+      "2017",
+      "2019"
+    ],
+    "values": [
+      1.5,
+      4.5,
+      16.0,
+      11.7,
+      27.5
+    ],
+    "values2": [
+      15.8,
+      12.7,
+      9.3,
+      7.6,
+      5.8
+    ],
+    "series": [
+      "Vapes",
+      "Cigarettes"
+    ],
+    "decimals": 1,
+    "from": 0,
+    "to": 28,
+    "from2": 5,
+    "to2": 16,
+    "found": "Yes: each line has its own scale, so the swings look equal.",
+    "miss": "That part is fair. Compare the numbers on the two sides.",
+    "misses": {
+      "headline": "That's the claim to test. The drawing is what sells it.",
+      "marks": "Each line is drawn right for its own axis. Do they share one?"
+    },
+    "name": "Two scales, one swap",
+    "lesson": "Two scales can make any rise mirror any fall. On one axis, see which is bigger."
+  },
+  "source": "CDC, National Youth Tobacco Survey, 2000–2019",
+  "source_kind": "statistics",
+  "reference": "CDC, Tobacco Product Use Among Middle and High School Students, United States, 2011–2019, MMWR reports on the National Youth Tobacco Survey; Wang et al., MMWR 68(50), 2019",
+  "written": "2026-10-07"
+}

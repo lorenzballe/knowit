@@ -6,20 +6,20 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "As a lake cools towards freezing, does its water keep getting denser? Why does a deep lake's bottom stay at 4 °C all winter?",
-  "answer": "Because water is densest at about 4 °C. As a lake cools, 4 °C water sinks to the bottom; colder water stays on top and freezes there, and the ice shields what lies below. Most liquids shrink all the way to solid. Water's open ice crystal gives fish a 4 °C basement for the winter.",
-  "move": "One odd property at the bottom can shape everything built above it.",
-  "ask": "Which small quirk of mine quietly shapes everything I build on top of it?",
+  "question": "Ice is 917 kg per cubic metre. Heat water from freezing to boiling: how light does it get?",
+  "answer": "Nowhere near ice. Boiling water is 958, only 4% lighter than cold water, so ice floats even in boiling water. Heat jostles water molecules apart; freezing locks them into an open hexagonal lattice that takes 9% more room. That is why frost bursts pipes: freezing swells water twice as much as boiling.",
+  "move": "When comparing two changes, ask which one rebuilds the structure.",
+  "ask": "Which change in my life rebuilt how things fit together, rather than just turning them up?",
   "keywords": [
-    "lakes",
-    "maximum density",
     "ice",
+    "density of water",
     "hydrogen bonds",
-    "winter"
+    "boiling water",
+    "frozen pipes"
   ],
   "era": "timeless",
   "region": "none",
-  "hook": "mechanism",
+  "hook": "misconception",
   "mood": "wonder",
   "numeracy": 2,
   "abstraction": "concrete",
@@ -29,43 +29,44 @@
   "figure": "none",
   "scene": {
     "type": "draw",
-    "label": "Density of water, kg per m³",
+    "label": "Density, kg per cubic metre",
     "columns": [
-      "12°C",
-      "10°C",
-      "8°C",
-      "6°C",
-      "4°C",
-      "2°C",
-      "0°C"
+      "Ice 0°C",
+      "0°C",
+      "20°C",
+      "40°C",
+      "60°C",
+      "80°C",
+      "100°C"
     ],
     "values": [
-      999.5,
-      999.7,
-      999.85,
-      999.94,
-      999.97,
-      999.94,
-      999.84
+      916.7,
+      999.8,
+      998.2,
+      992.2,
+      983.2,
+      971.8,
+      958.4
     ],
     "given": 2,
-    "min": 999.3,
-    "max": 1000.1,
-    "decimals": 2,
+    "min": 900,
+    "max": 1010,
+    "judge": 6,
+    "near": 0.08,
     "verdict": {
-      "under": "Lower than the truth, but the right turn: below 4 °C water gets lighter again.",
-      "near": "Right: water is densest at 4 °C, then lighter as it nears freezing.",
-      "over": "It turns: below 4 °C water grows lighter, so the coldest water floats on top."
+      "under": "Too light. Even boiling water is 958, far heavier than ice: ice floats in a boiling pan.",
+      "near": "Right: heating thins water by only 4%, and it never gets near ice's 917.",
+      "over": "Lighter than that: by 100 °C water is 4% thinner, but still far heavier than ice."
     },
     "notes": [
       {
         "at": 4,
-        "text": "Densest at 4 °C"
+        "text": "60 °C: 1.7% lighter"
       }
     ]
   },
-  "source": "Kell, 1975; Wetzel, Limnology, 2001",
-  "source_kind": "book",
-  "reference": "Kell, Density, thermal expansivity and compressibility of liquid water from 0 to 150 °C, Journal of Chemical and Engineering Data 20:97-105, 1975; Wetzel, Limnology: Lake and River Ecosystems, 3rd ed., Academic Press, 2001",
-  "written": "2026-09-26"
+  "source": "Kell, 1975; Hobbs, Ice Physics, 1974",
+  "source_kind": "paper",
+  "reference": "Kell, Density, thermal expansivity and compressibility of liquid water from 0 to 150 °C, Journal of Chemical and Engineering Data 20:97-105, 1975; Hobbs, Ice Physics, Clarendon Press, 1974 (ice at 0 °C: 916.7 kg per cubic metre)",
+  "written": "2026-10-07"
 }

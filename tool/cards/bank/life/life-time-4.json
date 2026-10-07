@@ -1,0 +1,62 @@
+{
+  "id": "life-time-4",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.time",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "On an average day, which takes Americans the most time: watching TV, eating, socialising in person or reading?",
+  "answer": "Television, by far: about 2.7 hours a day, more than half of all leisure time, in the American Time Use Survey. Socialising in person gets under 40 minutes, reading about a quarter of an hour. Free time drains into whatever needs no plan or effort; the things people say they value need both.",
+  "move": "Days drain into whatever needs no choosing; schedule what you value.",
+  "keywords": [
+    "time use",
+    "television",
+    "leisure",
+    "reading",
+    "socialising"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "US Bureau of Labor Statistics, American Time Use Survey",
+  "source_kind": "statistics",
+  "reference": "US Bureau of Labor Statistics (2024) American Time Use Survey: 2023 Results, news release",
+  "written": "2026-10-07",
+  "ask": "If I logged yesterday's free minutes, which activity would top the list?",
+  "scene": {
+    "type": "rank",
+    "quantity": "Minutes a day",
+    "most": "Most",
+    "unit": "min",
+    "items": [
+      {
+        "label": "Reading",
+        "value": 16,
+        "note": "About a quarter of an hour, and shrinking for two decades."
+      },
+      {
+        "label": "TV",
+        "value": 160,
+        "note": "About 2.7 hours: more than half of all leisure time."
+      },
+      {
+        "label": "Socialising",
+        "value": 37,
+        "note": "Talking and visiting in person: under a quarter of the TV time."
+      },
+      {
+        "label": "Eating",
+        "value": 66,
+        "note": "Counted only when eating is the main thing being done."
+      }
+    ]
+  }
+}

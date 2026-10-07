@@ -1,0 +1,61 @@
+{
+  "id": "psychology-fear-11",
+  "topic": "psychology",
+  "genre": "psychology.emotions",
+  "strand": "psychology.emotions.fear",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In one US year, which happened to most children: kidnap by a stranger, abduction by a relative or by someone else, or running away?",
+  "answer": "Running away: about 1.7 million in a national study of 1999, against about 204,000 taken by a family member and about 115 kidnappings of the kind that make the news. The rare case gets the coverage, so it feels common. Warnings about strangers aim where the risk is smallest.",
+  "move": "Guard against where the risk lies, not where the story is.",
+  "keywords": [
+    "child abduction",
+    "kidnapping",
+    "runaways",
+    "stranger danger"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "NISMART-2, US Department of Justice, 2002",
+  "source_kind": "statistics",
+  "reference": "Finkelhor, Hammer & Sedlak (2002) Nonfamily Abducted Children: National Estimates and Characteristics; Hammer, Finkelhor & Sedlak (2002) Children Abducted by Family Members and Runaway/Thrownaway Children, NISMART Bulletins, OJJDP, US Department of Justice",
+  "written": "2026-10-07",
+  "ask": "Which danger to me or my family do I guard against mainly because of a story?",
+  "scene": {
+    "type": "rank",
+    "quantity": "US children, thousands",
+    "most": "Most",
+    "log": true,
+    "items": [
+      {
+        "label": "Stranger",
+        "value": 0.115,
+        "note": "About 115: the kidnapping that makes the news, and the rarest by far."
+      },
+      {
+        "label": "Relative",
+        "value": 204,
+        "note": "About 204,000, most often by a parent in a custody fight."
+      },
+      {
+        "label": "Ran away",
+        "value": 1700,
+        "note": "About 1.7 million ran away or were thrown out: the commonest way a child goes missing."
+      },
+      {
+        "label": "Non-family",
+        "value": 58.2,
+        "note": "About 58,000, mostly brief, by acquaintances; the 115 kidnappings are among them."
+      }
+    ]
+  }
+}

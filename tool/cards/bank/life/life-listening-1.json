@@ -6,29 +6,39 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Do people understand a close friend's ambiguous messages better than a stranger's?",
-  "answer": "Often no better, yet they expect to. Savitsky and colleagues found speakers overestimated how well a friend or spouse understood them more than they did with strangers. Closeness made people assume shared meaning and stop checking. Familiar faces get the shorthand that strangers would have had explained.",
-  "move": "With people you know best, check what they heard, not what you meant.",
-  "ask": "With the person closest to me, when did I last check what they actually understood rather than assuming it?",
+  "question": "A teacher asks the class a question. How long do they usually wait before answering it themselves or calling on someone?",
+  "answer": "About one second, in Mary Budd Rowe's recordings of science lessons. When teachers learned to wait three seconds or more, answers grew longer, more pupils spoke, and they offered more reasons. One second is too short to think: the quick talkers fill it.",
+  "move": "After asking a question, count to three before you speak again.",
+  "ask": "Do I answer my own questions before anyone else can?",
   "keywords": [
-    "communication",
-    "close relationships",
-    "misunderstanding",
-    "egocentrism",
-    "friends"
+    "wait time",
+    "teaching",
+    "questions",
+    "mary budd rowe"
   ],
-  "era": "recent",
+  "era": "twentieth",
   "region": "americas",
-  "hook": "paradox",
-  "mood": "sober",
-  "numeracy": 0,
-  "abstraction": "mixed",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Savitsky and colleagues, JESP, 2011",
+  "scene": {
+    "type": "hold",
+    "what": "Teacher's wait after a question",
+    "seconds": 1,
+    "comparisons": [
+      {
+        "label": "Rowe's longer wait",
+        "seconds": 3
+      }
+    ]
+  },
+  "source": "Rowe, 1974 and 1986",
   "source_kind": "paper",
-  "reference": "Savitsky, Keysar, Epley, Carter and Swanson, The closeness-communication bias: Increased egocentrism among friends versus strangers, Journal of Experimental Social Psychology, 2011",
-  "written": "2026-10-03"
+  "reference": "Rowe, Wait-time and rewards as instructional variables, their influence on language, logic, and fate control: Part one, wait-time, Journal of Research in Science Teaching 11(2), 1974; Rowe, Wait time: slowing down may be a way of speeding up, Journal of Teacher Education 37(1), 1986",
+  "written": "2026-10-07"
 }

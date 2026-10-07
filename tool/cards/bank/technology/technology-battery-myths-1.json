@@ -1,0 +1,77 @@
+{
+  "id": "technology-battery-myths-1",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.battery_myths",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Your phone used to last all day. Since you started a new job, it is flat by 4 pm. Why?",
+  "answer": "Weak signal. A phone in poor coverage turns up its radio's transmit power and keeps searching for a better mast, and that can cost more than the screen. Nothing in the phone changed; only the room did. iPhones even list it on the battery screen as Low Signal. The basement ate the battery.",
+  "move": "When a problem comes and goes, ask what else comes and goes with it.",
+  "ask": "What problem in my week happens only in one place, or only with one person?",
+  "keywords": [
+    "phone battery",
+    "mobile signal",
+    "battery drain",
+    "troubleshooting"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Worn battery",
+      "Rogue app",
+      "Bright screen",
+      "Weak signal"
+    ],
+    "answer": 3,
+    "clues": [
+      {
+        "text": "Same phone, same habits. Since the new job started, it's flat by 4 pm.",
+        "tag": "Flat by 4 pm",
+        "rulesOut": []
+      },
+      {
+        "text": "Settings: battery health 99%. The phone is six months old.",
+        "tag": "Battery health 99%",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "Screen time is under two hours a day, just as it always was.",
+        "tag": "Same screen time",
+        "rulesOut": [
+          2
+        ]
+      },
+      {
+        "text": "At weekends, with the same apps and the same use, it still lasts all day.",
+        "tag": "Fine at weekends",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "Your new desk is in a basement: one bar of signal, often none.",
+        "tag": "One bar, in a basement",
+        "rulesOut": []
+      }
+    ],
+    "why": "Weekends kept the apps and changed only the place. A phone hunting for a mast burns power."
+  },
+  "source": "Apple Support, iPhone battery usage",
+  "source_kind": "company",
+  "reference": "Apple, iPhone User Guide, battery usage and the Low Signal insight in Settings > Battery, 2024, https://support.apple.com/guide/iphone/",
+  "written": "2026-10-07"
+}

@@ -1,0 +1,60 @@
+{
+  "id": "food-beer-11",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.beer",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which holds the most alcohol: a pint of 5% lager, a large glass of wine, a bottle of beer or a vodka shot?",
+  "answer": "The large glass of wine: about 3.3 units, against 2.8 for a pint of lager and 1 for a single shot. A UK unit is 10 ml of pure alcohol: millilitres times percent strength, divided by 1,000. A large glass is a third of a bottle; 14 units a week is barely four.",
+  "move": "Count what is in the glass, not how many glasses.",
+  "keywords": [
+    "alcohol units",
+    "wine",
+    "beer",
+    "drinking guidelines"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "UK Chief Medical Officers' drinking guidelines, 2016",
+  "source_kind": "institution",
+  "reference": "UK Chief Medical Officers (2016) Low Risk Drinking Guidelines, Department of Health; units = volume in ml x ABV% / 1,000",
+  "written": "2026-10-07",
+  "ask": "How many units did I drink last week, counted by the glasses I actually used?",
+  "scene": {
+    "type": "rank",
+    "quantity": "UK units of alcohol",
+    "most": "Most",
+    "items": [
+      {
+        "label": "Vodka shot",
+        "value": 1,
+        "note": "One unit: 10 ml of pure alcohol, about what a liver clears in an hour."
+      },
+      {
+        "label": "Pint of lager",
+        "value": 2.8,
+        "note": "568 ml at 5%: nearly three shots of vodka."
+      },
+      {
+        "label": "Bottle of beer",
+        "value": 1.7,
+        "note": "330 ml at 5%: 1.65 units."
+      },
+      {
+        "label": "Large wine",
+        "value": 3.3,
+        "note": "250 ml at 13%: more than a pint, in a glass that looks smaller."
+      }
+    ]
+  }
+}

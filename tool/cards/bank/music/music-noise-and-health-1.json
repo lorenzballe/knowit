@@ -3,34 +3,46 @@
   "topic": "music",
   "genre": "music.sound_itself",
   "strand": "music.sound_itself.noise_and_health",
-  "also": [
-    "human_body.blood_and_heart.blood_pressure"
-  ],
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How can traffic noise harm the heart of someone who sleeps right through it every night?",
-  "answer": "Because the body keeps reacting after the mind stops noticing. Passing lorries trigger brief arousals that never become waking: heart rate and blood pressure jump, then settle. Mathias Basner's review ties such spikes, night after night, to higher risks of hypertension and heart disease. Getting used to it is mostly a feeling.",
-  "move": "Getting used to something is not the same as it losing its effect.",
-  "ask": "What in my surroundings have I stopped noticing that my body may still be reacting to?",
+  "question": "Music blasts at 115 decibels, as it can near concert speakers. How long until a listener has taken a whole day's safe dose of noise?",
+  "answer": "About 28 seconds. NIOSH, the US workplace-safety institute, allows 85 decibels for eight hours and halves the time for every 3 decibels more, since 3 dB doubles the sound energy. 115 is ten doublings above 85: eight hours divided by 1,024.",
+  "move": "On a scale that counts doublings, small steps hide huge jumps.",
+  "ask": "Where do I read a small-sounding number on a scale where each step doubles?",
   "keywords": [
-    "traffic noise",
-    "sleep",
-    "blood pressure",
-    "heart disease"
+    "noise exposure",
+    "decibels",
+    "hearing loss",
+    "niosh"
   ],
   "era": "timeless",
-  "region": "world",
-  "hook": "mechanism",
-  "mood": "sober",
-  "numeracy": 0,
-  "abstraction": "mixed",
+  "region": "none",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Basner et al., The Lancet, 2014",
-  "source_kind": "paper",
-  "reference": "Basner et al., Auditory and non-auditory effects of noise on health, The Lancet, 2014",
-  "written": "2026-09-26"
+  "scene": {
+    "type": "hold",
+    "what": "A day's safe dose at 115 dB",
+    "seconds": 28.1,
+    "comparisons": [
+      {
+        "label": "At 112 dB",
+        "seconds": 56.3
+      },
+      {
+        "label": "At 121 dB",
+        "seconds": 7
+      }
+    ]
+  },
+  "source": "NIOSH, Occupational Noise Exposure, 1998",
+  "source_kind": "institution",
+  "reference": "NIOSH, Criteria for a Recommended Standard: Occupational Noise Exposure, Revised Criteria 1998, DHHS (NIOSH) Publication No. 98-126",
+  "written": "2026-10-07"
 }

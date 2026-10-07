@@ -1,0 +1,78 @@
+{
+  "id": "science-fire-11",
+  "topic": "science",
+  "genre": "science.cold_and_heat",
+  "strand": "science.cold_and_heat.fire",
+  "also": [
+    "medicine.diagnosis.symptoms"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "October, the heating has just come on, and a family of four all have headaches, nausea and tiredness. What is it?",
+  "answer": "Carbon monoxide, from a faulty boiler. A flame short of oxygen makes it instead of carbon dioxide, and it has no colour, taste or smell. It grips the blood's haemoglobin far harder than oxygen does, so a mild dose feels like flu without the fever. An alarm costs less than a takeaway.",
+  "move": "If it eases when you leave and returns when you are back, suspect the place.",
+  "ask": "Is there a carbon monoxide alarm near every boiler, fire and stove in my home?",
+  "keywords": [
+    "carbon monoxide",
+    "boiler",
+    "poisoning",
+    "alarm",
+    "combustion"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Flu",
+      "Bad food",
+      "Carbon monoxide"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Everyone at home has a dull headache, feels sick and can't wake up properly.",
+        "tag": "Headache, sick, tired",
+        "rulesOut": []
+      },
+      {
+        "text": "No fever, no aches, and it drags on for weeks.",
+        "tag": "No fever, for weeks",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "They bin everything in the fridge and shop fresh. Nothing changes.",
+        "tag": "Fresh food, no change",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "On a weekend away they all feel fine. Back home, the headaches return.",
+        "tag": "Fine when away",
+        "rulesOut": []
+      },
+      {
+        "text": "The cat, which eats only cat food, is sluggish too.",
+        "tag": "The cat too",
+        "rulesOut": []
+      }
+    ],
+    "why": "Weeks with no fever ruled out flu; fresh food changed nothing. What was left was the air at home."
+  },
+  "source": "NHS, Carbon monoxide poisoning",
+  "source_kind": "institution",
+  "reference": "https://www.nhs.uk/conditions/carbon-monoxide-poisoning/",
+  "written": "2026-10-07"
+}

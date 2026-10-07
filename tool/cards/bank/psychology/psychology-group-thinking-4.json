@@ -1,0 +1,78 @@
+{
+  "id": "psychology-group-thinking-4",
+  "topic": "psychology",
+  "genre": "psychology.other_people",
+  "strand": "psychology.other_people.group_thinking",
+  "also": [
+    "medicine.diagnosis.symptoms"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Tennessee, 1998. A teacher smells petrol in her classroom and feels sick. Within hours dozens are in hospital. What caused it?",
+  "answer": "Fear spreading, known as mass psychogenic illness. The symptoms were real, not faked: anxiety can bring on headache, nausea and breathlessness within minutes. Investigators found that falling ill went with seeing a sick classmate or hearing about the smell, not with where people sat. The symptoms were real; the poison was the story.",
+  "move": "Map how it spread; the path names the cause.",
+  "ask": "When alarm spreads around me, at work or online, which route is it really travelling?",
+  "keywords": [
+    "mass psychogenic illness",
+    "tennessee",
+    "school",
+    "anxiety",
+    "contagion"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Gas leak",
+      "A virus",
+      "Fear spreading"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Headaches, dizziness, nausea, short breath: dozens of pupils and staff need care.",
+        "tag": "Dozens need care",
+        "rulesOut": []
+      },
+      {
+        "text": "Symptoms came within minutes of the smell, not days.",
+        "tag": "Minutes, not days",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "Air, water, gas lines and blood are all tested. No toxin is found.",
+        "tag": "No toxin found",
+        "rulesOut": []
+      },
+      {
+        "text": "Who fell ill tracked who saw someone fall ill, not where they sat.",
+        "tag": "Seeing, not sitting",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "Days later the school reopens, and dozens more fall ill.",
+        "tag": "Reopens, more fall ill",
+        "rulesOut": []
+      }
+    ],
+    "why": "A gas harms by where you breathe. This struck by what people saw: fear travels by sight."
+  },
+  "source": "Jones et al., NEJM, 2000",
+  "source_kind": "paper",
+  "reference": "Jones et al., Mass psychogenic illness attributed to toxic exposure at a high school, New England Journal of Medicine 342:96-100, 2000, doi:10.1056/NEJM200001133420206",
+  "written": "2026-10-07"
+}

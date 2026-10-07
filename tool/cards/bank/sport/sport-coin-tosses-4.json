@@ -1,0 +1,60 @@
+{
+  "id": "sport-coin-tosses-4",
+  "topic": "sport",
+  "genre": "sport.luck_or_skill",
+  "strand": "sport.luck_or_skill.coin_tosses",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A tennis site charted Roger Federer's career: his share of points won against his opponents'. He looks untouchable. Where's the trick?",
+  "answer": "In the axis, which starts at 44%. From zero, 54 against 46 is close to a coin toss, as Federer said in 2024: he won almost 80% of his matches but only 54% of points. A match runs past a hundred points, and a small edge on each compounds, as a casino's does.",
+  "move": "Never dismiss a small edge before counting how often it repeats.",
+  "ask": "Where in my life is a small edge, repeated daily, quietly adding up for or against me?",
+  "keywords": [
+    "roger federer",
+    "tennis",
+    "truncated axis",
+    "small edges"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "paradox",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "trick",
+    "trick": "truncated",
+    "outlet": "Typical chart",
+    "headline": "Federer crushed his rivals",
+    "honest": "54% of points, almost 80% of matches",
+    "label": "Share of points won, career",
+    "unit": "%",
+    "columns": [
+      "Federer",
+      "Opponents"
+    ],
+    "values": [
+      54,
+      46
+    ],
+    "from": 44,
+    "to": 56,
+    "found": "Yes: the axis starts at 44%, not at zero.",
+    "miss": "That part is fair. Look at where the bars begin.",
+    "misses": {
+      "marks": "The numbers on the bars are right. It's their lengths that shout.",
+      "headline": "In matches, he did. The bars claim it point by point."
+    },
+    "name": "The cut-off axis",
+    "lesson": "Bars compare fairly only from zero. Drawn true, 54 against 46 is nearly even."
+  },
+  "source": "Federer, Dartmouth commencement address, 2024",
+  "source_kind": "primary_document",
+  "reference": "Roger Federer, commencement address, Dartmouth College, Hanover NH, 9 June 2024",
+  "written": "2026-10-07"
+}

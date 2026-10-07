@@ -1,0 +1,62 @@
+{
+  "id": "science-cleaning-11",
+  "topic": "science",
+  "genre": "science.chemistry_at_home",
+  "strand": "science.chemistry_at_home.cleaning",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In the US, which germ causes the most food poisoning: Salmonella, Listeria, Campylobacter or norovirus?",
+  "answer": "Norovirus, about 5.5 million of the 9.4 million US cases traced to a known germ each year, Scallan's CDC team estimated. It usually travels on hands rather than in raw meat: a sick cook, a shared bowl. Alcohol gel works poorly against it; the CDC advises washing hands with soap and water.",
+  "move": "Find out how a germ travels before deciding how to clean.",
+  "keywords": [
+    "norovirus",
+    "food poisoning",
+    "salmonella",
+    "listeria",
+    "handwashing"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Scallan et al., Emerging Infectious Diseases, 2011",
+  "source_kind": "paper",
+  "reference": "Scallan, E. et al. (2011) Foodborne illness acquired in the United States: major pathogens, Emerging Infectious Diseases 17(1): 7-15; CDC, Preventing Norovirus",
+  "written": "2026-10-07",
+  "ask": "Before I handle food, do I wash my hands with soap or reach for gel?",
+  "scene": {
+    "type": "rank",
+    "quantity": "US cases a year, thousands",
+    "most": "Most",
+    "log": true,
+    "items": [
+      {
+        "label": "Salmonella",
+        "value": 1030,
+        "note": "A fifth as many cases as norovirus, but it kills more Americans."
+      },
+      {
+        "label": "Listeria",
+        "value": 1.6,
+        "note": "Rare, about 1,600 cases, but about 1 in 6 of them dies."
+      },
+      {
+        "label": "Campylobacter",
+        "value": 845,
+        "note": "Mostly from undercooked chicken."
+      },
+      {
+        "label": "Norovirus",
+        "value": 5460,
+        "note": "Over half of all cases, often from food handled by someone already ill."
+      }
+    ]
+  }
+}

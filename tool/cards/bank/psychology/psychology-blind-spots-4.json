@@ -1,0 +1,78 @@
+{
+  "id": "psychology-blind-spots-4",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.blind_spots",
+  "also": [
+    "nature.animal_senses.animal_minds"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Berlin, 1904. A horse called Hans taps out the answers to sums with his hoof. How does he do it?",
+  "answer": "He read the asker. As his taps neared the right number, people relaxed or raised their heads a few millimetres, without knowing it, and Hans stopped. The psychologist Oskar Pfungst found the cue in 1907, then caught himself giving it while trying not to. Hans was clever, at faces.",
+  "move": "Before crediting the performer, check whether the audience knew the answer.",
+  "ask": "When someone gives me the answer I hoped for, could my face have told them?",
+  "keywords": [
+    "clever hans",
+    "oskar pfungst",
+    "cueing",
+    "expectations",
+    "horse"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "He can count",
+      "Owner's signals",
+      "Reads the asker"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Asked 3 plus 5, Hans taps eight times and stops. Again and again.",
+        "tag": "Taps the right number",
+        "rulesOut": []
+      },
+      {
+        "text": "A panel of 13 experts, a circus trainer among them, finds no trick.",
+        "tag": "13 experts, no trick",
+        "rulesOut": []
+      },
+      {
+        "text": "Strangers can ask, with his owner out of the room. He still gets it right.",
+        "tag": "Owner out of the room",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "When the asker doesn't know the answer, Hans almost always gets it wrong.",
+        "tag": "Asker doesn't know",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "In blinkers that hide the asker from him, he fails too.",
+        "tag": "Blinkers: he fails",
+        "rulesOut": []
+      }
+    ],
+    "why": "A horse that counts doesn't need the asker to know. Hans needed a face that knew when to relax."
+  },
+  "source": "Pfungst, Clever Hans, 1907",
+  "source_kind": "book",
+  "reference": "Pfungst, Clever Hans (The Horse of Mr. von Osten), translated by C. L. Rahn, Henry Holt, 1911",
+  "written": "2026-10-07"
+}

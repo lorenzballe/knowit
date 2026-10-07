@@ -6,19 +6,19 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did Ebbinghaus measure a memory he could no longer recall at all?",
-  "answer": "By timing how fast he relearned it. Lists of nonsense syllables that he could no longer recite a day later took about a third less effort to learn again; a month later, about a fifth less. Material that felt entirely gone still left a trace a stopwatch could find.",
-  "move": "Being unable to recall something is not the same as having lost it.",
-  "ask": "What have I decided I forgot that would come back quickly if I relearned it?",
+  "question": "Ebbinghaus learned lists of nonsense syllables, then relearned them after a wait. How much of the first effort did the memory still save?",
+  "answer": "Most of the loss came in the first hour. After 20 minutes relearning saved 58% of the original work, after an hour 44%, after a day 34%. Then the curve nearly flattens: a month later it still saved 21%. Forgetting is fast, then slow, and it rarely reaches zero.",
+  "move": "Review new material within the hour; that is when most of it slips.",
+  "ask": "What did I learn today that I should go over again before tonight?",
   "keywords": [
     "ebbinghaus",
+    "forgetting curve",
     "method of savings",
-    "nonsense syllables",
-    "relearning"
+    "memory"
   ],
   "era": "nineteenth",
   "region": "europe",
-  "hook": "mechanism",
+  "hook": "number",
   "mood": "wonder",
   "numeracy": 1,
   "abstraction": "mixed",
@@ -26,8 +26,52 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "draw",
+    "label": "Effort saved when relearning",
+    "unit": "%",
+    "columns": [
+      "0",
+      "20 min",
+      "1 hr",
+      "9 hr",
+      "1 day",
+      "2 days",
+      "6 days",
+      "31 days"
+    ],
+    "values": [
+      100,
+      58.2,
+      44.2,
+      35.8,
+      33.7,
+      27.8,
+      25.4,
+      21.1
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 100,
+    "judge": 2,
+    "verdict": {
+      "under": "Steeper than the truth, but you saw it coming: the fall is fast, then almost flat.",
+      "near": "Close. Over half is gone within the hour; after that the curve barely moves.",
+      "over": "Memory leaks faster than that: after one hour, more than half of the work was lost."
+    },
+    "notes": [
+      {
+        "at": 4,
+        "text": "1 day: 34% saved"
+      },
+      {
+        "at": 6,
+        "text": "6 days: still 25%"
+      }
+    ]
+  },
   "source": "Ebbinghaus, Memory, 1885, English edition 1913",
   "source_kind": "book",
   "reference": "Ebbinghaus, Memory: A Contribution to Experimental Psychology, trans. Ruger & Bussenius, Teachers College, Columbia University, 1913",
-  "written": "2026-09-26"
+  "written": "2026-10-07"
 }

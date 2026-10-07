@@ -6,15 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "In 2014 an online game crowned Wannabe the world's catchiest song by timing players naming clips. How fast did they name it?",
-  "answer": "In 2.29 seconds on average; Mambo No. 5 took 2.48, Eye of the Tiger 2.62. Over 12,000 people played Hooked on Music, from the University of Amsterdam and Manchester's Museum of Science and Industry. The title rests on a third of a second, among those players and that list of songs.",
+  "question": "Players of an online game named pop songs from short clips as fast as they could. How quickly was the catchiest one named?",
+  "answer": "In 2.3 seconds, for Wannabe: before the 5-second intro of a typical 2015 hit would have ended. Third place, Eye of the Tiger, took 2.6. Over 12,000 people played Hooked on Music in 2014; the title rests on a third of a second, among those who chose to play and the songs listed.",
   "move": "Before accepting a title like best ever, ask who was asked and from what list.",
   "ask": "Which best-ever title do I believe without asking who was asked?",
   "keywords": [
     "hooked on music",
     "recognition time",
     "catchiness",
-    "spice girls"
+    "spice girls",
+    "song intros"
   ],
   "era": "recent",
   "region": "europe",
@@ -25,24 +26,24 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "bars",
-  "source": "Newstalk, November 2014",
-  "source_kind": "news_archive",
-  "reference": "https://www.newstalk.com/news/wannabe-mambo-no-5-and-eye-of-the-tiger-named-as-catchiest-singles-684162",
-  "written": "2026-10-06",
+  "figure": "none",
   "scene": {
     "type": "hold",
     "what": "Naming Wannabe from a clip",
     "seconds": 2.29,
     "comparisons": [
       {
-        "label": "Mambo No. 5",
-        "seconds": 2.48
+        "label": "Eye of the Tiger, third",
+        "seconds": 2.62
       },
       {
-        "label": "Eye of the Tiger",
-        "seconds": 2.62
+        "label": "A hit's intro, 2015",
+        "seconds": 5
       }
     ]
-  }
+  },
+  "source": "Newstalk, 2014; Léveillé Gauvin, 2018",
+  "source_kind": "news_archive",
+  "reference": "https://www.newstalk.com/news/wannabe-mambo-no-5-and-eye-of-the-tiger-named-as-catchiest-singles-684162; Léveillé Gauvin, Drawn to distraction, Musicae Scientiae, 2018, doi:10.1177/1029864917698010",
+  "written": "2026-10-07"
 }

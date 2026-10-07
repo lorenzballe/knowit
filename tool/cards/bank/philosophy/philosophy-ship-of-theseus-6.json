@@ -6,58 +6,59 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Japan's Ise shrine is rebuilt, identical to the joint, on the empty plot beside it every 20 years. How many times has that been done?",
-  "answer": "62 times. The rite began in the late 600s and lapsed for over a century during the civil wars of the 1400s and 1500s. None of its timber is over 20 years old, yet the shrine is called ancient. What endures is the carpenters' knowledge, not the wood.",
-  "move": "Some things last by being remade, not by being kept.",
-  "ask": "What in my life lasts only because I keep rebuilding it?",
+  "question": "Your body is a ship rebuilt plank by plank. How many of your cells are replaced every second?",
+  "answer": "About 3.8 million, some 330 billion a day, by a 2021 Weizmann Institute count; most are blood cells and gut lining. But the rebuild is uneven: most neurons of the cortex, and the core of each eye's lens, are as old as you are. What carries you through is a pattern kept by parts that come and go.",
+  "move": "What keeps a thing the same is its pattern, not its parts.",
+  "ask": "Which part of me would I point to as the one that stays the same?",
   "keywords": [
-    "ise shrine",
-    "ritual rebuilding",
-    "japanese carpentry",
-    "authenticity"
+    "cell turnover",
+    "red blood cells",
+    "personal identity",
+    "neurons",
+    "ship of theseus"
   ],
-  "era": "timeless",
-  "region": "asia",
+  "era": "recent",
+  "region": "none",
   "hook": "number",
   "mood": "wonder",
   "numeracy": 2,
-  "abstraction": "concrete",
+  "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
   "scene": {
     "type": "count",
-    "unit": "rebuildings, the latest in 2013",
-    "answer": 62,
-    "each": 1,
-    "eachLabel": "1 dot = 1 complete rebuilding",
-    "compare": "No timber older than 20 years",
+    "unit": "of your cells replaced every second",
+    "answer": 3800000,
+    "each": 2000,
+    "eachLabel": "1 dot = 2,000 cells",
+    "compare": "About 1% of all your cells, every day",
     "options": [
       {
-        "label": "About 6",
-        "value": 6,
-        "note": "Far too few. The rebuilding of 2013 was the 62nd."
+        "label": "About 4,000",
+        "value": 4000,
+        "note": "Three zeros short. You remake about 330 billion cells a day."
       },
       {
-        "label": "About 20",
-        "value": 20,
-        "note": "Too few. Every 20 years for about 1,300 years makes over 60."
+        "label": "About 40,000",
+        "value": 40000,
+        "note": "Two zeros short. Blood alone is renewed by the million every second."
       },
       {
-        "label": "About 60",
-        "value": 60,
-        "note": "Right: 62 times since the late 600s, despite a century lost to war."
+        "label": "About 400,000",
+        "value": 400000,
+        "note": "One zero short. About 3.8 million a second, most of them blood cells."
       },
       {
-        "label": "About 200",
-        "value": 200,
-        "note": "Too many. 1,300 years at 20 a time is about 65, and war skipped a few."
+        "label": "4 million",
+        "value": 4000000,
+        "note": "Right: about 3.8 million a second. Yet most cortex neurons stay put for life."
       }
     ]
   },
-  "source": "Tange & Kawazoe, Ise, 1965",
-  "source_kind": "book",
-  "reference": "Tange & Kawazoe, Ise: Prototype of Japanese Architecture, MIT Press, 1965; Jingu Administration Office, Sengukan museum, the 62nd Shikinen Sengu, 2013: https://www.sengukan.jp/en",
-  "written": "2026-10-06"
+  "source": "Sender & Milo, Nature Medicine, 2021",
+  "source_kind": "paper",
+  "reference": "Sender R, Milo R, The distribution of cellular turnover in the human body, Nature Medicine 27, 45–48, 2021; Spalding et al., Cell 122, 133–143, 2005",
+  "written": "2026-10-07"
 }

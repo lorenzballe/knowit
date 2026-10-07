@@ -6,28 +6,44 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does a flash at one spot first speed up, then slow down, responses to a target there?",
-  "answer": "Attention jumps to the flash, then is steered away from it. Posner and Cohen found targets at a flashed spot were detected faster for roughly the first 150 milliseconds, but more slowly after about 300, when nothing had appeared there. This inhibition of return keeps a searching eye from rechecking where it just looked.",
-  "move": "A quick second look at the same place is usually wasted.",
+  "question": "You are driving at 70 mph when a child's ball bounces into the road ahead. How long until your foot reaches the brake?",
+  "answer": "About 1.5 seconds for a surprise, in Marc Green's review of braking studies; about 0.7 when the driver expects it. Surprise adds the time to notice and make sense of what is there. The Highway Code's 21-metre thinking distance at 70 mph assumes 0.67. At 1.5, the car covers 47 m before braking.",
+  "move": "Plan for the surprised version of yourself, not the alert one.",
+  "ask": "Where am I counting on reacting as fast as I would if I had seen it coming?",
   "keywords": [
-    "inhibition of return",
-    "spatial cueing",
-    "visual search",
-    "michael posner"
+    "reaction time",
+    "braking",
+    "highway code",
+    "surprise",
+    "stopping distance"
   ],
-  "era": "twentieth",
-  "region": "none",
-  "hook": "mechanism",
-  "mood": "wonder",
-  "numeracy": 1,
-  "abstraction": "mixed",
+  "era": "timeless",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Posner & Cohen, Attention and Performance X, 1984",
-  "source_kind": "book",
-  "reference": "Posner & Cohen, Components of visual orienting, in Bouma & Bouwhuis (eds), Attention and Performance X, Erlbaum, 1984",
-  "written": "2026-09-27",
-  "disabled": true
+  "scene": {
+    "type": "hold",
+    "what": "Surprise to foot on the brake",
+    "seconds": 1.5,
+    "comparisons": [
+      {
+        "label": "Highway Code thinking time",
+        "seconds": 0.67
+      },
+      {
+        "label": "US road design allows",
+        "seconds": 2.5
+      }
+    ]
+  },
+  "source": "Green, Transportation Human Factors, 2000",
+  "source_kind": "paper",
+  "reference": "Green, How long does it take to stop? Methodological analysis of driver perception-brake times, Transportation Human Factors 2(3), 2000; Department for Transport, The Highway Code, rule 126, typical stopping distances; AASHTO, A Policy on Geometric Design of Highways and Streets (stopping sight distance)",
+  "written": "2026-10-07"
 }

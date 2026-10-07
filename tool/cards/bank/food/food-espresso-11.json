@@ -1,0 +1,73 @@
+{
+  "id": "food-espresso-11",
+  "topic": "food",
+  "genre": "food.coffee",
+  "strand": "food.coffee.espresso",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "An Americano starts at 90 °C in a 20 °C room and loses 20 degrees in 10 minutes. How hot after half an hour?",
+  "answer": "About 45 °C, not room temperature. Heat leaks in proportion to the gap between cup and room, Newton's law of cooling: a 70-degree gap at the start, 25 after half an hour, so each 10 minutes takes less. So milk added straight away keeps coffee warmer: a cooler cup loses heat slower.",
+  "move": "Expect a gap to close fastest when it is widest, then crawl.",
+  "ask": "Which gap in my life closed fast at first and now seems stuck, as it naturally would?",
+  "keywords": [
+    "newton's law of cooling",
+    "coffee",
+    "temperature",
+    "milk",
+    "heat loss"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "draw",
+    "label": "Coffee temperature",
+    "unit": "°C",
+    "columns": [
+      "0 min",
+      "10 min",
+      "20 min",
+      "30 min",
+      "40 min",
+      "50 min",
+      "60 min"
+    ],
+    "values": [
+      90,
+      70,
+      55.7,
+      45.5,
+      38.2,
+      33.0,
+      29.3
+    ],
+    "given": 2,
+    "min": 0,
+    "max": 100,
+    "judge": 3,
+    "near": 0.07,
+    "verdict": {
+      "under": "Warmer than that: a cooler cup loses heat more slowly. At 30 minutes, about 45 °C.",
+      "near": "Right: it fell 20 degrees, then 14, then 10. The smaller the gap, the slower.",
+      "over": "A bit cooler: about 45 °C at 30 minutes. It slows, but keeps falling."
+    },
+    "notes": [
+      {
+        "at": 5,
+        "text": "50 min: still 33 °C"
+      }
+    ]
+  },
+  "source": "Newton, Philosophical Transactions, 1701",
+  "source_kind": "paper",
+  "reference": "Newton, Scala graduum caloris, Philosophical Transactions 22:824-829, 1701; temperatures computed for a gap to room temperature that shrinks by 2/7 every 10 minutes",
+  "written": "2026-10-07"
+}

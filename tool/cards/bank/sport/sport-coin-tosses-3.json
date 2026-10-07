@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How can a referee get a perfectly fair decision from a coin that might be biased?",
-  "answer": "Toss it twice. Heads then tails means one captain wins; tails then heads, the other; two of the same, toss again. Whatever the bias, the two mixed orders are equally likely, because each is one head times one tail. John von Neumann described the trick in 1951 for drawing random numbers from imperfect machines.",
+  "question": "A referee's coin might land heads far more often than tails. How can it still settle a match fairly, and at what cost?",
+  "answer": "Toss it twice. Heads then tails means one captain wins; tails then heads, the other; two of the same, toss again. Whatever the bias, both mixed orders are equally likely, one head times one tail. John von Neumann described the trick in 1951. The more lopsided the coin, the more pairs get thrown away.",
   "move": "Build fairness from symmetry rather than trusting the tool.",
   "ask": "Where could I make a choice fair by how it is set up, instead of trusting one person's judgement?",
   "keywords": [
@@ -21,7 +21,7 @@
   "region": "none",
   "hook": "puzzle",
   "mood": "playful",
-  "numeracy": 0,
+  "numeracy": 2,
   "abstraction": "abstract",
   "shelf_life": "evergreen",
   "mature": false,
@@ -30,5 +30,87 @@
   "source": "von Neumann, random digits, 1951",
   "source_kind": "paper",
   "reference": "John von Neumann, Various techniques used in connection with random digits, National Bureau of Standards Applied Mathematics Series 12, 1951",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "scene": {
+    "type": "slider",
+    "control": "How often the coin lands heads",
+    "controlUnit": "%",
+    "readout": "Tosses needed, on average",
+    "readoutUnit": "tosses",
+    "start": 50,
+    "step": 1,
+    "decimals": 1,
+    "points": [
+      [
+        50,
+        4.0
+      ],
+      [
+        55,
+        4.04
+      ],
+      [
+        60,
+        4.17
+      ],
+      [
+        65,
+        4.4
+      ],
+      [
+        70,
+        4.76
+      ],
+      [
+        75,
+        5.33
+      ],
+      [
+        80,
+        6.25
+      ],
+      [
+        85,
+        7.84
+      ],
+      [
+        88,
+        9.47
+      ],
+      [
+        90,
+        11.11
+      ],
+      [
+        92,
+        13.59
+      ],
+      [
+        94,
+        17.73
+      ],
+      [
+        95,
+        21.05
+      ]
+    ],
+    "notes": [
+      {
+        "at": 50,
+        "text": "Fair coin: toss in pairs, throw away HH and TT. Four tosses on average."
+      },
+      {
+        "at": 70,
+        "text": "70% heads: under five tosses, and the result is still exactly 50:50."
+      },
+      {
+        "at": 90,
+        "text": "90% heads: 11 tosses. The bias costs time, never fairness."
+      },
+      {
+        "at": 95,
+        "text": "95% heads: about 21 tosses. Patience buys back a fair result."
+      }
+    ]
+  }
 }

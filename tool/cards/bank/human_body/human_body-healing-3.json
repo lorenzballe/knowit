@@ -6,28 +6,44 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How strong is healed skin compared with the skin it replaced?",
-  "answer": "Weaker, for good. A cut has about a tenth of normal strength after a week, and by three months levels off at roughly 70 to 80% of unwounded skin, rarely improving much after. Scar collagen lies in dense parallel bundles, without the woven pattern, hair follicles or sweat glands of the surrounding skin.",
-  "move": "Something repaired is not the same as something restored.",
-  "ask": "Which thing I have repaired do I treat as good as new when it is not?",
+  "question": "Water at 60 °C, usual in a home's hot tank, pours onto an adult's arm. How long until it burns right through the skin?",
+  "answer": "About 5 seconds, by tables built on Moritz and Henriques's 1947 burn experiments; a child's thinner skin goes faster. At 54 °C it takes half a minute. Tanks stay hot to kill Legionella, so English rules since 2010 make new baths mix water down to 48 °C.",
+  "move": "Ask how a danger scales: a few degrees can turn minutes into seconds.",
+  "ask": "Which danger near me grows faster than its dial suggests?",
   "keywords": [
-    "scar tissue",
-    "wound strength",
-    "collagen",
-    "skin"
+    "scalds",
+    "hot water",
+    "burns",
+    "legionella",
+    "mixing valves"
   ],
   "era": "timeless",
-  "region": "none",
-  "hook": "misconception",
-  "mood": "sober",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "practical",
   "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Robbins and Cotran Pathologic Basis of Disease, 2021",
-  "source_kind": "book",
-  "reference": "Kumar, Abbas & Aster, Robbins and Cotran Pathologic Basis of Disease, 10th edition, Elsevier, 2021",
-  "written": "2026-09-26"
+  "scene": {
+    "type": "hold",
+    "what": "60 °C water to a deep burn",
+    "seconds": 5,
+    "comparisons": [
+      {
+        "label": "At 54 °C",
+        "seconds": 30
+      },
+      {
+        "label": "At 71 °C",
+        "seconds": 1
+      }
+    ]
+  },
+  "source": "Moritz & Henriques, 1947",
+  "source_kind": "paper",
+  "reference": "Moritz & Henriques, Studies of thermal injury II: the relative importance of time and surface temperature in the causation of cutaneous burns, American Journal of Pathology 23(5), 1947; HM Government, The Building Regulations 2010, Approved Document G, requirement G3",
+  "written": "2026-10-07"
 }

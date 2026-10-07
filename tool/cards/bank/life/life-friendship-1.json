@@ -6,22 +6,22 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How much did strong social relationships raise the odds of survival, in a pooling of 148 studies?",
-  "answer": "By about 50%. Holt-Lunstad's meta-analysis of 148 studies with 308,849 participants found people with stronger social relationships had 50% greater odds of survival over an average of 7.5 years, comparable with quitting smoking. The studies are observational, so the link is not proof of cause.",
-  "move": "Schedule the people you would miss before the work you would not.",
-  "ask": "Which person would I miss most, and when did I last put time with them ahead of work?",
+  "question": "Across 148 studies, strong social ties gave 50% greater odds of survival. Does that make people 50% more likely to survive?",
+  "answer": "No. Odds compare survivors with deaths, not with everyone. Holt-Lunstad's 2010 pooling of 308,849 people found 50% higher odds of survival with strong relationships, comparable with quitting smoking. Where most people survive anyway, that means a few extra survivors per hundred. The studies are observational: a link, not proof of cause.",
+  "move": "Before repeating a 50% rise, ask: 50% of the odds, or of the chance?",
+  "ask": "When I read that something raises the odds by half, do I know what it changes for me?",
   "keywords": [
     "social relationships",
     "survival",
+    "odds",
     "meta-analysis",
-    "loneliness",
     "holt-lunstad"
   ],
   "era": "recent",
   "region": "world",
   "hook": "number",
   "mood": "sober",
-  "numeracy": 2,
+  "numeracy": 3,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
@@ -30,5 +30,91 @@
   "source": "Holt-Lunstad, Smith and Layton, PLoS Medicine, 2010",
   "source_kind": "paper",
   "reference": "Holt-Lunstad, Smith and Layton, Social Relationships and Mortality Risk: A Meta-analytic Review, PLoS Medicine, 2010",
-  "written": "2026-09-29"
+  "written": "2026-09-29",
+  "scene": {
+    "type": "slider",
+    "control": "Survival without strong ties",
+    "controlUnit": "%",
+    "readout": "Extra survivors per 100 people",
+    "readoutUnit": "",
+    "start": 80,
+    "step": 1,
+    "decimals": 1,
+    "points": [
+      [
+        50,
+        10.0
+      ],
+      [
+        55,
+        9.71
+      ],
+      [
+        60,
+        9.23
+      ],
+      [
+        65,
+        8.58
+      ],
+      [
+        70,
+        7.78
+      ],
+      [
+        75,
+        6.82
+      ],
+      [
+        80,
+        5.71
+      ],
+      [
+        85,
+        4.47
+      ],
+      [
+        90,
+        3.1
+      ],
+      [
+        92,
+        2.52
+      ],
+      [
+        94,
+        1.92
+      ],
+      [
+        96,
+        1.3
+      ],
+      [
+        98,
+        0.66
+      ],
+      [
+        99,
+        0.33
+      ]
+    ],
+    "notes": [
+      {
+        "at": 50,
+        "text": "If half would die anyway: 10 more survivors per 100."
+      },
+      {
+        "at": 80,
+        "text": "If 80 in 100 survive anyway: about 6 more."
+      },
+      {
+        "at": 90,
+        "text": "90 in 100: 3 more. The odds rose 50%; the chance, about 3%."
+      },
+      {
+        "at": 98,
+        "text": "Young and healthy: under one more per 100. Same 50% higher odds."
+      }
+    ]
+  }
 }

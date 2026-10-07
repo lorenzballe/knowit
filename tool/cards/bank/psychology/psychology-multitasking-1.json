@@ -6,28 +6,39 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "When people alternate between two simple tasks, knowing exactly when each switch comes, does the slowdown vanish with time to prepare?",
-  "answer": "No. In experiments alternating between judging letters and judging digits, giving people over a second to get ready shrank the cost of switching but never removed it. Part of the mind only reconfigures once the next task actually arrives. Every hop between inbox and report pays a toll that warning cannot fully prepay.",
-  "move": "A switch you can see coming still costs time when it arrives.",
-  "ask": "How many times today did I switch between tasks that could have waited their turn?",
+  "question": "Lorry drivers were filmed texting at the wheel. Each time they texted, how long did their eyes stay off the road?",
+  "answer": "About 4.6 seconds in every 6, in a Virginia Tech study for US regulators. At 90 km/h that is 115 metres driven blind, longer than a football pitch. Car makers are asked to design screens so no glance needs more than 2 seconds: glances longer than that roughly doubled crash risk.",
+  "move": "Count a glance in metres travelled, not in seconds lost.",
+  "ask": "How far did I travel the last time I looked at my phone while driving?",
   "keywords": [
-    "task switching",
-    "switch cost",
-    "preparation",
-    "attention"
+    "texting while driving",
+    "eyes off the road",
+    "distraction",
+    "glance length"
   ],
-  "era": "twentieth",
-  "region": "none",
-  "hook": "mechanism",
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
   "mood": "sober",
-  "numeracy": 0,
-  "abstraction": "mixed",
+  "numeracy": 2,
+  "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Rogers & Monsell, JEP: General, 1995",
-  "source_kind": "paper",
-  "reference": "Rogers & Monsell, Costs of a predictable switch between simple cognitive tasks, Journal of Experimental Psychology: General, 1995",
-  "written": "2026-10-03"
+  "scene": {
+    "type": "hold",
+    "what": "Eyes off the road, texting",
+    "seconds": 4.6,
+    "comparisons": [
+      {
+        "label": "NHTSA's limit for a glance",
+        "seconds": 2
+      }
+    ]
+  },
+  "source": "Olson et al., FMCSA, 2009; NHTSA, 2013",
+  "source_kind": "institution",
+  "reference": "Olson, Hanowski, Hickman & Bocanegra, Driver Distraction in Commercial Vehicle Operations, FMCSA-RRR-09-042, 2009; NHTSA, Visual-Manual Driver Distraction Guidelines for In-Vehicle Electronic Devices, 2013; Klauer et al., The Impact of Driver Inattention on Near-Crash/Crash Risk, DOT HS 810 594, 2006",
+  "written": "2026-10-07"
 }

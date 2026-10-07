@@ -1,0 +1,82 @@
+{
+  "id": "life-saying-no-4",
+  "topic": "life",
+  "genre": "life.time_and_attention",
+  "strand": "life.time_and_attention.saying_no",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Requests reach you at random. At 40% busy, each waits about two-thirds of a task's length. What about at 90% busy?",
+  "answer": "About nine tasks' length, thirteen times the wait at 40%. In the simplest queue model, waiting grows with busy time over idle time: 0.9 over 0.1. Requests arrive in clumps, and with no slack each clump stacks on the last. That is why a week at 90% feels jammed, not just a bit fuller.",
+  "move": "Keep slack on purpose; the last tenth of busyness costs the most.",
+  "ask": "How full is my week, and is that why everything I start seems to wait?",
+  "keywords": [
+    "queueing",
+    "waiting time",
+    "utilisation",
+    "slack",
+    "overcommitment"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "draw",
+    "label": "Wait, × one task's length",
+    "unit": "×",
+    "columns": [
+      "10%",
+      "20%",
+      "30%",
+      "40%",
+      "50%",
+      "60%",
+      "70%",
+      "80%",
+      "90%"
+    ],
+    "values": [
+      0.11,
+      0.25,
+      0.43,
+      0.67,
+      1.0,
+      1.5,
+      2.33,
+      4.0,
+      9.0
+    ],
+    "given": 4,
+    "min": 0,
+    "max": 12,
+    "decimals": 1,
+    "judge": 8,
+    "near": 0.08,
+    "verdict": {
+      "under": "Far longer: at 90% busy the wait is 9 tasks long, 13 times the wait at 40%.",
+      "near": "Right: the curve explodes. From 80% to 90% busy, the wait more than doubles.",
+      "over": "Shorter than that, but you saw it explode: at 90% busy, about 9 tasks' wait."
+    },
+    "notes": [
+      {
+        "at": 5,
+        "text": "60% busy: 1.5 tasks"
+      },
+      {
+        "at": 7,
+        "text": "80% busy: 4 tasks"
+      }
+    ]
+  },
+  "source": "Kleinrock, Queueing Systems, 1975",
+  "source_kind": "book",
+  "reference": "Kleinrock, Queueing Systems, Volume 1: Theory, Wiley, 1975 (M/M/1 queue: mean wait in line = utilisation/(1 - utilisation) service times)",
+  "written": "2026-10-07"
+}

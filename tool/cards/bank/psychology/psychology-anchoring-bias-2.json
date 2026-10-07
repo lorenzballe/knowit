@@ -6,17 +6,15 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Four mental shortcuts, four everyday traps. Which shortcut is quietly at work in each of these moments?",
-  "answer": "The pay talk is the one people miss, because a first offer feels like a bluff to ignore. In negotiation experiments the opening number pulled the final price towards it, whoever made it. What weakened the pull was thinking hard about the other side's walk-away price. Silence hands the pen to the other side.",
+  "question": "In a negotiation, who usually ends nearer to their own target: the side that names a number first, or the side that waits?",
+  "answer": "Often the side that names it first. In negotiation experiments the opening offer pulled the final price towards it, whoever made it. What weakened that pull was not ignoring the offer but thinking hard about the other side's walk-away price or one's own target. Silence hands the pen to the other side.",
   "move": "Whoever puts the first number on the table sets the frame.",
   "ask": "In my next salary or price talk, have I decided my own number before hearing theirs?",
   "keywords": [
-    "anchoring",
-    "first offers",
     "negotiation",
-    "sunk cost",
-    "availability",
-    "planning fallacy"
+    "first offers",
+    "anchoring",
+    "bargaining"
   ],
   "era": "recent",
   "region": "none",
@@ -28,36 +26,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "scene": {
-    "type": "match",
-    "leftTitle": "Shortcut",
-    "rightTitle": "Where it gets you",
-    "pairs": [
-      {
-        "left": "Anchoring",
-        "right": "The first figure named in a pay negotiation",
-        "note": "Whoever speaks first sets the ruler both sides then measure by.",
-        "missed": true
-      },
-      {
-        "left": "Sunk cost",
-        "right": "Fixing the old car again after all those repairs",
-        "note": "Past repairs are spent either way. Only the next bill is still a choice."
-      },
-      {
-        "left": "Availability",
-        "right": "Fearing a shark, not the drive to the beach",
-        "note": "Shark attacks make the news. Road deaths are too common to."
-      },
-      {
-        "left": "Planning fallacy",
-        "right": "'The kitchen will take two weeks, tops'",
-        "note": "We plan the best case and forget the delays every past job had."
-      }
-    ]
-  },
-  "source": "Galinsky & Mussweiler, JPSP, 2001; Tversky & Kahneman, Science, 1974",
+  "source": "Galinsky & Mussweiler, JPSP, 2001",
   "source_kind": "paper",
   "reference": "Galinsky & Mussweiler, First offers as anchors: The role of perspective-taking and negotiator focus, Journal of Personality and Social Psychology, 2001",
-  "written": "2026-10-06"
+  "written": "2026-10-07"
 }

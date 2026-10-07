@@ -1,0 +1,72 @@
+{
+  "id": "sport-marathon-11",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.marathon",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "The men's marathon best fell from 2 h 29 min in 1925 to 2 h 12 min by 1965. Where was it by 2025?",
+  "answer": "At 2 h 0 min 35 s, set by Kelvin Kiptum in 2023. The twenty years to 1965 took off 15 minutes; the sixty since, only 11 more. Early gains come cheap; near the limits of lungs, legs and fuel, each minute costs more than the last. A steep stretch is a poor ruler.",
+  "move": "Never extend the steepest stretch of a record; ask what limit it nears.",
+  "ask": "Which of my improvements am I expecting to keep coming at their early pace?",
+  "keywords": [
+    "marathon",
+    "world record",
+    "diminishing returns",
+    "kelvin kiptum",
+    "progression"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "wonder",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "draw",
+    "label": "Marathon world best, minutes",
+    "unit": "min",
+    "columns": [
+      "1925",
+      "1945",
+      "1965",
+      "1985",
+      "2005",
+      "2025"
+    ],
+    "values": [
+      149.0,
+      146.7,
+      132.0,
+      127.2,
+      124.9,
+      120.6
+    ],
+    "given": 3,
+    "min": 90,
+    "max": 160,
+    "decimals": 1,
+    "judge": 5,
+    "near": 0.08,
+    "verdict": {
+      "under": "Too fast. After 1965 the record slowed to a crawl: 2 h 0 min 35 s by 2025.",
+      "near": "Right: the plunge did not last. Sixty years took off only another 11 minutes.",
+      "over": "Lower than that: it kept falling, slowly, to 2 h 0 min 35 s in 2023."
+    },
+    "notes": [
+      {
+        "at": 3,
+        "text": "1985: 2 h 07 min"
+      }
+    ]
+  },
+  "source": "IAAF, Progression of World Records, 2015; World Athletics",
+  "source_kind": "reference_work",
+  "reference": "IAAF, Progression of IAAF World Records, 2015 edition (marathon bests: Michelsen 2:29:01.8, 1925; Son 2:26:42, 1935; Shigematsu 2:12:00, 1965; Lopes 2:07:12, 1985; Tergat 2:04:55, 2003); World Athletics, men's marathon world record, Kiptum 2:00:35, Chicago, 2023",
+  "written": "2026-10-07"
+}

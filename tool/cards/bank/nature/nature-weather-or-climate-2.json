@@ -33,8 +33,31 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated daily records",
+    "hit": "Record was a heat record",
+    "rate": 0.6667,
+    "steps": [
+      6,
+      60,
+      600,
+      6000,
+      60000
+    ],
+    "seed": 146,
+    "button": "More records",
+    "notes": [
+      "One town's cold week: 6 records, only 2 for heat. 33%. So much for warming?",
+      "60 records: 55%. Barely more heat than cold.",
+      "600 records: 69%. The lean starts to show.",
+      "6,000 records: 68%.",
+      "60,000: 67%, the two to one built in. The cold week was one corner of it."
+    ],
+    "decimals": 0
+  },
   "source": "Meehl et al., Geophysical Research Letters, 2009",
   "source_kind": "paper",
   "reference": "Meehl, Tebaldi, Walton, Easterling & McDaniel, Relative increase of record high maximum temperatures compared to record low minimum temperatures in the U.S., Geophysical Research Letters, 2009",
-  "written": "2026-10-03"
+  "written": "2026-10-07"
 }

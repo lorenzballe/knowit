@@ -1,0 +1,78 @@
+{
+  "id": "weird_facts-extreme-spots-11",
+  "topic": "weird_facts",
+  "genre": "weird_facts.odd_places",
+  "strand": "weird_facts.odd_places.extreme_spots",
+  "also": [
+    "nature.weather.storms"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Death Valley's Racetrack Playa. Rocks, some heavier than a person, leave long trails across the dry lakebed. What moves them?",
+  "answer": "Ice and a light breeze. A shallow winter pond freezes into a skin a few millimetres thick; when the morning sun breaks it into panels, a breeze pushes them and they shove the rocks along. GPS on the rocks caught it in 2013. The force was ordinary; the conditions were rare.",
+  "move": "When nobody sees something happen, suspect rare conditions before huge forces.",
+  "ask": "What do I explain with something dramatic when an ordinary cause on an unusual day would do?",
+  "keywords": [
+    "racetrack playa",
+    "sailing stones",
+    "death valley",
+    "ice",
+    "wind"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Pranksters",
+      "Hurricane winds",
+      "Ice and a breeze"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Trails run hundreds of metres. For decades nobody sees a rock move.",
+        "tag": "Nobody sees them move",
+        "rulesOut": []
+      },
+      {
+        "text": "No footprints or tyre marks beside any trail, in mud that keeps every print.",
+        "tag": "No footprints",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "New trails appear only in winter, after rain leaves a shallow pond.",
+        "tag": "Winter, after rain",
+        "rulesOut": []
+      },
+      {
+        "text": "2013, GPS on the rocks: they creep while the wind is a light breeze.",
+        "tag": "Only a light breeze",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "That morning, ice a few millimetres thick breaks into floating panels.",
+        "tag": "Panels of thin ice",
+        "rulesOut": []
+      }
+    ],
+    "why": "No gale was blowing: the rocks moved in a breeze. Something else had to do the shoving."
+  },
+  "source": "Norris et al., PLOS ONE, 2014",
+  "source_kind": "paper",
+  "reference": "Norris et al., Sliding rocks on Racetrack Playa, Death Valley National Park: first observation of rocks in motion, PLOS ONE 9(8):e105948, 2014, doi:10.1371/journal.pone.0105948",
+  "written": "2026-10-07"
+}

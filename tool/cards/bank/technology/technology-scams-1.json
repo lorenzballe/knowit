@@ -1,0 +1,78 @@
+{
+  "id": "technology-scams-1",
+  "topic": "technology",
+  "genre": "technology.your_digital_life",
+  "strand": "technology.your_digital_life.scams",
+  "also": [
+    "psychology.think_under_pressure.stress_and_choices"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A WhatsApp from an unknown number: Hi Mum, I dropped my phone in the loo. Who sent it?",
+  "answer": "A scammer. The Hi Mum fraud, which spread through Britain and Australia in the early 2020s, needs no hacking: just a parent and a hurry. Nothing in the messages can expose it, since a real son with a broken phone would write the same. The urgency is there to stop the one check that can.",
+  "move": "Check a story through a door you already had, never the one it offers.",
+  "ask": "Who could reach me today with a story I would act on before checking?",
+  "keywords": [
+    "hi mum scam",
+    "whatsapp",
+    "fraud",
+    "urgency",
+    "verification"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Your son",
+      "Your daughter",
+      "A scammer"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Hi Mum, dropped my phone in the loo. This is my new number x",
+        "tag": "A new number",
+        "rulesOut": []
+      },
+      {
+        "text": "Your daughter is beside you on the sofa, scrolling her own phone.",
+        "tag": "Daughter beside you",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "Can you pay a bill for me? My bank app won't work on this phone.",
+        "tag": "Pay a bill for me",
+        "rulesOut": []
+      },
+      {
+        "text": "It has to go today. It's my flatmate's account, I'll pay you back x",
+        "tag": "Today, a stranger's name",
+        "rulesOut": []
+      },
+      {
+        "text": "You ring your son's old number. He answers at once, on the bus.",
+        "tag": "His old number answers",
+        "rulesOut": [
+          0
+        ]
+      }
+    ],
+    "why": "Every message fitted a son with a broken phone. Only a call to the number you already had could."
+  },
+  "source": "Action Fraud, WhatsApp scam alerts",
+  "source_kind": "institution",
+  "reference": "Action Fraud, UK National Fraud and Cyber Crime Reporting Centre, warnings on WhatsApp Hi Mum and Dad scams, 2022, https://www.actionfraud.police.uk",
+  "written": "2026-10-07"
+}

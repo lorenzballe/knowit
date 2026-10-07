@@ -1,0 +1,33 @@
+{
+  "id": "psychology-multitasking-4",
+  "topic": "psychology",
+  "genre": "psychology.attention",
+  "strand": "psychology.attention.multitasking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "When people alternate between two simple tasks, knowing exactly when each switch comes, does the slowdown vanish with time to prepare?",
+  "answer": "No. In experiments alternating between judging letters and judging digits, giving people over a second to get ready shrank the cost of switching but never removed it. Part of the mind only reconfigures once the next task actually arrives. Every hop between inbox and report pays a toll that warning cannot fully prepay.",
+  "move": "A switch you can see coming still costs time when it arrives.",
+  "ask": "How many times today did I switch between tasks that could have waited their turn?",
+  "keywords": [
+    "task switching",
+    "switch cost",
+    "preparation",
+    "attention"
+  ],
+  "era": "twentieth",
+  "region": "none",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Rogers & Monsell, JEP: General, 1995",
+  "source_kind": "paper",
+  "reference": "Rogers & Monsell, Costs of a predictable switch between simple cognitive tasks, Journal of Experimental Psychology: General, 1995",
+  "written": "2026-10-03"
+}

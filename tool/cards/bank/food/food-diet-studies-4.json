@@ -1,0 +1,63 @@
+{
+  "id": "food-diet-studies-4",
+  "topic": "food",
+  "genre": "food.food_claims",
+  "strand": "food.food_claims.diet_studies",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Three of your four friends on low-carb lost 5 kg; one of four on low-fat did. Which diet works better?",
+  "answer": "Neither, on the best evidence. Stanford's DIETFITS trial put 609 adults on a healthy low-carb or low-fat diet for a year: average losses were 6.0 and 5.3 kg, a difference too small to be reliable. Within each diet some lost a lot and others gained. Four friends are four draws from that spread.",
+  "move": "A diet that worked for a friend is one draw, not a verdict.",
+  "ask": "Which habit do I swear by because it worked for someone I know?",
+  "keywords": [
+    "low-carb diet",
+    "low-fat diet",
+    "weight loss",
+    "dietfits",
+    "anecdotes"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated dieters",
+    "hit": "Lost 5 kg in a year",
+    "groups": [
+      {
+        "label": "Low-fat",
+        "rate": 0.45
+      },
+      {
+        "label": "Low-carb",
+        "rate": 0.45
+      }
+    ],
+    "steps": [
+      8,
+      80,
+      609,
+      6090
+    ],
+    "seed": 53,
+    "button": "Add dieters",
+    "notes": [
+      "Four friends each: low-carb 75%, low-fat 25%. Built in: 45% for both.",
+      "40 each: low-fat 43%, low-carb 50%. The gap is shrinking.",
+      "609, as many as DIETFITS: 44% against 45%. No winner, as in the real trial.",
+      "6,090: 45% and 45%. The friends were drawing lots."
+    ]
+  },
+  "source": "Gardner et al., JAMA, 2018",
+  "source_kind": "paper",
+  "reference": "Gardner et al., Effect of low-fat vs low-carbohydrate diet on 12-month weight loss in overweight adults: the DIETFITS randomized clinical trial, JAMA 319(7):667-679, 2018",
+  "written": "2026-10-07"
+}

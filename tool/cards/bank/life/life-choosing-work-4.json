@@ -1,0 +1,54 @@
+{
+  "id": "life-choosing-work-4",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.choosing_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "You sent 10 job applications and heard nothing back. Is something wrong with your CV?",
+  "answer": "Not necessarily. In Bertrand and Mullainathan's field experiment, about 5,000 invented CVs sent to real job adverts drew callbacks around 8% of the time. At that rate, 10 applications bring no reply about 43% of the time. Ten silences are closer to a coin toss than a verdict.",
+  "move": "Before blaming yourself, ask how often a good attempt fails anyway.",
+  "ask": "Which setback am I reading as a verdict when it may just be the odds?",
+  "keywords": [
+    "job applications",
+    "callbacks",
+    "cvs",
+    "field experiment",
+    "rejection"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated applications",
+    "hit": "Got a callback",
+    "rate": 0.08,
+    "steps": [
+      10,
+      50,
+      500,
+      5000
+    ],
+    "seed": 12,
+    "button": "Send more",
+    "notes": [
+      "10 applications, no callbacks: 0%. Built in: an ordinary CV that gets 8%.",
+      "50 applications: 10%. Five callbacks, from the very same CV.",
+      "500 applications: 8%.",
+      "5,000, about as many as the study sent: 8%. The silence at ten was the odds."
+    ]
+  },
+  "source": "Bertrand & Mullainathan, American Economic Review, 2004",
+  "source_kind": "paper",
+  "reference": "Bertrand & Mullainathan, Are Emily and Greg More Employable than Lakisha and Jamal? A Field Experiment on Labor Market Discrimination, American Economic Review 94(4):991-1013, 2004",
+  "written": "2026-10-07"
+}

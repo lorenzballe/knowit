@@ -1,0 +1,55 @@
+{
+  "id": "weird_facts-octopuses-11",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.octopuses",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 2010 Paul, an octopus in a German aquarium, picked the winner of 8 World Cup matches in a row. Psychic?",
+  "answer": "No, and not even that unlikely. Eight right by pure guessing has a 1-in-256 chance, but other animals, pundits and office pools were picking the same games, and only the perfect run became famous. The misses never made the news. With enough guessers, someone goes eight for eight.",
+  "move": "Before marvelling at a perfect record, count everyone else who was trying.",
+  "ask": "Whose perfect record impressed me before I asked how many others were trying?",
+  "keywords": [
+    "paul the octopus",
+    "world cup",
+    "predictions",
+    "luck",
+    "coincidence"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated guessers",
+    "hit": "Picked all eight right",
+    "rate": 0.00390625,
+    "steps": [
+      16,
+      256,
+      2560,
+      25600
+    ],
+    "seed": 92,
+    "decimals": 1,
+    "button": "More guessers",
+    "notes": [
+      "16 guessers, eight coin-flip picks each: nobody goes eight for eight.",
+      "256 guessers: one perfect run, by luck alone. That is the one the news finds.",
+      "2,560 guessers: ten perfect records, and not one of them knows any football.",
+      "25,600: 100 perfect runs, the 1 in 256 built in. Fame picks one; the misses vanish."
+    ]
+  },
+  "source": "BBC News, 2010; coin-toss arithmetic",
+  "source_kind": "news_archive",
+  "reference": "BBC News, World Cup oracle Paul the octopus dies, 26 October 2010",
+  "written": "2026-10-07"
+}

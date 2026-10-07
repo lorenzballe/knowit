@@ -1,0 +1,70 @@
+{
+  "id": "medicine-screening-5",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.screening",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "At a 2015 hearing on Planned Parenthood, a US congressman showed this chart. Abortions cross over screenings. Where's the trick?",
+  "answer": "In the scales: each line has its own, and the original printed none. On one axis, screenings fell by half while abortions rose 13% and stayed far below. Many lost screenings were smear tests: between 2009 and 2012, US guidelines moved them from every year to every three years.",
+  "move": "When two lines cross, check they are measured against the same scale.",
+  "ask": "When a chart shows two things crossing, do I check whether they share one scale?",
+  "keywords": [
+    "planned parenthood",
+    "dual axis",
+    "cervical screening",
+    "smear tests",
+    "misleading charts"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "trick",
+    "trick": "dual",
+    "outlet": "US Congress, 2015 (redrawn)",
+    "headline": "Abortions up, life-saving procedures down",
+    "honest": "Screenings halved; abortions rose 13%",
+    "label": "Services a year, thousands",
+    "columns": [
+      "2006",
+      "2013"
+    ],
+    "values": [
+      2007,
+      936
+    ],
+    "values2": [
+      290,
+      327
+    ],
+    "series": [
+      "Screenings",
+      "Abortions"
+    ],
+    "from": 800,
+    "to": 2100,
+    "from2": 250,
+    "to2": 340,
+    "found": "Yes: each line has its own scale. The original showed none.",
+    "miss": "That part is true. Look at what each line is measured against.",
+    "misses": {
+      "headline": "Both halves are true. It's the drawing that makes them collide.",
+      "marks": "Each line is drawn right for its own axis. But which axis?"
+    },
+    "name": "Two scales, one cross",
+    "lesson": "Two scales can make any two lines cross. Put both on one axis before you read the crossing."
+  },
+  "source": "PolitiFact, 2015; USPSTF cervical screening, 2012",
+  "source_kind": "news_archive",
+  "reference": "PolitiFact, Chart shown at Planned Parenthood hearing is misleading and 'ethically wrong', 1 October 2015; US Preventive Services Task Force, Screening for Cervical Cancer, recommendation statement, 2012",
+  "written": "2026-10-07"
+}

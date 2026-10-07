@@ -1,0 +1,73 @@
+{
+  "id": "science-energy-5",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "At 30 mph a car stops in 23 metres. A child steps out 23 metres ahead of a faster car. How fast does it hit?",
+  "answer": "At 40 mph, about 30 mph. The faster driver covers 12 metres while reacting, not 9, so less road is left for braking. And braking sheds speed slowest at first, because the energy to lose grows with the square of speed. On the Highway Code's own distances, 35 mph still arrives at 20.",
+  "move": "Ask what is left when the margin runs out, not how small the excess is.",
+  "ask": "Where do I run slightly over the safe pace and assume it costs only slightly more?",
+  "keywords": [
+    "stopping distance",
+    "braking",
+    "highway code",
+    "kinetic energy",
+    "road safety"
+  ],
+  "era": "timeless",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "draw",
+    "label": "Speed when it reaches her, mph",
+    "unit": "mph",
+    "columns": [
+      "30 mph",
+      "35 mph",
+      "40 mph",
+      "45 mph",
+      "50 mph",
+      "55 mph",
+      "60 mph"
+    ],
+    "values": [
+      0,
+      20.5,
+      29.9,
+      37.6,
+      44.6,
+      51.1,
+      57.3
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 70,
+    "judge": 2,
+    "near": 0.08,
+    "verdict": {
+      "under": "Faster than that: at 40 mph the car still hits at about 30, where the slower one stopped.",
+      "near": "Right: only 10 mph more, and the car still arrives at about 30 mph.",
+      "over": "A bit lower: at 40 mph it hits at about 30, the speed the slower car set off at."
+    },
+    "notes": [
+      {
+        "at": 4,
+        "text": "At 50: hits at 45 mph"
+      }
+    ]
+  },
+  "source": "The Highway Code, Rule 126, stopping distances",
+  "source_kind": "primary_document",
+  "reference": "Department for Transport, The Highway Code, Rule 126 and typical stopping distances (30 mph: 9 m thinking + 14 m braking; 40 mph: 12 m + 24 m); impact speeds computed from these with steady braking",
+  "written": "2026-10-07"
+}

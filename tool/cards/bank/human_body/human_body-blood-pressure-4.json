@@ -1,0 +1,66 @@
+{
+  "id": "human_body-blood-pressure-4",
+  "topic": "human_body",
+  "genre": "human_body.blood_and_heart",
+  "strand": "human_body.blood_and_heart.blood_pressure",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Worldwide, which risk is linked to the most deaths a year: smoking, high blood pressure, obesity, air pollution or alcohol?",
+  "answer": "High blood pressure: about 10.8 million deaths in 2019, ahead of tobacco at 8.7 million, in the Global Burden of Disease estimates. It tops the list because it is common and silent. It strains the arteries for decades without a symptom, until a stroke or a heart attack. Only a cuff shows it.",
+  "move": "The risk that gives no symptoms is the one to go and measure.",
+  "keywords": [
+    "high blood pressure",
+    "risk factors",
+    "smoking",
+    "air pollution",
+    "global burden of disease"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "GBD 2019 Risk Factors, The Lancet, 2020",
+  "source_kind": "paper",
+  "reference": "GBD 2019 Risk Factors Collaborators (2020) Global burden of 87 risk factors in 204 countries and territories, 1990-2019, The Lancet 396: 1223-1249",
+  "written": "2026-10-07",
+  "ask": "When did I last have my blood pressure measured, and what was the number?",
+  "scene": {
+    "type": "rank",
+    "quantity": "Deaths a year, millions",
+    "most": "Most",
+    "items": [
+      {
+        "label": "Smoking",
+        "value": 8.7,
+        "note": "Second-hand smoke included: close behind, but not first."
+      },
+      {
+        "label": "Obesity",
+        "value": 5.0,
+        "note": "Counted as a high body-mass index; much of its harm runs through blood pressure."
+      },
+      {
+        "label": "Blood pressure",
+        "value": 10.8,
+        "note": "It has no symptoms: many people only learn they have it from a cuff."
+      },
+      {
+        "label": "Alcohol",
+        "value": 2.4,
+        "note": "About 2.4 million: under a quarter of the top killer's toll."
+      },
+      {
+        "label": "Air pollution",
+        "value": 6.7,
+        "note": "Fine particles outdoors, and smoke from cooking fires indoors."
+      }
+    ]
+  }
+}

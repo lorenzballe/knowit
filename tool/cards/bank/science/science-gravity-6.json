@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why is Earth's gravity in metres per second squared, 9.81, so close to π squared, 9.87?",
-  "answer": "Because the metre nearly was a pendulum. A pendulum whose single swing takes one second is g/π² metres long, and in 1791 the French Academy weighed it as the new unit. It chose instead a ten-millionth of the pole-to-equator arc, since gravity varies with latitude; that arc landed within 0.6% of the pendulum.",
+  "question": "Lengthen a pendulum and time one swing. Why is Earth's gravity, 9.81 m/s², so close to π squared, 9.87?",
+  "answer": "Because the metre nearly was a pendulum. One swing takes π times the square root of length over g, so a one-second swing needs a length of g/π² metres. In 1791 the French Academy weighed that as the new unit, then chose a ten-millionth of the pole-to-equator arc instead; the two landed within 0.6%.",
   "move": "When two numbers match too well, look for a shared history before calling it luck.",
   "ask": "When two things match too neatly, do I look for a shared cause before calling it luck?",
   "keywords": [
@@ -21,7 +21,7 @@
   "region": "europe",
   "hook": "puzzle",
   "mood": "wonder",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
@@ -30,5 +30,83 @@
   "source": "Alder, The Measure of All Things, 2002",
   "source_kind": "book",
   "reference": "Alder, The Measure of All Things: The Seven-Year Odyssey and Hidden Error That Transformed the World, Free Press, 2002",
-  "written": "2026-09-27"
+  "written": "2026-09-27",
+  "scene": {
+    "type": "slider",
+    "control": "Pendulum length",
+    "controlUnit": "cm",
+    "readout": "One swing takes",
+    "readoutUnit": "s",
+    "start": 50,
+    "step": 1,
+    "decimals": 2,
+    "points": [
+      [
+        25,
+        0.502
+      ],
+      [
+        30,
+        0.549
+      ],
+      [
+        40,
+        0.634
+      ],
+      [
+        50,
+        0.709
+      ],
+      [
+        60,
+        0.777
+      ],
+      [
+        75,
+        0.869
+      ],
+      [
+        90,
+        0.952
+      ],
+      [
+        99.4,
+        1.0
+      ],
+      [
+        110,
+        1.052
+      ],
+      [
+        125,
+        1.121
+      ],
+      [
+        150,
+        1.228
+      ],
+      [
+        175,
+        1.327
+      ],
+      [
+        200,
+        1.419
+      ]
+    ],
+    "notes": [
+      {
+        "at": 25,
+        "text": "A quarter of a metre: half a second per swing."
+      },
+      {
+        "at": 99,
+        "text": "99.4 cm: one swing, one second. That length is g ÷ π² metres."
+      },
+      {
+        "at": 200,
+        "text": "Two metres: 1.42 s. Four times the half metre, only twice the swing."
+      }
+    ]
+  }
 }

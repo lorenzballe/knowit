@@ -12,7 +12,7 @@
     "False"
   ],
   "correct": 1,
-  "answer": "False. Russel Kinnel at Morningstar found that in every asset class and period tested, the cheapest fifth of funds beat the most expensive fifth. Star ratings, built on past performance, worked most of the time but not always. A fee is taken every year, whatever the market does; a hot streak fades.",
+  "answer": "False. Russel Kinnel at Morningstar found the cheapest fifth of funds beat the dearest fifth in every asset class and period tested; star ratings worked most of the time, not always. Stars can rest on just three years of returns, and three years cannot tell skill from luck. A fee is certain.",
   "move": "Prefer the cost you can be sure of over a past that may not repeat.",
   "ask": "When I choose an investment, do I look at last year's winners or at what it costs me each year?",
   "trap": "Trusting ratings built on past winners over a dull cost figure.",
@@ -32,8 +32,37 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated fund months",
+    "hit": "Month beat the market",
+    "groups": [
+      {
+        "label": "No skill",
+        "rate": 0.5
+      },
+      {
+        "label": "Real skill",
+        "rate": 0.55
+      }
+    ],
+    "steps": [
+      72,
+      240,
+      720,
+      7200
+    ],
+    "seed": 357,
+    "button": "Add months",
+    "notes": [
+      "Three years, 36 months each: no skill wins 64% of months, real skill 44%.",
+      "Ten years each: 51% against 44%. Still the wrong way round.",
+      "30 years, a whole career: 51% and 51%. Even a career can fail to tell them apart.",
+      "300 years each: 50% against 55%, the edge built in. No fund lives that long."
+    ]
+  },
   "source": "Kinnel, Morningstar, 2010",
   "source_kind": "company",
   "reference": "https://www.morningstar.com/articles/347327/how-expense-ratios-and-star-ratings-predict-succes.html",
-  "written": "2026-10-03"
+  "written": "2026-10-07"
 }

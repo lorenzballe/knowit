@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Is a bigger world a better one?",
-  "answer": "Take a happy population. Adding people whose lives are worth living seems no worse. Repeat, trading a little quality for more numbers each time, and you arrive at an enormous population whose lives are barely worth living — rated better than the first. Forty years on, nobody has an agreed way out.",
+  "question": "Rank worlds by adding up how good every life is. How good must lives be in a world 100 times as crowded to tie?",
+  "answer": "Barely worth living, if only the total counts. Derek Parfit showed each step looks harmless: adding lives worth living harms no one, and sharing more evenly seems no loss. Follow the steps and an enormous, drab world outranks a happy one. He called it the repugnant conclusion; forty years on, nobody has an agreed way out.",
   "move": "Every reasonable-looking rule about population leads somewhere nobody accepts.",
   "ask": "Which of my goals keeps saying 'more is better', and would I stand by that if I followed it to the end?",
   "keywords": [
@@ -20,7 +20,7 @@
   "region": "none",
   "hook": "paradox",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "abstract",
   "shelf_life": "evergreen",
   "mature": false,
@@ -28,5 +28,123 @@
   "figure": "none",
   "source": "Parfit, Reasons and Persons, 1984; the repugnant conclusion",
   "source_kind": "book",
-  "reference": "Parfit, Reasons and Persons, Oxford University Press, 1984, part four"
+  "reference": "Parfit, Reasons and Persons, Oxford University Press, 1984, part four",
+  "scene": {
+    "type": "slider",
+    "control": "People, times the happy world",
+    "controlUnit": "×",
+    "readout": "Each life's score to tie, of 100",
+    "readoutUnit": "",
+    "start": 1,
+    "step": 1,
+    "decimals": 1,
+    "points": [
+      [
+        1,
+        100.0
+      ],
+      [
+        1.25,
+        80.0
+      ],
+      [
+        1.5,
+        66.7
+      ],
+      [
+        2,
+        50.0
+      ],
+      [
+        2.5,
+        40.0
+      ],
+      [
+        3,
+        33.3
+      ],
+      [
+        4,
+        25.0
+      ],
+      [
+        5,
+        20.0
+      ],
+      [
+        6,
+        16.7
+      ],
+      [
+        7,
+        14.3
+      ],
+      [
+        8,
+        12.5
+      ],
+      [
+        10,
+        10.0
+      ],
+      [
+        12,
+        8.3
+      ],
+      [
+        15,
+        6.7
+      ],
+      [
+        20,
+        5.0
+      ],
+      [
+        25,
+        4.0
+      ],
+      [
+        30,
+        3.3
+      ],
+      [
+        40,
+        2.5
+      ],
+      [
+        50,
+        2.0
+      ],
+      [
+        60,
+        1.7
+      ],
+      [
+        80,
+        1.2
+      ],
+      [
+        100,
+        1.0
+      ]
+    ],
+    "notes": [
+      {
+        "at": 1,
+        "text": "A world of happy people. Score every life 100."
+      },
+      {
+        "at": 2,
+        "text": "Twice the people at half the quality: the same total, so just as good."
+      },
+      {
+        "at": 10,
+        "text": "Ten times the people at 10 each. Any better than 10 and the crowd wins."
+      },
+      {
+        "at": 100,
+        "text": "A hundred times the people, lives barely worth living: the sum calls it a tie."
+      }
+    ]
+  }
 }

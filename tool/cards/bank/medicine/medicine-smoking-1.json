@@ -6,17 +6,17 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "availability",
-  "question": "In the 50-year study of British doctors, how much life did lifelong smokers lose on average?",
+  "question": "Grandad smoked all his life and reached 90. In the 50-year study of British doctors, how much life did lifelong smokers lose?",
   "options": [
     "About 10 years",
     "About 2 years",
     "About 25 years"
   ],
   "correct": 0,
-  "answer": "About 10 years. Doctors who smoked all their lives died about a decade earlier than those who never smoked. Stopping at 30 won back nearly all of it; stopping at 50, about six years; even at 60, about three. Everyone knows a smoker who reached 90; the study counted all the others too.",
+  "answer": "About 10 years. Lifelong smokers among the doctors died about a decade earlier than those who never smoked; stopping at 30 won back nearly all of it. On the study's survival chart about 1 smoker in 25 reached 90, against about 1 in 4 who never smoked. Grandad was the 1 in 25.",
   "move": "The one exception you remember hides the many you never met.",
   "ask": "Which risky habit do I excuse because I know one person it never seemed to hurt?",
-  "trap": "About 2 years, since everyone knows a smoker who reached 90.",
+  "trap": "About 2 years, since Grandad smoked and still reached 90.",
   "keywords": [
     "smoking",
     "british doctors study",
@@ -34,8 +34,37 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated men",
+    "hit": "Lived to 90",
+    "groups": [
+      {
+        "label": "Never smoked",
+        "rate": 0.24
+      },
+      {
+        "label": "Smoked",
+        "rate": 0.04
+      }
+    ],
+    "steps": [
+      8,
+      80,
+      800,
+      8000
+    ],
+    "seed": 468,
+    "button": "Add men",
+    "notes": [
+      "Four relatives each: one smoker reached 90, no non-smoker did. 25% to 0%.",
+      "40 each: 28% against 13%. The family story is already turning.",
+      "400 each: 24% against 5%.",
+      "4,000 each: 24% against 4%, the doctors' figures. Grandad was the 1 in 25."
+    ]
+  },
   "source": "Doll et al., BMJ, 2004",
   "source_kind": "paper",
   "reference": "Doll, Peto, Boreham & Sutherland, Mortality in relation to smoking: 50 years' observations on male British doctors, BMJ, 2004",
-  "written": "2026-10-03"
+  "written": "2026-10-07"
 }

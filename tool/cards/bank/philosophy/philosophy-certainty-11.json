@@ -1,0 +1,71 @@
+{
+  "id": "philosophy-certainty-11",
+  "topic": "philosophy",
+  "genre": "philosophy.knowledge",
+  "strand": "philosophy.knowledge.certainty",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "You give a rumour 1 chance in 100. Each independent source confirming it is ten times likelier if it's true. How sure after each?",
+  "answer": "About 9% after one, a coin toss after two, 91% after three. Each independent source multiplies the odds by ten: 1 to 99 becomes 10 to 99, then 100 to 99, then 1,000 to 99. The first piece of evidence barely shows; the third settles it. Three retellings of one rumour, though, count as one.",
+  "move": "Weigh evidence by multiplying odds, and count copies of one source once.",
+  "ask": "Which belief do I hold on one source, and which did I dismiss after one?",
+  "keywords": [
+    "bayes' theorem",
+    "evidence",
+    "odds",
+    "testimony",
+    "certainty"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "wonder",
+  "numeracy": 3,
+  "abstraction": "abstract",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "draw",
+    "label": "Chance the rumour is true",
+    "unit": "%",
+    "columns": [
+      "Before",
+      "1st",
+      "2nd",
+      "3rd",
+      "4th",
+      "5th"
+    ],
+    "values": [
+      1,
+      9.2,
+      50.3,
+      91.0,
+      99.0,
+      99.9
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 110,
+    "judge": 1,
+    "near": 0.08,
+    "verdict": {
+      "under": "Lower than the truth: one source lifts 1% to 9%, the second to a coin toss.",
+      "near": "Right: one source takes you only to 9%. The second makes it 50%, the third 91%.",
+      "over": "Too sure too soon: one source lifts 1% only to 9%. The jump comes with the second."
+    },
+    "notes": [
+      {
+        "at": 3,
+        "text": "3rd source: 91%"
+      }
+    ]
+  },
+  "source": "Bayes's rule in odds form; Good, 1950",
+  "source_kind": "book",
+  "reference": "Good, Probability and the Weighing of Evidence, Charles Griffin, London, 1950 (posterior odds = prior odds × likelihood ratio)",
+  "written": "2026-10-07"
+}

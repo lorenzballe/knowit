@@ -1,0 +1,60 @@
+{
+  "id": "medicine-smoking-4",
+  "topic": "medicine",
+  "genre": "medicine.public_health",
+  "strand": "medicine.public_health.smoking",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In the United States, which kills the most people each year: car crashes, drug overdoses, alcohol or smoking?",
+  "answer": "Smoking, by far: about 480,000 American deaths a year, the CDC estimates, nearly one death in five. Alcohol follows at about 178,000. Overdoses make headlines because they kill the young, suddenly; tobacco kills slowly, decades after the first cigarette, mostly late in life, so each death is recorded as an ordinary illness.",
+  "move": "A killer that works slowly looks like bad luck; count it anyway.",
+  "keywords": [
+    "smoking",
+    "alcohol",
+    "drug overdoses",
+    "causes of death"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "CDC; NCHS; NHTSA death statistics",
+  "source_kind": "statistics",
+  "reference": "CDC, Health Effects of Cigarette Smoking (more than 480,000 deaths a year); Esser et al. (2024) Deaths from excessive alcohol use, United States, 2016-2021, MMWR 73(8); NCHS Data Brief, Drug overdose deaths in the United States, 2002-2022; NHTSA, Traffic Safety Facts 2022",
+  "written": "2026-10-07",
+  "ask": "Which risk in my own life do I treat as normal because it kills slowly?",
+  "scene": {
+    "type": "rank",
+    "quantity": "US deaths a year, thousands",
+    "most": "Most",
+    "items": [
+      {
+        "label": "Overdoses",
+        "value": 107,
+        "note": "About 107,000 in 2022, the peak year; most involved fentanyl."
+      },
+      {
+        "label": "Car crashes",
+        "value": 42.5,
+        "note": "About 42,500 in 2022."
+      },
+      {
+        "label": "Smoking",
+        "value": 480,
+        "note": "About 480,000: more than the other three put together."
+      },
+      {
+        "label": "Alcohol",
+        "value": 178,
+        "note": "About 178,000: more than overdoses, and far less talked about."
+      }
+    ]
+  }
+}

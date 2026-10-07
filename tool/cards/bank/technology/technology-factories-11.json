@@ -1,0 +1,70 @@
+{
+  "id": "technology-factories-11",
+  "topic": "technology",
+  "genre": "technology.where_things_come_from",
+  "strand": "technology.where_things_come_from.factories",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Of the world's greenhouse gas, which part is largest: planes, road vehicles, cement, steel or farm animals?",
+  "answer": "Road vehicles, at about 12% of global greenhouse gas in 2016, then iron and steel at about 7%. Cement, at 3%, outweighs aviation at about 2%. Personal footprint calculators rarely show steel or cement, because nobody buys a tonne of either: they arrive hidden inside a car, a bridge or a flat.",
+  "move": "The quiet industries that build the world can outweigh the ones people argue about.",
+  "keywords": [
+    "cement",
+    "steel",
+    "aviation",
+    "livestock",
+    "emissions by sector"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Climate Watch data, via Our World in Data",
+  "source_kind": "statistics",
+  "reference": "Ritchie, H. (2020) Sector by sector: where do global greenhouse gas emissions come from? Our World in Data, from Climate Watch and World Resources Institute data for 2016",
+  "written": "2026-10-07",
+  "ask": "When I picture climate pollution, which industries never come to mind?",
+  "also": [
+    "nature.climate.carbon_footprint"
+  ],
+  "scene": {
+    "type": "rank",
+    "quantity": "Share of world emissions",
+    "most": "Most",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Aviation",
+        "value": 1.9,
+        "note": "About 2%; contrails add extra warming that this figure leaves out."
+      },
+      {
+        "label": "Cement",
+        "value": 3.0,
+        "note": "Heating limestone splits CO₂ out of the rock itself, before any fuel counts."
+      },
+      {
+        "label": "Road vehicles",
+        "value": 11.9,
+        "note": "Cars, lorries and buses: about 12%, the biggest slice here."
+      },
+      {
+        "label": "Livestock and manure",
+        "value": 5.8,
+        "note": "Methane from farm animals' guts and manure: three times aviation."
+      },
+      {
+        "label": "Iron and steel",
+        "value": 7.2,
+        "note": "Coke strips the oxygen from iron ore and leaves as CO₂."
+      }
+    ]
+  }
+}

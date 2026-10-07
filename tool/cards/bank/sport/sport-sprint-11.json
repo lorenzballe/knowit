@@ -1,0 +1,64 @@
+{
+  "id": "sport-sprint-11",
+  "topic": "sport",
+  "genre": "sport.records",
+  "strand": "sport.records.sprint",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A sports site charted 100 m world records from Jim Hines in 1968 to Usain Bolt. Bolt's bar is a stub. Where's the trick?",
+  "answer": "In the axis, which starts at 9.5 seconds. From zero, Bolt's 9.58 is 3.7% under Hines's 9.95: forty-one years of training, tracks and shoes for under four tenths of a second. At the line that still counts, nearly four metres, but the chart draws it as Hines taking five times longer.",
+  "move": "When values sit close together but bars do not, find the axis's start.",
+  "ask": "When a record or a result looks like a leap, do I check how much it really moved?",
+  "keywords": [
+    "100 metres",
+    "world records",
+    "usain bolt",
+    "truncated axis"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "trick",
+    "trick": "truncated",
+    "outlet": "Typical chart",
+    "headline": "Bolt left history in the dust",
+    "honest": "41 years, 3.7% faster",
+    "label": "Men's 100 m world record",
+    "unit": "s",
+    "decimals": 2,
+    "columns": [
+      "Hines '68",
+      "Lewis '88",
+      "Greene '99",
+      "Bolt '09"
+    ],
+    "values": [
+      9.95,
+      9.92,
+      9.79,
+      9.58
+    ],
+    "from": 9.5,
+    "to": 10.0,
+    "found": "Yes: the axis starts at 9.5 seconds, not at zero.",
+    "miss": "That part is fair. Look at where the bars start.",
+    "misses": {
+      "marks": "The times on the bars are right. It's the bar lengths that lie."
+    },
+    "name": "Axis cut at 9.5 s",
+    "lesson": "Close numbers, far-apart bars: the axis has been cut. Compare the numbers first."
+  },
+  "source": "World Athletics 100 m record progression",
+  "source_kind": "institution",
+  "reference": "World Athletics, men's 100 metres world record progression (electronic timing): Hines 9.95 (1968), Lewis 9.92 (1988), Greene 9.79 (1999), Bolt 9.58 (2009)",
+  "written": "2026-10-07"
+}

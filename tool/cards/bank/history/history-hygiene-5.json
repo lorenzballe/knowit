@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Toilet paper is first mentioned in China in 589. By 1393, how many sheets a year was the Ming court at Nanjing supplied with?",
-  "answer": "720,000, each about 60 by 90 cm, plus 15,000 small, soft, perfumed ones for the imperial family. The first mention, by the scholar Yan Zhitui, is a worry about sacrilege: paper bearing quotations from the classics or names of sages he dared not use 'for toilet purposes'. So plain paper already was.",
+  "question": "What was the scholar who wrote the first known mention of toilet paper, in 589, worried about?",
+  "answer": "Sacrilege. Yan Zhitui wrote that paper bearing quotations from the Five Classics or the names of sages he dared not use 'for toilet purposes', so plain paper already was. By 1393 the Ming court at Nanjing was supplied with 720,000 sheets a year, each about 60 by 90 cm.",
   "move": "A habit often enters the written record as a rule about its exceptions.",
   "ask": "Which everyday habit of mine would only ever show up in writing as a rule about its exceptions?",
   "keywords": [
@@ -19,46 +19,16 @@
   ],
   "era": "medieval",
   "region": "asia",
-  "hook": "number",
+  "hook": "origin",
   "mood": "playful",
-  "numeracy": 2,
+  "numeracy": 1,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "scene": {
-    "type": "count",
-    "unit": "sheets a year, each 60 by 90 cm",
-    "answer": 720000,
-    "each": 400,
-    "eachLabel": "1 dot = 400 sheets",
-    "compare": "About 2,000 sheets a day",
-    "options": [
-      {
-        "label": "About 7,000",
-        "value": 7000,
-        "note": "Two zeros short. A court of thousands, and each sheet was 60 by 90 cm."
-      },
-      {
-        "label": "About 70,000",
-        "value": 70000,
-        "note": "One zero short. 720,000 sheets a year: about 2,000 a day."
-      },
-      {
-        "label": "About 700,000",
-        "value": 700000,
-        "note": "Right: 720,000 a year, plus 15,000 perfumed ones for the imperial family."
-      },
-      {
-        "label": "7 million",
-        "value": 7000000,
-        "note": "One zero too many. Still, 720,000 sheets that size would cover 39 hectares."
-      }
-    ]
-  },
   "source": "Tsien, Paper and Printing, 1985",
   "source_kind": "book",
   "reference": "Tsien Tsuen-Hsuin, Paper and Printing, in Needham, Science and Civilisation in China, vol. 5 part 1, Cambridge University Press, 1985",
-  "written": "2026-10-06"
+  "written": "2026-10-07"
 }

@@ -1,0 +1,61 @@
+{
+  "id": "nature-what-one-person-can-do-4",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.what_one_person_can_do",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In an EU home, which uses the most energy: lights and appliances, hot water, cooking or heating the rooms?",
+  "answer": "Heating the rooms, about 63% of household energy in the EU, Eurostat reports, with hot water at about 15%. Every light and gadget together comes to about 14%. Heat leaks through walls, windows and roofs all winter, so insulation and the thermostat decide most of the bill, not chargers left in the socket.",
+  "move": "Before trimming the small switches, find the one that sets most of the bill.",
+  "keywords": [
+    "home heating",
+    "hot water",
+    "household energy",
+    "insulation"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Eurostat, energy consumption in households",
+  "source_kind": "statistics",
+  "reference": "Eurostat (2024) Energy consumption in households, Statistics Explained, data for 2022 (final energy consumption in the residential sector by use)",
+  "written": "2026-10-07",
+  "ask": "What is my thermostat set to, and when did anyone last check the loft insulation?",
+  "scene": {
+    "type": "rank",
+    "quantity": "Share of home energy, EU",
+    "most": "Most",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Appliances",
+        "value": 14,
+        "note": "Fridge, TV, lamps, chargers and the rest together: about a seventh."
+      },
+      {
+        "label": "Cooking",
+        "value": 6,
+        "note": "About 6%: the hob and oven matter least."
+      },
+      {
+        "label": "Hot water",
+        "value": 15,
+        "note": "As much as every light and appliance together: long showers count."
+      },
+      {
+        "label": "Heating",
+        "value": 63,
+        "note": "Nearly two thirds: the thermostat matters more than every switch."
+      }
+    ]
+  }
+}

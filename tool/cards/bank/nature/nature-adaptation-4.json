@@ -1,0 +1,57 @@
+{
+  "id": "nature-adaptation-4",
+  "topic": "nature",
+  "genre": "nature.climate",
+  "strand": "nature.climate.adaptation",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Worldwide, which kills more people each year: heat, cold, or floods, storms and earthquakes together?",
+  "answer": "Cold, about nine times more than heat: some 4.6 million deaths a year against 490,000, Zhao's team estimated for 2000 to 2019. Most die on merely cool days, of strokes and heart attacks, as chilled blood thickens. Deaths rise more each winter in mild Portugal than in cold Finland, whose homes are built for it.",
+  "move": "The everyday version of a danger usually kills more than the dramatic one.",
+  "keywords": [
+    "cold",
+    "heat",
+    "temperature deaths",
+    "natural disasters",
+    "winter deaths"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Zhao et al., Lancet Planetary Health, 2021",
+  "source_kind": "paper",
+  "reference": "Zhao, Q. et al. (2021) Global, regional, and national burden of mortality associated with non-optimal ambient temperatures from 2000 to 2019, Lancet Planetary Health 5: e415-e425; Healy (2003) Excess winter mortality in Europe, J Epidemiol Community Health 57: 784-789; EM-DAT disaster database, CRED",
+  "written": "2026-10-07",
+  "ask": "Does anyone I know live in a home too cold in winter for their health?",
+  "scene": {
+    "type": "rank",
+    "quantity": "Deaths a year, thousands",
+    "most": "Most",
+    "log": true,
+    "items": [
+      {
+        "label": "Heat",
+        "value": 489,
+        "note": "About 490,000 a year, and rising as the world warms."
+      },
+      {
+        "label": "Disasters",
+        "value": 45,
+        "note": "About 45,000 a year on average, though one bad year can top 200,000."
+      },
+      {
+        "label": "Cold",
+        "value": 4590,
+        "note": "About 4.6 million, mostly on ordinary cool days, not in freezing snaps."
+      }
+    ]
+  }
+}

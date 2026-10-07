@@ -1,0 +1,78 @@
+{
+  "id": "science-too-good-to-be-true-4",
+  "topic": "science",
+  "genre": "science.spot_bad_science",
+  "strand": "science.spot_bad_science.too_good_to_be_true",
+  "also": [
+    "nature.evolution.humans_evolving"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Sussex, 1912. A gravel pit yields a human-looking skull and an ape-like jaw. What was Piltdown Man?",
+  "answer": "A forgery: a human skull and an orangutan's jaw, stained to look ancient. It fooled experts for 40 years because it showed what many hoped to see: a big brain first, and in England. Every real fossil found later showed the reverse order, apelike brains with humanlike teeth, and Piltdown fitted none of them.",
+  "move": "Be most suspicious of the evidence that flatters what you hoped.",
+  "ask": "Which finding did I accept fastest because it was exactly what I wanted?",
+  "keywords": [
+    "piltdown man",
+    "forgery",
+    "fluorine dating",
+    "human evolution",
+    "orangutan"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Missing link",
+      "Two creatures",
+      "A forgery"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Skull and jaw lie in old gravel beside bones of long-extinct animals.",
+        "tag": "Beside extinct animals",
+        "rulesOut": []
+      },
+      {
+        "text": "The parts that would prove jaw and skull fit together are broken off.",
+        "tag": "The joint is missing",
+        "rulesOut": []
+      },
+      {
+        "text": "1949: the bones hold almost no fluorine, which buried bone soaks up over ages.",
+        "tag": "Too little fluorine",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "1953, under a microscope: fine scratches on the molars. They were filed flat.",
+        "tag": "Filed teeth",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "The jaw is an orangutan's, stained brown to match the gravel.",
+        "tag": "An orangutan's jaw",
+        "rulesOut": []
+      }
+    ],
+    "why": "Fluorine made the bones young; the file marks made them deliberate. Nature doesn't file teeth."
+  },
+  "source": "Weiner, Oakley & Le Gros Clark, 1953",
+  "source_kind": "paper",
+  "reference": "Weiner, Oakley & Le Gros Clark, The solution of the Piltdown problem, Bulletin of the British Museum (Natural History), Geology 2(3):141-146, 1953",
+  "written": "2026-10-07"
+}

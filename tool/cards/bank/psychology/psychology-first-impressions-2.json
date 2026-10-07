@@ -6,28 +6,40 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How does an interviewer's impression from a CV change the way the interview itself is run?",
-  "answer": "It steers it. Dougherty, Turban and Callender recorded real recruiters' interviews. Candidates who looked good on paper met a warmer manner, more selling of the job and less probing for information. The interview, meant to test the first impression, was run so as to confirm it. Strong CVs were met with a sales pitch.",
+  "question": "A recruiter opens your CV. How long do they look at it before deciding whether you are worth a call?",
+  "answer": "About 7 seconds: 7.4 in TheLadders' 2018 eye-tracking of recruiters. That verdict then runs the interview. Dougherty, Turban and Callender recorded real ones: candidates strong on paper met warmth, a sales pitch and less probing. The test of the impression was run to confirm it.",
   "move": "Check whether your test of an impression is really built to confirm it.",
-  "ask": "When I meet someone I already like on paper, do I ask them harder questions or just easier ones?",
+  "ask": "Do I question people I already like on paper less hard?",
   "keywords": [
     "job interviews",
     "recruiters",
     "cvs",
+    "eye tracking",
     "self-fulfilling impressions"
   ],
-  "era": "twentieth",
+  "era": "recent",
   "region": "americas",
   "hook": "mechanism",
   "mood": "sober",
-  "numeracy": 0,
+  "numeracy": 1,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Dougherty, Turban & Callender, J Applied Psychology, 1994",
+  "scene": {
+    "type": "hold",
+    "what": "A recruiter's look at a CV",
+    "seconds": 7.4,
+    "comparisons": [
+      {
+        "label": "Same study, 2012",
+        "seconds": 6
+      }
+    ]
+  },
+  "source": "TheLadders, 2018; Dougherty et al., 1994",
   "source_kind": "paper",
-  "reference": "Dougherty, Turban & Callender, Confirming first impressions in the employment interview: a field study of interviewer behavior, Journal of Applied Psychology, 1994",
-  "written": "2026-10-03"
+  "reference": "TheLadders, Eye-Tracking Study, 2018; Dougherty, Turban & Callender, Confirming first impressions in the employment interview: a field study of interviewer behavior, Journal of Applied Psychology 79(5), 1994",
+  "written": "2026-10-07"
 }

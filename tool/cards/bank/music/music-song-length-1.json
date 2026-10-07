@@ -6,16 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do pop songs still last about three minutes, when streaming has no limit?",
-  "answer": "Because a disc set the mould. Songwriters fitted their songs to the shellac record, and singles and radio playlists kept the shape long after the limit was gone. Streaming adds a squeeze of its own: a play counts once it passes 30 seconds, so shorter songs earn more plays per hour of listening.",
-  "move": "A limit can outlive the technology that imposed it by a century.",
-  "ask": "Which of my habits was set by a limit that no longer exists?",
+  "question": "What first made pop songs about three minutes long?",
+  "answer": "The grain of shellac. Songs were first cut on 78s, pressed from a gritty, noisy shellac mix that needed a wide groove and a fast spin, so a 10-inch side ran out after about three minutes. Vinyl's finer grain made the 20-minute LP side possible in 1948, but singles and radio had already fixed the shape.",
+  "move": "When a habit has no reason today, look for the machine it was built for.",
+  "ask": "Which of my habits was shaped by a machine I no longer use?",
   "keywords": [
     "78 rpm records",
+    "shellac",
     "song length",
-    "shellac discs",
-    "singles",
-    "radio"
+    "microgroove",
+    "singles"
   ],
   "era": "twentieth",
   "region": "world",
@@ -35,31 +35,31 @@
     },
     "levels": [
       {
-        "text": "Radio and the 7-inch single kept songs short for decades."
+        "text": "Radio and the 7-inch single kept songs that length for decades."
       },
       {
-        "text": "Those formats took the length from the 10-inch 78 record.",
+        "text": "They took it from the 10-inch 78, the disc songs were first cut for.",
         "figure": "~3 min",
         "unit": "per side of a 10-inch 78"
       },
       {
-        "text": "Songwriters learned to fit a song to what one side could hold."
+        "text": "A 78 spun fast in a wide groove, so each side ran out quickly."
       },
       {
-        "text": "The disc is gone; the habit it set is still in the songs."
+        "text": "Gritty shellac couldn't hold the fine groove vinyl later could."
       }
     ],
     "guess": {
       "options": [
-        "Old discs held 3 minutes",
         "Our attention runs out",
-        "Radio pays per song"
+        "Shellac needed wide grooves",
+        "Radio paid by the song"
       ],
-      "answer": 0
+      "answer": 1
     }
   },
   "source": "Katz, Capturing Sound, 2004",
   "source_kind": "book",
-  "reference": "Katz, Capturing Sound: How Technology Has Changed Music, University of California Press, 2004; https://support.spotify.com/artists/article/streams-and-listeners/",
-  "written": "2026-09-26"
+  "reference": "Mark Katz, Capturing Sound: How Technology Has Changed Music, University of California Press, 2004, ch. 1",
+  "written": "2026-10-07"
 }

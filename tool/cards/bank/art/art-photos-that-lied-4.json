@@ -1,0 +1,74 @@
+{
+  "id": "art-photos-that-lied-4",
+  "topic": "art",
+  "genre": "art.photography",
+  "strand": "art.photography.photos_that_lied",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Yorkshire, 1917. Two young cousins photograph fairies dancing beside a stream. How were the pictures made?",
+  "answer": "Paper cut-outs, copied from Princess Mary's Gift Book and propped on hatpins. The expert's check was honest: one exposure, no tampering. But a true answer to a narrow question was taken as an answer to the big one, and Conan Doyle's fame did the rest. The hoax stood for 66 years.",
+  "move": "Ask exactly which question an expert answered, and which one they did not.",
+  "ask": "Which expert-verified claim have I accepted without asking what exactly was verified?",
+  "keywords": [
+    "cottingley fairies",
+    "conan doyle",
+    "photo hoax",
+    "expert opinion"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Real fairies",
+      "Double exposure",
+      "Paper cut-outs"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Elsie is 16, Frances 9. They borrow her father's camera and come back with fairies.",
+        "tag": "Two girls, one camera",
+        "rulesOut": []
+      },
+      {
+        "text": "A photography expert finds a single exposure and no retouching.",
+        "tag": "No double exposure",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "In 1920 Arthur Conan Doyle, creator of Sherlock Holmes, publishes them as proof.",
+        "tag": "Conan Doyle believes",
+        "rulesOut": []
+      },
+      {
+        "text": "The fairies' poses match drawings in a children's gift book from 1914.",
+        "tag": "Poses from a 1914 book",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "1983: the cousins, now old women, admit to paper cut-outs held up with hatpins.",
+        "tag": "Hatpins",
+        "rulesOut": []
+      }
+    ],
+    "why": "Real fairies don't copy a book's drawings. The expert was right about the camera, and nothing else."
+  },
+  "source": "Conan Doyle, 1922; Cooper, 1990",
+  "source_kind": "book",
+  "reference": "Conan Doyle, The Coming of the Fairies, Hodder & Stoughton, 1922; Cooper, The Case of the Cottingley Fairies, Robert Hale, 1990",
+  "written": "2026-10-07"
+}

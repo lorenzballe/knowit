@@ -6,50 +6,55 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "A waiter leaves mints with the bill: one, two, or one and then, coming back, a second. Which lifts tips most?",
-  "answer": "The mint that came back. In Strohmetz and colleagues' restaurant study, two mints at once beat one, but the same two split by a pause did best: the second looked chosen for that table, not routine. Diners repay a favour as it feels, not as it costs, and the extra sweet cost pennies.",
-  "move": "A favour that feels chosen for you pulls harder than a bigger routine one.",
-  "ask": "When a seller treats me as special, can I pause and ask what the gesture is for?",
+  "question": "A survey comes by post. Which gets the most replies: cash or a small gift inside, or either promised once you reply?",
+  "answer": "Cash sent with no strings. Church pooled 38 mail-survey experiments: money in the envelope raised replies by about 19 points and a small gift by 8, while rewards promised for replying did little. A gift that arrives first creates a debt to repay; a promised fee is just an offer, easy to turn down.",
+  "move": "A gift that arrives before the ask pulls harder than a reward promised after.",
+  "ask": "Which free thing I accepted lately came with a request I then found hard to refuse?",
   "keywords": [
     "reciprocity",
-    "tipping",
-    "restaurants",
-    "mints"
+    "surveys",
+    "incentives",
+    "free gifts"
   ],
-  "era": "recent",
-  "region": "americas",
-  "hook": "number",
-  "mood": "playful",
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
   "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "bars",
-  "source": "Strohmetz et al., Applied Social Psychology, 2002",
+  "source": "Church, Public Opinion Quarterly, 1993",
   "source_kind": "paper",
-  "reference": "Strohmetz, Rind, Fisher & Lynn, Sweetening the till: the use of candy to increase restaurant tipping, Journal of Applied Social Psychology 32(2): 300-309, 2002",
-  "written": "2026-10-06",
+  "reference": "Church, A.H. (1993) Estimating the effect of incentives on mail survey response rates: a meta-analysis, Public Opinion Quarterly 57(1): 62-79",
+  "written": "2026-10-07",
   "scene": {
     "type": "rank",
-    "quantity": "Rise in tips",
+    "quantity": "Rise in replies",
     "most": "Biggest",
-    "unit": "%",
+    "unit": "pts",
     "items": [
       {
-        "label": "Two",
-        "value": 14.1,
-        "note": "Twice the sweets, more than four times the effect of one."
+        "label": "Cash on reply",
+        "value": 5,
+        "note": "Money promised for sending it back barely moved anyone."
       },
       {
-        "label": "1 + 1",
-        "value": 23,
-        "note": "The same two mints. The pause made the second feel meant for this table."
+        "label": "Gift inside",
+        "value": 8,
+        "note": "A pen or a stamp sent up front beat a promise of real money."
       },
       {
-        "label": "One",
-        "value": 3.3,
-        "note": "One sweet on the plate with the bill barely registered."
+        "label": "Gift on reply",
+        "value": 1,
+        "note": "A gift promised for replying did next to nothing."
+      },
+      {
+        "label": "Cash inside",
+        "value": 19,
+        "note": "A small note in the envelope, no strings: replies rose most."
       }
     ]
   }

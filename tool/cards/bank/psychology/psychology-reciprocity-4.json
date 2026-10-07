@@ -1,0 +1,33 @@
+{
+  "id": "psychology-reciprocity-4",
+  "topic": "psychology",
+  "genre": "psychology.resist_persuasion",
+  "strand": "psychology.resist_persuasion.reciprocity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "What made a waiter's after-dinner mint raise tips most: the sweet itself, the number, or how it was given?",
+  "answer": "How it was given. One mint with the bill lifted tips by about 3%, two mints by about 14%. One mint, a pause, then a second offered as if specially for that table, raised them about 23%. A gift that seems personal triggers the strongest urge to repay, and the extra sweet cost pennies.",
+  "move": "A gift that feels personal pulls harder than a bigger one.",
+  "ask": "When a seller treats me as special, can I pause and ask what the gesture is for?",
+  "keywords": [
+    "reciprocity",
+    "tipping",
+    "restaurants",
+    "mints"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "number",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "source": "Strohmetz et al., J Applied Social Psychology, 2002",
+  "source_kind": "paper",
+  "reference": "Strohmetz, Rind, Fisher & Lynn, Sweetening the till: The use of candy to increase restaurant tipping, Journal of Applied Social Psychology, 2002",
+  "written": "2026-10-03"
+}

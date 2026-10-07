@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How can organic farming pollute less per field yet cost the planet more per loaf?",
-  "answer": "Because an organic field grows less. A 2012 analysis in Nature found organic yields about 25% lower on average, from about 5% for some legumes to 34% in the strictest comparisons. The same food then needs more land, and ploughed or cleared land has its own cost. Per field and per tonne can disagree.",
+  "question": "Organic fields yield less on average. If a field grows a quarter less, how much more land does the same loaf need?",
+  "answer": "A third more, not a quarter. Land per tonne is one divided by yield, so each extra point of yield gap costs more land than the last. A 2012 analysis in Nature found organic yields about 25% lower on average. Fewer chemicals per field can still mean more ploughed or cleared land per loaf.",
   "move": "Judge a method per unit of what it makes, not per field.",
   "ask": "Am I measuring my choices per item, when what matters is the total result?",
   "keywords": [
@@ -20,7 +20,7 @@
   "region": "world",
   "hook": "paradox",
   "mood": "sober",
-  "numeracy": 2,
+  "numeracy": 3,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
@@ -29,5 +29,86 @@
   "source": "Seufert, Ramankutty & Foley, Nature, 2012",
   "source_kind": "paper",
   "reference": "Seufert, Ramankutty & Foley, Comparing the yields of organic and conventional agriculture, Nature, 2012",
-  "written": "2026-10-03"
+  "written": "2026-10-03",
+  "scene": {
+    "type": "slider",
+    "control": "How much less the field yields",
+    "controlUnit": "%",
+    "readout": "Extra land for the same harvest",
+    "readoutUnit": "%",
+    "start": 0,
+    "step": 1,
+    "points": [
+      [
+        0,
+        0.0
+      ],
+      [
+        5,
+        5.3
+      ],
+      [
+        10,
+        11.1
+      ],
+      [
+        15,
+        17.6
+      ],
+      [
+        20,
+        25.0
+      ],
+      [
+        25,
+        33.3
+      ],
+      [
+        30,
+        42.9
+      ],
+      [
+        34,
+        51.5
+      ],
+      [
+        40,
+        66.7
+      ],
+      [
+        45,
+        81.8
+      ],
+      [
+        50,
+        100.0
+      ],
+      [
+        55,
+        122.2
+      ],
+      [
+        60,
+        150.0
+      ]
+    ],
+    "notes": [
+      {
+        "at": 5,
+        "text": "5% lower, as for some legumes: barely more land."
+      },
+      {
+        "at": 25,
+        "text": "The average gap, 25%: a third more land, not a quarter."
+      },
+      {
+        "at": 34,
+        "text": "34% lower, the strictest comparisons: half as much land again."
+      },
+      {
+        "at": 50,
+        "text": "Half the yield: twice the land."
+      }
+    ]
+  }
 }

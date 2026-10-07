@@ -6,29 +6,43 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What were phosphates doing in washing powder before Europe capped them?",
-  "answer": "Softening the water. Phosphates grab the calcium and magnesium in hard water, which would otherwise tie up the detergent. The EU capped laundry doses at 0.5 g of phosphorus from 2013 and dishwasher doses at 0.3 g from 2017, because rinsed into rivers they fed the algae that choke lakes.",
-  "move": "Before banning an ingredient, ask what job it was doing.",
-  "ask": "Before I drop something from my life, do I ask what job it was quietly doing?",
+  "question": "Soap on your hands under the tap. How long should the scrubbing last to clear most of the germs?",
+  "answer": "At least 20 seconds, the US Centers for Disease Control advise. Soap molecules have one end that clings to fat and one that clings to water; rubbing works them into the greasy film holding germs, and into some viruses' fatty coats, so rinsing lifts it away. Watched in public toilets, people averaged about 6 seconds.",
+  "move": "When something works by contact, the time spent is the dose.",
+  "ask": "Which of my quick routines is too short to do what I assume it does?",
   "keywords": [
-    "phosphates",
-    "washing powder",
-    "hard water",
-    "algal blooms",
-    "eu regulation"
+    "handwashing",
+    "soap",
+    "surfactants",
+    "germs"
   ],
-  "era": "recent",
-  "region": "europe",
-  "hook": "mechanism",
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
   "mood": "practical",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
-  "shelf_life": "years",
+  "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Regulation (EU) No 259/2012",
+  "scene": {
+    "type": "hold",
+    "what": "Scrubbing with soap",
+    "seconds": 20,
+    "comparisons": [
+      {
+        "label": "An average wash, observed",
+        "seconds": 6
+      },
+      {
+        "label": "WHO's full routine",
+        "seconds": 40
+      }
+    ]
+  },
+  "source": "CDC; Borchgrevink et al., 2013",
   "source_kind": "institution",
-  "reference": "https://eur-lex.europa.eu/eli/reg/2012/259/oj/eng",
-  "written": "2026-09-26"
+  "reference": "US Centers for Disease Control and Prevention, Clean Hands: When and How to Wash Your Hands; Borchgrevink, Cha & Kim, Hand washing practices in a college town environment, Journal of Environmental Health 75(8), 2013; WHO, Hand Hygiene: Why, How and When?, 2009",
+  "written": "2026-10-07"
 }

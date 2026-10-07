@@ -1,0 +1,65 @@
+{
+  "id": "life-choosing-work-5",
+  "topic": "life",
+  "genre": "life.work_and_career",
+  "strand": "life.work_and_career.choosing_work",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A careers site drew this pie of why Americans quit their jobs in 2021. Low pay looks like under a quarter. Where's the trick?",
+  "answer": "In the slices: they add up to 271%. Pew let everyone who had quit tick every reason that applied, and most ticked several. So 63% named low pay, as many named no way to advance, and 57% felt disrespected. People rarely leave a job for one reason; they go when a few pile up.",
+  "move": "Behind a big decision, look for the several reasons, not the one.",
+  "ask": "If I left my job tomorrow, which reasons would I give, and which would I keep to myself?",
+  "keywords": [
+    "quitting a job",
+    "great resignation",
+    "pie chart",
+    "low pay",
+    "pew research"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "trick",
+    "trick": "pie",
+    "outlet": "Typical chart, Pew 2022 data",
+    "headline": "Why Americans quit their jobs",
+    "honest": "Most who quit had several reasons",
+    "label": "Reasons for quitting in 2021",
+    "unit": "%",
+    "columns": [
+      "Pay too low",
+      "No advancement",
+      "Disrespected",
+      "No flexibility",
+      "Poor benefits"
+    ],
+    "values": [
+      63,
+      63,
+      57,
+      45,
+      43
+    ],
+    "found": "Yes: the slices add up to 271%. Each person could tick several.",
+    "miss": "That part is fair. Try adding up the slices.",
+    "misses": {
+      "headline": "A plain title. The pie is what makes the claim.",
+      "label": "The reasons are real. How many could each person give?"
+    },
+    "name": "Several answers, one pie",
+    "lesson": "Slices past 100% mean people gave several answers. Read each one as a share of everyone."
+  },
+  "source": "Pew Research Center, why workers quit, 2022",
+  "source_kind": "statistics",
+  "reference": "Parker & Horowitz, Majority of workers who quit a job in 2021 cite low pay, no opportunities for advancement, feeling disrespected, Pew Research Center, 9 March 2022",
+  "written": "2026-10-07"
+}
