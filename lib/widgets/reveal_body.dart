@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../l10n/l10n.dart';
 
 import '../models/pill.dart';
+import '../sync/reports.dart';
 import '../theme.dart';
 import 'diagram_view.dart';
 import 'motion.dart';
+import 'report_sheet.dart';
 
 /// Everything a card says once it is turned over: the reasoning, the trap,
 /// the plain-words retelling and the other side of a debate.
@@ -163,6 +165,8 @@ class _RevealBodyState extends State<RevealBody> {
             color: widget.ink.withValues(alpha: 0.6),
           ),
         ),
+        const SizedBox(height: 16),
+        _ReportLine(pill: pill, ink: widget.ink),
       ],
     );
   }
@@ -236,6 +240,154 @@ abstract final class _Type {
     weight: FontWeight.w600,
     color: ink.withValues(alpha: 0.7),
   );
+}
+
+/// The report as a flag at the end of the card's source line: tap it to say
+/// the card is wrong; once this phone has reported it, a quiet tick instead.
+class _ReportFlag extends StatefulWidget {
+  final Pill pill;
+  final Color ink;
+  final double size;
+  const _ReportFlag({
+    required this.pill,
+    required this.ink,
+    required this.size,
+  });
+
+  @override
+  State<_ReportFlag> createState() => _ReportFlagState();
+}
+
+class _ReportFlagState extends State<_ReportFlag> {
+  @override
+  void initState() {
+    super.initState();
+    Reports.instance.load();
+  }
+
+  Future<void> _open() async {
+    final bool? sent = await showReportSheet(context, widget.pill);
+    if (sent != true || !mounted) return;
+    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+      SnackBar(
+        content: Text(context.l10n.reportSentToast),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final String id = widget.pill.id;
+    return ListenableBuilder(
+      listenable: Reports.instance,
+      builder: (context, _) {
+        final bool done = Reports.instance.has(id);
+        // No taller than the line it sits in, so it never deepens it.
+        final Widget mark = SizedBox(
+          height: widget.size * 1.2,
+          child: Icon(
+            done ? Icons.check_rounded : Icons.outlined_flag_rounded,
+            size: widget.size,
+            color: widget.ink.withValues(alpha: done ? 0.45 : 0.6),
+          ),
+        );
+        if (done) {
+          return Semantics(
+            label: context.l10n.reportedThanks,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 6),
+              child: mark,
+            ),
+          );
+        }
+        // The visible flag is small; the target around it is not.
+        return Semantics(
+          button: true,
+          label: context.l10n.reportProblem,
+          child: GestureDetector(
+            key: ValueKey('report-$id'),
+            behavior: HitTestBehavior.opaque,
+            onTap: _open,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
+              child: mark,
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// "Report a problem", under the source it would be checked against; once
+/// this phone has reported the card, a quiet line saying so instead.
+class _ReportLine extends StatefulWidget {
+  final Pill pill;
+  final Color ink;
+  const _ReportLine({required this.pill, required this.ink});
+
+  @override
+  State<_ReportLine> createState() => _ReportLineState();
+}
+
+class _ReportLineState extends State<_ReportLine> {
+  @override
+  void initState() {
+    super.initState();
+    Reports.instance.load();
+  }
+
+  Future<void> _open() async {
+    final bool? sent = await showReportSheet(context, widget.pill);
+    if (sent != true || !mounted) return;
+    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+      SnackBar(
+        content: Text(context.l10n.reportSentToast),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final String id = widget.pill.id;
+    return ListenableBuilder(
+      listenable: Reports.instance,
+      builder: (context, _) {
+        if (!Reports.instance.has(id)) {
+          return _TextAction(
+            key: ValueKey('report-$id'),
+            ink: widget.ink,
+            icon: Icons.outlined_flag_rounded,
+            label: context.l10n.reportProblem,
+            onTap: _open,
+          );
+        }
+        return Row(
+          key: ValueKey('reported-$id'),
+          children: [
+            Icon(
+              Icons.check_rounded,
+              size: 16,
+              color: widget.ink.withValues(alpha: 0.5),
+            ),
+            const SizedBox(width: 7),
+            Flexible(
+              child: Text(
+                context.l10n.reportedThanks,
+                style: AppText.body(
+                  size: 13,
+                  weight: FontWeight.w500,
+                  color: widget.ink.withValues(alpha: 0.5),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
 /// The solution, one move at a time: the first step is shown, and each tap
@@ -1065,12 +1217,30 @@ class _CardRevealState extends State<CardReveal> {
     gap(10);
     final source = l10n.sourceLabel(pill.source);
     final sourceStyle = _Type.source(ink, f.source);
+    // The flag to report the card rides at the end of the source it would be
+    // checked against, so it costs the card no line of its own. Measured as a
+    // short unbreakable word, so it wraps where the flag would.
     out.add(
       _Block(
-        m.height(source, sourceStyle, width - widget.cornerRoom),
+        m.height(
+          '$source\u00A0WW',
+          sourceStyle,
+          width - widget.cornerRoom,
+        ),
         Padding(
           padding: EdgeInsets.only(right: widget.cornerRoom),
-          child: Text(source, style: sourceStyle),
+          child: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(text: source),
+                WidgetSpan(
+                  alignment: PlaceholderAlignment.middle,
+                  child: _ReportFlag(pill: pill, ink: ink, size: f.source),
+                ),
+              ],
+            ),
+            style: sourceStyle,
+          ),
         ),
       ),
     );

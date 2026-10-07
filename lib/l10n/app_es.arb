@@ -490,5 +490,18 @@
   "sceneTapToPick": "Toca tu elección",
   "sceneShowMe": "Muéstramelo",
   "sceneYourGuess": "Tu apuesta",
-  "sceneNOfM": "{n} de {m}"
+  "sceneNOfM": "{n} de {m}",
+  "reportProblem": "Informar de un problema",
+  "reportedThanks": "Enviado. Gracias.",
+  "reportTitle": "¿Qué falla en esta tarjeta?",
+  "reportLead": "Revisamos cada aviso con las fuentes y corregimos la tarjeta.",
+  "reportFact": "Un dato es incorrecto",
+  "reportAnswer": "La respuesta marcada como correcta está mal",
+  "reportSource": "La fuente no lo respalda",
+  "reportUnclear": "Es confuso",
+  "reportTypo": "Una errata o una línea rota",
+  "reportOther": "Otra cosa",
+  "reportNoteHint": "Algo que nos ayude a comprobarlo (opcional)",
+  "reportSend": "Enviar",
+  "reportSentToast": "Gracias. Lo revisaremos."
 }

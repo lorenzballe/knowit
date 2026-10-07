@@ -118,7 +118,7 @@ export function topList(bank: Bank, tallies: Tallies, todayUtc: string, days: nu
     for (const [id, n] of tallies.get(day) ?? []) merged.set(id, (merged.get(id) ?? 0) + n);
     for (const [id, n] of merged) {
       const c = bank.byId.get(id);
-      if (!c || (where && !where(c))) continue;
+      if (!c || c.disabled || (where && !where(c))) continue;
       readers.set(id, (readers.get(id) ?? 0) + n);
       if (!latest.has(id)) latest.set(id, i);
     }

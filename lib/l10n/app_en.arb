@@ -1811,5 +1811,57 @@
     "type": "int"
    }
   }
+ },
+ "reportProblem": "Report a problem",
+ "@reportProblem": {
+  "description": "Link under a card's source that opens the report sheet."
+ },
+ "reportedThanks": "Reported. Thank you.",
+ "@reportedThanks": {
+  "description": "Shown instead of the report link once this phone has reported the card."
+ },
+ "reportTitle": "What's wrong with this card?",
+ "@reportTitle": {
+  "description": "Title of the sheet for reporting a problem with a card."
+ },
+ "reportLead": "We check every report against the sources and fix the card.",
+ "@reportLead": {
+  "description": "Line under the report sheet's title."
+ },
+ "reportFact": "A fact is wrong",
+ "@reportFact": {
+  "description": "Report reason: the card states something untrue."
+ },
+ "reportAnswer": "The answer marked right is wrong",
+ "@reportAnswer": {
+  "description": "Report reason: the option marked correct is not correct."
+ },
+ "reportSource": "The source doesn't back it up",
+ "@reportSource": {
+  "description": "Report reason: the cited source does not support the card."
+ },
+ "reportUnclear": "It's confusing",
+ "@reportUnclear": {
+  "description": "Report reason: the card is hard to understand."
+ },
+ "reportTypo": "A typo or a broken line",
+ "@reportTypo": {
+  "description": "Report reason: a spelling mistake or text laid out wrong."
+ },
+ "reportOther": "Something else",
+ "@reportOther": {
+  "description": "Report reason: anything else."
+ },
+ "reportNoteHint": "Anything that helps us check it (optional)",
+ "@reportNoteHint": {
+  "description": "Placeholder in the optional note field of the report sheet."
+ },
+ "reportSend": "Send",
+ "@reportSend": {
+  "description": "Button that sends a report."
+ },
+ "reportSentToast": "Thanks. We'll check it.",
+ "@reportSentToast": {
+  "description": "Brief message after a report is sent."
  }
 }

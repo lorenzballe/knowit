@@ -2105,4 +2105,44 @@ class AppLocalizationsPl extends AppLocalizations {
   String sceneNOfM(int n, int m) {
     return '$n z $m';
   }
+
+  @override
+  String get reportProblem => 'Zgłoś problem';
+
+  @override
+  String get reportedThanks => 'Zgłoszono. Dziękujemy.';
+
+  @override
+  String get reportTitle => 'Co jest nie tak z tą kartą?';
+
+  @override
+  String get reportLead =>
+      'Każde zgłoszenie sprawdzamy w źródłach i poprawiamy kartę.';
+
+  @override
+  String get reportFact => 'Fakt jest błędny';
+
+  @override
+  String get reportAnswer => 'Odpowiedź oznaczona jako poprawna jest błędna';
+
+  @override
+  String get reportSource => 'Źródło tego nie potwierdza';
+
+  @override
+  String get reportUnclear => 'Jest niejasne';
+
+  @override
+  String get reportTypo => 'Literówka lub rozjechana linijka';
+
+  @override
+  String get reportOther => 'Coś innego';
+
+  @override
+  String get reportNoteHint => 'Coś, co pomoże nam to sprawdzić (opcjonalnie)';
+
+  @override
+  String get reportSend => 'Wyślij';
+
+  @override
+  String get reportSentToast => 'Dziękujemy. Sprawdzimy to.';
 }

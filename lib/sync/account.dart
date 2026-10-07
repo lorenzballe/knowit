@@ -9,6 +9,7 @@ import '../state/app_state.dart';
 import 'board.dart';
 import 'identity.dart';
 import 'reader_snapshot.dart';
+import 'reports.dart';
 import 'served.dart';
 import 'trace.dart';
 import 'reader_store.dart';
@@ -417,6 +418,7 @@ class Account extends ChangeNotifier {
     // with them.
     await Trace.instance.reset();
     await Served.instance.reset();
+    await Reports.instance.reset();
     await _firebase?.signOut();
     notifyListeners();
   }

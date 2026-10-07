@@ -490,5 +490,18 @@
   "sceneTapToPick": "選んでタップ",
   "sceneShowMe": "見せて",
   "sceneYourGuess": "あなたの予想",
-  "sceneNOfM": "{m}中{n}"
+  "sceneNOfM": "{m}中{n}",
+  "reportProblem": "問題を報告",
+  "reportedThanks": "報告しました。ありがとうございます。",
+  "reportTitle": "このカードの何が問題ですか？",
+  "reportLead": "報告はすべて出典と照らし合わせて確認し、カードを直します。",
+  "reportFact": "事実が間違っている",
+  "reportAnswer": "正解とされた答えが間違っている",
+  "reportSource": "出典が裏付けていない",
+  "reportUnclear": "わかりにくい",
+  "reportTypo": "誤字や表示の崩れ",
+  "reportOther": "その他",
+  "reportNoteHint": "確認に役立つこと（任意）",
+  "reportSend": "送信",
+  "reportSentToast": "ありがとうございます。確認します。"
 }

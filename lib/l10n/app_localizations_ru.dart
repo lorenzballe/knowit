@@ -2107,4 +2107,44 @@ class AppLocalizationsRu extends AppLocalizations {
   String sceneNOfM(int n, int m) {
     return '$n из $m';
   }
+
+  @override
+  String get reportProblem => 'Сообщить о проблеме';
+
+  @override
+  String get reportedThanks => 'Отправлено. Спасибо.';
+
+  @override
+  String get reportTitle => 'Что не так с этой карточкой?';
+
+  @override
+  String get reportLead =>
+      'Мы сверяем каждое сообщение с источниками и исправляем карточку.';
+
+  @override
+  String get reportFact => 'Неверный факт';
+
+  @override
+  String get reportAnswer => 'Ответ, отмеченный как верный, неверен';
+
+  @override
+  String get reportSource => 'Источник этого не подтверждает';
+
+  @override
+  String get reportUnclear => 'Непонятно';
+
+  @override
+  String get reportTypo => 'Опечатка или сбитая строка';
+
+  @override
+  String get reportOther => 'Другое';
+
+  @override
+  String get reportNoteHint => 'Что поможет нам проверить (необязательно)';
+
+  @override
+  String get reportSend => 'Отправить';
+
+  @override
+  String get reportSentToast => 'Спасибо. Мы проверим.';
 }

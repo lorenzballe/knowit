@@ -2035,4 +2035,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String sceneNOfM(int n, int m) {
     return '$n of $m';
   }
+
+  @override
+  String get reportProblem => 'Report a problem';
+
+  @override
+  String get reportedThanks => 'Reported. Thank you.';
+
+  @override
+  String get reportTitle => 'What\'s wrong with this card?';
+
+  @override
+  String get reportLead =>
+      'We check every report against the sources and fix the card.';
+
+  @override
+  String get reportFact => 'A fact is wrong';
+
+  @override
+  String get reportAnswer => 'The answer marked right is wrong';
+
+  @override
+  String get reportSource => 'The source doesn\'t back it up';
+
+  @override
+  String get reportUnclear => 'It\'s confusing';
+
+  @override
+  String get reportTypo => 'A typo or a broken line';
+
+  @override
+  String get reportOther => 'Something else';
+
+  @override
+  String get reportNoteHint => 'Anything that helps us check it (optional)';
+
+  @override
+  String get reportSend => 'Send';
+
+  @override
+  String get reportSentToast => 'Thanks. We\'ll check it.';
 }

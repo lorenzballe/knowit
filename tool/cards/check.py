@@ -72,7 +72,7 @@ KEY_ORDER = [
     "options", "correct", "value", "unit", "tolerance", "withinFactor", "sides",
     "answer", "move", "ask", "both", "trap", "hint", "steps", "simply", "counterpoint",
     *TAG_KEYS, "builds_on", "figure", "diagram", "scene",
-    "source", "source_kind", "reference", "quote", "written", "disabled",
+    "source", "source_kind", "reference", "quote", "written", "checked", "disabled",
 ]
 
 # The longest a quoted passage may run. Forty words is the rule; a few over
@@ -395,7 +395,7 @@ def check_strict(card: dict) -> list[str]:
 
     every_text = " ".join(
         str(v) for k, v in card.items()
-        if isinstance(v, str) and k not in ("id", "topic", "kind", "reference", "written")
+        if isinstance(v, str) and k not in ("id", "topic", "kind", "reference", "written", "checked")
     )
     if "!" in every_text:
         problems.append("no exclamation marks")

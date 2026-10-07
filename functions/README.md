@@ -12,6 +12,8 @@ against the same Firestore the app writes to.
     src/deal.ts      the day, by the phone's own rules, from that profile
     src/explore.ts   Explore for everybody, and the shelf that is one reader's
     src/search.ts    the pool asked a question
+    src/scorecard.ts how every card does with the readers: counted, flagged,
+                     and the cards readers say are untrue held out of the deal
     src/serve.ts     one reader against Firestore: read, deal, write, forget
     src/index.ts     the functions themselves, and when they run
     src/*.test.ts    node:test, against the bundled bank; no project needed
@@ -25,6 +27,8 @@ against the same Firestore the app writes to.
 | `nightly`         | every hour               | every reader here in the last 14 days: their local today (and from 17:00 their tomorrow) dealt if missing; their own shelf once a day; the trace older than 21 days cleared |
 | `buildExplore`    | every hour at :05        | `explore/latest` from the counts: today's shelf, the top of the week and month (closed days), loved since the start |
 | `onReaderDeleted` | `readers/{uid}` deleted  | everything under it and `presence/{uid}` deleted                     |
+| `scorecard`       | every day at 04:20 UTC   | the closed days of everybody's trace added to each card's totals; reports read; flags and the quarantine written to `quality/latest`, readers' notes to `quality/notes` |
+| `cardStats`       | HTTPS GET                | `quality/latest` as JSON — numbers per card, nothing about who — for `tool/quality/` |
 
 The rules (`../firestore.rules`) let no phone write a day, a profile or
 Explore. What the server dealt is what the server dealt.
@@ -37,6 +41,8 @@ Explore. What the server dealt is what the server dealt.
 - `presence/{uid}` — when the reader was last here, their clock's offset,
   whether they hold Astute+.
 - `tallies/{day}`, `totals/{shard}` — the counts, for Explore.
+- `readers/{uid}/reports/{card}` — what a reader said is wrong with a card
+  (`lib/sync/reports.dart`): a reason, and a note if they wrote one.
 - The bank: `data/bank.json`, copied from `web/cards/cards.json` at build,
   and the site's newer one when `cards/version.json` names it.
 
@@ -99,6 +105,41 @@ deploys on a push.
 The first deploy of a scheduled function also creates its Cloud Scheduler
 job. The workflow `cloud-check.yml` runs the tests on every push but does
 not deploy.
+
+## The scorecard
+
+Once a day `scorecard` takes the day before yesterday — closed: the phone
+files an event under the UTC day it happened, and one that was offline
+sends it late — for every reader here since, adds it card by card to the
+running totals in `scorecard/{shard}`, and marks the day counted in
+`quality/ledger`, so a run that is retried counts nothing twice and one
+that was missed is caught up within the week. Every number is a count of
+reader-days (a card opened three times in a day was opened once that day),
+and the first answer is counted apart from reviews.
+
+From the totals and the reports it writes `quality/latest`:
+
+- **flags** — `tooEasy` / `tooHard`: thirty answers or more, and the 95%
+  Wilson interval of the right-rate wholly outside the band its label
+  allows (easy 55–100%, medium 30–90%, hard 0–70%: wide, because a trap is
+  meant to catch); `keySuspect`: on a three-option card, fewer than 15% can
+  be right while one other option takes 60% of the answers; `thrown` and
+  `kept`: thirty readers or more, and at least 10% throwing it down, or 20%
+  keeping it (liked, saved, shared, said); `reported`, and `disputed` when
+  two readers or more say it is untrue.
+- **the quarantine** — three readers saying a card is untrue (wrong fact,
+  wrong answer, a source that does not say it), or one when the crowd's
+  answers already make the key suspect. Every function that deals, searches
+  or lists reads it (at most ten minutes old) and treats those cards as
+  retired. A card's `checked` date — set when a person publishes it from
+  the review, or the monthly re-check finds it holds — answers every report
+  made before it, so a card that was fixed or confirmed comes back.
+- **cards** — the numbers per card, for cards five readers have met.
+
+Readers' notes go to `quality/notes`, which no phone may read and the tools
+never see: they are for the person fixing cards, in the Firebase console.
+`cardStats` serves `quality/latest`, and `tool/quality/stats.py` prints it
+for a person. The thresholds are constants at the top of `scorecard.ts`.
 
 ## What it costs
 

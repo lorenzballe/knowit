@@ -490,5 +490,18 @@
   "sceneTapToPick": "Touchez votre choix",
   "sceneShowMe": "Montrez-moi",
   "sceneYourGuess": "Votre idée",
-  "sceneNOfM": "{n} sur {m}"
+  "sceneNOfM": "{n} sur {m}",
+  "reportProblem": "Signaler un problème",
+  "reportedThanks": "Signalé. Merci.",
+  "reportTitle": "Qu'est-ce qui ne va pas sur cette carte ?",
+  "reportLead": "Nous vérifions chaque signalement dans les sources et corrigeons la carte.",
+  "reportFact": "Un fait est faux",
+  "reportAnswer": "La réponse donnée comme juste est fausse",
+  "reportSource": "La source ne le confirme pas",
+  "reportUnclear": "C'est confus",
+  "reportTypo": "Une coquille ou une ligne cassée",
+  "reportOther": "Autre chose",
+  "reportNoteHint": "Ce qui peut nous aider à vérifier (facultatif)",
+  "reportSend": "Envoyer",
+  "reportSentToast": "Merci. Nous allons vérifier."
 }

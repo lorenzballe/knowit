@@ -490,5 +490,18 @@
   "sceneTapToPick": "골라서 누르기",
   "sceneShowMe": "보여 줘",
   "sceneYourGuess": "내 예상",
-  "sceneNOfM": "{m}개 중 {n}개"
+  "sceneNOfM": "{m}개 중 {n}개",
+  "reportProblem": "문제 신고",
+  "reportedThanks": "신고했어요. 고마워요.",
+  "reportTitle": "이 카드의 어떤 점이 잘못됐나요?",
+  "reportLead": "모든 신고를 출처와 대조해 확인하고 카드를 고쳐요.",
+  "reportFact": "사실이 틀렸어요",
+  "reportAnswer": "정답으로 표시된 답이 틀렸어요",
+  "reportSource": "출처가 뒷받침하지 않아요",
+  "reportUnclear": "헷갈려요",
+  "reportTypo": "오타나 깨진 줄",
+  "reportOther": "기타",
+  "reportNoteHint": "확인에 도움이 될 내용 (선택)",
+  "reportSend": "보내기",
+  "reportSentToast": "고마워요. 확인할게요."
 }

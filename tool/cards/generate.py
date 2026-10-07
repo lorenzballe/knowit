@@ -1037,6 +1037,16 @@ class Outcome(BaseModel):
     domain: str = ""
     source_kind: str = ""
     checked: bool = False
+    # What the quality layer weighs (tool/quality/confidence.py): how the
+    # card got through, not only that it did.
+    kind: str = ""
+    shelf_life: str = ""
+    asked_source_kind: str = ""
+    tried: int = 0
+    repaired: bool = False
+    verdict: str = ""
+    critic_reason: str = ""
+    fix_refused: bool = False
 
 
 @dataclass
@@ -1055,6 +1065,10 @@ class Job:
     status: str = ""
     stage: str = ""
     note: str = ""
+    repaired: bool = False
+    verdict: str = ""
+    critic_reason: str = ""
+    fix_refused: bool = False
 
     @property
     def researched(self) -> bool:
@@ -1069,6 +1083,9 @@ class Job:
             id=(self.card or {}).get("id", ""), question=(self.card or {}).get("question", ""),
             note=self.note, domain=sources.domain_of(self.find.url) if self.find else "",
             source_kind=(self.card or {}).get("source_kind", ""), checked=self.checked,
+            kind=self.req.kind, shelf_life=(self.card or {}).get("shelf_life", ""),
+            asked_source_kind=self.req.source_kind, tried=self.tried, repaired=self.repaired,
+            verdict=self.verdict, critic_reason=self.critic_reason, fix_refused=self.fix_refused,
         )
 
 
@@ -1125,8 +1142,16 @@ def usable_find(find: Find) -> bool:
     return True
 
 
+def spent(model) -> float:
+    """What the run has cost so far: nothing, on a canned model."""
+    usage = getattr(model, "usage", None)
+    if not usage or not hasattr(model, "cost"):
+        return 0.0
+    return sum(model.cost(u) for u in usage.values())
+
+
 def run(requests: list[Request], model, bank: list[dict], *, out: Path, today: dt.date,
-        critic: bool = True, research: bool = True, log=print) -> list[Outcome]:
+        critic: bool = True, research: bool = True, budget: float | None = None, log=print) -> list[Outcome]:
     schema = check.load_schema()
     banned = check.load_banned()
     rules = RULES.read_text(encoding="utf-8")
@@ -1137,6 +1162,16 @@ def run(requests: list[Request], model, bank: list[dict], *, out: Path, today: d
     def alive() -> list[Job]:
         return [j for j in jobs if not j.status]
 
+    def over(stage: str) -> bool:
+        """Whether the budget is spent. What is still on its way stops
+        here, unwritten: a card is never filed without every stage."""
+        if budget is None or spent(model) < budget or not alive():
+            return False
+        log(f"budget: ${spent(model):.2f} of ${budget:.2f} spent; stopping before the {stage}")
+        for j in alive():
+            j.fail("failed", stage, f"the budget of ${budget:.2f} was spent before the {stage}")
+        return True
+
     def gate(card: dict, against: list[dict]) -> list[str]:
         card = dict(card, id=next_id(card["topic"], today, taken), written=today.isoformat())
         return (check.check_card(card, strict=True, schema=schema, banned=banned)
@@ -1146,6 +1181,7 @@ def run(requests: list[Request], model, bank: list[dict], *, out: Path, today: d
 
     # 1. The scout: three finds per card, for the cards that are written
     #    from a page. Thinking is arithmetic and skips to the writer.
+    over("scout")
     scouting = [j for j in alive() if j.researched and research]
     if scouting:
         log(f"scouting {len(scouting)} strand{'s' if len(scouting) != 1 else ''}")
@@ -1163,6 +1199,7 @@ def run(requests: list[Request], model, bank: list[dict], *, out: Path, today: d
         #    first did not hold. A quote the program cannot find on the
         #    page is a find that did not hold.
         for _ in range(FINDS):
+            over("read")
             reading = [j for j in alive() if j.researched and j.find is None and j.tried < len(j.finds)]
             if not reading:
                 break
@@ -1185,6 +1222,7 @@ def run(requests: list[Request], model, bank: list[dict], *, out: Path, today: d
                 j.fail("unsourced", "read", "no find held up when its page was read")
 
     # 3. The writer.
+    over("write")
     writing = alive()
     specs = []
     for j in writing:
@@ -1205,6 +1243,7 @@ def run(requests: list[Request], model, bank: list[dict], *, out: Path, today: d
         log(f"· {j.req}\n  wrote: {j.card['question']}" + (f"\n  gate: {'; '.join(j.problems)}" if j.problems else ""))
 
     # 4. One round of repair for what the gate named.
+    over("repair")
     repairing = [j for j in alive() if j.problems]
     if repairing:
         specs = [Spec(system, j.history + [{"role": "user", "content": "The gate refused the card:\n" + "\n".join(f"- {p}" for p in j.problems)
@@ -1214,6 +1253,7 @@ def run(requests: list[Request], model, bank: list[dict], *, out: Path, today: d
                 log(f"· {j.req}\n  repair: {r.error or 'nothing came back'}")
                 continue
             j.draft = r.parsed
+            j.repaired = True
             j.card = conform(to_card(j.draft), j.req, j.find, j.reading)
             j.problems = gate(j.card, bank)
     for j in alive():
@@ -1222,7 +1262,7 @@ def run(requests: list[Request], model, bank: list[dict], *, out: Path, today: d
             log(f"· {j.req}\n  refused: {j.note}")
 
     # 5. The critic.
-    if critic:
+    if critic and not over("critic"):
         judging = alive()
         specs = [Spec(critic_system(rules), [{"role": "user", "content": critic_brief(j.card, j.reading)}], Verdict,
                       tools=[_web_search(CRITIC_SEARCHES), _web_fetch(2)]) for j in judging]
@@ -1232,6 +1272,7 @@ def run(requests: list[Request], model, bank: list[dict], *, out: Path, today: d
                 log(f"· {j.req}\n  critic: {j.note}")
                 continue
             verdict = r.parsed
+            j.verdict, j.critic_reason = verdict.verdict, verdict.reason
             log(f"· {j.req}\n  critic: {verdict.verdict} — {verdict.reason}")
             if verdict.verdict == "reject":
                 j.fail("rejected", "critic", verdict.reason)
@@ -1240,6 +1281,7 @@ def run(requests: list[Request], model, bank: list[dict], *, out: Path, today: d
                 if not gate(fixed, bank):
                     j.card = fixed
                 else:
+                    j.fix_refused = True
                     log("  the fix did not pass the gate; keeping the draft")
 
     # 6. The files: tonight's cards are gated against each other too, in
@@ -1297,6 +1339,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--only", nargs="*", choices=TOPICS, help="plan within these topics")
     ap.add_argument("--out", type=Path, default=check.BANK, help="where cards are written (default: the bank)")
     ap.add_argument("--report", type=Path, help="write the pull request body here")
+    ap.add_argument("--outcomes", type=Path, help="write every request's outcome here, as JSON, for tool/quality/route.py")
+    ap.add_argument("--budget", type=float, help="stop before the next stage once this many dollars are spent")
     ap.add_argument("--no-critic", action="store_true")
     ap.add_argument("--no-research", action="store_true", help="write from memory, as before the scout and the reader")
     ap.add_argument("--batch", action="store_true", help="every stage through the Message Batches API, at half the token price")
@@ -1350,10 +1394,13 @@ def main(argv: list[str] | None = None) -> int:
             return 2
         model = Claude(args.model, batch=args.batch)
 
-    outcomes = run(requests, model, bank, out=args.out, today=today, critic=not args.no_critic, research=not args.no_research)
+    outcomes = run(requests, model, bank, out=args.out, today=today, critic=not args.no_critic,
+                   research=not args.no_research, budget=args.budget)
     text = report(outcomes, model.receipt(), today)
     if args.report:
         args.report.write_text(text, encoding="utf-8")
+    if args.outcomes:
+        args.outcomes.write_text(json.dumps([o.model_dump() for o in outcomes], ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     print()
     print(text)
     return 0 if any(o.status == "written" for o in outcomes) or not requests else 1

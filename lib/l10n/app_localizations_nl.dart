@@ -2041,4 +2041,45 @@ class AppLocalizationsNl extends AppLocalizations {
   String sceneNOfM(int n, int m) {
     return '$n van $m';
   }
+
+  @override
+  String get reportProblem => 'Een probleem melden';
+
+  @override
+  String get reportedThanks => 'Gemeld. Bedankt.';
+
+  @override
+  String get reportTitle => 'Wat klopt er niet aan deze kaart?';
+
+  @override
+  String get reportLead =>
+      'We controleren elke melding aan de hand van de bronnen en verbeteren de kaart.';
+
+  @override
+  String get reportFact => 'Een feit klopt niet';
+
+  @override
+  String get reportAnswer => 'Het als goed gemarkeerde antwoord is fout';
+
+  @override
+  String get reportSource => 'De bron onderbouwt het niet';
+
+  @override
+  String get reportUnclear => 'Het is onduidelijk';
+
+  @override
+  String get reportTypo => 'Een typfout of een kapotte regel';
+
+  @override
+  String get reportOther => 'Iets anders';
+
+  @override
+  String get reportNoteHint =>
+      'Alles wat ons helpt het te controleren (optioneel)';
+
+  @override
+  String get reportSend => 'Versturen';
+
+  @override
+  String get reportSentToast => 'Bedankt. We kijken ernaar.';
 }

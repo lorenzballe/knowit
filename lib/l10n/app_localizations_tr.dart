@@ -2025,4 +2025,45 @@ class AppLocalizationsTr extends AppLocalizations {
   String sceneNOfM(int n, int m) {
     return '$m içinde $n';
   }
+
+  @override
+  String get reportProblem => 'Bir sorun bildir';
+
+  @override
+  String get reportedThanks => 'Bildirildi. Teşekkürler.';
+
+  @override
+  String get reportTitle => 'Bu kartta ne yanlış?';
+
+  @override
+  String get reportLead =>
+      'Her bildirimi kaynaklarla karşılaştırıp kartı düzeltiyoruz.';
+
+  @override
+  String get reportFact => 'Bir bilgi yanlış';
+
+  @override
+  String get reportAnswer => 'Doğru diye işaretlenen cevap yanlış';
+
+  @override
+  String get reportSource => 'Kaynak bunu desteklemiyor';
+
+  @override
+  String get reportUnclear => 'Kafa karıştırıcı';
+
+  @override
+  String get reportTypo => 'Bir yazım hatası ya da bozuk bir satır';
+
+  @override
+  String get reportOther => 'Başka bir şey';
+
+  @override
+  String get reportNoteHint =>
+      'Kontrol etmemize yardımcı olacak bir şey (isteğe bağlı)';
+
+  @override
+  String get reportSend => 'Gönder';
+
+  @override
+  String get reportSentToast => 'Teşekkürler. Kontrol edeceğiz.';
 }

@@ -38,6 +38,7 @@ import 'package:astuto/sync/account.dart';
 import 'package:astuto/sync/board.dart';
 import 'package:astuto/theme.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
+import 'package:astuto/widgets/report_sheet.dart';
 
 /// Every screen, in every language, on a narrow phone: nothing cut.
 ///
@@ -239,6 +240,12 @@ void main() {
         'topics': TopicsScreen(initial: app.pickedTopics, onDone: (_) {}),
         'detail-debate': PillDetailScreen(pill: debate, app: app),
         'detail-pick': PillDetailScreen(pill: pick, app: app),
+        'report': Scaffold(
+          body: Align(
+            alignment: Alignment.bottomCenter,
+            child: ReportSheet(pill: pick),
+          ),
+        ),
         'deck-viewer': DeckViewerScreen(
           app: app,
           deck: app.todaysDeck,

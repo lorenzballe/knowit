@@ -490,5 +490,18 @@
   "sceneTapToPick": "点选你的答案",
   "sceneShowMe": "给我看",
   "sceneYourGuess": "你的猜测",
-  "sceneNOfM": "{m}个中的{n}个"
+  "sceneNOfM": "{m}个中的{n}个",
+  "reportProblem": "报告问题",
+  "reportedThanks": "已报告，谢谢。",
+  "reportTitle": "这张卡片哪里有问题？",
+  "reportLead": "每条报告我们都会对照来源核实，并修正卡片。",
+  "reportFact": "事实有误",
+  "reportAnswer": "标为正确的答案是错的",
+  "reportSource": "来源并不支持这一点",
+  "reportUnclear": "看不明白",
+  "reportTypo": "错别字或显示错乱",
+  "reportOther": "其他",
+  "reportNoteHint": "有助于我们核实的信息（可选）",
+  "reportSend": "发送",
+  "reportSentToast": "谢谢，我们会核实。"
 }
