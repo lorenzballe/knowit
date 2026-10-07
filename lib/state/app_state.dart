@@ -26,6 +26,7 @@ import '../sync/tally.dart';
 import '../sync/trace.dart';
 import '../utils/home_widget.dart';
 import '../utils/reminders.dart';
+import 'journey_record.dart';
 import 'progress.dart';
 
 /// Which paid plan the paywall has selected. Purchases are not wired up.
@@ -90,6 +91,8 @@ class AppState extends ChangeNotifier {
   static const _kDayStartRung = 'knowit.dayStartRung';
   static const _kDayStartScore = 'knowit.dayStartScore';
   static const _kRungDates = 'knowit.rungDates';
+  static const _kReadDays = 'knowit.readDays';
+  static const _kDayLog = 'knowit.dayLog';
   static const _kSaidIds = 'knowit.saidIds';
   static const _kOwnIds = 'knowit.todayOwnIds';
   static const _kAnswers = 'knowit.answersJson';
@@ -160,6 +163,17 @@ class AppState extends ChangeNotifier {
   /// The day each rung was first reached, by rung id — the dates on the
   /// journey. Written the moment a rung is cleared and never moved.
   Map<String, String> rungDates = {};
+
+  /// The cards first read on each day, by date key, kept for as long as the
+  /// app lives: what Your journey draws the weeks, the days and the shelves
+  /// from. Cards read before the app wrote this down are in [seenIds] and
+  /// not here, and the journey counts them as older than any day here.
+  Map<String, List<String>> readDays = {};
+
+  /// What each day the app was used came to, by date key — the score at the
+  /// end of it, the seconds spent on its cards and the cards read in each
+  /// part of it, laid out as [kLogScore] and the rest say.
+  Map<String, List<int>> dayLog = {};
 
   /// Cards the reader has said out loud to somebody. The one thing the app
   /// cannot check and the only one that proves the card left the phone.
@@ -306,6 +320,16 @@ class AppState extends ChangeNotifier {
     judgements = _decodeJudgements(_prefs.getString(_kJudgements));
     deckHistory = _decodeHistory(_prefs.getString(_kDeckHistory));
     rungDates = _decodeDates(_prefs.getString(_kRungDates));
+    readDays = _decodeHistory(_prefs.getString(_kReadDays));
+    dayLog = _decodeDayLog(_prefs.getString(_kDayLog));
+    // A phone that read before reading was written down by day: what each
+    // day dealt says when most of it was read.
+    if (readDays.isEmpty && seenIds.isNotEmpty) {
+      readDays = readDaysFrom(deckHistory, seenIds);
+      if (readDays.isNotEmpty) {
+        await _prefs.setString(_kReadDays, jsonEncode(readDays));
+      }
+    }
     saidIds = _prefs.getStringList(_kSaidIds) ?? [];
     // Absent on an install that started the day on an older build: the
     // reader is where they are now, and today reports no climb.
@@ -771,6 +795,7 @@ class AppState extends ChangeNotifier {
   Future<void> markReadElsewhere(String pillId) async {
     if (!seenIds.add(pillId)) return;
     await _prefs.setStringList(_kSeenIds, seenIds.toList());
+    await _noteDay(firstRead: pillId);
     Analytics.capture('card read elsewhere', cardFacts(pillId));
     notifyListeners();
   }
@@ -789,13 +814,22 @@ class AppState extends ChangeNotifier {
           ? null
           : DateTime.now().difference(upAt).inMilliseconds,
     });
-    seenIds.add(card.id);
+    final bool firstTime = seenIds.add(card.id);
     todayIndex += 1;
     pillsRead += 1;
     await _prefs.setInt(_kTodayIndex, todayIndex);
     await _prefs.setInt(_kPillsRead, pillsRead);
     await _prefs.setStringList(_kSeenIds, seenIds.toList());
     if (todayCompleted) await _completeToday();
+    await _noteDay(
+      firstRead: firstTime ? card.id : null,
+      seconds: upAt == null
+          ? 0
+          : (DateTime.now().difference(upAt).inMilliseconds / 1000)
+                .round()
+                .clamp(0, kMostSecondsACard),
+      card: true,
+    );
     _sayCardUp();
     // After every card, not only the last: the five widget counts them.
     unawaited(refreshHomeWidget());
@@ -831,6 +865,58 @@ class AppState extends ChangeNotifier {
       Analytics.register('rung', at);
     }
   }
+
+  /// Writes down what today has come to: the card first read, if one was,
+  /// the score as it now stands, the seconds on the card and the part of
+  /// the day it was read in. The journey draws its weeks from this.
+  Future<void> _noteDay({
+    String? firstRead,
+    int seconds = 0,
+    bool card = false,
+  }) async {
+    final String day = dateKey(today);
+    if (firstRead != null) {
+      final List<String> ids = readDays.putIfAbsent(day, () => []);
+      if (!ids.contains(firstRead)) ids.add(firstRead);
+      await _prefs.setString(_kReadDays, jsonEncode(readDays));
+    }
+    final List<int> log = [...(dayLog[day] ?? const <int>[])];
+    while (log.length < kDayLogLength) {
+      log.add(0);
+    }
+    log[kLogScore] = score.total;
+    log[kLogSeconds] += seconds;
+    if (card) log[kLogParts + partOfDay(DateTime.now().hour).index] += 1;
+    dayLog[day] = log;
+    await _prefs.setString(_kDayLog, jsonEncode(dayLog));
+  }
+
+  static Map<String, List<int>> _decodeDayLog(String? raw) {
+    final parsed = _decodeJson(raw);
+    if (parsed is! Map) return {};
+    return {
+      for (final e in parsed.entries)
+        if (e.value is List)
+          '${e.key}': [
+            for (final Object? n in e.value as List)
+              if (n is num) n.round(),
+          ],
+    };
+  }
+
+  /// The record over time, as the journey asks about it.
+  JourneyRecord get record => JourneyRecord(
+    today: today,
+    seen: seenIds,
+    readDays: readDays,
+    dayLog: dayLog,
+    judgements: judgements,
+    answers: answers,
+    completedDates: completedDates,
+    cards: {for (final p in PillBank.cards) p.id: p},
+    liveScore: score.total,
+    otherDays: rungDates.values,
+  );
 
   static Map<String, String> _decodeDates(String? raw) {
     final parsed = _decodeJson(raw);
@@ -1173,6 +1259,7 @@ class AppState extends ChangeNotifier {
     }
 
     await _saveAnswers();
+    await _noteDay();
     Analytics.capture('card answered', {
       ...cardFacts(pillId),
       'graded': graded,
@@ -2088,6 +2175,8 @@ class AppState extends ChangeNotifier {
     dislikedIds = [];
     friendCodes = [];
     rungDates = {};
+    readDays = {};
+    dayLog = {};
     saidIds = [];
     todayIndex = 0;
     pillsRead = 0;
@@ -2158,6 +2247,10 @@ class AppState extends ChangeNotifier {
     dislikedIds: List<String>.from(dislikedIds),
     friendCodes: List<String>.from(friendCodes),
     rungDates: Map<String, String>.from(rungDates),
+    readDays: {
+      for (final e in readDays.entries) e.key: List<String>.from(e.value),
+    },
+    dayLog: {for (final e in dayLog.entries) e.key: List<int>.from(e.value)},
     saidIds: List<String>.from(saidIds),
     seenIds: seenIds.toList(),
     pillsRead: pillsRead,
@@ -2187,6 +2280,10 @@ class AppState extends ChangeNotifier {
     dislikedIds = List<String>.from(s.dislikedIds);
     friendCodes = List<String>.from(s.friendCodes);
     rungDates = Map<String, String>.from(s.rungDates);
+    readDays = {
+      for (final e in s.readDays.entries) e.key: List<String>.from(e.value),
+    };
+    dayLog = {for (final e in s.dayLog.entries) e.key: List<int>.from(e.value)};
     saidIds = List<String>.from(s.saidIds);
     seenIds = s.seenIds.toSet();
     pillsRead = s.pillsRead;
@@ -2211,6 +2308,8 @@ class AppState extends ChangeNotifier {
     await _prefs.setStringList(_kDislikedIds, dislikedIds);
     await _prefs.setStringList(_kFriendCodes, friendCodes);
     await _prefs.setString(_kRungDates, jsonEncode(rungDates));
+    await _prefs.setString(_kReadDays, jsonEncode(readDays));
+    await _prefs.setString(_kDayLog, jsonEncode(dayLog));
     await _prefs.setStringList(_kSaidIds, saidIds);
     await _prefs.setStringList(_kSeenIds, seenIds.toList());
     await _prefs.setInt(_kPillsRead, pillsRead);

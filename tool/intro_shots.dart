@@ -370,23 +370,21 @@ void main() {
       if (plus) {
         await tester.pumpWidget(host(JourneyScreen(app: app, onBack: () {})));
         await settle();
-        // Down to the subjects, and Space open to its strands.
+        // Down to the subjects' wheel.
         final Finder list = find.byType(Scrollable).first;
         await tester.dragUntilVisible(
-          find.byKey(const ValueKey('subject-space')),
+          find.byKey(const ValueKey('journey-radar')),
           list,
           const Offset(0, -200),
         );
-        await settle();
-        await tester.tap(find.byKey(const ValueKey('subject-space')));
         await settle();
         await expectLater(
           find.byType(JourneyScreen),
           matchesGoldenFile('shots/journey-subjects.png'),
         );
-        // The foot of the journey: what stays.
+        // The foot of the journey: the days, and how far it reaches.
         await tester.dragUntilVisible(
-          find.text('COSA RESTA'),
+          find.byKey(const ValueKey('journey-days')),
           list,
           const Offset(0, -200),
         );

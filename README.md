@@ -202,47 +202,56 @@ longest of it to fitting in every language on a small phone.
 
 ## Your journey
 
-Artboard 134e at the top, and the order is the argument: the numbers
-first, the card to say last.
+Artboard 137a: tiles, two to a row, the score first.
 
-`JourneyScreen` opens on **how sure against how right**: how many points
-the reader's confidence runs off their results, set large, with where it
-stood a week ago beside it and an arrow for which way it went (down is the
-good way). Last week counts the answers made by then and the ones from
-before answers were dated, which are older than any that are. Under it,
-**the curve**, level by level: how sure they said they were across, how
-often they were right up the side, the diagonal where the two would be the
-same, and the space between where they were surer than right shaded and
-called *too sure*. Under the curve the five levels, to pick one, and a
-sentence that says how that one went: "When you said 90% sure, you were
-right 72% of the time", with how many answers it rests on. Until there are
-twelve answers said how sure, the number is a dash and the line under it
-says how many more.
+`JourneyScreen` opens on **the score** — the record as one number, where
+four things are worth what they cost: a card read is one, a card still with
+you weeks later three, a move you can spot ten, a week kept five — with
+what the last four weeks added to it in green, and a **line of weeks**: the
+score at the end of each week since the first day, a point a week. Tapping
+a point moves the pink ring to it and the sentence under the chart says
+what that week earned and how many cards were first read in it ("This week
+so far, you earned 27 points."). Then **the level**: its name set large,
+how far the next one is ("2 points from Sharp") and the ladder as seven
+bars that grow, the next one dashed; it opens the path.
 
-**The score** sits in a pill beside the title: the record as one number,
-where four things are worth what they cost — a card read is one, a card
-still with you weeks later three, a move you can spot ten, a week kept
-five. Nothing in it is invented and nothing in it goes down. Then the
-**week**: seven bars and how many were kept, which opens the week read back
-in full. Then the **level**: the rung in words ("Level 3 · Answering"), the one thing
-between the reader and the next one, and a bar. Then **four numbers**,
-two by two: how much of what was answered is still with them, how far off
-their confidence runs, the streak, and how many moves they can spot — a
-principle met in at least two contexts and got right more often than not,
-which is what "something you can explain" means here, counted rather than
-claimed. Then **what it is about**: the pile of cards in non-fiction
-books, hours of documentary and lectures, with the hours it took at forty
-seconds a card. It waits until twenty-five cards, because "five cards is
-about zero books" is worse than not asking yet. Then **by subject**: how
-much of each shelf has been read, most-read first, and tapping one opens
-what was read of it.
+Then the tiles. **Worth**: the cards read as books, fifty to a book, and
+hours of documentary, with the book under way drawn as far as it has got.
+**In a row**: the streak, the best run, the days read of the days since the
+first, and the last two weeks as squares; it opens the week read back in
+full. **The subjects**: every subject round a wheel in the order of its
+colour, the shape the cards read in each make, and the same at the end of
+the first month dashed under it; a subject's mark opens the cards read of
+it. **How hard** the cards opened are, easy one to hard three, and **reading
+time** as far as the app has timed it, with minutes a week lately against
+the start. **Points off**: how far the reader's confidence runs off their
+results, week by week, against the green band the top level asks for
+(until twelve answers are said how sure, a dash and how many more).
+**Right when sure** — at 80% or more, over the last four weeks — and the
+**moves** they can spot, with the newest. **What stayed**: the cards still
+with them, and how the cards went when they came back after each wait on
+the review ladder — two days after a miss, a week after the first right
+answer, three weeks after the second — now, against four weeks ago. **The
+days**: thirteen weeks, a square a day, as dark as the cards read on it,
+and when most are read. And how far it reaches: **in time** (from the
+oldest era a card read is set in to this year), **in place** (the regions
+of the world), **topics** (the strands inside the subjects) and **words**
+(the terms the bank uses on three cards or more, the three met last).
+Once the day is done, the day as five squares to send sits at the foot.
 
-And at the foot, the one thing on the page that is not a number: a card
-**to say tonight** — the question, the answer and the line to bring it up
-with — with *Another one* and *Said it*. What has been said is written
-down (`saidIds`, in the snapshot), because saying a card out loud is the
-only proof it left the phone, and the only thing the app cannot check for
-itself.
+Everything is counted from what the app writes down, with a date where it
+has one (`JourneyRecord`, in `lib/state/journey_record.dart`):
+`readDays`, the cards first read each day, and `dayLog`, what each day came
+to — the score at its end, the seconds on its cards (a card counts for five
+minutes at most) and the cards read in each part of the day. Both travel in
+the snapshot: a card was first read on whichever phone read it first, and a
+day's counts are the larger of each. A phone that read before this was
+written down gets its days from what each day dealt (`deckHistory`), and the
+cards no record dates count as older than any that are. A day before the
+log is counted again from the dated record — the cards read by then, the
+dated answers replayed for the cards held and the moves, the weeks kept —
+and what nothing recorded is not worked out: it shows as a dash and says
+why ("Counted from today").
 
 The **path** — the seven rungs one under the other on a trail, each with
 the day it was first reached, the one the reader stands on with the bar

@@ -73,17 +73,6 @@
    }
   }
  },
- "hoursMinutes": "{h} h {m} min",
- "@hoursMinutes": {
-  "placeholders": {
-   "h": {
-    "type": "int"
-   },
-   "m": {
-    "type": "int"
-   }
-  }
- },
  "tomorrowsFiveOpenIn": "Tomorrow's five open in {when}",
  "@tomorrowsFiveOpenIn": {
   "placeholders": {
@@ -1332,17 +1321,6 @@
    }
   }
  },
- "levelNamed": "Level {n} · {name}",
- "@levelNamed": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   },
-   "name": {
-    "type": "String"
-   }
-  }
- },
  "topLevel": "Top level",
  "plusNToday": "+{n} today",
  "@plusNToday": {
@@ -1352,90 +1330,7 @@
    }
   }
  },
- "stillWithYouOf": "still with you · {n} of {total}",
- "@stillWithYouOf": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   },
-   "total": {
-    "type": "int"
-   }
-  }
- },
- "stillWithYouNothing": "still with you · nothing answered yet",
- "calibrationPointsOff": "calibration · points off",
- "calibrationNotMeasured": "calibration · not measured yet",
- "inARowBest": "in a row · best {n}",
- "@inARowBest": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "movesYouCanSpot": "{n, plural, =1{move you can spot} other{moves you can spot}}",
- "@movesYouCanSpot": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "nCardsIsAbout": "{n} cards is about",
- "@nCardsIsAbout": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "nonFictionBooks": "{n, plural, =1{non-fiction book} other{non-fiction books}}",
- "hoursOfDocumentaries": "{n, plural, =1{hour of documentary} other{hours of documentaries}}",
- "lectures": "{n, plural, =1{lecture} other{lectures}}",
- "inTotalACard": "{time} in total · about 40 seconds a card",
- "@inTotalACard": {
-  "placeholders": {
-   "time": {
-    "type": "String"
-   }
-  }
- },
  "bySubject": "By subject",
- "readOfTheShelf": "read · of the shelf",
- "toSayTonight": "To say tonight",
- "anotherOne": "Another one",
- "saidIt": "Said it",
- "saidAlready": "Said",
- "justMinutes": "{m} min",
- "@justMinutes": {
-  "placeholders": {
-   "m": {
-    "type": "int"
-   }
-  }
- },
- "@nonFictionBooks": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "@hoursOfDocumentaries": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "@lectures": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
  "pts": "points",
  "nStillWithYou": "{n} still with you",
  "@nStillWithYou": {
@@ -1499,43 +1394,6 @@
  "plusCardLine": "Five cards a day from your mix, at your level. Your journey. Your whole archive.",
  "continueFree": "Continue free",
  "archiveBeforeThisWeek": "Before this week",
- "whatStays": "What stays",
- "nReadOfN": "{read} of {total} read",
- "@nReadOfN": {
-  "placeholders": {
-   "read": {
-    "type": "int"
-   },
-   "total": {
-    "type": "int"
-   }
-  }
- },
- "nAnswered": "{n, plural, =1{1 card answered} other{{n} cards answered}}",
- "@nAnswered": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "nCameBackAgain": "{n, plural, =1{1 came back} other{{n} came back}}",
- "@nCameBackAgain": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "nKeptOnReturn": "{n, plural, =1{1 still right when it came back} other{{n} still right when they came back}}",
- "@nKeptOnReturn": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "nothingBackYet": "Nothing has come back yet. A card returns after three days, then a week, then a month — and what you get right then is what you actually know.",
  "weekKeptThreeOwn": "A week kept: tomorrow three of the five are yours.",
  "perkJourneyLine": "Your level, every subject strand by strand, what stayed, and the card to say tonight.",
  "topOfTheWeek": "Top of the week",
@@ -1864,35 +1722,9 @@
  "@reportSentToast": {
   "description": "Brief message after a report is sent."
  },
- "journeyPoints": "{n} pts",
- "@journeyPoints": {
-  "description": "The reader's score in a pill beside Your journey's title.",
-  "placeholders": {
-   "n": {
-    "type": "String"
-   }
-  }
- },
  "journeyPointsOff": "points off",
  "@journeyPointsOff": {
   "description": "Beside the big number at the top of Your journey: how many points the reader's confidence runs off their results."
- },
- "journeyLastWeek": "{n} last week",
- "@journeyLastWeek": {
-  "description": "Chip beside the points off: what they were a week ago (an arrow says which way they went).",
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "journeyLastWeekSame": "same as last week",
- "@journeyLastWeekSame": {
-  "description": "Chip beside the points off when they are what they were a week ago."
- },
- "journeyOffExplain": "How far the sureness you give is from how often you turn out right. Zero would mean every 70% answer was right seven times in ten.",
- "@journeyOffExplain": {
-  "description": "Line under the points off, saying what they measure."
  },
  "journeyOffNotYet": "{n, plural, =1{One more answer with how sure, and it is measured.} other{{n} more answers with how sure, and it is measured.}}",
  "@journeyOffNotYet": {
@@ -1903,37 +1735,561 @@
    }
   }
  },
- "journeyAxisSure": "how sure you said →",
- "@journeyAxisSure": {
-  "description": "Caption under the chart, left: the across axis."
+ "journeyYourScore": "Your score",
+ "@journeyYourScore": {
+  "description": "Small capitals over the big score at the top of Your journey (shown in capitals)."
  },
- "journeyAxisRight": "↑ how often right",
- "@journeyAxisRight": {
-  "description": "Caption under the chart, right: the up axis."
- },
- "journeyCurveSpotOn": "spot on",
- "@journeyCurveSpotOn": {
-  "description": "Label on the chart's diagonal, where confidence equals accuracy."
- },
- "journeyTooSure": "too sure",
- "@journeyTooSure": {
-  "description": "Label on the shaded part of the chart where the reader was surer than right."
- },
- "journeyWhenYouSaid": "When you said {sure} sure, you were right {right} of the time.",
- "@journeyWhenYouSaid": {
-  "description": "Under the chart, for the level picked: e.g. When you said 90% sure, you were right 72% of the time.",
+ "journeyPointsUnit": "{n, plural, =1{point} other{points}}",
+ "@journeyPointsUnit": {
+  "description": "Beside the big score: the word for points, no number (the number is set large before it).",
   "placeholders": {
-   "sure": {
-    "type": "String"
-   },
-   "right": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyGainedIn": "+{n} in 4 weeks",
+ "@journeyGainedIn": {
+  "description": "Green chip beside the score: what it gained in the last four weeks.",
+  "placeholders": {
+   "n": {
     "type": "String"
    }
   }
  },
- "journeyNAnswers": "{n, plural, =1{1 answer} other{{n} answers}}",
- "@journeyNAnswers": {
-  "description": "How many answers the sentence above rests on.",
+ "journeyWeekSoFar": "{n, plural, =1{This week so far, you earned 1 point.} other{This week so far, you earned {n} points.}}",
+ "@journeyWeekSoFar": {
+  "description": "Under the score chart, for the week in hand.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyWeekOf": "{n, plural, =1{In the week of {date}, you earned 1 point.} other{In the week of {date}, you earned {n} points.}}",
+ "@journeyWeekOf": {
+  "description": "Under the score chart, for a past week the reader tapped. date is the day the week started, e.g. 14 July.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "date": {
+    "type": "String"
+   }
+  }
+ },
+ "journeyCards": "{n, plural, =1{1 card} other{{n} cards}}",
+ "@journeyCards": {
+  "description": "Beside that sentence: how many cards were first read that week.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyScoreCaption": "Your score at the end of each week since {date}. Tap a point to see that week.",
+ "@journeyScoreCaption": {
+  "description": "Small print under the score chart. date is the first day, e.g. 14 July.",
+  "placeholders": {
+   "date": {
+    "type": "String"
+   }
+  }
+ },
+ "journeyLevelOf": "Level {n} of {of}",
+ "@journeyLevelOf": {
+  "description": "Small capitals over the level's name (shown in capitals).",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyStepFrom": "{what}\nfrom {rung}",
+ "@journeyStepFrom": {
+  "description": "Right of the level's name, on two lines: how far the next level is. what is e.g. '2 points' or '12 cards'; rung is the next level's name.",
+  "placeholders": {
+   "what": {
+    "type": "String"
+   },
+   "rung": {
+    "type": "String"
+   }
+  }
+ },
+ "journeyToGoCards": "{n, plural, =1{1 card} other{{n} cards}}",
+ "@journeyToGoCards": {
+  "description": "How far the next level is: cards still to read.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyToGoAnswers": "{n, plural, =1{1 answer} other{{n} answers}}",
+ "@journeyToGoAnswers": {
+  "description": "How far the next level is: answers still to give.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyToGoSure": "{n, plural, =1{1 answer with how sure} other{{n} answers with how sure}}",
+ "@journeyToGoSure": {
+  "description": "How far the next level is: answers given with how sure the reader was.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyToGoHeld": "{n, plural, =1{1 card held} other{{n} cards held}}",
+ "@journeyToGoHeld": {
+  "description": "How far the next level is: cards still to keep (come back and get right).",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyToGoPoints": "{n, plural, =1{1 point} other{{n} points}}",
+ "@journeyToGoPoints": {
+  "description": "How far the next level is: points off still to lose.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyWorth": "Worth",
+ "@journeyWorth": {
+  "description": "Tile title: what the cards read are worth in books."
+ },
+ "journeyBooks": "{n, plural, =1{1 book} other{{n} books}}",
+ "@journeyBooks": {
+  "description": "Big number in the Worth tile: non-fiction books, at fifty cards a book.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyOrDocumentaries": "or {h} h of documentaries",
+ "@journeyOrDocumentaries": {
+  "description": "Under the books: the same in hours of documentaries.",
+  "placeholders": {
+   "h": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyToFirstBook": "{n, plural, =1{1 to the first book} other{{n} to the first book}}",
+ "@journeyToFirstBook": {
+  "description": "Under the cards read, before the first fifty: how many until the first book.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyInARow": "In a row",
+ "@journeyInARow": {
+  "description": "Tile title: days in a row."
+ },
+ "journeyDays": "{n, plural, =1{1 day} other{{n} days}}",
+ "@journeyDays": {
+  "description": "Big number in the In a row tile.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyBestActive": "Best {best} · {active} of {days}",
+ "@journeyBestActive": {
+  "description": "Under the days in a row: the best run, and the days read of the days since the first.",
+  "placeholders": {
+   "best": {
+    "type": "int"
+   },
+   "active": {
+    "type": "int"
+   },
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "journeySubjectsOf": "{n} of {of}",
+ "@journeySubjectsOf": {
+  "description": "Big number over the subjects chart: subjects opened of all of them.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "journeySubjectsDashed": "subjects · dashed: {month}",
+ "@journeySubjectsDashed": {
+  "description": "Beside it: the dashed shape is the reading as it stood at the end of the first month, e.g. July.",
+  "placeholders": {
+   "month": {
+    "type": "String"
+   }
+  }
+ },
+ "journeySubjects": "subjects",
+ "@journeySubjects": {
+  "description": "Beside it, before there is a first month to compare with."
+ },
+ "journeyHowHard": "How hard",
+ "@journeyHowHard": {
+  "description": "Tile title: how hard the cards the reader opens are."
+ },
+ "journeyOfThree": "of 3",
+ "@journeyOfThree": {
+  "description": "Beside the average level: out of 3 (easy 1, medium 2, hard 3)."
+ },
+ "journeyHardNow": "The cards you open.",
+ "@journeyHardNow": {
+  "description": "Under the average level."
+ },
+ "journeyHardThen": "The cards you open. {v} in {month}",
+ "@journeyHardThen": {
+  "description": "Under the average level, once there is a first month to compare with, e.g. 1.8 in July.",
+  "placeholders": {
+   "v": {
+    "type": "String"
+   },
+   "month": {
+    "type": "String"
+   }
+  }
+ },
+ "journeyReadingTime": "Reading time",
+ "@journeyReadingTime": {
+  "description": "Tile title: time spent on the cards."
+ },
+ "journeyHoursMinutes": "{h} h {m}",
+ "@journeyHoursMinutes": {
+  "description": "Big number: hours and minutes, e.g. 3 h 28.",
+  "placeholders": {
+   "h": {
+    "type": "int"
+   },
+   "m": {
+    "type": "String"
+   }
+  }
+ },
+ "journeyMinutes": "{m} min",
+ "@journeyMinutes": {
+  "description": "Big number under an hour.",
+  "placeholders": {
+   "m": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyMinAWeek": "{now} min a week, from {was}",
+ "@journeyMinAWeek": {
+  "description": "Under the reading time: minutes a week lately, and at the start.",
+  "placeholders": {
+   "now": {
+    "type": "int"
+   },
+   "was": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyMinThisWeek": "{m} min this week",
+ "@journeyMinThisWeek": {
+  "description": "Under the reading time, before there is a start to compare with.",
+  "placeholders": {
+   "m": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyTimedFromToday": "Counted from today",
+ "@journeyTimedFromToday": {
+  "description": "Under a dash: the app has started timing the cards today."
+ },
+ "journeyPointsOffFrom": "points off, from {was}",
+ "@journeyPointsOffFrom": {
+  "description": "Beside the points off: what they were at the start.",
+  "placeholders": {
+   "was": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyRungOrLess": "{rung} · {n} or less",
+ "@journeyRungOrLess": {
+  "description": "Green small capitals, right of the points off: what the top level asks (shown in capitals).",
+  "placeholders": {
+   "rung": {
+    "type": "String"
+   },
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyRightWhenSure": "Right when sure",
+ "@journeyRightWhenSure": {
+  "description": "Tile title: how often the reader was right when 80% sure or more."
+ },
+ "journeyFromIn": "From {v} in {month}",
+ "@journeyFromIn": {
+  "description": "Under a number: what it was in the first month, e.g. From 50% in July.",
+  "placeholders": {
+   "v": {
+    "type": "String"
+   },
+   "month": {
+    "type": "String"
+   }
+  }
+ },
+ "journeySureNone": "Nothing said at 80% or more yet",
+ "@journeySureNone": {
+  "description": "Under a dash, before any answer at 80% sure or more."
+ },
+ "journeyMovesTitle": "Moves you can spot",
+ "@journeyMovesTitle": {
+  "description": "Tile title: the reasoning moves the reader has down."
+ },
+ "journeyOfN": "of {n}",
+ "@journeyOfN": {
+  "description": "Beside the moves: out of how many there are.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyNewest": "Newest: {name}",
+ "@journeyNewest": {
+  "description": "Under the moves: the one the reader got most recently.",
+  "placeholders": {
+   "name": {
+    "type": "String"
+   }
+  }
+ },
+ "journeyNoneYet": "None yet",
+ "@journeyNoneYet": {
+  "description": "Under the moves, before the first."
+ },
+ "journeyStillWithYou": "{n, plural, =1{card still with you} other{cards still with you}}",
+ "@journeyStillWithYou": {
+  "description": "Beside the big number of cards held: no number in it.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyRecallDays": "{right} of {of} after {days, plural, =1{a day} other{{days} days}}",
+ "@journeyRecallDays": {
+  "description": "Under a bar: of the cards that came back after that many days, how many the reader still knew.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   },
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyRecallWeeks": "{right} of {of} after {weeks, plural, =1{a week} other{{weeks} weeks}}",
+ "@journeyRecallWeeks": {
+  "description": "The same, after weeks.",
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   },
+   "weeks": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyActiveDays": "{active} of {days} days",
+ "@journeyActiveDays": {
+  "description": "Over the calendar: days read of the days since the first.",
+  "placeholders": {
+   "active": {
+    "type": "int"
+   },
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyMostlyMorning": "Mostly mornings",
+ "@journeyMostlyMorning": {
+  "description": "Right of it: when most cards are read."
+ },
+ "journeyMostlyAfternoon": "Mostly afternoons",
+ "@journeyMostlyAfternoon": {
+  "description": "Right of it: when most cards are read."
+ },
+ "journeyMostlyEvening": "Mostly evenings",
+ "@journeyMostlyEvening": {
+  "description": "Right of it: when most cards are read."
+ },
+ "journeyMostlyNight": "Mostly at night",
+ "@journeyMostlyNight": {
+  "description": "Right of it: when most cards are read."
+ },
+ "journeyInTime": "In time",
+ "@journeyInTime": {
+  "description": "Tile title: how far back in time the cards read reach."
+ },
+ "journeyYears": "{n} years",
+ "@journeyYears": {
+  "description": "Big number: years, e.g. 5,000 years.",
+  "placeholders": {
+   "n": {
+    "type": "int",
+    "format": "decimalPattern"
+   }
+  }
+ },
+ "journeyFromEra": "from {era} to this year",
+ "@journeyFromEra": {
+  "description": "Under it: the oldest time the cards read are set in.",
+  "placeholders": {
+   "era": {
+    "type": "String"
+   }
+  }
+ },
+ "journeyEraAncient": "the ancient world",
+ "@journeyEraAncient": {
+  "description": "An era, inside 'from … to this year'."
+ },
+ "journeyEraMedieval": "the Middle Ages",
+ "@journeyEraMedieval": {
+  "description": "An era, inside 'from … to this year'."
+ },
+ "journeyEraEarlyModern": "the 1500s",
+ "@journeyEraEarlyModern": {
+  "description": "An era, inside 'from … to this year'."
+ },
+ "journeyEraNineteenth": "the 1800s",
+ "@journeyEraNineteenth": {
+  "description": "An era, inside 'from … to this year'."
+ },
+ "journeyEraTwentieth": "the 1900s",
+ "@journeyEraTwentieth": {
+  "description": "An era, inside 'from … to this year'."
+ },
+ "journeyEraRecent": "2000",
+ "@journeyEraRecent": {
+  "description": "An era, inside 'from … to this year': the year 2000."
+ },
+ "journeyNothingDated": "nothing dated yet",
+ "@journeyNothingDated": {
+  "description": "Under a dash in the In time tile."
+ },
+ "journeyInPlace": "In place",
+ "@journeyInPlace": {
+  "description": "Tile title: where in the world the cards read are set."
+ },
+ "journeyRegions": "{n, plural, =1{1 region} other{{n} regions}}",
+ "@journeyRegions": {
+  "description": "Big number: regions of the world.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyPlacesAndSpace": "{list}, and space",
+ "@journeyPlacesAndSpace": {
+  "description": "Under it: the regions read most, and space.",
+  "placeholders": {
+   "list": {
+    "type": "String"
+   }
+  }
+ },
+ "journeyRegionAmericas": "the Americas",
+ "@journeyRegionAmericas": {
+  "description": "A region of the world."
+ },
+ "journeyRegionEurope": "Europe",
+ "@journeyRegionEurope": {
+  "description": "A region of the world."
+ },
+ "journeyRegionAsia": "Asia",
+ "@journeyRegionAsia": {
+  "description": "A region of the world."
+ },
+ "journeyRegionOceania": "Oceania",
+ "@journeyRegionOceania": {
+  "description": "A region of the world."
+ },
+ "journeyRegionAfrica": "Africa",
+ "@journeyRegionAfrica": {
+  "description": "A region of the world."
+ },
+ "journeyRegionMiddleEast": "the Middle East",
+ "@journeyRegionMiddleEast": {
+  "description": "A region of the world."
+ },
+ "journeyNoPlace": "no place yet",
+ "@journeyNoPlace": {
+  "description": "Under a dash in the In place tile."
+ },
+ "journeyTopics": "Topics",
+ "@journeyTopics": {
+  "description": "Tile title: the topics inside the subjects that the reader has met."
+ },
+ "journeyMet": "{n} met",
+ "@journeyMet": {
+  "description": "Big number: topics met.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "journeyTopicsMost": "{n} of them in {subject}",
+ "@journeyTopicsMost": {
+  "description": "Under it: how many of them are in the subject with most.",
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "journeyWords": "Words",
+ "@journeyWords": {
+  "description": "Tile title: the terms the reader has met in the cards."
+ },
+ "journeyNew": "{n} new",
+ "@journeyNew": {
+  "description": "Big number: terms met for the first time.",
   "placeholders": {
    "n": {
     "type": "int"

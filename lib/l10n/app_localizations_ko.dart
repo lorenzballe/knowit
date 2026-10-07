@@ -97,11 +97,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String hoursMinutes(int h, int m) {
-    return '$h시간 $m분';
-  }
-
-  @override
   String tomorrowsFiveOpenIn(String when) {
     return '내일의 다섯 장은 $when 후에 열려요';
   }
@@ -1418,11 +1413,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String levelNamed(int n, String name) {
-    return '레벨 $n · $name';
-  }
-
-  @override
   String get topLevel => '최고 레벨';
 
   @override
@@ -1431,96 +1421,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String stillWithYouOf(int n, int total) {
-    return '아직 기억함 · $total장 중 $n장';
-  }
-
-  @override
-  String get stillWithYouNothing => '아직 기억함 · 답한 카드 없음';
-
-  @override
-  String get calibrationPointsOff => '확신 정확도 · 어긋난 점수';
-
-  @override
-  String get calibrationNotMeasured => '확신 정확도 · 미측정';
-
-  @override
-  String inARowBest(int n) {
-    return '연속 · 최고 $n일';
-  }
-
-  @override
-  String movesYouCanSpot(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '알아채는 수 $n개',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String nCardsIsAbout(int n) {
-    return '$n장은 대략';
-  }
-
-  @override
-  String nonFictionBooks(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '권의 논픽션',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String hoursOfDocumentaries(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '시간의 다큐멘터리',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String lectures(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '번의 강의',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String inTotalACard(String time) {
-    return '총 $time · 카드당 약 40초';
-  }
-
-  @override
   String get bySubject => '분야별';
-
-  @override
-  String get readOfTheShelf => '읽음 · 서가 중';
-
-  @override
-  String get toSayTonight => '오늘 밤 말해볼 것';
-
-  @override
-  String get anotherOne => '다른 카드';
-
-  @override
-  String get saidIt => '말했어요';
-
-  @override
-  String get saidAlready => '말함';
-
-  @override
-  String justMinutes(int m) {
-    return '$m분';
-  }
 
   @override
   String get pts => '점';
@@ -1623,48 +1524,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get archiveBeforeThisWeek => '이번 주 이전의 모든 것';
-
-  @override
-  String get whatStays => '남는 것';
-
-  @override
-  String nReadOfN(int read, int total) {
-    return '$total장 중 $read장 읽음';
-  }
-
-  @override
-  String nAnswered(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n장 답함',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String nCameBackAgain(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n장 돌아옴',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String nKeptOnReturn(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n장은 돌아와도 정답',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get nothingBackYet =>
-      '아직 돌아온 카드가 없습니다. 카드는 사흘 뒤, 일주일 뒤, 한 달 뒤에 돌아옵니다. 그때 맞히는 것이 진짜 아는 것입니다.';
 
   @override
   String get weekKeptThreeOwn => '일주일 달성: 내일은 다섯 장 중 세 장이 당신의 카드.';
@@ -2023,24 +1882,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get reportSentToast => '고마워요. 확인할게요.';
 
   @override
-  String journeyPoints(String n) {
-    return '$n점';
-  }
-
-  @override
   String get journeyPointsOff => '점 어긋남';
-
-  @override
-  String journeyLastWeek(int n) {
-    return '지난주 $n';
-  }
-
-  @override
-  String get journeyLastWeekSame => '지난주와 같음';
-
-  @override
-  String get journeyOffExplain =>
-      '말한 확신과 실제로 맞히는 비율의 차이예요. 0이면 70%라고 한 답이 열 번 중 일곱 번 맞았다는 뜻이에요.';
 
   @override
   String journeyOffNotYet(int n) {
@@ -2053,29 +1895,390 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get journeyAxisSure => '말한 확신 →';
+  String get journeyYourScore => '내 점수';
 
   @override
-  String get journeyAxisRight => '↑ 맞힌 비율';
-
-  @override
-  String get journeyCurveSpotOn => '딱 맞음';
-
-  @override
-  String get journeyTooSure => '과신';
-
-  @override
-  String journeyWhenYouSaid(String sure, String right) {
-    return '$sure 확신한다고 했을 때, $right 맞혔어요.';
+  String journeyPointsUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '점');
+    return '$_temp0';
   }
 
   @override
-  String journeyNAnswers(int n) {
+  String journeyGainedIn(String n) {
+    return '4주 동안 +$n';
+  }
+
+  @override
+  String journeyWeekSoFar(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '이번 주에는 지금까지 $n점을 얻었어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyWeekOf(int n, String date) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$date 주에는 $n점을 얻었어요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n장',
+      one: '1장',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyScoreCaption(String date) {
+    return '$date부터 매주 마지막 날의 점수예요. 점을 탭하면 그 주를 볼 수 있어요.';
+  }
+
+  @override
+  String journeyLevelOf(int n, int of) {
+    return '레벨 $n / $of';
+  }
+
+  @override
+  String journeyStepFrom(String what, String rung) {
+    return '$what 더\n$rung까지';
+  }
+
+  @override
+  String journeyToGoCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n장',
+      one: '1장',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyToGoAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
       other: '답 $n개',
     );
     return '$_temp0';
+  }
+
+  @override
+  String journeyToGoSure(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '확신을 말한 답 $n개',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyToGoHeld(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '유지한 카드 $n장',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyToGoPoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n점');
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyWorth => '환산하면';
+
+  @override
+  String journeyBooks(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n권');
+    return '$_temp0';
+  }
+
+  @override
+  String journeyOrDocumentaries(int h) {
+    return '또는 다큐멘터리 $h시간';
+  }
+
+  @override
+  String journeyToFirstBook(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '첫 책까지 $n장',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyInARow => '연속';
+
+  @override
+  String journeyDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n일',
+      one: '1일',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyBestActive(int best, int active, int days) {
+    return '최고 $best일 · $days일 중 $active일';
+  }
+
+  @override
+  String journeySubjectsOf(int n, int of) {
+    return '$n / $of';
+  }
+
+  @override
+  String journeySubjectsDashed(String month) {
+    return '주제 · 점선: $month';
+  }
+
+  @override
+  String get journeySubjects => '주제';
+
+  @override
+  String get journeyHowHard => '난이도';
+
+  @override
+  String get journeyOfThree => '/ 3';
+
+  @override
+  String get journeyHardNow => '열어 본 카드 기준.';
+
+  @override
+  String journeyHardThen(String v, String month) {
+    return '열어 본 카드 기준. $month에는 $v';
+  }
+
+  @override
+  String get journeyReadingTime => '읽은 시간';
+
+  @override
+  String journeyHoursMinutes(int h, String m) {
+    return '$h시간 $m분';
+  }
+
+  @override
+  String journeyMinutes(int m) {
+    return '$m분';
+  }
+
+  @override
+  String journeyMinAWeek(int now, int was) {
+    return '주 $now분, 처음엔 $was분';
+  }
+
+  @override
+  String journeyMinThisWeek(int m) {
+    return '이번 주 $m분';
+  }
+
+  @override
+  String get journeyTimedFromToday => '오늘부터 측정';
+
+  @override
+  String journeyPointsOffFrom(int was) {
+    return '점 어긋남, 처음엔 $was';
+  }
+
+  @override
+  String journeyRungOrLess(String rung, int n) {
+    return '$rung · $n 이하';
+  }
+
+  @override
+  String get journeyRightWhenSure => '확신할 때 정답률';
+
+  @override
+  String journeyFromIn(String v, String month) {
+    return '$month $v에서';
+  }
+
+  @override
+  String get journeySureNone => '80% 이상 답한 적 아직 없음';
+
+  @override
+  String get journeyMovesTitle => '알아채는 수';
+
+  @override
+  String journeyOfN(int n) {
+    return '/ $n';
+  }
+
+  @override
+  String journeyNewest(String name) {
+    return '최근: $name';
+  }
+
+  @override
+  String get journeyNoneYet => '아직 없음';
+
+  @override
+  String journeyStillWithYou(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '아직 기억하는 카드',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyRecallDays(int right, int of, int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days일 뒤',
+      one: '하루 뒤',
+    );
+    return '$_temp0 $of장 중 $right장';
+  }
+
+  @override
+  String journeyRecallWeeks(int right, int of, int weeks) {
+    String _temp0 = intl.Intl.pluralLogic(
+      weeks,
+      locale: localeName,
+      other: '$weeks주 뒤',
+      one: '일주일 뒤',
+    );
+    return '$_temp0 $of장 중 $right장';
+  }
+
+  @override
+  String journeyActiveDays(int active, int days) {
+    return '$days일 중 $active일';
+  }
+
+  @override
+  String get journeyMostlyMorning => '주로 아침';
+
+  @override
+  String get journeyMostlyAfternoon => '주로 오후';
+
+  @override
+  String get journeyMostlyEvening => '주로 저녁';
+
+  @override
+  String get journeyMostlyNight => '주로 밤';
+
+  @override
+  String get journeyInTime => '시대';
+
+  @override
+  String journeyYears(int n) {
+    final intl.NumberFormat nNumberFormat = intl.NumberFormat.decimalPattern(
+      localeName,
+    );
+    final String nString = nNumberFormat.format(n);
+
+    return '$nString년';
+  }
+
+  @override
+  String journeyFromEra(String era) {
+    return '$era부터 올해까지';
+  }
+
+  @override
+  String get journeyEraAncient => '고대';
+
+  @override
+  String get journeyEraMedieval => '중세';
+
+  @override
+  String get journeyEraEarlyModern => '16세기';
+
+  @override
+  String get journeyEraNineteenth => '19세기';
+
+  @override
+  String get journeyEraTwentieth => '20세기';
+
+  @override
+  String get journeyEraRecent => '2000';
+
+  @override
+  String get journeyNothingDated => '아직 연대가 있는 카드 없음';
+
+  @override
+  String get journeyInPlace => '지역';
+
+  @override
+  String journeyRegions(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n개 지역',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyPlacesAndSpace(String list) {
+    return '$list, 그리고 우주';
+  }
+
+  @override
+  String get journeyRegionAmericas => '아메리카';
+
+  @override
+  String get journeyRegionEurope => '유럽';
+
+  @override
+  String get journeyRegionAsia => '아시아';
+
+  @override
+  String get journeyRegionOceania => '오세아니아';
+
+  @override
+  String get journeyRegionAfrica => '아프리카';
+
+  @override
+  String get journeyRegionMiddleEast => '중동';
+
+  @override
+  String get journeyNoPlace => '아직 장소 없음';
+
+  @override
+  String get journeyTopics => '세부 주제';
+
+  @override
+  String journeyMet(int n) {
+    return '$n개 접함';
+  }
+
+  @override
+  String journeyTopicsMost(int n, String subject) {
+    return '그중 $n개는 $subject';
+  }
+
+  @override
+  String get journeyWords => '용어';
+
+  @override
+  String journeyNew(int n) {
+    return '새로 $n개';
   }
 }

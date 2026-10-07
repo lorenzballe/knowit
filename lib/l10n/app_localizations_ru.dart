@@ -99,11 +99,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String hoursMinutes(int h, int m) {
-    return '$h ч $m мин';
-  }
-
-  @override
   String tomorrowsFiveOpenIn(String when) {
     return 'Завтрашняя пятёрка откроется через $when';
   }
@@ -1504,11 +1499,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String levelNamed(int n, String name) {
-    return 'Уровень $n · $name';
-  }
-
-  @override
   String get topLevel => 'Высший уровень';
 
   @override
@@ -1517,108 +1507,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String stillWithYouOf(int n, int total) {
-    return 'ещё с вами · $n из $total';
-  }
-
-  @override
-  String get stillWithYouNothing => 'ещё с вами · пока нет ответов';
-
-  @override
-  String get calibrationPointsOff => 'калибровка · пунктов отклонения';
-
-  @override
-  String get calibrationNotMeasured => 'калибровка · не измерена';
-
-  @override
-  String inARowBest(int n) {
-    return 'подряд · рекорд $n';
-  }
-
-  @override
-  String movesYouCanSpot(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'приёма, которые вы замечаете',
-      many: 'приёмов, которые вы замечаете',
-      few: 'приёма, которые вы замечаете',
-      one: 'приём, который вы замечаете',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String nCardsIsAbout(int n) {
-    return '$n карточек — это примерно';
-  }
-
-  @override
-  String nonFictionBooks(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'книги нон-фикшн',
-      many: 'книг нон-фикшн',
-      few: 'книги нон-фикшн',
-      one: 'книга нон-фикшн',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String hoursOfDocumentaries(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'часа документальных фильмов',
-      many: 'часов документальных фильмов',
-      few: 'часа документальных фильмов',
-      one: 'час документальных фильмов',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String lectures(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'лекции',
-      many: 'лекций',
-      few: 'лекции',
-      one: 'лекция',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String inTotalACard(String time) {
-    return '$time всего · около 40 секунд на карточку';
-  }
-
-  @override
   String get bySubject => 'По темам';
-
-  @override
-  String get readOfTheShelf => 'прочитано · с полки';
-
-  @override
-  String get toSayTonight => 'Рассказать сегодня вечером';
-
-  @override
-  String get anotherOne => 'Ещё одну';
-
-  @override
-  String get saidIt => 'Рассказал';
-
-  @override
-  String get saidAlready => 'Рассказано';
-
-  @override
-  String justMinutes(int m) {
-    return '$m мин';
-  }
 
   @override
   String get pts => 'очков';
@@ -1727,51 +1616,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get archiveBeforeThisWeek => 'До этой недели';
-
-  @override
-  String get whatStays => 'Что остаётся';
-
-  @override
-  String nReadOfN(int read, int total) {
-    return '$read из $total прочитано';
-  }
-
-  @override
-  String nAnswered(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n карточек с ответом',
-      one: '1 карточка с ответом',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String nCameBackAgain(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n вернулись',
-      one: '1 вернулась',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String nKeptOnReturn(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n всё ещё верно при возвращении',
-      one: '1 всё ещё верно при возвращении',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get nothingBackYet =>
-      'Пока ничего не вернулось. Карточка возвращается через три дня, потом через неделю, потом через месяц — и то, что ты угадываешь тогда, ты знаешь по-настоящему.';
 
   @override
   String get weekKeptThreeOwn => 'Неделя подряд: завтра три из пяти — твои.';
@@ -2149,24 +1993,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get reportSentToast => 'Спасибо. Мы проверим.';
 
   @override
-  String journeyPoints(String n) {
-    return '$n очк.';
-  }
-
-  @override
   String get journeyPointsOff => 'пунктов отклонения';
-
-  @override
-  String journeyLastWeek(int n) {
-    return '$n на прошлой неделе';
-  }
-
-  @override
-  String get journeyLastWeekSame => 'как на прошлой неделе';
-
-  @override
-  String get journeyOffExplain =>
-      'Насколько ваша заявленная уверенность расходится с тем, как часто вы правы. Ноль означал бы, что каждый ответ на 70% был верен семь раз из десяти.';
 
   @override
   String journeyOffNotYet(int n) {
@@ -2182,24 +2009,95 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get journeyAxisSure => 'заявленная уверенность →';
+  String get journeyYourScore => 'Ваш счёт';
 
   @override
-  String get journeyAxisRight => '↑ как часто верно';
-
-  @override
-  String get journeyCurveSpotOn => 'в точку';
-
-  @override
-  String get journeyTooSure => 'слишком уверен';
-
-  @override
-  String journeyWhenYouSaid(String sure, String right) {
-    return 'Когда вы говорили, что уверены на $sure, вы были правы в $right случаев.';
+  String journeyPointsUnit(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'очка',
+      many: 'очков',
+      few: 'очка',
+      one: 'очко',
+    );
+    return '$_temp0';
   }
 
   @override
-  String journeyNAnswers(int n) {
+  String journeyGainedIn(String n) {
+    return '+$n за 4 недели';
+  }
+
+  @override
+  String journeyWeekSoFar(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'На этой неделе вы пока набрали $n очка.',
+      many: 'На этой неделе вы пока набрали $n очков.',
+      few: 'На этой неделе вы пока набрали $n очка.',
+      one: 'На этой неделе вы пока набрали $n очко.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyWeekOf(int n, String date) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'За неделю с $date вы набрали $n очка.',
+      many: 'За неделю с $date вы набрали $n очков.',
+      few: 'За неделю с $date вы набрали $n очка.',
+      one: 'За неделю с $date вы набрали $n очко.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n карточки',
+      many: '$n карточек',
+      few: '$n карточки',
+      one: '$n карточка',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyScoreCaption(String date) {
+    return 'Ваш счёт на конец каждой недели с $date. Коснитесь точки, чтобы открыть эту неделю.';
+  }
+
+  @override
+  String journeyLevelOf(int n, int of) {
+    return 'Уровень $n из $of';
+  }
+
+  @override
+  String journeyStepFrom(String what, String rung) {
+    return '$what\nдо уровня «$rung»';
+  }
+
+  @override
+  String journeyToGoCards(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n карточки',
+      many: '$n карточек',
+      few: '$n карточки',
+      one: '$n карточка',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyToGoAnswers(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
@@ -2207,6 +2105,380 @@ class AppLocalizationsRu extends AppLocalizations {
       many: '$n ответов',
       few: '$n ответа',
       one: '$n ответ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyToGoSure(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n ответа с уверенностью',
+      many: '$n ответов с уверенностью',
+      few: '$n ответа с уверенностью',
+      one: '$n ответ с уверенностью',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyToGoHeld(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n удержанной карточки',
+      many: '$n удержанных карточек',
+      few: '$n удержанные карточки',
+      one: '$n удержанная карточка',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyToGoPoints(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n пункта',
+      many: '$n пунктов',
+      few: '$n пункта',
+      one: '$n пункт',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyWorth => 'Эквивалент';
+
+  @override
+  String journeyBooks(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n книги',
+      many: '$n книг',
+      few: '$n книги',
+      one: '$n книга',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyOrDocumentaries(int h) {
+    return 'или $h ч документального кино';
+  }
+
+  @override
+  String journeyToFirstBook(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'ещё $n до первой книги',
+      many: 'ещё $n до первой книги',
+      few: 'ещё $n до первой книги',
+      one: 'ещё $n до первой книги',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get journeyInARow => 'Подряд';
+
+  @override
+  String journeyDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n дня',
+      many: '$n дней',
+      few: '$n дня',
+      one: '$n день',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyBestActive(int best, int active, int days) {
+    return 'Рекорд $best · $active из $days';
+  }
+
+  @override
+  String journeySubjectsOf(int n, int of) {
+    return '$n из $of';
+  }
+
+  @override
+  String journeySubjectsDashed(String month) {
+    return 'тем · пунктир: $month';
+  }
+
+  @override
+  String get journeySubjects => 'тем';
+
+  @override
+  String get journeyHowHard => 'Сложность';
+
+  @override
+  String get journeyOfThree => 'из 3';
+
+  @override
+  String get journeyHardNow => 'Карточки, которые вы открываете.';
+
+  @override
+  String journeyHardThen(String v, String month) {
+    return 'Карточки, которые вы открываете. $v за $month';
+  }
+
+  @override
+  String get journeyReadingTime => 'Время чтения';
+
+  @override
+  String journeyHoursMinutes(int h, String m) {
+    return '$h ч $m';
+  }
+
+  @override
+  String journeyMinutes(int m) {
+    return '$m мин';
+  }
+
+  @override
+  String journeyMinAWeek(int now, int was) {
+    return '$now мин в неделю, было $was';
+  }
+
+  @override
+  String journeyMinThisWeek(int m) {
+    return '$m мин на этой неделе';
+  }
+
+  @override
+  String get journeyTimedFromToday => 'Отсчёт с сегодняшнего дня';
+
+  @override
+  String journeyPointsOffFrom(int was) {
+    return 'пунктов отклонения, было $was';
+  }
+
+  @override
+  String journeyRungOrLess(String rung, int n) {
+    return '$rung · макс. $n';
+  }
+
+  @override
+  String get journeyRightWhenSure => 'Верно, если уверены';
+
+  @override
+  String journeyFromIn(String v, String month) {
+    return 'За $month: $v';
+  }
+
+  @override
+  String get journeySureNone => 'Пока нет ответов на 80% и выше';
+
+  @override
+  String get journeyMovesTitle => 'Замеченные приёмы';
+
+  @override
+  String journeyOfN(int n) {
+    return 'из $n';
+  }
+
+  @override
+  String journeyNewest(String name) {
+    return 'Последний: $name';
+  }
+
+  @override
+  String get journeyNoneYet => 'Пока нет';
+
+  @override
+  String journeyStillWithYou(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'карточки ещё с вами',
+      many: 'карточек ещё с вами',
+      few: 'карточки ещё с вами',
+      one: 'карточка ещё с вами',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyRecallDays(int right, int of, int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days дня',
+      many: '$days дней',
+      few: '$days дня',
+      one: '$days день',
+    );
+    return '$right из $of спустя $_temp0';
+  }
+
+  @override
+  String journeyRecallWeeks(int right, int of, int weeks) {
+    String _temp0 = intl.Intl.pluralLogic(
+      weeks,
+      locale: localeName,
+      other: '$weeks недели',
+      many: '$weeks недель',
+      few: '$weeks недели',
+      one: '$weeks неделю',
+    );
+    return '$right из $of спустя $_temp0';
+  }
+
+  @override
+  String journeyActiveDays(int active, int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days дня',
+      many: '$days дней',
+      few: '$days дней',
+      one: '$days дня',
+    );
+    return '$active из $_temp0';
+  }
+
+  @override
+  String get journeyMostlyMorning => 'Чаще утром';
+
+  @override
+  String get journeyMostlyAfternoon => 'Чаще днём';
+
+  @override
+  String get journeyMostlyEvening => 'Чаще вечером';
+
+  @override
+  String get journeyMostlyNight => 'Чаще ночью';
+
+  @override
+  String get journeyInTime => 'Во времени';
+
+  @override
+  String journeyYears(int n) {
+    final intl.NumberFormat nNumberFormat = intl.NumberFormat.decimalPattern(
+      localeName,
+    );
+    final String nString = nNumberFormat.format(n);
+
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$nString года',
+      many: '$nString лет',
+      few: '$nString года',
+      one: '$nString год',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyFromEra(String era) {
+    return 'от $era до наших дней';
+  }
+
+  @override
+  String get journeyEraAncient => 'древности';
+
+  @override
+  String get journeyEraMedieval => 'Средневековья';
+
+  @override
+  String get journeyEraEarlyModern => 'XVI века';
+
+  @override
+  String get journeyEraNineteenth => 'XIX века';
+
+  @override
+  String get journeyEraTwentieth => 'XX века';
+
+  @override
+  String get journeyEraRecent => '2000';
+
+  @override
+  String get journeyNothingDated => 'пока без дат';
+
+  @override
+  String get journeyInPlace => 'По миру';
+
+  @override
+  String journeyRegions(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n региона',
+      many: '$n регионов',
+      few: '$n региона',
+      one: '$n регион',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyPlacesAndSpace(String list) {
+    return '$list и космос';
+  }
+
+  @override
+  String get journeyRegionAmericas => 'Америка';
+
+  @override
+  String get journeyRegionEurope => 'Европа';
+
+  @override
+  String get journeyRegionAsia => 'Азия';
+
+  @override
+  String get journeyRegionOceania => 'Океания';
+
+  @override
+  String get journeyRegionAfrica => 'Африка';
+
+  @override
+  String get journeyRegionMiddleEast => 'Ближний Восток';
+
+  @override
+  String get journeyNoPlace => 'пока нигде';
+
+  @override
+  String get journeyTopics => 'Подтемы';
+
+  @override
+  String journeyMet(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n знакомой',
+      many: '$n знакомых',
+      few: '$n знакомые',
+      one: '$n знакомая',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String journeyTopicsMost(int n, String subject) {
+    return '$n из них в теме $subject';
+  }
+
+  @override
+  String get journeyWords => 'Слова';
+
+  @override
+  String journeyNew(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n нового',
+      many: '$n новых',
+      few: '$n новых',
+      one: '$n новое',
     );
     return '$_temp0';
   }
