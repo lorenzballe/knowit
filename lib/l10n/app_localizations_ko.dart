@@ -2009,4 +2009,53 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get reportSentToast => '고마워요. 확인할게요.';
+
+  @override
+  String journeyPoints(String n) {
+    return '$n점';
+  }
+
+  @override
+  String get journeyNow => '오늘';
+
+  @override
+  String journeyKickerNow(int day, int level, int levels) {
+    return '$day일째 · 레벨 $level/$levels';
+  }
+
+  @override
+  String journeyKickerThen(int level, int levels) {
+    return '2주 차 · 레벨 $level/$levels';
+  }
+
+  @override
+  String get journeyRowSure => '확신했을 때 맞힌 비율';
+
+  @override
+  String get journeyRowOff => '평균 어긋난 점수';
+
+  @override
+  String get journeyRowMoves => '알아채는 수';
+
+  @override
+  String get journeyRowHeld => '아직 기억하는 카드';
+
+  @override
+  String get journeyRowRead => '읽은 카드';
+
+  @override
+  String get journeyCurveTitle => '말한 확신과 실제로 맞힌 비율';
+
+  @override
+  String get journeyCurveSpotOn => '딱 맞음';
+
+  @override
+  String journeyCurveLegend(String when, int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$when · $n점 어긋남',
+    );
+    return '$_temp0';
+  }
 }

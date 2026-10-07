@@ -499,5 +499,17 @@
   "reportOther": "Другое",
   "reportNoteHint": "Что поможет нам проверить (необязательно)",
   "reportSend": "Отправить",
-  "reportSentToast": "Спасибо. Мы проверим."
+  "reportSentToast": "Спасибо. Мы проверим.",
+  "journeyPoints": "{n} очк.",
+  "journeyNow": "Сегодня",
+  "journeyKickerNow": "ДЕНЬ {day} · УРОВЕНЬ {level} ИЗ {levels}",
+  "journeyKickerThen": "ЧЕРЕЗ ДВЕ НЕДЕЛИ · УРОВЕНЬ {level} ИЗ {levels}",
+  "journeyRowSure": "Верно, когда вы были уверены",
+  "journeyRowOff": "Отклонение, в среднем",
+  "journeyRowMoves": "Приёмы, которые вы замечаете",
+  "journeyRowHeld": "Карточки, что ещё с вами",
+  "journeyRowRead": "Прочитано карточек",
+  "journeyCurveTitle": "Насколько вы были уверены — и как часто оказывались правы",
+  "journeyCurveSpotOn": "в точку",
+  "journeyCurveLegend": "{n, plural, one{{when} · {n} пункт отклонения} few{{when} · {n} пункта отклонения} many{{when} · {n} пунктов отклонения} other{{when} · {n} пункта отклонения}}"
 }

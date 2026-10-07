@@ -499,5 +499,17 @@
   "reportOther": "其他",
   "reportNoteHint": "有助于我们核实的信息（可选）",
   "reportSend": "发送",
-  "reportSentToast": "谢谢，我们会核实。"
+  "reportSentToast": "谢谢，我们会核实。",
+  "journeyPoints": "{n} 分",
+  "journeyNow": "今天",
+  "journeyKickerNow": "第 {day} 天 · 等级 {level}/{levels}",
+  "journeyKickerThen": "两周时 · 等级 {level}/{levels}",
+  "journeyRowSure": "有把握时答对的比例",
+  "journeyRowOff": "平均偏差（分）",
+  "journeyRowMoves": "能识破的套路",
+  "journeyRowHeld": "仍记得的卡片",
+  "journeyRowRead": "已读卡片",
+  "journeyCurveTitle": "你说的把握，对比你实际答对的比例",
+  "journeyCurveSpotOn": "正好",
+  "journeyCurveLegend": "{n, plural, other{{when} · 偏差 {n} 分}}"
 }

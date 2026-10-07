@@ -90,6 +90,7 @@ class AppState extends ChangeNotifier {
   static const _kDayStartRung = 'knowit.dayStartRung';
   static const _kDayStartScore = 'knowit.dayStartScore';
   static const _kRungDates = 'knowit.rungDates';
+  static const _kRecordDays = 'knowit.recordDays';
   static const _kSaidIds = 'knowit.saidIds';
   static const _kOwnIds = 'knowit.todayOwnIds';
   static const _kAnswers = 'knowit.answersJson';
@@ -160,6 +161,12 @@ class AppState extends ChangeNotifier {
   /// The day each rung was first reached, by rung id — the dates on the
   /// journey. Written the moment a rung is cleared and never moved.
   Map<String, String> rungDates = {};
+
+  /// What the reader had to show at the end of each day they used the app:
+  /// cards read, cards still with them, moves they could spot — by date key.
+  /// The journey sets two weeks in beside today from it, and a day nothing
+  /// was written for is the same as the last one that was.
+  Map<String, List<int>> recordDays = {};
 
   /// Cards the reader has said out loud to somebody. The one thing the app
   /// cannot check and the only one that proves the card left the phone.
@@ -306,6 +313,7 @@ class AppState extends ChangeNotifier {
     judgements = _decodeJudgements(_prefs.getString(_kJudgements));
     deckHistory = _decodeHistory(_prefs.getString(_kDeckHistory));
     rungDates = _decodeDates(_prefs.getString(_kRungDates));
+    recordDays = _decodeRecordDays(_prefs.getString(_kRecordDays));
     saidIds = _prefs.getStringList(_kSaidIds) ?? [];
     // Absent on an install that started the day on an older build: the
     // reader is where they are now, and today reports no climb.
@@ -830,6 +838,26 @@ class AppState extends ChangeNotifier {
       await _prefs.setString(_kRungDates, jsonEncode(rungDates));
       Analytics.register('rung', at);
     }
+    // The day's counts, for the journey's two weeks in.
+    final String day = dateKey(today);
+    final List<int> counts = [seenIds.length, heldCards, movesDown];
+    if (!listEquals(recordDays[day], counts)) {
+      recordDays[day] = counts;
+      await _prefs.setString(_kRecordDays, jsonEncode(recordDays));
+    }
+  }
+
+  static Map<String, List<int>> _decodeRecordDays(String? raw) {
+    final parsed = _decodeJson(raw);
+    if (parsed is! Map) return {};
+    return {
+      for (final e in parsed.entries)
+        if (e.value is List)
+          '${e.key}': [
+            for (final Object? n in e.value as List)
+              if (n is num) n.round(),
+          ],
+    };
   }
 
   static Map<String, String> _decodeDates(String? raw) {
@@ -2064,6 +2092,7 @@ class AppState extends ChangeNotifier {
     dislikedIds = [];
     friendCodes = [];
     rungDates = {};
+    recordDays = {};
     saidIds = [];
     todayIndex = 0;
     pillsRead = 0;
@@ -2134,6 +2163,9 @@ class AppState extends ChangeNotifier {
     dislikedIds: List<String>.from(dislikedIds),
     friendCodes: List<String>.from(friendCodes),
     rungDates: Map<String, String>.from(rungDates),
+    recordDays: {
+      for (final e in recordDays.entries) e.key: List<int>.from(e.value),
+    },
     saidIds: List<String>.from(saidIds),
     seenIds: seenIds.toList(),
     pillsRead: pillsRead,
@@ -2163,6 +2195,9 @@ class AppState extends ChangeNotifier {
     dislikedIds = List<String>.from(s.dislikedIds);
     friendCodes = List<String>.from(s.friendCodes);
     rungDates = Map<String, String>.from(s.rungDates);
+    recordDays = {
+      for (final e in s.recordDays.entries) e.key: List<int>.from(e.value),
+    };
     saidIds = List<String>.from(s.saidIds);
     seenIds = s.seenIds.toSet();
     pillsRead = s.pillsRead;
@@ -2187,6 +2222,7 @@ class AppState extends ChangeNotifier {
     await _prefs.setStringList(_kDislikedIds, dislikedIds);
     await _prefs.setStringList(_kFriendCodes, friendCodes);
     await _prefs.setString(_kRungDates, jsonEncode(rungDates));
+    await _prefs.setString(_kRecordDays, jsonEncode(recordDays));
     await _prefs.setStringList(_kSaidIds, saidIds);
     await _prefs.setStringList(_kSeenIds, seenIds.toList());
     await _prefs.setInt(_kPillsRead, pillsRead);

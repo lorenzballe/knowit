@@ -202,25 +202,38 @@ longest of it to fitting in every language on a small phone.
 
 ## Your journey
 
-Artboard 83a, and the order is the argument: the numbers first, the card
-to say last.
+Artboard 134b at the top, and the order is the argument: the numbers
+first, the card to say last.
 
-`JourneyScreen` opens on **the score**, set large: the record as one
-number, with the bar under it that says where it came from. Four things
-are worth points and they are worth what they cost — a card read is one,
-because reading is the easy part; a card still with you weeks later is
-three, because that is the part that fails; a move you can spot in a
-context you have not seen is ten, because that is the whole promise; and
-a week kept is five, because the habit produces the other three. Nothing
-in it is invented and nothing in it goes down. Beside it, what today has
-added, exact: the score at the start of the day is written down with the
-deck. Then the **level**: the rung in words ("Level 3 · Answering"), the one thing
-between the reader and the next one, and a bar. Then **four numbers**,
-two by two: how much of what was answered is still with them, how far off
-their confidence runs, the streak, and how many moves they can spot — a
-principle met in at least two contexts and got right more often than not,
-which is what "something you can explain" means here, counted rather than
-claimed. Then **what it is about**: the pile of cards in non-fiction
+`JourneyScreen` opens on **the level**, set large — "Holding" — with what
+it says about the reader ("It stays with you weeks later") and the ladder
+under it, seven steps from Day one to Sharp with the one they stand on
+lit. Tapping it opens the path. Beside the title, **the score** in a pill:
+the record as one number, where four things are worth what they cost — a
+card read is one, a card still with you weeks later three, a move you can
+spot ten, a week kept five. Nothing in it is invented and nothing in it
+goes down.
+
+Under the level, **five numbers**: how often they were right when they
+said they were sure (80% or more), how many points their confidence runs
+off their results, how many moves they can spot — a principle met in at
+least two contexts and got right more often than not — how many cards are
+still with them, and how many they have read. Then **the curve**: how sure
+they said they were against how often they were right, level by level,
+with the diagonal where the two would be the same.
+
+Once **two weeks in** is a week behind them, a switch over the level sets
+it beside today: the rung they stood on then, the five numbers as they
+were, and their curve then under today's — and on today each number says
+how far it has come. All of it is counted from what was written down with
+a date: the day each rung was reached (`rungDates`), every answer with how
+sure (`judgements`), and the day's counts of read, held and moves
+(`recordDays`, in the snapshot, written as the reader goes). What was not
+written down then — the counts, on an install older than them — shows as a
+dash rather than a guess (`lib/state/journey_record.dart`).
+
+Under the top, **the week**: seven bars and how many were kept, which opens
+the week read back in full. Then **what it is about**: the pile of cards in non-fiction
 books, hours of documentary and lectures, with the hours it took at forty
 seconds a card. It waits until twenty-five cards, because "five cards is
 about zero books" is worse than not asking yet. Then **by subject**: how

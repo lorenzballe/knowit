@@ -499,5 +499,17 @@
   "reportOther": "Başka bir şey",
   "reportNoteHint": "Kontrol etmemize yardımcı olacak bir şey (isteğe bağlı)",
   "reportSend": "Gönder",
-  "reportSentToast": "Teşekkürler. Kontrol edeceğiz."
+  "reportSentToast": "Teşekkürler. Kontrol edeceğiz.",
+  "journeyPoints": "{n} puan",
+  "journeyNow": "Bugün",
+  "journeyKickerNow": "{day}. GÜN · SEVİYE {level}/{levels}",
+  "journeyKickerThen": "İKİ HAFTA SONRA · SEVİYE {level}/{levels}",
+  "journeyRowSure": "Emin olduğunda doğru",
+  "journeyRowOff": "Ortalama puan sapması",
+  "journeyRowMoves": "Fark ettiğin numaralar",
+  "journeyRowHeld": "Hâlâ aklındaki kartlar",
+  "journeyRowRead": "Okunan kartlar",
+  "journeyCurveTitle": "Ne kadar emin olduğun ve ne sıklıkla haklı çıktığın",
+  "journeyCurveSpotOn": "tam isabet",
+  "journeyCurveLegend": "{n, plural, other{{when} · {n} puan sapma}}"
 }

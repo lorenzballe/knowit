@@ -208,8 +208,37 @@ void main() {
         (p) => p.challenge is PickOne,
       );
 
+      // Two months in, so the journey has a two weeks in to switch to.
+      final DateTime now = DateTime.now();
+      String ago(int days) => dateKey(now.subtract(Duration(days: days)));
+      final AppState travelled = await appWith({
+        ...done,
+        'knowit.completedDates': [for (var d = 59; d >= 1; d--) ago(d)],
+        'knowit.rungDates': jsonEncode({
+          'day_one': ago(59),
+          'reading': ago(54),
+          'answering': ago(48),
+          'saying_how_sure': ago(30),
+        }),
+        'knowit.judgements': jsonEncode([
+          for (var i = 0; i < 30; i++)
+            {
+              'c': 50 + (i % 5) * 10,
+              'k': i % 3 != 0,
+              'p': PillBank.cards[i].id,
+              'd': ago(58 - i),
+            },
+        ]),
+        'knowit.recordDays': jsonEncode({
+          ago(59): [5, 0, 0],
+          ago(46): [1240, 0, 0],
+          ago(2): [12480, 1300, 20],
+        }),
+      });
+
       final screens = <String, Widget>{
         'journey': JourneyScreen(app: app, onBack: () {}),
+        'journey-travelled': JourneyScreen(app: travelled, onBack: () {}),
         'path': PathScreen(app: app, onBack: () {}),
         'week': WeekScreen(app: app, onBack: () {}),
         'paywall': PaywallScreen(app: app, source: 'audit'),
@@ -256,6 +285,12 @@ void main() {
         await tester.pumpWidget(host(locale, entry.value));
         await settle(tester);
         note(locale, entry.key, tester);
+        // Two weeks in, which has words of its own.
+        if (entry.key == 'journey-travelled') {
+          await tester.tap(find.byKey(const ValueKey('journey-then')));
+          await settle(tester);
+          note(locale, 'journey two weeks in', tester);
+        }
         // The intro is five scenes; the first is not the long one.
         if (entry.key == 'intro') {
           for (var scene = 2; scene <= 5; scene++) {

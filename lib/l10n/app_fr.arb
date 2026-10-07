@@ -499,5 +499,17 @@
   "reportOther": "Autre chose",
   "reportNoteHint": "Ce qui peut nous aider à vérifier (facultatif)",
   "reportSend": "Envoyer",
-  "reportSentToast": "Merci. Nous allons vérifier."
+  "reportSentToast": "Merci. Nous allons vérifier.",
+  "journeyPoints": "{n} pts",
+  "journeyNow": "Aujourd'hui",
+  "journeyKickerNow": "JOUR {day} · NIVEAU {level} SUR {levels}",
+  "journeyKickerThen": "APRÈS DEUX SEMAINES · NIVEAU {level} SUR {levels}",
+  "journeyRowSure": "Juste quand tu étais sûr",
+  "journeyRowOff": "Points d'écart, en moyenne",
+  "journeyRowMoves": "Pièges que tu repères",
+  "journeyRowHeld": "Cartes encore avec toi",
+  "journeyRowRead": "Cartes lues",
+  "journeyCurveTitle": "Ta certitude annoncée, face à la fréquence où tu avais raison",
+  "journeyCurveSpotOn": "pile juste",
+  "journeyCurveLegend": "{n, plural, =1{{when} · 1 point d'écart} other{{when} · {n} points d'écart}}"
 }

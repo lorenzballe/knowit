@@ -499,5 +499,17 @@
   "reportOther": "Otra cosa",
   "reportNoteHint": "Algo que nos ayude a comprobarlo (opcional)",
   "reportSend": "Enviar",
-  "reportSentToast": "Gracias. Lo revisaremos."
+  "reportSentToast": "Gracias. Lo revisaremos.",
+  "journeyPoints": "{n} pts",
+  "journeyNow": "Hoy",
+  "journeyKickerNow": "DÍA {day} · NIVEL {level} DE {levels}",
+  "journeyKickerThen": "A LAS DOS SEMANAS · NIVEL {level} DE {levels}",
+  "journeyRowSure": "Aciertos cuando estabas seguro",
+  "journeyRowOff": "Puntos de desvío, de media",
+  "journeyRowMoves": "Trucos que detectas",
+  "journeyRowHeld": "Tarjetas aún contigo",
+  "journeyRowRead": "Tarjetas leídas",
+  "journeyCurveTitle": "Lo seguro que decías estar, frente a cuánto acertabas",
+  "journeyCurveSpotOn": "justo",
+  "journeyCurveLegend": "{n, plural, =1{{when} · 1 punto de desvío} other{{when} · {n} puntos de desvío}}"
 }

@@ -499,5 +499,17 @@
   "reportOther": "Etwas anderes",
   "reportNoteHint": "Alles, was uns beim Prüfen hilft (optional)",
   "reportSend": "Senden",
-  "reportSentToast": "Danke. Wir prüfen es."
+  "reportSentToast": "Danke. Wir prüfen es.",
+  "journeyPoints": "{n} Pkt.",
+  "journeyNow": "Heute",
+  "journeyKickerNow": "TAG {day} · STUFE {level} VON {levels}",
+  "journeyKickerThen": "NACH ZWEI WOCHEN · STUFE {level} VON {levels}",
+  "journeyRowSure": "Richtig, wenn du sicher warst",
+  "journeyRowOff": "Punkte daneben, im Schnitt",
+  "journeyRowMoves": "Muster, die du erkennst",
+  "journeyRowHeld": "Karten, die noch da sind",
+  "journeyRowRead": "Gelesene Karten",
+  "journeyCurveTitle": "Wie sicher du warst, gegen wie oft du richtig lagst",
+  "journeyCurveSpotOn": "genau richtig",
+  "journeyCurveLegend": "{n, plural, =1{{when} · 1 Punkt daneben} other{{when} · {n} Punkte daneben}}"
 }

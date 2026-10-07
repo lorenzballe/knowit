@@ -3119,6 +3119,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Thanks. We\'ll check it.'**
   String get reportSentToast;
+
+  /// The reader's score in a pill beside Your journey's title.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} pts'**
+  String journeyPoints(String n);
+
+  /// The right half of the journey's switch: the reader as they are today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get journeyNow;
+
+  /// Small caps over the level on the journey: which day of the journey and which level.
+  ///
+  /// In en, this message translates to:
+  /// **'DAY {day} · LEVEL {level} OF {levels}'**
+  String journeyKickerNow(int day, int level, int levels);
+
+  /// Small caps over the level when the journey shows the reader two weeks in.
+  ///
+  /// In en, this message translates to:
+  /// **'TWO WEEKS IN · LEVEL {level} OF {levels}'**
+  String journeyKickerThen(int level, int levels);
+
+  /// Row label: how often the reader was right when they said they were 80% sure or more.
+  ///
+  /// In en, this message translates to:
+  /// **'Right when you were sure'**
+  String get journeyRowSure;
+
+  /// Row label: how far the reader's confidence is from their results, in points.
+  ///
+  /// In en, this message translates to:
+  /// **'Points off, on average'**
+  String get journeyRowOff;
+
+  /// Row label: reasoning moves the reader can now spot.
+  ///
+  /// In en, this message translates to:
+  /// **'Moves you can spot'**
+  String get journeyRowMoves;
+
+  /// Row label: cards that came back and the reader still knew.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards still with you'**
+  String get journeyRowHeld;
+
+  /// Row label: cards read.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards read'**
+  String get journeyRowRead;
+
+  /// Title of the chart of stated confidence against accuracy.
+  ///
+  /// In en, this message translates to:
+  /// **'How sure you said, against how often you were right'**
+  String get journeyCurveTitle;
+
+  /// Label on the chart's diagonal, where confidence equals accuracy.
+  ///
+  /// In en, this message translates to:
+  /// **'spot on'**
+  String get journeyCurveSpotOn;
+
+  /// Legend line under the chart: a day, and how many points off the reader was then.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{{when} · 1 point off} other{{when} · {n} points off}}'**
+  String journeyCurveLegend(String when, int n);
 }
 
 class _AppLocalizationsDelegate
