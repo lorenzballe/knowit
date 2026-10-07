@@ -2069,6 +2069,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get revealBackToAnswer => 'Wróć do odpowiedzi';
 
   @override
+  String get revealShowWorking => 'Pokaż tok rozumowania';
+
+  @override
   String get sceneLockIn => 'ZATWIERDŹ';
 
   @override

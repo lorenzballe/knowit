@@ -187,6 +187,12 @@ void main() {
           await settle();
           await shoot('end');
           return;
+        } else if (pill.challenge case TypeNumber(:final answer)) {
+          // A wrong number, so the verdict is the longer line.
+          await tester.enterText(find.byType(TextField).first, '${answer * 2}');
+          await settle();
+          await tester.tap(find.bySemanticsLabel('Check my answer'));
+          await settle();
         } else {
           return;
         }
@@ -210,6 +216,18 @@ void main() {
           await settle();
         }
         await shoot('end');
+        // Whatever waits behind a line on a back short of room, opened.
+        for (final kind in ['picture', 'scene', 'working']) {
+          final open = find.byKey(ValueKey('$kind-toggle'));
+          if (open.evaluate().isEmpty) continue;
+          await tester.tap(open);
+          await settle();
+          await shoot(kind);
+          if (kind != 'working') {
+            await tester.tap(find.byKey(const ValueKey('back-to-answer')));
+            await settle();
+          }
+        }
         // A worked solution, walked two steps further.
         final next = find.byKey(const ValueKey('next-step'));
         if (next.evaluate().isNotEmpty) {

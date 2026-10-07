@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart' show FontLoader;
 import 'package:flutter_test/flutter_test.dart';
 
+import 'package:astuto/data/card_json.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
@@ -57,14 +58,27 @@ Answer? _answerFor(Pill pill) => switch (pill.challenge) {
   Estimate(:final answer) => Answer('${answer * 10}', confidence: 70),
 };
 
-/// The Today deck's card on a 360×740 phone with 24-point system bars.
+/// The Today deck's card on each phone we design for, with 24-point system
+/// bars: the deck keeps 18 points a side and 220 of the height for the
+/// header, the progress and the tab bar (measured in the app).
+const Map<String, (Size, Size)> _phones = {
+  'small': (Size(360, 740), Size(324, 520)),
+  'medium': (Size(390, 844), Size(354, 624)),
+  'large': (Size(430, 932), Size(394, 712)),
+};
 const Size _phone = Size(360, 740);
 const Size _card = Size(324, 520);
 
 void main() {
   setUpAll(_loadRealFonts);
 
-  Future<void> pumpBack(WidgetTester tester, Pill pill, {double scale = 1}) {
+  Future<void> pumpBack(
+    WidgetTester tester,
+    Pill pill, {
+    double scale = 1,
+    Size phone = _phone,
+    Size card = _card,
+  }) {
     return tester.pumpWidget(
       MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -73,14 +87,14 @@ void main() {
         theme: buildAstutoTheme(Brightness.dark),
         home: MediaQuery(
           data: MediaQueryData(
-            size: _phone,
+            size: phone,
             textScaler: TextScaler.linear(scale),
           ),
           child: Scaffold(
             backgroundColor: Colors.black,
             body: Center(
               child: SizedBox.fromSize(
-                size: _card,
+                size: card,
                 child: PillCard(
                   key: ValueKey(pill.id),
                   pill: pill,
@@ -107,12 +121,13 @@ void main() {
   /// the card. Zero is the only right answer.
   double scrollNeeded(WidgetTester tester) {
     var total = 0.0;
-    for (final e in find
-        .descendant(
-          of: find.byType(PillCard),
-          matching: find.byType(Scrollable),
-        )
-        .evaluate()) {
+    for (final e
+        in find
+            .descendant(
+              of: find.byType(PillCard),
+              matching: find.byType(Scrollable),
+            )
+            .evaluate()) {
       final state = (e as StatefulElement).state as ScrollableState;
       final p = state.position;
       if (p.hasContentDimensions && p.axis == Axis.vertical) {
@@ -185,75 +200,120 @@ void main() {
     return out;
   }
 
-  testWidgets('the back of every card fits a small phone without scrolling', (
+  for (final MapEntry(key: name, value: (phone, card)) in _phones.entries) {
+    testWidgets('the back of every card fits a $name phone without scrolling', (
+      tester,
+    ) async {
+      tester.view.physicalSize = phone;
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+
+      final findings = <String>[];
+      for (final pill in PillBank.cards) {
+        await pumpBack(tester, pill, phone: phone, card: card);
+        await settle(tester);
+        void note(String stage) {
+          final Object? error = tester.takeException();
+          if (error != null) {
+            findings.add(
+              '${pill.id} ($stage): ${error.toString().split('\n').first}',
+            );
+          }
+          final double scroll = scrollNeeded(tester);
+          if (scroll > 0.5) {
+            findings.add(
+              '${pill.id} ($stage): scrolls ${scroll.toStringAsFixed(0)}',
+            );
+          }
+          for (final line in cut(tester)) {
+            findings.add('${pill.id} ($stage): cut "${_short(line)}"');
+          }
+          for (final line in collisions(tester)) {
+            findings.add('${pill.id} ($stage): $line');
+          }
+        }
+
+        note('turned');
+        // A worked solution, every step out.
+        final all = find.byKey(const ValueKey('all-steps'));
+        if (all.evaluate().isNotEmpty) {
+          await tester.tap(all);
+          await settle(tester);
+          note('all steps');
+        }
+        // The picture, where it waits behind a line, swapped in.
+        for (final kind in ['picture', 'scene', 'working']) {
+          final open = find.byKey(ValueKey('$kind-toggle'));
+          if (open.evaluate().isEmpty) continue;
+          await tester.tap(open);
+          await settle(tester);
+          note(kind);
+          final whole = find.byKey(const ValueKey('all-steps'));
+          if (whole.evaluate().isNotEmpty) {
+            await tester.tap(whole);
+            await settle(tester);
+            note('$kind, all steps');
+          }
+          await tester.tap(find.byKey(const ValueKey('back-to-answer')));
+          await settle(tester);
+        }
+        // The other side's case, opened.
+        final other = find.text('What the other side says');
+        if (other.evaluate().isNotEmpty) {
+          await tester.tap(other);
+          await settle(tester);
+          note('other side');
+        }
+        final simply = find.text('Explain it like I am three');
+        if (simply.evaluate().isNotEmpty) {
+          await tester.tap(simply);
+          await settle(tester);
+          note('simply');
+        }
+      }
+
+      if (findings.isNotEmpty) {
+        // ignore: avoid_print
+        print('BACKS ${findings.length}\n${findings.join('\n')}');
+      }
+      expect(findings, isEmpty, reason: '${findings.length} backs do not fit');
+    });
+  }
+
+  testWidgets('the back ends on one box unless the card asks for both', (
     tester,
   ) async {
     tester.view.physicalSize = _phone;
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
 
-    final findings = <String>[];
-    for (final pill in PillBank.cards) {
-      await pumpBack(tester, pill);
+    final Map<String, Object?> json = cardToJson(
+      PillBank.cards.firstWhere((p) => p.ask.isNotEmpty && !p.asksSomething),
+    );
+    Future<void> show(Map<String, Object?> raw) async {
+      await pumpBack(tester, cardFromJson(raw));
       await settle(tester);
-      void note(String stage) {
-        final Object? error = tester.takeException();
-        if (error != null) {
-          findings.add(
-            '${pill.id} ($stage): ${error.toString().split('\n').first}',
-          );
-        }
-        final double scroll = scrollNeeded(tester);
-        if (scroll > 0.5) {
-          findings.add(
-            '${pill.id} ($stage): scrolls ${scroll.toStringAsFixed(0)}',
-          );
-        }
-        for (final line in cut(tester)) {
-          findings.add('${pill.id} ($stage): cut "${_short(line)}"');
-        }
-        for (final line in collisions(tester)) {
-          findings.add('${pill.id} ($stage): $line');
-        }
-      }
-
-      note('turned');
-      // A worked solution, every step out.
-      final all = find.byKey(const ValueKey('all-steps'));
-      if (all.evaluate().isNotEmpty) {
-        await tester.tap(all);
-        await settle(tester);
-        note('all steps');
-      }
-      // The picture, where it waits behind a line, swapped in.
-      final picture = find.byKey(const ValueKey('picture-toggle'));
-      if (picture.evaluate().isNotEmpty) {
-        await tester.tap(picture);
-        await settle(tester);
-        note('picture');
-        await tester.tap(find.byKey(const ValueKey('back-to-answer')));
-        await settle(tester);
-      }
-      // The other side's case, opened.
-      final other = find.text('What the other side says');
-      if (other.evaluate().isNotEmpty) {
-        await tester.tap(other);
-        await settle(tester);
-        note('other side');
-      }
-      final simply = find.text('Explain it like I am three');
-      if (simply.evaluate().isNotEmpty) {
-        await tester.tap(simply);
-        await settle(tester);
-        note('simply');
-      }
     }
 
-    if (findings.isNotEmpty) {
-      // ignore: avoid_print
-      print('BACKS ${findings.length}\n${findings.join('\n')}');
-    }
-    expect(findings, isEmpty, reason: '${findings.length} backs do not fit');
+    // What to keep, and nothing else.
+    await show(json);
+    expect(find.text('WHAT TO KEEP'), findsOneWidget);
+    expect(find.text('ASK YOURSELF'), findsNothing);
+
+    // The question to ask yourself, only in its place.
+    await show({...json, 'move': ''});
+    expect(find.text('WHAT TO KEEP'), findsNothing);
+    expect(find.text('ASK YOURSELF'), findsOneWidget);
+
+    // Both, on a card that opts in — and the flag survives the round trip.
+    final both = {...json, 'both': true};
+    expect(cardFromJson(both).both, isTrue);
+    expect(cardToJson(cardFromJson(both))['both'], isTrue);
+    expect(cardToJson(cardFromJson(json)).containsKey('both'), isFalse);
+    await show(both);
+    expect(find.text('WHAT TO KEEP'), findsOneWidget);
+    expect(find.text('ASK YOURSELF'), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('at the largest text size the back still reaches every line', (

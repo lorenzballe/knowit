@@ -2009,6 +2009,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get revealBackToAnswer => 'Torna alla risposta';
 
   @override
+  String get revealShowWorking => 'Mostra il ragionamento';
+
+  @override
   String get sceneLockIn => 'CONFERMA';
 
   @override

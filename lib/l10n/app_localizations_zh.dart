@@ -1935,6 +1935,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get revealBackToAnswer => '回到答案';
 
   @override
+  String get revealShowWorking => '查看推理过程';
+
+  @override
   String get sceneLockIn => '确定';
 
   @override

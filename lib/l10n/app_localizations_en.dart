@@ -1999,6 +1999,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get revealBackToAnswer => 'Back to the answer';
 
   @override
+  String get revealShowWorking => 'Show the working';
+
+  @override
   String get sceneLockIn => 'LOCK IT IN';
 
   @override

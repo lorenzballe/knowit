@@ -1741,6 +1741,10 @@
  "revealSeePicture": "See the picture",
  "revealPlayScene": "Play with it",
  "revealBackToAnswer": "Back to the answer",
+ "revealShowWorking": "Show the working",
+ "@revealShowWorking": {
+  "description": "On the back of a card with no room for its worked solution beside the answer: tap to see the steps in place of the answer."
+ },
  "@revealSeePicture": {
   "description": "On the back of a card with no room for its diagram beside the words: tap to see the diagram in place of the answer."
  },

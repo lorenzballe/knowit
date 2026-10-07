@@ -2005,6 +2005,9 @@ class AppLocalizationsNl extends AppLocalizations {
   String get revealBackToAnswer => 'Terug naar het antwoord';
 
   @override
+  String get revealShowWorking => 'Toon de uitwerking';
+
+  @override
   String get sceneLockIn => 'VASTLEGGEN';
 
   @override

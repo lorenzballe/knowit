@@ -367,6 +367,8 @@ class _BackFace extends StatelessWidget {
     // that is marked, the line they took on one that is not.
     Widget? lead;
     double Function(double, TextScaler)? leadHeight;
+    Widget? shortLead;
+    double Function(double, TextScaler)? shortLeadHeight;
     if (given != null && pill.isGraded) {
       final verdict = _Verdict(
         pill: pill,
@@ -400,12 +402,28 @@ class _BackFace extends StatelessWidget {
       );
       leadHeight = (width, scaler) =>
           _YourLine.heightFor(context, pill, given, width, scaler);
+      if (given.hasReason) {
+        shortLead = PopIn(
+          delay: const Duration(milliseconds: 260),
+          child: _YourLine(pill: pill, given: given, short: true),
+        );
+        shortLeadHeight = (width, scaler) => _YourLine.heightFor(
+          context,
+          pill,
+          given,
+          width,
+          scaler,
+          short: true,
+        );
+      }
     }
 
     return CardReveal(
       pill: pill,
       lead: lead,
       leadHeight: leadHeight,
+      shortLead: shortLead,
+      shortLeadHeight: shortLeadHeight,
       cornerRoom: cornerRoom,
       // On a card that asked first, the scene waits for the answer: played
       // before, it would have given it away.
@@ -1144,7 +1162,15 @@ class _ReasonStepState extends State<_ReasonStep> {
 class _YourLine extends StatelessWidget {
   final Pill pill;
   final Answer given;
-  const _YourLine({required this.pill, required this.given});
+
+  /// The side and the reason run together in one paragraph, for a back
+  /// short of room.
+  final bool short;
+  const _YourLine({
+    required this.pill,
+    required this.given,
+    this.short = false,
+  });
 
   /// Set off by a rule down its left edge rather than boxed: it is the
   /// reader's own voice quoted back, and the one box on the back belongs to
@@ -1156,21 +1182,25 @@ class _YourLine extends StatelessWidget {
       AppText.label(size: 10, spacing: 1.3, color: ink.withValues(alpha: 0.55));
   static TextStyle _took(Color ink) =>
       AppText.body(size: 15, weight: FontWeight.w600, height: 1.3, color: ink);
-  static TextStyle _reason(Color ink) => AppText.body(
-    size: 13.5,
-    height: 1.4,
-    color: ink.withValues(alpha: 0.75),
-  );
+  static TextStyle _reason(Color ink) =>
+      AppText.body(size: 13.5, height: 1.4, color: ink.withValues(alpha: 0.75));
 
   /// The side taken, run in after its label: one line where two would
   /// say no more.
-  static TextSpan _tookSpan(String caps, Pill pill, Answer given) => TextSpan(
+  static TextSpan _tookSpan(
+    String caps,
+    Pill pill,
+    Answer given, {
+    bool short = false,
+  }) => TextSpan(
     children: [
       TextSpan(text: '$caps  ', style: _label(pill.ink)),
       TextSpan(
         text: pill.challenge.describe(given.response),
         style: _took(pill.ink),
       ),
+      if (short && given.hasReason)
+        TextSpan(text: '  "${given.reason!.trim()}"', style: _reason(pill.ink)),
     ],
   );
 
@@ -1180,20 +1210,21 @@ class _YourLine extends StatelessWidget {
     Pill pill,
     Answer given,
     double width,
-    TextScaler scaler,
-  ) {
+    TextScaler scaler, {
+    bool short = false,
+  }) {
     final inner = width - _padding.horizontal - _rule;
     double h(String text, TextStyle style) =>
         _measure(context, text, style, inner, scaler);
 
     final took = _measureSpan(
       context,
-      _tookSpan(context.l10n.youTookCaps, pill, given),
+      _tookSpan(context.l10n.youTookCaps, pill, given, short: short),
       inner,
       scaler,
     );
     var total = _padding.vertical + took;
-    if (given.hasReason) {
+    if (given.hasReason && !short) {
       total += 6 + h('"${given.reason!.trim()}"', _reason(pill.ink));
     }
     return total;
@@ -1213,8 +1244,10 @@ class _YourLine extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text.rich(_tookSpan(context.l10n.youTookCaps, pill, given)),
-          if (given.hasReason) ...[
+          Text.rich(
+            _tookSpan(context.l10n.youTookCaps, pill, given, short: short),
+          ),
+          if (given.hasReason && !short) ...[
             const SizedBox(height: 6),
             Text('"${given.reason!.trim()}"', style: _reason(ink)),
           ],

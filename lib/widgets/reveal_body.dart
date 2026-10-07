@@ -168,7 +168,6 @@ class _RevealBodyState extends State<RevealBody> {
   }
 }
 
-
 /// The type of the reveal, in one place, so what is measured to fit the
 /// card is exactly what is then set on it.
 abstract final class _Type {
@@ -205,8 +204,11 @@ abstract final class _Type {
     color: ink.withValues(alpha: 0.65),
   );
 
-  static TextStyle panelLabel(Color ink) =>
-      AppText.label(size: 10.5, spacing: 1.2, color: ink.withValues(alpha: 0.6));
+  static TextStyle panelLabel(Color ink) => AppText.label(
+    size: 10.5,
+    spacing: 1.2,
+    color: ink.withValues(alpha: 0.6),
+  );
 
   static TextStyle panelBody(Color ink, double size) => AppText.body(
     size: size,
@@ -223,11 +225,8 @@ abstract final class _Type {
     color: ink,
   );
 
-  static TextStyle source(Color ink, double size) => AppText.body(
-    size: size,
-    height: 1.35,
-    color: ink.withValues(alpha: 0.6),
-  );
+  static TextStyle source(Color ink, double size) =>
+      AppText.body(size: size, height: 1.35, color: ink.withValues(alpha: 0.6));
 
   static TextStyle nextStep(Color ground) =>
       AppText.body(size: 13.5, weight: FontWeight.w700, color: ground);
@@ -282,7 +281,10 @@ class _Steps extends StatefulWidget {
         '${m.l10n.nextStep}  ${steps.length}/${steps.length}',
         _Type.nextStep(const Color(0xFF000000)),
       );
-      final all = m.size(m.l10n.showAllSteps, _Type.showAll(const Color(0xFF000000)));
+      final all = m.size(
+        m.l10n.showAllSteps,
+        _Type.showAll(const Color(0xFF000000)),
+      );
       final pill = Size(next.width + 32, next.height + 20);
       h += 14;
       h += pill.width + 14 + all.width <= width
@@ -504,7 +506,11 @@ class _TextAction extends StatelessWidget {
   static const double _pad = 7;
 
   static double heightFor(String label, double size, double width, _Measure m) {
-    final text = m.height(label, _Type.action(const Color(0xFF000000), size), width - 23);
+    final text = m.height(
+      label,
+      _Type.action(const Color(0xFF000000), size),
+      width - 23,
+    );
     return 2 * _pad + (text > 16 ? text : 16);
   }
 
@@ -563,6 +569,18 @@ class _Measure {
     return h;
   }
 
+  double spanHeight(InlineSpan span, double width) {
+    final p = TextPainter(
+      text: TextSpan(style: _base.style, children: [span]),
+      textDirection: _direction,
+      textScaler: scaler,
+      textHeightBehavior: _base.textHeightBehavior,
+    )..layout(maxWidth: width);
+    final h = p.height;
+    p.dispose();
+    return h;
+  }
+
   Size size(String text, TextStyle style) {
     final p = _lay(text, style, double.infinity);
     final s = p.size;
@@ -580,6 +598,10 @@ class _Fit {
     required this.gap,
     required this.scene,
     this.tucked = false,
+    this.tuckSteps = false,
+    this.pictureScale = 1,
+    this.shortLead = false,
+    this.noLead = false,
     this.scrolls = false,
   });
 
@@ -603,6 +625,23 @@ class _Fit {
   /// it is opened rather than pushing the card's foot off the screen.
   final bool tucked;
 
+  /// True when a worked solution does not fit under the verdict: the
+  /// answer's last line is shown, and the working waits behind a line to
+  /// tap, the way the picture does.
+  final bool tuckSteps;
+
+  /// The diagram drawn a little smaller, kept whole and upright, when even
+  /// on its own it is taller than the card can give it. Only ever a step
+  /// or two below full size.
+  final double pictureScale;
+
+  /// The reader's own line said in one paragraph rather than three.
+  final bool shortLead;
+
+  /// The reader's line left off altogether: the last thing given up, and
+  /// only while the other side's case is open on one of the longest debates.
+  final bool noLead;
+
   /// True when even the tightest setting does not fit — only at a large
   /// text size — and the back scrolls rather than shrink the reader's type.
   final bool scrolls;
@@ -610,22 +649,21 @@ class _Fit {
   bool get tight => gap < 1;
   bool get tightest => gap < 0.7;
   double get step => body - 0.5;
-  double get small => (body * 0.84).clamp(12.5, 14.5);
-  double get keep => tightest ? 13 : (body * 0.9).clamp(13.5, 15.5);
+  double get small => (body * 0.84).clamp(12.5, 15.5);
+  double get keep => tightest ? 13 : (body * 0.9).clamp(13.5, 17);
   double get source => tight ? 10.5 : 11.5;
 
-  _Fit copyWith({
-    double? questionSize,
-    double? scene,
-    bool? tucked,
-    bool? scrolls,
-  }) => _Fit(
+  _Fit copyWith({double? questionSize, double? scene, bool? scrolls}) => _Fit(
     question: question,
     questionSize: questionSize ?? this.questionSize,
     body: body,
     gap: gap,
     scene: scene ?? this.scene,
-    tucked: tucked ?? this.tucked,
+    tucked: tucked,
+    tuckSteps: tuckSteps,
+    pictureScale: pictureScale,
+    shortLead: shortLead,
+    noLead: noLead,
     scrolls: scrolls ?? this.scrolls,
   );
 }
@@ -660,6 +698,10 @@ class CardReveal extends StatefulWidget {
   final Widget? lead;
   final double Function(double width, TextScaler scaler)? leadHeight;
 
+  /// The same, said in fewer lines, for a back that is short of room.
+  final Widget? shortLead;
+  final double Function(double width, TextScaler scaler)? shortLeadHeight;
+
   /// Keeps the source's lines clear of the save and share buttons in the
   /// bottom corner.
   final double cornerRoom;
@@ -672,14 +714,17 @@ class CardReveal extends StatefulWidget {
     required this.pill,
     this.lead,
     this.leadHeight,
+    this.shortLead,
+    this.shortLeadHeight,
     this.cornerRoom = 0,
     this.scene,
   });
 
-  /// The answer's band. Eighteen is as large as body text reads well at a
-  /// phone's width; fourteen is as small as it should go for a reader at
-  /// an ordinary text size.
-  static const double maxBody = 18;
+  /// The answer's band. At most a fifteenth of the measure — about forty
+  /// characters to the line, as large as body text reads well — between
+  /// eighteen on a small phone and twenty-one on a large one; fourteen is as
+  /// small as it should go for a reader at an ordinary text size.
+  static double maxBody(double width) => (width / 15).clamp(18, 21);
   static const double minBody = 14;
 
   /// The question comes back only if the answer can still be set at this.
@@ -695,13 +740,8 @@ class CardReveal extends StatefulWidget {
   State<CardReveal> createState() => _CardRevealState();
 }
 
-/// Called with each block's planned height and the room, when set. For
-/// tests and the card camera; null in the app.
-@visibleForTesting
-void Function(List<double> blocks, double room)? debugRevealBlocks;
-
 /// What the back can show in the answer's place, one at a time.
-enum _Aside { none, picture, simply, counter }
+enum _Aside { none, scene, picture, working, simply, counter }
 
 class _CardRevealState extends State<CardReveal> {
   /// What is open in the answer's place. A retelling or the other side's
@@ -714,7 +754,9 @@ class _CardRevealState extends State<CardReveal> {
   /// Every state the reader can reach on this card.
   List<_Aside> _asides(_Fit f) => [
     _Aside.none,
-    if (f.tucked) _Aside.picture,
+    if (f.tucked && widget.scene != null) _Aside.scene,
+    if (f.tucked && widget.pill.diagram != null) _Aside.picture,
+    if (f.tuckSteps) _Aside.working,
     if (widget.pill.hasSimply) _Aside.simply,
     if (widget.pill.hasCounterpoint) _Aside.counter,
   ];
@@ -734,11 +776,25 @@ class _CardRevealState extends State<CardReveal> {
     final out = <_Block>[_Block(8 * g, SizedBox(height: 8 * g))];
     void gap(double h) => out.add(_Block(h * g, SizedBox(height: h * g)));
 
-    if (widget.lead != null) {
+    // A picture opened in the answer's place has the card to itself; the
+    // verdict above it was read on the way in.
+    // The working, too: the verdict and its ruler were read on the way
+    // in, and the steps need the card.
+    final visual =
+        aside == _Aside.scene ||
+        aside == _Aside.picture ||
+        aside == _Aside.working;
+    if (widget.lead != null && !visual && !f.noLead) {
+      final short = f.shortLead && widget.shortLead != null;
       out.add(
         _Block(
-          widget.leadHeight!(width, m.scaler),
-          KeyedSubtree(key: const ValueKey('lead'), child: widget.lead!),
+          short
+              ? widget.shortLeadHeight!(width, m.scaler)
+              : widget.leadHeight!(width, m.scaler),
+          KeyedSubtree(
+            key: const ValueKey('lead'),
+            child: short ? widget.shortLead! : widget.lead!,
+          ),
         ),
       );
       gap(14);
@@ -772,9 +828,9 @@ class _CardRevealState extends State<CardReveal> {
     );
 
     final words = aside == _Aside.none;
-    final picture = (words && !f.tucked) || aside == _Aside.picture;
+    final inline = words && !f.tucked;
 
-    if (widget.scene != null && picture) {
+    if (widget.scene != null && (inline || aside == _Aside.scene)) {
       out.add(
         _Block(
           f.scene,
@@ -786,32 +842,34 @@ class _CardRevealState extends State<CardReveal> {
       );
       if (words) gap(16);
     }
-    if (words) {
-      if (pill.hasSteps) {
-        final style = _Type.step(ink, f.step);
-        double at(int shown) => _Steps.heightFor(
-          steps: pill.steps,
-          shown: shown,
+    _Block steps() {
+      final style = _Type.step(ink, f.step);
+      double at(int shown) => _Steps.heightFor(
+        steps: pill.steps,
+        shown: shown,
+        style: style,
+        gap: 12 * g,
+        width: width,
+        m: m,
+      );
+      final first = at(1);
+      final whole = at(pill.steps.length);
+      return _Block(
+        first > whole ? first : whole,
+        _Steps(
+          key: const ValueKey('steps'),
+          pill: pill,
+          ink: ink,
+          stepByStep: true,
           style: style,
           gap: 12 * g,
-          width: width,
-          m: m,
-        );
-        final first = at(1);
-        final whole = at(pill.steps.length);
-        out.add(
-          _Block(
-            first > whole ? first : whole,
-            _Steps(
-              key: const ValueKey('steps'),
-              pill: pill,
-              ink: ink,
-              stepByStep: true,
-              style: style,
-              gap: 12 * g,
-            ),
-          ),
-        );
+        ),
+      );
+    }
+
+    if (words) {
+      if (pill.hasSteps && !f.tuckSteps) {
+        out.add(steps());
       } else {
         final style = _Type.answer(ink, f.body);
         out.add(
@@ -822,7 +880,8 @@ class _CardRevealState extends State<CardReveal> {
         );
       }
     }
-    if (pill.diagram != null && picture) {
+    if (aside == _Aside.working) out.add(steps());
+    if (pill.diagram != null && (inline || aside == _Aside.picture)) {
       if (words) gap(16);
       out.add(
         _Block(
@@ -840,6 +899,27 @@ class _CardRevealState extends State<CardReveal> {
           ),
         ),
       );
+      if (f.pictureScale < 1) {
+        // Drawn at its full size and set down smaller as a whole, so its
+        // words shrink with it and stay where the drawing put them.
+        final full = out.removeLast();
+        out.add(
+          _Block(
+            full.height * f.pictureScale,
+            SizedBox(
+              height: full.height * f.pictureScale,
+              child: FittedBox(
+                alignment: Alignment.topLeft,
+                child: SizedBox(
+                  width: width,
+                  height: full.height,
+                  child: full.child,
+                ),
+              ),
+            ),
+          ),
+        );
+      }
     }
     // A retelling or the other side's case, in the answer's place and set
     // like it: the same size, under a label saying whose words they are.
@@ -848,20 +928,18 @@ class _CardRevealState extends State<CardReveal> {
           ? l10n.putSimplyCaps
           : l10n.whatTheOtherSideSaysCaps;
       final body = aside == _Aside.simply ? pill.simply : pill.counterpoint;
-      final label = _Type.panelLabel(ink);
-      final style = _Type.answer(ink, f.body);
+      // The label runs in ahead of the words, as a speaker's name does in
+      // a script: it says whose case this is without a line of its own.
+      final span = TextSpan(
+        children: [
+          TextSpan(text: '$caps  ', style: _Type.panelLabel(ink)),
+          TextSpan(text: body, style: _Type.answer(ink, f.body)),
+        ],
+      );
       out.add(
         _Block(
-          m.height(caps, label, width) + 6 + m.height(body, style, width),
-          Column(
-            key: ValueKey(aside),
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(caps, style: label),
-              const SizedBox(height: 6),
-              Text(body, style: style),
-            ],
-          ),
+          m.spanHeight(span, width),
+          Text.rich(span, key: ValueKey(aside)),
         ),
       );
     }
@@ -874,14 +952,34 @@ class _CardRevealState extends State<CardReveal> {
         final style = _Type.trap(ink, f.small);
         out.add(_Block(m.height(text, style, width), Text(text, style: style)));
       }
-      if (f.tucked) {
+      if (f.tucked && widget.scene != null) {
         gap(6);
         out.add(
           action(
-            widget.scene != null ? l10n.revealPlayScene : l10n.revealSeePicture,
-            widget.scene != null
-                ? Icons.play_circle_outline_rounded
-                : Icons.insert_chart_outlined_rounded,
+            l10n.revealPlayScene,
+            Icons.play_circle_outline_rounded,
+            () => _open(_Aside.scene),
+            key: const ValueKey('scene-toggle'),
+          ),
+        );
+      }
+      if (f.tuckSteps) {
+        gap(6);
+        out.add(
+          action(
+            l10n.revealShowWorking,
+            Icons.format_list_numbered_rounded,
+            () => _open(_Aside.working),
+            key: const ValueKey('working-toggle'),
+          ),
+        );
+      }
+      if (f.tucked && pill.diagram != null) {
+        gap(6);
+        out.add(
+          action(
+            l10n.revealSeePicture,
+            Icons.insert_chart_outlined_rounded,
             () => _open(_Aside.picture),
             key: const ValueKey('picture-toggle'),
           ),
@@ -908,7 +1006,7 @@ class _CardRevealState extends State<CardReveal> {
         );
       }
     } else {
-      gap(aside == _Aside.picture ? 10 : 6);
+      gap(visual ? 10 : 6);
       out.add(
         action(
           l10n.revealBackToAnswer,
@@ -988,29 +1086,19 @@ class _CardRevealState extends State<CardReveal> {
   double _total(List<_Block> blocks) =>
       blocks.fold(0.0, (sum, b) => sum + b.height);
 
-  _Fit _choose(double width, double height, _Measure m) {
+  /// The sizes for the state the back is in. Each state is planned on its
+  /// own: opening the other side's case re-sets the card for what is now on
+  /// it, rather than every state being set as small as the longest needs.
+  _Fit _choose(double width, double height, _Measure m, _Aside aside) {
     final hasScene = widget.scene != null;
     // A point spare, so a rounding in layout never tips a fit over.
     final room = height - 1;
-    double need(_Fit f, _Aside aside) =>
-        _total(_blocks(f, width, m, aside: aside));
-    // Every state the reader can reach must fit — the steps all out, the
-    // other side's case read, the picture swapped in — so nothing they can
-    // tap pushes the foot of the card off the screen.
-    bool fits(_Fit f) => _asides(f).every((a) => need(f, a) <= room);
+    double need(_Fit f) => _total(_blocks(f, width, m, aside: aside));
+    bool fits(_Fit f) => need(f) <= room;
 
     _Fit grow(_Fit f) {
       if (hasScene) {
-        // The scene's band is the one the tightest state leaves it.
-        final at = f.tucked ? _Aside.picture : _Aside.none;
-        var more = room - need(f, at);
-        for (final a in _asides(f)) {
-          final left = room - need(f, a);
-          if (a != at && left < more && (a == _Aside.none) != f.tucked) {
-            more = left;
-          }
-        }
-        final scene = (f.scene + more).clamp(
+        final scene = (f.scene + room - need(f)).clamp(
           CardReveal.sceneMin,
           f.tucked ? CardReveal.sceneOpenMax : CardReveal.sceneMax,
         );
@@ -1018,7 +1106,8 @@ class _CardRevealState extends State<CardReveal> {
       }
       // A short answer leaves room the question can use: it grows toward
       // the size it had on the front, so the back is not a field of colour.
-      while (f.question && f.questionSize < 22) {
+      final maxQuestion = (width / 12).clamp(22.0, 28.0);
+      while (f.question && f.questionSize + 1 <= maxQuestion) {
         final bigger = f.copyWith(questionSize: f.questionSize + 1);
         if (!fits(bigger)) break;
         f = bigger;
@@ -1031,6 +1120,10 @@ class _CardRevealState extends State<CardReveal> {
       required bool question,
       double gap = 1,
       bool tucked = false,
+      bool tuckSteps = false,
+      double pictureScale = 1,
+      bool shortLead = false,
+      bool noLead = false,
     }) => _Fit(
       question: question,
       questionSize: 17,
@@ -1038,6 +1131,10 @@ class _CardRevealState extends State<CardReveal> {
       gap: gap,
       scene: CardReveal.sceneMin,
       tucked: tucked,
+      tuckSteps: tuckSteps,
+      pictureScale: pictureScale,
+      shortLead: shortLead,
+      noLead: noLead,
     );
 
     Iterable<double> band(double from, double to) sync* {
@@ -1046,33 +1143,101 @@ class _CardRevealState extends State<CardReveal> {
       }
     }
 
-    // A picture beside its words first; tucked away only when the words
-    // would otherwise go below a comfortable size.
-    for (final tucked in [false, if (_hasPicture) true]) {
-      for (final b in band(CardReveal.maxBody, CardReveal.minBodyWithQuestion)) {
-        final f = at(b, question: true, tucked: tucked);
-        if (fits(f)) return grow(f);
+    final visual = aside == _Aside.picture || aside == _Aside.scene;
+    final tucks = visual ? const [true] : [false, if (_hasPicture) true];
+    final stepsTucks = aside == _Aside.working
+        ? const [true]
+        : [false, if (widget.pill.hasSteps) true];
+
+    // Everything in its place first; then the working, then the picture,
+    // behind a line to tap — each only when the words would otherwise go
+    // below a comfortable size.
+    Iterable<_Fit> plans() sync* {
+      for (final tuckSteps in stepsTucks) {
+        for (final tucked in tucks) {
+          for (final b in band(
+            CardReveal.maxBody(width),
+            CardReveal.minBodyWithQuestion,
+          )) {
+            yield at(b, question: true, tucked: tucked, tuckSteps: tuckSteps);
+          }
+          for (final b in band(
+            CardReveal.maxBody(width),
+            CardReveal.minBody + 0.5,
+          )) {
+            yield at(b, question: false, tucked: tucked, tuckSteps: tuckSteps);
+          }
+          for (final b in band(15, CardReveal.minBody)) {
+            yield at(
+              b,
+              question: false,
+              gap: 0.75,
+              tucked: tucked,
+              tuckSteps: tuckSteps,
+            );
+          }
+          // The last half point, with the spacing at its closest: still a
+          // comfortable size on a phone, and better than a card that
+          // scrolls.
+          for (final gap in [0.75, 0.6]) {
+            yield at(
+              CardReveal.minBody - 0.5,
+              question: false,
+              gap: gap,
+              tucked: tucked,
+              tuckSteps: tuckSteps,
+            );
+          }
+        }
       }
-      for (final b in band(CardReveal.maxBody, CardReveal.minBody + 0.5)) {
-        final f = at(b, question: false, tucked: tucked);
-        if (fits(f)) return grow(f);
+      // The longest cards in the bank, at thirteen: a footnote's size, and
+      // still read without effort at a phone's distance.
+      yield at(
+        13,
+        question: false,
+        gap: 0.6,
+        tucked: tucks.last,
+        tuckSteps: stepsTucks.last,
+      );
+      // Then the reader's line, run together into one paragraph.
+      if (widget.shortLead != null) {
+        for (final b in band(15, 13)) {
+          yield at(
+            b,
+            question: false,
+            gap: b > 14 ? 0.75 : 0.6,
+            tucked: tucks.last,
+            tuckSteps: stepsTucks.last,
+            shortLead: true,
+          );
+        }
       }
-      for (final b in band(15, CardReveal.minBody)) {
-        final f = at(b, question: false, gap: 0.75, tucked: tucked);
-        if (fits(f)) return grow(f);
+      if (aside == _Aside.counter || aside == _Aside.simply) {
+        for (final b in [13.5, 13.0]) {
+          yield at(b, question: false, gap: 0.6, noLead: true);
+        }
       }
-      // The last half point, with the spacing at its closest: still a
-      // comfortable size on a phone, and better than a card that scrolls.
-      for (final gap in [0.75, 0.6]) {
-        final f = at(CardReveal.minBody - 0.5, question: false, gap: gap, tucked: tucked);
-        if (fits(f)) return grow(f);
+      if (aside == _Aside.picture) {
+        for (final scale in [0.92, 0.85, 0.8]) {
+          yield at(
+            13,
+            question: false,
+            gap: 0.6,
+            tucked: true,
+            pictureScale: scale,
+          );
+        }
       }
+    }
+
+    for (final f in plans()) {
+      if (fits(f)) return grow(f);
     }
     return at(
       CardReveal.minBody,
       question: false,
-      gap: 0.75,
-      tucked: _hasPicture,
+      tucked: tucks.last,
+      tuckSteps: stepsTucks.last,
     ).copyWith(scrolls: true);
   }
 
@@ -1082,12 +1247,13 @@ class _CardRevealState extends State<CardReveal> {
     return LayoutBuilder(
       builder: (context, box) {
         final width = box.maxWidth;
-        final fit = _choose(width, box.maxHeight, m);
-        final aside = _asides(fit).contains(_aside) ? _aside : _Aside.none;
+        var aside = _aside;
+        var fit = _choose(width, box.maxHeight, m, aside);
+        if (!_asides(fit).contains(aside)) {
+          aside = _Aside.none;
+          fit = _choose(width, box.maxHeight, m, aside);
+        }
         final blocks = _blocks(fit, width, m, aside: aside);
-        debugRevealBlocks?.call([
-          for (final b in blocks) b.height,
-        ], box.maxHeight);
         final children = [
           for (final b in blocks)
             if (b.child != null)

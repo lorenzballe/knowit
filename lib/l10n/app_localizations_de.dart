@@ -2007,6 +2007,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get revealBackToAnswer => 'Zurück zur Antwort';
 
   @override
+  String get revealShowWorking => 'Rechenweg zeigen';
+
+  @override
   String get sceneLockIn => 'FESTLEGEN';
 
   @override

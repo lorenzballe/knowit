@@ -2006,6 +2006,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get revealBackToAnswer => 'Voltar à resposta';
 
   @override
+  String get revealShowWorking => 'Ver o raciocínio';
+
+  @override
   String get sceneLockIn => 'CONFIRMAR';
 
   @override

@@ -32,8 +32,9 @@ Map<String, Object?>? _bankCard(String id) {
     'tool/cards/bank',
   ).listSync().whereType<Directory>()) {
     final f = File('${dir.path}/$id.json');
-    if (f.existsSync())
+    if (f.existsSync()) {
       return (jsonDecode(f.readAsStringSync()) as Map).cast<String, Object?>();
+    }
   }
   return null;
 }

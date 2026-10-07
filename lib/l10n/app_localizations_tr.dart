@@ -1989,6 +1989,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get revealBackToAnswer => 'Cevaba dön';
 
   @override
+  String get revealShowWorking => 'Çözümü göster';
+
+  @override
   String get sceneLockIn => 'ONAYLA';
 
   @override

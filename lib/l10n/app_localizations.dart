@@ -2994,6 +2994,12 @@ abstract class AppLocalizations {
   /// **'Back to the answer'**
   String get revealBackToAnswer;
 
+  /// On the back of a card with no room for its worked solution beside the answer: tap to see the steps in place of the answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the working'**
+  String get revealShowWorking;
+
   /// Label inside an interactive card scene.
   ///
   /// In en, this message translates to:

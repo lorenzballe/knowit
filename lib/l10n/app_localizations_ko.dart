@@ -1946,6 +1946,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get revealBackToAnswer => '답으로 돌아가기';
 
   @override
+  String get revealShowWorking => '풀이 보기';
+
+  @override
   String get sceneLockIn => '확정';
 
   @override

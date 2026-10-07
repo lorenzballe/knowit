@@ -48,7 +48,11 @@ class DiagramView extends StatefulWidget {
     Color ink = const Color(0xFF000000),
     TextStyle base = const TextStyle(),
   }) {
-    var h = _painterFor(diagram, kAlwaysCompleteAnimation, ink).heightFor(width);
+    var h = _painterFor(
+      diagram,
+      kAlwaysCompleteAnimation,
+      ink,
+    ).heightFor(width);
     if (diagram.caption.isNotEmpty) {
       final caption = TextPainter(
         text: TextSpan(

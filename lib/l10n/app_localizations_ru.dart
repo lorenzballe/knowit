@@ -2071,6 +2071,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get revealBackToAnswer => 'Вернуться к ответу';
 
   @override
+  String get revealShowWorking => 'Показать решение';
+
+  @override
   String get sceneLockIn => 'ГОТОВО';
 
   @override
