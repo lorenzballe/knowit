@@ -26,36 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "scene": {
-    "type": "count",
-    "unit": "hiccups, by one estimate",
-    "answer": 430000000,
-    "each": 200000,
-    "eachLabel": "1 dot = 200,000 hiccups",
-    "compare": "Up to 40 a minute, for 68 years",
-    "options": [
-      {
-        "label": "4 million",
-        "value": 4000000,
-        "note": "Two zeros short. At 20 a minute, a single year runs to over 10 million."
-      },
-      {
-        "label": "40 million",
-        "value": 40000000,
-        "note": "One zero short. That is only a few years of his hiccupping."
-      },
-      {
-        "label": "400 million",
-        "value": 400000000,
-        "note": "Right: about 430 million, slowing from 40 a minute to 20."
-      },
-      {
-        "label": "4 billion",
-        "value": 4000000000,
-        "note": "Too many. Even nonstop at 40 a minute, 68 years makes about 1.4 billion."
-      }
-    ]
-  },
   "source": "Guinness World Records",
   "source_kind": "reference_work",
   "reference": "https://www.guinnessworldrecords.com/news/2023/7/extreme-measures-person-with-68-year-attack-of-hiccups-took-to-try-and-stop-them-754877",

@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "A student who could repeat 7 digits read aloud practised for about 230 hours over two years. How many digits could he then repeat?",
+  "question": "A student who could repeat 7 digits read aloud practised for about 230 hours over 20 months. How many digits could he then repeat?",
   "answer": "79. SF, a keen runner, recoded digits as race times, so 3492 became 3 minutes 49.2 seconds for a mile. Then he was tested on letters, and his span fell back to about six. The skill lived in his running code, not in any general power to hold things in mind.",
   "move": "Before calling a skill general, test it where its tricks do not apply.",
   "ask": "Which skill I am proud of would vanish if I changed the material it works on?",
@@ -62,7 +62,7 @@
       {
         "label": "About 25",
         "value": 25,
-        "note": "Too few. He kept improving for two years, to 79 digits."
+        "note": "Too few. He kept improving for 20 months, to 79 digits."
       },
       {
         "label": "About 80",

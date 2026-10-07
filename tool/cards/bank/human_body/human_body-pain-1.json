@@ -7,7 +7,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "You stub your toe. The deep ache travels to the brain on slow, bare nerve fibres. How long does it take to arrive?",
-  "answer": "Between about 0.8 and 3 seconds; the sharp jab takes about a tenth. Fibres wrapped in myelin carry the first pain at 5 to 30 metres a second, bare C fibres the ache at 0.5 to 2. Over roughly 1.6 m of nerve, the hopping starts before the throbbing arrives.",
+  "answer": "Roughly half a second to two seconds; the sharp jab takes about a tenth. Fibres wrapped in myelin carry the first pain at 5 to 30 metres a second, bare C fibres the ache at 0.5 to 2. Over about a metre of nerve from toe to spine, the hopping starts before the throbbing arrives.",
   "move": "One event can arrive as two messages; wait for the second.",
   "ask": "When something hurts me, in body or mood, do I react before the full message has arrived?",
   "keywords": [
@@ -33,9 +33,9 @@
   "scene": {
     "type": "hold",
     "what": "The ache, toe to brain",
-    "seconds": 1.6,
-    "low": 0.8,
-    "high": 3.2,
+    "seconds": 1,
+    "low": 0.5,
+    "high": 2,
     "comparisons": [
       {
         "label": "The sharp jab",
