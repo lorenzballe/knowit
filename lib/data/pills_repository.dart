@@ -23,6 +23,14 @@ const int kPillsPerDay = 5;
 /// to open the app before coffee.
 const double kAskShare = 0.4;
 
+/// Whether [p] may be dealt on [date]. A card about the news carries the
+/// last day it is current (see [NewsScene.expires]); from the day after,
+/// it is never dealt again, though it still answers by id.
+bool dealableOn(Pill p, DateTime date) {
+  final scene = p.scene;
+  return scene is! NewsScene || !scene.expiredOn(date);
+}
+
 /// Deterministic pills for a day — the same date, topic mix and reading
 /// history always yield the same set and order, so the deck doesn't reshuffle
 /// mid-day or across devices.
@@ -70,7 +78,7 @@ List<Pill> pillsForDate(
   int? asking,
 }) {
   final seed = date.year * 10000 + date.month * 100 + date.day;
-  final pool = List<Pill>.from(PillBank.cards);
+  final pool = PillBank.cards.where((p) => dealableOn(p, date)).toList();
   pool.shuffle(Random(seed));
 
   final wanted = <String>{};
@@ -243,7 +251,8 @@ List<Pill> pillsAtRandom(
     seed = (seed + _stableHash(id)) & 0x1FFFFFFF;
   }
   final rng = Random(seed);
-  final pool = List<Pill>.from(PillBank.cards)..shuffle(rng);
+  final pool = PillBank.cards.where((p) => dealableOn(p, date)).toList()
+    ..shuffle(rng);
 
   final wanted = <String>{
     for (final key in topics ?? const <String>{}) ?kTopics[key]?.name,

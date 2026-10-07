@@ -30,7 +30,9 @@ def _num(v) -> bool:
     return isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v)
 
 
-def check_scene(scene) -> list[str]:
+def check_scene(scene, written: str | None = None) -> list[str]:
+    """[written] is the card's date: a `news` scene's expiry is checked
+    against it (scene_kinds/news.py)."""
     if not isinstance(scene, dict):
         return ["scene: not an object"]
     kind = scene.get("type")
@@ -39,7 +41,10 @@ def check_scene(scene) -> list[str]:
     if kind != "slider":
         import importlib
         sys.path.insert(0, str(Path(__file__).parent))
-        return importlib.import_module(f"scene_kinds.{kind}").check(scene)
+        module = importlib.import_module(f"scene_kinds.{kind}")
+        if kind == "news":
+            return module.check(scene, written)
+        return module.check(scene)
     p: list[str] = []
     for key in ("control", "readout"):
         v = scene.get(key)
@@ -89,7 +94,7 @@ def main() -> int:
     for f in sorted(Path(__file__).parent.joinpath("bank").glob("*/*.json")):
         card = json.loads(f.read_text())
         if "scene" in card:
-            for problem in check_scene(card["scene"]):
+            for problem in check_scene(card["scene"], card.get("written")):
                 bad += 1
                 print(f"{card['id']}: {problem}")
     return 1 if bad else 0

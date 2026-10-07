@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 
-import { Bank, asks, graded, editionOf, localDate, localHour, shiftDate } from './bank.js';
+import { Bank, asks, graded, editionOf, expiredOn, localDate, localHour, shiftDate } from './bank.js';
 import { keyed, unit } from './rng.js';
 import { buildProfile, readOnboarding, readTrace, weightsOn, dayNumberOf, Event, Snapshot, TASTE_LEAN } from './profile.js';
 import { arrangeDay, commonOfEdition, dealDay, dealOwn, explorerDay, questionOfEdition, EXPLORER_SHARE, OWN_FREE, OWN_REWARDED, PILLS_PER_DAY } from './deal.js';
@@ -311,4 +311,36 @@ test('the reader\'s day is the reader\'s clock\'s', () => {
   assert.deepEqual(datesToPrepare({ tz: rome }, Date.UTC(2026, 9, 3, 9, 0)), ['2026-10-03']);
   assert.equal(askableDate('2026-10-04', rome, Date.UTC(2026, 9, 3, 9, 0)), true);
   assert.equal(askableDate('2026-10-09', rome, Date.UTC(2026, 9, 3, 9, 0)), false);
+});
+
+// ── News goes stale ──────────────────────────────────────────────────────
+
+test('a news card is dealt up to its expiry day and never after', () => {
+  const news = (expires: string) => ({ type: 'news', expires });
+  const card = { ...bank.live[0], scene: news('2026-10-03') };
+  assert.equal(expiredOn(card, '2026-10-02'), false);
+  assert.equal(expiredOn(card, '2026-10-03'), false, 'the expiry day is still dealt');
+  assert.equal(expiredOn(card, '2026-10-04'), true);
+  assert.equal(expiredOn({ ...bank.live[0], scene: { type: 'why', expires: '2000-01-01' } }, DAY), false, 'only news expires');
+  assert.equal(expiredOn(bank.live[0], DAY), false);
+
+  // Every space card turned into news that went stale yesterday: a reader
+  // who keeps only space is dealt none of it today, and all of it yesterday.
+  const stale = new Bank({
+    version: 1,
+    cards: bank.cards.map((c) => (c.topic === 'space' ? { ...c, scene: news(shiftDate(DAY, -1)) } : c)),
+    editions: {},
+    commons: {},
+  });
+  const p = profileOf({ topicWeights: { space: 1 }, pickedTopics: ['space'] });
+  for (const plus of [false, true]) {
+    const reader = plus ? profileOf({ topicWeights: { space: 1 }, pickedTopics: ['space'] }, [], true) : p;
+    const today = dealDay(stale, reader, DAY, 'r');
+    assert.equal(today.cards.length, PILLS_PER_DAY, 'the day is still full');
+    assert.ok(today.cards.every((c) => c.topic !== 'space'), 'nothing past its expiry');
+    const yesterday = dealDay(stale, reader, shiftDate(DAY, -1), 'r');
+    assert.ok(yesterday.cards.some((c) => c.topic === 'space'), 'on its last day it is still dealt');
+  }
+  assert.ok(stale.liveOn(DAY).every((c) => c.topic !== 'space'));
+  assert.equal(stale.liveOn(shiftDate(DAY, -1)).length, stale.live.length);
 });

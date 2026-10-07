@@ -1,0 +1,157 @@
+[
+  {
+    "id": "nature-beauty-starlings",
+    "topic": "nature",
+    "genre": "nature.systems_thinking",
+    "strand": "nature.systems_thinking.chain_reactions",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Thousands of starlings wheel and turn as one. Which bird is leading?",
+    "answer": "None of them. Each starling keeps track of only its six or seven nearest neighbours, however far apart they are, and steers to stay near them, match their heading and not collide. A swerve away from a falcon ripples from neighbour to neighbour, so birds far from the attack turn without ever seeing it.",
+    "move": "When a crowd moves as one, look for simple local rules before a leader.",
+    "ask": "Where do I see a leader that is really neighbours copying neighbours?",
+    "keywords": [
+      "starlings",
+      "murmuration",
+      "flocking",
+      "emergence"
+    ],
+    "era": "timeless",
+    "region": "europe",
+    "hook": "mechanism",
+    "mood": "wonder",
+    "numeracy": 1,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "beauty",
+      "piece": "flock",
+      "caption": "Each bird watches only its 7 nearest neighbours: stay close, match them, don't collide.",
+      "hint": "Touch to send a falcon",
+      "reveal": "No bird sees the whole dive. The swerve passes from neighbour to neighbour.",
+      "params": {
+        "birds": 240
+      },
+      "seed": 1986
+    },
+    "source": "Ballerini et al., PNAS (2008)",
+    "source_kind": "paper",
+    "reference": "Ballerini et al., Interaction ruling animal collective behavior depends on topological rather than metric distance: evidence from a field study, PNAS 105(4):1232-1237, 2008; Reynolds, Flocks, herds and schools: a distributed behavioral model, SIGGRAPH 1987",
+    "written": "2026-10-07"
+  },
+  {
+    "id": "science-beauty-sunflower",
+    "topic": "science",
+    "genre": "science.maths_curios",
+    "strand": "science.maths_curios.infinity",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "A sunflower turns each new seed 137.5° from the last. Why that angle and no other?",
+    "answer": "Because it never repeats. 137.5° cuts a full turn in the golden ratio, the number fractions fit worst. A simple fraction of a turn, like two fifths (144°), puts seeds back on the same few spokes and leaves gaps. The golden angle never lines a seed up behind an earlier one, so seeds pack evenly.",
+    "move": "Perfect packing here comes from a turn that never repeats.",
+    "ask": "Where would a little irregularity fill the gaps that a neat rhythm leaves?",
+    "keywords": [
+      "golden angle",
+      "phyllotaxis",
+      "sunflower",
+      "golden ratio"
+    ],
+    "era": "timeless",
+    "region": "none",
+    "hook": "mechanism",
+    "mood": "wonder",
+    "numeracy": 2,
+    "abstraction": "mixed",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "beauty",
+      "piece": "phyllotaxis",
+      "caption": "Each new seed grows 137.5° round from the last. That one number is the whole rule.",
+      "hint": "Drag sideways to change the turn",
+      "reveal": "Off the golden angle, seeds stack into straight spokes and leave gaps.",
+      "dial": {
+        "label": "Turn between seeds",
+        "unit": "°",
+        "value": 137.508,
+        "from": 125,
+        "to": 150,
+        "decimals": 1
+      },
+      "params": {
+        "seeds": 700
+      },
+      "seed": 7
+    },
+    "source": "Vogel, Mathematical Biosciences (1979)",
+    "source_kind": "paper",
+    "reference": "Vogel, A better way to construct the sunflower head, Mathematical Biosciences 44(3-4):179-189, 1979",
+    "written": "2026-10-07"
+  },
+  {
+    "id": "space-beauty-venus-rose",
+    "topic": "space",
+    "genre": "space.think_at_scale",
+    "strand": "space.think_at_scale.deep_time",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Join Venus and Earth with a line every three days for eight years. Why does a five-petalled rose appear?",
+    "answer": "Because 13 Venus years almost exactly fill 8 of ours: 2,921 days against 2,922. Venus laps Earth every 584 days, and five laps take eight years, so after five petals the pattern closes where it began. The fit is not quite perfect, so the rose creeps round a couple of degrees every eight years.",
+    "move": "A pattern that repeats often hides two rhythms in a near-whole ratio.",
+    "ask": "Which of my repeating weeks are two cycles quietly lining up?",
+    "keywords": [
+      "venus",
+      "orbits",
+      "resonance",
+      "pentagram"
+    ],
+    "era": "timeless",
+    "region": "none",
+    "hook": "mechanism",
+    "mood": "wonder",
+    "numeracy": 2,
+    "abstraction": "mixed",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "beauty",
+      "piece": "orbits",
+      "caption": "Venus circles the Sun 13 times while Earth circles it 8. A line joins them every 3 days.",
+      "hint": "Drag to change Venus's year",
+      "reveal": "A few days off and the rose smears. Only 13 to 8 closes it.",
+      "dial": {
+        "label": "Venus's year",
+        "unit": "days",
+        "value": 224.701,
+        "from": 205,
+        "to": 245,
+        "decimals": 1
+      },
+      "params": {
+        "outer": 365.256,
+        "radii": [
+          0.723,
+          1.0
+        ],
+        "every": 3,
+        "span": 2922
+      },
+      "accent": "#FFE600",
+      "seed": 1
+    },
+    "source": "NASA Planetary Fact Sheet",
+    "source_kind": "institution",
+    "reference": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/ (NASA Planetary Fact Sheet: sidereal orbit periods of Venus 224.701 days and Earth 365.256 days)",
+    "written": "2026-10-07"
+  }
+]
