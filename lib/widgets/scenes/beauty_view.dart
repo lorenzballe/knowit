@@ -759,10 +759,10 @@ class _Flock extends _World {
     final vmax = s * 0.34, vmin = s * 0.18;
     final sep = s * 0.045;
     final reach = s * 0.3;
-    final margin = s * 0.14;
+    final margin = s * 0.16;
     // The roost's slow pull: a point wandering a Lissajous figure.
-    final px = w * (0.5 + 0.2 * math.cos(t * 0.23 + 1.3));
-    final py = hgt * (0.5 + 0.18 * math.sin(t * 0.31));
+    final px = w * (0.5 + 0.16 * math.cos(t * 0.23 + 1.3));
+    final py = hgt * (0.5 + 0.14 * math.sin(t * 0.31));
     _falconStep();
 
     for (var i = 0; i < n; i++) {
@@ -804,8 +804,8 @@ class _Flock extends _World {
       ax = ax / _k - vx[i];
       ay = ay / _k - vy[i];
 
-      var fx2 = cx * 2.2 + ax * 2.6 + sx * vmax * 4 + (px - xi) * 0.45;
-      var fy2 = cy * 2.2 + ay * 2.6 + sy * vmax * 4 + (py - yi) * 0.45;
+      var fx2 = cx * 2.2 + ax * 2.6 + sx * vmax * 4 + (px - xi) * 0.8;
+      var fy2 = cy * 2.2 + ay * 2.6 + sy * vmax * 4 + (py - yi) * 0.8;
 
       // The card's edges, felt as a soft wall.
       if (xi < margin) fx2 += (margin - xi) * 16;
