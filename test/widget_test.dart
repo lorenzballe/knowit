@@ -8,7 +8,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:astuto/data/daily.dart';
-import 'package:astuto/data/genres.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/topics.dart';
 import 'package:astuto/data/pills_repository.dart';
@@ -96,11 +95,6 @@ Future<void> _openJourney(WidgetTester tester, {bool plus = true}) async {
   expect(find.byType(JourneyScreen), plus ? findsOneWidget : findsNothing);
   if (!plus) expect(_paywallHeadline, findsOneWidget);
 }
-
-/// A text on the journey itself — not on the profile still under it, which
-/// has an offer of its own with the same button.
-Finder _onJourney(String text) =>
-    find.descendant(of: find.byType(JourneyScreen), matching: find.text(text));
 
 /// Walks past the offer the onboarding ends on.
 Future<void> _continueFree(WidgetTester tester) async {
@@ -675,7 +669,7 @@ void main() {
       await _settle(tester);
       expect(find.byType(JourneyScreen), findsOneWidget);
 
-      // A subject opens to its strands, and the cards read of it.
+      // A subject's mark on the wheel opens the cards read of it.
       final Finder list = find.descendant(
         of: find.byType(JourneyScreen),
         matching: find.byType(Scrollable),
@@ -686,28 +680,10 @@ void main() {
         scrollable: list,
       );
       await _settle(tester);
-      expect(find.text('BY SUBJECT'), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('subject-space')));
       await _settle(tester);
-      final Genre genre = kGenres['space']!.firstWhere(
-        (g) => g.strands.any((s) => s.id == read.strand),
-      );
-      final Strand strand = genre.strands.firstWhere(
-        (s) => s.id == read.strand,
-      );
-      expect(find.text(genre.label), findsOneWidget);
-      expect(find.text(strand.label), findsOneWidget);
-      expect(find.textContaining('1 of '), findsWidgets);
-      expect(find.text('1 card \u2192'), findsOneWidget);
-
-      // Under the subjects, what stays.
-      await tester.scrollUntilVisible(
-        _onJourney('WHAT STAYS'),
-        200,
-        scrollable: list,
-      );
-      await _settle(tester);
-      expect(find.textContaining('Nothing has come back yet'), findsOneWidget);
+      expect(find.byType(DeckViewerScreen), findsOneWidget);
+      expect(find.text(read.question), findsWidgets);
     });
 
     testWidgets('the button after the day is the paywall on the free plan', (
@@ -759,7 +735,7 @@ void main() {
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getBool('knowit.plus'), isTrue);
       expect(find.byType(JourneyScreen), findsOneWidget);
-      expect(find.byKey(const ValueKey('journey-gap')), findsOneWidget);
+      expect(find.byKey(const ValueKey('journey-score')), findsOneWidget);
     });
   });
 
@@ -2298,58 +2274,63 @@ void main() {
       await tester.tap(find.text('Your journey'));
       await _settle(tester);
 
-      // Artboard 134e at its head: how far the reader's confidence runs off
-      // their results — not measured yet, with no answer said how sure —
-      // and the score in a pill beside the title: five cards read is five
-      // points.
-      expect(find.byKey(const ValueKey('journey-score')), findsOneWidget);
-      expect(find.text('5 pts'), findsOneWidget);
-      expect(find.byKey(const ValueKey('journey-gap')), findsOneWidget);
-      expect(find.text('—'), findsWidgets);
-      expect(find.text('points off'), findsOneWidget);
+      // Artboard 137a: the score first — five cards read is five points,
+      // all of it this week — then the level, then the tiles.
+      expect(find.text('YOUR SCORE'), findsOneWidget);
       expect(
-        find.textContaining('12 more answers with how sure'),
+        (tester.widget(
+          find.byKey(const ValueKey('journey-score')),
+        ) as Text).data,
+        '5',
+      );
+      expect(find.text('+5 in 4 weeks'), findsOneWidget);
+      expect(
+        find.text('This week so far, you earned 5 points.'),
         findsOneWidget,
       );
-      expect(find.byKey(const ValueKey('journey-curve')), findsNothing);
-      expect(find.byKey(const ValueKey('journey-last-week')), findsNothing);
-      // The week sits under the top and above the level: today is the
-      // first day kept, and the strip says so. It opens the week in full.
-      expect(find.byKey(const ValueKey('journey-week')), findsOneWidget);
-      expect(find.text('1 of 7'), findsOneWidget);
-      expect(find.text('1 day of seven. Five keeps the week.'), findsOneWidget);
-      await tester.ensureVisible(find.byKey(const ValueKey('journey-week')));
+      expect(find.text('LEVEL 1 OF 7'), findsOneWidget);
+      expect(find.text('Day one'), findsOneWidget);
+      expect(find.text('15 cards\nfrom Reading'), findsOneWidget);
+      expect(find.text('5 cards'), findsWidgets);
+      expect(find.text('45 to the first book'), findsOneWidget);
+      final Finder list = find.descendant(
+        of: find.byType(JourneyScreen),
+        matching: find.byType(Scrollable),
+      );
+      // The days in a row open the week in full.
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('journey-week')),
+        200,
+        scrollable: list,
+      );
       await _settle(tester);
+      expect(find.text('1 day'), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('journey-week')));
       await _settle(tester);
       expect(find.text('Your week'), findsOneWidget);
       expect(find.text('WHERE THIS IS GOING'), findsOneWidget);
       await tester.tap(find.byType(BackCircle));
       await _settle(tester);
-      expect(find.byKey(const ValueKey('journey-score')), findsOneWidget);
-      expect(find.text('Level 1 · Day one'), findsOneWidget);
-      expect(find.textContaining('15 more cards to read'), findsOneWidget);
-      expect(
-        find.text('still with you · nothing answered yet'),
-        findsOneWidget,
-      );
-      expect(find.text('calibration · not measured yet'), findsOneWidget);
-      expect(find.text('in a row · best 1'), findsOneWidget);
-      expect(find.text('BY SUBJECT'), findsOneWidget);
-      // Five cards is about no books at all, so the comparison waits.
-      expect(find.textContaining('is about'), findsNothing);
-      // And the card to say out loud is at the foot, under the subjects.
-      await tester.dragUntilVisible(
-        find.text('TO SAY TONIGHT'),
-        find.byType(ListView).last,
-        const Offset(0, -200),
+      // How sure against how right is not measured yet: a dash, and how
+      // many more answers it takes.
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('journey-gap')),
+        200,
+        scrollable: list,
       );
       await _settle(tester);
-      expect(find.text('TO SAY TONIGHT'), findsOneWidget);
-      await tester.dragUntilVisible(
+      expect(
+        (tester.widget(find.byKey(const ValueKey('journey-gap'))) as Text).data,
+        '—',
+      );
+      expect(
+        find.textContaining('12 more answers with how sure'),
+        findsOneWidget,
+      );
+      await tester.scrollUntilVisible(
         find.byKey(const ValueKey('journey-level')),
-        find.byType(ListView).last,
-        const Offset(0, 220),
+        -200,
+        scrollable: list,
       );
       await _settle(tester);
 
@@ -2360,40 +2341,6 @@ void main() {
       expect(find.text('YOU ARE HERE'), findsOneWidget);
       expect(find.byKey(const ValueKey('stop-sharp')), findsOneWidget);
       expect(find.text('15 more cards to read → Reading'), findsOneWidget);
-    });
-
-    testWidgets('a card can be said out loud, and is written down', (
-      tester,
-    ) async {
-      SharedPreferences.setMockInitialValues(_installed(plus: true));
-      await tester.pumpWidget(const AstutoApp());
-      await _settle(tester);
-      await finish(tester);
-      await tester.tap(find.text('Your journey'));
-      await _settle(tester);
-
-      await tester.dragUntilVisible(
-        find.text('Said it'),
-        find.byType(ListView).last,
-        const Offset(0, -200),
-      );
-      await _settle(tester);
-      expect(find.text('Another one'), findsOneWidget);
-
-      await tester.tap(find.text('Said it'));
-      await _settle(tester);
-
-      final prefs = await SharedPreferences.getInstance();
-      final said = prefs.getStringList('knowit.saidIds')!;
-      expect(said, hasLength(1), reason: 'one card said, not the pile');
-      // Against the day this reader was actually dealt: on Astute+ all five
-      // are their own, which the free plan's deal is not, so working it out
-      // again here would agree only on the days the two happen to overlap.
-      expect(
-        prefs.getStringList('knowit.todayDeckIds'),
-        contains(said.single),
-        reason: 'what is offered is what has been read',
-      );
     });
 
     testWidgets('a rung climbed today gets today on the path', (tester) async {
@@ -2414,9 +2361,15 @@ void main() {
 
       await tester.tap(find.text('Your journey'));
       await _settle(tester);
-      expect(find.text('Level 2 · Reading'), findsOneWidget);
+      expect(find.text('LEVEL 2 OF 7'), findsOneWidget);
+      expect(find.text('Reading'), findsOneWidget);
       // Twenty-four read is twenty-four points.
-      expect(find.text('24 pts'), findsOneWidget);
+      expect(
+        (tester.widget(
+          find.byKey(const ValueKey('journey-score')),
+        ) as Text).data,
+        '24',
+      );
 
       await tester.tap(find.byKey(const ValueKey('journey-level')));
       await _settle(tester);

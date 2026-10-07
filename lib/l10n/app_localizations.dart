@@ -3215,6 +3215,462 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n, plural, =1{1 answer} other{{n} answers}}'**
   String journeyNAnswers(int n);
+
+  /// Small capitals over the big score at the top of Your journey (shown in capitals).
+  ///
+  /// In en, this message translates to:
+  /// **'Your score'**
+  String get journeyYourScore;
+
+  /// Beside the big score: the word for points, no number (the number is set large before it).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{point} other{points}}'**
+  String journeyPointsUnit(int n);
+
+  /// Green chip beside the score: what it gained in the last four weeks.
+  ///
+  /// In en, this message translates to:
+  /// **'+{n} in 4 weeks'**
+  String journeyGainedIn(String n);
+
+  /// Under the score chart, for the week in hand.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{This week so far, you earned 1 point.} other{This week so far, you earned {n} points.}}'**
+  String journeyWeekSoFar(int n);
+
+  /// Under the score chart, for a past week the reader tapped. date is the day the week started, e.g. 14 July.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{In the week of {date}, you earned 1 point.} other{In the week of {date}, you earned {n} points.}}'**
+  String journeyWeekOf(int n, String date);
+
+  /// Beside that sentence: how many cards were first read that week.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 card} other{{n} cards}}'**
+  String journeyCards(int n);
+
+  /// Small print under the score chart. date is the first day, e.g. 14 July.
+  ///
+  /// In en, this message translates to:
+  /// **'Your score at the end of each week since {date}. Tap a point to see that week.'**
+  String journeyScoreCaption(String date);
+
+  /// Small capitals over the level's name (shown in capitals).
+  ///
+  /// In en, this message translates to:
+  /// **'Level {n} of {of}'**
+  String journeyLevelOf(int n, int of);
+
+  /// Right of the level's name, on two lines: how far the next level is. what is e.g. '2 points' or '12 cards'; rung is the next level's name.
+  ///
+  /// In en, this message translates to:
+  /// **'{what}\nfrom {rung}'**
+  String journeyStepFrom(String what, String rung);
+
+  /// How far the next level is: cards still to read.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 card} other{{n} cards}}'**
+  String journeyToGoCards(int n);
+
+  /// How far the next level is: answers still to give.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 answer} other{{n} answers}}'**
+  String journeyToGoAnswers(int n);
+
+  /// How far the next level is: answers given with how sure the reader was.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 answer with how sure} other{{n} answers with how sure}}'**
+  String journeyToGoSure(int n);
+
+  /// How far the next level is: cards still to keep (come back and get right).
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 card held} other{{n} cards held}}'**
+  String journeyToGoHeld(int n);
+
+  /// How far the next level is: points off still to lose.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 point} other{{n} points}}'**
+  String journeyToGoPoints(int n);
+
+  /// Tile title: what the cards read are worth in books.
+  ///
+  /// In en, this message translates to:
+  /// **'Worth'**
+  String get journeyWorth;
+
+  /// Big number in the Worth tile: non-fiction books, at fifty cards a book.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 book} other{{n} books}}'**
+  String journeyBooks(int n);
+
+  /// Under the books: the same in hours of documentaries.
+  ///
+  /// In en, this message translates to:
+  /// **'or {h} h of documentaries'**
+  String journeyOrDocumentaries(int h);
+
+  /// Under the cards read, before the first fifty: how many until the first book.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 to the first book} other{{n} to the first book}}'**
+  String journeyToFirstBook(int n);
+
+  /// Tile title: days in a row.
+  ///
+  /// In en, this message translates to:
+  /// **'In a row'**
+  String get journeyInARow;
+
+  /// Big number in the In a row tile.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 day} other{{n} days}}'**
+  String journeyDays(int n);
+
+  /// Under the days in a row: the best run, and the days read of the days since the first.
+  ///
+  /// In en, this message translates to:
+  /// **'Best {best} · {active} of {days}'**
+  String journeyBestActive(int best, int active, int days);
+
+  /// Big number over the subjects chart: subjects opened of all of them.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {of}'**
+  String journeySubjectsOf(int n, int of);
+
+  /// Beside it: the dashed shape is the reading as it stood at the end of the first month, e.g. July.
+  ///
+  /// In en, this message translates to:
+  /// **'subjects · dashed: {month}'**
+  String journeySubjectsDashed(String month);
+
+  /// Beside it, before there is a first month to compare with.
+  ///
+  /// In en, this message translates to:
+  /// **'subjects'**
+  String get journeySubjects;
+
+  /// Tile title: how hard the cards the reader opens are.
+  ///
+  /// In en, this message translates to:
+  /// **'How hard'**
+  String get journeyHowHard;
+
+  /// Beside the average level: out of 3 (easy 1, medium 2, hard 3).
+  ///
+  /// In en, this message translates to:
+  /// **'of 3'**
+  String get journeyOfThree;
+
+  /// Under the average level.
+  ///
+  /// In en, this message translates to:
+  /// **'The cards you open.'**
+  String get journeyHardNow;
+
+  /// Under the average level, once there is a first month to compare with, e.g. 1.8 in July.
+  ///
+  /// In en, this message translates to:
+  /// **'The cards you open. {v} in {month}'**
+  String journeyHardThen(String v, String month);
+
+  /// Tile title: time spent on the cards.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading time'**
+  String get journeyReadingTime;
+
+  /// Big number: hours and minutes, e.g. 3 h 28.
+  ///
+  /// In en, this message translates to:
+  /// **'{h} h {m}'**
+  String journeyHoursMinutes(int h, String m);
+
+  /// Big number under an hour.
+  ///
+  /// In en, this message translates to:
+  /// **'{m} min'**
+  String journeyMinutes(int m);
+
+  /// Under the reading time: minutes a week lately, and at the start.
+  ///
+  /// In en, this message translates to:
+  /// **'{now} min a week, from {was}'**
+  String journeyMinAWeek(int now, int was);
+
+  /// Under the reading time, before there is a start to compare with.
+  ///
+  /// In en, this message translates to:
+  /// **'{m} min this week'**
+  String journeyMinThisWeek(int m);
+
+  /// Under a dash: the app has started timing the cards today.
+  ///
+  /// In en, this message translates to:
+  /// **'Counted from today'**
+  String get journeyTimedFromToday;
+
+  /// Beside the points off: what they were at the start.
+  ///
+  /// In en, this message translates to:
+  /// **'points off, from {was}'**
+  String journeyPointsOffFrom(int was);
+
+  /// Green small capitals, right of the points off: what the top level asks (shown in capitals).
+  ///
+  /// In en, this message translates to:
+  /// **'{rung} · {n} or less'**
+  String journeyRungOrLess(String rung, int n);
+
+  /// Tile title: how often the reader was right when 80% sure or more.
+  ///
+  /// In en, this message translates to:
+  /// **'Right when sure'**
+  String get journeyRightWhenSure;
+
+  /// Under a number: what it was in the first month, e.g. From 50% in July.
+  ///
+  /// In en, this message translates to:
+  /// **'From {v} in {month}'**
+  String journeyFromIn(String v, String month);
+
+  /// Under a dash, before any answer at 80% sure or more.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing said at 80% or more yet'**
+  String get journeySureNone;
+
+  /// Tile title: the reasoning moves the reader has down.
+  ///
+  /// In en, this message translates to:
+  /// **'Moves you can spot'**
+  String get journeyMovesTitle;
+
+  /// Beside the moves: out of how many there are.
+  ///
+  /// In en, this message translates to:
+  /// **'of {n}'**
+  String journeyOfN(int n);
+
+  /// Under the moves: the one the reader got most recently.
+  ///
+  /// In en, this message translates to:
+  /// **'Newest: {name}'**
+  String journeyNewest(String name);
+
+  /// Under the moves, before the first.
+  ///
+  /// In en, this message translates to:
+  /// **'None yet'**
+  String get journeyNoneYet;
+
+  /// Beside the big number of cards held: no number in it.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{card still with you} other{cards still with you}}'**
+  String journeyStillWithYou(int n);
+
+  /// Under a bar: of the cards that came back after that many days, how many the reader still knew.
+  ///
+  /// In en, this message translates to:
+  /// **'{right} of {of} after {days, plural, =1{a day} other{{days} days}}'**
+  String journeyRecallDays(int right, int of, int days);
+
+  /// The same, after weeks.
+  ///
+  /// In en, this message translates to:
+  /// **'{right} of {of} after {weeks, plural, =1{a week} other{{weeks} weeks}}'**
+  String journeyRecallWeeks(int right, int of, int weeks);
+
+  /// Over the calendar: days read of the days since the first.
+  ///
+  /// In en, this message translates to:
+  /// **'{active} of {days} days'**
+  String journeyActiveDays(int active, int days);
+
+  /// Right of it: when most cards are read.
+  ///
+  /// In en, this message translates to:
+  /// **'Mostly mornings'**
+  String get journeyMostlyMorning;
+
+  /// Right of it: when most cards are read.
+  ///
+  /// In en, this message translates to:
+  /// **'Mostly afternoons'**
+  String get journeyMostlyAfternoon;
+
+  /// Right of it: when most cards are read.
+  ///
+  /// In en, this message translates to:
+  /// **'Mostly evenings'**
+  String get journeyMostlyEvening;
+
+  /// Right of it: when most cards are read.
+  ///
+  /// In en, this message translates to:
+  /// **'Mostly at night'**
+  String get journeyMostlyNight;
+
+  /// Tile title: how far back in time the cards read reach.
+  ///
+  /// In en, this message translates to:
+  /// **'In time'**
+  String get journeyInTime;
+
+  /// Big number: years, e.g. 5,000 years.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} years'**
+  String journeyYears(String n);
+
+  /// Under it: the oldest time the cards read are set in.
+  ///
+  /// In en, this message translates to:
+  /// **'from {era} to this year'**
+  String journeyFromEra(String era);
+
+  /// An era, inside 'from … to this year'.
+  ///
+  /// In en, this message translates to:
+  /// **'the ancient world'**
+  String get journeyEraAncient;
+
+  /// An era, inside 'from … to this year'.
+  ///
+  /// In en, this message translates to:
+  /// **'the Middle Ages'**
+  String get journeyEraMedieval;
+
+  /// An era, inside 'from … to this year'.
+  ///
+  /// In en, this message translates to:
+  /// **'the 1500s'**
+  String get journeyEraEarlyModern;
+
+  /// An era, inside 'from … to this year'.
+  ///
+  /// In en, this message translates to:
+  /// **'the 1800s'**
+  String get journeyEraNineteenth;
+
+  /// An era, inside 'from … to this year'.
+  ///
+  /// In en, this message translates to:
+  /// **'the 1900s'**
+  String get journeyEraTwentieth;
+
+  /// An era, inside 'from … to this year': the year 2000.
+  ///
+  /// In en, this message translates to:
+  /// **'2000'**
+  String get journeyEraRecent;
+
+  /// Under a dash in the In time tile.
+  ///
+  /// In en, this message translates to:
+  /// **'nothing dated yet'**
+  String get journeyNothingDated;
+
+  /// Tile title: where in the world the cards read are set.
+  ///
+  /// In en, this message translates to:
+  /// **'In place'**
+  String get journeyInPlace;
+
+  /// Big number: regions of the world.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 region} other{{n} regions}}'**
+  String journeyRegions(int n);
+
+  /// Under it: the regions read most, and space.
+  ///
+  /// In en, this message translates to:
+  /// **'{list}, and space'**
+  String journeyPlacesAndSpace(String list);
+
+  /// A region of the world.
+  ///
+  /// In en, this message translates to:
+  /// **'the Americas'**
+  String get journeyRegionAmericas;
+
+  /// A region of the world.
+  ///
+  /// In en, this message translates to:
+  /// **'Europe'**
+  String get journeyRegionEurope;
+
+  /// A region of the world.
+  ///
+  /// In en, this message translates to:
+  /// **'Asia'**
+  String get journeyRegionAsia;
+
+  /// A region of the world.
+  ///
+  /// In en, this message translates to:
+  /// **'Oceania'**
+  String get journeyRegionOceania;
+
+  /// A region of the world.
+  ///
+  /// In en, this message translates to:
+  /// **'Africa'**
+  String get journeyRegionAfrica;
+
+  /// A region of the world.
+  ///
+  /// In en, this message translates to:
+  /// **'the Middle East'**
+  String get journeyRegionMiddleEast;
+
+  /// Under a dash in the In place tile.
+  ///
+  /// In en, this message translates to:
+  /// **'no place yet'**
+  String get journeyNoPlace;
+
+  /// Tile title: the topics inside the subjects that the reader has met.
+  ///
+  /// In en, this message translates to:
+  /// **'Topics'**
+  String get journeyTopics;
+
+  /// Big number: topics met.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} met'**
+  String journeyMet(int n);
+
+  /// Under it: how many of them are in the subject with most.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of them in {subject}'**
+  String journeyTopicsMost(int n, String subject);
+
+  /// Tile title: the terms the reader has met in the cards.
+  ///
+  /// In en, this message translates to:
+  /// **'Words'**
+  String get journeyWords;
+
+  /// Big number: terms met for the first time.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} new'**
+  String journeyNew(int n);
 }
 
 class _AppLocalizationsDelegate

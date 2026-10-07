@@ -24,6 +24,8 @@ class ReaderSnapshot {
     this.dislikedIds = const [],
     this.friendCodes = const [],
     this.rungDates = const {},
+    this.readDays = const {},
+    this.dayLog = const {},
     this.saidIds = const [],
     this.seenIds = const [],
     this.pillsRead = 0,
@@ -54,6 +56,13 @@ class ReaderSnapshot {
 
   /// The day each rung of the ladder was first reached, by rung id.
   final Map<String, String> rungDates;
+
+  /// The cards first read on each day, by date key.
+  final Map<String, List<String>> readDays;
+
+  /// What each day came to — the score at its end, the seconds on its cards
+  /// and the cards read in each part of it — by date key.
+  final Map<String, List<int>> dayLog;
 
   /// Cards the reader has said out loud to somebody.
   final List<String> saidIds;
@@ -96,6 +105,8 @@ class ReaderSnapshot {
     'dislikedIds': dislikedIds,
     'friendCodes': friendCodes,
     'rungDates': rungDates,
+    'readDays': readDays,
+    'dayLog': dayLog,
     'saidIds': saidIds,
     'seenIds': seenIds,
     'pillsRead': pillsRead,
@@ -150,6 +161,30 @@ class ReaderSnapshot {
       }
     }
 
+    final readRaw = raw['readDays'];
+    final readDays = <String, List<String>>{};
+    if (readRaw is Map) {
+      for (final entry in readRaw.entries) {
+        final key = entry.key;
+        if (key is String) readDays[key] = strings(entry.value);
+      }
+    }
+
+    final logRaw = raw['dayLog'];
+    final dayLog = <String, List<int>>{};
+    if (logRaw is Map) {
+      for (final entry in logRaw.entries) {
+        final key = entry.key;
+        final value = entry.value;
+        if (key is String && value is List) {
+          dayLog[key] = [
+            for (final Object? n in value)
+              if (n is num) n.round(),
+          ];
+        }
+      }
+    }
+
     final levelsRaw = raw['topicLevels'];
     final levels = <String, int>{};
     if (levelsRaw is Map) {
@@ -173,6 +208,8 @@ class ReaderSnapshot {
       dislikedIds: strings(raw['dislikedIds']),
       friendCodes: strings(raw['friendCodes']),
       rungDates: dates,
+      readDays: readDays,
+      dayLog: dayLog,
       saidIds: strings(raw['saidIds']),
       seenIds: strings(raw['seenIds']),
       pillsRead: raw['pillsRead'] is int ? raw['pillsRead'] as int : 0,
@@ -242,6 +279,43 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
     }
   }
 
+  // A card was first read on whichever phone read it first.
+  final Map<String, String> firstRead = {};
+  for (final days in [remote.readDays, local.readDays]) {
+    for (final entry in days.entries) {
+      for (final id in entry.value) {
+        final String? theirs = firstRead[id];
+        if (theirs == null || entry.key.compareTo(theirs) < 0) {
+          firstRead[id] = entry.key;
+        }
+      }
+    }
+  }
+  final Map<String, List<String>> readDays = {};
+  for (final entry in firstRead.entries) {
+    readDays.putIfAbsent(entry.value, () => []).add(entry.key);
+  }
+
+  // A day's counts only ever grow on the phone that wrote them, so where
+  // both phones wrote the same day, the larger of each is the truer.
+  final Map<String, List<int>> dayLog = {...remote.dayLog};
+  for (final entry in local.dayLog.entries) {
+    final List<int>? theirs = dayLog[entry.key];
+    dayLog[entry.key] = theirs == null
+        ? entry.value
+        : [
+            for (
+              var i = 0;
+              i < math.max(theirs.length, entry.value.length);
+              i++
+            )
+              math.max(
+                i < theirs.length ? theirs[i] : 0,
+                i < entry.value.length ? entry.value[i] : 0,
+              ),
+          ];
+  }
+
   // The mix is a decision, not a score: the one made most recently wins, and
   // this phone is where the reader just was.
   final bool localChoseMix = local.topicWeights.isNotEmpty;
@@ -261,6 +335,8 @@ ReaderSnapshot mergeSnapshots(ReaderSnapshot local, ReaderSnapshot remote) {
     dislikedIds: union(local.dislikedIds, remote.dislikedIds),
     friendCodes: union(local.friendCodes, remote.friendCodes),
     rungDates: rungDates,
+    readDays: readDays,
+    dayLog: dayLog,
     saidIds: union(local.saidIds, remote.saidIds),
     seenIds: union(local.seenIds, remote.seenIds),
     pillsRead: math.max(local.pillsRead, remote.pillsRead),

@@ -132,6 +132,43 @@ void main() {
       );
     });
 
+    test('a card was first read on whichever phone read it first, and a '
+        "day's counts are the larger of each", () {
+      const local = ReaderSnapshot(
+        readDays: {
+          '2026-09-03': ['a', 'b'],
+          '2026-09-05': ['c'],
+        },
+        dayLog: {
+          '2026-09-05': [40, 300, 2, 0, 1, 0],
+        },
+      );
+      const remote = ReaderSnapshot(
+        readDays: {
+          '2026-09-01': ['b'],
+          '2026-09-05': ['d'],
+        },
+        dayLog: {
+          '2026-09-05': [38, 420, 1, 1],
+          '2026-09-06': [45, 60, 1, 0, 0, 0],
+        },
+      );
+      final merged = mergeSnapshots(local, remote);
+      final Map<String, Set<String>> days = {
+        for (final e in merged.readDays.entries) e.key: e.value.toSet(),
+      };
+      expect(days, {
+        '2026-09-01': {'b'},
+        '2026-09-03': {'a'},
+        '2026-09-05': {'c', 'd'},
+      });
+      expect(merged.dayLog['2026-09-05'], [40, 420, 2, 1, 1, 0]);
+      expect(merged.dayLog['2026-09-06'], [45, 60, 1, 0, 0, 0]);
+      final again = ReaderSnapshot.fromJson(merged.toJson());
+      expect(again.dayLog['2026-09-05'], [40, 420, 2, 1, 1, 0]);
+      expect(again.readDays['2026-09-01'], ['b']);
+    });
+
     test('survives a round trip through JSON', () {
       const before = ReaderSnapshot(
         name: 'Marco',
