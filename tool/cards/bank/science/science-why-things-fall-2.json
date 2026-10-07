@@ -35,7 +35,7 @@
     "type": "slider",
     "control": "Body length, shaped like a person",
     "controlUnit": "cm",
-    "readout": "Top speed when falling",
+    "readout": "Modelled top speed, falling",
     "readoutUnit": "km/h",
     "start": 180,
     "step": 1,

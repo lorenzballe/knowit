@@ -844,3 +844,15 @@ life-risk-taking-1, life-regret-2, life-failure-2, life-spending-2.
 - psychology-framing-5 | draw: Slovic, Fischhoff & Lichtenstein 1978 used about 1 in 100,000 per trip for a disabling injury and about 40,000 trips in a driving life | Slovic Fischhoff Lichtenstein 1978 accident probabilities seat belt usage 100,000 trips
 - music-frequencies-11 | draw: a typical guitar string carries about 7 kg of tension | D'Addario string tension chart light gauge high E pounds
 - sport-marathon-11 | draw: Kiptum's 2:00:35 (2023) still the men's marathon record through 2025; 1925 best 2:29:01.8 (Michelsen) | World Athletics men's marathon world record progression 2025
+- psychology-reciprocity-2 | the two mint-study entries above are stale: the card now rests on Church 1993 (prepaid cash +19, prepaid gift +8, promised cash +5, promised gift +1 points) | Church 1993 Public Opinion Quarterly mail survey incentives meta-analysis 19.1 7.9 4.5
+- economics-interest-11 | rank: 2024 US card rate 21.5% (G.19, all accounts; assessed-interest accounts ran nearer 23%), FDIC national savings 0.46% | Federal Reserve G.19 2024 credit card plan interest rate all accounts; FDIC national rate savings 2024
+- economics-interest-12 | trick: Bank Rate path stops at Sep 2025 (4.0%); later moves not checked, and the card says "still 40 times" | Bank of England Bank Rate history 2025 2026
+- economics-education-4 | trick: the White House's 2015 graduation chart is described as a cut-axis chart ("like one") | White House December 2015 high school graduation rate chart axis
+- economics-fees-that-grow-3 | Kinnel 2010: cheapest quintile beat dearest in every asset class and period; stars predictive "most of the time" | Kinnel 2010 Morningstar How expense ratios and star ratings predict success
+- life-time-4 | rank: ATUS 2023 TV 2.7 h (160 min), socialising 37 min, reading 16 min, eating 66 min | BLS American Time Use Survey 2023 results TV socializing reading minutes
+- nature-adaptation-4 | rank: disasters (floods, storms, earthquakes) about 45,000 deaths a year on average | Our World in Data natural disasters average annual deaths EM-DAT
+- medicine-smoking-1 | sample: Doll 2004 survival to 90 about 24% never-smokers vs 4% lifelong smokers | Doll Peto 2004 BMJ 50 years survival to age 90 smokers non-smokers
+- human_body-healing-3 | hold: 71 °C water gives a full-thickness burn in about 1 s; published time-temperature tables differ | Moritz Henriques burn time temperature table 160F 71C seconds
+- psychology-group-thinking-4 | clues: falling ill tracked seeing an ill person or noticing the odour, not classroom location (year corrected to 1998) | Jones 2000 NEJM Warren County High School mass psychogenic illness risk factors location
+- space-moon-dust-3 | slider: moonlight from a fitted lunar phase curve (one day off full about 75%, quarter about 9%) | lunar phase curve magnitude phase angle 12 degrees 90 degrees Allen's Astrophysical Quantities
+- sport-cheap-or-expensive-2 | slider: air share from a model with assumed drag area and rolling resistance (half at 15 km/h, four fifths at 30) | cycling power model air drag share 15 km/h 30 km/h Martin 1998
