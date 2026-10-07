@@ -1,0 +1,68 @@
+{
+  "id": "technology-charging-11",
+  "topic": "technology",
+  "genre": "technology.batteries",
+  "strand": "technology.batteries.charging",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which uses the most energy: a full phone charge, an evening of LED light, boiling a litre, a hot shower or a 10 km drive?",
+  "answer": "The drive, then the shower. Heating water and moving a tonne of car take energy on a scale chargers never reach: about 5 kWh for 10 km in a petrol car, about 2 for an 8-minute shower, 0.02 for a full phone charge. Unplugging chargers is tidy; a shorter shower shows on the bill.",
+  "move": "Energy goes where things are heated or moved; look there first.",
+  "keywords": [
+    "energy use",
+    "phone charging",
+    "shower",
+    "kettle",
+    "driving"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 3,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Arithmetic from heat capacity and fuel energy",
+  "source_kind": "arithmetic",
+  "reference": "Water: 4.18 kJ per kg per degree; petrol: about 32 MJ (8.9 kWh) per litre; assumptions: 6 L per 100 km, a 4,000 mAh 3.85 V phone battery with charger losses, a 10 W LED for 5 hours, 8 L a minute of shower water warmed by 25 degrees",
+  "written": "2026-10-07",
+  "ask": "Which of my daily habits heats water or moves a heavy machine?",
+  "scene": {
+    "type": "rank",
+    "quantity": "Energy used, once",
+    "most": "Most",
+    "unit": "kWh",
+    "log": true,
+    "items": [
+      {
+        "label": "Full phone charge",
+        "value": 0.02,
+        "note": "A year of daily charges, about 7 kWh, matches a single 14 km drive."
+      },
+      {
+        "label": "8-minute hot shower",
+        "value": 1.9,
+        "note": "64 litres warmed by 25 °C: as much as about 90 phone charges."
+      },
+      {
+        "label": "LED bulb, 5 hours",
+        "value": 0.05,
+        "note": "A 10-watt bulb for a whole evening."
+      },
+      {
+        "label": "Drive 10 km",
+        "value": 5.3,
+        "note": "0.6 litres of petrol: over 250 phone charges' worth."
+      },
+      {
+        "label": "Boil 1 litre",
+        "value": 0.1,
+        "note": "Water is slow to heat: one litre to boiling takes about 0.1 kWh."
+      }
+    ]
+  }
+}

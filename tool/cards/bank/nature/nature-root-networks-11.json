@@ -1,0 +1,78 @@
+{
+  "id": "nature-root-networks-11",
+  "topic": "nature",
+  "genre": "nature.trees_and_forests",
+  "strand": "nature.trees_and_forests.root_networks",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Your peace lily droops and yellows, though you water it every few days. What is killing it?",
+  "answer": "Too much water. Roots need air as well as water; in soil that never drains they suffocate, rot and stop drinking. So an overwatered plant wilts exactly like a thirsty one, and the obvious cure, more water, finishes it. Water when the top few centimetres feel dry, in a pot with a hole.",
+  "move": "A symptom can point two opposite ways; test before you give more.",
+  "ask": "What am I giving more of because the problem looks like too little?",
+  "keywords": [
+    "houseplants",
+    "overwatering",
+    "root rot",
+    "roots",
+    "peace lily"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Thirst",
+      "Too much water",
+      "Too little light",
+      "Pests"
+    ],
+    "answer": 1,
+    "clues": [
+      {
+        "text": "Leaves hang limp, and the lower ones turn yellow, week after week.",
+        "tag": "Limp, yellow leaves",
+        "rulesOut": []
+      },
+      {
+        "text": "No webs, no specks, nothing sticky under the leaves.",
+        "tag": "Nothing under the leaves",
+        "rulesOut": [
+          3
+        ]
+      },
+      {
+        "text": "It sits near a bright window, and new leaves keep coming.",
+        "tag": "Bright spot, new leaves",
+        "rulesOut": [
+          2
+        ]
+      },
+      {
+        "text": "Push a finger into the pot: the soil is soggy two days after watering.",
+        "tag": "Soggy soil",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "Tipped out, the roots are brown and mushy, and smell sour.",
+        "tag": "Brown, mushy roots",
+        "rulesOut": []
+      }
+    ],
+    "why": "A thirsty plant sits in dry soil. Wet soil under a wilting plant means the roots can't drink."
+  },
+  "source": "RHS, Watering houseplants",
+  "source_kind": "institution",
+  "reference": "https://www.rhs.org.uk/plants/types/houseplants (Royal Horticultural Society, houseplant care: watering and root rot)",
+  "written": "2026-10-07"
+}

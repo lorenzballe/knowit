@@ -6,22 +6,23 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "sampling",
-  "question": "On a restaurant review site, which places crowd both the top and the bottom of the rankings?",
+  "question": "The top of a national exam league table is crowded with small schools. Should a donor pay to create more of them?",
   "options": [
-    "Long-established, popular places",
-    "New places with only a few reviews",
-    "Places with hundreds of reviews"
+    "Yes, small schools do better",
+    "First check the bottom of the table",
+    "No, big schools do better"
   ],
   "correct": 1,
-  "answer": "New places with only a few reviews. An average of five ratings swings wildly: two delighted friends make a perfect score, one bad night a terrible one. Hundreds of reviews pull the average towards the middle. Howard Wainer found the same with American schools: the smallest filled both the best and the worst lists.",
+  "answer": "Check the bottom first: small schools crowd it too. A year group of 25 swings far more than one of 250, so small schools land at both ends by chance. Howard Wainer showed this after the Gates Foundation had spent heavily on splitting big schools into small ones; it later changed course.",
   "move": "Distrust extremes that come from few measurements, in either direction.",
   "ask": "Which strong opinion of mine rests on just a handful of experiences?",
-  "trap": "Long-established places, because fame seems to stir extreme reactions.",
+  "trap": "Yes, small schools do better, as the top of the table shows.",
   "keywords": [
     "sample size",
-    "online reviews",
-    "ratings",
-    "small schools"
+    "small schools",
+    "league tables",
+    "exam results",
+    "howard wainer"
   ],
   "era": "timeless",
   "region": "none",
@@ -33,8 +34,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated pupils",
+    "hit": "Passed the exam",
+    "groups": [
+      {
+        "label": "School A",
+        "rate": 0.6
+      },
+      {
+        "label": "School B",
+        "rate": 0.6
+      }
+    ],
+    "steps": [
+      50,
+      500,
+      5000
+    ],
+    "seed": 1752,
+    "button": "Add pupils",
+    "notes": [
+      "Two schools of 25, equally good: 84% pass at one, 44% at the other. Top and bottom.",
+      "250 pupils each: 61% and 56%. The gap is closing.",
+      "2,500 each: 60% and 60%, the rate built into both. Size made the gap, not teaching."
+    ]
+  },
   "source": "Wainer, American Scientist, 2007",
   "source_kind": "paper",
   "reference": "Wainer, The most dangerous equation, American Scientist 95:249–256, 2007",
-  "written": "2026-09-26"
+  "written": "2026-10-07"
 }

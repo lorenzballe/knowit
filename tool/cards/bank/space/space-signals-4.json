@@ -1,0 +1,78 @@
+{
+  "id": "space-signals-4",
+  "topic": "space",
+  "genre": "space.are_we_alone",
+  "strand": "space.are_we_alone.signals",
+  "also": [
+    "space.are_we_alone.extraordinary_claims"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Parkes, Australia. For 17 years its radio dish catches short chirps that look like bursts from deep space. What makes them?",
+  "answer": "The staff microwave oven. Opening its door before the timer ran out let a burst escape that the dish read as a chirp from space. Named perytons in 2011, they were traced in 2015, and clearing them helped confirm that real fast radio bursts, seen in a single beam, come from far away.",
+  "move": "When a mystery keeps a timetable, look for whoever keeps that timetable.",
+  "ask": "What strange thing in my life happens on a schedule, and whose schedule is it?",
+  "keywords": [
+    "perytons",
+    "parkes",
+    "microwave oven",
+    "fast radio bursts",
+    "interference"
+  ],
+  "era": "recent",
+  "region": "oceania",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Far galaxy",
+      "Lightning",
+      "Microwave oven"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Each chirp sweeps from high pitch to low, as signals do after crossing space.",
+        "tag": "Sweeps high to low",
+        "rulesOut": []
+      },
+      {
+        "text": "Each fills all 13 of the dish's beams at once: it comes from close by.",
+        "tag": "In every beam at once",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "They come on weekdays, in working hours, mostly around lunchtime.",
+        "tag": "Weekdays, near lunch",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "A new monitor catches a 2.4 GHz flash with each one: a microwave oven's pitch.",
+        "tag": "A 2.4 GHz flash",
+        "rulesOut": []
+      },
+      {
+        "text": "Opening the oven door before the timer ends makes one on demand.",
+        "tag": "Door opened early",
+        "rulesOut": []
+      }
+    ],
+    "why": "Storms don't keep office hours. A signal that peaks at lunchtime comes from somebody's lunch."
+  },
+  "source": "Petroff et al., MNRAS, 2015",
+  "source_kind": "paper",
+  "reference": "Petroff et al., Identifying the source of perytons at the Parkes radio telescope, Monthly Notices of the Royal Astronomical Society 451:3933-3940, 2015, arXiv:1504.02165",
+  "written": "2026-10-07"
+}

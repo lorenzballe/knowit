@@ -1,0 +1,61 @@
+{
+  "id": "life-gut-or-data-4",
+  "topic": "life",
+  "genre": "life.decisions",
+  "strand": "life.decisions.gut_or_data",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In week one, new sales hire Ana closes 6 of her 20 calls and Ben closes 2. Who is the better seller?",
+  "answer": "Nobody can tell yet. At a true close rate of 20%, twenty calls give anywhere from 1 to 8 sales by luck alone. Kahneman and Klein agreed that a gut call becomes skill only where feedback is plentiful and clear. A first week of calls is neither, however sure it feels.",
+  "move": "Give a newcomer enough tries before deciding who they are.",
+  "ask": "Whom have I sized up on a first week, and how many tries did that rest on?",
+  "keywords": [
+    "new employees",
+    "sales calls",
+    "first impressions",
+    "intuition",
+    "sample size"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated sales calls",
+    "hit": "Call made a sale",
+    "groups": [
+      {
+        "label": "Ana",
+        "rate": 0.2
+      },
+      {
+        "label": "Ben",
+        "rate": 0.25
+      }
+    ],
+    "steps": [
+      40,
+      400,
+      4000
+    ],
+    "seed": 9084,
+    "button": "More weeks",
+    "notes": [
+      "Week one, 20 calls each: Ana 30%, Ben 10%. Built in: Ben sells better, 25% to 20%.",
+      "Ten weeks: 22% against 24%. Ben has only just drawn ahead.",
+      "Two years, 2,000 calls each: 20% against 25%. Week one picked the wrong one."
+    ]
+  },
+  "source": "Kahneman and Klein, American Psychologist, 2009",
+  "source_kind": "paper",
+  "reference": "Kahneman and Klein, Conditions for Intuitive Expertise: A Failure to Disagree, American Psychologist, 2009",
+  "written": "2026-10-07"
+}

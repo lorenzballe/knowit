@@ -6,29 +6,43 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Strangers asked to talk about deep topics expected it to be awkward. How did it actually turn out?",
-  "answer": "It was less awkward and more connecting than they expected. In Kardas, Kumar and Epley's studies, strangers forecast that deep questions would feel awkward and that partners would care little; afterwards they felt closer and more at ease than predicted, and partners were more interested than they thought.",
-  "move": "Ask the deeper question; the awkwardness is mostly rehearsed, not received.",
-  "ask": "Which deeper question have I held back from someone this week, assuming it would be awkward?",
+  "question": "You say something and the person you are talking to goes quiet. How long a silence before it starts to feel like rejection?",
+  "answer": "About 4 seconds: in Koudenburg's experiment, that pause left people anxious and feeling rejected. The usual gap between speakers is about 0.2 seconds, quicker than planning one word, so replies are prepared while the other talks. A long gap reads as a coming no, though often it is only thinking.",
+  "move": "A pause that feels like a verdict is often someone still thinking.",
+  "ask": "When someone goes quiet, do I rush in before they finish thinking?",
   "keywords": [
-    "deep conversation",
-    "strangers",
-    "small talk",
-    "epley",
-    "connection"
+    "conversation",
+    "silence",
+    "turn-taking",
+    "rejection"
   ],
   "era": "recent",
-  "region": "americas",
-  "hook": "misconception",
+  "region": "world",
+  "hook": "number",
   "mood": "practical",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Kardas, Kumar and Epley, JPSP, 2022",
+  "scene": {
+    "type": "hold",
+    "what": "Silence that feels like rejection",
+    "seconds": 4,
+    "comparisons": [
+      {
+        "label": "Usual gap between turns",
+        "seconds": 0.2
+      },
+      {
+        "label": "Time to plan one word",
+        "seconds": 0.6
+      }
+    ]
+  },
+  "source": "Koudenburg et al., 2011; Stivers et al., 2009",
   "source_kind": "paper",
-  "reference": "Kardas, Kumar and Epley, Overly shallow? Miscalibrated expectations create a barrier to deeper conversation, Journal of Personality and Social Psychology, 2022",
-  "written": "2026-09-29"
+  "reference": "Koudenburg, Postmes & Gordijn, Disrupting the flow: how brief silences in group conversations affect social needs, Journal of Experimental Social Psychology 47(2), 2011; Stivers et al., Universals and cultural variation in turn-taking in conversation, PNAS 106(26), 2009; Indefrey & Levelt, The spatial and temporal signatures of word production components, Cognition 92, 2004",
+  "written": "2026-10-07"
 }

@@ -1,0 +1,78 @@
+{
+  "id": "sport-diet-11",
+  "topic": "sport",
+  "genre": "sport.training",
+  "strand": "sport.training.diet",
+  "also": [
+    "medicine.diagnosis.symptoms"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Five hours into a marathon, a runner crosses the line, then grows confused and collapses. What has gone wrong?",
+  "answer": "Too much water: low blood sodium, or hyponatraemia. Drinking beyond what sweat removes dilutes the blood, and brain cells swell. At the 2002 Boston Marathon 13% of the runners tested had it; weight gain was the strongest warning sign, and slow runners, with hours to drink, were most at risk.",
+  "move": "A remedy taken just to be safe can be the very thing that hurts.",
+  "ask": "What do I overdo to be safe without ever checking whether it helps?",
+  "keywords": [
+    "hyponatraemia",
+    "marathon",
+    "hydration",
+    "sodium",
+    "boston marathon"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Dehydration",
+      "Heatstroke",
+      "Too much water"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Headache, vomiting, confusion: she collapses soon after the finish line.",
+        "tag": "Collapse after finish",
+        "rulesOut": []
+      },
+      {
+        "text": "Her temperature is normal, and the day was mild.",
+        "tag": "Normal temperature",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "On the scale she is 1.5 kg heavier than she was at the start.",
+        "tag": "Heavier at the finish",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "She drank a full cup at every station, to be safe.",
+        "tag": "A cup at every station",
+        "rulesOut": []
+      },
+      {
+        "text": "Blood test: sodium far below normal.",
+        "tag": "Low sodium",
+        "rulesOut": []
+      }
+    ],
+    "why": "A dehydrated runner finishes lighter. Gaining weight means she drank more than she sweated."
+  },
+  "source": "Almond et al., NEJM, 2005",
+  "source_kind": "paper",
+  "reference": "Almond et al., Hyponatremia among runners in the Boston Marathon, New England Journal of Medicine 352:1550-1556, 2005, doi:10.1056/NEJMoa043901",
+  "written": "2026-10-07"
+}

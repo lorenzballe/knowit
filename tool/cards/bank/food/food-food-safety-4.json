@@ -1,0 +1,78 @@
+{
+  "id": "food-food-safety-4",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.food_safety",
+  "also": [
+    "medicine.diagnosis.symptoms"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "At a tuna dinner your face flushes red, your head pounds and your heart races. What is happening?",
+  "answer": "Histamine poisoning, called scombroid. Tuna, mackerel or sardines kept too warm let bacteria turn the fish's histidine into histamine, the chemical behind allergic reactions. Cooking, freezing and canning do not destroy it, and the fish can look and smell fine. It mimics an allergy, but strikes everyone who ate the bad portion.",
+  "move": "If several people react at once, look at what they shared, not who they are.",
+  "ask": "When something goes wrong for me, do I check whether it went wrong for others too?",
+  "keywords": [
+    "scombroid",
+    "histamine",
+    "tuna",
+    "food poisoning",
+    "allergy"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Fish allergy",
+      "Stomach bug",
+      "Fish histamine"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Red face, pounding head, racing heart, and an itchy rash on the neck.",
+        "tag": "Flush, pounding, rash",
+        "rulesOut": []
+      },
+      {
+        "text": "It began 20 minutes after the first bite. Food bugs take hours.",
+        "tag": "Twenty minutes",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "Your friend had the tuna too, and turns red as well. The two on chicken are fine.",
+        "tag": "Your friend too",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "The tuna was cooked through, and tasted oddly peppery.",
+        "tag": "Cooked, and peppery",
+        "rulesOut": []
+      },
+      {
+        "text": "An antihistamine settles it within a few hours.",
+        "tag": "Antihistamine works",
+        "rulesOut": []
+      }
+    ],
+    "why": "An allergy belongs to one person. Two people flushing at once means the trigger was in the fish."
+  },
+  "source": "US FDA, Bad Bug Book, 2012",
+  "source_kind": "institution",
+  "reference": "US Food and Drug Administration, Bad Bug Book, 2nd edition, 2012, chapter Scombrotoxin, https://www.fda.gov/food/foodborne-pathogens/bad-bug-book-second-edition",
+  "written": "2026-10-07"
+}

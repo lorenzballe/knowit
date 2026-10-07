@@ -1,0 +1,61 @@
+{
+  "id": "medicine-risk-explained-4",
+  "topic": "medicine",
+  "genre": "medicine.talk_to_your_doctor",
+  "strand": "medicine.talk_to_your_doctor.risk_explained",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Surgeon A has lost none of her last 25 patients; surgeon B has lost 2. Whose patients are safer?",
+  "answer": "Twenty-five operations cannot say. When deaths run at a few in 100, one death more or less moves a small record by 4 points. That is why statisticians compare surgeons and hospitals on funnel plots, which flag a result only when it falls outside what chance allows for that many operations.",
+  "move": "Ask how many cases a record rests on before ranking anyone by it.",
+  "ask": "Which ranking have I trusted without asking how many cases stood behind it?",
+  "keywords": [
+    "surgeons",
+    "death rates",
+    "league tables",
+    "funnel plots",
+    "sample size"
+  ],
+  "era": "recent",
+  "region": "none",
+  "hook": "practical",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated operations",
+    "hit": "Patient died",
+    "groups": [
+      {
+        "label": "Surgeon A",
+        "rate": 0.04
+      },
+      {
+        "label": "Surgeon B",
+        "rate": 0.02
+      }
+    ],
+    "steps": [
+      50,
+      500,
+      5000
+    ],
+    "seed": 53,
+    "button": "More operations",
+    "notes": [
+      "25 each: A lost none, B lost 2, 8%. Built in: A is twice as risky, 4% to 2%.",
+      "250 each, years of work: A 1%, B 4%. A still looks the safer pair of hands.",
+      "2,500 each: 4% against 2%. Only now does the truth built in show."
+    ]
+  },
+  "source": "Spiegelhalter, Statistics in Medicine, 2005",
+  "source_kind": "paper",
+  "reference": "Spiegelhalter DJ, Funnel plots for comparing institutional performance, Statistics in Medicine 24:1185-1202, 2005",
+  "written": "2026-10-07"
+}

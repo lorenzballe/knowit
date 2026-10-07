@@ -6,28 +6,41 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does sleeping on a problem sometimes produce the answer in the morning?",
-  "answer": "Because sleep reorganises what was learned. In Wagner's experiment, people practised a number task hiding a shortcut; after a night's sleep, more than twice as many found the shortcut as those who stayed awake for the same time. The brain replays and recombines the day's material overnight: the morning mind starts from a reshuffled deck.",
-  "move": "Stop working on a hard problem early enough to sleep on it.",
-  "ask": "Which decision am I forcing tonight that would be clearer after a night's sleep?",
+  "question": "A tired driver's head drops and snaps back up. How long can a microsleep, a brief slide into sleep while awake, last?",
+  "answer": "From about 1 second to 15, by the usual laboratory definition: far longer than a blink. The sleeper often has no idea. Drowsy volunteers regularly deny dozing moments after their brain recordings show they did. At 100 km/h, 15 seconds is over 400 metres with nobody steering.",
+  "move": "When you are fighting to stay awake, assume you have already lost.",
+  "ask": "When did I last insist I was fine to drive while fighting to keep my eyes open?",
   "keywords": [
-    "sleep",
-    "insight",
-    "problem solving",
-    "memory consolidation"
+    "microsleep",
+    "drowsy driving",
+    "sleep deprivation",
+    "self-awareness"
   ],
-  "era": "recent",
-  "region": "europe",
-  "hook": "mechanism",
-  "mood": "wonder",
-  "numeracy": 1,
-  "abstraction": "mixed",
+  "era": "timeless",
+  "region": "none",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Wagner et al., Nature, 2004",
+  "scene": {
+    "type": "hold",
+    "what": "One microsleep",
+    "seconds": 4,
+    "low": 1,
+    "high": 15,
+    "comparisons": [
+      {
+        "label": "A blink",
+        "seconds": 0.3
+      }
+    ]
+  },
+  "source": "Hertig-Godeschalk et al., Sleep, 2020",
   "source_kind": "paper",
-  "reference": "Wagner U, Gais S, Haider H, Verleger R, Born J, Sleep inspires insight, Nature, 2004",
-  "written": "2026-09-26"
+  "reference": "Hertig-Godeschalk et al., Microsleep episodes in the borderland between wakefulness and sleep, Sleep 43(1), 2020",
+  "written": "2026-10-07"
 }

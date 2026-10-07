@@ -6,28 +6,43 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did a dying tropical storm strengthen and form an eye over Oklahoma, three days after leaving the sea?",
-  "answer": "Wet ground stood in for the ocean. After an unusually rainy summer, central Oklahoma's soaked soils fed Erin's remnants heat and moisture, much as warm water feeds a hurricane. On 19 August 2007 an eye appeared on radar and sustained winds reached about 95 km/h. Farmland had become a shallow, muddy sea.",
-  "move": "When a supply is cut, check whether something nearby can pass for it.",
+  "question": "A flash of lightning, then you count until the thunder. Under what gap should you already be heading indoors?",
+  "answer": "30 seconds, by the old 30-30 rule: sound covers a kilometre in about 3 seconds, so 30 means about 10 km, and lightning can strike that far from its storm. The US Weather Service now puts it more simply: if you can hear thunder at all, roughly 15 km or less, you are within reach.",
+  "move": "If you can hear the warning, you are already within range.",
+  "ask": "Which warning do I hear and still treat as far away?",
   "keywords": [
-    "tropical storm erin",
-    "oklahoma",
-    "soil moisture",
-    "brown ocean effect"
+    "lightning",
+    "thunder",
+    "speed of sound",
+    "30-30 rule"
   ],
-  "era": "recent",
-  "region": "americas",
-  "hook": "puzzle",
-  "mood": "wonder",
-  "numeracy": 1,
+  "era": "timeless",
+  "region": "none",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "map",
-  "source": "Arndt et al., BAMS, 2009",
-  "source_kind": "paper",
-  "reference": "Arndt et al., Observations of the Overland Reintensification of Tropical Storm Erin (2007), Bulletin of the American Meteorological Society, 2009",
-  "written": "2026-09-27",
-  "disabled": true
+  "figure": "none",
+  "scene": {
+    "type": "hold",
+    "what": "Flash to thunder: take cover",
+    "seconds": 30,
+    "comparisons": [
+      {
+        "label": "A strike 1 km away",
+        "seconds": 2.9
+      },
+      {
+        "label": "Thunder from 16 km",
+        "seconds": 47
+      }
+    ]
+  },
+  "source": "US National Weather Service, Lightning Safety",
+  "source_kind": "institution",
+  "reference": "https://www.weather.gov/safety/lightning",
+  "written": "2026-10-07"
 }

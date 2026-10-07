@@ -4,47 +4,44 @@
   "kind": "pickOne",
   "difficulty": "medium",
   "principle": "multipleComparisons",
-  "question": "A company tries 12 subject lines and one gets a much better open rate. What should it do next?",
+  "question": "Twelve email subject lines each go to 50 people. The best opens at 30%, against the usual 20%. What should the firm do next?",
   "options": [
     "Use it everywhere",
     "Run that one again on its own",
     "Try 12 more"
   ],
   "correct": 1,
-  "answer": "The best of twelve is the best partly because it caught a good sample. Running it alone against the original is what separates a real effect from the luckiest draw — and often it comes back to the middle.",
+  "answer": "Run it again on its own. On 50 sends, a line that truly opens at 20% can land anywhere from about 10% to 30% by luck, so the best of twelve is also the luckiest of twelve. Retested alone, a winner picked that way usually slides back to the pack.",
   "move": "The winner of a big search has to win again to count.",
   "ask": "What big win after a wide search have I not yet tried to repeat?",
-  "trap": "The winner of a wide search is partly a winner by luck.",
+  "trap": "Use it everywhere, since 30% plainly beats 20%.",
   "keywords": [
-    "multiple comparisons",
     "email subject lines",
     "open rates",
+    "a/b testing",
     "winner's curse"
   ],
   "era": "recent",
   "region": "none",
   "hook": "puzzle",
   "mood": "practical",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Winner's curse in A/B testing",
-  "source_kind": "book",
-  "reference": "Kohavi, Tang & Xu, Trustworthy Online Controlled Experiments, Cambridge University Press, 2020",
   "scene": {
     "type": "sample",
     "dots": "Simulated emails",
     "hit": "Opened",
     "groups": [
       {
-        "label": "Line A",
+        "label": "Original",
         "rate": 0.2
       },
       {
-        "label": "Line B",
+        "label": "Best of 12",
         "rate": 0.2
       }
     ],
@@ -54,13 +51,17 @@
       10000,
       100000
     ],
-    "seed": 72,
+    "seed": 1828,
     "button": "Send more",
     "notes": [
-      "50 emails each: line B opens at 26%, line A at 10%. Both are truly 20%.",
-      "500 each: 23% against 20%. Still a winner, still luck.",
-      "5,000 each: 21% against 20%.",
-      "50,000 each: 20% and 20%. The winner was the luckiest draw."
+      "50 each: the best of 12 lines opens at 30%, the original at 20%. All 12 are truly 20%.",
+      "500 each: 23% against 21%. Most of the lead was luck.",
+      "5,000 each: 20% and 20%. The winner is an ordinary line.",
+      "50,000 each: still 20% and 20%. It was picked for its luck, not its words."
     ]
-  }
+  },
+  "source": "Winner's curse in A/B testing",
+  "source_kind": "book",
+  "reference": "Kohavi, Tang & Xu, Trustworthy Online Controlled Experiments, Cambridge University Press, 2020",
+  "written": "2026-10-07"
 }

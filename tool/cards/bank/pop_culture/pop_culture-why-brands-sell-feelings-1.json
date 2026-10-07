@@ -6,29 +6,43 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "In blind tastings Coke and Pepsi split people evenly. What changes when the Coke cup is labelled?",
-  "answer": "The taste itself, as people report it. In McClure's 2004 brain-scanning study, telling people a cup held Coke raised how often they preferred it and lit up regions tied to memory and emotion; labelling Pepsi made no such difference. A century of advertising was being tasted along with the sugar and fizz.",
-  "move": "A name you trust arrives before the thing, and colours it.",
-  "ask": "Which product do I swear tastes better, without ever having tried it blind?",
+  "question": "An advert slides up your phone's feed among friends' posts. How long do eyes stay on one post before the thumb moves on?",
+  "answer": "About 1.7 seconds, by Facebook's own research, against 2.5 on a computer. People could later recall a post shown for a quarter of a second. No argument fits in that time; a face, a colour, a logo and a mood do. That is why feed adverts open on the brand and a feeling.",
+  "move": "Scrolling past an advert is not the same as escaping it.",
+  "ask": "Which brand did I scroll past this week that I would now pick without knowing why?",
   "keywords": [
-    "coca-cola",
-    "pepsi",
-    "blind tasting",
-    "brain imaging",
-    "brand"
+    "advertising",
+    "social media feeds",
+    "attention",
+    "brand recall"
   ],
   "era": "recent",
-  "region": "americas",
-  "hook": "mechanism",
-  "mood": "wonder",
-  "numeracy": 0,
-  "abstraction": "mixed",
-  "shelf_life": "evergreen",
+  "region": "world",
+  "hook": "number",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "McClure et al., Neuron, 2004",
-  "source_kind": "paper",
-  "reference": "Samuel M. McClure et al., Neural correlates of behavioral preference for culturally familiar drinks, Neuron, 2004",
-  "written": "2026-09-26"
+  "scene": {
+    "type": "hold",
+    "what": "Eyes on one post, phone feed",
+    "seconds": 1.7,
+    "comparisons": [
+      {
+        "label": "Same feed, on a computer",
+        "seconds": 2.5
+      },
+      {
+        "label": "Long enough to recall it",
+        "seconds": 0.25
+      }
+    ]
+  },
+  "source": "Facebook IQ, Capturing Attention in Feed, 2016",
+  "source_kind": "company",
+  "reference": "Facebook IQ, Capturing Attention in Feed: The Science Behind Effective Video Creative, Facebook for Business, 2016",
+  "written": "2026-10-07"
 }

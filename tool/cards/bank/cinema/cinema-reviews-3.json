@@ -13,7 +13,7 @@
     "Film B"
   ],
   "correct": 2,
-  "answer": "Film B. Four ratings can be four friends or four lucky draws; small groups produce extreme averages, high and low, by chance alone. As more viewers rate it, film A's score will drift towards ordinary. Howard Wainer called ignoring this the most dangerous equation; 3,000 ratings have already settled.",
+  "answer": "Film B. Four ratings can be four friends or four lucky draws; small groups throw up extreme averages, high and low, by chance alone. As more viewers rate it, film A's score drifts towards ordinary, while 3,000 ratings have already settled. Howard Wainer called ignoring this the most dangerous equation.",
   "move": "Treat a perfect score from a handful as a rumour, not a verdict.",
   "ask": "Which small, perfect sample made me sure of something too early?",
   "trap": "Film A, already perfect, since 5.0 beats 4.6.",
@@ -33,8 +33,28 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated ratings of A",
+    "hit": "Gave it five stars",
+    "rate": 0.6,
+    "steps": [
+      4,
+      40,
+      400,
+      4000
+    ],
+    "seed": 34,
+    "button": "More ratings",
+    "notes": [
+      "Four ratings, all five stars: 100%. Built in: 3 viewers in 5 give film A five stars.",
+      "40 ratings: 65%. The perfect score has already cracked.",
+      "400 ratings: 62%. Film A is liked, not adored.",
+      "4,000 ratings: 60%, the rate built in. Four people could never have shown it."
+    ]
+  },
   "source": "Wainer, American Scientist, 2007",
   "source_kind": "paper",
   "reference": "Howard Wainer, The Most Dangerous Equation, American Scientist, 95(3), 2007",
-  "written": "2026-10-03"
+  "written": "2026-10-07"
 }

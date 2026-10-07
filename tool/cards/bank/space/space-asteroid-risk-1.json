@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "NASA's DART spacecraft rammed a small asteroid in 2022. How much did that change its orbit, and why is that enough?",
-  "answer": "It cut Dimorphos's 11 hour 55 minute orbit around its partner by about 32 minutes. That sounds small, but a tiny change in speed made years ahead grows into a large change in position. The earlier the push, the gentler it can be and still make a dangerous rock miss Earth.",
+  "question": "An asteroid is on course for Earth. How much must its speed change to make it miss, and what does warning time buy?",
+  "answer": "Surprisingly little, given years. A small change in speed makes the rock arrive early or late, and the gap grows by three times that speed, every second, for years. DART, in 2022, cut its target moonlet's 11 hour 55 minute orbit by about half an hour. The earlier the push, the gentler it can be.",
   "move": "Act early, and a small push does what a huge one later cannot.",
   "ask": "Which small nudge now would save me a huge effort a year from today?",
   "keywords": [
@@ -20,14 +20,96 @@
   "region": "none",
   "hook": "mechanism",
   "mood": "practical",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Thomas et al., Nature, 2023",
+  "source": "Thomas et al., Nature, 2023; Ahrens & Harris",
   "source_kind": "paper",
-  "reference": "doi:10.1038/s41586-023-05805-2",
-  "written": "2026-10-03"
+  "reference": "Thomas et al., Orbital period change of Dimorphos due to the DART kinetic impact, Nature, 2023, doi:10.1038/s41586-023-05805-2; Ahrens & Harris, Deflection and fragmentation of near-Earth asteroids, Nature 360, 1992; Cheng et al., Momentum transfer from the DART mission kinetic impact on asteroid Dimorphos, Nature, 2023",
+  "written": "2026-10-03",
+  "scene": {
+    "type": "slider",
+    "control": "Years of warning",
+    "controlUnit": "years",
+    "readout": "Speed change to miss Earth",
+    "readoutUnit": "mm/s",
+    "start": 1,
+    "step": 1,
+    "decimals": 1,
+    "points": [
+      [
+        1,
+        67.29
+      ],
+      [
+        2,
+        33.65
+      ],
+      [
+        3,
+        22.43
+      ],
+      [
+        4,
+        16.82
+      ],
+      [
+        5,
+        13.46
+      ],
+      [
+        6,
+        11.22
+      ],
+      [
+        8,
+        8.41
+      ],
+      [
+        10,
+        6.73
+      ],
+      [
+        12,
+        5.61
+      ],
+      [
+        15,
+        4.49
+      ],
+      [
+        20,
+        3.36
+      ],
+      [
+        25,
+        2.69
+      ],
+      [
+        30,
+        2.24
+      ]
+    ],
+    "notes": [
+      {
+        "at": 1,
+        "text": "One year ahead: 67 mm a second, enough to shift it one Earth radius."
+      },
+      {
+        "at": 5,
+        "text": "Five years: 13 mm a second. Every extra year shrinks the push."
+      },
+      {
+        "at": 10,
+        "text": "Ten years: under 7 mm a second, a snail's pace."
+      },
+      {
+        "at": 25,
+        "text": "25 years: 2.7 mm a second, about what DART gave its moonlet."
+      }
+    ]
+  }
 }

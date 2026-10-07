@@ -6,13 +6,13 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "A city reports 95% measles vaccine coverage, enough for herd protection on paper. How can it still suffer a large outbreak?",
-  "answer": "Because the unvaccinated are not spread evenly. They cluster in the same schools, streets and congregations, where coverage may be far below the city average. In 2018 and 2019, New York City had about 650 measles cases, almost all in a few close-knit Brooklyn neighbourhoods. The virus spreads through the pocket, not the average.",
+  "question": "Measles coverage of 95% stops outbreaks on paper. What does one case do in a neighbourhood where fewer people are immune?",
+  "answer": "It spreads, because the unvaccinated cluster. Measles passes to about 15 people in a group with no immunity, so chains die out only above about 93% immune. New York City's 2018–19 outbreak, about 650 cases, ran almost entirely through a few close-knit Brooklyn neighbourhoods where coverage sat far below the city's average.",
   "move": "An average across a whole area hides the pocket where things break.",
   "ask": "Where in my life does a reassuring average hide one weak spot that could fail?",
   "keywords": [
     "measles",
-    "vaccine coverage",
+    "herd immunity",
     "outbreak",
     "new york",
     "clustering"
@@ -21,14 +21,163 @@
   "region": "americas",
   "hook": "misconception",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Zucker et al., NEJM, 2020",
+  "source": "Zucker et al., NEJM, 2020; Anderson & May",
   "source_kind": "paper",
-  "reference": "Zucker et al., Consequences of Undervaccination: Measles Outbreak, New York City, 2018-2019, New England Journal of Medicine, 2020",
-  "written": "2026-10-03"
+  "reference": "Zucker et al., Consequences of Undervaccination: Measles Outbreak, New York City, 2018-2019, New England Journal of Medicine, 2020; Anderson & May, Infectious Diseases of Humans: Dynamics and Control, Oxford University Press, 1991",
+  "written": "2026-10-03",
+  "scene": {
+    "type": "slider",
+    "control": "Immune in the neighbourhood",
+    "controlUnit": "%",
+    "readout": "New cases from one in five weeks",
+    "readoutUnit": "cases",
+    "start": 95,
+    "step": 1,
+    "points": [
+      [
+        50,
+        485.6
+      ],
+      [
+        52,
+        432.3
+      ],
+      [
+        54,
+        383.0
+      ],
+      [
+        56,
+        337.7
+      ],
+      [
+        58,
+        296.0
+      ],
+      [
+        60,
+        258.0
+      ],
+      [
+        62,
+        223.4
+      ],
+      [
+        64,
+        192.0
+      ],
+      [
+        66,
+        163.8
+      ],
+      [
+        68,
+        138.4
+      ],
+      [
+        70,
+        115.9
+      ],
+      [
+        72,
+        95.9
+      ],
+      [
+        74,
+        78.4
+      ],
+      [
+        76,
+        63.2
+      ],
+      [
+        78,
+        50.1
+      ],
+      [
+        80,
+        39.0
+      ],
+      [
+        82,
+        29.7
+      ],
+      [
+        84,
+        22.0
+      ],
+      [
+        86,
+        15.8
+      ],
+      [
+        88,
+        10.9
+      ],
+      [
+        90,
+        7.1
+      ],
+      [
+        92,
+        4.4
+      ],
+      [
+        93,
+        3.3
+      ],
+      [
+        94,
+        2.4
+      ],
+      [
+        95,
+        1.7
+      ],
+      [
+        96,
+        1.2
+      ],
+      [
+        97,
+        0.7
+      ],
+      [
+        98,
+        0.4
+      ],
+      [
+        99,
+        0.2
+      ],
+      [
+        100,
+        0.0
+      ]
+    ],
+    "notes": [
+      {
+        "at": 50,
+        "text": "Half immune: one case seeds nearly 500 more within five weeks."
+      },
+      {
+        "at": 80,
+        "text": "80% immune: each case infects three, and one becomes about 40."
+      },
+      {
+        "at": 93,
+        "text": "About 93%: the tipping point. Each case infects roughly one other."
+      },
+      {
+        "at": 95,
+        "text": "The city's average: chains fizzle out after a case or two."
+      }
+    ]
+  }
 }

@@ -1,0 +1,62 @@
+{
+  "id": "life-mortality-4",
+  "topic": "life",
+  "genre": "life.meaning",
+  "strand": "life.meaning.mortality",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Worldwide, which kills the most people each year: terrorism, murder, suicide or road crashes?",
+  "answer": "Road crashes, about 1.2 million a year, then suicide at about 727,000. Fear follows what is reported: a terror attack fills the news for days, a suicide almost never makes it. Yet suicide kills about one and a half times as many people as murder, and terrorism kills under 2% as many as murder.",
+  "move": "Before fearing a danger, compare it with the dull ones beside it.",
+  "keywords": [
+    "suicide",
+    "homicide",
+    "terrorism",
+    "road crashes",
+    "risk"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "WHO, UNODC and Global Terrorism Index",
+  "source_kind": "statistics",
+  "reference": "WHO (2023) Global status report on road safety 2023; WHO (2025) Suicide worldwide in 2021; UNODC (2023) Global Study on Homicide; Institute for Economics & Peace (2024) Global Terrorism Index",
+  "written": "2026-10-07",
+  "ask": "Which danger do I fear most, and how many people does it kill in a year?",
+  "scene": {
+    "type": "rank",
+    "quantity": "Deaths a year, worldwide",
+    "most": "Most",
+    "log": true,
+    "items": [
+      {
+        "label": "Terrorism",
+        "value": 8400,
+        "note": "About 8,400 in 2023: under 2% of the toll from murder."
+      },
+      {
+        "label": "Murder",
+        "value": 458000,
+        "note": "About 458,000 in 2021, by the UN's count."
+      },
+      {
+        "label": "Road crashes",
+        "value": 1190000,
+        "note": "About 1.2 million: the top killer of people aged 5 to 29."
+      },
+      {
+        "label": "Suicide",
+        "value": 727000,
+        "note": "About 727,000: one and a half times murder, and rarely in the news."
+      }
+    ]
+  }
+}

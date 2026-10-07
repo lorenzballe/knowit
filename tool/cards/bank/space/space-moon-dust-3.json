@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why is a full moon far more than twice as bright as a half moon?",
-  "answer": "Because of the dust. At full moon the Sun is directly behind the observer, so every grain hides its own shadow, and light scattered back along its path reinforces itself. From first quarter to full, the lit area only doubles but the brightness rises about tenfold: a field of dust with every shadow switched off.",
+  "question": "A day after full moon, the Moon still looks fully lit. How much of its light has already gone?",
+  "answer": "About a quarter. At full moon the Sun sits right behind the observer, so every grain of lunar dust hides its own shadow and light scatters straight back. A little off that line, shadows reappear all over the face. From quarter to full the lit area only doubles, while the brightness rises about tenfold.",
   "move": "When an effect far outruns its obvious cause, look for a second mechanism.",
   "ask": "When an effect is much bigger than its obvious cause, what second cause am I missing?",
   "keywords": [
@@ -29,6 +29,99 @@
   "figure": "none",
   "source": "Hapke, Nelson & Smythe, Science, 1993",
   "source_kind": "paper",
-  "reference": "Hapke, Nelson & Smythe, The Opposition Effect of the Moon: The Contribution of Coherent Backscatter, Science, 1993",
-  "written": "2026-09-26"
+  "reference": "Hapke, Nelson & Smythe, The Opposition Effect of the Moon: The Contribution of Coherent Backscatter, Science, 1993; Allen's Astrophysical Quantities, 4th edition, ed. Cox, Springer, 2000 (lunar phase curve)",
+  "written": "2026-09-26",
+  "scene": {
+    "type": "slider",
+    "control": "Days from full moon",
+    "controlUnit": "days",
+    "readout": "Moonlight, as % of full",
+    "readoutUnit": "%",
+    "start": 0,
+    "step": 0.1,
+    "points": [
+      [
+        0.0,
+        100.0
+      ],
+      [
+        0.5,
+        86.4
+      ],
+      [
+        1.0,
+        74.7
+      ],
+      [
+        1.5,
+        64.5
+      ],
+      [
+        2.0,
+        55.7
+      ],
+      [
+        2.5,
+        48.0
+      ],
+      [
+        3.0,
+        41.4
+      ],
+      [
+        3.5,
+        35.6
+      ],
+      [
+        4.0,
+        30.5
+      ],
+      [
+        4.5,
+        26.0
+      ],
+      [
+        5.0,
+        22.1
+      ],
+      [
+        5.5,
+        18.6
+      ],
+      [
+        6.0,
+        15.6
+      ],
+      [
+        6.5,
+        13.0
+      ],
+      [
+        7.0,
+        10.7
+      ],
+      [
+        7.4,
+        9.0
+      ]
+    ],
+    "notes": [
+      {
+        "at": 0,
+        "text": "Full moon: the Sun is behind you, and every grain hides its own shadow."
+      },
+      {
+        "at": 1,
+        "text": "One day off full: 99% of the face lit, a quarter of the light gone."
+      },
+      {
+        "at": 3.7,
+        "text": "Halfway to the quarter: 85% lit, a third of the light."
+      },
+      {
+        "at": 7.4,
+        "text": "Quarter moon: half the face lit, a tenth of the light."
+      }
+    ]
+  }
 }

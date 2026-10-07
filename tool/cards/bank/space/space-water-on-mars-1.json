@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why can't a cup of pure water stay liquid on most of the Martian surface, even on a warm afternoon?",
-  "answer": "The air is too thin to hold it. Average surface pressure is about 6 millibars, close to the 6.1 below which water cannot be liquid at all. Ice turns straight to vapour; liquid boils barely above 0 °C. Only deep basins such as Hellas, at twice the pressure, open a window of about ten degrees.",
+  "question": "Why can't a cup of water stay liquid on Mars, even on a warm afternoon? Climb into thinner air and watch it boil.",
+  "answer": "The air is too thin to hold it. Water boils when its vapour pushes as hard as the air above, so thinner air means a lower boiling point. Mars's surface pressure, about 6 millibars, sits near the 6.1 below which water cannot be liquid at all: ice turns straight to vapour.",
   "move": "Warmth alone does not make a liquid; the pressure has to allow it.",
   "ask": "What second condition besides the obvious one decides whether my plan can work?",
   "keywords": [
@@ -27,8 +27,117 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Haberle et al., Journal of Geophysical Research, 2001",
+  "source": "Haberle et al., 2001; US Standard Atmosphere",
   "source_kind": "paper",
-  "reference": "Haberle, McKay, Schaeffer et al., On the possibility of liquid water on present-day Mars, Journal of Geophysical Research: Planets 106(E10), 2001",
-  "written": "2026-09-26"
+  "reference": "Haberle, McKay, Schaeffer et al., On the possibility of liquid water on present-day Mars, Journal of Geophysical Research: Planets 106(E10), 2001; U.S. Standard Atmosphere, 1976, NOAA, NASA and US Air Force",
+  "written": "2026-09-26",
+  "scene": {
+    "type": "slider",
+    "control": "Height above sea level",
+    "controlUnit": "km",
+    "readout": "Water boils at",
+    "readoutUnit": "°C",
+    "start": 0,
+    "step": 0.1,
+    "points": [
+      [
+        0,
+        100.0
+      ],
+      [
+        2,
+        93.3
+      ],
+      [
+        4,
+        86.6
+      ],
+      [
+        6,
+        79.9
+      ],
+      [
+        8,
+        73.1
+      ],
+      [
+        8.85,
+        70.2
+      ],
+      [
+        10,
+        66.3
+      ],
+      [
+        12,
+        59.4
+      ],
+      [
+        14,
+        52.8
+      ],
+      [
+        16,
+        46.5
+      ],
+      [
+        18,
+        40.5
+      ],
+      [
+        19,
+        37.5
+      ],
+      [
+        20,
+        34.7
+      ],
+      [
+        22,
+        29.2
+      ],
+      [
+        24,
+        23.9
+      ],
+      [
+        26,
+        18.9
+      ],
+      [
+        28,
+        14.2
+      ],
+      [
+        30,
+        9.6
+      ],
+      [
+        32,
+        5.3
+      ],
+      [
+        34,
+        1.1
+      ]
+    ],
+    "notes": [
+      {
+        "at": 0,
+        "text": "Sea level: 100 °C, the number everyone learns."
+      },
+      {
+        "at": 8.8,
+        "text": "The top of Everest: water boils at about 70 °C."
+      },
+      {
+        "at": 19,
+        "text": "About 19 km: it boils at 37 °C, body heat. Pilots call it the Armstrong limit."
+      },
+      {
+        "at": 34,
+        "text": "About 34 km, air as thin as Mars's: liquid only between 0 and 1 °C."
+      }
+    ]
+  }
 }

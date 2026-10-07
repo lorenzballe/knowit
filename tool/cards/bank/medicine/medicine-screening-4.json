@@ -1,0 +1,61 @@
+{
+  "id": "medicine-screening-4",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.screening",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which cancer kills the most people worldwide each year: breast, prostate, bowel or lung?",
+  "answer": "Lung, about 1.8 million deaths in 2022, then bowel at about 900,000, by the WHO cancer agency's count. Bowel cancer grows for years out of small polyps, so a test can catch it early, or prevent it when a polyp is removed. Many health services post home stool kits.",
+  "move": "Rank diseases by their death toll, then ask which one a test can catch.",
+  "keywords": [
+    "lung cancer",
+    "bowel cancer",
+    "breast cancer",
+    "screening",
+    "cancer deaths"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "GLOBOCAN 2022, IARC; Bray et al., 2024",
+  "source_kind": "statistics",
+  "reference": "Bray, F. et al. (2024) Global cancer statistics 2022: GLOBOCAN estimates of incidence and mortality worldwide for 36 cancers in 185 countries, CA: A Cancer Journal for Clinicians 74(3): 229-263",
+  "written": "2026-10-07",
+  "ask": "Have I been sent a bowel screening kit, and did I send it back?",
+  "scene": {
+    "type": "rank",
+    "quantity": "Deaths a year, worldwide",
+    "most": "Most",
+    "items": [
+      {
+        "label": "Breast",
+        "value": 670000,
+        "note": "The commonest cancer in women, yet it kills fewer people than bowel cancer."
+      },
+      {
+        "label": "Prostate",
+        "value": 400000,
+        "note": "Common in older men, many of whom die with it rather than of it."
+      },
+      {
+        "label": "Lung",
+        "value": 1800000,
+        "note": "More than breast and bowel together, and mostly caused by smoking."
+      },
+      {
+        "label": "Bowel",
+        "value": 900000,
+        "note": "Second, and the one a home stool test can catch early."
+      }
+    ]
+  }
+}

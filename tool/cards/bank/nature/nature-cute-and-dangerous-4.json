@@ -1,0 +1,61 @@
+{
+  "id": "nature-cute-and-dangerous-4",
+  "topic": "nature",
+  "genre": "nature.nature_myths",
+  "strand": "nature.nature_myths.cute_and_dangerous",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In the US, which kills the most birds each year: wind turbines, cars, windows, or pet and stray cats?",
+  "answer": "Cats, by a wide margin: about 2.4 billion birds a year, Loss and colleagues estimated, most killed by strays and ferals but many by pets. Windows come next at about 600 million. Wind turbines, often blamed, killed about 234,000 a year when counted, roughly one bird for every 10,000 taken by cats.",
+  "move": "Blame falls on what is new and visible; old, familiar culprits go unnoticed.",
+  "keywords": [
+    "cats",
+    "birds",
+    "wind turbines",
+    "windows"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Loss, Will & Marra, Nature Communications, 2013",
+  "source_kind": "paper",
+  "reference": "Loss, Will & Marra (2013) The impact of free-ranging domestic cats on wildlife of the United States, Nature Communications 4: 1396; Loss et al. (2014) The Condor 116: 8-23; Loss et al. (2014) Journal of Wildlife Management 78: 763-771; Loss, Will & Marra (2013) Biological Conservation 168: 201-209",
+  "written": "2026-10-07",
+  "ask": "Does my cat, or my neighbour's, hunt outdoors, and what does it bring home?",
+  "scene": {
+    "type": "rank",
+    "quantity": "Birds killed a year, US",
+    "most": "Most",
+    "log": true,
+    "items": [
+      {
+        "label": "Wind turbines",
+        "value": 234000,
+        "note": "About 234,000: one bird for every 10,000 that cats kill."
+      },
+      {
+        "label": "Windows",
+        "value": 600000000,
+        "note": "About 600 million, mostly at houses and low buildings, not skyscrapers."
+      },
+      {
+        "label": "Cats",
+        "value": 2400000000,
+        "note": "About 2.4 billion, mostly by strays and ferals, but pet cats too."
+      },
+      {
+        "label": "Cars",
+        "value": 200000000,
+        "note": "About 200 million, though estimates run from 89 to 340 million."
+      }
+    ]
+  }
+}

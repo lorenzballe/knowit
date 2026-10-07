@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Six sitcom stars with unequal pay decided to bargain as one. Did it work?",
-  "answer": "Alone, each star could be told the show would go on without them. Six together could not: losing the whole cast meant losing the show. The best-paid gave up the chance to stay ahead, and equal pay removed the comparison that sours a cast. The bloc held for eight years.",
+  "question": "Six sitcom actors on unequal deals agreed to negotiate only as one. What did that do to their pay?",
+  "answer": "It multiplied it. Alone, each star could be told the show would go on without them; six together could not, because losing the cast meant losing the show. The best-paid gave up the chance to stay ahead, and equal pay removed the comparison that sours a cast. The bloc held for eight years.",
   "move": "A group that cannot be split can ask for what none could alone.",
   "ask": "What could my group ask for together that none of us could alone?",
   "keywords": [
@@ -32,41 +32,41 @@
       {
         "fact": "Friends, 1994",
         "glyph": "crowd",
-        "line": "Six leads, six separate pay deals."
+        "line": "Six little-known actors sign on, each on a separate deal."
       },
       {
-        "fact": "A hit by season two",
-        "glyph": "rise",
-        "line": "Some of them earn far more than others."
+        "fact": "Season one",
+        "glyph": "coin",
+        "line": "About $22,500 an episode each. Then their deals drift apart."
       },
       {
         "fact": "1996, reportedly Schwimmer",
         "glyph": "family",
-        "line": "The best-paid proposes they all bargain as one."
+        "line": "The best-paid proposes all six bargain together, for equal pay."
       }
     ],
-    "ask": "What happens to their pay?",
+    "ask": "By the last seasons, what is each paid per episode?",
     "options": [
       {
-        "label": "Top earners lose out"
+        "label": "About $100,000"
       },
       {
-        "label": "The studio splits them"
+        "label": "About $300,000"
       },
       {
-        "label": "All six soar together"
+        "label": "About $1 million"
       }
     ],
     "answer": 2,
     "outcome": {
-      "fact": "Seasons 9 and 10",
-      "glyph": "coin",
-      "line": "About $1 million each, per episode."
+      "fact": "Seasons 9 and 10, 2002–04",
+      "glyph": "rise",
+      "line": "$1 million each, every episode: over 40 times the first deal."
     },
-    "why": "A studio can replace one actor, not the whole cast. Together they were the show."
+    "why": "Alone, any one of them could be written out. Together they were the show, and were paid like it."
   },
   "source": "Austerlitz, Generation Friends, 2019",
   "source_kind": "book",
   "reference": "Saul Austerlitz, Generation Friends: An Inside Look at the Show That Defined a Television Era, Dutton, 2019",
-  "written": "2026-10-06"
+  "written": "2026-10-07"
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why can a mouse survive a fall down a deep mine shaft that would kill a horse?",
-  "answer": "Because its weight is tiny next to its surface. Halve an animal's length and its weight drops eightfold but its skin only fourfold, so air brakes small bodies far sooner. Haldane put it in 1926: down a shaft, a mouse walks away, a rat is killed, a man is broken, a horse splashes.",
+  "question": "Why can a mouse survive a fall down a deep mine shaft that would kill a horse? Shrink the faller and watch its top speed.",
+  "answer": "Because weight shrinks faster than surface. Halve a body's length and its weight drops eightfold but its skin only fourfold, so air brakes small bodies far sooner and each kilogram lands with far less energy. Haldane put it in 1926: down a shaft, a mouse walks away, a rat is killed, a man is broken, a horse splashes.",
   "move": "When something grows, ask which parts grow faster than the others.",
   "ask": "What in my life works at a small scale but would break if I simply made it bigger?",
   "keywords": [
@@ -21,7 +21,7 @@
   "region": "none",
   "hook": "mechanism",
   "mood": "playful",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
@@ -29,6 +29,91 @@
   "figure": "none",
   "source": "Haldane, On Being the Right Size, 1926",
   "source_kind": "book",
-  "reference": "Haldane, On Being the Right Size, in Possible Worlds and Other Essays, Chatto & Windus, 1927",
-  "written": "2026-09-26"
+  "reference": "Haldane, On Being the Right Size, in Possible Worlds and Other Essays, Chatto & Windus, 1927; Whitney & Mehlhaff, High-rise syndrome in cats, Journal of the American Veterinary Medical Association, 1987",
+  "written": "2026-09-26",
+  "scene": {
+    "type": "slider",
+    "control": "Body length, shaped like a person",
+    "controlUnit": "cm",
+    "readout": "Top speed when falling",
+    "readoutUnit": "km/h",
+    "start": 180,
+    "step": 1,
+    "points": [
+      [
+        5,
+        32.5
+      ],
+      [
+        8,
+        41.1
+      ],
+      [
+        10,
+        46.0
+      ],
+      [
+        15,
+        56.3
+      ],
+      [
+        20,
+        65.0
+      ],
+      [
+        25,
+        72.7
+      ],
+      [
+        30,
+        79.6
+      ],
+      [
+        45,
+        97.5
+      ],
+      [
+        60,
+        112.6
+      ],
+      [
+        80,
+        130.0
+      ],
+      [
+        100,
+        145.3
+      ],
+      [
+        120,
+        159.2
+      ],
+      [
+        150,
+        178.0
+      ],
+      [
+        180,
+        195.0
+      ]
+    ],
+    "notes": [
+      {
+        "at": 5,
+        "text": "Beetle-sized: about 33 km/h, gentle enough to land and walk on."
+      },
+      {
+        "at": 8,
+        "text": "Mouse-sized: about 40 km/h. Haldane's mouse walks away."
+      },
+      {
+        "at": 45,
+        "text": "Cat-sized: about 100 km/h, close to what vets estimate for falling cats."
+      },
+      {
+        "at": 180,
+        "text": "A person: about 195 km/h, a skydiver's speed lying flat."
+      }
+    ]
+  }
 }

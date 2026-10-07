@@ -1,0 +1,54 @@
+{
+  "id": "weird_facts-octopuses-11",
+  "topic": "weird_facts",
+  "genre": "weird_facts.animal_oddities",
+  "strand": "weird_facts.animal_oddities.octopuses",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "In 2010 Paul, an octopus in a German aquarium, picked the winner of 8 World Cup matches in a row. Psychic?",
+  "answer": "No, and not even that unlikely. Eight right by pure guessing has a 1-in-256 chance, but other animals, pundits and office pools were picking the same games, and only the perfect run became famous. The misses never made the news. With enough guessers, someone goes eight for eight.",
+  "move": "Before marvelling at a perfect record, count everyone else who was trying.",
+  "ask": "Whose perfect record impressed me before I asked how many others were trying?",
+  "keywords": [
+    "paul the octopus",
+    "world cup",
+    "predictions",
+    "luck",
+    "coincidence"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated picks",
+    "hit": "Picked the winner",
+    "rate": 0.5,
+    "steps": [
+      8,
+      80,
+      800,
+      8000
+    ],
+    "seed": 2955,
+    "button": "More matches",
+    "notes": [
+      "Eight picks, eight right: 100%. Built in: pure guessing, 50%. A 1-in-256 run.",
+      "80 picks: 53%. The gift fades as soon as the guessing goes on.",
+      "800 picks: 51%.",
+      "8,000 picks: 50%, a coin's rate. The fame came from the eight, not the rate."
+    ]
+  },
+  "source": "BBC News, 2010; coin-toss arithmetic",
+  "source_kind": "news_archive",
+  "reference": "BBC News, World Cup oracle Paul the octopus dies, 26 October 2010",
+  "written": "2026-10-07"
+}

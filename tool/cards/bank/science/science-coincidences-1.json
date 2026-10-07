@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does a truly random playlist so often play two songs by the same artist back to back?",
-  "answer": "Because real randomness clumps. Shuffle 100 songs by 10 artists and each next song has about a one-in-ten chance of sharing the artist, so roughly nine back-to-back pairs are expected. Listeners hear a pattern and suspect the machine. Spotify changed its shuffle in 2014 to spread artists out: less random, so it felt more random.",
+  "question": "A playlist mixes 10 artists equally and shuffles truly at random. How soon do two songs by one artist play back to back?",
+  "answer": "Within a handful of songs. Each song has a one-in-ten chance of matching the artist before it, and the chances pile up: past eight songs a pair is more likely than not. Spotify changed its shuffle in 2014 to spread artists out: less random, so it felt more random.",
   "move": "Expect chance to clump; evenly spread results are the suspicious ones.",
   "ask": "Which streak of bad luck in my life did I read as a pattern when it was just chance clumping?",
   "keywords": [
@@ -20,7 +20,7 @@
   "region": "none",
   "hook": "paradox",
   "mood": "playful",
-  "numeracy": 2,
+  "numeracy": 3,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
@@ -29,5 +29,154 @@
   "source": "Falk & Konold, Psychological Review, 1997",
   "source_kind": "paper",
   "reference": "Falk & Konold, Making sense of randomness: implicit encoding as a basis for judgment, Psychological Review 104:301–318, 1997",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "scene": {
+    "type": "slider",
+    "control": "Songs played",
+    "controlUnit": "songs",
+    "readout": "Chance of a same-artist pair",
+    "readoutUnit": "%",
+    "start": 1,
+    "step": 1,
+    "points": [
+      [
+        1,
+        0.0
+      ],
+      [
+        2,
+        10.0
+      ],
+      [
+        3,
+        19.0
+      ],
+      [
+        4,
+        27.1
+      ],
+      [
+        5,
+        34.4
+      ],
+      [
+        6,
+        41.0
+      ],
+      [
+        7,
+        46.9
+      ],
+      [
+        8,
+        52.2
+      ],
+      [
+        9,
+        57.0
+      ],
+      [
+        10,
+        61.3
+      ],
+      [
+        11,
+        65.1
+      ],
+      [
+        12,
+        68.6
+      ],
+      [
+        13,
+        71.8
+      ],
+      [
+        14,
+        74.6
+      ],
+      [
+        15,
+        77.1
+      ],
+      [
+        16,
+        79.4
+      ],
+      [
+        17,
+        81.5
+      ],
+      [
+        18,
+        83.3
+      ],
+      [
+        19,
+        85.0
+      ],
+      [
+        20,
+        86.5
+      ],
+      [
+        21,
+        87.8
+      ],
+      [
+        22,
+        89.1
+      ],
+      [
+        23,
+        90.2
+      ],
+      [
+        24,
+        91.1
+      ],
+      [
+        25,
+        92.0
+      ],
+      [
+        26,
+        92.8
+      ],
+      [
+        27,
+        93.5
+      ],
+      [
+        28,
+        94.2
+      ],
+      [
+        29,
+        94.8
+      ],
+      [
+        30,
+        95.3
+      ]
+    ],
+    "notes": [
+      {
+        "at": 1,
+        "text": "Each new song has a 1-in-10 chance of repeating the last artist."
+      },
+      {
+        "at": 8,
+        "text": "Eight songs in: a back-to-back pair is now more likely than not."
+      },
+      {
+        "at": 20,
+        "text": "A 20-song commute: 87%. A pair is the normal outcome."
+      },
+      {
+        "at": 30,
+        "text": "30 songs: 95%. A playlist with no pairs is the suspicious one."
+      }
+    ]
+  }
 }

@@ -1,0 +1,62 @@
+{
+  "id": "economics-interest-11",
+  "topic": "economics",
+  "genre": "economics.money_and_banks",
+  "strand": "economics.money_and_banks.interest",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Which grows fastest in a typical recent year: credit card debt, a mortgage, money in shares, or money in savings?",
+  "answer": "Card debt, at about 21.5% a year in the US in 2024, more than double the stock market's long-run average of about 10%. Paying off a card balance is a sure 21.5% return, which no investment promises; investing while the balance rolls over means borrowing at 21.5% to earn perhaps 10.",
+  "move": "Paying off expensive debt is an investment with a guaranteed return.",
+  "keywords": [
+    "credit cards",
+    "interest rates",
+    "mortgages",
+    "stock market",
+    "savings"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "years",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Federal Reserve G.19; Freddie Mac; FDIC; Siegel",
+  "source_kind": "statistics",
+  "reference": "Federal Reserve Statistical Release G.19, Consumer Credit (2024); Freddie Mac Primary Mortgage Market Survey (2024); FDIC National Rates and Rate Caps (2024); Siegel, Stocks for the Long Run, 6th ed., McGraw-Hill, 2022",
+  "ask": "Do I carry a card balance while putting money into investments?",
+  "written": "2026-10-07",
+  "scene": {
+    "type": "rank",
+    "quantity": "Typical yearly rate, US",
+    "most": "Highest",
+    "unit": "%",
+    "items": [
+      {
+        "label": "Mortgage",
+        "value": 6.7,
+        "note": "About 6.7% in 2024, for a 30-year fixed loan."
+      },
+      {
+        "label": "Shares",
+        "value": 10,
+        "note": "About 10% a year on average since 1926, with bad years on the way."
+      },
+      {
+        "label": "Savings account",
+        "value": 0.46,
+        "note": "The 2024 national average; even the best accounts paid a fraction of card rates."
+      },
+      {
+        "label": "Credit card",
+        "value": 21.5,
+        "note": "About 21.5%: clearing it beats the stock market's average twice over."
+      }
+    ]
+  }
+}

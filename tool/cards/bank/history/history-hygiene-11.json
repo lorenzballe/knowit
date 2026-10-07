@@ -1,0 +1,80 @@
+{
+  "id": "history-hygiene-11",
+  "topic": "history",
+  "genre": "history.everyday_life",
+  "strand": "history.everyday_life.hygiene",
+  "also": [
+    "medicine.public_health.clean_water"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Long Island, summer 1906. Six of the eleven people in a rented holiday house catch typhoid. What spread it?",
+  "answer": "The cook, Mary Mallon, the first healthy carrier of typhoid identified in America. The bacteria lived in her without making her ill and reached food on her hands, above all in her raw peaches with ice cream, which no oven made safe. The engineer George Soper found her through her employers, not her symptoms.",
+  "move": "Look for what was present every time, even when it looks perfectly healthy.",
+  "ask": "What is present every time things go wrong in my life, but looks too harmless to suspect?",
+  "keywords": [
+    "typhoid mary",
+    "mary mallon",
+    "healthy carrier",
+    "george soper",
+    "typhoid"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Well water",
+      "Local clams",
+      "Milk",
+      "The cook"
+    ],
+    "answer": 3,
+    "clues": [
+      {
+        "text": "Six of the eleven in the house fall ill within a week, in late August.",
+        "tag": "Six of eleven ill",
+        "rulesOut": []
+      },
+      {
+        "text": "The house's water and drains are tested, and found clean.",
+        "tag": "Water tested clean",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "Milk and clams came from the town's sellers, yet nobody else in town falls ill.",
+        "tag": "Nobody else in town",
+        "rulesOut": [
+          1,
+          2
+        ]
+      },
+      {
+        "text": "A new cook had arrived three weeks before the first case.",
+        "tag": "A new cook",
+        "rulesOut": []
+      },
+      {
+        "text": "Seven of the eight families she had cooked for since 1900 had typhoid.",
+        "tag": "Seven of eight families",
+        "rulesOut": []
+      }
+    ],
+    "why": "The town shared the milk and clams and stayed well. What was left was in that house alone."
+  },
+  "source": "Soper, JAMA, 1907",
+  "source_kind": "paper",
+  "reference": "Soper, The work of a chronic typhoid germ distributor, Journal of the American Medical Association 48:2019-2022, 1907",
+  "written": "2026-10-07"
+}

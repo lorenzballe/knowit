@@ -1,0 +1,75 @@
+{
+  "id": "pop_culture-manufactured-fame-4",
+  "topic": "pop_culture",
+  "genre": "pop_culture.behind_the_hype",
+  "strand": "pop_culture.behind_the_hype.manufactured_fame",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "1989. Milli Vanilli are pop's hottest new duo. When fans hear Rob and Fab on stage, whose voices are they hearing?",
+  "answer": "Other singers. The producer Frank Farian recorded session vocalists, then hired two dancers with the right look to front them. The jammed tape made headlines, but plenty of stars mime to their own records. The accents had been audible in every interview for months, and almost nobody asked what they meant.",
+  "move": "Check whether the polished version and the unscripted one sound like the same person.",
+  "ask": "Whose polished work have I admired without ever hearing them unscripted?",
+  "keywords": [
+    "milli vanilli",
+    "lip-syncing",
+    "frank farian",
+    "grammy",
+    "session singers"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "story",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Them, live",
+      "Them, on tape",
+      "Other singers"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Their album sells millions; in 1990 they win the Grammy for best new artist.",
+        "tag": "Best new artist",
+        "rulesOut": []
+      },
+      {
+        "text": "July 1989, on stage: the backing tape jams, repeating one line over and over.",
+        "tag": "The tape jams",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "In interviews: halting English, strong German and French accents. On record: none.",
+        "tag": "Accents in interviews",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "November 1990: their producer admits that other men sang every note.",
+        "tag": "The producer confesses",
+        "rulesOut": []
+      },
+      {
+        "text": "The Grammy is withdrawn.",
+        "tag": "Grammy withdrawn",
+        "rulesOut": []
+      }
+    ],
+    "why": "The jam only proved they mimed, as many acts do. The accents showed they weren't miming themselves."
+  },
+  "source": "New York Times, November 1990",
+  "source_kind": "news_archive",
+  "reference": "The New York Times, reports on Milli Vanilli's admission and the withdrawal of their Grammy, 16 and 20 November 1990, https://www.nytimes.com",
+  "written": "2026-10-07"
+}

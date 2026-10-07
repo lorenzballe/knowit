@@ -1,0 +1,61 @@
+{
+  "id": "science-energy-4",
+  "topic": "science",
+  "genre": "science.physics",
+  "strand": "science.physics.energy",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Counting accidents and pollution, which kills the most people per unit of electricity: coal, gas, hydropower or nuclear?",
+  "answer": "Coal, by far: about 25 deaths per terawatt-hour, mostly from the air pollution it causes, against 0.03 for nuclear, Chernobyl and Fukushima included. A nuclear accident is sudden, visible and named; coal's toll is spread thin, a few deaths in every city every year. A terawatt-hour is about a year's electricity for 150,000 Europeans.",
+  "move": "Deaths in one place make news; deaths spread everywhere make only statistics.",
+  "keywords": [
+    "nuclear power",
+    "coal",
+    "air pollution",
+    "energy safety"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "bars",
+  "source": "Markandya & Wilkinson, Lancet, 2007; Our World in Data",
+  "source_kind": "paper",
+  "reference": "Markandya, A. & Wilkinson, P. (2007) Electricity generation and health, The Lancet 370: 979-990; Ritchie, H. (2020) What are the safest and cleanest sources of energy? Our World in Data",
+  "written": "2026-10-07",
+  "ask": "Which energy source frightens me most, and how many deaths per unit of power does it cause?",
+  "scene": {
+    "type": "rank",
+    "quantity": "Deaths per TWh of power",
+    "most": "Most",
+    "log": true,
+    "items": [
+      {
+        "label": "Nuclear",
+        "value": 0.03,
+        "note": "Chernobyl and Fukushima included: about 800 times safer than coal."
+      },
+      {
+        "label": "Hydropower",
+        "value": 1.3,
+        "note": "Mostly one dam failure, Banqiao in China in 1975."
+      },
+      {
+        "label": "Coal",
+        "value": 24.6,
+        "note": "Almost all from air pollution: a slow toll nobody reports as a disaster."
+      },
+      {
+        "label": "Gas",
+        "value": 2.8,
+        "note": "It burns cleaner than coal: about a ninth of the deaths."
+      }
+    ]
+  }
+}

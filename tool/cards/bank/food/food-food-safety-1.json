@@ -6,29 +6,43 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why is cabbage left on a kitchen counter for weeks to make sauerkraut safe, while garlic stored in oil can be deadly?",
-  "answer": "Acid. The bacterium behind botulism, whose toxin paralyses, grows only without air and above about pH 4.6. In sauerkraut, salt holds rivals back while lactic bacteria push the pH below that within days. Garlic sunk in oil offers the airless, low-acid shelter the spores need, and nothing to sour it.",
-  "move": "Safety comes from conditions the danger cannot survive, not from cleanliness alone.",
-  "ask": "Do I know which condition is actually keeping a risk away from me?",
+  "question": "A slice of watermelon drops on the kitchen floor. How long before bacteria from the floor are on it?",
+  "answer": "Under a second, the shortest contact Miranda and Schaffner tested. More time did mean more bacteria, but wetness mattered more: watermelon picked up the most, gummy sweets the least, and carpet passed on less than tile or steel. The five-second rule times the wrong thing.",
+  "move": "When a rule hangs on one number, ask what it leaves out.",
+  "ask": "Which tidy rule do I follow that measures the wrong thing?",
   "keywords": [
-    "botulism",
-    "sauerkraut",
-    "garlic in oil",
-    "acidity",
-    "clostridium botulinum"
+    "five-second rule",
+    "bacteria",
+    "cross-contamination",
+    "kitchen hygiene"
   ],
-  "era": "timeless",
-  "region": "none",
-  "hook": "mechanism",
-  "mood": "practical",
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
   "numeracy": 1,
-  "abstraction": "mixed",
+  "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "US FDA, Bad Bug Book, 2012",
-  "source_kind": "institution",
-  "reference": "US Food and Drug Administration, Bad Bug Book: Handbook of Foodborne Pathogenic Microorganisms and Natural Toxins, 2nd edition, 2012",
-  "written": "2026-10-03"
+  "scene": {
+    "type": "hold",
+    "what": "Floor to food: bacteria arrive",
+    "seconds": 1,
+    "comparisons": [
+      {
+        "label": "The five-second rule",
+        "seconds": 5
+      },
+      {
+        "label": "Next contact tested",
+        "seconds": 30
+      }
+    ]
+  },
+  "source": "Miranda & Schaffner, 2016",
+  "source_kind": "paper",
+  "reference": "Miranda & Schaffner, Longer contact times increase cross-contamination of Enterobacter aerogenes from surfaces to food, Applied and Environmental Microbiology 82(21), 2016",
+  "written": "2026-10-07"
 }

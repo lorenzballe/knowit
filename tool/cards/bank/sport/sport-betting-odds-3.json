@@ -6,29 +6,49 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Who forecast German league football results better: newspaper tipsters or the bookmakers' odds?",
-  "answer": "The bookmakers' odds. Spann and Skiera compared tipsters, an online prediction market and betting odds over several Bundesliga seasons: the odds and the market were about equally accurate, and both beat the tipsters. A price that people back with money pools many views and punishes errors.",
-  "move": "Trust forecasts from people who lose something when they are wrong.",
-  "ask": "Whose predictions do I listen to, and do they pay any price when they are wrong?",
+  "question": "A tipster won 14 of his last 20 football bets at odds of 1.91. Is he beating the bookmaker?",
+  "answer": "Twenty bets cannot say. At odds of 1.91 a punter must win 52.4% just to break even, because the bookmaker builds in a margin, and 20 coin-flip bets usually land between 6 and 14 wins. Spann and Skiera found newspaper tipsters forecast Bundesliga results worse than the betting odds themselves.",
+  "move": "Measure a winning record against the rate needed just to break even.",
+  "ask": "Whose winning streak have I admired without asking what luck alone would give?",
   "keywords": [
     "betting odds",
-    "forecasting",
     "tipsters",
-    "prediction markets",
-    "bundesliga"
+    "football betting",
+    "sample size",
+    "bookmakers"
   ],
   "era": "recent",
   "region": "europe",
   "hook": "misconception",
   "mood": "practical",
-  "numeracy": 0,
+  "numeracy": 3,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Spann & Skiera, Journal of Forecasting, 2009",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated bets",
+    "hit": "Bet won",
+    "rate": 0.5,
+    "steps": [
+      20,
+      100,
+      1000,
+      10000
+    ],
+    "seed": 439,
+    "button": "More bets",
+    "notes": [
+      "14 of 20 won: 70%. Built in: a coin's 50%, short of the 52.4 in 100 needed to profit.",
+      "100 bets: still 65%. A season like this sells tipping subscriptions.",
+      "1,000 bets: 49%. The streak has gone; the bookmaker's margin has not.",
+      "10,000 bets: 50%. At 1.91 that loses 4.5 of every 100 staked."
+    ]
+  },
+  "source": "Spann & Skiera, J. Forecasting, 2009; odds arithmetic",
   "source_kind": "paper",
   "reference": "Martin Spann & Bernd Skiera, Sports forecasting: a comparison of the forecast accuracy of prediction markets, betting odds and tipsters, Journal of Forecasting, 2009",
-  "written": "2026-09-26"
+  "written": "2026-10-07"
 }

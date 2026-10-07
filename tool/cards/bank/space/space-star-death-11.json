@@ -1,0 +1,78 @@
+{
+  "id": "space-star-death-11",
+  "topic": "space",
+  "genre": "space.stars_and_light",
+  "strand": "space.stars_and_light.star_death",
+  "also": [
+    "space.are_we_alone.signals"
+  ],
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Cambridge, 1967. A radio telescope picks up a pulse every 1.337 seconds, regular as a clock. What is sending it?",
+  "answer": "A dead star: a neutron star, the city-sized core left by a supernova, spinning and sweeping a radio beam past Earth like a lighthouse. Jocelyn Bell, a PhD student, first spotted it as a smudge on chart paper. Thousands of pulsars are now known, each a beacon nobody built.",
+  "move": "Ask what the exciting explanation would also have to show, then look for it.",
+  "ask": "Which exciting explanation do I believe without checking what else it would have to show?",
+  "keywords": [
+    "pulsar",
+    "jocelyn bell",
+    "neutron star",
+    "radio astronomy",
+    "lgm-1"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "story",
+  "mood": "wonder",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Human radio",
+      "Alien planet",
+      "Dead star"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Pulses every 1.337 seconds, so steady it is nicknamed LGM-1: little green men.",
+        "tag": "Every 1.337 seconds",
+        "rulesOut": []
+      },
+      {
+        "text": "It returns 4 minutes earlier each day: it keeps time with the stars, not the Sun.",
+        "tag": "Keeps star time",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "Low radio pitches arrive after high ones: the pulses crossed light-years of gas.",
+        "tag": "Low pitches lag",
+        "rulesOut": []
+      },
+      {
+        "text": "No Doppler wobble: the sender is not circling a star, as a planet would.",
+        "tag": "No orbital wobble",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "A second source turns up elsewhere in the sky, with its own beat.",
+        "tag": "A second one",
+        "rulesOut": []
+      }
+    ],
+    "why": "A world with senders on it would swing round its sun, and its signal with it. This one didn't move."
+  },
+  "source": "Hewish, Bell et al., Nature, 1968",
+  "source_kind": "paper",
+  "reference": "Hewish, Bell, Pilkington, Scott & Collins, Observation of a rapidly pulsating radio source, Nature 217:709-713, 1968, doi:10.1038/217709a0",
+  "written": "2026-10-07"
+}

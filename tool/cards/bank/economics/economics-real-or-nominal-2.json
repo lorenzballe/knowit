@@ -6,24 +6,24 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do house prices, wages and tax takes seem to break records almost every year?",
-  "answer": "Because the ruler shrinks. Central banks aim for about 2% inflation, so almost any figure counted in money drifts upward even when nothing real has changed. Take inflation out and many records vanish. A pay rise of 2% in a year of 3% inflation is a record that buys less bread.",
-  "move": "Before cheering a record, ask whether it was counted in shrinking money.",
-  "ask": "When my pay or my savings hit a new high, does it buy more than before?",
+  "question": "Your pay rises exactly as fast as prices. Why can you still end up able to buy less?",
+  "answer": "Because the tax lines don't rise with you. England's tax-free allowance has been £12,570 since 2021. On £30,000, a 5% rise lifts income tax by about 8.6%, so take-home pay grows only about 4.5%, behind prices. Economists call it fiscal drag: every year of inflation quietly taxes more of each pay packet.",
+  "move": "A limit written in money tightens every year nobody updates it.",
+  "ask": "Which limits in my life are written in money and never updated?",
   "keywords": [
+    "fiscal drag",
+    "personal allowance",
+    "income tax",
     "inflation",
-    "nominal figures",
-    "records",
-    "wages",
-    "house prices"
+    "tax thresholds"
   ],
-  "era": "timeless",
-  "region": "none",
+  "era": "recent",
+  "region": "europe",
   "hook": "mechanism",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "mixed",
-  "shelf_life": "evergreen",
+  "shelf_life": "years",
   "mature": false,
   "language": "en",
   "figure": "none",
@@ -31,35 +31,37 @@
     "type": "why",
     "ask": "And why?",
     "start": {
-      "text": "Headline: house prices hit a record high. Again."
+      "text": "Pay up 5%, prices up 5%. You still end up a little poorer."
     },
     "levels": [
       {
-        "text": "They are counted in money, and money buys a bit less each year."
+        "text": "Your income tax went up faster than your pay did.",
+        "figure": "+8.6%",
+        "unit": "tax, on a £30,000 salary"
       },
       {
-        "text": "At 2% a year, the price level doubles in about 35 years.",
-        "figure": "~35 yrs",
-        "unit": "to double, at 2% a year"
+        "text": "The tax-free slice stayed put, so more of each pound is taxed.",
+        "figure": "£12,570",
+        "unit": "tax-free, since 2021"
       },
       {
-        "text": "So a figure flat in real terms still sets a money record most years."
+        "text": "Tax lines are written in pounds, and pounds buy less each year."
       },
       {
-        "text": "A record in shrinking money can be a fall in what it buys."
+        "text": "Freezing a threshold raises tax without a vote on a rise."
       }
     ],
     "guess": {
       "options": [
-        "Demand outruns supply",
-        "The ruler is shrinking",
-        "Economies always grow"
+        "Inflation is undercounted",
+        "The tax line stayed put",
+        "Employers cut perks"
       ],
       "answer": 1
     }
   },
-  "source": "Bank of England, inflation calculator",
+  "source": "GOV.UK, Income Tax rates and allowances",
   "source_kind": "institution",
-  "reference": "https://www.bankofengland.co.uk/monetary-policy/inflation/inflation-calculator",
-  "written": "2026-10-03"
+  "reference": "https://www.gov.uk/income-tax-rates; arithmetic: (31,500 − 12,570) × 20% = £3,786 against (30,000 − 12,570) × 20% = £3,486",
+  "written": "2026-10-07"
 }
