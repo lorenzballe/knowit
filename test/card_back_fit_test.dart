@@ -231,7 +231,7 @@ void main() {
         await tester.tap(picture);
         await settle(tester);
         note('picture');
-        await tester.tap(picture);
+        await tester.tap(find.byKey(const ValueKey('back-to-answer')));
         await settle(tester);
       }
       // The other side's case, opened.
@@ -240,6 +240,12 @@ void main() {
         await tester.tap(other);
         await settle(tester);
         note('other side');
+      }
+      final simply = find.text('Explain it like I am three');
+      if (simply.evaluate().isNotEmpty) {
+        await tester.tap(simply);
+        await settle(tester);
+        note('simply');
       }
     }
 

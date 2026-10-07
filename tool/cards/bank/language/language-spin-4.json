@@ -28,7 +28,7 @@
   "figure": "none",
   "scene": {
     "type": "sort",
-    "left": "Checkable",
+    "left": "Solid",
     "right": "Empty",
     "tag": "Small print, big words",
     "items": [

@@ -608,9 +608,10 @@ class _Fit {
   final bool scrolls;
 
   bool get tight => gap < 1;
+  bool get tightest => gap < 0.7;
   double get step => body - 0.5;
   double get small => (body * 0.84).clamp(12.5, 14.5);
-  double get keep => (body * 0.9).clamp(13.5, 15.5);
+  double get keep => tightest ? 13 : (body * 0.9).clamp(13.5, 15.5);
   double get source => tight ? 10.5 : 11.5;
 
   _Fit copyWith({
@@ -699,20 +700,32 @@ class CardReveal extends StatefulWidget {
 @visibleForTesting
 void Function(List<double> blocks, double room)? debugRevealBlocks;
 
-class _CardRevealState extends State<CardReveal> {
-  bool _simplyOpen = false;
-  bool _counterOpen = false;
+/// What the back can show in the answer's place, one at a time.
+enum _Aside { none, picture, simply, counter }
 
-  /// The tucked picture is out, in the answer's place.
-  bool _pictureOpen = false;
+class _CardRevealState extends State<CardReveal> {
+  /// What is open in the answer's place. A retelling or the other side's
+  /// case is read instead of the answer, not under it: under it, a card
+  /// that fitted would run off the screen the moment it was opened.
+  _Aside _aside = _Aside.none;
 
   bool get _hasPicture => widget.scene != null || widget.pill.diagram != null;
+
+  /// Every state the reader can reach on this card.
+  List<_Aside> _asides(_Fit f) => [
+    _Aside.none,
+    if (f.tucked) _Aside.picture,
+    if (widget.pill.hasSimply) _Aside.simply,
+    if (widget.pill.hasCounterpoint) _Aside.counter,
+  ];
+
+  void _open(_Aside aside) => setState(() => _aside = aside);
 
   List<_Block> _blocks(
     _Fit f,
     double width,
     _Measure m, {
-    required bool pictureOpen,
+    required _Aside aside,
   }) {
     final pill = widget.pill;
     final l10n = m.l10n;
@@ -741,34 +754,27 @@ class _CardRevealState extends State<CardReveal> {
       gap(14);
     }
 
-    // The picture, inline or behind its line.
-    final words = !f.tucked || !pictureOpen;
-    final showPicture = !f.tucked || pictureOpen;
-    _Block toggle() {
-      final String label = pictureOpen
-          ? l10n.revealBackToAnswer
-          : widget.scene != null
-          ? l10n.revealPlayScene
-          : l10n.revealSeePicture;
-      final IconData icon = pictureOpen
-          ? Icons.notes_rounded
-          : widget.scene != null
-          ? Icons.play_circle_outline_rounded
-          : Icons.insert_chart_outlined_rounded;
-      return _Block(
-        _TextAction.heightFor(label, f.small, width, m),
-        _TextAction(
-          key: const ValueKey('picture-toggle'),
-          ink: ink,
-          icon: icon,
-          label: label,
-          size: f.small,
-          onTap: () => setState(() => _pictureOpen = !_pictureOpen),
-        ),
-      );
-    }
+    _Block action(
+      String label,
+      IconData icon,
+      VoidCallback onTap, {
+      Key? key,
+    }) => _Block(
+      _TextAction.heightFor(label, f.small, width, m),
+      _TextAction(
+        key: key,
+        ink: ink,
+        icon: icon,
+        label: label,
+        size: f.small,
+        onTap: onTap,
+      ),
+    );
 
-    if (widget.scene != null && showPicture) {
+    final words = aside == _Aside.none;
+    final picture = (words && !f.tucked) || aside == _Aside.picture;
+
+    if (widget.scene != null && picture) {
       out.add(
         _Block(
           f.scene,
@@ -778,7 +784,7 @@ class _CardRevealState extends State<CardReveal> {
           ),
         ),
       );
-      gap(16);
+      if (words) gap(16);
     }
     if (words) {
       if (pill.hasSteps) {
@@ -816,7 +822,7 @@ class _CardRevealState extends State<CardReveal> {
         );
       }
     }
-    if (pill.diagram != null && showPicture) {
+    if (pill.diagram != null && picture) {
       if (words) gap(16);
       out.add(
         _Block(
@@ -835,9 +841,29 @@ class _CardRevealState extends State<CardReveal> {
         ),
       );
     }
-    if (f.tucked) {
-      gap(6);
-      out.add(toggle());
+    // A retelling or the other side's case, in the answer's place and set
+    // like it: the same size, under a label saying whose words they are.
+    if (aside == _Aside.simply || aside == _Aside.counter) {
+      final caps = aside == _Aside.simply
+          ? l10n.putSimplyCaps
+          : l10n.whatTheOtherSideSaysCaps;
+      final body = aside == _Aside.simply ? pill.simply : pill.counterpoint;
+      final label = _Type.panelLabel(ink);
+      final style = _Type.answer(ink, f.body);
+      out.add(
+        _Block(
+          m.height(caps, label, width) + 6 + m.height(body, style, width),
+          Column(
+            key: ValueKey(aside),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(caps, style: label),
+              const SizedBox(height: 6),
+              Text(body, style: style),
+            ],
+          ),
+        ),
+      );
     }
     if (words) {
       // The trap belongs to the explanation, so it follows it straight
@@ -848,62 +874,49 @@ class _CardRevealState extends State<CardReveal> {
         final style = _Type.trap(ink, f.small);
         out.add(_Block(m.height(text, style, width), Text(text, style: style)));
       }
-      final panelStyle = _Type.panelBody(ink, f.small);
-      _Block opener({
-        required bool open,
-        required String caps,
-        required String body,
-        required String label,
-        required IconData icon,
-        required VoidCallback onOpen,
-      }) => open
-          ? _Block(
-              _Panel.heightFor(caps, body, panelStyle, width, m, tight: f.tight),
-              _Panel(
-                label: caps,
-                body: body,
-                ink: ink,
-                wash: pill.wash,
-                style: panelStyle,
-                tight: f.tight,
-              ),
-            )
-          : _Block(
-              _TextAction.heightFor(label, f.small, width, m),
-              _TextAction(
-                ink: ink,
-                icon: icon,
-                label: label,
-                size: f.small,
-                onTap: onOpen,
-              ),
-            );
-      if (pill.hasSimply) {
-        gap(_simplyOpen ? 12 : 6);
+      if (f.tucked) {
+        gap(6);
         out.add(
-          opener(
-            open: _simplyOpen,
-            caps: l10n.putSimplyCaps,
-            body: pill.simply,
-            label: l10n.explainLikeImThree,
-            icon: Icons.child_care_rounded,
-            onOpen: () => setState(() => _simplyOpen = true),
+          action(
+            widget.scene != null ? l10n.revealPlayScene : l10n.revealSeePicture,
+            widget.scene != null
+                ? Icons.play_circle_outline_rounded
+                : Icons.insert_chart_outlined_rounded,
+            () => _open(_Aside.picture),
+            key: const ValueKey('picture-toggle'),
+          ),
+        );
+      }
+      if (pill.hasSimply) {
+        gap(6);
+        out.add(
+          action(
+            l10n.explainLikeImThree,
+            Icons.child_care_rounded,
+            () => _open(_Aside.simply),
           ),
         );
       }
       if (pill.hasCounterpoint) {
-        gap(_counterOpen ? 12 : 6);
+        gap(6);
         out.add(
-          opener(
-            open: _counterOpen,
-            caps: l10n.whatTheOtherSideSaysCaps,
-            body: pill.counterpoint,
-            label: l10n.whatTheOtherSideSays,
-            icon: Icons.swap_horiz_rounded,
-            onOpen: () => setState(() => _counterOpen = true),
+          action(
+            l10n.whatTheOtherSideSays,
+            Icons.swap_horiz_rounded,
+            () => _open(_Aside.counter),
           ),
         );
       }
+    } else {
+      gap(aside == _Aside.picture ? 10 : 6);
+      out.add(
+        action(
+          l10n.revealBackToAnswer,
+          Icons.notes_rounded,
+          () => _open(_Aside.none),
+          key: const ValueKey('back-to-answer'),
+        ),
+      );
     }
 
     // The give, then the box the card ends on, pinned to the foot.
@@ -979,21 +992,27 @@ class _CardRevealState extends State<CardReveal> {
     final hasScene = widget.scene != null;
     // A point spare, so a rounding in layout never tips a fit over.
     final room = height - 1;
-    double need(_Fit f, {bool open = false}) =>
-        _total(_blocks(f, width, m, pictureOpen: open));
-    // Every state the reader can reach must fit: the steps all out, a panel
-    // opened, the picture swapped in. Opening the other side's case may
-    // re-plan the card, which is a re-plan, not a scroll.
-    bool fits(_Fit f) =>
-        need(f) <= room && (!f.tucked || need(f, open: true) <= room);
+    double need(_Fit f, _Aside aside) =>
+        _total(_blocks(f, width, m, aside: aside));
+    // Every state the reader can reach must fit — the steps all out, the
+    // other side's case read, the picture swapped in — so nothing they can
+    // tap pushes the foot of the card off the screen.
+    bool fits(_Fit f) => _asides(f).every((a) => need(f, a) <= room);
 
     _Fit grow(_Fit f) {
       if (hasScene) {
-        final open = f.tucked;
-        final more = room - need(f, open: open);
+        // The scene's band is the one the tightest state leaves it.
+        final at = f.tucked ? _Aside.picture : _Aside.none;
+        var more = room - need(f, at);
+        for (final a in _asides(f)) {
+          final left = room - need(f, a);
+          if (a != at && left < more && (a == _Aside.none) != f.tucked) {
+            more = left;
+          }
+        }
         final scene = (f.scene + more).clamp(
           CardReveal.sceneMin,
-          open ? CardReveal.sceneOpenMax : CardReveal.sceneMax,
+          f.tucked ? CardReveal.sceneOpenMax : CardReveal.sceneMax,
         );
         f = f.copyWith(scene: scene);
       }
@@ -1042,6 +1061,12 @@ class _CardRevealState extends State<CardReveal> {
         final f = at(b, question: false, gap: 0.75, tucked: tucked);
         if (fits(f)) return grow(f);
       }
+      // The last half point, with the spacing at its closest: still a
+      // comfortable size on a phone, and better than a card that scrolls.
+      for (final gap in [0.75, 0.6]) {
+        final f = at(CardReveal.minBody - 0.5, question: false, gap: gap, tucked: tucked);
+        if (fits(f)) return grow(f);
+      }
     }
     return at(
       CardReveal.minBody,
@@ -1058,12 +1083,8 @@ class _CardRevealState extends State<CardReveal> {
       builder: (context, box) {
         final width = box.maxWidth;
         final fit = _choose(width, box.maxHeight, m);
-        final blocks = _blocks(
-          fit,
-          width,
-          m,
-          pictureOpen: fit.tucked && _pictureOpen,
-        );
+        final aside = _asides(fit).contains(_aside) ? _aside : _Aside.none;
+        final blocks = _blocks(fit, width, m, aside: aside);
         debugRevealBlocks?.call([
           for (final b in blocks) b.height,
         ], box.maxHeight);

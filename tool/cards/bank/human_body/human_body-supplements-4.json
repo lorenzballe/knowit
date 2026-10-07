@@ -30,7 +30,7 @@
   "scene": {
     "type": "sort",
     "left": "Backed",
-    "right": "Not backed",
+    "right": "No help",
     "tag": "Taken for a reason",
     "items": [
       {

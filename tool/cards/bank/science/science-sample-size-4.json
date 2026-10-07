@@ -29,7 +29,7 @@
   "scene": {
     "type": "sort",
     "left": "Real",
-    "right": "Maybe luck",
+    "right": "Luck",
     "tag": "The numbers behind it",
     "items": [
       {

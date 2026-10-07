@@ -30,7 +30,7 @@
   "scene": {
     "type": "sort",
     "left": "Real risk",
-    "right": "Overblown",
+    "right": "Fine",
     "tag": "In your kitchen",
     "items": [
       {
@@ -49,7 +49,7 @@
         "text": "Reheated rice",
         "note": "Cooked yesterday, left out overnight, microwaved.",
         "pile": "left",
-        "verdict": "Spores survive cooking, then make a toxin at room temperature that heat can't undo."
+        "verdict": "Spores survive cooking, then make a toxin left out that reheating can't undo."
       },
       {
         "text": "Mouldy cheddar",

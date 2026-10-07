@@ -28,8 +28,8 @@
   "figure": "none",
   "scene": {
     "type": "sort",
-    "left": "Tells you",
-    "right": "Tells little",
+    "left": "Useful",
+    "right": "Useless",
     "tag": "Is this site any good?",
     "items": [
       {

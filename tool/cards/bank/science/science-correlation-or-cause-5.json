@@ -30,8 +30,8 @@
   "scene": {
     "type": "sort",
     "left": "Cause",
-    "right": "Just a link",
-    "tag": "Found by comparing people",
+    "right": "No cause",
+    "tag": "Spotted in the data",
     "items": [
       {
         "text": "Smoking",

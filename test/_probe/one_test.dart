@@ -21,7 +21,7 @@ void main() {
     final pill = PillBank.cards.firstWhere((p) => p.id == const String.fromEnvironment('ID', defaultValue: 'art-abstraction-4'));
     debugRevealBlocks = (b, h) => print('blocks $b sum ${b.fold(0.0,(a,c)=>a+c)} of $h');
     await tester.pumpWidget(MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates, supportedLocales: AppLocalizations.supportedLocales, theme: buildAstutoTheme(Brightness.dark),
-      home: Scaffold(body: Center(child: SizedBox(width: 324, height: 520, child: PillCard(pill: pill, flipped: true, given: pill.asksSomething ? const Answer('0', confidence: 70) : null, onSave: () {}))))));
+      home: Scaffold(body: Center(child: SizedBox(width: 324, height: 520, child: PillCard(pill: pill, flipped: true, given: pill.challenge is TakeASide ? const Answer('0', reason: 'Because the cost lands on the people who had no say in it.') : pill.asksSomething ? const Answer('0', confidence: 70) : null, onSave: () {}))))));
     for (var i=0;i<10;i++) { await tester.pump(const Duration(milliseconds: 100)); }
     final col = find.descendant(of: find.byType(CardReveal), matching: find.byType(Column)).first;
     final ro = tester.renderObject(col) as RenderBox;

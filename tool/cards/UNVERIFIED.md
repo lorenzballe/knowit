@@ -870,3 +870,14 @@ life-risk-taking-1, life-regret-2, life-failure-2, life-spending-2.
 - human_body-longevity-12 | poll: 56% would not want treatments to live to 120+, 38% would, about two in three think most others would; ideal lifespan median about 90 | Pew Research 2013 Living to 120 and Beyond 56% 38% 68% ideal life span 90
 - medicine-questions-to-ask-4 | poll: one untried drug 53% refer without it; two untried drugs 72% | Redelmeier Shafir 1995 JAMA multiple alternatives ibuprofen piroxicam 53% 72%
 - food-hunger-or-habit-4 | poll: snack chosen a week ahead 74% healthy; chosen for now 70% unhealthy; hungry choosers picked more unhealthy for later | Read van Leeuwen 1998 predicting hunger 74% healthy 70% unhealthy
+
+## Scene cards (October 2026)
+
+- human_body-small-daily-habits-4 | balance and strength exercise cut the rate of falls in older people by about 23% across over 100 trials | Sherrington 2019 Cochrane exercise for preventing falls in older people community 108 trials rate of falls 23%
+- human_body-small-daily-habits-4 | in RCTs breakfast eaters ate slightly more total energy and weighed slightly more | Sievert 2019 BMJ effect of breakfast on weight and energy intake meta-analysis
+- human_body-supplements-4 | multivitamin trial: about 14,000 male doctors, over a decade, no difference in mortality | Physicians' Health Study II multivitamin 14,641 mortality Sesso 2012 JAMA
+- medicine-side-effects-4 | US military Shelf Life Extension Program found most tested drugs stable years past expiry | Lyon 2006 J Pharm Sci SLEP 88% of lots extended
+- technology-passwords-1 | Google 2019: an SMS code blocked 100% of automated bot attacks | Google Security Blog May 2019 basic account hygiene SMS 100% automated bots
+- weird_facts-hoaxes-1 | James Howells, Newport, discarded a drive with about 8,000 bitcoin in 2013 and spent years seeking to dig up the landfill | James Howells bitcoin hard drive Newport landfill 8,000
+- weird_facts-hoaxes-1 | Denmark agreed in 2024 a livestock emissions tax starting 2030 | Denmark green tripartite agreement livestock CO2 tax 2030
+- language-spin-4 | ASA ruled Colgate's "more than 80% of dentists recommend" ad misleading in 2007 | ASA Colgate 80% dentists recommend ruling 2007
