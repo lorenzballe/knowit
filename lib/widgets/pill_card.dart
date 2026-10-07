@@ -319,7 +319,7 @@ class _SceneFront extends StatelessWidget {
         // card's vertical throw for itself, so less like this stops working.
         final needed =
             (TextPainter(
-              text: TextSpan(text: pill.question, style: styleFor(18)),
+              text: TextSpan(text: pill.question, style: styleFor(16)),
               textDirection: Directionality.of(context),
               textScaler: MediaQuery.textScalerOf(context),
             )..layout(maxWidth: box.maxWidth)).height +
@@ -336,7 +336,7 @@ class _SceneFront extends StatelessWidget {
               height: room,
               child: ScaledText(
                 text: pill.question,
-                min: 18,
+                min: 16,
                 max: 27,
                 alignment: Alignment.topLeft,
                 styleFor: styleFor,
