@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What did it take for a surgeon in New York to remove a gallbladder in Strasbourg in 2001?",
-  "answer": "A private line under the Atlantic. Delay is the enemy of remote surgery, so France Telecom provided a dedicated fibre-optic connection that held the lag steady at about 155 milliseconds; ordinary internet delays jump about unpredictably. Jacques Marescaux worked a ZEUS robot's controls, and the 68-year-old patient went home 48 hours later.",
+  "question": "In 2001 a surgeon in New York removed a gallbladder in Strasbourg by robot. How late did each of his movements reach his screen?",
+  "answer": "About 155 milliseconds, held steady. The signal ran over 14,000 km there and back on a fibre line France Telecom reserved for the job; ordinary internet delays jump about, and a lag that wobbles is harder to work through than a long one. The team put the safe limit near 330 ms.",
   "move": "When acting at a distance, the delay matters more than the kilometres.",
   "ask": "Where is the delay, not the distance, what decides if my plan works?",
   "keywords": [
@@ -21,7 +21,7 @@
   "region": "world",
   "hook": "story",
   "mood": "wonder",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
@@ -30,5 +30,17 @@
   "source": "Marescaux et al., Nature, 2001",
   "source_kind": "paper",
   "reference": "Marescaux et al., Transatlantic robot-assisted telesurgery, Nature, 2001",
-  "written": "2026-09-26"
+  "written": "2026-10-06",
+  "scene": {
+    "type": "hold",
+    "what": "Lag, New York hand to screen",
+    "seconds": 0.155,
+    "display": "ms",
+    "comparisons": [
+      {
+        "label": "Estimated safe limit",
+        "seconds": 0.33
+      }
+    ]
+  }
 }

@@ -6,28 +6,58 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do the most dramatic results in a research field so often come from its smallest studies?",
-  "answer": "Because small studies are noisy, and only results that happen to look big pass the bar for significance. A 2013 review put the typical neuroscience study's power at about 21%: it would miss a real effect four times in five, and its hits overstate it. A small study's big result is often the lucky high.",
+  "question": "Small trials pooled in 1991 suggested a magnesium drip halved deaths after heart attacks. Then 58,050 patients were tested. What happened?",
+  "answer": "No benefit at all. In ISIS-4, 7.6% of magnesium patients died within five weeks, against 7.2% of controls. The earlier trials had about 1,300 patients between them. Small studies swing widely, and the swings that look like cures are the ones noticed; a 2013 review put a typical neuroscience study's power at 21%.",
   "move": "Shrink any striking result in proportion to how few cases produced it.",
   "ask": "When a small trial in my own life went brilliantly, how much of that was luck?",
   "keywords": [
-    "statistical power",
-    "small studies",
-    "neuroscience",
-    "effect size"
+    "magnesium",
+    "heart attack",
+    "small trials",
+    "sample size",
+    "isis-4"
   ],
-  "era": "recent",
+  "era": "twentieth",
   "region": "world",
   "hook": "mechanism",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "abstract",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Button et al., Nature Reviews Neuroscience, 2013",
+  "source": "Teo et al., BMJ 1991; ISIS-4, Lancet 1995",
   "source_kind": "paper",
-  "reference": "Button et al., Power failure: why small sample size undermines the reliability of neuroscience, Nature Reviews Neuroscience 14:365–376, 2013",
-  "written": "2026-09-26"
+  "reference": "Teo et al., Effects of intravenous magnesium in suspected acute myocardial infarction: overview of randomised trials, BMJ 303:1499–1503, 1991; ISIS-4 Collaborative Group, The Lancet 345:669–685, 1995; Button et al., Nature Reviews Neuroscience 14:365–376, 2013",
+  "written": "2026-09-26",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated patients",
+    "hit": "Died within five weeks",
+    "groups": [
+      {
+        "label": "No magnesium",
+        "rate": 0.0724
+      },
+      {
+        "label": "Magnesium",
+        "rate": 0.0764
+      }
+    ],
+    "steps": [
+      130,
+      1300,
+      13000,
+      58050
+    ],
+    "seed": 5301,
+    "button": "Add patients",
+    "notes": [
+      "130 patients, one small trial: 6.2% died without magnesium, 1.5% with it.",
+      "1,300, like the pooled small trials: 9.1% against 4.5%. Halved, by chance.",
+      "13,000 patients: 7.2% against 7.7%. The cure is gone.",
+      "58,050, as in ISIS-4. Its real deaths: 7.2% without, 7.6% with magnesium."
+    ]
+  }
 }

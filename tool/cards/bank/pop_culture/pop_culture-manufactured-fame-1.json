@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did thousands of public figures, from actors to pundits, come to have followers who did not exist?",
-  "answer": "They bought them. In 2018 The New York Times traced millions of fake Twitter accounts to Devumi, a Florida company that had sold more than 200 million followers to customers including actors, athletes and politicians. Many accounts copied real people's names and photos. A large following had become something anyone could order by the thousand.",
+  "question": "In 2018 reporters traced a Florida firm that sold Twitter followers to actors, athletes and pundits. How many followers had it sold?",
+  "answer": "More than 200 million, The New York Times found in its investigation of Devumi. The firm ran at least 3.5 million automated accounts and sold each many times over, to more than 200,000 customers. At least 55,000 copied real people's names and photos. A following had become something anyone could order by the thousand.",
   "move": "Treat any number that can be bought as a price, not a vote.",
   "ask": "Which numbers do I trust as signs of popularity that someone could simply have paid for?",
   "keywords": [
@@ -18,16 +18,46 @@
   ],
   "era": "recent",
   "region": "americas",
-  "hook": "story",
+  "hook": "number",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "count",
+    "unit": "fake followers sold",
+    "answer": 200000000,
+    "each": 100000,
+    "eachLabel": "1 dot = 100,000 followers",
+    "compare": "From 3.5 million bot accounts",
+    "options": [
+      {
+        "label": "2 million",
+        "value": 2000000,
+        "note": "Two zeros short. Devumi had over 200,000 customers, buying by the thousand."
+      },
+      {
+        "label": "20 million",
+        "value": 20000000,
+        "note": "One zero short. Each fake account was sold many times over."
+      },
+      {
+        "label": "200 million",
+        "value": 200000000,
+        "note": "Right: over 200 million, from about 3.5 million bots resold again and again."
+      },
+      {
+        "label": "2 billion",
+        "value": 2000000000,
+        "note": "One zero too many. But 200 million came from only 3.5 million fake accounts."
+      }
+    ]
+  },
   "source": "The New York Times, The Follower Factory",
   "source_kind": "news_archive",
   "reference": "Nicholas Confessore et al., The Follower Factory, The New York Times, 27 January 2018",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

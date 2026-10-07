@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "When does Britain's financial regulator count a credit-card customer as stuck in persistent debt?",
-  "answer": "When, over 18 months, they have paid more in interest, fees and charges than they repaid of what they borrowed. Since 2018 card firms must then nudge them to pay faster, and at 36 months offer a way out or suspend the card. Minimum payments had kept many paying rent on one debt for years.",
+  "question": "A British credit-card statement. Which line decides whether the debt on it ever shrinks?",
+  "answer": "The minimum payment. Britain's financial regulator counts a cardholder as in persistent debt when, over 18 months, they have paid more in interest and charges than they repaid of what they borrowed. Since 2018 firms must then nudge them, and at 36 months offer a way out. Minimums kept many paying rent on a debt.",
   "move": "Compare what a debt costs you with how much it actually shrinks.",
   "ask": "Over the last year, how much of what I paid on my cards actually reduced what I owe?",
   "keywords": [
@@ -26,8 +26,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Credit card statement",
+    "ref": "Typical text",
+    "title": "Your monthly statement",
+    "body": "Balance: £3,000. Minimum payment: £75. If you make only the minimum payment each month, it will take you longer and cost you more to clear your balance.",
+    "phrases": [
+      {
+        "text": "Balance",
+        "plain": "Money you owe",
+        "why": "Balance sounds like money you have. On a card it is the debt."
+      },
+      {
+        "text": "Minimum payment: £75",
+        "plain": "Least you can pay to keep the debt alive: £75",
+        "why": "At about 2% interest a month, £60 of it is interest. The debt falls by £15.",
+        "catch": true
+      },
+      {
+        "text": "it will take you longer",
+        "plain": "it can take you many years",
+        "why": "Minimum payments shrink as the debt does, so the end keeps moving away."
+      }
+    ],
+    "ask": "One line is set so the debt barely moves. Which?",
+    "watch": "Compare what a debt costs each month with how much it actually shrinks."
+  },
   "source": "FCA, Policy Statement PS18/4, 2018",
   "source_kind": "primary_document",
   "reference": "Financial Conduct Authority, PS18/4 Credit card market study: persistent debt and earlier intervention remedies, February 2018",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Does the team that shoots first in a penalty shoot-out really win more often?",
-  "answer": "Perhaps slightly; the evidence is contested. Apesteguia and Palacios-Huerta found first-shooting teams won 60% of 269 shoot-outs and blamed the pressure of chasing. Kocher, Lenz and Sutter, with twice as many shoot-outs, found no significant edge. Football's lawmakers trialled a tennis-style A-B-B-A order, then dropped it in 2018.",
+  "question": "In 262 penalty shoot-outs, the team kicking first won 60.5%. Is going first an edge, or could chance draw that?",
+  "answer": "Chance, most likely. Apesteguia and Palacios-Huerta's 60.5% came from 262 shoot-outs; Kocher, Lenz and Sutter's 540 gave about 53%, not significant. A 2025 study of about 7,000 shoot-outs found the first team won 48.8%. Football's lawmakers trialled an A-B-B-A order, then dropped it in 2018.",
   "move": "A striking result from one dataset is a question for the next.",
   "ask": "Which striking result have I believed without seeing it hold up a second time?",
   "keywords": [
@@ -27,8 +27,28 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Apesteguia & Palacios-Huerta, AER, 2010",
+  "source": "Pipke, Journal of Economic Psychology, 2025",
   "source_kind": "paper",
-  "reference": "Apesteguia & Palacios-Huerta, Psychological Pressure in Competitive Environments: Evidence from a Randomized Natural Experiment, American Economic Review, 2010",
-  "written": "2026-09-26"
+  "reference": "Apesteguia & Palacios-Huerta, American Economic Review 100(5), 2010; Kocher, Lenz & Sutter, Management Science 58:1585–1591, 2012; Pipke, No evidence of first-mover advantage in a large sample of penalty shootouts, Journal of Economic Psychology 108, 2025",
+  "written": "2026-09-26",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated shoot-outs",
+    "hit": "Team kicking first won",
+    "rate": 0.4883,
+    "steps": [
+      20,
+      262,
+      540,
+      7000
+    ],
+    "seed": 5439,
+    "button": "More shoot-outs",
+    "notes": [
+      "20 shoot-outs: kicking first won 40%. Pure chance around a true 48.8%.",
+      "262, as many as the first study: 60.3%. A famous edge, drawn by chance.",
+      "540, as many as the follow-up: 53%. The edge is melting.",
+      "About 7,000, like the 2025 study: 49.2%. Its real figure was 48.8%."
+    ]
+  }
 }

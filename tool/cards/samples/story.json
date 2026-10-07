@@ -1,0 +1,226 @@
+[
+  {
+    "id": "life-risk-compensation-story-1",
+    "topic": "life",
+    "genre": "life.clear_thinking",
+    "strand": "life.clear_thinking.second_order_effects",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Why would an engineer take every traffic light and sign out of a busy junction?",
+    "answer": "Because crashes halved. A year after Hans Monderman cleared the Laweiplein in Drachten, there were half as many accidents with a third more traffic. With no green light promising a clear road, drivers slowed down and made eye contact. Rules that make people feel safe can make them stop looking.",
+    "move": "Before adding a safety measure, ask how it will change what people pay attention to.",
+    "ask": "Where does feeling protected make me stop looking?",
+    "keywords": [
+      "shared space",
+      "hans monderman",
+      "drachten",
+      "risk compensation",
+      "traffic lights"
+    ],
+    "era": "recent",
+    "region": "europe",
+    "hook": "story",
+    "mood": "wonder",
+    "numeracy": 1,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "story",
+      "scenes": [
+        {
+          "fact": "Drachten, the Netherlands",
+          "glyph": "car",
+          "line": "A busy junction in the town centre. Cars, bikes, buses."
+        },
+        {
+          "fact": "The Laweiplein",
+          "glyph": "lights",
+          "line": "Lights, signs and road lines tell everyone who goes when."
+        },
+        {
+          "fact": "Engineer Hans Monderman",
+          "glyph": "ban",
+          "line": "He takes them all away. No lights, no signs, no lines."
+        }
+      ],
+      "ask": "What happens to the crashes?",
+      "options": [
+        {
+          "label": "They go up"
+        },
+        {
+          "label": "No real change"
+        },
+        {
+          "label": "They go down"
+        }
+      ],
+      "answer": 2,
+      "outcome": {
+        "fact": "One year later",
+        "glyph": "fall",
+        "line": "Half as many crashes, with a third more traffic."
+      },
+      "why": "With nothing telling them the way was clear, drivers slowed down and looked each other in the eye."
+    },
+    "source": "Vanderbilt, Traffic, 2008",
+    "source_kind": "book",
+    "reference": "Tom Vanderbilt, Traffic: Why We Drive the Way We Do (Knopf, 2008), ch. 7, on the Laweiplein in Drachten: a year after the redesign, half as many accidents while traffic rose by a third, and shorter waits for buses.",
+    "written": "2026-10-06"
+  },
+  {
+    "id": "economics-perverse-incentives-story-1",
+    "topic": "economics",
+    "genre": "economics.think_in_incentives",
+    "strand": "economics.think_in_incentives.perverse_rewards",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "A city overrun by rats pays a bounty for every rat tail. What could go wrong?",
+    "answer": "Hanoi paid one cent a tail in 1902, and tails poured in. Then officials saw tailless rats in the streets: hunters cut the tail and freed the rat to breed more bounty, and some farmed them. The city paid for proof of a kill, not the kill. Plague came in 1903.",
+    "move": "Before rewarding a measure, ask how someone could produce it without the result.",
+    "ask": "What am I rewarding that can be produced without the thing I want?",
+    "keywords": [
+      "rat bounty",
+      "hanoi",
+      "perverse incentives",
+      "cobra effect",
+      "plague"
+    ],
+    "era": "twentieth",
+    "region": "asia",
+    "hook": "story",
+    "mood": "playful",
+    "numeracy": 1,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "story",
+      "scenes": [
+        {
+          "fact": "Hanoi, 1902",
+          "glyph": "drain",
+          "line": "The French colonial city has brand new sewers."
+        },
+        {
+          "fact": "Plague is feared",
+          "glyph": "rat",
+          "line": "The sewers fill with rats, and the rats come up into homes."
+        },
+        {
+          "fact": "1 cent a tail",
+          "glyph": "coin",
+          "line": "The city pays a bounty for every rat tail handed in."
+        },
+        {
+          "fact": "Spring and summer 1902",
+          "glyph": "rise",
+          "line": "Tails pour in, tens of thousands of them."
+        }
+      ],
+      "ask": "What do officials start to see?",
+      "options": [
+        {
+          "label": "Far fewer rats"
+        },
+        {
+          "label": "Just as many rats"
+        },
+        {
+          "label": "Rats with no tails"
+        }
+      ],
+      "answer": 2,
+      "outcome": {
+        "fact": "Plague reached Hanoi in 1903",
+        "glyph": "rat",
+        "line": "Rats with no tails. Hunters cut them off and let rats breed."
+      },
+      "why": "The city paid for the proof of a kill, so people made proof instead of kills."
+    },
+    "source": "Vann, French Colonial History, 2003",
+    "source_kind": "paper",
+    "reference": "Michael G. Vann, 'Of Rats, Rice, and Race: The Great Hanoi Rat Massacre, an Episode in French Colonial History', French Colonial History 4 (2003): 191-203.",
+    "written": "2026-10-06"
+  },
+  {
+    "id": "psychology-a-fine-is-a-price-story-1",
+    "topic": "psychology",
+    "genre": "psychology.motivation",
+    "strand": "psychology.motivation.rewards",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "How do you stop parents picking their children up late from day-care?",
+    "answer": "Not with a small fine. In six Haifa centres a fine of 10 shekels roughly doubled late pickups within weeks, while centres without one stayed level. The fine turned guilt into a price, and the price was cheap. When it was dropped, lateness stayed high: the guilt did not come back.",
+    "move": "A price can replace a duty, and it is cheaper than the duty was.",
+    "ask": "Where would putting a price on something make people care about it less?",
+    "keywords": [
+      "fines",
+      "gneezy",
+      "day-care",
+      "crowding out",
+      "social norms"
+    ],
+    "era": "twentieth",
+    "region": "middle_east",
+    "hook": "paradox",
+    "mood": "practical",
+    "numeracy": 1,
+    "abstraction": "mixed",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "story",
+      "scenes": [
+        {
+          "fact": "Haifa, Israel",
+          "glyph": "family",
+          "line": "Ten day-care centres. Parents collect their children each day."
+        },
+        {
+          "fact": "Closing time: 4 pm",
+          "glyph": "clock",
+          "line": "Some come late, and a teacher has to wait with the child."
+        },
+        {
+          "fact": "10 shekels, about $3",
+          "glyph": "ticket",
+          "line": "Six of the centres bring in a fine for coming 10 minutes late."
+        }
+      ],
+      "ask": "What happens to late pickups?",
+      "options": [
+        {
+          "label": "They fall"
+        },
+        {
+          "label": "No real change"
+        },
+        {
+          "label": "They rise"
+        }
+      ],
+      "answer": 2,
+      "outcome": {
+        "fact": "Within weeks, about double",
+        "glyph": "rise",
+        "line": "More parents came late. When the fine went, they stayed late."
+      },
+      "why": "The fine turned guilt into a price, and $3 was a cheap price for being late."
+    },
+    "source": "Gneezy & Rustichini, J. Legal Studies, 2000",
+    "source_kind": "paper",
+    "reference": "Uri Gneezy and Aldo Rustichini, 'A Fine Is a Price', Journal of Legal Studies 29 (2000): 1-17. Ten private day-care centres in Haifa; a fine of NIS 10 for a delay of ten minutes or more was introduced in six of them in week 5 and removed in week 17.",
+    "written": "2026-10-06"
+  }
+]

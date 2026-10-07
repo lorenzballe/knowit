@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did the NFL change its overtime rules in 2010, after the coin toss kept deciding games?",
-  "answer": "Because winning the toss had become winning the game. From 1994, when the kickoff spot was moved, toss winners won about 60% of sudden-death overtimes, often after one drive and a field goal as kickers grew more accurate. From 2010 a first-possession field goal no longer ended a playoff game.",
+  "question": "From 1994, the team that won the NFL's overtime coin toss began winning more often. How many games did it take to see it?",
+  "answer": "Hundreds. Toss winners won 46.8% of 201 overtimes from 1974 to 1993, then 59.8% of 244 from 1994 to 2009, after kickoffs moved back and kickers grew more accurate: one drive and a field goal often ended it. From 2010 a first-possession field goal no longer ended a playoff game.",
   "move": "Recheck a fair rule whenever the people playing it get better.",
   "ask": "Is a rule I set years ago still fair, now that people have got better at playing it?",
   "keywords": [
@@ -24,7 +24,7 @@
   "region": "americas",
   "hook": "story",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
@@ -33,5 +33,34 @@
   "source": "ESPN, NFL owners pass playoff OT rules, 2010",
   "source_kind": "news_archive",
   "reference": "https://www.espn.com/nfl/news/story?id=5022064",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated overtimes",
+    "hit": "Toss winner won the game",
+    "groups": [
+      {
+        "label": "1974-93",
+        "rate": 0.468
+      },
+      {
+        "label": "1994-2009",
+        "rate": 0.598
+      }
+    ],
+    "steps": [
+      20,
+      80,
+      445,
+      4450
+    ],
+    "seed": 120,
+    "button": "More overtimes",
+    "notes": [
+      "Ten overtimes each: the old era's toss winners look better, 80% to 60%.",
+      "40 each: 57.5% and 57.5%. Still no difference to see.",
+      "445 games, as many as the real record: 48% against 64.4%. Now it shows.",
+      "Ten times the record: 47.5% against 60%. Built in: 46.8% and 59.8%."
+    ]
+  }
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How much did loyal customers in five British markets pay a year for staying with the same supplier?",
-  "answer": "About £4 billion a year, the Competition and Markets Authority found in 2018, across mobile phones, broadband, home insurance, mortgages and savings. Firms raised prices quietly at each renewal, made leaving slow and rolled contracts over by default. Loyalty, in these markets, was a charge on having no time to switch.",
+  "question": "A home-insurance renewal letter, worded the way many were. Which line is where staying put cost Britons billions?",
+  "answer": "The price, quietly raised because you stayed. Britain's competition regulator put the cost of loyalty at about £4 billion a year across five markets in 2018. The insurance regulator's name for it was price walking, and from 2022 it banned charging renewing home and motor customers more than new ones.",
   "move": "Check what a newcomer would pay before renewing anything.",
   "ask": "Which of my contracts renewed itself this year without my comparing the price?",
   "keywords": [
@@ -26,8 +26,40 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Competition and Markets Authority, loyalty penalty, 2018",
+  "scene": {
+    "type": "translate",
+    "head": "Insurance renewal",
+    "ref": "Typical text",
+    "title": "Your renewal",
+    "body": "Thank you for being a valued customer. Your policy will renew automatically. Your new premium reflects our latest pricing. No action is needed.",
+    "phrases": [
+      {
+        "text": "valued customer",
+        "plain": "customer we expect not to compare",
+        "why": "Staying is read as a sign you won't compare. That is worth money to the insurer."
+      },
+      {
+        "text": "renew automatically",
+        "plain": "renew at our new price unless you stop it",
+        "why": "Doing nothing counts as yes. The default does the selling."
+      },
+      {
+        "text": "reflects our latest pricing",
+        "plain": "is higher, partly because you stayed",
+        "why": "Regulators called it price walking: a little more each year for those who never left.",
+        "catch": true
+      },
+      {
+        "text": "No action is needed",
+        "plain": "Do nothing, and pay more",
+        "why": "The best price usually goes to whoever asks. Silence is the profitable answer."
+      }
+    ],
+    "ask": "One phrase is where loyal customers pay. Which?",
+    "watch": "A letter that asks you to do nothing is asking for the highest price."
+  },
+  "source": "CMA, 2018; FCA PS21/5, 2021",
   "source_kind": "institution",
   "reference": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/766795/Loyalty_Penalty.pdf",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

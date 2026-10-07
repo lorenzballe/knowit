@@ -475,5 +475,16 @@
   "minutesShort": "{n} MIN",
   "sideOr": "ou",
   "nextStep": "Étape suivante",
-  "showAllSteps": "Tout voir"
+  "showAllSteps": "Tout voir",
+  "sceneLockIn": "VALIDER",
+  "sceneYou": "VOUS",
+  "sceneTruth": "RÉEL",
+  "sceneTryAgain": "Recommencer",
+  "sceneDrawHint": "Dessinez votre idée du doigt",
+  "sceneHoldHint": "Maintenez appuyé",
+  "sceneSwipeHint": "Glissez ou touchez",
+  "sceneTapToPick": "Touchez votre choix",
+  "sceneShowMe": "Montrez-moi",
+  "sceneYourGuess": "Votre idée",
+  "sceneNOfM": "{n} sur {m}"
 }

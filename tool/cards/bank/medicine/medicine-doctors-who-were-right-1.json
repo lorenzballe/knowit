@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did scurvy return to British polar expeditions in the 1870s, long after citrus had beaten it at sea?",
-  "answer": "Because the Navy had swapped Mediterranean lemons for West Indian limes, which hold far less vitamin C, and the juice was processed and stored for months. Nobody knew what the active ingredient was, so nobody could tell that the substitute had stopped working. A cure known only by its recipe is easily lost.",
+  "question": "Citrus had beaten scurvy at sea. Why did scurvy come back?",
+  "answer": "Lemons and limes looked like the same medicine, and the only test was whether sailors fell ill. With no named ingredient to measure, each cheaper swap and each month in storage went unnoticed until men sickened. The failure even led some doctors to doubt citrus altogether, and look for other causes.",
   "move": "If you do not know why something works, you cannot tell when it stops.",
   "ask": "Which of my good habits might quietly stop working, because I never understood why it worked?",
   "keywords": [
@@ -27,8 +27,47 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "Royal Navy, 1795",
+        "glyph": "check",
+        "line": "Lemon juice becomes a daily ration. Scurvy all but vanishes."
+      },
+      {
+        "fact": "Mid 1800s",
+        "glyph": "coin",
+        "line": "The Navy swaps Mediterranean lemons for West Indian limes."
+      },
+      {
+        "fact": "Bottled for the voyage",
+        "glyph": "clock",
+        "line": "The juice is processed and stored for months before use."
+      }
+    ],
+    "ask": "What happens on the 1875 Arctic expedition?",
+    "options": [
+      {
+        "label": "No scurvy at all"
+      },
+      {
+        "label": "A few mild cases"
+      },
+      {
+        "label": "Scurvy breaks out"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "Nares expedition, 1875–76",
+      "glyph": "cross",
+      "line": "Scurvy broke out, with lime juice on board."
+    },
+    "why": "Nobody knew what in a lemon cured scurvy, so nobody could tell that limes held far less of it."
+  },
   "source": "Carpenter, History of Scurvy and Vitamin C, 1986",
   "source_kind": "book",
   "reference": "Carpenter, The History of Scurvy and Vitamin C, Cambridge University Press, 1986",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

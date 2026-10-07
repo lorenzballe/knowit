@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Which ordinary words could land a London business in legal trouble if paired in its adverts around 2012?",
-  "answer": "Words like Games, 2012, gold and summer. The London Olympic Games and Paralympic Games Act 2006 gave organisers a right against any advert suggesting a link with the Games, and listed pairings a court could take as evidence, such as Games with 2012, or 2012 with gold or summer. Sponsors had paid for the silence.",
+  "question": "Around London 2012, some word pairs in an advert could bring legal trouble. Which pairs were on the law's list?",
+  "answer": "The Act set out two lists. The first held games, 2012, twenty twelve and Two Thousand and Twelve; the second held gold, silver, bronze, London, medals, sponsors and summer. Two words from the first, or one from each, could be taken as evidence of a link with the Games. Sponsors had paid for that silence.",
   "move": "What a sponsor buys is often the right to stop others speaking.",
   "keywords": [
     "london 2012",
@@ -25,6 +25,56 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Clear",
+    "right": "Listed",
+    "tag": "Olympics Act 2006",
+    "items": [
+      {
+        "text": "Summer Games",
+        "note": "A summer sale tied to the big event.",
+        "pile": "right",
+        "verdict": "Games with summer: one word from each list."
+      },
+      {
+        "text": "Gold medals",
+        "note": "A jeweller's window display.",
+        "pile": "left",
+        "verdict": "Gold and medals are both second-list words. Not a listed pair."
+      },
+      {
+        "text": "London 2012",
+        "note": "The obvious slogan.",
+        "pile": "right",
+        "verdict": "2012 with London: exactly the pairing the Act names."
+      },
+      {
+        "text": "Games 2012",
+        "note": "A games shop's anniversary.",
+        "pile": "right",
+        "verdict": "Two first-list words together are listed too."
+      },
+      {
+        "text": "London summer",
+        "note": "A city tourism poster.",
+        "pile": "left",
+        "verdict": "London and summer are both second-list words."
+      },
+      {
+        "text": "2012 sale",
+        "note": "A shop's new-year offer.",
+        "pile": "left",
+        "verdict": "2012 alone, with no second word from either list."
+      },
+      {
+        "text": "Bronze 2012",
+        "note": "A tanning salon's offer.",
+        "pile": "right",
+        "verdict": "2012 with bronze: a listed pair."
+      }
+    ]
+  },
   "source": "London Olympic Games Act 2006, Schedule 4",
   "source_kind": "primary_document",
   "reference": "London Olympic Games and Paralympic Games Act 2006, Schedule 4, UK Parliament, 2006",

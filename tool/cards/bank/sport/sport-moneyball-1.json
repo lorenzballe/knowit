@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What happened to the salaries of patient, walk-drawing hitters after Moneyball became a bestseller in 2003?",
-  "answer": "They rose. Hakes and Sauer found that before 2004 clubs paid little for on-base percentage, though it drove wins more than the hitting power they paid for. In 2004, the season after the book, the market price of getting on base jumped and most of the bargain vanished. A known edge is a priced edge.",
+  "question": "A poor baseball club found a cheap way to win. What happened once a bestseller explained it?",
+  "answer": "Hakes and Sauer measured what clubs paid for each point of on-base percentage. Before the book, almost nothing, while hitting power was well paid. In 2004 the price of getting on base jumped, as richer rivals hired analysts of their own, and Oakland had to hunt for the next skill the market had missed.",
   "move": "Once everyone knows the bargain, it stops being one.",
   "ask": "Is the clever shortcut I rely on still an edge, or has everyone else caught on?",
   "keywords": [
@@ -26,8 +26,47 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "Oakland A's, 2002",
+        "glyph": "coin",
+        "line": "A poor club, with about a third of the Yankees' payroll."
+      },
+      {
+        "fact": "On-base percentage",
+        "glyph": "eye",
+        "line": "Its analysts see that drawing walks wins games, and is cheap."
+      },
+      {
+        "fact": "2003",
+        "glyph": "book",
+        "line": "Michael Lewis tells the whole story in a bestseller, Moneyball."
+      }
+    ],
+    "ask": "What happens to the bargain?",
+    "options": [
+      {
+        "label": "Oakland keeps it"
+      },
+      {
+        "label": "Rivals ignore it"
+      },
+      {
+        "label": "Gone within a year"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "2004 salaries",
+      "glyph": "rise",
+      "line": "Clubs started paying for on-base skill. The bargain was gone."
+    },
+    "why": "An edge lasts only while others can't see it, and a bestseller is the opposite of a secret."
+  },
   "source": "Hakes & Sauer, Journal of Economic Perspectives, 2006",
   "source_kind": "paper",
   "reference": "Jahn K. Hakes & Raymond D. Sauer, An Economic Evaluation of the Moneyball Hypothesis, Journal of Economic Perspectives, 2006",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

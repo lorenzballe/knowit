@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does a men's javelin throw of 104.80 m, made in 1984, not stand as the world record?",
-  "answer": "Because the javelin itself was changed. Throws that long were starting to threaten people at the far end of stadiums, so in 1986 the men's javelin was redesigned with its centre of gravity 4 cm further forward, making it nose down sooner. Records started again; the best with the new design is 98.48 m.",
+  "question": "The men's javelin world record climbed from 80 metres in 1953 to 104.80 m in 1984. Where did it go over the next twelve years?",
+  "answer": "Down by nearly 20 metres. Throws that long threatened people at the far end of stadiums, so from 1986 the men's javelin had its centre of gravity moved 4 cm forward, making it nose down sooner. Records restarted at 85.74 m; the best with the new design is 98.48 m, set in 1996.",
   "move": "Before comparing two results, check they were made with the same tools.",
   "ask": "Am I comparing my results today with ones made under rules or tools that no longer apply?",
   "keywords": [
@@ -30,6 +30,44 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "draw",
+    "label": "Javelin world record, metres",
+    "unit": "m",
+    "columns": [
+      "1953",
+      "1964",
+      "1983",
+      "1984",
+      "1986",
+      "1993",
+      "1996"
+    ],
+    "values": [
+      80.41,
+      91.72,
+      99.72,
+      104.8,
+      85.74,
+      95.54,
+      98.48
+    ],
+    "given": 4,
+    "min": 60,
+    "max": 120,
+    "decimals": 2,
+    "verdict": {
+      "under": "Lower than the truth: the new javelin has since climbed back to 98.48 m.",
+      "near": "Right: a new javelin in 1986 reset it to 85.74 m; nobody has regained 104.80.",
+      "over": "Too high: since the 1986 redesign, nobody has thrown beyond 98.48 m."
+    },
+    "notes": [
+      {
+        "at": 4,
+        "text": "New javelin, 1986"
+      }
+    ]
+  },
   "source": "IAAF, Progression of World Records, 2015",
   "source_kind": "reference_work",
   "reference": "IAAF, Progression of IAAF World Records, 2015 edition, IAAF, 2015",

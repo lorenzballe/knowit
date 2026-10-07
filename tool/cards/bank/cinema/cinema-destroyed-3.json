@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Who destroyed most of the silent films that are now lost?",
-  "answer": "Largely their owners. Once talkies took over around 1929, silent films had almost no resale value, while nitrate was costly to store, dangerous, and held recoverable silver. Studios let negatives rot, melted prints down or dumped them. The last known print of MGM's London After Midnight went in a studio vault fire in 1965.",
+  "question": "Most American silent features are lost. Which of these famous silent films survive, and which are gone?",
+  "answer": "Mostly their owners threw them away. Once talkies took over around 1929, silent films had almost no resale value, while nitrate was costly to store, dangerous, and held silver worth recovering. Studios let negatives rot, melted prints or dumped them. The survivors are often copies that sat forgotten abroad, where nobody bothered to destroy them.",
   "move": "Things are lost less through disaster than through no longer seeming worth keeping.",
   "ask": "What am I letting slip away just because it no longer feels worth keeping?",
   "keywords": [
@@ -27,6 +27,50 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Lost",
+    "right": "Survives",
+    "tag": "The silent era",
+    "items": [
+      {
+        "text": "After Midnight",
+        "note": "MGM's London After Midnight, 1927, with Lon Chaney.",
+        "pile": "left",
+        "verdict": "The last known print burned in a studio vault fire in 1965."
+      },
+      {
+        "text": "Nosferatu",
+        "note": "Murnau's unlicensed Dracula, 1922.",
+        "pile": "right",
+        "verdict": "A court ordered every print destroyed in 1925. Copies abroad survived."
+      },
+      {
+        "text": "Cleopatra",
+        "note": "Theda Bara's 1917 epic, a huge hit.",
+        "pile": "left",
+        "verdict": "Lost, apart from a few seconds of fragments."
+      },
+      {
+        "text": "Metropolis",
+        "note": "Fritz Lang's 1927 city of the future.",
+        "pile": "right",
+        "verdict": "Cut on release; a near-complete print turned up in Buenos Aires in 2008."
+      },
+      {
+        "text": "Mountain Eagle",
+        "note": "Hitchcock's second feature, 1926.",
+        "pile": "left",
+        "verdict": "The only Hitchcock feature with no known copy."
+      },
+      {
+        "text": "Joan of Arc",
+        "note": "Dreyer's The Passion of Joan of Arc, 1928.",
+        "pile": "right",
+        "verdict": "Its original cut was found in a Norwegian mental hospital in 1981."
+      }
+    ]
+  },
   "source": "Cherchi Usai, Silent Cinema, 2000",
   "source_kind": "book",
   "reference": "Cherchi Usai, Silent Cinema: An Introduction, BFI Publishing, 2000",

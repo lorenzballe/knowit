@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does a CT scan done for one problem so often start a hunt for another?",
-  "answer": "Because the scanner shows everything in its slices, wanted or not. About 4% of abdominal CT scans reveal an unexpected lump on an adrenal gland, and nearly all are harmless. Each can still prompt hormone tests and repeat scans for years. The scan answered the question it was asked, then wrote several more.",
+  "question": "A free full-body CT scan, or $1,000 in cash. Which would you take?",
+  "answer": "The scan is free; what it finds is not. A CT shows everything in its slices, wanted or not: about 4% of abdominal scans reveal a lump on an adrenal gland, nearly always harmless. Each can start years of tests, worry and more radiation. The scanner answers questions nobody asked.",
   "move": "The more closely you look, the more harmless oddities you have to explain.",
   "ask": "Where am I looking so closely, at my body or my relationships, that I find trouble that was never there?",
   "keywords": [
@@ -17,17 +17,38 @@
     "incidental findings"
   ],
   "era": "recent",
-  "region": "world",
-  "hook": "mechanism",
+  "region": "americas",
+  "hook": "misconception",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Bovio et al., J Endocrinol Invest, 2006",
+  "scene": {
+    "type": "poll",
+    "who": "US adults by phone, Schwartz 2004",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "The free scan",
+            "share": 73,
+            "mirror": "Like 73% of Americans asked. A scan feels like safety, but most turn up something to chase."
+          },
+          {
+            "label": "The $1,000",
+            "share": 27,
+            "mirror": "Like 27%. No expert body advises full-body scans for people who feel well."
+          }
+        ]
+      }
+    ],
+    "why": "Looking feels like safety; the cost of a search shows up only later."
+  },
+  "source": "Schwartz et al., JAMA, 2004; Bovio et al., 2006",
   "source_kind": "paper",
-  "reference": "Bovio et al., Prevalence of adrenal incidentaloma in a contemporary computerized tomography series, Journal of Endocrinological Investigation, 2006",
-  "written": "2026-10-03"
+  "reference": "Schwartz, Woloshin, Fowler & Welch, Enthusiasm for cancer screening in the United States, JAMA 291 (2004): 71-78; Bovio et al., Prevalence of adrenal incidentaloma in a contemporary computerized tomography series, Journal of Endocrinological Investigation, 2006",
+  "written": "2026-10-06"
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Which debate was the runaway tram dilemma invented for, before anyone called it a trolley problem?",
-  "answer": "Abortion. Philippa Foot's 1967 paper tested the doctrine of double effect, a Catholic moral rule separating harm intended from harm merely foreseen, long applied to abortion. Her tram had a driver, not a bystander. Judith Jarvis Thomson named it the trolley problem in 1976, and the bystander at the switch arrived only in 1985.",
+  "question": "The runaway trolley feels like a puzzle made for self-driving cars. When do you think each part of it appeared?",
+  "answer": "Philippa Foot used the tram to test the doctrine of double effect, a Catholic rule separating harm intended from harm merely foreseen, long applied to abortion. Her tram had a driver, not a bystander. Judith Jarvis Thomson named the problem and later added the bystander; MIT's 2018 Moral Machine gathered some 40 million such choices.",
   "move": "Ask what a famous example was built to test before arguing with it.",
   "ask": "Before I argue with a famous example, do I know what it was built to test?",
   "keywords": [
@@ -27,8 +27,33 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "source": "Foot, Oxford Review, 1967",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1950,
+    "to": 2025,
+    "events": [
+      {
+        "label": "Foot's runaway tram",
+        "year": 1967,
+        "note": "Foot's 1967 tram was built to test an argument about abortion."
+      },
+      {
+        "label": "Named the trolley problem",
+        "year": 1976
+      },
+      {
+        "label": "Bystander version added",
+        "year": 1985
+      },
+      {
+        "label": "Moral Machine survey",
+        "year": 2018
+      }
+    ]
+  },
+  "source": "Foot, 1967; Thomson, 1976, 1985; Awad et al., 2018",
   "source_kind": "paper",
-  "reference": "Foot, The Problem of Abortion and the Doctrine of the Double Effect, Oxford Review 5, 1967; Thomson, Killing, Letting Die, and the Trolley Problem, The Monist 59, 1976; Thomson, The Trolley Problem, Yale Law Journal 94, 1985",
-  "written": "2026-09-26"
+  "reference": "Foot, The Problem of Abortion and the Doctrine of the Double Effect, Oxford Review 5, 1967; Thomson, The Monist 59, 1976; Thomson, Yale Law Journal 94, 1985; Awad et al., The Moral Machine experiment, Nature 563, 2018",
+  "written": "2026-10-06"
 }

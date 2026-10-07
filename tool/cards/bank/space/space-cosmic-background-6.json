@@ -6,20 +6,20 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Which instrument did two Soviet physicists name in 1964 as the one able to detect the Big Bang's afterglow?",
-  "answer": "Bell Labs' horn antenna in New Jersey. Doroshkevich and Novikov calculated that the afterglow should dominate the radio sky at short wavelengths and cited measurements made with that antenna. A year later Penzias and Wilson, on that horn and unaware of the paper, found a hiss of about 3.5 K they could not remove.",
-  "move": "A prediction nobody reads is as good as one never made.",
-  "ask": "Which good idea of mine have I never put where the right people would see it?",
+  "question": "New Jersey, 1964. A radio horn picks up a faint hiss, 3.5 degrees above absolute zero, that will not go away. From where?",
+  "answer": "The afterglow of the Big Bang, stretched into microwaves. Penzias and Wilson did not know it; physicists at nearby Princeton explained it. Two Soviet physicists had named this very horn as able to find it. Nobel Prize, 1978.",
+  "move": "If a signal does not change when you move, it is not coming from nearby.",
+  "ask": "What bothers me everywhere I go?",
   "keywords": [
-    "doroshkevich",
-    "novikov",
     "penzias and wilson",
+    "cosmic background",
     "horn antenna",
-    "bell labs"
+    "bell labs",
+    "big bang"
   ],
   "era": "twentieth",
   "region": "world",
-  "hook": "story",
+  "hook": "puzzle",
   "mood": "sober",
   "numeracy": 1,
   "abstraction": "concrete",
@@ -27,8 +27,47 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "source": "Doroshkevich & Novikov, Soviet Physics Doklady, 1964",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Pigeon mess",
+      "New York radio",
+      "Our galaxy",
+      "Big Bang"
+    ],
+    "answer": 3,
+    "clues": [
+      {
+        "text": "The hiss is weak and steady, about 3.5 degrees warmer than it should be.",
+        "tag": "3.5 degrees too warm",
+        "rulesOut": []
+      },
+      {
+        "text": "Pigeons nesting in the horn are evicted and their droppings scrubbed out. It stays.",
+        "tag": "Pigeons evicted",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "Pointing the horn away from New York City changes nothing.",
+        "tag": "Not from New York",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "It is the same in every direction, day and night, through the seasons.",
+        "tag": "Same in every direction",
+        "rulesOut": [
+          2
+        ]
+      }
+    ],
+    "why": "The galaxy glows brightest along the Milky Way. A hiss the same everywhere comes from everywhere."
+  },
+  "source": "Penzias & Wilson, Astrophysical Journal, 1965",
   "source_kind": "paper",
-  "reference": "Doroshkevich & Novikov, Mean Density of Radiation in the Metagalaxy and Certain Problems in Relativistic Cosmology, Soviet Physics Doklady 9, 111, 1964",
-  "written": "2026-09-27"
+  "reference": "Penzias & Wilson, A Measurement of Excess Antenna Temperature at 4080 Mc/s, Astrophysical Journal 142, 419, 1965; Doroshkevich & Novikov, Soviet Physics Doklady 9, 111, 1964",
+  "written": "2026-10-06"
 }

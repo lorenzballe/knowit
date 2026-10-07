@@ -6,16 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "When colonial Hanoi paid a bounty for each rat tail in 1902, why did tailless rats start appearing in the streets?",
-  "answer": "Because catchers cut off the tails and let the rats go. The city paid per tail, not per dead rat, so a living rat that could keep breeding was worth more than a dead one; officials also suspected rats were being farmed. The bounty was dropped, and plague reached Hanoi the next year.",
+  "question": "Four rewards and penalties meant to change behaviour, from rat bounties to nursery fines. What did people actually do?",
+  "answer": "The nursery fine is the one people miss, because a penalty should cut lateness. In ten Haifa day-care centres a small fine roughly doubled late pick-ups: parents stopped feeling they owed the staff a favour and started paying for extra time. When the fine was lifted, the lateness stayed.",
   "move": "Before rewarding a measure, ask how someone could produce it without the goal.",
   "ask": "What am I rewarding, in myself or others, that can be produced without the result I want?",
   "keywords": [
-    "rat bounty",
-    "hanoi",
     "perverse incentives",
-    "plague",
-    "french colonial rule"
+    "hanoi rat massacre",
+    "day-care fine",
+    "wells fargo",
+    "mexico city"
   ],
   "era": "twentieth",
   "region": "asia",
@@ -27,8 +27,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Vann, French Colonial History, 2003",
+  "scene": {
+    "type": "match",
+    "leftTitle": "The rule",
+    "rightTitle": "What people did",
+    "pairs": [
+      {
+        "left": "Bounty per rat tail",
+        "right": "Cut off the tails, let the rats breed",
+        "note": "Hanoi, 1902. Officials also suspected rats were being farmed."
+      },
+      {
+        "left": "Fine for late pick-up",
+        "right": "Came late to collect children more often",
+        "note": "The fine turned guilt into a price, and the price was cheap.",
+        "missed": true
+      },
+      {
+        "left": "Sales target per head",
+        "right": "Opened accounts nobody asked for",
+        "note": "Wells Fargo staff opened millions of them to hit their numbers."
+      },
+      {
+        "left": "Car-free weekday",
+        "right": "Bought a second, older car",
+        "note": "Mexico City, 1989. Air quality did not measurably improve."
+      }
+    ]
+  },
+  "source": "Vann, 2003; Gneezy & Rustichini, 2000",
   "source_kind": "paper",
   "reference": "Vann, Of Rats, Rice, and Race: The Great Hanoi Rat Massacre, an Episode in French Colonial History, French Colonial History, 2003",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

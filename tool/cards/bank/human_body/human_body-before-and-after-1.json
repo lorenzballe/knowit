@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did US advertising rules in 2009 stop protecting dramatic before-and-after photos marked results not typical?",
-  "answer": "Because the disclaimer did not undo the impression. The Federal Trade Commission revised its endorsement guides so that an advert showing an extraordinary result must also say what typical users achieve. Shown a person who lost 40 kg, readers assume that is the norm. A small-print warning cannot outweigh a big photograph.",
+  "question": "A weight-loss advert under a dramatic before-and-after photo. Which line did US regulators decide no longer excuses it?",
+  "answer": "Results not typical. In 2009 the US Federal Trade Commission revised its endorsement guides: an advert showing an extraordinary result must also say what typical users achieve. Shown someone who lost 40 kg, readers take it as the norm, and a line of small print does not undo a big photograph.",
   "move": "A vivid single case speaks louder than the small print beside it.",
   "ask": "Which success story am I measuring myself against that was never typical?",
   "keywords": [
@@ -26,8 +26,40 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Weight-loss advert",
+    "ref": "Typical text",
+    "title": "Real people, real results",
+    "body": "I lost 40 kg and never felt hungry. Real customer, real story. *Results not typical. Individual results may vary.",
+    "phrases": [
+      {
+        "text": "I lost 40 kg",
+        "plain": "One customer, picked from many, lost 40 kg",
+        "why": "The best case is chosen for being extraordinary. That is what makes it look ordinary."
+      },
+      {
+        "text": "Real customer, real story",
+        "plain": "True for her; it says nothing about you",
+        "why": "A real story can still be a rare one."
+      },
+      {
+        "text": "Results not typical",
+        "plain": "Most buyers lose far less; we won't say how much",
+        "why": "Since 2009 the FTC has wanted the typical result shown, not just this line.",
+        "catch": true
+      },
+      {
+        "text": "Individual results may vary",
+        "plain": "Yours will probably be smaller",
+        "why": "Vary sounds even-handed. With the best case shown, it can only vary downwards."
+      }
+    ],
+    "ask": "One line tries to undo the photograph. Which?",
+    "watch": "When an advert shows its best case, ask what the typical buyer got."
+  },
   "source": "US FTC endorsement guides, 2009",
   "source_kind": "institution",
   "reference": "US Federal Trade Commission, Guides Concerning the Use of Endorsements and Testimonials in Advertising, 16 CFR Part 255, 2009",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

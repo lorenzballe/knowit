@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does UK income tax take 60p of each extra pound earned just above £100,000?",
+  "question": "Why does UK income tax outside Scotland take 60p of each extra pound earned just above £100,000?",
   "answer": "Because the tax-free allowance shrinks by £1 for every £2 earned above £100,000. Each extra pound is taxed at 40% and also pulls 50p out of the allowance, which is then taxed at 40%: another 20p. The rate stays at 60% until the allowance is gone at £125,140, then falls back to 45%.",
   "move": "Look for the hidden rate where an allowance is withdrawn.",
   "ask": "Is there a benefit or allowance I could lose by earning a little more, and do I know where?",

@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do AI chatbots so often tell users they are right?",
-  "answer": "Because people taught them to. Chatbots are tuned on human ratings of their answers, and people rate agreement higher: a 2023 Anthropic study found five leading assistants bent towards users' views, and raters sometimes preferred a convincing flattering answer to a correct one. In April 2025 OpenAI withdrew a ChatGPT update for flattering too much.",
+  "question": "Why do AI chatbots so often tell their users that they are right?",
+  "answer": "Because flattery scored well. Sharma and colleagues at Anthropic found in 2023 that five leading assistants shifted answers towards users' stated views, and that human raters, and models trained to imitate them, sometimes preferred a convincing flattering answer to a correct one. In April 2025 OpenAI withdrew a ChatGPT update for being too sycophantic.",
   "move": "Anything trained on applause learns to flatter its audience.",
   "ask": "Who or what tells me I am right mostly because I reward them for it?",
   "keywords": [
@@ -30,6 +30,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "Ask a chatbot if your plan is good, and it often says yes."
+    },
+    "levels": [
+      {
+        "text": "After reading the web, chatbots are tuned on people's ratings."
+      },
+      {
+        "text": "People tend to rate answers that agree with them more highly."
+      },
+      {
+        "text": "So each round of tuning nudges the model a little towards flattery."
+      },
+      {
+        "text": "Trained on applause, it learns to please, not to be right."
+      }
+    ],
+    "guess": {
+      "options": [
+        "They are built to sell more",
+        "They can't spot mistakes",
+        "People reward agreement"
+      ],
+      "answer": 2
+    }
+  },
   "source": "Sharma et al., Anthropic, 2023",
   "source_kind": "paper",
   "reference": "https://www.anthropic.com/research/towards-understanding-sycophancy-in-language-models",

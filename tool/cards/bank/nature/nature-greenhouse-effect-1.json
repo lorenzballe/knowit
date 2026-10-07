@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do nitrogen and oxygen, 99% of the air, trap almost no heat while carbon dioxide does?",
-  "answer": "Because of their shape. To absorb infrared, a molecule must bend or stretch in a way that shifts its electric charge. Nitrogen and oxygen are pairs of identical atoms, so their vibrations stay balanced; carbon dioxide's three atoms can bend lopsidedly. So a gas at 0.04% of the air does the work 99% cannot.",
+  "question": "Why does a trace of carbon dioxide trap heat that nitrogen and oxygen let through?",
+  "answer": "Because Earth sheds its heat as infrared, and only molecules that vibrate lopsidedly can absorb it. Carbon dioxide's bend absorbs near 15 micrometres, close to the peak of the infrared Earth gives off. Water vapour and methane work the same way. A trace gas with the right shape does what the bulk cannot.",
   "move": "A share of the total says little; ask what each part can do.",
   "ask": "Who in my team or family is a small part with an outsized effect?",
   "keywords": [
@@ -27,6 +27,37 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "CO₂ is a sliver of the air, yet it warms the planet."
+    },
+    "levels": [
+      {
+        "text": "The other 99%, nitrogen and oxygen, let heat radiation pass."
+      },
+      {
+        "text": "To catch infrared, a molecule must shift its charge as it vibrates."
+      },
+      {
+        "text": "Nitrogen and oxygen are pairs of identical atoms: charge stays even."
+      },
+      {
+        "text": "CO₂ can bend lopsided. Shape, not amount, decides.",
+        "figure": "0.04%",
+        "unit": "of the air is CO₂"
+      }
+    ],
+    "guess": {
+      "options": [
+        "CO₂ is heavier and sinks",
+        "Its shape catches heat",
+        "It is a darker gas"
+      ],
+      "answer": 1
+    }
+  },
   "source": "Pierrehumbert, Principles of Planetary Climate, 2010",
   "source_kind": "book",
   "reference": "Pierrehumbert, Principles of Planetary Climate, Cambridge University Press, 2010",

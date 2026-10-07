@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How long does it take to judge whether a stranger's face looks trustworthy, and what does more time add?",
-  "answer": "About a tenth of a second, and extra time adds mostly confidence. Willis and Todorov flashed faces for 100 milliseconds; judgements of trustworthiness already lined up closely with those made with no time limit. Longer looks made people surer, not different. The verdict is in before the person has spoken.",
+  "question": "A stranger's face flashes on a screen and you judge whether it looks trustworthy. How long a look do you need?",
+  "answer": "A tenth of a second. Willis and Todorov flashed faces for 100 ms, and trust ratings already matched those made with no time limit. Longer looks added little but confidence. The verdict is in before the person speaks; a longer look mostly makes it feel earned.",
   "move": "A verdict on a stranger arrives before any evidence does; hold it loosely.",
   "ask": "Whom did I size up within seconds this week, and what have I learned since that might change it?",
   "keywords": [
@@ -20,14 +20,26 @@
   "region": "none",
   "hook": "number",
   "mood": "wonder",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Willis & Todorov, Psychological Science, 2006",
+  "source": "Willis & Todorov, 2006",
   "source_kind": "paper",
   "reference": "Willis & Todorov, First impressions: making up your mind after a 100-ms exposure to a face, Psychological Science, 2006",
-  "written": "2026-10-03"
+  "written": "2026-10-06",
+  "scene": {
+    "type": "hold",
+    "what": "Long enough to judge trust",
+    "seconds": 0.1,
+    "display": "ms",
+    "comparisons": [
+      {
+        "label": "The longest look tested",
+        "seconds": 1.0
+      }
+    ]
+  }
 }

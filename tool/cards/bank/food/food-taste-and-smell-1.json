@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do so many passengers order tomato juice on planes, when few of them drink it on the ground?",
-  "answer": "Because the noise changes the taste. In a 2015 Cornell study, eating with roughly 85-decibel noise, like a cabin's roar, dulled sweetness and strengthened umami, the savoury taste tomatoes are rich in. Dry cabin air also dulls smell, which flattens most flavours. Tomato juice is one of the few drinks the cabin improves.",
+  "question": "Why do so many people order tomato juice on a plane, and almost never at home?",
+  "answer": "Because the cabin is part of the seasoning. Yan and Dando at Cornell had people taste while hearing loud, cabin-like noise: sweet came through weaker, umami, the savoury taste of tomato and stock, stronger. With smell dulled as well, most drinks go flat in the air. Tomato juice is one the plane improves.",
   "move": "The room shapes the taste as much as the recipe does.",
   "ask": "Where might my surroundings be shaping a judgment I think is all mine?",
   "keywords": [
@@ -26,6 +26,37 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "On planes, people order tomato juice they never drink at home."
+    },
+    "levels": [
+      {
+        "text": "Up there it simply tastes better: rounder, more savoury."
+      },
+      {
+        "text": "Loud cabin noise dulls sweetness and turns up savoury umami.",
+        "figure": "~85 dB",
+        "unit": "cabin noise, in cruise"
+      },
+      {
+        "text": "Dry, thin cabin air also numbs the nose, which carries most flavour."
+      },
+      {
+        "text": "Tomato is rich in umami, the one taste the cabin turns up."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Salt helps in dry air",
+        "Airlines push it",
+        "Noise boosts savoury taste"
+      ],
+      "answer": 2
+    }
+  },
   "source": "Yan & Dando, J. Exp. Psychol. Hum. Percept. Perform., 2015",
   "source_kind": "paper",
   "reference": "Yan & Dando, A crossmodal role for audition in taste perception, Journal of Experimental Psychology: Human Perception and Performance, 2015",

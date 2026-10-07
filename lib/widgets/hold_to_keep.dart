@@ -117,15 +117,14 @@ class _HoldToKeepState extends State<HoldToKeep> with TickerProviderStateMixin {
         // The card underneath keeps its tap and its throw: a quick tap never
         // reaches this, and a card dragged away takes the pointer with it.
         gestures: {
-          LongPressGestureRecognizer:
-              GestureRecognizerFactoryWithHandlers<LongPressGestureRecognizer>(
-                () => LongPressGestureRecognizer(duration: _press),
-                (r) => r
-                  ..onLongPressDown = ((_) => _hold.forward())
-                  ..onLongPressCancel = (() => _hold.reverse())
-                  ..onLongPressStart = ((_) => _fire())
-                  ..onLongPressEnd = ((_) => _hold.reverse()),
-              ),
+          _KeepPress: GestureRecognizerFactoryWithHandlers<_KeepPress>(
+            () => _KeepPress(duration: _press, onLost: _hold.reverse),
+            (r) => r
+              ..onLongPressDown = ((_) => _hold.forward())
+              ..onLongPressCancel = (() => _hold.reverse())
+              ..onLongPressStart = ((_) => _fire())
+              ..onLongPressEnd = ((_) => _hold.reverse()),
+          ),
         },
         child: AnimatedBuilder(
           animation: Listenable.merge([_hold, _done]),
@@ -276,4 +275,22 @@ class _Mark extends CustomPainter {
   @override
   bool shouldRepaint(_Mark old) =>
       old.hold != hold || old.done != done || old.letting != letting;
+}
+
+/// The long press that keeps a card, told when it loses.
+///
+/// A recognizer that loses the arena to another (a scene inside the card
+/// that claims the finger the moment it lands) is never given a cancel: it
+/// goes quiet while the finger stays down, and the mark it started would
+/// keep filling round a press that is no longer its own. Losing is a let go.
+class _KeepPress extends LongPressGestureRecognizer {
+  _KeepPress({super.duration, required this.onLost});
+
+  final VoidCallback onLost;
+
+  @override
+  void rejectGesture(int pointer) {
+    super.rejectGesture(pointer);
+    onLost();
+  }
 }

@@ -475,5 +475,16 @@
   "minutesShort": "{n} 分钟",
   "sideOr": "还是",
   "nextStep": "下一步",
-  "showAllSteps": "全部显示"
+  "showAllSteps": "全部显示",
+  "sceneLockIn": "确定",
+  "sceneYou": "你",
+  "sceneTruth": "真相",
+  "sceneTryAgain": "再试一次",
+  "sceneDrawHint": "用手指画出你的猜测",
+  "sceneHoldHint": "按住",
+  "sceneSwipeHint": "滑动或点击",
+  "sceneTapToPick": "点选你的答案",
+  "sceneShowMe": "给我看",
+  "sceneYourGuess": "你的猜测",
+  "sceneNOfM": "{m}个中的{n}个"
 }

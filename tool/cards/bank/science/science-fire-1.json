@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "When did fire first appear on Earth?",
-  "answer": "About 420 million years ago, in the last tenth of Earth's history. Fire needs fuel, oxygen and a spark. Lightning was always there, but fuel arrived only with land plants, and oxygen had to rise high enough. The oldest charcoal is that old: for four billion years, lightning struck ground with nothing to burn.",
+  "question": "Lightning has struck the Earth for billions of years. When do you think the first wildfire burned?",
+  "answer": "Fire needs fuel, oxygen and a spark. Lightning was always there, but fuel came only with land plants, and the air needed enough oxygen, at least about 16%, for flames to spread. Charcoal from Wales and Poland shows wildfires 430 million years ago, as soon as there were plants to burn.",
   "move": "A thing needs all its ingredients; the last one to arrive sets the date.",
   "ask": "What am I waiting for before something starts, and is it the one thing still missing?",
   "keywords": [
@@ -27,8 +27,38 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "source": "Glasspool, Edwards & Axe, Geology, 2004",
-  "source_kind": "paper",
-  "reference": "Glasspool, Edwards & Axe, Charcoal in the Silurian as evidence for the earliest wildfire, Geology, 2004",
-  "written": "2026-09-26"
+  "scene": {
+    "type": "timeline",
+    "axis": "ago",
+    "from": 10000000000,
+    "to": 100000,
+    "unit": "years ago",
+    "events": [
+      {
+        "label": "Earth forms",
+        "ago": 4540000000
+      },
+      {
+        "label": "Air gets oxygen",
+        "ago": 2400000000
+      },
+      {
+        "label": "First wildfire",
+        "ago": 430000000,
+        "note": "The oldest charcoal is 430 million years old: fire waited for plants to burn."
+      },
+      {
+        "label": "Dinosaurs die out",
+        "ago": 66000000
+      },
+      {
+        "label": "Our species appears",
+        "ago": 300000
+      }
+    ]
+  },
+  "source": "Glasspool & Gastaldo, GSA, 2022; Lyons et al., 2014",
+  "source_kind": "institution",
+  "reference": "https://www.geosociety.org/GSA/News/pr/2022/22-34.aspx",
+  "written": "2026-10-06"
 }

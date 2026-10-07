@@ -475,5 +475,16 @@
   "minutesShort": "{n}分",
   "sideOr": "または",
   "nextStep": "次のステップ",
-  "showAllSteps": "すべて表示"
+  "showAllSteps": "すべて表示",
+  "sceneLockIn": "決定",
+  "sceneYou": "あなた",
+  "sceneTruth": "正解",
+  "sceneTryAgain": "もう一度",
+  "sceneDrawHint": "指で予想を描いてください",
+  "sceneHoldHint": "長押し",
+  "sceneSwipeHint": "スワイプかタップ",
+  "sceneTapToPick": "選んでタップ",
+  "sceneShowMe": "見せて",
+  "sceneYourGuess": "あなたの予想",
+  "sceneNOfM": "{m}中{n}"
 }

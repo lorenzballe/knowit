@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How has Japan's Ise shrine kept its ancient form when none of its wood is more than 20 years old?",
-  "answer": "By being rebuilt every 20 years on the empty plot beside it, identical to the joint, before the old one comes down. The rite goes back about 1,300 years, though it lapsed for over a century during the civil wars of the 1400s and 1500s. What endures is the carpenters' knowledge, not the timber.",
+  "question": "Japan's Ise shrine is rebuilt, identical to the joint, on the empty plot beside it every 20 years. How many times has that been done?",
+  "answer": "62 times. The rite began in the late 600s and lapsed for over a century during the civil wars of the 1400s and 1500s. None of its timber is over 20 years old, yet the shrine is called ancient. What endures is the carpenters' knowledge, not the wood.",
   "move": "Some things last by being remade, not by being kept.",
   "ask": "What in my life lasts only because I keep rebuilding it?",
   "keywords": [
@@ -18,16 +18,46 @@
   ],
   "era": "timeless",
   "region": "asia",
-  "hook": "mechanism",
+  "hook": "number",
   "mood": "wonder",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "count",
+    "unit": "rebuildings, the latest in 2013",
+    "answer": 62,
+    "each": 1,
+    "eachLabel": "1 dot = 1 complete rebuilding",
+    "compare": "No timber older than 20 years",
+    "options": [
+      {
+        "label": "About 6",
+        "value": 6,
+        "note": "Far too few. The rebuilding of 2013 was the 62nd."
+      },
+      {
+        "label": "About 20",
+        "value": 20,
+        "note": "Too few. Every 20 years for about 1,300 years makes over 60."
+      },
+      {
+        "label": "About 60",
+        "value": 60,
+        "note": "Right: 62 times since the late 600s, despite a century lost to war."
+      },
+      {
+        "label": "About 200",
+        "value": 200,
+        "note": "Too many. 1,300 years at 20 a time is about 65, and war skipped a few."
+      }
+    ]
+  },
   "source": "Tange & Kawazoe, Ise, 1965",
   "source_kind": "book",
-  "reference": "Tange & Kawazoe, Ise: Prototype of Japanese Architecture, MIT Press, 1965",
-  "written": "2026-09-27"
+  "reference": "Tange & Kawazoe, Ise: Prototype of Japanese Architecture, MIT Press, 1965; Jingu Administration Office, Sengukan museum, the 62nd Shikinen Sengu, 2013: https://www.sengukan.jp/en",
+  "written": "2026-10-06"
 }

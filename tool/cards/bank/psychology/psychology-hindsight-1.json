@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Mock jurors judged whether a city should have paid a bridge watcher to prevent floods. What changed once they knew a flood happened?",
-  "answer": "Their verdict. Told only what the city knew beforehand, 24% thought the watcher was needed; told that a flood had occurred, 57% judged the city negligent for not hiring one. A third group, told of the flood but warned explicitly to ignore it, still found negligence 56% of the time. The outcome rewrote the past.",
+  "question": "A river city could pay for a watcher on its drawbridge, in case debris causes a flood. What do you say?",
+  "answer": "Knowing the ending makes it look foreseeable. Kamin and Rachlinski's jurors had the same facts; only the flood was new. A third group was told of the flood and warned to ignore it: 56% still found negligence. Hindsight cannot be switched off on request, which is why fair reviews judge what was known then.",
   "move": "Judge a decision by what was knowable then, not what happened next.",
   "ask": "Whom have I blamed for a choice that only looked foolish once I knew how it turned out?",
   "keywords": [
@@ -26,8 +26,45 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "Mock jurors, Kamin & Rachlinski 1995",
+    "questions": [
+      {
+        "prompt": "No flood has happened. Should the city pay for the watcher?",
+        "tag": "Judged before",
+        "options": [
+          {
+            "label": "Yes, hire one",
+            "share": 24
+          },
+          {
+            "label": "No, not needed",
+            "share": 76
+          }
+        ]
+      },
+      {
+        "prompt": "Same facts, but a flood came and did great damage. Was not hiring negligent?",
+        "tag": "Judged after a flood",
+        "options": [
+          {
+            "label": "Yes, negligent",
+            "share": 57
+          },
+          {
+            "label": "No, a fair call",
+            "share": 43
+          }
+        ]
+      }
+    ],
+    "why": "Once you know the ending, it looks as if anyone could have seen it coming.",
+    "same": "You held steady. The jurors didn't: backing the watcher rose from 24% to 57% after the flood.",
+    "switched": "You switched, like many jurors. The risk was the same; only knowing the ending changed."
+  },
   "source": "Kamin & Rachlinski, Law and Human Behavior, 1995",
   "source_kind": "paper",
   "reference": "Kamin & Rachlinski, Ex post is not ex ante: Determining liability in hindsight, Law and Human Behavior, 1995",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

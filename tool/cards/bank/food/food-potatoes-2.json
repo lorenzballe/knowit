@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did Prussia's king push reluctant peasants to grow potatoes in the 1750s?",
-  "answer": "By decree, again and again. Frederick II's circular of 24 March 1756 told Silesian officials to have potatoes planted on spare ground and to teach people to eat them, and similar orders followed for years. The tale of guards posted to tempt thieves is later legend. The famine of 1770 to 1772 finished the job.",
+  "question": "Prussian peasants had to be ordered to grow potatoes. Which of these traditional European foods came from the Americas?",
+  "answer": "New crops spread by need, not taste. Frederick II's circular of 24 March 1756 told Silesian officials to plant potatoes on spare ground and teach people to eat them, and similar orders followed for years. The famine of 1770 to 1772 finished the job. Much of Europe's traditional food is younger than Columbus.",
   "move": "Where a crop spreads by order, look for the hunger that made it stick.",
   "ask": "When people resist a change, do I give orders or look for what would make them want it?",
   "keywords": [
@@ -27,7 +27,63 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Earle, Feeding the People",
+  "scene": {
+    "type": "sort",
+    "left": "Eurasia",
+    "right": "America",
+    "tag": "Columbus sails · 1492",
+    "items": [
+      {
+        "text": "Potato",
+        "note": "Boiled, mashed, in every northern kitchen.",
+        "pile": "right",
+        "verdict": "From the Andes. Frederick II ordered it planted in Silesia in 1756."
+      },
+      {
+        "text": "Pasta",
+        "note": "Dried macaroni and its cousins.",
+        "pile": "left",
+        "verdict": "A Genoese inventory of 1279 already lists a basket of macaroni."
+      },
+      {
+        "text": "Tomato",
+        "note": "The base of Italian sauce.",
+        "pile": "right",
+        "verdict": "American. First described in Italy in 1544, fried like aubergine."
+      },
+      {
+        "text": "Paprika",
+        "note": "Hungary's red spice.",
+        "pile": "right",
+        "verdict": "Ground from chilli peppers, which are American."
+      },
+      {
+        "text": "Parmesan",
+        "note": "The hard cheese of Parma.",
+        "pile": "left",
+        "verdict": "Named in a Genoese deed of 1254, paid as rent."
+      },
+      {
+        "text": "Polenta",
+        "note": "Yellow maize porridge.",
+        "pile": "right",
+        "verdict": "Maize is American. Older polenta was farro, chestnut or millet."
+      },
+      {
+        "text": "Turkey",
+        "note": "The Christmas bird.",
+        "pile": "right",
+        "verdict": "Domesticated in Mexico; it reached Europe in the 1500s."
+      },
+      {
+        "text": "Aubergine",
+        "note": "Fried, baked, in parmigiana.",
+        "pile": "left",
+        "verdict": "Brought to Sicily by Arab growers in the Middle Ages."
+      }
+    ]
+  },
+  "source": "Earle, Feeding the People, 2020",
   "source_kind": "book",
   "reference": "Earle, Feeding the People: The Politics of the Potato, Cambridge University Press, 2020",
   "written": "2026-09-26"

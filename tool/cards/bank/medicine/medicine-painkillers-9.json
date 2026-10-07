@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why can a heart patient's daily low-dose aspirin stop protecting them if they take ibuprofen first?",
-  "answer": "Because ibuprofen reaches the target first. Aspirin protects by permanently plugging an enzyme in platelets, COX-1; ibuprofen sits loosely in the same channel and blocks aspirin's way in. When ibuprofen lets go, the aspirin has left the blood. The FDA advised in 2006: ibuprofen at least 30 minutes after aspirin, or 8 hours before.",
+  "question": "Why can an ibuprofen taken before a daily aspirin cancel its heart protection?",
+  "answer": "Because aspirin's effect is permanent and ibuprofen's is not. Aspirin locks the platelet enzyme COX-1 for the platelet's whole life, which is why a tiny daily dose is enough. Ibuprofen only sits there for a while. The FDA's 2006 advice: ibuprofen at least 30 minutes after immediate-release aspirin, or over 8 hours before.",
   "move": "Two harmless habits can cancel each other when they compete for one door.",
   "ask": "Which two harmless habits of mine could be cancelling each other out?",
   "keywords": [
@@ -27,6 +27,37 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "Ibuprofen before the daily aspirin can switch the aspirin off."
+    },
+    "levels": [
+      {
+        "text": "Aspirin protects by jamming an enzyme platelets need to clot."
+      },
+      {
+        "text": "It gets one short chance: the blood clears it within the hour.",
+        "figure": "~20 min",
+        "unit": "aspirin's half-life"
+      },
+      {
+        "text": "Ibuprofen, there first, sits in the same pocket during that chance."
+      },
+      {
+        "text": "Two drugs want one door, and the first to arrive wins."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Ibuprofen destroys aspirin",
+        "It blocks aspirin's spot",
+        "The blood gets too thin"
+      ],
+      "answer": 1
+    }
+  },
   "source": "US Food and Drug Administration, 2006",
   "source_kind": "institution",
   "reference": "US Food and Drug Administration, Information for Healthcare Professionals: Concomitant Use of Ibuprofen and Aspirin, 2006",

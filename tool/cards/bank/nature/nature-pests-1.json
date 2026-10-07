@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did Indonesia fight a rice pest in 1986 by banning 57 insecticides?",
-  "answer": "Because the sprays were breeding the pest. Broad insecticides killed the spiders and other predators that kept brown planthoppers in check, while the planthoppers bounced back faster and grew resistant. After a severe outbreak, a presidential decree banned 57 products on rice and backed farmer field schools. Spraying fell and harvests held.",
+  "question": "Indonesia's rice pest grew worse with every spraying. What did a spray ban do?",
+  "answer": "Broad sprays kill the hunters as well as the hunted, and the plant-eaters, breeding faster, rebound first into fields with nothing left to eat them; planthoppers also grew resistant. Removing the fix let spiders and other predators return, while farmer field schools taught growers to count insects before reaching for a spray.",
   "move": "When a fix keeps failing, ask whether it is feeding the problem.",
   "ask": "Which fix do I keep reaching for that may be what makes the problem come back?",
   "keywords": [
@@ -27,8 +27,52 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "Java, 1970s and 1980s",
+        "glyph": "calendar",
+        "line": "Rice farmers spray broad insecticides, often on a schedule."
+      },
+      {
+        "fact": "Brown planthopper",
+        "glyph": "rise",
+        "line": "A tiny pest keeps coming back, worse each time."
+      },
+      {
+        "fact": "More spraying",
+        "glyph": "cross",
+        "line": "The outbreaks grow anyway."
+      },
+      {
+        "fact": "November 1986",
+        "glyph": "ban",
+        "line": "A decree bans 57 insecticides on rice."
+      }
+    ],
+    "ask": "What happens to the planthopper?",
+    "options": [
+      {
+        "label": "No real change"
+      },
+      {
+        "label": "It comes back worse"
+      },
+      {
+        "label": "It falls back"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "Late 1980s",
+      "glyph": "fall",
+      "line": "Outbreaks faded, spraying fell, and harvests held."
+    },
+    "why": "The sprays killed the spiders that ate planthoppers, and the pest bred back first."
+  },
   "source": "Matteson, Annual Review of Entomology, 2000",
   "source_kind": "paper",
   "reference": "Matteson, Insect pest management in tropical Asian irrigated rice, Annual Review of Entomology, 2000",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

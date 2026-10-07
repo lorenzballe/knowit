@@ -6,9 +6,9 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What did a 2019 US government kitchen study find when volunteers rinsed raw chicken before cooking it?",
-  "answer": "That the rinse moved germs rather than removing them. In the USDA's observed kitchens, about a quarter of the people who washed their chicken later had its bacteria in the salad they made next. Splashes reach the sink, the counter and hands. Only cooking the middle to 74 °C kills what clings to the meat.",
-  "move": "Cleaning that spreads the problem is worse than no cleaning.",
+  "question": "Six kitchen rules handed down in families. Which are myths, and which hold up when tested?",
+  "answer": "The myths survive because each matches what the cook sees. Rinsed chicken looks clean, a crust looks sealed, the smell of wine fades. Germs, juice and alcohol are what the eye cannot check. In a 2019 USDA kitchen study, a quarter of those who rinsed chicken got its bacteria into their salad.",
+  "move": "When a habit's only proof is how it looks, test what you cannot see.",
   "ask": "Is there a fix I apply out of habit that might be spreading the problem?",
   "keywords": [
     "raw chicken",
@@ -26,8 +26,52 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "USDA Food Safety and Inspection Service, 2019",
+  "scene": {
+    "type": "sort",
+    "left": "Myth",
+    "right": "True",
+    "tag": "Mum always said",
+    "items": [
+      {
+        "text": "Raw chicken",
+        "note": "Rinse it under the tap to wash the germs off.",
+        "pile": "left",
+        "verdict": "It splashes them around. Only cooking the middle to 74 °C kills them."
+      },
+      {
+        "text": "Searing",
+        "note": "A hot pan seals the juices inside meat.",
+        "pile": "left",
+        "verdict": "Seared steaks lose as much liquid as unseared. Searing adds flavour, not a seal."
+      },
+      {
+        "text": "Wine in a stew",
+        "note": "The alcohol all cooks off.",
+        "pile": "left",
+        "verdict": "After an hour's simmer about 25% is left; after two and a half hours, 5%."
+      },
+      {
+        "text": "Salted water",
+        "note": "Salt makes pasta water boil sooner.",
+        "pile": "left",
+        "verdict": "It raises the boiling point a fraction. The salt is there for taste."
+      },
+      {
+        "text": "Fridge bread",
+        "note": "It goes stale faster than on the counter.",
+        "pile": "right",
+        "verdict": "Starch recrystallises fastest in the cold. Freeze it or leave it out."
+      },
+      {
+        "text": "Cold tomatoes",
+        "note": "The fridge dulls their flavour.",
+        "pile": "right",
+        "verdict": "Chilled at 5 °C they stop making flavour compounds, and some never restart."
+      }
+    ]
+  },
+  "source": "USDA, 2019; Zhang et al., PNAS, 2016",
   "source_kind": "institution",
-  "reference": "US Department of Agriculture Food Safety and Inspection Service, Food Safety Consumer Research Project: Meal Preparation Experiment Related to Poultry Washing, 2019",
+  "reference": "USDA FSIS, Meal Preparation Experiment Related to Poultry Washing, 2019; USDA Table of Nutrient Retention Factors, Release 6, 2007; Zhang et al., PNAS 113:12580, 2016, doi:10.1073/pnas.1613910113",
   "written": "2026-10-03"
 }

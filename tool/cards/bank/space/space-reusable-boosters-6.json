@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did engineers hold physical evidence of damaged booster seals years before Challenger was lost in 1986?",
-  "answer": "Because the boosters were fished out of the sea for reuse. Recovered casings showed the rubber O-rings in their joints scorched and eroded on flight after flight, from the second Shuttle mission in 1981, with the worst soot after a cold launch in January 1985. Each safe return was read as proof the margin held.",
+  "question": "The Shuttle's booster seals kept getting damaged, yet every flight landed safely. Now what?",
+  "answer": "Sociologist Diane Vaughan called it the normalisation of deviance. Damage that should never happen became expected, then acceptable, because nothing bad had followed. The night before the last launch, engineers at the booster maker argued against flying in the cold; managers asked them to prove it was unsafe, not that it was safe.",
   "move": "A near miss that keeps happening is a warning, not a record.",
   "ask": "Which near miss that keeps happening am I filing as a record, not a warning?",
   "keywords": [
@@ -27,8 +27,47 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "source": "Rogers Commission report, 1986",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "1981, the second flight",
+        "glyph": "eye",
+        "line": "Boosters fished from the sea show rubber seals scorched."
+      },
+      {
+        "fact": "Flight after flight",
+        "glyph": "check",
+        "line": "More seal damage. Each Shuttle still comes home safe."
+      },
+      {
+        "fact": "January 1985, about 12 °C",
+        "glyph": "fall",
+        "line": "The coldest launch yet brings the worst damage so far."
+      }
+    ],
+    "ask": "What do NASA's managers decide?",
+    "options": [
+      {
+        "label": "Ground the fleet"
+      },
+      {
+        "label": "Fix seals, then fly"
+      },
+      {
+        "label": "Fly on: within margin"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "28 January 1986, about 2 °C",
+      "glyph": "cross",
+      "line": "They flew on. On a far colder morning, a seal failed."
+    },
+    "why": "Each safe return was read as proof the risk was fine, so the line of acceptable kept moving."
+  },
+  "source": "Rogers Commission, 1986; Vaughan, 1996",
   "source_kind": "institution",
-  "reference": "Presidential Commission on the Space Shuttle Challenger Accident, Report to the President, Washington DC, 1986",
-  "written": "2026-09-27"
+  "reference": "Presidential Commission on the Space Shuttle Challenger Accident, Report to the President, Washington DC, 1986; Diane Vaughan, The Challenger Launch Decision: Risky Technology, Culture, and Deviance at NASA, University of Chicago Press, 1996",
+  "written": "2026-10-06"
 }

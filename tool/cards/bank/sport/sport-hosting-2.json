@@ -6,9 +6,9 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How long did it take Quebec to pay off the debt from Montreal's 1976 Olympics?",
-  "answer": "About thirty years: the last of it was cleared in November 2006. The stadium, nicknamed the Big Owe, got its retractable roof only in 1987, and it never worked well. A special tobacco tax helped pay. A Games lasting about two weeks was still being paid for by smokers born after it.",
-  "move": "Ask who pays for a party after the guests have gone home.",
+  "question": "Montreal, Sochi, London, Barcelona, Beijing: which Games ran furthest past the cost its city had promised?",
+  "answer": "Montreal 1976, at 720% over, in real terms. Flyvbjerg's team found overruns ranging from Beijing's 2% to Montreal's sevenfold, and no Games since 1960 under budget. Quebec cleared the last of Montreal's debt only in November 2006, helped by a tobacco tax. Its stadium was nicknamed the Big Owe.",
+  "move": "Treat a budget written to win a contest as a floor, not an estimate.",
   "ask": "When I enjoy something now, who ends up paying after the party is over?",
   "keywords": [
     "montreal 1976",
@@ -19,16 +19,48 @@
   ],
   "era": "twentieth",
   "region": "americas",
-  "hook": "story",
+  "hook": "number",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "timeline",
-  "source": "CBC News, 2006",
-  "source_kind": "news_archive",
-  "reference": "https://www.cbc.ca/news/canada/montreal/quebec-s-big-owe-stadium-debt-is-over-1.602530",
-  "written": "2026-09-26"
+  "figure": "bars",
+  "source": "Flyvbjerg, Stewart & Budzier, Oxford Olympics Study, 2016",
+  "source_kind": "paper",
+  "reference": "https://arxiv.org/abs/1607.04484",
+  "written": "2026-10-06",
+  "scene": {
+    "type": "rank",
+    "quantity": "Cost overrun, real terms",
+    "most": "Worst",
+    "unit": "%",
+    "items": [
+      {
+        "label": "London 2012",
+        "value": 76,
+        "note": "76% over: a middling result by Olympic standards."
+      },
+      {
+        "label": "Montreal 1976",
+        "value": 720,
+        "note": "Over seven times the promise. Quebec paid off the last of it in 2006."
+      },
+      {
+        "label": "Beijing 2008",
+        "value": 2,
+        "note": "Two per cent over, but only on the official sports budget."
+      },
+      {
+        "label": "Sochi 2014",
+        "value": 289,
+        "note": "Nearly four times its bid budget."
+      },
+      {
+        "label": "Barcelona 1992",
+        "value": 266
+      }
+    ]
+  }
 }

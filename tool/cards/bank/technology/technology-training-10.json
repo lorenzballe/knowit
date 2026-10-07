@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do AI labs delete near-identical passages from the text they train models on?",
-  "answer": "Because repeated text gets memorised and recited. Lee and colleagues found one 61-word English sentence repeated over 60,000 times in C4, a widely used web dataset. Models trained after duplicates were removed emitted memorised text about ten times less often. The web's boilerplate is what a model learns by heart.",
+  "question": "One 61-word English sentence turns up again and again in C4, a web dataset used to train AI models. How many times?",
+  "answer": "Over 60,000 times, Lee and colleagues found. Templates and boilerplate repeat across countless pages, and a model sees them so often that it learns them by rote. With repeats like this removed, models emitted memorised text about ten times less often and reached the same accuracy in fewer training steps.",
   "move": "Whatever is repeated most is learned by rote, not understood.",
   "ask": "What do I know by heart only because I heard it over and over?",
   "keywords": [
@@ -18,16 +18,46 @@
   ],
   "era": "recent",
   "region": "none",
-  "hook": "mechanism",
+  "hook": "number",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "count",
+    "unit": "copies of one sentence",
+    "answer": 61036,
+    "each": 25,
+    "eachLabel": "1 dot = 25 copies",
+    "compare": "Enough to learn it by heart",
+    "options": [
+      {
+        "label": "About 600",
+        "value": 600,
+        "note": "Two zeros short. Boilerplate repeats on every page a site generates."
+      },
+      {
+        "label": "About 6,000",
+        "value": 6000,
+        "note": "One zero short. It appeared 61,036 times in the training split alone."
+      },
+      {
+        "label": "About 60,000",
+        "value": 60000,
+        "note": "Right: 61,036 times. Removing repeats cut recited text tenfold."
+      },
+      {
+        "label": "About 600,000",
+        "value": 600000,
+        "note": "One zero too many, though C4 holds many sentences repeated thousands of times."
+      }
+    ]
+  },
   "source": "Lee et al., ACL, 2022",
   "source_kind": "paper",
-  "reference": "Lee et al., Deduplicating Training Data Makes Language Models Better, ACL, 2022",
-  "written": "2026-09-27"
+  "reference": "Lee et al., Deduplicating Training Data Makes Language Models Better, ACL 2022: https://aclanthology.org/2022.acl-long.577",
+  "written": "2026-10-06"
 }

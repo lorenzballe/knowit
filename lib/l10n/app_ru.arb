@@ -475,5 +475,16 @@
   "minutesShort": "{n} МИН",
   "sideOr": "или",
   "nextStep": "Следующий шаг",
-  "showAllSteps": "Показать всё"
+  "showAllSteps": "Показать всё",
+  "sceneLockIn": "ГОТОВО",
+  "sceneYou": "ВЫ",
+  "sceneTruth": "ИСТИНА",
+  "sceneTryAgain": "Ещё раз",
+  "sceneDrawHint": "Нарисуйте догадку пальцем",
+  "sceneHoldHint": "Нажмите и держите",
+  "sceneSwipeHint": "Смахните или нажмите",
+  "sceneTapToPick": "Нажмите свой вариант",
+  "sceneShowMe": "Покажите",
+  "sceneYourGuess": "Ваша догадка",
+  "sceneNOfM": "{n} из {m}"
 }

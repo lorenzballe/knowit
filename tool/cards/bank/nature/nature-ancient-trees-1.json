@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What did counting rings in bristlecone pines do to the dates of European prehistory?",
-  "answer": "Pushed them back by centuries. Radiocarbon dating assumed the air's carbon-14 never varied; Hans Suess measured it in bristlecone rings of known age and found early dates came out too young. Corrected, Europe's megalithic tombs moved back before the eastern tombs they were supposed to copy.",
+  "question": "Europe's stone tombs were once thought to copy eastern ones. With tree-ring dates, where do these monuments really fall?",
+  "answer": "Radiocarbon dating assumed the air's carbon-14 never varied. Hans Suess measured it in bristlecone pine rings of known age and found early dates came out centuries too young. Corrected, Europe's tombs and temples moved back before the eastern buildings they were said to copy, and the idea of light spreading from the East fell.",
   "move": "Check the instrument before arguing about what it measured.",
   "ask": "Before arguing about a result, have I checked that the tool measuring it is working properly?",
   "keywords": [
@@ -27,8 +27,34 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "source": "Renfrew, Before Civilization, 1973",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": -4000,
+    "to": -1000,
+    "events": [
+      {
+        "label": "Ġgantija, Malta",
+        "year": -3600,
+        "note": "Malta's temples are about a thousand years older than the Great Pyramid."
+      },
+      {
+        "label": "Newgrange built",
+        "year": -3200
+      },
+      {
+        "label": "Great Pyramid",
+        "year": -2560
+      },
+      {
+        "label": "Treasury of Atreus",
+        "year": -1250,
+        "note": "Mycenae's great tomb is about 2,000 years younger than Newgrange."
+      }
+    ]
+  },
+  "source": "Renfrew, Before Civilization, 1973; UNESCO",
   "source_kind": "book",
   "reference": "Renfrew, Before Civilization: The Radiocarbon Revolution and Prehistoric Europe, Jonathan Cape, 1973",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

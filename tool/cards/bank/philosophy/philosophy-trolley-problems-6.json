@@ -6,28 +6,66 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What did Thomson's looping track do to the idea that the switch is allowed because nobody is used?",
-  "answer": "It took the idea's support away. In Thomson's 1985 loop, the side track curves back to the five, and only the lone worker's bulk will stop the trolley. His death is now the means of rescue, yet turning seems no less permissible. One short piece of rail changed the reason, not the verdict.",
+  "question": "A runaway trolley will kill five people on the track. Is it all right to kill one person to save them?",
+  "answer": "Thomson's loop breaks the easy explanation. If the side track curves back to the five, only the one man's body stops the trolley: he is used, as on the bridge. Yet turning still seemed permissible to Thomson. Whatever splits the cases, it is not simply using someone; perhaps it is the push itself.",
   "move": "Change one detail of a case and see whether the verdict follows the rule.",
   "ask": "When my verdict shifts as one detail changes, what rule was I really using?",
   "keywords": [
+    "trolley problem",
+    "footbridge",
     "loop case",
     "judith jarvis thomson",
-    "doctrine of double effect",
     "means and side effects"
   ],
   "era": "twentieth",
   "region": "none",
-  "hook": "puzzle",
+  "hook": "paradox",
   "mood": "sober",
-  "numeracy": 0,
-  "abstraction": "abstract",
+  "numeracy": 1,
+  "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Thomson, Yale Law Journal, 1985",
+  "scene": {
+    "type": "poll",
+    "who": "Web volunteers, Hauser et al. 2007",
+    "questions": [
+      {
+        "prompt": "Is it all right to pull a switch that turns it onto a side track, killing one?",
+        "tag": "Pull a switch",
+        "options": [
+          {
+            "label": "It's all right",
+            "share": 85
+          },
+          {
+            "label": "It's wrong",
+            "share": 15
+          }
+        ]
+      },
+      {
+        "prompt": "Is it all right to push a heavy man off a footbridge into its path?",
+        "tag": "Push a man",
+        "options": [
+          {
+            "label": "It's all right",
+            "share": 12
+          },
+          {
+            "label": "It's wrong",
+            "share": 88
+          }
+        ]
+      }
+    ],
+    "why": "Using a person's body as the tool feels unlike turning a threat aside, even when the sums match.",
+    "same": "You held steady: one for five, judged alike both times. Most didn't: 85% fell to 12%.",
+    "switched": "You switched, like most. The sums were identical; what changed was laying hands on someone."
+  },
+  "source": "Thomson, 1985; Hauser et al., 2007",
   "source_kind": "paper",
-  "reference": "Thomson, The Trolley Problem, Yale Law Journal 94 (6), 1985, pp. 1395-1415",
-  "written": "2026-09-27"
+  "reference": "Thomson, The Trolley Problem, Yale Law Journal 94 (6), 1985, pp. 1395-1415; Hauser, Cushman, Young, Jin & Mikhail, A dissociation between moral judgments and justifications, Mind & Language 22 (2007): 1-21",
+  "written": "2026-10-06"
 }

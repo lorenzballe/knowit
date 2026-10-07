@@ -475,5 +475,16 @@
   "minutesShort": "{n}분",
   "sideOr": "또는",
   "nextStep": "다음 단계",
-  "showAllSteps": "모두 보기"
+  "showAllSteps": "모두 보기",
+  "sceneLockIn": "확정",
+  "sceneYou": "나",
+  "sceneTruth": "정답",
+  "sceneTryAgain": "다시 하기",
+  "sceneDrawHint": "손가락으로 예상을 그려 보세요",
+  "sceneHoldHint": "길게 누르기",
+  "sceneSwipeHint": "밀거나 누르기",
+  "sceneTapToPick": "골라서 누르기",
+  "sceneShowMe": "보여 줘",
+  "sceneYourGuess": "내 예상",
+  "sceneNOfM": "{m}개 중 {n}개"
 }

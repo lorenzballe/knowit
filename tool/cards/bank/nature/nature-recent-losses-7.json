@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What wiped out most of the native tree snails of Tahiti and Moorea within a few decades?",
-  "answer": "Another snail, released on purpose. On Tahiti in 1974 and Moorea in 1977, the predatory rosy wolf snail was let loose to control the giant African land snail. It preferred native Partula tree snails and spread across the Society Islands: about 55 of their 61 species vanished from the wild. Several survived only in zoos.",
+  "question": "Tahiti brought in a predatory snail to eat a pest snail. What did it eat?",
+  "answer": "A hunter eats what is easiest, not what it was hired for. The native Partula were small, slow and had never faced a snail-eating predator; the wolf snail followed their slime trails up into the trees. Several species survive only because zoos bred them, and some have since gone back to the islands.",
   "move": "A remedy free to choose its targets may not choose yours.",
   "ask": "Which remedy I introduced is free to choose its own targets, and not mine?",
   "keywords": [
@@ -26,8 +26,47 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "Tahiti and Moorea",
+        "glyph": "pin",
+        "line": "Dozens of kinds of tree snail live here and nowhere else."
+      },
+      {
+        "fact": "Giant African land snail",
+        "glyph": "rise",
+        "line": "An introduced snail is eating crops and gardens."
+      },
+      {
+        "fact": "Tahiti 1974, Moorea 1977",
+        "glyph": "check",
+        "line": "Officials free a snail that eats snails: the rosy wolf snail."
+      }
+    ],
+    "ask": "What does the hunter mostly eat?",
+    "options": [
+      {
+        "label": "The crop pest"
+      },
+      {
+        "label": "Nothing: it dies out"
+      },
+      {
+        "label": "The native tree snails"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "Society Islands",
+      "glyph": "cross",
+      "line": "The native snails. About 55 of 61 kinds vanished from the wild."
+    },
+    "why": "A predator eats what is easiest to catch, not what it was brought in to catch."
+  },
   "source": "Haponski et al., Evolutionary Applications, 2019",
   "source_kind": "paper",
   "reference": "Haponski et al., Deconstructing an infamous extinction crisis: Survival of Partula species on Moorea and Tahiti, Evolutionary Applications, 2019",
-  "written": "2026-09-27"
+  "written": "2026-10-06"
 }

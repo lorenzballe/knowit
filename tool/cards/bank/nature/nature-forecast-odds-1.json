@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "A forecaster says 70% chance of rain and the day stays dry. How can anyone tell if she was right?",
-  "answer": "Only over many forecasts. Gather every day she said 70%: if it rained on about 70% of them, she is well calibrated, and that dry day was one of the expected 30%. Murphy and Winkler ran this check on US rain forecasts in the 1970s and found them close to their stated odds.",
+  "question": "A forecaster says 70% chance of rain, and the day stays dry. How many forecasts before anyone can tell if she is good?",
+  "answer": "Many. Gather every day she said 70%: if it rained on about 70% of them, she is well calibrated, and the dry day was one of the expected 30%. Murphy and Winkler ran this check on US rain forecasts in the 1970s and found them close to their stated odds.",
   "move": "Judge anyone who speaks in odds on many calls, never on one.",
   "ask": "Whose judgement have I written off because of one call that went the other way?",
   "keywords": [
@@ -29,5 +29,25 @@
   "source": "Murphy & Winkler, Applied Statistics, 1977",
   "source_kind": "paper",
   "reference": "Murphy & Winkler, Reliability of subjective probability forecasts of precipitation and temperature, Journal of the Royal Statistical Society Series C (Applied Statistics), 1977",
-  "written": "2026-10-03"
+  "written": "2026-10-03",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated 70% days",
+    "hit": "It rained",
+    "rate": 0.7,
+    "steps": [
+      5,
+      20,
+      100,
+      1000
+    ],
+    "seed": 210,
+    "button": "More forecasts",
+    "notes": [
+      "Five days at 70%: rain on two, 40%. She looks hopeless, yet she is exact.",
+      "20 days: 80% rained. Now she looks timid.",
+      "100 days: 66%. Close to her word.",
+      "1,000 days: 72%. Only a long record shows she means 70%."
+    ]
+  }
 }

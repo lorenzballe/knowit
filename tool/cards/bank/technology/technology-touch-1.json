@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Where, and for what job, was the first finger-operated capacitive touchscreen built?",
-  "answer": "At the Royal Radar Establishment in Malvern, England, for air traffic control. In 1965 E. A. Johnson described a screen that sensed the electrical effect of a fingertip, letting controllers pick flights by touching them instead of typing. Versions of it served British air traffic control into the 1990s, decades before smartphones.",
+  "question": "A finger-operated touchscreen was described in 1965. Which of these came before the 1969 Moon landing, and which after?",
+  "answer": "The touchscreen was built for air traffic control, where speed mattered more than cost. At Britain's Royal Radar Establishment, E. A. Johnson described a screen that sensed a fingertip's electrical effect, so controllers could pick a flight by touching it. Versions of it served British air traffic control into the 1990s.",
   "move": "Ask who needed a technology first; it is rarely who uses it now.",
   "ask": "Who needed this first, and who uses it now?",
   "keywords": [

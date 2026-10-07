@@ -681,3 +681,109 @@ Written without the web, from memory: every figure and reference on
 `life-*` cards still wants a reader to open its source. The writer flagged
 these first: life-purpose-2, life-gratitude-2, life-limits-2,
 life-risk-taking-1, life-regret-2, life-failure-2, life-spending-2.
+
+## Scene cards (October 2026)
+
+- philosophy-trolley-problems-6 | poll: Moral Sense Test web sample judged the switch permissible 85% and pushing the man 12% | Hauser Cushman Young Jin Mikhail 2007 Mind & Language Denise Frank 85% 12% permissible
+- philosophy-newcomb-1 | poll: about 31,000 Guardian readers, 53.5% chose one box (rounded 54/46); philosophers who pick a side lean two boxes | Alex Bellos Guardian 2016 Newcomb's problem poll results 53.5% one box; PhilPapers survey Newcomb two boxes
+- medicine-too-much-testing-3 | poll: 73% of US adults would take a free total-body CT scan over $1,000 cash | Schwartz Woloshin Fowler Welch 2004 JAMA enthusiasm for cancer screening total-body CT $1000
+- sport-penalty-kicks-2 | poll: 286 penalties; keepers dived 94%, stayed centre 6%; centre stops about 33% vs about 13-14% for dives; about 29% of kicks to the centre | Bar-Eli 2007 action bias goalkeepers penalty kicks 6.3% centre 33.3% stopping
+- science-optical-illusions-1 | poll: 1,401 respondents saw blue/black 57%, white/gold 30%, blue/brown 11% | Lafer-Sousa Hermann Conway 2015 Current Biology dress percentages 57% 30% 11%
+- pop_culture-trends-2 | poll: Gallup 2022 US workforce engaged 32%, actively disengaged 18%, not engaged about 50% | Gallup Harter 2022 quiet quitting engaged 32% actively disengaged 18%
+- life-comparison-2 | poll: "about half" chose $50k/others $25k, shown as 50/50 | Solnick Hemenway 1998 positional income share choosing positional option
+- economics-inflation-2 | poll: 7% pay cut with no inflation: 38% acceptable / 62% unfair; 5% raise with 12% inflation: 78% / 22% | Kahneman Knetsch Thaler 1986 fairness wage cut 7% inflation 12% raise 5% acceptable unfair
+- psychology-reciprocity-2 | rank: one-then-a-second mint raised tips 23% (some summaries say 21%); one mint 3.3%, two 14.1% | Strohmetz Rind Fisher Lynn 2002 Sweetening the till abstract percentages
+- weird_facts-fastest-5 | rank: Space Shuttle launch peaked at about 3 g | NASA Space Shuttle launch maximum acceleration 3 g
+- history-1 | rank: peak areas British 35.5, Mongol 24.0, Russian 22.8, Spanish 13.7, French 11.5 million km², attributed to Taagepera 1997 | Taagepera 1997 International Studies Quarterly largest polities table
+- science-risk-in-numbers-1 | rank: scuba dive about 5 micromorts, general anaesthetic about 10, marathon 7 (UK figures) | Norm Chronicles micromorts scuba anaesthetic marathon
+- nature-3 | rank: livestock 0.1 Gt C (one summary says 0.11), humans 0.06, wild mammals 0.007 | Bar-On Phillips Milo 2018 PNAS livestock biomass Gt C
+- food-meat-1 | rank (from the food-emissions sample): kg CO2e per kg dark chocolate 47, coffee 29, cheese 24, chicken 10 | Our World in Data ghg-per-kg-poore table
+- human_body-smell-3 | people beat dogs on some odours in threshold tests (McGann 2017) | McGann 2017 Science human dogs odor sensitivity thresholds
+- language-borrowed-words-6 | sort: Caxton (Eneydos prologue, 1490) tells of a woman who knew eggs only as eyren | Caxton Eneydos prologue 1490 eggys eyren mercer
+- language-brand-names-4 | sort: Velcro released a song asking people not to say velcro (2017); Kleenex, Jacuzzi, Frisbee still registered marks; Aspirin still Bayer's mark in Germany and Canada | Velcro "Don't Say Velcro" 2017; Bayer Aspirin trademark Canada Germany
+- medicine-folk-remedies-3 | sort: medical honey dressings cleared in the US in 2007; Radithor drinker (Eben Byers) about 1,400 bottles, died 1932 | FDA Medihoney 2007 510(k); Eben Byers Radithor bottles
+- human_body-posture-myths-2 | sort: about 1% of height lost by evening; adult skeleton turns over in about ten years; heavy bags not a cause of scoliosis | Tyrrell Reilly Troup 1985 Spine circadian stature; Surgeon General 2004 bone remodelling 10 years; Scoliosis Research Society backpacks
+- cinema-fake-or-real-3 | sort: Psycho used chocolate syrup because it read better than stage blood in black and white; Wilhelm scream first recorded 1951 | BFI Psycho shower chocolate syrup; Wilhelm scream Distant Drums 1951
+- cinema-destroyed-3 | sort: Cleopatra (1917) survives only as seconds of fragments; The Mountain Eagle is Hitchcock's only feature with no known copy | Cleopatra 1917 surviving fragments; BFI Most Wanted Mountain Eagle
+- technology-dns-7 | sort: .gb still delegated in the root but unused; .yu removed 2010 | IANA root zone database gb yu
+- science-cold-myths-2 | sort: igloos heated by bodies alone can be tens of degrees warmer than outside | igloo interior temperature body heat study
+- science-insulation-2 | match: Bubble Wrap first sold as textured wallpaper (1957) and later took off wrapping IBM computers; Kleenex sold from 1924 as a cold-cream remover; Play-Doh began as Kutol's wallpaper-soot cleaner | Sealed Air history Fielding Chavannes 1957 wallpaper; Kimberly-Clark Kleenex 1924 cold cream; Kutol wallpaper cleaner Play-Doh
+- science-why-things-break-1 | match: Titanic's boats seated about half aboard and SOLAS 1914 required a seat for all; Tylenol 1982 seven deaths; Victoria Hall, Sunderland, 1883, 183 children, led to outward-opening exits | SOLAS 1914 lifeboats; Chicago Tylenol murders seven 1982 tamper-evident; Victoria Hall disaster 1883 legislation outward doors
+- language-jargon-3 | match: mayday from French m'aider; pan-pan from panne; Roger was R in the old radio alphabet | ICAO radiotelephony mayday pan-pan origin; Roger phonetic alphabet received
+- space-spinoffs-2 | match: Velcro from de Mestral's burrs (1940s); Teflon found by Plunkett at DuPont, 1938; Tang on sale from 1959 | NASA spinoff myths Velcro Teflon Tang; Tang General Foods 1959
+- sport-rule-changes-1 | match: Fort Wayne 19–18 Minneapolis (1950) led to the 24-second clock (1954); Notts County v Stoke 1891 handball led to the penalty kick; 1981 underarm ball led to the ban | NBA lowest scoring game 19-18 1950 shot clock 1954; Notts County Stoke 1891 penalty; underarm incident 1981
+- cinema-editing-tricks-1 | match: Kuleshov soup/coffin experiment (its original film is lost; modern replications partly support it); Shepard tone as endless rise | Kuleshov effect replication 2016 Mobbs; Shepard tone Dunkirk score
+- pop_culture-why-brands-sell-feelings-2 | match: Listerine's 1920s halitosis ads; Bernays's bacon-and-eggs doctors' survey for Beech-Nut; Torches of Freedom, Easter 1929 | Listerine halitosis advertising 1920s; Bernays bacon eggs Beech-Nut; Torches of Freedom 1929 Easter parade
+- art-synthetics-2 | match: mummy brown sold until the 1960s when C. Roberson ran out of mummies; ultramarine dearer than gold; carmine still used as E120 | C Roberson mummy brown 1960s; ultramarine price gold Renaissance; E120 cochineal carmine food
+- nature-unintended-fixes-1 | match: mongooses to Hawaii 1883 (day v night hunting); cane toads to Australia 1935 could not reach cane beetles; US farmers paid to plant kudzu against erosion | mongoose Hawaii 1883 rats nocturnal; cane toad 1935 cane beetle; Soil Conservation Service kudzu payments
+- human_body-digestion-3 | match: denervated fingers do not wrinkle in water; delayed muscle soreness is not lactic acid; fever chills from a raised set point | Wilder-Smith 2004 water immersion wrinkling nerve; DOMS lactate myth; fever set point chills
+- life-second-order-effects-1 | match: Haifa day-care fine roughly doubled late pick-ups, which stayed after removal (10 centres); Wells Fargo staff opened millions of unauthorised accounts; Mexico City Hoy No Circula 1989, no measurable air improvement, more older cars | Gneezy Rustichini 2000 A fine is a price; Wells Fargo 3.5 million accounts; Davis 2008 Journal of Political Economy Hoy No Circula
+- medicine-bad-cures-1 | match: Bayer sold heroin from 1898 as a cough medicine; Radithor killed Eben Byers in 1932 | Bayer heroin 1898 cough; Eben Byers Radithor 1932
+- weird_facts-still-on-the-books-1 | match: Singapore banned gum sales in 1992 after gum on MRT door sensors; Locomotive Act 1865 man with red flag; Licensing Act 1872 s.12 drunk in charge of cattle | Singapore chewing gum ban 1992 MRT doors; Locomotive Act 1865 red flag; Licensing Act 1872 section 12 cattle
+- economics-free-is-not-free-2 | match: Swrve 2014, 0.15% of mobile players brought in half of in-game revenue | Swrve monetization report 2014 0.15%
+- history-2 | match: Shroud of Turin radiocarbon 1260–1390 (Damon et al., Nature 1989); bomb-pulse dating of adult neurons (Spalding et al., Cell 2005, 2013) | Damon 1989 Shroud radiocarbon; Spalding 2005 retrospective birth dating of cells
+- food-caffeine-2 | why: daily caffeine makes the brain add adenosine receptors; caffeine's half-life in blood about 5 h | Fredholm 1999 Pharmacological Reviews caffeine adenosine receptor upregulation tolerance half-life
+- medicine-painkillers-9 | why: aspirin's plasma half-life about 20 minutes, cleared within the hour | acetylsalicylic acid plasma half-life 15-20 minutes
+- food-tomatoes-2 | why: the uniform-ripening mutation is in most modern varieties | Powell 2012 Science uniform ripening mutation widespread in cultivars
+- food-taste-and-smell-1 | why: dry, thin cabin air dulls the sense of smell | aircraft cabin humidity pressure smell taste perception study
+- economics-interest-2 | why: South Dakota lifted its rate cap in 1980 and Citibank moved its card business to Sioux Falls (1981) | Citibank Sioux Falls 1981 South Dakota usury law 1980
+- music-song-length-1 | why: a stream counts once it passes 30 seconds | Spotify stream counted after 30 seconds
+- economics-loyalty-traps-1 | translate: the FCA banned charging renewing home and motor insurance customers more than new ones from 1 January 2022, and its own term was price walking | FCA PS21/5 general insurance pricing practices price walking 1 January 2022
+- economics-2008-1 | translate: Britain dropped the 90% co-insurance band of deposit protection soon after the Northern Rock run (October 2007) | FSA October 2007 deposit protection 100% £35,000 co-insurance removed
+- psychology-scarcity-tricks-2 | translate: the CMA said counts of people looking could include people searching other dates | CMA online hotel booking 2019 undertakings other people looking different dates
+- art-motives-5 | translate: auction glossaries define Attributed to as probably by the artist in whole or in part, and Manner of as in the artist's style but of a later date | Christie's explanation of cataloguing practice attributed to manner of
+- medicine-reading-results-2 | translate: CKD stage 3a is an eGFR of 45 to 59 that must persist for more than 3 months | KDIGO 2012 CKD definition G3a 45-59 three months
+- medicine-getting-a-second-opinion-2 | translate: atypical ductal hyperplasia on a core biopsy is usually followed by surgical excision | atypical ductal hyperplasia core needle biopsy excision recommended upgrade
+- economics-corruption-2 | story: Kuwait, Egypt and Chad diplomats each ran up over 100 unpaid tickets; Norway, Sweden, Japan almost none; after Nov 2002 plate removals violations "almost stopped" (often quoted as about 98% down) | Fisman Miguel 2007 diplomatic parking tickets Kuwait 246 enforcement decline
+- economics-present-bias-1 | story: 78% of those who declined the adviser's advice joined Save More Tomorrow; their rate went 3.5% to 13.6% after four raises; the firm a midsize US manufacturer, late 1990s | Thaler Benartzi 2004 SMarT 78 percent joined 13.6
+- life-saving-1 | story: default contribution was 3% in a money market fund, switch in April 1998 | Madrian Shea 2001 automatic enrollment 3 percent money market April 1998
+- life-failure-1 | story: near-misses' advantage survived the authors' conservative test for attrition | Wang Jones Wang 2019 near misses conservative removal screening
+- medicine-doctors-who-were-right-1 | story: lemon juice ration from 1795; switch to West Indian limes mid-1800s; Nares expedition 1875-76 had lime juice on board | Carpenter History of Scurvy Nares 1875 lime juice West Indian limes
+- medicine-germ-theory-3 | story: Pettenkofer drank the culture in October 1892, aged 73; Hamburg drank unfiltered Elbe water | Pettenkofer 7 October 1892 cholera self-experiment
+- sport-doping-1 | story: riders' own centrifuges and saline before controls; typical male haematocrit low to mid 40s | USADA reasoned decision haematocrit centrifuge saline 50 percent
+- sport-moneyball-1 | story: Oakland's 2002 payroll about a third of the Yankees' | 2002 MLB payrolls Athletics Yankees
+- space-reusable-boosters-6 | story: January 1985 launch about 12 °C (53 °F), 28 Jan 1986 about 2 °C (36 °F); managers asked Thiokol to prove launch unsafe | Rogers Commission 53 degrees 51-C 36 degrees Thiokol prove unsafe
+- history-clothes-4 | story: a merchant family that dressed too grandly risked ruin (e.g. Ishikawa Rokubei's wife, 1681) | Shively 1964 sumptuary Ishikawa Rokubei 1681 confiscated
+- pop_culture-sitcoms-10 | story: by season two pay was unequal among the six | Friends season 2 salaries Schwimmer Aniston unequal
+- cinema-unfinished-6 | story: shooting abandoned in 1964 after the lead left and Clouzot's heart attack | L'Enfer Clouzot 1964 Reggiani heart attack abandoned
+- nature-recent-losses-7 | story: some Partula species since returned to the islands from zoos | Partula reintroduction Tahiti Moorea zoo 2016
+- life-big-choices-1 | story: coin-toss site ran from 2013; effect largest for quitting a job or ending a relationship | Levitt Heads or Tails 2021 job quitting breakup largest effect
+- music-sampling-2 | story: after Grand Upright (1991) labels cleared every sample and dense collage albums died out | Grand Upright v Warner 1991 sample clearance Paul's Boutique
+- psychology-fear-6 | trick: FBI murder rate per 100,000 was 4.4 in 2014 and 5.3 in 2016 (some tables give 4.5 and 5.4), 9.8 in 1991, 5.5 in 2000, 4.8 in 2010 | FBI Crime in the United States Table 1 murder rate 2014 2016 1991
+- pop_culture-4 | trick: Super Bowl LIX (2025) averaged 127.7 million US viewers; M*A*S*H finale 106.0m, Seinfeld finale 76.3m, Friends finale 52.5m | Nielsen Super Bowl LIX 127.7 million; M*A*S*H finale 105.97 million
+- cinema-hits-1 | trick: first-run North American grosses Titanic $600.8m, Star Wars: The Force Awakens $936.7m, Endgame $858.4m; NATO average tickets $4.59 (1997), $8.43 (2015), $9.16 (2019) | Box Office Mojo Titanic original release domestic 600.8; NATO average ticket price history
+- science-correlation-or-cause-3 | trick: Pew smartphone ownership 35% (2011), 56% (2013), 68% (2015), 77% (late 2016/early 2018, shown as 2017); NHANES adult obesity 34.9, 37.7, 39.6, 42.4% (2011-12 to 2017-18) and 22.9% (1988-94), 30.5% (1999-2000) | Pew mobile fact sheet smartphone ownership by year; NCHS data brief 360 obesity trends
+- human_body-longevity-10 | trick: US life expectancy 2010-2019 values (78.6-78.9), and the reference "NCHS Data Brief No. 521" for Mortality in the United States, 2023 | NCHS Mortality in the United States 2023 data brief number; life expectancy 2010-2019 series
+- sport-bad-stats-3 | trick: population bases used: USA 340m, China 1,410m, UK 68m, Australia 27m, New Zealand 5.3m (2023-24) | national statistics population 2024
+- nature-climate-myths-3 | trick: chart redrawn in °C on a 14 °C baseline (GISS's approximate 1951-80 global mean); National Review tweet of 14 Dec 2015 used a 0-110 °F axis | National Review only climate change chart you need to see December 2015 Powerline
+- nature-recent-losses-7 | story: about 55 of 61 Society Islands partulid species vanished from the wild after the rosy wolf snail | Haponski 2019 Evolutionary Applications Partula 61 species extinct in the wild count
+- medicine-doubt-1 | story: UK pertussis uptake fell from about 80% to about 30%; 1977-79 epidemics over 100,000 cases and 36 deaths | Baker 2003 Vaccine pertussis controversy Great Britain uptake 30% 1978 notifications deaths 1977-79
+- economics-present-bias-1 | story: 78% of those who declined the adviser joined Save More Tomorrow; saving rose 3.5% to 13.6% after four raises | Thaler Benartzi 2004 JPE SMarT 78% 13.6%
+- life-saving-1 | story: participation 37% under opt-in vs 86% under automatic enrolment, April 1998 | Madrian Shea 2001 QJE 401(k) 37% 86% automatic enrollment
+- medicine-reading-results-2 | translate: over a third of US adults over 70 have eGFR below 60 | Coresh 2007 JAMA CKD prevalence stage 3 age 70 and over NHANES
+- medicine-risk-numbers-3 | translate: about one article in three in high-impact journals reported benefits and harms in mismatched formats | Sedrakyan Shih 2007 Medical Care mismatched framing one third
+- sport-set-pieces-2 | sample: first study 262 shoot-outs (may be 269), Pipke 2025 about 7,000 shoot-outs with the first team winning 48.8% | Apesteguia Palacios-Huerta 2010 AER number of shoot-outs 60.5%; Pipke 2025 Journal of Economic Psychology first-mover penalty shootouts sample size
+- sport-coin-tosses-2 | sample: toss winners won 46.8% of 201 overtimes (1974-93) and 59.8% of 244 (1994-2009) | NFL overtime coin toss winner win percentage 1974-1993 1994-2009 number of games
+- medicine-bad-cures-3 | sample: CAST deaths 8.3% on encainide/flecainide vs 3.5% on placebo over about ten months (63/755 vs 26/743?) | Echt 1991 NEJM CAST total mortality encainide flecainide placebo percentages
+- economics-fine-print-2 | count: over £38 billion repaid after more than 32 million PPI complaints | FCA PPI complaints deadline final report 2020 total redress number of complaints
+- human_body-pain-1 | hold: deep-ache arrival recomputed as about 0.5 to 2 s over about 1 m of C fibre toe to spinal cord (was 0.8 to 3.2 s over 1.6 m) | C fibre conduction velocity 0.5-2 m/s; distance foot to dorsal horn; Purves Neuroscience first and second pain timing
+
+## Scene cards (October 2026)
+
+- medicine-doctors-who-were-right-3 | Rankin prison farm, 1915: most of the volunteer convicts on a fresh, corn-heavy diet developed pellagra (6 of 11), and institution staff never caught it | "Goldberger Rankin prison farm 1915 pellagra 6 of 11 volunteers; Goldberger asylum employees never pellagra"
+- food-coffee-and-health-claims-1 | MacMahon et al. 1981: the coffee association held in non-smokers as well as smokers | "MacMahon 1981 coffee pancreas cancer association not explained by cigarette smoking"
+- economics-averages-that-mislead-1 | Morningstar's fund total returns are net of fund expenses, and both total and investor returns are pre-tax | "Morningstar Mind the Gap methodology investor return net of expenses pre-tax"
+- nature-dinosaurs-1 | Alvarez et al. 1980 tested the boundary clay for plutonium-244 and found none, ruling out a nearby supernova | "Alvarez 1980 plutonium-244 supernova hypothesis rejected boundary clay"
+- human_body-smell-2 | Most people's smell returned within weeks, while lost brain cells rarely regenerate (used to strike off 'brain' in the clue order) | "covid anosmia recovery timeline weeks percent"
+- history-plague-1 | Plague was reported in the Golden Horde's Volga lands in 1346, before the siege of Kaffa | "Black Death 1346 Golden Horde Sarai Astrakhan before Kaffa"
+- science-experiments-3 | Semmelweis's 1841–46 figures: first clinic 9.92% maternal deaths, second clinic 3.38% (shown as 1 in 10 against 1 in 30) | "Semmelweis first clinic 9.92% second clinic 3.38% 1841-1846"
+- space-cosmic-background-6 | Penzias and Wilson pointed the horn away from New York and found no change; the excess was isotropic and constant through the seasons | "Penzias Wilson 1965 excess antenna temperature isotropic New York City pointing"
+- psychology-reciprocity-2 | rank: tips up 3.3% (one mint), 14.1% (two), 23% (one, then a second after a pause); a single small restaurant study, replication unknown | Strohmetz 2002 Sweetening the till replication candy tipping
+- psychology-rewards-2 | rank: 10% commission (219) vs unpaid (239) shekels; the gap may not be statistically significant, so "did not beat" may overstate | Gneezy Rustichini 2000 Pay enough or don't pay at all 10% vs no pay significance
+- science-why-things-break-1 | match: "rounded windows" as the lesson of the 1954 Comet losses; the inquiry traced the crack to a corner of the ADF aerial window and to punch-riveting, not to passenger windows alone | Comet G-ALYP inquiry 1955 ADF window crack origin rounded windows myth
+- weird_facts-local-bans-1 | sort: Sarpourenx (2008) blocked by a court from extending its cemetery; Cugnaux (2007) blocked by the state from a new one; Westminster "no law found" by the Law Commission in 2013 | Sarpourenx mayor 2008 cemetery tribunal; Cugnaux 2007 mayor décret mourir cimetière; Law Commission legal myths die in Parliament
+- history-guilds-3 | sort: Quit Rents horseshoes and nails are for the Forge first recorded 1235 (the 1211 date is the Moors in Shropshire) | Quit Rents Ceremony Forge St Clement Danes 1235 Moors 1211
+- nature-recent-losses-10 | sort: cahow rediscovered in 1951 as 18 nesting pairs (the scene said seven) | Bermuda petrel 1951 rediscovery 18 nesting pairs Murphy Mowbray Wingate
+- science-risk-in-numbers-1 | rank: general anaesthetic about 10 micromorts, skydive 8, marathon 7, scuba 5, 400 km by car 1 (UK figures) | Norm Chronicles micromort table general anaesthetic skydiving marathon
+- economics-container-ships-7 | draw: Drewry WCI points 2019 avg $1,420, Jan 2021 $5,245, Jan 2023 $2,132, Jul 2023 $1,537, Dec 2023 $1,382 | Drewry World Container Index weekly composite 2021 2023 archive
+- food-labels-2 | match: in the US, only infant formula carries a federally required (safety) date | USDA FSIS food product dating infant formula use-by federal requirement

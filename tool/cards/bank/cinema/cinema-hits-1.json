@@ -6,28 +6,64 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does a 1939 film still top the inflation-adjusted North American box-office chart?",
-  "answer": "Because it kept coming back. Before television and home video, a cinema was the only place to see a film, so Gone with the Wind was re-released again and again: 1947, 1954, 1961, 1967 and later. Its adjusted total adds up the audiences of several decades, not the crowds of one run.",
-  "move": "Before comparing totals, ask how many chances each one had to add up.",
-  "ask": "Which totals do I compare without asking how many chances each one had?",
+  "question": "Every few years a new film is crowned North America's biggest. Here are three champions by takings. Where's the trick?",
+  "answer": "In the money: a dollar of 1997 is not a dollar of 2019. Divide each gross by that year's average ticket: Titanic, at $4.59 a seat, sold about 131 million; Endgame, at $9.16, about 94 million. Most box-office records are records in prices. Counted in seats, Gone with the Wind, from 1939, still leads.",
+  "move": "Before comparing money across years, turn it back into things bought.",
+  "ask": "Which comparison across the years am I making in money instead of in what it bought?",
   "keywords": [
-    "gone with the wind",
-    "re-releases",
-    "inflation-adjusted gross",
-    "home video"
+    "box office",
+    "ticket prices",
+    "inflation",
+    "titanic",
+    "admissions"
   ],
-  "era": "twentieth",
+  "era": "recent",
   "region": "americas",
-  "hook": "mechanism",
-  "mood": "wonder",
-  "numeracy": 1,
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "years",
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "source": "Harmetz, On the Road to Tara, 1996",
-  "source_kind": "book",
-  "reference": "Harmetz, On the Road to Tara: The Making of Gone with the Wind, Harry N. Abrams, 1996",
-  "written": "2026-09-26"
+  "scene": {
+    "type": "trick",
+    "trick": "totals",
+    "outlet": "Box-office chart (redrawn)",
+    "headline": "The new films are the biggest ever",
+    "honest": "In tickets sold, Titanic still wins",
+    "label": "North American takings, $ million",
+    "honestLabel": "Tickets sold, million",
+    "decimals": 0,
+    "honestDecimals": 0,
+    "columns": [
+      "Titanic",
+      "Star Wars 7",
+      "Endgame"
+    ],
+    "values": [
+      600.8,
+      936.7,
+      858.4
+    ],
+    "per": [
+      4.59,
+      8.43,
+      9.16
+    ],
+    "perScale": 1,
+    "found": "Yes: dollars, from years when a ticket cost very different amounts.",
+    "miss": "The takings are right. Read what they're counted in, one line above the bars.",
+    "misses": {
+      "yaxis": "The axis starts at zero, so the bars are fair. Fair lengths of what?",
+      "headline": "True in dollars. But was a dollar the same in 1997 and 2019?"
+    },
+    "name": "Money, not tickets",
+    "lesson": "A total in money grows with prices. Divide by the price before you compare years."
+  },
+  "source": "Box Office Mojo grosses; NATO average ticket prices",
+  "source_kind": "statistics",
+  "reference": "National Association of Theatre Owners, Annual Average U.S. Ticket Price, 2020",
+  "written": "2026-10-06"
 }

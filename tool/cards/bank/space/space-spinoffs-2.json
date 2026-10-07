@@ -6,15 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What part of almost every phone camera grew out of a NASA lab's need to shrink cameras for spacecraft?",
-  "answer": "The image sensor. In the early 1990s Eric Fossum's team at NASA's Jet Propulsion Laboratory built a camera on a single chip, made with the same cheap process as ordinary computer chips, to cut the power and weight of cameras in space. That design, the CMOS sensor, now sits in billions of phones.",
+  "question": "Four things often credited to the space race. Where did each one really come from?",
+  "answer": "The camera chip is the one people miss, while the famous three are myths. Eric Fossum's team at NASA's Jet Propulsion Laboratory built a whole camera on one ordinary computer chip to save power and weight in space. That CMOS sensor now sits in billions of phones. Velcro, Teflon and Tang only flew.",
   "move": "Hard limits breed inventions that easy conditions never ask for.",
   "ask": "Which limit I'm stuck with could push me to a better solution than plenty would?",
   "keywords": [
-    "cmos image sensor",
-    "eric fossum",
+    "cmos sensor",
     "jet propulsion laboratory",
-    "phone cameras"
+    "velcro",
+    "teflon",
+    "tang"
   ],
   "era": "twentieth",
   "region": "americas",
@@ -26,8 +27,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "The thing",
+    "rightTitle": "Where it began",
+    "pairs": [
+      {
+        "left": "Phone camera chip",
+        "right": "A NASA lab shrinking cameras for probes",
+        "note": "JPL, early 1990s: a camera on one cheap chip. Now in billions of phones.",
+        "missed": true
+      },
+      {
+        "left": "Velcro",
+        "right": "A Swiss engineer's dog, covered in burrs",
+        "note": "George de Mestral, 1940s. NASA only used it later, and a lot."
+      },
+      {
+        "left": "Teflon",
+        "right": "A DuPont gas cylinder gone wrong, 1938",
+        "note": "Roy Plunkett found the slippery solid by accident, decades before Apollo."
+      },
+      {
+        "left": "Tang",
+        "right": "A food firm's drink, before any astronaut",
+        "note": "On sale from 1959. Flying in space made it famous; NASA didn't make it."
+      }
+    ]
+  },
   "source": "Fossum, IEEE Transactions on Electron Devices, 1997",
   "source_kind": "paper",
   "reference": "Fossum, CMOS image sensors: electronic camera-on-a-chip, IEEE Transactions on Electron Devices, 1997",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

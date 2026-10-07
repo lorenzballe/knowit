@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Where do most exaggerated health headlines first get exaggerated?",
-  "answer": "In the universities' own press releases. Sumner and colleagues compared 462 press releases with their papers and the news: about a third of the releases already overstated causes or advice, or stretched animal results to humans. When a release exaggerated, the news usually did too; when it stayed accurate, so mostly did the news.",
+  "question": "A health headline and its first lines, worded the way many are. Which words did the research not support?",
+  "answer": "Most of them. Sumner and colleagues traced 462 university press releases to their papers and the news that followed: about a third of the releases already overstated causes, advice or animal results. When the release exaggerated, the news usually did too; when it was accurate, mostly so was the news.",
   "move": "Trace a claim back one step before blaming the last messenger.",
   "ask": "When I'm annoyed at how something was reported, have I checked where the spin began?",
   "keywords": [
@@ -26,8 +26,40 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Daily news",
+    "ref": "Health",
+    "title": "Coffee linked to longer life",
+    "body": "Three cups a day could add years to your life, says a breakthrough study. Caffeine was linked to longer lifespans in mice.",
+    "phrases": [
+      {
+        "text": "could add years to your life",
+        "plain": "has not been tested on you",
+        "why": "Could is a word that can't be wrong. No person was in this study."
+      },
+      {
+        "text": "a breakthrough study",
+        "plain": "one new study",
+        "why": "Breakthrough is rarely the paper's word. It tends to arrive in the press release."
+      },
+      {
+        "text": "was linked to",
+        "plain": "was seen alongside",
+        "why": "Linked means seen together. It doesn't say which causes which, or whether either does."
+      },
+      {
+        "text": "in mice",
+        "plain": "in mice, not people",
+        "why": "About a third of press releases stretched animal results or causes; the news followed.",
+        "catch": true
+      }
+    ],
+    "ask": "Two words at the end undo the headline. Which?",
+    "watch": "Read a health story from the end: who was studied, and was it cause or only a link?"
+  },
   "source": "Sumner et al., BMJ, 2014",
   "source_kind": "paper",
   "reference": "Sumner et al., The association between exaggeration in health related science news and academic press releases, BMJ 349:g7015, 2014",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

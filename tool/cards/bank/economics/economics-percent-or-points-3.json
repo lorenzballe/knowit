@@ -6,28 +6,57 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "A bank boasts that its savings rate, once 0.5%, is up 100%. What does that add to €5,000 saved?",
-  "answer": "About €25 a year. Doubling 0.5% gives 1%, half a percentage point more. On €5,000 that is €50 of interest instead of €25. A percentage rise looks huge when the starting number is tiny, because 100% of almost nothing is still almost nothing: here, the price of two cinema tickets.",
-  "move": "A big percentage of a small number is still a small number.",
+  "question": "Four true numbers, four flattering headlines. Which trick makes each figure sound bigger than it is?",
+  "answer": "The record is the one people miss, because a record sounds like news. With prices rising a few per cent a year, totals in money set records almost every year by default. A house that rose 2% while prices rose 3% got cheaper. Check the base, the middle and the inflation before the adjective.",
+  "move": "Before a number impresses you, ask of what, since when, and in what money.",
   "ask": "When an offer quotes a big percentage, do I check what it is a percentage of?",
   "keywords": [
-    "savings rates",
-    "advertising",
-    "relative change",
-    "interest"
+    "percentage points",
+    "inflation",
+    "median",
+    "base effect",
+    "headlines"
   ],
   "era": "timeless",
   "region": "none",
   "hook": "practical",
   "mood": "playful",
-  "numeracy": 3,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Relative against absolute change",
+  "scene": {
+    "type": "match",
+    "leftTitle": "The trick",
+    "rightTitle": "The headline",
+    "pairs": [
+      {
+        "left": "Tiny base",
+        "right": "'Our savings rate is up 100%'",
+        "note": "0.5% became 1%. On €5,000 saved, that is €25 more a year."
+      },
+      {
+        "left": "No inflation",
+        "right": "'House prices hit a record high'",
+        "note": "Prices in money rise most years, so records are routine until adjusted.",
+        "missed": true
+      },
+      {
+        "left": "Mean, not median",
+        "right": "'Average pay up 4%' while most pay stood still",
+        "note": "A few big rises lift the mean. The middle earner may not move at all."
+      },
+      {
+        "left": "Picked start",
+        "right": "'Shares have doubled since 2009'",
+        "note": "Start at the bottom of a crash and any recovery looks like a boom."
+      }
+    ]
+  },
+  "source": "Relative against absolute change; inflation adjustment",
   "source_kind": "arithmetic",
   "reference": "Gigerenzer, Risk Savvy: How to Make Good Decisions, Viking, 2014",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

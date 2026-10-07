@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why can people still register new .su domains, more than three decades after the Soviet Union dissolved?",
-  "answer": "Because its code was never fully retired. Country endings follow ISO's list of country codes; when a country goes, its code is withdrawn and its domain is meant to wind down, as Yugoslavia's .yu did in 2010. SU was only marked transitionally reserved, and a Russian foundation has kept .su open to newcomers ever since.",
+  "question": "The Soviet Union's .su still takes new names. Which of these country endings still work, and which were switched off?",
+  "answer": "SU was never fully withdrawn. Country endings follow ISO's list of country codes: when a country goes, its code is meant to go and its domain to wind down. ISO only marked SU as transitionally reserved, so nobody had to pull the plug, and a Russian foundation has kept .su open to newcomers ever since.",
   "move": "Rules written for tidy endings rarely say who pulls the plug.",
   "keywords": [
     "soviet domain",
@@ -29,6 +29,50 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Retired",
+    "right": "Still live",
+    "tag": "Internet country codes",
+    "items": [
+      {
+        "text": ".su",
+        "note": "The Soviet Union.",
+        "pile": "right",
+        "verdict": "Still open to new registrations, more than 30 years after the USSR."
+      },
+      {
+        "text": ".yu",
+        "note": "Yugoslavia.",
+        "pile": "left",
+        "verdict": "Removed in 2010, after Serbia and Montenegro got their own."
+      },
+      {
+        "text": ".gb",
+        "note": "Great Britain, beside .uk.",
+        "pile": "right",
+        "verdict": "Still in the internet's root, though Britain chose .uk."
+      },
+      {
+        "text": ".cs",
+        "note": "Czechoslovakia.",
+        "pile": "left",
+        "verdict": "Removed in 1995, after the country split in two."
+      },
+      {
+        "text": ".zr",
+        "note": "Zaire.",
+        "pile": "left",
+        "verdict": "Removed in 2001, after the country became Congo."
+      },
+      {
+        "text": ".tp",
+        "note": "East Timor's first ending.",
+        "pile": "left",
+        "verdict": "Removed in 2015, years after .tl replaced it."
+      }
+    ]
+  },
   "source": "ISO 3166-1 country code standard",
   "source_kind": "standard",
   "reference": "ISO 3166-1:2020, Codes for the representation of names of countries and their subdivisions, Part 1: Country code, International Organization for Standardization, 2020",

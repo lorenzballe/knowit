@@ -475,5 +475,16 @@
   "minutesShort": "{n} MIN",
   "sideOr": "ou",
   "nextStep": "Passo seguinte",
-  "showAllSteps": "Ver tudo"
+  "showAllSteps": "Ver tudo",
+  "sceneLockIn": "CONFIRMAR",
+  "sceneYou": "VOCÊ",
+  "sceneTruth": "REAL",
+  "sceneTryAgain": "De novo",
+  "sceneDrawHint": "Desenhe seu palpite com o dedo",
+  "sceneHoldHint": "Pressione e segure",
+  "sceneSwipeHint": "Deslize ou toque",
+  "sceneTapToPick": "Toque na sua escolha",
+  "sceneShowMe": "Mostre",
+  "sceneYourGuess": "Seu palpite",
+  "sceneNOfM": "{n} de {m}"
 }

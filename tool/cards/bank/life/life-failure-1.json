@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Scientists who narrowly missed a first major NIH grant: how did their next ten years compare with narrow winners?",
-  "answer": "Those who stayed in science did better. Wang, Jones and Wang compared applicants who narrowly missed an NIH R01 grant with narrow winners; over ten years the near-misses who kept going produced more highly cited work. But more of them dropped out, so part of the gain is a filter on survivors.",
+  "question": "Two young scientists just miss and just win a grant. Who does better?",
+  "answer": "Partly a filter, partly a push. The near-misses were more likely to leave science, so the weakest may have dropped out before being counted. The authors tested that: even assuming the quitters were the weakest, the near-misses who stayed still did better. A setback that does not end a career can sharpen it.",
   "move": "Ask what happened to those who quit before praising those who continued.",
   "ask": "Whose success story do I admire, and what happened to the equally talented people who quit?",
   "keywords": [
@@ -27,8 +27,47 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "US National Institutes of Health",
+        "glyph": "book",
+        "line": "Young scientists apply for their first big research grant."
+      },
+      {
+        "fact": "A cut-off score",
+        "glyph": "check",
+        "line": "Some land just above the line, some just below it."
+      },
+      {
+        "fact": "Almost the same scores",
+        "glyph": "cross",
+        "line": "The near-misses get no money, and lose a year or more."
+      }
+    ],
+    "ask": "Ten years on, whose work is cited more?",
+    "options": [
+      {
+        "label": "The narrow winners"
+      },
+      {
+        "label": "No real difference"
+      },
+      {
+        "label": "The narrow losers"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "Wang, Jones and Wang, 2019",
+      "glyph": "rise",
+      "line": "The near-misses who stayed wrote more hit papers. More quit."
+    },
+    "why": "A near miss pushed some to work harder, and sent the least determined away."
+  },
   "source": "Wang, Jones and Wang, Nature Communications, 2019",
   "source_kind": "paper",
   "reference": "Wang, Jones and Wang, Early-career setback and future career impact, Nature Communications, 2019",
-  "written": "2026-09-29"
+  "written": "2026-10-06"
 }

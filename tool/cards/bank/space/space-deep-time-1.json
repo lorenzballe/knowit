@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did oxygen take hundreds of millions of years to build up in the air after microbes began making it?",
-  "answer": "Because the planet soaked it up first. Oxygen-making microbes may have worked for hundreds of millions of years before the air changed, about 2.4 billion years ago. Iron dissolved in the seas and gases from volcanoes grabbed the oxygen; the rusted iron settled as the striped rocks mined for steel today.",
+  "question": "Oxygen built up in Earth's air about 2.4 billion years ago. Which of these came before it, and which after?",
+  "answer": "The air changed late because the planet soaked oxygen up first. Iron dissolved in the seas and gases from volcanoes grabbed it as fast as microbes made it; the rusted iron settled as the striped rocks mined for steel today. Only when those sinks were full could oxygen linger, and ozone and complex cells follow.",
   "move": "A change can run for ages before it shows, while something absorbs it.",
   "ask": "Which effort of mine is still being soaked up, not failing, just not showing yet?",
   "keywords": [
@@ -26,6 +26,56 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Before",
+    "right": "After",
+    "tag": "Oxygen fills the air",
+    "items": [
+      {
+        "text": "The Moon",
+        "note": "Earth's companion forms.",
+        "pile": "left",
+        "verdict": "About 4.5 billion years ago, two billion years earlier."
+      },
+      {
+        "text": "Oceans",
+        "note": "Liquid water on the surface.",
+        "pile": "left",
+        "verdict": "Old zircon crystals point to water by about 4.4 billion years ago."
+      },
+      {
+        "text": "Life",
+        "note": "The first living cells.",
+        "pile": "left",
+        "verdict": "Fossil microbial mats are about 3.5 billion years old."
+      },
+      {
+        "text": "Oxygen makers",
+        "note": "Microbes that release oxygen as they make food.",
+        "pile": "left",
+        "verdict": "Possibly at work for hundreds of millions of years before the air changed."
+      },
+      {
+        "text": "Ozone layer",
+        "note": "The shield against ultraviolet light.",
+        "pile": "right",
+        "verdict": "Ozone is made from oxygen, so it had to wait for the air."
+      },
+      {
+        "text": "Complex cells",
+        "note": "Cells with a nucleus, like ours.",
+        "pile": "right",
+        "verdict": "Their firm fossils are less than 2 billion years old."
+      },
+      {
+        "text": "Animals",
+        "note": "The first creatures that move and eat.",
+        "pile": "right",
+        "verdict": "They appear in rocks less than a billion years old."
+      }
+    ]
+  },
   "source": "Lyons, Reinhard & Planavsky, Nature, 2014",
   "source_kind": "paper",
   "reference": "doi:10.1038/nature13068",

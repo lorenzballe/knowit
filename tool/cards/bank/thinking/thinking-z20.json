@@ -33,5 +33,34 @@
   "figure": "none",
   "source": "Winner's curse in A/B testing",
   "source_kind": "book",
-  "reference": "Kohavi, Tang & Xu, Trustworthy Online Controlled Experiments, Cambridge University Press, 2020"
+  "reference": "Kohavi, Tang & Xu, Trustworthy Online Controlled Experiments, Cambridge University Press, 2020",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated emails",
+    "hit": "Opened",
+    "groups": [
+      {
+        "label": "Line A",
+        "rate": 0.2
+      },
+      {
+        "label": "Line B",
+        "rate": 0.2
+      }
+    ],
+    "steps": [
+      100,
+      1000,
+      10000,
+      100000
+    ],
+    "seed": 72,
+    "button": "Send more",
+    "notes": [
+      "50 emails each: line B opens at 26%, line A at 10%. Both are truly 20%.",
+      "500 each: 23% against 20%. Still a winner, still luck.",
+      "5,000 each: 21% against 20%.",
+      "50,000 each: 20% and 20%. The winner was the luckiest draw."
+    ]
+  }
 }

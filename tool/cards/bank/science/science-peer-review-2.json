@@ -6,10 +6,10 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How was the physicist Jan Hendrik Schön, whose faked results passed review at top journals, finally caught?",
-  "answer": "By readers who noticed the same graph twice. In 2002 other physicists spotted identical noise, the random wiggles of measurement, in figures meant to show different experiments. Reviewers had judged whether his results were plausible, not whether his data existed. A Bell Labs inquiry upheld 16 of 24 allegations of misconduct.",
-  "move": "Ask whether anyone checked the evidence itself, not only its story.",
-  "ask": "When I believe a polished story, have I looked at any of the raw evidence myself?",
+  "question": "Bell Labs, 2001. A young physicist publishes breakthrough after breakthrough in top journals. No other lab can repeat them. Why?",
+  "answer": "He made it up. A 2002 Bell Labs inquiry upheld 16 of 24 allegations of misconduct. Reviewers had judged whether results were plausible, not whether the data existed. The duplicated noise caught the eye; the empty filing cabinet closed the case.",
+  "move": "Ask to see the raw records; a true result can always show its working.",
+  "ask": "What polished story have I believed unseen?",
   "keywords": [
     "jan hendrik schön",
     "scientific fraud",
@@ -18,7 +18,7 @@
   ],
   "era": "recent",
   "region": "americas",
-  "hook": "story",
+  "hook": "puzzle",
   "mood": "sober",
   "numeracy": 1,
   "abstraction": "concrete",
@@ -26,8 +26,44 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Real genius",
+      "Honest mix-up",
+      "Made-up data"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "He reports single-molecule transistors and superconducting plastics.",
+        "tag": "Dazzling results",
+        "rulesOut": []
+      },
+      {
+        "text": "Other labs try for months and cannot repeat any of it.",
+        "tag": "Nobody can repeat it",
+        "rulesOut": []
+      },
+      {
+        "text": "Graphs of two different experiments share the same noise, wiggle for wiggle.",
+        "tag": "Same noise twice",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "Asked for the raw data, he has none: no lab notebooks, files deleted.",
+        "tag": "No raw data kept",
+        "rulesOut": [
+          1
+        ]
+      }
+    ],
+    "why": "Real measurements never share noise. And an honest mix-up leaves originals to check: he had none."
+  },
   "source": "Beasley et al., Bell Labs inquiry report, 2002",
   "source_kind": "institution",
   "reference": "Beasley et al., Report of the Investigation Committee on the Possibility of Scientific Misconduct in the Work of Hendrik Schön and Coauthors, Lucent Technologies, 2002",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

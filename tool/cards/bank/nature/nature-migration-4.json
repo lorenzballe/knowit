@@ -6,10 +6,10 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did scientists show that painted lady butterflies found in South America had flown across the Atlantic?",
-  "answer": "From their pollen and the chemistry of their wings. Painted ladies found on a beach in French Guiana carried DNA from West African pollen, and isotopes in their wings pointed to birthplaces in Europe or Africa. Winds that week blew west off Africa: a crossing of at least 4,200 km with nowhere to land.",
+  "question": "October 2013: painted lady butterflies turn up on a beach in French Guiana, where the species does not live. Where from?",
+  "answer": "From across the Atlantic, out of West Africa, after a birth probably in Europe, as isotopes in their wings suggest. That is at least 4,200 km over open sea with nowhere to land, helped by winds blowing west.",
   "move": "A traveller's baggage can tell you where it has been.",
-  "ask": "What does the trail someone leaves behind tell me about where they have been?",
+  "ask": "What does the baggage around me say about where it has been?",
   "keywords": [
     "painted lady",
     "atlantic crossing",
@@ -27,8 +27,44 @@
   "mature": false,
   "language": "en",
   "figure": "map",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Local hatch",
+      "North America",
+      "Europe or Africa"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Painted ladies do not breed in this part of South America.",
+        "tag": "Not native here",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "Their genes match European and African populations, not North American ones.",
+        "tag": "Old World genes",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "They carry pollen from shrubs that grow only in tropical Africa.",
+        "tag": "African pollen",
+        "rulesOut": []
+      },
+      {
+        "text": "Winds that week blew west off Africa, over 4,200 km of open sea.",
+        "tag": "Winds off Africa",
+        "rulesOut": []
+      }
+    ],
+    "why": "The pollen is the vivid clue, but the genes had already settled it: these are Old World butterflies."
+  },
   "source": "Suchan et al., Nature Communications, 2024",
   "source_kind": "paper",
   "reference": "Suchan et al., A trans-oceanic flight of over 4,200 km by painted lady butterflies, Nature Communications, 2024",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

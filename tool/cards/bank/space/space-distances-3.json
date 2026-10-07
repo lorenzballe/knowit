@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "In films, spaceships weave through crowded asteroid fields. How crowded is the real asteroid belt?",
-  "answer": "Nearly empty. Its rocks are spread around a ring hundreds of millions of kilometres around, so neighbours are typically about a million kilometres apart, more than twice the distance to the Moon. Probes cross it without steering round anything. A map marking every rock with a dot paints a crowd where there is mostly space.",
+  "question": "In films, spaceships swerve through crowded asteroid fields. In the real asteroid belt, how far apart are neighbouring rocks?",
+  "answer": "About a million kilometres, more than twice the distance from Earth to the Moon. The belt holds over a million rocks wider than a kilometre, spread around a ring hundreds of millions of kilometres round. Probes cross it without steering round anything. A map marking every rock with a dot paints a crowd.",
   "move": "A crowded map can describe a nearly empty place.",
   "ask": "Which crowded picture of a risk in my head would look nearly empty if drawn to scale?",
   "keywords": [
@@ -18,16 +18,46 @@
   ],
   "era": "timeless",
   "region": "none",
-  "hook": "misconception",
+  "hook": "number",
   "mood": "wonder",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "NASA Science, Asteroids",
+  "scene": {
+    "type": "count",
+    "unit": "kilometres to the next asteroid",
+    "answer": 965600,
+    "each": 500,
+    "eachLabel": "1 dot = 500 km",
+    "compare": "Over twice as far as the Moon",
+    "options": [
+      {
+        "label": "About 10",
+        "value": 10,
+        "note": "Five zeros short. Films borrow the look of a crowd, not the real spacing."
+      },
+      {
+        "label": "About 1,000",
+        "value": 1000,
+        "note": "Three zeros short. Probes cross the belt without steering round anything."
+      },
+      {
+        "label": "About 100,000",
+        "value": 100000,
+        "note": "One zero short. The average gap is close to a million kilometres."
+      },
+      {
+        "label": "A million",
+        "value": 1000000,
+        "note": "Right: about 965,000 km on average, more than twice the Moon's distance."
+      }
+    ]
+  },
+  "source": "SwRI, Lucy mission, Main Belt density",
   "source_kind": "institution",
-  "reference": "https://science.nasa.gov/solar-system/asteroids/facts/",
-  "written": "2026-10-03"
+  "reference": "Southwest Research Institute, Lucy mission, The Density of the Asteroid Belt (average distance between objects about 965,600 km): https://lucy.swri.edu/MainBeltDensity.html",
+  "written": "2026-10-06"
 }

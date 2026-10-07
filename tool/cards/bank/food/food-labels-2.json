@@ -6,16 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How can a can of cooking spray, almost pure oil, list zero calories and zero fat per serving?",
-  "answer": "By making the serving tiny. US rules let a label round any serving under 5 calories down to zero, and fat under half a gram to zero. A serving of spray is about a quarter-second burst, roughly a quarter of a gram. Held down for a few seconds, the zero becomes tens of calories.",
+  "question": "Four words printed on food packs in the US, each true as written. What does each one actually promise?",
+  "answer": "The zero is the one people miss, because nobody checks the serving. US rules let a label round anything under 5 calories a serving down to 0, so cooking spray sets its serving at a quarter-second burst, about a quarter of a gram of oil. A few seconds' spray is tens of calories.",
   "move": "Before trusting a zero, check the size of the slice it describes.",
   "ask": "Which small number have I trusted without checking what it was a number of?",
   "keywords": [
+    "nutrition labels",
     "cooking spray",
-    "serving size",
-    "rounding rules",
-    "fda",
-    "nutrition labels"
+    "best before",
+    "multigrain",
+    "natural"
   ],
   "era": "recent",
   "region": "americas",
@@ -27,8 +27,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "On the label",
+    "rightTitle": "What it means",
+    "pairs": [
+      {
+        "left": "0 calories",
+        "right": "Under 5 calories in a very small serving",
+        "note": "Cooking spray: one serving is a quarter-second burst.",
+        "missed": true
+      },
+      {
+        "left": "Best before",
+        "right": "Past its best, but still safe to eat",
+        "note": "A quality date. In the US only infant formula must carry a safety date."
+      },
+      {
+        "left": "Multigrain",
+        "right": "Several grains, possibly all refined",
+        "note": "Not wholegrain: white flour from three grains still counts."
+      },
+      {
+        "left": "Natural",
+        "right": "Nothing defined in US law",
+        "note": "The FDA has only an informal policy: nothing artificial added."
+      }
+    ]
+  },
   "source": "US Code of Federal Regulations, 21 CFR 101.9",
   "source_kind": "primary_document",
   "reference": "https://www.ecfr.gov/current/title-21/chapter-I/subchapter-B/part-101/subpart-A/section-101.9",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

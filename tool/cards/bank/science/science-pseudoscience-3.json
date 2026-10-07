@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What did Australia's national medical research council find when it reviewed homeopathy for 61 health conditions?",
-  "answer": "No reliable evidence that it worked for any of them. The 2015 review weighed studies by quality: positive results came from small or poorly designed trials, while well-run ones found homeopathy no better than a placebo. The most diluted remedies are unlikely to hold a single molecule of the substance they started from.",
+  "question": "A tube of homeopathic pills from a chemist's shelf, labelled the way many are. What is actually in them?",
+  "answer": "Sugar, in practice. 30C means diluted a hundredfold, thirty times over: one part in a 1 followed by 60 zeros, far past the point where a single molecule is likely to remain. In 2015 Australia's national medical research council reviewed homeopathy for 61 conditions and found no reliable evidence it worked for any.",
   "move": "Weigh studies by how well they were run, not by how many.",
   "ask": "When I count the evidence for something I like, do I weigh the careful studies more than the rest?",
   "keywords": [
@@ -29,8 +29,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Homeopathic medicine",
+    "ref": "Typical text",
+    "title": "Arnica 30C",
+    "body": "Arnica montana 30C. Homeopathic remedy for bruises and aches. Gentle, with no known side effects.",
+    "phrases": [
+      {
+        "text": "30C",
+        "plain": "diluted 1 in 100, thirty times over",
+        "why": "One part in a number with 60 zeros. Past about 12C, not one molecule is likely to be left.",
+        "catch": true
+      },
+      {
+        "text": "Homeopathic remedy",
+        "plain": "Sugar pill, no better than a dummy in good trials,",
+        "why": "Australia's NHMRC reviewed 61 conditions in 2015 and found no reliable evidence for any."
+      },
+      {
+        "text": "no known side effects",
+        "plain": "no effects of any kind",
+        "why": "Nothing in it can act on the body, for good or ill. Gentle is the honest word."
+      }
+    ],
+    "ask": "One three-character code says the pill holds nothing. Which?",
+    "watch": "When a label lists an ingredient, ask how much of it is actually in there."
+  },
   "source": "NHMRC Information Paper on Homeopathy, 2015",
   "source_kind": "institution",
   "reference": "National Health and Medical Research Council, NHMRC Information Paper: Evidence on the effectiveness of homeopathy for treating health conditions, Canberra, 2015",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did researchers learn that a clam dredged off Iceland was the oldest individual animal ever precisely aged?",
-  "answer": "By sectioning its shell and counting growth lines, which only works on a dead clam. The ocean quahog, dredged in 2006, had been frozen on board as routine. A first count of the hinge said about 405 years; a recount in 2013 said 507. It hatched before Henry VIII took the throne.",
+  "question": "A clam dredged off Iceland in 2006 is the oldest animal ever aged precisely. When do you think it hatched?",
+  "answer": "Its age came from counting growth lines in a sectioned shell, which only works on a dead clam: it had been frozen on board with the rest of the catch. A first count said about 405 years; a recount in 2013 gave 507. It had been filtering Icelandic seawater through the whole of modern history.",
   "move": "Some measurements can only be taken once, so decide what is worth it.",
   "ask": "What can I only measure once, and is it worth the price?",
   "keywords": [
@@ -26,9 +26,34 @@
   "shelf_life": "years",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1450,
+    "to": 2025,
+    "events": [
+      {
+        "label": "The clam hatches",
+        "year": 1499,
+        "note": "It hatched in 1499 and was already 65 when Shakespeare was born."
+      },
+      {
+        "label": "Shakespeare born",
+        "year": 1564
+      },
+      {
+        "label": "US independence",
+        "year": 1776
+      },
+      {
+        "label": "Clam dredged up",
+        "year": 2006
+      }
+    ]
+  },
   "source": "Butler et al., Bangor University, 2013",
   "source_kind": "primary_document",
   "reference": "Butler et al., Variability of marine climate on the North Icelandic Shelf in a 1357-year proxy archive based on growth increments in the bivalve Arctica islandica, Palaeogeography, Palaeoclimatology, Palaeoecology, 2013",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

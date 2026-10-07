@@ -6,8 +6,8 @@
 const String kEmbeddedBank = r'''
 {
  "format": 1,
- "version": 202610061430,
- "built": "2026-10-06T14:30:30Z",
+ "version": 202610070954,
+ "built": "2026-10-07T09:54:32Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -2164,10 +2164,10 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "If the last tree ring in an oak panel dates to 1500, when was the picture painted?",
-   "answer": "Not before about 1511, and probably not before 1517. Panel makers cut away the sapwood, the pale outer rings, so the last ring left is years short of felling: for Baltic oak, add at least 9 sapwood rings, typically about 15. Then add at least two years of seasoning.",
+   "question": "The outermost tree ring left on an oak panel painting grew in 1500. When could the picture have been painted?",
+   "answer": "In 1511 at the earliest, probably after 1517. A tree ring gives only the earliest possible date, and each step of the panel maker's trade pushes it later: the trimmed sapwood, then the drying.",
    "move": "Some evidence can only tell you the earliest a thing could be.",
-   "ask": "What do I treat as an exact date or fact when it really only says not before then?",
+   "ask": "What do I treat as an exact date when it only says not before?",
    "keywords": [
     "dendrochronology",
     "oak panels",
@@ -2177,18 +2177,59 @@ const String kEmbeddedBank = r'''
    ],
    "era": "timeless",
    "region": "europe",
-   "hook": "mechanism",
+   "hook": "puzzle",
    "mood": "practical",
-   "numeracy": 2,
+   "numeracy": 3,
    "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "By 1500",
+     "1501 to 1510",
+     "1511 or later"
+    ],
+    "answer": 2,
+    "clues": [
+     {
+      "text": "The outermost ring left on the panel grew in 1500.",
+      "tag": "Last ring: 1500",
+      "rulesOut": [
+       0
+      ]
+     },
+     {
+      "text": "Panel makers cut away the pale sapwood: in Baltic oak, at least 9 rings.",
+      "tag": "Sapwood cut away",
+      "rulesOut": []
+     },
+     {
+      "text": "So the tree was felled in 1509 at the earliest.",
+      "tag": "Felled 1509 or later",
+      "rulesOut": []
+     },
+     {
+      "text": "Boards were left to season for at least two years before painting.",
+      "tag": "Two years drying",
+      "rulesOut": [
+       1
+      ]
+     },
+     {
+      "text": "Baltic oak usually has about 15 sapwood rings, not 9.",
+      "tag": "Usually 15 rings",
+      "rulesOut": []
+     }
+    ],
+    "why": "1500 plus 9 lost rings plus 2 years of drying: 1511 is the earliest a brush could touch it."
+   },
    "source": "Klein, Structural Conservation of Panel Paintings, 1998",
    "source_kind": "book",
    "reference": "Peter Klein, Dendrochronological Analyses of Panel Paintings, in Dardes & Rothe (eds), The Structural Conservation of Panel Paintings, Getty Conservation Institute, 1998",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "art-detection-6",
@@ -2430,8 +2471,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why was the first photograph scanned into a computer, in 1957, so small and coarse?",
-   "answer": "Because the machine could hold no more. At the US National Bureau of Standards, Russell Kirsch fed a photograph of his three-month-old son into a drum scanner linked to SEAC, an early stored-program computer. The image it could store was 176 pixels on a side, about 31,000 dots in all: enough for one small face.",
+   "question": "In 1957 a scientist scanned a photograph of his baby son into a computer: the first digital image. How many pixels did it have?",
+   "answer": "30,976: 176 pixels on a side. Russell Kirsch fed the photo of his three-month-old son through a drum scanner into SEAC, an early computer at the US National Bureau of Standards, and the picture was as large as the machine could hold. It was enough for one small face.",
    "move": "Early versions of a technology are shaped by what the machine could hold.",
    "ask": "What limits in my tools are shaping how my first attempts look?",
    "keywords": [
@@ -2443,7 +2484,7 @@ const String kEmbeddedBank = r'''
    ],
    "era": "twentieth",
    "region": "americas",
-   "hook": "origin",
+   "hook": "number",
    "mood": "wonder",
    "numeracy": 2,
    "abstraction": "concrete",
@@ -2451,10 +2492,40 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "pixels in the whole picture",
+    "answer": 30976,
+    "each": 16,
+    "eachLabel": "1 dot = 16 pixels",
+    "compare": "A 12 MP phone photo has 390 times more",
+    "options": [
+     {
+      "label": "About 300",
+      "value": 300,
+      "note": "Two zeros short. It was 176 pixels on a side: about 31,000 in all."
+     },
+     {
+      "label": "About 3,000",
+      "value": 3000,
+      "note": "One zero short. 176 by 176 makes 30,976, all the machine could hold."
+     },
+     {
+      "label": "About 30,000",
+      "value": 30000,
+      "note": "Right: 176 by 176, 30,976 pixels, enough for one small face."
+     },
+     {
+      "label": "3 million",
+      "value": 3000000,
+      "note": "Two zeros too many. That is a camera of around 2000, not 1957."
+     }
+    ]
+   },
    "source": "NIST, First Digital Image",
    "source_kind": "institution",
    "reference": "https://www.nist.gov/mathematics-statistics/first-digital-image",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "art-digital-2",
@@ -2937,8 +3008,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did experts accept the Amarna Princess, an Egyptian statue Bolton Museum bought in 2003 for about £440,000?",
-   "answer": "It came with a paper trail. The forgers, the Greenhalgh family, matched it to a genuine 1892 sale catalogue listing Egyptian figures from a country house, and told a plausible family story around it. The document did the persuading. The statue had been carved in a garden shed in Bolton.",
+   "question": "Bolton Museum paid about £440,000 for an Egyptian statue carved in a garden shed. Which of these were genuine, and which fake?",
+   "answer": "Experts err both ways for one reason: they judge by what fits. The Amarna Princess fitted, because the Greenhalghs matched it to a genuine 1892 sale catalogue and a family story. Altamira did not fit the belief that early humans could not paint like that, so it was called a forgery for 22 years.",
    "move": "A genuine document can be attached to a false object.",
    "ask": "When someone shows me a real-looking document, have I checked it belongs to what they are selling?",
    "keywords": [
@@ -2958,7 +3029,51 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "BBC News, Garden shed forger, 2007",
+   "scene": {
+    "type": "sort",
+    "left": "Fake",
+    "right": "Genuine",
+    "tag": "Expert opinion",
+    "items": [
+     {
+      "text": "Amarna Princess",
+      "note": "An Egyptian statue bought by Bolton Museum in 2003.",
+      "pile": "left",
+      "verdict": "Carved in a Bolton garden shed by Shaun Greenhalgh."
+     },
+     {
+      "text": "Altamira",
+      "note": "Cave paintings found in Spain in 1879.",
+      "pile": "right",
+      "verdict": "Called a forgery until 1902, when the chief sceptic apologised in print."
+     },
+     {
+      "text": "Met warriors",
+      "note": "Huge Etruscan terracotta figures bought by the Met.",
+      "pile": "left",
+      "verdict": "Shown to be modern in 1961, after a forger's confession."
+     },
+     {
+      "text": "Platypus",
+      "note": "A pelt with a duck's bill, sent to London in 1799.",
+      "pile": "right",
+      "verdict": "The curator cut at it with scissors, looking for stitches."
+     },
+     {
+      "text": "Vinland Map",
+      "note": "A medieval map showing America before Columbus.",
+      "pile": "left",
+      "verdict": "Its ink holds a titanium compound first made in the 1920s."
+     },
+     {
+      "text": "Archaeopteryx",
+      "note": "A fossil half bird, half dinosaur.",
+      "pile": "right",
+      "verdict": "Called a fake in 1985; the museum's experts showed it was real."
+     }
+    ]
+   },
+   "source": "BBC News, 2007; Yale Beinecke Library, 2021",
    "source_kind": "news_archive",
    "reference": "BBC News, Garden shed art forger jailed, 16 November 2007",
    "written": "2026-10-03"
@@ -5840,8 +5955,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did Eric Hebborn insist that his drawings in the manner of old masters were not forgeries?",
-   "answer": "Because he never signed them. Hebborn drew in the manner of masters from Mantegna to Van Dyck on old paper and let experts supply the names; a wrong attribution, he argued, was their error. Suspicion began in 1978, when a curator found two supposed old drawings on the same paper. He later claimed 1,000 fakes.",
+   "question": "Three lots in an auction catalogue, worded by a house's own glossary. Which ones claim the master drew it?",
+   "answer": "Only the first, and even that is an opinion. Auction houses grade their confidence in small words before a name. Eric Hebborn exploited that: he drew in old masters' manners on old paper, never signed, and let experts supply the names; a wrong attribution, he argued, was their error. He later claimed 1,000 fakes.",
    "move": "A claim can mislead even when nobody wrote a false word.",
    "ask": "Where have I misled someone lately without saying anything false?",
    "keywords": [
@@ -5861,10 +5976,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Hebborn, Drawn to Trouble, 1991",
+   "scene": {
+    "type": "translate",
+    "head": "Old master drawings",
+    "ref": "Sale catalogue",
+    "title": "Three heads of a man",
+    "body": "Lot 41: Anthony van Dyck, Head of a man. Lot 42: Attributed to Anthony van Dyck, Head of a man. Lot 43: Manner of Anthony van Dyck, Head of a man.",
+    "phrases": [
+     {
+      "text": "Lot 41: Anthony van Dyck",
+      "plain": "Lot 41: by van Dyck, in our opinion",
+      "why": "The bare name is the strongest claim a catalogue makes, and still an opinion."
+     },
+     {
+      "text": "Attributed to",
+      "plain": "Probably by, in whole or in part,",
+      "why": "The house's glossary says probably. A hedge you can see in the estimate."
+     },
+     {
+      "text": "Manner of",
+      "plain": "In his style, but later than",
+      "why": "In his style, made later. It names the master without claiming him.",
+      "catch": true
+     }
+    ],
+    "ask": "One phrase names the master and says he didn't draw it. Which?",
+    "watch": "In a catalogue the claim is the small words before the name."
+   },
+   "source": "Hebborn, 1991; Christie's cataloguing glossary",
    "source_kind": "book",
    "reference": "Eric Hebborn, Drawn to Trouble: The Forging of an Artist, Mainstream Publishing, 1991",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "art-motives-6",
@@ -8729,8 +8871,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How long do museum visitors spend in front of a painting, and what can appear if they stay far longer?",
-   "answer": "About 17 seconds was the median at the Metropolitan Museum in Smith and Smith's 2001 study. The art historian Jennifer Roberts makes her Harvard students sit three hours before one work. Trying it on a Copley portrait, she needed nine minutes to notice that the boy's ear echoes the fur on the squirrel's belly.",
+   "question": "A visitor at the Metropolitan Museum stops in front of a famous painting. How long do they spend looking at it?",
+   "answer": "A median of 17 seconds in Smith and Smith's 2001 count at the Met; the commonest time was 10. Much of it goes on the label. The art historian Jennifer Roberts makes students sit three hours: on a Copley portrait she needed nine minutes to see the boy's ear echo the squirrel's fur.",
    "move": "What you see in the first seconds is mostly what you expected.",
    "ask": "What is one thing I pass every day that I have never looked at for ten whole minutes?",
    "keywords": [
@@ -8743,16 +8885,31 @@ const String kEmbeddedBank = r'''
    "region": "americas",
    "hook": "practical",
    "mood": "practical",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Roberts, The Power of Patience, Harvard Magazine, 2013",
+   "source": "Smith & Smith, 2001; Roberts, 2013",
    "source_kind": "institution",
-   "reference": "Jennifer L. Roberts, The Power of Patience, Harvard Magazine, November–December 2013",
-   "written": "2026-10-03"
+   "reference": "Smith & Smith, Spending Time on Art, Empirical Studies of the Arts 19(2), 2001, doi:10.2190/5MQM-59JH-X21R-JN5J; Roberts, The Power of Patience, Harvard Magazine, 2013",
+   "written": "2026-10-06",
+   "scene": {
+    "type": "hold",
+    "what": "One look at a painting, the Met",
+    "seconds": 17,
+    "comparisons": [
+     {
+      "label": "The average look",
+      "seconds": 27.2
+     },
+     {
+      "label": "The most common look",
+      "seconds": 10
+     }
+    ]
+   }
   },
   {
    "id": "art-seeing-for-yourself-3",
@@ -9202,16 +9359,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How could green wallpaper poison a Victorian room without anyone touching it?",
-   "answer": "Through the air, with help from mould. Scheele's green and emerald green were cheap copper-arsenic pigments. In damp rooms, moulds feeding on the paste turn arsenic into a volatile gas, later identified as trimethylarsine, which smells of garlic. How many it sickened is still argued; the garlic smell in damp bedrooms is not.",
-   "move": "A stable substance can still move if something living digests it.",
-   "ask": "What looks harmless in my home or work but could turn harmful if something living got at it?",
+   "question": "Four colours painters once prized, one of them probably in your fridge today. What was each made from?",
+   "answer": "Carmine is the one people miss, because it never left: crushed cochineal insects still colour some sweets, drinks and yoghurts, listed as E120. The others are history. Scheele's green was copper and arsenic, and in damp rooms mould feeding on wallpaper paste released the arsenic as a garlic-smelling gas.",
+   "move": "Ask what a pretty thing is made of, not only how it looks.",
+   "ask": "Which colourful thing I eat or own have I never asked what it is made of?",
    "keywords": [
     "scheele's green",
     "arsenic",
-    "wallpaper",
-    "mould",
-    "trimethylarsine"
+    "carmine",
+    "mummy brown",
+    "ultramarine"
    ],
    "era": "nineteenth",
    "region": "europe",
@@ -9223,10 +9380,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "Colour",
+    "rightTitle": "Made from",
+    "pairs": [
+     {
+      "left": "Scheele's green",
+      "right": "Copper and arsenic",
+      "note": "In damp rooms, mould turned it into a garlic-smelling poison gas."
+     },
+     {
+      "left": "Mummy brown",
+      "right": "Ground-up Egyptian mummies",
+      "note": "Sold until the 1960s, when a London maker ran out of mummies."
+     },
+     {
+      "left": "Ultramarine",
+      "right": "Lapis lazuli from Afghan mines",
+      "note": "Dearer than gold, so painters saved it for the Virgin's robe."
+     },
+     {
+      "left": "Carmine",
+      "right": "Crushed insects",
+      "note": "Cochineal bugs, and still in some sweets and yoghurts today as E120.",
+      "missed": true
+     }
+    ]
+   },
    "source": "Hawksley, Bitten by Witch Fever, 2016",
    "source_kind": "book",
    "reference": "Lucinda Hawksley, Bitten by Witch Fever: Wallpaper and Arsenic in the Victorian Home, Thames & Hudson, 2016",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "art-synthetics-3",
@@ -9348,8 +9533,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did Japanese woodblock prints turn suddenly and intensely blue around 1830?",
-   "answer": "Because Prussian blue became cheap. Made in Europe since the early 1700s, it had reached Japan only in small, costly amounts; from about 1829 Chinese makers supplied it in bulk through Canton. Printers seized a blue that stayed bright where dayflower blue faded. Hokusai's Great Wave, of about 1831, rides that glut.",
+   "question": "Hokusai's Great Wave is the image of Japanese art. When do you think its famous blue was invented?",
+   "answer": "Prussian blue reached Japan only in small, costly amounts until about 1829, when Chinese makers began supplying it cheaply through Canton. Printers seized a blue that stayed bright where the old dayflower blue faded, and Hokusai's Fuji series was advertised with it for New Year 1831. An icon of Japan rides a German chemical.",
    "move": "A style can begin with a drop in the price of one material.",
    "ask": "What big change around me started simply because one ingredient got cheap?",
    "keywords": [
@@ -9368,11 +9553,36 @@ const String kEmbeddedBank = r'''
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
-   "source": "Smith, Hokusai and His Age, 2005",
+   "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1650,
+    "to": 1900,
+    "events": [
+     {
+      "label": "Prussian blue, Berlin",
+      "year": 1706,
+      "note": "The Great Wave's blue was invented in Berlin, 125 years before the print."
+     },
+     {
+      "label": "The Great Wave printed",
+      "year": 1831
+     },
+     {
+      "label": "Perry's ships reach Japan",
+      "year": 1853
+     },
+     {
+      "label": "Van Gogh copies Hiroshige",
+      "year": 1887
+     }
+    ]
+   },
+   "source": "Smith, Hokusai and His Age, 2005; Met Museum",
    "source_kind": "book",
    "reference": "Henry D. Smith II, Hokusai and the Blue Revolution in Edo Prints, in John T. Carpenter (ed.), Hokusai and His Age, Hotei Publishing, 2005",
-   "written": "2026-09-27"
+   "written": "2026-10-06"
   },
   {
    "id": "art-synthetics-7",
@@ -10307,8 +10517,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "The Perfect Storm shows a lost fishing crew's last hours at sea. Who could have known what they said?",
-   "answer": "Nobody. The Andrea Gail vanished in 1991 with all six men aboard, and no one heard their final hours. Sebastian Junger's book left them out; the film wrote them. Families of two crew sued over the invented scenes and lost in Florida's Supreme Court in 2005. The label covered the gaps.",
+   "question": "The Perfect Storm shows a lost fishing crew's last hours. Its opening card is worded like many. Which phrase covers those hours?",
+   "answer": "The fictionalised scenes. The Andrea Gail vanished in 1991 with all six men aboard, and no one heard their final hours. Sebastian Junger's book left them out; the film wrote them. Families of two crew sued over the invented scenes and lost in Florida's Supreme Court in 2005. The label covered the gaps.",
    "move": "Ask which parts of a true story anyone could have witnessed.",
    "ask": "In the true stories I repeat, which details could nobody actually have known?",
    "keywords": [
@@ -10327,10 +10537,36 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Opening title card",
+    "ref": "Typical text",
+    "body": "Based on a true story. Some names have been changed, and certain characters, events and dialogue have been fictionalised for dramatic purposes.",
+    "phrases": [
+     {
+      "text": "Based on a true story",
+      "plain": "Starting from real events",
+      "why": "A label about where the story began, not about any one scene."
+     },
+     {
+      "text": "certain characters, events and dialogue",
+      "plain": "scenes no witness lived to tell",
+      "why": "All six aboard died. Their last hours on screen had to be written.",
+      "catch": true
+     },
+     {
+      "text": "for dramatic purposes",
+      "plain": "to make a better film",
+      "why": "The aim is the story working, not the record being right."
+     }
+    ],
+    "ask": "One phrase covers the scenes nobody survived to tell. Which?",
+    "watch": "Count the scenes with a living witness. The rest were written."
+   },
    "source": "Tyne v. Time Warner, Florida Supreme Court",
    "source_kind": "primary_document",
    "reference": "https://caselaw.findlaw.com/court/fl-supreme-court/1239122.html",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "cinema-based-on-a-true-story-2",
@@ -11688,8 +11924,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Who destroyed most of the silent films that are now lost?",
-   "answer": "Largely their owners. Once talkies took over around 1929, silent films had almost no resale value, while nitrate was costly to store, dangerous, and held recoverable silver. Studios let negatives rot, melted prints down or dumped them. The last known print of MGM's London After Midnight went in a studio vault fire in 1965.",
+   "question": "Most American silent features are lost. Which of these famous silent films survive, and which are gone?",
+   "answer": "Mostly their owners threw them away. Once talkies took over around 1929, silent films had almost no resale value, while nitrate was costly to store, dangerous, and held silver worth recovering. Studios let negatives rot, melted prints or dumped them. The survivors are often copies that sat forgotten abroad, where nobody bothered to destroy them.",
    "move": "Things are lost less through disaster than through no longer seeming worth keeping.",
    "ask": "What am I letting slip away just because it no longer feels worth keeping?",
    "keywords": [
@@ -11709,6 +11945,50 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Lost",
+    "right": "Survives",
+    "tag": "The silent era",
+    "items": [
+     {
+      "text": "After Midnight",
+      "note": "MGM's London After Midnight, 1927, with Lon Chaney.",
+      "pile": "left",
+      "verdict": "The last known print burned in a studio vault fire in 1965."
+     },
+     {
+      "text": "Nosferatu",
+      "note": "Murnau's unlicensed Dracula, 1922.",
+      "pile": "right",
+      "verdict": "A court ordered every print destroyed in 1925. Copies abroad survived."
+     },
+     {
+      "text": "Cleopatra",
+      "note": "Theda Bara's 1917 epic, a huge hit.",
+      "pile": "left",
+      "verdict": "Lost, apart from a few seconds of fragments."
+     },
+     {
+      "text": "Metropolis",
+      "note": "Fritz Lang's 1927 city of the future.",
+      "pile": "right",
+      "verdict": "Cut on release; a near-complete print turned up in Buenos Aires in 2008."
+     },
+     {
+      "text": "Mountain Eagle",
+      "note": "Hitchcock's second feature, 1926.",
+      "pile": "left",
+      "verdict": "The only Hitchcock feature with no known copy."
+     },
+     {
+      "text": "Joan of Arc",
+      "note": "Dreyer's The Passion of Joan of Arc, 1928.",
+      "pile": "right",
+      "verdict": "Its original cut was found in a Norwegian mental hospital in 1981."
+     }
+    ]
+   },
    "source": "Cherchi Usai, Silent Cinema, 2000",
    "source_kind": "book",
    "reference": "Cherchi Usai, Silent Cinema: An Introduction, BFI Publishing, 2000",
@@ -12480,15 +12760,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "In a television interview filmed with one camera, when were the reporter's nods filmed?",
-   "answer": "Usually afterwards. With one camera on the guest, the crew turns round once the interview ends and films the reporter nodding or asking questions again, to cut in later. The BBC's editorial guidelines warn that these noddies must not change the meaning, because a nod placed after an answer reads as agreement.",
+   "question": "Four tricks of the screen, one of them used every night on the news. Which trick creates each effect?",
+   "answer": "The nod is the one people miss. With one camera on the guest, the crew turns round after the interview and films the reporter nodding, to cut in later. The BBC's guidelines warn that these noddies must not change the meaning, because a nod placed after an answer reads as agreement.",
    "move": "A reaction placed after a statement can be filmed at any time.",
    "ask": "When I see someone nodding along in a video, do I know when that nod happened?",
    "keywords": [
     "noddies",
-    "cutaways",
-    "tv interviews",
-    "bbc editorial guidelines"
+    "kuleshov effect",
+    "dolly zoom",
+    "shepard tone",
+    "editing"
    ],
    "era": "recent",
    "region": "europe",
@@ -12500,10 +12781,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "The trick",
+    "rightTitle": "The effect",
+    "pairs": [
+     {
+      "left": "Noddies",
+      "right": "A reporter who seems to agree as you speak",
+      "note": "One camera: the nods are filmed after the guest has gone.",
+      "missed": true
+     },
+     {
+      "left": "Kuleshov effect",
+      "right": "One blank face that looks hungry, then sad",
+      "note": "Cut it next to soup or a coffin and viewers read different feelings."
+     },
+     {
+      "left": "Dolly zoom",
+      "right": "A floor that seems to rush away beneath you",
+      "note": "Zoom in while the camera pulls back, as in Vertigo, 1958."
+     },
+     {
+      "left": "Shepard tone",
+      "right": "Music that seems to rise for ever",
+      "note": "Tones an octave apart fade in and out, so the climb never arrives."
+     }
+    ]
+   },
    "source": "BBC Editorial Guidelines",
    "source_kind": "institution",
    "reference": "BBC Editorial Guidelines, Section 3: Accuracy, British Broadcasting Corporation, 2019",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "cinema-editing-tricks-2",
@@ -12675,8 +12984,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Did the first audiences of the Lumière train film really flee their seats in panic?",
-   "answer": "There is no evidence they did. Martin Loiperdinger searched the newspapers and police reports of 1896 and found no account of panic at L'Arrivée d'un train. The tale grew later, partly from jokes about gullible country folk. Cinema's favourite origin story is about how easily fooled other people were.",
+   "question": "An 1896 audience fleeing a filmed train is cinema's favourite legend. Which of these film stories are true?",
+   "answer": "No 1896 source records a panic. Martin Loiperdinger searched the newspapers and police reports of the year and found none; the tale grew later, partly out of jokes about gullible country folk. Film legends spread when they flatter the teller, and this one is about how easily other audiences were fooled.",
    "move": "Stories about how gullible others were are often the gullible part.",
    "ask": "Which story about how foolish people used to be do I repeat without ever checking it?",
    "keywords": [
@@ -12695,6 +13004,50 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Myth",
+    "right": "True",
+    "tag": "Behind the screen",
+    "items": [
+     {
+      "text": "Train panic",
+      "note": "Lumière's first audience fled the oncoming train.",
+      "pile": "left",
+      "verdict": "No newspaper or police report of 1896 mentions any panic."
+     },
+     {
+      "text": "Psycho",
+      "note": "The shower scene's blood was chocolate syrup.",
+      "pile": "right",
+      "verdict": "In black and white, chocolate syrup looked more like blood than stage blood."
+     },
+     {
+      "text": "Wizard of Oz",
+      "note": "A suicide is visible in The Wizard of Oz.",
+      "pile": "left",
+      "verdict": "The shape in the trees is a large bird, one of several loaned to the set."
+     },
+     {
+      "text": "Jaws' shark",
+      "note": "The mechanical shark broke so often it was barely shown.",
+      "pile": "right",
+      "verdict": "Spielberg filmed around the broken shark and let suspense do the work."
+     },
+     {
+      "text": "The Wilhelm scream",
+      "note": "One stock scream recurs in hundreds of films.",
+      "pile": "right",
+      "verdict": "Recorded in 1951, it has been reused in hundreds of films since."
+     },
+     {
+      "text": "Snow White",
+      "note": "Snow White was the first animated feature.",
+      "pile": "left",
+      "verdict": "Argentina's El Apóstol ran 70 minutes in 1917, twenty years earlier."
+     }
+    ]
+   },
    "source": "Loiperdinger, The Moving Image, 2004",
    "source_kind": "paper",
    "reference": "Martin Loiperdinger, Lumière's Arrival of the Train: Cinema's Founding Myth, The Moving Image, 4(1), 2004",
@@ -13904,19 +14257,20 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Where did the stiff-armed Roman salute of so many epic films really come from?",
-   "answer": "From paintings and early films, not from Rome. No ancient text or monument clearly shows it. Jacques-Louis David's Oath of the Horatii of 1784 made the gesture famous, and Italian epics such as Cabiria of 1914 spread it. Fascists then adopted it as ancient tradition. Cinema invented a custom that politics later claimed.",
+   "question": "In epic after epic, Roman legions salute with a stiff arm raised, palm down. Where did that salute come from?",
+   "answer": "A painting. David's Oath of the Horatii, 1784, made the gesture look Roman; stage plays and Italian silent epics such as Cabiria spread it. D'Annunzio used it at Fiume in 1919, and the Fascists took it as ancient.",
    "move": "An old-looking custom may be younger than the story told about it.",
    "ask": "Which tradition I follow might be much younger than I assume?",
    "keywords": [
     "roman salute",
     "cabiria",
     "jacques-louis david",
-    "fascism"
+    "fascism",
+    "oath of the horatii"
    ],
    "era": "twentieth",
    "region": "europe",
-   "hook": "origin",
+   "hook": "puzzle",
    "mood": "sober",
    "numeracy": 1,
    "abstraction": "mixed",
@@ -13924,10 +14278,46 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "Ancient Rome",
+     "Mussolini",
+     "A painting"
+    ],
+    "answer": 2,
+    "clues": [
+     {
+      "text": "Fascist Italy and Nazi Germany both sold it as an ancient Roman greeting.",
+      "tag": "Sold as Roman",
+      "rulesOut": []
+     },
+     {
+      "text": "No Roman text describes it, and no Roman statue or coin clearly shows it.",
+      "tag": "No Roman evidence",
+      "rulesOut": [
+       0
+      ]
+     },
+     {
+      "text": "Italian epic films use it by 1914, years before any Fascist party existed.",
+      "tag": "On film by 1914",
+      "rulesOut": [
+       1
+      ]
+     },
+     {
+      "text": "In David's Oath of the Horatii, 1784, three brothers swear with arms outstretched.",
+      "tag": "David, 1784",
+      "rulesOut": []
+     }
+    ],
+    "why": "It was on cinema screens before Fascism existed, and Rome left no trace of it. A 1784 canvas did."
+   },
    "source": "Winkler, The Roman Salute, 2009",
    "source_kind": "book",
    "reference": "Martin M. Winkler, The Roman Salute: Cinema, History, Ideology, Ohio State University Press, 2009",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "cinema-historical-errors-2",
@@ -14401,30 +14791,66 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does a 1939 film still top the inflation-adjusted North American box-office chart?",
-   "answer": "Because it kept coming back. Before television and home video, a cinema was the only place to see a film, so Gone with the Wind was re-released again and again: 1947, 1954, 1961, 1967 and later. Its adjusted total adds up the audiences of several decades, not the crowds of one run.",
-   "move": "Before comparing totals, ask how many chances each one had to add up.",
-   "ask": "Which totals do I compare without asking how many chances each one had?",
+   "question": "Every few years a new film is crowned North America's biggest. Here are three champions by takings. Where's the trick?",
+   "answer": "In the money: a dollar of 1997 is not a dollar of 2019. Divide each gross by that year's average ticket: Titanic, at $4.59 a seat, sold about 131 million; Endgame, at $9.16, about 94 million. Most box-office records are records in prices. Counted in seats, Gone with the Wind, from 1939, still leads.",
+   "move": "Before comparing money across years, turn it back into things bought.",
+   "ask": "Which comparison across the years am I making in money instead of in what it bought?",
    "keywords": [
-    "gone with the wind",
-    "re-releases",
-    "inflation-adjusted gross",
-    "home video"
+    "box office",
+    "ticket prices",
+    "inflation",
+    "titanic",
+    "admissions"
    ],
-   "era": "twentieth",
+   "era": "recent",
    "region": "americas",
-   "hook": "mechanism",
-   "mood": "wonder",
-   "numeracy": 1,
+   "hook": "misconception",
+   "mood": "practical",
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "years",
    "mature": false,
    "language": "en",
    "figure": "timeline",
-   "source": "Harmetz, On the Road to Tara, 1996",
-   "source_kind": "book",
-   "reference": "Harmetz, On the Road to Tara: The Making of Gone with the Wind, Harry N. Abrams, 1996",
-   "written": "2026-09-26"
+   "scene": {
+    "type": "trick",
+    "trick": "totals",
+    "outlet": "Box-office chart (redrawn)",
+    "headline": "The new films are the biggest ever",
+    "honest": "In tickets sold, Titanic still wins",
+    "label": "North American takings, $ million",
+    "honestLabel": "Tickets sold, million",
+    "decimals": 0,
+    "honestDecimals": 0,
+    "columns": [
+     "Titanic",
+     "Star Wars 7",
+     "Endgame"
+    ],
+    "values": [
+     600.8,
+     936.7,
+     858.4
+    ],
+    "per": [
+     4.59,
+     8.43,
+     9.16
+    ],
+    "perScale": 1,
+    "found": "Yes: dollars, from years when a ticket cost very different amounts.",
+    "miss": "The takings are right. Read what they're counted in, one line above the bars.",
+    "misses": {
+     "yaxis": "The axis starts at zero, so the bars are fair. Fair lengths of what?",
+     "headline": "True in dollars. But was a dollar the same in 1997 and 2019?"
+    },
+    "name": "Money, not tickets",
+    "lesson": "A total in money grows with prices. Divide by the price before you compare years."
+   },
+   "source": "Box Office Mojo grosses; NATO average ticket prices",
+   "source_kind": "statistics",
+   "reference": "National Association of Theatre Owners, Annual Average U.S. Ticket Price, 2020",
+   "written": "2026-10-06"
   },
   {
    "id": "cinema-hits-2",
@@ -17910,8 +18336,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did hundreds of lost silent films turn up under a hockey rink in the Yukon?",
-   "answer": "Because Dawson City was the end of the line. Prints arrived years after release and were not worth the freight back, so they piled up. Around 1929 many were dumped into a disused swimming pool as fill, later covered by a rink. In 1978 a bulldozer found more than 500 reels, preserved by permafrost.",
+   "question": "Hundreds of lost silent films turned up under a hockey rink in the Yukon. When were they buried and found?",
+   "answer": "Dawson City was the end of the line: prints arrived years after release and were not worth the freight back, so they piled up. In 1929 a local man used them to fill an old swimming pool under the rink. Permafrost kept 533 reels of nitrate, which burns and rots, for half a century.",
    "move": "What is too costly to move is sometimes the thing that lasts.",
    "ask": "What do I have that lasted only because it was too much trouble to move?",
    "keywords": [
@@ -17930,11 +18356,36 @@ const String kEmbeddedBank = r'''
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1880,
+    "to": 2025,
+    "events": [
+     {
+      "label": "Klondike gold found",
+      "year": 1896
+     },
+     {
+      "label": "Reels buried as rubble",
+      "year": 1929,
+      "note": "Buried in 1929 as fill under a rink, the films lay frozen for 49 years."
+     },
+     {
+      "label": "A bulldozer finds them",
+      "year": 1978
+     },
+     {
+      "label": "Frozen Time documentary",
+      "year": 2016
+     }
+    ]
+   },
    "source": "Morrison, Dawson City: Frozen Time, 2016",
    "source_kind": "primary_document",
    "reference": "Morrison (director), Dawson City: Frozen Time, Hypnotic Pictures, 2016",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "cinema-rediscovered-2",
@@ -19758,8 +20209,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What stopped Henri-Georges Clouzot's L'Enfer in 1964, despite a budget with no ceiling?",
-   "answer": "Partly the missing ceiling itself. Columbia, impressed by his tests, gave Clouzot unlimited money, and he shot experiment after experiment with light, colour and distortion while the schedule slid. His lead actor left, ill; then Clouzot had a heart attack, and the shoot stopped for good. The footage lay in cans until a 2009 documentary.",
+   "question": "A great director got a film budget with no limit. What did he make?",
+   "answer": "A budget is also a set of decisions made for you: what to cut, when to stop testing, which take is good enough. Without one, Clouzot kept experimenting with light, colour and distortion while the schedule slid. The footage lay in cans until a 2009 documentary showed what he had shot, beautiful and unfinished.",
    "move": "Remove every limit and a piece of work may lose its reason to end.",
    "ask": "Where would a limit give my work a reason to end?",
    "keywords": [
@@ -19778,10 +20229,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "France, 1964",
+      "glyph": "eye",
+      "line": "Henri-Georges Clouzot, master of suspense, starts L'Enfer."
+     },
+     {
+      "fact": "Columbia Pictures",
+      "glyph": "coin",
+      "line": "Dazzled by his tests, the studio gives him unlimited money."
+     },
+     {
+      "fact": "Weeks of shooting",
+      "glyph": "clock",
+      "line": "Test after test of light and colour. The schedule slips."
+     }
+    ],
+    "ask": "What does the money buy?",
+    "options": [
+     {
+      "label": "His masterpiece"
+     },
+     {
+      "label": "A late, costly hit"
+     },
+     {
+      "label": "No film at all"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "Abandoned, 1964",
+     "glyph": "cross",
+     "line": "No film. His star left, he had a heart attack, it stopped."
+    },
+    "why": "With no limit, nothing forced a choice, so the tests ran on until something else stopped them."
+   },
    "source": "Bromberg and Medrea, L'Enfer d'Henri-Georges Clouzot",
    "source_kind": "primary_document",
    "reference": "Bromberg and Medrea (directors), L'Enfer d'Henri-Georges Clouzot, Lobster Films, 2009",
-   "written": "2026-09-27"
+   "written": "2026-10-06"
   },
   {
    "id": "cinema-unfinished-7",
@@ -19949,8 +20439,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "In the 1916 film The Battle of the Somme, which famous shot of soldiers going over the top was staged?",
-   "answer": "The best-known one. The sequence of men climbing from a trench into the smoke, one sliding back as if hit, was filmed at a training ground behind the lines. About 20 million Britons saw the film in its first six weeks. The image people remember of the battle was rehearsed.",
+   "question": "The 1916 film The Battle of the Somme showed British troops going over the top. How many Britons saw it in its first six weeks?",
+   "answer": "About 20 million, nearly half the population. Many believed they were watching men die. But the best-known sequence, soldiers climbing out of a trench into the smoke and one sliding back as if hit, was filmed at a training ground behind the lines. The image the country kept of the battle had been rehearsed.",
    "move": "The most iconic shot is the one most worth checking.",
    "ask": "Which picture of a real event shapes my opinion, and do I know how it was made?",
    "keywords": [
@@ -19961,18 +20451,48 @@ const String kEmbeddedBank = r'''
    ],
    "era": "twentieth",
    "region": "europe",
-   "hook": "story",
+   "hook": "number",
    "mood": "dark",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "Britons who saw it in six weeks",
+    "answer": 20000000,
+    "each": 10000,
+    "eachLabel": "1 dot = 10,000 viewers",
+    "compare": "Out of about 43 million Britons",
+    "options": [
+     {
+      "label": "About 50,000",
+      "value": 50000,
+      "note": "Far too few. Cinemas across Britain ran it for weeks on end."
+     },
+     {
+      "label": "About 500,000",
+      "value": 500000,
+      "note": "Two zeros short. About 20 million saw it, nearly half the country."
+     },
+     {
+      "label": "2 million",
+      "value": 2000000,
+      "note": "One zero short. About 20 million, out of some 43 million Britons."
+     },
+     {
+      "label": "20 million",
+      "value": 20000000,
+      "note": "Right: about 20 million, nearly half of Britain, in six weeks."
+     }
+    ]
+   },
    "source": "Imperial War Museums, Malins and the Somme film",
    "source_kind": "institution",
    "reference": "https://www.iwm.org.uk/history/geoffrey-malins-and-the-battle-of-the-somme-film",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "cinema-war-films-2",
@@ -20496,8 +21016,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did paying off debts after 1929 leave many American borrowers worse off in real terms?",
-   "answer": "Because selling to raise cash pushed prices down, and debts were fixed in dollars. Consumer prices fell about a quarter between 1929 and 1933, so each dollar owed cost about a third more in goods and labour. Irving Fisher named it debt deflation in 1933: a farmer paid the same mortgage with ever more bushels.",
+   "question": "In 1929 an American farmer owed $100, fixed in dollars. As the Depression deepened, what did that debt cost in 1929 goods?",
+   "answer": "About a third more by 1933. Selling to raise cash pushed consumer prices down about a quarter, while the debt stayed fixed in dollars, so every payment took more bushels and more hours of work. Irving Fisher named it debt deflation in 1933: the more debtors paid, the heavier the rest became.",
    "move": "A debt fixed in money grows whenever the prices around it fall.",
    "ask": "Do I owe anything that gets harder to pay back when prices or pay stand still?",
    "keywords": [
@@ -20517,9 +21037,42 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Fisher, Econometrica, 1933",
+   "scene": {
+    "type": "draw",
+    "label": "A $100 debt, in 1929 prices",
+    "unit": "$",
+    "columns": [
+     "1929",
+     "1930",
+     "1931",
+     "1932",
+     "1933"
+    ],
+    "values": [
+     100,
+     102.4,
+     112.5,
+     124.8,
+     131.5
+    ],
+    "given": 1,
+    "min": 50,
+    "max": 150,
+    "verdict": {
+     "under": "Debts usually shrink as prices rise. Here prices fell, so the same $100 grew to $132.",
+     "near": "Right: prices fell a quarter, so a fixed $100 debt weighed about $132 by 1933.",
+     "over": "Too steep, but the right way: falling prices made every dollar owed a third heavier."
+    },
+    "notes": [
+     {
+      "at": 2,
+      "text": "1931: prices down 11%"
+     }
+    ]
+   },
+   "source": "BLS consumer prices; Fisher, Econometrica, 1933",
    "source_kind": "paper",
-   "reference": "Fisher, The Debt-Deflation Theory of Great Depressions, Econometrica, 1933",
+   "reference": "US Bureau of Labor Statistics, Historical CPI-U, annual averages 1929-1933 (17.1, 16.7, 15.2, 13.7, 13.0); Fisher, The Debt-Deflation Theory of Great Depressions, Econometrica, 1933",
    "written": "2026-09-26"
   },
   {
@@ -20877,8 +21430,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did Northern Rock's savers queue for their money in 2007 when their deposits were insured?",
-   "answer": "Because the insurance left them holding part of the loss. Britain's scheme then covered all of the first £2,000 but only 90% of the next £33,000, and payouts could take months. For anyone with savings, running was rational. The queues stopped only when the Chancellor promised to guarantee every deposit, whole.",
+   "question": "Northern Rock's savers in 2007 had been told their money was protected. Why did they queue for it anyway?",
+   "answer": "Because protected meant mostly. Someone with £35,000 saved could get back £31,700, and only after months of paperwork. With a rumour in the air, leaving first cost nothing and waiting might cost thousands. The queues stopped only when the Chancellor promised to guarantee every deposit, whole. Britain soon dropped the 10% cut.",
    "move": "A guarantee with a gap in it invites people to race for the gap.",
    "ask": "Where is there a gap in a promise I rely on that could make everyone run for it?",
    "keywords": [
@@ -20898,10 +21451,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Deposit protection",
+    "ref": "UK rules, 2007",
+    "title": "Your savings are protected",
+    "body": "Deposits are covered by the Financial Services Compensation Scheme, up to a maximum of £35,000 per person. The Scheme pays 100% of the first £2,000 and 90% of the next £33,000.",
+    "phrases": [
+     {
+      "text": "covered",
+      "plain": "partly covered",
+      "why": "Covered sounds total. Here it meant a share of the loss stayed with the saver."
+     },
+     {
+      "text": "up to a maximum of £35,000",
+      "plain": "at most £31,700 back on £35,000",
+      "why": "£2,000 in full plus 90% of £33,000. The big number is a ceiling nobody reaches."
+     },
+     {
+      "text": "90% of the next £33,000",
+      "plain": "you lose £1 in every £10 above £2,000",
+      "why": "The saver shares the loss, so even a rumour makes getting out first the rational move.",
+      "catch": true
+     }
+    ],
+    "ask": "One phrase made running to the bank sensible. Which?",
+    "watch": "In any guarantee, find the gap. If there is one, expect a race for it."
+   },
    "source": "House of Commons Treasury Committee, 2008",
    "source_kind": "primary_document",
    "reference": "House of Commons Treasury Committee, The Run on the Rock, Fifth Report of Session 2007-08, HC 56, 2008",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "economics-2008-2",
@@ -21893,10 +22473,10 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "If American funds returned 7.3% a year over a decade, why did the people invested in them earn only 6.3%?",
-   "answer": "Because they bought after rises and sold after falls. A fund's return assumes money stayed put for the whole decade; investors' money came and went. Morningstar measured the gap at about a point a year over the ten years to 2023, roughly 15% of what the funds earned.",
+   "question": "Over ten years to 2023, US funds returned 7.3% a year, but their investors earned 6.3%. Where did the point go?",
+   "answer": "Into timing. A fund's return assumes money sat still for ten years. Investors' money arrived after good runs and left after bad ones, so more of it was in for the falls. Same funds, same fees, same tax.",
    "move": "Ask whose average a figure is: the product's or the people's.",
-   "ask": "Have I ever bought something after it rose and sold it after it fell?",
+   "ask": "When did I last buy something because it had just gone up?",
    "keywords": [
     "investor returns",
     "fund returns",
@@ -21905,7 +22485,7 @@ const String kEmbeddedBank = r'''
    ],
    "era": "recent",
    "region": "americas",
-   "hook": "paradox",
+   "hook": "puzzle",
    "mood": "practical",
    "numeracy": 2,
    "abstraction": "mixed",
@@ -21913,10 +22493,46 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "Fees",
+     "Taxes",
+     "Bad timing"
+    ],
+    "answer": 2,
+    "clues": [
+     {
+      "text": "The gap is about one point a year, every year, for a decade.",
+      "tag": "One point a year",
+      "rulesOut": []
+     },
+     {
+      "text": "The funds' 7.3% is already counted after their fees.",
+      "tag": "Fees already deducted",
+      "rulesOut": [
+       0
+      ]
+     },
+     {
+      "text": "Both figures are before tax, so tax cannot open a gap between them.",
+      "tag": "Both before tax",
+      "rulesOut": [
+       1
+      ]
+     },
+     {
+      "text": "Money poured in after rises and fled after falls.",
+      "tag": "In late, out early",
+      "rulesOut": []
+     }
+    ],
+    "why": "Fees and tax hit both numbers alike. Only one thing differs: when people's money was in."
+   },
    "source": "Morningstar, Mind the Gap, 2024",
    "source_kind": "company",
    "reference": "https://www.morningstar.com/personal-finance/fund-investors-who-kept-it-simple-captured-more-return",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "economics-averages-that-mislead-2",
@@ -22890,19 +23506,19 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How could the same share index, in March 2013, be fairly reported both as up 130% and as flat?",
-   "answer": "By choosing the start. The S&P 500 closed at 676 on 9 March 2009, its crisis low, and at 1,569 on 28 March 2013: up about 132%. Start from its October 2007 peak of 1,565 and five and a half years had earned nothing. Same index, same end; only the chart's left edge moved.",
-   "move": "Ask why a chart starts where it does before reading its slope.",
-   "ask": "When someone shows me a chart of how well something went, do I ask why it starts there?",
+   "question": "In 2013 charts like this one did the rounds: America's S&P 500 share index, up 58% in four years. Where's the trick?",
+   "answer": "In the years left out. The chart starts at the end of 2008, in the crash. Show every year from 1999 and the index closed 2012 below where it began. Both are true; the start picked the story. Measured from the March 2009 low, 676, March 2013's 1,569 was up 132%.",
+   "move": "Before trusting a gain, ask what it is measured from.",
+   "ask": "When I judge how well something went, do I pick the starting point that flatters it?",
    "keywords": [
     "s&p 500",
     "start date",
-    "charts",
+    "time window",
     "share prices"
    ],
    "era": "recent",
    "region": "americas",
-   "hook": "paradox",
+   "hook": "misconception",
    "mood": "sober",
    "numeracy": 2,
    "abstraction": "concrete",
@@ -22910,10 +23526,62 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "trick",
+    "trick": "window",
+    "outlet": "Money page, 2013 (redrawn)",
+    "headline": "Shares up 58% in four years",
+    "honest": "From the 1999 peak: still below it",
+    "label": "S&P 500 at the end of each year",
+    "columns": [
+     "1999",
+     "2000",
+     "2001",
+     "2002",
+     "2003",
+     "2004",
+     "2005",
+     "2006",
+     "2007",
+     "2008",
+     "2009",
+     "2010",
+     "2011",
+     "2012"
+    ],
+    "values": [
+     1469,
+     1320,
+     1148,
+     880,
+     1112,
+     1212,
+     1248,
+     1418,
+     1468,
+     903,
+     1115,
+     1258,
+     1258,
+     1426
+    ],
+    "window": [
+     9,
+     13
+    ],
+    "found": "Yes: it starts at the end of 2008, in the crash.",
+    "miss": "That part is honest. Ask why the chart starts where it does.",
+    "misses": {
+     "yaxis": "The scale is fair for these years. The question is which years.",
+     "marks": "Those are the real year-end closes. What's missing is the years before."
+    },
+    "name": "The chosen start",
+    "lesson": "Start a chart in a hole and anything looks like a climb. Ask what came before the first year."
+   },
    "source": "S&P Dow Jones Indices, S&P 500 closing levels",
    "source_kind": "statistics",
    "reference": "https://www.spglobal.com/spdji/en/indices/equity/sp-500/",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "economics-cherry-picked-charts-2",
@@ -23516,7 +24184,7 @@ const String kEmbeddedBank = r'''
      },
      {
       "at": 105,
-      "text": "Only now does the debt start to shrink."
+      "text": "Pay anything above the interest and the debt starts to shrink."
      }
     ]
    },
@@ -23790,8 +24458,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did container freight rates rise about sevenfold in 2021 while the volume of trade grew only modestly?",
-   "answer": "Because ships take years to build and port queues trapped the ones afloat. With part of the fleet idle at anchor, extra demand met no extra ships, so price adjusted instead: Drewry's index rose from about $1,420 in 2019 to $10,377 in September 2021. The ships ordered then arrived from 2023, into a slump.",
+   "question": "Container freight rates rose sevenfold by September 2021, because new ships take years to build. Where were they two years later?",
+   "answer": "Back below 2019. The spike came from ships that could not be added fast enough; the orders it set off arrived from 2023, just as demand cooled. Drewry's index fell from $10,377 a box to $1,382 by December 2023. Supply that cannot move quickly overshoots both ways: first too little, then too much.",
    "move": "When supply cannot move, a small shift in demand moves the price enormously.",
    "ask": "What do I buy where a small rise in demand makes the price jump?",
    "keywords": [
@@ -23811,7 +24479,46 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "bars",
-   "source": "Drewry World Container Index",
+   "scene": {
+    "type": "draw",
+    "label": "Freight, $ per 40-foot box",
+    "unit": "$",
+    "columns": [
+     "2019",
+     "Jan 21",
+     "Sep 21",
+     "Jan 22",
+     "Jul 22",
+     "Jan 23",
+     "Jul 23",
+     "Dec 23"
+    ],
+    "values": [
+     1420,
+     5245,
+     10377,
+     9545,
+     7051,
+     2132,
+     1537,
+     1382
+    ],
+    "given": 3,
+    "min": 0,
+    "max": 12000,
+    "verdict": {
+     "under": "Lower than the truth, but you saw the crash: rates fell back below 2019.",
+     "near": "Right: by late 2023 a box cost less than in 2019, as the new ships arrived.",
+     "over": "Higher than the truth. The new ships landed in a slump: by December 2023, below 2019."
+    },
+    "notes": [
+     {
+      "at": 5,
+      "text": "Jan 23: -79%"
+     }
+    ]
+   },
+   "source": "Drewry World Container Index, 2019-2023",
    "source_kind": "company",
    "reference": "Drewry Supply Chain Advisors, World Container Index, weekly composite assessments 2019-2023, 2023",
    "written": "2026-09-27"
@@ -24228,8 +24935,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What did unpaid parking tickets of United Nations diplomats in New York reveal about corruption?",
-   "answer": "That habits travel with people, and enforcement still beats habits. Immune from fines, diplomats from countries rated low on corruption, such as Norway, ran up almost no unpaid tickets, while those from high-corruption countries ran up many. When New York began stripping diplomatic plates for unpaid tickets in 2002, violations fell steeply across the board.",
+   "question": "Diplomats in New York could ignore parking fines. Who did, and what stopped them?",
+   "answer": "Culture decided who misbehaved when nothing was at stake: a diplomat's home-country corruption score predicted their unpaid tickets thousands of kilometres from home. Cost decided how much anyone misbehaved once something was. Both are true, and they answer different questions: who cuts corners, and whether corners get cut at all.",
    "move": "Norms shape behaviour when nobody is watching; penalties shape it when someone is.",
    "ask": "Which of my habits only hold because someone is checking, and which hold anyway?",
    "keywords": [
@@ -24249,10 +24956,54 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "New York, 1997 to 2002",
+      "glyph": "car",
+      "line": "UN diplomats can't be made to pay parking fines."
+     },
+     {
+      "fact": "Low-corruption countries",
+      "glyph": "check",
+      "line": "Diplomats from Norway, Sweden or Japan run up almost none."
+     },
+     {
+      "fact": "High-corruption countries",
+      "glyph": "rise",
+      "line": "Diplomats from Kuwait, Egypt or Chad run up over 100 each."
+     },
+     {
+      "fact": "November 2002",
+      "glyph": "ban",
+      "line": "New York starts taking diplomatic plates for unpaid tickets."
+     }
+    ],
+    "ask": "What happens to unpaid tickets?",
+    "options": [
+     {
+      "label": "They barely move"
+     },
+     {
+      "label": "They fall by a third"
+     },
+     {
+      "label": "They almost stop"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "Fisman and Miguel, 2007",
+     "glyph": "fall",
+     "line": "They almost stopped, from every kind of country."
+    },
+    "why": "Habits rule when breaking a rule is free. A real cost overrides them, for everyone."
+   },
    "source": "Fisman and Miguel, Journal of Political Economy, 2007",
    "source_kind": "paper",
    "reference": "Fisman & Miguel, Corruption, Norms, and Legal Enforcement: Evidence from Diplomatic Parking Tickets, Journal of Political Economy, 2007",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "economics-corruption-3",
@@ -24416,8 +25167,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When does Britain's financial regulator count a credit-card customer as stuck in persistent debt?",
-   "answer": "When, over 18 months, they have paid more in interest, fees and charges than they repaid of what they borrowed. Since 2018 card firms must then nudge them to pay faster, and at 36 months offer a way out or suspend the card. Minimum payments had kept many paying rent on one debt for years.",
+   "question": "A British credit-card statement. Which line decides whether the debt on it ever shrinks?",
+   "answer": "The minimum payment. Britain's financial regulator counts a cardholder as in persistent debt when, over 18 months, they have paid more in interest and charges than they repaid of what they borrowed. Since 2018 firms must then nudge them, and at 36 months offer a way out. Minimums kept many paying rent on a debt.",
    "move": "Compare what a debt costs you with how much it actually shrinks.",
    "ask": "Over the last year, how much of what I paid on my cards actually reduced what I owe?",
    "keywords": [
@@ -24436,10 +25187,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Credit card statement",
+    "ref": "Typical text",
+    "title": "Your monthly statement",
+    "body": "Balance: £3,000. Minimum payment: £75. If you make only the minimum payment each month, it will take you longer and cost you more to clear your balance.",
+    "phrases": [
+     {
+      "text": "Balance",
+      "plain": "Money you owe",
+      "why": "Balance sounds like money you have. On a card it is the debt."
+     },
+     {
+      "text": "Minimum payment: £75",
+      "plain": "Least you can pay to keep the debt alive: £75",
+      "why": "At about 2% interest a month, £60 of it is interest. The debt falls by £15.",
+      "catch": true
+     },
+     {
+      "text": "it will take you longer",
+      "plain": "it can take you many years",
+      "why": "Minimum payments shrink as the debt does, so the end keeps moving away."
+     }
+    ],
+    "ask": "One line is set so the debt barely moves. Which?",
+    "watch": "Compare what a debt costs each month with how much it actually shrinks."
+   },
    "source": "FCA, Policy Statement PS18/4, 2018",
    "source_kind": "primary_document",
    "reference": "Financial Conduct Authority, PS18/4 Credit card market study: persistent debt and earlier intervention remedies, February 2018",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "economics-debt-2",
@@ -24529,15 +25307,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What did the first study of decoy options, in 1982, show that choice theory had ruled out?",
-   "answer": "An added option raising the share of an existing one. Standard models held that a newcomer can only take buyers away, a property called regularity. Huber, Payne and Puto added options clearly worse than one of the existing choices, and that choice gained share. An option almost nobody picked sold its neighbour.",
+   "question": "Four prices built to steer what you buy, including a popcorn size almost nobody orders. Which trick is behind each?",
+   "answer": "The popcorn is the one people miss, because nobody buys the medium. That is its job. In 1982 Huber, Payne and Puto showed that adding an option clearly worse than another raises the share of the one that beats it, which choice theory had ruled out. An option almost nobody picked sold its neighbour.",
    "move": "More choice can change the winner, not just split the vote.",
    "ask": "Could an option I'd never pick be deciding which one I do pick?",
    "keywords": [
     "decoy effect",
-    "asymmetric dominance",
-    "regularity",
-    "choice theory"
+    "drip pricing",
+    "shrinkflation",
+    "charm prices",
+    "popcorn"
    ],
    "era": "twentieth",
    "region": "none",
@@ -24549,10 +25328,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "The trick",
+    "rightTitle": "The price",
+    "pairs": [
+     {
+      "left": "Decoy",
+      "right": "A £4.50 medium popcorn beside a £5 large",
+      "note": "The medium exists to make the large look like a bargain.",
+      "missed": true
+     },
+     {
+      "left": "Drip pricing",
+      "right": "A £19 flight that is £64 at the checkout",
+      "note": "Fees arrive step by step, after you have already decided to buy."
+     },
+     {
+      "left": "Shrinking pack",
+      "right": "Same price, same wrapper, 10% less chocolate",
+      "note": "Shoppers watch prices closely and weights hardly at all."
+     },
+     {
+      "left": "Charm price",
+      "right": "£9.99 instead of £10",
+      "note": "We read left to right, and the 9 lands before the pennies do."
+     }
+    ]
+   },
    "source": "Huber, Payne & Puto, J. Consumer Research, 1982",
    "source_kind": "paper",
    "reference": "doi:10.1086/208899",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "economics-decoy-options-2",
@@ -24938,8 +25745,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How long before Bitcoin could customers of a real bank spend anonymous digital cash?",
-   "answer": "More than a decade. From 1995, Mark Twain Bank in Missouri issued eCash built on David Chaum's 1982 idea of blind signatures: a bank signs a digital coin without seeing its serial number, so spending leaves no trail to the customer. Too few shops joined, and Chaum's company DigiCash filed for bankruptcy in November 1998.",
+   "question": "Bitcoin is often called the first digital cash. When do you think a real bank first issued anonymous digital money?",
+   "answer": "David Chaum's blind signatures let a bank sign a digital coin without seeing its serial number, so spending it left no trail. Mark Twain Bank in Missouri ran his eCash from 1995, but it signed up only a few thousand customers and few shops took it. The cryptography worked; the network never formed.",
    "move": "A payment method works only when both sides already use it.",
    "ask": "What do I try that only works if the people around me use it too?",
    "keywords": [
@@ -24959,10 +25766,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1975,
+    "to": 2015,
+    "events": [
+     {
+      "label": "Blind signatures invented",
+      "year": 1982
+     },
+     {
+      "label": "Bank issues eCash",
+      "year": 1995,
+      "note": "A Missouri bank offered anonymous eCash in 1995, 14 years before Bitcoin."
+     },
+     {
+      "label": "DigiCash goes bankrupt",
+      "year": 1998
+     },
+     {
+      "label": "Bitcoin launches",
+      "year": 2009
+     }
+    ]
+   },
    "source": "Brunton, Digital Cash, Princeton University Press, 2019",
    "source_kind": "book",
    "reference": "Brunton, Digital Cash: The Unknown History of the Anarchists, Utopians, and Technologists Who Created Cryptocurrency, Princeton University Press, 2019",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "economics-digital-money-3",
@@ -25283,8 +26115,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why don't hardware shops raise the price of snow shovels the morning after a blizzard?",
-   "answer": "Because customers would punish them. In a 1986 survey, 82% called raising a shovel from $15 to $20 after a snowstorm unfair or very unfair. Buyers judge a price against the one they feel entitled to. Firms that raise prices in a rush tend to dress it up as a fee or a surge.",
+   "question": "A blizzard, and everyone needs a shovel. Why doesn't the hardware shop raise the price?",
+   "answer": "Because a price is judged against a reference, not against demand. In Kahneman, Knetsch and Thaler's 1986 survey, 82% called raising a shovel from $15 to $20 after a snowstorm unfair. The same people accepted rises passed on from higher costs. That is why sudden price jumps arrive dressed as fees or surges.",
    "move": "A price people call unfair can cost more than the profit it brings.",
    "ask": "When a price makes me angry, is it the amount, or that it broke what I expected?",
    "keywords": [
@@ -25304,6 +26136,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "The morning after a blizzard, shovels cost the same."
+    },
+    "levels": [
+     {
+      "text": "Demand has leapt: at a higher price, every shovel would still sell."
+     },
+     {
+      "text": "Yet buyers judge a price against the one they feel entitled to.",
+      "figure": "82%",
+      "unit": "called a $5 rise unfair"
+     },
+     {
+      "text": "A shop that profits from a storm is remembered as the one that gouged."
+     },
+     {
+      "text": "It sells to the same town all year, and the town remembers."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Buyers would not forget",
+      "Shovels were bought cheap",
+      "Head office sets prices"
+     ],
+     "answer": 0
+    }
+   },
    "source": "Kahneman, Knetsch and Thaler, AER, 1986",
    "source_kind": "paper",
    "reference": "https://faculty.chicagobooth.edu/-/media/research/cdr/docs/thaler/fairness-as-a-constraint-on-profit-seeking.pdf",
@@ -25862,8 +26725,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did British banks pay back about £38 billion for an insurance they had sold alongside loans?",
-   "answer": "Because much of it could never pay out. Payment protection insurance, meant to cover repayments after illness or job loss, was often sold to self-employed people or those already ill, whom its own small print excluded. Sold on commission, it was often added without being asked for. Over 32 million complaints followed.",
+   "question": "For years British banks sold payment protection insurance alongside loans and cards. How much did they end up paying back?",
+   "answer": "Over £38 billion, the Financial Conduct Authority reported in 2020, after more than 32 million complaints. The cover was often sold to self-employed or already ill people whom its own small print excluded, and banks earned commission on every policy. Many customers had it added without being asked.",
    "move": "Before buying cover, find the clause that says when it pays nothing.",
    "ask": "Which insurance do I pay for without knowing what would stop it paying out?",
    "keywords": [
@@ -25874,18 +26737,49 @@ const String kEmbeddedBank = r'''
    ],
    "era": "recent",
    "region": "europe",
-   "hook": "story",
+   "hook": "number",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "prefix": "£",
+    "unit": "paid back to customers",
+    "answer": 38000000000,
+    "each": 20000000,
+    "eachLabel": "1 dot = £20 million",
+    "compare": "After over 32 million complaints",
+    "options": [
+     {
+      "label": "£380 million",
+      "value": 380000000,
+      "note": "Two zeros short. Over 32 million complaints, and most were upheld."
+     },
+     {
+      "label": "£3.8 billion",
+      "value": 3800000000,
+      "note": "One zero short. Over £38 billion: the largest redress in UK history."
+     },
+     {
+      "label": "£38 billion",
+      "value": 38000000000,
+      "note": "Right. Over £38 billion, the largest consumer redress in UK history."
+     },
+     {
+      "label": "£380 billion",
+      "value": 380000000000,
+      "note": "One zero too many. Still, £38 billion is about £700 for every UK adult."
+     }
+    ]
+   },
    "source": "FCA, PPI complaints deadline report, 2020",
    "source_kind": "institution",
    "reference": "https://www.fca.org.uk/publication/ppi/payment-protection-insurance-complaints-deadline-final-report.pdf",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "economics-fine-print-3",
@@ -26347,15 +27241,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did a share-trading app that charged no commission end up costing its customers money?",
-   "answer": "It sold their orders. Trading firms paid Robinhood to send them its customers' trades, and filled those orders at worse prices than other brokers got. The US Securities and Exchange Commission found customers lost $34.1 million even after the commissions they saved, and fined Robinhood $65 million in 2020.",
+   "question": "A trading app, a mobile game, a credit-score site and pay-in-three all cost you nothing. So who is really paying for each?",
+   "answer": "Pay in three is the one people miss. It feels like a loan, so people look for the interest, but the shop pays: a fee of a few per cent on every sale. Shops accept it because people spend more when the bill is split. The trading app's customers paid too, in worse prices.",
    "move": "If you cannot see the fee, look for it in the price you get.",
    "ask": "For the free apps I use, do I know who pays them, and for what?",
    "keywords": [
-    "robinhood",
     "payment for order flow",
-    "zero commission",
-    "sec"
+    "robinhood",
+    "buy now pay later",
+    "free to play",
+    "business models"
    ],
    "era": "recent",
    "region": "americas",
@@ -26367,10 +27262,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "SEC, Robinhood order, December 2020",
+   "scene": {
+    "type": "match",
+    "leftTitle": "Free",
+    "rightTitle": "Who pays",
+    "pairs": [
+     {
+      "left": "Trading app",
+      "right": "Market makers, paid to fill your orders",
+      "note": "Payment for order flow. The SEC fined Robinhood $65M for hiding it."
+     },
+     {
+      "left": "Mobile game",
+      "right": "A tiny few who spend a fortune",
+      "note": "In one 2014 study, 0.15% of players brought in half the money."
+     },
+     {
+      "left": "Credit score site",
+      "right": "Banks, when you take a card it suggests",
+      "note": "The score is the bait. The fee comes when you sign up for the card."
+     },
+     {
+      "left": "Pay in three",
+      "right": "The shop, giving up a cut of every sale",
+      "note": "Shops pay a few per cent a sale, because people buy more in instalments.",
+      "missed": true
+     }
+    ]
+   },
+   "source": "SEC, Robinhood order, 2020; Swrve, Monetization Report, 2014",
    "source_kind": "primary_document",
    "reference": "https://www.sec.gov/newsroom/press-releases/2020-321",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "economics-free-is-not-free-3",
@@ -28161,30 +29084,68 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do central banks aim for inflation of about 2% a year rather than for prices that never rise?",
-   "answer": "Partly because pay is rarely cut. Employers find it very hard to lower wages in cash terms, so with zero inflation a struggling firm sheds jobs instead. A little inflation lets pay adjust quietly: a 1% raise in a year of 2% inflation is a 1% cut that nobody has to announce.",
-   "move": "Change that arrives disguised is often easier to accept than change announced.",
+   "question": "A firm making a small profit, in a town with many jobless, changes everyone's pay. Is it fair?",
+   "answer": "This is part of why central banks aim for about 2% inflation, not zero. People resent a cut in money far more than the same loss through rising prices, so firms almost never cut pay. With no inflation, a struggling firm sheds jobs instead. A little inflation lets real pay adjust without a cut announced.",
+   "move": "Judge pay by what it buys, not by the number on the slip.",
    "ask": "If my pay rose less than prices this year, did I notice the cut?",
    "keywords": [
     "inflation target",
     "central banks",
     "wage cuts",
-    "real wages"
+    "money illusion",
+    "fairness"
    ],
    "era": "timeless",
    "region": "world",
-   "hook": "mechanism",
+   "hook": "paradox",
    "mood": "wonder",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Akerlof, Dickens and Perry, Brookings Papers, 1996",
+   "scene": {
+    "type": "poll",
+    "who": "Canadians by phone, Kahneman et al. 1986",
+    "questions": [
+     {
+      "prompt": "No inflation. The firm cuts everyone's pay by 7%.",
+      "tag": "A cut, no inflation",
+      "options": [
+       {
+        "label": "Acceptable",
+        "share": 38
+       },
+       {
+        "label": "Unfair",
+        "share": 62
+       }
+      ]
+     },
+     {
+      "prompt": "Prices are rising 12% a year. The firm raises pay by only 5%.",
+      "tag": "A 5% raise, 12% inflation",
+      "options": [
+       {
+        "label": "Acceptable",
+        "share": 78
+       },
+       {
+        "label": "Unfair",
+        "share": 22
+       }
+      ]
+     }
+    ],
+    "why": "We judge pay by the number on the payslip, not by what it buys, so a cut stings and a lag hides.",
+    "same": "You held steady. The crowd didn't: unfair fell from 62% to 22% for much the same loss.",
+    "switched": "You switched, like most. Both leave your pay buying about 6 to 7% less."
+   },
+   "source": "Kahneman, Knetsch & Thaler, AER, 1986",
    "source_kind": "paper",
-   "reference": "Akerlof, Dickens & Perry, The Macroeconomics of Low Inflation, Brookings Papers on Economic Activity, 1996",
-   "written": "2026-10-03"
+   "reference": "Kahneman, Knetsch & Thaler, Fairness as a constraint on profit seeking, American Economic Review 76 (1986): 728-741; Akerlof, Dickens & Perry, Brookings Papers on Economic Activity, 1996",
+   "written": "2026-10-06"
   },
   {
    "id": "economics-inflation-3",
@@ -28497,8 +29458,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why are so many American credit cards issued by banks based in South Dakota or Delaware?",
-   "answer": "Because of a 1978 Supreme Court ruling. In Marquette v. First of Omaha, the Court let a nationally chartered bank charge customers anywhere the interest its home state allowed. South Dakota scrapped its rate cap in 1980, Citibank moved its card business to Sioux Falls, and Delaware followed. The loosest state's rules became the country's.",
+   "question": "Why are so many American credit cards run from South Dakota or Delaware?",
+   "answer": "Because the rule followed the lender, not the borrower. Most states once capped card interest, and when inflation pushed market rates above those caps, cards lost money. Once Marquette let national banks export their home state's rate, states competed to be the loosest, and Delaware followed South Dakota in 1981.",
    "move": "When a rule can be exported, the loosest version wins.",
    "ask": "Where do I accept the loosest rule because the provider picked where to operate?",
    "keywords": [
@@ -28518,6 +29479,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "map",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "Millions of US card bills come from Sioux Falls, South Dakota."
+    },
+    "levels": [
+     {
+      "text": "The bank chose its home state for one law: no cap on interest."
+     },
+     {
+      "text": "A 1978 ruling let a bank charge anyone its home state's rate.",
+      "figure": "1978",
+      "unit": "Supreme Court, Marquette"
+     },
+     {
+      "text": "South Dakota scrapped its rate cap in 1980; Citibank moved in."
+     },
+     {
+      "text": "So one loose state can set the rules for a whole country."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Its law follows the bank",
+      "Taxes are lower there",
+      "Land and staff are cheap"
+     ],
+     "answer": 0
+    }
+   },
    "source": "US Supreme Court, Marquette v. First of Omaha",
    "source_kind": "primary_document",
    "reference": "Marquette National Bank of Minneapolis v. First of Omaha Service Corp., 439 U.S. 299 (1978)",
@@ -28945,8 +29937,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How much did loyal customers in five British markets pay a year for staying with the same supplier?",
-   "answer": "About £4 billion a year, the Competition and Markets Authority found in 2018, across mobile phones, broadband, home insurance, mortgages and savings. Firms raised prices quietly at each renewal, made leaving slow and rolled contracts over by default. Loyalty, in these markets, was a charge on having no time to switch.",
+   "question": "A home-insurance renewal letter, worded the way many were. Which line is where staying put cost Britons billions?",
+   "answer": "The price, quietly raised because you stayed. Britain's competition regulator put the cost of loyalty at about £4 billion a year across five markets in 2018. The insurance regulator's name for it was price walking, and from 2022 it banned charging renewing home and motor customers more than new ones.",
    "move": "Check what a newcomer would pay before renewing anything.",
    "ask": "Which of my contracts renewed itself this year without my comparing the price?",
    "keywords": [
@@ -28965,10 +29957,42 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Competition and Markets Authority, loyalty penalty, 2018",
+   "scene": {
+    "type": "translate",
+    "head": "Insurance renewal",
+    "ref": "Typical text",
+    "title": "Your renewal",
+    "body": "Thank you for being a valued customer. Your policy will renew automatically. Your new premium reflects our latest pricing. No action is needed.",
+    "phrases": [
+     {
+      "text": "valued customer",
+      "plain": "customer we expect not to compare",
+      "why": "Staying is read as a sign you won't compare. That is worth money to the insurer."
+     },
+     {
+      "text": "renew automatically",
+      "plain": "renew at our new price unless you stop it",
+      "why": "Doing nothing counts as yes. The default does the selling."
+     },
+     {
+      "text": "reflects our latest pricing",
+      "plain": "is higher, partly because you stayed",
+      "why": "Regulators called it price walking: a little more each year for those who never left.",
+      "catch": true
+     },
+     {
+      "text": "No action is needed",
+      "plain": "Do nothing, and pay more",
+      "why": "The best price usually goes to whoever asks. Silence is the profitable answer."
+     }
+    ],
+    "ask": "One phrase is where loyal customers pay. Which?",
+    "watch": "A letter that asks you to do nothing is asking for the highest price."
+   },
+   "source": "CMA, 2018; FCA PS21/5, 2021",
    "source_kind": "institution",
    "reference": "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/766795/Loyalty_Penalty.pdf",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "economics-loyalty-traps-2",
@@ -29286,31 +30310,67 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did envelopes bearing photos of their children help Indian labourers save more?",
-   "answer": "They made the money feel spoken for. Soman and Cheema gave construction workers' households their savings in sealed envelopes; splitting the cash into separate envelopes, some printed with the children's pictures, raised what was saved. Opening one meant breaking a seal marked with a purpose. A child's photo guarded the money better than willpower.",
-   "move": "Give money a name and a place, and it becomes harder to spend.",
-   "ask": "Which savings goal of mine would last longer if I gave it its own account and a name?",
+   "question": "At the theatre door, about to pay $10 for a ticket, you find something is missing. Do you still pay?",
+   "answer": "People keep money in mental accounts. A lost note comes out of general cash, but a lost ticket is charged to the play, which now seems to cost $20. The habit can be put to work: Soman and Cheema's labourers saved more when their cash went into envelopes marked for their children.",
+   "move": "Money lost is gone; ask only whether the next spend is worth it.",
+   "ask": "Which loss am I charging to the wrong account in my head?",
    "keywords": [
-    "earmarking",
-    "savings",
-    "envelopes",
-    "india",
-    "labourers"
+    "mental accounting",
+    "theatre ticket",
+    "lost money",
+    "earmarking"
    ],
-   "era": "recent",
-   "region": "asia",
-   "hook": "story",
-   "mood": "wonder",
-   "numeracy": 0,
+   "era": "twentieth",
+   "region": "world",
+   "hook": "paradox",
+   "mood": "playful",
+   "numeracy": 1,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Soman and Cheema, Journal of Marketing Research, 2011",
+   "scene": {
+    "type": "poll",
+    "who": "Students, Tversky & Kahneman 1981",
+    "questions": [
+     {
+      "prompt": "You find you have lost a $10 note on the way. Buy a ticket?",
+      "tag": "Lost a $10 note",
+      "options": [
+       {
+        "label": "Buy a ticket",
+        "share": 88
+       },
+       {
+        "label": "Go home",
+        "share": 12
+       }
+      ]
+     },
+     {
+      "prompt": "This time you bought the ticket earlier, and have lost it. Buy another?",
+      "tag": "Lost the $10 ticket",
+      "options": [
+       {
+        "label": "Buy another",
+        "share": 46
+       },
+       {
+        "label": "Go home",
+        "share": 54
+       }
+      ]
+     }
+    ],
+    "why": "A lost ticket is billed to the play, making it cost $20; a lost note is not.",
+    "same": "You held steady. The crowd didn't: buying fell from 88% to 46%.",
+    "switched": "You switched, like many. Either way you are $10 down and the play costs $10."
+   },
+   "source": "Tversky & Kahneman, Science, 1981; Soman & Cheema, 2011",
    "source_kind": "paper",
-   "reference": "Soman & Cheema, Earmarking and Partitioning: Increasing Saving by Low-Income Households, Journal of Marketing Research, 2011",
-   "written": "2026-10-03"
+   "reference": "Tversky & Kahneman, The framing of decisions and the psychology of choice, Science 211 (1981): 453-458; Soman & Cheema, Earmarking and Partitioning: Increasing Saving by Low-Income Households, Journal of Marketing Research, 2011",
+   "written": "2026-10-06"
   },
   {
    "id": "economics-mental-accounting-2",
@@ -29887,8 +30947,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What happened to sales of a $14.99 film when not buying was described as keeping $14.99 for other things?",
-   "answer": "They fell from 75% of people to 55%. In Frederick and colleagues' experiment, the only change was a reminder of what else the money could do. Everyone knew that $14.99 unspent could buy something else, yet a fifth of buyers changed their minds once the alternative was named out loud.",
+   "question": "A film you have wanted to see is on sale on DVD for $14.99. Would you buy it?",
+   "answer": "Naming the alternative moved a fifth of the students. Everyone knows unspent money can buy something else, but at the till the thought rarely arrives by itself. In Frederick and colleagues' study, only saying it aloud, keep the $14.99 for other purchases, cut buying from 75% to 55%.",
    "move": "Before buying, name one other thing the same money would get.",
    "ask": "Before my next purchase, can I name one other thing that money would buy me?",
    "keywords": [
@@ -29899,7 +30959,7 @@ const String kEmbeddedBank = r'''
    ],
    "era": "recent",
    "region": "americas",
-   "hook": "number",
+   "hook": "paradox",
    "mood": "practical",
    "numeracy": 2,
    "abstraction": "concrete",
@@ -29907,10 +30967,47 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "Students, Frederick et al. 2009",
+    "questions": [
+     {
+      "prompt": "Buy it, or not?",
+      "tag": "Not buying, said plainly",
+      "options": [
+       {
+        "label": "Buy it",
+        "share": 75
+       },
+       {
+        "label": "Don't buy it",
+        "share": 25
+       }
+      ]
+     },
+     {
+      "prompt": "Same film. Buy it, or keep the $14.99 for other things?",
+      "tag": "Not buying, as $14.99 kept",
+      "options": [
+       {
+        "label": "Buy the film",
+        "share": 55
+       },
+       {
+        "label": "Keep the $14.99",
+        "share": 45
+       }
+      ]
+     }
+    ],
+    "why": "A price names what you get. What else the money could buy stays silent unless someone says it.",
+    "same": "You held steady. The students didn't: buying fell from 75% to 55%.",
+    "switched": "You switched, like a fifth of the students. Nothing new was said; an obvious thing was said aloud."
+   },
    "source": "Frederick et al., Journal of Consumer Research, 2009",
    "source_kind": "paper",
    "reference": "Frederick, Novemsky, Wang, Dhar & Nowlis, Opportunity Cost Neglect, Journal of Consumer Research, 2009",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "economics-opportunity-cost-2",
@@ -30084,30 +31181,59 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "A bank boasts that its savings rate, once 0.5%, is up 100%. What does that add to €5,000 saved?",
-   "answer": "About €25 a year. Doubling 0.5% gives 1%, half a percentage point more. On €5,000 that is €50 of interest instead of €25. A percentage rise looks huge when the starting number is tiny, because 100% of almost nothing is still almost nothing: here, the price of two cinema tickets.",
-   "move": "A big percentage of a small number is still a small number.",
+   "question": "Four true numbers, four flattering headlines. Which trick makes each figure sound bigger than it is?",
+   "answer": "The record is the one people miss, because a record sounds like news. With prices rising a few per cent a year, totals in money set records almost every year by default. A house that rose 2% while prices rose 3% got cheaper. Check the base, the middle and the inflation before the adjective.",
+   "move": "Before a number impresses you, ask of what, since when, and in what money.",
    "ask": "When an offer quotes a big percentage, do I check what it is a percentage of?",
    "keywords": [
-    "savings rates",
-    "advertising",
-    "relative change",
-    "interest"
+    "percentage points",
+    "inflation",
+    "median",
+    "base effect",
+    "headlines"
    ],
    "era": "timeless",
    "region": "none",
    "hook": "practical",
    "mood": "playful",
-   "numeracy": 3,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Relative against absolute change",
+   "scene": {
+    "type": "match",
+    "leftTitle": "The trick",
+    "rightTitle": "The headline",
+    "pairs": [
+     {
+      "left": "Tiny base",
+      "right": "'Our savings rate is up 100%'",
+      "note": "0.5% became 1%. On €5,000 saved, that is €25 more a year."
+     },
+     {
+      "left": "No inflation",
+      "right": "'House prices hit a record high'",
+      "note": "Prices in money rise most years, so records are routine until adjusted.",
+      "missed": true
+     },
+     {
+      "left": "Mean, not median",
+      "right": "'Average pay up 4%' while most pay stood still",
+      "note": "A few big rises lift the mean. The middle earner may not move at all."
+     },
+     {
+      "left": "Picked start",
+      "right": "'Shares have doubled since 2009'",
+      "note": "Start at the bottom of a crash and any recovery looks like a boom."
+     }
+    ]
+   },
+   "source": "Relative against absolute change; inflation adjustment",
    "source_kind": "arithmetic",
    "reference": "Gigerenzer, Risk Savvy: How to Make Good Decisions, Viking, 2014",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "economics-perverse-rewards-1",
@@ -30158,8 +31284,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did Wells Fargo staff open up to 3.5 million accounts that customers never asked for?",
-   "answer": "Because they were judged on how many products each customer held. Branches chased steep daily sales targets, and staff who missed them feared for their jobs, so many opened accounts and cards in customers' names without consent. In 2016 regulators fined the bank $185 million. The count of accounts rose; the customers got fees.",
+   "question": "Wells Fargo staff were judged on products sold per customer. How many accounts did they open that nobody asked for?",
+   "answer": "About 3.5 million potentially unauthorised, the bank's own review found in 2017, from 2009 to 2016. Daily sales targets were steep, and staff who missed them feared for their jobs, so many opened accounts and cards in customers' names. The count of products rose; the customers got fees. Regulators had fined the bank $185 million in 2016.",
    "move": "Whatever you count, people will produce, whether or not it is real.",
    "ask": "Which number am I judged by that I could raise without doing better work?",
    "keywords": [
@@ -30170,18 +31296,48 @@ const String kEmbeddedBank = r'''
    ],
    "era": "recent",
    "region": "americas",
-   "hook": "story",
+   "hook": "number",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "accounts nobody asked for",
+    "answer": 3500000,
+    "each": 2000,
+    "eachLabel": "1 dot = 2,000 accounts",
+    "compare": "Found among 165 million, 2009 to 2016",
+    "options": [
+     {
+      "label": "About 35,000",
+      "value": 35000,
+      "note": "Two zeros short. This was no rogue branch: it ran through the bank for years."
+     },
+     {
+      "label": "About 350,000",
+      "value": 350000,
+      "note": "One zero short. A 2016 count found 2.1 million; the full review, 3.5 million."
+     },
+     {
+      "label": "3.5 million",
+      "value": 3500000,
+      "note": "Right. About 3.5 million accounts opened in customers' names without asking."
+     },
+     {
+      "label": "35 million",
+      "value": 35000000,
+      "note": "One zero too many. The 3.5 million came out of 165 million reviewed."
+     }
+    ]
+   },
    "source": "Wells Fargo, SEC filing, August 2017",
    "source_kind": "company",
    "reference": "https://www.sec.gov/Archives/edgar/data/0000072971/000007297117000428/wfcexhibit99108312017.htm",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "economics-perverse-rewards-3",
@@ -30230,8 +31386,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did one firm's workers raise their pension savings from 3.5% to 13.6% of pay without feeling poorer?",
-   "answer": "By promising now to save from future pay rises. In Thaler and Benartzi's Save More Tomorrow plan, part of each raise went into the pension, so take-home pay never fell. Workers who had refused to save signed up easily, because the sacrifice belonged to a later self. The rate nearly quadrupled in 40 months.",
+   "question": "Workers refused to save more for retirement. What deal changed their minds?",
+   "answer": "The plan never asked anyone to give up money they could already see. Present pain was zero; the cost belonged to a later self who would never see a smaller pay packet. Then inertia, which usually blocks saving, worked for it: almost nobody opted out, so each raise stepped the rate up again.",
    "move": "Commit today to a sacrifice that only starts later, and it gets done.",
    "ask": "Which good habit could I sign up for now that only starts with my next pay rise?",
    "keywords": [
@@ -30250,10 +31406,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "A US manufacturer, late 1990s",
+      "glyph": "coin",
+      "line": "Workers save about 3.5% of pay. An adviser urges far more."
+     },
+     {
+      "fact": "Most say no",
+      "glyph": "cross",
+      "line": "They can't face a smaller pay packet today."
+     },
+     {
+      "fact": "Save More Tomorrow",
+      "glyph": "calendar",
+      "line": "Offer: nothing now. Part of each future raise goes to savings."
+     }
+    ],
+    "ask": "How many of those who said no sign up?",
+    "options": [
+     {
+      "label": "Hardly any"
+     },
+     {
+      "label": "About a third"
+     },
+     {
+      "label": "Most of them"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "78% joined",
+     "glyph": "rise",
+     "line": "After four raises, their saving rate rose from 3.5% to 13.6%."
+    },
+    "why": "The cost landed on a future self, and because it came out of raises, take-home pay never fell."
+   },
    "source": "Thaler and Benartzi, Journal of Political Economy, 2004",
    "source_kind": "paper",
    "reference": "Thaler & Benartzi, Save More Tomorrow: Using Behavioral Economics to Increase Employee Saving, Journal of Political Economy, 2004",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "economics-present-bias-2",
@@ -30773,8 +31968,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do house prices, wages and tax takes hit record highs almost every year?",
-   "answer": "Because they are counted in money, and money keeps losing value. With prices rising 2% a year, a figure flat in real terms still sets a new money record most years. Take inflation out and many records vanish; some become falls. A record pay packet can buy less bread than last year's.",
+   "question": "Why do house prices, wages and tax takes seem to break records almost every year?",
+   "answer": "Because the ruler shrinks. Central banks aim for about 2% inflation, so almost any figure counted in money drifts upward even when nothing real has changed. Take inflation out and many records vanish. A pay rise of 2% in a year of 3% inflation is a record that buys less bread.",
    "move": "Before cheering a record, ask whether it was counted in shrinking money.",
    "ask": "When my pay or my savings hit a new high, does it buy more than before?",
    "keywords": [
@@ -30794,6 +31989,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "Headline: house prices hit a record high. Again."
+    },
+    "levels": [
+     {
+      "text": "They are counted in money, and money buys a bit less each year."
+     },
+     {
+      "text": "At 2% a year, the price level doubles in about 35 years.",
+      "figure": "~35 yrs",
+      "unit": "to double, at 2% a year"
+     },
+     {
+      "text": "So a figure flat in real terms still sets a money record most years."
+     },
+     {
+      "text": "A record in shrinking money can be a fall in what it buys."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Demand outruns supply",
+      "The ruler is shrinking",
+      "Economies always grow"
+     ],
+     "answer": 1
+    }
+   },
    "source": "Bank of England, inflation calculator",
    "source_kind": "institution",
    "reference": "https://www.bankofengland.co.uk/monetary-policy/inflation/inflation-calculator",
@@ -31346,8 +32572,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Who named the Silk Road, and what was that person looking for in China?",
-   "answer": "A German geologist, Ferdinand von Richthofen, in 1877, and he was looking for coal. His travels from 1868 began as a survey of coal reserves for the Bank of California. His volumes pointed Germany to Shandong's coalfields, and in 1897 it seized the harbour at Qingdao. The romantic name came wrapped in a mining report.",
+   "question": "The Silk Road sounds as ancient as the caravans on it. When do you think the name itself was coined?",
+   "answer": "Ferdinand von Richthofen, a German geologist, coined Seidenstrasse in 1877 after surveying China's coal for the Bank of California. His volumes pointed Germany to Shandong's coalfields, and in 1897 it seized the harbour at Qingdao. The traders never called it the Silk Road: the romantic name came wrapped in a mining report.",
    "move": "Ask what the person who named a thing wanted from it.",
    "ask": "What did the person who named something want from it?",
    "keywords": [
@@ -31366,11 +32592,36 @@ const String kEmbeddedBank = r'''
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": -300,
+    "to": 2025,
+    "events": [
+     {
+      "label": "Zhang Qian heads west",
+      "year": -138
+     },
+     {
+      "label": "Marco Polo reaches China",
+      "year": 1275
+     },
+     {
+      "label": "Sea route to India",
+      "year": 1498
+     },
+     {
+      "label": "The name Silk Road",
+      "year": 1877,
+      "note": "The name dates from 1877, a year after the telephone was patented."
+     }
+    ]
+   },
    "source": "Wu, Empires of Coal, 2015",
    "source_kind": "book",
    "reference": "Wu, Empires of Coal: Fueling China's Entry into the Modern World Order, 1860-1920, Stanford University Press, 2015",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "economics-silk-roads-2",
@@ -32401,7 +33652,7 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does UK income tax take 60p of each extra pound earned just above £100,000?",
+   "question": "Why does UK income tax outside Scotland take 60p of each extra pound earned just above £100,000?",
    "answer": "Because the tax-free allowance shrinks by £1 for every £2 earned above £100,000. Each extra pound is taxed at 40% and also pulls 50p out of the allowance, which is then taxed at 40%: another 20p. The rate stays at 60% until the allowance is gone at £125,140, then falls back to 45%.",
    "move": "Look for the hidden rate where an allowance is withdrawn.",
    "ask": "Is there a benefit or allowance I could lose by earning a little more, and do I know where?",
@@ -32521,8 +33772,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Charles Ponzi's 1920 scheme rested on a real profit from postal coupons. Why could it never have worked honestly?",
-   "answer": "Because the trick could not grow. Buying international reply coupons cheaply in Europe and redeeming them for American stamps did make money, but paying his investors would have taken about 160 million coupons; only about 27,000 were in circulation. New investors' money paid old ones instead, until it ran out within a year.",
+   "question": "Ponzi promised 50% in 45 days from buying cheap postal reply coupons abroad. How many coupons would honest profits have needed?",
+   "answer": "About 160 million, the financial journalist Clarence Barron reckoned in July 1920, when only about 27,000 were in circulation. The profit on each coupon was real but a matter of cents, and the supply could not grow. So early investors were paid with later investors' money, until the scheme collapsed weeks later.",
    "move": "A real edge that cannot grow cannot pay big returns to many people.",
    "ask": "If an offer's secret really worked, why would they need my money to run it?",
    "keywords": [
@@ -32533,7 +33784,7 @@ const String kEmbeddedBank = r'''
    ],
    "era": "twentieth",
    "region": "americas",
-   "hook": "story",
+   "hook": "number",
    "mood": "sober",
    "numeracy": 2,
    "abstraction": "concrete",
@@ -32541,10 +33792,40 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "reply coupons he would have needed",
+    "answer": 160000000,
+    "each": 100000,
+    "eachLabel": "1 dot = 100,000 coupons",
+    "compare": "Only about 27,000 existed",
+    "options": [
+     {
+      "label": "About 30,000",
+      "value": 30000,
+      "note": "That is roughly how many existed. His promises needed about 6,000 times more."
+     },
+     {
+      "label": "A million",
+      "value": 1000000,
+      "note": "Two zeros short. Millions of dollars at cents of profit each take far more."
+     },
+     {
+      "label": "160 million",
+      "value": 160000000,
+      "note": "Right. Barron's count: 160 million, against about 27,000 in circulation."
+     },
+     {
+      "label": "10 billion",
+      "value": 10000000000,
+      "note": "Too many. 160 million was already 6,000 times every coupon in existence."
+     }
+    ]
+   },
    "source": "Zuckoff, Ponzi's Scheme, 2005",
    "source_kind": "book",
-   "reference": "Mitchell Zuckoff, Ponzi's Scheme: The True Story of a Financial Legend, Random House, 2005",
-   "written": "2026-10-03"
+   "reference": "Mitchell Zuckoff, Ponzi's Scheme: The True Story of a Financial Legend, Random House, 2005; Smithsonian National Postal Museum, Behind the Badge: The Ponzi Scheme (160 million coupons needed, about 27,000 in circulation)",
+   "written": "2026-10-06"
   },
   {
    "id": "economics-too-good-to-be-true-2",
@@ -33025,8 +34306,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When Finland cut the sales tax on haircuts from 22% to 8%, who got the saving?",
-   "answer": "Salons and customers split it, roughly half each. Tuomas Kosonen compared Finnish hairdressers with similar businesses whose tax did not change: prices fell by only about half of what the cut allowed, and customers booked hardly any more haircuts. The rest of the tax cut stayed in the till.",
+   "question": "Finland cut the tax on haircuts. Who ended up with the money?",
+   "answer": "A tax cut stays with whoever has less reason to hand it on. Customers booked hardly any more haircuts when prices dipped, so salons lost few clients by keeping part of the saving, and competition did not force it out of them. The promise of cheaper haircuts assumed the cut would flow through untouched.",
    "move": "Watch the price after a tax cut, not the promise before it.",
    "ask": "When a tax on something I buy goes down, do I check whether my price does?",
    "keywords": [
@@ -33046,10 +34327,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "Finland, 2007",
+      "glyph": "coin",
+      "line": "The sales tax on haircuts is 22%. It is cut to 8%."
+     },
+     {
+      "fact": "The promise",
+      "glyph": "family",
+      "line": "Cheaper haircuts, more customers, more work for salons."
+     },
+     {
+      "fact": "Passed on in full",
+      "glyph": "fall",
+      "line": "A €20 haircut would drop to about €17.70."
+     }
+    ],
+    "ask": "How much did haircut prices actually fall?",
+    "options": [
+     {
+      "label": "By the full cut"
+     },
+     {
+      "label": "About half of that"
+     },
+     {
+      "label": "Not at all"
+     }
+    ],
+    "answer": 1,
+    "outcome": {
+     "fact": "Kosonen, 2015",
+     "glyph": "check",
+     "line": "About half the cut reached customers. Salons kept the rest."
+    },
+    "why": "Customers didn't come more often when prices fell, so salons had little reason to cut further."
+   },
    "source": "Kosonen, Journal of Public Economics, 2015",
    "source_kind": "paper",
    "reference": "Kosonen, More and Cheaper Haircuts after VAT Cut? On the Efficiency and Incidence of Service Sector Consumption Taxes, Journal of Public Economics, 2015",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "economics-who-pays-3",
@@ -34030,8 +35350,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does a habitual coffee drinker's first cup of the morning feel so powerful?",
-   "answer": "Mostly because it ends a small withdrawal. Overnight, a regular drinker's brain, used to caffeine, starts to run dull. In a 2010 Bristol study of 379 people kept off caffeine for 16 hours, regular drinkers given caffeine ended up about as alert as non-drinkers given a placebo. The cup returns them to normal.",
+   "question": "Why does a regular coffee drinker's first cup of the morning feel so powerful?",
+   "answer": "Mostly relief, not a boost. Rogers and colleagues kept 379 people off caffeine for 16 hours. Given caffeine, regular drinkers ended up about as alert as non-drinkers given a dummy pill: the cup bought back normal. Non-drinkers, who never pay the overnight toll, start the day where the coffee drinker ends up.",
    "move": "Relief from a habit can feel exactly like a benefit of it.",
    "ask": "Which of my daily habits mostly fixes a problem that the habit itself created?",
    "keywords": [
@@ -34050,9 +35370,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "The first coffee of the day feels like switching on."
+    },
+    "levels": [
+     {
+      "text": "Caffeine blocks adenosine, the brain's slow build-up of sleepiness."
+     },
+     {
+      "text": "Daily caffeine makes the brain add receptors to make up for it."
+     },
+     {
+      "text": "Overnight the caffeine fades, and the extra receptors leave you dull."
+     },
+     {
+      "text": "The first cup mostly cancels a withdrawal the habit created."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Caffeine works best early",
+      "Mornings are most tiring",
+      "It ends a small withdrawal"
+     ],
+     "answer": 2
+    }
+   },
    "source": "Rogers et al., Neuropsychopharmacology, 2010",
    "source_kind": "paper",
-   "reference": "Rogers, Hohoff, Heatherley, Mullings, Maxfield, Evershed, Deckert & Nutt, Association of the anxiogenic and alerting effects of caffeine with ADORA2A and ADORA1 polymorphisms and habitual level of caffeine consumption, Neuropsychopharmacology, 2010",
+   "reference": "Rogers, Hohoff, Heatherley, Mullings, Maxfield, Evershed, Deckert & Nutt, Association of the anxiogenic and alerting effects of caffeine with ADORA2A and ADORA1 polymorphisms and habitual level of caffeine consumption, Neuropsychopharmacology, 2010; Fredholm et al., Actions of caffeine in the brain, Pharmacological Reviews 51(1), 1999",
    "written": "2026-10-03"
   },
   {
@@ -34989,10 +36338,10 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "A 1981 study in a top medical journal tied coffee to pancreatic cancer. Why did the link not survive?",
-   "answer": "Because of who it was compared with. The cancer patients were set against other patients of the same doctors, many with stomach and gut illnesses that had made them cut down on coffee. That made coffee look commoner among the cancer cases. The authors' own larger follow-up, in 1986, found no clear link.",
+   "question": "In 1981 a top medical journal reported that people with pancreatic cancer had drunk more coffee than other patients. Why?",
+   "answer": "Who they were compared with. The controls were other patients of the same doctors, many with gut illnesses that had made them cut down on coffee. The authors' own larger follow-up, in 1986, found no clear link.",
    "move": "Before trusting a difference, ask who was picked for the comparison.",
-   "ask": "When I compare myself with others, have I picked a fair group to compare with?",
+   "ask": "Who was the comparison group?",
    "keywords": [
     "pancreatic cancer",
     "case-control study",
@@ -35001,7 +36350,7 @@ const String kEmbeddedBank = r'''
    ],
    "era": "twentieth",
    "region": "americas",
-   "hook": "story",
+   "hook": "puzzle",
    "mood": "sober",
    "numeracy": 0,
    "abstraction": "mixed",
@@ -35009,10 +36358,46 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "Coffee itself",
+     "Smoking",
+     "The comparison"
+    ],
+    "answer": 2,
+    "clues": [
+     {
+      "text": "Cancer patients report more coffee than other patients in the same hospitals.",
+      "tag": "More coffee in cancer",
+      "rulesOut": []
+     },
+     {
+      "text": "The link holds in non-smokers as well as in smokers.",
+      "tag": "Holds in non-smokers",
+      "rulesOut": [
+       1
+      ]
+     },
+     {
+      "text": "Many comparison patients had gut illnesses that made them drink less coffee.",
+      "tag": "Controls cut coffee",
+      "rulesOut": []
+     },
+     {
+      "text": "The same team's larger study, in 1986, finds no clear link.",
+      "tag": "Repeat: no link",
+      "rulesOut": [
+       0
+      ]
+     }
+    ],
+    "why": "Smoking didn't explain it, and the repeat found nothing. The comparison group had given up coffee."
+   },
    "source": "MacMahon et al., NEJM, 1981",
    "source_kind": "paper",
    "reference": "MacMahon, Yen, Trichopoulos, Warren & Nardi, Coffee and cancer of the pancreas, New England Journal of Medicine, 1981",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "food-coffee-and-health-claims-2",
@@ -35179,9 +36564,9 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What did a 2019 US government kitchen study find when volunteers rinsed raw chicken before cooking it?",
-   "answer": "That the rinse moved germs rather than removing them. In the USDA's observed kitchens, about a quarter of the people who washed their chicken later had its bacteria in the salad they made next. Splashes reach the sink, the counter and hands. Only cooking the middle to 74 °C kills what clings to the meat.",
-   "move": "Cleaning that spreads the problem is worse than no cleaning.",
+   "question": "Six kitchen rules handed down in families. Which are myths, and which hold up when tested?",
+   "answer": "The myths survive because each matches what the cook sees. Rinsed chicken looks clean, a crust looks sealed, the smell of wine fades. Germs, juice and alcohol are what the eye cannot check. In a 2019 USDA kitchen study, a quarter of those who rinsed chicken got its bacteria into their salad.",
+   "move": "When a habit's only proof is how it looks, test what you cannot see.",
    "ask": "Is there a fix I apply out of habit that might be spreading the problem?",
    "keywords": [
     "raw chicken",
@@ -35199,9 +36584,53 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "USDA Food Safety and Inspection Service, 2019",
+   "scene": {
+    "type": "sort",
+    "left": "Myth",
+    "right": "True",
+    "tag": "Mum always said",
+    "items": [
+     {
+      "text": "Raw chicken",
+      "note": "Rinse it under the tap to wash the germs off.",
+      "pile": "left",
+      "verdict": "It splashes them around. Only cooking the middle to 74 °C kills them."
+     },
+     {
+      "text": "Searing",
+      "note": "A hot pan seals the juices inside meat.",
+      "pile": "left",
+      "verdict": "Seared steaks lose as much liquid as unseared. Searing adds flavour, not a seal."
+     },
+     {
+      "text": "Wine in a stew",
+      "note": "The alcohol all cooks off.",
+      "pile": "left",
+      "verdict": "After an hour's simmer about 25% is left; after two and a half hours, 5%."
+     },
+     {
+      "text": "Salted water",
+      "note": "Salt makes pasta water boil sooner.",
+      "pile": "left",
+      "verdict": "It raises the boiling point a fraction. The salt is there for taste."
+     },
+     {
+      "text": "Fridge bread",
+      "note": "It goes stale faster than on the counter.",
+      "pile": "right",
+      "verdict": "Starch recrystallises fastest in the cold. Freeze it or leave it out."
+     },
+     {
+      "text": "Cold tomatoes",
+      "note": "The fridge dulls their flavour.",
+      "pile": "right",
+      "verdict": "Chilled at 5 °C they stop making flavour compounds, and some never restart."
+     }
+    ]
+   },
+   "source": "USDA, 2019; Zhang et al., PNAS, 2016",
    "source_kind": "institution",
-   "reference": "US Department of Agriculture Food Safety and Inspection Service, Food Safety Consumer Research Project: Meal Preparation Experiment Related to Poultry Washing, 2019",
+   "reference": "USDA FSIS, Meal Preparation Experiment Related to Poultry Washing, 2019; USDA Table of Nutrient Retention Factors, Release 6, 2007; Zhang et al., PNAS 113:12580, 2016, doi:10.1073/pnas.1613910113",
    "written": "2026-10-03"
   },
   {
@@ -36007,8 +37436,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How does homogenisation stop cream from rising to the top of a bottle of milk?",
-   "answer": "By shrinking the fat droplets. Forcing milk through a narrow gap at high pressure breaks globules of about 4 micrometres into ones under 1. Rising speed goes with the square of the radius, so a quarter of the size rises sixteen times slower: too slow to reach the top before the milk is drunk.",
+   "question": "Homogenising milk shrinks its fat droplets from about 4 micrometres across to below 1 micrometre. How much slower do they rise to make cream?",
+   "answer": "Sixteen times slower. By Stokes's law, a droplet's rising speed grows with the square of its radius, so a quarter of the size rises at a sixteenth of the speed. Forcing milk through a narrow gap makes the globules that small: too slow to reach the top before the milk is drunk.",
    "move": "When speed scales with a square, a modest shrink is a huge slowdown.",
    "ask": "What am I attacking with brute force when making it smaller would work better?",
    "keywords": [
@@ -36028,7 +37457,44 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Walstra et al., Dairy Science and Technology, 2006",
+   "scene": {
+    "type": "draw",
+    "label": "Rise speed (%), by size in microns",
+    "unit": "%",
+    "columns": [
+     "4",
+     "3.5",
+     "3",
+     "2.5",
+     "2",
+     "1.5",
+     "1"
+    ],
+    "values": [
+     100,
+     76.6,
+     56.3,
+     39.1,
+     25,
+     14.1,
+     6.3
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 110,
+    "verdict": {
+     "under": "Close to the floor, and nearly right: a 1-micron drop rises at 1/16 of the speed.",
+     "near": "Right: speed goes with the square of size, so a quarter the size is 1/16 the speed.",
+     "over": "Too fast. Halve the size and speed drops to a quarter; quarter it and to 1/16."
+    },
+    "notes": [
+     {
+      "at": 4,
+      "text": "Half the size: 25%"
+     }
+    ]
+   },
+   "source": "Stokes's law; Walstra et al., 2006",
    "source_kind": "book",
    "reference": "Walstra, Wouters & Geurts, Dairy Science and Technology, 2nd edition, CRC Press, 2006",
    "written": "2026-09-26"
@@ -37356,8 +38822,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "After a course of antibiotics, what did a probiotic do to volunteers' recovering gut bacteria?",
-   "answer": "It held them back. In a 2018 Weizmann Institute study, volunteers given an 11-strain probiotic after antibiotics took months longer to regain their usual gut community than those left alone, as the probiotic strains occupied the space. Volunteers given back their own gut bacteria, frozen before treatment, recovered within days.",
+   "question": "A probiotic drink sold to people finishing antibiotics, worded the way many are. What did a 2018 trial find it did?",
+   "answer": "It held recovery back. At the Weizmann Institute, volunteers given an 11-strain probiotic after antibiotics took months longer to regain their usual gut bacteria than those left alone, as the probiotic strains took the space. Volunteers given back their own bacteria, frozen before treatment, recovered within days.",
    "move": "Filling a gap fast can block what would have grown back.",
    "ask": "Is there a gap in my life I rushed to fill that might have healed on its own?",
    "keywords": [
@@ -37376,10 +38842,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Probiotic drink",
+    "ref": "Typical text",
+    "title": "After antibiotics",
+    "body": "Billions of live cultures to help restore your gut's natural balance after antibiotics. Clinically studied strains. One bottle a day.",
+    "phrases": [
+     {
+      "text": "Billions of live cultures",
+      "plain": "Billions of bacteria, many just passing through,",
+      "why": "Many people's guts shed probiotic strains. Arriving is not moving in."
+     },
+     {
+      "text": "help restore your gut's natural balance",
+      "plain": "slow your own gut bacteria's return",
+      "why": "In a 2018 trial, a probiotic after antibiotics delayed the usual gut community's return for months.",
+      "catch": true
+     },
+     {
+      "text": "Clinically studied strains",
+      "plain": "strains someone has studied, for something",
+      "why": "Studied is not proven. It says nothing about what was tested, or what was found."
+     }
+    ],
+    "ask": "One promise here did the opposite in a 2018 trial. Which?",
+    "watch": "When a product promises to restore something, ask what happens if you do nothing."
+   },
    "source": "Suez et al., Cell, 2018",
    "source_kind": "paper",
    "reference": "Suez, Zmora, Zilberman-Schapira et al., Post-antibiotic gut mucosal microbiome reconstitution is impaired by probiotics and improved by autologous FMT, Cell, 2018",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "food-gut-health-claims-2",
@@ -37691,8 +39184,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What did the first Korean book to mention chilli, in 1614, say about the plant?",
-   "answer": "That it was highly poisonous. The encyclopedia Jibong yuseol called it Japanese mustard, since it had arrived from Japan, and warned of its toxicity. For centuries before, kimchi was pale, salted vegetables flavoured with garlic, ginger or brine. Chilli appears in kimchi recipes only in the 1700s, and red kimchi spread through the 1800s.",
+   "question": "Kimchi feels as old as Korea itself. When do you think chilli, its red heat, first reached it?",
+   "answer": "Chilli is an American plant that Portuguese traders carried to Asia, and a Korean encyclopedia of 1614 called it Japanese mustard and warned it was highly poisonous. For centuries before, kimchi was pale: salted vegetables with garlic, ginger or brine. Red kimchi spread only in the 1800s, younger than Shakespeare's plays.",
    "move": "Date a tradition by its ingredients, not by how old it feels.",
    "ask": "What tradition do I think is ancient that depends on something quite new?",
    "keywords": [
@@ -37712,10 +39205,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1400,
+    "to": 2000,
+    "events": [
+     {
+      "label": "Korean alphabet created",
+      "year": 1443
+     },
+     {
+      "label": "Chilli reaches Europe",
+      "year": 1493
+     },
+     {
+      "label": "Korean book notes chilli",
+      "year": 1614
+     },
+     {
+      "label": "Chilli in a kimchi recipe",
+      "year": 1766,
+      "note": "The first kimchi recipe with chilli dates from 1766; red kimchi spread in the 1800s."
+     }
+    ]
+   },
    "source": "Journal of Ethnic Foods, 2025",
    "source_kind": "paper",
    "reference": "https://journalofethnicfoods.biomedcentral.com/articles/10.1186/s42779-025-00271-9",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "food-kimchi-2",
@@ -38109,16 +39627,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How can a can of cooking spray, almost pure oil, list zero calories and zero fat per serving?",
-   "answer": "By making the serving tiny. US rules let a label round any serving under 5 calories down to zero, and fat under half a gram to zero. A serving of spray is about a quarter-second burst, roughly a quarter of a gram. Held down for a few seconds, the zero becomes tens of calories.",
+   "question": "Four words printed on food packs in the US, each true as written. What does each one actually promise?",
+   "answer": "The zero is the one people miss, because nobody checks the serving. US rules let a label round anything under 5 calories a serving down to 0, so cooking spray sets its serving at a quarter-second burst, about a quarter of a gram of oil. A few seconds' spray is tens of calories.",
    "move": "Before trusting a zero, check the size of the slice it describes.",
    "ask": "Which small number have I trusted without checking what it was a number of?",
    "keywords": [
+    "nutrition labels",
     "cooking spray",
-    "serving size",
-    "rounding rules",
-    "fda",
-    "nutrition labels"
+    "best before",
+    "multigrain",
+    "natural"
    ],
    "era": "recent",
    "region": "americas",
@@ -38130,10 +39648,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "On the label",
+    "rightTitle": "What it means",
+    "pairs": [
+     {
+      "left": "0 calories",
+      "right": "Under 5 calories in a very small serving",
+      "note": "Cooking spray: one serving is a quarter-second burst.",
+      "missed": true
+     },
+     {
+      "left": "Best before",
+      "right": "Past its best, but still safe to eat",
+      "note": "A quality date. In the US only infant formula must carry a safety date."
+     },
+     {
+      "left": "Multigrain",
+      "right": "Several grains, possibly all refined",
+      "note": "Not wholegrain: white flour from three grains still counts."
+     },
+     {
+      "left": "Natural",
+      "right": "Nothing defined in US law",
+      "note": "The FDA has only an informal policy: nothing artificial added."
+     }
+    ]
+   },
    "source": "US Code of Federal Regulations, 21 CFR 101.9",
    "source_kind": "primary_document",
    "reference": "https://www.ecfr.gov/current/title-21/chapter-I/subchapter-B/part-101/subpart-A/section-101.9",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "food-labels-3",
@@ -38791,31 +40337,64 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Per gram of protein, how does beef from the lowest-emission farms compare with peas?",
-   "answer": "It still emits about six times the greenhouse gases and uses 36 times the land. Poore and Nemecek gathered data from about 38,700 farms in 119 countries and found wide gaps between producers of the same food. The gaps between foods were wider still. The cleanest herd cannot farm its way down to a pea.",
+   "question": "Per kilogram, which puts the most greenhouse gas into the air: beef, dark chocolate, coffee, cheese or chicken?",
+   "answer": "Beef, by far: about 100 kg of greenhouse gas per kilogram, twice dark chocolate's 47. Poore and Nemecek's data from about 38,700 farms show the gaps between foods dwarf those between farms: per gram of protein, even the lowest-emission beef emits about six times as much as peas.",
    "move": "Look at the gap between kinds before the gap between makers.",
    "ask": "Am I polishing how I do something, when changing what I do would matter more?",
    "keywords": [
     "beef",
-    "peas",
+    "chocolate",
+    "coffee",
     "greenhouse gases",
-    "land use",
     "farm data"
    ],
    "era": "recent",
    "region": "world",
-   "hook": "number",
+   "hook": "misconception",
    "mood": "sober",
    "numeracy": 2,
    "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "bars",
    "source": "Poore & Nemecek, Science, 2018",
    "source_kind": "paper",
-   "reference": "Poore & Nemecek, Reducing food's environmental impacts through producers and consumers, Science, 2018",
-   "written": "2026-10-03"
+   "reference": "Poore & Nemecek, Reducing food's environmental impacts through producers and consumers, Science 360: 987-992, 2018",
+   "written": "2026-10-06",
+   "scene": {
+    "type": "rank",
+    "quantity": "Kg of CO₂-equivalent per kg",
+    "most": "Most",
+    "unit": "kg",
+    "items": [
+     {
+      "label": "Chicken",
+      "value": 10,
+      "note": "A tenth of beef: chickens turn feed into meat far more efficiently."
+     },
+     {
+      "label": "Cheese",
+      "value": 24,
+      "note": "Ten litres of milk go into a kilogram, and dairy cows belch methane too."
+     },
+     {
+      "label": "Beef",
+      "value": 100,
+      "note": "Cattle belch methane, and their pasture is often cleared forest."
+     },
+     {
+      "label": "Coffee",
+      "value": 29,
+      "note": "Most of it comes from the farm, fertiliser and cleared land, not shipping."
+     },
+     {
+      "label": "Dark chocolate",
+      "value": 47,
+      "note": "Nearly half of beef, mostly from rainforest cleared for cocoa."
+     }
+    ]
+   }
   },
   {
    "id": "food-meat-2",
@@ -39429,8 +41008,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Where did the story that Marco Polo brought pasta home from China come from?",
-   "answer": "From an American trade magazine. In 1929 the Macaroni Journal, voice of the US pasta makers, ran a tale in which a sailor on Polo's voyage learns noodle-making in China. The sailor was named Spaghetti. Yet a Genoese inventory of 1279 already lists a basket of macaroni, sixteen years before Polo came home.",
+   "question": "Marco Polo supposedly brought pasta home from China. When do you think each part of that story happened?",
+   "answer": "The tale comes from the Macaroni Journal, the American pasta makers' trade magazine, which in 1929 told of a sailor on Polo's voyage who learned noodles in China. His name was Spaghetti. Pasta was already in Italy: a Genoese will of 1279 leaves a chest of macaroni, while Polo was still in China.",
    "move": "Trace a charming origin story to its first printing before repeating it.",
    "ask": "What charming story do I repeat that I have never traced back to its start?",
    "keywords": [
@@ -39448,11 +41027,33 @@ const String kEmbeddedBank = r'''
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
-   "source": "Dickie, The Epic History of the Italians, 2007",
+   "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1100,
+    "to": 2000,
+    "events": [
+     {
+      "label": "Pasta made in Sicily",
+      "year": 1154,
+      "note": "In 1154 a geographer saw Sicilian mills making pasta strings for export."
+     },
+     {
+      "label": "Marco Polo returns",
+      "year": 1295
+     },
+     {
+      "label": "The Polo story printed",
+      "year": 1929,
+      "note": "The Marco Polo story first appeared in a 1929 American pasta trade magazine."
+     }
+    ]
+   },
+   "source": "Dickie, Delizia, 2007; al-Idrisi, 1154",
    "source_kind": "book",
    "reference": "Dickie, Delizia! The Epic History of the Italians and Their Food, Hodder & Stoughton, 2007",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "food-pasta-2",
@@ -40335,8 +41936,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did Prussia's king push reluctant peasants to grow potatoes in the 1750s?",
-   "answer": "By decree, again and again. Frederick II's circular of 24 March 1756 told Silesian officials to have potatoes planted on spare ground and to teach people to eat them, and similar orders followed for years. The tale of guards posted to tempt thieves is later legend. The famine of 1770 to 1772 finished the job.",
+   "question": "Prussian peasants had to be ordered to grow potatoes. Which of these traditional European foods came from the Americas?",
+   "answer": "New crops spread by need, not taste. Frederick II's circular of 24 March 1756 told Silesian officials to plant potatoes on spare ground and teach people to eat them, and similar orders followed for years. The famine of 1770 to 1772 finished the job. Much of Europe's traditional food is younger than Columbus.",
    "move": "Where a crop spreads by order, look for the hunger that made it stick.",
    "ask": "When people resist a change, do I give orders or look for what would make them want it?",
    "keywords": [
@@ -40356,7 +41957,63 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Earle, Feeding the People",
+   "scene": {
+    "type": "sort",
+    "left": "Eurasia",
+    "right": "America",
+    "tag": "Columbus sails · 1492",
+    "items": [
+     {
+      "text": "Potato",
+      "note": "Boiled, mashed, in every northern kitchen.",
+      "pile": "right",
+      "verdict": "From the Andes. Frederick II ordered it planted in Silesia in 1756."
+     },
+     {
+      "text": "Pasta",
+      "note": "Dried macaroni and its cousins.",
+      "pile": "left",
+      "verdict": "A Genoese inventory of 1279 already lists a basket of macaroni."
+     },
+     {
+      "text": "Tomato",
+      "note": "The base of Italian sauce.",
+      "pile": "right",
+      "verdict": "American. First described in Italy in 1544, fried like aubergine."
+     },
+     {
+      "text": "Paprika",
+      "note": "Hungary's red spice.",
+      "pile": "right",
+      "verdict": "Ground from chilli peppers, which are American."
+     },
+     {
+      "text": "Parmesan",
+      "note": "The hard cheese of Parma.",
+      "pile": "left",
+      "verdict": "Named in a Genoese deed of 1254, paid as rent."
+     },
+     {
+      "text": "Polenta",
+      "note": "Yellow maize porridge.",
+      "pile": "right",
+      "verdict": "Maize is American. Older polenta was farro, chestnut or millet."
+     },
+     {
+      "text": "Turkey",
+      "note": "The Christmas bird.",
+      "pile": "right",
+      "verdict": "Domesticated in Mexico; it reached Europe in the 1500s."
+     },
+     {
+      "text": "Aubergine",
+      "note": "Fried, baked, in parmigiana.",
+      "pile": "left",
+      "verdict": "Brought to Sicily by Arab growers in the Middle Ages."
+     }
+    ]
+   },
+   "source": "Earle, Feeding the People, 2020",
    "source_kind": "book",
    "reference": "Earle, Feeding the People: The Politics of the Potato, Cambridge University Press, 2020",
    "written": "2026-09-26"
@@ -43043,8 +44700,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did the US Department of Agriculture withdraw its own table ranking foods by antioxidant power?",
-   "answer": "Because the scores meant little inside a body. The ORAC test measured how well a food extract mopped up reactive molecules in a test tube. Little of that survives digestion, and the body sets its own antioxidant levels. Juice makers printed ORAC numbers as proof of health; in 2012 the table was pulled.",
+   "question": "A bottle of berry juice, labelled the way many were before 2012. What does its scientific-sounding score measure?",
+   "answer": "Little that happens inside you. ORAC was a lab test of how well a food extract mopped up reactive molecules in a test tube. Little of that survives digestion, and the body sets its own antioxidant levels. Juice makers printed the scores anyway; in 2012 the US Department of Agriculture withdrew its own table.",
    "move": "A score that works in a test tube may mean nothing in you.",
    "ask": "Which number on a label have I trusted without asking what it really measures?",
    "keywords": [
@@ -43064,10 +44721,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Berry juice",
+    "ref": "Typical text",
+    "title": "Antioxidant power",
+    "body": "Packed with antioxidants, with a high ORAC score. Fights free radicals. A superfood blend for your body's natural defences.",
+    "phrases": [
+     {
+      "text": "a high ORAC score",
+      "plain": "a score from a test tube, not from a body",
+      "why": "ORAC measured an extract in the lab. Its own makers at the USDA withdrew the table in 2012.",
+      "catch": true
+     },
+     {
+      "text": "Fights free radicals",
+      "plain": "Did so in a test tube",
+      "why": "The body sets its own antioxidant levels. Little of the juice's survives digestion."
+     },
+     {
+      "text": "superfood",
+      "plain": "fruit",
+      "why": "No scientific category is called superfood. It is a word for selling."
+     }
+    ],
+    "ask": "One phrase sounds like science and was later withdrawn. Which?",
+    "watch": "A score from a test tube says nothing until someone measures it in people."
+   },
    "source": "USDA Agricultural Research Service, 2012",
    "source_kind": "institution",
    "reference": "US Department of Agriculture Agricultural Research Service, Oxygen Radical Absorbance Capacity (ORAC) of Selected Foods, Release 2 (2010), withdrawn 2012",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "food-superfoods-2",
@@ -43155,8 +44839,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do so many passengers order tomato juice on planes, when few of them drink it on the ground?",
-   "answer": "Because the noise changes the taste. In a 2015 Cornell study, eating with roughly 85-decibel noise, like a cabin's roar, dulled sweetness and strengthened umami, the savoury taste tomatoes are rich in. Dry cabin air also dulls smell, which flattens most flavours. Tomato juice is one of the few drinks the cabin improves.",
+   "question": "Why do so many people order tomato juice on a plane, and almost never at home?",
+   "answer": "Because the cabin is part of the seasoning. Yan and Dando at Cornell had people taste while hearing loud, cabin-like noise: sweet came through weaker, umami, the savoury taste of tomato and stock, stronger. With smell dulled as well, most drinks go flat in the air. Tomato juice is one the plane improves.",
    "move": "The room shapes the taste as much as the recipe does.",
    "ask": "Where might my surroundings be shaping a judgment I think is all mine?",
    "keywords": [
@@ -43175,6 +44859,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "On planes, people order tomato juice they never drink at home."
+    },
+    "levels": [
+     {
+      "text": "Up there it simply tastes better: rounder, more savoury."
+     },
+     {
+      "text": "Loud cabin noise dulls sweetness and turns up savoury umami.",
+      "figure": "~85 dB",
+      "unit": "cabin noise, in cruise"
+     },
+     {
+      "text": "Dry, thin cabin air also numbs the nose, which carries most flavour."
+     },
+     {
+      "text": "Tomato is rich in umami, the one taste the cabin turns up."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Salt helps in dry air",
+      "Airlines push it",
+      "Noise boosts savoury taste"
+     ],
+     "answer": 2
+    }
+   },
    "source": "Yan & Dando, J. Exp. Psychol. Hum. Percept. Perform., 2015",
    "source_kind": "paper",
    "reference": "Yan & Dando, A crossmodal role for audition in taste perception, Journal of Experimental Psychology: Human Perception and Performance, 2015",
@@ -43309,8 +45024,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did breeding tomatoes that turn evenly red make many of them taste worse?",
-   "answer": "Because the trait cost the fruit its sugar factories. Growers chose a mutation that removes the green shoulders of unripe tomatoes, so the fruit reddens evenly. In 2012 researchers found it disables a gene that builds chloroplasts in the fruit, which add sugar. Evenly red tomatoes ended up with less sugar and less flavour.",
+   "question": "Supermarket tomatoes are bred to turn evenly red. Why did that make them taste worse?",
+   "answer": "Because the green was working. Powell and colleagues showed in 2012 that the even-ripening trait disables a gene, GLK2, that builds chloroplasts in the fruit, which let a tomato make some of its own sugar. With the gene restored, fruit had more sugar. Growers chose the look and lost the taste.",
    "move": "Select for what you can see, and you may lose what you cannot.",
    "ask": "What do I judge by its looks that I should really judge by how it works?",
    "keywords": [
@@ -43330,6 +45045,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "Shop tomatoes are perfectly red and taste of little."
+    },
+    "levels": [
+     {
+      "text": "Breeders made them ripen evenly, with no green shoulders."
+     },
+     {
+      "text": "That trait comes from one faulty gene, now in most modern varieties."
+     },
+     {
+      "text": "The gene builds chloroplasts, the green sugar-makers, in the fruit."
+     },
+     {
+      "text": "Those green shoulders made sugar. Even red meant less sweet."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Bigger fruit, less flavour",
+      "It cut the fruit's sugar",
+      "Thicker skins trap aroma"
+     ],
+     "answer": 1
+    }
+   },
    "source": "Powell et al., Science, 2012",
    "source_kind": "paper",
    "reference": "Powell, Nguyen, Hill et al., Uniform ripening encodes a Golden 2-like transcription factor regulating tomato fruit chloroplast development, Science, 2012",
@@ -43383,8 +45127,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why is the widely quoted figure of about 15,000 litres of water per kilo of beef misleading?",
-   "answer": "Because most of it is rain. Mekonnen and Hoekstra's estimate of about 15,400 litres per kilo is 94% green water: rain on pastures and feed fields, which would fall anyway, though it could water other crops. Only about 4% is blue water drawn from rivers and aquifers, the kind that can run dry.",
+   "question": "One figure is quoted again and again in arguments about meat. How many litres of water does a kilo of beef take?",
+   "answer": "About 15,400 litres, in Mekonnen and Hoekstra's global average. But 94% of it is green water: rain falling on pastures and feed fields, which would fall anyway, though it could water other crops. The water pumped from rivers and aquifers is a few hundred litres. The headline number is mostly weather.",
    "move": "Ask which part of a big number is a real cost.",
    "ask": "Which alarming number have I repeated without asking what it was counting?",
    "keywords": [
@@ -43396,7 +45140,7 @@ const String kEmbeddedBank = r'''
    ],
    "era": "recent",
    "region": "world",
-   "hook": "misconception",
+   "hook": "number",
    "mood": "sober",
    "numeracy": 2,
    "abstraction": "mixed",
@@ -43404,10 +45148,40 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "litres of water per kilo of beef",
+    "answer": 15400,
+    "each": 10,
+    "eachLabel": "1 dot = 10 litres",
+    "compare": "94% of it is rain on fields",
+    "options": [
+     {
+      "label": "About 150",
+      "value": 150,
+      "note": "Two zeros short. A steer eats tonnes of feed, and every field drinks."
+     },
+     {
+      "label": "About 1,500",
+      "value": 1500,
+      "note": "One zero short. The global average estimate is about 15,400 litres."
+     },
+     {
+      "label": "About 15,000",
+      "value": 15000,
+      "note": "Right: about 15,400. Now look at what kind of water it is."
+     },
+     {
+      "label": "About 150,000",
+      "value": 150000,
+      "note": "One zero too many, though some grazing systems run well above average."
+     }
+    ]
+   },
    "source": "Mekonnen & Hoekstra, Ecosystems, 2012",
    "source_kind": "paper",
    "reference": "Mekonnen & Hoekstra, A global assessment of the water footprint of farm animal products, Ecosystems, 2012",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "food-water-use-2",
@@ -43880,29 +45654,31 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Is there a human fingerprint on the ice cores before industry?",
-   "answer": "There is a dip. Atmospheric CO2 fell in the early 1600s, and the timing matches the collapse of the Americas' population after 1492. Tens of millions of hectares of farmland reverted to forest, and the regrowth pulled down enough carbon to show up in ice.",
-   "move": "A population collapse is visible in the ice, two centuries before the factories.",
-   "ask": "What am I blaming on something recent when the real cause began long before?",
+   "question": "At its greatest extent, which empire ruled the most land: the Mongol, Russian, Spanish, French or British?",
+   "answer": "The British, at about 35.5 million km² around 1920, nearly a quarter of the world's land. It was built by sea: ships let one island hold coasts on every continent, and territories taken after the First World War pushed it to its peak. The Mongols' larger unbroken block came second.",
+   "move": "Whoever holds the routes can end up holding more than whoever holds the ground.",
+   "ask": "What do I assume is the biggest only because its story is the most dramatic?",
    "keywords": [
-    "ice cores",
-    "carbon dioxide",
-    "columbian exchange",
-    "depopulation"
+    "british empire",
+    "mongol empire",
+    "russian empire",
+    "territory",
+    "1920"
    ],
-   "era": "early_modern",
-   "region": "americas",
-   "hook": "number",
-   "mood": "dark",
-   "numeracy": 1,
-   "abstraction": "mixed",
+   "era": "twentieth",
+   "region": "world",
+   "hook": "misconception",
+   "mood": "sober",
+   "numeracy": 2,
+   "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
-   "source": "Koch et al., Quaternary Science Reviews, 2019",
+   "figure": "bars",
+   "source": "Taagepera, International Studies Quarterly, 1997",
    "source_kind": "paper",
-   "reference": "Koch, Brierley, Maslin & Lewis, Earth system impacts of the European arrival and Great Dying in the Americas after 1492, Quaternary Science Reviews, 2019"
+   "reference": "Taagepera, Expansion and contraction patterns of large polities: context for Russia, International Studies Quarterly 41(3), 1997",
+   "written": "2026-10-06"
   },
   {
    "id": "history-2",
@@ -43915,14 +45691,15 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How do you date something from the last seventy years?",
-   "answer": "By the bomb. Atmospheric nuclear testing from 1955 to 1963 nearly doubled carbon-14 in the air, then it declined on a known curve. Anything alive during that window carries a datable signature, accurate to a year or two — used on forged paintings, wine and human remains.",
-   "move": "Nuclear testing accidentally left the world a precise clock.",
+   "question": "Four ways of telling how old something is, from a cathedral beam to a brain cell. Which clock dated which?",
+   "answer": "Bomb carbon is the one people miss. Nuclear tests between 1955 and 1963 nearly doubled the carbon-14 in the air, which then fell on a known curve. Anything that grew in those decades carries its year, which is how researchers measured the age of neurons in adult human brains.",
+   "move": "When there is no date written down, look for a clock inside the thing.",
    "ask": "What around me holds a hidden clue about its own past, if I looked closely?",
    "keywords": [
-    "carbon-14",
     "bomb pulse",
-    "nuclear tests",
+    "radiocarbon",
+    "tree rings",
+    "shroud of turin",
     "dating"
    ],
    "era": "twentieth",
@@ -43935,9 +45712,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Levin & Kromer, Radiocarbon, bomb-pulse dating",
+   "scene": {
+    "type": "match",
+    "leftTitle": "The clock",
+    "rightTitle": "What it dated",
+    "pairs": [
+     {
+      "left": "Bomb carbon",
+      "right": "Brain cells in living adults",
+      "note": "Tests in 1955 to 1963 spiked carbon-14; its fall dates any cell made since.",
+      "missed": true
+     },
+     {
+      "left": "Radiocarbon",
+      "right": "The Shroud of Turin: 1260 to 1390",
+      "note": "In 1988 three labs dated its linen to the Middle Ages."
+     },
+     {
+      "left": "Tree rings",
+      "right": "The year a roof beam's oak was felled",
+      "note": "Wide and narrow years leave a pattern that matches a master record."
+     },
+     {
+      "left": "A coin in the soil",
+      "right": "The earliest a floor could have been laid",
+      "note": "A coin can't be dropped before it was minted, but can lie for centuries."
+     }
+    ]
+   },
+   "source": "Levin & Kromer, Radiocarbon, 2004; Spalding et al., Cell, 2005",
    "source_kind": "paper",
-   "reference": "Levin & Kromer, The tropospheric 14CO2 level in mid-latitudes of the Northern Hemisphere (1959-2003), Radiocarbon, 2004"
+   "reference": "Levin & Kromer, The tropospheric 14CO2 level in mid-latitudes of the Northern Hemisphere (1959-2003), Radiocarbon, 2004",
+   "written": "2026-10-06"
   },
   {
    "id": "history-3",
@@ -44606,8 +46412,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What did the Indian census of 1901 provoke by ranking castes in order of social precedence?",
-   "answer": "A flood of petitions. Herbert Risley, the census commissioner, had castes listed by precedence, and caste associations wrote in to claim higher places, often as Brahmins or Kshatriyas, the priestly and warrior orders. A count meant to describe society gave people reasons to organise around its categories. The census taker became a judge of status.",
+   "question": "In 1901 India's census ranked castes by status. How did people respond?",
+   "answer": "Many claimed descent from the priestly or warrior orders, Brahmins and Kshatriyas, and some changed customs to fit the claim. A ranking meant to describe society gave people a reason to organise around caste, and the caste associations that formed to lobby the census outlived it.",
    "move": "Rank people on a list and they will compete for the list.",
    "ask": "What ranking am I part of, and how does it change how I treat people?",
    "keywords": [
@@ -44627,10 +46433,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "British India, 1901",
+      "glyph": "book",
+      "line": "The census will record every person's caste."
+     },
+     {
+      "fact": "Herbert Risley",
+      "glyph": "rise",
+      "line": "This time, castes in each province are ranked by precedence."
+     },
+     {
+      "fact": "An official list",
+      "glyph": "eye",
+      "line": "The order is printed by the government, for all to read."
+     }
+    ],
+    "ask": "How do caste groups respond?",
+    "options": [
+     {
+      "label": "Mostly ignore it"
+     },
+     {
+      "label": "Reject ranking itself"
+     },
+     {
+      "label": "Petition to move up"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "Census of 1901",
+     "glyph": "crowd",
+     "line": "Petitions poured in from groups claiming a higher place."
+    },
+    "why": "An official list turns a loose pecking order into a prize worth lobbying for."
+   },
    "source": "Dirks, Castes of Mind, 2001",
    "source_kind": "book",
    "reference": "Dirks, Castes of Mind: Colonialism and the Making of Modern India, Princeton University Press, 2001",
-   "written": "2026-09-27"
+   "written": "2026-10-06"
   },
   {
    "id": "history-british-7",
@@ -44849,8 +46694,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did the builders who finished Cologne Cathedral in 1880 know the medieval design?",
-   "answer": "From a drawing found in an attic. Work stopped around 1473, leaving a wooden crane on the half-built south tower until 1868. In 1814 half of the medieval façade plan, a parchment about 4 m tall, turned up in a Darmstadt inn; the other half surfaced in Paris in 1816.",
+   "question": "Cologne Cathedral looks wholly medieval. When do you think each stage of its building actually happened?",
+   "answer": "It is a medieval design finished by Victorians. When work stopped, the plan was lost with it, until half of the façade drawing, a parchment about 4 m tall, turned up in a Darmstadt inn in 1814; the other half surfaced in Paris in 1816. Public money and the Prussian state paid for the rest.",
    "move": "Unfinished work can wait centuries if the plan survives.",
    "ask": "What big job of mine could outlast me, if only the plan were written down clearly?",
    "keywords": [
@@ -44870,10 +46715,36 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
-   "source": "Freies Deutsches Hochstift, Plan F",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1200,
+    "to": 1950,
+    "events": [
+     {
+      "label": "Foundation stone laid",
+      "year": 1248
+     },
+     {
+      "label": "Building stops",
+      "year": 1473,
+      "note": "Work stopped in 1473; a crane stood on the half-built tower until 1868."
+     },
+     {
+      "label": "Medieval plan found",
+      "year": 1814
+     },
+     {
+      "label": "Cathedral finished",
+      "year": 1880,
+      "note": "Finished in 1880, 632 years after the foundation stone."
+     }
+    ]
+   },
+   "source": "Freies Deutsches Hochstift; Cologne Cathedral",
    "source_kind": "institution",
    "reference": "https://www.guide.freies-deutsches-hochstift.de/en/mediaguide/romantik-ausstellung/3-obergeschoss/im-bilde-vollendet/wand-reproduktion/",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "history-cathedrals-3",
@@ -45312,8 +47183,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What did Edo Japan's rich merchants do when the law barred them from showy silks?",
-   "answer": "They made restraint the luxury. Sumptuary edicts barred townsmen from the most splendid fabrics, so merchants and kabuki actors set a new taste, iki, prizing subtlety. The display moved inward: sober colours and fine stripes outside, lavish silk linings within.",
+   "question": "Edo Japan banned rich merchants from showy silk. What did they do?",
+   "answer": "The hidden luxury became a style of its own. Iki prized understatement that only the knowing could read: a muted grey or brown cut from costly cloth, a flash of brilliant lining as a sleeve turned. Status did not disappear; it learned to whisper, and whispering became the fashion that townsmen and actors set.",
    "move": "Ban a display and the display moves somewhere the ban cannot reach.",
    "ask": "When a rule blocks something I want, where does that wanting go instead?",
    "keywords": [
@@ -45333,10 +47204,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "Edo Japan, 1600s",
+      "glyph": "coin",
+      "line": "Merchants grow rich, yet the law ranks them below farmers."
+     },
+     {
+      "fact": "Sumptuary edicts",
+      "glyph": "ban",
+      "line": "Townsmen are barred from the finest silks and boldest colours."
+     },
+     {
+      "fact": "Officials watching",
+      "glyph": "eye",
+      "line": "A merchant family that dresses too grandly risks ruin."
+     }
+    ],
+    "ask": "What do the rich merchants do?",
+    "options": [
+     {
+      "label": "Give up luxury"
+     },
+     {
+      "label": "Defy the law openly"
+     },
+     {
+      "label": "Hide it in the lining"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "The taste called iki",
+     "glyph": "check",
+     "line": "Sober stripes outside. Lavish silk linings within."
+    },
+    "why": "The law could police what was seen, so the spending moved where it couldn't look."
+   },
    "source": "Shively, Harvard Journal of Asiatic Studies, 1964",
    "source_kind": "paper",
    "reference": "Shively, Sumptuary Regulation and Status in Early Tokugawa Japan, Harvard Journal of Asiatic Studies, vol. 25, 1964–65",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "history-clothes-5",
@@ -46947,8 +48857,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Who still tests the coins of the Royal Mint in a court of law each year?",
-   "answer": "A medieval guild. At the Trial of the Pyx, a jury from the Goldsmiths' Company, sitting as a formal court, counts, weighs and tests the metal of coins set aside from every batch the Mint struck. Coins have been judged like this since at least 1282; since 1871 the trial sits in Goldsmiths' Hall.",
+   "question": "A court of goldsmiths still tests the Royal Mint's coins, as it has since 1282. Which of these medieval English customs still happen?",
+   "answer": "Customs survive when they still do a job, or cost nothing to keep. The Trial of the Pyx still checks that coins hold the metal the law promises, so a goldsmiths' jury sits as a court and assays them. Trial by battle did no job anyone wanted; Parliament ended it after its last claim.",
    "move": "An institution outlives its era when it keeps a job everyone needs done.",
    "ask": "What do I rely on that lasts simply because it does a job everyone needs?",
    "keywords": [
@@ -46968,6 +48878,56 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Ended",
+    "right": "Still held",
+    "tag": "Old England",
+    "items": [
+     {
+      "text": "Trial of the Pyx",
+      "note": "A jury tests sample coins from the Mint.",
+      "pile": "right",
+      "verdict": "Goldsmiths still weigh and assay the coins in a formal court."
+     },
+     {
+      "text": "Trial by battle",
+      "note": "Settling a charge by single combat.",
+      "pile": "left",
+      "verdict": "Claimed by a murder suspect in 1818, abolished in 1819."
+     },
+     {
+      "text": "Swan Upping",
+      "note": "Counting the Thames swans each July.",
+      "pile": "right",
+      "verdict": "Royal and livery company boats still round up cygnets every year."
+     },
+     {
+      "text": "The pillory",
+      "note": "Locked in the stocks for the crowd.",
+      "pile": "left",
+      "verdict": "Last used in 1830, abolished in 1837."
+     },
+     {
+      "text": "Quit Rents",
+      "note": "The City pays rent in horseshoes and nails.",
+      "pile": "right",
+      "verdict": "Six horseshoes and 61 nails, for a forge first let in 1235."
+     },
+     {
+      "text": "Neck verse",
+      "note": "Benefit of clergy: read a Bible verse, escape the noose.",
+      "pile": "left",
+      "verdict": "Abolished in 1827."
+     },
+     {
+      "text": "Doggett's race",
+      "note": "Young Thames watermen race for a red coat.",
+      "pile": "right",
+      "verdict": "Rowed every year since 1715, the oldest such race in the world."
+     }
+    ]
+   },
    "source": "The Goldsmiths' Company, Trial of the Pyx",
    "source_kind": "institution",
    "reference": "https://www.thegoldsmiths.co.uk/the-trial-of-the-pyx",
@@ -47396,8 +49356,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What was the scholar who wrote the first known mention of toilet paper, in 589, worried about?",
-   "answer": "Sacrilege. Yan Zhitui wrote that paper bearing quotations from the Five Classics or the names of sages he dared not use 'for toilet purposes', so plain paper already was. By 1393 the Ming court at Nanjing was supplied with 720,000 sheets a year, each about 60 by 90 cm.",
+   "question": "Toilet paper is first mentioned in China in 589. By 1393, how many sheets a year was the Ming court at Nanjing supplied with?",
+   "answer": "720,000, each about 60 by 90 cm, plus 15,000 small, soft, perfumed ones for the imperial family. The first mention, by the scholar Yan Zhitui, is a worry about sacrilege: paper bearing quotations from the classics or names of sages he dared not use 'for toilet purposes'. So plain paper already was.",
    "move": "A habit often enters the written record as a rule about its exceptions.",
    "ask": "Which everyday habit of mine would only ever show up in writing as a rule about its exceptions?",
    "keywords": [
@@ -47409,18 +49369,48 @@ const String kEmbeddedBank = r'''
    ],
    "era": "medieval",
    "region": "asia",
-   "hook": "origin",
+   "hook": "number",
    "mood": "playful",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "sheets a year, each 60 by 90 cm",
+    "answer": 720000,
+    "each": 400,
+    "eachLabel": "1 dot = 400 sheets",
+    "compare": "About 2,000 sheets a day",
+    "options": [
+     {
+      "label": "About 7,000",
+      "value": 7000,
+      "note": "Two zeros short. A court of thousands, and each sheet was 60 by 90 cm."
+     },
+     {
+      "label": "About 70,000",
+      "value": 70000,
+      "note": "One zero short. 720,000 sheets a year: about 2,000 a day."
+     },
+     {
+      "label": "About 700,000",
+      "value": 700000,
+      "note": "Right: 720,000 a year, plus 15,000 perfumed ones for the imperial family."
+     },
+     {
+      "label": "7 million",
+      "value": 7000000,
+      "note": "One zero too many. Still, 720,000 sheets that size would cover 39 hectares."
+     }
+    ]
+   },
    "source": "Tsien, Paper and Printing, 1985",
    "source_kind": "book",
    "reference": "Tsien Tsuen-Hsuin, Paper and Printing, in Needham, Science and Civilisation in China, vol. 5 part 1, Cambridge University Press, 1985",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "history-hygiene-6",
@@ -49399,8 +51389,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When did the Ottoman Empire first convene an elected parliament?",
-   "answer": "In March 1877, thirteen years before Japan's first parliament. The constitution of December 1876 created a chamber of deputies, chosen through provincial councils, with Muslim, Christian and Jewish members. It lasted less than a year: in February 1878 Sultan Abdülhamid II sent it home, and it did not meet again until 1908.",
+   "question": "Drag each first parliament to its year. Did the Ottoman Empire get one before or after Japan and Russia?",
+   "answer": "The constitution of December 1876 created an elected chamber with Muslim, Christian and Jewish deputies. It barely lasted: in February 1878 Sultan Abdülhamid II sent it home, citing the war with Russia, and it did not sit again until 1908. A reform reversed that fast leaves almost no trace in memory.",
    "move": "Early reforms are easy to miss when they are quickly reversed.",
    "ask": "Which early try of mine got dropped quickly, and was it really a failure?",
    "keywords": [
@@ -49420,10 +51410,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
-   "source": "Devereux, The First Ottoman Constitutional Period, 1963",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1750,
+    "to": 1925,
+    "events": [
+     {
+      "label": "First US Congress",
+      "year": 1789
+     },
+     {
+      "label": "Ottoman parliament opens",
+      "year": 1877,
+      "note": "The Ottoman parliament met in 1877: 13 years before Japan's, 29 before Russia's."
+     },
+     {
+      "label": "Japan's first Diet",
+      "year": 1890
+     },
+     {
+      "label": "Russia's first Duma",
+      "year": 1906
+     }
+    ]
+   },
+   "source": "Devereux, 1963; Grand National Assembly of Türkiye",
    "source_kind": "book",
-   "reference": "Devereux, The First Ottoman Constitutional Period: A Study of the Midhat Constitution and Parliament, Johns Hopkins Press, 1963",
-   "written": "2026-09-26"
+   "reference": "Devereux, The First Ottoman Constitutional Period, Johns Hopkins Press, 1963; https://www.tbmm.gov.tr/history/",
+   "written": "2026-10-06"
   },
   {
    "id": "history-ottoman-3",
@@ -49743,10 +51758,10 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How was the likely starting point of the Black Death pinned down?",
-   "answer": "By gravestones in Kyrgyzstan. Headstones near Lake Issyk-Kul, dated 1338 and 1339, give 'pestilence' as the cause of death. In 2022, ancient DNA from people buried there yielded a plague strain sitting at the root of the pandemic's family tree, some eight years before plague reached the Black Sea.",
-   "move": "Trust a finding more when two unrelated kinds of evidence point to it.",
-   "ask": "Which of my beliefs rests on two unrelated kinds of evidence, and which on one?",
+   "question": "In 1347 the Black Death came ashore in Sicily with dying sailors. Where did the outbreak actually begin?",
+   "answer": "Central Asia, most likely near Lake Issyk-Kul in Kyrgyzstan. Headstones there, dated 1338 and 1339, name 'pestilence', and in 2022 ancient DNA from those graves gave a strain at the root of the Black Death's family tree.",
+   "move": "Where trouble is first noticed is rarely where it began.",
+   "ask": "When a problem lands on my desk, do I ask where it started?",
    "keywords": [
     "black death",
     "yersinia pestis",
@@ -49756,7 +51771,7 @@ const String kEmbeddedBank = r'''
    ],
    "era": "medieval",
    "region": "asia",
-   "hook": "origin",
+   "hook": "puzzle",
    "mood": "dark",
    "numeracy": 1,
    "abstraction": "concrete",
@@ -49764,10 +51779,46 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "map",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "Italy",
+     "Crimea",
+     "Central Asia"
+    ],
+    "answer": 2,
+    "clues": [
+     {
+      "text": "Autumn 1347: Genoese galleys bring plague into Sicily from the Black Sea.",
+      "tag": "Came in by ship",
+      "rulesOut": [
+       0
+      ]
+     },
+     {
+      "text": "At Kaffa in Crimea, a besieging army is said to hurl its dead over the walls.",
+      "tag": "Bodies over the walls",
+      "rulesOut": []
+     },
+     {
+      "text": "Plague was already killing in the Volga lands, further east, in 1346.",
+      "tag": "Volga lands first",
+      "rulesOut": [
+       1
+      ]
+     },
+     {
+      "text": "Gravestones of 1338 and 1339 by Lake Issyk-Kul give 'pestilence' as the cause.",
+      "tag": "Gravestones of 1338",
+      "rulesOut": []
+     }
+    ],
+    "why": "It was killing in the Volga lands before Kaffa: Crimea was a stop on the road, not the start."
+   },
    "source": "Spyrou et al., Nature, 2022",
    "source_kind": "paper",
    "reference": "doi:10.1038/s41586-022-04800-3",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "history-plague-2",
@@ -51205,8 +53256,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How long did the Roman Senate go on meeting after the last western emperor was deposed?",
-   "answer": "More than a century. Under Odoacer and the Gothic kings the Senate still sat, and its leading men still held the consulship. Its last known collective act came in 603, when it acclaimed portraits of the eastern emperor Phocas in Rome. Around 630 its meeting house, the Curia, was turned into the church of Sant'Adriano.",
+   "question": "The last western Roman emperor was deposed in 476. When do you think the Roman Senate last met?",
+   "answer": "Kings replaced emperors, but Italy's new rulers needed the old elite to run Rome, so Odoacer and the Gothic kings kept the Senate sitting and its leaders still took the consulship. Its last known act, in 603, was to acclaim portraits of the eastern emperor Phocas. Around 630 its meeting house became a church.",
    "move": "Institutions often outlive the power that once gave them meaning.",
    "ask": "What do I still keep going after the power behind it has gone?",
    "keywords": [
@@ -51226,10 +53277,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 350,
+    "to": 700,
+    "events": [
+     {
+      "label": "Last western emperor out",
+      "year": 476
+     },
+     {
+      "label": "Hagia Sophia completed",
+      "year": 537
+     },
+     {
+      "label": "Senate's last known act",
+      "year": 603,
+      "note": "The Senate still met in 603, 127 years after the last western emperor fell."
+     },
+     {
+      "label": "Muhammad goes to Medina",
+      "year": 622
+     }
+    ]
+   },
    "source": "Cambridge Ancient History, vol. 14",
    "source_kind": "reference_work",
    "reference": "Humphries, Italy, A.D. 425-605, in Cameron, Ward-Perkins and Whitby (eds.), The Cambridge Ancient History, vol. 14, Cambridge University Press, 2000",
-   "written": "2026-09-27"
+   "written": "2026-10-06"
   },
   {
    "id": "history-the-fall-10",
@@ -51536,8 +53612,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why can collagen in a face cream not top up the collagen in the skin?",
-   "answer": "Because the molecule is far too big to get in. The skin's outer layer lets through almost nothing heavier than about 500 daltons, a unit of molecular weight, and collagen weighs around 300,000. Bos and Meinardi set out this 500-dalton rule. Collagen cream stays on the surface: a moisturiser with a grand name.",
+   "question": "A jar of anti-ageing night cream, worded the way many are. What can its collagen do for your skin's own?",
+   "answer": "Nothing; it never gets there. The skin's outer layer lets through almost nothing heavier than about 500 daltons, a unit of molecular weight, and collagen weighs around 300,000. It stays on the surface, holding water like any moisturiser. Hence the careful wording: a cosmetic may change how skin looks, not how it works.",
    "move": "Ask how an ingredient would reach the place it is meant to work.",
    "ask": "Which product do I pay for without asking how it could reach where it is meant to work?",
    "keywords": [
@@ -51556,10 +53632,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Night cream",
+    "ref": "Typical text",
+    "title": "Collagen renew",
+    "body": "Enriched with collagen to boost your skin's own. Visibly reduces the appearance of fine lines.",
+    "phrases": [
+     {
+      "text": "Enriched with collagen",
+      "plain": "Contains collagen, far too big to enter skin,",
+      "why": "Skin lets in little over 500 daltons. Collagen weighs about 300,000.",
+      "catch": true
+     },
+     {
+      "text": "to boost your skin's own",
+      "plain": "which stays on top, holding water",
+      "why": "On the surface it works like any moisturiser: plumper skin for a few hours."
+     },
+     {
+      "text": "Visibly reduces the appearance of",
+      "plain": "For a while, makes you see fewer",
+      "why": "Appearance is the legal escape. A cosmetic may change how skin looks, not how it works."
+     }
+    ],
+    "ask": "One ingredient can't reach where the jar implies. Which?",
+    "watch": "On a cosmetic, appearance means looks, not changes. Read it as a ceiling."
+   },
    "source": "Bos and Meinardi, Experimental Dermatology, 2000",
    "source_kind": "paper",
    "reference": "Bos JD, Meinardi MM, The 500 Dalton rule for the skin penetration of chemical compounds and drugs, Experimental Dermatology, 2000",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "human_body-anti-ageing-claims-2",
@@ -52029,8 +54132,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did US advertising rules in 2009 stop protecting dramatic before-and-after photos marked results not typical?",
-   "answer": "Because the disclaimer did not undo the impression. The Federal Trade Commission revised its endorsement guides so that an advert showing an extraordinary result must also say what typical users achieve. Shown a person who lost 40 kg, readers assume that is the norm. A small-print warning cannot outweigh a big photograph.",
+   "question": "A weight-loss advert under a dramatic before-and-after photo. Which line did US regulators decide no longer excuses it?",
+   "answer": "Results not typical. In 2009 the US Federal Trade Commission revised its endorsement guides: an advert showing an extraordinary result must also say what typical users achieve. Shown someone who lost 40 kg, readers take it as the norm, and a line of small print does not undo a big photograph.",
    "move": "A vivid single case speaks louder than the small print beside it.",
    "ask": "Which success story am I measuring myself against that was never typical?",
    "keywords": [
@@ -52049,10 +54152,42 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Weight-loss advert",
+    "ref": "Typical text",
+    "title": "Real people, real results",
+    "body": "I lost 40 kg and never felt hungry. Real customer, real story. *Results not typical. Individual results may vary.",
+    "phrases": [
+     {
+      "text": "I lost 40 kg",
+      "plain": "One customer, picked from many, lost 40 kg",
+      "why": "The best case is chosen for being extraordinary. That is what makes it look ordinary."
+     },
+     {
+      "text": "Real customer, real story",
+      "plain": "True for her; it says nothing about you",
+      "why": "A real story can still be a rare one."
+     },
+     {
+      "text": "Results not typical",
+      "plain": "Most buyers lose far less; we won't say how much",
+      "why": "Since 2009 the FTC has wanted the typical result shown, not just this line.",
+      "catch": true
+     },
+     {
+      "text": "Individual results may vary",
+      "plain": "Yours will probably be smaller",
+      "why": "Vary sounds even-handed. With the best case shown, it can only vary downwards."
+     }
+    ],
+    "ask": "One line tries to undo the photograph. Which?",
+    "watch": "When an advert shows its best case, ask what the typical buyer got."
+   },
    "source": "US FTC endorsement guides, 2009",
    "source_kind": "institution",
    "reference": "US Federal Trade Commission, Guides Concerning the Use of Endorsements and Testimonials in Advertising, 16 CFR Part 255, 2009",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "human_body-before-and-after-2",
@@ -52293,8 +54428,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How old is the difference between blood groups A and B?",
-   "answer": "Tens of millions of years, older than our species. The same two amino-acid changes separate A from B in humans, gibbons and Old World monkeys, and a 2012 study found the variants were inherited from a shared ancestor, not reinvented. Someone can share a blood group with a gibbon yet differ from a sibling.",
+   "question": "How old is the difference between blood groups A and B, next to our species and our split from chimps?",
+   "answer": "The two amino-acid changes that separate A from B are the same in humans, gibbons and Old World monkeys, and a 2012 study found the variants were inherited from a shared ancestor, not reinvented. Selection has kept both alive ever since. Someone can share a blood group with a gibbon but not with a sibling.",
    "move": "Ask how old a difference is before explaining it by recent history.",
    "ask": "Before I explain a difference between people, have I asked how long it has been there?",
    "keywords": [
@@ -52314,10 +54449,36 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
-   "source": "Ségurel et al., PNAS, 2012",
+   "scene": {
+    "type": "timeline",
+    "axis": "ago",
+    "from": 100000000,
+    "to": 1000,
+    "unit": "years ago",
+    "events": [
+     {
+      "label": "A and B",
+      "ago": 20000000,
+      "note": "A and B are at least 20 million years old: older than our split from chimps."
+     },
+     {
+      "label": "Chimps split",
+      "ago": 7000000
+     },
+     {
+      "label": "Our species",
+      "ago": 300000
+     },
+     {
+      "label": "Farming",
+      "ago": 12000
+     }
+    ]
+   },
+   "source": "Ségurel et al., PNAS, 2012; Smithsonian",
    "source_kind": "paper",
-   "reference": "doi:10.1073/pnas.1210603109",
-   "written": "2026-09-26"
+   "reference": "doi:10.1073/pnas.1210603109; Smithsonian National Museum of Natural History, Human Origins, https://humanorigins.si.edu/",
+   "written": "2026-10-06"
   },
   {
    "id": "human_body-blood-types-3",
@@ -52482,9 +54643,9 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why is one of the commonest human malaria parasites nearly absent from West and Central Africa?",
-   "answer": "Because most people there lack the door it uses. Plasmodium vivax enters red cells through a surface protein, the Duffy blood-group antigen, and in 1976 Miller and colleagues showed that Duffy-negative people resisted it; most West and Central Africans are Duffy-negative. The shield leaks: vivax has since been found infecting Duffy-negative people in Madagascar.",
-   "move": "Resistance can rest on a missing part rather than an added defence.",
+   "question": "Plasmodium vivax, a common malaria parasite, thrives across tropical Asia but is nearly absent from West Africa. Why?",
+   "answer": "A blood type. Most West and Central Africans are Duffy-negative: their red cells lack the protein vivax grips to get in, as Miller showed in 1976. The shield leaks: vivax now infects some Duffy-negative people.",
+   "move": "Before crediting the famous cause, check the cases it cannot explain.",
    "keywords": [
     "duffy antigen",
     "plasmodium vivax",
@@ -52494,7 +54655,7 @@ const String kEmbeddedBank = r'''
    ],
    "era": "twentieth",
    "region": "africa",
-   "hook": "mechanism",
+   "hook": "puzzle",
    "mood": "sober",
    "numeracy": 0,
    "abstraction": "concrete",
@@ -52502,11 +54663,51 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "disabled": true,
+   "ask": "Which famous explanation do I trust without testing?",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "Climate",
+     "No mosquitoes",
+     "Sickle-cell gene",
+     "A blood type"
+    ],
+    "answer": 3,
+    "clues": [
+     {
+      "text": "Vivax is common in South and Southeast Asia, just as hot and wet.",
+      "tag": "Thrives in hot Asia",
+      "rulesOut": [
+       0
+      ]
+     },
+     {
+      "text": "Falciparum, a deadlier malaria carried by the same mosquitoes, is rife there.",
+      "tag": "Other malaria is rife",
+      "rulesOut": [
+       1
+      ]
+     },
+     {
+      "text": "Most West Africans lack the sickle-cell gene. They escape vivax all the same.",
+      "tag": "No sickle gene, yet safe",
+      "rulesOut": [
+       2
+      ]
+     },
+     {
+      "text": "Vivax enters red cells by gripping the Duffy protein. Most there lack it.",
+      "tag": "No Duffy, no entry",
+      "rulesOut": []
+     }
+    ],
+    "why": "The famous shield, sickle cell, is missing in most of them. A missing Duffy protein is not."
+   },
    "source": "Miller et al., NEJM, 1976",
    "source_kind": "paper",
    "reference": "Miller, Mason, Clyde & McGinniss, The resistance factor to Plasmodium vivax in blacks: the Duffy-blood-group genotype, FyFy, New England Journal of Medicine, 1976",
-   "written": "2026-09-27",
-   "disabled": true
+   "written": "2026-10-06"
   },
   {
    "id": "human_body-blood-types-8",
@@ -52752,7 +54953,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "easy",
    "principle": "none",
    "question": "Why is flying east usually harder on the body clock than flying west?",
-   "answer": "Because the inner clock runs slightly long. Czeisler's team, isolating volunteers from the cues of day and night, measured the human cycle at about 24.2 hours. Flying west lengthens the day, which the clock does easily; flying east shortens it, against its natural drift. A clock that runs slow finds waiting easier than hurrying.",
+   "answer": "Because the inner clock's day is a touch longer than Earth's. Czeisler's team measured it at about 24.2 hours in volunteers shielded from daylight, so morning light must nudge it earlier every day just to keep time. A westward trip asks for a delay, the way it drifts anyway; an eastward one asks the opposite.",
    "move": "Work with the direction a system already drifts, not against it.",
    "ask": "Which change in my routine fights my natural drift, and could I make it the other way?",
    "keywords": [
@@ -52771,6 +54972,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "Jet lag hits harder flying east than flying west."
+    },
+    "levels": [
+     {
+      "text": "Flying east shrinks the day: bedtime comes before your clock is ready."
+     },
+     {
+      "text": "Kept from daylight, the human body clock runs a little long.",
+      "figure": "24.2 h",
+      "unit": "the inner clock's day"
+     },
+     {
+      "text": "So it must be nudged earlier every day just to keep time."
+     },
+     {
+      "text": "A clock that runs slow finds waiting easier than hurrying."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Flights east are overnight",
+      "Earth's spin fights you",
+      "The inner clock runs slow"
+     ],
+     "answer": 2
+    }
+   },
    "source": "Czeisler et al., Science, 1999",
    "source_kind": "paper",
    "reference": "Czeisler CA, Duffy JF, Shanahan TL et al., Stability, precision, and near-24-hour period of the human circadian pacemaker, Science, 1999",
@@ -52856,8 +55088,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What inside a bone senses how hard it is being used?",
-   "answer": "Cells buried in it. About 42 billion osteocytes sit walled into the mineral, linked by channels far finer than a hair. Bending a bone squeezes fluid through those channels, and the osteocytes are thought to read that flow and signal the cells that add or remove bone. In orbit, with little load, astronauts' bones thin.",
+   "question": "Bone senses how hard it is being used, through cells walled into the mineral itself. How many such cells does one skeleton hold?",
+   "answer": "About 42 billion osteocytes, Buenzli and Sims estimated, linked by channels far finer than a hair. Bending a bone squeezes fluid through those channels; the cells are thought to read that flow and tell others to add or remove bone. In orbit, with little load, astronauts' bones thin.",
    "move": "The part that feels the strain is often hidden inside the structure.",
    "ask": "What in my life gets stronger only when I push on it, and am I pushing enough?",
    "keywords": [
@@ -52869,18 +55101,48 @@ const String kEmbeddedBank = r'''
    ],
    "era": "timeless",
    "region": "none",
-   "hook": "mechanism",
+   "hook": "number",
    "mood": "wonder",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "cells buried inside your bones",
+    "answer": 42000000000,
+    "each": 20000000,
+    "eachLabel": "1 dot = 20 million cells",
+    "compare": "Half as many as neurons in a brain",
+    "options": [
+     {
+      "label": "A million",
+      "value": 1000000,
+      "note": "Four zeros short. Your skeleton holds about 42 billion of them."
+     },
+     {
+      "label": "100 million",
+      "value": 100000000,
+      "note": "Two zeros short. About 42 billion, half as many as a brain's neurons."
+     },
+     {
+      "label": "40 billion",
+      "value": 40000000000,
+      "note": "Right: about 42 billion, joined by some 3.7 trillion fine branches."
+     },
+     {
+      "label": "A trillion",
+      "value": 1000000000000,
+      "note": "Too many for cells, but their branches number about 3.7 trillion."
+     }
+    ]
+   },
    "source": "Buenzli & Sims, Bone, 2015",
    "source_kind": "paper",
-   "reference": "Buenzli & Sims, Quantifying the osteocyte network in the human skeleton, Bone, 2015",
-   "written": "2026-09-26"
+   "reference": "Buenzli & Sims, Quantifying the osteocyte network in the human skeleton, Bone 75:144-150, 2015",
+   "written": "2026-10-06"
   },
   {
    "id": "human_body-bone-strength-2",
@@ -53436,8 +55698,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Where does the popular claim that the brain finishes maturing at 25 really come from?",
-   "answer": "Mostly from where the studies stopped. The big scanning projects of the 1990s and 2000s followed children into their early twenties, and their curves were still changing at the final scan. Later studies found the brain's wiring still changing into the thirties. Twenty-five marks the end of the data, not of the brain.",
+   "question": "The brain finishes maturing at 25, people say. Which of these brain claims are myths, and which are true?",
+   "answer": "Brain myths last because each grew from something real. One hemisphere does lead on language; some areas are busier at times; and maturation curves did run to the mid-twenties, because that is where the big 1990s scanning studies stopped following people. Later scans found the brain's wiring still changing into the thirties.",
    "move": "Before trusting a cut-off, ask where the measurements ran out.",
    "ask": "Which limit do I believe about myself that may just mark where someone stopped looking?",
    "keywords": [
@@ -53456,9 +55718,53 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Somerville, Neuron, 2016",
+   "scene": {
+    "type": "sort",
+    "left": "Myth",
+    "right": "True",
+    "tag": "Heard about the brain",
+    "items": [
+     {
+      "text": "Done at 25",
+      "note": "The brain finishes maturing at 25.",
+      "pile": "left",
+      "verdict": "The studies stopped near 25. Its wiring keeps changing into the thirties."
+     },
+     {
+      "text": "Ten per cent",
+      "note": "We use only a tenth of our brain.",
+      "pile": "left",
+      "verdict": "Scans show activity all over, and damage almost anywhere costs something."
+     },
+     {
+      "text": "Energy hog",
+      "note": "It burns a fifth of the body's energy.",
+      "pile": "right",
+      "verdict": "About 2% of body weight, about 20% of the energy used at rest."
+     },
+     {
+      "text": "Left or right",
+      "note": "People are left-brained or right-brained.",
+      "pile": "left",
+      "verdict": "Scans of 1,011 people found nobody with a stronger whole side."
+     },
+     {
+      "text": "Learning styles",
+      "note": "Teaching to a visual or auditory style helps.",
+      "pile": "left",
+      "verdict": "Tests matching teaching to style found no gain (Pashler et al., 2008)."
+     },
+     {
+      "text": "No pain",
+      "note": "Brain tissue itself cannot feel pain.",
+      "pile": "right",
+      "verdict": "It has no pain sensors, so surgeons can operate on awake patients."
+     }
+    ]
+   },
+   "source": "Somerville, 2016; Nielsen et al., 2013; Raichle, 2002",
    "source_kind": "paper",
-   "reference": "Somerville LH, Searching for signatures of brain maturity: what are we searching for?, Neuron, 2016",
+   "reference": "Somerville, Neuron 92:1164, 2016; Nielsen et al., PLOS ONE, 2013, doi:10.1371/journal.pone.0071275; Raichle & Gusnard, PNAS 99:10237, 2002",
    "written": "2026-09-26"
   },
   {
@@ -53950,8 +56256,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Where along its circuit does blood move most slowly?",
-   "answer": "In the capillaries, the narrowest vessels. There are billions side by side, so their combined cross-section is roughly a thousand times the aorta's. The same flow, spread that wide, slows from about 30 cm a second in the aorta to under 1 mm a second: just long enough to trade oxygen for waste.",
+   "question": "Blood leaves the heart through the aorta at about 33 cm a second. How does its speed change on the way round the body?",
+   "answer": "It slows a thousandfold, then speeds up again. The same flow passes every stage, so speed falls as the total cross-section grows: some 2,500 cm² of capillaries against 2.5 cm² of aorta. There blood crawls at about 0.3 mm a second, long enough to trade oxygen for waste. As veins merge, it speeds back up.",
    "move": "Split one stream into many channels and each one slows down.",
    "ask": "Where in my week does one big job get split into so many pieces that everything slows down?",
    "keywords": [
@@ -53970,9 +56276,39 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "bars",
-   "source": "Levick, Introduction to Cardiovascular Physiology, 2010",
+   "scene": {
+    "type": "draw",
+    "label": "Blood speed, mm per second",
+    "columns": [
+     "Aorta",
+     "Arteries",
+     "Smallest",
+     "Veins",
+     "Big vein"
+    ],
+    "values": [
+     330,
+     41,
+     0.33,
+     10,
+     103
+    ],
+    "given": 1,
+    "min": 0.1,
+    "max": 1000,
+    "log": true,
+    "decimals": 1,
+    "judge": 2,
+    "verdict": {
+     "under": "Even lower than the truth. Capillaries run at 0.3 mm a second, a thousandth of the aorta.",
+     "near": "Right: a thousand times slower in the capillaries, then back up to 103 in the big veins.",
+     "over": "Slower than that: in the capillaries blood crawls at 0.3 mm a second."
+    },
+    "notes": []
+   },
+   "source": "Guyton and Hall, Textbook of Medical Physiology",
    "source_kind": "book",
-   "reference": "Levick, An Introduction to Cardiovascular Physiology, 5th edition, Hodder Arnold, 2010",
+   "reference": "Hall, Guyton and Hall Textbook of Medical Physiology, 14th edition, Elsevier, 2020, chapter 14: aortic velocity about 33 cm/s; cross-sections aorta 2.5, small arteries 20, arterioles 40, capillaries 2,500, small veins 80, venae cavae 8 cm²; speeds here are flow divided by area",
    "written": "2026-09-26"
   },
   {
@@ -54678,16 +57014,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What is the gut doing when an empty stomach growls a couple of hours after a meal?",
-   "answer": "Housekeeping. Between meals a wave of strong contractions, the migrating motor complex, sweeps from the stomach to the end of the small intestine roughly every 90 to 120 minutes, clearing leftover food and bacteria. Pushing gas and fluid ahead of it makes the noise; eating stops it at once.",
-   "move": "A noisy system at rest may simply be cleaning itself.",
-   "ask": "What noise in my life is just tidying up and not a sign that something is wrong?",
+   "question": "Five things your body does that seem to have obvious causes. What is really behind each one?",
+   "answer": "Wrinkled fingers are the one people miss. They look like skin soaking up water, but fingers whose nerve has been cut stay smooth. The nervous system narrows blood vessels in the fingertips and the skin puckers, which doctors once used as a bedside test of nerve damage.",
+   "move": "Ask what the body is doing, not what is being done to it.",
+   "ask": "Which of my body's signals have I been explaining with the obvious cause?",
    "keywords": [
     "migrating motor complex",
-    "stomach growling",
-    "small intestine",
-    "fasting",
-    "bacteria"
+    "finger wrinkling",
+    "muscle soreness",
+    "fever",
+    "pins and needles"
    ],
    "era": "timeless",
    "region": "none",
@@ -54699,10 +57035,43 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Deloose et al., Nat Rev Gastroenterol Hepatol, 2012",
+   "scene": {
+    "type": "match",
+    "leftTitle": "The signal",
+    "rightTitle": "The real cause",
+    "pairs": [
+     {
+      "left": "Stomach growls",
+      "right": "A cleaning wave sweeping the gut",
+      "note": "Between meals, a wave clears leftovers every 90 to 120 minutes."
+     },
+     {
+      "left": "Wrinkly bath fingers",
+      "right": "Nerves squeezing blood vessels",
+      "note": "Fingers with a cut nerve stay smooth. The body does it; water doesn't.",
+      "missed": true
+     },
+     {
+      "left": "Aching two days later",
+      "right": "Tiny damage in muscle fibres",
+      "note": "Not lactic acid: that is cleared within an hour or so of exercise."
+     },
+     {
+      "left": "Pins and needles",
+      "right": "A squashed nerve misfiring",
+      "note": "Pressure starves the nerve. As it recovers it fires at random."
+     },
+     {
+      "left": "Fever chills",
+      "right": "The brain raising its thermostat",
+      "note": "The set point jumps, so normal body heat suddenly feels cold."
+     }
+    ]
+   },
+   "source": "Deloose et al., 2012; Wilder-Smith, 2004",
    "source_kind": "paper",
    "reference": "Deloose, Janssen, Depoortere & Tack, The migrating motor complex: control mechanisms and its role in health and disease, Nature Reviews Gastroenterology & Hepatology, 2012",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "human_body-digestion-4",
@@ -57030,8 +59399,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How can a ball striking the chest stop a healthy heart without damaging it?",
-   "answer": "Timing. In animal experiments a blow set off fibrillation only if it landed in a 15-millisecond window on the upstroke of the T wave, while heart muscle recovers unevenly from the last beat. The same blow a moment earlier or later did nothing. Victims are mostly young, with springy chests; the heart is sound.",
+   "question": "A baseball to the chest can stop a healthy heart, but only at one moment of the beat. How long is that moment?",
+   "answer": "About 15 milliseconds. In Link's experiments on pigs, 9 of 10 blows landing 30 to 15 ms before the peak of the T wave set off fibrillation; blows at any other moment did not. In that sliver the muscle is recovering unevenly, so one jolt can start a chaotic circuit. The heart is undamaged.",
    "move": "The same push can do nothing or everything, depending on when it lands.",
    "ask": "Where might a small thing hurt me badly just because it lands at the wrong moment?",
    "keywords": [
@@ -57044,7 +59413,7 @@ const String kEmbeddedBank = r'''
    "region": "none",
    "hook": "mechanism",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
@@ -57053,7 +59422,19 @@ const String kEmbeddedBank = r'''
    "source": "Link et al., NEJM, 1998",
    "source_kind": "paper",
    "reference": "doi:10.1056/NEJM199806183382504",
-   "written": "2026-09-26"
+   "written": "2026-10-06",
+   "scene": {
+    "type": "hold",
+    "what": "The deadly moment in one beat",
+    "seconds": 0.015,
+    "display": "ms",
+    "comparisons": [
+     {
+      "label": "One beat, at 70 a minute",
+      "seconds": 0.857
+     }
+    ]
+   }
   },
   {
    "id": "human_body-heartbeat-4",
@@ -57103,8 +59484,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why can a leg muscle be held in one long contraction, but heart muscle cannot?",
-   "answer": "Its impulse is too long. A heart cell's impulse lasts about 250 milliseconds, nearly as long as the squeeze it triggers, and it cannot fire again until that ends, so each beat must ease off before the next. A skeletal muscle's impulse lasts about 2 milliseconds, so rapid impulses fuse into one sustained pull.",
+   "question": "Each heartbeat starts with an electrical impulse racing through the heart's muscle cells. How long does one cell's impulse last?",
+   "answer": "About a quarter of a second, against 1 to 5 milliseconds in a leg muscle. A heart cell cannot fire again until its impulse ends, and by then its squeeze is easing, so beats never pile up into a cramp. A leg muscle's impulses are so short that rapid ones fuse into one long pull.",
    "move": "A built-in pause can be what keeps a system working.",
    "ask": "Where do I need to build in rest so I can keep going?",
    "keywords": [
@@ -57126,7 +59507,21 @@ const String kEmbeddedBank = r'''
    "source": "Hall & Hall, Guyton and Hall Physiology, 2021",
    "source_kind": "book",
    "reference": "Hall & Hall, Guyton and Hall Textbook of Medical Physiology, 14th edition, Elsevier, 2021",
-   "written": "2026-09-26"
+   "written": "2026-10-06",
+   "scene": {
+    "type": "hold",
+    "what": "One heart-cell impulse",
+    "seconds": 0.25,
+    "low": 0.2,
+    "high": 0.3,
+    "display": "ms",
+    "comparisons": [
+     {
+      "label": "A leg-muscle impulse",
+      "seconds": 0.003
+     }
+    ]
+   }
   },
   {
    "id": "human_body-heartbeat-6",
@@ -58245,8 +60640,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What did Japanese officials discover in 2010 when they went looking for registered centenarians?",
-   "answer": "That many were long dead. The man listed as Tokyo's oldest, Sogen Kato, supposedly 111, was found mummified in his bedroom; he had probably died in 1978, and relatives had kept drawing his pension. A nationwide check of family registers then found about 230,000 people aged 100 or more whose whereabouts nobody could confirm.",
+   "question": "Tokyo officials went to honour the city's oldest man, aged 111. What did they find?",
+   "answer": "A nationwide check followed and found about 230,000 people aged 100 or more on family registers whose whereabouts nobody could confirm. Extreme ages are where record errors and fraud pile up, because nobody expects a centenarian to turn up in person, and every missing death keeps a birthday on the books.",
    "move": "The oldest ages in any record are where record errors pile up.",
    "ask": "Which impressive record or number I repeat might simply be a mistake nobody checked?",
    "keywords": [
@@ -58266,10 +60661,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "Tokyo, July 2010",
+      "glyph": "house",
+      "line": "Officials want to visit Sogen Kato, the city's oldest man."
+     },
+     {
+      "fact": "Aged 111",
+      "glyph": "family",
+      "line": "His family turns them away: he wants no visitors."
+     },
+     {
+      "fact": "Every month",
+      "glyph": "coin",
+      "line": "His pension is still paid into the family's account."
+     }
+    ],
+    "ask": "What do police find in his room?",
+    "options": [
+     {
+      "label": "A frail old man"
+     },
+     {
+      "label": "An empty room"
+     },
+     {
+      "label": "Remains, decades old"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "He probably died in 1978",
+     "glyph": "cross",
+     "line": "His mummified body. The family kept drawing his pension."
+    },
+    "why": "The register counted pensions paid, not people seen, so a payment passed for proof of life."
+   },
    "source": "Newman, bioRxiv, 2019",
    "source_kind": "paper",
    "reference": "Newman, Supercentenarians and the oldest-old are concentrated into regions with no birth certificates and short lifespans, bioRxiv, 2019",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "human_body-longevity-4",
@@ -58511,30 +60945,84 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Do people who reach 110 spend more years ill than those who die younger?",
-   "answer": "Less, on the evidence so far. Studying centenarians and supercentenarians in 2012, Andersen and colleagues found that the older the age at death, the later major diseases such as heart disease, stroke and cancer began. Among those reaching 110, illness was squeezed into the final years: a long life, mostly healthy, then a short decline.",
-   "move": "Those who go furthest may be those who break down latest, not slowest.",
-   "ask": "Who gets furthest in my field, those who go slowly or those who break down late?",
+   "question": "In 2024 headlines cheered American life expectancy's fastest rise in decades: two years, in two years. Where's the trick?",
+   "answer": "In the start year. 2021 was the bottom of a crash: Covid and drug overdoses had cut 2.4 years since 2019. The rise refilled the hole, and by 2023 the line was still below 2019, and below 2014. A rebound reported as progress hides a decade in which the line barely moved.",
+   "move": "Before cheering a recovery, ask where the line was before it fell.",
+   "ask": "Which of my recent gains is only a recovery from a fall?",
    "keywords": [
-    "supercentenarians",
-    "compression of morbidity",
-    "healthspan",
-    "centenarians"
+    "life expectancy",
+    "united states",
+    "covid",
+    "time window"
    ],
    "era": "recent",
    "region": "americas",
    "hook": "misconception",
-   "mood": "wonder",
-   "numeracy": 1,
-   "abstraction": "mixed",
-   "shelf_life": "evergreen",
+   "mood": "sober",
+   "numeracy": 2,
+   "abstraction": "concrete",
+   "shelf_life": "years",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Andersen et al., J Gerontol A, 2012",
-   "source_kind": "paper",
-   "reference": "Andersen, Sebastiani, Dworkis, Feldman & Perls, Health span approximates life span among many supercentenarians: compression of morbidity at the approximate limit of life span, Journals of Gerontology Series A, 2012",
-   "written": "2026-09-27"
+   "scene": {
+    "type": "trick",
+    "trick": "window",
+    "outlet": "Health news, 2024 (redrawn)",
+    "headline": "US life expectancy soars two years",
+    "honest": "Back near 2010's level, after a crash",
+    "label": "US life expectancy at birth",
+    "unit": "years",
+    "decimals": 1,
+    "columns": [
+     "2010",
+     "2011",
+     "2012",
+     "2013",
+     "2014",
+     "2015",
+     "2016",
+     "2017",
+     "2018",
+     "2019",
+     "2020",
+     "2021",
+     "2022",
+     "2023"
+    ],
+    "values": [
+     78.7,
+     78.7,
+     78.8,
+     78.8,
+     78.9,
+     78.7,
+     78.7,
+     78.6,
+     78.7,
+     78.8,
+     77.0,
+     76.4,
+     77.5,
+     78.4
+    ],
+    "window": [
+     11,
+     13
+    ],
+    "found": "Yes: it starts in 2021, the bottom of the Covid crash.",
+    "miss": "That part is honest. Ask why the chart starts in 2021.",
+    "misses": {
+     "yaxis": "A tight scale is fair for a line read by its slope. Which years, though?",
+     "marks": "Those are the CDC's real figures. What's missing is the years before."
+    },
+    "name": "The rebound window",
+    "lesson": "A bounce back is not progress. Ask where the line stood before it fell."
+   },
+   "source": "CDC NCHS, Mortality in the United States",
+   "source_kind": "statistics",
+   "reference": "Kochanek, Murphy, Xu & Arias, Mortality in the United States, 2023, NCHS Data Brief No. 521, 2024",
+   "written": "2026-10-06"
   },
   {
    "id": "human_body-microbiome-1",
@@ -58658,8 +61146,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did the first randomised trial of faecal transplants against recurrent gut infection end?",
-   "answer": "Early, because the comparison had become lopsided. In the Dutch trial published in 2013, one infusion of donor faeces cured 13 of 16 patients with recurrent Clostridioides difficile, against 4 of 13 on the antibiotic vancomycin. An interim analysis halted the trial, and relapsing patients from the antibiotic arms got donor faeces too.",
+   "question": "A Dutch trial of faecal transplants for a recurring gut infection was stopped after 43 of its planned 120 patients. Why so soon?",
+   "answer": "The answer had already arrived. One infusion of donor faeces cured 13 of 16 patients with recurrent Clostridioides difficile, against 4 of 13 on the antibiotic vancomycin. With a gap that wide, more patients would only have meant more people denied the better treatment, so the antibiotic groups were offered donor faeces too.",
    "move": "A test can end early because the answer arrived early.",
    "ask": "When did I last stop something early because the answer was already clear?",
    "keywords": [
@@ -58681,7 +61169,34 @@ const String kEmbeddedBank = r'''
    "source": "van Nood et al., NEJM, 2013",
    "source_kind": "paper",
    "reference": "doi:10.1056/NEJMoa1205037",
-   "written": "2026-09-26"
+   "written": "2026-09-26",
+   "scene": {
+    "type": "sample",
+    "dots": "Simulated patients",
+    "hit": "Cured",
+    "groups": [
+     {
+      "label": "Vancomycin",
+      "rate": 0.308
+     },
+     {
+      "label": "Donor faeces",
+      "rate": 0.813
+     }
+    ],
+    "steps": [
+     8,
+     29,
+     290
+    ],
+    "seed": 16,
+    "button": "Add patients",
+    "notes": [
+     "Four each: none cured on vancomycin, 75% on donor faeces. It shows at once.",
+     "29 patients: 26.7% against 85.7%. The trial's own: 30.8% against 81.3%.",
+     "Ten times as many: 40% against 83.4%. Nothing new, at the patients' cost."
+    ]
+   }
   },
   {
    "id": "human_body-microbiome-5",
@@ -58926,15 +61441,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does almost any cold remedy seem to work for the person who took it?",
-   "answer": "Because colds end on their own, usually within a week to ten days. People reach for a remedy when they feel worst, close to the peak, and improvement follows whatever they took. The remedy gets credit owed to time. Without a comparison, a zinc lozenge and a lucky sock look equally effective.",
+   "question": "Four reasons a remedy that does nothing can still seem to work. Which reason explains each grateful customer?",
+   "answer": "The bracelet is the one people miss. Pain that comes and goes, like arthritis, is treated at a flare, and flares fade on their own. The next day is better whatever was done, so the last thing tried takes the credit. Only a comparison group shows what time alone would have done.",
    "move": "Credit a remedy only after asking how long the trouble lasts untreated.",
    "ask": "What fix do I swear by that I only ever tried when things were about to improve anyway?",
    "keywords": [
+    "regression to the mean",
+    "natural course",
+    "testimonials",
     "common cold",
-    "remedies",
-    "natural recovery",
-    "self-limiting illness"
+    "remedies"
    ],
    "era": "timeless",
    "region": "none",
@@ -58946,10 +61462,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "Why it 'worked'",
+    "rightTitle": "The story",
+    "pairs": [
+     {
+      "left": "It ends anyway",
+      "right": "'My cold was gone in a week, with zinc'",
+      "note": "Colds clear in a week to ten days, whatever you take."
+     },
+     {
+      "left": "Taken at the worst",
+      "right": "Joint pain at its peak, then a copper bracelet",
+      "note": "Pain that comes and goes is usually going when people reach for help.",
+      "missed": true
+     },
+     {
+      "left": "Only the cured write",
+      "right": "Thousands of grateful letters",
+      "note": "The people it failed rarely write in, and some cannot."
+     },
+     {
+      "left": "Something else too",
+      "right": "'I took it with rest, soup and paracetamol'",
+      "note": "With five things at once, the credit goes to the one you believe in."
+     }
+    ]
+   },
    "source": "Heikkinen and Järvinen, The Lancet, 2003",
    "source_kind": "paper",
    "reference": "Heikkinen T, Järvinen A, The common cold, The Lancet, 2003",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "human_body-miracle-cures-2",
@@ -59492,8 +62036,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does a stubbed toe hurt in two waves, a sharp jab and then a deep ache?",
-   "answer": "Because two kinds of nerve fibre carry the news at different speeds. Fibres wrapped in insulating myelin send the sharp first pain at 5 to 30 metres a second; bare C fibres crawl at under 2 metres a second and bring the dull, lasting ache. From toe to brain, that is about a second apart.",
+   "question": "You stub your toe. The deep ache travels to the brain on slow, bare nerve fibres. How long does it take to arrive?",
+   "answer": "Roughly half a second to two seconds; the sharp jab takes about a tenth. Fibres wrapped in myelin carry the first pain at 5 to 30 metres a second, bare C fibres the ache at 0.5 to 2. Over about a metre of nerve from toe to spine, the hopping starts before the throbbing arrives.",
    "move": "One event can arrive as two messages; wait for the second.",
    "ask": "When something hurts me, in body or mood, do I react before the full message has arrived?",
    "keywords": [
@@ -59506,7 +62050,7 @@ const String kEmbeddedBank = r'''
    "region": "none",
    "hook": "mechanism",
    "mood": "wonder",
-   "numeracy": 2,
+   "numeracy": 3,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
@@ -59515,7 +62059,20 @@ const String kEmbeddedBank = r'''
    "source": "Purves et al., Neuroscience, 2018",
    "source_kind": "book",
    "reference": "Purves D, Augustine GJ, Fitzpatrick D et al., Neuroscience, 6th edition, Oxford University Press, 2018",
-   "written": "2026-09-26"
+   "written": "2026-10-06",
+   "scene": {
+    "type": "hold",
+    "what": "The ache, toe to brain",
+    "seconds": 1,
+    "low": 0.5,
+    "high": 2,
+    "comparisons": [
+     {
+      "label": "The sharp jab",
+      "seconds": 0.1
+     }
+    ]
+   }
   },
   {
    "id": "human_body-pain-2",
@@ -60013,8 +62570,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Where does the claim that looking down at a phone puts 27 kg on the neck come from?",
-   "answer": "From a 2014 computer model, not a measurement of harm. It calculated the force on the neck when the head tilts 60 degrees forward, and neck muscles and discs routinely handle such loads. When researchers in Brazil examined 150 young adults, they found no link between their texting posture and neck pain.",
+   "question": "Looking down at a phone is said to put 27 kg on the neck. Which of these claims about bones and posture hold up?",
+   "answer": "The 27 kg came from a 2014 computer model of a head tipped 60 degrees forward, not from measuring harm. Neck muscles and discs handle such loads every day, as leg bones handle running. When researchers in Brazil examined 150 young adults, their texting posture showed no link to neck pain.",
    "move": "A big force on paper is not the same as damage in a body.",
    "ask": "Which scary number have I repeated without checking whether it ever hurt anyone?",
    "keywords": [
@@ -60033,9 +62590,47 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Damasceno et al., European Spine Journal, 2018",
+   "scene": {
+    "type": "sort",
+    "left": "Myth",
+    "right": "True",
+    "tag": "Sit up straight",
+    "items": [
+     {
+      "text": "Text neck",
+      "note": "Looking down at a phone damages the neck.",
+      "pile": "left",
+      "verdict": "Among 150 young adults, texting posture was not linked to neck pain."
+     },
+     {
+      "text": "Knuckles",
+      "note": "Cracking them causes arthritis in the hands.",
+      "pile": "left",
+      "verdict": "Among 215 people, crackers had no more hand arthritis than others."
+     },
+     {
+      "text": "Morning height",
+      "note": "You are taller when you wake up.",
+      "pile": "right",
+      "verdict": "Discs flatten over the day; you lose about 1% of your height by evening."
+     },
+     {
+      "text": "School bags",
+      "note": "Heavy ones cause scoliosis.",
+      "pile": "left",
+      "verdict": "Bags can make backs ache, but they are not a cause of scoliosis."
+     },
+     {
+      "text": "A new skeleton",
+      "note": "Your bones rebuild themselves completely.",
+      "pile": "right",
+      "verdict": "Bone is constantly remodelled; the adult skeleton turns over in about ten years."
+     }
+    ]
+   },
+   "source": "Damasceno et al., 2018; deWeber et al., 2011",
    "source_kind": "paper",
-   "reference": "Damasceno GM, Ferreira AS, Nogueira LAC et al., Text neck and neck pain in 18-21-year-old young adults, European Spine Journal, 2018",
+   "reference": "Damasceno et al., European Spine Journal, 2018; deWeber, Olszewski & Ortolano, J Am Board Fam Med 24:169, 2011; US Surgeon General, Bone Health and Osteoporosis, 2004",
    "written": "2026-09-26"
   },
   {
@@ -60683,10 +63278,10 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Which cells did the COVID-19 virus attack to take away people's sense of smell?",
-   "answer": "The neurons' neighbours. Smell neurons lack ACE2, the protein the virus uses to enter cells, but the support cells wrapped around them in the nasal lining carry it. When those sustentacular cells die, the neurons lose their upkeep and fall silent. Because that layer regrows, most people's smell came back within weeks or months.",
-   "move": "When something fails, check what keeps it running, not only the part itself.",
-   "ask": "When something in my life stops working, have I looked at what supports it?",
+   "question": "Covid took away millions of people's sense of smell overnight, often with a clear nose. Which cells did it attack?",
+   "answer": "The support cells. They wrap the smell neurons, keep them working, and carry ACE2, the virus's way in. When they die, the healthy neurons fall silent. The layer regrows, so most people's smell returned within weeks or months.",
+   "move": "When a part fails, check what keeps it running, not just the part.",
+   "ask": "When something stops working, what keeps it running?",
    "keywords": [
     "covid-19",
     "anosmia",
@@ -60696,7 +63291,7 @@ const String kEmbeddedBank = r'''
    ],
    "era": "recent",
    "region": "world",
-   "hook": "mechanism",
+   "hook": "puzzle",
    "mood": "sober",
    "numeracy": 0,
    "abstraction": "mixed",
@@ -60704,10 +63299,46 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "Blocked nose",
+     "Smell neurons",
+     "Support cells"
+    ],
+    "answer": 2,
+    "clues": [
+     {
+      "text": "Smell vanishes suddenly, often while air flows freely through the nose.",
+      "tag": "Nose not blocked",
+      "rulesOut": [
+       0
+      ]
+     },
+     {
+      "text": "For most people it returns within weeks; lost brain cells rarely come back.",
+      "tag": "Back within weeks",
+      "rulesOut": []
+     },
+     {
+      "text": "Smell neurons lack ACE2, the protein the virus uses to get into cells.",
+      "tag": "Neurons lack the door",
+      "rulesOut": [
+       1
+      ]
+     },
+     {
+      "text": "The support cells wrapped around those neurons carry plenty of it.",
+      "tag": "Neighbours have the door",
+      "rulesOut": []
+     }
+    ],
+    "why": "The virus can only enter cells with ACE2. Smell neurons have none; the cells around them do."
+   },
    "source": "Brann et al., Science Advances, 2020",
    "source_kind": "paper",
    "reference": "Brann, Tsukahara, Weinreb et al., Non-neuronal expression of SARS-CoV-2 entry genes in the olfactory system suggests mechanisms underlying COVID-19-associated anosmia, Science Advances, 2020",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "human_body-smell-3",
@@ -60717,30 +63348,57 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Where did the idea that humans have a feeble sense of smell come from?",
-   "answer": "From brain anatomy, not smell tests. In 1879 the anatomist Paul Broca classed humans as non-smellers because their olfactory bulbs are small beside large frontal lobes. Yet the bulbs hold similar numbers of neurons across mammals, and blindfolded volunteers crawling on all fours have tracked a chocolate scent trail through grass.",
+   "question": "Each smell-receptor gene builds one kind of odour sensor. Which has the most working ones: dogs, humans, elephants or orangutans?",
+   "answer": "Elephants, with about 1,948, five times a human's 396. A count of genes is not a nose, though. Broca's 1879 verdict that humans smell poorly rested on small olfactory bulbs, not tests; McGann's review finds our bulbs hold neuron numbers like other mammals', and people beat dogs on some odours.",
    "move": "Ask whether a famous weakness was ever measured, or only assumed.",
    "ask": "What do I believe I am bad at that I have never actually tested?",
    "keywords": [
+    "olfactory receptor genes",
+    "elephants",
+    "dogs",
     "paul broca",
-    "olfactory bulb",
-    "scent tracking",
     "human olfaction"
    ],
    "era": "nineteenth",
    "region": "europe",
-   "hook": "origin",
+   "hook": "misconception",
    "mood": "playful",
-   "numeracy": 0,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
-   "source": "McGann, Science, 2017",
+   "figure": "bars",
+   "source": "Niimura, Genome Research 2014; McGann, Science 2017",
    "source_kind": "paper",
-   "reference": "McGann, Poor human olfaction is a 19th-century myth, Science, 2017",
-   "written": "2026-09-26"
+   "reference": "Niimura, Matsui & Touhara, Extreme expansion of the olfactory receptor gene repertoire in African elephants, Genome Research, 2014; McGann, Poor human olfaction is a 19th-century myth, Science, 2017",
+   "written": "2026-10-06",
+   "scene": {
+    "type": "rank",
+    "quantity": "Smell-receptor genes",
+    "most": "Most",
+    "items": [
+     {
+      "label": "Dog",
+      "value": 811,
+      "note": "Only about twice a human's count, far from the gap the legend suggests."
+     },
+     {
+      "label": "Human",
+      "value": 396,
+      "note": "Fewer than a dog, yet people match or beat dogs on some odours in tests."
+     },
+     {
+      "label": "Orangutan",
+      "value": 296
+     },
+     {
+      "label": "Elephant",
+      "value": 1948,
+      "note": "About 2,000, the most of 13 mammals compared: over twice a dog's."
+     }
+    ]
+   }
   },
   {
    "id": "human_body-smell-4",
@@ -61016,8 +63674,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Past how many daily steps did extra walking stop lowering the risk of death, in pooled data from 15 studies?",
-   "answer": "About 6,000 to 8,000 for people over 60, and 8,000 to 10,000 for younger adults. Paluch's meta-analysis of 15 cohorts found risk fell steeply from the lowest counts, then flattened. The biggest gain belongs to the least active. The first extra thousand steps off the sofa is worth more than the twelfth.",
+   "question": "In pooled data from 15 studies, the least active adults walked about 3,500 steps a day. How did the risk of death fall with more?",
+   "answer": "Steeply, then barely. In Amanda Paluch's meta-analysis of 47,471 adults, the group averaging 5,800 steps a day had 40% lower risk than the 3,550 group; doubling to 10,900 cut it only 13 points more. Gains levelled off around 6,000 to 8,000 steps past 60. The first thousand off the sofa counts most.",
    "move": "Gains are biggest where the starting point is lowest.",
    "ask": "Where would a small first step help me far more than polishing what I already do well?",
    "keywords": [
@@ -61036,9 +63694,40 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "draw",
+    "label": "Risk of death, by daily steps",
+    "unit": "%",
+    "columns": [
+     "3,553",
+     "5,801",
+     "7,842",
+     "10,901"
+    ],
+    "values": [
+     100,
+     60,
+     55,
+     47
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 120,
+    "verdict": {
+     "under": "Steeper than the truth: past about 6,000 steps the gains shrink to a few points.",
+     "near": "Right: the first extra 2,000 steps do most of the work; then the curve flattens.",
+     "over": "Higher than the truth: the biggest drop, 40%, comes from the first 2,000 extra steps."
+    },
+    "notes": [
+     {
+      "at": 1,
+      "text": "+2,250 steps: -40%"
+     }
+    ]
+   },
    "source": "Paluch et al., Lancet Public Health, 2022",
    "source_kind": "paper",
-   "reference": "https://www.thelancet.com/journals/lanpub/article/PIIS2468-2667(21)00302-9/fulltext",
+   "reference": "Paluch et al., Daily steps and all-cause mortality: a meta-analysis of 15 international cohorts, Lancet Public Health 7(3):e219-e228, 2022",
    "written": "2026-09-26"
   },
   {
@@ -61240,8 +63929,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does a bottle labelled SPF 30 rarely give SPF 30 protection on a beach?",
-   "answer": "Because the label is tested on a thick layer, 2 mg of cream per square centimetre of skin. Most people spread a quarter to a half of that, and protection falls steeply as the layer thins. Covering a whole adult body properly takes about 35 ml, roughly seven teaspoons, at every application.",
+   "question": "Why does a bottle labelled SPF 30 rarely give SPF 30 protection on a real beach?",
+   "answer": "Because a lab number holds only under lab conditions. Testers apply 2 mg of cream to every square centimetre; covering an adult body that way takes about 35 ml, roughly seven teaspoons, each time. Few people use half of that. Two coats, or a higher factor, makes up for a thin hand.",
    "move": "A tested number holds only under the conditions of the test.",
    "ask": "Which product do I trust without ever using it the way it was tested?",
    "keywords": [
@@ -61260,6 +63949,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "You wore SPF 30 and still burned by the afternoon."
+    },
+    "levels": [
+     {
+      "text": "The cream gave far less protection than the 30 on the bottle."
+     },
+     {
+      "text": "Protection depends on thickness: a thin film lets more UV through."
+     },
+     {
+      "text": "Most people spread a quarter to a half of the tested amount."
+     },
+     {
+      "text": "SPF is measured on a coat thicker than anyone spreads.",
+      "figure": "2 mg",
+      "unit": "of cream per cm² of skin"
+     }
+    ],
+    "guess": {
+     "options": [
+      "We spread it far too thin",
+      "Sweat washes it off",
+      "The sun is fiercer by sea"
+     ],
+     "answer": 0
+    }
+   },
    "source": "Petersen and Wulf, Photodermatol Photoimmunol Photomed, 2014",
    "source_kind": "paper",
    "reference": "Petersen B, Wulf HC, Application of sunscreen: theory and reality, Photodermatology, Photoimmunology & Photomedicine, 2014",
@@ -61433,8 +64153,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why can a US supplement say it supports immune health without ever proving it?",
-   "answer": "Because a 1994 law treats supplements more like food than medicine. Makers need no approval before selling, and may claim a product supports a body function, provided the label adds that the statement has not been evaluated by the Food and Drug Administration. That small print is where the missing evidence is declared.",
+   "question": "The label of a vitamin bottle sold in the US. Which line, in the smallest print, matters most?",
+   "answer": "The asterisk. Under a 1994 US law, supplements are sold without approval and may claim to support a body function, as long as this disclaimer sits beside the claim. They may not claim to treat a disease. So a label can sound medical while saying, in law, that nobody checked.",
    "move": "Read the small print first; it says what nobody checked.",
    "ask": "Which health claim did I believe this year without noticing who, if anyone, checked it?",
    "keywords": [
@@ -61453,10 +64173,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Dietary supplement",
+    "ref": "US label",
+    "title": "Immune support",
+    "body": "Supports a healthy immune system.* Clinically researched ingredients. *These statements have not been evaluated by the Food and Drug Administration.",
+    "phrases": [
+     {
+      "text": "Supports a healthy immune system.*",
+      "plain": "Claims to help a body function, no proof needed.*",
+      "why": "A structure-function claim: the maker only has to notify the FDA, not show it works."
+     },
+     {
+      "text": "Clinically researched ingredients",
+      "plain": "Ingredients someone has studied, for something",
+      "why": "Researched is not proven. It doesn't say for what, at what dose, or with what result."
+     },
+     {
+      "text": "have not been evaluated",
+      "plain": "were never checked",
+      "why": "The law makes the maker print this beside the claim. It is where the evidence is missing.",
+      "catch": true
+     }
+    ],
+    "ask": "One line is the law saying nobody checked. Which?",
+    "watch": "Follow the asterisk. Where a claim leads to small print, the evidence stops."
+   },
    "source": "US FDA, supplement claims guidance",
    "source_kind": "institution",
    "reference": "US Food and Drug Administration, Structure/function claims for dietary supplements under the Dietary Supplement Health and Education Act of 1994",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "human_body-taste-1",
@@ -62722,8 +65469,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How far back can alphabetical order, with A before B before G, be traced?",
-   "answer": "More than 3,000 years. Clay tablets from Ugarit, on the Syrian coast, list the letters of a 30-sign cuneiform alphabet in an order that opens much like the Phoenician and Hebrew one. The order outlived the scripts that carried it: a child reciting A, B, C follows a list pressed into Bronze Age clay.",
+   "question": "A, B, C feels like a classroom habit. How old do you think the order of the letters is?",
+   "answer": "Clay tablets from Ugarit, on the Syrian coast, list the 30 signs of a cuneiform alphabet in an order that opens much like the Phoenician and Hebrew one, from which Greek and Latin took theirs. The letters changed shape completely; the sequence barely moved. A child singing A, B, C recites Bronze Age clay.",
    "move": "An arbitrary order, once shared, can outlast everything it was for.",
    "ask": "What arbitrary habit of mine has outlived whatever it was for?",
    "keywords": [
@@ -62742,10 +65489,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": -2000,
+    "to": 2025,
+    "events": [
+     {
+      "label": "Ugarit's ABC tablet",
+      "year": -1250,
+      "note": "Letters were being listed in an order much like A, B, C over 3,000 years ago."
+     },
+     {
+      "label": "Rome founded",
+      "year": -753
+     },
+     {
+      "label": "Shakespeare born",
+      "year": 1564
+     },
+     {
+      "label": "The ABC song published",
+      "year": 1835
+     }
+    ]
+   },
    "source": "Healey, The Early Alphabet, 1990",
    "source_kind": "book",
    "reference": "Healey, The Early Alphabet, British Museum Publications, 1990",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "language-alphabets-5",
@@ -63176,8 +65948,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Pronouns are among the words languages almost never borrow. Why did English take they from Norse?",
-   "answer": "Because Norse and English speakers lived side by side in the Danelaw for generations, often in mixed households, and the English form had worn thin: hīe, they, sounded much like hē, he. Norse þeir was clearer and spread south slowly. Chaucer's London, around 1390, said they but still hem and here for them and their.",
+   "question": "English took its word they from the Vikings. Which of these everyday words came the same way?",
+   "answer": "Daily life moved them, not conquest. In the Danelaw, Norse and English speakers shared homes and markets for generations, and the two tongues were close enough to swap basic words. A borrowed pronoun is the rarest kind, which makes they the giveaway. Chaucer, around 1390, still wrote hem and here for them and their.",
    "move": "The hardest things to borrow move only when people share daily life.",
    "ask": "What stubborn habit of mine only changes when I spend real time with different people?",
    "keywords": [
@@ -63197,6 +65969,62 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Norse",
+    "right": "English",
+    "tag": "Words in the Danelaw",
+    "items": [
+     {
+      "text": "They",
+      "note": "The plural pronoun.",
+      "pile": "left",
+      "verdict": "Norse þeir. The English hīe sounded too much like hē, he."
+     },
+     {
+      "text": "Mother",
+      "note": "The first word for a parent.",
+      "pile": "right",
+      "verdict": "Old English mōdor, cousin of German Mutter. Always here."
+     },
+     {
+      "text": "Sky",
+      "note": "What is over your head.",
+      "pile": "left",
+      "verdict": "Norse ský meant cloud. English kept heaven for the religious sense."
+     },
+     {
+      "text": "Egg",
+      "note": "What a hen lays.",
+      "pile": "left",
+      "verdict": "Norse egg beat English ey. In 1490 Caxton still met a wife who said eyren."
+     },
+     {
+      "text": "House",
+      "note": "Where a family lives.",
+      "pile": "right",
+      "verdict": "Old English hūs. The Norse gave English husband, not house."
+     },
+     {
+      "text": "Window",
+      "note": "A hole in the wall for light.",
+      "pile": "left",
+      "verdict": "Norse vindauga, wind-eye. It pushed out English eye-thurl, eye-hole."
+     },
+     {
+      "text": "Husband",
+      "note": "The man of the house.",
+      "pile": "left",
+      "verdict": "Norse húsbóndi: house plus the one who dwells in it."
+     },
+     {
+      "text": "Bread",
+      "note": "What a baker sells.",
+      "pile": "right",
+      "verdict": "Old English brēad. It first meant a morsel; loaf was the word for bread."
+     }
+    ]
+   },
    "source": "Townend, Language and History in Viking Age England",
    "source_kind": "book",
    "reference": "Townend, Language and History in Viking Age England: Linguistic Relations between Speakers of Old Norse and Old English, Brepols, 2002",
@@ -63483,8 +66311,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did the Otis company lose escalator, a word it had owned as a trademark?",
-   "answer": "Partly by its own hand. When the US Patent Office cancelled the registration in 1950, the evidence included Otis's own advertising and patents, using escalator for any moving staircase. A trademark has to point to one maker; Otis had used it to name the machine. Rivals could now sell escalators as escalators.",
+   "question": "Otis lost its trademark on escalator in 1950. Which of these brand names are still owned, and which went generic?",
+   "answer": "A name survives only while it points to one maker. Once buyers, rivals and even the owner use it for the thing itself, a court can rule it generic. Owners fight with nouns after the name: Kleenex tissues, Velcro fasteners. Otis lost partly because its own patents called every moving staircase an escalator.",
    "move": "The way an owner talks about a name teaches everyone else how to use it.",
    "ask": "What do my own casual words teach others to expect from me, my work or my name?",
    "keywords": [
@@ -63503,6 +66331,56 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Generic",
+    "right": "Owned",
+    "tag": "Brand or word?",
+    "items": [
+     {
+      "text": "Escalator",
+      "note": "A moving staircase, named by its inventor in 1900.",
+      "pile": "left",
+      "verdict": "Cancelled in 1950. Otis's own adverts used it for any moving stair."
+     },
+     {
+      "text": "Kleenex",
+      "note": "A paper tissue.",
+      "pile": "right",
+      "verdict": "Still Kimberly-Clark's registered trademark, a century after launch."
+     },
+     {
+      "text": "Yo-yo",
+      "note": "A spool that climbs its own string.",
+      "pile": "left",
+      "verdict": "A US court ruled it common speech in 1965. Duncan went bankrupt."
+     },
+     {
+      "text": "Jacuzzi",
+      "note": "A whirlpool bath.",
+      "pile": "right",
+      "verdict": "Still the Jacuzzi company's. Everyone else sells hot tubs."
+     },
+     {
+      "text": "Aspirin",
+      "note": "A painkiller, named by Bayer in 1899.",
+      "pile": "left",
+      "verdict": "Generic in the US since 1921, yet still Bayer's mark in Germany and Canada."
+     },
+     {
+      "text": "Velcro",
+      "note": "A hook-and-loop fastener.",
+      "pile": "right",
+      "verdict": "Still owned. In 2017 the firm made a song begging people not to say velcro."
+     },
+     {
+      "text": "Frisbee",
+      "note": "A flying disc.",
+      "pile": "right",
+      "verdict": "Still Wham-O's. Ultimate players throw discs for that reason."
+     }
+    ]
+   },
    "source": "Haughton Elevator Co. v. Seeberger, 1950",
    "source_kind": "primary_document",
    "reference": "Haughton Elevator Co. v. Seeberger, 85 USPQ 80 (Commissioner of Patents, 1950)",
@@ -65153,8 +68031,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why, according to George Orwell, does political writing reach for words like pacification?",
-   "answer": "To name things without calling up pictures of them. In 1946 Orwell noted that when villages are bombed and their people driven out, the act is called pacification. Such phrases are needed, he argued, when the plain description would be unbearable. A vague abstract word lets a reader agree without ever seeing the burning huts.",
+   "question": "An email to all staff, in the style layoff notices are often written. What is it telling them?",
+   "answer": "That some of them are being sacked. In 1946 George Orwell noted that political language names things without calling up pictures of them, because the plain description would be too ugly to say. Here roles are impacted, so no person is fired and nobody does the firing. A camera would show a desk being cleared.",
    "move": "When a word hides a picture, describe what a camera would show.",
    "ask": "Which soft word do I use to avoid picturing what I am really doing?",
    "keywords": [
@@ -65173,10 +68051,42 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Message to all staff",
+    "ref": "Typical text",
+    "title": "Positioning us for growth",
+    "body": "As part of our strategic realignment, we are rightsizing the organisation. Some roles will be impacted, and affected colleagues will be supported through this transition.",
+    "phrases": [
+     {
+      "text": "strategic realignment",
+      "plain": "cost-cutting",
+      "why": "Strategy words put a plan where a decision was. Nobody has to picture anything."
+     },
+     {
+      "text": "rightsizing the organisation",
+      "plain": "making the company smaller",
+      "why": "Right implies the old size was a mistake. Nobody chose the word by accident."
+     },
+     {
+      "text": "Some roles will be impacted",
+      "plain": "Some of you will lose your jobs",
+      "why": "Roles, not people; impacted, not fired. The grammar hides who acts and who suffers.",
+      "catch": true
+     },
+     {
+      "text": "supported through this transition",
+      "plain": "helped on their way out",
+      "why": "Transition sounds like a journey. Here the journey is out of the door."
+     }
+    ],
+    "ask": "One phrase is about the reader's own job. Which?",
+    "watch": "When a sentence has nobody doing anything, ask who does what to whom."
+   },
    "source": "Orwell, Politics and the English Language, 1946",
    "source_kind": "primary_document",
    "reference": "Orwell, Politics and the English Language, Horizon 13(76), 1946",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "language-euphemisms-3",
@@ -67949,15 +70859,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do air-traffic controllers avoid saying take-off until the moment they clear a plane to go?",
-   "answer": "Because of Tenerife in 1977. A KLM crew radioed that they were now at take-off, already rolling. The controller's OK came through; his stand by for take-off was blocked by a simultaneous call. The jumbo struck a Pan Am 747 in fog and 583 people died. Since then, other messages say departure instead.",
+   "question": "Five words from a cockpit radio, each chosen with care. What does each one really mean?",
+   "answer": "Departure is the one people miss, because it looks like a synonym. At Tenerife in 1977 a KLM crew radioed that they were at take-off, already rolling; the controller's stand by was blocked by another call. The jumbo hit a Pan Am 747 in fog and 583 died. Take-off now means only go.",
    "move": "Jargon earns its place when it removes a doubt, not when it adds one.",
    "ask": "Which word in my work means two things, and who might act on the wrong one?",
    "keywords": [
-    "tenerife disaster",
-    "air traffic control",
-    "radio phraseology",
-    "ambiguity"
+    "tenerife",
+    "radiotelephony",
+    "mayday",
+    "roger",
+    "pan-pan"
    ],
    "era": "twentieth",
    "region": "europe",
@@ -67969,10 +70880,43 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "Radio word",
+    "rightTitle": "What it says",
+    "pairs": [
+     {
+      "left": "Mayday",
+      "right": "Come and help me: a life is at risk",
+      "note": "From French m'aider. Chosen because it carries clearly on a bad line."
+     },
+     {
+      "left": "Pan-pan",
+      "right": "Urgent, but no life in danger yet",
+      "note": "From French panne, a breakdown: one step below mayday."
+     },
+     {
+      "left": "Roger",
+      "right": "The letter R, for received",
+      "note": "R was Roger in the old radio alphabet. It means heard, not will do."
+     },
+     {
+      "left": "Departure",
+      "right": "Said for take-off until cleared to go",
+      "note": "Tenerife, 1977: an 'OK' after 'at take-off' let a jumbo roll. 583 died.",
+      "missed": true
+     },
+     {
+      "left": "Over and out",
+      "right": "Nonsense: reply, and do not reply",
+      "note": "Over means your turn, out means finished. Real crews never say both."
+     }
+    ]
+   },
    "source": "ICAO, Manual of Radiotelephony, Doc 9432",
    "source_kind": "primary_document",
    "reference": "International Civil Aviation Organization, Manual of Radiotelephony, Doc 9432, 4th ed., 2007",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "language-language-change-1",
@@ -68587,8 +71531,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What does the word natural on an American food label legally guarantee about the food?",
-   "answer": "Very little. The FDA has never formally defined it; its long-standing policy means only that nothing artificial or synthetic was added that would not normally be expected in the food. It says nothing about pesticides, processing methods or nutrition. The word reassures without promising.",
+   "question": "A box of cereal in an American shop, worded the way many are. Which word on it promises least?",
+   "answer": "Natural. The US Food and Drug Administration has never formally defined it; its long-standing policy means only that nothing artificial or synthetic was added that would not normally be in the food. It says nothing about sugar, pesticides, processing or nutrition. Honey-sweetened clusters can be all natural and still a sweet.",
    "move": "When a word sells, ask who defines it and who checks.",
    "ask": "Which reassuring word on something I buy have I never looked up?",
    "keywords": [
@@ -68607,10 +71551,42 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "US FDA, Use of the Term Natural on Food Labeling",
+   "scene": {
+    "type": "translate",
+    "head": "Breakfast cereal",
+    "ref": "Typical text",
+    "title": "Honey oat clusters",
+    "body": "All natural. Made with whole grain oats and real honey. No artificial flavours or colours. A wholesome start to your day.",
+    "phrases": [
+     {
+      "text": "All natural",
+      "plain": "Nothing artificial added; nothing else promised",
+      "why": "The FDA has never defined natural. It says nothing about sugar, pesticides or processing.",
+      "catch": true
+     },
+     {
+      "text": "Made with whole grain oats",
+      "plain": "Contains some whole grain, amount not stated",
+      "why": "Made with means it is in there. Not that it is most of what is in there."
+     },
+     {
+      "text": "real honey",
+      "plain": "honey, which the body treats as sugar",
+      "why": "Real makes it sound like a health food. Honey counts as free sugar in WHO advice."
+     },
+     {
+      "text": "wholesome",
+      "plain": "feel-good, legally empty",
+      "why": "A feeling, not a claim. Nobody can check it, so nobody has to."
+     }
+    ],
+    "ask": "One word promises almost nothing in law. Which?",
+    "watch": "When a word sells the product, ask who defines it and who checks."
+   },
+   "source": "US FDA, Use of the Term Natural",
    "source_kind": "institution",
    "reference": "https://www.fda.gov/food/food-labeling-nutrition/use-term-natural-food-labeling",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "language-loaded-words-2",
@@ -68706,8 +71682,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What kept Egyptian hieroglyphs unread for some 1,400 years after the last one was carved?",
-   "answer": "A wrong theory of what they were. Late antique writers such as Horapollo explained the signs as symbols of ideas, and scholars up to Athanasius Kircher, in the 1600s, built mystical readings on it. In 1822 Champollion showed that many signs wrote sounds. The last dated one, at Philae in AD 394, spelled words.",
+   "question": "Hieroglyphs feel like the writing of the pyramid age. When were the last ones carved, and when were they read again?",
+   "answer": "What kept them unread was a wrong theory. Late Roman writers such as Horapollo said each sign stood for an idea, and scholars up to Athanasius Kircher built mystical readings on it. In 1822 Champollion showed that many signs wrote sounds. The last one, carved at Philae in AD 394, spelled words.",
    "move": "A wrong idea of what the problem is can outlast every clue.",
    "ask": "What wrong idea of my problem is hiding answers already in front of me?",
    "keywords": [
@@ -68727,10 +71703,36 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": -500,
+    "to": 2025,
+    "events": [
+     {
+      "label": "Rosetta Stone carved",
+      "year": -196
+     },
+     {
+      "label": "Last hieroglyphs",
+      "year": 394,
+      "note": "Hieroglyphs were carved until AD 394, then went unread for 1,428 years."
+     },
+     {
+      "label": "Kircher's mystic reading",
+      "year": 1652,
+      "note": "In 1652 Kircher published confident readings of hieroglyphs as symbols. All wrong."
+     },
+     {
+      "label": "Champollion reads them",
+      "year": 1822
+     }
+    ]
+   },
    "source": "Parkinson, Cracking Codes, 1999",
    "source_kind": "book",
    "reference": "Parkinson, Cracking Codes: The Rosetta Stone and Decipherment, British Museum Press, 1999",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "language-lost-scripts-2",
@@ -69489,8 +72491,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Which ordinary English word did Jonathan Swift attack in 1710 as a vulgar new clipping?",
-   "answer": "Mob. Short for mobile vulgus, the fickle crowd, it was only a few decades old when Swift, writing in The Tatler, listed it with rep, pozz and phizz among the abbreviations spoiling the language. Mob became plain English; pozz, for positive, vanished. The complaint is remembered mostly because one of its targets survived.",
+   "question": "In 1710 Jonathan Swift named the new words he said were spoiling English. Which of them are still alive?",
+   "answer": "Most of the ones he hated most. Mob, rep, banter and bamboozle were short, new and handy, so speakers kept reaching for them; pozz, hipps and country put had rivals that did the job better. Swift was right that the words were new. He was wrong that newness was the problem.",
    "move": "Today's sloppy shortcut is often tomorrow's dictionary word.",
    "ask": "What sloppy shortcut today could be tomorrow's normal?",
    "keywords": [
@@ -69509,6 +72511,56 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Dead",
+    "right": "Alive",
+    "tag": "The Tatler · No. 230",
+    "items": [
+     {
+      "text": "Mobb",
+      "note": "Short for mobile vulgus, the fickle crowd.",
+      "pile": "right",
+      "verdict": "Mob is the plain word now. Nobody hears the Latin in it."
+     },
+     {
+      "text": "Pozz",
+      "note": "Short for positive, as in sure.",
+      "pile": "left",
+      "verdict": "Nobody has been pozz of anything for three hundred years."
+     },
+     {
+      "text": "Banter",
+      "note": "A new word for teasing talk.",
+      "pile": "right",
+      "verdict": "In every dictionary, and in every pub."
+     },
+     {
+      "text": "Hipps",
+      "note": "Short for hypochondria: low spirits.",
+      "pile": "left",
+      "verdict": "Gone. Nobody gets the hipps any more."
+     },
+     {
+      "text": "Bamboozle",
+      "note": "A new word for tricking someone.",
+      "pile": "right",
+      "verdict": "You can still be bamboozled, and you still are."
+     },
+     {
+      "text": "Country put",
+      "note": "A country bumpkin.",
+      "pile": "left",
+      "verdict": "Bumpkin won. Country put did not make it out of the 1700s."
+     },
+     {
+      "text": "Rep",
+      "note": "Short for reputation.",
+      "pile": "right",
+      "verdict": "A bad rep is still a bad rep."
+     }
+    ]
+   },
    "source": "Swift, The Tatler, No. 230, 1710",
    "source_kind": "primary_document",
    "reference": "Swift, The Tatler No. 230 (1710), in Davis (ed.), The Prose Works of Jonathan Swift, vol. 2, Blackwell, 1939",
@@ -70299,8 +73351,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How can the same survey find majorities agreeing with a statement and with its exact opposite?",
-   "answer": "People lean towards agreeing with whatever they are asked. In an American survey reported in 1981, about 60% agreed that individuals are more to blame than social conditions for crime; asked the reversed statement, about 57% agreed with that too. Pollsters call it acquiescence. Making people choose between the two sides removes most of it.",
+   "question": "A pollster reads you two statements about crime, one after the other. Do you agree with each?",
+   "answer": "About 60% agreed with the first and, asked the reverse, about 57% agreed again, so many people agreed with both. Pollsters call it acquiescence: agreeing is easier and politer than arguing with the asker. Asking people which of the two is more to blame removes most of it.",
    "move": "Offer both sides of a question, or the asker's side wins by default.",
    "ask": "When I ask a yes-or-no question, am I offering a real choice or inviting a yes?",
    "keywords": [
@@ -70319,10 +73371,47 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "US survey, Schuman & Presser 1981",
+    "questions": [
+     {
+      "prompt": "Individuals are more to blame than social conditions for crime.",
+      "tag": "Blame put on individuals",
+      "options": [
+       {
+        "label": "Agree",
+        "share": 60
+       },
+       {
+        "label": "Disagree",
+        "share": 40
+       }
+      ]
+     },
+     {
+      "prompt": "Social conditions are more to blame than individuals for crime.",
+      "tag": "Blame put on society",
+      "options": [
+       {
+        "label": "Disagree",
+        "share": 43
+       },
+       {
+        "label": "Agree",
+        "share": 57
+       }
+      ]
+     }
+    ],
+    "why": "Agreeing is the polite, easy answer, so whichever side a statement takes gets a head start.",
+    "same": "You kept your view. The country didn't: majorities agreed with both opposite statements.",
+    "switched": "You gave the same answer to opposite statements. Many did: the wording won, not the view."
+   },
    "source": "Schuman & Presser, Questions and Answers in Attitude Surveys, 1981",
    "source_kind": "book",
    "reference": "Schuman & Presser, Questions and Answers in Attitude Surveys, Academic Press, 1981",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "language-regional-slang-1",
@@ -70711,7 +73800,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "easy",
    "principle": "none",
    "question": "Why does English write knight with a k and a gh that nobody pronounces?",
-   "answer": "Because both were once pronounced. In Chaucer's day knight began with a k sound and had a throaty gh, as in Scottish loch. Printing arrived in England in 1476 and helped fix spellings just as the sounds were shifting. The letters stayed; speech moved on. Much of English spelling records late medieval pronunciation.",
+   "answer": "Because English spelling records sounds that later fell silent. In Chaucer's day knight began with a k and had a throaty middle, as Scottish loch and German Knecht still do. Printers helped fix spellings just as pronunciation shifted. Some silent letters really were added for show, like the b in debt; knight's were not.",
    "move": "A rule written down while things are moving soon describes the past.",
    "ask": "Which of my rules was written for a version of my life that no longer exists?",
    "keywords": [
@@ -70731,6 +73820,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "Knight: six letters, and three of them are silent."
+    },
+    "levels": [
+     {
+      "text": "Both were once spoken: a k, and a throaty gh as in loch."
+     },
+     {
+      "text": "Print spread fixed spellings while those sounds were changing.",
+      "figure": "1476",
+      "unit": "first press in England"
+     },
+     {
+      "text": "Then speech kept moving, and the printed spellings stayed put."
+     },
+     {
+      "text": "Our spelling is a record of how English sounded long ago."
+     }
+    ],
+    "guess": {
+     "options": [
+      "It shows French origin",
+      "Scribes added letters",
+      "We spell old speech"
+     ],
+     "answer": 2
+    }
+   },
    "source": "Crystal, Spell It Out, 2012",
    "source_kind": "book",
    "reference": "Crystal, Spell It Out: The Singular Story of English Spelling, Profile Books, 2012",
@@ -70911,8 +74031,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Is misleading someone with only true statements judged kinder than telling them a lie?",
-   "answer": "By the person doing it, yes; by the person misled, barely. In 2017 experiments, negotiators who steered others with true but misleading statements rated their own conduct as more ethical than lying. Once their targets found out, they judged it nearly as harshly as a lie and trusted the speaker less. Psychologists call it paltering.",
+   "question": "A flat's listing, written the way estate agents often write. Every word is true. What will a viewer find?",
+   "answer": "A small flat needing work, by a noisy road, and nobody lied. Misleading with true statements is called paltering. In 2017 experiments, people who paltered rated themselves more ethical than liars; the people they misled, once they found out, judged it nearly as harshly as a lie and trusted them less.",
    "move": "Judge a statement by the belief it leaves, not by its facts.",
    "ask": "When did I last say only true things to leave someone believing something false?",
    "keywords": [
@@ -70931,10 +74051,42 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "For sale",
+    "ref": "Typical text",
+    "title": "Charming flat",
+    "body": "Cosy one-bedroom flat with huge potential, in a vibrant area moments from excellent transport links. Early viewing highly recommended.",
+    "phrases": [
+     {
+      "text": "Cosy",
+      "plain": "Small",
+      "why": "True of any small room. It turns a measurement into a feeling."
+     },
+     {
+      "text": "with huge potential",
+      "plain": "that needs a lot of work",
+      "why": "Potential is what it could become, and someone has to pay for that.",
+      "catch": true
+     },
+     {
+      "text": "vibrant area",
+      "plain": "lively street, at 2 a.m. too,",
+      "why": "Vibrant is true of busy places. It leaves out the hours you'll be trying to sleep."
+     },
+     {
+      "text": "moments from excellent transport links",
+      "plain": "close to a railway or a busy road",
+      "why": "Close is true. So is the noise, which no listing measures."
+     }
+    ],
+    "ask": "Every word is true. Which phrase will cost the buyer most?",
+    "watch": "When every word is true, ask what picture the words were chosen to leave."
+   },
    "source": "Rogers et al., Journal of Personality and Social Psychology, 2017",
    "source_kind": "paper",
    "reference": "Rogers, Zeckhauser, Gino, Norton & Schweitzer, Artful paltering: the risks and rewards of using truthful statements to mislead others, Journal of Personality and Social Psychology 112(3), 2017",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "language-who-invents-words-1",
@@ -71167,15 +74319,17 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When a 14th-century English writer called someone nice, what was he accusing them of?",
-   "answer": "Being foolish. Nice came through French from Latin nescius, not knowing, and in Middle English meant silly or ignorant. It then drifted to fussy, then to precise, which survives in a nice distinction, and only in the 1700s to pleasant. Each step was small; added up, they turned an insult into a compliment.",
+   "question": "Five everyday English words used to mean something very different. What did each mean when it first arrived?",
+   "answer": "Girl is the one almost nobody gets: in Middle English it meant a child of either sex, and a boy could be a knave girl. Each word drifted in small, reasonable steps. Nice went from ignorant to fussy to precise to pleasant, until the sum was an opposite.",
    "move": "Small shifts, each one harmless, can add up to the opposite.",
    "ask": "What in my life has drifted, one small step at a time, into the opposite of how it started?",
    "keywords": [
     "nice",
-    "semantic change",
-    "middle english",
-    "latin nescius"
+    "silly",
+    "girl",
+    "awful",
+    "meat",
+    "semantic change"
    ],
    "era": "medieval",
    "region": "europe",
@@ -71187,10 +74341,43 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Online Etymology Dictionary, nice",
+   "scene": {
+    "type": "match",
+    "leftTitle": "Word",
+    "rightTitle": "Once meant",
+    "pairs": [
+     {
+      "left": "Nice",
+      "right": "Foolish, ignorant",
+      "note": "From Latin nescius, not knowing. Pleasant only from the 1700s."
+     },
+     {
+      "left": "Silly",
+      "right": "Blessed, happy",
+      "note": "Old English saelig, blessed; then innocent, pitiable, and foolish."
+     },
+     {
+      "left": "Girl",
+      "right": "A child of either sex",
+      "note": "In Middle English a boy could be called a knave girl.",
+      "missed": true
+     },
+     {
+      "left": "Awful",
+      "right": "Worthy of awe",
+      "note": "Full of awe, as in a hymn. Very bad only from around 1800."
+     },
+     {
+      "left": "Meat",
+      "right": "Any food at all",
+      "note": "Hence sweetmeats, and meat and drink for food and drink."
+     }
+    ]
+   },
+   "source": "Online Etymology Dictionary; Oxford English Dictionary",
    "source_kind": "reference_work",
    "reference": "https://www.etymonline.com/word/nice",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "language-words-that-changed-meaning-2",
@@ -71611,8 +74798,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What happened to people who let a coin toss decide a real decision, such as quitting a job?",
-   "answer": "Those the coin told to make the change were happier six months later than those told to stay. Levitt asked more than 20,000 volunteers on a website to toss a coin over a real dilemma. His reading: when a choice is close, people lean towards the status quo more than they should.",
+   "question": "People let a coin decide whether to make a big life change. Who was happier?",
+   "answer": "The coin made it a fair trial: chance, not courage, decided who changed, so the gap in happiness came from the change itself. The effect was largest for quitting a job or ending a relationship. Close calls, it seems, are rarely close: the fear of losing what you have tilts them towards staying.",
    "move": "When two options feel equal, suspect that fear of change is tipping them.",
    "ask": "On the decision I keep calling a coin flip, which side am I hoping for, and is fear of change the weight?",
    "keywords": [
@@ -71632,10 +74819,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "A website, 2013",
+      "glyph": "phone",
+      "line": "People stuck on a big decision are invited to toss a coin."
+     },
+     {
+      "fact": "Heads: make the change",
+      "glyph": "coin",
+      "line": "Quit the job, end the relationship, move. Tails: stay put."
+     },
+     {
+      "fact": "Over 20,000 tosses",
+      "glyph": "check",
+      "line": "Many do what the coin says, on choices they had agonised over."
+     }
+    ],
+    "ask": "Six months on, who is happier?",
+    "options": [
+     {
+      "label": "Those told to stay"
+     },
+     {
+      "label": "No difference"
+     },
+     {
+      "label": "Those told to change"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "Levitt, 2021",
+     "glyph": "rise",
+     "line": "Those the coin pushed into a change were happier."
+    },
+    "why": "On a close call, people weigh what they would lose by changing too heavily, so they stay too long."
+   },
    "source": "Levitt, Review of Economic Studies, 2021",
    "source_kind": "paper",
    "reference": "Levitt, Heads or Tails: The Impact of a Coin Toss on Major Life Decisions and Subsequent Happiness, Review of Economic Studies, 2021",
-   "written": "2026-09-29"
+   "written": "2026-10-06"
   },
   {
    "id": "life-big-choices-2",
@@ -72430,8 +75656,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Would people rather earn $50,000 while others earn $25,000, or $100,000 while others earn $200,000?",
-   "answer": "About half chose the first. Solnick and Hemenway put such choices to students and staff at a school of public health, prices held equal; many would give up half their real income to stay ahead. The pull of rank was much weaker for holidays: most preferred more weeks off even if others had more.",
+   "question": "Prices stay as they are today. Would you rather earn $50k while others earn $25k, or $100k while others earn $200k?",
+   "answer": "Half chose to be poorer but ahead. Solnick and Hemenway found the pull of rank strong for income and weak for holidays: most chose more weeks off even when others got more. People rank themselves on what others can see. A salary shows; an extra week at home does not.",
    "move": "Notice which of your wants are about having, and which about outranking.",
    "ask": "Which of my goals would I drop if nobody around me could see whether I reached it?",
    "keywords": [
@@ -72450,10 +75676,31 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "Public-health school, Solnick 1998",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "$50k, and ahead",
+        "share": 50,
+        "mirror": "So did about half. You'd give up half your money to stay ahead of the people around you."
+       },
+       {
+        "label": "$100k, but behind",
+        "share": 50,
+        "mirror": "So did about half. You'd take twice the money at the bottom; you count what it buys."
+       }
+      ]
+     }
+    ],
+    "why": "We judge pay against the people around us, so a raise everyone gets barely feels like one."
+   },
    "source": "Solnick and Hemenway, JEBO, 1998",
    "source_kind": "paper",
    "reference": "Solnick and Hemenway, Is more always better? A survey on positional concerns, Journal of Economic Behavior and Organization, 1998",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "life-comparison-3",
@@ -73187,8 +76434,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Scientists who narrowly missed a first major NIH grant: how did their next ten years compare with narrow winners?",
-   "answer": "Those who stayed in science did better. Wang, Jones and Wang compared applicants who narrowly missed an NIH R01 grant with narrow winners; over ten years the near-misses who kept going produced more highly cited work. But more of them dropped out, so part of the gain is a filter on survivors.",
+   "question": "Two young scientists just miss and just win a grant. Who does better?",
+   "answer": "Partly a filter, partly a push. The near-misses were more likely to leave science, so the weakest may have dropped out before being counted. The authors tested that: even assuming the quitters were the weakest, the near-misses who stayed still did better. A setback that does not end a career can sharpen it.",
    "move": "Ask what happened to those who quit before praising those who continued.",
    "ask": "Whose success story do I admire, and what happened to the equally talented people who quit?",
    "keywords": [
@@ -73208,10 +76455,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "US National Institutes of Health",
+      "glyph": "book",
+      "line": "Young scientists apply for their first big research grant."
+     },
+     {
+      "fact": "A cut-off score",
+      "glyph": "check",
+      "line": "Some land just above the line, some just below it."
+     },
+     {
+      "fact": "Almost the same scores",
+      "glyph": "cross",
+      "line": "The near-misses get no money, and lose a year or more."
+     }
+    ],
+    "ask": "Ten years on, whose work is cited more?",
+    "options": [
+     {
+      "label": "The narrow winners"
+     },
+     {
+      "label": "No real difference"
+     },
+     {
+      "label": "The narrow losers"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "Wang, Jones and Wang, 2019",
+     "glyph": "rise",
+     "line": "The near-misses who stayed wrote more hit papers. More quit."
+    },
+    "why": "A near miss pushed some to work harder, and sent the least determined away."
+   },
    "source": "Wang, Jones and Wang, Nature Communications, 2019",
    "source_kind": "paper",
    "reference": "Wang, Jones and Wang, Early-career setback and future career impact, Nature Communications, 2019",
-   "written": "2026-09-29"
+   "written": "2026-10-06"
   },
   {
    "id": "life-failure-2",
@@ -73635,8 +76921,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "About how many hours together does it take for an acquaintance to become a friend?",
-   "answer": "About 50 hours to become a casual friend, about 90 to become a friend, and over 200 for a close friend. Hall surveyed adults who had recently moved and tracked students. Time together predicted closeness, and the time counted most when spent joking, catching up and talking about things that mattered.",
+   "question": "You meet someone new and get on well. On average, how many hours together does it take before they become a close friend?",
+   "answer": "Over 200 hours, Jeffrey Hall found, following adults who had recently moved and students new to university. About 50 hours made a casual friend and about 90 a friend. Time alone was not enough: the hours counted most when spent joking, catching up and talking about things that mattered. That is fifty long evenings.",
    "move": "Count friendship in hours spent, and spend them on purpose.",
    "ask": "How many hours have I actually spent with the acquaintance I say I want as a friend?",
    "keywords": [
@@ -73656,10 +76942,40 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "hours together, for a close friend",
+    "answer": 200,
+    "each": 1,
+    "eachLabel": "1 dot = 1 hour together",
+    "compare": "50 for a casual friend, 90 for a friend",
+    "options": [
+     {
+      "label": "About 5",
+      "value": 5,
+      "note": "Far too few. A few hours makes an acquaintance; close takes over 200."
+     },
+     {
+      "label": "About 20",
+      "value": 20,
+      "note": "One zero short. About 50 hours makes a casual friend; close, over 200."
+     },
+     {
+      "label": "About 200",
+      "value": 200,
+      "note": "Right: over 200 hours. About 50 for a casual friend, 90 for a friend."
+     },
+     {
+      "label": "About 2,000",
+      "value": 2000,
+      "note": "One zero too many. Over 200 hours did it, if the time was spent well."
+     }
+    ]
+   },
    "source": "Hall, Journal of Social and Personal Relationships, 2019",
    "source_kind": "paper",
    "reference": "Hall, How many hours does it take to make a friend? Journal of Social and Personal Relationships, 2019",
-   "written": "2026-09-29"
+   "written": "2026-10-06"
   },
   {
    "id": "life-friendship-3",
@@ -75208,8 +78524,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do so many people feel groggy on Monday morning even after a restful weekend?",
-   "answer": "Because the weekend moved their body clock. Sleeping and waking later on free days shifts the clock later, and Monday's alarm then rings in its biological night. Roenneberg's team called the gap between free-day and workday sleep social jetlag, and found most people carry at least an hour of it.",
+   "question": "Why do so many people feel groggy on Monday morning, even after a restful weekend?",
+   "answer": "Because the weekend moved your clock. Roenneberg's team called the gap between free-day and workday sleep timing social jetlag, and found most people carry at least an hour of it. Lie-ins are not the problem; their timing is. Rising near the usual hour on Sunday and getting morning light softens Monday.",
    "move": "Keep the timing of a rhythm steady; swings cost more than short nights.",
    "ask": "How different are my weekend and weekday sleep times, and is Monday morning paying for the gap?",
    "keywords": [
@@ -75229,6 +78545,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "Monday morning feels awful, even after a lazy weekend."
+    },
+    "levels": [
+     {
+      "text": "At the weekend you slept and woke later than on weekdays."
+     },
+     {
+      "text": "Late waking and late light shift the body clock later."
+     },
+     {
+      "text": "So Monday's alarm rings while your clock still says night."
+     },
+     {
+      "text": "A weekend is a flight a time zone west, then back.",
+      "figure": "1 h+",
+      "unit": "weekly jet lag, most of us"
+     }
+    ],
+    "guess": {
+     "options": [
+      "You slept too much",
+      "Dread of the week ahead",
+      "Your body clock moved"
+     ],
+     "answer": 2
+    }
+   },
    "source": "Roenneberg and colleagues, Current Biology, 2012",
    "source_kind": "paper",
    "reference": "Roenneberg, Allebrandt, Merrow and Vetter, Social Jetlag and Obesity, Current Biology, 2012",
@@ -76404,8 +79751,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Two travellers miss the same flight, one by 30 minutes, one by five. Why does the second hurt more?",
-   "answer": "Because it is easier to imagine making it. Kahneman and Tversky asked people which traveller would be more upset, and 96% chose the one who missed by five minutes. The loss is identical; what differs is how easily the mind builds the version where it went right.",
+   "question": "Two travellers miss the same flight, one by 30 minutes, one by five. Which of them is more upset?",
+   "answer": "The loss is identical; what differs is how easily the mind builds the version where it went right. Kahneman and Tversky called it the simulation heuristic. It is also why silver medallists often look less happy than bronze: one nearly won gold, the other nearly went home with nothing.",
    "move": "Measure a loss by what was lost, not by how near it came.",
    "ask": "Which near miss am I still replaying, and would it hurt less if I judged it by what I lost?",
    "keywords": [
@@ -76425,10 +79772,31 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "Students, Kahneman & Tversky 1982",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "Missed by 5 min",
+        "share": 96,
+        "mirror": "Like 96% of those asked. A near miss is easy to undo in the mind, so it hurts more."
+       },
+       {
+        "label": "Missed by 30 min",
+        "share": 4,
+        "mirror": "Like 4%. You judge by the loss itself, and it is the same for both: one missed flight."
+       }
+      ]
+     }
+    ],
+    "why": "The closer we came, the easier it is to picture making it, and the pictured win is what hurts."
+   },
    "source": "Kahneman and Tversky, The Simulation Heuristic, 1982",
    "source_kind": "book",
    "reference": "Kahneman and Tversky, The simulation heuristic, in Kahneman, Slovic and Tversky (eds), Judgment under Uncertainty, Cambridge University Press, 1982",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "life-rest-1",
@@ -76707,20 +80075,20 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How large must the possible win in an even coin toss be before most people accept a possible loss?",
-   "answer": "About twice as large. In Tversky and Kahneman's median estimate, losses weigh about 2.25 times as much as equal gains, so someone risking 100 on a coin toss typically wants a possible win near 225. Later estimates vary by person and setting.",
-   "move": "Check whether fear of losing is pricing a bet, not its odds.",
-   "ask": "When I decline a fair bet, is it the odds I am pricing or my fear of losing?",
+   "question": "Two choices, each between a sure thing and a gamble with the same odds. Which would you take each time?",
+   "answer": "Most people play safe with gains and gamble with losses. Kahneman and Tversky called it the reflection effect: a loss hurts about twice as much as an equal gain pleases, so a sure loss feels unbearable. It is why investors sell winning shares early and cling to losers, hoping to get back to even.",
+   "move": "When losing, ask whether you would take this gamble starting fresh.",
+   "ask": "When I am behind, am I gambling just to get back to even?",
    "keywords": [
+    "reflection effect",
     "loss aversion",
     "prospect theory",
-    "kahneman",
-    "coin toss",
-    "gambles"
+    "gambles",
+    "risk"
    ],
    "era": "twentieth",
    "region": "world",
-   "hook": "number",
+   "hook": "paradox",
    "mood": "practical",
    "numeracy": 2,
    "abstraction": "mixed",
@@ -76728,10 +80096,47 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Tversky and Kahneman, J. Risk and Uncertainty, 1992",
+   "scene": {
+    "type": "poll",
+    "who": "95 people, Kahneman & Tversky 1979",
+    "questions": [
+     {
+      "prompt": "Which would you rather have?",
+      "tag": "A win",
+      "options": [
+       {
+        "label": "3,000 for sure",
+        "share": 80
+       },
+       {
+        "label": "4,000 at 80% odds",
+        "share": 20
+       }
+      ]
+     },
+     {
+      "prompt": "And which would you rather face?",
+      "tag": "A loss",
+      "options": [
+       {
+        "label": "Lose 3,000 for sure",
+        "share": 8
+       },
+       {
+        "label": "Lose 4,000 at 80%",
+        "share": 92
+       }
+      ]
+     }
+    ],
+    "why": "A sure gain is worth locking in. A sure loss hurts so much that any gamble to dodge it looks good.",
+    "same": "You held steady. The crowd didn't: the sure thing fell from 80% to 8%.",
+    "switched": "You switched, like most: careful with a win, a gambler with a loss. The odds never moved."
+   },
+   "source": "Kahneman & Tversky, Econometrica, 1979",
    "source_kind": "paper",
-   "reference": "Tversky and Kahneman, Advances in Prospect Theory: Cumulative Representation of Uncertainty, Journal of Risk and Uncertainty, 1992",
-   "written": "2026-09-29"
+   "reference": "Kahneman & Tversky, Prospect Theory: An Analysis of Decision under Risk, Econometrica 47 (1979): 263-291",
+   "written": "2026-10-06"
   },
   {
    "id": "life-risk-taking-3",
@@ -76898,8 +80303,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What happened to retirement-plan sign-ups at one large firm when joining became the default rather than a choice?",
-   "answer": "Participation among new hires rose from 37% to 86%. Madrian and Shea studied a US company that switched to automatic enrolment. But a large share of joiners stayed at the default contribution rate and default fund, so participation rose much faster than the amount saved.",
+   "question": "What happens when a firm makes joining its pension plan automatic?",
+   "answer": "Nobody's wishes changed; the effort did. Joining had meant a form and a decision, so many meant to and never got round to it. The default chose for them too: most stayed at the automatic 3% rate in a low-return fund. A default sets the amount as well as the yes.",
    "move": "Set the default first, since most choices never move from it.",
    "ask": "Which default in my money or time am I living with, and who set it?",
    "keywords": [
@@ -76919,10 +80324,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "A large US firm, 1990s",
+      "glyph": "family",
+      "line": "New staff may join the pension plan. They only need to sign up."
+     },
+     {
+      "fact": "Opt in",
+      "glyph": "check",
+      "line": "Only about 37% of new hires join."
+     },
+     {
+      "fact": "April 1998",
+      "glyph": "cross",
+      "line": "The firm flips it: everyone is in unless they ask to leave."
+     }
+    ],
+    "ask": "What share of new hires are in the plan now?",
+    "options": [
+     {
+      "label": "About 40%, as before"
+     },
+     {
+      "label": "About 60%"
+     },
+     {
+      "label": "About 86%"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "Madrian and Shea, 2001",
+     "glyph": "rise",
+     "line": "86% stay in, and most keep the 3% savings rate set for them."
+    },
+    "why": "Every form has an answer for people who do nothing, and most people do nothing."
+   },
    "source": "Madrian and Shea, Quarterly Journal of Economics, 2001",
    "source_kind": "paper",
    "reference": "Madrian and Shea, The Power of Suggestion: Inertia in 401(k) Participation and Savings Behavior, Quarterly Journal of Economics, 2001",
-   "written": "2026-09-29"
+   "written": "2026-10-06"
   },
   {
    "id": "life-saving-2",
@@ -77246,16 +80690,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When colonial Hanoi paid a bounty for each rat tail in 1902, why did tailless rats start appearing in the streets?",
-   "answer": "Because catchers cut off the tails and let the rats go. The city paid per tail, not per dead rat, so a living rat that could keep breeding was worth more than a dead one; officials also suspected rats were being farmed. The bounty was dropped, and plague reached Hanoi the next year.",
+   "question": "Four rewards and penalties meant to change behaviour, from rat bounties to nursery fines. What did people actually do?",
+   "answer": "The nursery fine is the one people miss, because a penalty should cut lateness. In ten Haifa day-care centres a small fine roughly doubled late pick-ups: parents stopped feeling they owed the staff a favour and started paying for extra time. When the fine was lifted, the lateness stayed.",
    "move": "Before rewarding a measure, ask how someone could produce it without the goal.",
    "ask": "What am I rewarding, in myself or others, that can be produced without the result I want?",
    "keywords": [
-    "rat bounty",
-    "hanoi",
     "perverse incentives",
-    "plague",
-    "french colonial rule"
+    "hanoi rat massacre",
+    "day-care fine",
+    "wells fargo",
+    "mexico city"
    ],
    "era": "twentieth",
    "region": "asia",
@@ -77267,10 +80711,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Vann, French Colonial History, 2003",
+   "scene": {
+    "type": "match",
+    "leftTitle": "The rule",
+    "rightTitle": "What people did",
+    "pairs": [
+     {
+      "left": "Bounty per rat tail",
+      "right": "Cut off the tails, let the rats breed",
+      "note": "Hanoi, 1902. Officials also suspected rats were being farmed."
+     },
+     {
+      "left": "Fine for late pick-up",
+      "right": "Came late to collect children more often",
+      "note": "The fine turned guilt into a price, and the price was cheap.",
+      "missed": true
+     },
+     {
+      "left": "Sales target per head",
+      "right": "Opened accounts nobody asked for",
+      "note": "Wells Fargo staff opened millions of them to hit their numbers."
+     },
+     {
+      "left": "Car-free weekday",
+      "right": "Bought a second, older car",
+      "note": "Mexico City, 1989. Air quality did not measurably improve."
+     }
+    ]
+   },
+   "source": "Vann, 2003; Gneezy & Rustichini, 2000",
    "source_kind": "paper",
    "reference": "Vann, Of Rats, Rice, and Race: The Great Hanoi Rat Massacre, an Episode in French Colonial History, French Colonial History, 2003",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "life-second-order-effects-2",
@@ -79223,16 +82695,17 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did pink disease in babies, common in Britain for decades, nearly vanish after 1954?",
-   "answer": "Because mercury came out of teething powders. Calomel, a mercury salt, was sold to soothe teething. Only a small minority of exposed babies reacted, with pink, peeling hands and feet and great misery, so the link stayed hidden for decades. Once the powders were withdrawn in 1954, the disease all but disappeared.",
+   "question": "Four medicines once sold over the counter for everyday complaints. What was each one meant to treat?",
+   "answer": "The teething powder is the one people miss, because only a few babies reacted. Calomel, a mercury salt, gave a small minority pink, peeling hands and feet and great misery, so the link stayed hidden for decades. Once the powders were withdrawn in 1954, pink disease all but disappeared.",
    "move": "A harm that strikes only a few users can hide inside a popular product.",
    "ask": "Is there something everyone around me uses happily that might quietly harm a few, including me?",
    "keywords": [
     "pink disease",
-    "acrodynia",
-    "teething powders",
+    "calomel",
     "mercury",
-    "calomel"
+    "heroin",
+    "thalidomide",
+    "radithor"
    ],
    "era": "twentieth",
    "region": "europe",
@@ -79244,10 +82717,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "The remedy",
+    "rightTitle": "Sold for",
+    "pairs": [
+     {
+      "left": "Calomel powder",
+      "right": "A baby's teething",
+      "note": "Mercury. Withdrawn in Britain in 1954, and pink disease vanished.",
+      "missed": true
+     },
+     {
+      "left": "Heroin",
+      "right": "A cough",
+      "note": "Bayer sold it from 1898 as a safer cough medicine than morphine."
+     },
+     {
+      "left": "Thalidomide",
+      "right": "Morning sickness",
+      "note": "Late 1950s. Thousands of babies were born with shortened limbs."
+     },
+     {
+      "left": "Radium water",
+      "right": "Energy and vigour",
+      "note": "Radithor. A US industrialist who drank it daily died of it in 1932."
+     }
+    ]
+   },
    "source": "Dally, Social History of Medicine, 1997",
    "source_kind": "paper",
    "reference": "Dally, The rise and fall of pink disease, Social History of Medicine, 1997",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "medicine-bad-cures-2",
@@ -79297,8 +82798,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "In the 1980s, doctors widely gave drugs that calmed irregular heartbeats after heart attacks. What did a trial find?",
-   "answer": "The drugs killed. In the Cardiac Arrhythmia Suppression Trial, patients on encainide or flecainide died more than twice as often as those on placebo, and the trial was stopped early in 1989. The drugs did tidy the heart tracing. Doctors had judged them by the tracing, not by who stayed alive.",
+   "question": "In the 1980s, drugs that calmed irregular heartbeats were widely given after heart attacks. What did a trial against dummy pills find?",
+   "answer": "That they killed. In CAST, 8.3% of patients on encainide or flecainide died over about ten months, against 3.5% on placebo, and those drugs were stopped early in 1989. The drugs did tidy the heart tracing. Doctors had judged them by the tracing; it took a big trial to count the deaths.",
    "move": "Improving a measurement is not the same as improving what it was meant to measure.",
    "ask": "Which number am I working to improve that may not be the thing I really care about?",
    "keywords": [
@@ -79319,8 +82820,35 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "source": "Echt et al., NEJM, 1991",
    "source_kind": "paper",
-   "reference": "Echt et al., Mortality and morbidity in patients receiving encainide, flecainide, or placebo: the Cardiac Arrhythmia Suppression Trial, New England Journal of Medicine, 1991",
-   "written": "2026-10-03"
+   "reference": "Echt et al., Mortality and morbidity in patients receiving encainide, flecainide, or placebo: the Cardiac Arrhythmia Suppression Trial, New England Journal of Medicine 324:781–788, 1991",
+   "written": "2026-10-03",
+   "scene": {
+    "type": "sample",
+    "dots": "Simulated patients",
+    "hit": "Died",
+    "groups": [
+     {
+      "label": "Placebo",
+      "rate": 0.035
+     },
+     {
+      "label": "Drug",
+      "rate": 0.083
+     }
+    ],
+    "steps": [
+     40,
+     200,
+     1498
+    ],
+    "seed": 63,
+    "button": "Add patients",
+    "notes": [
+     "20 each: 10% died on placebo, none on the drug. It looks protective.",
+     "100 each: 8% against 6%. Still nothing alarming.",
+     "1,498, as in CAST: 4% against 7.5%. The real trial: 3.5% against 8.3%."
+    ]
+   }
   },
   {
    "id": "medicine-barbers-1",
@@ -79333,8 +82861,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How long were London's surgeons legally in the same company as its barbers?",
-   "answer": "Just over two centuries. An Act of 1540 merged the Barbers' Company and the Guild of Surgeons, barring each trade from the other's work. The surgeons broke away only in 1745 as the Company of Surgeons, which became the Royal College of Surgeons in 1800. The barbers kept the hall.",
+   "question": "Surgeons and barbers once shared a trade. When do you think London's surgeons finally broke away?",
+   "answer": "An Act of 1540 joined the Barbers' Company and the Guild of Surgeons, and barred each trade from the other's work: barbers kept shaving and pulling teeth, surgeons the cutting. As new London hospitals made surgeons richer and prouder, they pressed Parliament for a split, granted in 1745. The barbers kept the hall.",
    "move": "Old partnerships often outlast the reasons they were formed.",
    "keywords": [
     "barber-surgeons",
@@ -79352,11 +82880,40 @@ const String kEmbeddedBank = r'''
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
-   "source": "Cope, Royal College of Surgeons history, 1959",
+   "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1500,
+    "to": 1850,
+    "events": [
+     {
+      "label": "Barbers and surgeons merge",
+      "year": 1540
+     },
+     {
+      "label": "Harvey: blood circulates",
+      "year": 1628
+     },
+     {
+      "label": "Newton dies",
+      "year": 1727
+     },
+     {
+      "label": "Surgeons leave barbers",
+      "year": 1745,
+      "note": "Surgeons shared a company with barbers until 1745, 18 years after Newton died."
+     },
+     {
+      "label": "Royal College of Surgeons",
+      "year": 1800
+     }
+    ]
+   },
+   "source": "Cope, 1959; Royal College of Surgeons",
    "source_kind": "book",
    "reference": "Cope, The Royal College of Surgeons of England: A History, Anthony Blond, 1959",
-   "written": "2026-09-26",
+   "written": "2026-10-06",
    "disabled": true
   },
   {
@@ -80622,8 +84179,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did about 400,000 people in Milwaukee fall ill in 1993 from water that had been chlorinated?",
-   "answer": "The culprit, the parasite Cryptosporidium, shrugs off chlorine inside a tough shell. It has to be removed by filtration, and one of the city's treatment plants was letting cloudy water through. An estimated 403,000 people fell ill, the largest recorded waterborne outbreak in US history. One barrier had been doing the job of two.",
+   "question": "In spring 1993 Milwaukee's tap water was chlorinated as usual. How many people fell ill from drinking it?",
+   "answer": "An estimated 403,000. The culprit, the parasite Cryptosporidium, shrugs off chlorine inside a tough shell, so only filtration removes it, and one of the city's two treatment plants was letting cloudy water through. It was the largest waterborne outbreak on record in the United States. One barrier had been doing the job of two.",
    "move": "A safeguard that stops most threats can be blind to the one that matters.",
    "ask": "Which single safeguard in my life am I trusting to stop every kind of problem?",
    "keywords": [
@@ -80635,7 +84192,7 @@ const String kEmbeddedBank = r'''
    ],
    "era": "twentieth",
    "region": "americas",
-   "hook": "story",
+   "hook": "number",
    "mood": "sober",
    "numeracy": 2,
    "abstraction": "concrete",
@@ -80643,10 +84200,40 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "people ill from tap water",
+    "answer": 403000,
+    "each": 200,
+    "eachLabel": "1 dot = 200 people",
+    "compare": "The largest US waterborne outbreak",
+    "options": [
+     {
+      "label": "About 4,000",
+      "value": 4000,
+      "note": "Two zeros short. One plant's cloudy water reached a whole metropolitan area."
+     },
+     {
+      "label": "About 40,000",
+      "value": 40000,
+      "note": "One zero short. Hospitals saw a fraction; surveys found the rest at home."
+     },
+     {
+      "label": "About 400,000",
+      "value": 400000,
+      "note": "Right: an estimated 403,000, the largest waterborne outbreak in US records."
+     },
+     {
+      "label": "4 million",
+      "value": 4000000,
+      "note": "One zero too many, but 403,000 still made it the largest in US records."
+     }
+    ]
+   },
    "source": "Mac Kenzie et al., NEJM, 1994",
    "source_kind": "paper",
    "reference": "Mac Kenzie et al., A massive outbreak in Milwaukee of cryptosporidium infection transmitted through the public water supply, New England Journal of Medicine, 1994",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "medicine-clean-water-3",
@@ -81195,8 +84782,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How many litres of blood plasma do the kidneys filter each day, with no detox product involved?",
-   "answer": "About 180 litres: the body's plasma passes through them roughly 60 times a day. They take back almost all the water and useful salts and send waste out in about 1.5 litres of urine, while the liver chemically repackages what will not dissolve. The cleaning runs every minute, juice cleanse or not.",
+   "question": "Detox products promise to clean out the blood. How many litres of blood plasma do your kidneys already filter every day?",
+   "answer": "About 180 litres. Some two million tiny filters strain the plasma, the kidneys take back almost all the water, salts and sugar, and about 1.5 litres leave as urine with the waste. The liver chemically repackages what will not dissolve. The cleaning runs every minute, juice cleanse or not.",
    "move": "Before buying help, check what the system already does for free.",
    "ask": "What am I paying someone to do that my own body, or my own routine, already does well?",
    "keywords": [
@@ -81216,10 +84803,40 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "litres of plasma filtered a day",
+    "answer": 180,
+    "each": 1,
+    "eachLabel": "1 dot = 1 litre",
+    "compare": "All your plasma, about 60 times over",
+    "options": [
+     {
+      "label": "About 2",
+      "value": 2,
+      "note": "Two zeros short. That is about what leaves as urine; far more goes through."
+     },
+     {
+      "label": "About 20",
+      "value": 20,
+      "note": "One zero short. All your plasma, about 3 litres, passes through some 60 times."
+     },
+     {
+      "label": "About 200",
+      "value": 200,
+      "note": "Right order: about 180 litres a day, with nothing bought."
+     },
+     {
+      "label": "About 2,000",
+      "value": 2000,
+      "note": "One zero too many. Still, 180 litres is about a bathtub, every day."
+     }
+    ]
+   },
    "source": "Hall, Guyton and Hall Medical Physiology, 2016",
    "source_kind": "book",
    "reference": "Hall, Guyton and Hall Textbook of Medical Physiology, 13th edition, Elsevier, 2016",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "medicine-detox-2",
@@ -81307,8 +84924,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did scurvy return to British polar expeditions in the 1870s, long after citrus had beaten it at sea?",
-   "answer": "Because the Navy had swapped Mediterranean lemons for West Indian limes, which hold far less vitamin C, and the juice was processed and stored for months. Nobody knew what the active ingredient was, so nobody could tell that the substitute had stopped working. A cure known only by its recipe is easily lost.",
+   "question": "Citrus had beaten scurvy at sea. Why did scurvy come back?",
+   "answer": "Lemons and limes looked like the same medicine, and the only test was whether sailors fell ill. With no named ingredient to measure, each cheaper swap and each month in storage went unnoticed until men sickened. The failure even led some doctors to doubt citrus altogether, and look for other causes.",
    "move": "If you do not know why something works, you cannot tell when it stops.",
    "ask": "Which of my good habits might quietly stop working, because I never understood why it worked?",
    "keywords": [
@@ -81328,10 +84945,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "Royal Navy, 1795",
+      "glyph": "check",
+      "line": "Lemon juice becomes a daily ration. Scurvy all but vanishes."
+     },
+     {
+      "fact": "Mid 1800s",
+      "glyph": "coin",
+      "line": "The Navy swaps Mediterranean lemons for West Indian limes."
+     },
+     {
+      "fact": "Bottled for the voyage",
+      "glyph": "clock",
+      "line": "The juice is processed and stored for months before use."
+     }
+    ],
+    "ask": "What happens on the 1875 Arctic expedition?",
+    "options": [
+     {
+      "label": "No scurvy at all"
+     },
+     {
+      "label": "A few mild cases"
+     },
+     {
+      "label": "Scurvy breaks out"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "Nares expedition, 1875–76",
+     "glyph": "cross",
+     "line": "Scurvy broke out, with lime juice on board."
+    },
+    "why": "Nobody knew what in a lemon cured scurvy, so nobody could tell that limes held far less of it."
+   },
    "source": "Carpenter, History of Scurvy and Vitamin C, 1986",
    "source_kind": "book",
    "reference": "Carpenter, The History of Scurvy and Vitamin C, Cambridge University Press, 1986",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "medicine-doctors-who-were-right-2",
@@ -81381,20 +85037,20 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did American doctors keep blaming pellagra on a germ after Joseph Goldberger traced it to diet?",
-   "answer": "Because it behaved like an infection. It clustered in households, mill villages and asylums, exactly where a germ would spread. But those places shared the same corn-heavy diet. Goldberger and volunteers even swallowed patients' scabs and excreta without falling ill. The missing vitamin, niacin, was identified only in 1937.",
-   "move": "People who share a roof also share a kitchen; check both.",
-   "ask": "When problems cluster among people I know, what else might they share besides the cause I suspect?",
+   "question": "The American South, 1914. Each spring thousands fall ill with a rash, diarrhoea and confusion. What causes pellagra?",
+   "answer": "A diet short of niacin, a B vitamin found only in 1937. Volunteers swallowing patients' scabs unharmed made the famous proof, but a dull fact had already settled it: a germ cannot strike every inmate and spare every nurse.",
+   "move": "The people a cause spares tell you as much as the people it strikes.",
+   "ask": "When things go wrong around me, who is spared?",
    "keywords": [
     "pellagra",
     "joseph goldberger",
     "niacin",
-    "diet",
-    "american south"
+    "asylums",
+    "diet"
    ],
    "era": "twentieth",
    "region": "americas",
-   "hook": "story",
+   "hook": "puzzle",
    "mood": "sober",
    "numeracy": 0,
    "abstraction": "mixed",
@@ -81402,10 +85058,46 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "A germ",
+     "Spoiled corn",
+     "A poor diet"
+    ],
+    "answer": 2,
+    "clues": [
+     {
+      "text": "Nearly all the sick are poor: mill workers, orphans, asylum inmates.",
+      "tag": "Poor, and clustered",
+      "rulesOut": []
+     },
+     {
+      "text": "Healthy prisoners eat a fresh but corn-heavy diet for months. Most get it.",
+      "tag": "Fresh corn, still ill",
+      "rulesOut": [
+       1
+      ]
+     },
+     {
+      "text": "In asylums the inmates get it. The nurses who live among them never do.",
+      "tag": "Staff never catch it",
+      "rulesOut": [
+       0
+      ]
+     },
+     {
+      "text": "Volunteers swallow patients' scabs and blood. None falls ill.",
+      "tag": "Scabs swallowed, no harm",
+      "rulesOut": []
+     }
+    ],
+    "why": "A germ can't strike every inmate and spare every nurse. What differed was the food on their plates."
+   },
    "source": "Bollet, Yale J Biol Med, 1992",
    "source_kind": "paper",
    "reference": "Bollet, Politics and pellagra: the epidemic of pellagra in the U.S. in the early twentieth century, Yale Journal of Biology and Medicine, 1992",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "medicine-doubt-1",
@@ -81415,8 +85107,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What happened in Britain after a 1974 report linked the whooping cough vaccine to brain damage?",
-   "answer": "Uptake fell from about 80% to about 30% by 1978, and the disease came back. Between 1977 and 1979 more than 100,000 cases and 36 deaths were reported in large epidemics. Parliament answered with the Vaccine Damage Payments Act of 1979, a no-fault compensation scheme that still pays out today.",
+   "question": "Parents in 1970s Britain stopped a vaccine after a scare. Then what?",
+   "answer": "The feared harm was rare and later studies did not confirm it; the harm prevented was common but invisible, because most children had been protected. Whooping cough had faded thanks to the vaccine, and its absence was mistaken for safety. Parliament passed a no-fault compensation law in 1979, and uptake slowly recovered.",
    "move": "When a protection is dropped, count what it was quietly holding back.",
    "ask": "What did I give up that was quietly holding something back, and what came back since?",
    "keywords": [
@@ -81436,10 +85128,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "Britain, 1974",
+      "glyph": "book",
+      "line": "A report links the whooping cough jab to brain damage."
+     },
+     {
+      "fact": "Papers and television",
+      "glyph": "eye",
+      "line": "The story spreads. Parents and even doctors hesitate."
+     },
+     {
+      "fact": "By 1978",
+      "glyph": "fall",
+      "line": "Vaccination falls from about 80% of children to about 30%."
+     }
+    ],
+    "ask": "What happens to whooping cough?",
+    "options": [
+     {
+      "label": "Little change"
+     },
+     {
+      "label": "A few more cases"
+     },
+     {
+      "label": "Big epidemics return"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "1977 to 1979",
+     "glyph": "rise",
+     "line": "Over 100,000 cases and 36 deaths in a wave of epidemics."
+    },
+    "why": "A disease you no longer see feels gone. It was only being held back."
+   },
    "source": "Baker, Vaccine, 2003",
    "source_kind": "paper",
    "reference": "Baker, The pertussis vaccine controversy in Great Britain, 1974-1986, Vaccine, 2003",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "medicine-doubt-2",
@@ -82101,8 +85832,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do surgeons still sometimes put live leeches on a reattached finger or ear?",
-   "answer": "To drain blood the tiny veins cannot yet carry away. Surgeons can reconnect a small artery more easily than its veins, so blood flows in but pools, and the tissue swells and dies. A leech draws it off, and its saliva keeps the wound oozing for hours. The ancient cure survived in one narrow job.",
+   "question": "Surgeons still put live leeches on reattached fingers. Which of these old remedies are still used, and which were dropped?",
+   "answer": "Old remedies come back when a narrow job fits them. A leech solves one problem: a reattached finger whose artery works but whose veins cannot yet drain it, so blood pools and the tissue dies. Its saliva keeps the wound oozing for hours. Arsenic and maggots returned the same way, each for one condition.",
    "move": "A discredited tool may still be the best one for a narrow job.",
    "ask": "Which tool or habit did I throw out entirely that might still be perfect for one small job?",
    "keywords": [
@@ -82121,6 +85852,62 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Dropped",
+    "right": "Still used",
+    "tag": "The old pharmacy",
+    "items": [
+     {
+      "text": "Leeches",
+      "note": "Live leeches on the skin.",
+      "pile": "right",
+      "verdict": "Cleared by the US FDA in 2004, to drain blood from reattached parts."
+     },
+     {
+      "text": "Maggots",
+      "note": "Fly larvae placed in a wound.",
+      "pile": "right",
+      "verdict": "Cleared in 2004 too. They eat dead tissue and leave live tissue alone."
+     },
+     {
+      "text": "Arsenic",
+      "note": "The poison, as a medicine.",
+      "pile": "right",
+      "verdict": "Arsenic trioxide treats a rare leukaemia. US approval came in 2000."
+     },
+     {
+      "text": "Mercury",
+      "note": "Rubbed on or swallowed for syphilis.",
+      "pile": "left",
+      "verdict": "Penicillin replaced it in the 1940s. Mercury poisoned the patients."
+     },
+     {
+      "text": "Bloodletting",
+      "note": "Opening a vein to drain blood.",
+      "pile": "right",
+      "verdict": "Still the main treatment when the body stores too much iron."
+     },
+     {
+      "text": "Smoke enema",
+      "note": "Tobacco smoke blown into a drowned person.",
+      "pile": "left",
+      "verdict": "Thames rescue kits carried the bellows in the 1780s. Rescue breaths won."
+     },
+     {
+      "text": "Radium water",
+      "note": "A radioactive tonic sold as a pick-me-up.",
+      "pile": "left",
+      "verdict": "A US tycoon who drank about 1,400 bottles died of it in 1932."
+     },
+     {
+      "text": "Honey",
+      "note": "Smeared on wounds.",
+      "pile": "right",
+      "verdict": "Medical-grade honey dressings were cleared in the US in 2007."
+     }
+    ]
+   },
    "source": "Whitaker et al., Br J Oral Surg, 2004",
    "source_kind": "paper",
    "reference": "Whitaker et al., Hirudo medicinalis: ancient origins of, and trends in the use of medicinal leeches throughout history, British Journal of Oral and Maxillofacial Surgery, 2004",
@@ -82350,8 +86137,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What happened when Max von Pettenkofer drank a culture of cholera bacteria in 1892?",
-   "answer": "He got mild diarrhoea and declared Robert Koch refuted. The Munich hygienist, 73, held that the germ alone could not cause cholera without local soil conditions, and drank it during Hamburg's epidemic. Stomach acid, a weakened culture or partial immunity may explain his luck. Healthy carriers later showed a germ can infect without sickening.",
+   "question": "A professor swallowed the cholera germ to prove it harmless. What did that prove?",
+   "answer": "Nothing, and Koch was right anyway. The germ causes cholera, but not in everyone it reaches: stomach acid kills much of a dose, and many infected people never fall ill. Pettenkofer's survival was one draw from a lottery that killed thousands that autumn in Hamburg, which drank unfiltered river water.",
    "move": "One person who got away with it proves nothing about the rest.",
    "ask": "Which belief do I defend because one person got away with it?",
    "keywords": [
@@ -82371,10 +86158,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "Hamburg, 1892",
+      "glyph": "crowd",
+      "line": "Cholera kills thousands. Koch blames a germ in the water."
+     },
+     {
+      "fact": "Munich, Max von Pettenkofer",
+      "glyph": "book",
+      "line": "A rival, 73, says the germ alone can't do it: soil matters."
+     },
+     {
+      "fact": "October 1892",
+      "glyph": "eye",
+      "line": "To prove it, he swallows a culture of the cholera germ."
+     }
+    ],
+    "ask": "What happens to him?",
+    "options": [
+     {
+      "label": "He dies of cholera"
+     },
+     {
+      "label": "Severe cholera"
+     },
+     {
+      "label": "Mild diarrhoea"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "Within days",
+     "glyph": "check",
+     "line": "Mild diarrhoea. He declares Koch refuted."
+    },
+    "why": "One body is a sample of one: acid, dose or luck can spare a person and not a city."
+   },
    "source": "Evans, Death in Hamburg, 1987",
    "source_kind": "book",
    "reference": "Evans, Death in Hamburg: Society and Politics in the Cholera Years 1830-1910, Oxford University Press, 1987",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "medicine-germ-theory-4",
@@ -82583,19 +86409,19 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did the stomach bacterium behind most ulcers refuse to grow in the lab until Easter 1982?",
-   "answer": "Because the plates were thrown away too soon. Robin Warren had seen curved bacteria in stomach biopsies, but Barry Marshall's cultures in Perth were discarded after two days, the routine for throat swabs. Over the long Easter weekend one batch sat for five days, and colonies of Helicobacter pylori appeared. It simply grew slowly.",
-   "move": "A search that stops too early reports that nothing is there.",
-   "ask": "What did I decide was not there because I stopped looking too soon?",
+   "question": "Perth, early 1980s. Stomach ulcers heal on acid-blocking pills, then come back. What really causes most of them?",
+   "answer": "A bacterium, Helicobacter pylori. It grew in the lab only in 1982, when Easter left a plate incubating five days instead of two. A doctor drinking it made headlines; the trials convinced: kill the germ and ulcers stop returning.",
+   "move": "A treatment that works only while you take it may be hiding the cause.",
+   "ask": "What problem do I keep treating without asking what causes it?",
    "keywords": [
     "helicobacter pylori",
     "stomach ulcers",
     "barry marshall",
-    "bacterial culture"
+    "antibiotics"
    ],
    "era": "twentieth",
    "region": "oceania",
-   "hook": "story",
+   "hook": "puzzle",
    "mood": "wonder",
    "numeracy": 1,
    "abstraction": "concrete",
@@ -82603,10 +86429,45 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "Stress",
+     "Too much acid",
+     "A bacterium"
+    ],
+    "answer": 2,
+    "clues": [
+     {
+      "text": "Ulcers heal while patients take acid-blocking pills; most return when they stop.",
+      "tag": "Heal, then come back",
+      "rulesOut": []
+     },
+     {
+      "text": "Curved bacteria turn up in the stomach lining of nearly every ulcer patient.",
+      "tag": "Bacteria in the lining",
+      "rulesOut": []
+     },
+     {
+      "text": "A doctor drinks a flask of the bacteria. Within days his stomach is inflamed.",
+      "tag": "The doctor drinks it",
+      "rulesOut": []
+     },
+     {
+      "text": "After two weeks of antibiotics, ulcers stay healed. Stress and acid are unchanged.",
+      "tag": "Antibiotics: no return",
+      "rulesOut": [
+       0,
+       1
+      ]
+     }
+    ],
+    "why": "The drink gave inflammation, not an ulcer. The cure decided: kill the germ, and ulcers stay away."
+   },
    "source": "Marshall, Nobel Lecture, 2005",
    "source_kind": "primary_document",
    "reference": "Marshall, Helicobacter connections, Nobel Lecture, Nobel Foundation, 2005",
-   "written": "2026-09-27"
+   "written": "2026-10-06"
   },
   {
    "id": "medicine-germ-theory-10",
@@ -82695,8 +86556,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When 115 pathologists read the same breast biopsies, where did they agree least with an expert panel?",
-   "answer": "On the borderline cases. Overall they matched the experts on about 75% of readings, but on atypia, abnormal cells that are not yet cancer, agreement fell to about 48%. Clear cancers and clearly harmless tissue were judged consistently. The middle, where treatment choices are hardest, is where a second reading is worth most.",
+   "question": "A breast biopsy report, worded the way pathologists write them. Where would a second opinion matter most?",
+   "answer": "On the first line. When 115 pathologists read the same breast biopsies, they matched an expert panel on about 75% of readings, but on atypia, abnormal cells that are not cancer, agreement fell to about 48%. Clear cancers and clearly harmless tissue were judged consistently. The borderline is where a second reading earns its cost.",
    "move": "Seek a second opinion where the call is closest, not where it is clear.",
    "ask": "Which of my decisions sits in a grey zone where another person's view would be worth asking for?",
    "keywords": [
@@ -82715,10 +86576,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Pathology report",
+    "ref": "Typical text",
+    "title": "Diagnosis",
+    "body": "Left breast, core biopsy: atypical ductal hyperplasia. No invasive carcinoma identified. Excision recommended.",
+    "phrases": [
+     {
+      "text": "atypical ductal hyperplasia",
+      "plain": "abnormal cells in a milk duct, not cancer",
+      "why": "The borderline category. Pathologists agreed with experts on only about half of these.",
+      "catch": true
+     },
+     {
+      "text": "No invasive carcinoma identified",
+      "plain": "No cancer seen in this sample",
+      "why": "Identified means found in what the needle took, a small part of the area."
+     },
+     {
+      "text": "Excision recommended",
+      "plain": "Removing the area is advised",
+      "why": "A needle samples a little. Taking the rest out checks what it may have missed."
+     }
+    ],
+    "ask": "One phrase is where experts disagree most. Which?",
+    "watch": "Ask how often experts agree on a diagnosis like yours, not only what it is."
+   },
    "source": "Elmore et al., JAMA, 2015",
    "source_kind": "paper",
    "reference": "Elmore et al., Diagnostic concordance among pathologists interpreting breast biopsy specimens, JAMA, 2015",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "medicine-getting-a-second-opinion-3",
@@ -84701,8 +88589,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why can a heart patient's daily low-dose aspirin stop protecting them if they take ibuprofen first?",
-   "answer": "Because ibuprofen reaches the target first. Aspirin protects by permanently plugging an enzyme in platelets, COX-1; ibuprofen sits loosely in the same channel and blocks aspirin's way in. When ibuprofen lets go, the aspirin has left the blood. The FDA advised in 2006: ibuprofen at least 30 minutes after aspirin, or 8 hours before.",
+   "question": "Why can an ibuprofen taken before a daily aspirin cancel its heart protection?",
+   "answer": "Because aspirin's effect is permanent and ibuprofen's is not. Aspirin locks the platelet enzyme COX-1 for the platelet's whole life, which is why a tiny daily dose is enough. Ibuprofen only sits there for a while. The FDA's 2006 advice: ibuprofen at least 30 minutes after immediate-release aspirin, or over 8 hours before.",
    "move": "Two harmless habits can cancel each other when they compete for one door.",
    "ask": "Which two harmless habits of mine could be cancelling each other out?",
    "keywords": [
@@ -84722,6 +88610,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "Ibuprofen before the daily aspirin can switch the aspirin off."
+    },
+    "levels": [
+     {
+      "text": "Aspirin protects by jamming an enzyme platelets need to clot."
+     },
+     {
+      "text": "It gets one short chance: the blood clears it within the hour.",
+      "figure": "~20 min",
+      "unit": "aspirin's half-life"
+     },
+     {
+      "text": "Ibuprofen, there first, sits in the same pocket during that chance."
+     },
+     {
+      "text": "Two drugs want one door, and the first to arrive wins."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Ibuprofen destroys aspirin",
+      "It blocks aspirin's spot",
+      "The blood gets too thin"
+     ],
+     "answer": 1
+    }
+   },
    "source": "US Food and Drug Administration, 2006",
    "source_kind": "institution",
    "reference": "US Food and Drug Administration, Information for Healthcare Professionals: Concomitant Use of Ibuprofen and Aspirin, 2006",
@@ -85731,8 +89650,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "In a German back pain trial, how did real acupuncture compare with shallow needles placed at random?",
-   "answer": "About the same, and both beat usual care. After six months, about 47% improved with real acupuncture, 44% with sham needling and 27% with standard drugs and physiotherapy. Where the needles went made little difference. The ritual of sessions, attention and expectation did much of the work.",
+   "question": "A German trial gave back-pain patients real acupuncture or shallow needles placed at random. Grow the trial: which does better?",
+   "answer": "Neither, much, and both beat usual care. After six months 47.6% improved with real acupuncture and 44.2% with sham needling, but only 27.4% with drugs and physiotherapy. Where the needles went made little difference across 1,162 patients; the sessions, attention and expectation did much of the work.",
    "move": "When the fake works as well as the real, the active part is elsewhere.",
    "ask": "In something that helps me, is it the thing itself or the ritual and attention around it?",
    "keywords": [
@@ -85753,8 +89672,37 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "source": "Haake et al., Archives of Internal Medicine, 2007",
    "source_kind": "paper",
-   "reference": "Haake et al., German Acupuncture Trials (GERAC) for chronic low back pain, Archives of Internal Medicine, 2007",
-   "written": "2026-10-03"
+   "reference": "Haake et al., German Acupuncture Trials (GERAC) for chronic low back pain, Archives of Internal Medicine 167(17):1892–1898, 2007",
+   "written": "2026-10-03",
+   "scene": {
+    "type": "sample",
+    "dots": "Simulated patients",
+    "hit": "Improved after six months",
+    "groups": [
+     {
+      "label": "Sham needles",
+      "rate": 0.442
+     },
+     {
+      "label": "Real needles",
+      "rate": 0.476
+     }
+    ],
+    "steps": [
+     20,
+     200,
+     774,
+     7740
+    ],
+    "seed": 166,
+    "button": "Add patients",
+    "notes": [
+     "Ten each: sham needles 70%, real ones 30%. Chance can crown the fake.",
+     "100 each: real needles lead, 51% to 39%. A result you could publish.",
+     "774 patients, two-thirds of the trial: 43.4% against 47.8%.",
+     "Ten times that: 43.2% against 46.7%. Built in: 44.2% and 47.6%."
+    ]
+   }
   },
   {
    "id": "medicine-placebo-or-real-3",
@@ -85804,8 +89752,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do most heart attacks happen to people with only average blood pressure and cholesterol?",
-   "answer": "Because there are so many of them. A small high-risk group has the highest rate, but a huge crowd at modest risk produces more cases in total. Geoffrey Rose called this the prevention paradox: lowering a whole population's blood pressure a little prevents more disease than treating only the few at the top.",
+   "question": "Why do most heart attacks strike people with average blood pressure and cholesterol?",
+   "answer": "Because risk is a rate and disease is a count. Geoffrey Rose called it the prevention paradox in 1985: a measure that brings large benefits to a community offers little to each person in it. It is the case for trimming salt in everyone's bread, not only treating the few at the top.",
    "move": "Many people at small risk can matter more than few at high risk.",
    "ask": "Which small risk do I dismiss because it is small, when it applies to my everyday life all the time?",
    "keywords": [
@@ -85825,6 +89773,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "Most heart attacks hit people whose numbers looked average."
+    },
+    "levels": [
+     {
+      "text": "People with very high readings do run the highest risk, each."
+     },
+     {
+      "text": "But they are a small slice; most people sit near the middle."
+     },
+     {
+      "text": "A modest risk times a huge crowd beats a high risk times a few."
+     },
+     {
+      "text": "So the biggest gains come from shifting everyone a little."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Their tests were wrong",
+      "Stress matters more",
+      "That's where people are"
+     ],
+     "answer": 2
+    }
+   },
    "source": "Rose, Int J Epidemiol, 1985",
    "source_kind": "paper",
    "reference": "Rose, Sick individuals and sick populations, International Journal of Epidemiology, 1985",
@@ -86067,8 +90044,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does a single kidney blood test label so many healthy 75-year-olds with kidney disease?",
-   "answer": "Because the cut-off ignores age. Kidney filtration falls naturally with age, yet chronic kidney disease is defined by the same threshold, an estimated filtration rate below 60, at 30 or at 80. In US national data, over a third of people over 70 fell below it. Many have kidneys that are old, not ill.",
+   "question": "A healthy 78-year-old's routine blood test comes back with this line flagged. How worried should she be?",
+   "answer": "Less than the label suggests. Chronic kidney disease is defined by one threshold, an estimated filtration rate below 60, at 30 or at 80, while filtration falls naturally with age. In US national data, over a third of people over 70 were below it. For many, the result describes kidneys that are old, not ill.",
    "move": "A fixed line across a changing population turns ageing into disease.",
    "ask": "Am I judging myself today by a standard that was set for someone younger?",
    "keywords": [
@@ -86088,10 +90065,42 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Laboratory report",
+    "ref": "Kidney panel",
+    "title": "Biochemistry",
+    "body": "eGFR 54 mL/min/1.73m² (low). Reference range: above 60. Consistent with CKD stage 3a. Suggest repeat in 3 months.",
+    "phrases": [
+     {
+      "text": "eGFR 54",
+      "plain": "Estimated kidney filtering 54",
+      "why": "An estimate from one blood value, adjusted for age and sex. It is not measured directly."
+     },
+     {
+      "text": "Reference range: above 60",
+      "plain": "Cut-off: 60, the same at 30 as at 80",
+      "why": "Kidney filtration falls naturally over a lifetime. The line does not move with it."
+     },
+     {
+      "text": "Consistent with CKD stage 3a",
+      "plain": "Labelled mild chronic kidney disease",
+      "why": "Over a third of Americans over 70 fall below 60. Many have kidneys that are old, not ill.",
+      "catch": true
+     },
+     {
+      "text": "Suggest repeat in 3 months",
+      "plain": "Check it stays low before calling it disease",
+      "why": "The label needs the value to stay low for three months. One test is not a diagnosis."
+     }
+    ],
+    "ask": "One phrase can turn an age into an illness. Which?",
+    "watch": "When a result is flagged, ask whether the line was drawn for someone your age."
+   },
    "source": "Coresh et al., JAMA, 2007",
    "source_kind": "paper",
    "reference": "Coresh et al., Prevalence of chronic kidney disease in the United States, JAMA, 2007",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "medicine-reading-results-3",
@@ -86726,8 +90735,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do some medical papers give a drug's benefit as a percentage cut, but its harms as raw counts?",
-   "answer": "Because the mix flatters the drug. A 33% cut in risk sounds big; two extra bleeds per 100 patients sounds small, though the harm may be larger. A review of leading medical journals found about one article in three reported benefits and harms in such mismatched formats. Readers need both per 100 people.",
+   "question": "A press release about a blood-thinning pill, written the way many are. Which number makes it sound better than it is?",
+   "answer": "The 33%. If 3 in 100 untreated patients would have a stroke and the pill brings it to 2, that is a third fewer strokes, but one person in 100 helped against two harmed by bleeding. A review of leading medical journals found about one article in three mixed formats like this.",
    "move": "Put the good news and the bad news in the same units before comparing.",
    "ask": "When someone shows me pros and cons, are both in the same kind of number?",
    "keywords": [
@@ -86746,10 +90755,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Press release",
+    "ref": "Typical text",
+    "title": "New pill cuts stroke risk",
+    "body": "In the trial, the new pill cut the risk of stroke by 33%. Major bleeding was uncommon, occurring in 2 extra patients per 100.",
+    "phrases": [
+     {
+      "text": "cut the risk of stroke by 33%",
+      "plain": "prevented 1 stroke in 100 patients, 3 down to 2",
+      "why": "A relative cut. A third of a small risk is a small number of people.",
+      "catch": true
+     },
+     {
+      "text": "Major bleeding",
+      "plain": "Bleeding serious enough to need care",
+      "why": "In trials, major is a defined grade of harm, not a nosebleed."
+     },
+     {
+      "text": "uncommon",
+      "plain": "twice as common as the strokes prevented",
+      "why": "The harm is given as a count, so it sounds small. Put in the same units, it is bigger."
+     }
+    ],
+    "ask": "Benefit and harm are in different units. Which one flatters?",
+    "watch": "Ask for every result as people per 100. A percentage cut needs its starting point."
+   },
    "source": "Sedrakyan & Shih, Medical Care, 2007",
    "source_kind": "paper",
    "reference": "Sedrakyan & Shih, Improving depiction of benefits and harms: analyses of studies of well-known therapeutics and review of high-impact medical journals, Medical Care, 2007",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "medicine-risks-of-surgery-1",
@@ -86905,8 +90941,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What did it take for a surgeon in New York to remove a gallbladder in Strasbourg in 2001?",
-   "answer": "A private line under the Atlantic. Delay is the enemy of remote surgery, so France Telecom provided a dedicated fibre-optic connection that held the lag steady at about 155 milliseconds; ordinary internet delays jump about unpredictably. Jacques Marescaux worked a ZEUS robot's controls, and the 68-year-old patient went home 48 hours later.",
+   "question": "In 2001 a surgeon in New York removed a gallbladder in Strasbourg by robot. How late did each of his movements reach his screen?",
+   "answer": "About 155 milliseconds, held steady. The signal ran over 14,000 km there and back on a fibre line France Telecom reserved for the job; ordinary internet delays jump about, and a lag that wobbles is harder to work through than a long one. The team put the safe limit near 330 ms.",
    "move": "When acting at a distance, the delay matters more than the kilometres.",
    "ask": "Where is the delay, not the distance, what decides if my plan works?",
    "keywords": [
@@ -86920,7 +90956,7 @@ const String kEmbeddedBank = r'''
    "region": "world",
    "hook": "story",
    "mood": "wonder",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
@@ -86929,7 +90965,19 @@ const String kEmbeddedBank = r'''
    "source": "Marescaux et al., Nature, 2001",
    "source_kind": "paper",
    "reference": "Marescaux et al., Transatlantic robot-assisted telesurgery, Nature, 2001",
-   "written": "2026-09-26"
+   "written": "2026-10-06",
+   "scene": {
+    "type": "hold",
+    "what": "Lag, New York hand to screen",
+    "seconds": 0.155,
+    "display": "ms",
+    "comparisons": [
+     {
+      "label": "Estimated safe limit",
+      "seconds": 0.33
+     }
+    ]
+   }
   },
   {
    "id": "medicine-robots-3",
@@ -87891,30 +91939,68 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When patients facing planned surgery use decision aids that set out the options and odds, what happens to surgery rates?",
-   "answer": "They fall a little. A Cochrane review of 105 trials found that patients using decision aids knew more, expected outcomes more accurately, and chose major elective surgery somewhat less often, in favour of gentler options. Patients given the full picture turned out more cautious than the system had assumed for them.",
-   "move": "People given the full picture often choose less, not more.",
-   "ask": "Before I agree to something big, have I seen all the options, including doing less?",
+   "question": "You have lung cancer and two treatments to choose from. Here are their odds, told two ways. Which do you choose?",
+   "answer": "The odds were identical; the wording moved a quarter of people. McNeil and colleagues found it among patients, students and experienced doctors alike. That is why good decision aids give both frames, as counts out of 100. When a choice depends on how it is said, ask to hear it both ways.",
+   "move": "Hear the odds as survivors and as deaths before you choose.",
+   "ask": "When a choice hangs on its wording, have I heard it said both ways?",
    "keywords": [
-    "decision aids",
-    "elective surgery",
-    "cochrane review",
-    "patient choice"
+    "framing",
+    "lung cancer",
+    "surgery",
+    "radiation",
+    "decision aids"
    ],
-   "era": "recent",
-   "region": "world",
-   "hook": "misconception",
+   "era": "twentieth",
+   "region": "americas",
+   "hook": "paradox",
    "mood": "practical",
-   "numeracy": 1,
-   "abstraction": "mixed",
+   "numeracy": 2,
+   "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Stacey et al., Cochrane Review, 2017",
+   "scene": {
+    "type": "poll",
+    "who": "Patients & doctors, McNeil et al. 1982",
+    "questions": [
+     {
+      "prompt": "Surgery: 90% survive it, 34% are alive at 5 years. Radiation: 100% and 22%.",
+      "tag": "Told as survival",
+      "options": [
+       {
+        "label": "Surgery",
+        "share": 82
+       },
+       {
+        "label": "Radiation",
+        "share": 18
+       }
+      ]
+     },
+     {
+      "prompt": "Surgery: 10% die of it, 66% are dead by 5 years. Radiation: 0% and 78%.",
+      "tag": "Told as deaths",
+      "options": [
+       {
+        "label": "Surgery",
+        "share": 56
+       },
+       {
+        "label": "Radiation",
+        "share": 44
+       }
+      ]
+     }
+    ],
+    "why": "A 10% chance of dying on the table looms larger than a 90% chance of living through it.",
+    "same": "You held steady. The crowd didn't: radiation rose from 18% to 44%.",
+    "switched": "You switched, like many patients and doctors. The odds were the same; only the words moved."
+   },
+   "source": "McNeil et al., NEJM, 1982",
    "source_kind": "paper",
-   "reference": "Stacey et al., Decision aids for people facing health treatment or screening decisions, Cochrane Database of Systematic Reviews, 2017",
-   "written": "2026-10-03"
+   "reference": "McNeil, Pauker, Sox & Tversky, On the elicitation of preferences for alternative therapies, New England Journal of Medicine 306 (1982): 1259-1262",
+   "written": "2026-10-06"
   },
   {
    "id": "medicine-shared-decisions-2",
@@ -88084,30 +92170,60 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why is the side-effect list in a medicine leaflet longer than the list of what the drug really causes?",
-   "answer": "Because many entries are things people reported during trials, not things shown to be caused by the drug. People on dummy pills report headaches, tiredness and nausea too, and leaflets rarely print that placebo rate beside the drug's. A list of everything that happened gets read as everything the pill does.",
+   "question": "Statin leaflets list muscle pain. In blinded trials, how often did people taking a dummy pill report it too?",
+   "answer": "Almost as often. Pooling 19 blinded trials with 123,940 people, Oxford's Cholesterol Treatment Trialists found muscle pain or weakness in 27.1% on a statin and 26.6% on placebo: about 1 report in 15 was the drug's doing. A leaflet lists what people reported, not what the pill caused.",
    "move": "Something that happened after is not the same as something that was caused.",
    "ask": "Which of my aches have I blamed on a new thing in my life, without asking whether they came anyway?",
    "keywords": [
-    "patient leaflets",
+    "statins",
     "side effects",
-    "adverse events",
-    "placebo"
+    "muscle pain",
+    "placebo",
+    "leaflets"
    ],
    "era": "recent",
    "region": "europe",
    "hook": "misconception",
    "mood": "practical",
-   "numeracy": 0,
+   "numeracy": 2,
    "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Academy of Medical Sciences, report, 2017",
-   "source_kind": "institution",
-   "reference": "Academy of Medical Sciences, Enhancing the use of scientific evidence to judge the potential benefits and harms of medicines, 2017",
-   "written": "2026-10-03"
+   "source": "Cholesterol Treatment Trialists, The Lancet, 2022",
+   "source_kind": "paper",
+   "reference": "Cholesterol Treatment Trialists' Collaboration, Effect of statin therapy on muscle symptoms: an individual participant data meta-analysis of large-scale, randomised, double-blind trials, The Lancet, 2022",
+   "written": "2026-10-03",
+   "scene": {
+    "type": "sample",
+    "dots": "Simulated patients",
+    "hit": "Reported muscle pain",
+    "groups": [
+     {
+      "label": "Placebo",
+      "rate": 0.266
+     },
+     {
+      "label": "Statin",
+      "rate": 0.271
+     }
+    ],
+    "steps": [
+     40,
+     400,
+     4000,
+     123940
+    ],
+    "seed": 94,
+    "button": "Add patients",
+    "notes": [
+     "20 each: muscle pain in 15% on placebo, 55% on the statin. Chance did that.",
+     "200 each: 24.5% against 31%. A side effect anyone would list.",
+     "4,000 patients: 25.5% against 26.6%. The gap is shrinking.",
+     "123,940, as in 19 trials: 26.6% against 27.1%. Nearly all was there anyway."
+    ]
+   }
   },
   {
    "id": "medicine-side-effects-in-numbers-1",
@@ -88425,8 +92541,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does appendicitis pain usually start around the navel before settling low on the right?",
-   "answer": "Because two nerve systems report it in turn. Early swelling stretches the appendix, whose gut nerves enter the spinal cord at the same level as the skin around the navel, so the brain places the pain vaguely there. Later it irritates the lining of the abdominal wall, which has precise nerves, and the pain moves.",
+   "question": "Why does appendicitis pain usually start around the navel, then move low on the right?",
+   "answer": "Because the body keeps two pain maps. First the brain places the stretched appendix on the skin sharing its nerve, around the navel. Hours later the inflamed appendix touches the lining of the belly wall, which has precise nerves, and the pain lands where the trouble is. Doctors read the move itself as a clue.",
    "move": "Where it hurts and where the trouble is are two separate questions.",
    "ask": "Where it hurts and where the problem sits: which have I mixed up lately?",
    "keywords": [
@@ -88446,6 +92562,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "Appendicitis often starts as a dull ache around the navel."
+    },
+    "levels": [
+     {
+      "text": "Yet the appendix sits low on the right, nowhere near the navel."
+     },
+     {
+      "text": "Gut nerves sense stretch, not place, and report it vaguely."
+     },
+     {
+      "text": "They enter the spine at the level that also serves the navel's skin."
+     },
+     {
+      "text": "The brain files gut pain under the skin that shares its nerve."
+     }
+    ],
+    "guess": {
+     "options": [
+      "The appendix moves",
+      "The brain misfiles gut pain",
+      "Gas spreads the pain"
+     ],
+     "answer": 1
+    }
+   },
    "source": "Bailey & Love's Short Practice of Surgery",
    "source_kind": "reference_work",
    "reference": "Williams, O'Connell & McCaskie (eds), Bailey & Love's Short Practice of Surgery, 27th edition, CRC Press, 2018",
@@ -88534,7 +92679,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "easy",
    "principle": "none",
    "question": "A famous 1965 study found a third of patients diagnosed with hysteria later proved to have physical disease. What did later studies find?",
-   "answer": "Far fewer: about 4%. A 2005 review of 27 studies by Jon Stone and colleagues found that misdiagnosis of such functional symptoms, real but without structural damage, fell from 29% in the 1950s to about 4% from the 1970s on. That is no worse than for other neurological and psychiatric diagnoses.",
+   "answer": "About 4%, and it got there fast. Jon Stone's 2005 review of 27 studies found misdiagnosis of such functional symptoms fell from 29% in the 1950s to 4% from the 1970s on. The authors put the drop down mostly to better-designed studies, not to brain scans: the old error rate measured old methods.",
    "move": "An old error rate can outlive the conditions that produced it.",
    "ask": "Which old error rate do I still quote even though the conditions have changed?",
    "keywords": [
@@ -88554,6 +92699,39 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
+   "scene": {
+    "type": "draw",
+    "label": "Later found to have a disease",
+    "unit": "%",
+    "columns": [
+     "1950s",
+     "1960s",
+     "1970s",
+     "1980s",
+     "1990s"
+    ],
+    "values": [
+     29,
+     17,
+     4,
+     4,
+     4
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 40,
+    "verdict": {
+     "under": "Just under the truth: since the 1970s it has held at about 4%.",
+     "near": "Right: it fell to about 4% by the 1970s and stayed, no worse than other diagnoses.",
+     "over": "Too high. Since the 1970s only about 4% have turned out to have a missed disease."
+    },
+    "notes": [
+     {
+      "at": 2,
+      "text": "4% by the 1970s"
+     }
+    ]
+   },
    "source": "Stone et al., BMJ, 2005",
    "source_kind": "paper",
    "reference": "Stone et al., Systematic review of misdiagnosis of conversion symptoms and hysteria, BMJ, 2005",
@@ -88798,8 +92976,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does a CT scan done for one problem so often start a hunt for another?",
-   "answer": "Because the scanner shows everything in its slices, wanted or not. About 4% of abdominal CT scans reveal an unexpected lump on an adrenal gland, and nearly all are harmless. Each can still prompt hormone tests and repeat scans for years. The scan answered the question it was asked, then wrote several more.",
+   "question": "A free full-body CT scan, or $1,000 in cash. Which would you take?",
+   "answer": "The scan is free; what it finds is not. A CT shows everything in its slices, wanted or not: about 4% of abdominal scans reveal a lump on an adrenal gland, nearly always harmless. Each can start years of tests, worry and more radiation. The scanner answers questions nobody asked.",
    "move": "The more closely you look, the more harmless oddities you have to explain.",
    "ask": "Where am I looking so closely, at my body or my relationships, that I find trouble that was never there?",
    "keywords": [
@@ -88809,19 +92987,40 @@ const String kEmbeddedBank = r'''
     "incidental findings"
    ],
    "era": "recent",
-   "region": "world",
-   "hook": "mechanism",
+   "region": "americas",
+   "hook": "misconception",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Bovio et al., J Endocrinol Invest, 2006",
+   "scene": {
+    "type": "poll",
+    "who": "US adults by phone, Schwartz 2004",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "The free scan",
+        "share": 73,
+        "mirror": "Like 73% of Americans asked. A scan feels like safety, but most turn up something to chase."
+       },
+       {
+        "label": "The $1,000",
+        "share": 27,
+        "mirror": "Like 27%. No expert body advises full-body scans for people who feel well."
+       }
+      ]
+     }
+    ],
+    "why": "Looking feels like safety; the cost of a search shows up only later."
+   },
+   "source": "Schwartz et al., JAMA, 2004; Bovio et al., 2006",
    "source_kind": "paper",
-   "reference": "Bovio et al., Prevalence of adrenal incidentaloma in a contemporary computerized tomography series, Journal of Endocrinological Investigation, 2006",
-   "written": "2026-10-03"
+   "reference": "Schwartz, Woloshin, Fowler & Welch, Enthusiasm for cancer screening in the United States, JAMA 291 (2004): 71-78; Bovio et al., Prevalence of adrenal incidentaloma in a contemporary computerized tomography series, Journal of Endocrinological Investigation, 2006",
+   "written": "2026-10-06"
   },
   {
    "id": "medicine-transplants-1",
@@ -89308,8 +93507,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When a doctor hands over an antibiotic prescription to use only if things get worse, how many people end up taking it?",
-   "answer": "About a third. In the trials pooled by Cochrane, about 30% of patients given a delayed prescription used it, against over 90% given one to take straight away, and satisfaction was almost the same. Most such infections turn the corner within days. The slip in the drawer reassures, and the illness settles first.",
+   "question": "Your cough is a week old. The doctor gives you an antibiotic prescription to use only if you get worse. Do you use it?",
+   "answer": "Most people never do, and fare just as well. Coughs, sore throats and earaches are mostly viral or settle within days, so the slip mainly buys time. In the trials Cochrane pooled, over 90% of those given a prescription to take at once took it. The reassurance did the work; the pills mostly did not.",
    "move": "A safety net you may never use can be worth more than acting now.",
    "ask": "Where could a backup plan in my pocket let me wait and see, instead of acting out of worry?",
    "keywords": [
@@ -89328,10 +93527,31 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "Patients in trials, Cochrane 2017",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "I'd take it",
+        "share": 30,
+        "mirror": "Like about 3 in 10 given a delayed prescription. Most of those who waited got better anyway."
+       },
+       {
+        "label": "I'd leave it",
+        "share": 70,
+        "mirror": "Like about 7 in 10. They were nearly as satisfied as people told to start the pills at once."
+       }
+      ]
+     }
+    ],
+    "why": "Worry pushes us to act now. A prescription in the drawer lets the worry wait while the body heals."
+   },
    "source": "Spurling et al., Cochrane Review, 2017",
    "source_kind": "paper",
    "reference": "Spurling et al., Delayed antibiotic prescriptions for respiratory infections, Cochrane Database of Systematic Reviews, 2017",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "science-3",
@@ -91126,8 +95346,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "For how long has Pachelbel's Canon been a staple at weddings?",
-   "answer": "Only about fifty years. Written over a two-bar bass loop around three centuries ago, it survived in a single manuscript copy and was first printed in 1919. A lush, slowed-down 1968 recording by Jean-François Paillard's orchestra turned it into a hit. The music of countless aisles spent two centuries on an archive shelf.",
+   "question": "Pachelbel's Canon sounds as if it has played at weddings for centuries. When do you think it became famous?",
+   "answer": "It was written over a two-bar bass loop sometime before Pachelbel died, survived in a single manuscript copy and was forgotten. Jean-François Paillard's 1968 recording slowed it down and added lush string parts, and the film Ordinary People used it in 1980. The music of countless aisles spent two centuries on an archive shelf.",
    "move": "A tradition that feels ancient may be younger than the people keeping it.",
    "ask": "Which tradition do I think is ancient but is really quite recent?",
    "keywords": [
@@ -91147,10 +95367,36 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
-   "source": "Perreault, Pachelbel thematic catalogue, 2004",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1650,
+    "to": 2025,
+    "events": [
+     {
+      "label": "Pachelbel dies",
+      "year": 1706
+     },
+     {
+      "label": "Canon first printed",
+      "year": 1919,
+      "note": "Unprinted until 1919: it survived in a single manuscript copy."
+     },
+     {
+      "label": "Paillard's slow recording",
+      "year": 1968,
+      "note": "A slow, lush 1968 recording made it a hit. The weddings came after."
+     },
+     {
+      "label": "Ordinary People uses it",
+      "year": 1980
+     }
+    ]
+   },
+   "source": "Perreault, Pachelbel catalogue, 2004",
    "source_kind": "reference_work",
    "reference": "Perreault, The Thematic Catalogue of the Musical Works of Johann Pachelbel, Scarecrow Press, 2004",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "music-chord-loops-3",
@@ -91600,8 +95846,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did film-makers keep paying to use the song Happy Birthday until a US court ruling in 2015?",
-   "answer": "Because Warner/Chappell claimed the copyright and charged for it, collecting about $2 million a year. In 2015 Judge George King ruled that the 1935 registration Warner relied on covered only certain piano arrangements, not the lyrics. Warner settled for $14 million. Decades of fees had rested on one unexamined filing.",
+   "question": "Until 2015 Warner/Chappell charged film-makers and advertisers to use Happy Birthday. How much did the song bring in each year?",
+   "answer": "By some estimates about $2 million a year. Then in 2015 Judge George King ruled that the 1935 registration Warner relied on covered only certain piano arrangements, not the lyrics. Warner settled for $14 million and the song entered the public domain. Decades of fees had rested on one unexamined filing.",
    "move": "Before paying for a right, ask to see the paper that proves it.",
    "ask": "What am I paying for or obeying only because someone confidently claims they own it?",
    "keywords": [
@@ -91612,7 +95858,7 @@ const String kEmbeddedBank = r'''
    ],
    "era": "recent",
    "region": "americas",
-   "hook": "story",
+   "hook": "number",
    "mood": "playful",
    "numeracy": 2,
    "abstraction": "concrete",
@@ -91620,10 +95866,41 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "prefix": "$",
+    "unit": "a year, for one short song",
+    "answer": 2000000,
+    "each": 1000,
+    "eachLabel": "1 dot = $1,000",
+    "compare": "Settled in 2016 for $14 million",
+    "options": [
+     {
+      "label": "About $20,000",
+      "value": 20000,
+      "note": "Two zeros short. Every film, show or ad that sang it paid a licence."
+     },
+     {
+      "label": "About $200,000",
+      "value": 200000,
+      "note": "One zero short. By some estimates the fees ran to $2 million a year."
+     },
+     {
+      "label": "$2 million",
+      "value": 2000000,
+      "note": "Right: by some estimates about $2 million a year, for decades."
+     },
+     {
+      "label": "$20 million",
+      "value": 20000000,
+      "note": "One zero too many. All the refunds together came to $14 million."
+     }
+    ]
+   },
    "source": "Marya v. Warner/Chappell Music, 2015",
    "source_kind": "primary_document",
    "reference": "Marya v. Warner/Chappell Music, Inc., US District Court for the Central District of California, 22 September 2015",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "music-copyright-2",
@@ -93671,8 +97948,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does noise destroy human hearing for good, when a chicken's ear can grow its lost cells back?",
-   "answer": "Because mammal ears lost the knack of replacing hair cells, the sensors that turn vibration into nerve signals. In birds, supporting cells around them divide or turn into new hair cells after damage, as Corwin and Cotanche showed in chicks in 1988. Each human cochlea's roughly 15,000 hair cells are all it will ever have.",
+   "question": "Every sound you hear is turned into nerve signals by hair cells in the inner ear. How many does each ear get, for life?",
+   "answer": "About 15,500: some 3,500 inner and 12,000 outer hair cells, all made before birth. Mammal ears lost the knack of replacing them. In birds, supporting cells divide or turn into new hair cells after damage, as Corwin and Cotanche showed in chicks in 1988. In humans each one that loud noise kills stays dead.",
    "move": "Find which of your resources can never be replaced, and guard those first.",
    "ask": "What do I have only one supply of, like my hearing, that I treat as if it would grow back?",
    "keywords": [
@@ -93684,18 +97961,48 @@ const String kEmbeddedBank = r'''
    ],
    "era": "timeless",
    "region": "none",
-   "hook": "mechanism",
+   "hook": "number",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "hair cells in each ear, for life",
+    "answer": 15500,
+    "each": 10,
+    "eachLabel": "1 dot = 10 hair cells",
+    "compare": "A chick grows lost ones back. You can't",
+    "options": [
+     {
+      "label": "About 150",
+      "value": 150,
+      "note": "Two zeros short. About 15,500, in rows along the coiled cochlea."
+     },
+     {
+      "label": "About 1,500",
+      "value": 1500,
+      "note": "One zero short. About 15,500, and noise destroys them for good."
+     },
+     {
+      "label": "About 15,000",
+      "value": 15000,
+      "note": "Right: about 15,500, all made before birth and never replaced."
+     },
+     {
+      "label": "1.5 million",
+      "value": 1500000,
+      "note": "Two zeros too many. An eye has over 100 million light sensors; an ear, 15,500."
+     }
+    ]
+   },
    "source": "Corwin & Cotanche, Science, 1988",
    "source_kind": "paper",
-   "reference": "Corwin & Cotanche, Regeneration of sensory hair cells after acoustic trauma, Science, 1988",
-   "written": "2026-09-26"
+   "reference": "Corwin & Cotanche, Regeneration of sensory hair cells after acoustic trauma, Science, 1988; R. Pujol, Journey into the World of Hearing, cochlea.eu (about 3,500 inner and 12,000 outer hair cells)",
+   "written": "2026-10-06"
   },
   {
    "id": "music-hip-hop-1",
@@ -94091,8 +98398,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What did the 2014 finding that Wannabe is the world's catchiest song actually measure?",
-   "answer": "How fast players of one online game named short clips. Over 12,000 played Hooked on Music, from the University of Amsterdam with Manchester's Museum of Science and Industry: Wannabe averaged 2.29 seconds, Mambo No. 5 2.48, Eye of the Tiger 2.62. It ranks which fragments those players had stored best.",
+   "question": "In 2014 an online game crowned Wannabe the world's catchiest song by timing players naming clips. How fast did they name it?",
+   "answer": "In 2.29 seconds on average; Mambo No. 5 took 2.48, Eye of the Tiger 2.62. Over 12,000 people played Hooked on Music, from the University of Amsterdam and Manchester's Museum of Science and Industry. The title rests on a third of a second, among those players and that list of songs.",
    "move": "Before accepting a title like best ever, ask who was asked and from what list.",
    "ask": "Which best-ever title do I believe without asking who was asked?",
    "keywords": [
@@ -94114,7 +98421,22 @@ const String kEmbeddedBank = r'''
    "source": "Newstalk, November 2014",
    "source_kind": "news_archive",
    "reference": "https://www.newstalk.com/news/wannabe-mambo-no-5-and-eye-of-the-tiger-named-as-catchiest-singles-684162",
-   "written": "2026-09-27"
+   "written": "2026-10-06",
+   "scene": {
+    "type": "hold",
+    "what": "Naming Wannabe from a clip",
+    "seconds": 2.29,
+    "comparisons": [
+     {
+      "label": "Mambo No. 5",
+      "seconds": 2.48
+     },
+     {
+      "label": "Eye of the Tiger",
+      "seconds": 2.62
+     }
+    ]
+   }
   },
   {
    "id": "music-hooks-9",
@@ -94622,8 +98944,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do many record contracts signed since the 2000s take a cut of the artist's concerts and T-shirts?",
-   "answer": "Because recorded music stopped paying for itself. As CD sales collapsed after 2000, labels began taking a share of touring, merchandise and sponsorship too, in 360 deals, named for taking from every side. Robbie Williams's 2002 contract with EMI is often named as the first big one. The label became a partner in the career.",
+   "question": "American recorded music earned $14.6 billion in 1999. What happened to that money, and why did labels start taking a cut of concerts?",
+   "answer": "It halved, so labels reached for the rest of the career. US recorded revenue fell to about $7 billion by 2011. In 360 deals, labels took shares of touring, merchandise and sponsorship; Robbie Williams's 2002 EMI contract is often named as the first big one. Streaming brought sales back later, but the deals stayed.",
    "move": "When a firm's product stops paying, it reaches for the customer's other income.",
    "ask": "When a company I use loses money on its main product, where will it start charging me instead?",
    "keywords": [
@@ -94637,15 +98959,50 @@ const String kEmbeddedBank = r'''
    "region": "world",
    "hook": "mechanism",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Marshall, European Journal of Cultural Studies, 2013",
+   "scene": {
+    "type": "draw",
+    "label": "US recorded music, $ billion",
+    "unit": "$",
+    "columns": [
+     "1999",
+     "2005",
+     "2011",
+     "2017",
+     "2023"
+    ],
+    "values": [
+     14.6,
+     12.27,
+     7.01,
+     8.7,
+     17.1
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 20,
+    "decimals": 1,
+    "judge": 2,
+    "verdict": {
+     "under": "Lower than the truth, but the right fall: by 2011 sales had about halved.",
+     "near": "Right: by 2011 sales had halved. That hole is what the 360 deal was built to fill.",
+     "over": "Not that gentle: by 2011 recorded music earned less than half its 1999 total."
+    },
+    "notes": [
+     {
+      "at": 4,
+      "text": "Not adjusted for inflation"
+     }
+    ]
+   },
+   "source": "RIAA revenue data; Marshall, 2013",
    "source_kind": "paper",
-   "reference": "Marshall, The 360 deal and the new music industry, European Journal of Cultural Studies, 2013",
+   "reference": "RIAA, U.S. Music Revenue Database, https://www.riaa.com/u-s-music-revenue-database/ (1999 $14.6bn, 2005 $12.27bn, 2011 $7.01bn, 2017 $8.7bn, 2023 $17.1bn); Marshall, The 360 deal and the new music industry, European Journal of Cultural Studies, 2013",
    "written": "2026-09-26"
   },
   {
@@ -98131,8 +102488,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do so many dance and pop tracks sit close to 120 beats per minute?",
-   "answer": "Because that is close to the pace of human walking. MacDougall and Moore tracked volunteers through whole days and found steps clustered tightly around two per second, which is 120 a minute. Tapping and dancing tend to settle near the same rate. A dance floor runs at the tempo of a brisk stroll.",
+   "question": "Many dance and pop tracks sit close to 120 beats a minute. How long does one step of a person's everyday walk take?",
+   "answer": "About half a second: 120 steps a minute. MacDougall and Moore tracked volunteers' head movements through whole days and found one sharp peak at two a second. Tapping and dancing settle near the same rate. A dance floor runs at the tempo of a stroll.",
    "move": "When many people converge on one number, look for the body behind it.",
    "ask": "Which of my preferences might really be set by my body's own natural pace?",
    "keywords": [
@@ -98151,10 +102508,21 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "MacDougall & Moore, J Applied Physiology, 2005",
+   "source": "MacDougall & Moore, 2005",
    "source_kind": "paper",
    "reference": "MacDougall & Moore, Marching to the beat of the same drummer: the spontaneous tempo of human locomotion, Journal of Applied Physiology, 2005",
-   "written": "2026-09-26"
+   "written": "2026-10-06",
+   "scene": {
+    "type": "hold",
+    "what": "One step of an everyday walk",
+    "seconds": 0.5,
+    "comparisons": [
+     {
+      "label": "A heartbeat, 70 a minute",
+      "seconds": 0.857
+     }
+    ]
+   }
   },
   {
    "id": "music-rhythm-in-the-body-3",
@@ -98252,8 +102620,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did hip hop albums built from dozens of samples, like the Beastie Boys' Paul's Boutique, almost vanish after 1991?",
-   "answer": "Because a court put a price on every sample. In Grand Upright v Warner, 1991, a judge ruled that Biz Markie's unlicensed use of Gilbert O'Sullivan's Alone Again (Naturally) was theft and referred the case for criminal prosecution. Labels began clearing every sample, and a collage of dozens became dozens of negotiations.",
+   "question": "Hip hop albums were once collages of dozens of samples. What killed them?",
+   "answer": "Each sample now needed its own licence, and one owner saying no or asking too much could sink a track. A collage of dozens became dozens of negotiations, and labels stopped approving them. Producers turned to a few cleared loops, or hired players to replay a riff so only the song needed clearing.",
    "move": "When each ingredient needs its own permission, the recipe changes, not just the price.",
    "ask": "What would I make differently if one permission I need became easier, or harder, to get?",
    "keywords": [
@@ -98273,10 +102641,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "1989",
+      "glyph": "book",
+      "line": "Albums like Paul's Boutique are built from dozens of samples."
+     },
+     {
+      "fact": "A collage of records",
+      "glyph": "check",
+      "line": "One track can stack a dozen bits of other people's songs."
+     },
+     {
+      "fact": "Grand Upright v Warner, 1991",
+      "glyph": "ban",
+      "line": "A judge rules an unlicensed sample is theft."
+     }
+    ],
+    "ask": "What happens to sample-collage albums?",
+    "options": [
+     {
+      "label": "Same, but with fees"
+     },
+     {
+      "label": "Nobody checks"
+     },
+     {
+      "label": "They almost vanish"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "The 1990s",
+     "glyph": "fall",
+     "line": "Labels cleared every sample. The dense collages died out."
+    },
+    "why": "A price on each piece multiplies: one refusal among dozens kills the whole track."
+   },
    "source": "McLeod & DiCola, Creative License, 2011",
    "source_kind": "book",
    "reference": "McLeod & DiCola, Creative License: The Law and Culture of Digital Sampling, Duke University Press, 2011",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "music-sampling-3",
@@ -98697,8 +103104,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do so many pop songs still last about three minutes, when streaming has no time limit at all?",
-   "answer": "Because the shellac record set the habit. A 10-inch disc spinning at 78 rpm held only about three minutes a side, so songs were written to fit it. The 7-inch single and radio playlists kept the length long after. The limit vanished decades ago; the shape stayed in songwriters' hands.",
+   "question": "Why do pop songs still last about three minutes, when streaming has no limit?",
+   "answer": "Because a disc set the mould. Songwriters fitted their songs to the shellac record, and singles and radio playlists kept the shape long after the limit was gone. Streaming adds a squeeze of its own: a play counts once it passes 30 seconds, so shorter songs earn more plays per hour of listening.",
    "move": "A limit can outlive the technology that imposed it by a century.",
    "ask": "Which of my habits was set by a limit that no longer exists?",
    "keywords": [
@@ -98718,9 +103125,40 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "Most pop songs still end at around three minutes."
+    },
+    "levels": [
+     {
+      "text": "Radio and the 7-inch single kept songs short for decades."
+     },
+     {
+      "text": "Those formats took the length from the 10-inch 78 record.",
+      "figure": "~3 min",
+      "unit": "per side of a 10-inch 78"
+     },
+     {
+      "text": "Songwriters learned to fit a song to what one side could hold."
+     },
+     {
+      "text": "The disc is gone; the habit it set is still in the songs."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Old discs held 3 minutes",
+      "Our attention runs out",
+      "Radio pays per song"
+     ],
+     "answer": 0
+    }
+   },
    "source": "Katz, Capturing Sound, 2004",
    "source_kind": "book",
-   "reference": "Katz, Capturing Sound: How Technology Has Changed Music, University of California Press, 2004",
+   "reference": "Katz, Capturing Sound: How Technology Has Changed Music, University of California Press, 2004; https://support.spotify.com/artists/article/streams-and-listeners/",
    "written": "2026-09-26"
   },
   {
@@ -99989,29 +104427,52 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How would you know if the ocean used to be fuller?",
-   "answer": "You probably would not. Each generation of scientists takes the sea they first studied as the natural baseline, so every generation measures decline from an already-depleted state. Daniel Pauly named this shifting baseline syndrome, and it makes long collapses look like normal variation.",
+   "question": "Weighed all together, which is heaviest: every wild mammal on Earth, every human, or every farm animal?",
+   "answer": "Farm animals, at about 100 million tonnes of carbon, then humans at 60. All wild mammals, from whales to mice, come to about 7: some 4% of the mammals on Earth by weight. Bar-On, Phillips and Milo's 2018 census shows a loss no single generation watched happen.",
    "move": "Everyone measures the decline from whatever they found when they arrived.",
    "ask": "What am I treating as normal today only because it is what I first saw when I arrived?",
    "keywords": [
-    "shifting baselines",
-    "fisheries",
-    "ocean",
-    "daniel pauly"
+    "biomass",
+    "livestock",
+    "wild mammals",
+    "shifting baselines"
    ],
-   "era": "timeless",
+   "era": "recent",
    "region": "world",
-   "hook": "paradox",
+   "hook": "number",
    "mood": "sober",
-   "numeracy": 0,
-   "abstraction": "abstract",
+   "numeracy": 2,
+   "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
-   "source": "Pauly, Trends in Ecology & Evolution, 1995",
+   "figure": "bars",
+   "source": "Bar-On, Phillips & Milo, PNAS, 2018",
    "source_kind": "paper",
-   "reference": "Pauly, Anecdotes and the shifting baseline syndrome of fisheries, Trends in Ecology & Evolution, 1995"
+   "reference": "Bar-On, Phillips & Milo, The biomass distribution on Earth, PNAS 115(25): 6506-6511, 2018",
+   "scene": {
+    "type": "rank",
+    "quantity": "Mammals, million t carbon",
+    "most": "Most",
+    "items": [
+     {
+      "label": "Wild",
+      "value": 7,
+      "note": "Every whale, elephant, deer and mouse together: about 4% of all mammals."
+     },
+     {
+      "label": "Human",
+      "value": 60,
+      "note": "More than eight times the weight of all wild mammals combined."
+     },
+     {
+      "label": "Farmed",
+      "value": 100,
+      "note": "Mostly cattle: they outweigh humans and wild mammals put together."
+     }
+    ]
+   },
+   "written": "2026-10-06"
   },
   {
    "id": "nature-4",
@@ -100193,8 +104654,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What did counting rings in bristlecone pines do to the dates of European prehistory?",
-   "answer": "Pushed them back by centuries. Radiocarbon dating assumed the air's carbon-14 never varied; Hans Suess measured it in bristlecone rings of known age and found early dates came out too young. Corrected, Europe's megalithic tombs moved back before the eastern tombs they were supposed to copy.",
+   "question": "Europe's stone tombs were once thought to copy eastern ones. With tree-ring dates, where do these monuments really fall?",
+   "answer": "Radiocarbon dating assumed the air's carbon-14 never varied. Hans Suess measured it in bristlecone pine rings of known age and found early dates came out centuries too young. Corrected, Europe's tombs and temples moved back before the eastern buildings they were said to copy, and the idea of light spreading from the East fell.",
    "move": "Check the instrument before arguing about what it measured.",
    "ask": "Before arguing about a result, have I checked that the tool measuring it is working properly?",
    "keywords": [
@@ -100214,10 +104675,36 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
-   "source": "Renfrew, Before Civilization, 1973",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": -4000,
+    "to": -1000,
+    "events": [
+     {
+      "label": "Ġgantija, Malta",
+      "year": -3600,
+      "note": "Malta's temples are about a thousand years older than the Great Pyramid."
+     },
+     {
+      "label": "Newgrange built",
+      "year": -3200
+     },
+     {
+      "label": "Great Pyramid",
+      "year": -2560
+     },
+     {
+      "label": "Treasury of Atreus",
+      "year": -1250,
+      "note": "Mycenae's great tomb is about 2,000 years younger than Newgrange."
+     }
+    ]
+   },
+   "source": "Renfrew, Before Civilization, 1973; UNESCO",
    "source_kind": "book",
    "reference": "Renfrew, Before Civilization: The Radiocarbon Revolution and Prehistoric Europe, Jonathan Cape, 1973",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "nature-ancient-trees-2",
@@ -100579,9 +105066,9 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did a young chimpanzee in Kyoto beat university students at a memory test?",
-   "answer": "By taking in a whole screen at a glance. Numerals 1 to 9 flashed in random spots, then turned into blank squares, and Ayumu touched them in order. Given about a fifth of a second to look, he stayed accurate while students faltered. Inoue and Matsuzawa suggest people traded such snapshot memory for other skills.",
-   "move": "Do not rank minds on one ladder; each is built for its own job.",
+   "question": "A young chimpanzee in Kyoto saw numerals scattered on a screen, then blank squares to touch in order. How long did he get to look?",
+   "answer": "210 milliseconds, too short to move the eyes from one numeral to the next. Ayumu still recalled positions and order far better than untrained students. Later, two researchers who practised the task for weeks matched him, so much of the gap was training.",
+   "move": "Before crediting a gift, ask how many hours of practice stand behind it.",
    "ask": "Whose skill have I underrated because it is not the kind of clever I happen to have?",
    "keywords": [
     "chimpanzees",
@@ -100599,10 +105086,16 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Inoue & Matsuzawa, Current Biology, 2007",
+   "source": "Inoue & Matsuzawa, 2007",
    "source_kind": "paper",
-   "reference": "Inoue & Matsuzawa, Working memory of numerals in chimpanzees, Current Biology, 2007",
-   "written": "2026-10-03"
+   "reference": "Inoue & Matsuzawa, Working memory of numerals in chimpanzees, Current Biology 17(23), 2007; Silberberg & Kearns, Memory for the order of briefly presented numerals in humans as a function of practice, Animal Cognition 12, 2009",
+   "written": "2026-10-06",
+   "scene": {
+    "type": "hold",
+    "what": "Ayumu's glimpse of the numbers",
+    "seconds": 0.21,
+    "display": "ms"
+   }
   },
   {
    "id": "nature-animal-minds-2",
@@ -100730,8 +105223,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Is one year of a dog's life really worth seven human years?",
-   "answer": "No, the ratio changes with age. Wang and colleagues compared chemical marks on DNA that shift with ageing in Labradors and in people. By that clock a one-year-old dog matches a human of about 31, a four-year-old about 53, and a twelve-year-old about 71. Dogs race through youth, then age more slowly.",
+   "question": "One dog year is worth seven human years, people say. Which of these animal sayings are myths, and which are true?",
+   "answer": "The dog rule fails because the ratio changes with age. Comparing chemical marks on DNA that shift with ageing in Labradors and people, Wang's team matched a one-year-old dog to a human of about 31, a four-year-old to about 53, and a twelve-year-old to about 71. Dogs race through youth, then slow down.",
    "move": "A single conversion factor hides how a rate changes over time.",
    "ask": "Which rule of thumb am I applying the same way at every stage, when the rate actually changes?",
    "keywords": [
@@ -100750,9 +105243,9 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Wang et al., Cell Systems, 2020",
+   "source": "Wang et al., 2020; Yang et al., 2021",
    "source_kind": "paper",
-   "reference": "Wang et al., Quantitative translation of dog-to-human aging by conserved remodeling of the DNA methylome, Cell Systems, 2020",
+   "reference": "Wang et al., Cell Systems 11:176, 2020, doi:10.1016/j.cels.2020.06.006; Yang et al., Soft Matter 17:475, 2021, doi:10.1039/D0SM01230K",
    "written": "2026-10-03"
   },
   {
@@ -102211,8 +106704,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why can the same electric car have a footprint many times larger in Poland than in Norway?",
-   "answer": "Because the car runs on whatever the grid burns. Norway's electricity comes almost entirely from hydropower, at a few tens of grams of carbon dioxide per kilowatt-hour; Poland's leans on coal at over 600. A car using 0.18 kWh a kilometre emits about 108 grams per km in Poland; in Norway, a few.",
+   "question": "An electric car advert, worded the way many are. Where do the car's emissions actually go?",
+   "answer": "Up the power line. Norway's electricity is almost all hydropower, at a few tens of grams of carbon dioxide per kilowatt-hour; Poland's leans on coal, at over 600. A car using 0.18 kWh a kilometre emits about 108 grams per km in Poland, close to a frugal petrol car, and a few in Norway.",
    "move": "Ask what powers a thing, not just what it is called.",
    "ask": "Which of my choices looks clean but depends on something upstream I never see?",
    "keywords": [
@@ -102232,10 +106725,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Car advert",
+    "ref": "Typical text",
+    "title": "Drive electric",
+    "body": "Zero emissions. 100% electric, 0 g CO2/km. Charge at home and drive clean.",
+    "phrases": [
+     {
+      "text": "Zero emissions",
+      "plain": "Zero from the car itself",
+      "why": "Nothing leaves a tailpipe because there isn't one. The power station is another matter."
+     },
+     {
+      "text": "0 g CO2/km",
+      "plain": "0 g at the car, about 108 g/km on a coal grid",
+      "why": "At 0.18 kWh per km and 600 g per kWh. On Norway's hydropower, a few grams.",
+      "catch": true
+     },
+     {
+      "text": "drive clean",
+      "plain": "drive as clean as your grid",
+      "why": "The car runs on whatever the local power stations burn."
+     }
+    ],
+    "ask": "One number depends on a country the advert never names. Which?",
+    "watch": "For anything electric, ask what the local power stations burn."
+   },
    "source": "European Environment Agency, electricity emission intensity",
    "source_kind": "institution",
    "reference": "European Environment Agency, Greenhouse gas emission intensity of electricity generation in Europe, indicator assessment, 2023",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "nature-chain-reactions-1",
@@ -102438,30 +106958,128 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Climate has always changed. Why does that make today's warming more worrying, not less?",
-   "answer": "Because past changes show how strongly climate answers a push. Ice ages came and went on small wobbles in Earth's orbit, amplified by carbon dioxide. The IPCC found temperature has risen faster since 1970 than in any 50-year period for at least 2,000 years. A planet that swung on a nudge is now being shoved.",
-   "move": "Past swings measure how sensitive a system is, not how safe.",
-   "ask": "When I say it has always been like this, am I learning from the past or excusing the present?",
+   "question": "In 2015 a US magazine tweeted this as the only climate chart you need to see. The line is flat. Where's the trick?",
+   "answer": "In the scale. The axis spans 61 degrees, a Siberian winter to a desert noon, so a 0.6°C rise is a pixel. Yet the planet's average barely moves: the last ice age, with ice over Canada and northern Europe, was only about 6°C colder. On that ruler, 0.6°C is a tenth of an ice age.",
+   "move": "Before reading a flat line, ask how big a change would matter.",
+   "ask": "Which change in my life do I dismiss because it looks small on the wrong scale?",
    "keywords": [
-    "climate change",
-    "ice ages",
-    "ipcc",
-    "climate sensitivity"
+    "national review",
+    "global temperature",
+    "stretched axis",
+    "ice age"
    ],
-   "era": "timeless",
+   "era": "recent",
    "region": "world",
    "hook": "misconception",
    "mood": "sober",
-   "numeracy": 1,
-   "abstraction": "mixed",
+   "numeracy": 2,
+   "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "IPCC AR6 Working Group I, 2021",
-   "source_kind": "institution",
-   "reference": "IPCC, Climate Change 2021: The Physical Science Basis, Summary for Policymakers, statement A.2.2, Cambridge University Press, 2021",
-   "written": "2026-10-03"
+   "scene": {
+    "type": "trick",
+    "trick": "stretched",
+    "outlet": "Nat. Review, 2015 (redrawn)",
+    "headline": "The only climate chart you need to see",
+    "honest": "1980 to 2015: about 0.6°C warmer",
+    "label": "World average temperature",
+    "unit": "°C",
+    "decimals": 1,
+    "columns": [
+     "1980",
+     "1981",
+     "1982",
+     "1983",
+     "1984",
+     "1985",
+     "1986",
+     "1987",
+     "1988",
+     "1989",
+     "1990",
+     "1991",
+     "1992",
+     "1993",
+     "1994",
+     "1995",
+     "1996",
+     "1997",
+     "1998",
+     "1999",
+     "2000",
+     "2001",
+     "2002",
+     "2003",
+     "2004",
+     "2005",
+     "2006",
+     "2007",
+     "2008",
+     "2009",
+     "2010",
+     "2011",
+     "2012",
+     "2013",
+     "2014",
+     "2015"
+    ],
+    "values": [
+     14.26,
+     14.32,
+     14.14,
+     14.31,
+     14.16,
+     14.12,
+     14.18,
+     14.32,
+     14.39,
+     14.27,
+     14.45,
+     14.4,
+     14.22,
+     14.23,
+     14.31,
+     14.45,
+     14.33,
+     14.46,
+     14.61,
+     14.38,
+     14.39,
+     14.53,
+     14.62,
+     14.61,
+     14.53,
+     14.67,
+     14.63,
+     14.66,
+     14.54,
+     14.65,
+     14.72,
+     14.61,
+     14.64,
+     14.67,
+     14.74,
+     14.89
+    ],
+    "from": -18,
+    "to": 43,
+    "honestFrom": 14,
+    "honestTo": 15,
+    "found": "Yes: the axis runs from -18°C to 43°C, a year of weather.",
+    "miss": "That part tells the truth. Look at how much room the axis gives the line.",
+    "misses": {
+     "marks": "Those are NASA's yearly figures, redrawn in °C. It's the room around them.",
+     "headline": "A big claim, but the drawing does the persuading. Check the scale."
+    },
+    "name": "The stretched axis",
+    "lesson": "Decide what size of change would matter, then check the axis could even show it."
+   },
+   "source": "NASA GISTEMP v4; Tierney et al., Nature, 2020",
+   "source_kind": "statistics",
+   "reference": "https://data.giss.nasa.gov/gistemp/",
+   "written": "2026-10-06"
   },
   {
    "id": "nature-clouds-1",
@@ -102471,8 +107089,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does a cloud holding hundreds of tonnes of water not fall out of the sky?",
-   "answer": "Its droplets do fall, too slowly to see. A droplet 0.02 mm across sinks about 1 cm a second, so the gentlest rising air holds it. The water is a tiny share: about half a gram per cubic metre, inside a kilogram of air. A cloud is air with a faint mist in it.",
+   "question": "Why doesn't a cloud holding hundreds of tonnes of water fall out of the sky?",
+   "answer": "Because it is falling, only more slowly than the air is rising. As a drop shrinks, its weight drops much faster than the drag on it, so the smallest barely sink. Rain begins only when droplets merge into drops about a million times bigger by volume, heavy enough to beat the updraft.",
    "move": "Before asking why something stays up, check how fast it is coming down.",
    "ask": "What do I wonder why it is still up, without noticing how fast it is coming down?",
    "keywords": [
@@ -102491,6 +107109,39 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "A small, fluffy cloud holds hundreds of tonnes of water."
+    },
+    "levels": [
+     {
+      "text": "The water is spread thin: half a gram in each cubic metre.",
+      "figure": "0.5 g",
+      "unit": "of water per m³ of cloud"
+     },
+     {
+      "text": "Tiny droplets meet huge drag for their weight and sink very slowly.",
+      "figure": "~1 cm/s",
+      "unit": "a droplet's fall speed"
+     },
+     {
+      "text": "Air rising even gently inside a cloud moves faster than that."
+     },
+     {
+      "text": "The cloud is falling, just slower than the air lifts it."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Rising air beats the fall",
+      "Vapour is lighter than air",
+      "Static holds drops up"
+     ],
+     "answer": 0
+    }
+   },
    "source": "Wallace & Hobbs, Atmospheric Science, 2006",
    "source_kind": "book",
    "reference": "Wallace & Hobbs, Atmospheric Science: An Introductory Survey, 2nd edition, Academic Press, 2006",
@@ -104381,20 +109032,19 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What were Luis and Walter Alvarez trying to measure when they found the iridium spike?",
-   "answer": "How long a thin clay layer at Gubbio, Italy, took to settle. Iridium is scarce in Earth's crust but arrives steadily in space dust, so they hoped to use it as a clock. The clay held about 30 times the usual level: one huge delivery, not a drizzle. The clock became the crime scene.",
-   "move": "An instrument built to answer one question can overturn a bigger one.",
-   "ask": "What question am I measuring that might hide a much bigger one in my data?",
+   "question": "A thin layer of clay marks the moment the dinosaurs vanished, 66 million years ago. What killed them?",
+   "answer": "An asteroid about 10 km across. The Alvarezes wanted iridium as a clock for how slowly the clay settled; the spike made the clock a crime scene. But iridium alone could not convict. Quieter tests struck off the other suspects.",
+   "move": "The striking clue opens the case; the dull ones that exclude rivals close it.",
    "keywords": [
     "iridium",
     "alvarez",
-    "gubbio",
-    "cretaceous-paleogene boundary",
+    "shocked quartz",
+    "chicxulub",
     "asteroid impact"
    ],
    "era": "twentieth",
    "region": "europe",
-   "hook": "origin",
+   "hook": "puzzle",
    "mood": "wonder",
    "numeracy": 1,
    "abstraction": "concrete",
@@ -104402,10 +109052,51 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "Volcanoes",
+     "Supernova",
+     "Asteroid"
+    ],
+    "answer": 2,
+    "clues": [
+     {
+      "text": "Worldwide, one thin clay layer divides rocks with dinosaurs from rocks without.",
+      "tag": "One thin layer",
+      "rulesOut": []
+     },
+     {
+      "text": "The clay holds about 30 times the usual iridium, a metal rare in Earth's crust.",
+      "tag": "Iridium spike",
+      "rulesOut": []
+     },
+     {
+      "text": "No plutonium-244, which a nearby supernova would have spread, is in the clay.",
+      "tag": "No plutonium-244",
+      "rulesOut": [
+       1
+      ]
+     },
+     {
+      "text": "Quartz grains in the layer are shocked, a scar left only by violent impacts.",
+      "tag": "Shocked quartz",
+      "rulesOut": [
+       0
+      ]
+     },
+     {
+      "text": "In 1991 a buried crater about 180 km wide, in Mexico, is dated to that moment.",
+      "tag": "Crater in Mexico",
+      "rulesOut": []
+     }
+    ],
+    "why": "Volcanoes can't shock quartz, and a supernova would leave plutonium. The crater only confirmed it."
+   },
    "source": "Alvarez et al., Science, 1980",
    "source_kind": "paper",
    "reference": "Alvarez, Alvarez, Asaro & Michel, Extraterrestrial cause for the Cretaceous-Tertiary extinction, Science, 1980",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "nature-dinosaurs-2",
@@ -105262,8 +109953,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "A forecaster says 70% chance of rain and the day stays dry. How can anyone tell if she was right?",
-   "answer": "Only over many forecasts. Gather every day she said 70%: if it rained on about 70% of them, she is well calibrated, and that dry day was one of the expected 30%. Murphy and Winkler ran this check on US rain forecasts in the 1970s and found them close to their stated odds.",
+   "question": "A forecaster says 70% chance of rain, and the day stays dry. How many forecasts before anyone can tell if she is good?",
+   "answer": "Many. Gather every day she said 70%: if it rained on about 70% of them, she is well calibrated, and the dry day was one of the expected 30%. Murphy and Winkler ran this check on US rain forecasts in the 1970s and found them close to their stated odds.",
    "move": "Judge anyone who speaks in odds on many calls, never on one.",
    "ask": "Whose judgement have I written off because of one call that went the other way?",
    "keywords": [
@@ -105285,7 +109976,27 @@ const String kEmbeddedBank = r'''
    "source": "Murphy & Winkler, Applied Statistics, 1977",
    "source_kind": "paper",
    "reference": "Murphy & Winkler, Reliability of subjective probability forecasts of precipitation and temperature, Journal of the Royal Statistical Society Series C (Applied Statistics), 1977",
-   "written": "2026-10-03"
+   "written": "2026-10-03",
+   "scene": {
+    "type": "sample",
+    "dots": "Simulated 70% days",
+    "hit": "It rained",
+    "rate": 0.7,
+    "steps": [
+     5,
+     20,
+     100,
+     1000
+    ],
+    "seed": 210,
+    "button": "More forecasts",
+    "notes": [
+     "Five days at 70%: rain on two, 40%. She looks hopeless, yet she is exact.",
+     "20 days: 80% rained. Now she looks timid.",
+     "100 days: 66%. Close to her word.",
+     "1,000 days: 72%. Only a long record shows she means 70%."
+    ]
+   }
   },
   {
    "id": "nature-forecast-odds-2",
@@ -105973,8 +110684,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do nitrogen and oxygen, 99% of the air, trap almost no heat while carbon dioxide does?",
-   "answer": "Because of their shape. To absorb infrared, a molecule must bend or stretch in a way that shifts its electric charge. Nitrogen and oxygen are pairs of identical atoms, so their vibrations stay balanced; carbon dioxide's three atoms can bend lopsidedly. So a gas at 0.04% of the air does the work 99% cannot.",
+   "question": "Why does a trace of carbon dioxide trap heat that nitrogen and oxygen let through?",
+   "answer": "Because Earth sheds its heat as infrared, and only molecules that vibrate lopsidedly can absorb it. Carbon dioxide's bend absorbs near 15 micrometres, close to the peak of the infrared Earth gives off. Water vapour and methane work the same way. A trace gas with the right shape does what the bulk cannot.",
    "move": "A share of the total says little; ask what each part can do.",
    "ask": "Who in my team or family is a small part with an outsized effect?",
    "keywords": [
@@ -105994,6 +110705,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "CO₂ is a sliver of the air, yet it warms the planet."
+    },
+    "levels": [
+     {
+      "text": "The other 99%, nitrogen and oxygen, let heat radiation pass."
+     },
+     {
+      "text": "To catch infrared, a molecule must shift its charge as it vibrates."
+     },
+     {
+      "text": "Nitrogen and oxygen are pairs of identical atoms: charge stays even."
+     },
+     {
+      "text": "CO₂ can bend lopsided. Shape, not amount, decides.",
+      "figure": "0.04%",
+      "unit": "of the air is CO₂"
+     }
+    ],
+    "guess": {
+     "options": [
+      "CO₂ is heavier and sinks",
+      "Its shape catches heat",
+      "It is a darker gas"
+     ],
+     "answer": 1
+    }
+   },
    "source": "Pierrehumbert, Principles of Planetary Climate, 2010",
    "source_kind": "book",
    "reference": "Pierrehumbert, Principles of Planetary Climate, Cambridge University Press, 2010",
@@ -106082,7 +110824,7 @@ const String kEmbeddedBank = r'''
     "type": "slider",
     "control": "Carbon dioxide in the air",
     "controlUnit": "ppm",
-    "readout": "Extra heating at the surface",
+    "readout": "Extra heat trapped",
     "readoutUnit": "W/m²",
     "start": 280,
     "step": 10,
@@ -107017,10 +111759,10 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did scientists show that painted lady butterflies found in South America had flown across the Atlantic?",
-   "answer": "From their pollen and the chemistry of their wings. Painted ladies found on a beach in French Guiana carried DNA from West African pollen, and isotopes in their wings pointed to birthplaces in Europe or Africa. Winds that week blew west off Africa: a crossing of at least 4,200 km with nowhere to land.",
+   "question": "October 2013: painted lady butterflies turn up on a beach in French Guiana, where the species does not live. Where from?",
+   "answer": "From across the Atlantic, out of West Africa, after a birth probably in Europe, as isotopes in their wings suggest. That is at least 4,200 km over open sea with nowhere to land, helped by winds blowing west.",
    "move": "A traveller's baggage can tell you where it has been.",
-   "ask": "What does the trail someone leaves behind tell me about where they have been?",
+   "ask": "What does the baggage around me say about where it has been?",
    "keywords": [
     "painted lady",
     "atlantic crossing",
@@ -107038,10 +111780,46 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "map",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "Local hatch",
+     "North America",
+     "Europe or Africa"
+    ],
+    "answer": 2,
+    "clues": [
+     {
+      "text": "Painted ladies do not breed in this part of South America.",
+      "tag": "Not native here",
+      "rulesOut": [
+       0
+      ]
+     },
+     {
+      "text": "Their genes match European and African populations, not North American ones.",
+      "tag": "Old World genes",
+      "rulesOut": [
+       1
+      ]
+     },
+     {
+      "text": "They carry pollen from shrubs that grow only in tropical Africa.",
+      "tag": "African pollen",
+      "rulesOut": []
+     },
+     {
+      "text": "Winds that week blew west off Africa, over 4,200 km of open sea.",
+      "tag": "Winds off Africa",
+      "rulesOut": []
+     }
+    ],
+    "why": "The pollen is the vivid clue, but the genes had already settled it: these are Old World butterflies."
+   },
    "source": "Suchan et al., Nature Communications, 2024",
    "source_kind": "paper",
    "reference": "Suchan et al., A trans-oceanic flight of over 4,200 km by painted lady butterflies, Nature Communications, 2024",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "nature-migration-5",
@@ -107435,8 +112213,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does the EU cap how much copper organic vineyards may spray on their vines?",
-   "answer": "Because the copper builds up in the soil. Copper sprays are among the few fungicides organic growers may use against mildew, and unlike synthetic ones they never break down. Over decades the metal accumulates and harms earthworms and soil microbes. Since 2019 EU rules allow at most 28 kg per hectare over seven years.",
+   "question": "The back label of a bottle of organic wine. What may its vines still have been sprayed with?",
+   "answer": "Copper. It is one of the few fungicides organic growers may use against mildew, and unlike synthetic sprays, which break down, a metal never does. Over decades it builds up in vineyard soil and harms earthworms and soil microbes. Since 2019 EU rules allow at most 28 kg of copper per hectare over seven years.",
    "move": "Ask what a permitted remedy leaves behind, not just what it is.",
    "ask": "Which of my natural or safe choices leaves something behind that builds up over the years?",
    "keywords": [
@@ -107456,10 +112234,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Organic wine",
+    "ref": "Back label",
+    "title": "Certified organic",
+    "body": "Made from organically grown grapes. No synthetic pesticides or fertilisers. Kind to the land.",
+    "phrases": [
+     {
+      "text": "organically grown grapes",
+      "plain": "grapes grown under EU organic rules",
+      "why": "Organic is a legal list of what may be used. Since 2019 it caps copper at 4 kg/ha a year."
+     },
+     {
+      "text": "No synthetic pesticides",
+      "plain": "No synthetic pesticides; copper sprays allowed",
+      "why": "Copper is one of few fungicides organic growers may use against mildew.",
+      "catch": true
+     },
+     {
+      "text": "Kind to the land",
+      "plain": "Kind, apart from metal building up in the soil",
+      "why": "Copper never breaks down. Over decades it harms earthworms and soil microbes."
+     }
+    ],
+    "ask": "One phrase is true and leaves out a metal. Which?",
+    "watch": "Natural tells you where a thing came from, not what it leaves behind."
+   },
    "source": "European Commission, Regulation (EU) 2018/1981",
    "source_kind": "institution",
    "reference": "Commission Implementing Regulation (EU) 2018/1981 renewing the approval of the active substances copper compounds, Official Journal of the European Union, 2018",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "nature-natural-is-better-3",
@@ -108130,8 +112935,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did Indonesia fight a rice pest in 1986 by banning 57 insecticides?",
-   "answer": "Because the sprays were breeding the pest. Broad insecticides killed the spiders and other predators that kept brown planthoppers in check, while the planthoppers bounced back faster and grew resistant. After a severe outbreak, a presidential decree banned 57 products on rice and backed farmer field schools. Spraying fell and harvests held.",
+   "question": "Indonesia's rice pest grew worse with every spraying. What did a spray ban do?",
+   "answer": "Broad sprays kill the hunters as well as the hunted, and the plant-eaters, breeding faster, rebound first into fields with nothing left to eat them; planthoppers also grew resistant. Removing the fix let spiders and other predators return, while farmer field schools taught growers to count insects before reaching for a spray.",
    "move": "When a fix keeps failing, ask whether it is feeding the problem.",
    "ask": "Which fix do I keep reaching for that may be what makes the problem come back?",
    "keywords": [
@@ -108151,10 +112956,54 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "Java, 1970s and 1980s",
+      "glyph": "calendar",
+      "line": "Rice farmers spray broad insecticides, often on a schedule."
+     },
+     {
+      "fact": "Brown planthopper",
+      "glyph": "rise",
+      "line": "A tiny pest keeps coming back, worse each time."
+     },
+     {
+      "fact": "More spraying",
+      "glyph": "cross",
+      "line": "The outbreaks grow anyway."
+     },
+     {
+      "fact": "November 1986",
+      "glyph": "ban",
+      "line": "A decree bans 57 insecticides on rice."
+     }
+    ],
+    "ask": "What happens to the planthopper?",
+    "options": [
+     {
+      "label": "No real change"
+     },
+     {
+      "label": "It comes back worse"
+     },
+     {
+      "label": "It falls back"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "Late 1980s",
+     "glyph": "fall",
+     "line": "Outbreaks faded, spraying fell, and harvests held."
+    },
+    "why": "The sprays killed the spiders that ate planthoppers, and the pest bred back first."
+   },
    "source": "Matteson, Annual Review of Entomology, 2000",
    "source_kind": "paper",
    "reference": "Matteson, Insect pest management in tropical Asian irrigated rice, Annual Review of Entomology, 2000",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "nature-pests-2",
@@ -109140,8 +113989,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What wiped out most of the native tree snails of Tahiti and Moorea within a few decades?",
-   "answer": "Another snail, released on purpose. On Tahiti in 1974 and Moorea in 1977, the predatory rosy wolf snail was let loose to control the giant African land snail. It preferred native Partula tree snails and spread across the Society Islands: about 55 of their 61 species vanished from the wild. Several survived only in zoos.",
+   "question": "Tahiti brought in a predatory snail to eat a pest snail. What did it eat?",
+   "answer": "A hunter eats what is easiest, not what it was hired for. The native Partula were small, slow and had never faced a snail-eating predator; the wolf snail followed their slime trails up into the trees. Several species survive only because zoos bred them, and some have since gone back to the islands.",
    "move": "A remedy free to choose its targets may not choose yours.",
    "ask": "Which remedy I introduced is free to choose its own targets, and not mine?",
    "keywords": [
@@ -109160,10 +114009,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "Tahiti and Moorea",
+      "glyph": "pin",
+      "line": "Dozens of kinds of tree snail live here and nowhere else."
+     },
+     {
+      "fact": "Giant African land snail",
+      "glyph": "rise",
+      "line": "An introduced snail is eating crops and gardens."
+     },
+     {
+      "fact": "Tahiti 1974, Moorea 1977",
+      "glyph": "check",
+      "line": "Officials free a snail that eats snails: the rosy wolf snail."
+     }
+    ],
+    "ask": "What does the hunter mostly eat?",
+    "options": [
+     {
+      "label": "The crop pest"
+     },
+     {
+      "label": "Nothing: it dies out"
+     },
+     {
+      "label": "The native tree snails"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "Society Islands",
+     "glyph": "cross",
+     "line": "The native snails. About 55 of 61 kinds vanished from the wild."
+    },
+    "why": "A predator eats what is easiest to catch, not what it was brought in to catch."
+   },
    "source": "Haponski et al., Evolutionary Applications, 2019",
    "source_kind": "paper",
    "reference": "Haponski et al., Deconstructing an infamous extinction crisis: Survival of Partula species on Moorea and Tahiti, Evolutionary Applications, 2019",
-   "written": "2026-09-27"
+   "written": "2026-10-06"
   },
   {
    "id": "nature-recent-losses-8",
@@ -109252,9 +114140,9 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did scientists conclude in 2006 that the Yangtze river dolphin was probably gone, and what had killed it?",
-   "answer": "By searching its whole range, twice. A six-week survey in 2006 sent two boats about 3,400 km up and down the Yangtze, with observers and underwater microphones, and found no baiji. Turvey and colleagues blamed mainly accidental deaths in fishing gear, such as electrofishing, not hunting. Nobody had set out to kill it.",
-   "move": "Harm that nobody intends can still add up to an ending.",
+   "question": "The Yangtze river dolphin was declared probably extinct in 2006. Which of these animals are gone, and which turned up alive?",
+   "answer": "Searching is what separates the two piles. The baiji was written off only after a six-week survey sent two boats 3,400 km along its whole range, with observers and underwater microphones. Most animals found alive had been given up without anyone looking in the right place: a sea stack, a valley, an islet.",
+   "move": "A missing animal is only gone once someone has searched everywhere it could be.",
    "keywords": [
     "baiji",
     "yangtze river",
@@ -109271,6 +114159,56 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "map",
+   "scene": {
+    "type": "sort",
+    "left": "Gone",
+    "right": "Alive",
+    "tag": "Missing, presumed extinct",
+    "items": [
+     {
+      "text": "Baiji",
+      "note": "The Yangtze river dolphin.",
+      "pile": "left",
+      "verdict": "A 2006 survey covered 3,400 km of the river and found none."
+     },
+     {
+      "text": "Coelacanth",
+      "note": "A fish known from 66-million-year-old fossils.",
+      "pile": "right",
+      "verdict": "A trawler landed one off South Africa in 1938."
+     },
+     {
+      "text": "Takahē",
+      "note": "A flightless New Zealand bird, written off by 1900.",
+      "pile": "right",
+      "verdict": "Found again in the Murchison Mountains in 1948."
+     },
+     {
+      "text": "Thylacine",
+      "note": "The Tasmanian tiger.",
+      "pile": "left",
+      "verdict": "The last known one died in a Hobart zoo in 1936."
+     },
+     {
+      "text": "Stick insect",
+      "note": "A giant Lord Howe Island insect, wiped out by rats in the 1920s.",
+      "pile": "right",
+      "verdict": "In 2001, 24 were found on Ball's Pyramid, a sea stack 23 km away."
+     },
+     {
+      "text": "Cahow",
+      "note": "The Bermuda petrel, unseen for about 300 years.",
+      "pile": "right",
+      "verdict": "Eighteen nesting pairs turned up on Bermuda's islets in 1951."
+     },
+     {
+      "text": "Golden toad",
+      "note": "A bright orange toad of Costa Rica's cloud forest.",
+      "pile": "left",
+      "verdict": "Last seen in 1989, declared extinct in 2004."
+     }
+    ]
+   },
    "source": "Turvey et al., Biology Letters, 2007",
    "source_kind": "paper",
    "reference": "Turvey et al., First human-caused extinction of a cetacean species?, Biology Letters, 2007",
@@ -109774,7 +114712,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "easy",
    "principle": "none",
    "question": "Why does a dog so often lose sight of a red ball thrown onto green grass?",
-   "answer": "Because to a dog, red and green look much alike. Dogs have two kinds of colour cone where most people have three, so they tell blue from yellow but not red from green. Colour tests confirmed it. A red ball on a lawn is dull on dull; a blue one stands out.",
+   "answer": "Because the toy was designed for the person paying for it. Neitz, Geist and Jacobs tested dogs in 1989 and found two-cone vision, much like a red-green colour-blind person's: not black and white, just fewer colours. A red ball on a lawn is dull on dull; a blue or yellow one stands out.",
    "move": "What is obvious to you may be invisible to someone wired differently.",
    "ask": "What am I sure is obvious that the people around me may simply not be able to see?",
    "keywords": [
@@ -109793,6 +114731,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "The dog runs straight past the red ball on the lawn."
+    },
+    "levels": [
+     {
+      "text": "To a dog, the red ball and the green grass look much alike."
+     },
+     {
+      "text": "Dogs have two kinds of colour cone; most people have three."
+     },
+     {
+      "text": "With two, they tell blue from yellow but not red from green."
+     },
+     {
+      "text": "Red toys are chosen for the buyer's eyes, not the dog's."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Dogs track by smell",
+      "Red suits human eyes",
+      "Dogs see in grey"
+     ],
+     "answer": 1
+    }
+   },
    "source": "Neitz, Geist & Jacobs, Visual Neuroscience, 1989",
    "source_kind": "paper",
    "reference": "Neitz, Geist & Jacobs, Color vision in the dog, Visual Neuroscience, 1989",
@@ -110006,8 +114973,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How much of the heat a hurricane releases ends up driving its winds?",
-   "answer": "About a quarter of one percent. NOAA's hurricane researchers put the heat released by condensing rain at around 600 terawatts, some 200 times the world's electricity-generating capacity. Keeping the winds going takes about 1.5 terawatts. Most of the heat is carried aloft and radiated to space: a vast furnace turning a modest fan.",
+   "question": "A hurricane's rain releases heat as water vapour condenses. How many times the world's electricity-generating capacity is that?",
+   "answer": "About 200 times: some 600 terawatts, NOAA's hurricane researchers estimate. Only about 1.5 terawatts, a quarter of one percent, keeps the winds going. The rest is carried aloft in the clouds and radiated to space. A hurricane is a vast furnace turning a modest fan.",
    "move": "Judge an engine by what reaches the wheels, not by what it burns.",
    "ask": "Do I judge my effort by what reaches the result, or by how much I burn?",
    "keywords": [
@@ -110042,10 +115009,40 @@ const String kEmbeddedBank = r'''
     ],
     "caption": "Of 600 terawatts of heat, 1.5 drive the winds: a quarter of one percent."
    },
+   "scene": {
+    "type": "count",
+    "unit": "times all the power stations on Earth",
+    "answer": 200,
+    "each": 1,
+    "eachLabel": "1 dot = every power plant on Earth",
+    "compare": "Yet only 0.25% of it drives the wind",
+    "options": [
+     {
+      "label": "A tenth",
+      "value": 0.1,
+      "note": "Three zeros short. One hurricane outpowers every plant on Earth combined."
+     },
+     {
+      "label": "About 2",
+      "value": 2,
+      "note": "Two zeros short. About 600 terawatts of heat, from vapour turning to rain."
+     },
+     {
+      "label": "About 200",
+      "value": 200,
+      "note": "Right: about 200 times. Yet the winds take only a quarter of one percent."
+     },
+     {
+      "label": "About 20,000",
+      "value": 20000,
+      "note": "Two zeros too many. Still, 600 terawatts, from rain forming in clouds."
+     }
+    ]
+   },
    "source": "NOAA Hurricane Research Division",
    "source_kind": "institution",
    "reference": "https://www.aoml.noaa.gov/hrd-faq/",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "nature-storms-5",
@@ -110508,16 +115505,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did China's 1958 campaign to kill sparrows end with more crops lost, not fewer?",
-   "answer": "Because sparrows eat insects as well as grain. Millions of people banged pots until exhausted birds dropped dead, and sparrow numbers collapsed. With a predator gone, locusts and other insects swarmed the fields. By 1960 bedbugs replaced sparrows on the official list of pests, and crop losses fed a famine already under way.",
+   "question": "Four times people fixed nature's pests by bringing in or wiping out an animal or plant. What went wrong each time?",
+   "answer": "The mongoose is the one people miss, because the plan looked perfect on paper. Mongooses were shipped to Hawaii's cane fields in 1883 to eat rats, but mongooses hunt by day and rats come out at night. They ate ground birds' eggs instead. Each fix met a system with a job nobody had listed.",
    "move": "Before removing a nuisance, ask what else it was quietly doing.",
    "ask": "What irritating thing in my life might be doing a job I have never noticed?",
    "keywords": [
     "four pests campaign",
     "sparrows",
-    "china",
-    "locusts",
-    "famine"
+    "cane toads",
+    "mongoose",
+    "kudzu"
    ],
    "era": "twentieth",
    "region": "asia",
@@ -110529,10 +115526,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "The fix",
+    "rightTitle": "What went wrong",
+    "pairs": [
+     {
+      "left": "Kill the sparrows",
+      "right": "Locusts with nothing left to eat them",
+      "note": "China, 1958. Sparrows ate insects too, and a famine was already starting."
+     },
+     {
+      "left": "Bring in cane toads",
+      "right": "Toads that ignored the beetle and spread",
+      "note": "Australia, 1935. The beetles lived high on the cane, out of reach."
+     },
+     {
+      "left": "Bring in mongooses",
+      "right": "Rat-hunters awake while the rats slept",
+      "note": "Hawaii, 1883. Mongooses hunt by day, rats by night.",
+      "missed": true
+     },
+     {
+      "left": "Plant kudzu",
+      "right": "A vine meant to hold soil that took over",
+      "note": "US farmers were paid to plant it against erosion. It now smothers trees."
+     }
+    ]
+   },
    "source": "Shapiro, Mao's War against Nature, 2001",
    "source_kind": "book",
    "reference": "Shapiro, Mao's War against Nature: Politics and the Environment in Revolutionary China, Cambridge University Press, 2001",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "nature-unintended-fixes-2",
@@ -112408,8 +117433,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What room for free will did Benjamin Libet keep after his own experiments seemed to rule it out?",
-   "answer": "A veto. In Libet's 1983 study the brain's build-up began about 550 milliseconds before a flick of the wrist; people reported deciding only about 200 milliseconds before it. Libet argued that the conscious mind, too late to start the act, was still in time to cancel it in the final tenth of a second.",
+   "question": "In Benjamin Libet's 1983 experiment, people flicked a wrist whenever they chose. How long before the flick did their brain start preparing?",
+   "answer": "About 550 milliseconds, while people reported feeling the decision only about 200 ms before moving. Libet did not call will an illusion. He argued that the conscious mind, too late to start the act, was still in time to cancel it, in the last tenth of a second or so. That reading is disputed.",
    "move": "Where you cannot start something, look for the point where you can still stop it.",
    "ask": "I can't control when an urge starts, but can I still choose whether to act on it?",
    "keywords": [
@@ -112428,39 +117453,22 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
-   "diagram": {
-    "type": "timeline",
-    "from": -600,
-    "to": 0,
-    "unit": "ms",
-    "events": [
-     {
-      "at": -550,
-      "label": "brain's build-up begins"
-     },
-     {
-      "at": -200,
-      "label": "felt decision"
-     },
-     {
-      "at": 0,
-      "label": "wrist flicks",
-      "hi": true
-     }
-    ],
-    "spans": [
-     {
-      "from": -100,
-      "to": 0,
-      "label": "veto window"
-     }
-    ],
-    "caption": "The brain starts 350 ms before the felt decision, leaving the mind only a late veto."
-   },
-   "source": "Libet, Journal of Consciousness Studies, 1999",
+   "source": "Libet et al., Brain, 1983",
    "source_kind": "paper",
-   "reference": "Libet, Do We Have Free Will?, Journal of Consciousness Studies 6 (8-9), 1999",
-   "written": "2026-09-26"
+   "reference": "Libet, Gleason, Wright & Pearl, Time of conscious intention to act in relation to onset of cerebral activity (readiness-potential), Brain 106(3), 1983; Libet, Do We Have Free Will?, Journal of Consciousness Studies 6(8-9), 1999",
+   "written": "2026-10-06",
+   "scene": {
+    "type": "hold",
+    "what": "Brain build-up before the flick",
+    "seconds": 0.55,
+    "display": "ms",
+    "comparisons": [
+     {
+      "label": "Feeling of deciding",
+      "seconds": 0.2
+     }
+    ]
+   }
   },
   {
    "id": "philosophy-choice-3",
@@ -115881,16 +120889,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Before criticising someone's view, what did Daniel Dennett say you should first be able to do?",
-   "answer": "Restate it so clearly that its holder says: thanks, I wish I had put it that way. Dennett called this the first of Rapoport's rules, after the game theorist Anatol Rapoport. Next, list where you agree and what you learned; only then criticise. A victory over a view nobody holds wins nothing.",
+   "question": "Four replies heard in any argument, each one a known way of dodging the point. Which dodge is each?",
+   "answer": "The smoker's reply is the one people miss, because hypocrisy feels like a refutation. It is not: a doctor who smokes is still right about lungs. Daniel Dennett's advice, after Anatol Rapoport, stops all four at the root: restate the other view so well its holder thanks you, and only then criticise.",
    "move": "Earn the right to disagree by stating the other view better than its holder.",
    "ask": "Could I explain the view I most disagree with so well that the people who hold it would nod?",
    "keywords": [
-    "daniel dennett",
-    "rapoport's rules",
-    "steelmanning",
-    "disagreement",
-    "criticism"
+    "straw man",
+    "false dilemma",
+    "appeal to nature",
+    "tu quoque",
+    "rapoport's rules"
    ],
    "era": "recent",
    "region": "none",
@@ -115902,10 +120910,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "The dodge",
+    "rightTitle": "Heard as",
+    "pairs": [
+     {
+      "left": "Straw man",
+      "right": "'So you want no rules at all?'",
+      "note": "It defeats a view nobody holds. The cure: restate theirs first."
+     },
+     {
+      "left": "False choice",
+      "right": "'Either we cut taxes or the economy dies'",
+      "note": "Two options are offered as if there were no third."
+     },
+     {
+      "left": "Appeal to nature",
+      "right": "'It's natural, so it can't hurt'",
+      "note": "Hemlock and arsenic are natural too."
+     },
+     {
+      "left": "Tu quoque (you too)",
+      "right": "'You smoke too, so don't lecture me'",
+      "note": "A hypocrite can still be right. Her habit says nothing about lungs.",
+      "missed": true
+     }
+    ]
+   },
    "source": "Dennett, Intuition Pumps, 2013",
    "source_kind": "book",
    "reference": "Dennett, Intuition Pumps and Other Tools for Thinking, W. W. Norton, 2013",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "philosophy-good-arguments-3",
@@ -117338,8 +122374,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When Robert Nozick put the two-box predictor puzzle to friends and students, what did he find?",
-   "answer": "That nearly everyone found the answer perfectly obvious, and they split almost evenly between the two answers, each half thinking the other silly. Nozick published the puzzle in 1969, crediting the physicist William Newcomb. Surveys of philosophers still show the split. Feeling certain told nobody which side was right.",
+   "question": "Box A holds $1,000. Box B holds $1 million only if a near-perfect predictor foresaw you taking B alone. Which do you take?",
+   "answer": "Nozick found almost everyone thought the answer obvious, and they split nearly in half, each side thinking the other silly. Both arguments hold on their own terms: one counts who walks away rich, the other notes that nothing you do now can change what is in the boxes. Feeling certain decided nothing.",
    "move": "When an answer feels obvious, check how many careful people find the opposite obvious.",
    "ask": "On which question am I sure the other side is silly, though thoughtful people hold it?",
    "keywords": [
@@ -117353,16 +122389,37 @@ const String kEmbeddedBank = r'''
    "region": "none",
    "hook": "paradox",
    "mood": "playful",
-   "numeracy": 0,
+   "numeracy": 1,
    "abstraction": "abstract",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Nozick, Newcomb's Problem, 1969",
+   "scene": {
+    "type": "poll",
+    "who": "31,000 Guardian readers, Bellos 2016",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "Only box B",
+        "share": 54,
+        "mirror": "Like 54% of readers. You trust the track record: one-boxers walk off rich, almost every time."
+       },
+       {
+        "label": "Both boxes",
+        "share": 46,
+        "mirror": "Like 46% of readers, and most philosophers who pick a side. The money is there, or not."
+       }
+      ]
+     }
+    ],
+    "why": "One rule says do what the winners do; another says the boxes are already filled, so take both."
+   },
+   "source": "Nozick, 1969; Bellos, The Guardian, 2016",
    "source_kind": "book",
-   "reference": "Nozick, Newcomb's Problem and Two Principles of Choice, in Rescher (ed.), Essays in Honor of Carl G. Hempel, Reidel, 1969",
-   "written": "2026-10-03"
+   "reference": "Nozick, Newcomb's Problem and Two Principles of Choice, in Rescher (ed.), Essays in Honor of Carl G. Hempel, Reidel, 1969; Alex Bellos, Newcomb's problem poll, The Guardian, 2016",
+   "written": "2026-10-06"
   },
   {
    "id": "philosophy-newcomb-2",
@@ -118669,20 +123726,20 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When two planets strayed from Newton's predictions, how did the same explanation end so differently?",
-   "answer": "One found a planet, the other invented one. Blaming an unseen world for Uranus's wanderings led Le Verrier to Neptune in 1846. Blaming another for an unexplained turn of Mercury's orbit gave Vulcan, which does not exist; relativity explained the turn, about a hundredth of a degree a century, in 1915.",
-   "move": "When a prediction fails, the evidence rarely says which assumption broke.",
-   "ask": "When one of my plans fails, which assumption broke, and how do I know?",
+   "question": "Mercury's orbit swings round a little more each century than Newton's law allows. What is causing the extra turn?",
+   "answer": "Gravity itself: Newton's law is slightly wrong near the Sun. After Neptune, a hidden planet, Vulcan, was the obvious bet, and some even claimed to see it. Einstein's relativity, in 1915, gave the missing 43 arcseconds with nothing adjusted.",
+   "move": "When the trick that worked last time fails, suspect the rule itself.",
+   "ask": "When my plan fails, which assumption broke?",
    "keywords": [
-    "neptune",
+    "mercury's orbit",
     "vulcan",
     "le verrier",
-    "mercury's orbit",
-    "underdetermination"
+    "general relativity",
+    "neptune"
    ],
    "era": "nineteenth",
    "region": "europe",
-   "hook": "paradox",
+   "hook": "puzzle",
    "mood": "wonder",
    "numeracy": 1,
    "abstraction": "mixed",
@@ -118690,10 +123747,46 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "Hidden planet",
+     "Flattened Sun",
+     "New gravity"
+    ],
+    "answer": 2,
+    "clues": [
+     {
+      "text": "Mercury's closest point to the Sun creeps 43 arcseconds a century too far.",
+      "tag": "43 arcseconds too far",
+      "rulesOut": []
+     },
+     {
+      "text": "The same puzzle with Uranus ended in 1846: Neptune, found where predicted.",
+      "tag": "Neptune found that way",
+      "rulesOut": []
+     },
+     {
+      "text": "Decades of eclipse watches find no planet inside Mercury's orbit.",
+      "tag": "No inner planet seen",
+      "rulesOut": [
+       0
+      ]
+     },
+     {
+      "text": "Measured edge to edge, the Sun is round to a few parts in a million.",
+      "tag": "The Sun is too round",
+      "rulesOut": [
+       1
+      ]
+     }
+    ],
+    "why": "No planet, and a Sun too round to tug. With nothing left to blame, Newton's law itself had to give."
+   },
    "source": "Baum & Sheehan, In Search of Planet Vulcan",
    "source_kind": "book",
    "reference": "Baum & Sheehan, In Search of Planet Vulcan: The Ghost in Newton's Clockwork Universe, Plenum Press, 1997",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "philosophy-science-5",
@@ -119156,8 +124249,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How has Japan's Ise shrine kept its ancient form when none of its wood is more than 20 years old?",
-   "answer": "By being rebuilt every 20 years on the empty plot beside it, identical to the joint, before the old one comes down. The rite goes back about 1,300 years, though it lapsed for over a century during the civil wars of the 1400s and 1500s. What endures is the carpenters' knowledge, not the timber.",
+   "question": "Japan's Ise shrine is rebuilt, identical to the joint, on the empty plot beside it every 20 years. How many times has that been done?",
+   "answer": "62 times. The rite began in the late 600s and lapsed for over a century during the civil wars of the 1400s and 1500s. None of its timber is over 20 years old, yet the shrine is called ancient. What endures is the carpenters' knowledge, not the wood.",
    "move": "Some things last by being remade, not by being kept.",
    "ask": "What in my life lasts only because I keep rebuilding it?",
    "keywords": [
@@ -119168,18 +124261,48 @@ const String kEmbeddedBank = r'''
    ],
    "era": "timeless",
    "region": "asia",
-   "hook": "mechanism",
+   "hook": "number",
    "mood": "wonder",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "rebuildings, the latest in 2013",
+    "answer": 62,
+    "each": 1,
+    "eachLabel": "1 dot = 1 complete rebuilding",
+    "compare": "No timber older than 20 years",
+    "options": [
+     {
+      "label": "About 6",
+      "value": 6,
+      "note": "Far too few. The rebuilding of 2013 was the 62nd."
+     },
+     {
+      "label": "About 20",
+      "value": 20,
+      "note": "Too few. Every 20 years for about 1,300 years makes over 60."
+     },
+     {
+      "label": "About 60",
+      "value": 60,
+      "note": "Right: 62 times since the late 600s, despite a century lost to war."
+     },
+     {
+      "label": "About 200",
+      "value": 200,
+      "note": "Too many. 1,300 years at 20 a time is about 65, and war skipped a few."
+     }
+    ]
+   },
    "source": "Tange & Kawazoe, Ise, 1965",
    "source_kind": "book",
-   "reference": "Tange & Kawazoe, Ise: Prototype of Japanese Architecture, MIT Press, 1965",
-   "written": "2026-09-27"
+   "reference": "Tange & Kawazoe, Ise: Prototype of Japanese Architecture, MIT Press, 1965; Jingu Administration Office, Sengukan museum, the 62nd Shikinen Sengu, 2013: https://www.sengukan.jp/en",
+   "written": "2026-10-06"
   },
   {
    "id": "philosophy-ship-of-theseus-7",
@@ -120444,8 +125567,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Which debate was the runaway tram dilemma invented for, before anyone called it a trolley problem?",
-   "answer": "Abortion. Philippa Foot's 1967 paper tested the doctrine of double effect, a Catholic moral rule separating harm intended from harm merely foreseen, long applied to abortion. Her tram had a driver, not a bystander. Judith Jarvis Thomson named it the trolley problem in 1976, and the bystander at the switch arrived only in 1985.",
+   "question": "The runaway trolley feels like a puzzle made for self-driving cars. When do you think each part of it appeared?",
+   "answer": "Philippa Foot used the tram to test the doctrine of double effect, a Catholic rule separating harm intended from harm merely foreseen, long applied to abortion. Her tram had a driver, not a bystander. Judith Jarvis Thomson named the problem and later added the bystander; MIT's 2018 Moral Machine gathered some 40 million such choices.",
    "move": "Ask what a famous example was built to test before arguing with it.",
    "ask": "Before I argue with a famous example, do I know what it was built to test?",
    "keywords": [
@@ -120465,10 +125588,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
-   "source": "Foot, Oxford Review, 1967",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1950,
+    "to": 2025,
+    "events": [
+     {
+      "label": "Foot's runaway tram",
+      "year": 1967,
+      "note": "Foot's 1967 tram was built to test an argument about abortion."
+     },
+     {
+      "label": "Named the trolley problem",
+      "year": 1976
+     },
+     {
+      "label": "Bystander version added",
+      "year": 1985
+     },
+     {
+      "label": "Moral Machine survey",
+      "year": 2018
+     }
+    ]
+   },
+   "source": "Foot, 1967; Thomson, 1976, 1985; Awad et al., 2018",
    "source_kind": "paper",
-   "reference": "Foot, The Problem of Abortion and the Doctrine of the Double Effect, Oxford Review 5, 1967; Thomson, Killing, Letting Die, and the Trolley Problem, The Monist 59, 1976; Thomson, The Trolley Problem, Yale Law Journal 94, 1985",
-   "written": "2026-09-26"
+   "reference": "Foot, The Problem of Abortion and the Doctrine of the Double Effect, Oxford Review 5, 1967; Thomson, The Monist 59, 1976; Thomson, Yale Law Journal 94, 1985; Awad et al., The Moral Machine experiment, Nature 563, 2018",
+   "written": "2026-10-06"
   },
   {
    "id": "philosophy-trolley-problems-2",
@@ -120631,30 +125779,68 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What did Thomson's looping track do to the idea that the switch is allowed because nobody is used?",
-   "answer": "It took the idea's support away. In Thomson's 1985 loop, the side track curves back to the five, and only the lone worker's bulk will stop the trolley. His death is now the means of rescue, yet turning seems no less permissible. One short piece of rail changed the reason, not the verdict.",
+   "question": "A runaway trolley will kill five people on the track. Is it all right to kill one person to save them?",
+   "answer": "Thomson's loop breaks the easy explanation. If the side track curves back to the five, only the one man's body stops the trolley: he is used, as on the bridge. Yet turning still seemed permissible to Thomson. Whatever splits the cases, it is not simply using someone; perhaps it is the push itself.",
    "move": "Change one detail of a case and see whether the verdict follows the rule.",
    "ask": "When my verdict shifts as one detail changes, what rule was I really using?",
    "keywords": [
+    "trolley problem",
+    "footbridge",
     "loop case",
     "judith jarvis thomson",
-    "doctrine of double effect",
     "means and side effects"
    ],
    "era": "twentieth",
    "region": "none",
-   "hook": "puzzle",
+   "hook": "paradox",
    "mood": "sober",
-   "numeracy": 0,
-   "abstraction": "abstract",
+   "numeracy": 1,
+   "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Thomson, Yale Law Journal, 1985",
+   "scene": {
+    "type": "poll",
+    "who": "Web volunteers, Hauser et al. 2007",
+    "questions": [
+     {
+      "prompt": "Is it all right to pull a switch that turns it onto a side track, killing one?",
+      "tag": "Pull a switch",
+      "options": [
+       {
+        "label": "It's all right",
+        "share": 85
+       },
+       {
+        "label": "It's wrong",
+        "share": 15
+       }
+      ]
+     },
+     {
+      "prompt": "Is it all right to push a heavy man off a footbridge into its path?",
+      "tag": "Push a man",
+      "options": [
+       {
+        "label": "It's all right",
+        "share": 12
+       },
+       {
+        "label": "It's wrong",
+        "share": 88
+       }
+      ]
+     }
+    ],
+    "why": "Using a person's body as the tool feels unlike turning a threat aside, even when the sums match.",
+    "same": "You held steady: one for five, judged alike both times. Most didn't: 85% fell to 12%.",
+    "switched": "You switched, like most. The sums were identical; what changed was laying hands on someone."
+   },
+   "source": "Thomson, 1985; Hauser et al., 2007",
    "source_kind": "paper",
-   "reference": "Thomson, The Trolley Problem, Yale Law Journal 94 (6), 1985, pp. 1395-1415",
-   "written": "2026-09-27"
+   "reference": "Thomson, The Trolley Problem, Yale Law Journal 94 (6), 1985, pp. 1395-1415; Hauser, Cushman, Young, Jin & Mikhail, A dissociation between moral judgments and justifications, Mind & Language 22 (2007): 1-21",
+   "written": "2026-10-06"
   },
   {
    "id": "philosophy-trolley-problems-7",
@@ -121918,25 +127104,69 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Whose laughter is on old sitcoms?",
-   "answer": "Often people who died decades before the show aired. Most canned laughter came from a single machine, the Laff Box, built and jealously guarded by one engineer who recorded audiences in the 1950s. The same chuckles recur across hundreds of programmes.",
-   "move": "That laugh track is a recording of an audience from the 1950s.",
+   "question": "In 2025 the Super Bowl became the most-watched broadcast in American history, again. Here it is against TV's biggest sitcom finales. Where's the trick?",
+   "answer": "In what is counted: heads, in a country that keeps growing. America had 234 million people in 1983 and about 340 million in 2025, so big events set records almost by default. Per 100 Americans, the last M*A*S*H drew 45 and the Super Bowl 38, and Nielsen now counts bars and streams too.",
+   "move": "Before cheering a record, ask whether the crowd it was drawn from grew.",
+   "ask": "Which record of mine is just a bigger crowd, not a bigger share?",
    "keywords": [
-    "laugh track",
-    "laff box",
-    "charley douglass",
-    "canned laughter"
+    "tv ratings",
+    "super bowl",
+    "sitcom finales",
+    "population",
+    "records"
    ],
-   "era": "twentieth",
+   "era": "recent",
    "region": "americas",
-   "hook": "story",
+   "hook": "misconception",
    "mood": "playful",
-   "numeracy": 0,
+   "numeracy": 2,
    "abstraction": "concrete",
-   "shelf_life": "evergreen",
+   "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "source": "Charles Douglass and the Laff Box",
+   "figure": "none",
+   "scene": {
+    "type": "trick",
+    "trick": "totals",
+    "outlet": "TV ratings, 1983–2025",
+    "headline": "Super Bowl: most-watched broadcast ever",
+    "honest": "Per American, M*A*S*H's finale still wins",
+    "label": "US viewers, million",
+    "honestLabel": "Viewers per 100 Americans",
+    "decimals": 0,
+    "honestDecimals": 0,
+    "columns": [
+     "M*A*S*H",
+     "Seinfeld",
+     "Friends",
+     "Super Bowl"
+    ],
+    "values": [
+     106.0,
+     76.3,
+     52.5,
+     127.7
+    ],
+    "per": [
+     234,
+     276,
+     293,
+     340
+    ],
+    "perScale": 100,
+    "found": "Yes: viewers in total, from a country 100 million people bigger.",
+    "miss": "The counts are right. Read what they count, one line above the bars.",
+    "misses": {
+     "yaxis": "The axis starts at zero, so the bars are fair lengths. Of what?",
+     "headline": "True, in heads. But were there as many heads in 1983?"
+    },
+    "name": "A bigger crowd",
+    "lesson": "In a growing country, records in totals come by themselves. Ask for the share."
+   },
+   "source": "Nielsen audience estimates; US Census population",
+   "source_kind": "statistics",
+   "reference": "Nielsen Media Research audience estimates: M*A*S*H finale (1983), Seinfeld finale (1998), Friends finale (2004), Super Bowl LIX (2025)",
+   "written": "2026-10-06",
    "disabled": true
   },
   {
@@ -123917,8 +129147,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did a garden shed in south London become TripAdvisor's top-rated restaurant in the city?",
-   "answer": "With reviews written by friends. In 2017 the journalist Oobah Butler listed his shed as an appointment-only restaurant, had acquaintances post glowing fake reviews, and told callers it was fully booked. Scarcity read as exclusivity, and the shed climbed to first place among thousands of London restaurants before it had served a single meal.",
+   "question": "In 2017 a London restaurant's listing climbed to first place on TripAdvisor. What was behind these words?",
+   "answer": "A garden shed. The journalist Oobah Butler listed his shed in south London as an appointment-only restaurant, had friends post glowing reviews, and told every caller it was fully booked. A table nobody could get read as exclusivity, and the shed rose to first place before it had served a single meal.",
    "move": "Praise nobody can check, plus scarcity, can build a reputation from nothing.",
    "ask": "When I pick a place by its rating, how many of the reviews could I actually check?",
    "keywords": [
@@ -123937,10 +129167,42 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Restaurant listing",
+    "ref": "London, 2017",
+    "title": "The Shed at Dulwich",
+    "body": "Ranked first of all restaurants in London. By appointment only. Fully booked for weeks. Guests say: an unforgettable experience.",
+    "phrases": [
+     {
+      "text": "Ranked first of all restaurants in London",
+      "plain": "Top of a ranking built on unchecked reviews",
+      "why": "The ranking counts praise. It cannot tell whether anyone ever ate there."
+     },
+     {
+      "text": "By appointment only",
+      "plain": "There is nowhere to walk into",
+      "why": "It explained why no one had seen the place. Mystery passed for exclusivity."
+     },
+     {
+      "text": "Fully booked for weeks",
+      "plain": "Never open; every caller is told this",
+      "why": "Scarcity read as demand. Each refused booking made the place more wanted.",
+      "catch": true
+     },
+     {
+      "text": "an unforgettable experience",
+      "plain": "words written by the owner's friends",
+      "why": "None of the reviewers had eaten there. There was nothing to eat."
+     }
+    ],
+    "ask": "One phrase did most to make it famous. Which?",
+    "watch": "Praise nobody can check, plus a place nobody can visit: two warnings, not two stars."
+   },
    "source": "Butler, Vice, December 2017",
    "source_kind": "news_archive",
    "reference": "Oobah Butler, I Made My Shed the Top Rated Restaurant on TripAdvisor, Vice, December 2017",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "pop_culture-fake-reviews-2",
@@ -126128,7 +131390,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "easy",
    "principle": "none",
    "question": "Why did US regulators fine Kim Kardashian $1.26 million over one Instagram post about a crypto token?",
-   "answer": "Because she did not say she was paid. The Securities and Exchange Commission found she had received $250,000 to promote EthereumMax tokens and posted about them without disclosing it. To her followers it looked like a tip from someone who believed in it; it was an advert, and the law treats those differently.",
+   "answer": "Because she hid how much she was paid. The post carried #ad, but the Securities and Exchange Commission found she had received $250,000 to promote EthereumMax tokens without disclosing that payment, which the law requires when someone touts an investment. A tag says it's an advert; the price says how much the praise is worth.",
    "move": "Before taking a tip, ask who is paying the person giving it.",
    "ask": "Who might be paid to recommend the things I have been told to buy lately?",
    "keywords": [
@@ -126425,8 +131687,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did thousands of public figures, from actors to pundits, come to have followers who did not exist?",
-   "answer": "They bought them. In 2018 The New York Times traced millions of fake Twitter accounts to Devumi, a Florida company that had sold more than 200 million followers to customers including actors, athletes and politicians. Many accounts copied real people's names and photos. A large following had become something anyone could order by the thousand.",
+   "question": "In 2018 reporters traced a Florida firm that sold Twitter followers to actors, athletes and pundits. How many followers had it sold?",
+   "answer": "More than 200 million, The New York Times found in its investigation of Devumi. The firm ran at least 3.5 million automated accounts and sold each many times over, to more than 200,000 customers. At least 55,000 copied real people's names and photos. A following had become something anyone could order by the thousand.",
    "move": "Treat any number that can be bought as a price, not a vote.",
    "ask": "Which numbers do I trust as signs of popularity that someone could simply have paid for?",
    "keywords": [
@@ -126437,18 +131699,48 @@ const String kEmbeddedBank = r'''
    ],
    "era": "recent",
    "region": "americas",
-   "hook": "story",
+   "hook": "number",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "fake followers sold",
+    "answer": 200000000,
+    "each": 100000,
+    "eachLabel": "1 dot = 100,000 followers",
+    "compare": "From 3.5 million bot accounts",
+    "options": [
+     {
+      "label": "2 million",
+      "value": 2000000,
+      "note": "Two zeros short. Devumi had over 200,000 customers, buying by the thousand."
+     },
+     {
+      "label": "20 million",
+      "value": 20000000,
+      "note": "One zero short. Each fake account was sold many times over."
+     },
+     {
+      "label": "200 million",
+      "value": 200000000,
+      "note": "Right: over 200 million, from about 3.5 million bots resold again and again."
+     },
+     {
+      "label": "2 billion",
+      "value": 2000000000,
+      "note": "One zero too many. But 200 million came from only 3.5 million fake accounts."
+     }
+    ]
+   },
    "source": "The New York Times, The Follower Factory",
    "source_kind": "news_archive",
    "reference": "Nicholas Confessore et al., The Follower Factory, The New York Times, 27 January 2018",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "pop_culture-manufactured-fame-2",
@@ -126717,8 +132009,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What was the 1996 Dancing Baby animation made for, before it spread by email?",
-   "answer": "To sell software. Michael Girard and Robert Lurye built it as a sample file for Character Studio, a plug-in for animating figures in 3D Studio Max. Passed on as a looping GIF, it was dancing on Ally McBeal by 1998. An early mass-shared animation was an advert for the tool that drew it.",
+   "question": "The Dancing Baby spread by email in 1996. Which of these internet jokes are older than Google, and which younger?",
+   "answer": "The Dancing Baby advertised the tool that drew it. Michael Girard and Robert Lurye built it as a sample file for Character Studio, a plug-in for 3D Studio Max; as a looping GIF it was dancing on Ally McBeal by 1998. Jokes spread by email and newsgroups long before anyone searched for them.",
    "move": "Ask who made the first copy, and what they wanted it to show.",
    "keywords": [
     "dancing baby",
@@ -127365,8 +132657,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did Netflix pay about $100 million to keep a 1990s sitcom for just one more year?",
-   "answer": "Because old comfort shows stop subscribers leaving. Friends, which ended in 2004, was among Netflix's most watched titles, replayed by many viewers again and again. Losing it risked cancellations, so in late 2018 Netflix paid roughly $100 million for 2019 alone; then its owner, WarnerMedia, took it back for its own service.",
+   "question": "Friends ended in 2004. In late 2018, how much did Netflix pay to keep streaming it in the US for one more year?",
+   "answer": "About $100 million, The New York Times reported, more than triple the roughly $30 million a year it had been paying. Friends was among Netflix's most watched titles, replayed again and again by viewers who might cancel without it. In 2020 its owner, WarnerMedia, took it back for its own service.",
    "move": "Price a thing by what losing it would cost, not by its age.",
    "ask": "What do I return to again and again for comfort, and what would I miss without it?",
    "keywords": [
@@ -127379,16 +132671,47 @@ const String kEmbeddedBank = r'''
    "region": "americas",
    "hook": "number",
    "mood": "playful",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "prefix": "$",
+    "unit": "for one more year of Friends",
+    "answer": 100000000,
+    "each": 50000,
+    "eachLabel": "1 dot = $50,000",
+    "compare": "Triple the $30 million it paid before",
+    "options": [
+     {
+      "label": "$1 million",
+      "value": 1000000,
+      "note": "Two zeros short. Old comfort shows keep subscribers from leaving."
+     },
+     {
+      "label": "$10 million",
+      "value": 10000000,
+      "note": "One zero short. Netflix had been paying about $30 million a year."
+     },
+     {
+      "label": "$100 million",
+      "value": 100000000,
+      "note": "Right: about $100 million, triple the old price, for 2019 alone."
+     },
+     {
+      "label": "$1 billion",
+      "value": 1000000000,
+      "note": "One zero too many, though $100 million for a 15-year-old sitcom is plenty."
+     }
+    ]
+   },
    "source": "The New York Times, December 2018",
    "source_kind": "news_archive",
    "reference": "The New York Times, report on Netflix's renewal of Friends for 2019, December 2018",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "pop_culture-online-outrage-1",
@@ -128708,8 +134031,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did all six Friends leads earn exactly the same fee per episode from 1996 onwards?",
-   "answer": "Because they bargained as one. From the third season the cast negotiated together, reportedly at the urging of David Schwimmer, then the best-paid of them, so none could be played off against another. By the last two seasons each earned about $1 million an episode. A walkout by one meant a walkout by six.",
+   "question": "Six sitcom stars with unequal pay decided to bargain as one. Did it work?",
+   "answer": "Alone, each star could be told the show would go on without them. Six together could not: losing the whole cast meant losing the show. The best-paid gave up the chance to stay ahead, and equal pay removed the comparison that sours a cast. The bloc held for eight years.",
    "move": "A group that cannot be split can ask for what none could alone.",
    "ask": "What could my group ask for together that none of us could alone?",
    "keywords": [
@@ -128728,10 +134051,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "Friends, 1994",
+      "glyph": "crowd",
+      "line": "Six leads, six separate pay deals."
+     },
+     {
+      "fact": "A hit by season two",
+      "glyph": "rise",
+      "line": "Some of them earn far more than others."
+     },
+     {
+      "fact": "1996, reportedly Schwimmer",
+      "glyph": "family",
+      "line": "The best-paid proposes they all bargain as one."
+     }
+    ],
+    "ask": "What happens to their pay?",
+    "options": [
+     {
+      "label": "Top earners lose out"
+     },
+     {
+      "label": "The studio splits them"
+     },
+     {
+      "label": "All six soar together"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "Seasons 9 and 10",
+     "glyph": "coin",
+     "line": "About $1 million each, per episode."
+    },
+    "why": "A studio can replace one actor, not the whole cast. Together they were the show."
+   },
    "source": "Austerlitz, Generation Friends, 2019",
    "source_kind": "book",
    "reference": "Saul Austerlitz, Generation Friends: An Inside Look at the Show That Defined a Television Era, Dutton, 2019",
-   "written": "2026-09-27"
+   "written": "2026-10-06"
   },
   {
    "id": "pop_culture-sneakers-1",
@@ -130866,8 +136228,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What brought down the printed Encyclopaedia Britannica's sales in the 1990s, years before Wikipedia existed?",
-   "answer": "A cheap CD-ROM. Britannica's sales peaked in 1990, with sets sold door to door for well over $1,000; Microsoft's Encarta cost a small fraction of that or came free with a new PC. Parents had bought the books partly to feel they were helping their children; a computer now did that.",
+   "question": "When did the printed Encyclopaedia Britannica sell best, and what arrived before Wikipedia to end that?",
+   "answer": "A cheap CD-ROM did the damage. Sets sold door to door for well over $1,000; Microsoft's Encarta cost a fraction of that or came free with a new PC. Parents had bought the volumes partly to feel they were helping their children's schooling, and now a computer did that job.",
    "move": "Find the job a product does for its buyers, and the real rival appears.",
    "ask": "What job does my work really do for people, and what cheaper thing could do it instead?",
    "keywords": [
@@ -130885,11 +136247,36 @@ const String kEmbeddedBank = r'''
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
-   "source": "Evans and Wurster, Blown to Bits, 2000",
+   "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1980,
+    "to": 2015,
+    "events": [
+     {
+      "label": "Print sales peak",
+      "year": 1990,
+      "note": "Sales peaked in 1990 and fell with Encarta, eight years before Wikipedia."
+     },
+     {
+      "label": "Encarta CD-ROM launches",
+      "year": 1993
+     },
+     {
+      "label": "Wikipedia launches",
+      "year": 2001
+     },
+     {
+      "label": "Last printed edition",
+      "year": 2010
+     }
+    ]
+   },
+   "source": "Evans & Wurster, Blown to Bits, 2000",
    "source_kind": "book",
    "reference": "Philip Evans and Thomas S. Wurster, Blown to Bits, Harvard Business School Press, 2000",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "pop_culture-then-and-now-2",
@@ -131036,8 +136423,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When quiet quitting swept the news in 2022, what did Gallup's long-running survey of workers show?",
-   "answer": "A new name for an old number. Gallup put quiet quitters, people doing no more than their job asks, at about half the US workforce; but that group was its long-standing not engaged category, which had hovered around half for years. The trend was in the headlines more than in the offices.",
+   "question": "Be honest about your job right now. Which of these sounds most like you?",
+   "answer": "Half of US workers do what is asked and no more, and they always have. When quiet quitting swept the news in 2022, Gallup pointed out that the group was its old not engaged category, which had hovered around half for years. The trend was in the headlines more than in the offices.",
    "move": "Before believing a new trend, ask whether only the name is new.",
    "ask": "Which new trend have I worried about that may just be an old thing with a new name?",
    "keywords": [
@@ -131056,10 +136443,36 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "US workers, Gallup 2022",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "I go beyond the job",
+        "share": 32,
+        "mirror": "Like about a third of US workers. Gallup calls you engaged: 30 to 36% for a decade."
+       },
+       {
+        "label": "I do what's asked",
+        "share": 50,
+        "mirror": "Like half of US workers. In 2022 the news named you quiet quitters; you were always there."
+       },
+       {
+        "label": "I'm fed up with it",
+        "share": 18,
+        "mirror": "Like nearly 1 in 5. Gallup calls this actively disengaged: unhappy, and showing it."
+       }
+      ]
+     }
+    ],
+    "why": "Most jobs ask for the job. Going beyond takes a good manager, a purpose, or a reason to care."
+   },
    "source": "Gallup, Is Quiet Quitting Real?, 2022",
    "source_kind": "statistics",
    "reference": "Jim Harter, Is Quiet Quitting Real?, Gallup, September 2022",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "pop_culture-trends-3",
@@ -131743,15 +137156,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did De Beers want buyers to feel that a diamond is forever, beyond selling more stones?",
-   "answer": "To stop them ever selling. Vast numbers of diamonds already sat in drawers; if owners resold them, prices would sag. A gift meant to be kept for life stays off the market, and Edward Jay Epstein found in 1982 that dealers would buy a ring back for a fraction of what it had cost.",
+   "question": "Four ideas that feel like common sense were written by advertisers. What was each one really meant to do?",
+   "answer": "The diamond is the one people miss: it was meant to stop owners ever selling. Vast numbers of stones already sat in drawers, and resale would have shown how little they fetched. Edward Jay Epstein found in 1982 that dealers bought rings back for a fraction of their price. Forever kept the market small.",
    "move": "When a seller praises keeping forever, ask what resale would reveal.",
    "ask": "Is there something I keep for sentimental reasons whose sentiment was sold to me?",
    "keywords": [
     "de beers",
-    "diamonds",
-    "advertising slogan",
-    "resale"
+    "listerine",
+    "edward bernays",
+    "advertising",
+    "halitosis"
    ],
    "era": "twentieth",
    "region": "world",
@@ -131763,10 +137177,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "The idea",
+    "rightTitle": "What it was for",
+    "pairs": [
+     {
+      "left": "Diamonds are forever",
+      "right": "Stop owners ever reselling the stones",
+      "note": "Kept stones never flood the market. Dealers buy rings back for a fraction.",
+      "missed": true
+     },
+     {
+      "left": "Halitosis",
+      "right": "Make bad breath a condition to treat",
+      "note": "Listerine put an obscure medical word at the heart of its 1920s ads."
+     },
+     {
+      "left": "A hearty breakfast",
+      "right": "Sell more bacon",
+      "note": "Edward Bernays had doctors endorse bacon and eggs for a meat packer."
+     },
+     {
+      "left": "Torches of freedom",
+      "right": "Get women smoking in public",
+      "note": "1929: Bernays had young women light up at New York's Easter parade."
+     }
+    ]
+   },
    "source": "Epstein, The Atlantic, February 1982",
    "source_kind": "news_archive",
    "reference": "Edward Jay Epstein, Have You Ever Tried to Sell a Diamond?, The Atlantic, February 1982",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "pop_culture-why-brands-sell-feelings-3",
@@ -132229,15 +137671,17 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "In a negotiation, who usually ends nearer to their own target: the side that names a number first, or the side that waits?",
-   "answer": "Often the side that names it first. In negotiation experiments the opening offer pulled the final price towards it, whoever made it. What weakened that pull was not ignoring the offer but thinking hard about the other side's walk-away price or one's own target. Silence hands the pen to the other side.",
+   "question": "Four mental shortcuts, four everyday traps. Which shortcut is quietly at work in each of these moments?",
+   "answer": "The pay talk is the one people miss, because a first offer feels like a bluff to ignore. In negotiation experiments the opening number pulled the final price towards it, whoever made it. What weakened the pull was thinking hard about the other side's walk-away price. Silence hands the pen to the other side.",
    "move": "Whoever puts the first number on the table sets the frame.",
    "ask": "In my next salary or price talk, have I decided my own number before hearing theirs?",
    "keywords": [
-    "negotiation",
-    "first offers",
     "anchoring",
-    "bargaining"
+    "first offers",
+    "negotiation",
+    "sunk cost",
+    "availability",
+    "planning fallacy"
    ],
    "era": "recent",
    "region": "none",
@@ -132249,10 +137693,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Galinsky & Mussweiler, JPSP, 2001",
+   "scene": {
+    "type": "match",
+    "leftTitle": "Shortcut",
+    "rightTitle": "Where it gets you",
+    "pairs": [
+     {
+      "left": "Anchoring",
+      "right": "The first figure named in a pay negotiation",
+      "note": "Whoever speaks first sets the ruler both sides then measure by.",
+      "missed": true
+     },
+     {
+      "left": "Sunk cost",
+      "right": "Fixing the old car again after all those repairs",
+      "note": "Past repairs are spent either way. Only the next bill is still a choice."
+     },
+     {
+      "left": "Availability",
+      "right": "Fearing a shark, not the drive to the beach",
+      "note": "Shark attacks make the news. Road deaths are too common to."
+     },
+     {
+      "left": "Planning fallacy",
+      "right": "'The kitchen will take two weeks, tops'",
+      "note": "We plan the best case and forget the delays every past job had."
+     }
+    ]
+   },
+   "source": "Galinsky & Mussweiler, JPSP, 2001; Tversky & Kahneman, Science, 1974",
    "source_kind": "paper",
    "reference": "Galinsky & Mussweiler, First offers as anchors: The role of perspective-taking and negotiator focus, Journal of Personality and Social Psychology, 2001",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "psychology-anchoring-bias-3",
@@ -132557,8 +138029,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When each partner in a couple estimates their own share of the household work, why do the two shares add up past 100%?",
-   "answer": "Because each remembers their own efforts best. Married couples asked for their share of chores such as shopping, cleaning and planning outings tended to total more than 100%: one's own work is seen and felt, the other's often happens off stage. Neither is lying. Each simply holds a fuller diary of their own days.",
+   "question": "Why do two partners' shares of the housework add up to more than 100%?",
+   "answer": "Because memory keeps a lopsided ledger. Ross and Sicoly asked married couples for their share of everyday activities, from shopping to planning outings, and the two estimates tended to total more than 100%. The same arithmetic runs in teams and group projects. Before arguing about fairness, list what the other person did.",
    "move": "Count the work you did not see before you weigh your share.",
    "ask": "In my home or team, what does the other person do that I rarely see happening?",
    "keywords": [
@@ -132577,6 +138049,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "Each partner's share of the chores adds up to over 100%."
+    },
+    "levels": [
+     {
+      "text": "Neither is lying: each sincerely recalls doing most of it."
+     },
+     {
+      "text": "Your own work you do, feel and remember in detail."
+     },
+     {
+      "text": "Your partner's work mostly happens while you're elsewhere."
+     },
+     {
+      "text": "We judge by what comes to mind, and our own work comes first."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Each wants to look good",
+      "Own work comes to mind",
+      "People are bad at maths"
+     ],
+     "answer": 1
+    }
+   },
    "source": "Ross & Sicoly, JPSP, 1979",
    "source_kind": "paper",
    "reference": "Ross & Sicoly, Egocentric biases in availability and attribution, Journal of Personality and Social Psychology, 1979",
@@ -133871,30 +139372,52 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When people answer privately instead of aloud before a group, what happens to their conformity?",
-   "answer": "It drops sharply. Deutsch and Gerard found that people who recorded answers anonymously went along with a wrong majority far less than those who answered face to face. Much conformity is public compliance: people still see the truth, but say what the group says. A secret ballot is a conformity test in reverse.",
+   "question": "Asked which of three lines matches a fourth, everyone before you gives the same wrong answer. Would you ever go along?",
+   "answer": "Three in four went along at least once, though only about a third of all answers bent. And much of it was for show: when Deutsch and Gerard let people answer privately, conformity fell sharply. People saw the right line and said the wrong one. The group changed the voice, not the eyes.",
    "move": "Collect views privately first, or you hear only what the room wants said.",
    "ask": "When I ask people for their opinions, do they answer before or after they know what I think?",
    "keywords": [
     "conformity",
+    "asch",
+    "line judgement",
     "anonymity",
-    "social pressure",
-    "public compliance"
+    "social pressure"
    ],
    "era": "twentieth",
    "region": "americas",
    "hook": "mechanism",
    "mood": "practical",
-   "numeracy": 0,
+   "numeracy": 1,
    "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Deutsch & Gerard, J Abnormal and Social Psychology, 1955",
+   "scene": {
+    "type": "poll",
+    "who": "Students, Asch's line studies, 1950s",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "Never, not once",
+        "share": 25,
+        "mirror": "Like a quarter of Asch's subjects, who held out every time. Even they felt the strain."
+       },
+       {
+        "label": "At least once",
+        "share": 75,
+        "mirror": "Like three in four. Most gave in only now and then, and many still saw the right line."
+       }
+      ]
+     }
+    ],
+    "why": "Being right alone feels risky. Most went along to avoid the stares, not because they were convinced."
+   },
+   "source": "Asch, 1956; Deutsch & Gerard, 1955",
    "source_kind": "paper",
-   "reference": "Deutsch & Gerard, A study of normative and informational social influences upon individual judgment, Journal of Abnormal and Social Psychology, 1955",
-   "written": "2026-10-03"
+   "reference": "Asch, Studies of independence and conformity, Psychological Monographs 70 (9), 1956; Deutsch & Gerard, A study of normative and informational social influences upon individual judgment, Journal of Abnormal and Social Psychology 51, 1955",
+   "written": "2026-10-06"
   },
   {
    "id": "psychology-conformity-3",
@@ -134785,8 +140308,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why is overhearing one side of a phone call more distracting than overhearing both sides of a conversation?",
-   "answer": "Because the missing half cannot be predicted. Emberson and colleagues found that a half-conversation, or halfalogue, hurt performance on attention tasks more than the full dialogue did, though it held fewer words. Filtered to the same sounds but unintelligible, it did no extra harm. The mind keeps trying to fill the silences it cannot foresee.",
+   "question": "Why is hearing one side of a phone call more distracting than a whole conversation?",
+   "answer": "Because the gaps are unpredictable. Emberson and colleagues played people a full dialogue or just one side while they did attention tasks: the half-conversation did more harm with fewer words. Filtered so the words could not be understood, it did no extra harm. Loudness was not the problem; meaning with holes in it was.",
    "move": "What cannot be predicted keeps pulling at the ear.",
    "ask": "Which half-heard, unpredictable sound in my workspace keeps stealing my attention?",
    "keywords": [
@@ -134808,6 +140331,35 @@ const String kEmbeddedBank = r'''
     "psychology-distraction-2"
    ],
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "On the train, someone's phone call is impossible to tune out."
+    },
+    "levels": [
+     {
+      "text": "A full conversation nearby bothers you less, with twice the words."
+     },
+     {
+      "text": "With one side, you can't predict when the next words will come."
+     },
+     {
+      "text": "The brain keeps guessing at the missing half, and attention follows."
+     },
+     {
+      "text": "What we can't predict, we can't stop listening to."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Phone talkers are louder",
+      "We're nosy about others",
+      "The gaps are unpredictable"
+     ],
+     "answer": 2
+    }
+   },
    "source": "Emberson et al., Psychological Science, 2010",
    "source_kind": "paper",
    "reference": "Emberson, Lupyan, Goldstein & Spivey, Overheard cell-phone conversations: when less speech is more distracting, Psychological Science, 2010",
@@ -135820,36 +141372,77 @@ const String kEmbeddedBank = r'''
    "genre": "psychology.emotions",
    "strand": "psychology.emotions.fear",
    "also": [
-    "human_body.the_brain.neurons"
+    "economics.read_money_news.cherry_picked_charts"
    ],
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Does the amygdala produce the conscious feeling of being afraid?",
-   "answer": "Probably not, argues Joseph LeDoux, who mapped its threat circuits. Shown snakes or angry faces too briefly to be seen, people still sweat and the amygdala responds, yet they report no fear. On his view it runs the defence; cortical circuits build the feeling. The palms can brace for a snake the eyes never saw.",
-   "move": "A body reacting and a person feeling are two measurements, not one.",
-   "ask": "When my body panics, am I confusing the reaction with what I actually feel?",
+   "question": "In most years since 1993, most Americans have told Gallup that crime is rising. Charts like this help. Where's the trick?",
+   "answer": "In the frame: two years, on an axis that starts at 4. The rise was real, but from near the lowest rate in decades, and still about half the 1991 rate. A rise makes news and a slow fall never does, so most Americans felt crime climbing through years it was falling.",
+   "move": "Before you feel a trend, ask to see the long run.",
+   "ask": "Which danger do I feel growing because I hear about it more, not because it is?",
    "keywords": [
-    "amygdala",
-    "joseph ledoux",
-    "threat circuits",
-    "conscious fear",
-    "masked faces"
+    "fear of crime",
+    "murder rate",
+    "gallup",
+    "time window"
    ],
    "era": "recent",
-   "region": "none",
+   "region": "americas",
    "hook": "misconception",
-   "mood": "wonder",
-   "numeracy": 0,
-   "abstraction": "mixed",
+   "mood": "sober",
+   "numeracy": 2,
+   "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "LeDoux & Pine, American Journal of Psychiatry, 2016",
-   "source_kind": "paper",
-   "reference": "LeDoux & Pine, Using neuroscience to help understand fear and anxiety: a two-system framework, American Journal of Psychiatry, 2016",
-   "written": "2026-09-27"
+   "scene": {
+    "type": "trick",
+    "trick": "window",
+    "chart": "bars",
+    "outlet": "News graphic, 2017 (redrawn)",
+    "headline": "US murders soar 20% in two years",
+    "honest": "Still about half the 1991 rate",
+    "label": "US murders per 100,000 people",
+    "decimals": 1,
+    "columns": [
+     "1991",
+     "2000",
+     "2010",
+     "2014",
+     "2016"
+    ],
+    "values": [
+     9.8,
+     5.5,
+     4.8,
+     4.4,
+     5.3
+    ],
+    "window": [
+     3,
+     4
+    ],
+    "from": 4,
+    "to": 5.5,
+    "spot": [
+     "xaxis",
+     "yaxis"
+    ],
+    "found": "Yes: two years picked, on an axis that starts at 4.",
+    "miss": "That part is honest. Look at which years made it in, and where the bars start.",
+    "misses": {
+     "marks": "Those are the FBI's real rates. What's missing is the years around them.",
+     "headline": "The rise was real. Ask what it was a rise from."
+    },
+    "name": "Two years, cut short",
+    "lesson": "Before a scary rise, ask for the long run, drawn from zero."
+   },
+   "source": "FBI Uniform Crime Reports; Gallup crime polls",
+   "source_kind": "statistics",
+   "reference": "https://news.gallup.com/poll/1603/crime.aspx",
+   "written": "2026-10-06"
   },
   {
    "id": "psychology-fear-7",
@@ -136024,8 +141617,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How long does it take to judge whether a stranger's face looks trustworthy, and what does more time add?",
-   "answer": "About a tenth of a second, and extra time adds mostly confidence. Willis and Todorov flashed faces for 100 milliseconds; judgements of trustworthiness already lined up closely with those made with no time limit. Longer looks made people surer, not different. The verdict is in before the person has spoken.",
+   "question": "A stranger's face flashes on a screen and you judge whether it looks trustworthy. How long a look do you need?",
+   "answer": "A tenth of a second. Willis and Todorov flashed faces for 100 ms, and trust ratings already matched those made with no time limit. Longer looks added little but confidence. The verdict is in before the person speaks; a longer look mostly makes it feel earned.",
    "move": "A verdict on a stranger arrives before any evidence does; hold it loosely.",
    "ask": "Whom did I size up within seconds this week, and what have I learned since that might change it?",
    "keywords": [
@@ -136038,16 +141631,28 @@ const String kEmbeddedBank = r'''
    "region": "none",
    "hook": "number",
    "mood": "wonder",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Willis & Todorov, Psychological Science, 2006",
+   "source": "Willis & Todorov, 2006",
    "source_kind": "paper",
    "reference": "Willis & Todorov, First impressions: making up your mind after a 100-ms exposure to a face, Psychological Science, 2006",
-   "written": "2026-10-03"
+   "written": "2026-10-06",
+   "scene": {
+    "type": "hold",
+    "what": "Long enough to judge trust",
+    "seconds": 0.1,
+    "display": "ms",
+    "comparisons": [
+     {
+      "label": "The longest look tested",
+      "seconds": 1.0
+     }
+    ]
+   }
   },
   {
    "id": "psychology-first-impressions-2",
@@ -136575,8 +142180,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "In a rapid stream of letters, why is a second target often missed when it follows the first closely?",
-   "answer": "Attention is still busy with the first. At about ten items a second, a second target arriving 200 to 500 milliseconds after the first is often missed, while one arriving immediately after is usually caught. Raymond, Shapiro and Arnell named this gap the attentional blink: the eyes stay open while the mind looks away.",
+   "question": "Letters flash past in a rapid stream and you spot the one you were looking for. How long after it might you miss another?",
+   "answer": "Until about 450 milliseconds after it, in a window opening at 180 ms. Raymond, Shapiro and Arnell found a second target shown then was poorly detected, while one straight after it was usually caught: attention is still filing the first. This is the attentional blink: the eyes stay open while the mind looks away.",
    "move": "Right after catching one thing is the worst moment to catch another.",
    "ask": "After I catch one important thing, how likely am I to miss the next one?",
    "keywords": [
@@ -136589,7 +142194,7 @@ const String kEmbeddedBank = r'''
    "region": "none",
    "hook": "mechanism",
    "mood": "wonder",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
@@ -136598,7 +142203,15 @@ const String kEmbeddedBank = r'''
    "source": "Raymond, Shapiro & Arnell, 1992",
    "source_kind": "paper",
    "reference": "Raymond, Shapiro & Arnell, Temporary suppression of visual processing in an RSVP task: an attentional blink?, Journal of Experimental Psychology: Human Perception and Performance, 1992",
-   "written": "2026-09-26"
+   "written": "2026-10-06",
+   "scene": {
+    "type": "hold",
+    "what": "The blind spot after a find",
+    "seconds": 0.315,
+    "low": 0.18,
+    "high": 0.45,
+    "display": "ms"
+   }
   },
   {
    "id": "psychology-focus-4",
@@ -137340,8 +142953,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do charities ask for a small sum a day rather than the same total once a year?",
-   "answer": "Because a daily amount gets compared with petty daily spending, like a coffee, while a yearly total gets compared with big purchases. In experiments, describing the same annual donation as pennies a day made people more willing to give. The money is identical; only the yardstick changes. Less than a coffee sounds like nothing.",
+   "question": "A charity advert, worded the way many are. Why does it give a price per day rather than per year?",
+   "answer": "Because a daily sum gets compared with petty daily spending, and a yearly one with big purchases. In Gourville's experiments, describing the same yearly donation as pennies a day made people more willing to give. The money is identical; only the yardstick changes. Fifty pence sounds like nothing; £182.50 sounds like a decision.",
    "move": "Convert a small repeated price into its yearly total before agreeing.",
    "ask": "Which of my subscriptions would I still choose if I saw its full yearly price?",
    "keywords": [
@@ -137361,10 +142974,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Charity appeal",
+    "ref": "Typical text",
+    "title": "Clean water for a child",
+    "body": "For just 50p a day, less than the price of a coffee, you can help give a child clean water. Set up a monthly gift today.",
+    "phrases": [
+     {
+      "text": "just 50p a day",
+      "plain": "£182.50 a year",
+      "why": "Same money, smaller unit. Daily sums get weighed against pocket change.",
+      "catch": true
+     },
+     {
+      "text": "less than the price of a coffee",
+      "plain": "next to something you already spend without thinking",
+      "why": "The coffee is the yardstick chosen for you: small, daily, easy to give up."
+     },
+     {
+      "text": "monthly gift",
+      "plain": "standing order",
+      "why": "A gift sounds one-off. This one repeats until you stop it."
+     }
+    ],
+    "ask": "One phrase picks what you compare the cost with. Which?",
+    "watch": "The unit a price is quoted in chooses what you compare it with."
+   },
    "source": "Gourville, Journal of Consumer Research, 1998",
    "source_kind": "paper",
    "reference": "Gourville, Pennies-a-day: The effect of temporal reframing on transaction evaluation, Journal of Consumer Research, 1998",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "psychology-framing-3",
@@ -138341,8 +143981,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Mock jurors judged whether a city should have paid a bridge watcher to prevent floods. What changed once they knew a flood happened?",
-   "answer": "Their verdict. Told only what the city knew beforehand, 24% thought the watcher was needed; told that a flood had occurred, 57% judged the city negligent for not hiring one. A third group, told of the flood but warned explicitly to ignore it, still found negligence 56% of the time. The outcome rewrote the past.",
+   "question": "A river city could pay for a watcher on its drawbridge, in case debris causes a flood. What do you say?",
+   "answer": "Knowing the ending makes it look foreseeable. Kamin and Rachlinski's jurors had the same facts; only the flood was new. A third group was told of the flood and warned to ignore it: 56% still found negligence. Hindsight cannot be switched off on request, which is why fair reviews judge what was known then.",
    "move": "Judge a decision by what was knowable then, not what happened next.",
    "ask": "Whom have I blamed for a choice that only looked foolish once I knew how it turned out?",
    "keywords": [
@@ -138361,10 +144001,47 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "Mock jurors, Kamin & Rachlinski 1995",
+    "questions": [
+     {
+      "prompt": "No flood has happened. Should the city pay for the watcher?",
+      "tag": "Judged before",
+      "options": [
+       {
+        "label": "Yes, hire one",
+        "share": 24
+       },
+       {
+        "label": "No, not needed",
+        "share": 76
+       }
+      ]
+     },
+     {
+      "prompt": "Same facts, but a flood came and did great damage. Was not hiring negligent?",
+      "tag": "Judged after a flood",
+      "options": [
+       {
+        "label": "Yes, negligent",
+        "share": 57
+       },
+       {
+        "label": "No, a fair call",
+        "share": 43
+       }
+      ]
+     }
+    ],
+    "why": "Once you know the ending, it looks as if anyone could have seen it coming.",
+    "same": "You held steady. The jurors didn't: backing the watcher rose from 24% to 57% after the flood.",
+    "switched": "You switched, like many jurors. The risk was the same; only knowing the ending changed."
+   },
    "source": "Kamin & Rachlinski, Law and Human Behavior, 1995",
    "source_kind": "paper",
    "reference": "Kamin & Rachlinski, Ex post is not ex ante: Determining liability in hindsight, Law and Human Behavior, 1995",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "psychology-hindsight-2",
@@ -139527,8 +145204,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "A student trained his digit span from seven to about eighty. What happened when he was tested on letters?",
-   "answer": "His span fell back to about six. SF, a keen runner, had learned to recode digits as race times, so 3492 became 3 minutes 49.2 seconds for a mile, and to group those chunks into larger blocks. The skill lived in that code, not in any general capacity to hold things in mind.",
+   "question": "A student who could repeat 7 digits read aloud practised for about 230 hours over 20 months. How many digits could he then repeat?",
+   "answer": "79. SF, a keen runner, recoded digits as race times, so 3492 became 3 minutes 49.2 seconds for a mile. Then he was tested on letters, and his span fell back to about six. The skill lived in his running code, not in any general power to hold things in mind.",
    "move": "Before calling a skill general, test it where its tricks do not apply.",
    "ask": "Which skill I am proud of would vanish if I changed the material it works on?",
    "keywords": [
@@ -139539,9 +145216,9 @@ const String kEmbeddedBank = r'''
    ],
    "era": "twentieth",
    "region": "americas",
-   "hook": "story",
+   "hook": "number",
    "mood": "wonder",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
@@ -139567,10 +145244,40 @@ const String kEmbeddedBank = r'''
     ],
     "caption": "Eighty digits, but only six letters: the skill lived in his code for digits."
    },
+   "scene": {
+    "type": "count",
+    "unit": "digits held after practice",
+    "answer": 79,
+    "each": 1,
+    "eachLabel": "1 dot = 1 digit remembered",
+    "compare": "He started at 7, like most people",
+    "options": [
+     {
+      "label": "About 8",
+      "value": 8,
+      "note": "Far too few. Practice took him from 7 to 79 digits, over ten times more."
+     },
+     {
+      "label": "About 25",
+      "value": 25,
+      "note": "Too few. He kept improving for 20 months, to 79 digits."
+     },
+     {
+      "label": "About 80",
+      "value": 80,
+      "note": "Right: 79 digits. Yet on letters, his span fell back to about six."
+     },
+     {
+      "label": "About 250",
+      "value": 250,
+      "note": "Too many, but 79 was over ten times where he started."
+     }
+    ]
+   },
    "source": "Ericsson, Chase & Faloon, Science, 1980",
    "source_kind": "paper",
    "reference": "Ericsson, Chase & Faloon, Acquisition of a memory skill, Science, 1980",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "psychology-mnemonics-4",
@@ -140551,8 +146258,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Many people having a panic attack fear they are about to faint. Why do they almost never do?",
-   "answer": "Because panic raises blood pressure, and fainting needs it to fall. The racing heart and light head are the body's alarm working normally. In Clark's model, an attack grows when such sensations are read as a catastrophe, which sounds more alarm. Blood-injury phobia, where pressure drops at the sight of a needle, is the exception.",
+   "question": "People in a panic attack often fear they are about to faint. Why do they almost never do?",
+   "answer": "Because the frightening signs are the alarm, not a failure. In David Clark's model an attack feeds on itself when a racing heart and dizziness are read as catastrophe, which sounds more alarm. Knowing what the sensations mean breaks the loop. The exception is blood and needle phobia, where pressure really drops.",
    "move": "A frightening sensation is not proof of danger; ask what it usually means.",
    "ask": "Which sensation in my body do I read as danger when it might just be alarm doing its job?",
    "keywords": [
@@ -140571,6 +146278,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "In a panic attack, many people are sure they're about to faint."
+    },
+    "levels": [
+     {
+      "text": "The head swims and the heart races: it feels like collapse."
+     },
+     {
+      "text": "The light head comes from fast breathing, not low blood pressure."
+     },
+     {
+      "text": "Fainting needs pressure to fall so the brain runs short of blood."
+     },
+     {
+      "text": "Panic is an alarm, and alarms push blood pressure up."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Fear keeps the brain alert",
+      "Attacks are too short",
+      "Panic raises blood pressure"
+     ],
+     "answer": 2
+    }
+   },
    "source": "Clark, Behaviour Research and Therapy, 1986",
    "source_kind": "paper",
    "reference": "Clark, A cognitive approach to panic, Behaviour Research and Therapy, 1986",
@@ -140999,9 +146735,9 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What made a waiter's after-dinner mint raise tips most: the sweet itself, the number, or how it was given?",
-   "answer": "How it was given. One mint with the bill lifted tips by about 3%, two mints by about 14%. One mint, a pause, then a second offered as if specially for that table, raised them about 23%. A gift that seems personal triggers the strongest urge to repay, and the extra sweet cost pennies.",
-   "move": "A gift that feels personal pulls harder than a bigger one.",
+   "question": "A waiter leaves mints with the bill: one, two, or one and then, coming back, a second. Which lifts tips most?",
+   "answer": "The mint that came back. In Strohmetz and colleagues' restaurant study, two mints at once beat one, but the same two split by a pause did best: the second looked chosen for that table, not routine. Diners repay a favour as it feels, not as it costs, and the extra sweet cost pennies.",
+   "move": "A favour that feels chosen for you pulls harder than a bigger routine one.",
    "ask": "When a seller treats me as special, can I pause and ask what the gesture is for?",
    "keywords": [
     "reciprocity",
@@ -141018,11 +146754,34 @@ const String kEmbeddedBank = r'''
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
-   "source": "Strohmetz et al., J Applied Social Psychology, 2002",
+   "figure": "bars",
+   "source": "Strohmetz et al., Applied Social Psychology, 2002",
    "source_kind": "paper",
-   "reference": "Strohmetz, Rind, Fisher & Lynn, Sweetening the till: The use of candy to increase restaurant tipping, Journal of Applied Social Psychology, 2002",
-   "written": "2026-10-03"
+   "reference": "Strohmetz, Rind, Fisher & Lynn, Sweetening the till: the use of candy to increase restaurant tipping, Journal of Applied Social Psychology 32(2): 300-309, 2002",
+   "written": "2026-10-06",
+   "scene": {
+    "type": "rank",
+    "quantity": "Rise in tips",
+    "most": "Biggest",
+    "unit": "%",
+    "items": [
+     {
+      "label": "Two",
+      "value": 14.1,
+      "note": "Twice the sweets, more than four times the effect of one."
+     },
+     {
+      "label": "1 + 1",
+      "value": 23,
+      "note": "The same two mints. The pause made the second feel meant for this table."
+     },
+     {
+      "label": "One",
+      "value": 3.3,
+      "note": "One sweet on the plate with the bill barely registered."
+     }
+    ]
+   }
   },
   {
    "id": "psychology-reciprocity-3",
@@ -141216,8 +146975,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Pupils collected charity donations door to door. Who collected the most: the unpaid ones or those on commission?",
-   "answer": "The unpaid ones. Gneezy and Rustichini offered some Israeli pupils 1% of what they raised and others 10%. The 1% group collected far less than the unpaid, and the 10% group did not catch up with them. Once paid, the outing was judged as a job, and as a job it paid badly.",
+   "question": "Pupils went door to door for charity: some unpaid, some on 1% commission, some on 10%. Which pairs raised the most?",
+   "answer": "The unpaid pairs. In Gneezy and Rustichini's field experiment, about 180 Israeli pupils collected for good causes. Pay turned a good deed into a job, and judged as a job, 1% was an insult: takings fell by a third. Ten times the rate won most of it back, but not all.",
    "move": "Pay properly or not at all; a token fee is judged as a poor wage.",
    "ask": "Where am I offering someone a token payment for something they might happily have done for free?",
    "keywords": [
@@ -141230,16 +146989,38 @@ const String kEmbeddedBank = r'''
    "region": "middle_east",
    "hook": "paradox",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "bars",
    "source": "Gneezy & Rustichini, Quarterly Journal of Economics, 2000",
    "source_kind": "paper",
-   "reference": "Gneezy & Rustichini, Pay enough or don't pay at all, Quarterly Journal of Economics, 2000",
-   "written": "2026-10-03"
+   "reference": "Gneezy & Rustichini, Pay enough or don't pay at all, Quarterly Journal of Economics 115(3), 2000, doi:10.1162/003355300554917",
+   "written": "2026-10-06",
+   "scene": {
+    "type": "rank",
+    "quantity": "Raised per pair, in shekels",
+    "most": "Most",
+    "items": [
+     {
+      "label": "1% pay",
+      "value": 154,
+      "note": "A third less than the unpaid: the token fee made charity a badly paid job."
+     },
+     {
+      "label": "Unpaid",
+      "value": 239,
+      "note": "Working for nothing, the outing stayed a good deed, and they worked hardest."
+     },
+     {
+      "label": "10% pay",
+      "value": 219,
+      "note": "Ten times the commission still did not beat working for free."
+     }
+    ]
+   }
   },
   {
    "id": "psychology-rewards-3",
@@ -141328,8 +147109,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What did Britain's competition regulator find wrong with hotel sites' claims that only one room was left?",
-   "answer": "That they could mislead. In 2019 the Competition and Markets Authority found that such claims, along with counts of other people looking and countdowns on prices, could give a false impression of availability and rush bookings. Six large sites agreed to change them. The last room was sometimes only that site's last room.",
+   "question": "A hotel booking page, in the style Britain's regulator examined in 2019. What do the urgent lines really say?",
+   "answer": "Mostly how much they want you to hurry. In 2019 Britain's Competition and Markets Authority found claims like these could give a false impression of how scarce rooms were: a last room could be only that site's last room, and those looking might want other dates. Six large booking sites agreed to change.",
    "move": "Urgency claimed by the seller is a sales tool until proven otherwise.",
    "ask": "When a site tells me to hurry, what happens if I simply close it and come back tomorrow?",
    "keywords": [
@@ -141348,10 +147129,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Hotel booking site",
+    "ref": "Typical text",
+    "title": "Seafront hotel, 2 nights",
+    "body": "Only 1 room left. 14 people are looking at this hotel right now. Booked 9 times in the last 24 hours. This price is held for 10 minutes.",
+    "phrases": [
+     {
+      "text": "Only 1 room left",
+      "plain": "Our site's last room of this type",
+      "why": "The CMA found it could mean the last room this site had, not the last in the hotel.",
+      "catch": true
+     },
+     {
+      "text": "14 people are looking at this hotel",
+      "plain": "Others are browsing, perhaps for other dates",
+      "why": "Counts of other viewers can include people searching completely different nights."
+     },
+     {
+      "text": "This price is held for 10 minutes",
+      "plain": "We'd like you to decide before you compare",
+      "why": "A countdown makes checking elsewhere feel risky. Regulators count it as pressure selling."
+     }
+    ],
+    "ask": "One line can be true and still mislead. Which?",
+    "watch": "Urgency the seller creates is a sales tool. Ask what happens if you wait a day."
+   },
    "source": "Competition and Markets Authority, online hotel booking",
    "source_kind": "institution",
    "reference": "https://www.gov.uk/cma-cases/online-hotel-booking",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "psychology-scarcity-tricks-3",
@@ -141400,8 +147208,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Volunteers were told cold-water tolerance reveals heart health. What did they then do with their hand in icy water?",
-   "answer": "They changed how long they held it there. Those told a healthy heart means longer tolerance held on longer; those told it means shorter tolerance pulled out sooner. Most denied trying to influence the result, and many concluded their hearts were fine. They rigged a test of their own body and believed the reading.",
+   "question": "Can you cheat a test of your own heart without noticing?",
+   "answer": "Holding on longer cannot change a heart; it can only change the reading. Most volunteers denied trying to influence the result, and many concluded their hearts were fine. Quattrone and Tversky saw the same logic in voters who turn out because people like them vote, as if one ballot could cause the others.",
    "move": "A test you can steer only tells you what you hoped.",
    "ask": "Where do I measure my own progress in a way I can nudge without noticing?",
    "keywords": [
@@ -141420,10 +147228,54 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "A psychology lab",
+      "glyph": "clock",
+      "line": "Volunteers hold an arm in icy water for as long as they can."
+     },
+     {
+      "fact": "A short talk",
+      "glyph": "book",
+      "line": "They hear that cold tolerance shows what kind of heart you have."
+     },
+     {
+      "fact": "Half the group",
+      "glyph": "rise",
+      "line": "Told: a healthy heart means lasting longer in the cold."
+     },
+     {
+      "fact": "The other half",
+      "glyph": "fall",
+      "line": "Told: a healthy heart means giving up sooner."
+     }
+    ],
+    "ask": "They do the test again. What happens?",
+    "options": [
+     {
+      "label": "Same times as before"
+     },
+     {
+      "label": "All last longer"
+     },
+     {
+      "label": "Each moves to healthy"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "Quattrone and Tversky, 1984",
+     "glyph": "eye",
+     "line": "Each group shifted its time towards the healthy heart."
+    },
+    "why": "They wanted the good diagnosis, so they quietly produced it, then believed it."
+   },
    "source": "Quattrone & Tversky, JPSP, 1984",
    "source_kind": "paper",
    "reference": "Quattrone & Tversky, Causal versus diagnostic contingencies: On self-deception and on the voter's illusion, Journal of Personality and Social Psychology, 1984",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "psychology-self-deception-2",
@@ -142041,15 +147893,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did a sign saying many visitors steal petrified wood make theft worse than a plain request not to?",
-   "answer": "Because it told visitors that taking wood was normal. In Arizona's Petrified Forest, paths with a sign saying many past visitors had removed wood lost 7.92% of the marked pieces, against 1.67% with a sign simply asking people not to. A warning that stresses how common a wrong is can advertise it.",
+   "question": "A national park put up a sign to stop visitors taking petrified wood. Which persuasion lever does each of these pull?",
+   "answer": "The park sign is the one people misread. Written to shame thieves, it told visitors that taking wood was normal. In Cialdini's Petrified Forest test, paths with that sign lost 7.92% of marked pieces, against 1.67% with a plain request. A warning about how common a wrong is can advertise it.",
    "move": "Never advertise how many people are doing the thing you want stopped.",
    "ask": "When I complain that everyone does something, could I be making it seem more normal?",
    "keywords": [
-    "social norms",
-    "signs",
+    "social proof",
     "petrified forest",
-    "theft"
+    "reciprocity",
+    "scarcity",
+    "foot in the door"
    ],
    "era": "recent",
    "region": "americas",
@@ -142061,10 +147914,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "The lever",
+    "rightTitle": "Where it's pulled",
+    "pairs": [
+     {
+      "left": "Social proof",
+      "right": "'Many past visitors have taken wood'",
+      "note": "Meant as a warning, read as permission: 7.9% of wood went, not 1.7%.",
+      "missed": true
+     },
+     {
+      "left": "Scarcity",
+      "right": "'Only 1 room left at this price'",
+      "note": "What looks rare looks better, so sellers can manufacture the rarity."
+     },
+     {
+      "left": "Reciprocity",
+      "right": "The free sample handed to you in the aisle",
+      "note": "A gift creates a small debt, and buying is the easiest way to repay it."
+     },
+     {
+      "left": "Commitment",
+      "right": "A tiny favour asked first, then a big one",
+      "note": "After one yes, a second yes keeps you consistent with yourself."
+     }
+    ]
+   },
    "source": "Cialdini, Current Directions in Psychological Science, 2003",
    "source_kind": "paper",
    "reference": "Cialdini, Crafting normative messages to protect the environment, Current Directions in Psychological Science, 2003",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "psychology-social-proof-3",
@@ -142917,31 +148798,51 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Who first called honouring sunk costs the Concorde fallacy, and about what?",
-   "answer": "Two biologists, writing about animal parents deserting a mate. In 1976 Richard Dawkins and Tamsin Carlisle argued that a parent does not stay with a brood because of what it has already put in; only future costs and benefits should count. They named the opposite error after the jet Britain and France kept funding.",
-   "move": "Behind a choice that seems to honour the past, look for a future reason.",
-   "ask": "Which choice am I defending as honouring the past when a future reason would serve better?",
+   "question": "You booked a $100 ski weekend, then a $50 one you would enjoy more. Same dates, no refunds. Which do you go on?",
+   "answer": "Both are paid for, so the only question left is which weekend is better, and that is the $50 one. Yet most of Arkes and Blumer's students chose the dearer trip. In 1976 two biologists named this the Concorde fallacy, after a jet that kept getting money because so much had been spent.",
+   "move": "Ask which option you would pick if both had been free.",
+   "ask": "Which choice am I defending only because of what it already cost me?",
    "keywords": [
+    "sunk costs",
     "concorde fallacy",
-    "parental investment",
-    "richard dawkins",
-    "evolutionary biology",
-    "sunk costs"
+    "ski trip",
+    "arkes and blumer"
    ],
    "era": "twentieth",
-   "region": "none",
-   "hook": "origin",
-   "mood": "wonder",
-   "numeracy": 0,
-   "abstraction": "mixed",
+   "region": "americas",
+   "hook": "puzzle",
+   "mood": "playful",
+   "numeracy": 1,
+   "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Dawkins & Carlisle, Nature, 1976",
+   "scene": {
+    "type": "poll",
+    "who": "61 students, Arkes & Blumer 1985",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "The $100 trip",
+        "share": 54,
+        "mirror": "Like 54% of the students. Wasting the bigger sum feels worse, though both are spent anyway."
+       },
+       {
+        "label": "The $50 trip",
+        "share": 46,
+        "mirror": "Like 46%. You let the money go and chose the better weekend; it was gone either way."
+       }
+      ]
+     }
+    ],
+    "why": "Skipping the dearer trip feels like wasting $100, though the money is gone whichever you pick."
+   },
+   "source": "Arkes & Blumer, OBHDP, 1985",
    "source_kind": "paper",
-   "reference": "doi:10.1038/262131a0",
-   "written": "2026-09-26"
+   "reference": "Arkes & Blumer, The psychology of sunk cost, Organizational Behavior and Human Decision Processes 35 (1985): 124-140; Dawkins & Carlisle, Nature 262 (1976): 131-133",
+   "written": "2026-10-06"
   },
   {
    "id": "psychology-sunk-cost-2",
@@ -144314,8 +150215,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Does a sugary drink restore self-control by refuelling the brain?",
-   "answer": "No. The idea that self-control burns blood sugar rested on small studies. Kurzban showed the brain's glucose use barely changes with mental effort, far too little to drain a tank. Later, merely rinsing the mouth with sugar water and spitting it out seemed to help too, which no fuel could explain.",
+   "question": "A sugary drink was said to restore willpower. Which famous psychology findings held up when many labs repeated them?",
+   "answer": "Willpower as a fuel tank looked solid in small studies, not large ones. Kurzban showed the brain's glucose use barely changes with mental effort, far too little to drain a tank, and merely rinsing with sugar water seemed to help, which no fuel could explain. A 23-lab replication in 2016 found almost no effect.",
    "move": "Test a tidy metaphor against the measurement it implies.",
    "ask": "When I say I have no willpower left, is that true, or have I just stopped wanting to?",
    "keywords": [
@@ -144334,9 +150235,53 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Kurzban, Evolutionary Psychology, 2010",
+   "scene": {
+    "type": "sort",
+    "left": "Failed",
+    "right": "Held up",
+    "tag": "Repeated in many labs",
+    "items": [
+     {
+      "text": "Willpower fuel",
+      "note": "Self-control runs down, and glucose refills it.",
+      "pile": "left",
+      "verdict": "23 labs, 2,141 people: the depletion effect was close to zero."
+     },
+     {
+      "text": "Anchoring",
+      "note": "A number just seen drags your estimates.",
+      "pile": "right",
+      "verdict": "Replicated strongly across 36 samples in Many Labs, 2014."
+     },
+     {
+      "text": "Power posing",
+      "note": "Standing like a superhero raises testosterone.",
+      "pile": "left",
+      "verdict": "With 200 people: no change in hormones or in risk-taking."
+     },
+     {
+      "text": "Framing",
+      "note": "Saying lives saved or lives lost flips choices.",
+      "pile": "right",
+      "verdict": "Replicated in Many Labs: same odds, different words, different choice."
+     },
+     {
+      "text": "Flag priming",
+      "note": "A glimpse of a flag shifts political views.",
+      "pile": "left",
+      "verdict": "Across 36 samples in Many Labs, no effect."
+     },
+     {
+      "text": "Sunk cost",
+      "note": "A paid ticket makes people sit through a bad show.",
+      "pile": "right",
+      "verdict": "Replicated in Many Labs: money already spent still pulls."
+     }
+    ]
+   },
+   "source": "Kurzban 2010; Hagger 2016; Klein 2014",
    "source_kind": "paper",
-   "reference": "Kurzban, Does the mind run on glucose? Continuing controversy and a reply, Evolutionary Psychology, 2010",
+   "reference": "Kurzban, Evolutionary Psychology, 2010; Hagger et al., Perspectives on Psychological Science 11:546, 2016; Klein et al., Social Psychology 45:142, 2014; Ranehill et al., Psychological Science 26:653, 2015",
    "written": "2026-10-03"
   },
   {
@@ -144500,29 +150445,64 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did we know what a kilogram was?",
-   "answer": "Until 2019, a kilogram was a metal cylinder in a vault near Paris. Its official copies drifted apart by around 50 micrograms over a century — and nobody could say which had changed, because the cylinder was the definition. It is now fixed to a constant of nature instead.",
-   "move": "For 130 years the kilogram could not be wrong, only different.",
-   "ask": "What do I treat as fixed that is really just a convention we agreed on?",
+   "question": "Where would a bathroom scale read highest: on Earth, on Mars, or at the cloud tops of Saturn, Uranus or Neptune?",
+   "answer": "Neptune, then Earth. Surface gravity grows with a planet's mass but shrinks with the square of its radius. Saturn has 95 times Earth's mass yet is about nine times as wide, so at its cloud tops it pulls 9.0 metres per second squared, against Earth's 9.8. Its mass is spread thin.",
+   "move": "Big is not heavy; ask how much is packed into how much room.",
+   "ask": "Where do I judge something by its size when what counts is how tightly it is packed?",
    "keywords": [
-    "kilogram",
-    "le grand k",
-    "si units",
-    "planck constant"
+    "surface gravity",
+    "saturn",
+    "neptune",
+    "planets",
+    "weight"
    ],
-   "era": "recent",
-   "region": "europe",
-   "hook": "story",
-   "mood": "wonder",
-   "numeracy": 1,
+   "era": "timeless",
+   "region": "none",
+   "hook": "misconception",
+   "mood": "playful",
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
-   "source": "BIPM, 2019 redefinition of the SI",
-   "source_kind": "standard",
-   "reference": "BIPM, The International System of Units (SI Brochure), 9th edition, 2019"
+   "figure": "bars",
+   "source": "NASA Planetary Fact Sheet",
+   "source_kind": "institution",
+   "reference": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+   "scene": {
+    "type": "rank",
+    "quantity": "Gravity at the surface",
+    "most": "Heaviest",
+    "unit": "m/s²",
+    "items": [
+     {
+      "label": "Saturn",
+      "value": 9.0,
+      "note": "95 Earths of mass, spread so wide that its cloud tops pull less than Earth."
+     },
+     {
+      "label": "Mars",
+      "value": 3.7,
+      "note": "Just over a third of Earth's pull: 70 kg would feel like 26."
+     },
+     {
+      "label": "Earth",
+      "value": 9.8,
+      "note": "Small, but rocky and dense: it beats two giant planets."
+     },
+     {
+      "label": "Uranus",
+      "value": 8.7,
+      "note": "Over 14 Earths of mass, yet a scale would read a little less than at home."
+     },
+     {
+      "label": "Neptune",
+      "value": 11.0,
+      "note": "Smaller than Uranus but denser: the strongest pull of the five."
+     }
+    ]
+   },
+   "written": "2026-10-06"
   },
   {
    "id": "science-2",
@@ -145014,7 +150994,7 @@ const String kEmbeddedBank = r'''
    "difficulty": "easy",
    "principle": "none",
    "question": "Why do most people's friends have more friends than they do?",
-   "answer": "Because popular people turn up on many more friend lists. Someone with 50 friends is counted 50 times when everyone tallies their friends; someone with 2, twice. So the average friend is better connected than the average person, as Scott Feld showed in 1991. Other people's busy social lives are partly a counting effect.",
+   "answer": "Because of how friends enter the sample. Scott Feld showed in 1991 that in almost any network the average friend is better connected than the average person, simply because well-connected people have more people to count them. Other people's busy social lives are partly a counting effect, not a verdict on yours.",
    "move": "Ask how the people being compared were chosen before feeling behind.",
    "ask": "When others seem to have fuller lives than mine, am I comparing myself with a fair sample?",
    "keywords": [
@@ -145033,6 +151013,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "Your friends seem to have more friends than you do."
+    },
+    "levels": [
+     {
+      "text": "For most people it is true, and not because they are unlikeable."
+     },
+     {
+      "text": "Someone with 50 friends turns up on 50 friend lists."
+     },
+     {
+      "text": "Someone with 2 friends turns up on just 2: the popular are overcounted."
+     },
+     {
+      "text": "Pick a friend and you are sampling the popular."
+     }
+    ],
+    "guess": {
+     "options": [
+      "People overstate friends",
+      "Popular people count more",
+      "Social media inflates"
+     ],
+     "answer": 1
+    }
+   },
    "source": "Feld, American Journal of Sociology, 1991",
    "source_kind": "paper",
    "reference": "Feld, Why your friends have more friends than you do, American Journal of Sociology 96(6):1464–1477, 1991",
@@ -145353,30 +151362,144 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did global temperature charts starting in 1998 seem to show that warming had stopped?",
-   "answer": "Because 1998 was a freak hot year. A powerful El Niño, a periodic warming of the Pacific, had pushed it far above the trend, so a line drawn from it looked flat for a decade. Start a year earlier or later and the rise reappears; every year since 2015 has been hotter than 1998.",
-   "move": "Ask why a chart starts where it does before reading its trend.",
+   "question": "Around 2013 charts like this went round: global warming stopped in 1998. The line really is flat. Where's the trick?",
+   "answer": "In the years. 1998 was a freak El Niño year, a periodic warming of the Pacific, so a chart that starts there starts on a spike and finds the next years flat. Open the window and NASA's readings rise about 0.9°C from 1980 to 2023; every year since 2014 beat 1998.",
+   "move": "Ask what the line would show from a year earlier or later.",
    "ask": "When someone shows me a trend, have I asked what it looks like from a different starting point?",
    "keywords": [
     "global warming",
     "el niño",
-    "start points",
-    "temperature records"
+    "cherry-picking",
+    "time window"
    ],
    "era": "recent",
    "region": "world",
    "hook": "misconception",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Lewandowsky, Risbey & Oreskes, BAMS, 2016",
-   "source_kind": "paper",
-   "reference": "Lewandowsky, Risbey & Oreskes, The 'pause' in global warming: turning a routine fluctuation into a problem for science, Bulletin of the American Meteorological Society 97:723–733, 2016",
-   "written": "2026-09-26"
+   "scene": {
+    "type": "trick",
+    "trick": "window",
+    "outlet": "Typical blog chart, 2013",
+    "headline": "Global warming stopped in 1998",
+    "honest": "Since 1980: about 0.9°C warmer",
+    "label": "World temperature vs 1951–80",
+    "unit": "°C",
+    "decimals": 2,
+    "columns": [
+     "1980",
+     "1981",
+     "1982",
+     "1983",
+     "1984",
+     "1985",
+     "1986",
+     "1987",
+     "1988",
+     "1989",
+     "1990",
+     "1991",
+     "1992",
+     "1993",
+     "1994",
+     "1995",
+     "1996",
+     "1997",
+     "1998",
+     "1999",
+     "2000",
+     "2001",
+     "2002",
+     "2003",
+     "2004",
+     "2005",
+     "2006",
+     "2007",
+     "2008",
+     "2009",
+     "2010",
+     "2011",
+     "2012",
+     "2013",
+     "2014",
+     "2015",
+     "2016",
+     "2017",
+     "2018",
+     "2019",
+     "2020",
+     "2021",
+     "2022",
+     "2023"
+    ],
+    "values": [
+     0.26,
+     0.32,
+     0.14,
+     0.31,
+     0.16,
+     0.12,
+     0.18,
+     0.32,
+     0.39,
+     0.27,
+     0.45,
+     0.4,
+     0.22,
+     0.23,
+     0.31,
+     0.45,
+     0.33,
+     0.46,
+     0.61,
+     0.38,
+     0.39,
+     0.53,
+     0.62,
+     0.61,
+     0.53,
+     0.67,
+     0.63,
+     0.66,
+     0.54,
+     0.65,
+     0.72,
+     0.61,
+     0.64,
+     0.67,
+     0.74,
+     0.89,
+     1.01,
+     0.92,
+     0.85,
+     0.98,
+     1.01,
+     0.85,
+     0.89,
+     1.17
+    ],
+    "window": [
+     18,
+     32
+    ],
+    "found": "Yes: it starts on 1998, a record spike.",
+    "miss": "That part is honest. Ask why the chart begins and ends where it does.",
+    "misses": {
+     "yaxis": "The scale is a fair one for these years. The question is which years.",
+     "marks": "Those are NASA's real readings. What's missing is the years around them."
+    },
+    "name": "The cherry-picked window",
+    "lesson": "Start a series on a peak and anything looks flat. Always ask what came before and after."
+   },
+   "source": "NASA GISTEMP v4; Lewandowsky et al., BAMS, 2016",
+   "source_kind": "statistics",
+   "reference": "https://data.giss.nasa.gov/gistemp/",
+   "written": "2026-10-06"
   },
   {
    "id": "science-cherry-picking-2",
@@ -146032,8 +152155,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "In a cold room, why does a metal spoon feel colder than a wooden one at exactly the same temperature?",
-   "answer": "Because skin senses heat leaving it, not temperature. Metal conducts heat hundreds of times faster than wood, so it drains warmth from a fingertip and the skin cools; wood lets a thin warm layer build up at the contact. Both sit at room temperature. The hand is a heat-flow meter that reports like a thermometer.",
+   "question": "In a cold room a metal spoon feels colder than a wooden one. Which of these beliefs about cold are true?",
+   "answer": "Skin measures heat flow, not temperature, and that misleads both ways. Metal drains warmth from a fingertip hundreds of times faster than wood, so at the same temperature it feels colder. A drink does the reverse: it sends warm blood to the skin, so the nerves report warmth while the body's core is losing it.",
    "move": "Ask what an instrument really measures before trusting what it reports.",
    "ask": "What do I judge by how it feels, when the feeling measures something else?",
    "keywords": [
@@ -146053,9 +152176,47 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Incropera, Fundamentals of Heat and Mass Transfer",
+   "scene": {
+    "type": "sort",
+    "left": "Myth",
+    "right": "True",
+    "tag": "Wrap up warm",
+    "items": [
+     {
+      "text": "Metal spoon",
+      "note": "Metal in a cold room is colder than wood.",
+      "pile": "left",
+      "verdict": "Both sit at room temperature. Metal just pulls heat from skin faster."
+     },
+     {
+      "text": "Hats",
+      "note": "Most body heat escapes through the head.",
+      "pile": "left",
+      "verdict": "About 10%. The old army test left only the heads uncovered."
+     },
+     {
+      "text": "A stiff drink",
+      "note": "Alcohol warms you up in the cold.",
+      "pile": "left",
+      "verdict": "It opens skin vessels: you feel warm while your core cools faster."
+     },
+     {
+      "text": "Snow walls",
+      "note": "Snow keeps a shelter warm.",
+      "pile": "right",
+      "verdict": "Fresh snow is mostly trapped air. Igloos can be tens of degrees warmer inside."
+     },
+     {
+      "text": "Wet clothes",
+      "note": "Damp clothes chill you faster than dry.",
+      "pile": "right",
+      "verdict": "Water carries heat away about 20 times better than air."
+     }
+    ]
+   },
+   "source": "Incropera, Heat Transfer; Vreeman & Carroll, BMJ, 2008",
    "source_kind": "book",
-   "reference": "Incropera, DeWitt, Bergman & Lavine, Fundamentals of Heat and Mass Transfer, 6th ed., Wiley, 2007",
+   "reference": "Incropera, DeWitt, Bergman & Lavine, Fundamentals of Heat and Mass Transfer, 6th ed., Wiley, 2007; Vreeman & Carroll, Festive medical myths, BMJ 337:a2769, 2008",
    "written": "2026-09-26"
   },
   {
@@ -146106,8 +152267,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did taking teenage offenders on frightening prison visits look, for years, like it worked?",
-   "answer": "Because teenagers caught at their worst usually calm down anyway, and early programmes measured them only before and after. When randomised trials compared them with similar teenagers left alone, the visited group offended more, not less: a 2013 review of nine trials found the visits raised the odds of offending by about two thirds.",
+   "question": "Can a day being shouted at by prison inmates scare teenage offenders straight?",
+   "answer": "Why it backfired is still argued over: perhaps prison looked survivable, perhaps the teenagers met others in trouble. What is clear is why it looked good for years. Teenagers caught at their worst tend to calm down anyway, and before-and-after figures handed that calming to the programme.",
    "move": "Compare with people left alone before crediting any intervention.",
    "ask": "What did I try at my lowest point that only looked like it worked because things improved anyway?",
    "keywords": [
@@ -146126,10 +152287,54 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "Rahway State Prison, 1970s",
+      "glyph": "crowd",
+      "line": "Lifers shout at teenage offenders about life inside."
+     },
+     {
+      "fact": "Before and after",
+      "glyph": "check",
+      "line": "Organisers report most of the teenagers go straight."
+     },
+     {
+      "fact": "A hit film",
+      "glyph": "rise",
+      "line": "The idea spreads across the US and to other countries."
+     },
+     {
+      "fact": "Randomised trials",
+      "glyph": "walker",
+      "line": "Some teenagers are sent; similar ones are left alone."
+     }
+    ],
+    "ask": "Who offends more afterwards?",
+    "options": [
+     {
+      "label": "The teens sent"
+     },
+     {
+      "label": "No real difference"
+     },
+     {
+      "label": "The teens left alone"
+     }
+    ],
+    "answer": 0,
+    "outcome": {
+     "fact": "Review of 9 trials, 2013",
+     "glyph": "rise",
+     "line": "The teens sent offended more: odds up by about two thirds."
+    },
+    "why": "Teens at their worst calm down anyway. Only a group left alone shows how much."
+   },
    "source": "Petrosino et al., Campbell Systematic Reviews, 2013",
    "source_kind": "paper",
    "reference": "Petrosino, Turpin-Petrosino, Hollis-Peel & Lavenberg, 'Scared Straight' and other juvenile awareness programs for preventing juvenile delinquency, Campbell Systematic Reviews 9(5), 2013",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "science-control-groups-2",
@@ -146597,8 +152802,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did hormone replacement therapy seem to protect women's hearts until a randomised trial tested it?",
-   "answer": "Because the women who chose it were healthier to begin with: richer, slimmer, more active. Observational studies credited the pills. The Women's Health Initiative assigned 16,608 women by lot and in 2002 found slightly more heart disease on the hormones, not less. The healthy habits came with the prescription, not from it.",
+   "question": "Women on hormone therapy had fewer heart attacks. Were the hormones protecting them?",
+   "answer": "The pills had been credited with what their users brought along. Women who seek out a preventive treatment and stick with it tend to look after themselves in every way, so the studies compared healthy women with less healthy ones. Only drawing lots breaks that link, because the lot does not know who jogs.",
    "move": "Ask who chooses a treatment before crediting it with their health.",
    "ask": "Which habit do I credit for my health that people like me tend to have anyway?",
    "keywords": [
@@ -146617,10 +152822,54 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "1980s and 1990s",
+      "glyph": "eye",
+      "line": "Big studies follow women on and off hormones after menopause."
+     },
+     {
+      "fact": "The pattern",
+      "glyph": "fall",
+      "line": "Women taking hormones have far fewer heart attacks."
+     },
+     {
+      "fact": "Millions of prescriptions",
+      "glyph": "rise",
+      "line": "Doctors prescribe it, partly to protect the heart."
+     },
+     {
+      "fact": "Women's Health Initiative",
+      "glyph": "coin",
+      "line": "A trial gives 16,608 women hormones or dummy pills, by lot."
+     }
+    ],
+    "ask": "What happens to heart disease?",
+    "options": [
+     {
+      "label": "Far less on hormones"
+     },
+     {
+      "label": "No difference"
+     },
+     {
+      "label": "More on hormones"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "Stopped early, 2002",
+     "glyph": "cross",
+     "line": "Slightly more heart disease on hormones, not less."
+    },
+    "why": "The women who chose hormones were already healthier: richer, slimmer, more active."
+   },
    "source": "Writing Group for the WHI, JAMA, 2002",
    "source_kind": "paper",
    "reference": "Writing Group for the Women's Health Initiative Investigators, Risks and benefits of estrogen plus progestin in healthy postmenopausal women, JAMA 288:321–333, 2002",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "science-correlation-or-cause-2",
@@ -146670,31 +152919,74 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did leaving a light on at night seem, in 1999, to make babies short-sighted?",
-   "answer": "Because short-sighted parents were the ones leaving lights on. A 1999 study found short sight in 55% of children who had slept with a room light before age two, against 10% in darkness. Within a year, two larger studies found no effect of the light. Short sight runs in families, and so did the lamp.",
-   "move": "When a habit and an outcome travel together, ask what both inherit.",
-   "ask": "What do I blame on a habit when it might come from where I started?",
+   "question": "Picture a post blaming smartphones for American obesity, with this chart: two lines rising in perfect step. Where's the trick?",
+   "answer": "In the two scales, each stretched until the lines matched. On one axis, phone owners rose 42 points and obesity 7. Obesity had already climbed from about 23% to 31% of adults in the 1990s, before any smartphone. Anything that grew in the 2010s tracks anything else that grew: a shared calendar, not a cause.",
+   "move": "When two rising lines match, ask what else rose over those years.",
+   "ask": "What do I blame on something new that was already happening before it arrived?",
    "keywords": [
-    "myopia",
-    "night lights",
-    "confounding",
-    "children",
-    "heredity"
+    "dual axis",
+    "spurious correlation",
+    "smartphones",
+    "obesity"
    ],
-   "era": "twentieth",
+   "era": "recent",
    "region": "americas",
-   "hook": "story",
+   "hook": "misconception",
    "mood": "practical",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Zadnik et al., Nature, 2000",
-   "source_kind": "paper",
-   "reference": "Zadnik et al., Myopia and ambient night-time lighting, Nature 404:143–144, 2000",
-   "written": "2026-09-26"
+   "scene": {
+    "type": "trick",
+    "trick": "dual",
+    "outlet": "Made-up post, real data",
+    "headline": "Smartphones are making America fat",
+    "honest": "Phones up 42 points, obesity up 7",
+    "label": "US adults, %",
+    "unit": "%",
+    "decimals": 0,
+    "columns": [
+     "2011",
+     "2013",
+     "2015",
+     "2017"
+    ],
+    "values": [
+     35,
+     56,
+     68,
+     77
+    ],
+    "values2": [
+     34.9,
+     37.7,
+     39.6,
+     42.4
+    ],
+    "series": [
+     "Own a phone",
+     "Obese"
+    ],
+    "from": 30,
+    "to": 80,
+    "from2": 34,
+    "to2": 43,
+    "found": "Yes: each line has its own scale, set to make them match.",
+    "miss": "That part is fair. Compare the numbers on the two sides of the chart.",
+    "misses": {
+     "marks": "Both lines are real survey figures. It's how they were lined up that persuades.",
+     "headline": "That's the claim. The drawing is what makes it look proven."
+    },
+    "name": "Two axes, one story",
+    "lesson": "Two scales can make any two rising lines move as one. Put them on one axis first."
+   },
+   "source": "CDC NHANES obesity data; Pew smartphone surveys",
+   "source_kind": "statistics",
+   "reference": "https://www.cdc.gov/nchs/products/databriefs/db360.htm",
+   "written": "2026-10-06"
   },
   {
    "id": "science-energy-1",
@@ -147031,31 +153323,75 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What made Vienna's two maternity clinics of the 1840s such a powerful experiment for Ignaz Semmelweis?",
-   "answer": "Admission alternated by day, so chance, not choice, decided which clinic a woman entered. The clinic run by doctors, who came from dissecting corpses, lost about 10% of mothers to childbed fever; the midwives' clinic, about 4%. With similar women on both sides, only the care differed. Chlorine handwashing then cut the doctors' rate sharply.",
-   "move": "Look for places where chance has already done the sorting.",
-   "ask": "Where in my own life has chance already run a fair comparison I could learn from?",
+   "question": "Vienna, 1846. Mothers die of fever far more often in one clinic than in the one next door. What is killing them?",
+   "answer": "The doctors' hands. Semmelweis struck off every rival he could test: the air, the crowding, the priest's bell. One difference was left: the doctors came from dissecting corpses. From May 1847 they washed in chlorine; deaths fell to 13 in 1,000.",
+   "move": "Strike off every suspect you can test; the one left standing is your lead.",
+   "ask": "Do I test the rivals, or chase the vivid one?",
    "keywords": [
     "semmelweis",
-    "natural experiments",
     "childbed fever",
     "vienna",
-    "handwashing"
+    "handwashing",
+    "elimination"
    ],
    "era": "nineteenth",
    "region": "europe",
    "hook": "story",
    "mood": "sober",
-   "numeracy": 2,
+   "numeracy": 1,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Semmelweis, The Etiology of Childbed Fever",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "Bad air",
+     "Overcrowding",
+     "Priest's bell",
+     "Dirty hands"
+    ],
+    "answer": 3,
+    "clues": [
+     {
+      "text": "In the doctors' clinic about 1 mother in 10 dies; next door, with midwives, 1 in 30.",
+      "tag": "1 in 10 against 1 in 30",
+      "rulesOut": []
+     },
+     {
+      "text": "Both clinics share one building, one city's air, and take mothers on alternate days.",
+      "tag": "Same building, same air",
+      "rulesOut": [
+       0
+      ]
+     },
+     {
+      "text": "The midwives' clinic is the more crowded: women beg to be sent there.",
+      "tag": "More crowded, yet safer",
+      "rulesOut": [
+       1
+      ]
+     },
+     {
+      "text": "The priest stops ringing his bell through the doctors' wards. Deaths don't fall.",
+      "tag": "Bell silenced, no change",
+      "rulesOut": [
+       2
+      ]
+     },
+     {
+      "text": "A doctor cut by a student's scalpel during an autopsy dies of the same fever.",
+      "tag": "Scalpel cut, same fever",
+      "rulesOut": []
+     }
+    ],
+    "why": "The silent bell struck off the last rival. One difference was left: the doctors came from corpses."
+   },
+   "source": "Semmelweis, The Etiology of Childbed Fever; Loudon, James Lind Library, 2013",
    "source_kind": "book",
-   "reference": "Semmelweis, The Etiology, Concept, and Prophylaxis of Childbed Fever, trans. Carter, University of Wisconsin Press, 1983",
-   "written": "2026-09-26"
+   "reference": "Semmelweis, The Etiology, Concept, and Prophylaxis of Childbed Fever, trans. Carter, University of Wisconsin Press, 1983; https://www.jameslindlibrary.org/articles/ignaz-phillip-semmelweis-studies-of-death-in-childbirth/",
+   "written": "2026-10-06"
   },
   {
    "id": "science-experts-disagree-1",
@@ -147258,8 +153594,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does an exponential curve always look as if the explosion is only just starting?",
-   "answer": "Because each doubling outweighs all the ones before it. At any moment, the latest doubling holds as much as all earlier history combined, so the curve looks flat behind and steep ahead. The physicist Albert Bartlett showed that at 7% yearly growth, each decade consumes more than every previous decade put together.",
+   "question": "Oil use once grew about 7% a year. After each decade, what share of all oil ever burned went in that decade?",
+   "answer": "About half, every decade, however long the history. At 7% a year use doubles roughly every ten years, so each new decade burns about as much as all earlier decades combined. Albert Bartlett pressed this in 1978: under steady growth the past never looks large, because the present always matches it.",
    "move": "When growth is steady, expect the latest stretch to outweigh everything before it.",
    "ask": "Which steady habit of mine looks harmless only because I'm judging it by its past?",
    "keywords": [
@@ -147272,13 +153608,54 @@ const String kEmbeddedBank = r'''
    "region": "none",
    "hook": "paradox",
    "mood": "wonder",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "abstract",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Bartlett, American Journal of Physics, 1978",
+   "scene": {
+    "type": "draw",
+    "label": "Last decade's share of all use",
+    "unit": "%",
+    "columns": [
+     "10 yrs",
+     "20 yrs",
+     "30 yrs",
+     "40 yrs",
+     "50 yrs",
+     "60 yrs",
+     "70 yrs"
+    ],
+    "values": [
+     100,
+     66.3,
+     56.6,
+     52.7,
+     50.9,
+     50.0,
+     49.6
+    ],
+    "given": 1,
+    "min": 0,
+    "max": 110,
+    "verdict": {
+     "under": "Too low. History never catches up: each decade at 7% uses about as much as all before.",
+     "near": "Right: it settles at about half. Each new decade matches all of history before it.",
+     "over": "Lower than that, but not by much: it settles at about half and stays there."
+    },
+    "notes": [
+     {
+      "at": 2,
+      "text": "30 years in: 57%"
+     },
+     {
+      "at": 4,
+      "text": "50 years in: 51%"
+     }
+    ]
+   },
+   "source": "Arithmetic; Bartlett, Am J Phys, 1978",
    "source_kind": "paper",
    "reference": "Bartlett, Forgotten fundamentals of the energy crisis, American Journal of Physics 46:876–888, 1978",
    "written": "2026-09-26"
@@ -147291,8 +153668,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When did fire first appear on Earth?",
-   "answer": "About 420 million years ago, in the last tenth of Earth's history. Fire needs fuel, oxygen and a spark. Lightning was always there, but fuel arrived only with land plants, and oxygen had to rise high enough. The oldest charcoal is that old: for four billion years, lightning struck ground with nothing to burn.",
+   "question": "Lightning has struck the Earth for billions of years. When do you think the first wildfire burned?",
+   "answer": "Fire needs fuel, oxygen and a spark. Lightning was always there, but fuel came only with land plants, and the air needed enough oxygen, at least about 16%, for flames to spread. Charcoal from Wales and Poland shows wildfires 430 million years ago, as soon as there were plants to burn.",
    "move": "A thing needs all its ingredients; the last one to arrive sets the date.",
    "ask": "What am I waiting for before something starts, and is it the one thing still missing?",
    "keywords": [
@@ -147312,10 +153689,40 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
-   "source": "Glasspool, Edwards & Axe, Geology, 2004",
-   "source_kind": "paper",
-   "reference": "Glasspool, Edwards & Axe, Charcoal in the Silurian as evidence for the earliest wildfire, Geology, 2004",
-   "written": "2026-09-26"
+   "scene": {
+    "type": "timeline",
+    "axis": "ago",
+    "from": 10000000000,
+    "to": 100000,
+    "unit": "years ago",
+    "events": [
+     {
+      "label": "Earth forms",
+      "ago": 4540000000
+     },
+     {
+      "label": "Air gets oxygen",
+      "ago": 2400000000
+     },
+     {
+      "label": "First wildfire",
+      "ago": 430000000,
+      "note": "The oldest charcoal is 430 million years old: fire waited for plants to burn."
+     },
+     {
+      "label": "Dinosaurs die out",
+      "ago": 66000000
+     },
+     {
+      "label": "Our species appears",
+      "ago": 300000
+     }
+    ]
+   },
+   "source": "Glasspool & Gastaldo, GSA, 2022; Lyons et al., 2014",
+   "source_kind": "institution",
+   "reference": "https://www.geosociety.org/GSA/News/pr/2022/22-34.aspx",
+   "written": "2026-10-06"
   },
   {
    "id": "science-fire-2",
@@ -148421,8 +154828,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Where do most exaggerated health headlines first get exaggerated?",
-   "answer": "In the universities' own press releases. Sumner and colleagues compared 462 press releases with their papers and the news: about a third of the releases already overstated causes or advice, or stretched animal results to humans. When a release exaggerated, the news usually did too; when it stayed accurate, so mostly did the news.",
+   "question": "A health headline and its first lines, worded the way many are. Which words did the research not support?",
+   "answer": "Most of them. Sumner and colleagues traced 462 university press releases to their papers and the news that followed: about a third of the releases already overstated causes, advice or animal results. When the release exaggerated, the news usually did too; when it was accurate, mostly so was the news.",
    "move": "Trace a claim back one step before blaming the last messenger.",
    "ask": "When I'm annoyed at how something was reported, have I checked where the spin began?",
    "keywords": [
@@ -148441,10 +154848,42 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Daily news",
+    "ref": "Health",
+    "title": "Coffee linked to longer life",
+    "body": "Three cups a day could add years to your life, says a breakthrough study. Caffeine was linked to longer lifespans in mice.",
+    "phrases": [
+     {
+      "text": "could add years to your life",
+      "plain": "has not been tested on you",
+      "why": "Could is a word that can't be wrong. No person was in this study."
+     },
+     {
+      "text": "a breakthrough study",
+      "plain": "one new study",
+      "why": "Breakthrough is rarely the paper's word. It tends to arrive in the press release."
+     },
+     {
+      "text": "was linked to",
+      "plain": "was seen alongside",
+      "why": "Linked means seen together. It doesn't say which causes which, or whether either does."
+     },
+     {
+      "text": "in mice",
+      "plain": "in mice, not people",
+      "why": "About a third of press releases stretched animal results or causes; the news followed.",
+      "catch": true
+     }
+    ],
+    "ask": "Two words at the end undo the headline. Which?",
+    "watch": "Read a health story from the end: who was studied, and was it cause or only a link?"
+   },
    "source": "Sumner et al., BMJ, 2014",
    "source_kind": "paper",
    "reference": "Sumner et al., The association between exaggeration in health related science news and academic press releases, BMJ 349:g7015, 2014",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "science-headlines-and-papers-2",
@@ -149367,16 +155806,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What was the vacuum flask invented to hold?",
-   "answer": "Liquefied gases. James Dewar built it at the Royal Institution in 1892 to stop liquid air and oxygen boiling away: two glass walls with a vacuum between them block conduction and convection, and silvering the walls reflects radiant heat. From 1904 a Berlin firm, Thermos, turned the laboratory vessel into a picnic flask.",
+   "question": "Four everyday things started life doing a quite different job. What was each one first made for?",
+   "answer": "The flask is the one people miss, because it seems made for tea. James Dewar built it at the Royal Institution in 1892 to stop liquid air and oxygen boiling away: a vacuum between two glass walls blocks conduction and convection, and silvering reflects radiant heat. From 1904 Thermos sold it for picnics.",
    "move": "Ask what problem an everyday object was first built to solve.",
    "ask": "What everyday thing do I use without knowing what problem it was first made to solve?",
    "keywords": [
     "vacuum flask",
     "james dewar",
-    "royal institution",
-    "liquid air",
-    "thermos"
+    "bubble wrap",
+    "kleenex",
+    "play-doh"
    ],
    "era": "nineteenth",
    "region": "europe",
@@ -149388,10 +155827,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "The invention",
+    "rightTitle": "First made to",
+    "pairs": [
+     {
+      "left": "Vacuum flask",
+      "right": "Stop liquid oxygen boiling away in a lab",
+      "note": "James Dewar, 1892. A Berlin firm made it a picnic flask from 1904.",
+      "missed": true
+     },
+     {
+      "left": "Bubble wrap",
+      "right": "Be a textured wallpaper",
+      "note": "It flopped as wallpaper in 1957, then found work wrapping computers."
+     },
+     {
+      "left": "Kleenex",
+      "right": "Wipe off cold cream make-up",
+      "note": "Sold for removing make-up in 1924. Buyers kept blowing their noses."
+     },
+     {
+      "left": "Play-Doh",
+      "right": "Rub soot off wallpaper",
+      "note": "Coal fires left walls sooty. When homes switched to gas, it became a toy."
+     }
+    ]
+   },
    "source": "Mendelssohn, The Quest for Absolute Zero, 1966",
    "source_kind": "book",
    "reference": "Mendelssohn, The Quest for Absolute Zero: The Meaning of Low Temperature Physics, Weidenfeld & Nicolson, 1966",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "science-insulation-3",
@@ -150285,16 +156752,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does pouring bleach into a toilet already dosed with an acidic cleaner fill the room with gas?",
-   "answer": "Because acid turns bleach into chlorine gas. Bleach is sodium hypochlorite, kept stable by being strongly alkaline; lower its pH with an acid toilet or limescale cleaner and the hypochlorite gives up chlorine. The gas attacks the moist lining of eyes and lungs, forming acid there: the same chemistry, now inside a throat.",
+   "question": "Four pairs of household cleaners that people combine for extra power. What does each mixture really produce?",
+   "answer": "Vinegar and baking soda is the one people miss: the fizz looks like cleaning power, but it is an acid neutralising a base. What is left is mostly water with a little sodium acetate, weaker than either alone. The bleach mixtures are the reverse: each part safe, the pair dangerous.",
    "move": "Check what two safe things become together before combining them.",
    "ask": "Which two habits or products do I combine without asking what they do to each other?",
    "keywords": [
     "bleach",
     "chlorine gas",
-    "toilet cleaner",
-    "hypochlorite",
-    "acids"
+    "chloramine",
+    "baking soda",
+    "vinegar"
    ],
    "era": "timeless",
    "region": "none",
@@ -150306,10 +156773,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "CDC, Facts About Chlorine",
+   "scene": {
+    "type": "match",
+    "leftTitle": "Mixed",
+    "rightTitle": "What you get",
+    "pairs": [
+     {
+      "left": "Bleach + acid cleaner",
+      "right": "Chlorine gas that burns eyes and lungs",
+      "note": "Acid lowers bleach's pH, and the hypochlorite gives up its chlorine."
+     },
+     {
+      "left": "Bleach + ammonia",
+      "right": "Choking chloramine vapours",
+      "note": "Many glass cleaners hold ammonia. With bleach it makes chloramines."
+     },
+     {
+      "left": "Bleach + alcohol",
+      "right": "Chloroform, among other toxic things",
+      "note": "Rubbing alcohol and bleach react to make chloroform."
+     },
+     {
+      "left": "Vinegar + soda",
+      "right": "Salty water and fizz: they cancel out",
+      "note": "Acid meets base. The bubbles are carbon dioxide, not cleaning.",
+      "missed": true
+     }
+    ]
+   },
+   "source": "CDC, Facts About Chlorine; NHS, bleach safety",
    "source_kind": "institution",
    "reference": "https://emergency.cdc.gov/agent/chlorine/basics/facts.asp",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "science-mixing-cleaners-2",
@@ -150396,8 +156891,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did a 2015 photo of a dress split people into those seeing blue and black and those seeing white and gold?",
-   "answer": "Because the photo hides its lighting. Each brain guesses the light and subtracts it: assume bluish shade and the dress looks white and gold; assume warm indoor light and it looks blue and black. A survey of 1,401 people found the split ran along those guesses. The dress itself was blue and black.",
+   "question": "Remember the 2015 photo of a striped dress that split the internet? What colours did you see?",
+   "answer": "Eyes never report colour raw: the brain estimates the light and removes it, which is why a white shirt looks white in shade and under a lamp. The photo gave no clue to its lighting, so brains guessed differently and subtracted different colours. The dress itself, sold online, was blue and black.",
    "move": "When two people see one thing differently, compare their unstated assumptions.",
    "ask": "When someone sees it differently from me, what am I assuming that they are not?",
    "keywords": [
@@ -150416,10 +156911,36 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "1,401 people online, Lafer-Sousa 2015",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "Blue and black",
+        "share": 57,
+        "mirror": "Like 57%. Your brain guessed warm indoor light and took the yellow out. Right dress."
+       },
+       {
+        "label": "White and gold",
+        "share": 30,
+        "mirror": "Like 30%. Your brain guessed bluish shade and took the blue out: a fair guess, wrong dress."
+       },
+       {
+        "label": "Blue and brown",
+        "share": 11,
+        "mirror": "Like 11%. Your brain settled between the two guesses about the light."
+       }
+      ]
+     }
+    ],
+    "why": "The photo hides its lighting, so each brain makes its own guess about the light and subtracts it."
+   },
    "source": "Lafer-Sousa et al., Current Biology, 2015",
    "source_kind": "paper",
    "reference": "Lafer-Sousa, Hermann & Conway, Striking individual differences in color perception uncovered by 'the dress' photograph, Current Biology 25:R545–R546, 2015",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "science-optical-illusions-2",
@@ -150549,10 +157070,10 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How was the physicist Jan Hendrik Schön, whose faked results passed review at top journals, finally caught?",
-   "answer": "By readers who noticed the same graph twice. In 2002 other physicists spotted identical noise, the random wiggles of measurement, in figures meant to show different experiments. Reviewers had judged whether his results were plausible, not whether his data existed. A Bell Labs inquiry upheld 16 of 24 allegations of misconduct.",
-   "move": "Ask whether anyone checked the evidence itself, not only its story.",
-   "ask": "When I believe a polished story, have I looked at any of the raw evidence myself?",
+   "question": "Bell Labs, 2001. A young physicist publishes breakthrough after breakthrough in top journals. No other lab can repeat them. Why?",
+   "answer": "He made it up. A 2002 Bell Labs inquiry upheld 16 of 24 allegations of misconduct. Reviewers had judged whether results were plausible, not whether the data existed. The duplicated noise caught the eye; the empty filing cabinet closed the case.",
+   "move": "Ask to see the raw records; a true result can always show its working.",
+   "ask": "What polished story have I believed unseen?",
    "keywords": [
     "jan hendrik schön",
     "scientific fraud",
@@ -150561,7 +157082,7 @@ const String kEmbeddedBank = r'''
    ],
    "era": "recent",
    "region": "americas",
-   "hook": "story",
+   "hook": "puzzle",
    "mood": "sober",
    "numeracy": 1,
    "abstraction": "concrete",
@@ -150569,10 +157090,46 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "Real genius",
+     "Honest mix-up",
+     "Made-up data"
+    ],
+    "answer": 2,
+    "clues": [
+     {
+      "text": "He reports single-molecule transistors and superconducting plastics.",
+      "tag": "Dazzling results",
+      "rulesOut": []
+     },
+     {
+      "text": "Other labs try for months and cannot repeat any of it.",
+      "tag": "Nobody can repeat it",
+      "rulesOut": []
+     },
+     {
+      "text": "Graphs of two different experiments share the same noise, wiggle for wiggle.",
+      "tag": "Same noise twice",
+      "rulesOut": [
+       0
+      ]
+     },
+     {
+      "text": "Asked for the raw data, he has none: no lab notebooks, files deleted.",
+      "tag": "No raw data kept",
+      "rulesOut": [
+       1
+      ]
+     }
+    ],
+    "why": "Real measurements never share noise. And an honest mix-up leaves originals to check: he had none."
+   },
    "source": "Beasley et al., Bell Labs inquiry report, 2002",
    "source_kind": "institution",
    "reference": "Beasley et al., Report of the Investigation Committee on the Possibility of Scientific Misconduct in the Work of Hendrik Schön and Coauthors, Lucent Technologies, 2002",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "science-peer-review-3",
@@ -150703,8 +157260,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does a splash of water make a T-shirt or a patch of sand look darker?",
-   "answer": "Water hides the surfaces that scatter light. In dry cloth or sand, every boundary between air and solid bounces light back. Water bends light nearly as much as the solids, so when it fills the gaps those boundaries barely reflect, and light travels deeper and is absorbed. Pigment ground in oil darkens the same way.",
+   "question": "Water is clear. Why does a splash of it make sand or a T-shirt look darker?",
+   "answer": "Because brightness lives at boundaries. A grain or a fibre reflects light where its surface meets air; fill the gaps with water and the jump is small, so light travels deeper and more is absorbed. Lekner and Dorf worked it out in 1988. Grease does the same to paper: the spot turns see-through.",
    "move": "What happens at the edges can matter more than what things are made of.",
    "ask": "What looks different to me only because of the surface it lands on?",
    "keywords": [
@@ -150724,9 +157281,40 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "Wet sand is darker than dry sand, though water is clear."
+    },
+    "levels": [
+     {
+      "text": "Dry sand looks pale: every grain's surface bounces light back."
+     },
+     {
+      "text": "Water bends light almost as much as sand, so those edges nearly vanish.",
+      "figure": "1.33",
+      "unit": "water; air 1.00, sand 1.54"
+     },
+     {
+      "text": "Light no longer bounces out early; it travels deeper among the grains."
+     },
+     {
+      "text": "Deeper light gets absorbed, and less comes back to the eye."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Water hides bright edges",
+      "Water is slightly grey",
+      "Wet grains swell"
+     ],
+     "answer": 0
+    }
+   },
    "source": "Lekner and Dorf, Applied Optics, 1988",
    "source_kind": "paper",
-   "reference": "Lekner and Dorf, Why some things are darker when wet, Applied Optics 27, 1278, 1988",
+   "reference": "Lekner and Dorf, Why some things are darker when wet, Applied Optics 27, 1278, 1988; Hecht, Optics, 5th edition, Pearson, 2017 (refractive indices)",
    "written": "2026-09-26"
   },
   {
@@ -151752,8 +158340,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "In 1901 a mathematician estimated π by dropping a needle on ruled lines 3,408 times. What was wrong with his result?",
-   "answer": "It was too good. Mario Lazzarini's 1,808 crossings gave 355/113, π to six places, when honest runs that long miss by about 0.05. And with his needle length, 355/113 can only come out if the drops number a multiple of 213. He made 3,408: exactly 16 × 213, as if he stopped when it matched.",
+   "question": "In 1901 Mario Lazzarini dropped a needle on ruled lines 3,408 times and got pi right to six places. Could honest drops do that?",
+   "answer": "No: the result was too good. Honest runs of 3,408 drops miss pi by about 0.05. With his needle, 355/113 can only come out when the drops are a multiple of 213, and 3,408 is exactly 16 × 213: he seems to have stopped the moment it matched.",
    "move": "When a result is better than the method allows, ask how it stopped.",
    "ask": "When a result looks better than the method allows, do I ask how it stopped?",
    "keywords": [
@@ -151767,7 +158355,7 @@ const String kEmbeddedBank = r'''
    "region": "europe",
    "hook": "story",
    "mood": "playful",
-   "numeracy": 2,
+   "numeracy": 3,
    "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
@@ -151776,7 +158364,29 @@ const String kEmbeddedBank = r'''
    "source": "Badger, Mathematics Magazine, 1994",
    "source_kind": "paper",
    "reference": "Badger, Lazzarini's Lucky Approximation of π, Mathematics Magazine, 1994",
-   "written": "2026-09-26"
+   "written": "2026-09-26",
+   "scene": {
+    "type": "sample",
+    "dots": "Simulated needle drops",
+    "hit": "Needle crossed a line",
+    "rate": 0.530516,
+    "steps": [
+     34,
+     341,
+     3408,
+     34080,
+     340800
+    ],
+    "seed": 2,
+    "button": "Drop more",
+    "notes": [
+     "34 drops, 23 crossings: 67.6%. Turned into pi, that makes it 2.46.",
+     "341 drops: 54.8% crossed, so pi comes out 3.04.",
+     "3,408 drops, as many as Lazzarini's: pi = 3.10. His said 3.1415929.",
+     "34,080 drops: pi = 3.13. Ten times his work, one decimal right.",
+     "340,800 drops: pi = 3.138. Six true places would take tens of trillions."
+    ]
+   }
   },
   {
    "id": "science-probability-2",
@@ -152246,8 +158856,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did a nine-year-old test whether touch therapists could really feel a human energy field?",
-   "answer": "She hid behind a screen, held her hand over one of theirs, chosen by a coin toss, and asked which. Emily Rosa ran 280 trials with 21 practitioners; they named the right hand 44% of the time, worse than the 50% of pure guessing. Published in JAMA in 1998, she became its youngest author.",
+   "question": "Touch therapists said they could feel a hand held above theirs. A nine-year-old tested them by coin toss. What would guessing score?",
+   "answer": "About what they scored. In Emily Rosa's test, 21 practitioners named the right hand in 123 of 280 trials, 44%, below the 50% of guessing. Ten tries can flatter anyone; 280 leave luck no room. Her paper ran in JAMA in 1998, making her its youngest author.",
    "move": "Ask what result would show a claim false, then go and look.",
    "ask": "Which of my beliefs have I never put to a simple test I could easily run?",
    "keywords": [
@@ -152269,7 +158879,27 @@ const String kEmbeddedBank = r'''
    "source": "Rosa et al., JAMA, 1998",
    "source_kind": "paper",
    "reference": "Rosa, Rosa, Sarner & Barrett, A close look at therapeutic touch, JAMA 279:1005–1010, 1998",
-   "written": "2026-09-26"
+   "written": "2026-09-26",
+   "scene": {
+    "type": "sample",
+    "dots": "Simulated guesses",
+    "hit": "Named the right hand",
+    "rate": 0.5,
+    "steps": [
+     10,
+     280,
+     2800,
+     28000
+    ],
+    "seed": 7576,
+    "button": "Guess more",
+    "notes": [
+     "One therapist's 10 tries: 8 right, 80%. Pure guessing, looking like a gift.",
+     "280 guesses, as many as Emily Rosa ran: 44%. Her therapists scored 44% too.",
+     "2,800 guesses: 50%. Luck has nowhere left to hide.",
+     "28,000 guesses: 50%. A coin can't feel a hand either."
+    ]
+   }
   },
   {
    "id": "science-pseudoscience-2",
@@ -152322,8 +158952,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What did Australia's national medical research council find when it reviewed homeopathy for 61 health conditions?",
-   "answer": "No reliable evidence that it worked for any of them. The 2015 review weighed studies by quality: positive results came from small or poorly designed trials, while well-run ones found homeopathy no better than a placebo. The most diluted remedies are unlikely to hold a single molecule of the substance they started from.",
+   "question": "A tube of homeopathic pills from a chemist's shelf, labelled the way many are. What is actually in them?",
+   "answer": "Sugar, in practice. 30C means diluted a hundredfold, thirty times over: one part in a 1 followed by 60 zeros, far past the point where a single molecule is likely to remain. In 2015 Australia's national medical research council reviewed homeopathy for 61 conditions and found no reliable evidence it worked for any.",
    "move": "Weigh studies by how well they were run, not by how many.",
    "ask": "When I count the evidence for something I like, do I weigh the careful studies more than the rest?",
    "keywords": [
@@ -152342,10 +158972,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Homeopathic medicine",
+    "ref": "Typical text",
+    "title": "Arnica 30C",
+    "body": "Arnica montana 30C. Homeopathic remedy for bruises and aches. Gentle, with no known side effects.",
+    "phrases": [
+     {
+      "text": "30C",
+      "plain": "diluted 1 in 100, thirty times over",
+      "why": "One part in a number with 60 zeros. Past about 12C, not one molecule is likely to be left.",
+      "catch": true
+     },
+     {
+      "text": "Homeopathic remedy",
+      "plain": "Sugar pill, no better than a dummy in good trials,",
+      "why": "Australia's NHMRC reviewed 61 conditions in 2015 and found no reliable evidence for any."
+     },
+     {
+      "text": "no known side effects",
+      "plain": "no effects of any kind",
+      "why": "Nothing in it can act on the body, for good or ill. Gentle is the honest word."
+     }
+    ],
+    "ask": "One three-character code says the pill holds nothing. Which?",
+    "watch": "When a label lists an ingredient, ask how much of it is actually in there."
+   },
    "source": "NHMRC Information Paper on Homeopathy, 2015",
    "source_kind": "institution",
    "reference": "National Health and Medical Research Council, NHMRC Information Paper: Evidence on the effectiveness of homeopathy for treating health conditions, Canberra, 2015",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "science-quantum-1",
@@ -153227,8 +159884,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Does the number inside the recycling arrows on a plastic pot mean it can be recycled?",
-   "answer": "No. The number, 1 to 7, only says which plastic it is; the arrows were a 1988 industry design, not a promise. Bottles marked 1 and 2 are widely recycled; most items marked 3 to 7 have no buyer and are landfilled or burned. In 2013 the standard swapped the arrows for a plain triangle.",
+   "question": "The bottom of a yoghurt pot. What does the mark in the plastic promise about where it ends up?",
+   "answer": "Nothing. The number, 1 to 7, says only which plastic it is, and the arrows were a 1988 industry design, not a promise. Bottles marked 1 and 2 are widely recycled; most items marked 3 to 7 have no buyer and are landfilled or burned. In 2013 the standard swapped the arrows for a triangle.",
    "move": "A symbol that looks like a promise may only be a label.",
    "ask": "Which reassuring symbol do I trust without knowing who put it there or what it promises?",
    "keywords": [
@@ -153247,10 +159904,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Yoghurt pot",
+    "ref": "Underneath",
+    "title": "Plastic code 6",
+    "body": "Chasing arrows around a 6, PS beneath. Recyclable where facilities exist. Please rinse before recycling.",
+    "phrases": [
+     {
+      "text": "Chasing arrows around a 6",
+      "plain": "A code for plastic type 6",
+      "why": "The number names the plastic. The arrows were a 1988 industry design, not a promise.",
+      "catch": true
+     },
+     {
+      "text": "PS",
+      "plain": "polystyrene",
+      "why": "A plastic that few recycling plants want. Its code is not a ticket in."
+     },
+     {
+      "text": "Recyclable where facilities exist",
+      "plain": "Recyclable in theory; most places don't take it",
+      "why": "Items marked 3 to 7 mostly have no buyer. They are landfilled or burned."
+     }
+    ],
+    "ask": "One mark looks like a promise and is a name tag. Which?",
+    "watch": "Check your council's list, not the pot. The pot only says what it is made of."
+   },
    "source": "ASTM D7611, Resin Identification Code",
    "source_kind": "standard",
    "reference": "ASTM D7611/D7611M, Standard Practice for Coding Plastic Manufactured Articles for Resin Identification, ASTM International, 2013",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "science-recycling-claims-2",
@@ -153940,8 +160624,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When a drug company's scientists tried to repeat 53 landmark cancer studies, how many held up?",
-   "answer": "Six. In 2012 Glenn Begley and Lee Ellis reported that Amgen's teams could confirm only 6 of 53 high-profile laboratory papers, even after asking the original authors for help. Some originals had shown their best experiment, not their typical one. Drug programmes costing millions had been planned on foundations that would not stand twice.",
+   "question": "Amgen's scientists tried to repeat 53 landmark cancer studies, even asking the original authors for help. How many results held up?",
+   "answer": "Six. Begley and Ellis reported in 2012 that the other 47 could not be confirmed. Some originals had shown their single best experiment rather than a typical one, and few had been repeated before publication. Drug programmes costing millions had been planned on foundations that would not stand twice.",
    "move": "Before building on a result, check it stands when someone else repeats it.",
    "ask": "What am I building my plans on that I've only ever seen work once?",
    "keywords": [
@@ -153952,18 +160636,44 @@ const String kEmbeddedBank = r'''
    ],
    "era": "recent",
    "region": "americas",
-   "hook": "story",
+   "hook": "number",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "of 53 landmark studies held up",
+    "answer": 6,
+    "each": 1,
+    "eachLabel": "1 dot = 1 result confirmed",
+    "arrange": "grid",
+    "compare": "47 of the 53 could not be repeated",
+    "options": [
+     {
+      "label": "About 5",
+      "value": 5,
+      "note": "Right: 6 of 53. Some originals showed their best run, not their typical one."
+     },
+     {
+      "label": "About 15",
+      "value": 15,
+      "note": "Too many. Only 6 of the 53 stood up when another lab repeated them."
+     },
+     {
+      "label": "Nearly all",
+      "value": 50,
+      "note": "Far too many. 47 of the 53 landmark results could not be reproduced."
+     }
+    ]
+   },
    "source": "Begley & Ellis, Nature, 2012",
    "source_kind": "paper",
    "reference": "Begley & Ellis, Raise standards for preclinical cancer research, Nature 483:531–533, 2012",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "science-replication-3",
@@ -154012,8 +160722,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What does a one-in-a-million chance of dying look like in ordinary life?",
-   "answer": "About one micromort, the unit the decision scientist Ronald Howard coined for it. In Britain, driving about 400 km carries one; a skydive about eight; a general anaesthetic around ten. Putting every risk in one unit lets the frightening sit beside the everyday, and the frightening often looks smaller.",
+   "question": "Measured in micromorts, one-in-a-million chances of dying, which of these is the riskiest thing to do once?",
+   "answer": "The general anaesthetic, at about ten, then the skydive at about eight. Ronald Howard's unit puts every risk on one scale, so the frightening sits beside the routine. On Blastland and Spiegelhalter's British figures a marathon is close to a skydive, a scuba dive about five, and 400 km of driving one.",
    "move": "Put risks in the same unit before deciding which to fear.",
    "ask": "Which risk do I avoid out of fear while taking a bigger one daily without a thought?",
    "keywords": [
@@ -154024,18 +160734,49 @@ const String kEmbeddedBank = r'''
    ],
    "era": "timeless",
    "region": "europe",
-   "hook": "practical",
+   "hook": "misconception",
    "mood": "practical",
    "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "bars",
    "source": "Blastland & Spiegelhalter, The Norm Chronicles, 2013",
    "source_kind": "book",
    "reference": "Blastland & Spiegelhalter, The Norm Chronicles: Stories and Numbers About Danger, Profile Books, 2013",
-   "written": "2026-09-26"
+   "written": "2026-10-06",
+   "scene": {
+    "type": "rank",
+    "quantity": "Micromorts, each time",
+    "most": "Riskiest",
+    "items": [
+     {
+      "label": "One skydive",
+      "value": 8,
+      "note": "About eight: the jump that feels reckless loses to a routine anaesthetic."
+     },
+     {
+      "label": "Driving 400 km",
+      "value": 1,
+      "note": "One. A long day's drive is the safest thing here."
+     },
+     {
+      "label": "General anaesthetic",
+      "value": 10,
+      "note": "About ten, more than a skydive, though nobody calls it daring."
+     },
+     {
+      "label": "Running a marathon",
+      "value": 7,
+      "note": "About seven: nearly a skydive, run by people who would never jump."
+     },
+     {
+      "label": "One scuba dive",
+      "value": 5
+     }
+    ]
+   }
   },
   {
    "id": "science-risk-in-numbers-2",
@@ -154711,30 +161452,60 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do the most dramatic results in a research field so often come from its smallest studies?",
-   "answer": "Because small studies are noisy, and only results that happen to look big pass the bar for significance. A 2013 review put the typical neuroscience study's power at about 21%: it would miss a real effect four times in five, and its hits overstate it. A small study's big result is often the lucky high.",
+   "question": "Small trials pooled in 1991 suggested a magnesium drip halved deaths after heart attacks. Then 58,050 patients were tested. What happened?",
+   "answer": "No benefit at all. In ISIS-4, 7.6% of magnesium patients died within five weeks, against 7.2% of controls. The earlier trials had about 1,300 patients between them. Small studies swing widely, and the swings that look like cures are the ones noticed; a 2013 review put a typical neuroscience study's power at 21%.",
    "move": "Shrink any striking result in proportion to how few cases produced it.",
    "ask": "When a small trial in my own life went brilliantly, how much of that was luck?",
    "keywords": [
-    "statistical power",
-    "small studies",
-    "neuroscience",
-    "effect size"
+    "magnesium",
+    "heart attack",
+    "small trials",
+    "sample size",
+    "isis-4"
    ],
-   "era": "recent",
+   "era": "twentieth",
    "region": "world",
    "hook": "mechanism",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "abstract",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Button et al., Nature Reviews Neuroscience, 2013",
+   "source": "Teo et al., BMJ 1991; ISIS-4, Lancet 1995",
    "source_kind": "paper",
-   "reference": "Button et al., Power failure: why small sample size undermines the reliability of neuroscience, Nature Reviews Neuroscience 14:365–376, 2013",
-   "written": "2026-09-26"
+   "reference": "Teo et al., Effects of intravenous magnesium in suspected acute myocardial infarction: overview of randomised trials, BMJ 303:1499–1503, 1991; ISIS-4 Collaborative Group, The Lancet 345:669–685, 1995; Button et al., Nature Reviews Neuroscience 14:365–376, 2013",
+   "written": "2026-09-26",
+   "scene": {
+    "type": "sample",
+    "dots": "Simulated patients",
+    "hit": "Died within five weeks",
+    "groups": [
+     {
+      "label": "No magnesium",
+      "rate": 0.0724
+     },
+     {
+      "label": "Magnesium",
+      "rate": 0.0764
+     }
+    ],
+    "steps": [
+     130,
+     1300,
+     13000,
+     58050
+    ],
+    "seed": 5301,
+    "button": "Add patients",
+    "notes": [
+     "130 patients, one small trial: 6.2% died without magnesium, 1.5% with it.",
+     "1,300, like the pooled small trials: 9.1% against 4.5%. Halved, by chance.",
+     "13,000 patients: 7.2% against 7.7%. The cure is gone.",
+     "58,050, as in ISIS-4. Its real deaths: 7.2% without, 7.6% with magnesium."
+    ]
+   }
   },
   {
    "id": "science-steel-1",
@@ -155475,8 +162246,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does the bottom of a deep lake stay at about 4 °C all winter, even under ice?",
-   "answer": "Because water is densest at about 4 °C. As a lake cools in autumn, water at 4 °C sinks to the bottom; colder water stays on top and freezes, and the ice shields what lies beneath. Most liquids shrink as they freeze. Water's open ice crystal gives fish a 4 °C basement for the winter.",
+   "question": "As a lake cools towards freezing, does its water keep getting denser? Why does a deep lake's bottom stay at 4 °C all winter?",
+   "answer": "Because water is densest at about 4 °C. As a lake cools, 4 °C water sinks to the bottom; colder water stays on top and freezes there, and the ice shields what lies below. Most liquids shrink all the way to solid. Water's open ice crystal gives fish a 4 °C basement for the winter.",
    "move": "One odd property at the bottom can shape everything built above it.",
    "ask": "Which small quirk of mine quietly shapes everything I build on top of it?",
    "keywords": [
@@ -155490,15 +162261,52 @@ const String kEmbeddedBank = r'''
    "region": "none",
    "hook": "mechanism",
    "mood": "wonder",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Wetzel, Limnology, 2001",
+   "scene": {
+    "type": "draw",
+    "label": "Density of water, kg per m³",
+    "columns": [
+     "12°C",
+     "10°C",
+     "8°C",
+     "6°C",
+     "4°C",
+     "2°C",
+     "0°C"
+    ],
+    "values": [
+     999.5,
+     999.7,
+     999.85,
+     999.94,
+     999.97,
+     999.94,
+     999.84
+    ],
+    "given": 2,
+    "min": 999.3,
+    "max": 1000.1,
+    "decimals": 2,
+    "verdict": {
+     "under": "Lower than the truth, but the right turn: below 4 °C water gets lighter again.",
+     "near": "Right: water is densest at 4 °C, then lighter as it nears freezing.",
+     "over": "It turns: below 4 °C water grows lighter, so the coldest water floats on top."
+    },
+    "notes": [
+     {
+      "at": 4,
+      "text": "Densest at 4 °C"
+     }
+    ]
+   },
+   "source": "Kell, 1975; Wetzel, Limnology, 2001",
    "source_kind": "book",
-   "reference": "Wetzel, Limnology: Lake and River Ecosystems, 3rd ed., Academic Press, 2001",
+   "reference": "Kell, Density, thermal expansivity and compressibility of liquid water from 0 to 150 °C, Journal of Chemical and Engineering Data 20:97-105, 1975; Wetzel, Limnology: Lake and River Ecosystems, 3rd ed., Academic Press, 2001",
    "written": "2026-09-26"
   },
   {
@@ -155592,15 +162400,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Where did the crack that broke up a Comet jet airliner over the Mediterranean in 1954 begin?",
-   "answer": "At the corner of a small roof window cut for a navigation aerial. Sharp corners concentrate stress: the metal there carries several times the load of the panel around it. Every flight pressurised the cabin and flexed that corner, until a fatigue crack grew from a hole beside it. Airliner windows have rounded corners now.",
-   "move": "Look for the sharp corner where strain has nowhere else to go.",
-   "ask": "Where in my week does all the pressure collect at one sharp corner?",
+   "question": "Four safety rules so ordinary nobody notices them. Which disaster was each one written after?",
+   "answer": "The windows are the one people miss, because rounded corners look like styling. Sharp corners concentrate stress: the metal there carries several times the load of the panel around it. Each pressurised flight flexed a corner on two Comets until a fatigue crack grew and the cabins burst open over the Mediterranean.",
+   "move": "Behind every odd safety rule, look for the accident that wrote it.",
+   "ask": "Which rule in my life looks pointless because I never heard about the accident behind it?",
    "keywords": [
     "de havilland comet",
     "metal fatigue",
-    "stress concentration",
-    "aircraft windows"
+    "titanic",
+    "tylenol",
+    "panic bars"
    ],
    "era": "twentieth",
    "region": "europe",
@@ -155612,10 +162421,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "The rule",
+    "rightTitle": "Written after",
+    "pairs": [
+     {
+      "left": "Rounded windows",
+      "right": "Two jets breaking up in mid-air, 1954",
+      "note": "Cracks grew from a sharp corner, where the stress had piled up.",
+      "missed": true
+     },
+     {
+      "left": "Lifeboats for all",
+      "right": "A liner sinking with seats for about half",
+      "note": "Titanic, 1912. The first SOLAS treaty, 1914, demanded a seat for all."
+     },
+     {
+      "left": "Sealed pill caps",
+      "right": "Seven people killed by painkillers, 1982",
+      "note": "Tylenol capsules were laced with cyanide on shop shelves in Chicago."
+     },
+     {
+      "left": "Push-bar exit doors",
+      "right": "183 children crushed at a bolted door",
+      "note": "Victoria Hall, Sunderland, 1883. Exits since have to open outwards."
+     }
+    ]
+   },
    "source": "Court of Inquiry, Comet G-ALYP and G-ALYY, 1955",
    "source_kind": "institution",
    "reference": "Report of the Court of Inquiry into the Accidents to Comet Aircraft G-ALYP and G-ALYY, HMSO, London, 1955",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "science-why-things-break-2",
@@ -156901,8 +163738,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How was the temperature of the cosmic background measured in 1941, 24 years before its discovery?",
-   "answer": "Through a molecule in space. In 1941 Andrew McKellar in Canada found cyanogen, a carbon-nitrogen molecule seen in starlight, slightly more excited than empty space should allow, as if bathed in radiation about 2 degrees above absolute zero. Nobody knew what was warming it until the cosmic background was found in 1965.",
+   "question": "Drag each to the year you think: when was the Big Bang's afterglow predicted, found and first measured?",
+   "answer": "Andrew McKellar saw cyanogen molecules in starlight slightly more excited than empty space should allow, as if bathed in warmth about 2.3 degrees above absolute zero. Nobody connected it to the Big Bang. The 1948 prediction said about 5 degrees. McKellar's number, the closer one, sat unread in an observatory journal.",
    "move": "An unexplained number in an old paper may be tomorrow's discovery.",
    "ask": "What odd, unexplained number in an old record of mine might be a discovery waiting?",
    "keywords": [
@@ -156922,10 +163759,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
-   "source": "McKellar, Publications of the Dominion Astrophysical Observatory, 1941",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1920,
+    "to": 2000,
+    "events": [
+     {
+      "label": "McKellar measures 2.3 K",
+      "year": 1941,
+      "note": "Its temperature was measured in 1941, seven years before anyone predicted it."
+     },
+     {
+      "label": "Afterglow predicted",
+      "year": 1948
+     },
+     {
+      "label": "Penzias and Wilson find it",
+      "year": 1965
+     },
+     {
+      "label": "Nobel Prize for the find",
+      "year": 1978
+     }
+    ]
+   },
+   "source": "McKellar, 1941; Alpher & Herman, Nature, 1948",
    "source_kind": "paper",
    "reference": "McKellar, Molecular Lines from the Lowest States of Diatomic Molecules Composed of Atoms Probably Present in Interstellar Space, Publications of the Dominion Astrophysical Observatory 7, 251, 1941",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "space-cosmic-background-2",
@@ -157093,20 +163955,20 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Which instrument did two Soviet physicists name in 1964 as the one able to detect the Big Bang's afterglow?",
-   "answer": "Bell Labs' horn antenna in New Jersey. Doroshkevich and Novikov calculated that the afterglow should dominate the radio sky at short wavelengths and cited measurements made with that antenna. A year later Penzias and Wilson, on that horn and unaware of the paper, found a hiss of about 3.5 K they could not remove.",
-   "move": "A prediction nobody reads is as good as one never made.",
-   "ask": "Which good idea of mine have I never put where the right people would see it?",
+   "question": "New Jersey, 1964. A radio horn picks up a faint hiss, 3.5 degrees above absolute zero, that will not go away. From where?",
+   "answer": "The afterglow of the Big Bang, stretched into microwaves. Penzias and Wilson did not know it; physicists at nearby Princeton explained it. Two Soviet physicists had named this very horn as able to find it. Nobel Prize, 1978.",
+   "move": "If a signal does not change when you move, it is not coming from nearby.",
+   "ask": "What bothers me everywhere I go?",
    "keywords": [
-    "doroshkevich",
-    "novikov",
     "penzias and wilson",
+    "cosmic background",
     "horn antenna",
-    "bell labs"
+    "bell labs",
+    "big bang"
    ],
    "era": "twentieth",
    "region": "world",
-   "hook": "story",
+   "hook": "puzzle",
    "mood": "sober",
    "numeracy": 1,
    "abstraction": "concrete",
@@ -157114,10 +163976,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
-   "source": "Doroshkevich & Novikov, Soviet Physics Doklady, 1964",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "Pigeon mess",
+     "New York radio",
+     "Our galaxy",
+     "Big Bang"
+    ],
+    "answer": 3,
+    "clues": [
+     {
+      "text": "The hiss is weak and steady, about 3.5 degrees warmer than it should be.",
+      "tag": "3.5 degrees too warm",
+      "rulesOut": []
+     },
+     {
+      "text": "Pigeons nesting in the horn are evicted and their droppings scrubbed out. It stays.",
+      "tag": "Pigeons evicted",
+      "rulesOut": [
+       0
+      ]
+     },
+     {
+      "text": "Pointing the horn away from New York City changes nothing.",
+      "tag": "Not from New York",
+      "rulesOut": [
+       1
+      ]
+     },
+     {
+      "text": "It is the same in every direction, day and night, through the seasons.",
+      "tag": "Same in every direction",
+      "rulesOut": [
+       2
+      ]
+     }
+    ],
+    "why": "The galaxy glows brightest along the Milky Way. A hiss the same everywhere comes from everywhere."
+   },
+   "source": "Penzias & Wilson, Astrophysical Journal, 1965",
    "source_kind": "paper",
-   "reference": "Doroshkevich & Novikov, Mean Density of Radiation in the Metagalaxy and Certain Problems in Relativistic Cosmology, Soviet Physics Doklady 9, 111, 1964",
-   "written": "2026-09-27"
+   "reference": "Penzias & Wilson, A Measurement of Excess Antenna Temperature at 4080 Mc/s, Astrophysical Journal 142, 419, 1965; Doroshkevich & Novikov, Soviet Physics Doklady 9, 111, 1964",
+   "written": "2026-10-06"
   },
   {
    "id": "space-cosmic-background-7",
@@ -157907,8 +164808,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did oxygen take hundreds of millions of years to build up in the air after microbes began making it?",
-   "answer": "Because the planet soaked it up first. Oxygen-making microbes may have worked for hundreds of millions of years before the air changed, about 2.4 billion years ago. Iron dissolved in the seas and gases from volcanoes grabbed the oxygen; the rusted iron settled as the striped rocks mined for steel today.",
+   "question": "Oxygen built up in Earth's air about 2.4 billion years ago. Which of these came before it, and which after?",
+   "answer": "The air changed late because the planet soaked oxygen up first. Iron dissolved in the seas and gases from volcanoes grabbed it as fast as microbes made it; the rusted iron settled as the striped rocks mined for steel today. Only when those sinks were full could oxygen linger, and ozone and complex cells follow.",
    "move": "A change can run for ages before it shows, while something absorbs it.",
    "ask": "Which effort of mine is still being soaked up, not failing, just not showing yet?",
    "keywords": [
@@ -157927,6 +164828,56 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Before",
+    "right": "After",
+    "tag": "Oxygen fills the air",
+    "items": [
+     {
+      "text": "The Moon",
+      "note": "Earth's companion forms.",
+      "pile": "left",
+      "verdict": "About 4.5 billion years ago, two billion years earlier."
+     },
+     {
+      "text": "Oceans",
+      "note": "Liquid water on the surface.",
+      "pile": "left",
+      "verdict": "Old zircon crystals point to water by about 4.4 billion years ago."
+     },
+     {
+      "text": "Life",
+      "note": "The first living cells.",
+      "pile": "left",
+      "verdict": "Fossil microbial mats are about 3.5 billion years old."
+     },
+     {
+      "text": "Oxygen makers",
+      "note": "Microbes that release oxygen as they make food.",
+      "pile": "left",
+      "verdict": "Possibly at work for hundreds of millions of years before the air changed."
+     },
+     {
+      "text": "Ozone layer",
+      "note": "The shield against ultraviolet light.",
+      "pile": "right",
+      "verdict": "Ozone is made from oxygen, so it had to wait for the air."
+     },
+     {
+      "text": "Complex cells",
+      "note": "Cells with a nucleus, like ours.",
+      "pile": "right",
+      "verdict": "Their firm fossils are less than 2 billion years old."
+     },
+     {
+      "text": "Animals",
+      "note": "The first creatures that move and eat.",
+      "pile": "right",
+      "verdict": "They appear in rocks less than a billion years old."
+     }
+    ]
+   },
    "source": "Lyons, Reinhard & Planavsky, Nature, 2014",
    "source_kind": "paper",
    "reference": "doi:10.1038/nature13068",
@@ -158129,8 +165080,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "In films, spaceships weave through crowded asteroid fields. How crowded is the real asteroid belt?",
-   "answer": "Nearly empty. Its rocks are spread around a ring hundreds of millions of kilometres around, so neighbours are typically about a million kilometres apart, more than twice the distance to the Moon. Probes cross it without steering round anything. A map marking every rock with a dot paints a crowd where there is mostly space.",
+   "question": "In films, spaceships swerve through crowded asteroid fields. In the real asteroid belt, how far apart are neighbouring rocks?",
+   "answer": "About a million kilometres, more than twice the distance from Earth to the Moon. The belt holds over a million rocks wider than a kilometre, spread around a ring hundreds of millions of kilometres round. Probes cross it without steering round anything. A map marking every rock with a dot paints a crowd.",
    "move": "A crowded map can describe a nearly empty place.",
    "ask": "Which crowded picture of a risk in my head would look nearly empty if drawn to scale?",
    "keywords": [
@@ -158141,18 +165092,48 @@ const String kEmbeddedBank = r'''
    ],
    "era": "timeless",
    "region": "none",
-   "hook": "misconception",
+   "hook": "number",
    "mood": "wonder",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "NASA Science, Asteroids",
+   "scene": {
+    "type": "count",
+    "unit": "kilometres to the next asteroid",
+    "answer": 965600,
+    "each": 500,
+    "eachLabel": "1 dot = 500 km",
+    "compare": "Over twice as far as the Moon",
+    "options": [
+     {
+      "label": "About 10",
+      "value": 10,
+      "note": "Five zeros short. Films borrow the look of a crowd, not the real spacing."
+     },
+     {
+      "label": "About 1,000",
+      "value": 1000,
+      "note": "Three zeros short. Probes cross the belt without steering round anything."
+     },
+     {
+      "label": "About 100,000",
+      "value": 100000,
+      "note": "One zero short. The average gap is close to a million kilometres."
+     },
+     {
+      "label": "A million",
+      "value": 1000000,
+      "note": "Right: about 965,000 km on average, more than twice the Moon's distance."
+     }
+    ]
+   },
+   "source": "SwRI, Lucy mission, Main Belt density",
    "source_kind": "institution",
-   "reference": "https://science.nasa.gov/solar-system/asteroids/facts/",
-   "written": "2026-10-03"
+   "reference": "Southwest Research Institute, Lucy mission, The Density of the Asteroid Belt (average distance between objects about 965,600 km): https://lucy.swri.edu/MainBeltDensity.html",
+   "written": "2026-10-06"
   },
   {
    "id": "space-earth-from-above-1",
@@ -159239,10 +166220,10 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "In 2011 an experiment timed particles beating light by 60 billionths of a second. How did the story end?",
-   "answer": "With a loose cable. The OPERA team in Italy timed neutrinos sent from CERN arriving early. Rather than claim a revolution, they published and asked others to find the flaw. In 2012 a badly connected fibre-optic cable in the timing system turned up, and repeat runs matched the speed of light.",
+   "question": "2011: neutrinos fired 730 km from CERN to Italy arrive 60 billionths of a second before light could. What happened?",
+   "answer": "A timing fault: a fibre-optic cable not fully plugged in, plus a clock slightly off. The team published and asked others to find the flaw rather than claim a revolution. Repeat runs in 2012 matched the speed of light.",
    "move": "When a result overturns everything, hunt first for the loose cable.",
-   "ask": "When a surprising result lands in front of me, what boring error should I rule out first?",
+   "ask": "When a result looks too good, whose independent check am I waiting for?",
    "keywords": [
     "opera experiment",
     "neutrinos",
@@ -159252,7 +166233,7 @@ const String kEmbeddedBank = r'''
    ],
    "era": "recent",
    "region": "europe",
-   "hook": "story",
+   "hook": "puzzle",
    "mood": "sober",
    "numeracy": 1,
    "abstraction": "concrete",
@@ -159260,10 +166241,46 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "New physics",
+     "Bad statistics",
+     "Timing fault"
+    ],
+    "answer": 2,
+    "clues": [
+     {
+      "text": "Over three years about 16,000 neutrinos arrive 60 ns early: six sigma sure.",
+      "tag": "60 ns early, six sigma",
+      "rulesOut": []
+     },
+     {
+      "text": "Rerun with very short pulses, each neutrino timed alone: still 60 ns early.",
+      "tag": "Short pulses, same gap",
+      "rulesOut": [
+       1
+      ]
+     },
+     {
+      "text": "ICARUS, a detector in the same lab, times the same beam: light speed.",
+      "tag": "Neighbour: light speed",
+      "rulesOut": [
+       0
+      ]
+     },
+     {
+      "text": "A fibre-optic cable in OPERA's timing system turns out badly plugged in.",
+      "tag": "A loose cable",
+      "rulesOut": []
+     }
+    ],
+    "why": "A neighbour timing the same beam saw plain light speed. The loose cable only said where to look."
+   },
    "source": "OPERA Collaboration, Journal of High Energy Physics, 2012",
    "source_kind": "paper",
    "reference": "OPERA Collaboration, Measurement of the neutrino velocity with the OPERA detector in the CNGS beam, Journal of High Energy Physics, 2012",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "space-extraordinary-claims-2",
@@ -159355,8 +166372,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does the silence from aliens puzzle scientists, instead of simply showing that space is big?",
-   "answer": "The galaxy is old enough to have been filled many times. A species spreading at just 1% of light speed could cross the 100,000 light-year disc in about 10 million years, or tens of millions with stops: under 1% of the galaxy's age. One such species should have reached everywhere, including here.",
+   "question": "Suppose a species spreads from star to star at 1% of the speed of light. How long would it take to cross our galaxy?",
+   "answer": "About 10 million years for the 100,000 light-year disc, or tens of millions with stops to settle. The galaxy is over 13 billion years old, so it could have been crossed a thousand times. That is the puzzle Michael Hart pressed in 1975: one patient species should have reached everywhere, including here.",
    "move": "If a thing could easily have happened, its absence is a clue.",
    "ask": "Which thing that should have happened by now in my life hasn't, and what is that telling me?",
    "keywords": [
@@ -159367,7 +166384,7 @@ const String kEmbeddedBank = r'''
    ],
    "era": "twentieth",
    "region": "none",
-   "hook": "paradox",
+   "hook": "number",
    "mood": "wonder",
    "numeracy": 2,
    "abstraction": "mixed",
@@ -159375,10 +166392,40 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "years to cross the Milky Way",
+    "answer": 10000000,
+    "each": 5000,
+    "eachLabel": "1 dot = 5,000 years",
+    "compare": "Under 1% of the galaxy's age",
+    "options": [
+     {
+      "label": "About 10,000",
+      "value": 10000,
+      "note": "Three zeros short. At 1% of light speed, each light-year takes a century."
+     },
+     {
+      "label": "A million",
+      "value": 1000000,
+      "note": "One zero short. 100,000 light-years at a hundredth of light speed: 10 million."
+     },
+     {
+      "label": "10 million",
+      "value": 10000000,
+      "note": "Right: about 10 million years, a blink beside the galaxy's 13 billion."
+     },
+     {
+      "label": "A billion",
+      "value": 1000000000,
+      "note": "Two zeros too many. Even with long stops, it takes tens of millions."
+     }
+    ]
+   },
    "source": "Hart, Quarterly Journal of the RAS, 1975",
    "source_kind": "paper",
    "reference": "Hart, An Explanation for the Absence of Extraterrestrials on Earth, Quarterly Journal of the Royal Astronomical Society, 1975",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "space-fermi-paradox-2",
@@ -159931,8 +166978,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does a phone need signals from four GPS satellites to find itself, when three distances should pin down a point?",
-   "answer": "Because its own clock is cheap and wrong. Each satellite broadcasts the time and its position; the phone turns how late each signal arrives into a distance, which needs the exact time. A fourth signal gives a fourth equation, so the phone solves for its clock error as well as its place. It never transmits.",
+   "question": "Why does a phone need four GPS satellites, when three distances should fix a point?",
+   "answer": "Because time is the fourth unknown. Three distances fix a point only if the phone knows the exact time, and its quartz clock is nowhere near the satellites' atomic ones. A fourth signal adds a fourth equation, so the phone solves for its clock error along with its place. It never transmits; it only listens.",
    "move": "When your own clock is unreliable, add one more reference to cancel it.",
    "ask": "When I can't trust my own sense of something, what extra reference could I check it against?",
    "keywords": [
@@ -159951,9 +166998,42 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "Your phone finds itself from satellites far overhead."
+    },
+    "levels": [
+     {
+      "text": "Each satellite broadcasts its position and the exact time.",
+      "figure": "20,200 km",
+      "unit": "up, each GPS satellite"
+     },
+     {
+      "text": "Distance comes from delay, so a millionth of a second is 300 m.",
+      "figure": "1 µs",
+      "unit": "of clock error: 300 m"
+     },
+     {
+      "text": "A phone's cheap quartz clock is far less exact than that."
+     },
+     {
+      "text": "So a fourth satellite lets the phone solve for its own clock."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Earth's curve needs four",
+      "One signal gets blocked",
+      "The phone's clock is off"
+     ],
+     "answer": 2
+    }
+   },
    "source": "Misra & Enge, Global Positioning System, 2006",
    "source_kind": "book",
-   "reference": "Misra & Enge, Global Positioning System: Signals, Measurements, and Performance, 2nd edition, Ganga-Jamuna Press, 2006",
+   "reference": "Misra & Enge, Global Positioning System: Signals, Measurements, and Performance, 2nd edition, Ganga-Jamuna Press, 2006; https://www.gps.gov/systems/gps/space/",
    "written": "2026-10-03"
   },
   {
@@ -160946,8 +168026,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why may a rocket not launch through a cloud that has produced no lightning at all?",
-   "answer": "Because the rocket can make the lightning. A tall conductor trailing a long, ionised exhaust plume distorts the electric field in a charged cloud enough to trigger a strike. Apollo 12 was hit twice within its first minute in 1969, with no storm reported; in 1987 triggered lightning destroyed an Atlas-Centaur rocket.",
+   "question": "Apollo 12 lifted off in rain in 1969, with no thunderstorm reported nearby. How long after liftoff did lightning strike it?",
+   "answer": "36.5 seconds, and again at 52. The rocket made the lightning: a tall conductor trailing an ionised exhaust plume distorts the electric field in a charged cloud enough to trigger a strike. The fuel cells dropped offline and the crew rode on batteries. In 1987 triggered lightning destroyed an Atlas-Centaur rocket.",
    "move": "Check whether your own action creates the danger you are watching for.",
    "ask": "Could my own action be creating the danger I am watching out for?",
    "keywords": [
@@ -160967,10 +168047,21 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "NASA, Apollo 12 Mission Report, 1970",
+   "source": "NASA, Apollo 12 Mission Report",
    "source_kind": "institution",
    "reference": "NASA Manned Spacecraft Center, Apollo 12 Mission Report, MSC-01855, 1970",
-   "written": "2026-09-26"
+   "written": "2026-10-06",
+   "scene": {
+    "type": "hold",
+    "what": "Liftoff to the first strike",
+    "seconds": 36.5,
+    "comparisons": [
+     {
+      "label": "The second strike",
+      "seconds": 52
+     }
+    ]
+   }
   },
   {
    "id": "space-launch-windows-5",
@@ -162454,8 +169545,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does a sleepless night under a full moon feel like proof, when other sleepless nights do not?",
-   "answer": "Because only the full moon gives the night a label. Wake at 3 a.m., see a bright moon, and the night is filed as moon-made; a bad night under a thin crescent is just a bad night. A 1985 review of dozens of studies found no reliable link between moon phase and behaviour.",
+   "question": "A month has about 29.5 nights, three of them around the full moon. What share of bad nights should land there by chance?",
+   "answer": "About one in ten, and memory keeps more. A sleepless night under a bright moon gets a label; a bad night under a crescent is just a bad night, and soon forgotten. A 1985 review of 37 studies found no reliable link between moon phase and behaviour.",
    "move": "Count the times nothing happened, not only the times the story fitted.",
    "ask": "Which of my beliefs rests on the times I noticed, while the times I didn't went unrecorded?",
    "keywords": [
@@ -162468,7 +169559,7 @@ const String kEmbeddedBank = r'''
    "region": "none",
    "hook": "misconception",
    "mood": "practical",
-   "numeracy": 0,
+   "numeracy": 2,
    "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
@@ -162476,8 +169567,29 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "source": "Rotton & Kelly, Psychological Bulletin, 1985",
    "source_kind": "paper",
-   "reference": "Rotton & Kelly, Much ado about the full moon: a meta-analysis of lunar-lunacy research, Psychological Bulletin, 1985",
-   "written": "2026-10-03"
+   "reference": "Rotton & Kelly, Much ado about the full moon: a meta-analysis of lunar-lunacy research, Psychological Bulletin 97:286–306, 1985",
+   "written": "2026-10-03",
+   "scene": {
+    "type": "sample",
+    "dots": "Simulated bad nights",
+    "hit": "Near a full moon",
+    "rate": 0.1016,
+    "steps": [
+     10,
+     50,
+     365,
+     3650
+    ],
+    "seed": 81,
+    "button": "More bad nights",
+    "notes": [
+     "Ten bad nights, three near a full moon: 30%. Three times what chance gives.",
+     "50 bad nights: 16%. Still enough to swear by.",
+     "A year of bad nights: 10.4%.",
+     "Ten years: 10.1%, next to 3 in 29.5. No moon effect is built in."
+    ],
+    "max": 0.4
+   }
   },
   {
    "id": "space-moon-dust-1",
@@ -163316,8 +170428,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did physicists show that tiny black holes made in a particle collider could not swallow Earth, before switching it on?",
-   "answer": "By pointing to experiments nature had already run. Cosmic rays hit the Earth, and far denser stars, at higher energies than any collider, and have done so for billions of years. If such collisions made black holes that grow, white dwarfs and neutron stars would have been eaten. They are still there.",
+   "question": "Some feared a particle collider would make a black hole that swallowed Earth. Which of these black hole claims are true?",
+   "answer": "The collider fear failed a test nature had already run. Cosmic rays strike the Earth, and far denser white dwarfs and neutron stars, harder than any collider, and have done for billions of years. If such hits made black holes that grow, those stars would be gone. They are still there.",
    "move": "Before fearing something new, check whether nature has already run the test.",
    "ask": "Which new step am I afraid of that other people have quietly taken many times already?",
    "keywords": [
@@ -163337,6 +170449,50 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Myth",
+    "right": "True",
+    "tag": "Black holes",
+    "items": [
+     {
+      "text": "Collider",
+      "note": "A particle collider could make a black hole that eats Earth.",
+      "pile": "left",
+      "verdict": "Cosmic rays hit dense stars harder, for aeons. The stars are still there."
+     },
+     {
+      "text": "Suction",
+      "note": "Black holes suck in everything around them.",
+      "pile": "left",
+      "verdict": "From far off, a black hole pulls like any star of the same mass."
+     },
+     {
+      "text": "A black Sun",
+      "note": "If the Sun became one, Earth's orbit would not change.",
+      "pile": "right",
+      "verdict": "Same mass, same pull at our distance. It would just be dark and cold."
+     },
+     {
+      "text": "The Sun's fate",
+      "note": "The Sun will end as a black hole.",
+      "pile": "left",
+      "verdict": "It is far too light. It will end as a white dwarf."
+     },
+     {
+      "text": "The edge",
+      "note": "You could fall into a giant one and feel nothing at first.",
+      "pile": "right",
+      "verdict": "At a huge black hole's edge the stretching is gentle. It comes later."
+     },
+     {
+      "text": "A photograph",
+      "note": "We have a picture of one.",
+      "pile": "right",
+      "verdict": "In 2019 a telescope network imaged M87's: a ring of light round a shadow."
+     }
+    ]
+   },
    "source": "Giddings & Mangano, Physical Review D, 2008",
    "source_kind": "paper",
    "reference": "doi:10.1103/PhysRevD.78.035009",
@@ -164044,8 +171200,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did engineers hold physical evidence of damaged booster seals years before Challenger was lost in 1986?",
-   "answer": "Because the boosters were fished out of the sea for reuse. Recovered casings showed the rubber O-rings in their joints scorched and eroded on flight after flight, from the second Shuttle mission in 1981, with the worst soot after a cold launch in January 1985. Each safe return was read as proof the margin held.",
+   "question": "The Shuttle's booster seals kept getting damaged, yet every flight landed safely. Now what?",
+   "answer": "Sociologist Diane Vaughan called it the normalisation of deviance. Damage that should never happen became expected, then acceptable, because nothing bad had followed. The night before the last launch, engineers at the booster maker argued against flying in the cold; managers asked them to prove it was unsafe, not that it was safe.",
    "move": "A near miss that keeps happening is a warning, not a record.",
    "ask": "Which near miss that keeps happening am I filing as a record, not a warning?",
    "keywords": [
@@ -164065,10 +171221,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
-   "source": "Rogers Commission report, 1986",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "1981, the second flight",
+      "glyph": "eye",
+      "line": "Boosters fished from the sea show rubber seals scorched."
+     },
+     {
+      "fact": "Flight after flight",
+      "glyph": "check",
+      "line": "More seal damage. Each Shuttle still comes home safe."
+     },
+     {
+      "fact": "January 1985, about 12 °C",
+      "glyph": "fall",
+      "line": "The coldest launch yet brings the worst damage so far."
+     }
+    ],
+    "ask": "What do NASA's managers decide?",
+    "options": [
+     {
+      "label": "Ground the fleet"
+     },
+     {
+      "label": "Fix seals, then fly"
+     },
+     {
+      "label": "Fly on: within margin"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "28 January 1986, about 2 °C",
+     "glyph": "cross",
+     "line": "They flew on. On a far colder morning, a seal failed."
+    },
+    "why": "Each safe return was read as proof the risk was fine, so the line of acceptable kept moving."
+   },
+   "source": "Rogers Commission, 1986; Vaughan, 1996",
    "source_kind": "institution",
-   "reference": "Presidential Commission on the Space Shuttle Challenger Accident, Report to the President, Washington DC, 1986",
-   "written": "2026-09-27"
+   "reference": "Presidential Commission on the Space Shuttle Challenger Accident, Report to the President, Washington DC, 1986; Diane Vaughan, The Challenger Launch Decision: Risky Technology, Culture, and Deviance at NASA, University of Chicago Press, 1996",
+   "written": "2026-10-06"
   },
   {
    "id": "space-reusable-boosters-7",
@@ -164742,15 +171937,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What part of almost every phone camera grew out of a NASA lab's need to shrink cameras for spacecraft?",
-   "answer": "The image sensor. In the early 1990s Eric Fossum's team at NASA's Jet Propulsion Laboratory built a camera on a single chip, made with the same cheap process as ordinary computer chips, to cut the power and weight of cameras in space. That design, the CMOS sensor, now sits in billions of phones.",
+   "question": "Four things often credited to the space race. Where did each one really come from?",
+   "answer": "The camera chip is the one people miss, while the famous three are myths. Eric Fossum's team at NASA's Jet Propulsion Laboratory built a whole camera on one ordinary computer chip to save power and weight in space. That CMOS sensor now sits in billions of phones. Velcro, Teflon and Tang only flew.",
    "move": "Hard limits breed inventions that easy conditions never ask for.",
    "ask": "Which limit I'm stuck with could push me to a better solution than plenty would?",
    "keywords": [
-    "cmos image sensor",
-    "eric fossum",
+    "cmos sensor",
     "jet propulsion laboratory",
-    "phone cameras"
+    "velcro",
+    "teflon",
+    "tang"
    ],
    "era": "twentieth",
    "region": "americas",
@@ -164762,10 +171958,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "The thing",
+    "rightTitle": "Where it began",
+    "pairs": [
+     {
+      "left": "Phone camera chip",
+      "right": "A NASA lab shrinking cameras for probes",
+      "note": "JPL, early 1990s: a camera on one cheap chip. Now in billions of phones.",
+      "missed": true
+     },
+     {
+      "left": "Velcro",
+      "right": "A Swiss engineer's dog, covered in burrs",
+      "note": "George de Mestral, 1940s. NASA only used it later, and a lot."
+     },
+     {
+      "left": "Teflon",
+      "right": "A DuPont gas cylinder gone wrong, 1938",
+      "note": "Roy Plunkett found the slippery solid by accident, decades before Apollo."
+     },
+     {
+      "left": "Tang",
+      "right": "A food firm's drink, before any astronaut",
+      "note": "On sale from 1959. Flying in space made it famous; NASA didn't make it."
+     }
+    ]
+   },
    "source": "Fossum, IEEE Transactions on Electron Devices, 1997",
    "source_kind": "paper",
    "reference": "Fossum, CMOS image sensors: electronic camera-on-a-chip, IEEE Transactions on Electron Devices, 1997",
-   "written": "2026-10-03"
+   "written": "2026-10-06"
   },
   {
    "id": "space-spinoffs-3",
@@ -164900,8 +172124,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did underground detectors register supernova 1987A hours before any telescope saw it?",
-   "answer": "Because its light was trapped inside the star. The collapsing core released neutrinos, particles that cross matter almost unhindered; light had to wait for the shock wave to reach the surface. On 23 February 1987 three detectors caught about two dozen neutrinos in 13 seconds, two to three hours before the light.",
+   "question": "When supernova 1987A's core collapsed, a burst of neutrinos reached a detector in a Japanese mine. How long did the burst last?",
+   "answer": "About 13 seconds: Kamiokande-II counted 11 neutrinos in that window, and IMB in Ohio 8 within 5.6 s. Neutrinos cross matter almost unhindered. The light waited for the shock wave to reach the star's surface, and reached Earth two to three hours after the burst was over.",
    "move": "The signal that arrives first is often the one nobody is watching for.",
    "ask": "What early signal am I ignoring because nobody is watching for it?",
    "keywords": [
@@ -164915,16 +172139,27 @@ const String kEmbeddedBank = r'''
    "region": "none",
    "hook": "story",
    "mood": "wonder",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "timeline",
-   "source": "Hirata et al., Physical Review Letters, 1987",
+   "source": "Hirata et al., PRL, 1987",
    "source_kind": "paper",
    "reference": "doi:10.1103/PhysRevLett.58.1490",
-   "written": "2026-09-26"
+   "written": "2026-10-06",
+   "scene": {
+    "type": "hold",
+    "what": "Neutrino burst at Kamiokande",
+    "seconds": 13,
+    "comparisons": [
+     {
+      "label": "The same burst at IMB",
+      "seconds": 5.6
+     }
+    ]
+   }
   },
   {
    "id": "space-star-death-4",
@@ -167832,8 +175067,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What did an Athenian who won at Olympia receive back home, beyond the olive wreath?",
-   "answer": "Cash, and later free meals for life. Plutarch reports that Solon's laws paid an Olympic victor 500 drachmas and an Isthmian victor 100, when a sheep was valued at one drachma. By the fifth century BC, Olympic victors could also dine at public expense in the city's town hall, the prytaneion.",
+   "question": "Solon's Athens paid Olympic champions in cash, and valued a sheep at one drachma. How many sheep was a win worth?",
+   "answer": "500. Plutarch reports that Solon's laws paid an Olympic victor 500 drachmas and an Isthmian victor 100, when a sheep was reckoned at one drachma. By the fifth century BC, Olympic victors could also dine at public expense in the city's town hall. The wreath was only the part the crowd saw.",
    "move": "A prize that looks symbolic may sit on top of one that is not.",
    "ask": "What reward do I call just symbolic that is quietly worth a lot?",
    "keywords": [
@@ -167845,7 +175080,7 @@ const String kEmbeddedBank = r'''
    ],
    "era": "ancient",
    "region": "europe",
-   "hook": "misconception",
+   "hook": "number",
    "mood": "wonder",
    "numeracy": 2,
    "abstraction": "concrete",
@@ -167853,10 +175088,40 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "sheep, for one Olympic win",
+    "answer": 500,
+    "each": 1,
+    "eachLabel": "1 dot = 1 sheep",
+    "compare": "An Isthmian win: 100 sheep",
+    "options": [
+     {
+      "label": "About 5",
+      "value": 5,
+      "note": "Two zeros short. The olive wreath came with 500 drachmas at home."
+     },
+     {
+      "label": "About 50",
+      "value": 50,
+      "note": "One zero short. Even an Isthmian win paid 100 drachmas."
+     },
+     {
+      "label": "About 500",
+      "value": 500,
+      "note": "Right: 500 drachmas, a flock of 500 sheep, for one win."
+     },
+     {
+      "label": "About 5,000",
+      "value": 5000,
+      "note": "One zero too many. 500 sheep was already a fortune for a farmer."
+     }
+    ]
+   },
    "source": "Plutarch, Life of Solon, 23",
    "source_kind": "primary_document",
    "reference": "Plutarch, Lives, Volume I: Solon, trans. Bernadotte Perrin, Loeb Classical Library, Harvard, 1914",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "sport-ancient-6",
@@ -168132,30 +175397,71 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why can an ordinary basketball player post one of the best plus-minus scores on his team?",
-   "answer": "Because plus-minus counts the score while he is on court, not what he did. Share the floor with the team's stars, against tired reserves, and points pile up around him. Analysts built adjusted versions that compare lineups with and without each player, and even those need several seasons of data to settle.",
-   "move": "A number earned in company says little about one member of it.",
-   "ask": "Am I taking credit, or giving it, for results that came from the team around one person?",
+   "question": "Every Olympics ends with this table. At Paris 2024 the United States topped it with 126 medals. Where's the trick?",
+   "answer": "In what is counted. A medal table adds medals, so it mostly ranks how many people, and how much money, a country has. Per person, New Zealand won about ten times as many as the United States, and China came last of these five. Britain won 65 with a fifth of America's people.",
+   "move": "Before crowning a winner, divide by what each one started with.",
+   "ask": "When I compare my results with someone else's, have I allowed for how much more they had to start with?",
    "keywords": [
-    "plus-minus",
-    "basketball",
-    "lineups",
-    "player ratings"
+    "olympic medals",
+    "medal table",
+    "per capita",
+    "paris 2024"
    ],
    "era": "recent",
-   "region": "americas",
-   "hook": "mechanism",
-   "mood": "sober",
-   "numeracy": 0,
-   "abstraction": "abstract",
-   "shelf_life": "evergreen",
+   "region": "world",
+   "hook": "misconception",
+   "mood": "practical",
+   "numeracy": 2,
+   "abstraction": "concrete",
+   "shelf_life": "years",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Winston, Mathletics, 2009",
-   "source_kind": "book",
-   "reference": "Wayne L. Winston, Mathletics, Princeton University Press, 2009",
-   "written": "2026-09-26"
+   "scene": {
+    "type": "trick",
+    "trick": "totals",
+    "outlet": "Medal table, Paris 2024",
+    "headline": "USA tops the Paris 2024 medal table",
+    "honest": "Per person, New Zealand won ten times more",
+    "label": "Medals won at Paris 2024",
+    "honestLabel": "Medals per 10 million people",
+    "decimals": 0,
+    "honestDecimals": 1,
+    "columns": [
+     "USA",
+     "CHN",
+     "GBR",
+     "AUS",
+     "NZL"
+    ],
+    "values": [
+     126,
+     91,
+     65,
+     53,
+     20
+    ],
+    "per": [
+     340,
+     1410,
+     68,
+     27,
+     5.3
+    ],
+    "perScale": 10,
+    "found": "Yes: these are totals, for countries of very different sizes.",
+    "miss": "The counts are right. Read what they count, one line above the bars.",
+    "misses": {
+     "yaxis": "The axis starts at zero, so the bars are fair lengths. Of what, though?",
+     "headline": "True, in total. But is a total the right yardstick here?"
+    },
+    "name": "Totals, not per person",
+    "lesson": "A big country tops every total. Divide by its people before calling it the best."
+   },
+   "source": "IOC Paris 2024 medal table; national population estimates",
+   "source_kind": "institution",
+   "reference": "https://olympics.com/en/olympic-games/paris-2024/medals",
+   "written": "2026-10-06"
   },
   {
    "id": "sport-balls-1",
@@ -169436,8 +176742,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did the NFL change its overtime rules in 2010, after the coin toss kept deciding games?",
-   "answer": "Because winning the toss had become winning the game. From 1994, when the kickoff spot was moved, toss winners won about 60% of sudden-death overtimes, often after one drive and a field goal as kickers grew more accurate. From 2010 a first-possession field goal no longer ended a playoff game.",
+   "question": "From 1994, the team that won the NFL's overtime coin toss began winning more often. How many games did it take to see it?",
+   "answer": "Hundreds. Toss winners won 46.8% of 201 overtimes from 1974 to 1993, then 59.8% of 244 from 1994 to 2009, after kickoffs moved back and kickers grew more accurate: one drive and a field goal often ended it. From 2010 a first-possession field goal no longer ended a playoff game.",
    "move": "Recheck a fair rule whenever the people playing it get better.",
    "ask": "Is a rule I set years ago still fair, now that people have got better at playing it?",
    "keywords": [
@@ -169451,7 +176757,7 @@ const String kEmbeddedBank = r'''
    "region": "americas",
    "hook": "story",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
@@ -169460,7 +176766,36 @@ const String kEmbeddedBank = r'''
    "source": "ESPN, NFL owners pass playoff OT rules, 2010",
    "source_kind": "news_archive",
    "reference": "https://www.espn.com/nfl/news/story?id=5022064",
-   "written": "2026-09-26"
+   "written": "2026-09-26",
+   "scene": {
+    "type": "sample",
+    "dots": "Simulated overtimes",
+    "hit": "Toss winner won the game",
+    "groups": [
+     {
+      "label": "1974-93",
+      "rate": 0.468
+     },
+     {
+      "label": "1994-2009",
+      "rate": 0.598
+     }
+    ],
+    "steps": [
+     20,
+     80,
+     445,
+     4450
+    ],
+    "seed": 120,
+    "button": "More overtimes",
+    "notes": [
+     "Ten overtimes each: the old era's toss winners look better, 80% to 60%.",
+     "40 each: 57.5% and 57.5%. Still no difference to see.",
+     "445 games, as many as the real record: 48% against 64.4%. Now it shows.",
+     "Ten times the record: 47.5% against 60%. Built in: 46.8% and 59.8%."
+    ]
+   }
   },
   {
    "id": "sport-coin-tosses-3",
@@ -170110,8 +177445,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did cycling's 1997 limit of 50% red cells in the blood fail to stop riders using EPO?",
-   "answer": "Because it tested a number, not the drug. EPO raises the share of blood made of red cells, the haematocrit, so riders measured their own, dosed to sit just under 50%, and could thin their blood with saline before a control. The cap told everyone exactly how far they could go.",
+   "question": "Cycling couldn't detect EPO, so it capped what EPO does. What happened?",
+   "answer": "A test of a side effect is a test you can steer. Riders checked their own red-cell share with small centrifuges and dosed to just below the line, with saline to thin the blood before a control. A typical man sits in the low to mid 40s, so the cap allowed a big boost.",
    "move": "A limit on a number becomes a target to sit just under.",
    "ask": "Which limit in my life have I quietly turned into a target to stay just under?",
    "keywords": [
@@ -170131,10 +177466,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "Pro cycling, 1990s",
+      "glyph": "rise",
+      "line": "EPO, a hormone, raises red blood cells and endurance."
+     },
+     {
+      "fact": "No test for the drug",
+      "glyph": "cross",
+      "line": "Nobody can detect EPO itself in a rider's sample."
+     },
+     {
+      "fact": "1997: the 50% rule",
+      "glyph": "ban",
+      "line": "Riders with over 50% red cells in their blood are stood down."
+     }
+    ],
+    "ask": "What do the riders do?",
+    "options": [
+     {
+      "label": "Most stop using EPO"
+     },
+     {
+      "label": "Dose to sit at 49%"
+     },
+     {
+      "label": "Switch to other drugs"
+     }
+    ],
+    "answer": 1,
+    "outcome": {
+     "fact": "USADA report, 2012",
+     "glyph": "check",
+     "line": "They dosed to sit just under 50%, and diluted if too close."
+    },
+    "why": "Before the cap, riders guessed how far they dared go. The cap told them exactly."
+   },
    "source": "USADA, Reasoned Decision, Armstrong case, 2012",
    "source_kind": "primary_document",
    "reference": "U.S. Anti-Doping Agency, Reasoned Decision of the United States Anti-Doping Agency on Disqualification and Ineligibility, Lance Armstrong, 2012",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "sport-doping-2",
@@ -170341,8 +177715,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "In daily fantasy baseball in 2015, who took almost all of the profits?",
-   "answer": "About 1.3% of players, who took 91% of the profits in McKinsey's analysis of the first half of that season. They were high-volume entrants using data and software to submit many lineups; the top 11 each paid about $2 million in entry fees. For most casual players, the game was a slow transfer to them.",
+   "question": "An advert for daily fantasy baseball, in the style of 2015. Who usually took the prize money?",
+   "answer": "A tiny group of professionals. In McKinsey's analysis of the first half of the 2015 season, about 1.3% of players took 91% of the profits. They used data and software to enter many lineups; the top 11 each paid about $2 million in entry fees. For casual players, skill was the reason they lost.",
    "move": "Before joining a game, find out who usually wins it.",
    "ask": "In which game I play, at work or for money, do a few experts quietly take most of the winnings?",
    "keywords": [
@@ -170362,10 +177736,37 @@ const String kEmbeddedBank = r'''
    "mature": true,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "translate",
+    "head": "Fantasy sports app",
+    "ref": "Typical text",
+    "title": "Win cash tonight",
+    "body": "Pick your team tonight and win cash prizes. It's a game of skill, so anyone can win. Thousands of winners every day.",
+    "phrases": [
+     {
+      "text": "a game of skill",
+      "plain": "a game the most skilled win, again and again",
+      "why": "Skill means the edge is real, and it goes to whoever has data, software and volume.",
+      "catch": true
+     },
+     {
+      "text": "anyone can win",
+      "plain": "anyone can win, once in a while",
+      "why": "Possible is not likely. Small wins now and then keep casual players paying in."
+     },
+     {
+      "text": "Thousands of winners every day",
+      "plain": "Thousands of small wins; the profit goes to a few",
+      "why": "McKinsey found 1.3% of players took 91% of the profits in early 2015."
+     }
+    ],
+    "ask": "One phrase is true and is why most players lose. Which?",
+    "watch": "In a game of skill, find out who the skilled players are before you sit down."
+   },
    "source": "McKinsey, Miller & Singer, 2015",
    "source_kind": "company",
    "reference": "https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/for-daily-fantasy-sports-operators-the-curse-of-too-much-skill",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "sport-fantasy-sport-2",
@@ -171604,9 +179005,9 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How long did it take Quebec to pay off the debt from Montreal's 1976 Olympics?",
-   "answer": "About thirty years: the last of it was cleared in November 2006. The stadium, nicknamed the Big Owe, got its retractable roof only in 1987, and it never worked well. A special tobacco tax helped pay. A Games lasting about two weeks was still being paid for by smokers born after it.",
-   "move": "Ask who pays for a party after the guests have gone home.",
+   "question": "Montreal, Sochi, London, Barcelona, Beijing: which Games ran furthest past the cost its city had promised?",
+   "answer": "Montreal 1976, at 720% over, in real terms. Flyvbjerg's team found overruns ranging from Beijing's 2% to Montreal's sevenfold, and no Games since 1960 under budget. Quebec cleared the last of Montreal's debt only in November 2006, helped by a tobacco tax. Its stadium was nicknamed the Big Owe.",
+   "move": "Treat a budget written to win a contest as a floor, not an estimate.",
    "ask": "When I enjoy something now, who ends up paying after the party is over?",
    "keywords": [
     "montreal 1976",
@@ -171617,18 +179018,50 @@ const String kEmbeddedBank = r'''
    ],
    "era": "twentieth",
    "region": "americas",
-   "hook": "story",
+   "hook": "number",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "timeline",
-   "source": "CBC News, 2006",
-   "source_kind": "news_archive",
-   "reference": "https://www.cbc.ca/news/canada/montreal/quebec-s-big-owe-stadium-debt-is-over-1.602530",
-   "written": "2026-09-26"
+   "figure": "bars",
+   "source": "Flyvbjerg, Stewart & Budzier, Oxford Olympics Study, 2016",
+   "source_kind": "paper",
+   "reference": "https://arxiv.org/abs/1607.04484",
+   "written": "2026-10-06",
+   "scene": {
+    "type": "rank",
+    "quantity": "Cost overrun, real terms",
+    "most": "Worst",
+    "unit": "%",
+    "items": [
+     {
+      "label": "London 2012",
+      "value": 76,
+      "note": "76% over: a middling result by Olympic standards."
+     },
+     {
+      "label": "Montreal 1976",
+      "value": 720,
+      "note": "Over seven times the promise. Quebec paid off the last of it in 2006."
+     },
+     {
+      "label": "Beijing 2008",
+      "value": 2,
+      "note": "Two per cent over, but only on the official sports budget."
+     },
+     {
+      "label": "Sochi 2014",
+      "value": 289,
+      "note": "Nearly four times its bid budget."
+     },
+     {
+      "label": "Barcelona 1992",
+      "value": 266
+     }
+    ]
+   }
   },
   {
    "id": "sport-hosting-3",
@@ -171784,8 +179217,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Which ordinary words could land a London business in legal trouble if paired in its adverts around 2012?",
-   "answer": "Words like Games, 2012, gold and summer. The London Olympic Games and Paralympic Games Act 2006 gave organisers a right against any advert suggesting a link with the Games, and listed pairings a court could take as evidence, such as Games with 2012, or 2012 with gold or summer. Sponsors had paid for the silence.",
+   "question": "Around London 2012, some word pairs in an advert could bring legal trouble. Which pairs were on the law's list?",
+   "answer": "The Act set out two lists. The first held games, 2012, twenty twelve and Two Thousand and Twelve; the second held gold, silver, bronze, London, medals, sponsors and summer. Two words from the first, or one from each, could be taken as evidence of a link with the Games. Sponsors had paid for that silence.",
    "move": "What a sponsor buys is often the right to stop others speaking.",
    "keywords": [
     "london 2012",
@@ -171803,6 +179236,56 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Clear",
+    "right": "Listed",
+    "tag": "Olympics Act 2006",
+    "items": [
+     {
+      "text": "Summer Games",
+      "note": "A summer sale tied to the big event.",
+      "pile": "right",
+      "verdict": "Games with summer: one word from each list."
+     },
+     {
+      "text": "Gold medals",
+      "note": "A jeweller's window display.",
+      "pile": "left",
+      "verdict": "Gold and medals are both second-list words. Not a listed pair."
+     },
+     {
+      "text": "London 2012",
+      "note": "The obvious slogan.",
+      "pile": "right",
+      "verdict": "2012 with London: exactly the pairing the Act names."
+     },
+     {
+      "text": "Games 2012",
+      "note": "A games shop's anniversary.",
+      "pile": "right",
+      "verdict": "Two first-list words together are listed too."
+     },
+     {
+      "text": "London summer",
+      "note": "A city tourism poster.",
+      "pile": "left",
+      "verdict": "London and summer are both second-list words."
+     },
+     {
+      "text": "2012 sale",
+      "note": "A shop's new-year offer.",
+      "pile": "left",
+      "verdict": "2012 alone, with no second word from either list."
+     },
+     {
+      "text": "Bronze 2012",
+      "note": "A tanning salon's offer.",
+      "pile": "right",
+      "verdict": "2012 with bronze: a listed pair."
+     }
+    ]
+   },
    "source": "London Olympic Games Act 2006, Schedule 4",
    "source_kind": "primary_document",
    "reference": "London Olympic Games and Paralympic Games Act 2006, Schedule 4, UK Parliament, 2006",
@@ -171978,31 +179461,52 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why was the basketball hot hand, dismissed as an illusion in 1985, revived by economists more than thirty years later?",
-   "answer": "Because the 1985 test was tilted against finding it. Gilovich, Vallone and Tversky compared hit rates after runs of makes with hit rates after misses, within short sets of shots, a method that quietly favours a miss after a make. Corrected for that, the same shooting data showed players did get hotter.",
+   "question": "A basketball player has just made three shots in a row. Is his next shot more likely to go in?",
+   "answer": "The fans may be partly right. The 1985 test compared hits after runs of makes with hits after misses, within short sets of shots, a method that quietly favours a miss after a make. When Miller and Sanjurjo corrected for it in 2018, the same shooting data showed players did get hotter.",
    "move": "A test that cannot find an effect cannot rule it out.",
    "ask": "Did I drop an idea once because a test said no, without checking whether the test was fair?",
    "keywords": [
     "hot hand",
     "gilovich",
-    "tversky",
+    "miller and sanjurjo",
     "basketball",
     "statistical bias"
    ],
    "era": "twentieth",
    "region": "americas",
-   "hook": "story",
+   "hook": "misconception",
    "mood": "wonder",
-   "numeracy": 0,
+   "numeracy": 1,
    "abstraction": "abstract",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Gilovich, Vallone & Tversky, Cognitive Psychology, 1985",
+   "scene": {
+    "type": "poll",
+    "who": "100 basketball fans, Gilovich 1985",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "Yes, he's hot",
+        "share": 91,
+        "mirror": "Like 91% of fans. Science called you wrong in 1985, then found you may be partly right."
+       },
+       {
+        "label": "No, same odds",
+        "share": 9,
+        "mirror": "Like 9% of fans, and the 1985 paper. Its test was later found to lean your way by mistake."
+       }
+      ]
+     }
+    ],
+    "why": "A streak is vivid, and we expect chance to look choppy, so any run of hits seems to mean something."
+   },
+   "source": "Gilovich et al., 1985; Miller & Sanjurjo, 2018",
    "source_kind": "paper",
-   "reference": "Gilovich, Vallone & Tversky, The hot hand in basketball: On the misperception of random sequences, Cognitive Psychology, 1985",
-   "written": "2026-09-26"
+   "reference": "Gilovich, Vallone & Tversky, The hot hand in basketball: On the misperception of random sequences, Cognitive Psychology 17 (1985); Miller & Sanjurjo, Surprised by the hot hand fallacy?, Econometrica 86 (2018)",
+   "written": "2026-10-06"
   },
   {
    "id": "sport-hot-hand-3",
@@ -172392,8 +179896,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did athletics have no official marathon world record until 2004?",
-   "answer": "Because no two courses are alike. Hills, bends and weather differ from city to city, so fast times were listed only as world bests. From 1 January 2004 records were ratified, but only on courses measured with a calibrated bicycle, plus one extra metre per kilometre so that no approved course can turn out short.",
+   "question": "Marathon runners have raced since 1896. When do you think the first official marathon world record was ratified?",
+   "answer": "No two courses are alike: hills, bends and weather differ from city to city, so fast times were listed only as world bests. From 1 January 2004 records counted, but only on courses measured with a calibrated bicycle, plus one metre per kilometre so that no approved course can turn out short.",
    "move": "A ranking means little until everyone has faced the same test.",
    "ask": "Am I comparing results that were never run on the same course?",
    "keywords": [
@@ -172412,11 +179916,36 @@ const String kEmbeddedBank = r'''
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
-   "source": "IAAF/AIMS, The Measurement of Road Race Courses",
+   "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1880,
+    "to": 2025,
+    "events": [
+     {
+      "label": "First Olympic marathon",
+      "year": 1896
+     },
+     {
+      "label": "Athletics body founded",
+      "year": 1912
+     },
+     {
+      "label": "42.195 km made standard",
+      "year": 1921
+     },
+     {
+      "label": "First official record",
+      "year": 2004,
+      "note": "Marathon records became official only in 2004, 108 years after the first Olympic race."
+     }
+    ]
+   },
+   "source": "IAAF & AIMS, Road Race Courses, 2004",
    "source_kind": "standard",
    "reference": "IAAF & AIMS, The Measurement of Road Race Courses, 2nd edition, 2004",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "sport-marathon-5",
@@ -172889,8 +180418,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did the Olympics stop awarding medals for painting, music and literature after 1948?",
-   "answer": "Because the artists were professionals. Art contests ran from 1912 to 1948, but Olympic rules then barred anyone who earned a living from their event, and painters, composers and writers lived by selling their work. The IOC swapped the contests for exhibitions without medals. The art medals no longer appear in national medal totals.",
+   "question": "Painters once won Olympic medals. Which of these have been Olympic medal events, and which never have?",
+   "answer": "The art medals ended because the artists were professionals. Olympic rules then barred anyone who earned a living from their event, and painters, composers and writers lived by selling their work. After 1948 the IOC swapped the contests for exhibitions without medals, and the art medals no longer appear in national medal totals.",
    "move": "A rule written for one kind of competitor can shut out another by accident.",
    "ask": "Which rule I live by shuts out someone it was never meant to?",
    "keywords": [
@@ -173155,8 +180684,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What happened to the salaries of patient, walk-drawing hitters after Moneyball became a bestseller in 2003?",
-   "answer": "They rose. Hakes and Sauer found that before 2004 clubs paid little for on-base percentage, though it drove wins more than the hitting power they paid for. In 2004, the season after the book, the market price of getting on base jumped and most of the bargain vanished. A known edge is a priced edge.",
+   "question": "A poor baseball club found a cheap way to win. What happened once a bestseller explained it?",
+   "answer": "Hakes and Sauer measured what clubs paid for each point of on-base percentage. Before the book, almost nothing, while hitting power was well paid. In 2004 the price of getting on base jumped, as richer rivals hired analysts of their own, and Oakland had to hunt for the next skill the market had missed.",
    "move": "Once everyone knows the bargain, it stops being one.",
    "ask": "Is the clever shortcut I rely on still an edge, or has everyone else caught on?",
    "keywords": [
@@ -173175,10 +180704,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "Oakland A's, 2002",
+      "glyph": "coin",
+      "line": "A poor club, with about a third of the Yankees' payroll."
+     },
+     {
+      "fact": "On-base percentage",
+      "glyph": "eye",
+      "line": "Its analysts see that drawing walks wins games, and is cheap."
+     },
+     {
+      "fact": "2003",
+      "glyph": "book",
+      "line": "Michael Lewis tells the whole story in a bestseller, Moneyball."
+     }
+    ],
+    "ask": "What happens to the bargain?",
+    "options": [
+     {
+      "label": "Oakland keeps it"
+     },
+     {
+      "label": "Rivals ignore it"
+     },
+     {
+      "label": "Gone within a year"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "2004 salaries",
+     "glyph": "rise",
+     "line": "Clubs started paying for on-base skill. The bargain was gone."
+    },
+    "why": "An edge lasts only while others can't see it, and a bestseller is the opposite of a secret."
+   },
    "source": "Hakes & Sauer, Journal of Economic Perspectives, 2006",
    "source_kind": "paper",
    "reference": "Jahn K. Hakes & Raymond D. Sauer, An Economic Evaluation of the Moneyball Hypothesis, Journal of Economic Perspectives, 2006",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "sport-moneyball-2",
@@ -173810,37 +181378,54 @@ const String kEmbeddedBank = r'''
    "topic": "sport",
    "genre": "sport.luck_or_skill",
    "strand": "sport.luck_or_skill.penalty_kicks",
-   "also": [
-    "sport.the_mind_in_sport.choking"
-   ],
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Where do anxious penalty takers look just before the kick, and what does it do to the shot?",
-   "answer": "At the goalkeeper. Wilson, Wood and Vine fitted players with eye trackers: under pressure they fixed on the keeper sooner and for longer, and their shots drifted toward the centre, within the keeper's reach. Later work found that training players to fix their eyes on the target spot made shots more accurate under pressure.",
-   "move": "Under pressure, eyes go to the threat; point them at the target.",
-   "ask": "In a stressful moment, am I staring at the threat instead of at what I want to hit?",
+   "question": "You are the goalkeeper. The penalty taker starts his run-up. What do you do?",
+   "answer": "Keepers dive because doing something feels better than doing nothing. Almost a third of kicks went down the middle, and keepers who stayed put saved about a third of theirs, against one in seven for dives. A goal let in standing still looks like a mistake; one let in mid-dive looks like bad luck.",
+   "move": "When waiting is best, ask whether you act just to look busy.",
+   "ask": "Where am I doing something mostly so nobody can say I did nothing?",
    "keywords": [
     "penalty kicks",
-    "eye tracking",
-    "anxiety",
     "goalkeeper",
-    "quiet eye"
+    "action bias",
+    "football"
    ],
    "era": "recent",
    "region": "europe",
-   "hook": "mechanism",
-   "mood": "practical",
-   "numeracy": 0,
+   "hook": "misconception",
+   "mood": "playful",
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Wilson, Wood & Vine, JSEP, 2009",
+   "scene": {
+    "type": "poll",
+    "who": "286 top-league penalties, Bar-Eli 2007",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "Dive left or right",
+        "share": 94,
+        "mirror": "Like 94% of keepers. A dive looks like trying, even when staying put saves more."
+       },
+       {
+        "label": "Stay in the centre",
+        "share": 6,
+        "mirror": "Like 6% of keepers. In these kicks, staying put saved about 1 in 3; diving, about 1 in 7."
+       }
+      ]
+     }
+    ],
+    "why": "A goal let in while doing nothing feels worse than one let in while diving, so keepers act."
+   },
+   "source": "Bar-Eli et al., J Economic Psychology, 2007",
    "source_kind": "paper",
-   "reference": "Wilson, Wood & Vine, Anxiety, attentional control, and performance impairment in penalty kicks, Journal of Sport & Exercise Psychology, 2009",
-   "written": "2026-09-26"
+   "reference": "Bar-Eli, Azar, Ritov, Keidar-Levin & Schein, Action bias among elite soccer goalkeepers: The case of penalty kicks, Journal of Economic Psychology 28 (2007): 606-621",
+   "written": "2026-10-06"
   },
   {
    "id": "sport-penalty-kicks-3",
@@ -174840,16 +182425,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did football stop goalkeepers from picking up a deliberate pass from a team-mate's foot in 1992?",
-   "answer": "Because teams had learned to kill games with it. A side in front could pass back to its keeper, who picked the ball up, waited, and rolled it out again, over and over. The 1990 World Cup averaged 2.21 goals a game, still the lowest ever, and within two years the law was changed.",
+   "question": "Four rules of sport that seem to have always been there. Which match or game forced each one?",
+   "answer": "The 19–18 game is the one people miss. In 1950 Fort Wayne beat Minneapolis by holding the ball instead of shooting, and the NBA's answer, in 1954, was a 24-second clock. Each rule here closed a loophole teams were using legally, which is why blaming players never fixed it.",
    "move": "When everyone exploits a rule the same way, fix the rule, not the players.",
    "ask": "Which rule at work or at home is being gamed so well that people blame each other instead of it?",
    "keywords": [
     "back-pass rule",
-    "goalkeepers",
-    "time-wasting",
-    "1990 world cup",
-    "laws of the game"
+    "shot clock",
+    "penalty kick",
+    "underarm bowling",
+    "rule changes"
    ],
    "era": "twentieth",
    "region": "world",
@@ -174861,10 +182446,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "The rule",
+    "rightTitle": "Written after",
+    "pairs": [
+     {
+      "left": "Back-pass rule",
+      "right": "A World Cup of 2.2 goals a game",
+      "note": "Italia 90: teams in front passed back to the keeper to kill time."
+     },
+     {
+      "left": "Shot clock",
+      "right": "An NBA game that ended 19–18",
+      "note": "1950: Fort Wayne held the ball and won. The 24-second clock came in 1954.",
+      "missed": true
+     },
+     {
+      "left": "Penalty kick",
+      "right": "A handball on the goal line in a cup tie",
+      "note": "Notts County v Stoke, 1891. The penalty kick arrived that same year."
+     },
+     {
+      "left": "No underarm",
+      "right": "A last ball rolled along the ground",
+      "note": "Australia v New Zealand, 1981: six needed to tie, and the ball was rolled."
+     }
+    ]
+   },
    "source": "FIFA, official report, World Cup Italia 1990",
    "source_kind": "primary_document",
    "reference": "FIFA, Official Report: FIFA World Cup Italia '90, FIFA, 1990",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "sport-rule-changes-2",
@@ -175610,8 +183223,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Does the team that shoots first in a penalty shoot-out really win more often?",
-   "answer": "Perhaps slightly; the evidence is contested. Apesteguia and Palacios-Huerta found first-shooting teams won 60% of 269 shoot-outs and blamed the pressure of chasing. Kocher, Lenz and Sutter, with twice as many shoot-outs, found no significant edge. Football's lawmakers trialled a tennis-style A-B-B-A order, then dropped it in 2018.",
+   "question": "In 262 penalty shoot-outs, the team kicking first won 60.5%. Is going first an edge, or could chance draw that?",
+   "answer": "Chance, most likely. Apesteguia and Palacios-Huerta's 60.5% came from 262 shoot-outs; Kocher, Lenz and Sutter's 540 gave about 53%, not significant. A 2025 study of about 7,000 shoot-outs found the first team won 48.8%. Football's lawmakers trialled an A-B-B-A order, then dropped it in 2018.",
    "move": "A striking result from one dataset is a question for the next.",
    "ask": "Which striking result have I believed without seeing it hold up a second time?",
    "keywords": [
@@ -175631,10 +183244,30 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Apesteguia & Palacios-Huerta, AER, 2010",
+   "source": "Pipke, Journal of Economic Psychology, 2025",
    "source_kind": "paper",
-   "reference": "Apesteguia & Palacios-Huerta, Psychological Pressure in Competitive Environments: Evidence from a Randomized Natural Experiment, American Economic Review, 2010",
-   "written": "2026-09-26"
+   "reference": "Apesteguia & Palacios-Huerta, American Economic Review 100(5), 2010; Kocher, Lenz & Sutter, Management Science 58:1585–1591, 2012; Pipke, No evidence of first-mover advantage in a large sample of penalty shootouts, Journal of Economic Psychology 108, 2025",
+   "written": "2026-09-26",
+   "scene": {
+    "type": "sample",
+    "dots": "Simulated shoot-outs",
+    "hit": "Team kicking first won",
+    "rate": 0.4883,
+    "steps": [
+     20,
+     262,
+     540,
+     7000
+    ],
+    "seed": 5439,
+    "button": "More shoot-outs",
+    "notes": [
+     "20 shoot-outs: kicking first won 40%. Pure chance around a true 48.8%.",
+     "262, as many as the first study: 60.3%. A famous edge, drawn by chance.",
+     "540, as many as the follow-up: 53%. The edge is melting.",
+     "About 7,000, like the 2025 study: 49.2%. Its real figure was 48.8%."
+    ]
+   }
   },
   {
    "id": "sport-set-pieces-3",
@@ -176351,8 +183984,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What was unremarkable about Usain Bolt's 9.58-second 100 m world record in Berlin in 2009?",
-   "answer": "His start. His reaction to the gun, 0.146 seconds, was slower than that of some of the men he beat. The record was built later: laser measurements put his top speed at 12.34 m/s, about 44 km/h, reached between 60 and 80 m, well past halfway.",
+   "question": "Usain Bolt ran the 100 m in 9.58 seconds in Berlin in 2009. How long did he take to react to the gun?",
+   "answer": "0.146 seconds, slower than Tyson Gay, second, at 0.144, and Asafa Powell, third, at 0.134. Under 0.100 counts as a false start: too fast to be a reaction to the sound. Bolt gained nothing at the gun; laser measurements show he built the record later, at top speed well past halfway.",
    "move": "Find where a winner gained the time before praising the obvious part.",
    "ask": "When someone wins, do I look at where the time was really gained?",
    "keywords": [
@@ -176372,10 +184005,26 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Graubner & Nixdorf, New Studies in Athletics, 2011",
+   "source": "Graubner & Nixdorf, 2011",
    "source_kind": "paper",
-   "reference": "Graubner & Nixdorf, Biomechanical analysis of the sprint and hurdles events at the 2009 IAAF World Championships in Athletics, New Studies in Athletics, 2011",
-   "written": "2026-09-26"
+   "reference": "Graubner & Nixdorf, Biomechanical analysis of the sprint and hurdles events at the 2009 IAAF World Championships in Athletics, New Studies in Athletics, 2011; World Athletics, Berlin 2009 men's 100 m final results, worldathletics.org",
+   "written": "2026-10-06",
+   "scene": {
+    "type": "hold",
+    "what": "Bolt's reaction to the gun",
+    "seconds": 0.146,
+    "display": "ms",
+    "comparisons": [
+     {
+      "label": "Powell, third",
+      "seconds": 0.134
+     },
+     {
+      "label": "False-start limit",
+      "seconds": 0.1
+     }
+    ]
+   }
   },
   {
    "id": "sport-sprint-2",
@@ -176465,8 +184114,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why are sprint records from before 1977 not comparable with later ones, even to a tenth of a second?",
-   "answer": "Because they were timed by hand. Timekeepers started their watches on seeing the gun's smoke, after a human reaction delay, and tended to stop them early as runners neared the line. Statisticians add 0.24 seconds to a hand-timed 100 m to compare it with electronic times. From 1977, records needed fully automatic timing.",
+   "question": "Before 1977, sprints were timed by hand. How much must be added to a hand-timed 100 m to match electronic timing?",
+   "answer": "0.24 seconds, the correction statisticians use. Timekeepers started their watches only after seeing the gun's smoke, a human reaction late, and tended to stop them early as runners neared the line. The error is bigger than Bolt's whole margin over Tyson Gay in his 9.58 world record.",
    "move": "Before comparing two figures, ask whether the same instrument produced both.",
    "ask": "Before I compare two figures, did the same instrument produce both?",
    "keywords": [
@@ -176479,16 +184128,28 @@ const String kEmbeddedBank = r'''
    "region": "world",
    "hook": "mechanism",
    "mood": "practical",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Hymans, Progression of IAAF World Records, 2015",
+   "source": "Hymans, IAAF World Records, 2015",
    "source_kind": "statistics",
-   "reference": "Hymans & Matrahazi, Progression of IAAF World Records, 2015 Edition, IAAF, 2015",
-   "written": "2026-09-26"
+   "reference": "Hymans & Matrahazi, Progression of IAAF World Records, 2015 Edition, IAAF, 2015; Track & Field News, Remember Hand Timing, trackandfieldnews.com",
+   "written": "2026-10-06",
+   "scene": {
+    "type": "hold",
+    "what": "What a hand-timed 100 m gains",
+    "seconds": 0.24,
+    "display": "ms",
+    "comparisons": [
+     {
+      "label": "Bolt's margin, Berlin 2009",
+      "seconds": 0.13
+     }
+    ]
+   }
   },
   {
    "id": "sport-sprint-5",
@@ -176805,8 +184466,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When a statistician tested years of major league batting records for streaky hitters, what did he find?",
-   "answer": "Mostly chance. Albright tested whether hitters did better after recent hits than their usual rate predicted. A few players looked streaky in a given season, about as many as random variation would produce, and they were rarely the same players the following year. The streaky hitter was usually a different person each season.",
+   "question": "Fans swear some hitters run hot and cold. When a statistician tested years of major league batting records, what were the streaks?",
+   "answer": "Mostly chance. Albright checked whether hitters did better after recent hits than their usual rate predicted. A few looked streaky each season, about as many as random variation produces, and rarely the same players the next year. Twenty at-bats from a steady hitter swing as widely as any streak.",
    "move": "A pattern that does not repeat in fresh data was probably noise.",
    "ask": "Is the pattern I see in someone a lasting trait, or something that may not show up next time?",
    "keywords": [
@@ -176819,7 +184480,7 @@ const String kEmbeddedBank = r'''
    "region": "americas",
    "hook": "misconception",
    "mood": "sober",
-   "numeracy": 0,
+   "numeracy": 2,
    "abstraction": "abstract",
    "shelf_life": "evergreen",
    "mature": false,
@@ -176827,8 +184488,28 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "source": "Albright, J Am Stat Assoc, 1993",
    "source_kind": "paper",
-   "reference": "S. Christian Albright, A Statistical Analysis of Hitting Streaks in Baseball, Journal of the American Statistical Association, 1993",
-   "written": "2026-09-26"
+   "reference": "S. Christian Albright, A Statistical Analysis of Hitting Streaks in Baseball, Journal of the American Statistical Association 88:1175–1183, 1993; Baseball-Reference, Major League Batting Year-by-Year Averages",
+   "written": "2026-09-26",
+   "scene": {
+    "type": "sample",
+    "dots": "Simulated at-bats",
+    "hit": "Got a hit",
+    "rate": 0.263,
+    "steps": [
+     20,
+     100,
+     550,
+     5500
+    ],
+    "seed": 21,
+    "button": "More at-bats",
+    "notes": [
+     "8 hits in 20 at-bats: 40%, a .400 hot streak. He is a steady .263 hitter.",
+     "100 at-bats: 27%. The streak has cooled; nothing about him changed.",
+     "A season, 550 at-bats: 26.5%. The fans will remember the hot week.",
+     "Ten seasons: 26.9%. Built in all along: .263, the 1987 major league average."
+    ]
+   }
   },
   {
    "id": "sport-suits-1",
@@ -177999,8 +185680,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does a men's javelin throw of 104.80 m, made in 1984, not stand as the world record?",
-   "answer": "Because the javelin itself was changed. Throws that long were starting to threaten people at the far end of stadiums, so in 1986 the men's javelin was redesigned with its centre of gravity 4 cm further forward, making it nose down sooner. Records started again; the best with the new design is 98.48 m.",
+   "question": "The men's javelin world record climbed from 80 metres in 1953 to 104.80 m in 1984. Where did it go over the next twelve years?",
+   "answer": "Down by nearly 20 metres. Throws that long threatened people at the far end of stadiums, so from 1986 the men's javelin had its centre of gravity moved 4 cm forward, making it nose down sooner. Records restarted at 85.74 m; the best with the new design is 98.48 m, set in 1996.",
    "move": "Before comparing two results, check they were made with the same tools.",
    "ask": "Am I comparing my results today with ones made under rules or tools that no longer apply?",
    "keywords": [
@@ -178020,6 +185701,44 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "draw",
+    "label": "Javelin world record, metres",
+    "unit": "m",
+    "columns": [
+     "1953",
+     "1964",
+     "1983",
+     "1984",
+     "1986",
+     "1993",
+     "1996"
+    ],
+    "values": [
+     80.41,
+     91.72,
+     99.72,
+     104.8,
+     85.74,
+     95.54,
+     98.48
+    ],
+    "given": 4,
+    "min": 60,
+    "max": 120,
+    "decimals": 2,
+    "verdict": {
+     "under": "Lower than the truth: the new javelin has since climbed back to 98.48 m.",
+     "near": "Right: a new javelin in 1986 reset it to 85.74 m; nobody has regained 104.80.",
+     "over": "Too high: since the 1986 redesign, nobody has thrown beyond 98.48 m."
+    },
+    "notes": [
+     {
+      "at": 4,
+      "text": "New javelin, 1986"
+     }
+    ]
+   },
    "source": "IAAF, Progression of World Records, 2015",
    "source_kind": "reference_work",
    "reference": "IAAF, Progression of IAAF World Records, 2015 edition, IAAF, 2015",
@@ -178590,8 +186309,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do fast-charging claims so often stop at 80% rather than 100%?",
-   "answer": "Because the last fifth is slow by design. A charger pushes constant current until the cell hits its voltage limit at roughly 80% full. Then it holds that voltage and lets the current dwindle, or the cell would overshoot its safe limit. The last 20% can take as long as the first 80%.",
+   "question": "Why do fast-charging claims so often stop at 80%, not 100%?",
+   "answer": "Because the last fifth is slow by design. A charger pushes constant current until the cell reaches its voltage limit, often around 80% full, then holds that voltage while the current tapers off. Those last 20% can take as long as the first 80%. So the headline stops where the speed stops.",
    "move": "When a figure stops at a round number, ask what happens after it.",
    "ask": "Which number do I trust that stops at a round figure, and what happens after it?",
    "keywords": [
@@ -178611,6 +186330,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "The ad says: fast charge to 80%. It never says 100%."
+    },
+    "levels": [
+     {
+      "text": "The last fifth charges far more slowly than the first four."
+     },
+     {
+      "text": "Near full, the charger holds the voltage and lets the current dwindle."
+     },
+     {
+      "text": "Push hard into a nearly full cell and lithium plates out as metal."
+     },
+     {
+      "text": "Forcing the top end would grow metal that can short the cell."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Chargers overheat past 80%",
+      "Full cells can't be rushed",
+      "Adverts round it down"
+     ],
+     "answer": 1
+    }
+   },
    "source": "Linden's Handbook of Batteries, 2011",
    "source_kind": "book",
    "reference": "Reddy (ed.), Linden's Handbook of Batteries, 4th edition, McGraw-Hill, 2011",
@@ -178976,8 +186724,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do AI chatbots so often tell users they are right?",
-   "answer": "Because people taught them to. Chatbots are tuned on human ratings of their answers, and people rate agreement higher: a 2023 Anthropic study found five leading assistants bent towards users' views, and raters sometimes preferred a convincing flattering answer to a correct one. In April 2025 OpenAI withdrew a ChatGPT update for flattering too much.",
+   "question": "Why do AI chatbots so often tell their users that they are right?",
+   "answer": "Because flattery scored well. Sharma and colleagues at Anthropic found in 2023 that five leading assistants shifted answers towards users' stated views, and that human raters, and models trained to imitate them, sometimes preferred a convincing flattering answer to a correct one. In April 2025 OpenAI withdrew a ChatGPT update for being too sycophantic.",
    "move": "Anything trained on applause learns to flatter its audience.",
    "ask": "Who or what tells me I am right mostly because I reward them for it?",
    "keywords": [
@@ -178997,6 +186745,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "Ask a chatbot if your plan is good, and it often says yes."
+    },
+    "levels": [
+     {
+      "text": "After reading the web, chatbots are tuned on people's ratings."
+     },
+     {
+      "text": "People tend to rate answers that agree with them more highly."
+     },
+     {
+      "text": "So each round of tuning nudges the model a little towards flattery."
+     },
+     {
+      "text": "Trained on applause, it learns to please, not to be right."
+     }
+    ],
+    "guess": {
+     "options": [
+      "They are built to sell more",
+      "They can't spot mistakes",
+      "People reward agreement"
+     ],
+     "answer": 2
+    }
+   },
    "source": "Sharma et al., Anthropic, 2023",
    "source_kind": "paper",
    "reference": "https://www.anthropic.com/research/towards-understanding-sycophancy-in-language-models",
@@ -179010,8 +186787,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When Air Canada's website chatbot invented a refund policy, who did a tribunal hold responsible?",
-   "answer": "The airline. In 2024 a British Columbia tribunal rejected Air Canada's suggestion that its chatbot was a separate legal entity responsible for its own actions, calling it remarkable. The bot had promised a bereavement refund after travel, while the page it linked to said the opposite. The bill came to 812 Canadian dollars.",
+   "question": "An airline's chatbot invented a refund policy. Who pays for its promise?",
+   "answer": "The tribunal saw no reason a customer should trust one part of a company's website less than another. Air Canada put the bot there, so it owned the bot's words, as it would own a mistake by an agent at the counter. Its claim that the bot answered for itself was called remarkable.",
    "move": "Whoever deploys a tool answers for what the tool says.",
    "ask": "When I share what a tool told me, am I ready to answer for it?",
    "keywords": [
@@ -179030,10 +186807,54 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "Canada, November 2022",
+      "glyph": "family",
+      "line": "A man's grandmother dies. He books a flight to the funeral."
+     },
+     {
+      "fact": "Air Canada's website",
+      "glyph": "phone",
+      "line": "Its chatbot: fly now, claim a bereavement discount later."
+     },
+     {
+      "fact": "The airline's own policy page",
+      "glyph": "book",
+      "line": "No bereavement refunds after travel."
+     },
+     {
+      "fact": "Claim refused",
+      "glyph": "ban",
+      "line": "The airline argues the chatbot is responsible for itself."
+     }
+    ],
+    "ask": "Who does the tribunal hold responsible?",
+    "options": [
+     {
+      "label": "The passenger"
+     },
+     {
+      "label": "No one: a bot erred"
+     },
+     {
+      "label": "The airline"
+     }
+    ],
+    "answer": 2,
+    "outcome": {
+     "fact": "February 2024",
+     "glyph": "check",
+     "line": "The airline. It paid him about 812 Canadian dollars."
+    },
+    "why": "A company's website speaks for the company, whether a person or a program wrote the words."
+   },
    "source": "Moffatt v. Air Canada, 2024 BCCRT 149",
    "source_kind": "primary_document",
    "reference": "Moffatt v. Air Canada, 2024 BCCRT 149, Civil Resolution Tribunal of British Columbia, 2024",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "technology-chatbots-3",
@@ -179741,8 +187562,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How many machine failures did Google expect in a new server cluster's first year?",
-   "answer": "About a thousand, plus thousands of failed hard drives. Jeff Dean's 2009 list for a typical new cluster also counted about 20 whole racks failing, a power unit dropping hundreds of machines at once, and a chance of overheating. At that scale something breaks every few hours, and the software simply routes around the gap.",
+   "question": "Google builds a new cluster of servers. In its first year, how many individual machine failures does it plan for?",
+   "answer": "About a thousand, Jeff Dean said in 2009, plus thousands of failed hard drives, some 20 whole racks and a power unit dropping hundreds of machines at once. So Google stopped trying to make each machine reliable. Its software expects the failures and routes around them, every few hours, without waking anyone.",
    "move": "At large enough scale, rare failures become a schedule to plan for.",
    "ask": "What rare failure becomes certain at my scale, so that I should plan for it?",
    "keywords": [
@@ -179756,16 +187577,46 @@ const String kEmbeddedBank = r'''
    "region": "world",
    "hook": "number",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "machine failures in year one",
+    "answer": 1000,
+    "each": 1,
+    "eachLabel": "1 dot = 1 machine failing",
+    "compare": "Plus thousands of dead hard drives",
+    "options": [
+     {
+      "label": "About 10",
+      "value": 10,
+      "note": "Two zeros short. At this scale, something breaks every few hours."
+     },
+     {
+      "label": "About 100",
+      "value": 100,
+      "note": "One zero short. About 1,000: roughly three machines lost every day."
+     },
+     {
+      "label": "About 1,000",
+      "value": 1000,
+      "note": "Right. About 1,000 machines, and thousands of hard drives too."
+     },
+     {
+      "label": "About 10,000",
+      "value": 10000,
+      "note": "One zero too many, though thousands of hard drives did fail as well."
+     }
+    ]
+   },
    "source": "Dean, LADIS keynote, 2009",
    "source_kind": "company",
    "reference": "Dean, Designs, Lessons and Advice from Building Large Distributed Systems, LADIS keynote, 2009",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "technology-data-centres-2",
@@ -179775,8 +187626,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How much extra power does a typical data centre spend just on cooling and power conversion?",
-   "answer": "About half as much again. The Uptime Institute's 2024 survey found an average power usage effectiveness, total power divided by the power reaching the IT equipment, of about 1.56, a figure that has barely improved in years. Google reports about 1.10 across its fleet: per 100 watts of computing, 10 of overhead, not 56.",
+   "question": "In 2007 a typical data centre spent 1.5 extra watts on cooling and power for every watt of computing. How far did that fall?",
+   "answer": "Fast at first, then hardly at all. In the Uptime Institute's surveys, power usage effectiveness, total power divided by the power reaching the computers, fell from 2.5 in 2007 to 1.7 by 2014, then stalled near 1.55. Google reports about 1.10 across its fleet: per 100 watts of computing, 10 of overhead, not 56.",
    "move": "Ask what share of the energy reaches the task, not just the total.",
    "ask": "How much of what I spend in time, money or energy really reaches the thing I care about?",
    "keywords": [
@@ -179795,9 +187646,42 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "bars",
-   "source": "Uptime Institute Global Data Center Survey, 2024",
+   "scene": {
+    "type": "draw",
+    "label": "Total watts per watt of computing",
+    "columns": [
+     "2007",
+     "2014",
+     "2018",
+     "2022",
+     "2024"
+    ],
+    "values": [
+     2.5,
+     1.7,
+     1.58,
+     1.55,
+     1.56
+    ],
+    "given": 1,
+    "min": 1,
+    "max": 3,
+    "decimals": 2,
+    "verdict": {
+     "under": "Lower than the truth. The average stalled near 1.55, well above Google's 1.10.",
+     "near": "Right: big gains to 2014, then a plateau around 1.55 for a decade.",
+     "over": "Higher than the truth: it fell to about 1.6, then stopped improving."
+    },
+    "notes": [
+     {
+      "at": 1,
+      "text": "Most gain by 2014"
+     }
+    ]
+   },
+   "source": "Uptime Institute Global Data Center Surveys",
    "source_kind": "institution",
-   "reference": "https://uptimeinstitute.com/resources/research-and-reports/uptime-institute-global-data-center-survey-results-2024",
+   "reference": "Uptime Institute, Global Data Center Survey results, 2007-2024 (average PUE 2.5 in 2007, 1.7 in 2014, 1.58 in 2018, 1.55 in 2022, 1.56 in 2024), https://uptimeinstitute.com/resources/research-and-reports/uptime-institute-global-data-center-survey-results-2024",
    "written": "2026-09-26"
   },
   {
@@ -180467,8 +188351,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why can people still register new .su domains, more than three decades after the Soviet Union dissolved?",
-   "answer": "Because its code was never fully retired. Country endings follow ISO's list of country codes; when a country goes, its code is withdrawn and its domain is meant to wind down, as Yugoslavia's .yu did in 2010. SU was only marked transitionally reserved, and a Russian foundation has kept .su open to newcomers ever since.",
+   "question": "The Soviet Union's .su still takes new names. Which of these country endings still work, and which were switched off?",
+   "answer": "SU was never fully withdrawn. Country endings follow ISO's list of country codes: when a country goes, its code is meant to go and its domain to wind down. ISO only marked SU as transitionally reserved, so nobody had to pull the plug, and a Russian foundation has kept .su open to newcomers ever since.",
    "move": "Rules written for tidy endings rarely say who pulls the plug.",
    "keywords": [
     "soviet domain",
@@ -180487,6 +188371,50 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Retired",
+    "right": "Still live",
+    "tag": "Internet country codes",
+    "items": [
+     {
+      "text": ".su",
+      "note": "The Soviet Union.",
+      "pile": "right",
+      "verdict": "Still open to new registrations, more than 30 years after the USSR."
+     },
+     {
+      "text": ".yu",
+      "note": "Yugoslavia.",
+      "pile": "left",
+      "verdict": "Removed in 2010, after Serbia and Montenegro got their own."
+     },
+     {
+      "text": ".gb",
+      "note": "Great Britain, beside .uk.",
+      "pile": "right",
+      "verdict": "Still in the internet's root, though Britain chose .uk."
+     },
+     {
+      "text": ".cs",
+      "note": "Czechoslovakia.",
+      "pile": "left",
+      "verdict": "Removed in 1995, after the country split in two."
+     },
+     {
+      "text": ".zr",
+      "note": "Zaire.",
+      "pile": "left",
+      "verdict": "Removed in 2001, after the country became Congo."
+     },
+     {
+      "text": ".tp",
+      "note": "East Timor's first ending.",
+      "pile": "left",
+      "verdict": "Removed in 2015, years after .tl replaced it."
+     }
+    ]
+   },
    "source": "ISO 3166-1 country code standard",
    "source_kind": "standard",
    "reference": "ISO 3166-1:2020, Codes for the representation of names of countries and their subdivisions, Part 1: Country code, International Organization for Standardization, 2020",
@@ -180629,8 +188557,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did electrifying factories barely raise their productivity until the 1920s?",
-   "answer": "Because owners first kept the old layout. Early factories swapped the steam engine for one big motor still turning the same shafts and belts, in the same multi-storey buildings. The gains came when each machine got its own motor and plants were rebuilt as single-storey lines arranged around the work, not the driveshaft.",
+   "question": "Edison opened his first power station in 1882. When do you think electric motors drove most American factory machinery?",
+   "answer": "Owners first swapped the steam engine for one big motor turning the same shafts and belts in the same multi-storey mills. The gains came when each machine got its own motor and plants were rebuilt as single-storey lines around the work. In 1990 Paul David argued that computers were on the same slow path.",
    "move": "A new tool pays off only after the work is rearranged around it.",
    "ask": "Which new tool am I using without having rearranged my work around it?",
    "keywords": [
@@ -180650,10 +188578,35 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1870,
+    "to": 2000,
+    "events": [
+     {
+      "label": "Edison's first station",
+      "year": 1882
+     },
+     {
+      "label": "Motors: 5% of power",
+      "year": 1899
+     },
+     {
+      "label": "Motors pass half",
+      "year": 1920,
+      "note": "Electric motors passed half of US factory power only around 1920, 38 years on."
+     },
+     {
+      "label": "Solow's computer quip",
+      "year": 1987
+     }
+    ]
+   },
    "source": "David, American Economic Review, 1990",
    "source_kind": "paper",
    "reference": "David, The Dynamo and the Computer: An Historical Perspective on the Modern Productivity Paradox, American Economic Review 80(2), 1990",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "technology-factories-2",
@@ -183663,8 +191616,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why could a 60 Hz tube television show motion more sharply than a 60 Hz flat screen?",
-   "answer": "Because the tube flashed and the flat screen holds. A tube's phosphor glowed for a millisecond or two, then went dark; an LCD or OLED keeps each frame lit for the full 16.7 ms. Eyes tracking a moving object slide across that held image, smearing it. Makers now insert black frames to imitate the flash.",
+   "question": "A 60 Hz flat screen, like an old 60 Hz tube TV, shows 60 frames a second. How long is each frame lit?",
+   "answer": "The full 16.7 ms, until the next frame replaces it; a tube's phosphor flashed for a millisecond or two, then went dark. An eye following a moving object slides across a held image and smears it, while brief flashes stay sharp. Makers now slip in black frames to imitate the tube's flash.",
    "move": "What stays still while you move smears; brief glimpses stay sharp.",
    "ask": "What in my life blurs because I keep it moving, when brief glimpses would be sharper?",
    "keywords": [
@@ -183677,16 +191630,28 @@ const String kEmbeddedBank = r'''
    "region": "none",
    "hook": "mechanism",
    "mood": "wonder",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Kurita, SID Symposium Digest, 2001",
+   "source": "Kurita, SID Digest, 2001",
    "source_kind": "paper",
    "reference": "Kurita, Moving picture quality improvement for hold-type AM-LCDs, SID Symposium Digest of Technical Papers 32, 2001",
-   "written": "2026-09-26"
+   "written": "2026-10-06",
+   "scene": {
+    "type": "hold",
+    "what": "One frame lit, 60 Hz flat screen",
+    "seconds": 0.0167,
+    "display": "ms",
+    "comparisons": [
+     {
+      "label": "A tube's phosphor glow",
+      "seconds": 0.0015
+     }
+    ]
+   }
   },
   {
    "id": "technology-refresh-rates-3",
@@ -184134,16 +192099,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How does a landline keep a man's voice deep when it cuts every sound below 300 hertz?",
-   "answer": "The listener's brain puts it back. A man's voice has its lowest note, the fundamental, near 120 hertz, plus harmonics at whole multiples: 240, 360, 480 and up. The brain reads their spacing and hears the missing note. The deepest sound in the call never travels down the wire.",
+   "question": "Four sounds the ear gets wrong, from a phone call to a seashell. What is really happening in each?",
+   "answer": "The phone is the one people miss. Landlines cut everything below about 300 hertz, yet a man's voice, with its lowest note near 120, still sounds deep. That note's harmonics at 240, 360 and 480 arrive intact, and the brain reads their even spacing and supplies the missing fundamental.",
    "move": "Sometimes the most important part of a signal is inferred, not sent.",
    "ask": "What important thing does the other person work out for themselves, without my saying it?",
    "keywords": [
     "missing fundamental",
-    "telephone bandwidth",
-    "pitch",
-    "harmonics",
-    "hearing"
+    "telephone",
+    "bone conduction",
+    "helium voice",
+    "seashell"
    ],
    "era": "timeless",
    "region": "none",
@@ -184155,10 +192120,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "What you hear",
+    "rightTitle": "The real cause",
+    "pairs": [
+     {
+      "left": "A deep voice by phone",
+      "right": "Your brain rebuilds a note never sent",
+      "note": "The low note is cut, but the spacing of its harmonics implies it.",
+      "missed": true
+     },
+     {
+      "left": "Your recorded voice",
+      "right": "Missing the bass your skull adds",
+      "note": "You hear yourself partly through bone, which boosts low tones."
+     },
+     {
+      "left": "Helium voice",
+      "right": "Sound running faster in the throat",
+      "note": "The vocal cords hum as usual; the throat's resonances shift up."
+     },
+     {
+      "left": "The sea in a shell",
+      "right": "Room noise ringing in a hollow",
+      "note": "A cup or a cupped hand does the same: the cavity amplifies the room."
+     }
+    ]
+   },
    "source": "Plack, The Sense of Hearing, 2018",
    "source_kind": "book",
    "reference": "Plack, The Sense of Hearing, 3rd edition, Routledge, 2018",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "technology-telephones-3",
@@ -184168,8 +192161,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why did an old landline phone keep working when a power cut blacked out the house?",
-   "answer": "Its power came down the line. Exchanges fed every line from their own battery rooms at about 48 volts, kept negative to slow corrosion of the copper. Digital lines run on household electricity, so as Britain retires its copper network, providers must offer vulnerable customers at least an hour of backup for emergency calls.",
+   "question": "Why did an old landline phone keep working in a power cut that blacked out the house?",
+   "answer": "Because the phone network was built as a lifeline, with batteries and generators to run for days without the grid. Digital phones and routers draw household power instead, so as Britain retires its copper lines, Ofcom requires providers to offer at-risk customers at least an hour of backup for emergency calls.",
    "move": "When a service moves to new wiring, check what the old wiring quietly supplied.",
    "ask": "Which service did I move to something new without checking what the old one quietly supplied?",
    "keywords": [
@@ -184189,6 +192182,37 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+     "text": "Power cut: the lights are dead, but the landline still works."
+    },
+    "levels": [
+     {
+      "text": "The phone took no power from the house; it came down the line."
+     },
+     {
+      "text": "Each exchange fed every line from its own rooms of batteries.",
+      "figure": "48 V",
+      "unit": "on the line, kept negative"
+     },
+     {
+      "text": "Exchanges were built to stay up when the grid went down."
+     },
+     {
+      "text": "A phone had to work in the very emergency that cut the power."
+     }
+    ],
+    "guess": {
+     "options": [
+      "Batteries were cheaper",
+      "It had to work in a crisis",
+      "Houses had few sockets"
+     ],
+     "answer": 1
+    }
+   },
    "source": "Ofcom, emergency calls during power cuts, 2018",
    "source_kind": "institution",
    "reference": "Ofcom, Protecting access to emergency organisations when there is a power cut at the customer's premises, 2018",
@@ -184476,8 +192500,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Where, and for what job, was the first finger-operated capacitive touchscreen built?",
-   "answer": "At the Royal Radar Establishment in Malvern, England, for air traffic control. In 1965 E. A. Johnson described a screen that sensed the electrical effect of a fingertip, letting controllers pick flights by touching them instead of typing. Versions of it served British air traffic control into the 1990s, decades before smartphones.",
+   "question": "A finger-operated touchscreen was described in 1965. Which of these came before the 1969 Moon landing, and which after?",
+   "answer": "The touchscreen was built for air traffic control, where speed mattered more than cost. At Britain's Royal Radar Establishment, E. A. Johnson described a screen that sensed a fingertip's electrical effect, so controllers could pick a flight by touching it. Versions of it served British air traffic control into the 1990s.",
    "move": "Ask who needed a technology first; it is rarely who uses it now.",
    "ask": "Who needed this first, and who uses it now?",
    "keywords": [
@@ -184509,8 +192533,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Where did the multi-finger gestures on the first iPhone come from?",
-   "answer": "Largely from a PhD born of hand pain. Wayne Westerman, whose repetitive strain injury made typing hard, wrote his 1999 University of Delaware thesis on tracking many fingers on a touch surface. With his adviser John Elias he founded FingerWorks to sell gesture keyboards. Apple bought the company in 2005, two years before the iPhone.",
+   "question": "The iPhone made pinching and swiping famous in 2007. When do you think touchscreens and multi-touch were invented?",
+   "answer": "Eric Johnson built a touch display for British air traffic control in the 1960s, and a Toronto student, Nimish Mehta, read several fingers at once in 1982. The iPhone's gestures came largely from Wayne Westerman, whose hand pain led to a 1999 thesis on tracking many fingers. Apple bought his company in 2005.",
    "move": "Tools built for people with a limitation often end up serving everyone.",
    "ask": "What did someone build for a limitation that ended up helping everyone, including me?",
    "keywords": [
@@ -184529,11 +192553,36 @@ const String kEmbeddedBank = r'''
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
-   "source": "Westerman, PhD thesis, University of Delaware, 1999",
-   "source_kind": "paper",
-   "reference": "Westerman, Hand Tracking, Finger Identification, and Chordic Manipulation on a Multi-Touch Surface, PhD thesis, University of Delaware, 1999",
-   "written": "2026-09-26"
+   "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1950,
+    "to": 2025,
+    "events": [
+     {
+      "label": "First touchscreen",
+      "year": 1965
+     },
+     {
+      "label": "First multi-touch system",
+      "year": 1982,
+      "note": "Multi-touch was 25 years old when the iPhone arrived."
+     },
+     {
+      "label": "Westerman's thesis",
+      "year": 1999
+     },
+     {
+      "label": "iPhone launched",
+      "year": 2007
+     }
+    ]
+   },
+   "source": "Buxton, Multi-Touch Systems; Westerman, 1999",
+   "source_kind": "reference_work",
+   "reference": "https://www.billbuxton.com/multitouchOverview.html",
+   "written": "2026-10-06"
   },
   {
    "id": "technology-touch-3",
@@ -185304,8 +193353,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do AI labs delete near-identical passages from the text they train models on?",
-   "answer": "Because repeated text gets memorised and recited. Lee and colleagues found one 61-word English sentence repeated over 60,000 times in C4, a widely used web dataset. Models trained after duplicates were removed emitted memorised text about ten times less often. The web's boilerplate is what a model learns by heart.",
+   "question": "One 61-word English sentence turns up again and again in C4, a web dataset used to train AI models. How many times?",
+   "answer": "Over 60,000 times, Lee and colleagues found. Templates and boilerplate repeat across countless pages, and a model sees them so often that it learns them by rote. With repeats like this removed, models emitted memorised text about ten times less often and reached the same accuracy in fewer training steps.",
    "move": "Whatever is repeated most is learned by rote, not understood.",
    "ask": "What do I know by heart only because I heard it over and over?",
    "keywords": [
@@ -185316,18 +193365,48 @@ const String kEmbeddedBank = r'''
    ],
    "era": "recent",
    "region": "none",
-   "hook": "mechanism",
+   "hook": "number",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "count",
+    "unit": "copies of one sentence",
+    "answer": 61036,
+    "each": 25,
+    "eachLabel": "1 dot = 25 copies",
+    "compare": "Enough to learn it by heart",
+    "options": [
+     {
+      "label": "About 600",
+      "value": 600,
+      "note": "Two zeros short. Boilerplate repeats on every page a site generates."
+     },
+     {
+      "label": "About 6,000",
+      "value": 6000,
+      "note": "One zero short. It appeared 61,036 times in the training split alone."
+     },
+     {
+      "label": "About 60,000",
+      "value": 60000,
+      "note": "Right: 61,036 times. Removing repeats cut recited text tenfold."
+     },
+     {
+      "label": "About 600,000",
+      "value": 600000,
+      "note": "One zero too many, though C4 holds many sentences repeated thousands of times."
+     }
+    ]
+   },
    "source": "Lee et al., ACL, 2022",
    "source_kind": "paper",
-   "reference": "Lee et al., Deduplicating Training Data Makes Language Models Better, ACL, 2022",
-   "written": "2026-09-27"
+   "reference": "Lee et al., Deduplicating Training Data Makes Language Models Better, ACL 2022: https://aclanthology.org/2022.acl-long.577",
+   "written": "2026-10-06"
   },
   {
    "id": "technology-typewriters-1",
@@ -188338,7 +196417,37 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "source": "Subgroup analysis",
    "source_kind": "paper",
-   "reference": "Sun, Briel, Walter & Guyatt, Is a subgroup effect believable? Updating criteria to evaluate the credibility of subgroup analyses, BMJ, 2010"
+   "reference": "Sun, Briel, Walter & Guyatt, Is a subgroup effect believable? Updating criteria to evaluate the credibility of subgroup analyses, BMJ, 2010",
+   "scene": {
+    "type": "sample",
+    "dots": "Simulated customers",
+    "hit": "Bought",
+    "groups": [
+     {
+      "label": "No campaign",
+      "rate": 0.05
+     },
+     {
+      "label": "Campaign",
+      "rate": 0.05
+     }
+    ],
+    "steps": [
+     120,
+     1200,
+     12000,
+     120000
+    ],
+    "seed": 34,
+    "button": "Widen the slice",
+    "notes": [
+     "A slice of 120: 2% bought without the campaign, 15% with it. Pure chance.",
+     "1,200: 5% against 4%. Now the campaign looks harmful.",
+     "12,000: 4% against 5%.",
+     "120,000, the whole market: 5% and 5%. The slice's success was luck."
+    ],
+    "max": 0.2
+   }
   },
   {
    "id": "thinking-n1",
@@ -189755,7 +197864,36 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "source": "Winner's curse in A/B testing",
    "source_kind": "book",
-   "reference": "Kohavi, Tang & Xu, Trustworthy Online Controlled Experiments, Cambridge University Press, 2020"
+   "reference": "Kohavi, Tang & Xu, Trustworthy Online Controlled Experiments, Cambridge University Press, 2020",
+   "scene": {
+    "type": "sample",
+    "dots": "Simulated emails",
+    "hit": "Opened",
+    "groups": [
+     {
+      "label": "Line A",
+      "rate": 0.2
+     },
+     {
+      "label": "Line B",
+      "rate": 0.2
+     }
+    ],
+    "steps": [
+     100,
+     1000,
+     10000,
+     100000
+    ],
+    "seed": 72,
+    "button": "Send more",
+    "notes": [
+     "50 emails each: line B opens at 26%, line A at 10%. Both are truly 20%.",
+     "500 each: 23% against 20%. Still a winner, still luck.",
+     "5,000 each: 21% against 20%.",
+     "50,000 each: 20% and 20%. The winner was the luckiest draw."
+    ]
+   }
   },
   {
    "id": "thinking-z21",
@@ -191006,10 +199144,10 @@ const String kEmbeddedBank = r'''
     "Yes, some can",
     "No, it is noise"
    ],
-   "answer": "Death records keep showing dips before meaningful dates and bumps after them. Phillips and King found fewer Jewish deaths in the week before Passover and more in the week after. Hospice staff describe patients waiting for a wedding or a grandchild. A goal plausibly works through appetite, effort and choices about treatment.",
+   "answer": "Some records show it. In about 1,900 Jewish deaths in California, Phillips and King found fewer in the week before Passover and more in the week after. Hospice staff describe patients who seem to wait for a wedding or a grandchild. A goal could plausibly act through appetite, effort and choices about treatment.",
    "move": "Whichever side you took, it turns on counting every date, not the chosen ones.",
    "ask": "What do I believe because I remember the times it happened and forget the times it didn't?",
-   "counterpoint": "Ohio's death certificates for 1989 to 2000, nearly 310,000 cancer deaths, showed no fewer deaths in the week before Christmas, Thanksgiving or a birthday than in the week after. The early studies were small and examined many occasions, so some dips were bound to appear. A patient who waits is remembered; one who dies the night before is not.",
+   "counterpoint": "The largest test found nothing. Ohio's 309,221 cancer deaths from 1989 to 2000 showed no fewer in the week before Christmas, Thanksgiving or a birthday than after; the few small gaps ran the other way. A few thousand deaths can draw a dip by chance. A patient who waits is remembered; one who dies the night before is not.",
    "keywords": [
     "death dates",
     "holidays",
@@ -191021,15 +199159,15 @@ const String kEmbeddedBank = r'''
    "region": "americas",
    "hook": "paradox",
    "mood": "sober",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "mixed",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Young and Hade, JAMA, 2004",
-   "source_kind": "statistics",
-   "reference": "Young and Hade, Holidays, birthdays, and postponement of cancer death, JAMA, 2004",
+   "source": "Phillips & King 1988; Young & Hade 2004",
+   "source_kind": "paper",
+   "reference": "Phillips & King, Death takes a holiday: mortality surrounding major social occasions, The Lancet, 1988; Young & Hade, Holidays, birthdays, and postponement of cancer death, JAMA 292(24):3012-3016, 2004",
    "written": "2026-09-26"
   },
   {
@@ -192132,30 +200270,59 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why does a mantis shrimp's strike hit its prey twice?",
-   "answer": "Because the water tears open. The club swings out at up to about 23 m/s, so fast that pressure behind it drops and a vapour bubble forms. Its collapse against the shell lands a second blow, with a sharp crack of sound. A snail is struck by the club, then by the water.",
-   "move": "Past a certain speed, the medium itself becomes part of the blow.",
-   "ask": "When I push something hard, what else around it starts to change?",
+   "question": "The mantis shrimp's punch is famous for its speed. Which accelerates hardest: its club, a fungus spore or a hydra's sting?",
+   "answer": "The hydra's sting, by far: over 5.4 million g. Acceleration favours the tiny, since the spring has only a trace of mass to fling. The shrimp swings a whole limb through water, still hard enough to tear the water behind its club into vapour bubbles that strike the prey a second time.",
+   "move": "The smaller the thing being moved, the harder it can be flung.",
+   "ask": "Where am I impressed by the big, famous example while a smaller one goes unnoticed?",
    "keywords": [
     "mantis shrimp",
-    "cavitation",
-    "strike speed",
-    "snails"
+    "hydra",
+    "pilobolus",
+    "acceleration",
+    "cavitation"
    ],
    "era": "recent",
    "region": "none",
-   "hook": "mechanism",
+   "hook": "misconception",
    "mood": "wonder",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
-   "source": "Patek, Korff & Caldwell, Nature, 2004",
-   "source_kind": "primary_document",
-   "reference": "Patek, Korff & Caldwell, Deadly strike mechanism of a mantis shrimp, Nature, 2004",
-   "written": "2026-09-26"
+   "figure": "bars",
+   "source": "Patek 2004; Yafetto 2008; Nüchter 2006",
+   "source_kind": "paper",
+   "reference": "Patek, Korff & Caldwell, Deadly strike mechanism of a mantis shrimp, Nature, 2004; Yafetto et al., The fastest flights in nature, PLoS ONE 3(9): e3237, 2008; Nüchter et al., Nanosecond-scale kinetics of nematocyst discharge, Current Biology, 2006",
+   "written": "2026-10-06",
+   "scene": {
+    "type": "rank",
+    "quantity": "Peak acceleration, in g",
+    "most": "Hardest",
+    "log": true,
+    "items": [
+     {
+      "label": "Shrimp",
+      "value": 10400,
+      "note": "Over 10,400 g, enough to tear the water behind it into vapour."
+     },
+     {
+      "label": "Hydra",
+      "value": 5410000,
+      "note": "Over five million g, in 700 billionths of a second: a harpoon inside a cell."
+     },
+     {
+      "label": "Fungus",
+      "value": 20000,
+      "note": "A dung fungus that fires its spores 2 m, at twice the shrimp's g."
+     },
+     {
+      "label": "Shuttle launch",
+      "value": 3,
+      "note": "Astronauts on a Space Shuttle felt at most about 3 g."
+     }
+    ]
+   }
   },
   {
    "id": "weird_facts-fastest-6",
@@ -193266,8 +201433,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did the man with the longest recorded bout of hiccups finally get rid of them?",
-   "answer": "Nobody knows. Charles Osborne of Iowa started hiccupping in 1922 while lifting a hog for slaughter and went on for 68 years, at first about 40 times a minute: an estimated 430 million hiccups. No treatment worked. They stopped on their own in 1990, about a year before he died.",
+   "question": "In 1922 Charles Osborne, an Iowa farmer, began hiccupping while lifting a hog. He went on for 68 years. How many hiccups?",
+   "answer": "About 430 million, by Guinness World Records' estimate: up to 40 a minute at first, about 20 in later years. No treatment ever worked. In February 1990 the hiccups stopped by themselves, about a year before he died, and nobody knows why. In between he married twice and had eight children.",
    "move": "A problem that ends by itself leaves no lesson about the cure.",
    "ask": "What problem did I think I solved that simply ended on its own?",
    "keywords": [
@@ -193278,9 +201445,9 @@ const String kEmbeddedBank = r'''
    ],
    "era": "twentieth",
    "region": "americas",
-   "hook": "story",
+   "hook": "number",
    "mood": "wonder",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "evergreen",
    "mature": false,
@@ -193288,8 +201455,8 @@ const String kEmbeddedBank = r'''
    "figure": "none",
    "source": "Guinness World Records",
    "source_kind": "reference_work",
-   "reference": "https://www.guinnessworldrecords.com/world-records/67619-longest-attack-of-hiccups",
-   "written": "2026-09-26"
+   "reference": "https://www.guinnessworldrecords.com/news/2023/7/extreme-measures-person-with-68-year-attack-of-hiccups-took-to-try-and-stop-them-754877",
+   "written": "2026-10-06"
   },
   {
    "id": "weird_facts-hiccups-6",
@@ -193495,8 +201662,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why have mayors of some French villages issued decrees forbidding residents to die?",
-   "answer": "To force a decision on a full cemetery. Le Lavandou's mayor did it in 2000 and Sarpourenx's in 2008, when there was no room left to bury people and plans for new ground had been blocked in court. The decrees could never be enforced; they were protests dressed as bylaws.",
+   "question": "Mayors in France and Italy have forbidden residents to die. Which of these death bans really happened, and which are myths?",
+   "answer": "The real ones were protests aimed at the state, not at residents. Each time the cemetery was full and new ground was blocked by courts or planners; a decree nobody could obey made the deadlock news. Le Lavandou's mayor did it first, in 2000. The ban everyone repeats, in Longyearbyen, was never a law.",
    "move": "When a rule is absurd on purpose, look for the audience it addresses.",
    "ask": "When a rule sounds absurd, who is it really meant to be heard by?",
    "keywords": [
@@ -193515,6 +201682,50 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Myth",
+    "right": "Real",
+    "tag": "Dying is forbidden",
+    "items": [
+     {
+      "text": "Le Lavandou",
+      "note": "A Riviera town bans death, 2000.",
+      "pile": "right",
+      "verdict": "The mayor's protest over a full cemetery and a blocked new one."
+     },
+     {
+      "text": "Longyearbyen",
+      "note": "Dying is illegal in this Arctic town.",
+      "pile": "left",
+      "verdict": "No law. Burials stopped because the permafrost keeps bodies intact."
+     },
+     {
+      "text": "Sarpourenx",
+      "note": "A village in south-west France, 2008.",
+      "pile": "right",
+      "verdict": "Another full cemetery, and a court blocking the land to extend it."
+     },
+     {
+      "text": "Westminster",
+      "note": "The Houses of Parliament: it is illegal to die in them.",
+      "pile": "left",
+      "verdict": "In 2013 the Law Commission could find no such law."
+     },
+     {
+      "text": "Cugnaux",
+      "note": "A town near Toulouse, 2007.",
+      "pile": "right",
+      "verdict": "The mayor's protest after the state blocked a new cemetery."
+     },
+     {
+      "text": "Falciano",
+      "note": "Falciano del Massico, an Italian village, 2012.",
+      "pile": "right",
+      "verdict": "Its dead had to be buried in the next town over."
+     }
+    ]
+   },
    "source": "NPR, March 2008",
    "source_kind": "news_archive",
    "reference": "https://www.npr.org/2008/03/07/87974995/mayor-bans-death-in-french-town",
@@ -194827,8 +203038,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did a rich Roman turn the Twelve Tables' fixed fine for assault into a game?",
-   "answer": "He slapped strangers and paid on the spot. The Tables fixed the penalty for such an injury at 25 asses, a sum inflation had made trivial. Aulus Gellius tells of Lucius Veratius, who struck free men in the face while a slave counted out the coins. The praetors switched to damages assessed case by case.",
+   "question": "Rome fixed the fine for a slap at 25 coins, forever. What happened?",
+   "answer": "The praetors, the magistrates who ran the courts, dropped the fixed sum and let judges assess damages case by case. Any penalty written as a number rather than a share, from parking fines to late fees, quietly gets cheaper every year nobody updates it, until for someone it is just a price.",
    "move": "A penalty fixed in coins shrinks every year that prices rise.",
    "ask": "What fixed price or penalty in my life has shrunk as everything else got dearer?",
    "keywords": [
@@ -194848,10 +203059,49 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "story",
+    "scenes": [
+     {
+      "fact": "Rome, about 450 BC",
+      "glyph": "book",
+      "line": "The Twelve Tables fix the fine for a slap: 25 asses."
+     },
+     {
+      "fact": "Centuries pass",
+      "glyph": "rise",
+      "line": "Prices rise. 25 asses become pocket change."
+     },
+     {
+      "fact": "Lucius Veratius, a rich man",
+      "glyph": "walker",
+      "line": "He walks the streets, a slave with a purse at his heels."
+     }
+    ],
+    "ask": "What does Veratius do?",
+    "options": [
+     {
+      "label": "Pays others' fines"
+     },
+     {
+      "label": "Slaps strangers"
+     },
+     {
+      "label": "Lends at interest"
+     }
+    ],
+    "answer": 1,
+    "outcome": {
+     "fact": "Aulus Gellius, Attic Nights",
+     "glyph": "coin",
+     "line": "He slapped free men, and the slave paid 25 asses each."
+    },
+    "why": "A fixed fine is a price, and inflation turns the price into a bargain."
+   },
    "source": "Aulus Gellius, Attic Nights 20.1",
    "source_kind": "primary_document",
    "reference": "Aulus Gellius, Attic Nights, trans. Rolfe, Loeb Classical Library, Harvard University Press, 1927",
-   "written": "2026-09-27"
+   "written": "2026-10-06"
   },
   {
    "id": "weird_facts-odd-fines-7",
@@ -195023,8 +203273,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How did researchers learn that a clam dredged off Iceland was the oldest individual animal ever precisely aged?",
-   "answer": "By sectioning its shell and counting growth lines, which only works on a dead clam. The ocean quahog, dredged in 2006, had been frozen on board as routine. A first count of the hinge said about 405 years; a recount in 2013 said 507. It hatched before Henry VIII took the throne.",
+   "question": "A clam dredged off Iceland in 2006 is the oldest animal ever aged precisely. When do you think it hatched?",
+   "answer": "Its age came from counting growth lines in a sectioned shell, which only works on a dead clam: it had been frozen on board with the rest of the catch. A first count said about 405 years; a recount in 2013 gave 507. It had been filtering Icelandic seawater through the whole of modern history.",
    "move": "Some measurements can only be taken once, so decide what is worth it.",
    "ask": "What can I only measure once, and is it worth the price?",
    "keywords": [
@@ -195043,11 +203293,36 @@ const String kEmbeddedBank = r'''
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1450,
+    "to": 2025,
+    "events": [
+     {
+      "label": "The clam hatches",
+      "year": 1499,
+      "note": "It hatched in 1499 and was already 65 when Shakespeare was born."
+     },
+     {
+      "label": "Shakespeare born",
+      "year": 1564
+     },
+     {
+      "label": "US independence",
+      "year": 1776
+     },
+     {
+      "label": "Clam dredged up",
+      "year": 2006
+     }
+    ]
+   },
    "source": "Butler et al., Bangor University, 2013",
    "source_kind": "primary_document",
    "reference": "Butler et al., Variability of marine climate on the North Icelandic Shelf in a 1357-year proxy archive based on growth increments in the bivalve Arctica islandica, Palaeogeography, Palaeoclimatology, Palaeoecology, 2013",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "weird_facts-oldest-2",
@@ -195057,31 +203332,53 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "How old is the oldest seed ever to sprout into a living plant?",
-   "answer": "About 2,000 years. A date palm seed from the excavations at Masada, radiocarbon-dated to between about 155 BC and 64 AD, was planted in 2005 and grew into a tree nicknamed Methuselah. Older plants have been regrown from frozen tissue in laboratories, but none sprouted from a seed on its own.",
+   "question": "Which is the oldest living plant ever brought back: a Masada date palm, a Chinese lotus or Silene, a Siberian wildflower?",
+   "answer": "Silene, at about 31,800 years, but only by changing the rules. Russian scientists grew it in 2012 by laboratory culture from fruit tissue frozen in an Ice Age squirrel burrow. For a seed sprouting on its own, the record is still the Masada date palm, about 2,000 years old.",
    "move": "Read how a record was defined before comparing it with another.",
    "ask": "Before I compare two records, did they use the same definition?",
    "keywords": [
     "judean date palm",
-    "masada",
-    "methuselah",
-    "seed germination",
-    "radiocarbon"
+    "silene stenophylla",
+    "sacred lotus",
+    "permafrost",
+    "seed germination"
    ],
    "era": "recent",
    "region": "middle_east",
    "hook": "number",
    "mood": "wonder",
-   "numeracy": 1,
+   "numeracy": 2,
    "abstraction": "concrete",
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "figure": "none",
-   "source": "Sallon et al., Science, 2008",
-   "source_kind": "primary_document",
-   "reference": "Sallon et al., Germination, genetics, and growth of an ancient date seed, Science, 2008",
-   "written": "2026-09-26"
+   "figure": "bars",
+   "source": "Sallon 2008; Yashina 2012; Shen-Miller 1995",
+   "source_kind": "paper",
+   "reference": "Sallon et al., Germination, genetics, and growth of an ancient date seed, Science, 2008; Yashina et al., Regeneration of whole fertile plants from 30,000-y-old fruit tissue buried in Siberian permafrost, PNAS, 2012; Shen-Miller et al., Exceptional seed longevity and robust growth: ancient sacred lotus from China, American Journal of Botany, 1995",
+   "written": "2026-10-06",
+   "scene": {
+    "type": "rank",
+    "quantity": "Thousands of years old",
+    "most": "Oldest",
+    "items": [
+     {
+      "label": "Date palm",
+      "value": 2,
+      "note": "The oldest seed to sprout, planted in 2005: a tree now called Methuselah."
+     },
+     {
+      "label": "Silene",
+      "value": 31.8,
+      "note": "Grown from fruit tissue in a frozen squirrel burrow, not from a seed."
+     },
+     {
+      "label": "Lotus",
+      "value": 1.3,
+      "note": "About 1,300 years in a dry lakebed: its hard coat kept water and air out."
+     }
+    ]
+   }
   },
   {
    "id": "weird_facts-oldest-3",
@@ -195175,8 +203472,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why could the man who recorded a voice singing a French folk song in 1860 never hear his recording?",
-   "answer": "His machine only drew sound. Édouard-Léon Scott de Martinville's phonautograph traced vibrations as wavy lines on soot-blackened paper, to be read by eye. His 1860 tracing of Au clair de la lune, the oldest recognisable recording of a human voice, was first played back in 2008, from scans of the lines.",
+   "question": "When was the oldest recording of a human voice made, and when could anyone first hear it?",
+   "answer": "Édouard-Léon Scott de Martinville's phonautograph was never meant to play anything back. It traced sound waves as wavy lines on soot-blackened paper, to be studied by eye. In 2008 researchers scanned his tracing of Au clair de la lune and turned the lines into sound: a man, probably Scott, singing slowly.",
    "move": "An old record may hold more than its makers could read.",
    "ask": "What from my past might mean more now than I could understand then?",
    "keywords": [
@@ -195194,11 +203491,36 @@ const String kEmbeddedBank = r'''
    "shelf_life": "evergreen",
    "mature": false,
    "language": "en",
-   "figure": "none",
+   "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1840,
+    "to": 2025,
+    "events": [
+     {
+      "label": "Voice recorded in Paris",
+      "year": 1860,
+      "note": "Recorded in 1860, 17 years before Edison's phonograph, but first heard in 2008."
+     },
+     {
+      "label": "Edison's phonograph",
+      "year": 1877
+     },
+     {
+      "label": "Moon landing",
+      "year": 1969
+     },
+     {
+      "label": "First heard by anyone",
+      "year": 2008
+     }
+    ]
+   },
    "source": "Rosen, The New York Times, 2008",
    "source_kind": "news_archive",
    "reference": "Rosen, Researchers Play Tune Recorded Before Edison, The New York Times, 27 March 2008",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "weird_facts-oldest-6",
@@ -195367,10 +203689,10 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why were the ancient human footprints at White Sands, New Mexico, dated a second time?",
-   "answer": "Because the first dates came from water plants. Ditch-grass seeds in the layers gave 21,000 to 23,000 years, and critics argued that aquatic plants absorb old carbon from dissolved rock, making them look older. In 2023 pollen from land plants and quartz grains gave consistent ages. The oldest footprints in the Americas passed the retest.",
-   "move": "When a date rests on one material, ask what that material absorbs.",
-   "ask": "What do I believe that rests on one source I never questioned?",
+   "question": "Human footprints at White Sands, New Mexico, could change when people first reached the Americas. How old are they?",
+   "answer": "About 21,000 to 23,000 years, from the depth of the last ice age, long before people were thought to have arrived. The first dates rested on one flawed material; two unrelated methods agreeing is what settled it.",
+   "move": "One method can be fooled; two unrelated methods rarely fail the same way.",
+   "ask": "Which of my beliefs rests on one source that could be fooled?",
    "keywords": [
     "white sands",
     "footprints",
@@ -195380,7 +203702,7 @@ const String kEmbeddedBank = r'''
    ],
    "era": "recent",
    "region": "americas",
-   "hook": "story",
+   "hook": "puzzle",
    "mood": "wonder",
    "numeracy": 1,
    "abstraction": "concrete",
@@ -195388,10 +203710,51 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "clues",
+    "options": [
+     "4,000 years",
+     "13,000 years",
+     "22,000 years"
+    ],
+    "answer": 2,
+    "clues": [
+     {
+      "text": "The human prints cross tracks of mammoths, gone for over 10,000 years.",
+      "tag": "Beside mammoth tracks",
+      "rulesOut": [
+       0
+      ]
+     },
+     {
+      "text": "Seeds of a pond plant in the layers radiocarbon-date to 21,000-23,000 years.",
+      "tag": "Seeds: 22,000 years",
+      "rulesOut": []
+     },
+     {
+      "text": "Pond plants soak up old carbon from groundwater, so they can look too old.",
+      "tag": "Pond plants look old",
+      "rulesOut": []
+     },
+     {
+      "text": "Pollen of land conifers, which take carbon from the air, gives the same age.",
+      "tag": "Land pollen agrees",
+      "rulesOut": [
+       1
+      ]
+     },
+     {
+      "text": "Quartz grains, dated by when they last saw sunlight, agree too.",
+      "tag": "Quartz agrees",
+      "rulesOut": []
+     }
+    ],
+    "why": "The seeds alone could not decide. Pollen that took its carbon from air gave the same 22,000 years."
+   },
    "source": "Pigati et al., Science, 2023",
    "source_kind": "primary_document",
    "reference": "Pigati et al., Independent age estimates resolve the controversy of ancient human footprints at White Sands, Science, 2023",
-   "written": "2026-09-27"
+   "written": "2026-10-06"
   },
   {
    "id": "weird_facts-sneezes-1",
@@ -195769,15 +204132,16 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Whom is the English offence of handling salmon in suspicious circumstances aimed at?",
-   "answer": "Buyers of poached fish. Section 32 of the Salmon Act 1986 makes it an offence to receive or dispose of salmon believed to be caught illegally. Like handling stolen goods, it follows the money: poaching pays only if someone buys. It targets the back door of a restaurant kitchen, not the riverbank.",
+   "question": "Four British and Singapore laws that sound absurd today. What real problem was each one written to stop?",
+   "answer": "The salmon law is the one people miss: it targets buyers, not anglers. Section 32 of the Salmon Act 1986 makes it an offence to receive or dispose of salmon believed to be caught illegally. Like handling stolen goods, it follows the money: poaching pays only if someone buys.",
    "move": "To stop a theft, make the buyer as liable as the thief.",
    "ask": "Do I go after the one who does the harm, or also the one who pays for it?",
    "keywords": [
     "salmon act 1986",
     "poaching",
-    "handling offence",
-    "england and wales"
+    "chewing gum ban",
+    "red flag act",
+    "licensing act 1872"
    ],
    "era": "twentieth",
    "region": "europe",
@@ -195789,10 +204153,38 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "match",
+    "leftTitle": "The law",
+    "rightTitle": "Aimed at",
+    "pairs": [
+     {
+      "left": "Handling salmon",
+      "right": "Kitchens buying poached fish",
+      "note": "Salmon Act 1986: buying a suspect salmon is an offence, like stolen goods.",
+      "missed": true
+     },
+     {
+      "left": "No gum for sale",
+      "right": "Gum jamming train door sensors",
+      "note": "Singapore, 1992, after gum was stuck on the new metro's doors."
+     },
+     {
+      "left": "A man with a red flag",
+      "right": "Steam engines on roads full of horses",
+      "note": "Locomotive Act 1865: a man walked ahead of road engines, flag in hand."
+     },
+     {
+      "left": "Drunk with cattle",
+      "right": "Drovers drunk on the road with a herd",
+      "note": "Licensing Act 1872. It also covers horses, carriages and steam engines."
+     }
+    ]
+   },
    "source": "Salmon Act 1986, section 32",
    "source_kind": "primary_document",
    "reference": "Salmon Act 1986, c. 62, section 32, United Kingdom Parliament, 1986",
-   "written": "2026-09-26"
+   "written": "2026-10-06"
   },
   {
    "id": "weird_facts-still-on-the-books-2",
@@ -195802,8 +204194,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "What does the oldest statute still in force in England deal with?",
-   "answer": "Seizing goods for debt, and tenants spoiling land. The Statute of Marlborough, passed in 1267 after a civil war, still has a few chapters in force. Most curb distress, taking a debtor's goods without a court's order; one forbids tenants to waste the land they farm. Its clauses have outlived the barons by 750 years.",
+   "question": "England's oldest statute still in force deals with debts. When do you think it was passed?",
+   "answer": "The Statute of Marlborough followed a civil war between Henry III and his barons. A few chapters survive: most curb distress, taking a debtor's goods without a court order; one forbids tenants to waste the land they farm. Statutes go only when someone repeals them, so a law can quietly outlive its whole world.",
    "move": "Rules written to end a crisis tend to outlast the crisis by centuries.",
    "ask": "Which rule do I follow that was written for a crisis long over?",
    "keywords": [
@@ -195822,11 +204214,36 @@ const String kEmbeddedBank = r'''
    "shelf_life": "years",
    "mature": false,
    "language": "en",
-   "figure": "none",
-   "source": "Baker, An Introduction to English Legal History",
+   "figure": "timeline",
+   "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1150,
+    "to": 2025,
+    "events": [
+     {
+      "label": "Magna Carta sealed",
+      "year": 1215
+     },
+     {
+      "label": "Statute of Marlborough",
+      "year": 1267,
+      "note": "Its clauses on seizing goods for debt date from 1267 and are still law in England."
+     },
+     {
+      "label": "Columbus sails",
+      "year": 1492
+     },
+     {
+      "label": "US Constitution signed",
+      "year": 1787
+     }
+    ]
+   },
+   "source": "Baker, English Legal History; legislation.gov.uk",
    "source_kind": "reference_work",
-   "reference": "Baker, An Introduction to English Legal History, 5th edition, Oxford University Press, 2019",
-   "written": "2026-09-26"
+   "reference": "Baker, An Introduction to English Legal History, 5th edition, Oxford University Press, 2019; https://www.legislation.gov.uk/aep/Hen3cc1415/52/1",
+   "written": "2026-10-06"
   },
   {
    "id": "weird_facts-still-on-the-books-3",
@@ -196068,8 +204485,8 @@ const String kEmbeddedBank = r'''
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Under a statute from the 1320s, who owns a whale or sturgeon taken off the English coast?",
-   "answer": "The Crown. De Prerogativa Regis, a statute usually dated to about 1324, makes whales and sturgeon royal fish, and it has never been repealed. Strandings and catches are reported to the Receiver of Wreck, the official who handles wreck and royal claims. A carcass on the sand belongs, in law, to the King.",
+   "question": "Whales and sturgeon off England's coast still belong to the Crown, by a statute of the 1320s. Which of these English laws are real?",
+   "answer": "Old laws last when keeping them costs nobody anything. De Prerogativa Regis, usually dated to about 1324, makes whales and sturgeon royal fish, and nobody has troubled to repeal it; strandings still go to the Receiver of Wreck. The funny old laws that circulate are mostly invented, so nobody can cite them.",
    "move": "Old rules survive when keeping them costs nobody anything.",
    "keywords": [
     "royal fish",
@@ -196088,6 +204505,56 @@ const String kEmbeddedBank = r'''
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Myth",
+    "right": "Still law",
+    "tag": "Laws of England",
+    "items": [
+     {
+      "text": "Royal fish",
+      "note": "Whales and sturgeon caught off the coast go to the Crown.",
+      "pile": "right",
+      "verdict": "From a statute of about 1324, never repealed."
+     },
+     {
+      "text": "Welshmen",
+      "note": "In Chester you may shoot a Welshman with a longbow.",
+      "pile": "left",
+      "verdict": "No such law has ever been traced, in Chester or anywhere else."
+     },
+     {
+      "text": "Marlborough",
+      "note": "1267: limits on seizing a debtor's goods.",
+      "pile": "right",
+      "verdict": "A few chapters still in force, 750 years on."
+     },
+     {
+      "text": "Police helmet",
+      "note": "A pregnant woman may relieve herself in one.",
+      "pile": "left",
+      "verdict": "No law, old or new, says so."
+     },
+     {
+      "text": "Armour",
+      "note": "Coming to Parliament in armour is banned.",
+      "pile": "right",
+      "verdict": "A statute of 1313, still in force."
+     },
+     {
+      "text": "Mince pies",
+      "note": "Eating them on Christmas Day is illegal.",
+      "pile": "left",
+      "verdict": "Puritan bans on Christmas lapsed in 1660."
+     },
+     {
+      "text": "Salmon",
+      "note": "Handling salmon in suspicious circumstances.",
+      "pile": "right",
+      "verdict": "An offence under the Salmon Act 1986, aimed at poached fish."
+     }
+    ]
+   },
    "source": "Blackstone, Commentaries, Book 1",
    "source_kind": "reference_work",
    "reference": "Blackstone, Commentaries on the Laws of England, Book 1, ed. Lemmings, Oxford University Press, 2016",
@@ -198123,7 +206590,8 @@ const String kEmbeddedBank = r'''
   "433": "thinking-1",
   "434": "thinking-z31",
   "435": "thinking-u1",
-  "436": "thinking-h18"
+  "436": "thinking-h18",
+  "437": "thinking-h15"
  },
  "commons": {
   "1": [
@@ -202485,6 +210953,16 @@ const String kEmbeddedBank = r'''
    "art-composition-3",
    "music-music-therapy-1",
    "nature-insect-decline-2"
+  ],
+  "437": [
+   "life-deep-focus-2",
+   "medicine-back-pain-3",
+   "language-latin-roots-2",
+   "cinema-sound-and-fear-1",
+   "science-experiments-3",
+   "human_body-cortisol-1",
+   "sport-tech-doping-1",
+   "psychology-self-deception-1"
   ]
  }
 }

@@ -6,9 +6,9 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why is one of the commonest human malaria parasites nearly absent from West and Central Africa?",
-  "answer": "Because most people there lack the door it uses. Plasmodium vivax enters red cells through a surface protein, the Duffy blood-group antigen, and in 1976 Miller and colleagues showed that Duffy-negative people resisted it; most West and Central Africans are Duffy-negative. The shield leaks: vivax has since been found infecting Duffy-negative people in Madagascar.",
-  "move": "Resistance can rest on a missing part rather than an added defence.",
+  "question": "Plasmodium vivax, a common malaria parasite, thrives across tropical Asia but is nearly absent from West Africa. Why?",
+  "answer": "A blood type. Most West and Central Africans are Duffy-negative: their red cells lack the protein vivax grips to get in, as Miller showed in 1976. The shield leaks: vivax now infects some Duffy-negative people.",
+  "move": "Before crediting the famous cause, check the cases it cannot explain.",
   "keywords": [
     "duffy antigen",
     "plasmodium vivax",
@@ -18,7 +18,7 @@
   ],
   "era": "twentieth",
   "region": "africa",
-  "hook": "mechanism",
+  "hook": "puzzle",
   "mood": "sober",
   "numeracy": 0,
   "abstraction": "concrete",
@@ -26,9 +26,49 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "disabled": true,
+  "ask": "Which famous explanation do I trust without testing?",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Climate",
+      "No mosquitoes",
+      "Sickle-cell gene",
+      "A blood type"
+    ],
+    "answer": 3,
+    "clues": [
+      {
+        "text": "Vivax is common in South and Southeast Asia, just as hot and wet.",
+        "tag": "Thrives in hot Asia",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "Falciparum, a deadlier malaria carried by the same mosquitoes, is rife there.",
+        "tag": "Other malaria is rife",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "Most West Africans lack the sickle-cell gene. They escape vivax all the same.",
+        "tag": "No sickle gene, yet safe",
+        "rulesOut": [
+          2
+        ]
+      },
+      {
+        "text": "Vivax enters red cells by gripping the Duffy protein. Most there lack it.",
+        "tag": "No Duffy, no entry",
+        "rulesOut": []
+      }
+    ],
+    "why": "The famous shield, sickle cell, is missing in most of them. A missing Duffy protein is not."
+  },
   "source": "Miller et al., NEJM, 1976",
   "source_kind": "paper",
   "reference": "Miller, Mason, Clyde & McGinniss, The resistance factor to Plasmodium vivax in blacks: the Duffy-blood-group genotype, FyFy, New England Journal of Medicine, 1976",
-  "written": "2026-09-27",
-  "disabled": true
+  "written": "2026-10-06"
 }

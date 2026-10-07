@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why can the same electric car have a footprint many times larger in Poland than in Norway?",
-  "answer": "Because the car runs on whatever the grid burns. Norway's electricity comes almost entirely from hydropower, at a few tens of grams of carbon dioxide per kilowatt-hour; Poland's leans on coal at over 600. A car using 0.18 kWh a kilometre emits about 108 grams per km in Poland; in Norway, a few.",
+  "question": "An electric car advert, worded the way many are. Where do the car's emissions actually go?",
+  "answer": "Up the power line. Norway's electricity is almost all hydropower, at a few tens of grams of carbon dioxide per kilowatt-hour; Poland's leans on coal, at over 600. A car using 0.18 kWh a kilometre emits about 108 grams per km in Poland, close to a frugal petrol car, and a few in Norway.",
   "move": "Ask what powers a thing, not just what it is called.",
   "ask": "Which of my choices looks clean but depends on something upstream I never see?",
   "keywords": [
@@ -27,8 +27,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Car advert",
+    "ref": "Typical text",
+    "title": "Drive electric",
+    "body": "Zero emissions. 100% electric, 0 g CO2/km. Charge at home and drive clean.",
+    "phrases": [
+      {
+        "text": "Zero emissions",
+        "plain": "Zero from the car itself",
+        "why": "Nothing leaves a tailpipe because there isn't one. The power station is another matter."
+      },
+      {
+        "text": "0 g CO2/km",
+        "plain": "0 g at the car, about 108 g/km on a coal grid",
+        "why": "At 0.18 kWh per km and 600 g per kWh. On Norway's hydropower, a few grams.",
+        "catch": true
+      },
+      {
+        "text": "drive clean",
+        "plain": "drive as clean as your grid",
+        "why": "The car runs on whatever the local power stations burn."
+      }
+    ],
+    "ask": "One number depends on a country the advert never names. Which?",
+    "watch": "For anything electric, ask what the local power stations burn."
+  },
   "source": "European Environment Agency, electricity emission intensity",
   "source_kind": "institution",
   "reference": "European Environment Agency, Greenhouse gas emission intensity of electricity generation in Europe, indicator assessment, 2023",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

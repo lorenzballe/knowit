@@ -6,15 +6,17 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "When a 14th-century English writer called someone nice, what was he accusing them of?",
-  "answer": "Being foolish. Nice came through French from Latin nescius, not knowing, and in Middle English meant silly or ignorant. It then drifted to fussy, then to precise, which survives in a nice distinction, and only in the 1700s to pleasant. Each step was small; added up, they turned an insult into a compliment.",
+  "question": "Five everyday English words used to mean something very different. What did each mean when it first arrived?",
+  "answer": "Girl is the one almost nobody gets: in Middle English it meant a child of either sex, and a boy could be a knave girl. Each word drifted in small, reasonable steps. Nice went from ignorant to fussy to precise to pleasant, until the sum was an opposite.",
   "move": "Small shifts, each one harmless, can add up to the opposite.",
   "ask": "What in my life has drifted, one small step at a time, into the opposite of how it started?",
   "keywords": [
     "nice",
-    "semantic change",
-    "middle english",
-    "latin nescius"
+    "silly",
+    "girl",
+    "awful",
+    "meat",
+    "semantic change"
   ],
   "era": "medieval",
   "region": "europe",
@@ -26,8 +28,41 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Online Etymology Dictionary, nice",
+  "scene": {
+    "type": "match",
+    "leftTitle": "Word",
+    "rightTitle": "Once meant",
+    "pairs": [
+      {
+        "left": "Nice",
+        "right": "Foolish, ignorant",
+        "note": "From Latin nescius, not knowing. Pleasant only from the 1700s."
+      },
+      {
+        "left": "Silly",
+        "right": "Blessed, happy",
+        "note": "Old English saelig, blessed; then innocent, pitiable, and foolish."
+      },
+      {
+        "left": "Girl",
+        "right": "A child of either sex",
+        "note": "In Middle English a boy could be called a knave girl.",
+        "missed": true
+      },
+      {
+        "left": "Awful",
+        "right": "Worthy of awe",
+        "note": "Full of awe, as in a hymn. Very bad only from around 1800."
+      },
+      {
+        "left": "Meat",
+        "right": "Any food at all",
+        "note": "Hence sweetmeats, and meat and drink for food and drink."
+      }
+    ]
+  },
+  "source": "Online Etymology Dictionary; Oxford English Dictionary",
   "source_kind": "reference_work",
   "reference": "https://www.etymonline.com/word/nice",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

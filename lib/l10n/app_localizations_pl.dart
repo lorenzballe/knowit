@@ -2058,4 +2058,39 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get showAllSteps => 'Pokaż wszystko';
+
+  @override
+  String get sceneLockIn => 'ZATWIERDŹ';
+
+  @override
+  String get sceneYou => 'TY';
+
+  @override
+  String get sceneTruth => 'PRAWDA';
+
+  @override
+  String get sceneTryAgain => 'Jeszcze raz';
+
+  @override
+  String get sceneDrawHint => 'Narysuj palcem, jak myślisz';
+
+  @override
+  String get sceneHoldHint => 'Przytrzymaj';
+
+  @override
+  String get sceneSwipeHint => 'Przesuń lub dotknij';
+
+  @override
+  String get sceneTapToPick => 'Dotknij swój wybór';
+
+  @override
+  String get sceneShowMe => 'Pokaż';
+
+  @override
+  String get sceneYourGuess => 'Twój typ';
+
+  @override
+  String sceneNOfM(int n, int m) {
+    return '$n z $m';
+  }
 }

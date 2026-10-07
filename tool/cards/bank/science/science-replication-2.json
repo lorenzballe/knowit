@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "When a drug company's scientists tried to repeat 53 landmark cancer studies, how many held up?",
-  "answer": "Six. In 2012 Glenn Begley and Lee Ellis reported that Amgen's teams could confirm only 6 of 53 high-profile laboratory papers, even after asking the original authors for help. Some originals had shown their best experiment, not their typical one. Drug programmes costing millions had been planned on foundations that would not stand twice.",
+  "question": "Amgen's scientists tried to repeat 53 landmark cancer studies, even asking the original authors for help. How many results held up?",
+  "answer": "Six. Begley and Ellis reported in 2012 that the other 47 could not be confirmed. Some originals had shown their single best experiment rather than a typical one, and few had been repeated before publication. Drug programmes costing millions had been planned on foundations that would not stand twice.",
   "move": "Before building on a result, check it stands when someone else repeats it.",
   "ask": "What am I building my plans on that I've only ever seen work once?",
   "keywords": [
@@ -18,16 +18,42 @@
   ],
   "era": "recent",
   "region": "americas",
-  "hook": "story",
+  "hook": "number",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "count",
+    "unit": "of 53 landmark studies held up",
+    "answer": 6,
+    "each": 1,
+    "eachLabel": "1 dot = 1 result confirmed",
+    "arrange": "grid",
+    "compare": "47 of the 53 could not be repeated",
+    "options": [
+      {
+        "label": "About 5",
+        "value": 5,
+        "note": "Right: 6 of 53. Some originals showed their best run, not their typical one."
+      },
+      {
+        "label": "About 15",
+        "value": 15,
+        "note": "Too many. Only 6 of the 53 stood up when another lab repeated them."
+      },
+      {
+        "label": "Nearly all",
+        "value": 50,
+        "note": "Far too many. 47 of the 53 landmark results could not be reproduced."
+      }
+    ]
+  },
   "source": "Begley & Ellis, Nature, 2012",
   "source_kind": "paper",
   "reference": "Begley & Ellis, Raise standards for preclinical cancer research, Nature 483:531–533, 2012",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

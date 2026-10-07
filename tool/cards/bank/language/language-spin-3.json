@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Is misleading someone with only true statements judged kinder than telling them a lie?",
-  "answer": "By the person doing it, yes; by the person misled, barely. In 2017 experiments, negotiators who steered others with true but misleading statements rated their own conduct as more ethical than lying. Once their targets found out, they judged it nearly as harshly as a lie and trusted the speaker less. Psychologists call it paltering.",
+  "question": "A flat's listing, written the way estate agents often write. Every word is true. What will a viewer find?",
+  "answer": "A small flat needing work, by a noisy road, and nobody lied. Misleading with true statements is called paltering. In 2017 experiments, people who paltered rated themselves more ethical than liars; the people they misled, once they found out, judged it nearly as harshly as a lie and trusted them less.",
   "move": "Judge a statement by the belief it leaves, not by its facts.",
   "ask": "When did I last say only true things to leave someone believing something false?",
   "keywords": [
@@ -29,8 +29,40 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "For sale",
+    "ref": "Typical text",
+    "title": "Charming flat",
+    "body": "Cosy one-bedroom flat with huge potential, in a vibrant area moments from excellent transport links. Early viewing highly recommended.",
+    "phrases": [
+      {
+        "text": "Cosy",
+        "plain": "Small",
+        "why": "True of any small room. It turns a measurement into a feeling."
+      },
+      {
+        "text": "with huge potential",
+        "plain": "that needs a lot of work",
+        "why": "Potential is what it could become, and someone has to pay for that.",
+        "catch": true
+      },
+      {
+        "text": "vibrant area",
+        "plain": "lively street, at 2 a.m. too,",
+        "why": "Vibrant is true of busy places. It leaves out the hours you'll be trying to sleep."
+      },
+      {
+        "text": "moments from excellent transport links",
+        "plain": "close to a railway or a busy road",
+        "why": "Close is true. So is the noise, which no listing measures."
+      }
+    ],
+    "ask": "Every word is true. Which phrase will cost the buyer most?",
+    "watch": "When every word is true, ask what picture the words were chosen to leave."
+  },
   "source": "Rogers et al., Journal of Personality and Social Psychology, 2017",
   "source_kind": "paper",
   "reference": "Rogers, Zeckhauser, Gino, Norton & Schweitzer, Artful paltering: the risks and rewards of using truthful statements to mislead others, Journal of Personality and Social Psychology 112(3), 2017",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

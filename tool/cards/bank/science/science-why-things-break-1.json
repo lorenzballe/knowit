@@ -6,15 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Where did the crack that broke up a Comet jet airliner over the Mediterranean in 1954 begin?",
-  "answer": "At the corner of a small roof window cut for a navigation aerial. Sharp corners concentrate stress: the metal there carries several times the load of the panel around it. Every flight pressurised the cabin and flexed that corner, until a fatigue crack grew from a hole beside it. Airliner windows have rounded corners now.",
-  "move": "Look for the sharp corner where strain has nowhere else to go.",
-  "ask": "Where in my week does all the pressure collect at one sharp corner?",
+  "question": "Four safety rules so ordinary nobody notices them. Which disaster was each one written after?",
+  "answer": "The windows are the one people miss, because rounded corners look like styling. Sharp corners concentrate stress: the metal there carries several times the load of the panel around it. Each pressurised flight flexed a corner on two Comets until a fatigue crack grew and the cabins burst open over the Mediterranean.",
+  "move": "Behind every odd safety rule, look for the accident that wrote it.",
+  "ask": "Which rule in my life looks pointless because I never heard about the accident behind it?",
   "keywords": [
     "de havilland comet",
     "metal fatigue",
-    "stress concentration",
-    "aircraft windows"
+    "titanic",
+    "tylenol",
+    "panic bars"
   ],
   "era": "twentieth",
   "region": "europe",
@@ -26,8 +27,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "The rule",
+    "rightTitle": "Written after",
+    "pairs": [
+      {
+        "left": "Rounded windows",
+        "right": "Two jets breaking up in mid-air, 1954",
+        "note": "Cracks grew from a sharp corner, where the stress had piled up.",
+        "missed": true
+      },
+      {
+        "left": "Lifeboats for all",
+        "right": "A liner sinking with seats for about half",
+        "note": "Titanic, 1912. The first SOLAS treaty, 1914, demanded a seat for all."
+      },
+      {
+        "left": "Sealed pill caps",
+        "right": "Seven people killed by painkillers, 1982",
+        "note": "Tylenol capsules were laced with cyanide on shop shelves in Chicago."
+      },
+      {
+        "left": "Push-bar exit doors",
+        "right": "183 children crushed at a bolted door",
+        "note": "Victoria Hall, Sunderland, 1883. Exits since have to open outwards."
+      }
+    ]
+  },
   "source": "Court of Inquiry, Comet G-ALYP and G-ALYY, 1955",
   "source_kind": "institution",
   "reference": "Report of the Court of Inquiry into the Accidents to Comet Aircraft G-ALYP and G-ALYY, HMSO, London, 1955",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

@@ -6,10 +6,10 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "If the last tree ring in an oak panel dates to 1500, when was the picture painted?",
-  "answer": "Not before about 1511, and probably not before 1517. Panel makers cut away the sapwood, the pale outer rings, so the last ring left is years short of felling: for Baltic oak, add at least 9 sapwood rings, typically about 15. Then add at least two years of seasoning.",
+  "question": "The outermost tree ring left on an oak panel painting grew in 1500. When could the picture have been painted?",
+  "answer": "In 1511 at the earliest, probably after 1517. A tree ring gives only the earliest possible date, and each step of the panel maker's trade pushes it later: the trimmed sapwood, then the drying.",
   "move": "Some evidence can only tell you the earliest a thing could be.",
-  "ask": "What do I treat as an exact date or fact when it really only says not before then?",
+  "ask": "What do I treat as an exact date when it only says not before?",
   "keywords": [
     "dendrochronology",
     "oak panels",
@@ -19,16 +19,57 @@
   ],
   "era": "timeless",
   "region": "europe",
-  "hook": "mechanism",
+  "hook": "puzzle",
   "mood": "practical",
-  "numeracy": 2,
+  "numeracy": 3,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "By 1500",
+      "1501 to 1510",
+      "1511 or later"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "The outermost ring left on the panel grew in 1500.",
+        "tag": "Last ring: 1500",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "Panel makers cut away the pale sapwood: in Baltic oak, at least 9 rings.",
+        "tag": "Sapwood cut away",
+        "rulesOut": []
+      },
+      {
+        "text": "So the tree was felled in 1509 at the earliest.",
+        "tag": "Felled 1509 or later",
+        "rulesOut": []
+      },
+      {
+        "text": "Boards were left to season for at least two years before painting.",
+        "tag": "Two years drying",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "Baltic oak usually has about 15 sapwood rings, not 9.",
+        "tag": "Usually 15 rings",
+        "rulesOut": []
+      }
+    ],
+    "why": "1500 plus 9 lost rings plus 2 years of drying: 1511 is the earliest a brush could touch it."
+  },
   "source": "Klein, Structural Conservation of Panel Paintings, 1998",
   "source_kind": "book",
   "reference": "Peter Klein, Dendrochronological Analyses of Panel Paintings, in Dardes & Rothe (eds), The Structural Conservation of Panel Paintings, Getty Conservation Institute, 1998",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

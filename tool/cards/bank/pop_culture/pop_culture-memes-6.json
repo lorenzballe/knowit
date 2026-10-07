@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What was the 1996 Dancing Baby animation made for, before it spread by email?",
-  "answer": "To sell software. Michael Girard and Robert Lurye built it as a sample file for Character Studio, a plug-in for animating figures in 3D Studio Max. Passed on as a looping GIF, it was dancing on Ally McBeal by 1998. An early mass-shared animation was an advert for the tool that drew it.",
+  "question": "The Dancing Baby spread by email in 1996. Which of these internet jokes are older than Google, and which younger?",
+  "answer": "The Dancing Baby advertised the tool that drew it. Michael Girard and Robert Lurye built it as a sample file for Character Studio, a plug-in for 3D Studio Max; as a looping GIF it was dancing on Ally McBeal by 1998. Jokes spread by email and newsgroups long before anyone searched for them.",
   "move": "Ask who made the first copy, and what they wanted it to show.",
   "keywords": [
     "dancing baby",

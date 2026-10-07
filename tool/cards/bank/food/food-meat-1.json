@@ -6,29 +6,62 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Per gram of protein, how does beef from the lowest-emission farms compare with peas?",
-  "answer": "It still emits about six times the greenhouse gases and uses 36 times the land. Poore and Nemecek gathered data from about 38,700 farms in 119 countries and found wide gaps between producers of the same food. The gaps between foods were wider still. The cleanest herd cannot farm its way down to a pea.",
+  "question": "Per kilogram, which puts the most greenhouse gas into the air: beef, dark chocolate, coffee, cheese or chicken?",
+  "answer": "Beef, by far: about 100 kg of greenhouse gas per kilogram, twice dark chocolate's 47. Poore and Nemecek's data from about 38,700 farms show the gaps between foods dwarf those between farms: per gram of protein, even the lowest-emission beef emits about six times as much as peas.",
   "move": "Look at the gap between kinds before the gap between makers.",
   "ask": "Am I polishing how I do something, when changing what I do would matter more?",
   "keywords": [
     "beef",
-    "peas",
+    "chocolate",
+    "coffee",
     "greenhouse gases",
-    "land use",
     "farm data"
   ],
   "era": "recent",
   "region": "world",
-  "hook": "number",
+  "hook": "misconception",
   "mood": "sober",
   "numeracy": 2,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
   "source": "Poore & Nemecek, Science, 2018",
   "source_kind": "paper",
-  "reference": "Poore & Nemecek, Reducing food's environmental impacts through producers and consumers, Science, 2018",
-  "written": "2026-10-03"
+  "reference": "Poore & Nemecek, Reducing food's environmental impacts through producers and consumers, Science 360: 987-992, 2018",
+  "written": "2026-10-06",
+  "scene": {
+    "type": "rank",
+    "quantity": "Kg of CO₂-equivalent per kg",
+    "most": "Most",
+    "unit": "kg",
+    "items": [
+      {
+        "label": "Chicken",
+        "value": 10,
+        "note": "A tenth of beef: chickens turn feed into meat far more efficiently."
+      },
+      {
+        "label": "Cheese",
+        "value": 24,
+        "note": "Ten litres of milk go into a kilogram, and dairy cows belch methane too."
+      },
+      {
+        "label": "Beef",
+        "value": 100,
+        "note": "Cattle belch methane, and their pasture is often cleared forest."
+      },
+      {
+        "label": "Coffee",
+        "value": 29,
+        "note": "Most of it comes from the farm, fertiliser and cleared land, not shipping."
+      },
+      {
+        "label": "Dark chocolate",
+        "value": 47,
+        "note": "Nearly half of beef, mostly from rainforest cleared for cocoa."
+      }
+    ]
+  }
 }

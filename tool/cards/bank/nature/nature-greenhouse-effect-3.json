@@ -41,7 +41,7 @@
     "type": "slider",
     "control": "Carbon dioxide in the air",
     "controlUnit": "ppm",
-    "readout": "Extra heating at the surface",
+    "readout": "Extra heat trapped",
     "readoutUnit": "W/m²",
     "start": 280,
     "step": 10,

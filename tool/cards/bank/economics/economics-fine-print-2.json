@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did British banks pay back about £38 billion for an insurance they had sold alongside loans?",
-  "answer": "Because much of it could never pay out. Payment protection insurance, meant to cover repayments after illness or job loss, was often sold to self-employed people or those already ill, whom its own small print excluded. Sold on commission, it was often added without being asked for. Over 32 million complaints followed.",
+  "question": "For years British banks sold payment protection insurance alongside loans and cards. How much did they end up paying back?",
+  "answer": "Over £38 billion, the Financial Conduct Authority reported in 2020, after more than 32 million complaints. The cover was often sold to self-employed or already ill people whom its own small print excluded, and banks earned commission on every policy. Many customers had it added without being asked.",
   "move": "Before buying cover, find the clause that says when it pays nothing.",
   "ask": "Which insurance do I pay for without knowing what would stop it paying out?",
   "keywords": [
@@ -18,16 +18,47 @@
   ],
   "era": "recent",
   "region": "europe",
-  "hook": "story",
+  "hook": "number",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "count",
+    "prefix": "£",
+    "unit": "paid back to customers",
+    "answer": 38000000000,
+    "each": 20000000,
+    "eachLabel": "1 dot = £20 million",
+    "compare": "After over 32 million complaints",
+    "options": [
+      {
+        "label": "£380 million",
+        "value": 380000000,
+        "note": "Two zeros short. Over 32 million complaints, and most were upheld."
+      },
+      {
+        "label": "£3.8 billion",
+        "value": 3800000000,
+        "note": "One zero short. Over £38 billion: the largest redress in UK history."
+      },
+      {
+        "label": "£38 billion",
+        "value": 38000000000,
+        "note": "Right. Over £38 billion, the largest consumer redress in UK history."
+      },
+      {
+        "label": "£380 billion",
+        "value": 380000000000,
+        "note": "One zero too many. Still, £38 billion is about £700 for every UK adult."
+      }
+    ]
+  },
   "source": "FCA, PPI complaints deadline report, 2020",
   "source_kind": "institution",
   "reference": "https://www.fca.org.uk/publication/ppi/payment-protection-insurance-complaints-deadline-final-report.pdf",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

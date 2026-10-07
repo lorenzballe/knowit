@@ -6,10 +6,10 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "A 1981 study in a top medical journal tied coffee to pancreatic cancer. Why did the link not survive?",
-  "answer": "Because of who it was compared with. The cancer patients were set against other patients of the same doctors, many with stomach and gut illnesses that had made them cut down on coffee. That made coffee look commoner among the cancer cases. The authors' own larger follow-up, in 1986, found no clear link.",
+  "question": "In 1981 a top medical journal reported that people with pancreatic cancer had drunk more coffee than other patients. Why?",
+  "answer": "Who they were compared with. The controls were other patients of the same doctors, many with gut illnesses that had made them cut down on coffee. The authors' own larger follow-up, in 1986, found no clear link.",
   "move": "Before trusting a difference, ask who was picked for the comparison.",
-  "ask": "When I compare myself with others, have I picked a fair group to compare with?",
+  "ask": "Who was the comparison group?",
   "keywords": [
     "pancreatic cancer",
     "case-control study",
@@ -18,7 +18,7 @@
   ],
   "era": "twentieth",
   "region": "americas",
-  "hook": "story",
+  "hook": "puzzle",
   "mood": "sober",
   "numeracy": 0,
   "abstraction": "mixed",
@@ -26,8 +26,44 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Coffee itself",
+      "Smoking",
+      "The comparison"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Cancer patients report more coffee than other patients in the same hospitals.",
+        "tag": "More coffee in cancer",
+        "rulesOut": []
+      },
+      {
+        "text": "The link holds in non-smokers as well as in smokers.",
+        "tag": "Holds in non-smokers",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "Many comparison patients had gut illnesses that made them drink less coffee.",
+        "tag": "Controls cut coffee",
+        "rulesOut": []
+      },
+      {
+        "text": "The same team's larger study, in 1986, finds no clear link.",
+        "tag": "Repeat: no link",
+        "rulesOut": [
+          0
+        ]
+      }
+    ],
+    "why": "Smoking didn't explain it, and the repeat found nothing. The comparison group had given up coffee."
+  },
   "source": "MacMahon et al., NEJM, 1981",
   "source_kind": "paper",
   "reference": "MacMahon, Yen, Trichopoulos, Warren & Nardi, Coffee and cancer of the pancreas, New England Journal of Medicine, 1981",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

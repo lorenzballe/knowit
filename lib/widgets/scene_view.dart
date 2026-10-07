@@ -4,6 +4,20 @@ import 'package:flutter/services.dart';
 import '../models/scene.dart';
 import '../theme.dart';
 import 'place_it.dart' show roughNumber;
+import 'scenes/count_view.dart';
+import 'scenes/draw_view.dart';
+import 'scenes/hold_view.dart';
+import 'scenes/rank_view.dart';
+import 'scenes/sample_view.dart';
+import 'scenes/sort_view.dart';
+import 'scenes/timeline_view.dart';
+import 'scenes/trick_view.dart';
+import 'scenes/why_view.dart';
+import 'scenes/poll_view.dart';
+import 'scenes/story_view.dart';
+import 'scenes/translate_view.dart';
+import 'scenes/match_view.dart';
+import 'scenes/clues_view.dart';
 
 /// Draws a [Scene] and lets the reader play with it.
 ///
@@ -23,6 +37,29 @@ class SceneView extends StatelessWidget {
   @override
   Widget build(BuildContext context) => switch (scene) {
     final SliderScene s => _SliderSceneView(scene: s, ink: ink, ground: ground),
+    final CountScene s => CountSceneView(scene: s, ink: ink, ground: ground),
+    final DrawScene s => DrawSceneView(scene: s, ink: ink, ground: ground),
+    final HoldScene s => HoldSceneView(scene: s, ink: ink, ground: ground),
+    final RankScene s => RankSceneView(scene: s, ink: ink, ground: ground),
+    final SampleScene s => SampleSceneView(scene: s, ink: ink, ground: ground),
+    final SortScene s => SortSceneView(scene: s, ink: ink, ground: ground),
+    final TimelineScene s => TimelineSceneView(
+      scene: s,
+      ink: ink,
+      ground: ground,
+    ),
+    final TrickScene s => TrickSceneView(scene: s, ink: ink, ground: ground),
+    final WhyScene s => WhySceneView(scene: s, ink: ink, ground: ground),
+    final PollScene s => PollSceneView(scene: s, ink: ink, ground: ground),
+    final StoryScene s => StorySceneView(scene: s, ink: ink, ground: ground),
+    final TranslateScene s => TranslateSceneView(
+      scene: s,
+      ink: ink,
+      ground: ground,
+    ),
+    final MatchScene s => MatchSceneView(scene: s, ink: ink, ground: ground),
+    final CluesScene s => CluesSceneView(scene: s, ink: ink, ground: ground),
+    _ => const SizedBox.shrink(),
   };
 }
 

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Where did the story that Marco Polo brought pasta home from China come from?",
-  "answer": "From an American trade magazine. In 1929 the Macaroni Journal, voice of the US pasta makers, ran a tale in which a sailor on Polo's voyage learns noodle-making in China. The sailor was named Spaghetti. Yet a Genoese inventory of 1279 already lists a basket of macaroni, sixteen years before Polo came home.",
+  "question": "Marco Polo supposedly brought pasta home from China. When do you think each part of that story happened?",
+  "answer": "The tale comes from the Macaroni Journal, the American pasta makers' trade magazine, which in 1929 told of a sailor on Polo's voyage who learned noodles in China. His name was Spaghetti. Pasta was already in Italy: a Genoese will of 1279 leaves a chest of macaroni, while Polo was still in China.",
   "move": "Trace a charming origin story to its first printing before repeating it.",
   "ask": "What charming story do I repeat that I have never traced back to its start?",
   "keywords": [
@@ -25,9 +25,31 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
-  "source": "Dickie, The Epic History of the Italians, 2007",
+  "figure": "timeline",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1100,
+    "to": 2000,
+    "events": [
+      {
+        "label": "Pasta made in Sicily",
+        "year": 1154,
+        "note": "In 1154 a geographer saw Sicilian mills making pasta strings for export."
+      },
+      {
+        "label": "Marco Polo returns",
+        "year": 1295
+      },
+      {
+        "label": "The Polo story printed",
+        "year": 1929,
+        "note": "The Marco Polo story first appeared in a 1929 American pasta trade magazine."
+      }
+    ]
+  },
+  "source": "Dickie, Delizia, 2007; al-Idrisi, 1154",
   "source_kind": "book",
   "reference": "Dickie, Delizia! The Epic History of the Italians and Their Food, Hodder & Stoughton, 2007",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

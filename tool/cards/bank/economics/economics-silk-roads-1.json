@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Who named the Silk Road, and what was that person looking for in China?",
-  "answer": "A German geologist, Ferdinand von Richthofen, in 1877, and he was looking for coal. His travels from 1868 began as a survey of coal reserves for the Bank of California. His volumes pointed Germany to Shandong's coalfields, and in 1897 it seized the harbour at Qingdao. The romantic name came wrapped in a mining report.",
+  "question": "The Silk Road sounds as ancient as the caravans on it. When do you think the name itself was coined?",
+  "answer": "Ferdinand von Richthofen, a German geologist, coined Seidenstrasse in 1877 after surveying China's coal for the Bank of California. His volumes pointed Germany to Shandong's coalfields, and in 1897 it seized the harbour at Qingdao. The traders never called it the Silk Road: the romantic name came wrapped in a mining report.",
   "move": "Ask what the person who named a thing wanted from it.",
   "ask": "What did the person who named something want from it?",
   "keywords": [
@@ -26,9 +26,34 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "timeline",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": -300,
+    "to": 2025,
+    "events": [
+      {
+        "label": "Zhang Qian heads west",
+        "year": -138
+      },
+      {
+        "label": "Marco Polo reaches China",
+        "year": 1275
+      },
+      {
+        "label": "Sea route to India",
+        "year": 1498
+      },
+      {
+        "label": "The name Silk Road",
+        "year": 1877,
+        "note": "The name dates from 1877, a year after the telephone was patented."
+      }
+    ]
+  },
   "source": "Wu, Empires of Coal, 2015",
   "source_kind": "book",
   "reference": "Wu, Empires of Coal: Fueling China's Entry into the Modern World Order, 1860-1920, Stanford University Press, 2015",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

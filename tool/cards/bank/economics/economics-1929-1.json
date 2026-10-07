@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did paying off debts after 1929 leave many American borrowers worse off in real terms?",
-  "answer": "Because selling to raise cash pushed prices down, and debts were fixed in dollars. Consumer prices fell about a quarter between 1929 and 1933, so each dollar owed cost about a third more in goods and labour. Irving Fisher named it debt deflation in 1933: a farmer paid the same mortgage with ever more bushels.",
+  "question": "In 1929 an American farmer owed $100, fixed in dollars. As the Depression deepened, what did that debt cost in 1929 goods?",
+  "answer": "About a third more by 1933. Selling to raise cash pushed consumer prices down about a quarter, while the debt stayed fixed in dollars, so every payment took more bushels and more hours of work. Irving Fisher named it debt deflation in 1933: the more debtors paid, the heavier the rest became.",
   "move": "A debt fixed in money grows whenever the prices around it fall.",
   "ask": "Do I owe anything that gets harder to pay back when prices or pay stand still?",
   "keywords": [
@@ -27,8 +27,41 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Fisher, Econometrica, 1933",
+  "scene": {
+    "type": "draw",
+    "label": "A $100 debt, in 1929 prices",
+    "unit": "$",
+    "columns": [
+      "1929",
+      "1930",
+      "1931",
+      "1932",
+      "1933"
+    ],
+    "values": [
+      100,
+      102.4,
+      112.5,
+      124.8,
+      131.5
+    ],
+    "given": 1,
+    "min": 50,
+    "max": 150,
+    "verdict": {
+      "under": "Debts usually shrink as prices rise. Here prices fell, so the same $100 grew to $132.",
+      "near": "Right: prices fell a quarter, so a fixed $100 debt weighed about $132 by 1933.",
+      "over": "Too steep, but the right way: falling prices made every dollar owed a third heavier."
+    },
+    "notes": [
+      {
+        "at": 2,
+        "text": "1931: prices down 11%"
+      }
+    ]
+  },
+  "source": "BLS consumer prices; Fisher, Econometrica, 1933",
   "source_kind": "paper",
-  "reference": "Fisher, The Debt-Deflation Theory of Great Depressions, Econometrica, 1933",
+  "reference": "US Bureau of Labor Statistics, Historical CPI-U, annual averages 1929-1933 (17.1, 16.7, 15.2, 13.7, 13.0); Fisher, The Debt-Deflation Theory of Great Depressions, Econometrica, 1933",
   "written": "2026-09-26"
 }

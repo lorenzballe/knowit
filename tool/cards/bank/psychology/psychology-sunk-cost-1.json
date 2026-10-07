@@ -6,29 +6,49 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Who first called honouring sunk costs the Concorde fallacy, and about what?",
-  "answer": "Two biologists, writing about animal parents deserting a mate. In 1976 Richard Dawkins and Tamsin Carlisle argued that a parent does not stay with a brood because of what it has already put in; only future costs and benefits should count. They named the opposite error after the jet Britain and France kept funding.",
-  "move": "Behind a choice that seems to honour the past, look for a future reason.",
-  "ask": "Which choice am I defending as honouring the past when a future reason would serve better?",
+  "question": "You booked a $100 ski weekend, then a $50 one you would enjoy more. Same dates, no refunds. Which do you go on?",
+  "answer": "Both are paid for, so the only question left is which weekend is better, and that is the $50 one. Yet most of Arkes and Blumer's students chose the dearer trip. In 1976 two biologists named this the Concorde fallacy, after a jet that kept getting money because so much had been spent.",
+  "move": "Ask which option you would pick if both had been free.",
+  "ask": "Which choice am I defending only because of what it already cost me?",
   "keywords": [
+    "sunk costs",
     "concorde fallacy",
-    "parental investment",
-    "richard dawkins",
-    "evolutionary biology",
-    "sunk costs"
+    "ski trip",
+    "arkes and blumer"
   ],
   "era": "twentieth",
-  "region": "none",
-  "hook": "origin",
-  "mood": "wonder",
-  "numeracy": 0,
-  "abstraction": "mixed",
+  "region": "americas",
+  "hook": "puzzle",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Dawkins & Carlisle, Nature, 1976",
+  "scene": {
+    "type": "poll",
+    "who": "61 students, Arkes & Blumer 1985",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "The $100 trip",
+            "share": 54,
+            "mirror": "Like 54% of the students. Wasting the bigger sum feels worse, though both are spent anyway."
+          },
+          {
+            "label": "The $50 trip",
+            "share": 46,
+            "mirror": "Like 46%. You let the money go and chose the better weekend; it was gone either way."
+          }
+        ]
+      }
+    ],
+    "why": "Skipping the dearer trip feels like wasting $100, though the money is gone whichever you pick."
+  },
+  "source": "Arkes & Blumer, OBHDP, 1985",
   "source_kind": "paper",
-  "reference": "doi:10.1038/262131a0",
-  "written": "2026-09-26"
+  "reference": "Arkes & Blumer, The psychology of sunk cost, Organizational Behavior and Human Decision Processes 35 (1985): 124-140; Dawkins & Carlisle, Nature 262 (1976): 131-133",
+  "written": "2026-10-06"
 }

@@ -6,16 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Before criticising someone's view, what did Daniel Dennett say you should first be able to do?",
-  "answer": "Restate it so clearly that its holder says: thanks, I wish I had put it that way. Dennett called this the first of Rapoport's rules, after the game theorist Anatol Rapoport. Next, list where you agree and what you learned; only then criticise. A victory over a view nobody holds wins nothing.",
+  "question": "Four replies heard in any argument, each one a known way of dodging the point. Which dodge is each?",
+  "answer": "The smoker's reply is the one people miss, because hypocrisy feels like a refutation. It is not: a doctor who smokes is still right about lungs. Daniel Dennett's advice, after Anatol Rapoport, stops all four at the root: restate the other view so well its holder thanks you, and only then criticise.",
   "move": "Earn the right to disagree by stating the other view better than its holder.",
   "ask": "Could I explain the view I most disagree with so well that the people who hold it would nod?",
   "keywords": [
-    "daniel dennett",
-    "rapoport's rules",
-    "steelmanning",
-    "disagreement",
-    "criticism"
+    "straw man",
+    "false dilemma",
+    "appeal to nature",
+    "tu quoque",
+    "rapoport's rules"
   ],
   "era": "recent",
   "region": "none",
@@ -27,8 +27,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "The dodge",
+    "rightTitle": "Heard as",
+    "pairs": [
+      {
+        "left": "Straw man",
+        "right": "'So you want no rules at all?'",
+        "note": "It defeats a view nobody holds. The cure: restate theirs first."
+      },
+      {
+        "left": "False choice",
+        "right": "'Either we cut taxes or the economy dies'",
+        "note": "Two options are offered as if there were no third."
+      },
+      {
+        "left": "Appeal to nature",
+        "right": "'It's natural, so it can't hurt'",
+        "note": "Hemlock and arsenic are natural too."
+      },
+      {
+        "left": "Tu quoque (you too)",
+        "right": "'You smoke too, so don't lecture me'",
+        "note": "A hypocrite can still be right. Her habit says nothing about lungs.",
+        "missed": true
+      }
+    ]
+  },
   "source": "Dennett, Intuition Pumps, 2013",
   "source_kind": "book",
   "reference": "Dennett, Intuition Pumps and Other Tools for Thinking, W. W. Norton, 2013",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "When each partner in a couple estimates their own share of the household work, why do the two shares add up past 100%?",
-  "answer": "Because each remembers their own efforts best. Married couples asked for their share of chores such as shopping, cleaning and planning outings tended to total more than 100%: one's own work is seen and felt, the other's often happens off stage. Neither is lying. Each simply holds a fuller diary of their own days.",
+  "question": "Why do two partners' shares of the housework add up to more than 100%?",
+  "answer": "Because memory keeps a lopsided ledger. Ross and Sicoly asked married couples for their share of everyday activities, from shopping to planning outings, and the two estimates tended to total more than 100%. The same arithmetic runs in teams and group projects. Before arguing about fairness, list what the other person did.",
   "move": "Count the work you did not see before you weigh your share.",
   "ask": "In my home or team, what does the other person do that I rarely see happening?",
   "keywords": [
@@ -26,6 +26,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "Each partner's share of the chores adds up to over 100%."
+    },
+    "levels": [
+      {
+        "text": "Neither is lying: each sincerely recalls doing most of it."
+      },
+      {
+        "text": "Your own work you do, feel and remember in detail."
+      },
+      {
+        "text": "Your partner's work mostly happens while you're elsewhere."
+      },
+      {
+        "text": "We judge by what comes to mind, and our own work comes first."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Each wants to look good",
+        "Own work comes to mind",
+        "People are bad at maths"
+      ],
+      "answer": 1
+    }
+  },
   "source": "Ross & Sicoly, JPSP, 1979",
   "source_kind": "paper",
   "reference": "Ross & Sicoly, Egocentric biases in availability and attribution, Journal of Personality and Social Psychology, 1979",

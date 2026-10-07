@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Would people rather earn $50,000 while others earn $25,000, or $100,000 while others earn $200,000?",
-  "answer": "About half chose the first. Solnick and Hemenway put such choices to students and staff at a school of public health, prices held equal; many would give up half their real income to stay ahead. The pull of rank was much weaker for holidays: most preferred more weeks off even if others had more.",
+  "question": "Prices stay as they are today. Would you rather earn $50k while others earn $25k, or $100k while others earn $200k?",
+  "answer": "Half chose to be poorer but ahead. Solnick and Hemenway found the pull of rank strong for income and weak for holidays: most chose more weeks off even when others got more. People rank themselves on what others can see. A salary shows; an extra week at home does not.",
   "move": "Notice which of your wants are about having, and which about outranking.",
   "ask": "Which of my goals would I drop if nobody around me could see whether I reached it?",
   "keywords": [
@@ -26,8 +26,29 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "Public-health school, Solnick 1998",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "$50k, and ahead",
+            "share": 50,
+            "mirror": "So did about half. You'd give up half your money to stay ahead of the people around you."
+          },
+          {
+            "label": "$100k, but behind",
+            "share": 50,
+            "mirror": "So did about half. You'd take twice the money at the bottom; you count what it buys."
+          }
+        ]
+      }
+    ],
+    "why": "We judge pay against the people around us, so a raise everyone gets barely feels like one."
+  },
   "source": "Solnick and Hemenway, JEBO, 1998",
   "source_kind": "paper",
   "reference": "Solnick and Hemenway, Is more always better? A survey on positional concerns, Journal of Economic Behavior and Organization, 1998",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

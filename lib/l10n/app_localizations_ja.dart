@@ -1923,4 +1923,39 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get showAllSteps => 'すべて表示';
+
+  @override
+  String get sceneLockIn => '決定';
+
+  @override
+  String get sceneYou => 'あなた';
+
+  @override
+  String get sceneTruth => '正解';
+
+  @override
+  String get sceneTryAgain => 'もう一度';
+
+  @override
+  String get sceneDrawHint => '指で予想を描いてください';
+
+  @override
+  String get sceneHoldHint => '長押し';
+
+  @override
+  String get sceneSwipeHint => 'スワイプかタップ';
+
+  @override
+  String get sceneTapToPick => '選んでタップ';
+
+  @override
+  String get sceneShowMe => '見せて';
+
+  @override
+  String get sceneYourGuess => 'あなたの予想';
+
+  @override
+  String sceneNOfM(int n, int m) {
+    return '$m中$n';
+  }
 }

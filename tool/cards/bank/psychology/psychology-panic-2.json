@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Many people having a panic attack fear they are about to faint. Why do they almost never do?",
-  "answer": "Because panic raises blood pressure, and fainting needs it to fall. The racing heart and light head are the body's alarm working normally. In Clark's model, an attack grows when such sensations are read as a catastrophe, which sounds more alarm. Blood-injury phobia, where pressure drops at the sight of a needle, is the exception.",
+  "question": "People in a panic attack often fear they are about to faint. Why do they almost never do?",
+  "answer": "Because the frightening signs are the alarm, not a failure. In David Clark's model an attack feeds on itself when a racing heart and dizziness are read as catastrophe, which sounds more alarm. Knowing what the sensations mean breaks the loop. The exception is blood and needle phobia, where pressure really drops.",
   "move": "A frightening sensation is not proof of danger; ask what it usually means.",
   "ask": "Which sensation in my body do I read as danger when it might just be alarm doing its job?",
   "keywords": [
@@ -26,6 +26,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "In a panic attack, many people are sure they're about to faint."
+    },
+    "levels": [
+      {
+        "text": "The head swims and the heart races: it feels like collapse."
+      },
+      {
+        "text": "The light head comes from fast breathing, not low blood pressure."
+      },
+      {
+        "text": "Fainting needs pressure to fall so the brain runs short of blood."
+      },
+      {
+        "text": "Panic is an alarm, and alarms push blood pressure up."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Fear keeps the brain alert",
+        "Attacks are too short",
+        "Panic raises blood pressure"
+      ],
+      "answer": 2
+    }
+  },
   "source": "Clark, Behaviour Research and Therapy, 1986",
   "source_kind": "paper",
   "reference": "Clark, A cognitive approach to panic, Behaviour Research and Therapy, 1986",

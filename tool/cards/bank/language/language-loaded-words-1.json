@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What does the word natural on an American food label legally guarantee about the food?",
-  "answer": "Very little. The FDA has never formally defined it; its long-standing policy means only that nothing artificial or synthetic was added that would not normally be expected in the food. It says nothing about pesticides, processing methods or nutrition. The word reassures without promising.",
+  "question": "A box of cereal in an American shop, worded the way many are. Which word on it promises least?",
+  "answer": "Natural. The US Food and Drug Administration has never formally defined it; its long-standing policy means only that nothing artificial or synthetic was added that would not normally be in the food. It says nothing about sugar, pesticides, processing or nutrition. Honey-sweetened clusters can be all natural and still a sweet.",
   "move": "When a word sells, ask who defines it and who checks.",
   "ask": "Which reassuring word on something I buy have I never looked up?",
   "keywords": [
@@ -26,8 +26,40 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "US FDA, Use of the Term Natural on Food Labeling",
+  "scene": {
+    "type": "translate",
+    "head": "Breakfast cereal",
+    "ref": "Typical text",
+    "title": "Honey oat clusters",
+    "body": "All natural. Made with whole grain oats and real honey. No artificial flavours or colours. A wholesome start to your day.",
+    "phrases": [
+      {
+        "text": "All natural",
+        "plain": "Nothing artificial added; nothing else promised",
+        "why": "The FDA has never defined natural. It says nothing about sugar, pesticides or processing.",
+        "catch": true
+      },
+      {
+        "text": "Made with whole grain oats",
+        "plain": "Contains some whole grain, amount not stated",
+        "why": "Made with means it is in there. Not that it is most of what is in there."
+      },
+      {
+        "text": "real honey",
+        "plain": "honey, which the body treats as sugar",
+        "why": "Real makes it sound like a health food. Honey counts as free sugar in WHO advice."
+      },
+      {
+        "text": "wholesome",
+        "plain": "feel-good, legally empty",
+        "why": "A feeling, not a claim. Nobody can check it, so nobody has to."
+      }
+    ],
+    "ask": "One word promises almost nothing in law. Which?",
+    "watch": "When a word sells the product, ask who defines it and who checks."
+  },
+  "source": "US FDA, Use of the Term Natural",
   "source_kind": "institution",
   "reference": "https://www.fda.gov/food/food-labeling-nutrition/use-term-natural-food-labeling",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

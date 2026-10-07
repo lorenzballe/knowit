@@ -6,16 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What was the vacuum flask invented to hold?",
-  "answer": "Liquefied gases. James Dewar built it at the Royal Institution in 1892 to stop liquid air and oxygen boiling away: two glass walls with a vacuum between them block conduction and convection, and silvering the walls reflects radiant heat. From 1904 a Berlin firm, Thermos, turned the laboratory vessel into a picnic flask.",
+  "question": "Four everyday things started life doing a quite different job. What was each one first made for?",
+  "answer": "The flask is the one people miss, because it seems made for tea. James Dewar built it at the Royal Institution in 1892 to stop liquid air and oxygen boiling away: a vacuum between two glass walls blocks conduction and convection, and silvering reflects radiant heat. From 1904 Thermos sold it for picnics.",
   "move": "Ask what problem an everyday object was first built to solve.",
   "ask": "What everyday thing do I use without knowing what problem it was first made to solve?",
   "keywords": [
     "vacuum flask",
     "james dewar",
-    "royal institution",
-    "liquid air",
-    "thermos"
+    "bubble wrap",
+    "kleenex",
+    "play-doh"
   ],
   "era": "nineteenth",
   "region": "europe",
@@ -27,8 +27,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "The invention",
+    "rightTitle": "First made to",
+    "pairs": [
+      {
+        "left": "Vacuum flask",
+        "right": "Stop liquid oxygen boiling away in a lab",
+        "note": "James Dewar, 1892. A Berlin firm made it a picnic flask from 1904.",
+        "missed": true
+      },
+      {
+        "left": "Bubble wrap",
+        "right": "Be a textured wallpaper",
+        "note": "It flopped as wallpaper in 1957, then found work wrapping computers."
+      },
+      {
+        "left": "Kleenex",
+        "right": "Wipe off cold cream make-up",
+        "note": "Sold for removing make-up in 1924. Buyers kept blowing their noses."
+      },
+      {
+        "left": "Play-Doh",
+        "right": "Rub soot off wallpaper",
+        "note": "Coal fires left walls sooty. When homes switched to gas, it became a toy."
+      }
+    ]
+  },
   "source": "Mendelssohn, The Quest for Absolute Zero, 1966",
   "source_kind": "book",
   "reference": "Mendelssohn, The Quest for Absolute Zero: The Meaning of Low Temperature Physics, Weidenfeld & Nicolson, 1966",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

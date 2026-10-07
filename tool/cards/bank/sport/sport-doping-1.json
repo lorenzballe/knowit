@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did cycling's 1997 limit of 50% red cells in the blood fail to stop riders using EPO?",
-  "answer": "Because it tested a number, not the drug. EPO raises the share of blood made of red cells, the haematocrit, so riders measured their own, dosed to sit just under 50%, and could thin their blood with saline before a control. The cap told everyone exactly how far they could go.",
+  "question": "Cycling couldn't detect EPO, so it capped what EPO does. What happened?",
+  "answer": "A test of a side effect is a test you can steer. Riders checked their own red-cell share with small centrifuges and dosed to just below the line, with saline to thin the blood before a control. A typical man sits in the low to mid 40s, so the cap allowed a big boost.",
   "move": "A limit on a number becomes a target to sit just under.",
   "ask": "Which limit in my life have I quietly turned into a target to stay just under?",
   "keywords": [
@@ -27,8 +27,47 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "Pro cycling, 1990s",
+        "glyph": "rise",
+        "line": "EPO, a hormone, raises red blood cells and endurance."
+      },
+      {
+        "fact": "No test for the drug",
+        "glyph": "cross",
+        "line": "Nobody can detect EPO itself in a rider's sample."
+      },
+      {
+        "fact": "1997: the 50% rule",
+        "glyph": "ban",
+        "line": "Riders with over 50% red cells in their blood are stood down."
+      }
+    ],
+    "ask": "What do the riders do?",
+    "options": [
+      {
+        "label": "Most stop using EPO"
+      },
+      {
+        "label": "Dose to sit at 49%"
+      },
+      {
+        "label": "Switch to other drugs"
+      }
+    ],
+    "answer": 1,
+    "outcome": {
+      "fact": "USADA report, 2012",
+      "glyph": "check",
+      "line": "They dosed to sit just under 50%, and diluted if too close."
+    },
+    "why": "Before the cap, riders guessed how far they dared go. The cap told them exactly."
+  },
   "source": "USADA, Reasoned Decision, Armstrong case, 2012",
   "source_kind": "primary_document",
   "reference": "U.S. Anti-Doping Agency, Reasoned Decision of the United States Anti-Doping Agency on Disqualification and Ineligibility, Lance Armstrong, 2012",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

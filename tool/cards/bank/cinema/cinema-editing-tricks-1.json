@@ -6,15 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "In a television interview filmed with one camera, when were the reporter's nods filmed?",
-  "answer": "Usually afterwards. With one camera on the guest, the crew turns round once the interview ends and films the reporter nodding or asking questions again, to cut in later. The BBC's editorial guidelines warn that these noddies must not change the meaning, because a nod placed after an answer reads as agreement.",
+  "question": "Four tricks of the screen, one of them used every night on the news. Which trick creates each effect?",
+  "answer": "The nod is the one people miss. With one camera on the guest, the crew turns round after the interview and films the reporter nodding, to cut in later. The BBC's guidelines warn that these noddies must not change the meaning, because a nod placed after an answer reads as agreement.",
   "move": "A reaction placed after a statement can be filmed at any time.",
   "ask": "When I see someone nodding along in a video, do I know when that nod happened?",
   "keywords": [
     "noddies",
-    "cutaways",
-    "tv interviews",
-    "bbc editorial guidelines"
+    "kuleshov effect",
+    "dolly zoom",
+    "shepard tone",
+    "editing"
   ],
   "era": "recent",
   "region": "europe",
@@ -26,8 +27,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "The trick",
+    "rightTitle": "The effect",
+    "pairs": [
+      {
+        "left": "Noddies",
+        "right": "A reporter who seems to agree as you speak",
+        "note": "One camera: the nods are filmed after the guest has gone.",
+        "missed": true
+      },
+      {
+        "left": "Kuleshov effect",
+        "right": "One blank face that looks hungry, then sad",
+        "note": "Cut it next to soup or a coffin and viewers read different feelings."
+      },
+      {
+        "left": "Dolly zoom",
+        "right": "A floor that seems to rush away beneath you",
+        "note": "Zoom in while the camera pulls back, as in Vertigo, 1958."
+      },
+      {
+        "left": "Shepard tone",
+        "right": "Music that seems to rise for ever",
+        "note": "Tones an octave apart fade in and out, so the climb never arrives."
+      }
+    ]
+  },
   "source": "BBC Editorial Guidelines",
   "source_kind": "institution",
   "reference": "BBC Editorial Guidelines, Section 3: Accuracy, British Broadcasting Corporation, 2019",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

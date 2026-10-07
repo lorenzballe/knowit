@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did experts accept the Amarna Princess, an Egyptian statue Bolton Museum bought in 2003 for about £440,000?",
-  "answer": "It came with a paper trail. The forgers, the Greenhalgh family, matched it to a genuine 1892 sale catalogue listing Egyptian figures from a country house, and told a plausible family story around it. The document did the persuading. The statue had been carved in a garden shed in Bolton.",
+  "question": "Bolton Museum paid about £440,000 for an Egyptian statue carved in a garden shed. Which of these were genuine, and which fake?",
+  "answer": "Experts err both ways for one reason: they judge by what fits. The Amarna Princess fitted, because the Greenhalghs matched it to a genuine 1892 sale catalogue and a family story. Altamira did not fit the belief that early humans could not paint like that, so it was called a forgery for 22 years.",
   "move": "A genuine document can be attached to a false object.",
   "ask": "When someone shows me a real-looking document, have I checked it belongs to what they are selling?",
   "keywords": [
@@ -27,7 +27,51 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "BBC News, Garden shed forger, 2007",
+  "scene": {
+    "type": "sort",
+    "left": "Fake",
+    "right": "Genuine",
+    "tag": "Expert opinion",
+    "items": [
+      {
+        "text": "Amarna Princess",
+        "note": "An Egyptian statue bought by Bolton Museum in 2003.",
+        "pile": "left",
+        "verdict": "Carved in a Bolton garden shed by Shaun Greenhalgh."
+      },
+      {
+        "text": "Altamira",
+        "note": "Cave paintings found in Spain in 1879.",
+        "pile": "right",
+        "verdict": "Called a forgery until 1902, when the chief sceptic apologised in print."
+      },
+      {
+        "text": "Met warriors",
+        "note": "Huge Etruscan terracotta figures bought by the Met.",
+        "pile": "left",
+        "verdict": "Shown to be modern in 1961, after a forger's confession."
+      },
+      {
+        "text": "Platypus",
+        "note": "A pelt with a duck's bill, sent to London in 1799.",
+        "pile": "right",
+        "verdict": "The curator cut at it with scissors, looking for stitches."
+      },
+      {
+        "text": "Vinland Map",
+        "note": "A medieval map showing America before Columbus.",
+        "pile": "left",
+        "verdict": "Its ink holds a titanium compound first made in the 1920s."
+      },
+      {
+        "text": "Archaeopteryx",
+        "note": "A fossil half bird, half dinosaur.",
+        "pile": "right",
+        "verdict": "Called a fake in 1985; the museum's experts showed it was real."
+      }
+    ]
+  },
+  "source": "BBC News, 2007; Yale Beinecke Library, 2021",
   "source_kind": "news_archive",
   "reference": "BBC News, Garden shed art forger jailed, 16 November 2007",
   "written": "2026-10-03"

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does the bottom of a deep lake stay at about 4 °C all winter, even under ice?",
-  "answer": "Because water is densest at about 4 °C. As a lake cools in autumn, water at 4 °C sinks to the bottom; colder water stays on top and freezes, and the ice shields what lies beneath. Most liquids shrink as they freeze. Water's open ice crystal gives fish a 4 °C basement for the winter.",
+  "question": "As a lake cools towards freezing, does its water keep getting denser? Why does a deep lake's bottom stay at 4 °C all winter?",
+  "answer": "Because water is densest at about 4 °C. As a lake cools, 4 °C water sinks to the bottom; colder water stays on top and freezes there, and the ice shields what lies below. Most liquids shrink all the way to solid. Water's open ice crystal gives fish a 4 °C basement for the winter.",
   "move": "One odd property at the bottom can shape everything built above it.",
   "ask": "Which small quirk of mine quietly shapes everything I build on top of it?",
   "keywords": [
@@ -21,14 +21,51 @@
   "region": "none",
   "hook": "mechanism",
   "mood": "wonder",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Wetzel, Limnology, 2001",
+  "scene": {
+    "type": "draw",
+    "label": "Density of water, kg per m³",
+    "columns": [
+      "12°C",
+      "10°C",
+      "8°C",
+      "6°C",
+      "4°C",
+      "2°C",
+      "0°C"
+    ],
+    "values": [
+      999.5,
+      999.7,
+      999.85,
+      999.94,
+      999.97,
+      999.94,
+      999.84
+    ],
+    "given": 2,
+    "min": 999.3,
+    "max": 1000.1,
+    "decimals": 2,
+    "verdict": {
+      "under": "Lower than the truth, but the right turn: below 4 °C water gets lighter again.",
+      "near": "Right: water is densest at 4 °C, then lighter as it nears freezing.",
+      "over": "It turns: below 4 °C water grows lighter, so the coldest water floats on top."
+    },
+    "notes": [
+      {
+        "at": 4,
+        "text": "Densest at 4 °C"
+      }
+    ]
+  },
+  "source": "Kell, 1975; Wetzel, Limnology, 2001",
   "source_kind": "book",
-  "reference": "Wetzel, Limnology: Lake and River Ecosystems, 3rd ed., Academic Press, 2001",
+  "reference": "Kell, Density, thermal expansivity and compressibility of liquid water from 0 to 150 °C, Journal of Chemical and Engineering Data 20:97-105, 1975; Wetzel, Limnology: Lake and River Ecosystems, 3rd ed., Academic Press, 2001",
   "written": "2026-09-26"
 }

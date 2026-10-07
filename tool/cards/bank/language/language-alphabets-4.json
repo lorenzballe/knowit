@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How far back can alphabetical order, with A before B before G, be traced?",
-  "answer": "More than 3,000 years. Clay tablets from Ugarit, on the Syrian coast, list the letters of a 30-sign cuneiform alphabet in an order that opens much like the Phoenician and Hebrew one. The order outlived the scripts that carried it: a child reciting A, B, C follows a list pressed into Bronze Age clay.",
+  "question": "A, B, C feels like a classroom habit. How old do you think the order of the letters is?",
+  "answer": "Clay tablets from Ugarit, on the Syrian coast, list the 30 signs of a cuneiform alphabet in an order that opens much like the Phoenician and Hebrew one, from which Greek and Latin took theirs. The letters changed shape completely; the sequence barely moved. A child singing A, B, C recites Bronze Age clay.",
   "move": "An arbitrary order, once shared, can outlast everything it was for.",
   "ask": "What arbitrary habit of mine has outlived whatever it was for?",
   "keywords": [
@@ -26,8 +26,33 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": -2000,
+    "to": 2025,
+    "events": [
+      {
+        "label": "Ugarit's ABC tablet",
+        "year": -1250,
+        "note": "Letters were being listed in an order much like A, B, C over 3,000 years ago."
+      },
+      {
+        "label": "Rome founded",
+        "year": -753
+      },
+      {
+        "label": "Shakespeare born",
+        "year": 1564
+      },
+      {
+        "label": "The ABC song published",
+        "year": 1835
+      }
+    ]
+  },
   "source": "Healey, The Early Alphabet, 1990",
   "source_kind": "book",
   "reference": "Healey, The Early Alphabet, British Museum Publications, 1990",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

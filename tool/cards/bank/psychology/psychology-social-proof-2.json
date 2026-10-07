@@ -6,15 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did a sign saying many visitors steal petrified wood make theft worse than a plain request not to?",
-  "answer": "Because it told visitors that taking wood was normal. In Arizona's Petrified Forest, paths with a sign saying many past visitors had removed wood lost 7.92% of the marked pieces, against 1.67% with a sign simply asking people not to. A warning that stresses how common a wrong is can advertise it.",
+  "question": "A national park put up a sign to stop visitors taking petrified wood. Which persuasion lever does each of these pull?",
+  "answer": "The park sign is the one people misread. Written to shame thieves, it told visitors that taking wood was normal. In Cialdini's Petrified Forest test, paths with that sign lost 7.92% of marked pieces, against 1.67% with a plain request. A warning about how common a wrong is can advertise it.",
   "move": "Never advertise how many people are doing the thing you want stopped.",
   "ask": "When I complain that everyone does something, could I be making it seem more normal?",
   "keywords": [
-    "social norms",
-    "signs",
+    "social proof",
     "petrified forest",
-    "theft"
+    "reciprocity",
+    "scarcity",
+    "foot in the door"
   ],
   "era": "recent",
   "region": "americas",
@@ -26,8 +27,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "match",
+    "leftTitle": "The lever",
+    "rightTitle": "Where it's pulled",
+    "pairs": [
+      {
+        "left": "Social proof",
+        "right": "'Many past visitors have taken wood'",
+        "note": "Meant as a warning, read as permission: 7.9% of wood went, not 1.7%.",
+        "missed": true
+      },
+      {
+        "left": "Scarcity",
+        "right": "'Only 1 room left at this price'",
+        "note": "What looks rare looks better, so sellers can manufacture the rarity."
+      },
+      {
+        "left": "Reciprocity",
+        "right": "The free sample handed to you in the aisle",
+        "note": "A gift creates a small debt, and buying is the easiest way to repay it."
+      },
+      {
+        "left": "Commitment",
+        "right": "A tiny favour asked first, then a big one",
+        "note": "After one yes, a second yes keeps you consistent with yourself."
+      }
+    ]
+  },
   "source": "Cialdini, Current Directions in Psychological Science, 2003",
   "source_kind": "paper",
   "reference": "Cialdini, Crafting normative messages to protect the environment, Current Directions in Psychological Science, 2003",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

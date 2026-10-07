@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What did Britain's competition regulator find wrong with hotel sites' claims that only one room was left?",
-  "answer": "That they could mislead. In 2019 the Competition and Markets Authority found that such claims, along with counts of other people looking and countdowns on prices, could give a false impression of availability and rush bookings. Six large sites agreed to change them. The last room was sometimes only that site's last room.",
+  "question": "A hotel booking page, in the style Britain's regulator examined in 2019. What do the urgent lines really say?",
+  "answer": "Mostly how much they want you to hurry. In 2019 Britain's Competition and Markets Authority found claims like these could give a false impression of how scarce rooms were: a last room could be only that site's last room, and those looking might want other dates. Six large booking sites agreed to change.",
   "move": "Urgency claimed by the seller is a sales tool until proven otherwise.",
   "ask": "When a site tells me to hurry, what happens if I simply close it and come back tomorrow?",
   "keywords": [
@@ -26,8 +26,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Hotel booking site",
+    "ref": "Typical text",
+    "title": "Seafront hotel, 2 nights",
+    "body": "Only 1 room left. 14 people are looking at this hotel right now. Booked 9 times in the last 24 hours. This price is held for 10 minutes.",
+    "phrases": [
+      {
+        "text": "Only 1 room left",
+        "plain": "Our site's last room of this type",
+        "why": "The CMA found it could mean the last room this site had, not the last in the hotel.",
+        "catch": true
+      },
+      {
+        "text": "14 people are looking at this hotel",
+        "plain": "Others are browsing, perhaps for other dates",
+        "why": "Counts of other viewers can include people searching completely different nights."
+      },
+      {
+        "text": "This price is held for 10 minutes",
+        "plain": "We'd like you to decide before you compare",
+        "why": "A countdown makes checking elsewhere feel risky. Regulators count it as pressure selling."
+      }
+    ],
+    "ask": "One line can be true and still mislead. Which?",
+    "watch": "Urgency the seller creates is a sales tool. Ask what happens if you wait a day."
+  },
   "source": "Competition and Markets Authority, online hotel booking",
   "source_kind": "institution",
   "reference": "https://www.gov.uk/cma-cases/online-hotel-booking",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

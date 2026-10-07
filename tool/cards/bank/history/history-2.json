@@ -9,14 +9,15 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How do you date something from the last seventy years?",
-  "answer": "By the bomb. Atmospheric nuclear testing from 1955 to 1963 nearly doubled carbon-14 in the air, then it declined on a known curve. Anything alive during that window carries a datable signature, accurate to a year or two — used on forged paintings, wine and human remains.",
-  "move": "Nuclear testing accidentally left the world a precise clock.",
+  "question": "Four ways of telling how old something is, from a cathedral beam to a brain cell. Which clock dated which?",
+  "answer": "Bomb carbon is the one people miss. Nuclear tests between 1955 and 1963 nearly doubled the carbon-14 in the air, which then fell on a known curve. Anything that grew in those decades carries its year, which is how researchers measured the age of neurons in adult human brains.",
+  "move": "When there is no date written down, look for a clock inside the thing.",
   "ask": "What around me holds a hidden clue about its own past, if I looked closely?",
   "keywords": [
-    "carbon-14",
     "bomb pulse",
-    "nuclear tests",
+    "radiocarbon",
+    "tree rings",
+    "shroud of turin",
     "dating"
   ],
   "era": "twentieth",
@@ -29,7 +30,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Levin & Kromer, Radiocarbon, bomb-pulse dating",
+  "scene": {
+    "type": "match",
+    "leftTitle": "The clock",
+    "rightTitle": "What it dated",
+    "pairs": [
+      {
+        "left": "Bomb carbon",
+        "right": "Brain cells in living adults",
+        "note": "Tests in 1955 to 1963 spiked carbon-14; its fall dates any cell made since.",
+        "missed": true
+      },
+      {
+        "left": "Radiocarbon",
+        "right": "The Shroud of Turin: 1260 to 1390",
+        "note": "In 1988 three labs dated its linen to the Middle Ages."
+      },
+      {
+        "left": "Tree rings",
+        "right": "The year a roof beam's oak was felled",
+        "note": "Wide and narrow years leave a pattern that matches a master record."
+      },
+      {
+        "left": "A coin in the soil",
+        "right": "The earliest a floor could have been laid",
+        "note": "A coin can't be dropped before it was minted, but can lie for centuries."
+      }
+    ]
+  },
+  "source": "Levin & Kromer, Radiocarbon, 2004; Spalding et al., Cell, 2005",
   "source_kind": "paper",
-  "reference": "Levin & Kromer, The tropospheric 14CO2 level in mid-latitudes of the Northern Hemisphere (1959-2003), Radiocarbon, 2004"
+  "reference": "Levin & Kromer, The tropospheric 14CO2 level in mid-latitudes of the Northern Hemisphere (1959-2003), Radiocarbon, 2004",
+  "written": "2026-10-06"
 }

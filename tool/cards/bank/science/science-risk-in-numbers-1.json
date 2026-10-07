@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What does a one-in-a-million chance of dying look like in ordinary life?",
-  "answer": "About one micromort, the unit the decision scientist Ronald Howard coined for it. In Britain, driving about 400 km carries one; a skydive about eight; a general anaesthetic around ten. Putting every risk in one unit lets the frightening sit beside the everyday, and the frightening often looks smaller.",
+  "question": "Measured in micromorts, one-in-a-million chances of dying, which of these is the riskiest thing to do once?",
+  "answer": "The general anaesthetic, at about ten, then the skydive at about eight. Ronald Howard's unit puts every risk on one scale, so the frightening sits beside the routine. On Blastland and Spiegelhalter's British figures a marathon is close to a skydive, a scuba dive about five, and 400 km of driving one.",
   "move": "Put risks in the same unit before deciding which to fear.",
   "ask": "Which risk do I avoid out of fear while taking a bigger one daily without a thought?",
   "keywords": [
@@ -18,16 +18,47 @@
   ],
   "era": "timeless",
   "region": "europe",
-  "hook": "practical",
+  "hook": "misconception",
   "mood": "practical",
   "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
+  "figure": "bars",
   "source": "Blastland & Spiegelhalter, The Norm Chronicles, 2013",
   "source_kind": "book",
   "reference": "Blastland & Spiegelhalter, The Norm Chronicles: Stories and Numbers About Danger, Profile Books, 2013",
-  "written": "2026-09-26"
+  "written": "2026-10-06",
+  "scene": {
+    "type": "rank",
+    "quantity": "Micromorts, each time",
+    "most": "Riskiest",
+    "items": [
+      {
+        "label": "One skydive",
+        "value": 8,
+        "note": "About eight: the jump that feels reckless loses to a routine anaesthetic."
+      },
+      {
+        "label": "Driving 400 km",
+        "value": 1,
+        "note": "One. A long day's drive is the safest thing here."
+      },
+      {
+        "label": "General anaesthetic",
+        "value": 10,
+        "note": "About ten, more than a skydive, though nobody calls it daring."
+      },
+      {
+        "label": "Running a marathon",
+        "value": 7,
+        "note": "About seven: nearly a skydive, run by people who would never jump."
+      },
+      {
+        "label": "One scuba dive",
+        "value": 5
+      }
+    ]
+  }
 }

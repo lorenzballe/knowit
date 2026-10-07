@@ -2975,6 +2975,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Show all'**
   String get showAllSteps;
+
+  /// Label inside an interactive card scene.
+  ///
+  /// In en, this message translates to:
+  /// **'LOCK IT IN'**
+  String get sceneLockIn;
+
+  /// Label inside an interactive card scene.
+  ///
+  /// In en, this message translates to:
+  /// **'YOU'**
+  String get sceneYou;
+
+  /// Label inside an interactive card scene.
+  ///
+  /// In en, this message translates to:
+  /// **'TRUTH'**
+  String get sceneTruth;
+
+  /// Label inside an interactive card scene.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get sceneTryAgain;
+
+  /// Label inside an interactive card scene.
+  ///
+  /// In en, this message translates to:
+  /// **'Draw your guess with your finger'**
+  String get sceneDrawHint;
+
+  /// Label inside an interactive card scene.
+  ///
+  /// In en, this message translates to:
+  /// **'Press and hold'**
+  String get sceneHoldHint;
+
+  /// Label inside an interactive card scene.
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe or tap'**
+  String get sceneSwipeHint;
+
+  /// Label inside an interactive card scene.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap your pick'**
+  String get sceneTapToPick;
+
+  /// Label inside an interactive card scene.
+  ///
+  /// In en, this message translates to:
+  /// **'Show me'**
+  String get sceneShowMe;
+
+  /// Label inside an interactive card scene.
+  ///
+  /// In en, this message translates to:
+  /// **'Your guess'**
+  String get sceneYourGuess;
+
+  /// A score inside a card scene, e.g. 4 of 7.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} of {m}'**
+  String sceneNOfM(int n, int m);
 }
 
 class _AppLocalizationsDelegate

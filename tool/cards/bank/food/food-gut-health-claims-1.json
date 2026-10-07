@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "After a course of antibiotics, what did a probiotic do to volunteers' recovering gut bacteria?",
-  "answer": "It held them back. In a 2018 Weizmann Institute study, volunteers given an 11-strain probiotic after antibiotics took months longer to regain their usual gut community than those left alone, as the probiotic strains occupied the space. Volunteers given back their own gut bacteria, frozen before treatment, recovered within days.",
+  "question": "A probiotic drink sold to people finishing antibiotics, worded the way many are. What did a 2018 trial find it did?",
+  "answer": "It held recovery back. At the Weizmann Institute, volunteers given an 11-strain probiotic after antibiotics took months longer to regain their usual gut bacteria than those left alone, as the probiotic strains took the space. Volunteers given back their own bacteria, frozen before treatment, recovered within days.",
   "move": "Filling a gap fast can block what would have grown back.",
   "ask": "Is there a gap in my life I rushed to fill that might have healed on its own?",
   "keywords": [
@@ -26,8 +26,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Probiotic drink",
+    "ref": "Typical text",
+    "title": "After antibiotics",
+    "body": "Billions of live cultures to help restore your gut's natural balance after antibiotics. Clinically studied strains. One bottle a day.",
+    "phrases": [
+      {
+        "text": "Billions of live cultures",
+        "plain": "Billions of bacteria, many just passing through,",
+        "why": "Many people's guts shed probiotic strains. Arriving is not moving in."
+      },
+      {
+        "text": "help restore your gut's natural balance",
+        "plain": "slow your own gut bacteria's return",
+        "why": "In a 2018 trial, a probiotic after antibiotics delayed the usual gut community's return for months.",
+        "catch": true
+      },
+      {
+        "text": "Clinically studied strains",
+        "plain": "strains someone has studied, for something",
+        "why": "Studied is not proven. It says nothing about what was tested, or what was found."
+      }
+    ],
+    "ask": "One promise here did the opposite in a 2018 trial. Which?",
+    "watch": "When a product promises to restore something, ask what happens if you do nothing."
+  },
   "source": "Suez et al., Cell, 2018",
   "source_kind": "paper",
   "reference": "Suez, Zmora, Zilberman-Schapira et al., Post-antibiotic gut mucosal microbiome reconstitution is impaired by probiotics and improved by autologous FMT, Cell, 2018",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

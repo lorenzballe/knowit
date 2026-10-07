@@ -2060,4 +2060,39 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get showAllSteps => 'Показать всё';
+
+  @override
+  String get sceneLockIn => 'ГОТОВО';
+
+  @override
+  String get sceneYou => 'ВЫ';
+
+  @override
+  String get sceneTruth => 'ИСТИНА';
+
+  @override
+  String get sceneTryAgain => 'Ещё раз';
+
+  @override
+  String get sceneDrawHint => 'Нарисуйте догадку пальцем';
+
+  @override
+  String get sceneHoldHint => 'Нажмите и держите';
+
+  @override
+  String get sceneSwipeHint => 'Смахните или нажмите';
+
+  @override
+  String get sceneTapToPick => 'Нажмите свой вариант';
+
+  @override
+  String get sceneShowMe => 'Покажите';
+
+  @override
+  String get sceneYourGuess => 'Ваша догадка';
+
+  @override
+  String sceneNOfM(int n, int m) {
+    return '$n из $m';
+  }
 }

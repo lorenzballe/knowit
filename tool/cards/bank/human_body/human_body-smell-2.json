@@ -6,10 +6,10 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Which cells did the COVID-19 virus attack to take away people's sense of smell?",
-  "answer": "The neurons' neighbours. Smell neurons lack ACE2, the protein the virus uses to enter cells, but the support cells wrapped around them in the nasal lining carry it. When those sustentacular cells die, the neurons lose their upkeep and fall silent. Because that layer regrows, most people's smell came back within weeks or months.",
-  "move": "When something fails, check what keeps it running, not only the part itself.",
-  "ask": "When something in my life stops working, have I looked at what supports it?",
+  "question": "Covid took away millions of people's sense of smell overnight, often with a clear nose. Which cells did it attack?",
+  "answer": "The support cells. They wrap the smell neurons, keep them working, and carry ACE2, the virus's way in. When they die, the healthy neurons fall silent. The layer regrows, so most people's smell returned within weeks or months.",
+  "move": "When a part fails, check what keeps it running, not just the part.",
+  "ask": "When something stops working, what keeps it running?",
   "keywords": [
     "covid-19",
     "anosmia",
@@ -19,7 +19,7 @@
   ],
   "era": "recent",
   "region": "world",
-  "hook": "mechanism",
+  "hook": "puzzle",
   "mood": "sober",
   "numeracy": 0,
   "abstraction": "mixed",
@@ -27,8 +27,44 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Blocked nose",
+      "Smell neurons",
+      "Support cells"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Smell vanishes suddenly, often while air flows freely through the nose.",
+        "tag": "Nose not blocked",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "For most people it returns within weeks; lost brain cells rarely come back.",
+        "tag": "Back within weeks",
+        "rulesOut": []
+      },
+      {
+        "text": "Smell neurons lack ACE2, the protein the virus uses to get into cells.",
+        "tag": "Neurons lack the door",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "The support cells wrapped around those neurons carry plenty of it.",
+        "tag": "Neighbours have the door",
+        "rulesOut": []
+      }
+    ],
+    "why": "The virus can only enter cells with ACE2. Smell neurons have none; the cells around them do."
+  },
   "source": "Brann et al., Science Advances, 2020",
   "source_kind": "paper",
   "reference": "Brann, Tsukahara, Weinreb et al., Non-neuronal expression of SARS-CoV-2 entry genes in the olfactory system suggests mechanisms underlying COVID-19-associated anosmia, Science Advances, 2020",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

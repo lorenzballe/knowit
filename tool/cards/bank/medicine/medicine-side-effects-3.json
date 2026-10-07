@@ -6,28 +6,58 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why is the side-effect list in a medicine leaflet longer than the list of what the drug really causes?",
-  "answer": "Because many entries are things people reported during trials, not things shown to be caused by the drug. People on dummy pills report headaches, tiredness and nausea too, and leaflets rarely print that placebo rate beside the drug's. A list of everything that happened gets read as everything the pill does.",
+  "question": "Statin leaflets list muscle pain. In blinded trials, how often did people taking a dummy pill report it too?",
+  "answer": "Almost as often. Pooling 19 blinded trials with 123,940 people, Oxford's Cholesterol Treatment Trialists found muscle pain or weakness in 27.1% on a statin and 26.6% on placebo: about 1 report in 15 was the drug's doing. A leaflet lists what people reported, not what the pill caused.",
   "move": "Something that happened after is not the same as something that was caused.",
   "ask": "Which of my aches have I blamed on a new thing in my life, without asking whether they came anyway?",
   "keywords": [
-    "patient leaflets",
+    "statins",
     "side effects",
-    "adverse events",
-    "placebo"
+    "muscle pain",
+    "placebo",
+    "leaflets"
   ],
   "era": "recent",
   "region": "europe",
   "hook": "misconception",
   "mood": "practical",
-  "numeracy": 0,
+  "numeracy": 2,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Academy of Medical Sciences, report, 2017",
-  "source_kind": "institution",
-  "reference": "Academy of Medical Sciences, Enhancing the use of scientific evidence to judge the potential benefits and harms of medicines, 2017",
-  "written": "2026-10-03"
+  "source": "Cholesterol Treatment Trialists, The Lancet, 2022",
+  "source_kind": "paper",
+  "reference": "Cholesterol Treatment Trialists' Collaboration, Effect of statin therapy on muscle symptoms: an individual participant data meta-analysis of large-scale, randomised, double-blind trials, The Lancet, 2022",
+  "written": "2026-10-03",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated patients",
+    "hit": "Reported muscle pain",
+    "groups": [
+      {
+        "label": "Placebo",
+        "rate": 0.266
+      },
+      {
+        "label": "Statin",
+        "rate": 0.271
+      }
+    ],
+    "steps": [
+      40,
+      400,
+      4000,
+      123940
+    ],
+    "seed": 94,
+    "button": "Add patients",
+    "notes": [
+      "20 each: muscle pain in 15% on placebo, 55% on the statin. Chance did that.",
+      "200 each: 24.5% against 31%. A side effect anyone would list.",
+      "4,000 patients: 25.5% against 26.6%. The gap is shrinking.",
+      "123,940, as in 19 trials: 26.6% against 27.1%. Nearly all was there anyway."
+    ]
+  }
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did a nine-year-old test whether touch therapists could really feel a human energy field?",
-  "answer": "She hid behind a screen, held her hand over one of theirs, chosen by a coin toss, and asked which. Emily Rosa ran 280 trials with 21 practitioners; they named the right hand 44% of the time, worse than the 50% of pure guessing. Published in JAMA in 1998, she became its youngest author.",
+  "question": "Touch therapists said they could feel a hand held above theirs. A nine-year-old tested them by coin toss. What would guessing score?",
+  "answer": "About what they scored. In Emily Rosa's test, 21 practitioners named the right hand in 123 of 280 trials, 44%, below the 50% of guessing. Ten tries can flatter anyone; 280 leave luck no room. Her paper ran in JAMA in 1998, making her its youngest author.",
   "move": "Ask what result would show a claim false, then go and look.",
   "ask": "Which of my beliefs have I never put to a simple test I could easily run?",
   "keywords": [
@@ -29,5 +29,25 @@
   "source": "Rosa et al., JAMA, 1998",
   "source_kind": "paper",
   "reference": "Rosa, Rosa, Sarner & Barrett, A close look at therapeutic touch, JAMA 279:1005–1010, 1998",
-  "written": "2026-09-26"
+  "written": "2026-09-26",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated guesses",
+    "hit": "Named the right hand",
+    "rate": 0.5,
+    "steps": [
+      10,
+      280,
+      2800,
+      28000
+    ],
+    "seed": 7576,
+    "button": "Guess more",
+    "notes": [
+      "One therapist's 10 tries: 8 right, 80%. Pure guessing, looking like a gift.",
+      "280 guesses, as many as Emily Rosa ran: 44%. Her therapists scored 44% too.",
+      "2,800 guesses: 50%. Luck has nowhere left to hide.",
+      "28,000 guesses: 50%. A coin can't feel a hand either."
+    ]
+  }
 }

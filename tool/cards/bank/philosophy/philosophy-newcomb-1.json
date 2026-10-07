@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "When Robert Nozick put the two-box predictor puzzle to friends and students, what did he find?",
-  "answer": "That nearly everyone found the answer perfectly obvious, and they split almost evenly between the two answers, each half thinking the other silly. Nozick published the puzzle in 1969, crediting the physicist William Newcomb. Surveys of philosophers still show the split. Feeling certain told nobody which side was right.",
+  "question": "Box A holds $1,000. Box B holds $1 million only if a near-perfect predictor foresaw you taking B alone. Which do you take?",
+  "answer": "Nozick found almost everyone thought the answer obvious, and they split nearly in half, each side thinking the other silly. Both arguments hold on their own terms: one counts who walks away rich, the other notes that nothing you do now can change what is in the boxes. Feeling certain decided nothing.",
   "move": "When an answer feels obvious, check how many careful people find the opposite obvious.",
   "ask": "On which question am I sure the other side is silly, though thoughtful people hold it?",
   "keywords": [
@@ -21,14 +21,35 @@
   "region": "none",
   "hook": "paradox",
   "mood": "playful",
-  "numeracy": 0,
+  "numeracy": 1,
   "abstraction": "abstract",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Nozick, Newcomb's Problem, 1969",
+  "scene": {
+    "type": "poll",
+    "who": "31,000 Guardian readers, Bellos 2016",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "Only box B",
+            "share": 54,
+            "mirror": "Like 54% of readers. You trust the track record: one-boxers walk off rich, almost every time."
+          },
+          {
+            "label": "Both boxes",
+            "share": 46,
+            "mirror": "Like 46% of readers, and most philosophers who pick a side. The money is there, or not."
+          }
+        ]
+      }
+    ],
+    "why": "One rule says do what the winners do; another says the boxes are already filled, so take both."
+  },
+  "source": "Nozick, 1969; Bellos, The Guardian, 2016",
   "source_kind": "book",
-  "reference": "Nozick, Newcomb's Problem and Two Principles of Choice, in Rescher (ed.), Essays in Honor of Carl G. Hempel, Reidel, 1969",
-  "written": "2026-10-03"
+  "reference": "Nozick, Newcomb's Problem and Two Principles of Choice, in Rescher (ed.), Essays in Honor of Carl G. Hempel, Reidel, 1969; Alex Bellos, Newcomb's problem poll, The Guardian, 2016",
+  "written": "2026-10-06"
 }

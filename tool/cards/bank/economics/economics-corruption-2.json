@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What did unpaid parking tickets of United Nations diplomats in New York reveal about corruption?",
-  "answer": "That habits travel with people, and enforcement still beats habits. Immune from fines, diplomats from countries rated low on corruption, such as Norway, ran up almost no unpaid tickets, while those from high-corruption countries ran up many. When New York began stripping diplomatic plates for unpaid tickets in 2002, violations fell steeply across the board.",
+  "question": "Diplomats in New York could ignore parking fines. Who did, and what stopped them?",
+  "answer": "Culture decided who misbehaved when nothing was at stake: a diplomat's home-country corruption score predicted their unpaid tickets thousands of kilometres from home. Cost decided how much anyone misbehaved once something was. Both are true, and they answer different questions: who cuts corners, and whether corners get cut at all.",
   "move": "Norms shape behaviour when nobody is watching; penalties shape it when someone is.",
   "ask": "Which of my habits only hold because someone is checking, and which hold anyway?",
   "keywords": [
@@ -27,8 +27,52 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "New York, 1997 to 2002",
+        "glyph": "car",
+        "line": "UN diplomats can't be made to pay parking fines."
+      },
+      {
+        "fact": "Low-corruption countries",
+        "glyph": "check",
+        "line": "Diplomats from Norway, Sweden or Japan run up almost none."
+      },
+      {
+        "fact": "High-corruption countries",
+        "glyph": "rise",
+        "line": "Diplomats from Kuwait, Egypt or Chad run up over 100 each."
+      },
+      {
+        "fact": "November 2002",
+        "glyph": "ban",
+        "line": "New York starts taking diplomatic plates for unpaid tickets."
+      }
+    ],
+    "ask": "What happens to unpaid tickets?",
+    "options": [
+      {
+        "label": "They barely move"
+      },
+      {
+        "label": "They fall by a third"
+      },
+      {
+        "label": "They almost stop"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "Fisman and Miguel, 2007",
+      "glyph": "fall",
+      "line": "They almost stopped, from every kind of country."
+    },
+    "why": "Habits rule when breaking a rule is free. A real cost overrides them, for everyone."
+  },
   "source": "Fisman and Miguel, Journal of Political Economy, 2007",
   "source_kind": "paper",
   "reference": "Fisman & Miguel, Corruption, Norms, and Legal Enforcement: Evidence from Diplomatic Parking Tickets, Journal of Political Economy, 2007",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

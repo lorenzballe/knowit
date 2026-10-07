@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "In daily fantasy baseball in 2015, who took almost all of the profits?",
-  "answer": "About 1.3% of players, who took 91% of the profits in McKinsey's analysis of the first half of that season. They were high-volume entrants using data and software to submit many lineups; the top 11 each paid about $2 million in entry fees. For most casual players, the game was a slow transfer to them.",
+  "question": "An advert for daily fantasy baseball, in the style of 2015. Who usually took the prize money?",
+  "answer": "A tiny group of professionals. In McKinsey's analysis of the first half of the 2015 season, about 1.3% of players took 91% of the profits. They used data and software to enter many lineups; the top 11 each paid about $2 million in entry fees. For casual players, skill was the reason they lost.",
   "move": "Before joining a game, find out who usually wins it.",
   "ask": "In which game I play, at work or for money, do a few experts quietly take most of the winnings?",
   "keywords": [
@@ -27,8 +27,35 @@
   "mature": true,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Fantasy sports app",
+    "ref": "Typical text",
+    "title": "Win cash tonight",
+    "body": "Pick your team tonight and win cash prizes. It's a game of skill, so anyone can win. Thousands of winners every day.",
+    "phrases": [
+      {
+        "text": "a game of skill",
+        "plain": "a game the most skilled win, again and again",
+        "why": "Skill means the edge is real, and it goes to whoever has data, software and volume.",
+        "catch": true
+      },
+      {
+        "text": "anyone can win",
+        "plain": "anyone can win, once in a while",
+        "why": "Possible is not likely. Small wins now and then keep casual players paying in."
+      },
+      {
+        "text": "Thousands of winners every day",
+        "plain": "Thousands of small wins; the profit goes to a few",
+        "why": "McKinsey found 1.3% of players took 91% of the profits in early 2015."
+      }
+    ],
+    "ask": "One phrase is true and is why most players lose. Which?",
+    "watch": "In a game of skill, find out who the skilled players are before you sit down."
+  },
   "source": "McKinsey, Miller & Singer, 2015",
   "source_kind": "company",
   "reference": "https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/for-daily-fantasy-sports-operators-the-curse-of-too-much-skill",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

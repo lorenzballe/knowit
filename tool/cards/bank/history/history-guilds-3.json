@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Who still tests the coins of the Royal Mint in a court of law each year?",
-  "answer": "A medieval guild. At the Trial of the Pyx, a jury from the Goldsmiths' Company, sitting as a formal court, counts, weighs and tests the metal of coins set aside from every batch the Mint struck. Coins have been judged like this since at least 1282; since 1871 the trial sits in Goldsmiths' Hall.",
+  "question": "A court of goldsmiths still tests the Royal Mint's coins, as it has since 1282. Which of these medieval English customs still happen?",
+  "answer": "Customs survive when they still do a job, or cost nothing to keep. The Trial of the Pyx still checks that coins hold the metal the law promises, so a goldsmiths' jury sits as a court and assays them. Trial by battle did no job anyone wanted; Parliament ended it after its last claim.",
   "move": "An institution outlives its era when it keeps a job everyone needs done.",
   "ask": "What do I rely on that lasts simply because it does a job everyone needs?",
   "keywords": [
@@ -27,6 +27,56 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Ended",
+    "right": "Still held",
+    "tag": "Old England",
+    "items": [
+      {
+        "text": "Trial of the Pyx",
+        "note": "A jury tests sample coins from the Mint.",
+        "pile": "right",
+        "verdict": "Goldsmiths still weigh and assay the coins in a formal court."
+      },
+      {
+        "text": "Trial by battle",
+        "note": "Settling a charge by single combat.",
+        "pile": "left",
+        "verdict": "Claimed by a murder suspect in 1818, abolished in 1819."
+      },
+      {
+        "text": "Swan Upping",
+        "note": "Counting the Thames swans each July.",
+        "pile": "right",
+        "verdict": "Royal and livery company boats still round up cygnets every year."
+      },
+      {
+        "text": "The pillory",
+        "note": "Locked in the stocks for the crowd.",
+        "pile": "left",
+        "verdict": "Last used in 1830, abolished in 1837."
+      },
+      {
+        "text": "Quit Rents",
+        "note": "The City pays rent in horseshoes and nails.",
+        "pile": "right",
+        "verdict": "Six horseshoes and 61 nails, for a forge first let in 1235."
+      },
+      {
+        "text": "Neck verse",
+        "note": "Benefit of clergy: read a Bible verse, escape the noose.",
+        "pile": "left",
+        "verdict": "Abolished in 1827."
+      },
+      {
+        "text": "Doggett's race",
+        "note": "Young Thames watermen race for a red coat.",
+        "pile": "right",
+        "verdict": "Rowed every year since 1715, the oldest such race in the world."
+      }
+    ]
+  },
   "source": "The Goldsmiths' Company, Trial of the Pyx",
   "source_kind": "institution",
   "reference": "https://www.thegoldsmiths.co.uk/the-trial-of-the-pyx",

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why can a leg muscle be held in one long contraction, but heart muscle cannot?",
-  "answer": "Its impulse is too long. A heart cell's impulse lasts about 250 milliseconds, nearly as long as the squeeze it triggers, and it cannot fire again until that ends, so each beat must ease off before the next. A skeletal muscle's impulse lasts about 2 milliseconds, so rapid impulses fuse into one sustained pull.",
+  "question": "Each heartbeat starts with an electrical impulse racing through the heart's muscle cells. How long does one cell's impulse last?",
+  "answer": "About a quarter of a second, against 1 to 5 milliseconds in a leg muscle. A heart cell cannot fire again until its impulse ends, and by then its squeeze is easing, so beats never pile up into a cramp. A leg muscle's impulses are so short that rapid ones fuse into one long pull.",
   "move": "A built-in pause can be what keeps a system working.",
   "ask": "Where do I need to build in rest so I can keep going?",
   "keywords": [
@@ -29,5 +29,19 @@
   "source": "Hall & Hall, Guyton and Hall Physiology, 2021",
   "source_kind": "book",
   "reference": "Hall & Hall, Guyton and Hall Textbook of Medical Physiology, 14th edition, Elsevier, 2021",
-  "written": "2026-09-26"
+  "written": "2026-10-06",
+  "scene": {
+    "type": "hold",
+    "what": "One heart-cell impulse",
+    "seconds": 0.25,
+    "low": 0.2,
+    "high": 0.3,
+    "display": "ms",
+    "comparisons": [
+      {
+        "label": "A leg-muscle impulse",
+        "seconds": 0.003
+      }
+    ]
+  }
 }

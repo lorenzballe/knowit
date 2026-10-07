@@ -6,16 +6,16 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does pouring bleach into a toilet already dosed with an acidic cleaner fill the room with gas?",
-  "answer": "Because acid turns bleach into chlorine gas. Bleach is sodium hypochlorite, kept stable by being strongly alkaline; lower its pH with an acid toilet or limescale cleaner and the hypochlorite gives up chlorine. The gas attacks the moist lining of eyes and lungs, forming acid there: the same chemistry, now inside a throat.",
+  "question": "Four pairs of household cleaners that people combine for extra power. What does each mixture really produce?",
+  "answer": "Vinegar and baking soda is the one people miss: the fizz looks like cleaning power, but it is an acid neutralising a base. What is left is mostly water with a little sodium acetate, weaker than either alone. The bleach mixtures are the reverse: each part safe, the pair dangerous.",
   "move": "Check what two safe things become together before combining them.",
   "ask": "Which two habits or products do I combine without asking what they do to each other?",
   "keywords": [
     "bleach",
     "chlorine gas",
-    "toilet cleaner",
-    "hypochlorite",
-    "acids"
+    "chloramine",
+    "baking soda",
+    "vinegar"
   ],
   "era": "timeless",
   "region": "none",
@@ -27,8 +27,36 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "CDC, Facts About Chlorine",
+  "scene": {
+    "type": "match",
+    "leftTitle": "Mixed",
+    "rightTitle": "What you get",
+    "pairs": [
+      {
+        "left": "Bleach + acid cleaner",
+        "right": "Chlorine gas that burns eyes and lungs",
+        "note": "Acid lowers bleach's pH, and the hypochlorite gives up its chlorine."
+      },
+      {
+        "left": "Bleach + ammonia",
+        "right": "Choking chloramine vapours",
+        "note": "Many glass cleaners hold ammonia. With bleach it makes chloramines."
+      },
+      {
+        "left": "Bleach + alcohol",
+        "right": "Chloroform, among other toxic things",
+        "note": "Rubbing alcohol and bleach react to make chloroform."
+      },
+      {
+        "left": "Vinegar + soda",
+        "right": "Salty water and fizz: they cancel out",
+        "note": "Acid meets base. The bubbles are carbon dioxide, not cleaning.",
+        "missed": true
+      }
+    ]
+  },
+  "source": "CDC, Facts About Chlorine; NHS, bleach safety",
   "source_kind": "institution",
   "reference": "https://emergency.cdc.gov/agent/chlorine/basics/facts.asp",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

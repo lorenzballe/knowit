@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What brought down the printed Encyclopaedia Britannica's sales in the 1990s, years before Wikipedia existed?",
-  "answer": "A cheap CD-ROM. Britannica's sales peaked in 1990, with sets sold door to door for well over $1,000; Microsoft's Encarta cost a small fraction of that or came free with a new PC. Parents had bought the books partly to feel they were helping their children; a computer now did that.",
+  "question": "When did the printed Encyclopaedia Britannica sell best, and what arrived before Wikipedia to end that?",
+  "answer": "A cheap CD-ROM did the damage. Sets sold door to door for well over $1,000; Microsoft's Encarta cost a fraction of that or came free with a new PC. Parents had bought the volumes partly to feel they were helping their children's schooling, and now a computer did that job.",
   "move": "Find the job a product does for its buyers, and the real rival appears.",
   "ask": "What job does my work really do for people, and what cheaper thing could do it instead?",
   "keywords": [
@@ -25,9 +25,34 @@
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
-  "source": "Evans and Wurster, Blown to Bits, 2000",
+  "figure": "timeline",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1980,
+    "to": 2015,
+    "events": [
+      {
+        "label": "Print sales peak",
+        "year": 1990,
+        "note": "Sales peaked in 1990 and fell with Encarta, eight years before Wikipedia."
+      },
+      {
+        "label": "Encarta CD-ROM launches",
+        "year": 1993
+      },
+      {
+        "label": "Wikipedia launches",
+        "year": 2001
+      },
+      {
+        "label": "Last printed edition",
+        "year": 2010
+      }
+    ]
+  },
+  "source": "Evans & Wurster, Blown to Bits, 2000",
   "source_kind": "book",
   "reference": "Philip Evans and Thomas S. Wurster, Blown to Bits, Harvard Business School Press, 2000",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

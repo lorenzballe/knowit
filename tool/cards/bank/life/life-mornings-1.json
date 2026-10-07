@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do so many people feel groggy on Monday morning even after a restful weekend?",
-  "answer": "Because the weekend moved their body clock. Sleeping and waking later on free days shifts the clock later, and Monday's alarm then rings in its biological night. Roenneberg's team called the gap between free-day and workday sleep social jetlag, and found most people carry at least an hour of it.",
+  "question": "Why do so many people feel groggy on Monday morning, even after a restful weekend?",
+  "answer": "Because the weekend moved your clock. Roenneberg's team called the gap between free-day and workday sleep timing social jetlag, and found most people carry at least an hour of it. Lie-ins are not the problem; their timing is. Rising near the usual hour on Sunday and getting morning light softens Monday.",
   "move": "Keep the timing of a rhythm steady; swings cost more than short nights.",
   "ask": "How different are my weekend and weekday sleep times, and is Monday morning paying for the gap?",
   "keywords": [
@@ -27,6 +27,37 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "Monday morning feels awful, even after a lazy weekend."
+    },
+    "levels": [
+      {
+        "text": "At the weekend you slept and woke later than on weekdays."
+      },
+      {
+        "text": "Late waking and late light shift the body clock later."
+      },
+      {
+        "text": "So Monday's alarm rings while your clock still says night."
+      },
+      {
+        "text": "A weekend is a flight a time zone west, then back.",
+        "figure": "1 h+",
+        "unit": "weekly jet lag, most of us"
+      }
+    ],
+    "guess": {
+      "options": [
+        "You slept too much",
+        "Dread of the week ahead",
+        "Your body clock moved"
+      ],
+      "answer": 2
+    }
+  },
   "source": "Roenneberg and colleagues, Current Biology, 2012",
   "source_kind": "paper",
   "reference": "Roenneberg, Allebrandt, Merrow and Vetter, Social Jetlag and Obesity, Current Biology, 2012",

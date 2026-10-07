@@ -59,3 +59,5 @@ tool/rules/package-lock.json
 .env
 # Card camera output (tool/card_shots.dart): looked at, not kept
 tool/shots/cards/
+tool/shots/scenes/
+tool/shots/draw/

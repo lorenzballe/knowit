@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did film-makers keep paying to use the song Happy Birthday until a US court ruling in 2015?",
-  "answer": "Because Warner/Chappell claimed the copyright and charged for it, collecting about $2 million a year. In 2015 Judge George King ruled that the 1935 registration Warner relied on covered only certain piano arrangements, not the lyrics. Warner settled for $14 million. Decades of fees had rested on one unexamined filing.",
+  "question": "Until 2015 Warner/Chappell charged film-makers and advertisers to use Happy Birthday. How much did the song bring in each year?",
+  "answer": "By some estimates about $2 million a year. Then in 2015 Judge George King ruled that the 1935 registration Warner relied on covered only certain piano arrangements, not the lyrics. Warner settled for $14 million and the song entered the public domain. Decades of fees had rested on one unexamined filing.",
   "move": "Before paying for a right, ask to see the paper that proves it.",
   "ask": "What am I paying for or obeying only because someone confidently claims they own it?",
   "keywords": [
@@ -18,7 +18,7 @@
   ],
   "era": "recent",
   "region": "americas",
-  "hook": "story",
+  "hook": "number",
   "mood": "playful",
   "numeracy": 2,
   "abstraction": "concrete",
@@ -26,8 +26,39 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "count",
+    "prefix": "$",
+    "unit": "a year, for one short song",
+    "answer": 2000000,
+    "each": 1000,
+    "eachLabel": "1 dot = $1,000",
+    "compare": "Settled in 2016 for $14 million",
+    "options": [
+      {
+        "label": "About $20,000",
+        "value": 20000,
+        "note": "Two zeros short. Every film, show or ad that sang it paid a licence."
+      },
+      {
+        "label": "About $200,000",
+        "value": 200000,
+        "note": "One zero short. By some estimates the fees ran to $2 million a year."
+      },
+      {
+        "label": "$2 million",
+        "value": 2000000,
+        "note": "Right: by some estimates about $2 million a year, for decades."
+      },
+      {
+        "label": "$20 million",
+        "value": 20000000,
+        "note": "One zero too many. All the refunds together came to $14 million."
+      }
+    ]
+  },
   "source": "Marya v. Warner/Chappell Music, 2015",
   "source_kind": "primary_document",
   "reference": "Marya v. Warner/Chappell Music, Inc., US District Court for the Central District of California, 22 September 2015",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

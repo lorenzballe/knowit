@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did Northern Rock's savers queue for their money in 2007 when their deposits were insured?",
-  "answer": "Because the insurance left them holding part of the loss. Britain's scheme then covered all of the first £2,000 but only 90% of the next £33,000, and payouts could take months. For anyone with savings, running was rational. The queues stopped only when the Chancellor promised to guarantee every deposit, whole.",
+  "question": "Northern Rock's savers in 2007 had been told their money was protected. Why did they queue for it anyway?",
+  "answer": "Because protected meant mostly. Someone with £35,000 saved could get back £31,700, and only after months of paperwork. With a rumour in the air, leaving first cost nothing and waiting might cost thousands. The queues stopped only when the Chancellor promised to guarantee every deposit, whole. Britain soon dropped the 10% cut.",
   "move": "A guarantee with a gap in it invites people to race for the gap.",
   "ask": "Where is there a gap in a promise I rely on that could make everyone run for it?",
   "keywords": [
@@ -27,8 +27,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Deposit protection",
+    "ref": "UK rules, 2007",
+    "title": "Your savings are protected",
+    "body": "Deposits are covered by the Financial Services Compensation Scheme, up to a maximum of £35,000 per person. The Scheme pays 100% of the first £2,000 and 90% of the next £33,000.",
+    "phrases": [
+      {
+        "text": "covered",
+        "plain": "partly covered",
+        "why": "Covered sounds total. Here it meant a share of the loss stayed with the saver."
+      },
+      {
+        "text": "up to a maximum of £35,000",
+        "plain": "at most £31,700 back on £35,000",
+        "why": "£2,000 in full plus 90% of £33,000. The big number is a ceiling nobody reaches."
+      },
+      {
+        "text": "90% of the next £33,000",
+        "plain": "you lose £1 in every £10 above £2,000",
+        "why": "The saver shares the loss, so even a rumour makes getting out first the rational move.",
+        "catch": true
+      }
+    ],
+    "ask": "One phrase made running to the bank sensible. Which?",
+    "watch": "In any guarantee, find the gap. If there is one, expect a race for it."
+  },
   "source": "House of Commons Treasury Committee, 2008",
   "source_kind": "primary_document",
   "reference": "House of Commons Treasury Committee, The Run on the Rock, Fifth Report of Session 2007-08, HC 56, 2008",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

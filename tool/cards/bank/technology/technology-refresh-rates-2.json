@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why could a 60 Hz tube television show motion more sharply than a 60 Hz flat screen?",
-  "answer": "Because the tube flashed and the flat screen holds. A tube's phosphor glowed for a millisecond or two, then went dark; an LCD or OLED keeps each frame lit for the full 16.7 ms. Eyes tracking a moving object slide across that held image, smearing it. Makers now insert black frames to imitate the flash.",
+  "question": "A 60 Hz flat screen, like an old 60 Hz tube TV, shows 60 frames a second. How long is each frame lit?",
+  "answer": "The full 16.7 ms, until the next frame replaces it; a tube's phosphor flashed for a millisecond or two, then went dark. An eye following a moving object slides across a held image and smears it, while brief flashes stay sharp. Makers now slip in black frames to imitate the tube's flash.",
   "move": "What stays still while you move smears; brief glimpses stay sharp.",
   "ask": "What in my life blurs because I keep it moving, when brief glimpses would be sharper?",
   "keywords": [
@@ -20,14 +20,26 @@
   "region": "none",
   "hook": "mechanism",
   "mood": "wonder",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Kurita, SID Symposium Digest, 2001",
+  "source": "Kurita, SID Digest, 2001",
   "source_kind": "paper",
   "reference": "Kurita, Moving picture quality improvement for hold-type AM-LCDs, SID Symposium Digest of Technical Papers 32, 2001",
-  "written": "2026-09-26"
+  "written": "2026-10-06",
+  "scene": {
+    "type": "hold",
+    "what": "One frame lit, 60 Hz flat screen",
+    "seconds": 0.0167,
+    "display": "ms",
+    "comparisons": [
+      {
+        "label": "A tube's phosphor glow",
+        "seconds": 0.0015
+      }
+    ]
+  }
 }

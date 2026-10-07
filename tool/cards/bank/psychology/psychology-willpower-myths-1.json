@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Does a sugary drink restore self-control by refuelling the brain?",
-  "answer": "No. The idea that self-control burns blood sugar rested on small studies. Kurzban showed the brain's glucose use barely changes with mental effort, far too little to drain a tank. Later, merely rinsing the mouth with sugar water and spitting it out seemed to help too, which no fuel could explain.",
+  "question": "A sugary drink was said to restore willpower. Which famous psychology findings held up when many labs repeated them?",
+  "answer": "Willpower as a fuel tank looked solid in small studies, not large ones. Kurzban showed the brain's glucose use barely changes with mental effort, far too little to drain a tank, and merely rinsing with sugar water seemed to help, which no fuel could explain. A 23-lab replication in 2016 found almost no effect.",
   "move": "Test a tidy metaphor against the measurement it implies.",
   "ask": "When I say I have no willpower left, is that true, or have I just stopped wanting to?",
   "keywords": [
@@ -26,8 +26,52 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Kurzban, Evolutionary Psychology, 2010",
+  "scene": {
+    "type": "sort",
+    "left": "Failed",
+    "right": "Held up",
+    "tag": "Repeated in many labs",
+    "items": [
+      {
+        "text": "Willpower fuel",
+        "note": "Self-control runs down, and glucose refills it.",
+        "pile": "left",
+        "verdict": "23 labs, 2,141 people: the depletion effect was close to zero."
+      },
+      {
+        "text": "Anchoring",
+        "note": "A number just seen drags your estimates.",
+        "pile": "right",
+        "verdict": "Replicated strongly across 36 samples in Many Labs, 2014."
+      },
+      {
+        "text": "Power posing",
+        "note": "Standing like a superhero raises testosterone.",
+        "pile": "left",
+        "verdict": "With 200 people: no change in hormones or in risk-taking."
+      },
+      {
+        "text": "Framing",
+        "note": "Saying lives saved or lives lost flips choices.",
+        "pile": "right",
+        "verdict": "Replicated in Many Labs: same odds, different words, different choice."
+      },
+      {
+        "text": "Flag priming",
+        "note": "A glimpse of a flag shifts political views.",
+        "pile": "left",
+        "verdict": "Across 36 samples in Many Labs, no effect."
+      },
+      {
+        "text": "Sunk cost",
+        "note": "A paid ticket makes people sit through a bad show.",
+        "pile": "right",
+        "verdict": "Replicated in Many Labs: money already spent still pulls."
+      }
+    ]
+  },
+  "source": "Kurzban 2010; Hagger 2016; Klein 2014",
   "source_kind": "paper",
-  "reference": "Kurzban, Does the mind run on glucose? Continuing controversy and a reply, Evolutionary Psychology, 2010",
+  "reference": "Kurzban, Evolutionary Psychology, 2010; Hagger et al., Perspectives on Psychological Science 11:546, 2016; Klein et al., Social Psychology 45:142, 2014; Ranehill et al., Psychological Science 26:653, 2015",
   "written": "2026-10-03"
 }

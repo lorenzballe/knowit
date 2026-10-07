@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why are sprint records from before 1977 not comparable with later ones, even to a tenth of a second?",
-  "answer": "Because they were timed by hand. Timekeepers started their watches on seeing the gun's smoke, after a human reaction delay, and tended to stop them early as runners neared the line. Statisticians add 0.24 seconds to a hand-timed 100 m to compare it with electronic times. From 1977, records needed fully automatic timing.",
+  "question": "Before 1977, sprints were timed by hand. How much must be added to a hand-timed 100 m to match electronic timing?",
+  "answer": "0.24 seconds, the correction statisticians use. Timekeepers started their watches only after seeing the gun's smoke, a human reaction late, and tended to stop them early as runners neared the line. The error is bigger than Bolt's whole margin over Tyson Gay in his 9.58 world record.",
   "move": "Before comparing two figures, ask whether the same instrument produced both.",
   "ask": "Before I compare two figures, did the same instrument produce both?",
   "keywords": [
@@ -20,14 +20,26 @@
   "region": "world",
   "hook": "mechanism",
   "mood": "practical",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Hymans, Progression of IAAF World Records, 2015",
+  "source": "Hymans, IAAF World Records, 2015",
   "source_kind": "statistics",
-  "reference": "Hymans & Matrahazi, Progression of IAAF World Records, 2015 Edition, IAAF, 2015",
-  "written": "2026-09-26"
+  "reference": "Hymans & Matrahazi, Progression of IAAF World Records, 2015 Edition, IAAF, 2015; Track & Field News, Remember Hand Timing, trackandfieldnews.com",
+  "written": "2026-10-06",
+  "scene": {
+    "type": "hold",
+    "what": "What a hand-timed 100 m gains",
+    "seconds": 0.24,
+    "display": "ms",
+    "comparisons": [
+      {
+        "label": "Bolt's margin, Berlin 2009",
+        "seconds": 0.13
+      }
+    ]
+  }
 }

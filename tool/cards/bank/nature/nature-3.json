@@ -6,27 +6,50 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How would you know if the ocean used to be fuller?",
-  "answer": "You probably would not. Each generation of scientists takes the sea they first studied as the natural baseline, so every generation measures decline from an already-depleted state. Daniel Pauly named this shifting baseline syndrome, and it makes long collapses look like normal variation.",
+  "question": "Weighed all together, which is heaviest: every wild mammal on Earth, every human, or every farm animal?",
+  "answer": "Farm animals, at about 100 million tonnes of carbon, then humans at 60. All wild mammals, from whales to mice, come to about 7: some 4% of the mammals on Earth by weight. Bar-On, Phillips and Milo's 2018 census shows a loss no single generation watched happen.",
   "move": "Everyone measures the decline from whatever they found when they arrived.",
   "ask": "What am I treating as normal today only because it is what I first saw when I arrived?",
   "keywords": [
-    "shifting baselines",
-    "fisheries",
-    "ocean",
-    "daniel pauly"
+    "biomass",
+    "livestock",
+    "wild mammals",
+    "shifting baselines"
   ],
-  "era": "timeless",
+  "era": "recent",
   "region": "world",
-  "hook": "paradox",
+  "hook": "number",
   "mood": "sober",
-  "numeracy": 0,
-  "abstraction": "abstract",
+  "numeracy": 2,
+  "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
-  "figure": "none",
-  "source": "Pauly, Trends in Ecology & Evolution, 1995",
+  "figure": "bars",
+  "source": "Bar-On, Phillips & Milo, PNAS, 2018",
   "source_kind": "paper",
-  "reference": "Pauly, Anecdotes and the shifting baseline syndrome of fisheries, Trends in Ecology & Evolution, 1995"
+  "reference": "Bar-On, Phillips & Milo, The biomass distribution on Earth, PNAS 115(25): 6506-6511, 2018",
+  "scene": {
+    "type": "rank",
+    "quantity": "Mammals, million t carbon",
+    "most": "Most",
+    "items": [
+      {
+        "label": "Wild",
+        "value": 7,
+        "note": "Every whale, elephant, deer and mouse together: about 4% of all mammals."
+      },
+      {
+        "label": "Human",
+        "value": 60,
+        "note": "More than eight times the weight of all wild mammals combined."
+      },
+      {
+        "label": "Farmed",
+        "value": 100,
+        "note": "Mostly cattle: they outweigh humans and wild mammals put together."
+      }
+    ]
+  },
+  "written": "2026-10-06"
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does a single kidney blood test label so many healthy 75-year-olds with kidney disease?",
-  "answer": "Because the cut-off ignores age. Kidney filtration falls naturally with age, yet chronic kidney disease is defined by the same threshold, an estimated filtration rate below 60, at 30 or at 80. In US national data, over a third of people over 70 fell below it. Many have kidneys that are old, not ill.",
+  "question": "A healthy 78-year-old's routine blood test comes back with this line flagged. How worried should she be?",
+  "answer": "Less than the label suggests. Chronic kidney disease is defined by one threshold, an estimated filtration rate below 60, at 30 or at 80, while filtration falls naturally with age. In US national data, over a third of people over 70 were below it. For many, the result describes kidneys that are old, not ill.",
   "move": "A fixed line across a changing population turns ageing into disease.",
   "ask": "Am I judging myself today by a standard that was set for someone younger?",
   "keywords": [
@@ -27,8 +27,40 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Laboratory report",
+    "ref": "Kidney panel",
+    "title": "Biochemistry",
+    "body": "eGFR 54 mL/min/1.73m² (low). Reference range: above 60. Consistent with CKD stage 3a. Suggest repeat in 3 months.",
+    "phrases": [
+      {
+        "text": "eGFR 54",
+        "plain": "Estimated kidney filtering 54",
+        "why": "An estimate from one blood value, adjusted for age and sex. It is not measured directly."
+      },
+      {
+        "text": "Reference range: above 60",
+        "plain": "Cut-off: 60, the same at 30 as at 80",
+        "why": "Kidney filtration falls naturally over a lifetime. The line does not move with it."
+      },
+      {
+        "text": "Consistent with CKD stage 3a",
+        "plain": "Labelled mild chronic kidney disease",
+        "why": "Over a third of Americans over 70 fall below 60. Many have kidneys that are old, not ill.",
+        "catch": true
+      },
+      {
+        "text": "Suggest repeat in 3 months",
+        "plain": "Check it stays low before calling it disease",
+        "why": "The label needs the value to stay low for three months. One test is not a diagnosis."
+      }
+    ],
+    "ask": "One phrase can turn an age into an illness. Which?",
+    "watch": "When a result is flagged, ask whether the line was drawn for someone your age."
+  },
   "source": "Coresh et al., JAMA, 2007",
   "source_kind": "paper",
   "reference": "Coresh et al., Prevalence of chronic kidney disease in the United States, JAMA, 2007",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

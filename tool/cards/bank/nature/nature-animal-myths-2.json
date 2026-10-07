@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Is one year of a dog's life really worth seven human years?",
-  "answer": "No, the ratio changes with age. Wang and colleagues compared chemical marks on DNA that shift with ageing in Labradors and in people. By that clock a one-year-old dog matches a human of about 31, a four-year-old about 53, and a twelve-year-old about 71. Dogs race through youth, then age more slowly.",
+  "question": "One dog year is worth seven human years, people say. Which of these animal sayings are myths, and which are true?",
+  "answer": "The dog rule fails because the ratio changes with age. Comparing chemical marks on DNA that shift with ageing in Labradors and people, Wang's team matched a one-year-old dog to a human of about 31, a four-year-old to about 53, and a twelve-year-old to about 71. Dogs race through youth, then slow down.",
   "move": "A single conversion factor hides how a rate changes over time.",
   "ask": "Which rule of thumb am I applying the same way at every stage, when the rate actually changes?",
   "keywords": [
@@ -26,8 +26,8 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Wang et al., Cell Systems, 2020",
+  "source": "Wang et al., 2020; Yang et al., 2021",
   "source_kind": "paper",
-  "reference": "Wang et al., Quantitative translation of dog-to-human aging by conserved remodeling of the DNA methylome, Cell Systems, 2020",
+  "reference": "Wang et al., Cell Systems 11:176, 2020, doi:10.1016/j.cels.2020.06.006; Yang et al., Soft Matter 17:475, 2021, doi:10.1039/D0SM01230K",
   "written": "2026-10-03"
 }

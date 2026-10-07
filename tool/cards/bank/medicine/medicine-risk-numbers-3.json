@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do some medical papers give a drug's benefit as a percentage cut, but its harms as raw counts?",
-  "answer": "Because the mix flatters the drug. A 33% cut in risk sounds big; two extra bleeds per 100 patients sounds small, though the harm may be larger. A review of leading medical journals found about one article in three reported benefits and harms in such mismatched formats. Readers need both per 100 people.",
+  "question": "A press release about a blood-thinning pill, written the way many are. Which number makes it sound better than it is?",
+  "answer": "The 33%. If 3 in 100 untreated patients would have a stroke and the pill brings it to 2, that is a third fewer strokes, but one person in 100 helped against two harmed by bleeding. A review of leading medical journals found about one article in three mixed formats like this.",
   "move": "Put the good news and the bad news in the same units before comparing.",
   "ask": "When someone shows me pros and cons, are both in the same kind of number?",
   "keywords": [
@@ -26,8 +26,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Press release",
+    "ref": "Typical text",
+    "title": "New pill cuts stroke risk",
+    "body": "In the trial, the new pill cut the risk of stroke by 33%. Major bleeding was uncommon, occurring in 2 extra patients per 100.",
+    "phrases": [
+      {
+        "text": "cut the risk of stroke by 33%",
+        "plain": "prevented 1 stroke in 100 patients, 3 down to 2",
+        "why": "A relative cut. A third of a small risk is a small number of people.",
+        "catch": true
+      },
+      {
+        "text": "Major bleeding",
+        "plain": "Bleeding serious enough to need care",
+        "why": "In trials, major is a defined grade of harm, not a nosebleed."
+      },
+      {
+        "text": "uncommon",
+        "plain": "twice as common as the strokes prevented",
+        "why": "The harm is given as a count, so it sounds small. Put in the same units, it is bigger."
+      }
+    ],
+    "ask": "Benefit and harm are in different units. Which one flatters?",
+    "watch": "Ask for every result as people per 100. A percentage cut needs its starting point."
+  },
   "source": "Sedrakyan & Shih, Medical Care, 2007",
   "source_kind": "paper",
   "reference": "Sedrakyan & Shih, Improving depiction of benefits and harms: analyses of studies of well-known therapeutics and review of high-impact medical journals, Medical Care, 2007",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

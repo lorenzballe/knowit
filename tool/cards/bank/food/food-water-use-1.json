@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why is the widely quoted figure of about 15,000 litres of water per kilo of beef misleading?",
-  "answer": "Because most of it is rain. Mekonnen and Hoekstra's estimate of about 15,400 litres per kilo is 94% green water: rain on pastures and feed fields, which would fall anyway, though it could water other crops. Only about 4% is blue water drawn from rivers and aquifers, the kind that can run dry.",
+  "question": "One figure is quoted again and again in arguments about meat. How many litres of water does a kilo of beef take?",
+  "answer": "About 15,400 litres, in Mekonnen and Hoekstra's global average. But 94% of it is green water: rain falling on pastures and feed fields, which would fall anyway, though it could water other crops. The water pumped from rivers and aquifers is a few hundred litres. The headline number is mostly weather.",
   "move": "Ask which part of a big number is a real cost.",
   "ask": "Which alarming number have I repeated without asking what it was counting?",
   "keywords": [
@@ -19,7 +19,7 @@
   ],
   "era": "recent",
   "region": "world",
-  "hook": "misconception",
+  "hook": "number",
   "mood": "sober",
   "numeracy": 2,
   "abstraction": "mixed",
@@ -27,8 +27,38 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "count",
+    "unit": "litres of water per kilo of beef",
+    "answer": 15400,
+    "each": 10,
+    "eachLabel": "1 dot = 10 litres",
+    "compare": "94% of it is rain on fields",
+    "options": [
+      {
+        "label": "About 150",
+        "value": 150,
+        "note": "Two zeros short. A steer eats tonnes of feed, and every field drinks."
+      },
+      {
+        "label": "About 1,500",
+        "value": 1500,
+        "note": "One zero short. The global average estimate is about 15,400 litres."
+      },
+      {
+        "label": "About 15,000",
+        "value": 15000,
+        "note": "Right: about 15,400. Now look at what kind of water it is."
+      },
+      {
+        "label": "About 150,000",
+        "value": 150000,
+        "note": "One zero too many, though some grazing systems run well above average."
+      }
+    ]
+  },
   "source": "Mekonnen & Hoekstra, Ecosystems, 2012",
   "source_kind": "paper",
   "reference": "Mekonnen & Hoekstra, A global assessment of the water footprint of farm animal products, Ecosystems, 2012",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

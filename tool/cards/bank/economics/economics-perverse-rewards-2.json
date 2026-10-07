@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did Wells Fargo staff open up to 3.5 million accounts that customers never asked for?",
-  "answer": "Because they were judged on how many products each customer held. Branches chased steep daily sales targets, and staff who missed them feared for their jobs, so many opened accounts and cards in customers' names without consent. In 2016 regulators fined the bank $185 million. The count of accounts rose; the customers got fees.",
+  "question": "Wells Fargo staff were judged on products sold per customer. How many accounts did they open that nobody asked for?",
+  "answer": "About 3.5 million potentially unauthorised, the bank's own review found in 2017, from 2009 to 2016. Daily sales targets were steep, and staff who missed them feared for their jobs, so many opened accounts and cards in customers' names. The count of products rose; the customers got fees. Regulators had fined the bank $185 million in 2016.",
   "move": "Whatever you count, people will produce, whether or not it is real.",
   "ask": "Which number am I judged by that I could raise without doing better work?",
   "keywords": [
@@ -18,16 +18,46 @@
   ],
   "era": "recent",
   "region": "americas",
-  "hook": "story",
+  "hook": "number",
   "mood": "sober",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "concrete",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "count",
+    "unit": "accounts nobody asked for",
+    "answer": 3500000,
+    "each": 2000,
+    "eachLabel": "1 dot = 2,000 accounts",
+    "compare": "Found among 165 million, 2009 to 2016",
+    "options": [
+      {
+        "label": "About 35,000",
+        "value": 35000,
+        "note": "Two zeros short. This was no rogue branch: it ran through the bank for years."
+      },
+      {
+        "label": "About 350,000",
+        "value": 350000,
+        "note": "One zero short. A 2016 count found 2.1 million; the full review, 3.5 million."
+      },
+      {
+        "label": "3.5 million",
+        "value": 3500000,
+        "note": "Right. About 3.5 million accounts opened in customers' names without asking."
+      },
+      {
+        "label": "35 million",
+        "value": 35000000,
+        "note": "One zero too many. The 3.5 million came out of 165 million reviewed."
+      }
+    ]
+  },
   "source": "Wells Fargo, SEC filing, August 2017",
   "source_kind": "company",
   "reference": "https://www.sec.gov/Archives/edgar/data/0000072971/000007297117000428/wfcexhibit99108312017.htm",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

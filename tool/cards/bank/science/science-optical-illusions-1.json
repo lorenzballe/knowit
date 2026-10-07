@@ -9,8 +9,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did a 2015 photo of a dress split people into those seeing blue and black and those seeing white and gold?",
-  "answer": "Because the photo hides its lighting. Each brain guesses the light and subtracts it: assume bluish shade and the dress looks white and gold; assume warm indoor light and it looks blue and black. A survey of 1,401 people found the split ran along those guesses. The dress itself was blue and black.",
+  "question": "Remember the 2015 photo of a striped dress that split the internet? What colours did you see?",
+  "answer": "Eyes never report colour raw: the brain estimates the light and removes it, which is why a white shirt looks white in shade and under a lamp. The photo gave no clue to its lighting, so brains guessed differently and subtracted different colours. The dress itself, sold online, was blue and black.",
   "move": "When two people see one thing differently, compare their unstated assumptions.",
   "ask": "When someone sees it differently from me, what am I assuming that they are not?",
   "keywords": [
@@ -29,8 +29,34 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "1,401 people online, Lafer-Sousa 2015",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "Blue and black",
+            "share": 57,
+            "mirror": "Like 57%. Your brain guessed warm indoor light and took the yellow out. Right dress."
+          },
+          {
+            "label": "White and gold",
+            "share": 30,
+            "mirror": "Like 30%. Your brain guessed bluish shade and took the blue out: a fair guess, wrong dress."
+          },
+          {
+            "label": "Blue and brown",
+            "share": 11,
+            "mirror": "Like 11%. Your brain settled between the two guesses about the light."
+          }
+        ]
+      }
+    ],
+    "why": "The photo hides its lighting, so each brain makes its own guess about the light and subtracts it."
+  },
   "source": "Lafer-Sousa et al., Current Biology, 2015",
   "source_kind": "paper",
   "reference": "Lafer-Sousa, Hermann & Conway, Striking individual differences in color perception uncovered by 'the dress' photograph, Current Biology 25:R545–R546, 2015",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

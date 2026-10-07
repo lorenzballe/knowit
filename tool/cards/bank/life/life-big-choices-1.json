@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What happened to people who let a coin toss decide a real decision, such as quitting a job?",
-  "answer": "Those the coin told to make the change were happier six months later than those told to stay. Levitt asked more than 20,000 volunteers on a website to toss a coin over a real dilemma. His reading: when a choice is close, people lean towards the status quo more than they should.",
+  "question": "People let a coin decide whether to make a big life change. Who was happier?",
+  "answer": "The coin made it a fair trial: chance, not courage, decided who changed, so the gap in happiness came from the change itself. The effect was largest for quitting a job or ending a relationship. Close calls, it seems, are rarely close: the fear of losing what you have tilts them towards staying.",
   "move": "When two options feel equal, suspect that fear of change is tipping them.",
   "ask": "On the decision I keep calling a coin flip, which side am I hoping for, and is fear of change the weight?",
   "keywords": [
@@ -27,8 +27,47 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "A website, 2013",
+        "glyph": "phone",
+        "line": "People stuck on a big decision are invited to toss a coin."
+      },
+      {
+        "fact": "Heads: make the change",
+        "glyph": "coin",
+        "line": "Quit the job, end the relationship, move. Tails: stay put."
+      },
+      {
+        "fact": "Over 20,000 tosses",
+        "glyph": "check",
+        "line": "Many do what the coin says, on choices they had agonised over."
+      }
+    ],
+    "ask": "Six months on, who is happier?",
+    "options": [
+      {
+        "label": "Those told to stay"
+      },
+      {
+        "label": "No difference"
+      },
+      {
+        "label": "Those told to change"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "Levitt, 2021",
+      "glyph": "rise",
+      "line": "Those the coin pushed into a change were happier."
+    },
+    "why": "On a close call, people weigh what they would lose by changing too heavily, so they stay too long."
+  },
   "source": "Levitt, Review of Economic Studies, 2021",
   "source_kind": "paper",
   "reference": "Levitt, Heads or Tails: The Impact of a Coin Toss on Major Life Decisions and Subsequent Happiness, Review of Economic Studies, 2021",
-  "written": "2026-09-29"
+  "written": "2026-10-06"
 }

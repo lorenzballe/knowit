@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did the builders who finished Cologne Cathedral in 1880 know the medieval design?",
-  "answer": "From a drawing found in an attic. Work stopped around 1473, leaving a wooden crane on the half-built south tower until 1868. In 1814 half of the medieval façade plan, a parchment about 4 m tall, turned up in a Darmstadt inn; the other half surfaced in Paris in 1816.",
+  "question": "Cologne Cathedral looks wholly medieval. When do you think each stage of its building actually happened?",
+  "answer": "It is a medieval design finished by Victorians. When work stopped, the plan was lost with it, until half of the façade drawing, a parchment about 4 m tall, turned up in a Darmstadt inn in 1814; the other half surfaced in Paris in 1816. Public money and the Prussian state paid for the rest.",
   "move": "Unfinished work can wait centuries if the plan survives.",
   "ask": "What big job of mine could outlast me, if only the plan were written down clearly?",
   "keywords": [
@@ -27,8 +27,34 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
-  "source": "Freies Deutsches Hochstift, Plan F",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": 1200,
+    "to": 1950,
+    "events": [
+      {
+        "label": "Foundation stone laid",
+        "year": 1248
+      },
+      {
+        "label": "Building stops",
+        "year": 1473,
+        "note": "Work stopped in 1473; a crane stood on the half-built tower until 1868."
+      },
+      {
+        "label": "Medieval plan found",
+        "year": 1814
+      },
+      {
+        "label": "Cathedral finished",
+        "year": 1880,
+        "note": "Finished in 1880, 632 years after the foundation stone."
+      }
+    ]
+  },
+  "source": "Freies Deutsches Hochstift; Cologne Cathedral",
   "source_kind": "institution",
   "reference": "https://www.guide.freies-deutsches-hochstift.de/en/mediaguide/romantik-ausstellung/3-obergeschoss/im-bilde-vollendet/wand-reproduktion/",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

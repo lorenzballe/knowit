@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "When Finland cut the sales tax on haircuts from 22% to 8%, who got the saving?",
-  "answer": "Salons and customers split it, roughly half each. Tuomas Kosonen compared Finnish hairdressers with similar businesses whose tax did not change: prices fell by only about half of what the cut allowed, and customers booked hardly any more haircuts. The rest of the tax cut stayed in the till.",
+  "question": "Finland cut the tax on haircuts. Who ended up with the money?",
+  "answer": "A tax cut stays with whoever has less reason to hand it on. Customers booked hardly any more haircuts when prices dipped, so salons lost few clients by keeping part of the saving, and competition did not force it out of them. The promise of cheaper haircuts assumed the cut would flow through untouched.",
   "move": "Watch the price after a tax cut, not the promise before it.",
   "ask": "When a tax on something I buy goes down, do I check whether my price does?",
   "keywords": [
@@ -27,8 +27,47 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "Finland, 2007",
+        "glyph": "coin",
+        "line": "The sales tax on haircuts is 22%. It is cut to 8%."
+      },
+      {
+        "fact": "The promise",
+        "glyph": "family",
+        "line": "Cheaper haircuts, more customers, more work for salons."
+      },
+      {
+        "fact": "Passed on in full",
+        "glyph": "fall",
+        "line": "A €20 haircut would drop to about €17.70."
+      }
+    ],
+    "ask": "How much did haircut prices actually fall?",
+    "options": [
+      {
+        "label": "By the full cut"
+      },
+      {
+        "label": "About half of that"
+      },
+      {
+        "label": "Not at all"
+      }
+    ],
+    "answer": 1,
+    "outcome": {
+      "fact": "Kosonen, 2015",
+      "glyph": "check",
+      "line": "About half the cut reached customers. Salons kept the rest."
+    },
+    "why": "Customers didn't come more often when prices fell, so salons had little reason to cut further."
+  },
   "source": "Kosonen, Journal of Public Economics, 2015",
   "source_kind": "paper",
   "reference": "Kosonen, More and Cheaper Haircuts after VAT Cut? On the Efficiency and Incidence of Service Sector Consumption Taxes, Journal of Public Economics, 2015",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why have mayors of some French villages issued decrees forbidding residents to die?",
-  "answer": "To force a decision on a full cemetery. Le Lavandou's mayor did it in 2000 and Sarpourenx's in 2008, when there was no room left to bury people and plans for new ground had been blocked in court. The decrees could never be enforced; they were protests dressed as bylaws.",
+  "question": "Mayors in France and Italy have forbidden residents to die. Which of these death bans really happened, and which are myths?",
+  "answer": "The real ones were protests aimed at the state, not at residents. Each time the cemetery was full and new ground was blocked by courts or planners; a decree nobody could obey made the deadlock news. Le Lavandou's mayor did it first, in 2000. The ban everyone repeats, in Longyearbyen, was never a law.",
   "move": "When a rule is absurd on purpose, look for the audience it addresses.",
   "ask": "When a rule sounds absurd, who is it really meant to be heard by?",
   "keywords": [
@@ -26,6 +26,50 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Myth",
+    "right": "Real",
+    "tag": "Dying is forbidden",
+    "items": [
+      {
+        "text": "Le Lavandou",
+        "note": "A Riviera town bans death, 2000.",
+        "pile": "right",
+        "verdict": "The mayor's protest over a full cemetery and a blocked new one."
+      },
+      {
+        "text": "Longyearbyen",
+        "note": "Dying is illegal in this Arctic town.",
+        "pile": "left",
+        "verdict": "No law. Burials stopped because the permafrost keeps bodies intact."
+      },
+      {
+        "text": "Sarpourenx",
+        "note": "A village in south-west France, 2008.",
+        "pile": "right",
+        "verdict": "Another full cemetery, and a court blocking the land to extend it."
+      },
+      {
+        "text": "Westminster",
+        "note": "The Houses of Parliament: it is illegal to die in them.",
+        "pile": "left",
+        "verdict": "In 2013 the Law Commission could find no such law."
+      },
+      {
+        "text": "Cugnaux",
+        "note": "A town near Toulouse, 2007.",
+        "pile": "right",
+        "verdict": "The mayor's protest after the state blocked a new cemetery."
+      },
+      {
+        "text": "Falciano",
+        "note": "Falciano del Massico, an Italian village, 2012.",
+        "pile": "right",
+        "verdict": "Its dead had to be buried in the next town over."
+      }
+    ]
+  },
   "source": "NPR, March 2008",
   "source_kind": "news_archive",
   "reference": "https://www.npr.org/2008/03/07/87974995/mayor-bans-death-in-french-town",

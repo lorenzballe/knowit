@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why did all six Friends leads earn exactly the same fee per episode from 1996 onwards?",
-  "answer": "Because they bargained as one. From the third season the cast negotiated together, reportedly at the urging of David Schwimmer, then the best-paid of them, so none could be played off against another. By the last two seasons each earned about $1 million an episode. A walkout by one meant a walkout by six.",
+  "question": "Six sitcom stars with unequal pay decided to bargain as one. Did it work?",
+  "answer": "Alone, each star could be told the show would go on without them. Six together could not: losing the whole cast meant losing the show. The best-paid gave up the chance to stay ahead, and equal pay removed the comparison that sours a cast. The bloc held for eight years.",
   "move": "A group that cannot be split can ask for what none could alone.",
   "ask": "What could my group ask for together that none of us could alone?",
   "keywords": [
@@ -26,8 +26,47 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "Friends, 1994",
+        "glyph": "crowd",
+        "line": "Six leads, six separate pay deals."
+      },
+      {
+        "fact": "A hit by season two",
+        "glyph": "rise",
+        "line": "Some of them earn far more than others."
+      },
+      {
+        "fact": "1996, reportedly Schwimmer",
+        "glyph": "family",
+        "line": "The best-paid proposes they all bargain as one."
+      }
+    ],
+    "ask": "What happens to their pay?",
+    "options": [
+      {
+        "label": "Top earners lose out"
+      },
+      {
+        "label": "The studio splits them"
+      },
+      {
+        "label": "All six soar together"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "Seasons 9 and 10",
+      "glyph": "coin",
+      "line": "About $1 million each, per episode."
+    },
+    "why": "A studio can replace one actor, not the whole cast. Together they were the show."
+  },
   "source": "Austerlitz, Generation Friends, 2019",
   "source_kind": "book",
   "reference": "Saul Austerlitz, Generation Friends: An Inside Look at the Show That Defined a Television Era, Dutton, 2019",
-  "written": "2026-09-27"
+  "written": "2026-10-06"
 }

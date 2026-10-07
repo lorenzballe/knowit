@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why, according to George Orwell, does political writing reach for words like pacification?",
-  "answer": "To name things without calling up pictures of them. In 1946 Orwell noted that when villages are bombed and their people driven out, the act is called pacification. Such phrases are needed, he argued, when the plain description would be unbearable. A vague abstract word lets a reader agree without ever seeing the burning huts.",
+  "question": "An email to all staff, in the style layoff notices are often written. What is it telling them?",
+  "answer": "That some of them are being sacked. In 1946 George Orwell noted that political language names things without calling up pictures of them, because the plain description would be too ugly to say. Here roles are impacted, so no person is fired and nobody does the firing. A camera would show a desk being cleared.",
   "move": "When a word hides a picture, describe what a camera would show.",
   "ask": "Which soft word do I use to avoid picturing what I am really doing?",
   "keywords": [
@@ -26,8 +26,40 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Message to all staff",
+    "ref": "Typical text",
+    "title": "Positioning us for growth",
+    "body": "As part of our strategic realignment, we are rightsizing the organisation. Some roles will be impacted, and affected colleagues will be supported through this transition.",
+    "phrases": [
+      {
+        "text": "strategic realignment",
+        "plain": "cost-cutting",
+        "why": "Strategy words put a plan where a decision was. Nobody has to picture anything."
+      },
+      {
+        "text": "rightsizing the organisation",
+        "plain": "making the company smaller",
+        "why": "Right implies the old size was a mistake. Nobody chose the word by accident."
+      },
+      {
+        "text": "Some roles will be impacted",
+        "plain": "Some of you will lose your jobs",
+        "why": "Roles, not people; impacted, not fired. The grammar hides who acts and who suffers.",
+        "catch": true
+      },
+      {
+        "text": "supported through this transition",
+        "plain": "helped on their way out",
+        "why": "Transition sounds like a journey. Here the journey is out of the door."
+      }
+    ],
+    "ask": "One phrase is about the reader's own job. Which?",
+    "watch": "When a sentence has nobody doing anything, ask who does what to whom."
+  },
   "source": "Orwell, Politics and the English Language, 1946",
   "source_kind": "primary_document",
   "reference": "Orwell, Politics and the English Language, Horizon 13(76), 1946",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

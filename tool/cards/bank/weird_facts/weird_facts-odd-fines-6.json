@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "How did a rich Roman turn the Twelve Tables' fixed fine for assault into a game?",
-  "answer": "He slapped strangers and paid on the spot. The Tables fixed the penalty for such an injury at 25 asses, a sum inflation had made trivial. Aulus Gellius tells of Lucius Veratius, who struck free men in the face while a slave counted out the coins. The praetors switched to damages assessed case by case.",
+  "question": "Rome fixed the fine for a slap at 25 coins, forever. What happened?",
+  "answer": "The praetors, the magistrates who ran the courts, dropped the fixed sum and let judges assess damages case by case. Any penalty written as a number rather than a share, from parking fines to late fees, quietly gets cheaper every year nobody updates it, until for someone it is just a price.",
   "move": "A penalty fixed in coins shrinks every year that prices rise.",
   "ask": "What fixed price or penalty in my life has shrunk as everything else got dearer?",
   "keywords": [
@@ -27,8 +27,47 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "Rome, about 450 BC",
+        "glyph": "book",
+        "line": "The Twelve Tables fix the fine for a slap: 25 asses."
+      },
+      {
+        "fact": "Centuries pass",
+        "glyph": "rise",
+        "line": "Prices rise. 25 asses become pocket change."
+      },
+      {
+        "fact": "Lucius Veratius, a rich man",
+        "glyph": "walker",
+        "line": "He walks the streets, a slave with a purse at his heels."
+      }
+    ],
+    "ask": "What does Veratius do?",
+    "options": [
+      {
+        "label": "Pays others' fines"
+      },
+      {
+        "label": "Slaps strangers"
+      },
+      {
+        "label": "Lends at interest"
+      }
+    ],
+    "answer": 1,
+    "outcome": {
+      "fact": "Aulus Gellius, Attic Nights",
+      "glyph": "coin",
+      "line": "He slapped free men, and the slave paid 25 asses each."
+    },
+    "why": "A fixed fine is a price, and inflation turns the price into a bargain."
+  },
   "source": "Aulus Gellius, Attic Nights 20.1",
   "source_kind": "primary_document",
   "reference": "Aulus Gellius, Attic Nights, trans. Rolfe, Loeb Classical Library, Harvard University Press, 1927",
-  "written": "2026-09-27"
+  "written": "2026-10-06"
 }

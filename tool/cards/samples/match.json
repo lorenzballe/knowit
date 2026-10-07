@@ -1,0 +1,182 @@
+[
+  {
+    "id": "psychology-match-bias-traps",
+    "topic": "psychology",
+    "genre": "psychology.bias",
+    "strand": "psychology.bias.anchoring_bias",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Four mental shortcuts, four everyday traps. Which bias catches you in which moment?",
+    "answer": "The one people miss is anchoring. A crossed-out price looks like information about value; it is there to set the ruler. In one experiment a rigged wheel stopping on 10 or 65 moved people's guesses of Africa's share of UN members from 25% to 45%.",
+    "move": "A bias you can name in the moment is one you can step around.",
+    "keywords": [
+      "anchoring",
+      "sunk cost",
+      "availability",
+      "planning fallacy"
+    ],
+    "era": "modern",
+    "region": "world",
+    "hook": "mechanism",
+    "mood": "playful",
+    "numeracy": 1,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "match",
+      "leftTitle": "Bias",
+      "rightTitle": "Where it gets you",
+      "pairs": [
+        {
+          "left": "Anchoring",
+          "right": "The 'was $400' tag that makes $199 feel cheap",
+          "note": "The first number you see becomes the ruler for every one after it.",
+          "missed": true
+        },
+        {
+          "left": "Sunk cost",
+          "right": "Sitting through a bad film because you paid",
+          "note": "The money is gone either way. Only the next two hours are still yours."
+        },
+        {
+          "left": "Availability",
+          "right": "Fearing the flight more than the drive there",
+          "note": "Crashes make the news. Car deaths are too common to."
+        },
+        {
+          "left": "Planning fallacy",
+          "right": "'The kitchen will take two weeks, tops'",
+          "note": "We plan the best case and forget the delays every past job had."
+        }
+      ]
+    },
+    "source": "Tversky and Kahneman, Judgment under Uncertainty: Heuristics and Biases, Science 1974",
+    "source_kind": "paper",
+    "reference": "https://doi.org/10.1126/science.185.4157.1124",
+    "written": "2026-10-06"
+  },
+  {
+    "id": "science-match-findings-traps",
+    "topic": "science",
+    "genre": "science.how_science_knows",
+    "strand": "science.how_science_knows.correlation_or_cause",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Four true findings that point the wrong way. Which trap is hiding inside each one?",
+    "answer": "The schools are the one people miss. Small schools top the rankings and also fill the bottom: with few pupils, a handful of bright or struggling ones swings the average. The Gates Foundation spent about $1.7 billion splitting up big schools before anyone checked the bottom of the list.",
+    "move": "Before trusting a pattern, ask who is missing and how many were counted.",
+    "keywords": [
+      "survivorship bias",
+      "sample size",
+      "regression to the mean",
+      "confounding"
+    ],
+    "era": "modern",
+    "region": "world",
+    "hook": "paradox",
+    "mood": "wonder",
+    "numeracy": 2,
+    "abstraction": "abstract",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "match",
+      "leftTitle": "The trap",
+      "rightTitle": "The finding",
+      "pairs": [
+        {
+          "left": "Survivors only",
+          "right": "Planes come home shot in the wings. Armour them?",
+          "note": "Planes hit in the engines never came home. Armour where the holes aren't."
+        },
+        {
+          "left": "Small samples",
+          "right": "The top-scoring schools are mostly small ones",
+          "note": "So are the worst. Few pupils, wild swings: small schools fill both ends.",
+          "missed": true
+        },
+        {
+          "left": "Back to average",
+          "right": "Star rookies slump in their second season",
+          "note": "A record year is part luck. The luck doesn't repeat; the talent does."
+        },
+        {
+          "left": "A hidden cause",
+          "right": "Countries with more storks have more babies",
+          "note": "Bigger countries have more of both. Size drives each; storks don't."
+        }
+      ]
+    },
+    "source": "Howard Wainer, The Most Dangerous Equation, American Scientist 2007; Robert Matthews, Storks Deliver Babies (p = 0.008), Teaching Statistics 2000",
+    "source_kind": "paper",
+    "reference": "https://www.americanscientist.org/article/the-most-dangerous-equation",
+    "written": "2026-10-06"
+  },
+  {
+    "id": "economics-match-free-who-pays",
+    "topic": "economics",
+    "genre": "economics.spot_a_bad_deal",
+    "strand": "economics.spot_a_bad_deal.free_is_not_free",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "All of these cost you nothing to use. So who is really paying for each one?",
+    "answer": "Pay in three is the one people miss. It feels like a loan, so you look for the interest, but the shop pays: a fee of a few per cent on every sale. Shops accept it because people spend more when the bill is split.",
+    "move": "When something is free, find who pays, and what they get for it.",
+    "keywords": [
+      "payment for order flow",
+      "buy now pay later",
+      "free to play",
+      "business models"
+    ],
+    "era": "recent",
+    "region": "world",
+    "hook": "mechanism",
+    "mood": "practical",
+    "numeracy": 1,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "match",
+      "leftTitle": "Free",
+      "rightTitle": "Who pays",
+      "pairs": [
+        {
+          "left": "Trading app",
+          "right": "Market makers, paid to fill your orders",
+          "note": "Payment for order flow. The SEC fined Robinhood $65M for hiding it."
+        },
+        {
+          "left": "Mobile game",
+          "right": "A tiny few who spend a fortune",
+          "note": "In one 2014 study, 0.15% of players brought in half the money."
+        },
+        {
+          "left": "Credit score site",
+          "right": "Banks, when you take a card it suggests",
+          "note": "The score is the bait. The fee comes when you sign up for the card."
+        },
+        {
+          "left": "Pay in three",
+          "right": "The shop, giving up a cut of every sale",
+          "note": "Shops pay a few per cent a sale, because people buy more in instalments.",
+          "missed": true
+        }
+      ]
+    },
+    "source": "SEC, press release 2020-321 on Robinhood; Swrve, Monetization Report 2014; Klarna Group, Annual Report 2024",
+    "source_kind": "institution",
+    "reference": "https://www.sec.gov/news/press-release/2020-321",
+    "written": "2026-10-06"
+  }
+]

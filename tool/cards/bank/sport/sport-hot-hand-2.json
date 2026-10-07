@@ -6,29 +6,50 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why was the basketball hot hand, dismissed as an illusion in 1985, revived by economists more than thirty years later?",
-  "answer": "Because the 1985 test was tilted against finding it. Gilovich, Vallone and Tversky compared hit rates after runs of makes with hit rates after misses, within short sets of shots, a method that quietly favours a miss after a make. Corrected for that, the same shooting data showed players did get hotter.",
+  "question": "A basketball player has just made three shots in a row. Is his next shot more likely to go in?",
+  "answer": "The fans may be partly right. The 1985 test compared hits after runs of makes with hits after misses, within short sets of shots, a method that quietly favours a miss after a make. When Miller and Sanjurjo corrected for it in 2018, the same shooting data showed players did get hotter.",
   "move": "A test that cannot find an effect cannot rule it out.",
   "ask": "Did I drop an idea once because a test said no, without checking whether the test was fair?",
   "keywords": [
     "hot hand",
     "gilovich",
-    "tversky",
+    "miller and sanjurjo",
     "basketball",
     "statistical bias"
   ],
   "era": "twentieth",
   "region": "americas",
-  "hook": "story",
+  "hook": "misconception",
   "mood": "wonder",
-  "numeracy": 0,
+  "numeracy": 1,
   "abstraction": "abstract",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Gilovich, Vallone & Tversky, Cognitive Psychology, 1985",
+  "scene": {
+    "type": "poll",
+    "who": "100 basketball fans, Gilovich 1985",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "Yes, he's hot",
+            "share": 91,
+            "mirror": "Like 91% of fans. Science called you wrong in 1985, then found you may be partly right."
+          },
+          {
+            "label": "No, same odds",
+            "share": 9,
+            "mirror": "Like 9% of fans, and the 1985 paper. Its test was later found to lean your way by mistake."
+          }
+        ]
+      }
+    ],
+    "why": "A streak is vivid, and we expect chance to look choppy, so any run of hits seems to mean something."
+  },
+  "source": "Gilovich et al., 1985; Miller & Sanjurjo, 2018",
   "source_kind": "paper",
-  "reference": "Gilovich, Vallone & Tversky, The hot hand in basketball: On the misperception of random sequences, Cognitive Psychology, 1985",
-  "written": "2026-09-26"
+  "reference": "Gilovich, Vallone & Tversky, The hot hand in basketball: On the misperception of random sequences, Cognitive Psychology 17 (1985); Miller & Sanjurjo, Surprised by the hot hand fallacy?, Econometrica 86 (2018)",
+  "written": "2026-10-06"
 }

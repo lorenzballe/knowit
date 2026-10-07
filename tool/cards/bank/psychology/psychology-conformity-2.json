@@ -6,28 +6,50 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "When people answer privately instead of aloud before a group, what happens to their conformity?",
-  "answer": "It drops sharply. Deutsch and Gerard found that people who recorded answers anonymously went along with a wrong majority far less than those who answered face to face. Much conformity is public compliance: people still see the truth, but say what the group says. A secret ballot is a conformity test in reverse.",
+  "question": "Asked which of three lines matches a fourth, everyone before you gives the same wrong answer. Would you ever go along?",
+  "answer": "Three in four went along at least once, though only about a third of all answers bent. And much of it was for show: when Deutsch and Gerard let people answer privately, conformity fell sharply. People saw the right line and said the wrong one. The group changed the voice, not the eyes.",
   "move": "Collect views privately first, or you hear only what the room wants said.",
   "ask": "When I ask people for their opinions, do they answer before or after they know what I think?",
   "keywords": [
     "conformity",
+    "asch",
+    "line judgement",
     "anonymity",
-    "social pressure",
-    "public compliance"
+    "social pressure"
   ],
   "era": "twentieth",
   "region": "americas",
   "hook": "mechanism",
   "mood": "practical",
-  "numeracy": 0,
+  "numeracy": 1,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Deutsch & Gerard, J Abnormal and Social Psychology, 1955",
+  "scene": {
+    "type": "poll",
+    "who": "Students, Asch's line studies, 1950s",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "Never, not once",
+            "share": 25,
+            "mirror": "Like a quarter of Asch's subjects, who held out every time. Even they felt the strain."
+          },
+          {
+            "label": "At least once",
+            "share": 75,
+            "mirror": "Like three in four. Most gave in only now and then, and many still saw the right line."
+          }
+        ]
+      }
+    ],
+    "why": "Being right alone feels risky. Most went along to avoid the stares, not because they were convinced."
+  },
+  "source": "Asch, 1956; Deutsch & Gerard, 1955",
   "source_kind": "paper",
-  "reference": "Deutsch & Gerard, A study of normative and informational social influences upon individual judgment, Journal of Abnormal and Social Psychology, 1955",
-  "written": "2026-10-03"
+  "reference": "Asch, Studies of independence and conformity, Psychological Monographs 70 (9), 1956; Deutsch & Gerard, A study of normative and informational social influences upon individual judgment, Journal of Abnormal and Social Psychology 51, 1955",
+  "written": "2026-10-06"
 }

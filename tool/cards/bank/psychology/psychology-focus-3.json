@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "In a rapid stream of letters, why is a second target often missed when it follows the first closely?",
-  "answer": "Attention is still busy with the first. At about ten items a second, a second target arriving 200 to 500 milliseconds after the first is often missed, while one arriving immediately after is usually caught. Raymond, Shapiro and Arnell named this gap the attentional blink: the eyes stay open while the mind looks away.",
+  "question": "Letters flash past in a rapid stream and you spot the one you were looking for. How long after it might you miss another?",
+  "answer": "Until about 450 milliseconds after it, in a window opening at 180 ms. Raymond, Shapiro and Arnell found a second target shown then was poorly detected, while one straight after it was usually caught: attention is still filing the first. This is the attentional blink: the eyes stay open while the mind looks away.",
   "move": "Right after catching one thing is the worst moment to catch another.",
   "ask": "After I catch one important thing, how likely am I to miss the next one?",
   "keywords": [
@@ -20,7 +20,7 @@
   "region": "none",
   "hook": "mechanism",
   "mood": "wonder",
-  "numeracy": 1,
+  "numeracy": 2,
   "abstraction": "mixed",
   "shelf_life": "evergreen",
   "mature": false,
@@ -29,5 +29,13 @@
   "source": "Raymond, Shapiro & Arnell, 1992",
   "source_kind": "paper",
   "reference": "Raymond, Shapiro & Arnell, Temporary suppression of visual processing in an RSVP task: an attentional blink?, Journal of Experimental Psychology: Human Perception and Performance, 1992",
-  "written": "2026-09-26"
+  "written": "2026-10-06",
+  "scene": {
+    "type": "hold",
+    "what": "The blind spot after a find",
+    "seconds": 0.315,
+    "low": 0.18,
+    "high": 0.45,
+    "display": "ms"
+  }
 }

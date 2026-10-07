@@ -6,19 +6,20 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Where did the stiff-armed Roman salute of so many epic films really come from?",
-  "answer": "From paintings and early films, not from Rome. No ancient text or monument clearly shows it. Jacques-Louis David's Oath of the Horatii of 1784 made the gesture famous, and Italian epics such as Cabiria of 1914 spread it. Fascists then adopted it as ancient tradition. Cinema invented a custom that politics later claimed.",
+  "question": "In epic after epic, Roman legions salute with a stiff arm raised, palm down. Where did that salute come from?",
+  "answer": "A painting. David's Oath of the Horatii, 1784, made the gesture look Roman; stage plays and Italian silent epics such as Cabiria spread it. D'Annunzio used it at Fiume in 1919, and the Fascists took it as ancient.",
   "move": "An old-looking custom may be younger than the story told about it.",
   "ask": "Which tradition I follow might be much younger than I assume?",
   "keywords": [
     "roman salute",
     "cabiria",
     "jacques-louis david",
-    "fascism"
+    "fascism",
+    "oath of the horatii"
   ],
   "era": "twentieth",
   "region": "europe",
-  "hook": "origin",
+  "hook": "puzzle",
   "mood": "sober",
   "numeracy": 1,
   "abstraction": "mixed",
@@ -26,8 +27,44 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Ancient Rome",
+      "Mussolini",
+      "A painting"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Fascist Italy and Nazi Germany both sold it as an ancient Roman greeting.",
+        "tag": "Sold as Roman",
+        "rulesOut": []
+      },
+      {
+        "text": "No Roman text describes it, and no Roman statue or coin clearly shows it.",
+        "tag": "No Roman evidence",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "Italian epic films use it by 1914, years before any Fascist party existed.",
+        "tag": "On film by 1914",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "In David's Oath of the Horatii, 1784, three brothers swear with arms outstretched.",
+        "tag": "David, 1784",
+        "rulesOut": []
+      }
+    ],
+    "why": "It was on cinema screens before Fascism existed, and Rome left no trace of it. A 1784 canvas did."
+  },
   "source": "Winkler, The Roman Salute, 2009",
   "source_kind": "book",
   "reference": "Martin M. Winkler, The Roman Salute: Cinema, History, Ideology, Ohio State University Press, 2009",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

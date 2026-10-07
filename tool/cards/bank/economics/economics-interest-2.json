@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why are so many American credit cards issued by banks based in South Dakota or Delaware?",
-  "answer": "Because of a 1978 Supreme Court ruling. In Marquette v. First of Omaha, the Court let a nationally chartered bank charge customers anywhere the interest its home state allowed. South Dakota scrapped its rate cap in 1980, Citibank moved its card business to Sioux Falls, and Delaware followed. The loosest state's rules became the country's.",
+  "question": "Why are so many American credit cards run from South Dakota or Delaware?",
+  "answer": "Because the rule followed the lender, not the borrower. Most states once capped card interest, and when inflation pushed market rates above those caps, cards lost money. Once Marquette let national banks export their home state's rate, states competed to be the loosest, and Delaware followed South Dakota in 1981.",
   "move": "When a rule can be exported, the loosest version wins.",
   "ask": "Where do I accept the loosest rule because the provider picked where to operate?",
   "keywords": [
@@ -27,6 +27,37 @@
   "mature": false,
   "language": "en",
   "figure": "map",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "Millions of US card bills come from Sioux Falls, South Dakota."
+    },
+    "levels": [
+      {
+        "text": "The bank chose its home state for one law: no cap on interest."
+      },
+      {
+        "text": "A 1978 ruling let a bank charge anyone its home state's rate.",
+        "figure": "1978",
+        "unit": "Supreme Court, Marquette"
+      },
+      {
+        "text": "South Dakota scrapped its rate cap in 1980; Citibank moved in."
+      },
+      {
+        "text": "So one loose state can set the rules for a whole country."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Its law follows the bank",
+        "Taxes are lower there",
+        "Land and staff are cheap"
+      ],
+      "answer": 0
+    }
+  },
   "source": "US Supreme Court, Marquette v. First of Omaha",
   "source_kind": "primary_document",
   "reference": "Marquette National Bank of Minneapolis v. First of Omaha Service Corp., 439 U.S. 299 (1978)",

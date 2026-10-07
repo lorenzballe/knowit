@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What kept Egyptian hieroglyphs unread for some 1,400 years after the last one was carved?",
-  "answer": "A wrong theory of what they were. Late antique writers such as Horapollo explained the signs as symbols of ideas, and scholars up to Athanasius Kircher, in the 1600s, built mystical readings on it. In 1822 Champollion showed that many signs wrote sounds. The last dated one, at Philae in AD 394, spelled words.",
+  "question": "Hieroglyphs feel like the writing of the pyramid age. When were the last ones carved, and when were they read again?",
+  "answer": "What kept them unread was a wrong theory. Late Roman writers such as Horapollo said each sign stood for an idea, and scholars up to Athanasius Kircher built mystical readings on it. In 1822 Champollion showed that many signs wrote sounds. The last one, carved at Philae in AD 394, spelled words.",
   "move": "A wrong idea of what the problem is can outlast every clue.",
   "ask": "What wrong idea of my problem is hiding answers already in front of me?",
   "keywords": [
@@ -27,8 +27,34 @@
   "mature": false,
   "language": "en",
   "figure": "timeline",
+  "scene": {
+    "type": "timeline",
+    "axis": "years",
+    "from": -500,
+    "to": 2025,
+    "events": [
+      {
+        "label": "Rosetta Stone carved",
+        "year": -196
+      },
+      {
+        "label": "Last hieroglyphs",
+        "year": 394,
+        "note": "Hieroglyphs were carved until AD 394, then went unread for 1,428 years."
+      },
+      {
+        "label": "Kircher's mystic reading",
+        "year": 1652,
+        "note": "In 1652 Kircher published confident readings of hieroglyphs as symbols. All wrong."
+      },
+      {
+        "label": "Champollion reads them",
+        "year": 1822
+      }
+    ]
+  },
   "source": "Parkinson, Cracking Codes, 1999",
   "source_kind": "book",
   "reference": "Parkinson, Cracking Codes: The Rosetta Stone and Decipherment, British Museum Press, 1999",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

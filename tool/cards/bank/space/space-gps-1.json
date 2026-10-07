@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does a phone need signals from four GPS satellites to find itself, when three distances should pin down a point?",
-  "answer": "Because its own clock is cheap and wrong. Each satellite broadcasts the time and its position; the phone turns how late each signal arrives into a distance, which needs the exact time. A fourth signal gives a fourth equation, so the phone solves for its clock error as well as its place. It never transmits.",
+  "question": "Why does a phone need four GPS satellites, when three distances should fix a point?",
+  "answer": "Because time is the fourth unknown. Three distances fix a point only if the phone knows the exact time, and its quartz clock is nowhere near the satellites' atomic ones. A fourth signal adds a fourth equation, so the phone solves for its clock error along with its place. It never transmits; it only listens.",
   "move": "When your own clock is unreliable, add one more reference to cancel it.",
   "ask": "When I can't trust my own sense of something, what extra reference could I check it against?",
   "keywords": [
@@ -26,8 +26,41 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "Your phone finds itself from satellites far overhead."
+    },
+    "levels": [
+      {
+        "text": "Each satellite broadcasts its position and the exact time.",
+        "figure": "20,200 km",
+        "unit": "up, each GPS satellite"
+      },
+      {
+        "text": "Distance comes from delay, so a millionth of a second is 300 m.",
+        "figure": "1 µs",
+        "unit": "of clock error: 300 m"
+      },
+      {
+        "text": "A phone's cheap quartz clock is far less exact than that."
+      },
+      {
+        "text": "So a fourth satellite lets the phone solve for its own clock."
+      }
+    ],
+    "guess": {
+      "options": [
+        "Earth's curve needs four",
+        "One signal gets blocked",
+        "The phone's clock is off"
+      ],
+      "answer": 2
+    }
+  },
   "source": "Misra & Enge, Global Positioning System, 2006",
   "source_kind": "book",
-  "reference": "Misra & Enge, Global Positioning System: Signals, Measurements, and Performance, 2nd edition, Ganga-Jamuna Press, 2006",
+  "reference": "Misra & Enge, Global Positioning System: Signals, Measurements, and Performance, 2nd edition, Ganga-Jamuna Press, 2006; https://www.gps.gov/systems/gps/space/",
   "written": "2026-10-03"
 }

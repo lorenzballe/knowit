@@ -1,0 +1,193 @@
+[
+  {
+    "id": "psychology-poll-asian-disease",
+    "topic": "psychology",
+    "genre": "psychology.resist_persuasion",
+    "strand": "psychology.resist_persuasion.framing",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "A disease will kill 600 people unless you act. Which programme do you choose?",
+    "answer": "Most people take the sure thing when it is worded as lives saved, and the gamble when it is worded as deaths. In Tversky and Kahneman's study, 72% chose to save 200 for sure; only 22% chose the same plan worded as 400 dying. Every option leaves 200 alive on average. Only the words moved.",
+    "move": "Before choosing, say the option the other way round: saved as died, gain as loss.",
+    "keywords": [
+      "framing",
+      "loss aversion",
+      "risk",
+      "gains and losses"
+    ],
+    "era": "twentieth",
+    "region": "americas",
+    "hook": "paradox",
+    "mood": "playful",
+    "numeracy": 2,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "poll",
+      "who": "Students, Tversky & Kahneman 1981",
+      "questions": [
+        {
+          "prompt": "Programme A or programme B?",
+          "tag": "Told as lives saved",
+          "options": [
+            {
+              "label": "200 saved for sure",
+              "share": 72
+            },
+            {
+              "label": "1/3 chance all 600 saved",
+              "share": 28
+            }
+          ]
+        },
+        {
+          "prompt": "Now the same 600, with programme C or D:",
+          "tag": "Told as deaths",
+          "options": [
+            {
+              "label": "400 die for sure",
+              "share": 22
+            },
+            {
+              "label": "1/3 chance nobody dies",
+              "share": 78
+            }
+          ]
+        }
+      ],
+      "why": "A sure gain feels safe; a sure loss feels unbearable, so we gamble to dodge it.",
+      "same": "You held steady. The crowd didn't: the sure plan fell from 72% to 22%.",
+      "switched": "You switched, like most people. A and C are the same plan; so are B and D."
+    },
+    "source": "Tversky & Kahneman, Science, 1981",
+    "source_kind": "paper",
+    "reference": "Tversky & Kahneman, The framing of decisions and the psychology of choice, Science 211 (1981): 453-458",
+    "written": "2026-10-06"
+  },
+  {
+    "id": "economics-poll-now-or-later",
+    "topic": "economics",
+    "genre": "economics.your_money_decisions",
+    "strand": "economics.your_money_decisions.present_bias",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Free money, from a 1995 Dutch study in guilders. Which offer would you take?",
+    "answer": "Waiting four weeks for 10% more feels costly when the wait starts today, and cheap when it starts in six months. In Keren and Roelofsma's study, 82% took 100 now over 110 in four weeks; only 37% took 100 in 26 weeks over 110 in 30. Same trade, minus the word now.",
+    "move": "Push both dates a year away and check you still choose the same.",
+    "keywords": [
+      "present bias",
+      "hyperbolic discounting",
+      "patience",
+      "saving"
+    ],
+    "era": "twentieth",
+    "region": "europe",
+    "hook": "paradox",
+    "mood": "playful",
+    "numeracy": 2,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "poll",
+      "who": "Students, Keren & Roelofsma 1995",
+      "questions": [
+        {
+          "prompt": "Which would you take?",
+          "tag": "The wait starts today",
+          "options": [
+            {
+              "label": "100 guilders now",
+              "share": 82
+            },
+            {
+              "label": "110 in 4 weeks",
+              "share": 18
+            }
+          ]
+        },
+        {
+          "prompt": "And this time?",
+          "tag": "The wait starts in 6 months",
+          "options": [
+            {
+              "label": "100 in 26 weeks",
+              "share": 37
+            },
+            {
+              "label": "110 in 30 weeks",
+              "share": 63
+            }
+          ]
+        }
+      ],
+      "why": "Now gets a bonus in the mind that no later date gets, so a wait from today feels longer.",
+      "same": "You held steady. The crowd didn't: taking the 100 fell from 82% to 37%.",
+      "switched": "You switched, like many in the study. Both times it was 4 weeks for 10 more."
+    },
+    "source": "Keren & Roelofsma, Organizational Behavior and Human Decision Processes, 1995",
+    "source_kind": "paper",
+    "reference": "Keren & Roelofsma, Immediacy and certainty in intertemporal choice, Organizational Behavior and Human Decision Processes 63 (1995): 287-297",
+    "written": "2026-10-06"
+  },
+  {
+    "id": "psychology-poll-better-driver",
+    "topic": "psychology",
+    "genre": "psychology.know_your_own_mind",
+    "strand": "psychology.know_your_own_mind.overconfidence",
+    "kind": "read",
+    "difficulty": "easy",
+    "principle": "none",
+    "question": "Picture a room of drivers your age. Are you a more skilful driver than half of them?",
+    "answer": "Only half of a room can be better than half of it. Yet when Ola Svenson asked American students to rank their driving skill against the others in the room, 93% put themselves in the top half; Swedish students, 69%. We see our own care from the inside, and others only through their mistakes.",
+    "move": "Before ranking yourself, ask how the people below you would rank you.",
+    "keywords": [
+      "overconfidence",
+      "better than average",
+      "driving",
+      "self-assessment"
+    ],
+    "era": "twentieth",
+    "region": "world",
+    "hook": "misconception",
+    "mood": "playful",
+    "numeracy": 1,
+    "abstraction": "concrete",
+    "shelf_life": "evergreen",
+    "mature": false,
+    "language": "en",
+    "figure": "none",
+    "scene": {
+      "type": "poll",
+      "who": "81 US students, Svenson 1981",
+      "questions": [
+        {
+          "options": [
+            {
+              "label": "Better than half",
+              "share": 93,
+              "mirror": "So did 93% of the students asked. At most half a room can sit in its top half."
+            },
+            {
+              "label": "Not better than half",
+              "share": 7,
+              "mirror": "Only 7% said this. Humble or right, you saw what the rest of the room missed."
+            }
+          ]
+        }
+      ],
+      "why": "We judge ourselves by our intentions and careful moments, and others by the slips we see."
+    },
+    "source": "Svenson, Acta Psychologica, 1981",
+    "source_kind": "paper",
+    "reference": "Svenson, Are we all less risky and more skillful than our fellow drivers?, Acta Psychologica 47 (1981): 143-148",
+    "written": "2026-10-06"
+  }
+]

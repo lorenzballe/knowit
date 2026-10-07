@@ -6,20 +6,19 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "What were Luis and Walter Alvarez trying to measure when they found the iridium spike?",
-  "answer": "How long a thin clay layer at Gubbio, Italy, took to settle. Iridium is scarce in Earth's crust but arrives steadily in space dust, so they hoped to use it as a clock. The clay held about 30 times the usual level: one huge delivery, not a drizzle. The clock became the crime scene.",
-  "move": "An instrument built to answer one question can overturn a bigger one.",
-  "ask": "What question am I measuring that might hide a much bigger one in my data?",
+  "question": "A thin layer of clay marks the moment the dinosaurs vanished, 66 million years ago. What killed them?",
+  "answer": "An asteroid about 10 km across. The Alvarezes wanted iridium as a clock for how slowly the clay settled; the spike made the clock a crime scene. But iridium alone could not convict. Quieter tests struck off the other suspects.",
+  "move": "The striking clue opens the case; the dull ones that exclude rivals close it.",
   "keywords": [
     "iridium",
     "alvarez",
-    "gubbio",
-    "cretaceous-paleogene boundary",
+    "shocked quartz",
+    "chicxulub",
     "asteroid impact"
   ],
   "era": "twentieth",
   "region": "europe",
-  "hook": "origin",
+  "hook": "puzzle",
   "mood": "wonder",
   "numeracy": 1,
   "abstraction": "concrete",
@@ -27,8 +26,49 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "Volcanoes",
+      "Supernova",
+      "Asteroid"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Worldwide, one thin clay layer divides rocks with dinosaurs from rocks without.",
+        "tag": "One thin layer",
+        "rulesOut": []
+      },
+      {
+        "text": "The clay holds about 30 times the usual iridium, a metal rare in Earth's crust.",
+        "tag": "Iridium spike",
+        "rulesOut": []
+      },
+      {
+        "text": "No plutonium-244, which a nearby supernova would have spread, is in the clay.",
+        "tag": "No plutonium-244",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "Quartz grains in the layer are shocked, a scar left only by violent impacts.",
+        "tag": "Shocked quartz",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "In 1991 a buried crater about 180 km wide, in Mexico, is dated to that moment.",
+        "tag": "Crater in Mexico",
+        "rulesOut": []
+      }
+    ],
+    "why": "Volcanoes can't shock quartz, and a supernova would leave plutonium. The crater only confirmed it."
+  },
   "source": "Alvarez et al., Science, 1980",
   "source_kind": "paper",
   "reference": "Alvarez, Alvarez, Asaro & Michel, Extraterrestrial cause for the Cretaceous-Tertiary extinction, Science, 1980",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

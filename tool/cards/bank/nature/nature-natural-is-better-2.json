@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does the EU cap how much copper organic vineyards may spray on their vines?",
-  "answer": "Because the copper builds up in the soil. Copper sprays are among the few fungicides organic growers may use against mildew, and unlike synthetic ones they never break down. Over decades the metal accumulates and harms earthworms and soil microbes. Since 2019 EU rules allow at most 28 kg per hectare over seven years.",
+  "question": "The back label of a bottle of organic wine. What may its vines still have been sprayed with?",
+  "answer": "Copper. It is one of the few fungicides organic growers may use against mildew, and unlike synthetic sprays, which break down, a metal never does. Over decades it builds up in vineyard soil and harms earthworms and soil microbes. Since 2019 EU rules allow at most 28 kg of copper per hectare over seven years.",
   "move": "Ask what a permitted remedy leaves behind, not just what it is.",
   "ask": "Which of my natural or safe choices leaves something behind that builds up over the years?",
   "keywords": [
@@ -27,8 +27,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "translate",
+    "head": "Organic wine",
+    "ref": "Back label",
+    "title": "Certified organic",
+    "body": "Made from organically grown grapes. No synthetic pesticides or fertilisers. Kind to the land.",
+    "phrases": [
+      {
+        "text": "organically grown grapes",
+        "plain": "grapes grown under EU organic rules",
+        "why": "Organic is a legal list of what may be used. Since 2019 it caps copper at 4 kg/ha a year."
+      },
+      {
+        "text": "No synthetic pesticides",
+        "plain": "No synthetic pesticides; copper sprays allowed",
+        "why": "Copper is one of few fungicides organic growers may use against mildew.",
+        "catch": true
+      },
+      {
+        "text": "Kind to the land",
+        "plain": "Kind, apart from metal building up in the soil",
+        "why": "Copper never breaks down. Over decades it harms earthworms and soil microbes."
+      }
+    ],
+    "ask": "One phrase is true and leaves out a metal. Which?",
+    "watch": "Natural tells you where a thing came from, not what it leaves behind."
+  },
   "source": "European Commission, Regulation (EU) 2018/1981",
   "source_kind": "institution",
   "reference": "Commission Implementing Regulation (EU) 2018/1981 renewing the approval of the active substances copper compounds, Official Journal of the European Union, 2018",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

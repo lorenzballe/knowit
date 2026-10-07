@@ -33,5 +33,35 @@
   "figure": "none",
   "source": "Subgroup analysis",
   "source_kind": "paper",
-  "reference": "Sun, Briel, Walter & Guyatt, Is a subgroup effect believable? Updating criteria to evaluate the credibility of subgroup analyses, BMJ, 2010"
+  "reference": "Sun, Briel, Walter & Guyatt, Is a subgroup effect believable? Updating criteria to evaluate the credibility of subgroup analyses, BMJ, 2010",
+  "scene": {
+    "type": "sample",
+    "dots": "Simulated customers",
+    "hit": "Bought",
+    "groups": [
+      {
+        "label": "No campaign",
+        "rate": 0.05
+      },
+      {
+        "label": "Campaign",
+        "rate": 0.05
+      }
+    ],
+    "steps": [
+      120,
+      1200,
+      12000,
+      120000
+    ],
+    "seed": 34,
+    "button": "Widen the slice",
+    "notes": [
+      "A slice of 120: 2% bought without the campaign, 15% with it. Pure chance.",
+      "1,200: 5% against 4%. Now the campaign looks harmful.",
+      "12,000: 4% against 5%.",
+      "120,000, the whole market: 5% and 5%. The slice's success was luck."
+    ],
+    "max": 0.2
+  }
 }

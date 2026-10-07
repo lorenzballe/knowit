@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "When Air Canada's website chatbot invented a refund policy, who did a tribunal hold responsible?",
-  "answer": "The airline. In 2024 a British Columbia tribunal rejected Air Canada's suggestion that its chatbot was a separate legal entity responsible for its own actions, calling it remarkable. The bot had promised a bereavement refund after travel, while the page it linked to said the opposite. The bill came to 812 Canadian dollars.",
+  "question": "An airline's chatbot invented a refund policy. Who pays for its promise?",
+  "answer": "The tribunal saw no reason a customer should trust one part of a company's website less than another. Air Canada put the bot there, so it owned the bot's words, as it would own a mistake by an agent at the counter. Its claim that the bot answered for itself was called remarkable.",
   "move": "Whoever deploys a tool answers for what the tool says.",
   "ask": "When I share what a tool told me, am I ready to answer for it?",
   "keywords": [
@@ -26,8 +26,52 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "story",
+    "scenes": [
+      {
+        "fact": "Canada, November 2022",
+        "glyph": "family",
+        "line": "A man's grandmother dies. He books a flight to the funeral."
+      },
+      {
+        "fact": "Air Canada's website",
+        "glyph": "phone",
+        "line": "Its chatbot: fly now, claim a bereavement discount later."
+      },
+      {
+        "fact": "The airline's own policy page",
+        "glyph": "book",
+        "line": "No bereavement refunds after travel."
+      },
+      {
+        "fact": "Claim refused",
+        "glyph": "ban",
+        "line": "The airline argues the chatbot is responsible for itself."
+      }
+    ],
+    "ask": "Who does the tribunal hold responsible?",
+    "options": [
+      {
+        "label": "The passenger"
+      },
+      {
+        "label": "No one: a bot erred"
+      },
+      {
+        "label": "The airline"
+      }
+    ],
+    "answer": 2,
+    "outcome": {
+      "fact": "February 2024",
+      "glyph": "check",
+      "line": "The airline. It paid him about 812 Canadian dollars."
+    },
+    "why": "A company's website speaks for the company, whether a person or a program wrote the words."
+  },
   "source": "Moffatt v. Air Canada, 2024 BCCRT 149",
   "source_kind": "primary_document",
   "reference": "Moffatt v. Air Canada, 2024 BCCRT 149, Civil Resolution Tribunal of British Columbia, 2024",
-  "written": "2026-09-26"
+  "written": "2026-10-06"
 }

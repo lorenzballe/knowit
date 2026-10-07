@@ -9,10 +9,10 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "In 2011 an experiment timed particles beating light by 60 billionths of a second. How did the story end?",
-  "answer": "With a loose cable. The OPERA team in Italy timed neutrinos sent from CERN arriving early. Rather than claim a revolution, they published and asked others to find the flaw. In 2012 a badly connected fibre-optic cable in the timing system turned up, and repeat runs matched the speed of light.",
+  "question": "2011: neutrinos fired 730 km from CERN to Italy arrive 60 billionths of a second before light could. What happened?",
+  "answer": "A timing fault: a fibre-optic cable not fully plugged in, plus a clock slightly off. The team published and asked others to find the flaw rather than claim a revolution. Repeat runs in 2012 matched the speed of light.",
   "move": "When a result overturns everything, hunt first for the loose cable.",
-  "ask": "When a surprising result lands in front of me, what boring error should I rule out first?",
+  "ask": "When a result looks too good, whose independent check am I waiting for?",
   "keywords": [
     "opera experiment",
     "neutrinos",
@@ -22,7 +22,7 @@
   ],
   "era": "recent",
   "region": "europe",
-  "hook": "story",
+  "hook": "puzzle",
   "mood": "sober",
   "numeracy": 1,
   "abstraction": "concrete",
@@ -30,8 +30,44 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "clues",
+    "options": [
+      "New physics",
+      "Bad statistics",
+      "Timing fault"
+    ],
+    "answer": 2,
+    "clues": [
+      {
+        "text": "Over three years about 16,000 neutrinos arrive 60 ns early: six sigma sure.",
+        "tag": "60 ns early, six sigma",
+        "rulesOut": []
+      },
+      {
+        "text": "Rerun with very short pulses, each neutrino timed alone: still 60 ns early.",
+        "tag": "Short pulses, same gap",
+        "rulesOut": [
+          1
+        ]
+      },
+      {
+        "text": "ICARUS, a detector in the same lab, times the same beam: light speed.",
+        "tag": "Neighbour: light speed",
+        "rulesOut": [
+          0
+        ]
+      },
+      {
+        "text": "A fibre-optic cable in OPERA's timing system turns out badly plugged in.",
+        "tag": "A loose cable",
+        "rulesOut": []
+      }
+    ],
+    "why": "A neighbour timing the same beam saw plain light speed. The loose cable only said where to look."
+  },
   "source": "OPERA Collaboration, Journal of High Energy Physics, 2012",
   "source_kind": "paper",
   "reference": "OPERA Collaboration, Measurement of the neutrino velocity with the OPERA detector in the CNGS beam, Journal of High Energy Physics, 2012",
-  "written": "2026-10-03"
+  "written": "2026-10-06"
 }

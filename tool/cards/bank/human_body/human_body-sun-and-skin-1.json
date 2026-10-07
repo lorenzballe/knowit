@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why does a bottle labelled SPF 30 rarely give SPF 30 protection on a beach?",
-  "answer": "Because the label is tested on a thick layer, 2 mg of cream per square centimetre of skin. Most people spread a quarter to a half of that, and protection falls steeply as the layer thins. Covering a whole adult body properly takes about 35 ml, roughly seven teaspoons, at every application.",
+  "question": "Why does a bottle labelled SPF 30 rarely give SPF 30 protection on a real beach?",
+  "answer": "Because a lab number holds only under lab conditions. Testers apply 2 mg of cream to every square centimetre; covering an adult body that way takes about 35 ml, roughly seven teaspoons, each time. Few people use half of that. Two coats, or a higher factor, makes up for a thin hand.",
   "move": "A tested number holds only under the conditions of the test.",
   "ask": "Which product do I trust without ever using it the way it was tested?",
   "keywords": [
@@ -26,6 +26,37 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "You wore SPF 30 and still burned by the afternoon."
+    },
+    "levels": [
+      {
+        "text": "The cream gave far less protection than the 30 on the bottle."
+      },
+      {
+        "text": "Protection depends on thickness: a thin film lets more UV through."
+      },
+      {
+        "text": "Most people spread a quarter to a half of the tested amount."
+      },
+      {
+        "text": "SPF is measured on a coat thicker than anyone spreads.",
+        "figure": "2 mg",
+        "unit": "of cream per cm² of skin"
+      }
+    ],
+    "guess": {
+      "options": [
+        "We spread it far too thin",
+        "Sweat washes it off",
+        "The sun is fiercer by sea"
+      ],
+      "answer": 0
+    }
+  },
   "source": "Petersen and Wulf, Photodermatol Photoimmunol Photomed, 2014",
   "source_kind": "paper",
   "reference": "Petersen B, Wulf HC, Application of sunscreen: theory and reality, Photodermatology, Photoimmunology & Photomedicine, 2014",

@@ -10,7 +10,7 @@
   "difficulty": "easy",
   "principle": "none",
   "question": "Why do most people's friends have more friends than they do?",
-  "answer": "Because popular people turn up on many more friend lists. Someone with 50 friends is counted 50 times when everyone tallies their friends; someone with 2, twice. So the average friend is better connected than the average person, as Scott Feld showed in 1991. Other people's busy social lives are partly a counting effect.",
+  "answer": "Because of how friends enter the sample. Scott Feld showed in 1991 that in almost any network the average friend is better connected than the average person, simply because well-connected people have more people to count them. Other people's busy social lives are partly a counting effect, not a verdict on yours.",
   "move": "Ask how the people being compared were chosen before feeling behind.",
   "ask": "When others seem to have fuller lives than mine, am I comparing myself with a fair sample?",
   "keywords": [
@@ -29,6 +29,35 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "why",
+    "ask": "And why?",
+    "start": {
+      "text": "Your friends seem to have more friends than you do."
+    },
+    "levels": [
+      {
+        "text": "For most people it is true, and not because they are unlikeable."
+      },
+      {
+        "text": "Someone with 50 friends turns up on 50 friend lists."
+      },
+      {
+        "text": "Someone with 2 friends turns up on just 2: the popular are overcounted."
+      },
+      {
+        "text": "Pick a friend and you are sampling the popular."
+      }
+    ],
+    "guess": {
+      "options": [
+        "People overstate friends",
+        "Popular people count more",
+        "Social media inflates"
+      ],
+      "answer": 1
+    }
+  },
   "source": "Feld, American Journal of Sociology, 1991",
   "source_kind": "paper",
   "reference": "Feld, Why your friends have more friends than you do, American Journal of Sociology 96(6):1464–1477, 1991",
