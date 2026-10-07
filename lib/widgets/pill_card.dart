@@ -186,7 +186,11 @@ class PillCard extends StatelessWidget {
           ),
           Expanded(
             child: flipped
-                ? _BackFace(pill: pill, given: given)
+                ? _BackFace(
+                    pill: pill,
+                    given: given,
+                    cornerRoom: onSave != null ? 88 : 0,
+                  )
                 // The challenge decides the front. A new kind of challenge
                 // will not compile until it is given a face here.
                 : switch (pill.challenge) {
@@ -346,81 +350,134 @@ class _SceneFront extends StatelessWidget {
 class _BackFace extends StatelessWidget {
   final Pill pill;
   final Answer? given;
-  const _BackFace({required this.pill, this.given});
+
+  /// Room kept clear for the save and share buttons in the bottom corner.
+  final double cornerRoom;
+  const _BackFace({required this.pill, this.given, this.cornerRoom = 0});
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      // The reveal is read, not looked at, so it starts at the top like any
-      // other page. Centring a block of body text in a tall card leaves it
-      // floating with a gap above and below, and the gap above is the one
-      // that reads as a mistake rather than as a margin.
-      builder: (context, constraints) => SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: constraints.maxHeight),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 10),
-              if (pill.isGraded && given != null) ...[
-                PopIn(
-                  delay: const Duration(milliseconds: 260),
-                  child: _Verdict(
-                    pill: pill,
-                    right: pill.challenge.accepts(given!.response),
-                    given: pill.challenge.describe(given!.response),
-                    confidence: given!.confidence,
-                  ),
-                ),
-                if (pill.challenge case final Estimate estimate) ...[
-                  const SizedBox(height: 6),
-                  PlaceItReveal(
-                    pill: pill,
-                    estimate: estimate,
-                    response: given!.response,
-                  ),
-                ],
-                const SizedBox(height: 14),
-              ] else if (!pill.isGraded && given != null) ...[
-                PopIn(
-                  delay: const Duration(milliseconds: 260),
-                  child: _YourLine(pill: pill, given: given!),
-                ),
-                const SizedBox(height: 14),
-              ],
-              Text(
-                pill.question,
-                style: AppText.display(
-                  size: pill.asksSomething ? 18 : 20,
-                  weight: FontWeight.w600,
-                  height: 1.28,
-                  spacing: -0.4,
-                  color: pill.ink,
-                ),
+    final given = this.given;
+    final Estimate? estimate = switch (pill.challenge) {
+      final Estimate e when pill.isGraded => e,
+      _ => null,
+    };
+
+    // What the reader committed to, said first: right or wrong on a card
+    // that is marked, the line they took on one that is not.
+    Widget? lead;
+    double Function(double, TextScaler)? leadHeight;
+    Widget? shortLead;
+    double Function(double, TextScaler)? shortLeadHeight;
+    if (given != null && pill.isGraded) {
+      final verdict = _Verdict(
+        pill: pill,
+        right: pill.challenge.accepts(given.response),
+        given: pill.challenge.describe(given.response),
+        confidence: given.confidence,
+      );
+      final line = verdict.text(context);
+      lead = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          PopIn(delay: const Duration(milliseconds: 260), child: verdict),
+          if (estimate != null) ...[
+            const SizedBox(height: 6),
+            PlaceItReveal(
+              pill: pill,
+              estimate: estimate,
+              response: given.response,
+            ),
+          ],
+        ],
+      );
+      leadHeight = (width, scaler) =>
+          _Verdict.heightFor(context, line, pill.ink, width, scaler) +
+          (estimate != null ? 6 + PlaceItReveal.height : 0);
+    } else if (given != null) {
+      lead = PopIn(
+        delay: const Duration(milliseconds: 260),
+        child: _YourLine(pill: pill, given: given),
+      );
+      leadHeight = (width, scaler) =>
+          _YourLine.heightFor(context, pill, given, width, scaler);
+      if (given.hasReason) {
+        shortLead = PopIn(
+          delay: const Duration(milliseconds: 260),
+          child: _YourLine(pill: pill, given: given, short: true),
+        );
+        shortLeadHeight = (width, scaler) => _YourLine.heightFor(
+          context,
+          pill,
+          given,
+          width,
+          scaler,
+          short: true,
+        );
+      }
+    }
+
+    return CardReveal(
+      pill: pill,
+      lead: lead,
+      leadHeight: leadHeight,
+      shortLead: shortLead,
+      shortLeadHeight: shortLeadHeight,
+      cornerRoom: cornerRoom,
+      // On a card that asked first, the scene waits for the answer: played
+      // before, it would have given it away.
+      scene: pill.scene != null && pill.asksSomething
+          ? (height) => SizedBox(
+              height: height,
+              child: SceneView(
+                scene: pill.scene!,
+                ink: pill.ink,
+                ground: pill.color,
               ),
-              const SizedBox(height: 16),
-              // On a card that asked first, the scene waits for the answer:
-              // played before, it would have given it away.
-              if (pill.scene != null && pill.asksSomething) ...[
-                SizedBox(
-                  height: 270,
-                  child: SceneView(
-                    scene: pill.scene!,
-                    ink: pill.ink,
-                    ground: pill.color,
-                  ),
-                ),
-                const SizedBox(height: 18),
-              ],
-              RevealBody.onCard(pill),
-            ],
-          ),
-        ),
-      ),
+            )
+          : null,
     );
   }
+}
+
+/// The height [text] is set at in [width], the way a [Text] here sets it:
+/// on the inherited style, which carries the theme's tracking.
+double _measure(
+  BuildContext context,
+  String text,
+  TextStyle style,
+  double width,
+  TextScaler scaler,
+) {
+  final base = DefaultTextStyle.of(context);
+  final p = TextPainter(
+    text: TextSpan(text: text, style: base.style.merge(style)),
+    textDirection: Directionality.of(context),
+    textScaler: scaler,
+    textHeightBehavior: base.textHeightBehavior,
+  )..layout(maxWidth: width);
+  final h = p.height;
+  p.dispose();
+  return h;
+}
+
+double _measureSpan(
+  BuildContext context,
+  InlineSpan span,
+  double width,
+  TextScaler scaler,
+) {
+  final base = DefaultTextStyle.of(context);
+  final p = TextPainter(
+    text: TextSpan(style: base.style, children: [span]),
+    textDirection: Directionality.of(context),
+    textScaler: scaler,
+    textHeightBehavior: base.textHeightBehavior,
+  )..layout(maxWidth: width);
+  final h = p.height;
+  p.dispose();
+  return h;
 }
 
 /// Right or wrong, said plainly at the top of the reveal.
@@ -435,6 +492,26 @@ class _Verdict extends StatelessWidget {
     required this.given,
     this.confidence,
   });
+
+  static TextStyle _style(Color ink) =>
+      AppText.label(size: 11, spacing: 1.2, color: ink.withValues(alpha: 0.85));
+
+  /// The verdict as it is printed, confidence and all.
+  String text(BuildContext context) => confidence == null
+      ? _line(context)
+      : context.l10n.lineYouSaidSure(_line(context), confidence!);
+
+  /// The room the verdict takes at [width]: its words beside the mark.
+  static double heightFor(
+    BuildContext context,
+    String text,
+    Color ink,
+    double width,
+    TextScaler scaler,
+  ) {
+    final h = _measure(context, text, _style(ink), width - 26, scaler);
+    return h > 18 ? h : 18;
+  }
 
   String _line(BuildContext context) {
     return switch (pill.challenge) {
@@ -458,24 +535,16 @@ class _Verdict extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(
-          right ? Icons.check_circle_rounded : Icons.cancel_rounded,
-          size: 18,
-          color: pill.ink,
-        ),
-        const SizedBox(width: 8),
-        Flexible(
-          child: Text(
-            confidence == null
-                ? _line(context)
-                : context.l10n.lineYouSaidSure(_line(context), confidence!),
-            style: AppText.label(
-              size: 11,
-              spacing: 1.2,
-              color: pill.ink.withValues(alpha: 0.85),
-            ),
+        // The words say right or wrong; the mark repeats it in shape.
+        ExcludeSemantics(
+          child: Icon(
+            right ? Icons.check_circle_rounded : Icons.cancel_rounded,
+            size: 18,
+            color: pill.ink,
           ),
         ),
+        const SizedBox(width: 8),
+        Flexible(child: Text(text(context), style: _style(pill.ink))),
       ],
     );
   }
@@ -1093,50 +1162,94 @@ class _ReasonStepState extends State<_ReasonStep> {
 class _YourLine extends StatelessWidget {
   final Pill pill;
   final Answer given;
-  const _YourLine({required this.pill, required this.given});
+
+  /// The side and the reason run together in one paragraph, for a back
+  /// short of room.
+  final bool short;
+  const _YourLine({
+    required this.pill,
+    required this.given,
+    this.short = false,
+  });
+
+  /// Set off by a rule down its left edge rather than boxed: it is the
+  /// reader's own voice quoted back, and the one box on the back belongs to
+  /// the line to keep.
+  static const EdgeInsets _padding = EdgeInsets.fromLTRB(13, 2, 0, 2);
+  static const double _rule = 2;
+
+  static TextStyle _label(Color ink) =>
+      AppText.label(size: 10, spacing: 1.3, color: ink.withValues(alpha: 0.55));
+  static TextStyle _took(Color ink) =>
+      AppText.body(size: 15, weight: FontWeight.w600, height: 1.3, color: ink);
+  static TextStyle _reason(Color ink) =>
+      AppText.body(size: 13.5, height: 1.4, color: ink.withValues(alpha: 0.75));
+
+  /// The side taken, run in after its label: one line where two would
+  /// say no more.
+  static TextSpan _tookSpan(
+    String caps,
+    Pill pill,
+    Answer given, {
+    bool short = false,
+  }) => TextSpan(
+    children: [
+      TextSpan(text: '$caps  ', style: _label(pill.ink)),
+      TextSpan(
+        text: pill.challenge.describe(given.response),
+        style: _took(pill.ink),
+      ),
+      if (short && given.hasReason)
+        TextSpan(text: '  "${given.reason!.trim()}"', style: _reason(pill.ink)),
+    ],
+  );
+
+  /// The room the line takes at [width].
+  static double heightFor(
+    BuildContext context,
+    Pill pill,
+    Answer given,
+    double width,
+    TextScaler scaler, {
+    bool short = false,
+  }) {
+    final inner = width - _padding.horizontal - _rule;
+    double h(String text, TextStyle style) =>
+        _measure(context, text, style, inner, scaler);
+
+    final took = _measureSpan(
+      context,
+      _tookSpan(context.l10n.youTookCaps, pill, given, short: short),
+      inner,
+      scaler,
+    );
+    var total = _padding.vertical + took;
+    if (given.hasReason && !short) {
+      total += 6 + h('"${given.reason!.trim()}"', _reason(pill.ink));
+    }
+    return total;
+  }
 
   @override
   Widget build(BuildContext context) {
     final ink = pill.ink;
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(15, 12, 15, 14),
+      padding: _padding,
       decoration: BoxDecoration(
-        color: pill.wash,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: pill.washEdge),
+        border: Border(
+          left: BorderSide(color: ink.withValues(alpha: 0.45), width: _rule),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            context.l10n.youTookCaps,
-            style: AppText.label(
-              size: 10,
-              spacing: 1.3,
-              color: ink.withValues(alpha: 0.55),
-            ),
+          Text.rich(
+            _tookSpan(context.l10n.youTookCaps, pill, given, short: short),
           ),
-          const SizedBox(height: 5),
-          Text(
-            pill.challenge.describe(given.response),
-            style: AppText.body(
-              size: 15,
-              weight: FontWeight.w600,
-              height: 1.3,
-              color: ink,
-            ),
-          ),
-          if (given.hasReason) ...[
-            const SizedBox(height: 8),
-            Text(
-              '"${given.reason!.trim()}"',
-              style: AppText.body(
-                size: 13.5,
-                height: 1.4,
-                color: ink.withValues(alpha: 0.75),
-              ),
-            ),
+          if (given.hasReason && !short) ...[
+            const SizedBox(height: 6),
+            Text('"${given.reason!.trim()}"', style: _reason(ink)),
           ],
         ],
       ),

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Over a lifetime, do people come to regret the things they did, or the things they did not do?",
-  "answer": "Mostly what they did not do. Gilovich and Medvec found that in the short run people regret actions more, but over the long run regrets of inaction grow. Actions can be explained away or repaired, while a missed chance leaves imagined outcomes open, and imagined outcomes are never disappointing.",
+  "question": "Six regrets people describe. Which kind fades with the years, and which still stings decades later?",
+  "answer": "The things not done last. Gilovich and Medvec found actions hurt more at first, but over a lifetime regrets of inaction dominate. People repair a mistake or find its silver lining; a missed chance has no ending, and the reasons that held them back fade faster than the dream.",
   "move": "Ask which choice you would still be explaining in twenty years.",
   "ask": "Which choice facing me now will I still be explaining in twenty years if I do not make it?",
   "keywords": [
@@ -27,8 +27,52 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Fades",
+    "right": "Lingers",
+    "tag": "Looking back",
+    "items": [
+      {
+        "text": "The wrong job",
+        "note": "Took a job that turned out badly.",
+        "pile": "left",
+        "verdict": "Actions get explained: at least it showed what I did not want."
+      },
+      {
+        "text": "Never asked",
+        "note": "Never asked out the person they liked.",
+        "pile": "right",
+        "verdict": "No answer ever came, so the imagined one stays perfect."
+      },
+      {
+        "text": "A drunk message",
+        "note": "Sent something embarrassing late at night.",
+        "pile": "left",
+        "verdict": "Sharp for a week. Then it turns into a story told against yourself."
+      },
+      {
+        "text": "Didn't study",
+        "note": "Never went back to finish their education.",
+        "pile": "right",
+        "verdict": "Education tops the lists of what people regret most in later life."
+      },
+      {
+        "text": "A bad purchase",
+        "note": "Bought a car that was a mistake.",
+        "pile": "left",
+        "verdict": "Sold, written off, forgotten. A mistake made can be repaired."
+      },
+      {
+        "text": "Never went",
+        "note": "Always meant to travel, and never did.",
+        "pile": "right",
+        "verdict": "With time the obstacles shrink in memory, and the trip not taken grows."
+      }
+    ]
+  },
   "source": "Gilovich and Medvec, Psychological Review, 1995",
   "source_kind": "paper",
-  "reference": "Gilovich and Medvec, The Experience of Regret: What, When, and Why, Psychological Review, 1995",
+  "reference": "Gilovich and Medvec, The Experience of Regret: What, When, and Why, Psychological Review 102:379, 1995; Roese and Summerville, What We Regret Most... and Why, Personality and Social Psychology Bulletin 31:1273, 2005",
   "written": "2026-09-29"
 }

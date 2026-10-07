@@ -70,7 +70,7 @@ TAG_KEYS = ("keywords", "era", "region", "hook", "mood", "numeracy", "abstractio
 KEY_ORDER = [
     "id", "topic", "genre", "strand", "also", "kind", "difficulty", "principle", "question",
     "options", "correct", "value", "unit", "tolerance", "withinFactor", "sides",
-    "answer", "move", "ask", "trap", "hint", "steps", "simply", "counterpoint",
+    "answer", "move", "ask", "both", "trap", "hint", "steps", "simply", "counterpoint",
     *TAG_KEYS, "builds_on", "figure", "diagram", "scene",
     "source", "source_kind", "reference", "quote", "written", "checked", "disabled",
 ]

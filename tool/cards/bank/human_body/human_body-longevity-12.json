@@ -1,0 +1,59 @@
+{
+  "id": "human_body-longevity-12",
+  "topic": "human_body",
+  "genre": "human_body.ageing",
+  "strand": "human_body.ageing.longevity",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A treatment could slow ageing and let you live to 120 or beyond. Would you want it for yourself?",
+  "answer": "Most said no, yet about two in three guessed that most other people would say yes. Each doubter took their doubt for the exception. Asked their ideal lifespan, the typical answer was about 90, not far past what many already reach. People want the years they can picture, healthy ones.",
+  "move": "Before guessing what others want, check whether you want it yourself.",
+  "ask": "How many years do I want, and what would make me want more?",
+  "keywords": [
+    "lifespan",
+    "radical life extension",
+    "ageing",
+    "other people's views"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "US adults, Pew Research 2013",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "Yes, I'd take it",
+            "share": 38,
+            "mirror": "Like 38% of Americans. More years means more of what you love; why stop at 85?"
+          },
+          {
+            "label": "No, thanks",
+            "share": 56,
+            "mirror": "Like 56%. Many feared extra years of frailty, or a world too crowded to share them."
+          },
+          {
+            "label": "Not sure",
+            "share": 6,
+            "mirror": "Like 6%. It depends on the health it brings, the cost, and who else gets to come."
+          }
+        ]
+      }
+    ],
+    "why": "Most of us picture extra years as extra old age, and want them only with the health to enjoy them."
+  },
+  "source": "Pew Research Center, 2013",
+  "source_kind": "statistics",
+  "reference": "Pew Research Center, Living to 120 and Beyond: Americans' Views on Aging, Medical Advances and Radical Life Extension, August 2013",
+  "written": "2026-10-07"
+}

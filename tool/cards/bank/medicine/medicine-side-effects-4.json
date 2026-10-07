@@ -1,0 +1,78 @@
+{
+  "id": "medicine-side-effects-4",
+  "topic": "medicine",
+  "genre": "medicine.judge_a_treatment",
+  "strand": "medicine.judge_a_treatment.side_effects",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Six worries about mixing medicines with food, drink or each other. Which are real risks, and which are overblown?",
+  "answer": "The real dangers are the quiet ones. Grapefruit, milk and a second packet of paracetamol all look harmless, and each changes how much drug reaches the blood. The famous fears, the pint and the old pill bottle, matter far less. A pharmacist knows which is which, and asking costs nothing.",
+  "move": "Worry about what changes the dose, not about what sounds dangerous.",
+  "ask": "What do I take alongside my medicines that I have never mentioned to a pharmacist?",
+  "keywords": [
+    "drug interactions",
+    "grapefruit",
+    "paracetamol",
+    "antibiotics",
+    "expiry dates"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Real risk",
+    "right": "Fine",
+    "tag": "Read the leaflet",
+    "items": [
+      {
+        "text": "Grapefruit",
+        "note": "Juice with a statin such as simvastatin.",
+        "pile": "left",
+        "verdict": "It blocks a gut enzyme, so several times more of the drug reaches the blood."
+      },
+      {
+        "text": "Expired tablets",
+        "note": "Painkiller tablets two years past the date.",
+        "pile": "right",
+        "verdict": "US military tests found most kept working years on. Not insulin or liquids."
+      },
+      {
+        "text": "Two cold remedies",
+        "note": "A cold-and-flu powder with paracetamol tablets.",
+        "pile": "left",
+        "verdict": "Many cold remedies already contain paracetamol. Doubling up harms the liver."
+      },
+      {
+        "text": "A pint",
+        "note": "Beer while on most common antibiotics.",
+        "pile": "right",
+        "verdict": "Fine in moderation with most. The NHS warns off metronidazole and tinidazole."
+      },
+      {
+        "text": "Milk",
+        "note": "Swallowing ciprofloxacin with a glass of milk.",
+        "pile": "left",
+        "verdict": "Calcium binds the drug in the gut, so much less of it is absorbed."
+      },
+      {
+        "text": "Two painkillers",
+        "note": "Ibuprofen and paracetamol together, each at normal dose.",
+        "pile": "right",
+        "verdict": "They work differently. Adults can safely take both at the same time."
+      }
+    ]
+  },
+  "source": "NHS medicines guidance; Lyon et al., 2006",
+  "source_kind": "institution",
+  "reference": "NHS, Can I drink alcohol while taking antibiotics?; NHS, Ciprofloxacin: how and when to take it; NHS, Paracetamol for adults; Lyon et al., Stability profiles of drug products extended beyond labeled expiration dates, Journal of Pharmaceutical Sciences 95:1549, 2006; Lilja et al., Clin Pharmacol Ther 64:477, 1998",
+  "written": "2026-10-07"
+}

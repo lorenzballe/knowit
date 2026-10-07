@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Why do people readily spot bias in others' judgements but rarely in their own?",
-  "answer": "Because they judge themselves by looking inward and others by what they do. Searching their own thoughts, people find no biased motive, since most bias works out of sight, and conclude they are fair. Others offer only behaviour, where bias shows. Each person is graded on intentions, everyone else on results.",
+  "question": "Most people rate themselves above average at being fair and considerate. Say you did too. What would you say about your rating?",
+  "answer": "Most called their own rating accurate, minutes after reading about the very bias. People judge themselves by looking inward and others by what they do. Searching their thoughts, they find no biased motive, since bias works out of sight. Each person is graded on intentions, everyone else on results.",
   "move": "Check your fairness by what you did, not by what you meant.",
   "ask": "If a stranger watched only my actions this month, what bias might they see that I cannot?",
   "keywords": [
@@ -26,8 +26,34 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Pronin & Kugler, JESP, 2007",
+  "scene": {
+    "type": "poll",
+    "who": "Stanford students, Pronin et al. 2002",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "It's accurate",
+            "share": 63,
+            "mirror": "Like 63% of the students, just told about this bias. From inside, a fair rating feels fair."
+          },
+          {
+            "label": "Too flattering",
+            "share": 24,
+            "mirror": "Like about a quarter. You can see the pull in yourself, which most see only in others."
+          },
+          {
+            "label": "Too modest",
+            "share": 13,
+            "mirror": "Like 13%. You may be right: some people do sell themselves short."
+          }
+        ]
+      }
+    ],
+    "why": "We check ourselves by looking inward and find no bias, because bias works out of sight."
+  },
+  "source": "Pronin et al., PSPB, 2002; Pronin & Kugler, JESP, 2007",
   "source_kind": "paper",
-  "reference": "Pronin & Kugler, Valuing thoughts, ignoring behavior: The introspection illusion as a source of the bias blind spot, Journal of Experimental Social Psychology, 2007",
+  "reference": "Pronin, Lin & Ross, The bias blind spot: perceptions of bias in self versus others, Personality and Social Psychology Bulletin 28 (2002): 369-381; Pronin & Kugler, Valuing thoughts, ignoring behavior, Journal of Experimental Social Psychology, 2007",
   "written": "2026-10-03"
 }

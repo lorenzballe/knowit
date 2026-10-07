@@ -1999,6 +1999,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get showAllSteps => 'Ver todo';
 
   @override
+  String get revealSeePicture => 'Ver el dibujo';
+
+  @override
+  String get revealPlayScene => 'Pruébalo tú';
+
+  @override
+  String get revealBackToAnswer => 'Volver a la respuesta';
+
+  @override
+  String get revealShowWorking => 'Ver el razonamiento';
+
+  @override
   String get sceneLockIn => 'CONFIRMAR';
 
   @override

@@ -1,0 +1,77 @@
+{
+  "id": "technology-checking-a-source-1",
+  "topic": "technology",
+  "genre": "technology.truth_online",
+  "strand": "technology.truth_online.checking_a_source",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "You land on an unfamiliar website making a health claim. Which of these tell you whether to trust it?",
+  "answer": "The useful checks happen off the page. Stanford researchers watched historians, students and professional fact-checkers judge websites. The fact-checkers won, and fast, by leaving the site almost at once to read what others said about it. The rest stayed on the page, studying exactly the things a site's owners control.",
+  "move": "To judge a source, leave it and read what others say about it.",
+  "ask": "Which website did I last trust because it looked serious?",
+  "keywords": [
+    "lateral reading",
+    "fact-checking",
+    "website credibility",
+    "misinformation"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Useful",
+    "right": "Useless",
+    "tag": "Is this site any good?",
+    "items": [
+      {
+        "text": ".org address",
+        "note": "The site ends in .org, not .com.",
+        "pile": "right",
+        "verdict": "Anyone can register a .org for a few pounds. Lobby groups use them too."
+      },
+      {
+        "text": "Polished design",
+        "note": "Clean pages, charts, not a typo anywhere.",
+        "pile": "right",
+        "verdict": "A good template costs little. Looking professional is cheap to fake."
+      },
+      {
+        "text": "Its About page",
+        "note": "It calls itself independent and non-profit.",
+        "pile": "right",
+        "verdict": "Every site describes itself kindly. That is the claim, not the check."
+      },
+      {
+        "text": "Others on it",
+        "note": "You search its name in a new tab.",
+        "pile": "left",
+        "verdict": "Professional fact-checkers do this first. It is how they beat the historians."
+      },
+      {
+        "text": "Who pays for it",
+        "note": "Its funders, found on other sites.",
+        "pile": "left",
+        "verdict": "Money shapes tone. Ask who pays, and look for the answer somewhere else."
+      },
+      {
+        "text": "40,000 shares",
+        "note": "Shared all over social media this week.",
+        "pile": "right",
+        "verdict": "Shares measure feeling, not truth. A good scare travels further than a fact."
+      }
+    ]
+  },
+  "source": "Wineburg and McGrew, Teachers College Record, 2019",
+  "source_kind": "paper",
+  "reference": "Sam Wineburg and Sarah McGrew, Lateral Reading and the Nature of Expertise: Reading Less and Learning More When Evaluating Digital Information, Teachers College Record 121(11), 2019",
+  "written": "2026-10-07"
+}

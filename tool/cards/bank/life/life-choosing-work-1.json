@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "Administrative assistants doing the same job were asked what their work meant to them. How did their answers split?",
-  "answer": "Into three, in roughly equal numbers. Wrzesniewski and colleagues found people in the same role saw it as a job, for the pay; a career, for advancement; or a calling, for the work itself. Those with a calling were the most satisfied with work and life. The desk was the same; the job was not.",
+  "question": "Think of the work you do most days. Which of these is closest to what it is for you?",
+  "answer": "The three answers came in roughly equal numbers, even among administrative assistants doing the same tasks, so the job title does not set them. In later studies by Wrzesniewski, some hospital cleaners counted talking with patients as part of the work, and did more of it. They had rewritten the job from inside.",
   "move": "Ask what a job means to the person in it, not only what it is.",
   "ask": "Do I treat my work as a job, a career or a calling, and is that partly my choice?",
   "keywords": [
@@ -26,8 +26,34 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "source": "Wrzesniewski and colleagues, J. Research in Personality, 1997",
+  "scene": {
+    "type": "poll",
+    "who": "University staff, Wrzesniewski 1997",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "A job: it pays the bills",
+            "share": 33,
+            "mirror": "Like about a third. You work to live, and what you care about most happens outside it."
+          },
+          {
+            "label": "A career: I'm climbing",
+            "share": 33,
+            "mirror": "Like about a third. You want to grow and be recognised; the next step keeps you going."
+          },
+          {
+            "label": "A calling: it matters",
+            "share": 34,
+            "mirror": "Like about a third. People with a calling were the most satisfied, with work and with life."
+          }
+        ]
+      }
+    ],
+    "why": "Same desk, same tasks, three readings: the meaning comes from the person as much as the job."
+  },
+  "source": "Wrzesniewski et al., J. Research in Personality, 1997",
   "source_kind": "paper",
-  "reference": "Wrzesniewski, McCauley, Rozin and Schwartz, Jobs, Careers, and Callings: People's Relations to Their Work, Journal of Research in Personality, 1997",
+  "reference": "Wrzesniewski, McCauley, Rozin and Schwartz, Jobs, Careers, and Callings: People's Relations to Their Work, Journal of Research in Personality, 1997; Wrzesniewski and Dutton, Crafting a Job, Academy of Management Review, 2001",
   "written": "2026-10-03"
 }

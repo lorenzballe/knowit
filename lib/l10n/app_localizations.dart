@@ -2976,6 +2976,30 @@ abstract class AppLocalizations {
   /// **'Show all'**
   String get showAllSteps;
 
+  /// On the back of a card with no room for its diagram beside the words: tap to see the diagram in place of the answer.
+  ///
+  /// In en, this message translates to:
+  /// **'See the picture'**
+  String get revealSeePicture;
+
+  /// On the back of a card with no room for its interactive scene beside the words: tap to play the scene in place of the answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Play with it'**
+  String get revealPlayScene;
+
+  /// Shown with the diagram or scene on the back of a card: tap to bring the answer back.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to the answer'**
+  String get revealBackToAnswer;
+
+  /// On the back of a card with no room for its worked solution beside the answer: tap to see the steps in place of the answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the working'**
+  String get revealShowWorking;
+
   /// Label inside an interactive card scene.
   ///
   /// In en, this message translates to:

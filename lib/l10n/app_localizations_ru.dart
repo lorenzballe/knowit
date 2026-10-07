@@ -2062,6 +2062,18 @@ class AppLocalizationsRu extends AppLocalizations {
   String get showAllSteps => 'Показать всё';
 
   @override
+  String get revealSeePicture => 'Посмотреть рисунок';
+
+  @override
+  String get revealPlayScene => 'Попробовать самому';
+
+  @override
+  String get revealBackToAnswer => 'Вернуться к ответу';
+
+  @override
+  String get revealShowWorking => 'Показать решение';
+
+  @override
   String get sceneLockIn => 'ГОТОВО';
 
   @override

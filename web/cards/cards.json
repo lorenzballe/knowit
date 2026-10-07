@@ -1,7 +1,7 @@
 {
  "format": 1,
- "version": 202610071504,
- "built": "2026-10-07T15:04:33Z",
+ "version": 202610071808,
+ "built": "2026-10-07T18:08:53Z",
  "cards": [
   {
    "id": "art-abstraction-1",
@@ -29217,6 +29217,60 @@
    "written": "2026-10-03"
   },
   {
+   "id": "economics-hidden-incentives-4",
+   "topic": "economics",
+   "genre": "economics.think_in_incentives",
+   "strand": "economics.think_in_incentives.hidden_incentives",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "You are offered €10 to let a surplus lab mouse be put down; refuse, and it lives. Do you take the money?",
+   "answer": "Alone, 46% took the money. When the same choice became a trade, a buyer and a seller haggling over the price, nearly three in four sellers agreed to a price for a mouse's life. In a market the blame is split, and someone else would take the deal anyway. A price can wear down what people refuse alone.",
+   "move": "Ask what you would do if the deal were yours alone.",
+   "ask": "What do I go along with at work that I would refuse on my own?",
+   "keywords": [
+    "markets",
+    "morals",
+    "lab mice",
+    "responsibility"
+   ],
+   "era": "recent",
+   "region": "europe",
+   "hook": "paradox",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "Bonn students, Falk & Szech 2013",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "Take the €10",
+        "share": 46,
+        "mirror": "Like 46% of the students. A lab mouse is not a pet, and mice die every day for less."
+       },
+       {
+        "label": "Save the mouse",
+        "share": 54,
+        "mirror": "Like 54%. Every mouse spared in the study was bought and kept alive for the rest of its life."
+       }
+      ]
+     }
+    ],
+    "why": "Some weigh a small life against the money; others won't put any price on a life at all."
+   },
+   "source": "Falk & Szech, Science, 2013",
+   "source_kind": "paper",
+   "reference": "Falk & Szech, Morals and markets, Science 340 (2013): 707-711",
+   "written": "2026-10-07"
+  },
+  {
    "id": "economics-hyperinflation-1",
    "topic": "economics",
    "genre": "economics.crises",
@@ -31069,6 +31123,76 @@
    "source_kind": "paper",
    "reference": "Kivetz, Urminsky & Zheng, The Goal-Gradient Hypothesis Resurrected: Purchase Acceleration, Illusionary Goal Progress, and Customer Retention, Journal of Marketing Research, 2006",
    "written": "2026-10-03"
+  },
+  {
+   "id": "economics-loyalty-traps-4",
+   "topic": "economics",
+   "genre": "economics.spot_a_bad_deal",
+   "strand": "economics.spot_a_bad_deal.loyalty_traps",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "You are handed a small free gift, then offered a swap for another of about the same value. Do you swap?",
+   "answer": "A third group, given a free choice, split 56% mug and 44% chocolate, so neither was the clear favourite. Yet about 9 in 10 kept whichever they had been handed minutes before. Owning a thing, even briefly, makes giving it up feel like a loss. Free trials and 30-day returns are built on that minute.",
+   "move": "Before keeping something, ask whether you would buy it today at this price.",
+   "ask": "What do I keep paying for only because it is already mine?",
+   "keywords": [
+    "endowment effect",
+    "ownership",
+    "free trials",
+    "loss aversion"
+   ],
+   "era": "twentieth",
+   "region": "americas",
+   "hook": "paradox",
+   "mood": "playful",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "Students, Knetsch 1989",
+    "questions": [
+     {
+      "prompt": "You have been given a coffee mug. Swap it for a big chocolate bar?",
+      "tag": "Handed the mug",
+      "options": [
+       {
+        "label": "Keep the mug",
+        "share": 89
+       },
+       {
+        "label": "Swap for the chocolate",
+        "share": 11
+       }
+      ]
+     },
+     {
+      "prompt": "Say you had been handed the chocolate instead. Swap it for the mug?",
+      "tag": "Handed the chocolate",
+      "options": [
+       {
+        "label": "Swap for the mug",
+        "share": 10
+       },
+       {
+        "label": "Keep the chocolate",
+        "share": 90
+       }
+      ]
+     }
+    ],
+    "why": "Giving up what you hold feels like a loss, and a loss weighs more than the same thing gained.",
+    "same": "You held steady: you know which you like. Most didn't: about 9 in 10 kept whatever they got.",
+    "switched": "Your pick moved with what you were handed. For 9 in 10, being handed it was reason to keep it."
+   },
+   "source": "Knetsch, American Economic Review, 1989",
+   "source_kind": "paper",
+   "reference": "Knetsch, The endowment effect and evidence of nonreversible indifference curves, American Economic Review 79 (1989): 1277-1284",
+   "written": "2026-10-07"
   },
   {
    "id": "economics-luck-1",
@@ -34972,6 +35096,83 @@
    "source_kind": "paper",
    "reference": "Cormac Herley, Why do Nigerian Scammers Say They are From Nigeria?, Workshop on the Economics of Information Security, 2012",
    "written": "2026-10-03"
+  },
+  {
+   "id": "economics-too-good-to-be-true-4",
+   "topic": "economics",
+   "genre": "economics.spot_a_bad_deal",
+   "strand": "economics.spot_a_bad_deal.too_good_to_be_true",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "An investment is pitched to you online. Which of these signs should worry you, and which are normal for a real one?",
+   "answer": "A real investment looks worse than a scam. It admits losses, promises nothing and lets you check it at leisure. A Ponzi scheme can afford to look perfect, and to pay its first investors, because the money comes from the next ones. The friend who got paid is part of the pitch.",
+   "move": "When nothing can go wrong, ask where the money comes from.",
+   "ask": "Would I still believe this if a stranger, not a friend, had pitched it to me?",
+   "keywords": [
+    "investment scams",
+    "ponzi schemes",
+    "fake celebrity ads",
+    "financial regulators"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "practical",
+   "mood": "practical",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Red flag",
+    "right": "Normal",
+    "tag": "Sponsored · Invest now",
+    "items": [
+     {
+      "text": "Guaranteed 10%",
+      "note": "Ten per cent a year, guaranteed.",
+      "pile": "left",
+      "verdict": "Nobody can guarantee more than a safe bank pays. The guarantee is the hook."
+     },
+     {
+      "text": "A friend got paid",
+      "note": "A friend put money in and has already taken profits out.",
+      "pile": "left",
+      "verdict": "Ponzi schemes pay early investors with newcomers' money, so the word spreads."
+     },
+     {
+      "text": "Some losing years",
+      "note": "Its record shows years when it lost money.",
+      "pile": "right",
+      "verdict": "Every real investment that grows has bad years. Losses on record are honest."
+     },
+     {
+      "text": "A celebrity ad",
+      "note": "A famous TV presenter recommends it on social media.",
+      "pile": "left",
+      "verdict": "Fake celebrity adverts are common bait. Martin Lewis sued Facebook over them."
+     },
+     {
+      "text": "Pay in crypto",
+      "note": "You pay in crypto, or into a person's bank account.",
+      "pile": "left",
+      "verdict": "Real firms take money into an account in the firm's own name."
+     },
+     {
+      "text": "On the register",
+      "note": "You found the firm on the regulator's own website.",
+      "pile": "right",
+      "verdict": "A real check. Then call the number listed there, not the one in the advert."
+     }
+    ]
+   },
+   "source": "FCA ScamSmart",
+   "source_kind": "institution",
+   "reference": "Financial Conduct Authority, ScamSmart: avoid investment and pension scams, https://www.fca.org.uk/scamsmart ; BBC News, Martin Lewis drops Facebook lawsuit over fake ads, 23 January 2019",
+   "written": "2026-10-07"
   },
   {
    "id": "economics-tragedy-of-the-commons-1",
@@ -39843,6 +40044,90 @@
    "written": "2026-10-03"
   },
   {
+   "id": "food-food-safety-6",
+   "topic": "food",
+   "genre": "food.fermentation",
+   "strand": "food.fermentation.food_safety",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Rare steak, reheated rice, mouldy cheese. Which of these kitchen fears are real risks, and which are overblown?",
+   "answer": "Risk depends on where the germs can be. On a steak or a block of cheddar they stay on the surface, where heat or a knife reaches them. Mince, soft bread, raw flour and cooled rice hide them inside, or let them make toxins that cooking cannot undo. Looks tell you neither.",
+   "move": "Ask where the danger sits before asking how bad it looks.",
+   "ask": "Which food do I throw away out of fear, and which do I eat without a second thought?",
+   "keywords": [
+    "food poisoning",
+    "mould",
+    "rice",
+    "raw flour",
+    "rare meat"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "practical",
+   "mood": "practical",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Real risk",
+    "right": "Fine",
+    "tag": "In your kitchen",
+    "items": [
+     {
+      "text": "Rare steak",
+      "note": "Pink all the way through the middle.",
+      "pile": "right",
+      "verdict": "Germs sit on the outside of a whole cut, and searing kills them."
+     },
+     {
+      "text": "Rare burger",
+      "note": "Pink all the way through the middle.",
+      "pile": "left",
+      "verdict": "Mincing spreads the surface germs all through. Cook it right through."
+     },
+     {
+      "text": "Reheated rice",
+      "note": "Cooked yesterday, left out overnight, microwaved.",
+      "pile": "left",
+      "verdict": "Spores survive cooking, then make a toxin left out that reheating can't undo."
+     },
+     {
+      "text": "Mouldy cheddar",
+      "note": "A spot of mould on a block of hard cheese.",
+      "pile": "right",
+      "verdict": "Mould can't reach far into hard cheese. Cut 2.5 cm around the spot."
+     },
+     {
+      "text": "Mouldy bread",
+      "note": "A spot of mould on one slice.",
+      "pile": "left",
+      "verdict": "Its threads run through soft food unseen. Bin the loaf, not just the slice."
+     },
+     {
+      "text": "Cookie dough",
+      "note": "Raw off the spoon, made without eggs.",
+      "pile": "left",
+      "verdict": "Raw flour has caused E. coli outbreaks. It is a raw crop, never heated."
+     },
+     {
+      "text": "Refreezing meat",
+      "note": "Thawed in the fridge, then frozen again.",
+      "pile": "right",
+      "verdict": "Safe if it stayed cold all along. It just comes out a little drier."
+     }
+    ]
+   },
+   "source": "USDA FSIS; NHS; CDC",
+   "source_kind": "institution",
+   "reference": "USDA FSIS, Molds on Food: Are They Dangerous?; USDA FSIS, Freezing and Food Safety; NHS, Can reheating rice cause food poisoning?; CDC, Say No to Raw Dough; Food Standards Agency, Rare burgers and steaks",
+   "written": "2026-10-07"
+  },
+  {
    "id": "food-food-waste-1",
    "topic": "food",
    "genre": "food.food_and_the_planet",
@@ -40557,6 +40842,76 @@
    "source_kind": "paper",
    "reference": "Cummings, Purnell, Frayo, Schmidova, Wisse & Weigle, A preprandial rise in plasma ghrelin levels suggests a role in meal initiation in humans, Diabetes, 2001",
    "written": "2026-10-03"
+  },
+  {
+   "id": "food-hunger-or-habit-4",
+   "topic": "food",
+   "genre": "food.eat_smarter",
+   "strand": "food.eat_smarter.hunger_or_habit",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Free snacks at the office: you choose one for next week, then one to eat right now. Which do you take each time?",
+   "answer": "Choices made ahead are made by a calmer self, and our forecasts leave out the pull of a treat within reach. Appetite leaks the other way too: in Read and van Leeuwen's study, people who were hungry while choosing next week's snack picked more junk for it. Today's stomach writes tomorrow's plan.",
+   "move": "Decide what you will eat before you're hungry, and keep the rest out of reach.",
+   "ask": "Which of my plans are made on a full stomach and broken on an empty one?",
+   "keywords": [
+    "snacks",
+    "self-control",
+    "planning",
+    "hunger"
+   ],
+   "era": "twentieth",
+   "region": "europe",
+   "hook": "paradox",
+   "mood": "playful",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "Office workers, Read & van Leeuwen 1998",
+    "questions": [
+     {
+      "prompt": "A snack to be handed to you a week from now. Which?",
+      "tag": "Chosen a week ahead",
+      "options": [
+       {
+        "label": "Fruit",
+        "share": 74
+       },
+       {
+        "label": "Chocolate or crisps",
+        "share": 26
+       }
+      ]
+     },
+     {
+      "prompt": "And a snack to eat right now?",
+      "tag": "Chosen on the spot",
+      "options": [
+       {
+        "label": "Fruit",
+        "share": 30
+       },
+       {
+        "label": "Chocolate or crisps",
+        "share": 70
+       }
+      ]
+     }
+    ],
+    "why": "Ahead, we choose for the person we mean to be; on the spot, for the one who is peckish.",
+    "same": "You held steady. The office didn't: fruit fell from 74% to 30% once the snack was in reach.",
+    "switched": "You switched, like most: the planner picks fruit, the one holding the snack picks chocolate."
+   },
+   "source": "Read & van Leeuwen, OBHDP, 1998",
+   "source_kind": "paper",
+   "reference": "Read & van Leeuwen, Predicting hunger: the effects of appetite and delay on choice, Organizational Behavior and Human Decision Processes 76 (1998): 189-205",
+   "written": "2026-10-07"
   },
   {
    "id": "food-kimchi-1",
@@ -62934,6 +63289,65 @@
    "written": "2026-09-27"
   },
   {
+   "id": "human_body-longevity-12",
+   "topic": "human_body",
+   "genre": "human_body.ageing",
+   "strand": "human_body.ageing.longevity",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "A treatment could slow ageing and let you live to 120 or beyond. Would you want it for yourself?",
+   "answer": "Most said no, yet about two in three guessed that most other people would say yes. Each doubter took their doubt for the exception. Asked their ideal lifespan, the typical answer was about 90, not far past what many already reach. People want the years they can picture, healthy ones.",
+   "move": "Before guessing what others want, check whether you want it yourself.",
+   "ask": "How many years do I want, and what would make me want more?",
+   "keywords": [
+    "lifespan",
+    "radical life extension",
+    "ageing",
+    "other people's views"
+   ],
+   "era": "recent",
+   "region": "americas",
+   "hook": "misconception",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "US adults, Pew Research 2013",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "Yes, I'd take it",
+        "share": 38,
+        "mirror": "Like 38% of Americans. More years means more of what you love; why stop at 85?"
+       },
+       {
+        "label": "No, thanks",
+        "share": 56,
+        "mirror": "Like 56%. Many feared extra years of frailty, or a world too crowded to share them."
+       },
+       {
+        "label": "Not sure",
+        "share": 6,
+        "mirror": "Like 6%. It depends on the health it brings, the cost, and who else gets to come."
+       }
+      ]
+     }
+    ],
+    "why": "Most of us picture extra years as extra old age, and want them only with the health to enjoy them."
+   },
+   "source": "Pew Research Center, 2013",
+   "source_kind": "statistics",
+   "reference": "Pew Research Center, Living to 120 and Beyond: Americans' Views on Aging, Medical Advances and Radical Life Extension, August 2013",
+   "written": "2026-10-07"
+  },
+  {
    "id": "human_body-microbiome-1",
    "topic": "human_body",
    "genre": "human_body.gut",
@@ -65341,6 +65755,84 @@
    "written": "2026-09-26"
   },
   {
+   "id": "human_body-small-daily-habits-4",
+   "topic": "human_body",
+   "genre": "human_body.your_body_your_choices",
+   "strand": "human_body.your_body_your_choices.small_daily_habits",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Six health habits nearly everyone has been told to keep. Which rest on strong trials, and which on weak ones?",
+   "answer": "Advice repeated often feels tested, but repeating is not testing. Flossing, eight glasses and breakfast spread through guidelines and adverts long before anyone checked them. The habits that won in trials are duller: less salt, balance classes. Weak evidence does not make a habit useless; it means nobody has shown it works.",
+   "move": "Ask whether advice was tested, or just repeated until it sounded tested.",
+   "ask": "Which of my daily health rules have I never once seen tested?",
+   "keywords": [
+    "flossing",
+    "drinking water",
+    "breakfast",
+    "salt",
+    "falls"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "misconception",
+   "mood": "practical",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Strong",
+    "right": "Weak",
+    "tag": "Doctor's orders",
+    "items": [
+     {
+      "text": "Flossing",
+      "note": "Every day, to save your gums.",
+      "pile": "right",
+      "verdict": "Trials are small and short. At best, gums bleed a little less."
+     },
+     {
+      "text": "Eight glasses",
+      "note": "Of water a day, on top of everything else.",
+      "pile": "right",
+      "verdict": "No study behind the number. Food and other drinks supply much of your water."
+     },
+     {
+      "text": "Less salt",
+      "note": "To bring blood pressure down.",
+      "pile": "left",
+      "verdict": "In controlled feeding trials, cutting salt lowered blood pressure within weeks."
+     },
+     {
+      "text": "Breakfast",
+      "note": "Eat it to keep your weight down.",
+      "pile": "right",
+      "verdict": "In trials, breakfast eaters took in slightly more over the day, not less."
+     },
+     {
+      "text": "Balance classes",
+      "note": "For people over 65, to avoid falls.",
+      "pile": "left",
+      "verdict": "Over a hundred trials: balance and strength exercise cut falls by nearly a quarter."
+     },
+     {
+      "text": "Standing desk",
+      "note": "To undo the harm of sitting all day.",
+      "pile": "right",
+      "verdict": "They do cut sitting time. No trial has yet shown that health improves."
+     }
+    ]
+   },
+   "source": "Cochrane reviews; Sacks et al., NEJM, 2001",
+   "source_kind": "paper",
+   "reference": "Worthington et al., Home use of interdental cleaning devices, Cochrane 2019; Valtin, Am J Physiol 283:R993, 2002; Sacks et al., DASH-Sodium, NEJM 344:3-10, 2001; Sievert et al., BMJ 364:l42, 2019; Sherrington et al., Exercise for preventing falls in older people, Cochrane 2019; Shrestha et al., Workplace interventions for reducing sitting at work, Cochrane 2018",
+   "written": "2026-10-07"
+  },
+  {
    "id": "human_body-smell-1",
    "topic": "human_body",
    "genre": "human_body.senses",
@@ -66307,6 +66799,84 @@
    "source_kind": "institution",
    "reference": "US Food and Drug Administration, Structure/function claims for dietary supplements under the Dietary Supplement Health and Education Act of 1994",
    "written": "2026-10-06"
+  },
+  {
+   "id": "human_body-supplements-4",
+   "topic": "human_body",
+   "genre": "human_body.health_claims",
+   "strand": "human_body.health_claims.supplements",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Six supplements, and the reason each is taken. For which reasons do trials say the pill does its job?",
+   "answer": "The ones that work fill a gap someone really has. A baby forming a spine, a vegan with no animal foods, a breastfed infant: each lacks something specific. Healthy adults topping up a full tank get nothing measurable, which is why the big trials of fish oil and multivitamins came back flat.",
+   "move": "Ask what gap a pill fills before asking whether it works.",
+   "ask": "Which pill do I take without knowing what I am short of?",
+   "keywords": [
+    "folic acid",
+    "fish oil",
+    "multivitamins",
+    "vitamin c",
+    "vitamin b12"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "misconception",
+   "mood": "practical",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Backed",
+    "right": "No help",
+    "tag": "Taken for a reason",
+    "items": [
+     {
+      "text": "Folic acid",
+      "note": "Taken while trying for a baby.",
+      "pile": "left",
+      "verdict": "A 1991 trial cut spina bifida and similar defects by about 70%."
+     },
+     {
+      "text": "Fish oil",
+      "note": "Taken by healthy adults to protect the heart.",
+      "pile": "right",
+      "verdict": "In a trial of nearly 26,000 adults, heart attacks were no rarer than on dummy pills."
+     },
+     {
+      "text": "Vitamin B12",
+      "note": "Taken by vegans.",
+      "pile": "left",
+      "verdict": "Plants do not make it. Without it, vegans risk anaemia and nerve damage."
+     },
+     {
+      "text": "Multivitamin",
+      "note": "One a day, to live longer.",
+      "pile": "right",
+      "verdict": "In a trial of 14,000 doctors over a decade, takers died at the same rate."
+     },
+     {
+      "text": "Vitamin C",
+      "note": "Every day, to ward off colds.",
+      "pile": "right",
+      "verdict": "Most people catch as many colds. Only those under extreme strain catch fewer."
+     },
+     {
+      "text": "Vitamin D drops",
+      "note": "Given to breastfed babies.",
+      "pile": "left",
+      "verdict": "Breast milk holds little of it. The drops prevent rickets: soft, bending bones."
+     }
+    ]
+   },
+   "source": "MRC Vitamin Study, Lancet, 1991; VITAL, NEJM, 2019",
+   "source_kind": "paper",
+   "reference": "MRC Vitamin Study Research Group, Lancet 338:131-137, 1991; Manson et al., Marine n-3 fatty acids and prevention of cardiovascular disease and cancer, NEJM 380:23-32, 2019; Sesso et al., JAMA 308:1751-1760, 2012; Hemilä and Chalker, Vitamin C for preventing and treating the common cold, Cochrane Database Syst Rev, 2013",
+   "written": "2026-10-07"
   },
   {
    "id": "human_body-taste-1",
@@ -76273,6 +76843,89 @@
    "written": "2026-10-06"
   },
   {
+   "id": "language-spin-4",
+   "topic": "language",
+   "genre": "language.words_that_persuade",
+   "strand": "language.words_that_persuade.spin",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Seven claims seen on adverts and labels. Which promise something you could check, and which promise almost nothing?",
+   "answer": "The empty ones are built from words that bend: up to, helps, proven, recommend. Each stays true across a huge range of meanings, so advertisers can use them safely. A checkable claim names a number and a baseline, so it could turn out wrong, and the seller can be held to it.",
+   "move": "Trust a claim in proportion to how easily it could be shown wrong.",
+   "ask": "Which thing did I buy because of a word that promised nothing?",
+   "keywords": [
+    "advertising claims",
+    "weasel words",
+    "colgate",
+    "unit pricing"
+   ],
+   "era": "recent",
+   "region": "europe",
+   "hook": "practical",
+   "mood": "playful",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Solid",
+    "right": "Empty",
+    "tag": "Small print, big words",
+    "items": [
+     {
+      "text": "Up to 50% off",
+      "note": "On a banner across a shop window.",
+      "pile": "right",
+      "verdict": "Up to sets a ceiling. Most items can be cut by far less, or not at all."
+     },
+     {
+      "text": "Helps fight germs",
+      "note": "On a bottle of mouthwash.",
+      "pile": "right",
+      "verdict": "Helps covers any effect at all, however small."
+     },
+     {
+      "text": "£1.20 per 100 g",
+      "note": "On a supermarket shelf label.",
+      "pile": "left",
+      "verdict": "A unit price lets you compare any two packs, whatever their size."
+     },
+     {
+      "text": "80% of dentists",
+      "note": "Recommend this toothpaste.",
+      "pile": "right",
+      "verdict": "Colgate's survey let dentists name several brands. Britain's ad watchdog banned it."
+     },
+     {
+      "text": "Clinically proven",
+      "note": "On a jar of face cream.",
+      "pile": "right",
+      "verdict": "Proven to do what, in how many people, against what? The phrase never says."
+     },
+     {
+      "text": "Fixed for 24 months",
+      "note": "On a broadband contract.",
+      "pile": "left",
+      "verdict": "A firm promise with a date on it. If the price rises, you can hold them to it."
+     },
+     {
+      "text": "30% less fat",
+      "note": "Than our original recipe.",
+      "pile": "left",
+      "verdict": "A number and a baseline. Check the baseline, but you can check it."
+     }
+    ]
+   },
+   "source": "Advertising Standards Authority, Colgate ruling, 2007",
+   "source_kind": "institution",
+   "reference": "Advertising Standards Authority, ASA adjudication on Colgate-Palmolive (UK) Ltd, 2007; Weasel word, Oxford English Dictionary",
+   "written": "2026-10-07"
+  },
+  {
    "id": "language-who-invents-words-1",
    "topic": "language",
    "genre": "language.slang",
@@ -77464,8 +78117,8 @@
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Administrative assistants doing the same job were asked what their work meant to them. How did their answers split?",
-   "answer": "Into three, in roughly equal numbers. Wrzesniewski and colleagues found people in the same role saw it as a job, for the pay; a career, for advancement; or a calling, for the work itself. Those with a calling were the most satisfied with work and life. The desk was the same; the job was not.",
+   "question": "Think of the work you do most days. Which of these is closest to what it is for you?",
+   "answer": "The three answers came in roughly equal numbers, even among administrative assistants doing the same tasks, so the job title does not set them. In later studies by Wrzesniewski, some hospital cleaners counted talking with patients as part of the work, and did more of it. They had rewritten the job from inside.",
    "move": "Ask what a job means to the person in it, not only what it is.",
    "ask": "Do I treat my work as a job, a career or a calling, and is that partly my choice?",
    "keywords": [
@@ -77484,9 +78137,35 @@
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Wrzesniewski and colleagues, J. Research in Personality, 1997",
+   "scene": {
+    "type": "poll",
+    "who": "University staff, Wrzesniewski 1997",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "A job: it pays the bills",
+        "share": 33,
+        "mirror": "Like about a third. You work to live, and what you care about most happens outside it."
+       },
+       {
+        "label": "A career: I'm climbing",
+        "share": 33,
+        "mirror": "Like about a third. You want to grow and be recognised; the next step keeps you going."
+       },
+       {
+        "label": "A calling: it matters",
+        "share": 34,
+        "mirror": "Like about a third. People with a calling were the most satisfied, with work and with life."
+       }
+      ]
+     }
+    ],
+    "why": "Same desk, same tasks, three readings: the meaning comes from the person as much as the job."
+   },
+   "source": "Wrzesniewski et al., J. Research in Personality, 1997",
    "source_kind": "paper",
-   "reference": "Wrzesniewski, McCauley, Rozin and Schwartz, Jobs, Careers, and Callings: People's Relations to Their Work, Journal of Research in Personality, 1997",
+   "reference": "Wrzesniewski, McCauley, Rozin and Schwartz, Jobs, Careers, and Callings: People's Relations to Their Work, Journal of Research in Personality, 1997; Wrzesniewski and Dutton, Crafting a Job, Academy of Management Review, 2001",
    "written": "2026-10-03"
   },
   {
@@ -79005,6 +79684,76 @@
    "written": "2026-10-03"
   },
   {
+   "id": "life-family-4",
+   "topic": "life",
+   "genre": "life.relationships",
+   "strand": "life.relationships.family",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "A is an average parent in every way; B is richer and closer to the child, but often away. Your ruling?",
+   "answer": "Parent B won both ways: picked for custody by 64%, and refused custody by 55%. Asked to choose, the mind hunts for strengths; asked to reject, for flaws. B had plenty of both and A had few of either, so the vivid parent was picked and refused alike. Shafir found the same with holidays.",
+   "move": "Ask the question both ways: which to pick, and which to drop.",
+   "ask": "Which choice in my life would come out differently if I asked what to drop?",
+   "keywords": [
+    "custody",
+    "choosing and rejecting",
+    "framing",
+    "parents"
+   ],
+   "era": "twentieth",
+   "region": "americas",
+   "hook": "paradox",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "Students, Shafir 1993",
+    "questions": [
+     {
+      "prompt": "Which parent should get sole custody?",
+      "tag": "Asked who gets custody",
+      "options": [
+       {
+        "label": "Parent A, all average",
+        "share": 36
+       },
+       {
+        "label": "Parent B, highs and lows",
+        "share": 64
+       }
+      ]
+     },
+     {
+      "prompt": "Same two parents. Which one should be denied custody?",
+      "tag": "Asked who is denied it",
+      "options": [
+       {
+        "label": "Deny parent B",
+        "share": 55
+       },
+       {
+        "label": "Deny parent A",
+        "share": 45
+       }
+      ]
+     }
+    ],
+    "why": "Choosing hunts for reasons for, refusing for reasons against, and B has plenty of both.",
+    "same": "You held steady. The crowd didn't: parent B was the most chosen and the most refused.",
+    "switched": "You switched, like many: picking, we count B's pluses; refusing, B's minuses."
+   },
+   "source": "Shafir, Memory & Cognition, 1993",
+   "source_kind": "paper",
+   "reference": "Shafir, Choosing versus rejecting: why some options are both better and worse than others, Memory & Cognition 21 (1993): 546-556",
+   "written": "2026-10-07"
+  },
+  {
    "id": "life-feedback-1",
    "topic": "life",
    "genre": "life.growth",
@@ -79728,8 +80477,8 @@
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "When can a firefighter's gut feeling be trusted, while a stock picker's cannot?",
-   "answer": "When the world is regular and mistakes show quickly. Kahneman and Klein, long on opposite sides, agreed that intuition becomes skill only with stable patterns and fast, clear feedback, as in fire, chess or nursing. Markets and long-range forecasts give neither, so confidence grows without accuracy.",
+   "question": "A firefighter, a stock picker and four others trust their gut at work every day. Whose hunches have earned it?",
+   "answer": "Those whose world repeats and whose mistakes show fast. Kahneman and Klein, long on opposite sides, agreed that a hunch becomes skill only with regular patterns and quick, clear feedback. Fires, chess and the operating theatre give both. Markets, hiring and politics give neither, so confidence grows while accuracy stays put.",
    "move": "Trust a hunch only where you have been told quickly when it was wrong.",
    "ask": "In which part of my life do I get fast feedback, and where am I trusting a hunch that has never been checked?",
    "keywords": [
@@ -79749,9 +80498,53 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Trust it",
+    "right": "Check it",
+    "tag": "Gut feeling at work",
+    "items": [
+     {
+      "text": "Firefighter",
+      "note": "Senses a floor is about to give way.",
+      "pile": "left",
+      "verdict": "Fires repeat their patterns, and a wrong call shows within minutes."
+     },
+     {
+      "text": "Stock picker",
+      "note": "Feels a share is about to rise.",
+      "pile": "right",
+      "verdict": "Prices already hold what others know, and a call takes years to judge."
+     },
+     {
+      "text": "Chess master",
+      "note": "Sees the right move at a glance.",
+      "pile": "left",
+      "verdict": "Thousands of games, each one scored the moment it ends."
+     },
+     {
+      "text": "Interviewer",
+      "note": "Knows within five minutes who will do well.",
+      "pile": "right",
+      "verdict": "Never sees how the rejected would have done, so the hunch is never corrected."
+     },
+     {
+      "text": "Anaesthetist",
+      "note": "Senses a patient is about to crash.",
+      "pile": "left",
+      "verdict": "The monitors answer within seconds, so every hunch gets checked."
+     },
+     {
+      "text": "Pundit",
+      "note": "Calls an election three years out.",
+      "pile": "right",
+      "verdict": "In Tetlock's 20-year study, experts' long-range calls did little better than chance."
+     }
+    ]
+   },
    "source": "Kahneman and Klein, American Psychologist, 2009",
    "source_kind": "paper",
-   "reference": "Kahneman and Klein, Conditions for Intuitive Expertise: A Failure to Disagree, American Psychologist, 2009",
+   "reference": "Kahneman and Klein, Conditions for Intuitive Expertise: A Failure to Disagree, American Psychologist 64:515, 2009; Tetlock, Expert Political Judgment, Princeton University Press, 2005",
    "written": "2026-10-03"
   },
   {
@@ -82287,8 +83080,8 @@
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Over a lifetime, do people come to regret the things they did, or the things they did not do?",
-   "answer": "Mostly what they did not do. Gilovich and Medvec found that in the short run people regret actions more, but over the long run regrets of inaction grow. Actions can be explained away or repaired, while a missed chance leaves imagined outcomes open, and imagined outcomes are never disappointing.",
+   "question": "Six regrets people describe. Which kind fades with the years, and which still stings decades later?",
+   "answer": "The things not done last. Gilovich and Medvec found actions hurt more at first, but over a lifetime regrets of inaction dominate. People repair a mistake or find its silver lining; a missed chance has no ending, and the reasons that held them back fade faster than the dream.",
    "move": "Ask which choice you would still be explaining in twenty years.",
    "ask": "Which choice facing me now will I still be explaining in twenty years if I do not make it?",
    "keywords": [
@@ -82308,9 +83101,53 @@
    "mature": false,
    "language": "en",
    "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Fades",
+    "right": "Lingers",
+    "tag": "Looking back",
+    "items": [
+     {
+      "text": "The wrong job",
+      "note": "Took a job that turned out badly.",
+      "pile": "left",
+      "verdict": "Actions get explained: at least it showed what I did not want."
+     },
+     {
+      "text": "Never asked",
+      "note": "Never asked out the person they liked.",
+      "pile": "right",
+      "verdict": "No answer ever came, so the imagined one stays perfect."
+     },
+     {
+      "text": "A drunk message",
+      "note": "Sent something embarrassing late at night.",
+      "pile": "left",
+      "verdict": "Sharp for a week. Then it turns into a story told against yourself."
+     },
+     {
+      "text": "Didn't study",
+      "note": "Never went back to finish their education.",
+      "pile": "right",
+      "verdict": "Education tops the lists of what people regret most in later life."
+     },
+     {
+      "text": "A bad purchase",
+      "note": "Bought a car that was a mistake.",
+      "pile": "left",
+      "verdict": "Sold, written off, forgotten. A mistake made can be repaired."
+     },
+     {
+      "text": "Never went",
+      "note": "Always meant to travel, and never did.",
+      "pile": "right",
+      "verdict": "With time the obstacles shrink in memory, and the trip not taken grows."
+     }
+    ]
+   },
    "source": "Gilovich and Medvec, Psychological Review, 1995",
    "source_kind": "paper",
-   "reference": "Gilovich and Medvec, The Experience of Regret: What, When, and Why, Psychological Review, 1995",
+   "reference": "Gilovich and Medvec, The Experience of Regret: What, When, and Why, Psychological Review 102:379, 1995; Roese and Summerville, What We Regret Most... and Why, Personality and Social Psychology Bulletin 31:1273, 2005",
    "written": "2026-09-29"
   },
   {
@@ -84502,6 +85339,60 @@
      }
     ]
    }
+  },
+  {
+   "id": "life-time-5",
+   "topic": "life",
+   "genre": "life.money_and_time",
+   "strand": "life.money_and_time.time",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "If you had to choose, which would you rather have more of in your life: time, or money?",
+   "answer": "Most chose money, yet those who chose time said they were happier, and the gap held at the same income and hours of work. The study cannot say which comes first. But time can be bought: in Whillans's experiments, people who spent money on saving time felt better than those who spent it on things.",
+   "move": "Before trading hours for money, price the hours as carefully as the money.",
+   "ask": "What would I do with an extra free hour a day, and what is it worth to me?",
+   "keywords": [
+    "time",
+    "money",
+    "happiness",
+    "trade-offs"
+   ],
+   "era": "recent",
+   "region": "americas",
+   "hook": "practical",
+   "mood": "practical",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "US adults, Hershfield et al. 2016",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "More money",
+        "share": 64,
+        "mirror": "Like about two in three. Money buys calm and, often, time; many people are short of it."
+       },
+       {
+        "label": "More time",
+        "share": 36,
+        "mirror": "Like about one in three. Those who chose time were happier, even at the same income."
+       }
+      ]
+     }
+    ],
+    "why": "Money is counted and arrives monthly; time leaks away uncounted, so money feels more urgent."
+   },
+   "source": "Hershfield et al., SPPS, 2016; Whillans et al., PNAS, 2017",
+   "source_kind": "paper",
+   "reference": "Hershfield, Mogilner & Barnea, People who choose time over money are happier, Social Psychological and Personality Science, 2016; Whillans et al., Buying time promotes happiness, PNAS, 2017",
+   "written": "2026-10-07"
   },
   {
    "id": "life-trust-1",
@@ -93103,6 +93994,76 @@
    "written": "2026-10-03"
   },
   {
+   "id": "medicine-questions-to-ask-4",
+   "topic": "medicine",
+   "genre": "medicine.talk_to_your_doctor",
+   "strand": "medicine.talk_to_your_doctor.questions_to_ask",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "A 67-year-old's hip pain has resisted several pills; he is referred for a hip replacement. Then an untried pill turns up. What would you advise?",
+   "answer": "A second untried pill made more doctors try none. Each pill was a sensible next step alone, but picking between two is hard work, and referral offered a way out of the choice. Patients feel the same pull: a longer menu of treatments can end in doing nothing, or in taking the default.",
+   "move": "When two good options stall you, compare each one with doing nothing.",
+   "ask": "Which decision am I putting off only because I have two good options?",
+   "keywords": [
+    "choice overload",
+    "doctors",
+    "hip pain",
+    "decision conflict"
+   ],
+   "era": "twentieth",
+   "region": "americas",
+   "hook": "paradox",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "Family doctors, Redelmeier & Shafir 1995",
+    "questions": [
+     {
+      "prompt": "One pill he hasn't tried. Start it, or just refer him?",
+      "tag": "One untried pill",
+      "options": [
+       {
+        "label": "Try the pill first",
+        "share": 47
+       },
+       {
+        "label": "Just refer him",
+        "share": 53
+       }
+      ]
+     },
+     {
+      "prompt": "Now there are two untried pills, both sensible. Start one, or just refer him?",
+      "tag": "Two untried pills",
+      "options": [
+       {
+        "label": "Try a pill first",
+        "share": 28
+       },
+       {
+        "label": "Just refer him",
+        "share": 72
+       }
+      ]
+     }
+    ],
+    "why": "Picking between two good options is hard, so the easy way out is to pick neither.",
+    "same": "You held steady. The doctors didn't: no new pill rose from 53% to 72%.",
+    "switched": "You switched, like many doctors. A second good option made trying either one look harder."
+   },
+   "source": "Redelmeier & Shafir, JAMA, 1995",
+   "source_kind": "paper",
+   "reference": "Redelmeier & Shafir, Medical decision making in situations that offer multiple alternatives, JAMA 273 (1995): 302-305",
+   "written": "2026-10-07"
+  },
+  {
    "id": "medicine-reading-results-1",
    "topic": "medicine",
    "genre": "medicine.talk_to_your_doctor",
@@ -95651,6 +96612,84 @@
      "123,940, as in 19 trials: 26.6% against 27.1%. Nearly all was there anyway."
     ]
    }
+  },
+  {
+   "id": "medicine-side-effects-4",
+   "topic": "medicine",
+   "genre": "medicine.judge_a_treatment",
+   "strand": "medicine.judge_a_treatment.side_effects",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Six worries about mixing medicines with food, drink or each other. Which are real risks, and which are overblown?",
+   "answer": "The real dangers are the quiet ones. Grapefruit, milk and a second packet of paracetamol all look harmless, and each changes how much drug reaches the blood. The famous fears, the pint and the old pill bottle, matter far less. A pharmacist knows which is which, and asking costs nothing.",
+   "move": "Worry about what changes the dose, not about what sounds dangerous.",
+   "ask": "What do I take alongside my medicines that I have never mentioned to a pharmacist?",
+   "keywords": [
+    "drug interactions",
+    "grapefruit",
+    "paracetamol",
+    "antibiotics",
+    "expiry dates"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "practical",
+   "mood": "practical",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Real risk",
+    "right": "Fine",
+    "tag": "Read the leaflet",
+    "items": [
+     {
+      "text": "Grapefruit",
+      "note": "Juice with a statin such as simvastatin.",
+      "pile": "left",
+      "verdict": "It blocks a gut enzyme, so several times more of the drug reaches the blood."
+     },
+     {
+      "text": "Expired tablets",
+      "note": "Painkiller tablets two years past the date.",
+      "pile": "right",
+      "verdict": "US military tests found most kept working years on. Not insulin or liquids."
+     },
+     {
+      "text": "Two cold remedies",
+      "note": "A cold-and-flu powder with paracetamol tablets.",
+      "pile": "left",
+      "verdict": "Many cold remedies already contain paracetamol. Doubling up harms the liver."
+     },
+     {
+      "text": "A pint",
+      "note": "Beer while on most common antibiotics.",
+      "pile": "right",
+      "verdict": "Fine in moderation with most. The NHS warns off metronidazole and tinidazole."
+     },
+     {
+      "text": "Milk",
+      "note": "Swallowing ciprofloxacin with a glass of milk.",
+      "pile": "left",
+      "verdict": "Calcium binds the drug in the gut, so much less of it is absorbed."
+     },
+     {
+      "text": "Two painkillers",
+      "note": "Ibuprofen and paracetamol together, each at normal dose.",
+      "pile": "right",
+      "verdict": "They work differently. Adults can safely take both at the same time."
+     }
+    ]
+   },
+   "source": "NHS medicines guidance; Lyon et al., 2006",
+   "source_kind": "institution",
+   "reference": "NHS, Can I drink alcohol while taking antibiotics?; NHS, Ciprofloxacin: how and when to take it; NHS, Paracetamol for adults; Lyon et al., Stability profiles of drug products extended beyond labeled expiration dates, Journal of Pharmaceutical Sciences 95:1549, 2006; Lilja et al., Clin Pharmacol Ther 64:477, 1998",
+   "written": "2026-10-07"
   },
   {
    "id": "medicine-side-effects-in-numbers-1",
@@ -122546,6 +123585,60 @@
    "written": "2026-10-03"
   },
   {
+   "id": "philosophy-death-4",
+   "topic": "philosophy",
+   "genre": "philosophy.living_well",
+   "strand": "philosophy.living_well.death",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "A free, private test could tell you for certain the date you will die. Would you want to know it?",
+   "answer": "Nearly nine in ten said no, and many refused good news too, such as what they would get for Christmas. Gigerenzer and Garcia-Retamero named it Cassandra's regret, after the prophet cursed to see what was coming. Not wanting to know is often a choice about how to live, not a fear of facts.",
+   "move": "Before seeking an answer, ask what you would do differently once you had it.",
+   "ask": "What am I better off not knowing, and why?",
+   "keywords": [
+    "deliberate ignorance",
+    "death",
+    "knowing the future",
+    "hope"
+   ],
+   "era": "recent",
+   "region": "europe",
+   "hook": "story",
+   "mood": "sober",
+   "numeracy": 1,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "Germans and Spaniards, Gigerenzer 2017",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "Yes, tell me",
+        "share": 12,
+        "mirror": "Like about 1 in 10. You'd rather plan the years you have than wonder how many there are."
+       },
+       {
+        "label": "No, I'd rather not",
+        "share": 88,
+        "mirror": "Like nearly 9 in 10. Not knowing keeps the future open, and lets you live as if it is."
+       }
+      ]
+     }
+    ],
+    "why": "Knowing would help us plan, but would take away hope and the ease of not counting down."
+   },
+   "source": "Gigerenzer & Garcia-Retamero, Psychological Review, 2017",
+   "source_kind": "paper",
+   "reference": "Gigerenzer & Garcia-Retamero, Cassandra's regret: the psychology of not wanting to know, Psychological Review 124 (2017): 179-196",
+   "written": "2026-10-07"
+  },
+  {
    "id": "philosophy-determinism-1",
    "topic": "philosophy",
    "genre": "philosophy.free_will",
@@ -124917,6 +126010,70 @@
    "written": "2026-10-03"
   },
   {
+   "id": "philosophy-fairness-4",
+   "topic": "philosophy",
+   "genre": "philosophy.justice",
+   "strand": "philosophy.justice.fairness",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "You are given €10 and a stranger gets nothing. You may give them any part of it, and they cannot reply. How much?",
+   "answer": "On average people gave away about 28%, though nobody could punish them. Part of that is being seen to be fair: in a later study, many players paid to slip out of the game before the stranger even learnt it existed. Engel pooled over 600 versions of the game to find the average.",
+   "move": "Ask whether you would act the same if nobody could ever find out.",
+   "ask": "When nobody is watching, what do I give, and what do I keep?",
+   "keywords": [
+    "dictator game",
+    "generosity",
+    "fairness",
+    "strangers"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "mechanism",
+   "mood": "sober",
+   "numeracy": 2,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "20,000+ players, Engel 2011 review",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "Nothing",
+        "share": 36,
+        "mirror": "Like 36% of players. The money came to you by chance, and keeping it broke no promise."
+       },
+       {
+        "label": "Something, under €5",
+        "share": 41,
+        "mirror": "Like about 4 in 10, the most common answer: a gesture to the stranger, not half your luck."
+       },
+       {
+        "label": "Half: €5",
+        "share": 17,
+        "mirror": "Like 17%. An even split felt fair to you, though nobody could see or punish you."
+       },
+       {
+        "label": "More than half",
+        "share": 6,
+        "mirror": "Like about 6%, most of whom gave it all. Their need felt bigger than your claim."
+       }
+      ]
+     }
+    ],
+    "why": "Nobody can punish you here, yet most give something: fairness is felt, not only enforced."
+   },
+   "source": "Engel, Experimental Economics, 2011; Dana et al., 2006",
+   "source_kind": "paper",
+   "reference": "Engel, Dictator games: a meta study, Experimental Economics 14 (2011): 583-610; Dana, Cain & Dawes, What you don't know won't hurt me, Organizational Behavior and Human Decision Processes 100 (2006): 193-201",
+   "written": "2026-10-07"
+  },
+  {
    "id": "philosophy-fallacies-1",
    "topic": "philosophy",
    "genre": "philosophy.arguments",
@@ -126567,6 +127724,65 @@
    "source_kind": "book",
    "reference": "Saul, Lying, Misleading, and What Is Said, Oxford University Press, 2012; Adler, Lying, Deceiving, or Falsely Implicating, Journal of Philosophy 94 (9), 1997",
    "written": "2026-10-03"
+  },
+  {
+   "id": "philosophy-lying-4",
+   "topic": "philosophy",
+   "genre": "philosophy.ethics",
+   "strand": "philosophy.ethics.lying",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Only you see the die. You are paid what you report, up to 5 francs, but a 6 pays nothing. What do you report?",
+   "answer": "Few lied all the way. Reports of 5 came far above one in six, and 6s, which paid nothing, far less often, yet many who cheated stopped short of the top. Lying a little lets people keep both the money and their picture of themselves as honest. The paper called it lies in disguise.",
+   "move": "Watch the small bends you allow yourself because they still feel honest.",
+   "ask": "Where do I round in my own favour and still call it honest?",
+   "keywords": [
+    "honesty",
+    "cheating",
+    "die roll",
+    "self-image"
+   ],
+   "era": "recent",
+   "region": "europe",
+   "hook": "mechanism",
+   "mood": "playful",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "Students, Fischbacher & Föllmi-Heusi",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "Exactly what I rolled",
+        "share": 39,
+        "mirror": "Like an estimated 39%: honest, though nobody could ever have known. Many people simply are."
+       },
+       {
+        "label": "A bit more than I rolled",
+        "share": 41,
+        "mirror": "Like many: they nudged the number up but stopped short of 5. A small lie still feels honest."
+       },
+       {
+        "label": "5, the top pay",
+        "share": 20,
+        "mirror": "Like about 1 in 5. Nobody was harmed, the money was the lab's, and the rules invited it."
+       }
+      ]
+     }
+    ],
+    "why": "We want the money and to stay honest in our own eyes, so we lie only a little."
+   },
+   "source": "Fischbacher & Föllmi-Heusi, JEEA, 2013",
+   "source_kind": "paper",
+   "reference": "Fischbacher & Föllmi-Heusi, Lies in disguise: an experimental study on cheating, Journal of the European Economic Association 11 (2013): 525-547",
+   "written": "2026-10-07"
   },
   {
    "id": "philosophy-meaning-1",
@@ -142926,8 +144142,8 @@
    "kind": "read",
    "difficulty": "easy",
    "principle": "none",
-   "question": "Why do people readily spot bias in others' judgements but rarely in their own?",
-   "answer": "Because they judge themselves by looking inward and others by what they do. Searching their own thoughts, people find no biased motive, since most bias works out of sight, and conclude they are fair. Others offer only behaviour, where bias shows. Each person is graded on intentions, everyone else on results.",
+   "question": "Most people rate themselves above average at being fair and considerate. Say you did too. What would you say about your rating?",
+   "answer": "Most called their own rating accurate, minutes after reading about the very bias. People judge themselves by looking inward and others by what they do. Searching their thoughts, they find no biased motive, since bias works out of sight. Each person is graded on intentions, everyone else on results.",
    "move": "Check your fairness by what you did, not by what you meant.",
    "ask": "If a stranger watched only my actions this month, what bias might they see that I cannot?",
    "keywords": [
@@ -142946,9 +144162,35 @@
    "mature": false,
    "language": "en",
    "figure": "none",
-   "source": "Pronin & Kugler, JESP, 2007",
+   "scene": {
+    "type": "poll",
+    "who": "Stanford students, Pronin et al. 2002",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "It's accurate",
+        "share": 63,
+        "mirror": "Like 63% of the students, just told about this bias. From inside, a fair rating feels fair."
+       },
+       {
+        "label": "Too flattering",
+        "share": 24,
+        "mirror": "Like about a quarter. You can see the pull in yourself, which most see only in others."
+       },
+       {
+        "label": "Too modest",
+        "share": 13,
+        "mirror": "Like 13%. You may be right: some people do sell themselves short."
+       }
+      ]
+     }
+    ],
+    "why": "We check ourselves by looking inward and find no bias, because bias works out of sight."
+   },
+   "source": "Pronin et al., PSPB, 2002; Pronin & Kugler, JESP, 2007",
    "source_kind": "paper",
-   "reference": "Pronin & Kugler, Valuing thoughts, ignoring behavior: The introspection illusion as a source of the bias blind spot, Journal of Experimental Social Psychology, 2007",
+   "reference": "Pronin, Lin & Ross, The bias blind spot: perceptions of bias in self versus others, Personality and Social Psychology Bulletin 28 (2002): 369-381; Pronin & Kugler, Valuing thoughts, ignoring behavior, Journal of Experimental Social Psychology, 2007",
    "written": "2026-10-03"
   },
   {
@@ -146751,7 +147993,7 @@
    "answer": "Mastery takes thousands of hours, and nobody sustains that without wanting to come back. Flow arises from clear goals, instant feedback and a stretch just beyond skill, which are also the conditions good practice needs. A learner absorbed in the task keeps going through the long middle years in which most people quit.",
    "move": "Whichever side you took, the hinge is whether improvement needs failure to feel bad.",
    "ask": "Do I practise to feel good, or to improve, even when improving feels bad?",
-   "counterpoint": "Ericsson's work on expert violinists holds that improvement comes from solitary practice at the edge of failure, fixing specific weaknesses: effortful work he described as not inherently enjoyable. Flow thrives when skill already meets the challenge, so seeking it steers practice back towards what one can already do: the favourite piece, played well again.",
+   "counterpoint": "Ericsson's work on expert violinists holds that improvement comes from solitary practice at the edge of failure, fixing specific weaknesses: work he called not inherently enjoyable. Flow thrives when skill already meets the challenge, so chasing it steers practice back to what one can already do: the favourite piece, played well again.",
    "keywords": [
     "deliberate practice",
     "flow",
@@ -151376,6 +152618,60 @@
    "written": "2026-10-03"
   },
   {
+   "id": "psychology-overconfidence-4",
+   "topic": "psychology",
+   "genre": "psychology.know_your_own_mind",
+   "strand": "psychology.know_your_own_mind.overconfidence",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Next week a charity sells daffodils on your campus to raise money for cancer research. Will you buy at least one?",
+   "answer": "About 43% bought one. Asked about their classmates, the same students guessed 56%, far nearer the truth than the 83% they forecast for themselves. They knew how people behave; each simply expected to be the exception. The best guide to their own week was the rest of the campus.",
+   "move": "To predict what you will do, start from what most people do.",
+   "ask": "Which of my plans would I bet on if a stranger had made them?",
+   "keywords": [
+    "self-prediction",
+    "charity",
+    "good intentions",
+    "forecasting"
+   ],
+   "era": "twentieth",
+   "region": "americas",
+   "hook": "misconception",
+   "mood": "playful",
+   "numeracy": 2,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "Cornell students, Epley & Dunning 2000",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "Yes, I'll buy one",
+        "share": 83,
+        "mirror": "Like 83% of the students. In the end 43% bought one: kind plans meet busy weeks."
+       },
+       {
+        "label": "No, probably not",
+        "share": 17,
+        "mirror": "Like 17%. A frank forecast: in the end, most of the students didn't buy one either."
+       }
+      ]
+     }
+    ],
+    "why": "We forecast ourselves from our intentions, and others from how people act."
+   },
+   "source": "Epley & Dunning, JPSP, 2000",
+   "source_kind": "paper",
+   "reference": "Epley & Dunning, Feeling holier than thou: are self-serving assessments produced by errors in self- or social prediction?, Journal of Personality and Social Psychology 79 (2000): 861-875",
+   "written": "2026-10-07"
+  },
+  {
    "id": "psychology-panic-1",
    "topic": "psychology",
    "genre": "psychology.think_under_pressure",
@@ -154086,6 +155382,65 @@
    "source_kind": "paper",
    "reference": "Porcelli & Delgado, Acute stress modulates risk taking in financial decision making, Psychological Science, 2009",
    "written": "2026-10-03"
+  },
+  {
+   "id": "psychology-stress-and-choices-4",
+   "topic": "psychology",
+   "genre": "psychology.think_under_pressure",
+   "strand": "psychology.think_under_pressure.stress_and_choices",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "You have just sat a hard exam; the results come tomorrow. A cheap Hawaii holiday is on offer, today only. What do you do?",
+   "answer": "Most paid to wait for news that would not change their answer. Students told they had passed mostly bought the holiday, as a reward; those told they had failed bought it too, as a consolation. Not knowing which reason applied, most chose neither and waited. Tversky and Shafir called it the disjunction effect.",
+   "move": "If you would choose the same whatever the news, stop waiting for it.",
+   "ask": "What am I waiting to find out that would not change what I do?",
+   "keywords": [
+    "uncertainty",
+    "disjunction effect",
+    "holiday",
+    "exam results"
+   ],
+   "era": "twentieth",
+   "region": "americas",
+   "hook": "paradox",
+   "mood": "playful",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "poll",
+    "who": "Students, Tversky & Shafir 1992",
+    "questions": [
+     {
+      "options": [
+       {
+        "label": "Buy it now",
+        "share": 32,
+        "mirror": "Like 32%. Pass or fail, you'd go: as a treat, or as a consolation."
+       },
+       {
+        "label": "Don't buy it",
+        "share": 7,
+        "mirror": "Like 7%. Whatever the result, a holiday isn't for now, and no news changes that."
+       },
+       {
+        "label": "Pay $5 to decide later",
+        "share": 61,
+        "mirror": "Like 61%. Yet students told they had passed mostly bought it, and so did those who failed."
+       }
+      ]
+     }
+    ],
+    "why": "Each result gives a reason to go. Not knowing which one, we wait, though either would do."
+   },
+   "source": "Tversky & Shafir, Psychological Science, 1992",
+   "source_kind": "paper",
+   "reference": "Tversky & Shafir, The disjunction effect in choice under uncertainty, Psychological Science 3 (1992): 305-309",
+   "written": "2026-10-07"
   },
   {
    "id": "psychology-sunk-cost-1",
@@ -158643,6 +159998,84 @@
    "source_kind": "paper",
    "reference": "Zadnik et al., Myopia and ambient night-time lighting, Nature 404:143–144, 2000",
    "written": "2026-09-26"
+  },
+  {
+   "id": "science-correlation-or-cause-5",
+   "topic": "science",
+   "genre": "science.how_science_knows",
+   "strand": "science.how_science_knows.correlation_or_cause",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Six health links found by comparing groups of people. Which turned out to be cause and effect, and which fell apart?",
+   "answer": "A link survives when its obvious rival is ruled out. Breastfeeding mothers, sunbathers and vitamin takers differ from other people in ways that matter; compare like with like and the link vanishes or flips. Smoking, HPV and lead passed the harder tests: more exposure, more harm, and less harm once it was removed.",
+   "move": "Before believing a link, ask how the people in it came to be there.",
+   "ask": "Which habit do I credit for my health that people like me simply tend to have?",
+   "keywords": [
+    "correlation",
+    "confounding",
+    "breastfeeding",
+    "sunscreen",
+    "hpv"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "misconception",
+   "mood": "sober",
+   "numeracy": 0,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Cause",
+    "right": "No cause",
+    "tag": "Spotted in the data",
+    "items": [
+     {
+      "text": "Smoking",
+      "note": "Smokers get far more lung cancer.",
+      "pile": "left",
+      "verdict": "No trial ever made people smoke. Dose, timing and quitting proved it anyway."
+     },
+     {
+      "text": "Breastfeeding",
+      "note": "Breastfed children score higher on IQ tests.",
+      "pile": "right",
+      "verdict": "Compared with their own siblings, the gap vanished. The mothers explained it."
+     },
+     {
+      "text": "Sunscreen",
+      "note": "In some surveys, users get more melanoma.",
+      "pile": "right",
+      "verdict": "Sunbathers use more of it. In a trial, daily use halved new melanomas."
+     },
+     {
+      "text": "HPV",
+      "note": "Women with this virus get cervical cancer.",
+      "pile": "left",
+      "verdict": "Where girls were vaccinated against it, the cancer has almost vanished among them."
+     },
+     {
+      "text": "Vitamin E",
+      "note": "People taking it had fewer heart attacks.",
+      "pile": "right",
+      "verdict": "Takers were healthier to start with. Trials of thousands found no benefit."
+     },
+     {
+      "text": "Lead",
+      "note": "Children with more lead in their blood score lower on IQ tests.",
+      "pile": "left",
+      "verdict": "It damages nerve cells in lab animals, and more lead means lower scores."
+     }
+    ]
+   },
+   "source": "Der et al., BMJ, 2006; Green et al., JCO, 2011",
+   "source_kind": "paper",
+   "reference": "Der, Batty and Deary, Effect of breast feeding on intelligence in children, BMJ 333:945, 2006; Green et al., Reduced melanoma after regular sunscreen use, J Clin Oncol 29:257-263, 2011; HOPE Study Investigators, Vitamin E supplementation and cardiovascular events, NEJM 342:154-160, 2000; Lei et al., HPV vaccination and the risk of invasive cervical cancer, NEJM 383:1340-1348, 2020",
+   "written": "2026-10-07"
   },
   {
    "id": "science-energy-1",
@@ -167514,6 +168947,83 @@
      "58,050, as in ISIS-4. Its real deaths: 7.2% without, 7.6% with magnesium."
     ]
    }
+  },
+  {
+   "id": "science-sample-size-4",
+   "topic": "science",
+   "genre": "science.read_a_study",
+   "strand": "science.read_a_study.sample_size",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Six claims, each resting on a difference between two numbers. Which differences are real, and which could easily be luck?",
+   "answer": "A difference means nothing without the count behind it. Sixty per cent of 50 tasters is close to a coin toss; sixty per cent of 10,000 tosses is a bent coin. Small counts swing wildly on their own, which is why the most dramatic headlines so often rest on the smallest numbers.",
+   "move": "Before trusting a change, ask how big a change luck alone makes.",
+   "ask": "Which result did I last celebrate that rested on a handful of cases?",
+   "keywords": [
+    "sample size",
+    "statistical noise",
+    "taste tests",
+    "cancer clusters"
+   ],
+   "era": "timeless",
+   "region": "none",
+   "hook": "puzzle",
+   "mood": "practical",
+   "numeracy": 2,
+   "abstraction": "mixed",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Real",
+    "right": "Luck",
+    "tag": "The numbers behind it",
+    "items": [
+     {
+      "text": "A taste test",
+      "note": "30 of 50 tasters prefer cola A.",
+      "pile": "right",
+      "verdict": "A fair coin gives 30 or more heads out of 50 about one time in ten."
+     },
+     {
+      "text": "A coin",
+      "note": "6,000 heads in 10,000 tosses.",
+      "pile": "left",
+      "verdict": "The same 60%. Over 10,000 tosses, luck alone would essentially never get there."
+     },
+     {
+      "text": "A cancer cluster",
+      "note": "Cases near a phone mast doubled, from 2 to 4.",
+      "pile": "right",
+      "verdict": "With counts this small, 2 one year and 4 the next is everyday wobble."
+     },
+     {
+      "text": "Unemployment",
+      "note": "The national rate fell from 5.1% to 5.0%.",
+      "pile": "right",
+      "verdict": "It comes from a survey that wobbles by more than that. A 0.1 point move is noise."
+     },
+     {
+      "text": "A big drug trial",
+      "note": "Deaths fell from 10% to 8% among 30,000 patients.",
+      "pile": "left",
+      "verdict": "That is 1,500 deaths against 1,200. With numbers this big, 300 is no fluke."
+     },
+     {
+      "text": "A class's results",
+      "note": "A class of 30 passes 4 points more than last year.",
+      "pile": "right",
+      "verdict": "One pupil is over 3 points of a class of 30. One extra pass explains it."
+     }
+    ]
+   },
+   "source": "Binomial arithmetic; ONS Labour Force Survey",
+   "source_kind": "arithmetic",
+   "reference": "Binomial distribution: P(X >= 30) for 50 fair tosses = 0.10; 6,000 of 10,000 is 20 standard deviations from 5,000; ONS, A guide to labour market statistics: sampling variability of the unemployment rate",
+   "written": "2026-10-07"
   },
   {
    "id": "science-steel-1",
@@ -194599,6 +196109,83 @@
    "written": "2026-09-27"
   },
   {
+   "id": "technology-checking-a-source-1",
+   "topic": "technology",
+   "genre": "technology.truth_online",
+   "strand": "technology.truth_online.checking_a_source",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "You land on an unfamiliar website making a health claim. Which of these tell you whether to trust it?",
+   "answer": "The useful checks happen off the page. Stanford researchers watched historians, students and professional fact-checkers judge websites. The fact-checkers won, and fast, by leaving the site almost at once to read what others said about it. The rest stayed on the page, studying exactly the things a site's owners control.",
+   "move": "To judge a source, leave it and read what others say about it.",
+   "ask": "Which website did I last trust because it looked serious?",
+   "keywords": [
+    "lateral reading",
+    "fact-checking",
+    "website credibility",
+    "misinformation"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "practical",
+   "mood": "practical",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Useful",
+    "right": "Useless",
+    "tag": "Is this site any good?",
+    "items": [
+     {
+      "text": ".org address",
+      "note": "The site ends in .org, not .com.",
+      "pile": "right",
+      "verdict": "Anyone can register a .org for a few pounds. Lobby groups use them too."
+     },
+     {
+      "text": "Polished design",
+      "note": "Clean pages, charts, not a typo anywhere.",
+      "pile": "right",
+      "verdict": "A good template costs little. Looking professional is cheap to fake."
+     },
+     {
+      "text": "Its About page",
+      "note": "It calls itself independent and non-profit.",
+      "pile": "right",
+      "verdict": "Every site describes itself kindly. That is the claim, not the check."
+     },
+     {
+      "text": "Others on it",
+      "note": "You search its name in a new tab.",
+      "pile": "left",
+      "verdict": "Professional fact-checkers do this first. It is how they beat the historians."
+     },
+     {
+      "text": "Who pays for it",
+      "note": "Its funders, found on other sites.",
+      "pile": "left",
+      "verdict": "Money shapes tone. Ask who pays, and look for the answer somewhere else."
+     },
+     {
+      "text": "40,000 shares",
+      "note": "Shared all over social media this week.",
+      "pile": "right",
+      "verdict": "Shares measure feeling, not truth. A good scare travels further than a fact."
+     }
+    ]
+   },
+   "source": "Wineburg and McGrew, Teachers College Record, 2019",
+   "source_kind": "paper",
+   "reference": "Sam Wineburg and Sarah McGrew, Lateral Reading and the Nature of Expertise: Reading Less and Learning More When Evaluating Digital Information, Teachers College Record 121(11), 2019",
+   "written": "2026-10-07"
+  },
+  {
    "id": "technology-chips-1",
    "topic": "technology",
    "genre": "technology.where_things_come_from",
@@ -198429,6 +200016,83 @@
    "disabled": true
   },
   {
+   "id": "technology-passwords-1",
+   "topic": "technology",
+   "genre": "technology.your_digital_life",
+   "strand": "technology.your_digital_life.passwords",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Six pieces of password advice you have probably followed. Which make an account harder to break into?",
+   "answer": "The rules that annoy people most protect them least. Forced changes and symbol quotas push people towards predictable tweaks, which cracking software tries first. What works is length, a different password for every site, and a second step at login, because attackers work at scale, from lists of leaked passwords.",
+   "move": "Judge a security rule by what it costs the attacker, not you.",
+   "ask": "Which of my accounts would fall if one website I use were breached tomorrow?",
+   "keywords": [
+    "passwords",
+    "two-step login",
+    "password reuse",
+    "nist guidelines"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "misconception",
+   "mood": "practical",
+   "numeracy": 1,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Helps",
+    "right": "Hardly",
+    "tag": "Create a password",
+    "items": [
+     {
+      "text": "Change it often",
+      "note": "A new password every 90 days.",
+      "pile": "right",
+      "verdict": "People just bump a digit. The US standards body NIST dropped the rule in 2017."
+     },
+     {
+      "text": "Add a symbol",
+      "note": "At least one capital, one digit, one symbol.",
+      "pile": "right",
+      "verdict": "Password1! passes. NIST now advises against these rules."
+     },
+     {
+      "text": "Make it long",
+      "note": "Four random words in a row.",
+      "pile": "left",
+      "verdict": "Each word drawn at random from 7,776 multiplies the guesses needed by 7,776."
+     },
+     {
+      "text": "One per site",
+      "note": "Never the same password twice.",
+      "pile": "left",
+      "verdict": "Leaked passwords are tried on other sites by the million. One reuse, many doors."
+     },
+     {
+      "text": "Two-step login",
+      "note": "A code sent to your phone as well.",
+      "pile": "left",
+      "verdict": "In Google's tests, even a texted code stopped every automated attack."
+     },
+     {
+      "text": "Security question",
+      "note": "Your mother's maiden name, as a backup.",
+      "pile": "right",
+      "verdict": "Often public, or easy to guess: in one Google study, favourite food was often pizza."
+     }
+    ]
+   },
+   "source": "NIST SP 800-63B, 2017; Google, 2019",
+   "source_kind": "standard",
+   "reference": "NIST Special Publication 800-63B, Digital Identity Guidelines: Authentication and Lifecycle Management, 2017; Google Security Blog, New research: how effective is basic account hygiene at preventing hijacking, May 2019; Bonneau et al., Secrets, Lies, and Account Recovery, WWW 2015",
+   "written": "2026-10-07"
+  },
+  {
    "id": "technology-rare-metals-1",
    "topic": "technology",
    "genre": "technology.where_things_come_from",
@@ -199756,6 +201420,89 @@
    "source": "Action Fraud, WhatsApp scam alerts",
    "source_kind": "institution",
    "reference": "Action Fraud, UK National Fraud and Cyber Crime Reporting Centre, warnings on WhatsApp Hi Mum and Dad scams, 2022, https://www.actionfraud.police.uk",
+   "written": "2026-10-07"
+  },
+  {
+   "id": "technology-scams-2",
+   "topic": "technology",
+   "genre": "technology.your_digital_life",
+   "strand": "technology.your_digital_life.scams",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "A caller says he is from your bank's fraud team and your savings are at risk. Which of these prove he is real?",
+   "answer": "Only what you reach yourself. Everything a caller can show you, he can buy or fake: leaked names and addresses, a spoofed number, a sender name on a text. That is why banks say they will never ask you to move money to a safe account. The request alone tells you who is calling.",
+   "move": "Trust the line you opened, never the one that opened you.",
+   "ask": "Which of my accounts could a calm, well-informed stranger talk me out of in one phone call?",
+   "keywords": [
+    "bank impersonation",
+    "caller id spoofing",
+    "phishing",
+    "safe account scam"
+   ],
+   "era": "recent",
+   "region": "world",
+   "hook": "practical",
+   "mood": "practical",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Proof",
+    "right": "No proof",
+    "tag": "Caller: Fraud Team",
+    "items": [
+     {
+      "text": "Your name",
+      "note": "He knows your full name and home address.",
+      "pile": "right",
+      "verdict": "Leaked in data breaches and sold by the million. Anyone can buy it."
+     },
+     {
+      "text": "The bank's number",
+      "note": "The number on your screen matches the one on your card.",
+      "pile": "right",
+      "verdict": "Caller ID can be faked: the number shown is whatever the caller types."
+     },
+     {
+      "text": "Your card digits",
+      "note": "He reads out the last four digits of your card.",
+      "pile": "right",
+      "verdict": "They are printed on receipts and shown in online shops. Many scammers have them."
+     },
+     {
+      "text": "Same text thread",
+      "note": "His text arrives among your bank's real messages.",
+      "pile": "right",
+      "verdict": "A text's sender name can be faked too, so it files itself with the real ones."
+     },
+     {
+      "text": "A padlock",
+      "note": "His link opens a site with a padlock in the address bar.",
+      "pile": "right",
+      "verdict": "The padlock means the connection is encrypted, not that the site is honest."
+     },
+     {
+      "text": "You call back",
+      "note": "You hang up and dial the number on your card yourself.",
+      "pile": "left",
+      "verdict": "Now you chose who answers. Use another phone if you can: a line can be held open."
+     },
+     {
+      "text": "In your app",
+      "note": "The same alert is there when you open the bank's app yourself.",
+      "pile": "left",
+      "verdict": "You went in through a door you trust. A link sent to you would not count."
+     }
+    ]
+   },
+   "source": "UK Finance, Take Five to Stop Fraud",
+   "source_kind": "institution",
+   "reference": "https://www.takefive-stopfraud.org.uk/ ; Ofcom, Tackling scam calls and texts, 2022",
    "written": "2026-10-07"
   },
   {
@@ -209439,6 +211186,90 @@
    "source_kind": "statistics",
    "reference": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5679820/",
    "written": "2026-09-27"
+  },
+  {
+   "id": "weird_facts-hoaxes-1",
+   "topic": "weird_facts",
+   "genre": "weird_facts.too_strange_to_be_true",
+   "strand": "weird_facts.too_strange_to_be_true.hoaxes",
+   "kind": "read",
+   "difficulty": "easy",
+   "principle": "none",
+   "question": "Seven headlines that went round the world. Which reported something that really happened?",
+   "answer": "The fakes were the plausible ones. A pope's endorsement, a sky spectacle, a nation in panic: each fit what people already expected, so few checked. Real events are under no pressure to sound likely, which is why the strangest headline here, an army beaten by birds, is plain history.",
+   "move": "Judge a story by who reported it, not by how likely it sounds.",
+   "ask": "What was the last thing I shared because it sounded right, without checking who said it?",
+   "keywords": [
+    "fake news",
+    "hoaxes",
+    "emu war",
+    "war of the worlds",
+    "misinformation"
+   ],
+   "era": "twentieth",
+   "region": "world",
+   "hook": "misconception",
+   "mood": "playful",
+   "numeracy": 0,
+   "abstraction": "concrete",
+   "shelf_life": "evergreen",
+   "mature": false,
+   "language": "en",
+   "figure": "none",
+   "scene": {
+    "type": "sort",
+    "left": "Real",
+    "right": "Fake",
+    "tag": "Shared around the world",
+    "items": [
+     {
+      "text": "The Emu War",
+      "note": "Australia's army fights emus with machine guns, and loses.",
+      "pile": "left",
+      "verdict": "Western Australia, 1932. The birds scattered faster than the gunners could aim."
+     },
+     {
+      "text": "Pope backs Trump",
+      "note": "Pope Francis endorses a US presidential candidate, 2016.",
+      "pile": "right",
+      "verdict": "Invented by a fake news site, and one of 2016's most shared stories on Facebook."
+     },
+     {
+      "text": "An ear on a mouse",
+      "note": "Scientists grow a human-shaped ear on a mouse's back.",
+      "pile": "left",
+      "verdict": "1997: cartilage cells grown on an ear-shaped mould under the mouse's skin."
+     },
+     {
+      "text": "Mars like the Moon",
+      "note": "Mars will look as big as the full Moon tonight.",
+      "pile": "right",
+      "verdict": "An email chain since 2003. Even at its closest, Mars is a bright dot."
+     },
+     {
+      "text": "Radio panic",
+      "note": "A radio play about Martians sends America into mass panic, 1938.",
+      "pile": "right",
+      "verdict": "Few listeners panicked. Newspapers, losing advertisers to radio, blew it up."
+     },
+     {
+      "text": "Bitcoin in the bin",
+      "note": "A man throws away a hard drive holding 8,000 bitcoin.",
+      "pile": "left",
+      "verdict": "Newport, Wales, 2013. He spent years asking the council to let him dig up the tip."
+     },
+     {
+      "text": "A cow burp tax",
+      "note": "A country taxes farmers for their livestock's emissions.",
+      "pile": "left",
+      "verdict": "Denmark agreed it in 2024, to start in 2030."
+     }
+    ]
+   },
+   "source": "Pooley and Socolow, Slate, 2013; Cao et al., 1997",
+   "source_kind": "news_archive",
+   "reference": "Jefferson Pooley and Michael J. Socolow, The Myth of the War of the Worlds Panic, Slate, 28 October 2013; Craig Silverman, This Analysis Shows How Viral Fake Election News Stories Outperformed Real News On Facebook, BuzzFeed News, 16 November 2016; Cao, Vacanti et al., Plastic and Reconstructive Surgery 100:297, 1997; Danish Ministry of Taxation, Green tripartite agreement, June 2024",
+   "written": "2026-10-07"
   },
   {
    "id": "weird_facts-local-bans-1",

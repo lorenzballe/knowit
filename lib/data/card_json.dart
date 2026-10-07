@@ -66,6 +66,7 @@ Map<String, Object?> cardToJson(Pill p) {
   out['answer'] = p.answer;
   out['move'] = p.barMove;
   if (p.ask.isNotEmpty) out['ask'] = p.ask;
+  if (p.both) out['both'] = true;
   if (p.hasTrap) out['trap'] = p.trap;
   if (p.hasHint) out['hint'] = p.hint;
   if (p.hasSteps) out['steps'] = p.steps;
@@ -181,6 +182,7 @@ Pill cardFromJson(Map<String, Object?> raw) {
     answer: text('answer'),
     barMove: text('move'),
     ask: text('ask'),
+    both: raw['both'] == true,
     source: text('source'),
     challenge: challenge,
     hint: text('hint'),

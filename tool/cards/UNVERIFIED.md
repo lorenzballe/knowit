@@ -856,3 +856,28 @@ life-risk-taking-1, life-regret-2, life-failure-2, life-spending-2.
 - psychology-group-thinking-4 | clues: falling ill tracked seeing an ill person or noticing the odour, not classroom location (year corrected to 1998) | Jones 2000 NEJM Warren County High School mass psychogenic illness risk factors location
 - space-moon-dust-3 | slider: moonlight from a fitted lunar phase curve (one day off full about 75%, quarter about 9%) | lunar phase curve magnitude phase angle 12 degrees 90 degrees Allen's Astrophysical Quantities
 - sport-cheap-or-expensive-2 | slider: air share from a model with assumed drag area and rolling resistance (half at 15 km/h, four fifths at 30) | cycling power model air drag share 15 km/h 30 km/h Martin 1998
+- life-choosing-work-1 | poll: the job / career / calling split shown as 33 / 33 / 34; the paper reports "roughly equal" thirds, exact shares not checked | Wrzesniewski McCauley Rozin Schwartz 1997 jobs careers callings proportions administrative assistants
+- psychology-blind-spots-1 | poll: after reading about the better-than-average effect, 63% called their own rating objective, 13% too modest (24% inferred as too flattering) | Pronin Lin Ross 2002 bias blind spot 63% objective 13% too modest
+- life-family-4 | poll: award custody 64% parent B / 36% A; deny custody 55% B / 45% A; the same pattern with holiday spots | Shafir 1993 choosing versus rejecting custody 64% 55%
+- psychology-stress-and-choices-4 | poll: Hawaii package 32% buy / 7% not / 61% pay $5 to wait when the result is unknown; passed 54% buy, failed 57% buy | Tversky Shafir 1992 disjunction effect Hawaii 32% 61% 54% 57%
+- psychology-overconfidence-4 | poll: daffodil drive, 83% predicted they would buy, 56% predicted for peers, 43% bought | Epley Dunning 2000 holier than thou daffodil 83% 56% 43%
+- life-time-5 | poll: about 64% chose money over time; time-choosers happier controlling for income and hours | Hershfield Mogilner Barnea 2016 choose time over money happier percentage chose money
+- economics-loyalty-traps-4 | poll: kept mug 89%, kept chocolate 90%, free choice 56% mug / 44% chocolate | Knetsch 1989 endowment effect mug chocolate 89% 90% 56%
+- economics-hidden-incentives-4 | poll: individual condition 45.9% took €10; bilateral market about 72% agreed; spared mice kept alive | Falk Szech 2013 Morals and markets 45.9% individual 72% bilateral market
+- philosophy-fairness-4 | poll: Engel 2011 meta, 36% give nothing, about 17% give half, about 5% give all, mean about 28%; the 41 / 6 split of the rest is inferred; Dana et al. 2006 exit option | Engel 2011 dictator games meta study 36.11% nothing 16.74% half 5.44% all 28.35%
+- philosophy-lying-4 | poll: about 20% lie to the maximum, 39% fully honest (41% partial liars inferred) | Fischbacher Föllmi-Heusi 2013 lies in disguise 20% 39% fully honest
+- philosophy-death-4 | poll: about 88% would not want to know when they will die; many also declined good news such as Christmas presents | Gigerenzer Garcia-Retamero 2017 Cassandra's regret 87.7% death not want to know Christmas
+- human_body-longevity-12 | poll: 56% would not want treatments to live to 120+, 38% would, about two in three think most others would; ideal lifespan median about 90 | Pew Research 2013 Living to 120 and Beyond 56% 38% 68% ideal life span 90
+- medicine-questions-to-ask-4 | poll: one untried drug 53% refer without it; two untried drugs 72% | Redelmeier Shafir 1995 JAMA multiple alternatives ibuprofen piroxicam 53% 72%
+- food-hunger-or-habit-4 | poll: snack chosen a week ahead 74% healthy; chosen for now 70% unhealthy; hungry choosers picked more unhealthy for later | Read van Leeuwen 1998 predicting hunger 74% healthy 70% unhealthy
+
+## Scene cards (October 2026)
+
+- human_body-small-daily-habits-4 | balance and strength exercise cut the rate of falls in older people by about 23% across over 100 trials | Sherrington 2019 Cochrane exercise for preventing falls in older people community 108 trials rate of falls 23%
+- human_body-small-daily-habits-4 | in RCTs breakfast eaters ate slightly more total energy and weighed slightly more | Sievert 2019 BMJ effect of breakfast on weight and energy intake meta-analysis
+- human_body-supplements-4 | multivitamin trial: about 14,000 male doctors, over a decade, no difference in mortality | Physicians' Health Study II multivitamin 14,641 mortality Sesso 2012 JAMA
+- medicine-side-effects-4 | US military Shelf Life Extension Program found most tested drugs stable years past expiry | Lyon 2006 J Pharm Sci SLEP 88% of lots extended
+- technology-passwords-1 | Google 2019: an SMS code blocked 100% of automated bot attacks | Google Security Blog May 2019 basic account hygiene SMS 100% automated bots
+- weird_facts-hoaxes-1 | James Howells, Newport, discarded a drive with about 8,000 bitcoin in 2013 and spent years seeking to dig up the landfill | James Howells bitcoin hard drive Newport landfill 8,000
+- weird_facts-hoaxes-1 | Denmark agreed in 2024 a livestock emissions tax starting 2030 | Denmark green tripartite agreement livestock CO2 tax 2030
+- language-spin-4 | ASA ruled Colgate's "more than 80% of dentists recommend" ad misleading in 2007 | ASA Colgate 80% dentists recommend ruling 2007

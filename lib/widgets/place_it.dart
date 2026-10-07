@@ -428,6 +428,9 @@ class RulerPainter extends CustomPainter {
 /// The reveal: the same ruler, the "close enough" band, the truth and the
 /// reader's guess, arriving in that order.
 class PlaceItReveal extends StatelessWidget {
+  /// The ruler's height, fixed, so a back that fits the card can plan for it.
+  static const double height = 84;
+
   final Pill pill;
   final Estimate estimate;
   final String response;
@@ -453,7 +456,7 @@ class PlaceItReveal extends StatelessWidget {
       builder: (context, v, _) {
         double phase(double a, double b) => ((v - a) / (b - a)).clamp(0.0, 1.0);
         return SizedBox(
-          height: 84,
+          height: height,
           width: double.infinity,
           child: CustomPaint(
             painter: RulerPainter(

@@ -85,7 +85,9 @@ List<Pill> _cards() {
   ];
 }
 
-/// One card on the black ground, sized as the deck sizes it.
+/// One card on the black ground, sized as the deck sizes it: the Today deck
+/// leaves 220 points of the screen's height to the bars and the header and
+/// 18 a side, so a 360×740 phone gets a 324×520 card.
 class _Frame extends StatefulWidget {
   final Pill pill;
   const _Frame(this.pill);
@@ -109,7 +111,7 @@ class _FrameState extends State<_Frame> {
         backgroundColor: Colors.black,
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(14, 60, 14, 96),
+            padding: const EdgeInsets.fromLTRB(18, 116, 18, 104),
             child: GestureDetector(
               onTap: widget.pill.asksSomething
                   ? null
@@ -118,6 +120,8 @@ class _FrameState extends State<_Frame> {
                 pill: widget.pill,
                 flipped: _flipped,
                 given: _given,
+                onSave: () {},
+                onShare: () {},
                 onAnswer: (r, c, w) => setState(() {
                   _given = Answer(r, confidence: c, reason: w);
                   _flipped = true;
@@ -183,6 +187,12 @@ void main() {
           await settle();
           await shoot('end');
           return;
+        } else if (pill.challenge case TypeNumber(:final answer)) {
+          // A wrong number, so the verdict is the longer line.
+          await tester.enterText(find.byType(TextField).first, '${answer * 2}');
+          await settle();
+          await tester.tap(find.bySemanticsLabel('Check my answer'));
+          await settle();
         } else {
           return;
         }
@@ -193,7 +203,31 @@ void main() {
           await tester.tap(sure.first);
           await settle();
         }
+        // A debate asks why before it shows the other side: one line, as a
+        // reader would write it.
+        final why = find.byType(TextField);
+        if (pill.challenge is TakeASide && why.evaluate().isNotEmpty) {
+          await tester.enterText(
+            why.first,
+            'Because the cost lands on people who had no say in it.',
+          );
+          await settle();
+          await tester.tap(find.text('Now show me the other side'));
+          await settle();
+        }
         await shoot('end');
+        // Whatever waits behind a line on a back short of room, opened.
+        for (final kind in ['picture', 'scene', 'working']) {
+          final open = find.byKey(ValueKey('$kind-toggle'));
+          if (open.evaluate().isEmpty) continue;
+          await tester.tap(open);
+          await settle();
+          await shoot(kind);
+          if (kind != 'working') {
+            await tester.tap(find.byKey(const ValueKey('back-to-answer')));
+            await settle();
+          }
+        }
         // A worked solution, walked two steps further.
         final next = find.byKey(const ValueKey('next-step'));
         if (next.evaluate().isNotEmpty) {

@@ -2201,8 +2201,10 @@ void main() {
       expect(find.text(front.answer), findsNothing);
 
       // Longer than the framework's own long press, and still a tap.
+      // On the question: a card with a scene keeps a press in its middle.
+      final card = tester.getRect(find.byType(HoldToKeep).first);
       final press = await tester.startGesture(
-        tester.getCenter(find.byType(HoldToKeep).first),
+        Offset(card.center.dx, card.top + 90),
       );
       await tester.pump(const Duration(milliseconds: 560));
       await press.up();
@@ -3798,15 +3800,25 @@ void main() {
       expect(find.text('"Because of the cost."'), findsOneWidget);
 
       // The other side is one tap away, and not shown before it is asked for.
-      // A long case pushes the tap below the fold of the card's back.
-      expect(find.text(debate.counterpoint), findsNothing);
-      await tester.ensureVisible(find.text('What the other side says'));
-      await tester.pumpAndSettle();
+      // It is read in the answer's place, run in after a label saying whose
+      // case it is, with the reader's own line still above it.
+      final other = find.textContaining(
+        debate.counterpoint,
+        findRichText: true,
+      );
+      expect(other, findsNothing);
       await tester.tap(find.text('What the other side says'));
       await tester.pumpAndSettle();
-      await tester.ensureVisible(find.text(debate.counterpoint));
+      expect(other, findsOneWidget);
+      expect(
+        find.textContaining('"Because of the cost."', findRichText: true),
+        findsOneWidget,
+      );
+      // And the way back to the answer.
+      await tester.tap(find.text('Back to the answer'));
       await tester.pumpAndSettle();
-      expect(find.text(debate.counterpoint), findsOneWidget);
+      expect(other, findsNothing);
+      expect(find.text(debate.answer), findsOneWidget);
     });
 
     testWidgets('the reason step still fits on a small handset', (
@@ -3847,7 +3859,11 @@ void main() {
       await tester.tap(find.text('Skip — show me anyway'));
       await tester.pumpAndSettle();
 
-      expect(find.text('YOU TOOK'), findsOneWidget);
+      // The side taken runs in after its label, in one line.
+      expect(
+        find.textContaining('YOU TOOK', findRichText: true),
+        findsOneWidget,
+      );
       expect(find.text('What the other side says'), findsOneWidget);
     });
 
@@ -3863,16 +3879,13 @@ void main() {
       await tester.tap(find.text(pill.question));
       await tester.pumpAndSettle();
 
-      expect(find.text(pill.simply), findsNothing);
-      // A full reveal — verdict, answer, trap, bar move, source — is taller
-      // than the card, so the offer sits below the fold and is reached the
-      // way a reader reaches it.
-      final offer = find.text('Explain it like I am three');
-      await tester.ensureVisible(offer);
+      final simply = find.textContaining(pill.simply, findRichText: true);
+      expect(simply, findsNothing);
+      // The whole reveal fits the card, so the offer is on it to be tapped,
+      // and the retelling is read in the answer's place.
+      await tester.tap(find.text('Explain it like I am three'));
       await tester.pumpAndSettle();
-      await tester.tap(offer);
-      await tester.pumpAndSettle();
-      expect(find.text(pill.simply), findsWidgets);
+      expect(simply, findsWidgets);
     });
   });
 

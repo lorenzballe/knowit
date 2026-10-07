@@ -343,6 +343,12 @@ class Pill {
   /// The question the reader takes away and asks of their own life: what
   /// the card is for. Empty on a card not yet given one.
   final String ask;
+
+  /// Whether the back shows both boxes, what to keep and the question to
+  /// ask yourself. One box is the rule — the back is a card, not a form, and
+  /// two panels of take-aways read as homework — so this is off unless the
+  /// card itself opts in.
+  final bool both;
   final String source;
 
   /// What the card asks before it turns over.
@@ -439,6 +445,7 @@ class Pill {
     required this.answer,
     required this.barMove,
     this.ask = '',
+    this.both = false,
     required this.source,
     this.challenge = const NoChallenge(),
     this.hint = '',
@@ -493,6 +500,12 @@ class Pill {
   bool get asksSomething => challenge is! NoChallenge;
   bool get hasHint => hint.isNotEmpty;
   bool get hasTrap => trap.isNotEmpty;
+
+  /// The boxes the back of the card ends on. What to keep, when the card has
+  /// one; the question to ask yourself only in its place, or beside it on a
+  /// card marked [both].
+  bool get showsMove => barMove.isNotEmpty;
+  bool get showsAsk => ask.isNotEmpty && (both || barMove.isEmpty);
   bool get hasSteps => steps.isNotEmpty;
   bool get hasSimply => simply.isNotEmpty;
   bool get hasCounterpoint => counterpoint.isNotEmpty;

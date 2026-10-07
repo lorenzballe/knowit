@@ -1,0 +1,59 @@
+{
+  "id": "philosophy-lying-4",
+  "topic": "philosophy",
+  "genre": "philosophy.ethics",
+  "strand": "philosophy.ethics.lying",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Only you see the die. You are paid what you report, up to 5 francs, but a 6 pays nothing. What do you report?",
+  "answer": "Few lied all the way. Reports of 5 came far above one in six, and 6s, which paid nothing, far less often, yet many who cheated stopped short of the top. Lying a little lets people keep both the money and their picture of themselves as honest. The paper called it lies in disguise.",
+  "move": "Watch the small bends you allow yourself because they still feel honest.",
+  "ask": "Where do I round in my own favour and still call it honest?",
+  "keywords": [
+    "honesty",
+    "cheating",
+    "die roll",
+    "self-image"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "mechanism",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "Students, Fischbacher & Föllmi-Heusi",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "Exactly what I rolled",
+            "share": 39,
+            "mirror": "Like an estimated 39%: honest, though nobody could ever have known. Many people simply are."
+          },
+          {
+            "label": "A bit more than I rolled",
+            "share": 41,
+            "mirror": "Like many: they nudged the number up but stopped short of 5. A small lie still feels honest."
+          },
+          {
+            "label": "5, the top pay",
+            "share": 20,
+            "mirror": "Like about 1 in 5. Nobody was harmed, the money was the lab's, and the rules invited it."
+          }
+        ]
+      }
+    ],
+    "why": "We want the money and to stay honest in our own eyes, so we lie only a little."
+  },
+  "source": "Fischbacher & Föllmi-Heusi, JEEA, 2013",
+  "source_kind": "paper",
+  "reference": "Fischbacher & Föllmi-Heusi, Lies in disguise: an experimental study on cheating, Journal of the European Economic Association 11 (2013): 525-547",
+  "written": "2026-10-07"
+}

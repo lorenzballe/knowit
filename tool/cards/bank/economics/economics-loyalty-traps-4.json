@@ -1,0 +1,70 @@
+{
+  "id": "economics-loyalty-traps-4",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.loyalty_traps",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "You are handed a small free gift, then offered a swap for another of about the same value. Do you swap?",
+  "answer": "A third group, given a free choice, split 56% mug and 44% chocolate, so neither was the clear favourite. Yet about 9 in 10 kept whichever they had been handed minutes before. Owning a thing, even briefly, makes giving it up feel like a loss. Free trials and 30-day returns are built on that minute.",
+  "move": "Before keeping something, ask whether you would buy it today at this price.",
+  "ask": "What do I keep paying for only because it is already mine?",
+  "keywords": [
+    "endowment effect",
+    "ownership",
+    "free trials",
+    "loss aversion"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "Students, Knetsch 1989",
+    "questions": [
+      {
+        "prompt": "You have been given a coffee mug. Swap it for a big chocolate bar?",
+        "tag": "Handed the mug",
+        "options": [
+          {
+            "label": "Keep the mug",
+            "share": 89
+          },
+          {
+            "label": "Swap for the chocolate",
+            "share": 11
+          }
+        ]
+      },
+      {
+        "prompt": "Say you had been handed the chocolate instead. Swap it for the mug?",
+        "tag": "Handed the chocolate",
+        "options": [
+          {
+            "label": "Swap for the mug",
+            "share": 10
+          },
+          {
+            "label": "Keep the chocolate",
+            "share": 90
+          }
+        ]
+      }
+    ],
+    "why": "Giving up what you hold feels like a loss, and a loss weighs more than the same thing gained.",
+    "same": "You held steady: you know which you like. Most didn't: about 9 in 10 kept whatever they got.",
+    "switched": "Your pick moved with what you were handed. For 9 in 10, being handed it was reason to keep it."
+  },
+  "source": "Knetsch, American Economic Review, 1989",
+  "source_kind": "paper",
+  "reference": "Knetsch, The endowment effect and evidence of nonreversible indifference curves, American Economic Review 79 (1989): 1277-1284",
+  "written": "2026-10-07"
+}

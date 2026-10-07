@@ -1926,6 +1926,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get showAllSteps => '全部显示';
 
   @override
+  String get revealSeePicture => '看图';
+
+  @override
+  String get revealPlayScene => '自己试试';
+
+  @override
+  String get revealBackToAnswer => '回到答案';
+
+  @override
+  String get revealShowWorking => '查看推理过程';
+
+  @override
   String get sceneLockIn => '确定';
 
   @override

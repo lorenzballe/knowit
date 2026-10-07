@@ -1,0 +1,70 @@
+{
+  "id": "food-hunger-or-habit-4",
+  "topic": "food",
+  "genre": "food.eat_smarter",
+  "strand": "food.eat_smarter.hunger_or_habit",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Free snacks at the office: you choose one for next week, then one to eat right now. Which do you take each time?",
+  "answer": "Choices made ahead are made by a calmer self, and our forecasts leave out the pull of a treat within reach. Appetite leaks the other way too: in Read and van Leeuwen's study, people who were hungry while choosing next week's snack picked more junk for it. Today's stomach writes tomorrow's plan.",
+  "move": "Decide what you will eat before you're hungry, and keep the rest out of reach.",
+  "ask": "Which of my plans are made on a full stomach and broken on an empty one?",
+  "keywords": [
+    "snacks",
+    "self-control",
+    "planning",
+    "hunger"
+  ],
+  "era": "twentieth",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "Office workers, Read & van Leeuwen 1998",
+    "questions": [
+      {
+        "prompt": "A snack to be handed to you a week from now. Which?",
+        "tag": "Chosen a week ahead",
+        "options": [
+          {
+            "label": "Fruit",
+            "share": 74
+          },
+          {
+            "label": "Chocolate or crisps",
+            "share": 26
+          }
+        ]
+      },
+      {
+        "prompt": "And a snack to eat right now?",
+        "tag": "Chosen on the spot",
+        "options": [
+          {
+            "label": "Fruit",
+            "share": 30
+          },
+          {
+            "label": "Chocolate or crisps",
+            "share": 70
+          }
+        ]
+      }
+    ],
+    "why": "Ahead, we choose for the person we mean to be; on the spot, for the one who is peckish.",
+    "same": "You held steady. The office didn't: fruit fell from 74% to 30% once the snack was in reach.",
+    "switched": "You switched, like most: the planner picks fruit, the one holding the snack picks chocolate."
+  },
+  "source": "Read & van Leeuwen, OBHDP, 1998",
+  "source_kind": "paper",
+  "reference": "Read & van Leeuwen, Predicting hunger: the effects of appetite and delay on choice, Organizational Behavior and Human Decision Processes 76 (1998): 189-205",
+  "written": "2026-10-07"
+}

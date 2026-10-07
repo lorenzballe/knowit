@@ -1998,6 +1998,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get showAllSteps => 'Alle zeigen';
 
   @override
+  String get revealSeePicture => 'Bild ansehen';
+
+  @override
+  String get revealPlayScene => 'Selbst ausprobieren';
+
+  @override
+  String get revealBackToAnswer => 'Zurück zur Antwort';
+
+  @override
+  String get revealShowWorking => 'Rechenweg zeigen';
+
+  @override
   String get sceneLockIn => 'FESTLEGEN';
 
   @override

@@ -2060,6 +2060,18 @@ class AppLocalizationsPl extends AppLocalizations {
   String get showAllSteps => 'Pokaż wszystko';
 
   @override
+  String get revealSeePicture => 'Zobacz rysunek';
+
+  @override
+  String get revealPlayScene => 'Wypróbuj sam';
+
+  @override
+  String get revealBackToAnswer => 'Wróć do odpowiedzi';
+
+  @override
+  String get revealShowWorking => 'Pokaż tok rozumowania';
+
+  @override
   String get sceneLockIn => 'ZATWIERDŹ';
 
   @override

@@ -1,0 +1,84 @@
+{
+  "id": "food-food-safety-6",
+  "topic": "food",
+  "genre": "food.fermentation",
+  "strand": "food.fermentation.food_safety",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Rare steak, reheated rice, mouldy cheese. Which of these kitchen fears are real risks, and which are overblown?",
+  "answer": "Risk depends on where the germs can be. On a steak or a block of cheddar they stay on the surface, where heat or a knife reaches them. Mince, soft bread, raw flour and cooled rice hide them inside, or let them make toxins that cooking cannot undo. Looks tell you neither.",
+  "move": "Ask where the danger sits before asking how bad it looks.",
+  "ask": "Which food do I throw away out of fear, and which do I eat without a second thought?",
+  "keywords": [
+    "food poisoning",
+    "mould",
+    "rice",
+    "raw flour",
+    "rare meat"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Real risk",
+    "right": "Fine",
+    "tag": "In your kitchen",
+    "items": [
+      {
+        "text": "Rare steak",
+        "note": "Pink all the way through the middle.",
+        "pile": "right",
+        "verdict": "Germs sit on the outside of a whole cut, and searing kills them."
+      },
+      {
+        "text": "Rare burger",
+        "note": "Pink all the way through the middle.",
+        "pile": "left",
+        "verdict": "Mincing spreads the surface germs all through. Cook it right through."
+      },
+      {
+        "text": "Reheated rice",
+        "note": "Cooked yesterday, left out overnight, microwaved.",
+        "pile": "left",
+        "verdict": "Spores survive cooking, then make a toxin left out that reheating can't undo."
+      },
+      {
+        "text": "Mouldy cheddar",
+        "note": "A spot of mould on a block of hard cheese.",
+        "pile": "right",
+        "verdict": "Mould can't reach far into hard cheese. Cut 2.5 cm around the spot."
+      },
+      {
+        "text": "Mouldy bread",
+        "note": "A spot of mould on one slice.",
+        "pile": "left",
+        "verdict": "Its threads run through soft food unseen. Bin the loaf, not just the slice."
+      },
+      {
+        "text": "Cookie dough",
+        "note": "Raw off the spoon, made without eggs.",
+        "pile": "left",
+        "verdict": "Raw flour has caused E. coli outbreaks. It is a raw crop, never heated."
+      },
+      {
+        "text": "Refreezing meat",
+        "note": "Thawed in the fridge, then frozen again.",
+        "pile": "right",
+        "verdict": "Safe if it stayed cold all along. It just comes out a little drier."
+      }
+    ]
+  },
+  "source": "USDA FSIS; NHS; CDC",
+  "source_kind": "institution",
+  "reference": "USDA FSIS, Molds on Food: Are They Dangerous?; USDA FSIS, Freezing and Food Safety; NHS, Can reheating rice cause food poisoning?; CDC, Say No to Raw Dough; Food Standards Agency, Rare burgers and steaks",
+  "written": "2026-10-07"
+}
