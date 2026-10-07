@@ -1,0 +1,78 @@
+{
+  "id": "human_body-supplements-4",
+  "topic": "human_body",
+  "genre": "human_body.health_claims",
+  "strand": "human_body.health_claims.supplements",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Six supplements, and the reason each is taken. For which reasons do trials say the pill does its job?",
+  "answer": "The ones that work fill a gap someone really has. A baby forming a spine, a vegan with no animal foods, a breastfed infant: each lacks something specific. Healthy adults topping up a full tank get nothing measurable, which is why the big trials of fish oil and multivitamins came back flat.",
+  "move": "Ask what gap a pill fills before asking whether it works.",
+  "ask": "Which pill do I take without knowing what I am short of?",
+  "keywords": [
+    "folic acid",
+    "fish oil",
+    "multivitamins",
+    "vitamin c",
+    "vitamin b12"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Backed",
+    "right": "Not backed",
+    "tag": "Taken for a reason",
+    "items": [
+      {
+        "text": "Folic acid",
+        "note": "Taken while trying for a baby.",
+        "pile": "left",
+        "verdict": "A 1991 trial cut spina bifida and similar defects by about 70%."
+      },
+      {
+        "text": "Fish oil",
+        "note": "Taken by healthy adults to protect the heart.",
+        "pile": "right",
+        "verdict": "In a trial of nearly 26,000 adults, heart attacks were no rarer than on dummy pills."
+      },
+      {
+        "text": "Vitamin B12",
+        "note": "Taken by vegans.",
+        "pile": "left",
+        "verdict": "Plants do not make it. Without it, vegans risk anaemia and nerve damage."
+      },
+      {
+        "text": "Multivitamin",
+        "note": "One a day, to live longer.",
+        "pile": "right",
+        "verdict": "In a trial of 14,000 doctors over a decade, takers died at the same rate."
+      },
+      {
+        "text": "Vitamin C",
+        "note": "Every day, to ward off colds.",
+        "pile": "right",
+        "verdict": "Most people catch as many colds. Only those under extreme strain catch fewer."
+      },
+      {
+        "text": "Vitamin D drops",
+        "note": "Given to breastfed babies.",
+        "pile": "left",
+        "verdict": "Breast milk holds little of it. The drops prevent rickets: soft, bending bones."
+      }
+    ]
+  },
+  "source": "MRC Vitamin Study, Lancet, 1991; VITAL, NEJM, 2019",
+  "source_kind": "paper",
+  "reference": "MRC Vitamin Study Research Group, Lancet 338:131-137, 1991; Manson et al., Marine n-3 fatty acids and prevention of cardiovascular disease and cancer, NEJM 380:23-32, 2019; Sesso et al., JAMA 308:1751-1760, 2012; Hemilä and Chalker, Vitamin C for preventing and treating the common cold, Cochrane Database Syst Rev, 2013",
+  "written": "2026-10-07"
+}

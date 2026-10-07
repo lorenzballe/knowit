@@ -1,0 +1,54 @@
+{
+  "id": "philosophy-death-4",
+  "topic": "philosophy",
+  "genre": "philosophy.living_well",
+  "strand": "philosophy.living_well.death",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A free, private test could tell you for certain the date you will die. Would you want to know it?",
+  "answer": "Nearly nine in ten said no, and many refused good news too, such as what they would get for Christmas. Gigerenzer and Garcia-Retamero named it Cassandra's regret, after the prophet cursed to see what was coming. Not wanting to know is often a choice about how to live, not a fear of facts.",
+  "move": "Before seeking an answer, ask what you would do differently once you had it.",
+  "ask": "What am I better off not knowing, and why?",
+  "keywords": [
+    "deliberate ignorance",
+    "death",
+    "knowing the future",
+    "hope"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "story",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "Germans and Spaniards, Gigerenzer 2017",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "Yes, tell me",
+            "share": 12,
+            "mirror": "Like about 1 in 10. You'd rather plan the years you have than wonder how many there are."
+          },
+          {
+            "label": "No, I'd rather not",
+            "share": 88,
+            "mirror": "Like nearly 9 in 10. Not knowing keeps the future open, and lets you live as if it is."
+          }
+        ]
+      }
+    ],
+    "why": "Knowing would help us plan, but would take away hope and the ease of not counting down."
+  },
+  "source": "Gigerenzer & Garcia-Retamero, Psychological Review, 2017",
+  "source_kind": "paper",
+  "reference": "Gigerenzer & Garcia-Retamero, Cassandra's regret: the psychology of not wanting to know, Psychological Review 124 (2017): 179-196",
+  "written": "2026-10-07"
+}

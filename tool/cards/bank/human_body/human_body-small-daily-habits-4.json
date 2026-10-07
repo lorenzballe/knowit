@@ -1,0 +1,78 @@
+{
+  "id": "human_body-small-daily-habits-4",
+  "topic": "human_body",
+  "genre": "human_body.your_body_your_choices",
+  "strand": "human_body.your_body_your_choices.small_daily_habits",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Six health habits nearly everyone has been told to keep. Which rest on strong trials, and which on weak ones?",
+  "answer": "Advice repeated often feels tested, but repeating is not testing. Flossing, eight glasses and breakfast spread through guidelines and adverts long before anyone checked them. The habits that won in trials are duller: less salt, balance classes. Weak evidence does not make a habit useless; it means nobody has shown it works.",
+  "move": "Ask whether advice was tested, or just repeated until it sounded tested.",
+  "ask": "Which of my daily health rules have I never once seen tested?",
+  "keywords": [
+    "flossing",
+    "drinking water",
+    "breakfast",
+    "salt",
+    "falls"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Strong",
+    "right": "Weak",
+    "tag": "You have surely been told",
+    "items": [
+      {
+        "text": "Flossing",
+        "note": "Every day, to save your gums.",
+        "pile": "right",
+        "verdict": "Trials are small and short. At best, gums bleed a little less."
+      },
+      {
+        "text": "Eight glasses",
+        "note": "Of water a day, on top of everything else.",
+        "pile": "right",
+        "verdict": "No study behind the number. Food and other drinks supply much of your water."
+      },
+      {
+        "text": "Less salt",
+        "note": "To bring blood pressure down.",
+        "pile": "left",
+        "verdict": "In controlled feeding trials, cutting salt lowered blood pressure within weeks."
+      },
+      {
+        "text": "Breakfast",
+        "note": "Eat it to keep your weight down.",
+        "pile": "right",
+        "verdict": "In trials, breakfast eaters took in slightly more over the day, not less."
+      },
+      {
+        "text": "Balance classes",
+        "note": "For people over 65, to avoid falls.",
+        "pile": "left",
+        "verdict": "Over a hundred trials: balance and strength exercise cut falls by nearly a quarter."
+      },
+      {
+        "text": "Standing desk",
+        "note": "To undo the harm of sitting all day.",
+        "pile": "right",
+        "verdict": "They do cut sitting time. No trial has yet shown that health improves."
+      }
+    ]
+  },
+  "source": "Cochrane reviews; Sacks et al., NEJM, 2001",
+  "source_kind": "paper",
+  "reference": "Worthington et al., Home use of interdental cleaning devices, Cochrane 2019; Valtin, Am J Physiol 283:R993, 2002; Sacks et al., DASH-Sodium, NEJM 344:3-10, 2001; Sievert et al., BMJ 364:l42, 2019; Sherrington et al., Exercise for preventing falls in older people, Cochrane 2019; Shrestha et al., Workplace interventions for reducing sitting at work, Cochrane 2018",
+  "written": "2026-10-07"
+}

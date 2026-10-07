@@ -1937,6 +1937,15 @@ class AppLocalizationsKo extends AppLocalizations {
   String get showAllSteps => '모두 보기';
 
   @override
+  String get revealSeePicture => '그림 보기';
+
+  @override
+  String get revealPlayScene => '직접 해 보기';
+
+  @override
+  String get revealBackToAnswer => '답으로 돌아가기';
+
+  @override
   String get sceneLockIn => '확정';
 
   @override

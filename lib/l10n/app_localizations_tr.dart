@@ -1980,6 +1980,15 @@ class AppLocalizationsTr extends AppLocalizations {
   String get showAllSteps => 'Tümünü göster';
 
   @override
+  String get revealSeePicture => 'Çizime bak';
+
+  @override
+  String get revealPlayScene => 'Kendin dene';
+
+  @override
+  String get revealBackToAnswer => 'Cevaba dön';
+
+  @override
   String get sceneLockIn => 'ONAYLA';
 
   @override

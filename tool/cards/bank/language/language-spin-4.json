@@ -1,0 +1,83 @@
+{
+  "id": "language-spin-4",
+  "topic": "language",
+  "genre": "language.words_that_persuade",
+  "strand": "language.words_that_persuade.spin",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Seven claims seen on adverts and labels. Which promise something you could check, and which promise almost nothing?",
+  "answer": "The empty ones are built from words that bend: up to, helps, proven, recommend. Each stays true across a huge range of meanings, so advertisers can use them safely. A checkable claim names a number and a baseline, so it could turn out wrong, and the seller can be held to it.",
+  "move": "Trust a claim in proportion to how easily it could be shown wrong.",
+  "ask": "Which thing did I buy because of a word that promised nothing?",
+  "keywords": [
+    "advertising claims",
+    "weasel words",
+    "colgate",
+    "unit pricing"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "practical",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Checkable",
+    "right": "Empty",
+    "tag": "Small print, big words",
+    "items": [
+      {
+        "text": "Up to 50% off",
+        "note": "On a banner across a shop window.",
+        "pile": "right",
+        "verdict": "Up to sets a ceiling. Most items can be cut by far less, or not at all."
+      },
+      {
+        "text": "Helps fight germs",
+        "note": "On a bottle of mouthwash.",
+        "pile": "right",
+        "verdict": "Helps covers any effect at all, however small."
+      },
+      {
+        "text": "£1.20 per 100 g",
+        "note": "On a supermarket shelf label.",
+        "pile": "left",
+        "verdict": "A unit price lets you compare any two packs, whatever their size."
+      },
+      {
+        "text": "80% of dentists",
+        "note": "Recommend this toothpaste.",
+        "pile": "right",
+        "verdict": "Colgate's survey let dentists name several brands. Britain's ad watchdog banned it."
+      },
+      {
+        "text": "Clinically proven",
+        "note": "On a jar of face cream.",
+        "pile": "right",
+        "verdict": "Proven to do what, in how many people, against what? The phrase never says."
+      },
+      {
+        "text": "Fixed for 24 months",
+        "note": "On a broadband contract.",
+        "pile": "left",
+        "verdict": "A firm promise with a date on it. If the price rises, you can hold them to it."
+      },
+      {
+        "text": "30% less fat",
+        "note": "Than our original recipe.",
+        "pile": "left",
+        "verdict": "A number and a baseline. Check the baseline, but you can check it."
+      }
+    ]
+  },
+  "source": "Advertising Standards Authority, Colgate ruling, 2007",
+  "source_kind": "institution",
+  "reference": "Advertising Standards Authority, ASA adjudication on Colgate-Palmolive (UK) Ltd, 2007; Weasel word, Oxford English Dictionary",
+  "written": "2026-10-07"
+}

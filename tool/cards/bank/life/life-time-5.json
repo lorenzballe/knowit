@@ -1,0 +1,54 @@
+{
+  "id": "life-time-5",
+  "topic": "life",
+  "genre": "life.money_and_time",
+  "strand": "life.money_and_time.time",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "If you had to choose, which would you rather have more of in your life: time, or money?",
+  "answer": "Most chose money, yet those who chose time said they were happier, and the gap held at the same income and hours of work. The study cannot say which comes first. But time can be bought: in Whillans's experiments, people who spent money on saving time felt better than those who spent it on things.",
+  "move": "Before trading hours for money, price the hours as carefully as the money.",
+  "ask": "What would I do with an extra free hour a day, and what is it worth to me?",
+  "keywords": [
+    "time",
+    "money",
+    "happiness",
+    "trade-offs"
+  ],
+  "era": "recent",
+  "region": "americas",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 1,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "US adults, Hershfield et al. 2016",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "More money",
+            "share": 64,
+            "mirror": "Like about two in three. Money buys calm and, often, time; many people are short of it."
+          },
+          {
+            "label": "More time",
+            "share": 36,
+            "mirror": "Like about one in three. Those who chose time were happier, even at the same income."
+          }
+        ]
+      }
+    ],
+    "why": "Money is counted and arrives monthly; time leaks away uncounted, so money feels more urgent."
+  },
+  "source": "Hershfield et al., SPPS, 2016; Whillans et al., PNAS, 2017",
+  "source_kind": "paper",
+  "reference": "Hershfield, Mogilner & Barnea, People who choose time over money are happier, Social Psychological and Personality Science, 2016; Whillans et al., Buying time promotes happiness, PNAS, 2017",
+  "written": "2026-10-07"
+}

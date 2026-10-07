@@ -1,0 +1,84 @@
+{
+  "id": "weird_facts-hoaxes-1",
+  "topic": "weird_facts",
+  "genre": "weird_facts.too_strange_to_be_true",
+  "strand": "weird_facts.too_strange_to_be_true.hoaxes",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Seven headlines that went round the world. Which reported something that really happened?",
+  "answer": "The fakes were the plausible ones. A pope's endorsement, a sky spectacle, a nation in panic: each fit what people already expected, so few checked. Real events are under no pressure to sound likely, which is why the strangest headline here, an army beaten by birds, is plain history.",
+  "move": "Judge a story by who reported it, not by how likely it sounds.",
+  "ask": "What was the last thing I shared because it sounded right, without checking who said it?",
+  "keywords": [
+    "fake news",
+    "hoaxes",
+    "emu war",
+    "war of the worlds",
+    "misinformation"
+  ],
+  "era": "twentieth",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Real",
+    "right": "Fake",
+    "tag": "Shared around the world",
+    "items": [
+      {
+        "text": "The Emu War",
+        "note": "Australia's army fights emus with machine guns, and loses.",
+        "pile": "left",
+        "verdict": "Western Australia, 1932. The birds scattered faster than the gunners could aim."
+      },
+      {
+        "text": "Pope backs Trump",
+        "note": "Pope Francis endorses a US presidential candidate, 2016.",
+        "pile": "right",
+        "verdict": "Invented by a fake news site, and one of 2016's most shared stories on Facebook."
+      },
+      {
+        "text": "An ear on a mouse",
+        "note": "Scientists grow a human-shaped ear on a mouse's back.",
+        "pile": "left",
+        "verdict": "1997: cartilage cells grown on an ear-shaped mould under the mouse's skin."
+      },
+      {
+        "text": "Mars like the Moon",
+        "note": "Mars will look as big as the full Moon tonight.",
+        "pile": "right",
+        "verdict": "An email chain since 2003. Even at its closest, Mars is a bright dot."
+      },
+      {
+        "text": "Radio panic",
+        "note": "A radio play about Martians sends America into mass panic, 1938.",
+        "pile": "right",
+        "verdict": "Few listeners panicked. Newspapers, losing advertisers to radio, blew it up."
+      },
+      {
+        "text": "Bitcoin in the bin",
+        "note": "A man throws away a hard drive holding 8,000 bitcoin.",
+        "pile": "left",
+        "verdict": "Newport, Wales, 2013. He spent years asking the council to let him dig up the tip."
+      },
+      {
+        "text": "A cow burp tax",
+        "note": "A country taxes farmers for their livestock's emissions.",
+        "pile": "left",
+        "verdict": "Denmark agreed it in 2024, to start in 2030."
+      }
+    ]
+  },
+  "source": "Pooley and Socolow, Slate, 2013; Cao et al., 1997",
+  "source_kind": "news_archive",
+  "reference": "Jefferson Pooley and Michael J. Socolow, The Myth of the War of the Worlds Panic, Slate, 28 October 2013; Craig Silverman, This Analysis Shows How Viral Fake Election News Stories Outperformed Real News On Facebook, BuzzFeed News, 16 November 2016; Cao, Vacanti et al., Plastic and Reconstructive Surgery 100:297, 1997; Danish Ministry of Taxation, Green tripartite agreement, June 2024",
+  "written": "2026-10-07"
+}

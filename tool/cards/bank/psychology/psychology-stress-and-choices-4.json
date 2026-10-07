@@ -1,0 +1,59 @@
+{
+  "id": "psychology-stress-and-choices-4",
+  "topic": "psychology",
+  "genre": "psychology.think_under_pressure",
+  "strand": "psychology.think_under_pressure.stress_and_choices",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "You have just sat a hard exam; the results come tomorrow. A cheap Hawaii holiday is on offer, today only. What do you do?",
+  "answer": "Most paid to wait for news that would not change their answer. Students told they had passed mostly bought the holiday, as a reward; those told they had failed bought it too, as a consolation. Not knowing which reason applied, most chose neither and waited. Tversky and Shafir called it the disjunction effect.",
+  "move": "If you would choose the same whatever the news, stop waiting for it.",
+  "ask": "What am I waiting to find out that would not change what I do?",
+  "keywords": [
+    "uncertainty",
+    "disjunction effect",
+    "holiday",
+    "exam results"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "playful",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "Students, Tversky & Shafir 1992",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "Buy it now",
+            "share": 32,
+            "mirror": "Like 32%. Pass or fail, you'd go: as a treat, or as a consolation."
+          },
+          {
+            "label": "Don't buy it",
+            "share": 7,
+            "mirror": "Like 7%. Whatever the result, a holiday isn't for now, and no news changes that."
+          },
+          {
+            "label": "Pay $5 to decide later",
+            "share": 61,
+            "mirror": "Like 61%. Yet students told they had passed mostly bought it, and so did those who failed."
+          }
+        ]
+      }
+    ],
+    "why": "Each result gives a reason to go. Not knowing which one, we wait, though either would do."
+  },
+  "source": "Tversky & Shafir, Psychological Science, 1992",
+  "source_kind": "paper",
+  "reference": "Tversky & Shafir, The disjunction effect in choice under uncertainty, Psychological Science 3 (1992): 305-309",
+  "written": "2026-10-07"
+}

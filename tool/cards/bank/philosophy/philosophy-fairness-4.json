@@ -1,0 +1,64 @@
+{
+  "id": "philosophy-fairness-4",
+  "topic": "philosophy",
+  "genre": "philosophy.justice",
+  "strand": "philosophy.justice.fairness",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "You are given €10 and a stranger gets nothing. You may give them any part of it, and they cannot reply. How much?",
+  "answer": "On average people gave away about 28%, though nobody could punish them. Part of that is being seen to be fair: in a later study, many players paid to slip out of the game before the stranger even learnt it existed. Engel pooled over 600 versions of the game to find the average.",
+  "move": "Ask whether you would act the same if nobody could ever find out.",
+  "ask": "When nobody is watching, what do I give, and what do I keep?",
+  "keywords": [
+    "dictator game",
+    "generosity",
+    "fairness",
+    "strangers"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "mechanism",
+  "mood": "sober",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "20,000+ players, Engel 2011 review",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "Nothing",
+            "share": 36,
+            "mirror": "Like 36% of players. The money came to you by chance, and keeping it broke no promise."
+          },
+          {
+            "label": "Something, under €5",
+            "share": 41,
+            "mirror": "Like about 4 in 10, the most common answer: a gesture to the stranger, not half your luck."
+          },
+          {
+            "label": "Half: €5",
+            "share": 17,
+            "mirror": "Like 17%. An even split felt fair to you, though nobody could see or punish you."
+          },
+          {
+            "label": "More than half",
+            "share": 6,
+            "mirror": "Like about 6%, most of whom gave it all. Their need felt bigger than your claim."
+          }
+        ]
+      }
+    ],
+    "why": "Nobody can punish you here, yet most give something: fairness is felt, not only enforced."
+  },
+  "source": "Engel, Experimental Economics, 2011; Dana et al., 2006",
+  "source_kind": "paper",
+  "reference": "Engel, Dictator games: a meta study, Experimental Economics 14 (2011): 583-610; Dana, Cain & Dawes, What you don't know won't hurt me, Organizational Behavior and Human Decision Processes 100 (2006): 193-201",
+  "written": "2026-10-07"
+}

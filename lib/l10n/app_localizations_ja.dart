@@ -1925,6 +1925,15 @@ class AppLocalizationsJa extends AppLocalizations {
   String get showAllSteps => 'すべて表示';
 
   @override
+  String get revealSeePicture => '図を見る';
+
+  @override
+  String get revealPlayScene => '自分で試す';
+
+  @override
+  String get revealBackToAnswer => '答えに戻る';
+
+  @override
   String get sceneLockIn => '決定';
 
   @override

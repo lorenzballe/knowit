@@ -1,0 +1,70 @@
+{
+  "id": "life-family-4",
+  "topic": "life",
+  "genre": "life.relationships",
+  "strand": "life.relationships.family",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A is an average parent in every way; B is richer and closer to the child, but often away. Your ruling?",
+  "answer": "Parent B won both ways: picked for custody by 64%, and refused custody by 55%. Asked to choose, the mind hunts for strengths; asked to reject, for flaws. B had plenty of both and A had few of either, so the vivid parent was picked and refused alike. Shafir found the same with holidays.",
+  "move": "Ask the question both ways: which to pick, and which to drop.",
+  "ask": "Which choice in my life would come out differently if I asked what to drop?",
+  "keywords": [
+    "custody",
+    "choosing and rejecting",
+    "framing",
+    "parents"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "Students, Shafir 1993",
+    "questions": [
+      {
+        "prompt": "Which parent should get sole custody?",
+        "tag": "Asked who gets custody",
+        "options": [
+          {
+            "label": "Parent A, all average",
+            "share": 36
+          },
+          {
+            "label": "Parent B, highs and lows",
+            "share": 64
+          }
+        ]
+      },
+      {
+        "prompt": "Same two parents. Which one should be denied custody?",
+        "tag": "Asked who is denied it",
+        "options": [
+          {
+            "label": "Deny parent B",
+            "share": 55
+          },
+          {
+            "label": "Deny parent A",
+            "share": 45
+          }
+        ]
+      }
+    ],
+    "why": "Choosing hunts for reasons for, refusing for reasons against, and B has plenty of both.",
+    "same": "You held steady. The crowd didn't: parent B was the most chosen and the most refused.",
+    "switched": "You switched, like many: picking, we count B's pluses; refusing, B's minuses."
+  },
+  "source": "Shafir, Memory & Cognition, 1993",
+  "source_kind": "paper",
+  "reference": "Shafir, Choosing versus rejecting: why some options are both better and worse than others, Memory & Cognition 21 (1993): 546-556",
+  "written": "2026-10-07"
+}

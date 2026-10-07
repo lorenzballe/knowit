@@ -1,0 +1,54 @@
+{
+  "id": "psychology-overconfidence-4",
+  "topic": "psychology",
+  "genre": "psychology.know_your_own_mind",
+  "strand": "psychology.know_your_own_mind.overconfidence",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Next week a charity sells daffodils on your campus to raise money for cancer research. Will you buy at least one?",
+  "answer": "About 43% bought one. Asked about their classmates, the same students guessed 56%, far nearer the truth than the 83% they forecast for themselves. They knew how people behave; each simply expected to be the exception. The best guide to their own week was the rest of the campus.",
+  "move": "To predict what you will do, start from what most people do.",
+  "ask": "Which of my plans would I bet on if a stranger had made them?",
+  "keywords": [
+    "self-prediction",
+    "charity",
+    "good intentions",
+    "forecasting"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "misconception",
+  "mood": "playful",
+  "numeracy": 2,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "Cornell students, Epley & Dunning 2000",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "Yes, I'll buy one",
+            "share": 83,
+            "mirror": "Like 83% of the students. In the end 43% bought one: kind plans meet busy weeks."
+          },
+          {
+            "label": "No, probably not",
+            "share": 17,
+            "mirror": "Like 17%. A frank forecast: in the end, most of the students didn't buy one either."
+          }
+        ]
+      }
+    ],
+    "why": "We forecast ourselves from our intentions, and others from how people act."
+  },
+  "source": "Epley & Dunning, JPSP, 2000",
+  "source_kind": "paper",
+  "reference": "Epley & Dunning, Feeling holier than thou: are self-serving assessments produced by errors in self- or social prediction?, Journal of Personality and Social Psychology 79 (2000): 861-875",
+  "written": "2026-10-07"
+}

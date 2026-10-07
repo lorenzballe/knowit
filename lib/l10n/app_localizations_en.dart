@@ -1990,6 +1990,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get showAllSteps => 'Show all';
 
   @override
+  String get revealSeePicture => 'See the picture';
+
+  @override
+  String get revealPlayScene => 'Play with it';
+
+  @override
+  String get revealBackToAnswer => 'Back to the answer';
+
+  @override
   String get sceneLockIn => 'LOCK IT IN';
 
   @override

@@ -38,6 +38,34 @@ class DiagramView extends StatefulWidget {
 
   @override
   State<DiagramView> createState() => _DiagramViewState();
+
+  /// The height the diagram takes at [width], caption included — so a
+  /// card that has to fit one screen can plan for it before it is built.
+  static double heightFor(
+    Diagram diagram,
+    double width,
+    TextScaler scaler, {
+    Color ink = const Color(0xFF000000),
+    TextStyle base = const TextStyle(),
+  }) {
+    var h = _painterFor(diagram, kAlwaysCompleteAnimation, ink).heightFor(width);
+    if (diagram.caption.isNotEmpty) {
+      final caption = TextPainter(
+        text: TextSpan(
+          text: diagram.caption,
+          style: base.merge(_captionStyle(ink)),
+        ),
+        textDirection: TextDirection.ltr,
+        textScaler: scaler,
+      )..layout(maxWidth: width);
+      h += 8 + caption.height;
+      caption.dispose();
+    }
+    return h;
+  }
+
+  static TextStyle _captionStyle(Color ink) =>
+      AppText.body(size: 12, height: 1.4, color: ink.withValues(alpha: 0.62));
 }
 
 class _DiagramViewState extends State<DiagramView>
@@ -116,11 +144,7 @@ class _DiagramViewState extends State<DiagramView>
                     ),
                     child: Text(
                       d.caption,
-                      style: AppText.body(
-                        size: 12,
-                        height: 1.4,
-                        color: widget.ink.withValues(alpha: 0.62),
-                      ),
+                      style: DiagramView._captionStyle(widget.ink),
                     ),
                   ),
                 ],

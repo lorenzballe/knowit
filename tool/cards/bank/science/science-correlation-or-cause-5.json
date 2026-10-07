@@ -1,0 +1,78 @@
+{
+  "id": "science-correlation-or-cause-5",
+  "topic": "science",
+  "genre": "science.how_science_knows",
+  "strand": "science.how_science_knows.correlation_or_cause",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Six health links found by comparing groups of people. Which turned out to be cause and effect, and which fell apart?",
+  "answer": "A link survives when its obvious rival is ruled out. Breastfeeding mothers, sunbathers and vitamin takers differ from other people in ways that matter; compare like with like and the link vanishes or flips. Smoking, HPV and lead passed the harder tests: more exposure, more harm, and less harm once it was removed.",
+  "move": "Before believing a link, ask how the people in it came to be there.",
+  "ask": "Which habit do I credit for my health that people like me simply tend to have?",
+  "keywords": [
+    "correlation",
+    "confounding",
+    "breastfeeding",
+    "sunscreen",
+    "hpv"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "misconception",
+  "mood": "sober",
+  "numeracy": 0,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Cause",
+    "right": "Just a link",
+    "tag": "Found by comparing people",
+    "items": [
+      {
+        "text": "Smoking",
+        "note": "Smokers get far more lung cancer.",
+        "pile": "left",
+        "verdict": "No trial ever made people smoke. Dose, timing and quitting proved it anyway."
+      },
+      {
+        "text": "Breastfeeding",
+        "note": "Breastfed children score higher on IQ tests.",
+        "pile": "right",
+        "verdict": "Compared with their own siblings, the gap vanished. The mothers explained it."
+      },
+      {
+        "text": "Sunscreen",
+        "note": "In some surveys, users get more melanoma.",
+        "pile": "right",
+        "verdict": "Sunbathers use more of it. In a trial, daily use halved new melanomas."
+      },
+      {
+        "text": "HPV",
+        "note": "Women with this virus get cervical cancer.",
+        "pile": "left",
+        "verdict": "Where girls were vaccinated against it, the cancer has almost vanished among them."
+      },
+      {
+        "text": "Vitamin E",
+        "note": "People taking it had fewer heart attacks.",
+        "pile": "right",
+        "verdict": "Takers were healthier to start with. Trials of thousands found no benefit."
+      },
+      {
+        "text": "Lead",
+        "note": "Children with more lead in their blood score lower on IQ tests.",
+        "pile": "left",
+        "verdict": "It damages nerve cells in lab animals, and more lead means lower scores."
+      }
+    ]
+  },
+  "source": "Der et al., BMJ, 2006; Green et al., JCO, 2011",
+  "source_kind": "paper",
+  "reference": "Der, Batty and Deary, Effect of breast feeding on intelligence in children, BMJ 333:945, 2006; Green et al., Reduced melanoma after regular sunscreen use, J Clin Oncol 29:257-263, 2011; HOPE Study Investigators, Vitamin E supplementation and cardiovascular events, NEJM 342:154-160, 2000; Lei et al., HPV vaccination and the risk of invasive cervical cancer, NEJM 383:1340-1348, 2020",
+  "written": "2026-10-07"
+}

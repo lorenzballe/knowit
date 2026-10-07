@@ -1997,6 +1997,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get showAllSteps => 'Ver tudo';
 
   @override
+  String get revealSeePicture => 'Ver o desenho';
+
+  @override
+  String get revealPlayScene => 'Experimente você';
+
+  @override
+  String get revealBackToAnswer => 'Voltar à resposta';
+
+  @override
   String get sceneLockIn => 'CONFIRMAR';
 
   @override

@@ -6,8 +6,8 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "When can a firefighter's gut feeling be trusted, while a stock picker's cannot?",
-  "answer": "When the world is regular and mistakes show quickly. Kahneman and Klein, long on opposite sides, agreed that intuition becomes skill only with stable patterns and fast, clear feedback, as in fire, chess or nursing. Markets and long-range forecasts give neither, so confidence grows without accuracy.",
+  "question": "A firefighter, a stock picker and four others trust their gut at work every day. Whose hunches have earned it?",
+  "answer": "Those whose world repeats and whose mistakes show fast. Kahneman and Klein, long on opposite sides, agreed that a hunch becomes skill only with regular patterns and quick, clear feedback. Fires, chess and the operating theatre give both. Markets, hiring and politics give neither, so confidence grows while accuracy stays put.",
   "move": "Trust a hunch only where you have been told quickly when it was wrong.",
   "ask": "In which part of my life do I get fast feedback, and where am I trusting a hunch that has never been checked?",
   "keywords": [
@@ -27,8 +27,52 @@
   "mature": false,
   "language": "en",
   "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Trust it",
+    "right": "Check it",
+    "tag": "Gut feeling at work",
+    "items": [
+      {
+        "text": "Firefighter",
+        "note": "Senses a floor is about to give way.",
+        "pile": "left",
+        "verdict": "Fires repeat their patterns, and a wrong call shows within minutes."
+      },
+      {
+        "text": "Stock picker",
+        "note": "Feels a share is about to rise.",
+        "pile": "right",
+        "verdict": "Prices already hold what others know, and a call takes years to judge."
+      },
+      {
+        "text": "Chess master",
+        "note": "Sees the right move at a glance.",
+        "pile": "left",
+        "verdict": "Thousands of games, each one scored the moment it ends."
+      },
+      {
+        "text": "Interviewer",
+        "note": "Knows within five minutes who will do well.",
+        "pile": "right",
+        "verdict": "Never sees how the rejected would have done, so the hunch is never corrected."
+      },
+      {
+        "text": "Anaesthetist",
+        "note": "Senses a patient is about to crash.",
+        "pile": "left",
+        "verdict": "The monitors answer within seconds, so every hunch gets checked."
+      },
+      {
+        "text": "Pundit",
+        "note": "Calls an election three years out.",
+        "pile": "right",
+        "verdict": "In Tetlock's 20-year study, experts' long-range calls did little better than chance."
+      }
+    ]
+  },
   "source": "Kahneman and Klein, American Psychologist, 2009",
   "source_kind": "paper",
-  "reference": "Kahneman and Klein, Conditions for Intuitive Expertise: A Failure to Disagree, American Psychologist, 2009",
+  "reference": "Kahneman and Klein, Conditions for Intuitive Expertise: A Failure to Disagree, American Psychologist 64:515, 2009; Tetlock, Expert Political Judgment, Princeton University Press, 2005",
   "written": "2026-10-03"
 }

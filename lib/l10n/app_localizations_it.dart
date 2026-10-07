@@ -2000,6 +2000,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get showAllSteps => 'Mostra tutto';
 
   @override
+  String get revealSeePicture => 'Guarda il disegno';
+
+  @override
+  String get revealPlayScene => 'Provalo tu';
+
+  @override
+  String get revealBackToAnswer => 'Torna alla risposta';
+
+  @override
   String get sceneLockIn => 'CONFERMA';
 
   @override

@@ -1,0 +1,83 @@
+{
+  "id": "technology-scams-2",
+  "topic": "technology",
+  "genre": "technology.your_digital_life",
+  "strand": "technology.your_digital_life.scams",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A caller says he is from your bank's fraud team and your savings are at risk. Which of these prove he is real?",
+  "answer": "Only what you reach yourself. Everything a caller can show you, he can buy or fake: leaked names and addresses, a spoofed number, a sender name on a text. That is why banks say they will never ask you to move money to a safe account. The request alone tells you who is calling.",
+  "move": "Trust the line you opened, never the one that opened you.",
+  "ask": "Which of my accounts could a calm, well-informed stranger talk me out of in one phone call?",
+  "keywords": [
+    "bank impersonation",
+    "caller id spoofing",
+    "phishing",
+    "safe account scam"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Proof",
+    "right": "No proof",
+    "tag": "Caller: Fraud Team",
+    "items": [
+      {
+        "text": "Your name",
+        "note": "He knows your full name and home address.",
+        "pile": "right",
+        "verdict": "Leaked in data breaches and sold by the million. Anyone can buy it."
+      },
+      {
+        "text": "The bank's number",
+        "note": "The number on your screen matches the one on your card.",
+        "pile": "right",
+        "verdict": "Caller ID can be faked: the number shown is whatever the caller types."
+      },
+      {
+        "text": "Your card digits",
+        "note": "He reads out the last four digits of your card.",
+        "pile": "right",
+        "verdict": "They are printed on receipts and shown in online shops. Many scammers have them."
+      },
+      {
+        "text": "Same text thread",
+        "note": "His text arrives among your bank's real messages.",
+        "pile": "right",
+        "verdict": "A text's sender name can be faked too, so it files itself with the real ones."
+      },
+      {
+        "text": "A padlock",
+        "note": "His link opens a site with a padlock in the address bar.",
+        "pile": "right",
+        "verdict": "The padlock means the connection is encrypted, not that the site is honest."
+      },
+      {
+        "text": "You call back",
+        "note": "You hang up and dial the number on your card yourself.",
+        "pile": "left",
+        "verdict": "Now you chose who answers. Use another phone if you can: a line can be held open."
+      },
+      {
+        "text": "In your app",
+        "note": "The same alert is there when you open the bank's app yourself.",
+        "pile": "left",
+        "verdict": "You went in through a door you trust. A link sent to you would not count."
+      }
+    ]
+  },
+  "source": "UK Finance, Take Five to Stop Fraud",
+  "source_kind": "institution",
+  "reference": "https://www.takefive-stopfraud.org.uk/ ; Ofcom, Tackling scam calls and texts, 2022",
+  "written": "2026-10-07"
+}

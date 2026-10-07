@@ -1,0 +1,70 @@
+{
+  "id": "medicine-questions-to-ask-4",
+  "topic": "medicine",
+  "genre": "medicine.talk_to_your_doctor",
+  "strand": "medicine.talk_to_your_doctor.questions_to_ask",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "A 67-year-old's hip pain has resisted several pills; he is referred for a hip replacement. Then an untried pill turns up. What would you advise?",
+  "answer": "A second untried pill made more doctors try none. Each pill was a sensible next step alone, but picking between two is hard work, and referral offered a way out of the choice. Patients feel the same pull: a longer menu of treatments can end in doing nothing, or in taking the default.",
+  "move": "When two good options stall you, compare each one with doing nothing.",
+  "ask": "Which decision am I putting off only because I have two good options?",
+  "keywords": [
+    "choice overload",
+    "doctors",
+    "hip pain",
+    "decision conflict"
+  ],
+  "era": "twentieth",
+  "region": "americas",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "Family doctors, Redelmeier & Shafir 1995",
+    "questions": [
+      {
+        "prompt": "One pill he hasn't tried. Start it, or just refer him?",
+        "tag": "One untried pill",
+        "options": [
+          {
+            "label": "Try the pill first",
+            "share": 47
+          },
+          {
+            "label": "Just refer him",
+            "share": 53
+          }
+        ]
+      },
+      {
+        "prompt": "Now there are two untried pills, both sensible. Start one, or just refer him?",
+        "tag": "Two untried pills",
+        "options": [
+          {
+            "label": "Try a pill first",
+            "share": 28
+          },
+          {
+            "label": "Just refer him",
+            "share": 72
+          }
+        ]
+      }
+    ],
+    "why": "Picking between two good options is hard, so the easy way out is to pick neither.",
+    "same": "You held steady. The doctors didn't: no new pill rose from 53% to 72%.",
+    "switched": "You switched, like many doctors. A second good option made trying either one look harder."
+  },
+  "source": "Redelmeier & Shafir, JAMA, 1995",
+  "source_kind": "paper",
+  "reference": "Redelmeier & Shafir, Medical decision making in situations that offer multiple alternatives, JAMA 273 (1995): 302-305",
+  "written": "2026-10-07"
+}

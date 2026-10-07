@@ -1,0 +1,54 @@
+{
+  "id": "economics-hidden-incentives-4",
+  "topic": "economics",
+  "genre": "economics.think_in_incentives",
+  "strand": "economics.think_in_incentives.hidden_incentives",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "You are offered €10 to let a surplus lab mouse be put down; refuse, and it lives. Do you take the money?",
+  "answer": "Alone, 46% took the money. When the same choice became a trade, a buyer and a seller haggling over the price, nearly three in four sellers agreed to a price for a mouse's life. In a market the blame is split, and someone else would take the deal anyway. A price can wear down what people refuse alone.",
+  "move": "Ask what you would do if the deal were yours alone.",
+  "ask": "What do I go along with at work that I would refuse on my own?",
+  "keywords": [
+    "markets",
+    "morals",
+    "lab mice",
+    "responsibility"
+  ],
+  "era": "recent",
+  "region": "europe",
+  "hook": "paradox",
+  "mood": "sober",
+  "numeracy": 1,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "poll",
+    "who": "Bonn students, Falk & Szech 2013",
+    "questions": [
+      {
+        "options": [
+          {
+            "label": "Take the €10",
+            "share": 46,
+            "mirror": "Like 46% of the students. A lab mouse is not a pet, and mice die every day for less."
+          },
+          {
+            "label": "Save the mouse",
+            "share": 54,
+            "mirror": "Like 54%. Every mouse spared in the study was bought and kept alive for the rest of its life."
+          }
+        ]
+      }
+    ],
+    "why": "Some weigh a small life against the money; others won't put any price on a life at all."
+  },
+  "source": "Falk & Szech, Science, 2013",
+  "source_kind": "paper",
+  "reference": "Falk & Szech, Morals and markets, Science 340 (2013): 707-711",
+  "written": "2026-10-07"
+}

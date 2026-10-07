@@ -1,0 +1,77 @@
+{
+  "id": "science-sample-size-4",
+  "topic": "science",
+  "genre": "science.read_a_study",
+  "strand": "science.read_a_study.sample_size",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "Six claims, each resting on a difference between two numbers. Which differences are real, and which could easily be luck?",
+  "answer": "A difference means nothing without the count behind it. Sixty per cent of 50 tasters is close to a coin toss; sixty per cent of 10,000 tosses is a bent coin. Small counts swing wildly on their own, which is why the most dramatic headlines so often rest on the smallest numbers.",
+  "move": "Before trusting a change, ask how big a change luck alone makes.",
+  "ask": "Which result did I last celebrate that rested on a handful of cases?",
+  "keywords": [
+    "sample size",
+    "statistical noise",
+    "taste tests",
+    "cancer clusters"
+  ],
+  "era": "timeless",
+  "region": "none",
+  "hook": "puzzle",
+  "mood": "practical",
+  "numeracy": 2,
+  "abstraction": "mixed",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Real",
+    "right": "Maybe luck",
+    "tag": "The numbers behind it",
+    "items": [
+      {
+        "text": "A taste test",
+        "note": "30 of 50 tasters prefer cola A.",
+        "pile": "right",
+        "verdict": "A fair coin gives 30 or more heads out of 50 about one time in ten."
+      },
+      {
+        "text": "A coin",
+        "note": "6,000 heads in 10,000 tosses.",
+        "pile": "left",
+        "verdict": "The same 60%. Over 10,000 tosses, luck alone would essentially never get there."
+      },
+      {
+        "text": "A cancer cluster",
+        "note": "Cases near a phone mast doubled, from 2 to 4.",
+        "pile": "right",
+        "verdict": "With counts this small, 2 one year and 4 the next is everyday wobble."
+      },
+      {
+        "text": "Unemployment",
+        "note": "The national rate fell from 5.1% to 5.0%.",
+        "pile": "right",
+        "verdict": "It comes from a survey that wobbles by more than that. A 0.1 point move is noise."
+      },
+      {
+        "text": "A big drug trial",
+        "note": "Deaths fell from 10% to 8% among 30,000 patients.",
+        "pile": "left",
+        "verdict": "That is 1,500 deaths against 1,200. With numbers this big, 300 is no fluke."
+      },
+      {
+        "text": "A class's results",
+        "note": "A class of 30 passes 4 points more than last year.",
+        "pile": "right",
+        "verdict": "One pupil is over 3 points of a class of 30. One extra pass explains it."
+      }
+    ]
+  },
+  "source": "Binomial arithmetic; ONS Labour Force Survey",
+  "source_kind": "arithmetic",
+  "reference": "Binomial distribution: P(X >= 30) for 50 fair tosses = 0.10; 6,000 of 10,000 is 20 standard deviations from 5,000; ONS, A guide to labour market statistics: sampling variability of the unemployment rate",
+  "written": "2026-10-07"
+}

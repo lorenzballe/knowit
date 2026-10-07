@@ -1,0 +1,77 @@
+{
+  "id": "economics-too-good-to-be-true-4",
+  "topic": "economics",
+  "genre": "economics.spot_a_bad_deal",
+  "strand": "economics.spot_a_bad_deal.too_good_to_be_true",
+  "kind": "read",
+  "difficulty": "easy",
+  "principle": "none",
+  "question": "An investment is pitched to you online. Which of these signs should worry you, and which are normal for a real one?",
+  "answer": "A real investment looks worse than a scam. It admits losses, promises nothing and lets you check it at leisure. A Ponzi scheme can afford to look perfect, and to pay its first investors, because the money comes from the next ones. The friend who got paid is part of the pitch.",
+  "move": "When nothing can go wrong, ask where the money comes from.",
+  "ask": "Would I still believe this if a stranger, not a friend, had pitched it to me?",
+  "keywords": [
+    "investment scams",
+    "ponzi schemes",
+    "fake celebrity ads",
+    "financial regulators"
+  ],
+  "era": "recent",
+  "region": "world",
+  "hook": "practical",
+  "mood": "practical",
+  "numeracy": 0,
+  "abstraction": "concrete",
+  "shelf_life": "evergreen",
+  "mature": false,
+  "language": "en",
+  "figure": "none",
+  "scene": {
+    "type": "sort",
+    "left": "Red flag",
+    "right": "Normal",
+    "tag": "Sponsored · Invest now",
+    "items": [
+      {
+        "text": "Guaranteed 10%",
+        "note": "Ten per cent a year, guaranteed.",
+        "pile": "left",
+        "verdict": "Nobody can guarantee more than a safe bank pays. The guarantee is the hook."
+      },
+      {
+        "text": "A friend got paid",
+        "note": "A friend put money in and has already taken profits out.",
+        "pile": "left",
+        "verdict": "Ponzi schemes pay early investors with newcomers' money, so the word spreads."
+      },
+      {
+        "text": "Some losing years",
+        "note": "Its record shows years when it lost money.",
+        "pile": "right",
+        "verdict": "Every real investment that grows has bad years. Losses on record are honest."
+      },
+      {
+        "text": "A celebrity ad",
+        "note": "A famous TV presenter recommends it on social media.",
+        "pile": "left",
+        "verdict": "Fake celebrity adverts are common bait. Martin Lewis sued Facebook over them."
+      },
+      {
+        "text": "Pay in crypto",
+        "note": "You pay in crypto, or into a person's bank account.",
+        "pile": "left",
+        "verdict": "Real firms take money into an account in the firm's own name."
+      },
+      {
+        "text": "On the register",
+        "note": "You found the firm on the regulator's own website.",
+        "pile": "right",
+        "verdict": "A real check. Then call the number listed there, not the one in the advert."
+      }
+    ]
+  },
+  "source": "FCA ScamSmart",
+  "source_kind": "institution",
+  "reference": "Financial Conduct Authority, ScamSmart: avoid investment and pension scams, https://www.fca.org.uk/scamsmart ; BBC News, Martin Lewis drops Facebook lawsuit over fake ads, 23 January 2019",
+  "written": "2026-10-07"
+}

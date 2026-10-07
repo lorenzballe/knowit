@@ -225,6 +225,22 @@ void main() {
         await settle(tester);
         note('all steps');
       }
+      // The picture, where it waits behind a line, swapped in.
+      final picture = find.byKey(const ValueKey('picture-toggle'));
+      if (picture.evaluate().isNotEmpty) {
+        await tester.tap(picture);
+        await settle(tester);
+        note('picture');
+        await tester.tap(picture);
+        await settle(tester);
+      }
+      // The other side's case, opened.
+      final other = find.text('What the other side says');
+      if (other.evaluate().isNotEmpty) {
+        await tester.tap(other);
+        await settle(tester);
+        note('other side');
+      }
     }
 
     if (findings.isNotEmpty) {

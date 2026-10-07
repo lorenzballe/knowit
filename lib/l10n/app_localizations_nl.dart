@@ -1996,6 +1996,15 @@ class AppLocalizationsNl extends AppLocalizations {
   String get showAllSteps => 'Alles tonen';
 
   @override
+  String get revealSeePicture => 'Bekijk de tekening';
+
+  @override
+  String get revealPlayScene => 'Probeer het zelf';
+
+  @override
+  String get revealBackToAnswer => 'Terug naar het antwoord';
+
+  @override
   String get sceneLockIn => 'VASTLEGGEN';
 
   @override

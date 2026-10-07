@@ -2004,6 +2004,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get showAllSteps => 'Tout voir';
 
   @override
+  String get revealSeePicture => 'Voir le schéma';
+
+  @override
+  String get revealPlayScene => 'Essaie toi-même';
+
+  @override
+  String get revealBackToAnswer => 'Retour à la réponse';
+
+  @override
   String get sceneLockIn => 'VALIDER';
 
   @override
