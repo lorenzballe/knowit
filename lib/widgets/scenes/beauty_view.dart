@@ -194,7 +194,7 @@ class _BeautySceneViewState extends State<BeautySceneView>
 
     return LayoutBuilder(
       builder: (context, box) {
-        final compact = box.maxHeight < 330;
+        final compact = box.maxHeight < 300;
         _width = math.max(1, box.maxWidth);
         final line = _played && s.reveal.isNotEmpty ? s.reveal : s.hint;
 
@@ -1045,29 +1045,17 @@ class _Sunflower extends _World {
       if (age > big * 0.9) d *= (big - age) / (big * 0.1);
       if (d < 0.6) continue;
       final b = ((d / dmax) * (_sizes - 1)).round().clamp(0, _sizes - 1);
-      final arm = k % 34 == 0 || k % 21 == 0;
+      final arm = k % 21 % 3 == 0;
       (arm ? _arms : _dots)[b].add(cx + r * math.cos(a), cy + r * math.sin(a));
     }
     for (var b = 0; b < _sizes; b++) {
       final w = dmax * (b + 0.5) / _sizes * e;
       _dot
         ..strokeWidth = w
-        ..color = look.ink.withValues(alpha: 0.8 * e);
+        ..color = look.ink.withValues(alpha: 0.5 * e);
       _dots[b].draw(canvas, PointMode.points, _dot);
-      _dot.color = (look.accent == look.ink
-          ? look.ground
-          : look.accent).withValues(alpha: e);
-      if (look.accent == look.ink) {
-        // No accent: the arms are drawn as rings, ground in an ink seed.
-        _dot.color = look.ink.withValues(alpha: e);
-        _arms[b].draw(canvas, PointMode.points, _dot);
-        _dot
-          ..strokeWidth = w * 0.42
-          ..color = look.ground.withValues(alpha: e);
-        _arms[b].draw(canvas, PointMode.points, _dot);
-      } else {
-        _arms[b].draw(canvas, PointMode.points, _dot);
-      }
+      _dot.color = look.accent.withValues(alpha: e);
+      _arms[b].draw(canvas, PointMode.points, _dot);
     }
   }
 }
@@ -1080,16 +1068,13 @@ class _Sunflower extends _World {
 /// rose of five petals, because thirteen Venus years are almost exactly
 /// eight of ours.
 class _Orbits extends _World {
-  _Orbits(super.scene) {
-    // Opens on a rose already half drawn.
-    t = 0;
-  }
+  _Orbits(super.scene);
 
   static const _shades = 10;
 
   /// Days a second of watching covers.
   double get _pace => scene.outer / 1.7;
-  double get _days => calm ? scene.span : scene.span * 0.45 + t * _pace;
+  double get _days => scene.span + (calm ? 0 : t * _pace);
 
   final List<_Batch> _bands = List.generate(_shades, (_) => _Batch());
   final Paint _line = Paint()..strokeCap = StrokeCap.round;
@@ -1239,7 +1224,7 @@ class _Waves extends _World {
     final k = math.pi * 2 / lambda;
     final w = math.pi * 2 / 1.7;
     final time = calm ? 0.35 : t;
-    final g = math.max(6.5, size.width / 46);
+    final g = math.max(5.0, size.width / 58);
     final cols = (size.width / g).floor();
     final rows = (size.height / g).floor();
     final ox = (size.width - (cols - 1) * g) / 2;
@@ -1260,15 +1245,17 @@ class _Waves extends _World {
         final v =
             math.cos(k * d1 - w * time) / math.sqrt(1 + d1 / reach) +
             math.cos(k * d2 - w * time) / math.sqrt(1 + d2 / reach);
-        if (v <= 0.12) continue;
-        final q = ((v / 2).clamp(0.0, 1.0) * (_sizes - 1)).round();
+        // Every point a dot: a crest swells it, a trough shrinks it to a
+        // speck, and where the two waves cancel it never changes.
+        final q = (((v + 2) / 4).clamp(0.0, 1.0) * (_sizes - 1)).round();
         _dots[q].add(px, py);
       }
     }
-    for (var q = 1; q < _sizes; q++) {
+    for (var q = 0; q < _sizes; q++) {
+      final f = q / (_sizes - 1);
       _dot
-        ..strokeWidth = g * 0.86 * (q / (_sizes - 1)) * e
-        ..color = look.ink.withValues(alpha: (0.45 + 0.55 * q / (_sizes - 1)) * e);
+        ..strokeWidth = g * (0.12 + 0.86 * f * f) * e
+        ..color = look.ink.withValues(alpha: (0.35 + 0.65 * f) * e);
       _dots[q].draw(canvas, PointMode.points, _dot);
     }
 
