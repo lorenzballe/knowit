@@ -26,56 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "scene": {
-    "type": "sort",
-    "left": "Older",
-    "right": "Younger",
-    "tag": "Google · September 1998",
-    "items": [
-      {
-        "text": "Dancing Baby",
-        "note": "A 3D baby doing the cha-cha.",
-        "pile": "left",
-        "verdict": "1996: a demo file for animation software."
-      },
-      {
-        "text": ":-)",
-        "note": "The sideways smiley.",
-        "pile": "left",
-        "verdict": "Proposed at Carnegie Mellon on 19 September 1982."
-      },
-      {
-        "text": "Godwin's law",
-        "note": "Every long argument ends with a Hitler comparison.",
-        "pile": "left",
-        "verdict": "Coined on Usenet in 1990."
-      },
-      {
-        "text": "Spam",
-        "note": "Junk sent to thousands at once.",
-        "pile": "left",
-        "verdict": "The first mass commercial spam hit Usenet in April 1994."
-      },
-      {
-        "text": "All your base",
-        "note": "A mistranslated video-game line.",
-        "pile": "right",
-        "verdict": "The game is from 1989; the joke spread in 2000 and 2001."
-      },
-      {
-        "text": "Lolcats",
-        "note": "Cats with captions in broken English.",
-        "pile": "right",
-        "verdict": "I Can Has Cheezburger? launched in 2007."
-      },
-      {
-        "text": "Rickrolling",
-        "note": "A link that plays Never Gonna Give You Up.",
-        "pile": "right",
-        "verdict": "It took off in 2007, twenty years after the song."
-      }
-    ]
-  },
   "source": "Shifman, Memes in Digital Culture, 2014",
   "source_kind": "book",
   "reference": "Limor Shifman, Memes in Digital Culture, MIT Press, 2014",

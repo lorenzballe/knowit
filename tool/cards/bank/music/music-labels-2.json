@@ -55,7 +55,12 @@
       "near": "Right: by 2011 sales had halved. That hole is what the 360 deal was built to fill.",
       "over": "Not that gentle: by 2011 recorded music earned less than half its 1999 total."
     },
-    "notes": []
+    "notes": [
+      {
+        "at": 4,
+        "text": "Not adjusted for inflation"
+      }
+    ]
   },
   "source": "RIAA revenue data; Marshall, 2013",
   "source_kind": "paper",

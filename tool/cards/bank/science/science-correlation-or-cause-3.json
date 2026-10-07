@@ -6,7 +6,7 @@
   "kind": "read",
   "difficulty": "easy",
   "principle": "none",
-  "question": "A post blamed smartphones for American obesity, with this chart: two lines rising in perfect step. Where's the trick?",
+  "question": "Picture a post blaming smartphones for American obesity, with this chart: two lines rising in perfect step. Where's the trick?",
   "answer": "In the two scales, each stretched until the lines matched. On one axis, phone owners rose 42 points and obesity 7. Obesity had already climbed from about 23% to 31% of adults in the 1990s, before any smartphone. Anything that grew in the 2010s tracks anything else that grew: a shared calendar, not a cause.",
   "move": "When two rising lines match, ask what else rose over those years.",
   "ask": "What do I blame on something new that was already happening before it arrived?",
@@ -29,7 +29,7 @@
   "scene": {
     "type": "trick",
     "trick": "dual",
-    "outlet": "Viral post (redrawn)",
+    "outlet": "Made-up post, real data",
     "headline": "Smartphones are making America fat",
     "honest": "Phones up 42 points, obesity up 7",
     "label": "US adults, %",

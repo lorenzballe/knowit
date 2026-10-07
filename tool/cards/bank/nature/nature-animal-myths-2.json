@@ -26,50 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "scene": {
-    "type": "sort",
-    "left": "Myth",
-    "right": "True",
-    "tag": "Heard it somewhere",
-    "items": [
-      {
-        "text": "Dog years",
-        "note": "One dog year equals seven human years.",
-        "pile": "left",
-        "verdict": "By a DNA clock, a one-year-old dog matches a human of about 31."
-      },
-      {
-        "text": "Goldfish",
-        "note": "Their memory lasts about three seconds.",
-        "pile": "left",
-        "verdict": "Goldfish can be trained, and remember the trick for months."
-      },
-      {
-        "text": "Octopus",
-        "note": "It has three hearts.",
-        "pile": "right",
-        "verdict": "Two pump blood through the gills, one through the rest of the body."
-      },
-      {
-        "text": "Bats",
-        "note": "They are blind.",
-        "pile": "left",
-        "verdict": "Every bat can see. Many hunt by sound as well, not instead."
-      },
-      {
-        "text": "Wombats",
-        "note": "Their droppings come out as cubes.",
-        "pile": "right",
-        "verdict": "Stiff and soft bands in the gut wall square them off."
-      },
-      {
-        "text": "Ostriches",
-        "note": "They bury their heads in sand when scared.",
-        "pile": "left",
-        "verdict": "They lie flat to hide, or turn their eggs in the nest."
-      }
-    ]
-  },
   "source": "Wang et al., 2020; Yang et al., 2021",
   "source_kind": "paper",
   "reference": "Wang et al., Cell Systems 11:176, 2020, doi:10.1016/j.cels.2020.06.006; Yang et al., Soft Matter 17:475, 2021, doi:10.1039/D0SM01230K",

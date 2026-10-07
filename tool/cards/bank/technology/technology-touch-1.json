@@ -26,62 +26,6 @@
   "mature": false,
   "language": "en",
   "figure": "none",
-  "scene": {
-    "type": "sort",
-    "left": "Before",
-    "right": "After",
-    "tag": "Apollo 11 · July 1969",
-    "items": [
-      {
-        "text": "Touchscreen",
-        "note": "A screen that senses a finger.",
-        "pile": "left",
-        "verdict": "1965, for air traffic controllers in Malvern, England."
-      },
-      {
-        "text": "Fax",
-        "note": "Sending an image down a wire.",
-        "pile": "left",
-        "verdict": "Patented in 1843, before the telephone existed."
-      },
-      {
-        "text": "Mobile call",
-        "note": "A call from a handheld phone.",
-        "pile": "right",
-        "verdict": "April 1973, on a New York street."
-      },
-      {
-        "text": "Cash machine",
-        "note": "Banknotes from a hole in the wall.",
-        "pile": "left",
-        "verdict": "June 1967, at a Barclays branch in Enfield."
-      },
-      {
-        "text": "Calculator",
-        "note": "An electronic calculator for a pocket.",
-        "pile": "right",
-        "verdict": "The first that truly fitted one went on sale in 1971."
-      },
-      {
-        "text": "Video call",
-        "note": "Seeing the person you phone.",
-        "pile": "left",
-        "verdict": "AT&T's Picturephone, at the 1964 World's Fair."
-      },
-      {
-        "text": "Barcode scan",
-        "note": "A checkout reads a striped code.",
-        "pile": "right",
-        "verdict": "June 1974: a pack of chewing gum, in Ohio."
-      },
-      {
-        "text": "Mouse",
-        "note": "A box rolled on the desk to point.",
-        "pile": "left",
-        "verdict": "Built in 1964, shown to the world in 1968."
-      }
-    ]
-  },
   "source": "Johnson, Electronics Letters, 1965",
   "source_kind": "paper",
   "reference": "Johnson, Touch display: a novel input/output device for computers, Electronics Letters 1(8), 1965",

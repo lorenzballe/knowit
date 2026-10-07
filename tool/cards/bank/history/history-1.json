@@ -30,35 +30,5 @@
   "source": "Taagepera, International Studies Quarterly, 1997",
   "source_kind": "paper",
   "reference": "Taagepera, Expansion and contraction patterns of large polities: context for Russia, International Studies Quarterly 41(3), 1997",
-  "scene": {
-    "type": "rank",
-    "quantity": "Peak area, million km²",
-    "most": "Largest",
-    "items": [
-      {
-        "label": "Mongol",
-        "value": 24.0,
-        "note": "The largest single unbroken block of land ever ruled, won on horseback."
-      },
-      {
-        "label": "Spanish",
-        "value": 13.7
-      },
-      {
-        "label": "British",
-        "value": 35.5,
-        "note": "About a quarter of the world's land in 1920, held together by ships."
-      },
-      {
-        "label": "French",
-        "value": 11.5
-      },
-      {
-        "label": "Russian",
-        "value": 22.8,
-        "note": "Nearly the Mongols' size, all of it joined by land."
-      }
-    ]
-  },
   "written": "2026-10-06"
 }
