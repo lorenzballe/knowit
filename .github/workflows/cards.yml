@@ -13,6 +13,20 @@ name: Write tonight's cards
 #   Settings → Actions → General → "Allow GitHub Actions to create and
 #   approve pull requests"
 #
+# Every night, once a count is set: a repository variable CARDS_PER_NIGHT
+# (Settings → Secrets and variables → Actions → Variables) says how many
+# cards to ask for, and unset is off — the generator spends real money, so
+# it runs every night only when somebody has said how much. CARDS_BUDGET
+# caps a night in dollars (default: a dollar and a half a card): past it,
+# the run stops before the next stage and files nothing half-checked.
+#
+# Not every card waits for a person. Each one is scored on how it got
+# through (tool/quality/confidence.py); the doubtful ones and a sample of
+# the rest move to tool/cards/review/, and once this is merged they are
+# listed in the issue labelled cards-review, to publish or drop. With the
+# variable CARDS_AUTOMERGE set to true, the rest merge themselves and go
+# out; without it, merging the pull request stays the review.
+#
 # Run it by hand from the Actions tab with a count and, optionally, a topic.
 # "fake" runs the whole thing on a canned model — no key, no cost — and
 # opens a pull request that says so in its title: it proves the machinery,
@@ -21,11 +35,8 @@ name: Write tonight's cards
 # trial night.
 
 on:
-  # No schedule for now: the generator runs only when someone starts it from
-  # the Actions tab, so nothing is spent unasked. To run it every night,
-  # put back:
-  #   schedule:
-  #     - cron: "0 3 * * *"
+  schedule:
+    - cron: "17 2 * * *"
   workflow_dispatch:
     inputs:
       count:
@@ -49,6 +60,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write
 
 concurrency:
   group: cards
@@ -67,38 +79,84 @@ jobs:
         with:
           python-version: "3.12"
 
+      # Whether tonight runs at all: by hand, always; on the schedule, only
+      # with a count set; and never without a key, unless on the canned model.
+      - name: Is there anything to do?
+        id: go
+        env:
+          KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NIGHTLY: ${{ vars.CARDS_PER_NIGHT }}
+          ASKED: ${{ github.event.inputs.count }}
+          BUDGET: ${{ vars.CARDS_BUDGET }}
+        run: |
+          count="$ASKED"
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            count="$NIGHTLY"
+            if [ -z "$count" ] || [ "$count" = "0" ]; then
+              echo "The nightly run is off: set the repository variable CARDS_PER_NIGHT to a number of cards to turn it on." >> "$GITHUB_STEP_SUMMARY"
+              echo "run=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+          if [ -z "$KEY" ] && [ "${{ inputs.fake }}" != "true" ]; then
+            echo "No ANTHROPIC_API_KEY secret is set, so no cards were written. Add it under Settings → Secrets and variables → Actions." >> "$GITHUB_STEP_SUMMARY"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          count="${count:-12}"
+          case "$count" in *[!0-9]*) echo "The count has to be a whole number, not $count." >&2; exit 1;; esac
+          budget="$BUDGET"
+          [ -n "$budget" ] || budget="$(python3 -c "print(round($count * 1.5, 2))")"
+          echo "count=$count" >> "$GITHUB_OUTPUT"
+          echo "budget=$budget" >> "$GITHUB_OUTPUT"
+          echo "run=true" >> "$GITHUB_OUTPUT"
+
       - run: pip install -r tool/cards/requirements.txt
+        if: steps.go.outputs.run == 'true'
 
       - name: The bank as it stands has to pass its own gate
+        if: steps.go.outputs.run == 'true'
         run: python3 tool/cards/check.py
 
       # A card that reached the bank without tags — a hand edit, a bundle
       # from before the tags — is tagged before anything new is written.
       # Usually nothing to do.
       - name: Tag what has no tags
-        if: ${{ inputs.fake != true }}
+        if: steps.go.outputs.run == 'true' && inputs.fake != true
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python3 tool/cards/tag.py --missing
 
       - name: Write the cards
+        if: steps.go.outputs.run == 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           only="${{ github.event.inputs.topics }}"
           python3 tool/cards/generate.py --plan --batch \
-            --count "${{ github.event.inputs.count || '30' }}" \
+            --count "${{ steps.go.outputs.count }}" \
+            --budget "${{ steps.go.outputs.budget }}" \
             --model "${{ github.event.inputs.model || 'claude-opus-5' }}" \
             ${{ inputs.fake == true && '--fake' || '' }} \
             ${only:+--only $only} \
+            --outcomes cards-outcomes.json \
             --report cards-report.md
 
+      # The doubtful cards and a sample of the rest leave the bank for the
+      # review folder, and the pull request says who reads what.
+      - name: Send the doubtful ones to a person
+        if: steps.go.outputs.run == 'true'
+        run: python3 tool/quality/route.py --outcomes cards-outcomes.json --report cards-report.md --today "$(date -u +%F)"
+
       - name: Gate the bank again, with the new cards in it, and bundle
+        if: steps.go.outputs.run == 'true'
         run: |
           python3 tool/cards/check.py
           python3 tool/cards/bundle.py
 
       - name: Open the pull request
+        id: pr
+        if: steps.go.outputs.run == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
           branch: cards/${{ github.run_id }}
@@ -111,8 +169,22 @@ jobs:
             The gate and the critic passed these; a person has not yet.
           add-paths: |
             tool/cards/bank/**
+            tool/cards/review/**
             tool/cards/editions.json
             lib/data/embedded_bank.dart
             web/cards/cards.json
             web/cards/version.json
           labels: "${{ inputs.fake == true && 'cards, dry-run' || 'cards' }}"
+
+      # With CARDS_AUTOMERGE set to true, the confident cards go out on
+      # their own: the pull request is merged, the site is deployed (a
+      # merge made by this workflow's token does not start the deploy by
+      # itself), and the review issue lists what waits for a person.
+      - name: Merge it, when the confident cards may go out alone
+        if: steps.go.outputs.run == 'true' && steps.pr.outputs.pull-request-number && vars.CARDS_AUTOMERGE == 'true' && inputs.fake != true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr merge "${{ steps.pr.outputs.pull-request-number }}" --merge --delete-branch
+          gh workflow run deploy.yml --ref main
+          gh workflow run review.yml --ref main

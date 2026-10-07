@@ -418,6 +418,9 @@ export function reviewsDue(profile: Profile, bank: Bank, date: string): Card[] {
     const original = bank.byId.get(id);
     if (!original) continue;
     const pick = freshInstanceOf(original, claimed, profile, bank, date);
+    // A card taken out of the deal — retired, or in quarantine — is not
+    // brought back as a review; a sibling of its principle still can be.
+    if (pick.disabled) continue;
     claimed.add(pick.id);
     out.push(pick);
   }

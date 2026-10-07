@@ -1959,4 +1959,43 @@ class AppLocalizationsZh extends AppLocalizations {
   String sceneNOfM(int n, int m) {
     return '$m个中的$n个';
   }
+
+  @override
+  String get reportProblem => '报告问题';
+
+  @override
+  String get reportedThanks => '已报告，谢谢。';
+
+  @override
+  String get reportTitle => '这张卡片哪里有问题？';
+
+  @override
+  String get reportLead => '每条报告我们都会对照来源核实，并修正卡片。';
+
+  @override
+  String get reportFact => '事实有误';
+
+  @override
+  String get reportAnswer => '标为正确的答案是错的';
+
+  @override
+  String get reportSource => '来源并不支持这一点';
+
+  @override
+  String get reportUnclear => '看不明白';
+
+  @override
+  String get reportTypo => '错别字或显示错乱';
+
+  @override
+  String get reportOther => '其他';
+
+  @override
+  String get reportNoteHint => '有助于我们核实的信息（可选）';
+
+  @override
+  String get reportSend => '发送';
+
+  @override
+  String get reportSentToast => '谢谢，我们会核实。';
 }

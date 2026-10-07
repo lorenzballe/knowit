@@ -97,6 +97,7 @@ class Trace extends ChangeNotifier {
     'pill unsaved': 'unsave',
     'pill disliked': 'skip',
     'pill dislike undone': 'unskip',
+    'card reported': 'rep',
     'pill said': 'said',
     'pill shared': 'share',
     'pill opened': 'open',
@@ -155,6 +156,8 @@ class Trace extends ChangeNotifier {
     'to': 'to',
     'length': 'len',
     'found': 'found',
+    'report_reason': 'rr',
+    'with_note': 'nt',
   };
 
   /// Writes an event down, if it is one the trace keeps.

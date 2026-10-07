@@ -1958,4 +1958,43 @@ class AppLocalizationsJa extends AppLocalizations {
   String sceneNOfM(int n, int m) {
     return '$m中$n';
   }
+
+  @override
+  String get reportProblem => '問題を報告';
+
+  @override
+  String get reportedThanks => '報告しました。ありがとうございます。';
+
+  @override
+  String get reportTitle => 'このカードの何が問題ですか？';
+
+  @override
+  String get reportLead => '報告はすべて出典と照らし合わせて確認し、カードを直します。';
+
+  @override
+  String get reportFact => '事実が間違っている';
+
+  @override
+  String get reportAnswer => '正解とされた答えが間違っている';
+
+  @override
+  String get reportSource => '出典が裏付けていない';
+
+  @override
+  String get reportUnclear => 'わかりにくい';
+
+  @override
+  String get reportTypo => '誤字や表示の崩れ';
+
+  @override
+  String get reportOther => 'その他';
+
+  @override
+  String get reportNoteHint => '確認に役立つこと（任意）';
+
+  @override
+  String get reportSend => '送信';
+
+  @override
+  String get reportSentToast => 'ありがとうございます。確認します。';
 }

@@ -1,0 +1,106 @@
+name: Check the cards that are out
+
+# Once a month the cards most in need of it go back in front of the critic,
+# told it is checking a card that is live (tool/quality/recheck.py): first
+# the ones readers say are untrue — out of the deal until checked — then
+# the ones readers dispute or report, then the ones whose answer can change
+# and were checked longest ago. A card that holds gets today as its checked
+# date; one that has moved gets a correction, which waits in the review
+# issue for a person; one that no longer holds is retired. All of it
+# arrives as a pull request, which a person merges: these are cards that
+# are already out.
+#
+# Needs the ANTHROPIC_API_KEY secret, as the night does; without it, the run
+# says so and stops. "fake" runs on a canned critic that passes everything.
+
+on:
+  schedule:
+    - cron: "41 3 2 * *"
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: At most this many cards
+        default: "20"
+      fake:
+        description: A canned critic instead of the API — no key, no cost
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+# The same group as the night: the two never write the bank at once.
+concurrency:
+  group: cards
+  cancel-in-progress: false
+
+jobs:
+  recheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Is there a key?
+        id: go
+        env:
+          KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          LIMIT: ${{ github.event.inputs.limit }}
+        run: |
+          if [ -z "$KEY" ] && [ "${{ inputs.fake }}" != "true" ]; then
+            echo "No ANTHROPIC_API_KEY secret is set, so no card was checked." >> "$GITHUB_STEP_SUMMARY"
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          limit="${LIMIT:-20}"
+          case "$limit" in *[!0-9]*) echo "The limit has to be a whole number." >&2; exit 1;; esac
+          echo "limit=$limit" >> "$GITHUB_OUTPUT"
+          echo "run=true" >> "$GITHUB_OUTPUT"
+
+      - run: pip install -q -r tool/cards/requirements.txt
+        if: steps.go.outputs.run == 'true'
+
+      - name: Check them again
+        if: steps.go.outputs.run == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python3 tool/quality/recheck.py --batch \
+            --limit "${{ steps.go.outputs.limit }}" \
+            ${{ inputs.fake == true && '--fake' || '' }} \
+            --today "$(date -u +%F)" \
+            --report recheck-report.md
+          [ -f recheck-report.md ] && cat recheck-report.md >> "$GITHUB_STEP_SUMMARY" || true
+
+      - name: Gate the bank, and bundle
+        if: steps.go.outputs.run == 'true'
+        run: |
+          python3 tool/cards/check.py
+          python3 tool/cards/bundle.py
+
+      - name: Open the pull request
+        if: steps.go.outputs.run == 'true' && hashFiles('recheck-report.md') != ''
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: recheck/${{ github.run_id }}
+          delete-branch: true
+          title: "${{ inputs.fake == true && 'Cards: a re-check on a canned critic, do not merge' || 'Cards: the monthly re-check' }}"
+          body-path: recheck-report.md
+          commit-message: |
+            The monthly re-check of the cards that are out
+
+            Stamped the ones that held, retired the ones that did not;
+            the corrections wait in the review issue.
+          add-paths: |
+            tool/cards/bank/**
+            tool/cards/review/**
+            tool/cards/editions.json
+            lib/data/embedded_bank.dart
+            web/cards/cards.json
+            web/cards/version.json
+          labels: "${{ inputs.fake == true && 'cards, dry-run' || 'cards' }}"

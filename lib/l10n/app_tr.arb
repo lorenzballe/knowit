@@ -486,5 +486,18 @@
   "sceneTapToPick": "Seçimine dokun",
   "sceneShowMe": "Göster",
   "sceneYourGuess": "Tahminin",
-  "sceneNOfM": "{m} içinde {n}"
+  "sceneNOfM": "{m} içinde {n}",
+  "reportProblem": "Bir sorun bildir",
+  "reportedThanks": "Bildirildi. Teşekkürler.",
+  "reportTitle": "Bu kartta ne yanlış?",
+  "reportLead": "Her bildirimi kaynaklarla karşılaştırıp kartı düzeltiyoruz.",
+  "reportFact": "Bir bilgi yanlış",
+  "reportAnswer": "Doğru diye işaretlenen cevap yanlış",
+  "reportSource": "Kaynak bunu desteklemiyor",
+  "reportUnclear": "Kafa karıştırıcı",
+  "reportTypo": "Bir yazım hatası ya da bozuk bir satır",
+  "reportOther": "Başka bir şey",
+  "reportNoteHint": "Kontrol etmemize yardımcı olacak bir şey (isteğe bağlı)",
+  "reportSend": "Gönder",
+  "reportSentToast": "Teşekkürler. Kontrol edeceğiz."
 }

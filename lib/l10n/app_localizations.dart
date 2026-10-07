@@ -3041,6 +3041,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n} of {m}'**
   String sceneNOfM(int n, int m);
+
+  /// Link under a card's source that opens the report sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Report a problem'**
+  String get reportProblem;
+
+  /// Shown instead of the report link once this phone has reported the card.
+  ///
+  /// In en, this message translates to:
+  /// **'Reported. Thank you.'**
+  String get reportedThanks;
+
+  /// Title of the sheet for reporting a problem with a card.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s wrong with this card?'**
+  String get reportTitle;
+
+  /// Line under the report sheet's title.
+  ///
+  /// In en, this message translates to:
+  /// **'We check every report against the sources and fix the card.'**
+  String get reportLead;
+
+  /// Report reason: the card states something untrue.
+  ///
+  /// In en, this message translates to:
+  /// **'A fact is wrong'**
+  String get reportFact;
+
+  /// Report reason: the option marked correct is not correct.
+  ///
+  /// In en, this message translates to:
+  /// **'The answer marked right is wrong'**
+  String get reportAnswer;
+
+  /// Report reason: the cited source does not support the card.
+  ///
+  /// In en, this message translates to:
+  /// **'The source doesn\'t back it up'**
+  String get reportSource;
+
+  /// Report reason: the card is hard to understand.
+  ///
+  /// In en, this message translates to:
+  /// **'It\'s confusing'**
+  String get reportUnclear;
+
+  /// Report reason: a spelling mistake or text laid out wrong.
+  ///
+  /// In en, this message translates to:
+  /// **'A typo or a broken line'**
+  String get reportTypo;
+
+  /// Report reason: anything else.
+  ///
+  /// In en, this message translates to:
+  /// **'Something else'**
+  String get reportOther;
+
+  /// Placeholder in the optional note field of the report sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Anything that helps us check it (optional)'**
+  String get reportNoteHint;
+
+  /// Button that sends a report.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get reportSend;
+
+  /// Brief message after a report is sent.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks. We\'ll check it.'**
+  String get reportSentToast;
 }
 
 class _AppLocalizationsDelegate

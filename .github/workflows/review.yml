@@ -1,0 +1,121 @@
+name: Cards waiting for a person
+
+# The cards the night or the re-check could not trust alone wait in
+# tool/cards/review/, outside the bank, and are listed in one issue labelled
+# cards-review, each shown whole with a Publish and a Drop box under it
+# (tool/quality/review.py). This keeps that issue in step with the folder,
+# and does what a tick says: Publish puts the card in the bank with today
+# as the day a person checked it, Drop deletes it. The bank is gated again
+# before anything is committed, and the site is deployed with the change.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tool/cards/review/**"
+  issues:
+    types: [edited]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  actions: write
+
+concurrency:
+  group: cards-review
+  cancel-in-progress: false
+
+jobs:
+  review:
+    # An edit to any other issue is none of this workflow's business.
+    if: github.event_name != 'issues' || contains(github.event.issue.labels.*.name, 'cards-review')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -q -r tool/cards/requirements.txt
+
+      - name: Do what the ticks say
+        id: apply
+        if: github.event_name == 'issues'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BODY: ${{ github.event.issue.body }}
+          SENDER: ${{ github.event.sender.login }}
+        run: |
+          # Only somebody who may change the repository publishes a card.
+          permission=$(gh api "repos/${{ github.repository }}/collaborators/$SENDER/permission" --jq .permission 2>/dev/null || echo none)
+          case "$permission" in
+            admin|maintain|write) ;;
+            *) echo "changed=false" >> "$GITHUB_OUTPUT"; echo "skip=true" >> "$GITHUB_OUTPUT"; exit 0 ;;
+          esac
+          printf '%s' "$BODY" > "$RUNNER_TEMP/issue.md"
+          python3 tool/quality/review.py apply --body "$RUNNER_TEMP/issue.md" --today "$(date -u +%F)" --summary "$RUNNER_TEMP/summary.md"
+          if [ -z "$(git status --porcelain tool/cards)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if ! python3 tool/cards/check.py > "$RUNNER_TEMP/gate.txt" 2>&1; then
+            {
+              echo "The bank did not pass its gate with these cards in it, so nothing was changed:"
+              echo
+              echo '```'
+              tail -40 "$RUNNER_TEMP/gate.txt"
+              echo '```'
+            } > "$RUNNER_TEMP/summary.md"
+            git checkout -- . && git clean -fdq tool/cards
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          python3 tool/cards/bundle.py
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      # A push made with this workflow's token starts no other workflow, so
+      # the deploy is asked for by name.
+      - name: Commit it to main, and deploy
+        if: steps.apply.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A tool/cards lib/data/embedded_bank.dart web/cards
+          git commit -q -m "Cards: published or dropped from the review" -m "$(cat "$RUNNER_TEMP/summary.md")"
+          git pull -q --rebase origin main
+          git push -q origin HEAD:main
+          gh workflow run deploy.yml --ref main
+
+      - name: Say what was done
+        if: github.event_name == 'issues' && steps.apply.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -s "$RUNNER_TEMP/summary.md" ] && ! grep -qx "Nothing ticked." "$RUNNER_TEMP/summary.md"; then
+            gh issue comment "${{ github.event.issue.number }}" --body-file "$RUNNER_TEMP/summary.md"
+          fi
+
+      - name: Bring the issue up to date
+        if: steps.apply.outputs.skip != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 tool/quality/review.py body > "$RUNNER_TEMP/body.md"
+          gh label create cards-review --color FBCA04 --description "Cards waiting for a person" --force
+          number=$(gh issue list --label cards-review --state open --json number --jq '.[0].number // empty')
+          waiting=$(python3 -c "import sys; sys.path.insert(0, 'tool/quality'); import common; print(len(common.read_queue()))")
+          if [ "$waiting" = "0" ]; then
+            if [ -n "$number" ]; then gh issue close "$number" --comment "Nothing is waiting any more."; fi
+            exit 0
+          fi
+          if [ -n "$number" ]; then
+            gh issue edit "$number" --body-file "$RUNNER_TEMP/body.md"
+          else
+            gh issue create --title "Cards waiting for a person" --label cards-review --body-file "$RUNNER_TEMP/body.md"
+          fi

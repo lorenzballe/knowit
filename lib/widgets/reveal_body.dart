@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import '../l10n/l10n.dart';
 
 import '../models/pill.dart';
+import '../sync/reports.dart';
 import '../theme.dart';
 import 'diagram_view.dart';
 import 'motion.dart';
+import 'report_sheet.dart';
 
 /// Everything a card says once it is turned over: the reasoning, the trap,
 /// the plain-words retelling and the other side of a debate.
@@ -166,7 +168,79 @@ class _RevealBodyState extends State<RevealBody> {
             color: widget.ink.withValues(alpha: 0.6),
           ),
         ),
+        const SizedBox(height: 16),
+        _ReportLine(pill: pill, ink: widget.ink),
       ],
+    );
+  }
+}
+
+/// "Report a problem", under the source it would be checked against; once
+/// this phone has reported the card, a quiet line saying so instead.
+class _ReportLine extends StatefulWidget {
+  final Pill pill;
+  final Color ink;
+  const _ReportLine({required this.pill, required this.ink});
+
+  @override
+  State<_ReportLine> createState() => _ReportLineState();
+}
+
+class _ReportLineState extends State<_ReportLine> {
+  @override
+  void initState() {
+    super.initState();
+    Reports.instance.load();
+  }
+
+  Future<void> _open() async {
+    final bool? sent = await showReportSheet(context, widget.pill);
+    if (sent != true || !mounted) return;
+    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+      SnackBar(
+        content: Text(context.l10n.reportSentToast),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final String id = widget.pill.id;
+    return ListenableBuilder(
+      listenable: Reports.instance,
+      builder: (context, _) {
+        if (!Reports.instance.has(id)) {
+          return _TextAction(
+            key: ValueKey('report-$id'),
+            ink: widget.ink,
+            icon: Icons.outlined_flag_rounded,
+            label: context.l10n.reportProblem,
+            onTap: _open,
+          );
+        }
+        return Row(
+          key: ValueKey('reported-$id'),
+          children: [
+            Icon(
+              Icons.check_rounded,
+              size: 16,
+              color: widget.ink.withValues(alpha: 0.5),
+            ),
+            const SizedBox(width: 7),
+            Flexible(
+              child: Text(
+                context.l10n.reportedThanks,
+                style: AppText.body(
+                  size: 13,
+                  weight: FontWeight.w500,
+                  color: widget.ink.withValues(alpha: 0.5),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -378,6 +452,7 @@ class _TextAction extends StatelessWidget {
   final VoidCallback onTap;
 
   const _TextAction({
+    super.key,
     required this.ink,
     required this.icon,
     required this.label,
