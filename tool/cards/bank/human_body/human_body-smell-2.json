@@ -31,11 +31,10 @@
     "type": "clues",
     "options": [
       "Blocked nose",
-      "Brain cells",
       "Smell neurons",
       "Support cells"
     ],
-    "answer": 3,
+    "answer": 2,
     "clues": [
       {
         "text": "Smell vanishes suddenly, often while air flows freely through the nose.",
@@ -47,15 +46,13 @@
       {
         "text": "For most people it returns within weeks; lost brain cells rarely come back.",
         "tag": "Back within weeks",
-        "rulesOut": [
-          1
-        ]
+        "rulesOut": []
       },
       {
         "text": "Smell neurons lack ACE2, the protein the virus uses to get into cells.",
         "tag": "Neurons lack the door",
         "rulesOut": [
-          2
+          1
         ]
       },
       {

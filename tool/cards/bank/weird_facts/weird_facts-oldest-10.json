@@ -30,9 +30,9 @@
   "scene": {
     "type": "clues",
     "options": [
-      "About 4,000 yrs",
-      "About 13,000 yrs",
-      "About 22,000 yrs"
+      "4,000 years",
+      "13,000 years",
+      "22,000 years"
     ],
     "answer": 2,
     "clues": [

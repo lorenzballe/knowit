@@ -69,7 +69,7 @@
     "figure": "none",
     "scene": {
       "type": "clues",
-      "options": ["Bad air", "Overcrowding", "Priest's bell", "Doctors' hands"],
+      "options": ["Bad air", "Overcrowding", "Priest's bell", "Dirty hands"],
       "answer": 3,
       "clues": [
         {"text": "In the doctors' clinic about 1 mother in 10 dies; next door, with midwives, 1 in 30.",

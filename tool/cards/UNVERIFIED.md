@@ -767,3 +767,23 @@ life-risk-taking-1, life-regret-2, life-failure-2, life-spending-2.
 - medicine-bad-cures-3 | sample: CAST deaths 8.3% on encainide/flecainide vs 3.5% on placebo over about ten months (63/755 vs 26/743?) | Echt 1991 NEJM CAST total mortality encainide flecainide placebo percentages
 - economics-fine-print-2 | count: over £38 billion repaid after more than 32 million PPI complaints | FCA PPI complaints deadline final report 2020 total redress number of complaints
 - human_body-pain-1 | hold: deep-ache arrival recomputed as about 0.5 to 2 s over about 1 m of C fibre toe to spinal cord (was 0.8 to 3.2 s over 1.6 m) | C fibre conduction velocity 0.5-2 m/s; distance foot to dorsal horn; Purves Neuroscience first and second pain timing
+
+## Scene cards (October 2026)
+
+- medicine-doctors-who-were-right-3 | Rankin prison farm, 1915: most of the volunteer convicts on a fresh, corn-heavy diet developed pellagra (6 of 11), and institution staff never caught it | "Goldberger Rankin prison farm 1915 pellagra 6 of 11 volunteers; Goldberger asylum employees never pellagra"
+- food-coffee-and-health-claims-1 | MacMahon et al. 1981: the coffee association held in non-smokers as well as smokers | "MacMahon 1981 coffee pancreas cancer association not explained by cigarette smoking"
+- economics-averages-that-mislead-1 | Morningstar's fund total returns are net of fund expenses, and both total and investor returns are pre-tax | "Morningstar Mind the Gap methodology investor return net of expenses pre-tax"
+- nature-dinosaurs-1 | Alvarez et al. 1980 tested the boundary clay for plutonium-244 and found none, ruling out a nearby supernova | "Alvarez 1980 plutonium-244 supernova hypothesis rejected boundary clay"
+- human_body-smell-2 | Most people's smell returned within weeks, while lost brain cells rarely regenerate (used to strike off 'brain' in the clue order) | "covid anosmia recovery timeline weeks percent"
+- history-plague-1 | Plague was reported in the Golden Horde's Volga lands in 1346, before the siege of Kaffa | "Black Death 1346 Golden Horde Sarai Astrakhan before Kaffa"
+- science-experiments-3 | Semmelweis's 1841–46 figures: first clinic 9.92% maternal deaths, second clinic 3.38% (shown as 1 in 10 against 1 in 30) | "Semmelweis first clinic 9.92% second clinic 3.38% 1841-1846"
+- space-cosmic-background-6 | Penzias and Wilson pointed the horn away from New York and found no change; the excess was isotropic and constant through the seasons | "Penzias Wilson 1965 excess antenna temperature isotropic New York City pointing"
+- psychology-reciprocity-2 | rank: tips up 3.3% (one mint), 14.1% (two), 23% (one, then a second after a pause); a single small restaurant study, replication unknown | Strohmetz 2002 Sweetening the till replication candy tipping
+- psychology-rewards-2 | rank: 10% commission (219) vs unpaid (239) shekels; the gap may not be statistically significant, so "did not beat" may overstate | Gneezy Rustichini 2000 Pay enough or don't pay at all 10% vs no pay significance
+- science-why-things-break-1 | match: "rounded windows" as the lesson of the 1954 Comet losses; the inquiry traced the crack to a corner of the ADF aerial window and to punch-riveting, not to passenger windows alone | Comet G-ALYP inquiry 1955 ADF window crack origin rounded windows myth
+- weird_facts-local-bans-1 | sort: Sarpourenx (2008) blocked by a court from extending its cemetery; Cugnaux (2007) blocked by the state from a new one; Westminster "no law found" by the Law Commission in 2013 | Sarpourenx mayor 2008 cemetery tribunal; Cugnaux 2007 mayor décret mourir cimetière; Law Commission legal myths die in Parliament
+- history-guilds-3 | sort: Quit Rents horseshoes and nails are for the Forge first recorded 1235 (the 1211 date is the Moors in Shropshire) | Quit Rents Ceremony Forge St Clement Danes 1235 Moors 1211
+- nature-recent-losses-10 | sort: cahow rediscovered in 1951 as 18 nesting pairs (the scene said seven) | Bermuda petrel 1951 rediscovery 18 nesting pairs Murphy Mowbray Wingate
+- science-risk-in-numbers-1 | rank: general anaesthetic about 10 micromorts, skydive 8, marathon 7, scuba 5, 400 km by car 1 (UK figures) | Norm Chronicles micromort table general anaesthetic skydiving marathon
+- economics-container-ships-7 | draw: Drewry WCI points 2019 avg $1,420, Jan 2021 $5,245, Jan 2023 $2,132, Jul 2023 $1,537, Dec 2023 $1,382 | Drewry World Container Index weekly composite 2021 2023 archive
+- food-labels-2 | match: in the US, only infant formula carries a federally required (safety) date | USDA FSIS food product dating infant formula use-by federal requirement
