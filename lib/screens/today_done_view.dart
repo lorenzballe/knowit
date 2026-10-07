@@ -1286,11 +1286,13 @@ class _Tomorrow extends StatelessWidget {
     final int minutes = left.inMinutes % 60;
     final String when = hours >= 1 ? '${hours}h ${minutes}m' : '${minutes}m';
 
-    // A subject's colour is its mark's colour, unless the ground is the same
-    // colour — Thinking's white on paper is a mark nobody can see.
+    // A subject's colour is its mark's colour, unless the ground is so close
+    // to it that the mark vanishes — Thinking's white on paper. Measured as a
+    // contrast ratio, not a difference in luminance: Cinema's violet sits
+    // near black in luminance yet reads plainly on it.
     Color tint = lead?.color ?? context.p.ink;
-    if ((tint.computeLuminance() - context.p.surface.computeLuminance()).abs() <
-        0.15) {
+    final a = tint.computeLuminance(), b = context.p.surface.computeLuminance();
+    if ((math.max(a, b) + 0.05) / (math.min(a, b) + 0.05) < 1.6) {
       tint = context.p.ink;
     }
 
