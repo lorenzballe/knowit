@@ -15,7 +15,7 @@
   - **Fraunces**, serif pesante, per domande, titoli, frasi grandi e numeri grandi;
   - **Figtree**, sans pulito, per testo, etichette, pulsanti, grafici.
 - **In basso:** la fonte, piccola e discreta. Poi salva e condividi.
-- **Il riquadro della frase finale** ("WHAT TO KEEP"), quando c'è: fondo leggermente trasparente, etichetta piccola in maiuscolo, frase in grassetto. Sempre **in fondo alla carta**, con un piccolo margine sotto.
+- **Il riquadro finale**, quando c'è: fondo leggermente trasparente, etichetta piccola in maiuscolo, frase in grassetto. Sempre **in fondo alla carta**, con un piccolo margine sotto. **Di solito è uno solo**: "WHAT TO KEEP" (la frase da portare con sé) oppure "ASK YOURSELF" (la domanda da farsi), quello più forte per quella carta. Due solo se servono davvero (vedi `ESEMPI.md`, lezione 2).
 - **Niente scroll.** Tutto sta nella carta.
 
 ## Cosa può cambiare da carta a carta

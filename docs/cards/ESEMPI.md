@@ -25,3 +25,14 @@ Esempi di come le stesse storie andavano fatte:
 | La potenza dell'IA cresce di ~4,5 volte all'anno | Scelta multipla | "Disegna tu": il lettore traccia la crescita che si aspetta, poi esplode la curva vera |
 | Il vincitore di una gara d'appalto sottostima i costi | Testo | Gioco: il lettore fa offerte su lavori dal costo incerto e scopre che quando vince, perde |
 | Il secondo dell'orologio che sembra fermarsi | Testo | Esperimento su di te: un orologio animato da guardare con una consegna precisa |
+
+## Lezione 2: il retro finisce con un riquadro, di solito uno (ottobre 2026)
+
+Il proprietario non vuole che ogni carta finisca con due riquadri, "da portare con te" e "chiediti": due cose da portarsi via, ovunque, sono troppe.
+
+- **In genere un riquadro solo**, quello più forte per quella carta: la frase da tenere oppure la domanda da farsi. Su una carta che parla di un'abitudine, di una scelta, di una cosa che il lettore rifarà, spesso è più forte la domanda.
+- **Due solo se servono davvero tutti e due**, quando uno solo perderebbe qualcosa.
+- **Non è una regola fissa.** Si decide carta per carta, pensando a come rendere quella carta, su quell'argomento, la migliore possibile. Vale per tutte le sue indicazioni: sono linee guida, non obblighi.
+
+Nei dati: `"end": "ask"` per finire con la domanda, `"both": true` per tutti e due; senza niente finisce con la frase da tenere. Vale dalle carte nuove in poi: quelle già nell'app restano come sono.
+

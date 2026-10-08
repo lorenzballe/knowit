@@ -134,6 +134,14 @@ class TheGate(unittest.TestCase):
         self.assertEqual(self.check(debate), [])
         self.assertTrue(any("two sides" in p for p in self.check({k: v for k, v in debate.items() if k != "sides"})))
 
+    def test_the_back_ends_on_one_box_chosen_by_the_card(self):
+        ask = "Where else would I count only the ones still standing?"
+        self.assertEqual(self.check(read_card(ask=ask, end="ask")), [])
+        self.assertEqual(self.check(read_card(ask=ask, both=True)), [])
+        self.assertTrue(any("end is keep or ask" in p or "end" in p for p in self.check(read_card(ask=ask, end="both"))))
+        self.assertTrue(any("needs an ask" in p for p in self.check(read_card(end="ask"))))
+        self.assertTrue(any("needs an ask" in p for p in self.check(read_card(both=True))))
+
     def test_the_schema_refuses_unknowns(self):
         self.assertTrue(any("astrology" in p for p in self.check(read_card(topic="astrology"))))
         self.assertTrue(any("colour" in p for p in self.check(read_card(colour="red"))))

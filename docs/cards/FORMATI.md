@@ -15,7 +15,7 @@ Qualunque sia il formato:
 Quasi sempre, ma non sempre:
 
 - **una domanda o un titolo** che fa da gancio. Senza succede molto, molto raramente, quando la storia funziona meglio così;
-- **una frase da portarsi via** ("WHAT TO KEEP", o "BAR MOVE": l'etichetta è da decidere), quando l'idea si può riassumere senza tradirla (vedi `SCOPO.md`).
+- **un riquadro finale**, quando l'idea si può riassumere senza tradirla (vedi `SCOPO.md`): la frase da portarsi via ("WHAT TO KEEP") **oppure** la domanda da farsi ("ASK YOURSELF"), quella più forte per quella carta. In genere uno solo; due solo quando servono davvero tutti e due (vedi `ESEMPI.md`, lezione 2).
 
 E questi dati, che servono a darla alla persona giusta:
 
