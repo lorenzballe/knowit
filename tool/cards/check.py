@@ -70,7 +70,7 @@ TAG_KEYS = ("keywords", "era", "region", "hook", "mood", "numeracy", "abstractio
 KEY_ORDER = [
     "id", "topic", "genre", "strand", "also", "kind", "difficulty", "principle", "question",
     "options", "correct", "value", "unit", "tolerance", "withinFactor", "sides",
-    "answer", "move", "ask", "both", "trap", "hint", "steps", "simply", "counterpoint",
+    "answer", "move", "ask", "end", "both", "trap", "hint", "steps", "simply", "counterpoint",
     *TAG_KEYS, "builds_on", "figure", "diagram", "scene",
     "source", "source_kind", "reference", "quote", "written", "checked", "disabled",
 ]
@@ -206,6 +206,14 @@ def check_card(card: dict, *, strict: bool = False, schema: dict | None = None,
             problems.append("ask is a question, and ends with a question mark")
         elif len(ask.split()) > 25:
             problems.append("ask runs past 25 words")
+    # The box the back ends on: one, the stronger of the two for this card;
+    # both only when the card truly needs them. Either way the question has
+    # to be there to be shown.
+    end = card.get("end")
+    if end is not None and end not in ("keep", "ask"):
+        problems.append("end is keep or ask")
+    if (end == "ask" or card.get("both") is True) and not (ask or "").strip():
+        problems.append("a back that ends on the question needs an ask")
 
     # The shape each kind has to have.
     if kind == "read":

@@ -28,6 +28,8 @@
     "answer": { "type": "string", "description": "The reveal. On a number or estimate card it is the last line of the steps." },
     "move": { "type": "string", "minLength": 1, "description": "The one line that survives the card." },
     "ask": { "type": "string", "description": "The question the reader takes into their own day: the card turned on their life. One sentence ending in a question mark." },
+    "end": { "enum": ["keep", "ask"], "description": "Which one box the back ends on: the move to keep (the default) or the question to ask yourself, whichever is stronger on this card. 'ask' needs an ask." },
+    "both": { "type": "boolean", "description": "The back shows both boxes. Only when the card truly needs the two; one box is the rule." },
     "trap": { "type": "string", "description": "The wrong answer most people reach for first, and why it feels right." },
     "hint": { "type": "string", "description": "A way in, without the number." },
     "steps": { "type": "array", "items": { "type": "string", "minLength": 1 }, "description": "The worked solution, one move per line." },

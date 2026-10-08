@@ -37,6 +37,8 @@ One JSON object per card, in the schema you are given. The fields:
 | `question` | yes | |
 | `answer` | yes | on `number` and `estimate` it is the last line of `steps` |
 | `move` | yes | |
+| `ask` | yes | |
+| `end`, `both` | | which box the back ends on, see §5 |
 | `source`, `reference` | yes | |
 | `trap` | | `pickOne` (required), `number`, `estimate` |
 | `options`, `correct` | | `pickOne` |
@@ -110,6 +112,24 @@ The gate refuses a card outside these without reading it.
   "survivorship bias" but "the ones that shut are not on the street to be
   counted".
 - Never the answer rephrased, never the trap negated.
+
+### The ending: one box, the stronger one
+
+The back of a card ends on a box: **what to keep** (the `move`) or **ask
+yourself** (the `ask`, the card turned on the reader's own day, one sentence
+ending in `?`). Write both lines, then choose, card by card, the one that is
+stronger on this card, and show only that one:
+
+- the move, as most cards do: leave `end` out (or `"keep"`);
+- the question, when it is the better way to leave this reader — a card
+  about a habit, a choice, a feeling, a judgement they will make again:
+  `"end": "ask"`;
+- both, only when the card truly needs the two and one would lose
+  something the other cannot carry: `"both": true`. Rarely.
+
+This is a judgement, not a quota: no share of cards has to end either way.
+Two boxes of take-aways read as homework, so one is the rule; the move is
+kept in every case, because it is the line the card is quoted by.
 
 ## 6. The trap
 
