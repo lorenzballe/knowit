@@ -149,8 +149,13 @@ bool _fits(ShelfTheme theme, int variant, Pill p) {
   }
 }
 
+/// Whether [p] belongs on [theme], in its [variant] where it has more than
+/// one: the test every theme deals by, for the shelves that deal their own.
+bool fitsTheme(ShelfTheme theme, Pill p, {int variant = 0}) =>
+    _fits(theme, variant, p);
+
 /// FNV-1a, so the order is the same on every phone and every run.
-int _hash(String s) {
+int shelfHash(String s) {
   var h = 0x811c9dc5;
   for (final c in s.codeUnits) {
     h ^= c;
@@ -171,7 +176,7 @@ List<ThemedShelf> themedShelves(List<Pill> pool, {required int day}) {
   final start = (day * kThemesPerDay) % kThemeCycle.length;
   for (int i = 0; i < kThemeCycle.length && out.length < kThemesPerDay; i++) {
     final theme = kThemeCycle[(start + i) % kThemeCycle.length];
-    final shelf = _deal(theme, themeVariant(theme, day), pool, day);
+    final shelf = dealTheme(theme, themeVariant(theme, day), pool, day);
     if (shelf != null) out.add(shelf);
   }
   return out;
@@ -189,7 +194,7 @@ const List<ShelfTheme> kSignatureThemes = [
 ];
 
 List<ThemedShelf> signatureShelves(List<Pill> pool, {required int day}) => [
-  for (final theme in kSignatureThemes) ?_deal(theme, 0, pool, day),
+  for (final theme in kSignatureThemes) ?dealTheme(theme, 0, pool, day),
 ];
 
 /// The figure a numbers card is about, to be set large on its shelf: the
@@ -232,7 +237,12 @@ String? shelfFigure(Pill p) {
   return null;
 }
 
-ThemedShelf? _deal(ShelfTheme theme, int variant, List<Pill> pool, int day) {
+ThemedShelf? dealTheme(
+  ShelfTheme theme,
+  int variant,
+  List<Pill> pool,
+  int day,
+) {
   {
     final fits =
         pool
@@ -246,8 +256,8 @@ ThemedShelf? _deal(ShelfTheme theme, int variant, List<Pill> pool, int day) {
             .toList()
           ..sort(
             (a, b) =>
-                _hash('$day:${theme.name}:${a.id}')
-                    .compareTo(_hash('$day:${theme.name}:${b.id}')),
+                shelfHash('$day:${theme.name}:${a.id}')
+                    .compareTo(shelfHash('$day:${theme.name}:${b.id}')),
           );
     final picked = <Pill>[];
     final perTopic = <String, int>{};

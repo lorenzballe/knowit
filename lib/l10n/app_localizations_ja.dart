@@ -2271,4 +2271,623 @@ class AppLocalizationsJa extends AppLocalizations {
   String journeyNew(int n) {
     return '新出$n語';
   }
+
+  @override
+  String get aMove => '考え方の型';
+
+  @override
+  String get anotherOne => '別のカード';
+
+  @override
+  String answerIs(String said) {
+    return '答え：$said';
+  }
+
+  @override
+  String get answeredAlready => '回答済み';
+
+  @override
+  String get anyCard => 'どの分野、どの棚からでも、1枚';
+
+  @override
+  String betN(int n) {
+    return '$nを賭ける';
+  }
+
+  @override
+  String get betSlip => 'あなたの賭け票';
+
+  @override
+  String get betWord => '賭ける';
+
+  @override
+  String get biggerLabel => '大きい';
+
+  @override
+  String get biggerNote => 'どの数字もカードの答えです。';
+
+  @override
+  String biggerScore(int right, int asked) {
+    return '$asked問中$right問正解。';
+  }
+
+  @override
+  String get biggerYouGotIt => '大きい・正解';
+
+  @override
+  String cameBackAfterDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(n, locale: localeName, other: '$n日後');
+    return '$_temp0';
+  }
+
+  @override
+  String get cameBackAfterWeek => '1週間後';
+
+  @override
+  String cameBackAfterWeeks(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n週間後',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get check => '答え合わせ';
+
+  @override
+  String closerDone(String said, int right, int steps) {
+    return '答えは$said。$steps回中$right回正解。';
+  }
+
+  @override
+  String closerNoLess(String v) {
+    return 'いいえ、$vより少ない。';
+  }
+
+  @override
+  String closerNoMore(String v) {
+    return 'いいえ、$vより多い。';
+  }
+
+  @override
+  String get closerStart => '3ステップで絞り込もう。';
+
+  @override
+  String closerYesLess(String v) {
+    return '正解、$vより少ない。';
+  }
+
+  @override
+  String closerYesMore(String v) {
+    return '正解、$vより多い。';
+  }
+
+  @override
+  String get corrections => '訂正';
+
+  @override
+  String get didYouKnow => '知ってた？';
+
+  @override
+  String get didYouKnowLine => 'めくって、それから：初耳？知ってた？';
+
+  @override
+  String get dragToSet => 'ドラッグで設定';
+
+  @override
+  String get dykAgain => 'もう一度';
+
+  @override
+  String dykKnew(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '知っていたのは$n枚',
+      zero: '知っていたのは0枚',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dykNew(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '初耳は$n枚',
+      zero: '今日は初耳なし',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get editionEnd => '今日の号はここまで';
+
+  @override
+  String get editionTomorrow => '明日の号は朝に届きます';
+
+  @override
+  String get eraAncient => '古代の世界';
+
+  @override
+  String get eraAncientWhen => '500年より前';
+
+  @override
+  String get eraEarlyModern => '近世';
+
+  @override
+  String get eraEarlyModernWhen => '1500年〜1800年';
+
+  @override
+  String get eraMedieval => '中世';
+
+  @override
+  String get eraMedievalWhen => '500年〜1500年';
+
+  @override
+  String eraMore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'この時代からあと$n枚',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get eraNineteenth => '19世紀';
+
+  @override
+  String get eraNineteenthWhen => '1800年〜1900年';
+
+  @override
+  String get eraRecent => '今世紀';
+
+  @override
+  String get eraRecentWhen => '2000年以降';
+
+  @override
+  String get eraRulerNow => '現在';
+
+  @override
+  String get eraRulerOld => '古代';
+
+  @override
+  String get eraShortAncient => '古代';
+
+  @override
+  String get eraShortEarlyModern => '1500–1800年';
+
+  @override
+  String get eraShortMedieval => '中世';
+
+  @override
+  String get eraShortNineteenth => '1800年代';
+
+  @override
+  String get eraShortRecent => '2000年代';
+
+  @override
+  String get eraShortTwentieth => '1900年代';
+
+  @override
+  String get eraTwentieth => '前世紀';
+
+  @override
+  String get eraTwentiethWhen => '1900年〜2000年';
+
+  @override
+  String get fewCards => '数枚で分かる';
+
+  @override
+  String get fewCardsLine => '1枚では説明しきれないときに';
+
+  @override
+  String get firstLabel => '始まり';
+
+  @override
+  String get forYouNow => '今のあなたに';
+
+  @override
+  String get goNarrow => '自信があるなら狭く：3倍もらえます。';
+
+  @override
+  String get hardBadge => '難問';
+
+  @override
+  String hidesIn(String where) {
+    return '場所：$where';
+  }
+
+  @override
+  String get howSure => 'どれくらい確かで、なぜそう思う？';
+
+  @override
+  String get inNumbers => '数字で見る';
+
+  @override
+  String inRange(int pts, String said) {
+    return '範囲内：+$ptsポイント。答えは$said。';
+  }
+
+  @override
+  String inYourMoves(int n) {
+    return 'あなたの手 · $n回';
+  }
+
+  @override
+  String itIs(String said) {
+    return '答えは$said。';
+  }
+
+  @override
+  String get knewIt => '知ってた';
+
+  @override
+  String get less => '少ない';
+
+  @override
+  String get lookFirst => '見出しを信じる前に、グラフを見よう。';
+
+  @override
+  String get markTried => 'やってみた';
+
+  @override
+  String minutesLabel(int n) {
+    return '$n分';
+  }
+
+  @override
+  String missedRange(String said) {
+    return '外れ：答えは$said。';
+  }
+
+  @override
+  String get modeBigger => 'どっちが大きい？';
+
+  @override
+  String get modeBiggerLine => '見積もれる2つの数字。大きいほうをタップ';
+
+  @override
+  String get modeCloser => 'だんだん近づく';
+
+  @override
+  String get modeCloserLine => '多いか少ないかの3ステップで数字に迫る';
+
+  @override
+  String get modePick => '1つ選ぶ';
+
+  @override
+  String get modePickLine => '3つの数字。カードを開く前に決めよう';
+
+  @override
+  String get modeRange => '範囲に賭ける';
+
+  @override
+  String get modeRangeLine => '狭いほど高配当、当たればね';
+
+  @override
+  String get modeSlide => '動かす';
+
+  @override
+  String get modeSlideLine => 'まず答えを決めて、どれだけずれたか確かめよう';
+
+  @override
+  String get modeStake => '賭けてみる';
+
+  @override
+  String modeStakeLine(int n) {
+    return '1日$nポイント。当たれば賭け金が2倍に';
+  }
+
+  @override
+  String get monthShelfLine => '毎月新しい分野、みんな同じ';
+
+  @override
+  String moodMeta(int cards, int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      cards,
+      locale: localeName,
+      other: '$cards枚',
+    );
+    return '$_temp0 · $minutes分';
+  }
+
+  @override
+  String get moodTime => '使える時間';
+
+  @override
+  String get moodTitle => '気分と時間で';
+
+  @override
+  String get moodTone => 'トーン';
+
+  @override
+  String get more => '多い';
+
+  @override
+  String moreOrLess(String v) {
+    return '$vより多い？少ない？';
+  }
+
+  @override
+  String get moveComparedToWhat => '何と比べて';
+
+  @override
+  String get moveComparedToWhatLine => '比較対象がなければ、変化は何も語らない';
+
+  @override
+  String get moveSampling => 'サンプル';
+
+  @override
+  String get moveSamplingLine => '誰がサンプルに入ったかで、言えることが決まる';
+
+  @override
+  String mythDeckHint(int at, int of) {
+    return '$of枚中$at枚目 · スワイプでめくる';
+  }
+
+  @override
+  String nOfM(int at, int of) {
+    return '$at/$of';
+  }
+
+  @override
+  String get newMove => 'はじめての手';
+
+  @override
+  String get newToMe => '初耳';
+
+  @override
+  String get notEnoughPoints => 'ポイント不足';
+
+  @override
+  String get notSureLine => 'Astuteのどこかから1枚';
+
+  @override
+  String get notSureTitle => 'どこから始めるか迷ったら';
+
+  @override
+  String get openWord => '開く';
+
+  @override
+  String get pickOneFirst => 'まず1つ選んで';
+
+  @override
+  String pointsToday(int n) {
+    return '今日 +$n';
+  }
+
+  @override
+  String get puzzleOfTheDay => '今日のパズル';
+
+  @override
+  String rangeWidth(int w, int pts) {
+    return '±$w・${pts}pt';
+  }
+
+  @override
+  String get rightLastTime => '前回は正解';
+
+  @override
+  String get sameForEveryoneCaps => 'みんな同じ';
+
+  @override
+  String get sayFalse => '間違い';
+
+  @override
+  String get sayTrue => '正しい';
+
+  @override
+  String get seriesAnchors => '第一印象のわな';
+
+  @override
+  String get seriesGrowth => '暴走する数字';
+
+  @override
+  String seriesMeta(int n, int m) {
+    return '$n枚 · 約$m分';
+  }
+
+  @override
+  String get seriesOdds => 'うそをつく確率';
+
+  @override
+  String get seriesRetold => '語り直される歴史';
+
+  @override
+  String seriesStrand(String name) {
+    return '数枚でわかる「$name」';
+  }
+
+  @override
+  String get seriesStudies => '研究がまどわせる理由';
+
+  @override
+  String showAllN(int n) {
+    return '$n枚すべて表示';
+  }
+
+  @override
+  String get showFewer => '少なく表示';
+
+  @override
+  String get sixtyAgain => 'もう一度';
+
+  @override
+  String sixtyIn(int s) {
+    return '$s秒で';
+  }
+
+  @override
+  String get sixtyLine => '正しい？間違い？を8問。直感で';
+
+  @override
+  String get sixtyPerfect => '8問すべて正解。';
+
+  @override
+  String sixtyScore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'ここまで$n問正解',
+      zero: 'まだ正解なし',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixtySecondsFor => '秒で\n正誤8問';
+
+  @override
+  String sixtySecondsLeft(int s) {
+    return '$s秒';
+  }
+
+  @override
+  String get sixtyStart => 'スタート';
+
+  @override
+  String get sixtyTimeUp => '時間切れまでに';
+
+  @override
+  String get sixtyTitle => '60秒';
+
+  @override
+  String slideAverage(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '平均$nポイントのずれ。',
+      zero: '平均でぴったり。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get slideNote => '決めて、確かめる。大事なのは、どれだけずれたか。';
+
+  @override
+  String slideOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$nポイントずれ。',
+      zero: 'ぴったり。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get slipEmpty => 'まだ賭けていません。賭けるとここに並びます。';
+
+  @override
+  String get stakeLabel => '賭け金';
+
+  @override
+  String stepOf(int at, int of) {
+    return 'ステップ $at/$of';
+  }
+
+  @override
+  String get surpriseMe => 'おまかせ';
+
+  @override
+  String get tapIfBigger => '大きいならタップ';
+
+  @override
+  String get tapToTurn => 'タップでめくる';
+
+  @override
+  String get tfRight => '正解。理由はカードで。';
+
+  @override
+  String tfWrong(String side) {
+    return '答えは「$side」。理由はカードで。';
+  }
+
+  @override
+  String theAnswer(String said) {
+    return '答え：$said。';
+  }
+
+  @override
+  String get theAstute => 'The Astute';
+
+  @override
+  String get theLead => 'トップ記事';
+
+  @override
+  String get throughTime => '時代をめぐる';
+
+  @override
+  String get throughTimeLine => '古代から今年まで。ドラッグして旅しよう';
+
+  @override
+  String get todayLabel => '今日';
+
+  @override
+  String get todaysEdition => '今日の号';
+
+  @override
+  String get toneCurious => '好奇心';
+
+  @override
+  String get toneLight => '気軽に';
+
+  @override
+  String get toneSerious => 'まじめに';
+
+  @override
+  String get toneTough => '手ごわい';
+
+  @override
+  String get unmaskBack => '元のグラフに戻す';
+
+  @override
+  String get unmaskFlipped => '正しい向きに直す';
+
+  @override
+  String get unmaskLine => '同じ数字、違う見え方';
+
+  @override
+  String get unmaskStretched => '公平な目盛りにする';
+
+  @override
+  String get unmaskTitle => 'グラフの正体';
+
+  @override
+  String get unmaskTotals => '公平に比べる';
+
+  @override
+  String get unmaskTruncated => '軸をゼロから始める';
+
+  @override
+  String get unmaskWindow => '全期間を表示';
+
+  @override
+  String get whatIfTrue => 'もし本当なら？';
+
+  @override
+  String get whatIfTrueLine => '閉じたあとも考えさせるカード';
+
+  @override
+  String get whatYouBelieve => '信じていること';
+
+  @override
+  String get wrongLastTime => '前回は不正解';
+
+  @override
+  String youLose(int n) {
+    return '$n失いました。';
+  }
+
+  @override
+  String youWin(int n) {
+    return '$n獲得！';
+  }
+
+  @override
+  String get yourPick => 'あなたの選択';
 }

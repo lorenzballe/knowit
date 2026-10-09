@@ -5,16 +5,30 @@ import 'package:flutter/material.dart';
 
 import '../l10n/l10n.dart';
 
+import '../data/explore_mix.dart';
 import '../data/pills_repository.dart';
 import '../data/pill_bank.dart';
 import '../data/themed_shelves.dart';
 import '../data/topics.dart';
 import '../models/pill.dart';
 import '../state/app_state.dart';
+import '../state/explore_play.dart';
 import '../sync/served.dart';
 import '../sync/tally.dart';
 import '../sync/trace.dart';
 import '../theme.dart';
+import '../widgets/explore/did_you_know.dart';
+import '../widgets/explore/form_shelves.dart';
+import '../widgets/explore/front_page.dart';
+import '../widgets/explore/month_shelf.dart';
+import '../widgets/explore/mood_minutes.dart';
+import '../widgets/explore/myth_deck.dart';
+import '../widgets/explore/series_shelf.dart';
+import '../widgets/explore/sixty_seconds.dart';
+import '../widgets/explore/surprise_me.dart';
+import '../widgets/explore/through_time.dart';
+import '../widgets/explore/unmask_chart.dart';
+import '../widgets/explore/work_it_out.dart';
 import '../widgets/scaled_text.dart';
 import '../widgets/signature_shelves.dart';
 import '../widgets/subject_icon.dart';
@@ -70,6 +84,9 @@ class ExploreScreenState extends State<ExploreScreen> {
     // itself, and main asks again once they are.
     Tallies.instance.refresh();
     Served.instance.explore();
+    // What was played on the shelves earlier today: the points left, the
+    // bets laid, the cards ticked off.
+    ExplorePlay.instance.load();
     _shelves.addListener(_scrolled);
   }
 
@@ -313,10 +330,11 @@ class ExploreScreenState extends State<ExploreScreen> {
                 (pillById(place.id)!, place.readers),
           ];
 
-    // The third shelf is about the reader, and it is always there. An
-    // install that never dragged the mix used to get two shelves and a
-    // page with nowhere to scroll to, which is not this screen.
-    final (String title, String line, String subject) = served?.because != null
+    // The third shelf is about the reader: the subject they pushed up, or
+    // the one they have read most of. Before either exists there is no
+    // shelf here — the subject of the month, further down, is the place to
+    // start for somebody who has said nothing yet.
+    final (String, String, String)? third = served?.because != null
         ? (
             context.l10n.becauseSitsAtFull(
               kTopics[served!.because]?.name ?? served.because!,
@@ -325,19 +343,22 @@ class ExploreScreenState extends State<ExploreScreen> {
             kTopics[served.because]?.name ?? served.because!,
           )
         : _thirdShelf();
-    final List<Pill> mine =
-        (served != null && served.mine.isNotEmpty
-                ? _only(served.mine)
-                : _only(
-                    pickedPills(
-                      seed: monthSeed(DateTime.now()),
-                      count: 120,
-                      topic: subject,
-                    ),
-                  ))
-            .where(unread)
-            .take(8)
-            .toList();
+    final String title = third?.$1 ?? '';
+    final String line = third?.$2 ?? '';
+    final List<Pill> mine = third == null
+        ? const []
+        : (served != null && served.mine.isNotEmpty
+                  ? _only(served.mine)
+                  : _only(
+                      pickedPills(
+                        seed: monthSeed(DateTime.now()),
+                        count: 120,
+                        topic: third.$3,
+                      ),
+                    ))
+              .where(unread)
+              .take(8)
+              .toList();
 
     // Loved since the start, and not read yet: where somebody who arrived
     // late finds the best of what came before them, and somebody who has
@@ -365,40 +386,36 @@ class ExploreScreenState extends State<ExploreScreen> {
                 pillById(place.id)!,
           ];
 
-    // The themes that turn over: four a day round a fixed cycle, the same
-    // for everybody, never a card already read and never one already on a
-    // shelf above.
-    final Set<String> shown = {for (final p in fresh) p.id};
-    final List<Pill> pool = _only(PillBank.cards)
-        .where((p) => unread(p) && !shown.contains(p.id))
-        .toList();
+    // Everything under the shelves that were always there: one form per
+    // kind of card, dealt for the day from what the reader has not read,
+    // each card on one shelf only. Today's shelf, the ones that ask the most
+    // and the reader's own keep their cards, so nothing down here was just
+    // scrolled past.
     final int day = themeDay(DateTime.now());
-    // Three shelves are always here, each with its own drawing; the rest
-    // turn over and leave those three out, so no theme shows twice.
-    final List<ThemedShelf> signatures = signatureShelves(pool, day: day);
-    final Set<String> onSignature = {
-      for (final t in signatures) ...t.pills.map((p) => p.id),
-    };
-    final List<ThemedShelf> themes = themedShelves(
-      pool.where((p) => !onSignature.contains(p.id)).toList(),
+    final ExploreMix mix = _mixFor(
       day: day,
-    ).where((t) => !kSignatureThemes.contains(t.theme)).toList();
-    List<Widget> themed(Iterable<ThemedShelf> list) => [
-      for (final t in list) ...[
-        const SizedBox(height: 24),
-        _Shelf(
-          key: ValueKey('theme-${t.key}'),
-          title: _themeTitle(context, t),
-          line: _themeLine(context, t),
-          child: _SmallRow(
-            pills: t.pills,
-            isRead: read,
-            onOpen: _open,
-            onShown: (p) => _seen('theme-${t.key}', p),
-          ),
-        ),
-      ],
-    ];
+      // Today's shelf comes from the server when it has answered, and from
+      // the phone before: the mix follows it once, when it arrives.
+      source: served == null ? 'phone' : 'served',
+      bank: () => _only(PillBank.cards),
+      pool: () {
+        final Set<String> above = {
+          for (final p in fresh) p.id,
+          for (final p in asking) p.id,
+          for (final p in mine) p.id,
+        };
+        return _only(PillBank.cards)
+            .where((p) => unread(p) && !above.contains(p.id))
+            .toList();
+      },
+    );
+    final List<CameBackCard> cameBack = _cameBack();
+    final l = context.l10n;
+
+    (String, bool) moveBadge(Principle move) {
+      final int met = widget.app.masteryOf(move).met;
+      return met > 0 ? (l.inYourMoves(met), true) : (l.newMove, false);
+    }
 
     return Stack(
       children: [
@@ -518,24 +535,326 @@ class ExploreScreenState extends State<ExploreScreen> {
                 ),
               ),
             ],
-            for (final t in signatures) ...[
+            // ── The mix ──────────────────────────────────────────────────
+            // Under everything that was always here, the shelves that each
+            // have a form of their own, in three movements: cards to read
+            // (the month, myths, numbers, things to try, a side to pick,
+            // the hardest, origins, pictures, stories), cards to play (true
+            // or false, what came back, the tricks in a number, working it
+            // out, a chart unmasked, how sure, what if), and ways in by time
+            // (a few cards, sixty seconds, your minutes, the day's edition,
+            // an age, a fact), with one card from anywhere at the very end.
+            // Every one is free: Explore is what brings a reader back.
+            if (mix.month.length >= 3) ...[
               const SizedBox(height: 24),
               _Shelf(
-                key: ValueKey('signature-${t.theme.name}'),
-                title: _themeTitle(context, t),
-                line: _themeLine(context, t),
-                child: SignatureRow(
-                  shelf: t,
+                key: const ValueKey('mix-month'),
+                title: l.monthOf(kTopics[mix.monthSubjectKey]?.name ?? ''),
+                line: l.monthShelfLine,
+                child: MonthShelf(
+                  pills: mix.month,
                   isRead: read,
                   onOpen: _open,
-                  onShown: (p) => _seen('signature-${t.theme.name}', p),
+                  onShown: (p) => _seen('month', p),
                 ),
               ),
             ],
-            // The turning themes go under everything that was always here:
-            // the top of the screen stays as it was, and the further down
-            // the reader scrolls, the more there is.
-            ...themed(themes),
+            if (mix.myths case final ThemedShelf t) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                key: ValueKey('theme-${t.key}'),
+                title: _themeTitle(context, t),
+                line: _themeLine(context, t),
+                child: MythDeck(
+                  pills: t.pills,
+                  isRead: read,
+                  onOpen: _open,
+                  onShown: (p) => _seen('theme-${t.key}', p),
+                ),
+              ),
+            ],
+            if (mix.numbers case final ThemedShelf t)
+              ..._signature(context, t, read),
+            if (mix.practical case final ThemedShelf t) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                key: ValueKey('theme-${t.key}'),
+                title: _themeTitle(context, t),
+                line: _themeLine(context, t),
+                child: ListenableBuilder(
+                  listenable: ExplorePlay.instance,
+                  builder: (context, _) => UseTodayList(
+                    pills: t.pills,
+                    isRead: read,
+                    onOpen: _open,
+                    isTried: (p) =>
+                        ExplorePlay.instance['tried:${p.id}'] == true,
+                    onTried: (p, on) {
+                      Analytics.capture('explore tried', {
+                        'pill_id': p.id,
+                        'tried': on,
+                      });
+                      ExplorePlay.instance.put(
+                        'tried:${p.id}',
+                        on ? true : null,
+                      );
+                    },
+                    onShown: (p) => _seen('theme-${t.key}', p),
+                  ),
+                ),
+              ),
+            ],
+            if (mix.debates case final ThemedShelf t)
+              ..._signature(context, t, read),
+            if (mix.sharpest case final ThemedShelf t) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                key: ValueKey('theme-${t.key}'),
+                title: _themeTitle(context, t),
+                line: _themeLine(context, t),
+                child: SharpRow(
+                  pills: t.pills,
+                  isRead: read,
+                  onOpen: _open,
+                  onShown: (p) => _seen('theme-${t.key}', p),
+                ),
+              ),
+            ],
+            if (mix.origins case final ThemedShelf t) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                key: ValueKey('theme-${t.key}'),
+                title: _themeTitle(context, t),
+                line: _themeLine(context, t),
+                child: OriginRow(
+                  pills: t.pills,
+                  isRead: read,
+                  onOpen: _open,
+                  onShown: (p) => _seen('theme-${t.key}', p),
+                ),
+              ),
+            ],
+            if (mix.seen case final ThemedShelf t) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                key: ValueKey('theme-${t.key}'),
+                title: _themeTitle(context, t),
+                line: _themeLine(context, t),
+                child: SeenRow(
+                  pills: t.pills,
+                  isRead: read,
+                  onOpen: _open,
+                  onShown: (p) => _seen('theme-${t.key}', p),
+                ),
+              ),
+            ],
+            if (mix.stories case final ThemedShelf t) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                key: ValueKey('theme-${t.key}'),
+                title: _themeTitle(context, t),
+                line: _themeLine(context, t),
+                child: StoryRow(
+                  pills: t.pills,
+                  isRead: read,
+                  onOpen: _open,
+                  onShown: (p) => _seen('theme-${t.key}', p),
+                ),
+              ),
+            ],
+            if (mix.trueFalse case final ThemedShelf t) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                key: ValueKey('theme-${t.key}'),
+                title: _themeTitle(context, t),
+                line: _themeLine(context, t),
+                child: TrueFalseRow(
+                  pills: t.pills,
+                  isRead: read,
+                  onOpen: _open,
+                  answerOf: _answerOf,
+                  onCommit: _commit,
+                  onShown: (p) => _seen('theme-${t.key}', p),
+                ),
+              ),
+            ],
+            if (cameBack.isNotEmpty) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                key: const ValueKey('mix-came-back'),
+                title: l.cameBack,
+                line: l.cardsCameBack(cameBack.length),
+                child: CameBackRow(
+                  cards: cameBack,
+                  onOpen: _openDue,
+                  onShown: (p) => _seen('came-back', p),
+                ),
+              ),
+            ],
+            if (mix.sampling.length >= 3) ...[
+              const SizedBox(height: 24),
+              MoveShelf(
+                key: const ValueKey('mix-move-sampling'),
+                name: l.moveSampling,
+                line: l.moveSamplingLine,
+                badge: moveBadge(Principle.sampling).$1,
+                badgeLit: moveBadge(Principle.sampling).$2,
+                pills: mix.sampling,
+                isRead: read,
+                onOpen: _open,
+                onShown: (p) => _seen('move-sampling', p),
+              ),
+            ],
+            if (mix.compared.length >= 3) ...[
+              const SizedBox(height: 24),
+              MoveShelf(
+                key: const ValueKey('mix-move-compared'),
+                name: l.moveComparedToWhat,
+                line: l.moveComparedToWhatLine,
+                badge: moveBadge(Principle.counterfactual).$1,
+                badgeLit: moveBadge(Principle.counterfactual).$2,
+                pills: mix.compared,
+                isRead: read,
+                onOpen: _open,
+                onShown: (p) => _seen('move-counterfactual', p),
+              ),
+            ],
+            if (!mix.work.isEmpty) ...[
+              const SizedBox(height: 24),
+              WorkItOut(
+                key: const ValueKey('mix-work'),
+                deal: mix.work,
+                isRead: read,
+                onOpen: _open,
+                answerOf: _answerOf,
+                onCommit: _commit,
+                onShown: (p) => _seen('work', p),
+              ),
+            ],
+            if (mix.unmask.isNotEmpty) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                key: const ValueKey('mix-unmask'),
+                title: l.unmaskTitle,
+                line: l.unmaskLine,
+                child: UnmaskRow(
+                  pills: mix.unmask,
+                  onOpen: _open,
+                  onShown: (p) => _seen('unmask', p),
+                ),
+              ),
+            ],
+            if (mix.howSure.length >= 3) ...[
+              const SizedBox(height: 28),
+              HowSureShelf(
+                key: const ValueKey('mix-how-sure'),
+                pills: mix.howSure,
+                isRead: read,
+                onOpen: _open,
+                onShown: (p) => _seen('how-sure', p),
+              ),
+            ],
+            if (mix.whatIf.length >= 3) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                key: const ValueKey('mix-what-if'),
+                title: l.whatIfTrue,
+                line: l.whatIfTrueLine,
+                child: WhatIfRow(
+                  pills: mix.whatIf,
+                  isRead: read,
+                  onOpen: _open,
+                  onShown: (p) => _seen('what-if', p),
+                ),
+              ),
+            ],
+            if (mix.series.isNotEmpty) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                key: const ValueKey('mix-series'),
+                title: l.fewCards,
+                line: l.fewCardsLine,
+                child: SeriesRow(
+                  series: mix.series,
+                  onOpen: _open,
+                  onShown: (p) => _seen('series', p),
+                ),
+              ),
+            ],
+            if (mix.sixty.length == 8) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                key: const ValueKey('mix-sixty'),
+                title: l.sixtyTitle,
+                line: l.sixtyLine,
+                child: SixtySeconds(
+                  pills: mix.sixty,
+                  onOpen: _open,
+                  onShown: (p) => _seen('sixty', p),
+                ),
+              ),
+            ],
+            if (mix.moodPool.isNotEmpty) ...[
+              const SizedBox(height: 28),
+              MoodMinutes(
+                key: const ValueKey('mix-mood'),
+                cardsFor: (tone, minutes) => _moodMemo.putIfAbsent(
+                  '${tone.name}-$minutes',
+                  () => forTheTime(
+                    mix.moodPool,
+                    tone: tone,
+                    minutes: minutes,
+                    day: day,
+                  ),
+                ),
+                isRead: read,
+                onOpen: _open,
+                onShown: (p) => _seen('mood', p),
+              ),
+            ],
+            // The day as an edition: the same front page for everybody.
+            if (mix.front case final FrontPage page) ...[
+              const SizedBox(height: 32),
+              FrontPageView(
+                page: page,
+                onOpen: _open,
+                onShown: (p) => _seen('front-page', p),
+              ),
+            ],
+            if (mix.eras.length >= 2) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                key: const ValueKey('mix-through-time'),
+                title: l.throughTime,
+                line: l.throughTimeLine,
+                child: ThroughTime(
+                  eras: mix.eras,
+                  startAt: day % mix.eras.length,
+                  isRead: read,
+                  onOpen: _open,
+                  onShown: (p) => _seen('through-time', p),
+                ),
+              ),
+            ],
+            if (mix.didYouKnow.length >= 4) ...[
+              const SizedBox(height: 24),
+              DidYouKnow(
+                key: const ValueKey('mix-did-you-know'),
+                pills: mix.didYouKnow,
+                onOpen: _open,
+                onRead: (p) => widget.app.markReadElsewhere(p.id),
+                onShown: (p) => _seen('did-you-know', p),
+              ),
+            ],
+            if (mix.surprise.isNotEmpty) ...[
+              const SizedBox(height: 24),
+              _Shelf(
+                key: const ValueKey('mix-surprise'),
+                title: l.notSureTitle,
+                line: l.notSureLine,
+                child: SurpriseMe(pool: mix.surprise, onOpen: _open),
+              ),
+            ],
           ],
         ),
         // The shelves run under the tab bar rather than stopping short of
@@ -564,14 +883,132 @@ class ExploreScreenState extends State<ExploreScreen> {
     );
   }
 
-  /// The last shelf: what it is called, why, and whose cards are on it.
+  /// The mix, dealt once for a day and a subject and kept for the rest of
+  /// it, like the shelves above: a card answered on a shelf, or read from
+  /// one, stays where it is, marked, rather than the whole page being dealt
+  /// again under the reader's thumb. Dealing it is also a pass over the
+  /// whole bank, and the screen rebuilds on every count that arrives.
+  ExploreMix? _mix;
+  String _mixKey = '';
+
+  /// What "your mood, your minutes" dealt for each tone and time, for the
+  /// mix in force.
+  final Map<String, List<Pill>> _moodMemo = {};
+
+  ExploreMix _mixFor({
+    required int day,
+    required String source,
+    required List<Pill> Function() bank,
+    required List<Pill> Function() pool,
+  }) {
+    final String key =
+        '$day|${_subject ?? ''}|$_dealtOn|${PillBank.version}|$source';
+    if (_mix != null && key == _mixKey) return _mix!;
+    _mixKey = key;
+    _moodMemo.clear();
+    return _mix = dealExploreMix(
+      bank: bank(),
+      pool: pool(),
+      day: day,
+      on: DateTime.now(),
+    );
+  }
+
+  /// The cards that came back and wait to be answered again, narrowed by
+  /// the subject row: worked out again only when an answer is given or the
+  /// day turns, because it walks every answer the reader ever gave.
+  List<CameBackCard> _cameBackCards = const [];
+  String _cameBackKey = '';
+
+  List<CameBackCard> _cameBack() {
+    final AppState app = widget.app;
+    final String key =
+        '${dateKey(app.today)}|${app.answers.length}|'
+        '${app.todaysDeck.length}|${_subject ?? ''}|${_dueCount(app)}';
+    if (key == _cameBackKey) return _cameBackCards;
+    _cameBackKey = key;
+    return _cameBackCards = [
+      for (final r in app.reviewsWaitingWithAnswers)
+        if (_subject == null || r.card.topic == _subject)
+          CameBackCard(
+            r.card,
+            days:
+                kReviewLadder[r.last.stage.clamp(0, kReviewLadder.length - 1)],
+            right: r.last.stage > 0,
+          ),
+    ];
+  }
+
+  /// How many answers are due today: what changes when a card that came
+  /// back is answered again, which the count of answers does not.
+  static int _dueCount(AppState app) {
+    final String today = dateKey(app.today);
+    int n = 0;
+    for (final a in app.answers.values) {
+      if (a.dueOn != null && a.dueOn!.compareTo(today) <= 0) n++;
+    }
+    return n;
+  }
+
+  /// What the reader answered on a card, if they have.
+  String? _answerOf(Pill pill) => widget.app.answerFor(pill.id)?.response;
+
+  /// A commitment made on a shelf: the card's answer, recorded the way the
+  /// card itself takes one, and the card counted as read, since its answer
+  /// is a tap away and the day should never deal it again.
+  Future<void> _commit(Pill pill, String response) async {
+    Analytics.capture('explore answered', {
+      'pill_id': pill.id,
+      'right': pill.challenge.accepts(response),
+    });
+    await widget.app.recordAnswer(pill.id, response);
+    await widget.app.markReadElsewhere(pill.id);
+  }
+
+  /// The cards that came back open to be answered again, as they do from
+  /// the finished day.
+  void _openDue(List<Pill> shelf, Pill pill) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => DeckViewerScreen(
+          app: widget.app,
+          deck: shelf,
+          title: context.l10n.cameBack,
+          initialIndex: shelf.indexOf(pill),
+          answering: true,
+        ),
+      ),
+    );
+  }
+
+  /// A shelf with one drawing for its kind (132): numbers that surprise,
+  /// pick a side.
+  List<Widget> _signature(
+    BuildContext context,
+    ThemedShelf t,
+    bool Function(Pill) read,
+  ) => [
+    const SizedBox(height: 24),
+    _Shelf(
+      key: ValueKey('signature-${t.theme.name}'),
+      title: _themeTitle(context, t),
+      line: _themeLine(context, t),
+      child: SignatureRow(
+        shelf: t,
+        isRead: read,
+        onOpen: _open,
+        onShown: (p) => _seen('signature-${t.theme.name}', p),
+      ),
+    ),
+  ];
+
+  /// The third shelf: what it is called, why, and whose cards are on it.
   ///
-  /// Three answers, in the order of how much the app actually knows. The
-  /// mix the reader dragged is the best of them and the canvas's own; what
-  /// they have read most of is the next; and before either of those exists
-  /// there is still a subject to put on a shelf, which beats a screen with
-  /// a hole where a shelf was.
-  (String, String, String) _thirdShelf() {
+  /// Two answers, in the order of how much the app actually knows: the mix
+  /// the reader dragged, which is the canvas's own, then what they have read
+  /// most of. Before either exists, null, and there is no third shelf: the
+  /// subject of the month further down is somewhere to start.
+  (String, String, String)? _thirdShelf() {
     final app = widget.app;
 
     final weights = app.topicWeights.entries.toList()
@@ -589,9 +1026,12 @@ class ExploreScreenState extends State<ExploreScreen> {
       }
     }
 
+    // What was read when the shelves were dealt, not what has been read
+    // since: a card answered on a shelf further down must not slide a new
+    // shelf in above the reader and push the page from under their thumb.
     final counted = <String, int>{};
     for (final pill in PillBank.cards) {
-      if (app.seenIds.contains(pill.id)) {
+      if (_readWhenDealt.contains(pill.id)) {
         counted[pill.topic] = (counted[pill.topic] ?? 0) + 1;
       }
     }
@@ -602,19 +1042,7 @@ class ExploreScreenState extends State<ExploreScreen> {
               .key;
       return (context.l10n.moreOn(most), context.l10n.subjectReadMost, most);
     }
-
-    // Nothing read and no mix: a subject of the month, so the shelf is
-    // still a shelf on the morning somebody installs the app.
-    final subjects =
-        app.pickedTopics
-            .map((key) => kTopics[key]?.name)
-            .whereType<String>()
-            .toList()
-          ..sort();
-    final String name = subjects.isEmpty
-        ? kTopics['science']!.name
-        : subjects[monthSeed(DateTime.now()).hashCode.abs() % subjects.length];
-    return (context.l10n.monthOf(name), context.l10n.somewhereToStart, name);
+    return null;
   }
 
   Widget _found(BuildContext context) {

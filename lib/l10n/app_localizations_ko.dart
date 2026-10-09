@@ -2281,4 +2281,627 @@ class AppLocalizationsKo extends AppLocalizations {
   String journeyNew(int n) {
     return '새로 $n개';
   }
+
+  @override
+  String get aMove => '한 수';
+
+  @override
+  String get anotherOne => '다른 카드';
+
+  @override
+  String answerIs(String said) {
+    return '답: $said';
+  }
+
+  @override
+  String get answeredAlready => '이미 답했어요';
+
+  @override
+  String get anyCard => '어떤 주제, 어떤 선반이든, 카드 한 장';
+
+  @override
+  String betN(int n) {
+    return '$n 걸기';
+  }
+
+  @override
+  String get betSlip => '내 베팅 내역';
+
+  @override
+  String get betWord => '걸기';
+
+  @override
+  String get biggerLabel => '더 큼';
+
+  @override
+  String get biggerNote => '모든 숫자는 카드의 답입니다.';
+
+  @override
+  String biggerScore(int right, int asked) {
+    return '$asked개 중 $right개 맞혔어요.';
+  }
+
+  @override
+  String get biggerYouGotIt => '더 큼 · 맞혔어요';
+
+  @override
+  String cameBackAfterDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n일 뒤',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cameBackAfterWeek => '일주일 뒤';
+
+  @override
+  String cameBackAfterWeeks(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n주 뒤',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get check => '확인';
+
+  @override
+  String closerDone(String said, int right, int steps) {
+    return '답은 $said. $steps번 중 $right번 맞혔어요.';
+  }
+
+  @override
+  String closerNoLess(String v) {
+    return '아니요, $v보다 적어요.';
+  }
+
+  @override
+  String closerNoMore(String v) {
+    return '아니요, $v보다 많아요.';
+  }
+
+  @override
+  String get closerStart => '세 단계로 좁혀 보세요.';
+
+  @override
+  String closerYesLess(String v) {
+    return '맞아요, $v보다 적어요.';
+  }
+
+  @override
+  String closerYesMore(String v) {
+    return '맞아요, $v보다 많아요.';
+  }
+
+  @override
+  String get corrections => '바로잡습니다';
+
+  @override
+  String get didYouKnow => '알고 있었나요?';
+
+  @override
+  String get didYouKnowLine => '뒤집어 본 뒤: 처음 아는 건가요, 알던 건가요?';
+
+  @override
+  String get dragToSet => '끌어서 정하기';
+
+  @override
+  String get dykAgain => '다시';
+
+  @override
+  String dykKnew(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '알던 카드 $n장',
+      zero: '알던 카드 없음',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dykNew(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '새로 안 카드 $n장',
+      zero: '오늘은 새로운 게 없어요',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get editionEnd => '오늘 판은 여기까지';
+
+  @override
+  String get editionTomorrow => '내일 판은 아침에 나와요';
+
+  @override
+  String get eraAncient => '고대 세계';
+
+  @override
+  String get eraAncientWhen => '500년 이전';
+
+  @override
+  String get eraEarlyModern => '근세';
+
+  @override
+  String get eraEarlyModernWhen => '1500년~1800년';
+
+  @override
+  String get eraMedieval => '중세';
+
+  @override
+  String get eraMedievalWhen => '500년~1500년';
+
+  @override
+  String eraMore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '이 시대 카드 $n장 더',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get eraNineteenth => '19세기';
+
+  @override
+  String get eraNineteenthWhen => '1800년~1900년';
+
+  @override
+  String get eraRecent => '이번 세기';
+
+  @override
+  String get eraRecentWhen => '2000년 이후';
+
+  @override
+  String get eraRulerNow => '지금';
+
+  @override
+  String get eraRulerOld => '고대';
+
+  @override
+  String get eraShortAncient => '고대';
+
+  @override
+  String get eraShortEarlyModern => '1500–1800년';
+
+  @override
+  String get eraShortMedieval => '중세';
+
+  @override
+  String get eraShortNineteenth => '1800년대';
+
+  @override
+  String get eraShortRecent => '2000년대';
+
+  @override
+  String get eraShortTwentieth => '1900년대';
+
+  @override
+  String get eraTwentieth => '지난 세기';
+
+  @override
+  String get eraTwentiethWhen => '1900년~2000년';
+
+  @override
+  String get fewCards => '카드 몇 장으로';
+
+  @override
+  String get fewCardsLine => '카드 한 장으로는 설명이 안 될 때';
+
+  @override
+  String get firstLabel => '시작';
+
+  @override
+  String get forYouNow => '지금 당신을 위해';
+
+  @override
+  String get goNarrow => '확신이 있으면 좁게: 세 배를 받아요.';
+
+  @override
+  String get hardBadge => '어려움';
+
+  @override
+  String hidesIn(String where) {
+    return '어디서: $where';
+  }
+
+  @override
+  String get howSure => '나는 얼마나 확신하고, 왜 그럴까?';
+
+  @override
+  String get inNumbers => '숫자로 보기';
+
+  @override
+  String inRange(int pts, String said) {
+    return '범위 안: +$pts점. 답은 $said.';
+  }
+
+  @override
+  String inYourMoves(int n) {
+    return '내 수 · $n번';
+  }
+
+  @override
+  String itIs(String said) {
+    return '답은 $said.';
+  }
+
+  @override
+  String get knewIt => '알고 있었어요';
+
+  @override
+  String get less => '적다';
+
+  @override
+  String get lookFirst => '제목을 믿기 전에 그래프를 보세요.';
+
+  @override
+  String get markTried => '해 봤어요';
+
+  @override
+  String minutesLabel(int n) {
+    return '$n분';
+  }
+
+  @override
+  String missedRange(String said) {
+    return '빗나갔어요: 답은 $said.';
+  }
+
+  @override
+  String get modeBigger => '어느 쪽이 클까?';
+
+  @override
+  String get modeBiggerLine => '짐작할 수 있는 두 숫자. 큰 쪽을 누르세요';
+
+  @override
+  String get modeCloser => '점점 가까이';
+
+  @override
+  String get modeCloserLine => '많다·적다 세 번으로 숫자에 다가가기';
+
+  @override
+  String get modePick => '하나 고르기';
+
+  @override
+  String get modePickLine => '세 개의 값. 카드를 열기 전에 정하세요';
+
+  @override
+  String get modeRange => '범위에 걸기';
+
+  @override
+  String get modeRangeLine => '좁을수록 더 받아요, 맞히면요';
+
+  @override
+  String get modeSlide => '움직이기';
+
+  @override
+  String get modeSlideLine => '먼저 답을 정하고, 얼마나 빗나갔는지 보세요';
+
+  @override
+  String get modeStake => '베팅하기';
+
+  @override
+  String modeStakeLine(int n) {
+    return '하루 $n점. 맞히면 건 점수가 두 배';
+  }
+
+  @override
+  String get monthShelfLine => '매달 새로운 주제, 모두에게 같아요';
+
+  @override
+  String moodMeta(int cards, int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      cards,
+      locale: localeName,
+      other: '카드 $cards장',
+    );
+    return '$_temp0 · $minutes분';
+  }
+
+  @override
+  String get moodTime => '가진 시간';
+
+  @override
+  String get moodTitle => '기분과 시간에 맞춰';
+
+  @override
+  String get moodTone => '톤';
+
+  @override
+  String get more => '많다';
+
+  @override
+  String moreOrLess(String v) {
+    return '$v보다 많을까, 적을까?';
+  }
+
+  @override
+  String get moveComparedToWhat => '무엇과 비교해서';
+
+  @override
+  String get moveComparedToWhatLine => '대조군이 없으면 변화는 아무 의미가 없어요';
+
+  @override
+  String get moveSampling => '표본';
+
+  @override
+  String get moveSamplingLine => '누가 표본에 들어갔는지가 말할 수 있는 것을 정해요';
+
+  @override
+  String mythDeckHint(int at, int of) {
+    return '$of장 중 $at번째 · 넘기려면 밀어 보세요';
+  }
+
+  @override
+  String nOfM(int at, int of) {
+    return '$at/$of';
+  }
+
+  @override
+  String get newMove => '처음 보는 수';
+
+  @override
+  String get newToMe => '처음 알았어요';
+
+  @override
+  String get notEnoughPoints => '점수가 부족해요';
+
+  @override
+  String get notSureLine => 'Astute 어디서든 카드 한 장';
+
+  @override
+  String get notSureTitle => '어디서부터 시작할지 모르겠다면?';
+
+  @override
+  String get openWord => '열기';
+
+  @override
+  String get pickOneFirst => '먼저 하나 고르세요';
+
+  @override
+  String pointsToday(int n) {
+    return '오늘 +$n';
+  }
+
+  @override
+  String get puzzleOfTheDay => '오늘의 퍼즐';
+
+  @override
+  String rangeWidth(int w, int pts) {
+    return '±$w · $pts점';
+  }
+
+  @override
+  String get rightLastTime => '지난번엔 맞혔어요';
+
+  @override
+  String get sameForEveryoneCaps => '모두에게 같아요';
+
+  @override
+  String get sayFalse => '거짓';
+
+  @override
+  String get sayTrue => '참';
+
+  @override
+  String get seriesAnchors => '첫인상의 함정';
+
+  @override
+  String get seriesGrowth => '폭주하는 숫자';
+
+  @override
+  String seriesMeta(int n, int m) {
+    return '카드 $n장 · 약 $m분';
+  }
+
+  @override
+  String get seriesOdds => '속이는 확률';
+
+  @override
+  String get seriesRetold => '다시 쓰는 역사';
+
+  @override
+  String seriesStrand(String name) {
+    return '카드 몇 장으로 보는 $name';
+  }
+
+  @override
+  String get seriesStudies => '연구가 오해를 낳는 이유';
+
+  @override
+  String showAllN(int n) {
+    return '$n장 모두 보기';
+  }
+
+  @override
+  String get showFewer => '간단히 보기';
+
+  @override
+  String get sixtyAgain => '다시 하기';
+
+  @override
+  String sixtyIn(int s) {
+    return '$s초 만에';
+  }
+
+  @override
+  String get sixtyLine => '참·거짓 8문제. 직감대로';
+
+  @override
+  String get sixtyPerfect => '8문제 모두 정답.';
+
+  @override
+  String sixtyScore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '지금까지 $n개 정답',
+      zero: '아직 맞힌 문제 없음',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixtySecondsFor => '초 동안\n참·거짓 8문제';
+
+  @override
+  String sixtySecondsLeft(int s) {
+    return '$s초';
+  }
+
+  @override
+  String get sixtyStart => '시작';
+
+  @override
+  String get sixtyTimeUp => '시간이 끝나기 전에';
+
+  @override
+  String get sixtyTitle => '60초';
+
+  @override
+  String slideAverage(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '평균 $n포인트 차이.',
+      zero: '평균적으로 정확해요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get slideNote => '정하고 확인하세요. 중요한 건 얼마나 빗나갔는지예요.';
+
+  @override
+  String slideOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n포인트 빗나갔어요.',
+      zero: '정확해요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get slipEmpty => '아직 베팅이 없어요. 걸면 여기에 쌓여요.';
+
+  @override
+  String get stakeLabel => '걸 점수';
+
+  @override
+  String stepOf(int at, int of) {
+    return '$at/$of단계';
+  }
+
+  @override
+  String get surpriseMe => '깜짝 카드';
+
+  @override
+  String get tapIfBigger => '더 크면 누르기';
+
+  @override
+  String get tapToTurn => '눌러서 뒤집기';
+
+  @override
+  String get tfRight => '맞아요. 이유는 카드를 열어 보세요.';
+
+  @override
+  String tfWrong(String side) {
+    return '답은 $side. 이유는 카드를 열어 보세요.';
+  }
+
+  @override
+  String theAnswer(String said) {
+    return '답: $said.';
+  }
+
+  @override
+  String get theAstute => 'The Astute';
+
+  @override
+  String get theLead => '머리기사';
+
+  @override
+  String get throughTime => '시간 여행';
+
+  @override
+  String get throughTimeLine => '고대부터 올해까지. 끌어서 이동하세요';
+
+  @override
+  String get todayLabel => '오늘';
+
+  @override
+  String get todaysEdition => '오늘 판';
+
+  @override
+  String get toneCurious => '호기심';
+
+  @override
+  String get toneLight => '가볍게';
+
+  @override
+  String get toneSerious => '진지하게';
+
+  @override
+  String get toneTough => '어렵게';
+
+  @override
+  String get unmaskBack => '원래대로 보기';
+
+  @override
+  String get unmaskFlipped => '바로 세우기';
+
+  @override
+  String get unmaskLine => '같은 숫자, 다른 그림';
+
+  @override
+  String get unmaskStretched => '공정한 눈금으로';
+
+  @override
+  String get unmaskTitle => '그래프의 민낯';
+
+  @override
+  String get unmaskTotals => '공정하게 비교하기';
+
+  @override
+  String get unmaskTruncated => '축을 0부터';
+
+  @override
+  String get unmaskWindow => '전체 기간 보기';
+
+  @override
+  String get whatIfTrue => '만약 사실이라면?';
+
+  @override
+  String get whatIfTrueLine => '닫은 뒤에도 계속 생각나는 카드';
+
+  @override
+  String get whatYouBelieve => '내가 믿는 것';
+
+  @override
+  String get wrongLastTime => '지난번엔 틀렸어요';
+
+  @override
+  String youLose(int n) {
+    return '$n점을 잃었어요.';
+  }
+
+  @override
+  String youWin(int n) {
+    return '$n점을 얻었어요.';
+  }
+
+  @override
+  String get yourPick => '내 선택';
 }

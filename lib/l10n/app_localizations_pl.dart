@@ -2480,4 +2480,668 @@ class AppLocalizationsPl extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get aMove => 'Ruch';
+
+  @override
+  String get anotherOne => 'Inna';
+
+  @override
+  String answerIs(String said) {
+    return 'Odpowiedź: $said';
+  }
+
+  @override
+  String get answeredAlready => 'Już odpowiedziana';
+
+  @override
+  String get anyCard => 'Dowolny temat, dowolna półka, jedna karta';
+
+  @override
+  String betN(int n) {
+    return 'Postaw $n';
+  }
+
+  @override
+  String get betSlip => 'Twój kupon';
+
+  @override
+  String get betWord => 'Postaw';
+
+  @override
+  String get biggerLabel => 'Większe';
+
+  @override
+  String get biggerNote => 'Każda liczba to odpowiedź z jednej karty.';
+
+  @override
+  String biggerScore(int right, int asked) {
+    return 'Trafione: $right z $asked.';
+  }
+
+  @override
+  String get biggerYouGotIt => 'Większe · trafione';
+
+  @override
+  String cameBackAfterDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Po $n dniach',
+      many: 'Po $n dniach',
+      few: 'Po $n dniach',
+      one: 'Po jednym dniu',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cameBackAfterWeek => 'Po tygodniu';
+
+  @override
+  String cameBackAfterWeeks(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Po $n tygodniach',
+      many: 'Po $n tygodniach',
+      few: 'Po $n tygodniach',
+      one: 'Po tygodniu',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get check => 'Sprawdź';
+
+  @override
+  String closerDone(String said, int right, int steps) {
+    return 'To $said. Trafione: $right z $steps.';
+  }
+
+  @override
+  String closerNoLess(String v) {
+    return 'Nie: to mniej niż $v.';
+  }
+
+  @override
+  String closerNoMore(String v) {
+    return 'Nie: to więcej niż $v.';
+  }
+
+  @override
+  String get closerStart => 'Trzy kroki, żeby się zbliżyć.';
+
+  @override
+  String closerYesLess(String v) {
+    return 'Tak: to mniej niż $v.';
+  }
+
+  @override
+  String closerYesMore(String v) {
+    return 'Tak: to więcej niż $v.';
+  }
+
+  @override
+  String get corrections => 'Sprostowania';
+
+  @override
+  String get didYouKnow => 'Czy to wiesz?';
+
+  @override
+  String get didYouKnowLine =>
+      'Odwróć, a potem: nowe dla ciebie czy już to znasz?';
+
+  @override
+  String get dragToSet => 'Przeciągnij, aby ustawić';
+
+  @override
+  String get dykAgain => 'Jeszcze raz';
+
+  @override
+  String dykKnew(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Znanych: $n',
+      many: 'Znanych: $n',
+      few: 'Znane: $n',
+      one: 'Znana: 1',
+      zero: 'Znane: żadna',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dykNew(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n nowych dla ciebie',
+      many: '$n nowych dla ciebie',
+      few: '$n nowe dla ciebie',
+      one: '1 nowa dla ciebie',
+      zero: 'Dziś nic nowego',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get editionEnd => 'To całe dzisiejsze wydanie';
+
+  @override
+  String get editionTomorrow => 'Jutrzejsze ukaże się rano';
+
+  @override
+  String get eraAncient => 'Świat starożytny';
+
+  @override
+  String get eraAncientWhen => 'Przed rokiem 500';
+
+  @override
+  String get eraEarlyModern => 'Wczesna nowożytność';
+
+  @override
+  String get eraEarlyModernWhen => 'Od 1500 do 1800';
+
+  @override
+  String get eraMedieval => 'Średniowiecze';
+
+  @override
+  String get eraMedievalWhen => 'Od 500 do 1500';
+
+  @override
+  String eraMore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Jeszcze $n z tej epoki',
+      many: 'Jeszcze $n z tej epoki',
+      few: 'Jeszcze $n z tej epoki',
+      one: 'Jeszcze 1 z tej epoki',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get eraNineteenth => 'Wiek XIX';
+
+  @override
+  String get eraNineteenthWhen => 'Od 1800 do 1900';
+
+  @override
+  String get eraRecent => 'Ten wiek';
+
+  @override
+  String get eraRecentWhen => 'Od 2000 roku';
+
+  @override
+  String get eraRulerNow => 'Dziś';
+
+  @override
+  String get eraRulerOld => 'Starożytność';
+
+  @override
+  String get eraShortAncient => 'Starożytność';
+
+  @override
+  String get eraShortEarlyModern => '1500–1800';
+
+  @override
+  String get eraShortMedieval => 'Średniowiecze';
+
+  @override
+  String get eraShortNineteenth => 'XIX wiek';
+
+  @override
+  String get eraShortRecent => 'XXI wiek';
+
+  @override
+  String get eraShortTwentieth => 'XX wiek';
+
+  @override
+  String get eraTwentieth => 'Ubiegły wiek';
+
+  @override
+  String get eraTwentiethWhen => 'Od 1900 do 2000';
+
+  @override
+  String get fewCards => 'W kilku kartach';
+
+  @override
+  String get fewCardsLine => 'Gdy jedna karta nie wystarczy, by to wyjaśnić';
+
+  @override
+  String get firstLabel => 'Od';
+
+  @override
+  String get forYouNow => 'Dla ciebie, teraz';
+
+  @override
+  String get goNarrow => 'Zawężaj, gdy masz pewność: płaci trzy razy więcej.';
+
+  @override
+  String get hardBadge => 'Trudne';
+
+  @override
+  String hidesIn(String where) {
+    return 'W: $where';
+  }
+
+  @override
+  String get howSure => 'Na ile mam pewność i dlaczego?';
+
+  @override
+  String get inNumbers => 'W liczbach';
+
+  @override
+  String inRange(int pts, String said) {
+    return 'Trafione: +$pts pkt. To $said.';
+  }
+
+  @override
+  String inYourMoves(int n) {
+    return 'W twoich ruchach · $n×';
+  }
+
+  @override
+  String itIs(String said) {
+    return 'To $said.';
+  }
+
+  @override
+  String get knewIt => 'Znam to';
+
+  @override
+  String get less => 'Mniej';
+
+  @override
+  String get lookFirst => 'Spójrz na wykres, zanim uwierzysz w nagłówek.';
+
+  @override
+  String get markTried => 'Wypróbowane';
+
+  @override
+  String minutesLabel(int n) {
+    return '$n min';
+  }
+
+  @override
+  String missedRange(String said) {
+    return 'Pudło: to $said.';
+  }
+
+  @override
+  String get modeBigger => 'Co jest większe?';
+
+  @override
+  String get modeBiggerLine => 'Dwie liczby do oszacowania. Stuknij większą';
+
+  @override
+  String get modeCloser => 'Coraz bliżej';
+
+  @override
+  String get modeCloserLine =>
+      'Trzy kroki „więcej czy mniej”, żeby zbliżyć się do liczby';
+
+  @override
+  String get modePick => 'Wybierz jedną';
+
+  @override
+  String get modePickLine => 'Trzy wartości. Zdecyduj, zanim otworzysz kartę';
+
+  @override
+  String get modeRange => 'Obstaw przedział';
+
+  @override
+  String get modeRangeLine => 'Im węziej, tym więcej płaci, jeśli trafisz';
+
+  @override
+  String get modeSlide => 'Przesuń';
+
+  @override
+  String get modeSlideLine =>
+      'Najpierw ustaw odpowiedź, potem zobacz, jak daleko było do prawdy';
+
+  @override
+  String get modeStake => 'Postaw zakład';
+
+  @override
+  String modeStakeLine(int n) {
+    return '$n punktów dziennie. Wygrasz — podwajasz stawkę';
+  }
+
+  @override
+  String get monthShelfLine => 'Co miesiąc nowy temat, ten sam dla wszystkich';
+
+  @override
+  String moodMeta(int cards, int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      cards,
+      locale: localeName,
+      other: '$cards karty',
+      many: '$cards kart',
+      few: '$cards karty',
+      one: '1 karta',
+    );
+    return '$_temp0 · $minutes min';
+  }
+
+  @override
+  String get moodTime => 'Ile masz czasu';
+
+  @override
+  String get moodTitle => 'Twój nastrój, twoje minuty';
+
+  @override
+  String get moodTone => 'Ton';
+
+  @override
+  String get more => 'Więcej';
+
+  @override
+  String moreOrLess(String v) {
+    return 'Więcej czy mniej niż $v?';
+  }
+
+  @override
+  String get moveComparedToWhat => 'W porównaniu z czym';
+
+  @override
+  String get moveComparedToWhatLine =>
+      'Zmiana nic nie znaczy bez grupy kontrolnej';
+
+  @override
+  String get moveSampling => 'Próba';
+
+  @override
+  String get moveSamplingLine =>
+      'To, kto trafił do próby, decyduje, co może ona powiedzieć';
+
+  @override
+  String mythDeckHint(int at, int of) {
+    return '$at z $of · przesuń, by odwrócić';
+  }
+
+  @override
+  String nOfM(int at, int of) {
+    return '$at z $of';
+  }
+
+  @override
+  String get newMove => 'Nowość dla ciebie';
+
+  @override
+  String get newToMe => 'Nowe dla mnie';
+
+  @override
+  String get notEnoughPoints => 'Za mało punktów';
+
+  @override
+  String get notSureLine => 'Jedna karta z dowolnego miejsca w Astute';
+
+  @override
+  String get notSureTitle => 'Nie wiesz, od czego zacząć?';
+
+  @override
+  String get openWord => 'Otwórz';
+
+  @override
+  String get pickOneFirst => 'Najpierw wybierz';
+
+  @override
+  String pointsToday(int n) {
+    return '+$n dziś';
+  }
+
+  @override
+  String get puzzleOfTheDay => 'Łamigłówka dnia';
+
+  @override
+  String rangeWidth(int w, int pts) {
+    return '±$w · $pts pkt';
+  }
+
+  @override
+  String get rightLastTime => 'Ostatnio dobrze';
+
+  @override
+  String get sameForEveryoneCaps => 'Taka sama dla wszystkich';
+
+  @override
+  String get sayFalse => 'Fałsz';
+
+  @override
+  String get sayTrue => 'Prawda';
+
+  @override
+  String get seriesAnchors => 'Pierwsze wrażenia';
+
+  @override
+  String get seriesGrowth => 'Liczby, które uciekają';
+
+  @override
+  String seriesMeta(int n, int m) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n karty',
+      many: '$n kart',
+      few: '$n karty',
+    );
+    return '$_temp0 · około $m min';
+  }
+
+  @override
+  String get seriesOdds => 'Kłamliwe prawdopodobieństwa';
+
+  @override
+  String get seriesRetold => 'Historia opowiedziana na nowo';
+
+  @override
+  String seriesStrand(String name) {
+    return '$name w kilku kartach';
+  }
+
+  @override
+  String get seriesStudies => 'Dlaczego badania wprowadzają w błąd';
+
+  @override
+  String showAllN(int n) {
+    return 'Pokaż wszystkie ($n)';
+  }
+
+  @override
+  String get showFewer => 'Pokaż mniej';
+
+  @override
+  String get sixtyAgain => 'Zagraj jeszcze raz';
+
+  @override
+  String sixtyIn(int s) {
+    return 'w $s s';
+  }
+
+  @override
+  String get sixtyLine => 'Osiem razy prawda czy fałsz. Zaufaj intuicji';
+
+  @override
+  String get sixtyPerfect => 'Wszystkie osiem dobrze.';
+
+  @override
+  String sixtyScore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Na razie $n dobrze',
+      many: 'Na razie $n dobrze',
+      few: 'Na razie $n dobrze',
+      one: 'Na razie 1 dobrze',
+      zero: 'Na razie żadnej dobrze',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixtySecondsFor => 'sekund na osiem\nrazy prawda czy fałsz';
+
+  @override
+  String sixtySecondsLeft(int s) {
+    return '$s s';
+  }
+
+  @override
+  String get sixtyStart => 'Start';
+
+  @override
+  String get sixtyTimeUp => 'zanim skończył się czas';
+
+  @override
+  String get sixtyTitle => 'Sześćdziesiąt sekund';
+
+  @override
+  String slideAverage(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Średnio $n punktu różnicy.',
+      many: 'Średnio $n punktów różnicy.',
+      few: 'Średnio $n punkty różnicy.',
+      one: 'Średnio 1 punkt różnicy.',
+      zero: 'Średnio idealnie.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get slideNote => 'Ustaw, sprawdź. Liczy się, jak daleko był wynik.';
+
+  @override
+  String slideOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n punktu różnicy.',
+      many: '$n punktów różnicy.',
+      few: '$n punkty różnicy.',
+      one: '1 punkt różnicy.',
+      zero: 'Idealnie.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get slipEmpty =>
+      'Jeszcze nic nie obstawiono. Każdy zakład trafi tutaj.';
+
+  @override
+  String get stakeLabel => 'Stawka';
+
+  @override
+  String stepOf(int at, int of) {
+    return 'Krok $at z $of';
+  }
+
+  @override
+  String get surpriseMe => 'Zaskocz mnie';
+
+  @override
+  String get tapIfBigger => 'Stuknij, jeśli większe';
+
+  @override
+  String get tapToTurn => 'Stuknij, by odwrócić';
+
+  @override
+  String get tfRight => 'Dobrze. Otwórz, żeby poznać powód.';
+
+  @override
+  String tfWrong(String side) {
+    return 'To $side. Otwórz, żeby poznać powód.';
+  }
+
+  @override
+  String theAnswer(String said) {
+    return 'Odpowiedź: $said.';
+  }
+
+  @override
+  String get theAstute => 'The Astute';
+
+  @override
+  String get theLead => 'Temat dnia';
+
+  @override
+  String get throughTime => 'Przez wieki';
+
+  @override
+  String get throughTimeLine =>
+      'Od starożytności po ten rok. Przeciągnij, by podróżować';
+
+  @override
+  String get todayLabel => 'Dziś';
+
+  @override
+  String get todaysEdition => 'Dzisiejsze wydanie';
+
+  @override
+  String get toneCurious => 'Ciekawe';
+
+  @override
+  String get toneLight => 'Lekkie';
+
+  @override
+  String get toneSerious => 'Poważne';
+
+  @override
+  String get toneTough => 'Trudne';
+
+  @override
+  String get unmaskBack => 'Pokaż jak w oryginale';
+
+  @override
+  String get unmaskFlipped => 'Odwróć właściwie';
+
+  @override
+  String get unmaskLine => 'Te same liczby, inny obraz';
+
+  @override
+  String get unmaskStretched => 'Użyj uczciwej skali';
+
+  @override
+  String get unmaskTitle => 'Zdemaskuj wykres';
+
+  @override
+  String get unmaskTotals => 'Porównaj uczciwie';
+
+  @override
+  String get unmaskTruncated => 'Zacznij oś od zera';
+
+  @override
+  String get unmaskWindow => 'Pokaż całą serię';
+
+  @override
+  String get whatIfTrue => 'A jeśli to prawda?';
+
+  @override
+  String get whatIfTrueLine => 'Karty, które działają dalej po zamknięciu';
+
+  @override
+  String get whatYouBelieve => 'W co wierzysz';
+
+  @override
+  String get wrongLastTime => 'Ostatnio źle';
+
+  @override
+  String youLose(int n) {
+    return 'Tracisz $n.';
+  }
+
+  @override
+  String youWin(int n) {
+    return 'Wygrywasz $n.';
+  }
+
+  @override
+  String get yourPick => 'Twój wybór';
 }

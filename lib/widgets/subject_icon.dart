@@ -14,15 +14,20 @@ class SubjectIcon extends StatelessWidget {
     required this.subject,
     required this.size,
     required this.ink,
+    this.stroke = 1.9,
   });
 
   final String subject;
   final double size;
   final Color ink;
 
+  /// The line's weight on the 24-unit grid. The one weight everywhere, except
+  /// where the mark is drawn large behind a card as its signature.
+  final double stroke;
+
   @override
   Widget build(BuildContext context) {
-    final String svg = subjectIconSvg(subject);
+    final String svg = subjectIconSvg(subject, stroke: stroke);
     if (svg.isEmpty) return SizedBox(width: size, height: size);
     return SizedBox(
       width: size,

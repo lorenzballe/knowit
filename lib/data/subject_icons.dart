@@ -41,11 +41,11 @@ const Set<String> kPaleSubjects = {'Life'};
 
 /// The icon wrapped as a standalone SVG document, which is what the renderer
 /// takes. White, because it always sits on the subject's own fill.
-String subjectIconSvg(String subject) {
+String subjectIconSvg(String subject, {double stroke = 1.9}) {
   final path = kSubjectIcons[subject];
   if (path == null) return '';
   return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">'
       '<path d="$path" fill="none" '
-      'stroke="${kPaleSubjects.contains(subject) ? '#10100c' : '#ffffff'}" stroke-width="1.9" '
+      'stroke="${kPaleSubjects.contains(subject) ? '#10100c' : '#ffffff'}" stroke-width="$stroke" '
       'stroke-linecap="round" stroke-linejoin="round"/></svg>';
 }

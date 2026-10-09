@@ -2482,4 +2482,670 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get aMove => 'Приём';
+
+  @override
+  String get anotherOne => 'Другую';
+
+  @override
+  String answerIs(String said) {
+    return 'Ответ: $said';
+  }
+
+  @override
+  String get answeredAlready => 'Уже отвечено';
+
+  @override
+  String get anyCard => 'Любая тема, любая полка, одна карточка';
+
+  @override
+  String betN(int n) {
+    return 'Ставка $n';
+  }
+
+  @override
+  String get betSlip => 'Ваш купон';
+
+  @override
+  String get betWord => 'Поставить';
+
+  @override
+  String get biggerLabel => 'Больше';
+
+  @override
+  String get biggerNote => 'Каждое число — ответ одной из карточек.';
+
+  @override
+  String biggerScore(int right, int asked) {
+    return 'Верно: $right из $asked.';
+  }
+
+  @override
+  String get biggerYouGotIt => 'Больше · верно';
+
+  @override
+  String cameBackAfterDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Через $n дня',
+      many: 'Через $n дней',
+      few: 'Через $n дня',
+      one: 'Через $n день',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cameBackAfterWeek => 'Через неделю';
+
+  @override
+  String cameBackAfterWeeks(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Через $n недели',
+      many: 'Через $n недель',
+      few: 'Через $n недели',
+      one: 'Через $n неделю',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get check => 'Проверить';
+
+  @override
+  String closerDone(String said, int right, int steps) {
+    return 'Это $said. Верно $right из $steps.';
+  }
+
+  @override
+  String closerNoLess(String v) {
+    return 'Нет: меньше $v.';
+  }
+
+  @override
+  String closerNoMore(String v) {
+    return 'Нет: больше $v.';
+  }
+
+  @override
+  String get closerStart => 'Три шага, чтобы подобраться.';
+
+  @override
+  String closerYesLess(String v) {
+    return 'Верно: меньше $v.';
+  }
+
+  @override
+  String closerYesMore(String v) {
+    return 'Верно: больше $v.';
+  }
+
+  @override
+  String get corrections => 'Поправки';
+
+  @override
+  String get didYouKnow => 'А вы знали?';
+
+  @override
+  String get didYouKnowLine => 'Переверните, а потом: новое для вас или знали?';
+
+  @override
+  String get dragToSet => 'Перетащите';
+
+  @override
+  String get dykAgain => 'Ещё раз';
+
+  @override
+  String dykKnew(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n знакомых',
+      many: '$n знакомых',
+      few: '$n знакомые',
+      one: '$n знакомая',
+      zero: 'Знакомых нет',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dykNew(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n новых для вас',
+      many: '$n новых для вас',
+      few: '$n новые для вас',
+      one: '$n новая для вас',
+      zero: 'Сегодня ничего нового',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get editionEnd => 'Это сегодняшний выпуск';
+
+  @override
+  String get editionTomorrow => 'Завтрашний выйдет утром';
+
+  @override
+  String get eraAncient => 'Древний мир';
+
+  @override
+  String get eraAncientWhen => 'До 500 года';
+
+  @override
+  String get eraEarlyModern => 'Раннее Новое время';
+
+  @override
+  String get eraEarlyModernWhen => '1500–1800 годы';
+
+  @override
+  String get eraMedieval => 'Средние века';
+
+  @override
+  String get eraMedievalWhen => '500–1500 годы';
+
+  @override
+  String eraMore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ещё $n из этой эпохи',
+      many: 'Ещё $n из этой эпохи',
+      few: 'Ещё $n из этой эпохи',
+      one: 'Ещё $n из этой эпохи',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get eraNineteenth => 'XIX век';
+
+  @override
+  String get eraNineteenthWhen => '1800–1900 годы';
+
+  @override
+  String get eraRecent => 'Этот век';
+
+  @override
+  String get eraRecentWhen => 'С 2000 года';
+
+  @override
+  String get eraRulerNow => 'Сейчас';
+
+  @override
+  String get eraRulerOld => 'Древность';
+
+  @override
+  String get eraShortAncient => 'Древность';
+
+  @override
+  String get eraShortEarlyModern => '1500–1800';
+
+  @override
+  String get eraShortMedieval => 'Средневековье';
+
+  @override
+  String get eraShortNineteenth => 'XIX век';
+
+  @override
+  String get eraShortRecent => 'XXI век';
+
+  @override
+  String get eraShortTwentieth => 'XX век';
+
+  @override
+  String get eraTwentieth => 'Прошлый век';
+
+  @override
+  String get eraTwentiethWhen => '1900–2000 годы';
+
+  @override
+  String get fewCards => 'В нескольких карточках';
+
+  @override
+  String get fewCardsLine => 'Когда одной карточки мало, чтобы объяснить';
+
+  @override
+  String get firstLabel => 'С';
+
+  @override
+  String get forYouNow => 'Для вас, прямо сейчас';
+
+  @override
+  String get goNarrow => 'Сужайте, когда уверены: это приносит втрое больше.';
+
+  @override
+  String get hardBadge => 'Сложно';
+
+  @override
+  String hidesIn(String where) {
+    return 'Где: $where';
+  }
+
+  @override
+  String get howSure => 'Насколько я уверен — и почему?';
+
+  @override
+  String get inNumbers => 'В цифрах';
+
+  @override
+  String inRange(int pts, String said) {
+    return 'Попали: +$pts очков. Это $said.';
+  }
+
+  @override
+  String inYourMoves(int n) {
+    return 'В ваших приёмах · $n×';
+  }
+
+  @override
+  String itIs(String said) {
+    return 'Это $said.';
+  }
+
+  @override
+  String get knewIt => 'Знаю';
+
+  @override
+  String get less => 'Меньше';
+
+  @override
+  String get lookFirst => 'Посмотрите на график, прежде чем верить заголовку.';
+
+  @override
+  String get markTried => 'Попробовано';
+
+  @override
+  String minutesLabel(int n) {
+    return '$n мин';
+  }
+
+  @override
+  String missedRange(String said) {
+    return 'Мимо: это $said.';
+  }
+
+  @override
+  String get modeBigger => 'Что больше?';
+
+  @override
+  String get modeBiggerLine =>
+      'Два числа, которые можно оценить. Нажмите на большее';
+
+  @override
+  String get modeCloser => 'Ближе и ближе';
+
+  @override
+  String get modeCloserLine =>
+      'Три шага «больше или меньше», чтобы подобраться к числу';
+
+  @override
+  String get modePick => 'Выберите';
+
+  @override
+  String get modePickLine =>
+      'Три варианта. Решите до того, как откроете карточку';
+
+  @override
+  String get modeRange => 'Ставка на диапазон';
+
+  @override
+  String get modeRangeLine => 'Чем уже, тем больше выигрыш — если угадаете';
+
+  @override
+  String get modeSlide => 'Двигайте';
+
+  @override
+  String get modeSlideLine =>
+      'Сначала задайте ответ, потом посмотрите, насколько ошиблись';
+
+  @override
+  String get modeStake => 'Делайте ставку';
+
+  @override
+  String modeStakeLine(int n) {
+    return '$n очков в день. Выиграете — ставка удвоится';
+  }
+
+  @override
+  String get monthShelfLine => 'Каждый месяц новая тема, одна на всех';
+
+  @override
+  String moodMeta(int cards, int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      cards,
+      locale: localeName,
+      other: '$cards карточки',
+      many: '$cards карточек',
+      few: '$cards карточки',
+      one: '$cards карточка',
+    );
+    return '$_temp0 · $minutes мин';
+  }
+
+  @override
+  String get moodTime => 'Сколько у вас времени';
+
+  @override
+  String get moodTitle => 'Ваше настроение, ваши минуты';
+
+  @override
+  String get moodTone => 'Тон';
+
+  @override
+  String get more => 'Больше';
+
+  @override
+  String moreOrLess(String v) {
+    return 'Больше или меньше $v?';
+  }
+
+  @override
+  String get moveComparedToWhat => 'По сравнению с чем';
+
+  @override
+  String get moveComparedToWhatLine =>
+      'Изменение ничего не значит без контрольной группы';
+
+  @override
+  String get moveSampling => 'Выборка';
+
+  @override
+  String get moveSamplingLine =>
+      'Кто попал в выборку, то и решает, о чём она говорит';
+
+  @override
+  String mythDeckHint(int at, int of) {
+    return '$at из $of · смахните, чтобы перевернуть';
+  }
+
+  @override
+  String nOfM(int at, int of) {
+    return '$at из $of';
+  }
+
+  @override
+  String get newMove => 'Новое для вас';
+
+  @override
+  String get newToMe => 'Новое для меня';
+
+  @override
+  String get notEnoughPoints => 'Недостаточно очков';
+
+  @override
+  String get notSureLine => 'Одна карточка из любого уголка Astute';
+
+  @override
+  String get notSureTitle => 'Не знаете, с чего начать?';
+
+  @override
+  String get openWord => 'Открыть';
+
+  @override
+  String get pickOneFirst => 'Сначала выберите';
+
+  @override
+  String pointsToday(int n) {
+    return '+$n сегодня';
+  }
+
+  @override
+  String get puzzleOfTheDay => 'Задача дня';
+
+  @override
+  String rangeWidth(int w, int pts) {
+    return '±$w · $pts оч.';
+  }
+
+  @override
+  String get rightLastTime => 'В прошлый раз верно';
+
+  @override
+  String get sameForEveryoneCaps => 'Один на всех';
+
+  @override
+  String get sayFalse => 'Ложь';
+
+  @override
+  String get sayTrue => 'Правда';
+
+  @override
+  String get seriesAnchors => 'Первые впечатления';
+
+  @override
+  String get seriesGrowth => 'Числа, которые убегают';
+
+  @override
+  String seriesMeta(int n, int m) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n карточки',
+      many: '$n карточек',
+      few: '$n карточки',
+      one: '$n карточка',
+    );
+    return '$_temp0 · около $m мин';
+  }
+
+  @override
+  String get seriesOdds => 'Обманчивые вероятности';
+
+  @override
+  String get seriesRetold => 'История заново';
+
+  @override
+  String seriesStrand(String name) {
+    return '$name в нескольких карточках';
+  }
+
+  @override
+  String get seriesStudies => 'Почему исследования вводят в заблуждение';
+
+  @override
+  String showAllN(int n) {
+    return 'Показать все $n';
+  }
+
+  @override
+  String get showFewer => 'Свернуть';
+
+  @override
+  String get sixtyAgain => 'Сыграть ещё';
+
+  @override
+  String sixtyIn(int s) {
+    return 'за $s с';
+  }
+
+  @override
+  String get sixtyLine => 'Восемь «правда или ложь». Доверьтесь чутью';
+
+  @override
+  String get sixtyPerfect => 'Все восемь верно.';
+
+  @override
+  String sixtyScore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Пока $n верных',
+      many: 'Пока $n верных',
+      few: 'Пока $n верных',
+      one: 'Пока $n верный',
+      zero: 'Пока ни одного верного',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixtySecondsFor => 'секунд на восемь\n«правда или ложь»';
+
+  @override
+  String sixtySecondsLeft(int s) {
+    return '$s с';
+  }
+
+  @override
+  String get sixtyStart => 'Начать';
+
+  @override
+  String get sixtyTimeUp => 'пока не вышло время';
+
+  @override
+  String get sixtyTitle => 'Шестьдесят секунд';
+
+  @override
+  String slideAverage(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'В среднем ошибка $n пункта.',
+      many: 'В среднем ошибка $n пунктов.',
+      few: 'В среднем ошибка $n пункта.',
+      one: 'В среднем ошибка $n пункт.',
+      zero: 'В среднем точно.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get slideNote => 'Задайте, проверьте. Важно, насколько вы ошиблись.';
+
+  @override
+  String slideOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ошибка $n пункта.',
+      many: 'Ошибка $n пунктов.',
+      few: 'Ошибка $n пункта.',
+      one: 'Ошибка $n пункт.',
+      zero: 'Точно.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get slipEmpty => 'Ставок пока нет. Каждая будет здесь.';
+
+  @override
+  String get stakeLabel => 'Ставка';
+
+  @override
+  String stepOf(int at, int of) {
+    return 'Шаг $at из $of';
+  }
+
+  @override
+  String get surpriseMe => 'Удивите меня';
+
+  @override
+  String get tapIfBigger => 'Нажмите, если больше';
+
+  @override
+  String get tapToTurn => 'Нажмите, чтобы перевернуть';
+
+  @override
+  String get tfRight => 'Верно. Откройте, чтобы узнать почему.';
+
+  @override
+  String tfWrong(String side) {
+    return 'Это $side. Откройте, чтобы узнать почему.';
+  }
+
+  @override
+  String theAnswer(String said) {
+    return 'Ответ: $said.';
+  }
+
+  @override
+  String get theAstute => 'The Astute';
+
+  @override
+  String get theLead => 'Главное';
+
+  @override
+  String get throughTime => 'Сквозь время';
+
+  @override
+  String get throughTimeLine =>
+      'От древнего мира до наших дней. Перетащите, чтобы путешествовать';
+
+  @override
+  String get todayLabel => 'Сегодня';
+
+  @override
+  String get todaysEdition => 'Сегодняшний выпуск';
+
+  @override
+  String get toneCurious => 'Любопытно';
+
+  @override
+  String get toneLight => 'Легко';
+
+  @override
+  String get toneSerious => 'Серьёзно';
+
+  @override
+  String get toneTough => 'Сложно';
+
+  @override
+  String get unmaskBack => 'Показать как было';
+
+  @override
+  String get unmaskFlipped => 'Перевернуть правильно';
+
+  @override
+  String get unmaskLine => 'Те же числа, другая картина';
+
+  @override
+  String get unmaskStretched => 'Честный масштаб';
+
+  @override
+  String get unmaskTitle => 'Разоблачите график';
+
+  @override
+  String get unmaskTotals => 'Сравнить честно';
+
+  @override
+  String get unmaskTruncated => 'Начать ось с нуля';
+
+  @override
+  String get unmaskWindow => 'Показать весь ряд';
+
+  @override
+  String get whatIfTrue => 'А если это правда?';
+
+  @override
+  String get whatIfTrueLine =>
+      'Карточки, которые продолжают работать после того, как вы их закрыли';
+
+  @override
+  String get whatYouBelieve => 'Во что вы верите';
+
+  @override
+  String get wrongLastTime => 'В прошлый раз неверно';
+
+  @override
+  String youLose(int n) {
+    return 'Вы теряете $n.';
+  }
+
+  @override
+  String youWin(int n) {
+    return 'Вы выигрываете $n.';
+  }
+
+  @override
+  String get yourPick => 'Ваш выбор';
 }

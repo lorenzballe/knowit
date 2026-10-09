@@ -1337,9 +1337,24 @@ class AppState extends ChangeNotifier {
     return dueReviews.where((p) => !dealt.contains(p.id)).toList();
   }
 
+  /// The cards that came due and found no room in the five, each with the
+  /// answer that sent it back: how long it waited and whether it was right
+  /// last time, which is what Explore's Came back shelf says on each.
+  List<({Pill card, Answer last})> get reviewsWaitingWithAnswers {
+    final dealt = todaysDeck.map((p) => p.id).toSet();
+    return [
+      for (final r in _dueWithAnswers(today))
+        if (!dealt.contains(r.card.id)) r,
+    ];
+  }
+
   /// The same, for a day that has not started: what [on] will bring back.
-  List<Pill> _reviewsDue(DateTime on) {
-    final due = <MapEntry<String, Pill>>[];
+  List<Pill> _reviewsDue(DateTime on) => [
+    for (final r in _dueWithAnswers(on)) r.card,
+  ];
+
+  List<({Pill card, Answer last})> _dueWithAnswers(DateTime on) {
+    final due = <({Pill card, Answer last})>[];
     final claimed = <String>{};
 
     final entries = answers.entries.where((e) => _dueBy(e.key, on)).toList()
@@ -1350,9 +1365,9 @@ class AppState extends ChangeNotifier {
       if (original == null) continue;
       final pick = _freshInstanceOf(original, claimed, on);
       claimed.add(pick.id);
-      due.add(MapEntry(e.value.dueOn!, pick));
+      due.add((card: pick, last: e.value));
     }
-    return [for (final entry in due) entry.value];
+    return due;
   }
 
   /// Tomorrow's cards, dealt the way tomorrow will deal them.

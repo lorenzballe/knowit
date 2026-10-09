@@ -3461,6 +3461,996 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{n} new'**
   String journeyNew(int n);
+
+  /// No description provided for @aMove.
+  ///
+  /// In en, this message translates to:
+  /// **'A move'**
+  String get aMove;
+
+  /// No description provided for @anotherOne.
+  ///
+  /// In en, this message translates to:
+  /// **'Another'**
+  String get anotherOne;
+
+  /// No description provided for @answerIs.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer: {said}'**
+  String answerIs(String said);
+
+  /// No description provided for @answeredAlready.
+  ///
+  /// In en, this message translates to:
+  /// **'Answered already'**
+  String get answeredAlready;
+
+  /// No description provided for @anyCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Any subject, any shelf, one card'**
+  String get anyCard;
+
+  /// No description provided for @betN.
+  ///
+  /// In en, this message translates to:
+  /// **'Bet {n}'**
+  String betN(int n);
+
+  /// No description provided for @betSlip.
+  ///
+  /// In en, this message translates to:
+  /// **'Your bet slip'**
+  String get betSlip;
+
+  /// No description provided for @betWord.
+  ///
+  /// In en, this message translates to:
+  /// **'Bet'**
+  String get betWord;
+
+  /// No description provided for @biggerLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Bigger'**
+  String get biggerLabel;
+
+  /// No description provided for @biggerNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Each figure is a card\'s own answer.'**
+  String get biggerNote;
+
+  /// No description provided for @biggerScore.
+  ///
+  /// In en, this message translates to:
+  /// **'Right on {right} of {asked}.'**
+  String biggerScore(int right, int asked);
+
+  /// No description provided for @biggerYouGotIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Bigger · you got it'**
+  String get biggerYouGotIt;
+
+  /// No description provided for @cameBackAfterDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{After a day} other{After {n} days}}'**
+  String cameBackAfterDays(int n);
+
+  /// No description provided for @cameBackAfterWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'After a week'**
+  String get cameBackAfterWeek;
+
+  /// No description provided for @cameBackAfterWeeks.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{After a week} other{After {n} weeks}}'**
+  String cameBackAfterWeeks(int n);
+
+  /// No description provided for @check.
+  ///
+  /// In en, this message translates to:
+  /// **'Check'**
+  String get check;
+
+  /// No description provided for @closerDone.
+  ///
+  /// In en, this message translates to:
+  /// **'It is {said}. You got {right} of {steps}.'**
+  String closerDone(String said, int right, int steps);
+
+  /// No description provided for @closerNoLess.
+  ///
+  /// In en, this message translates to:
+  /// **'No: it is less than {v}.'**
+  String closerNoLess(String v);
+
+  /// No description provided for @closerNoMore.
+  ///
+  /// In en, this message translates to:
+  /// **'No: it is more than {v}.'**
+  String closerNoMore(String v);
+
+  /// No description provided for @closerStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Three steps to close in on it.'**
+  String get closerStart;
+
+  /// No description provided for @closerYesLess.
+  ///
+  /// In en, this message translates to:
+  /// **'Right: it is less than {v}.'**
+  String closerYesLess(String v);
+
+  /// No description provided for @closerYesMore.
+  ///
+  /// In en, this message translates to:
+  /// **'Right: it is more than {v}.'**
+  String closerYesMore(String v);
+
+  /// No description provided for @corrections.
+  ///
+  /// In en, this message translates to:
+  /// **'Corrections'**
+  String get corrections;
+
+  /// No description provided for @didYouKnow.
+  ///
+  /// In en, this message translates to:
+  /// **'Did you know?'**
+  String get didYouKnow;
+
+  /// No description provided for @didYouKnowLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn it over, then: new to you, or knew it?'**
+  String get didYouKnowLine;
+
+  /// No description provided for @dragToSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Drag to set'**
+  String get dragToSet;
+
+  /// No description provided for @dykAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Again'**
+  String get dykAgain;
+
+  /// No description provided for @dykKnew.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{None you knew} =1{1 you knew} other{{n} you knew}}'**
+  String dykKnew(int n);
+
+  /// No description provided for @dykNew.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Nothing new today} =1{1 new to you} other{{n} new to you}}'**
+  String dykNew(int n);
+
+  /// No description provided for @editionEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s today\'s edition'**
+  String get editionEnd;
+
+  /// No description provided for @editionTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Tomorrow\'s is out in the morning'**
+  String get editionTomorrow;
+
+  /// No description provided for @eraAncient.
+  ///
+  /// In en, this message translates to:
+  /// **'The ancient world'**
+  String get eraAncient;
+
+  /// No description provided for @eraAncientWhen.
+  ///
+  /// In en, this message translates to:
+  /// **'Before 500'**
+  String get eraAncientWhen;
+
+  /// No description provided for @eraEarlyModern.
+  ///
+  /// In en, this message translates to:
+  /// **'The early modern age'**
+  String get eraEarlyModern;
+
+  /// No description provided for @eraEarlyModernWhen.
+  ///
+  /// In en, this message translates to:
+  /// **'1500 to 1800'**
+  String get eraEarlyModernWhen;
+
+  /// No description provided for @eraMedieval.
+  ///
+  /// In en, this message translates to:
+  /// **'The Middle Ages'**
+  String get eraMedieval;
+
+  /// No description provided for @eraMedievalWhen.
+  ///
+  /// In en, this message translates to:
+  /// **'500 to 1500'**
+  String get eraMedievalWhen;
+
+  /// No description provided for @eraMore.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =1{1 more from this age} other{{n} more from this age}}'**
+  String eraMore(int n);
+
+  /// No description provided for @eraNineteenth.
+  ///
+  /// In en, this message translates to:
+  /// **'The nineteenth century'**
+  String get eraNineteenth;
+
+  /// No description provided for @eraNineteenthWhen.
+  ///
+  /// In en, this message translates to:
+  /// **'1800 to 1900'**
+  String get eraNineteenthWhen;
+
+  /// No description provided for @eraRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'This century'**
+  String get eraRecent;
+
+  /// No description provided for @eraRecentWhen.
+  ///
+  /// In en, this message translates to:
+  /// **'Since 2000'**
+  String get eraRecentWhen;
+
+  /// No description provided for @eraRulerNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Now'**
+  String get eraRulerNow;
+
+  /// No description provided for @eraRulerOld.
+  ///
+  /// In en, this message translates to:
+  /// **'Antiquity'**
+  String get eraRulerOld;
+
+  /// No description provided for @eraShortAncient.
+  ///
+  /// In en, this message translates to:
+  /// **'Antiquity'**
+  String get eraShortAncient;
+
+  /// No description provided for @eraShortEarlyModern.
+  ///
+  /// In en, this message translates to:
+  /// **'1500–1800'**
+  String get eraShortEarlyModern;
+
+  /// No description provided for @eraShortMedieval.
+  ///
+  /// In en, this message translates to:
+  /// **'Middle Ages'**
+  String get eraShortMedieval;
+
+  /// No description provided for @eraShortNineteenth.
+  ///
+  /// In en, this message translates to:
+  /// **'1800s'**
+  String get eraShortNineteenth;
+
+  /// No description provided for @eraShortRecent.
+  ///
+  /// In en, this message translates to:
+  /// **'2000s'**
+  String get eraShortRecent;
+
+  /// No description provided for @eraShortTwentieth.
+  ///
+  /// In en, this message translates to:
+  /// **'1900s'**
+  String get eraShortTwentieth;
+
+  /// No description provided for @eraTwentieth.
+  ///
+  /// In en, this message translates to:
+  /// **'The last century'**
+  String get eraTwentieth;
+
+  /// No description provided for @eraTwentiethWhen.
+  ///
+  /// In en, this message translates to:
+  /// **'1900 to 2000'**
+  String get eraTwentiethWhen;
+
+  /// No description provided for @fewCards.
+  ///
+  /// In en, this message translates to:
+  /// **'In a few cards'**
+  String get fewCards;
+
+  /// No description provided for @fewCardsLine.
+  ///
+  /// In en, this message translates to:
+  /// **'When one card isn\'t enough to explain it'**
+  String get fewCardsLine;
+
+  /// No description provided for @firstLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'First'**
+  String get firstLabel;
+
+  /// No description provided for @forYouNow.
+  ///
+  /// In en, this message translates to:
+  /// **'For you, right now'**
+  String get forYouNow;
+
+  /// No description provided for @goNarrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Go narrow when you\'re sure: it pays three times as much.'**
+  String get goNarrow;
+
+  /// No description provided for @hardBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Hard'**
+  String get hardBadge;
+
+  /// No description provided for @hidesIn.
+  ///
+  /// In en, this message translates to:
+  /// **'In {where}'**
+  String hidesIn(String where);
+
+  /// No description provided for @howSure.
+  ///
+  /// In en, this message translates to:
+  /// **'How sure am I, and why?'**
+  String get howSure;
+
+  /// No description provided for @inNumbers.
+  ///
+  /// In en, this message translates to:
+  /// **'In numbers'**
+  String get inNumbers;
+
+  /// No description provided for @inRange.
+  ///
+  /// In en, this message translates to:
+  /// **'In range: +{pts} points. It is {said}.'**
+  String inRange(int pts, String said);
+
+  /// No description provided for @inYourMoves.
+  ///
+  /// In en, this message translates to:
+  /// **'In your moves · {n}×'**
+  String inYourMoves(int n);
+
+  /// No description provided for @itIs.
+  ///
+  /// In en, this message translates to:
+  /// **'It is {said}.'**
+  String itIs(String said);
+
+  /// No description provided for @knewIt.
+  ///
+  /// In en, this message translates to:
+  /// **'Knew it'**
+  String get knewIt;
+
+  /// No description provided for @less.
+  ///
+  /// In en, this message translates to:
+  /// **'Less'**
+  String get less;
+
+  /// No description provided for @lookFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Look at the chart before you believe the headline.'**
+  String get lookFirst;
+
+  /// No description provided for @markTried.
+  ///
+  /// In en, this message translates to:
+  /// **'Tried it'**
+  String get markTried;
+
+  /// No description provided for @minutesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} min'**
+  String minutesLabel(int n);
+
+  /// No description provided for @missedRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Missed: it is {said}.'**
+  String missedRange(String said);
+
+  /// No description provided for @modeBigger.
+  ///
+  /// In en, this message translates to:
+  /// **'Which is bigger?'**
+  String get modeBigger;
+
+  /// No description provided for @modeBiggerLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Two figures you can work out. Tap the bigger one'**
+  String get modeBiggerLine;
+
+  /// No description provided for @modeCloser.
+  ///
+  /// In en, this message translates to:
+  /// **'Closer, closer'**
+  String get modeCloser;
+
+  /// No description provided for @modeCloserLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Three steps of more or less to close in on the number'**
+  String get modeCloserLine;
+
+  /// No description provided for @modePick.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick one'**
+  String get modePick;
+
+  /// No description provided for @modePickLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Three amounts. Commit before you open the card'**
+  String get modePickLine;
+
+  /// No description provided for @modeRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Bet a range'**
+  String get modeRange;
+
+  /// No description provided for @modeRangeLine.
+  ///
+  /// In en, this message translates to:
+  /// **'The narrower you go, the more it pays, if you\'re right'**
+  String get modeRangeLine;
+
+  /// No description provided for @modeSlide.
+  ///
+  /// In en, this message translates to:
+  /// **'Move it'**
+  String get modeSlide;
+
+  /// No description provided for @modeSlideLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your answer first, then see how far off you were'**
+  String get modeSlideLine;
+
+  /// No description provided for @modeStake.
+  ///
+  /// In en, this message translates to:
+  /// **'Place your bet'**
+  String get modeStake;
+
+  /// No description provided for @modeStakeLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} points a day. Win and you double your stake'**
+  String modeStakeLine(int n);
+
+  /// No description provided for @monthShelfLine.
+  ///
+  /// In en, this message translates to:
+  /// **'A new subject every month, the same for everyone'**
+  String get monthShelfLine;
+
+  /// No description provided for @moodMeta.
+  ///
+  /// In en, this message translates to:
+  /// **'{cards, plural, =1{1 card} other{{cards} cards}} · {minutes} min'**
+  String moodMeta(int cards, int minutes);
+
+  /// No description provided for @moodTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time you have'**
+  String get moodTime;
+
+  /// No description provided for @moodTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your mood, your minutes'**
+  String get moodTitle;
+
+  /// No description provided for @moodTone.
+  ///
+  /// In en, this message translates to:
+  /// **'Tone'**
+  String get moodTone;
+
+  /// No description provided for @more.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get more;
+
+  /// No description provided for @moreOrLess.
+  ///
+  /// In en, this message translates to:
+  /// **'More or less than {v}?'**
+  String moreOrLess(String v);
+
+  /// No description provided for @moveComparedToWhat.
+  ///
+  /// In en, this message translates to:
+  /// **'Compared to what'**
+  String get moveComparedToWhat;
+
+  /// No description provided for @moveComparedToWhatLine.
+  ///
+  /// In en, this message translates to:
+  /// **'A change means nothing without a control'**
+  String get moveComparedToWhatLine;
+
+  /// No description provided for @moveSampling.
+  ///
+  /// In en, this message translates to:
+  /// **'Sampling'**
+  String get moveSampling;
+
+  /// No description provided for @moveSamplingLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Who ended up in the sample decides what it can say'**
+  String get moveSamplingLine;
+
+  /// No description provided for @mythDeckHint.
+  ///
+  /// In en, this message translates to:
+  /// **'{at} of {of} · swipe to turn it over'**
+  String mythDeckHint(int at, int of);
+
+  /// No description provided for @nOfM.
+  ///
+  /// In en, this message translates to:
+  /// **'{at} of {of}'**
+  String nOfM(int at, int of);
+
+  /// No description provided for @newMove.
+  ///
+  /// In en, this message translates to:
+  /// **'New to you'**
+  String get newMove;
+
+  /// No description provided for @newToMe.
+  ///
+  /// In en, this message translates to:
+  /// **'New to me'**
+  String get newToMe;
+
+  /// No description provided for @notEnoughPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough points'**
+  String get notEnoughPoints;
+
+  /// No description provided for @notSureLine.
+  ///
+  /// In en, this message translates to:
+  /// **'One card from anywhere in Astute'**
+  String get notSureLine;
+
+  /// No description provided for @notSureTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Not sure where to start?'**
+  String get notSureTitle;
+
+  /// No description provided for @openWord.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get openWord;
+
+  /// No description provided for @pickOneFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick one first'**
+  String get pickOneFirst;
+
+  /// No description provided for @pointsToday.
+  ///
+  /// In en, this message translates to:
+  /// **'+{n} today'**
+  String pointsToday(int n);
+
+  /// No description provided for @puzzleOfTheDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Puzzle of the day'**
+  String get puzzleOfTheDay;
+
+  /// No description provided for @rangeWidth.
+  ///
+  /// In en, this message translates to:
+  /// **'±{w} · {pts} pts'**
+  String rangeWidth(int w, int pts);
+
+  /// No description provided for @rightLastTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Right last time'**
+  String get rightLastTime;
+
+  /// No description provided for @sameForEveryoneCaps.
+  ///
+  /// In en, this message translates to:
+  /// **'The same for everyone'**
+  String get sameForEveryoneCaps;
+
+  /// No description provided for @sayFalse.
+  ///
+  /// In en, this message translates to:
+  /// **'False'**
+  String get sayFalse;
+
+  /// No description provided for @sayTrue.
+  ///
+  /// In en, this message translates to:
+  /// **'True'**
+  String get sayTrue;
+
+  /// No description provided for @seriesAnchors.
+  ///
+  /// In en, this message translates to:
+  /// **'First impressions'**
+  String get seriesAnchors;
+
+  /// No description provided for @seriesGrowth.
+  ///
+  /// In en, this message translates to:
+  /// **'Numbers that run away'**
+  String get seriesGrowth;
+
+  /// No description provided for @seriesMeta.
+  ///
+  /// In en, this message translates to:
+  /// **'{n} cards · about {m} min'**
+  String seriesMeta(int n, int m);
+
+  /// No description provided for @seriesOdds.
+  ///
+  /// In en, this message translates to:
+  /// **'Odds that lie'**
+  String get seriesOdds;
+
+  /// No description provided for @seriesRetold.
+  ///
+  /// In en, this message translates to:
+  /// **'History, retold'**
+  String get seriesRetold;
+
+  /// No description provided for @seriesStrand.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}, in a few cards'**
+  String seriesStrand(String name);
+
+  /// No description provided for @seriesStudies.
+  ///
+  /// In en, this message translates to:
+  /// **'Why studies mislead'**
+  String get seriesStudies;
+
+  /// No description provided for @showAllN.
+  ///
+  /// In en, this message translates to:
+  /// **'Show all {n}'**
+  String showAllN(int n);
+
+  /// No description provided for @showFewer.
+  ///
+  /// In en, this message translates to:
+  /// **'Show fewer'**
+  String get showFewer;
+
+  /// No description provided for @sixtyAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Play again'**
+  String get sixtyAgain;
+
+  /// No description provided for @sixtyIn.
+  ///
+  /// In en, this message translates to:
+  /// **'in {s} seconds'**
+  String sixtyIn(int s);
+
+  /// No description provided for @sixtyLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Eight true or false. Go with your gut'**
+  String get sixtyLine;
+
+  /// No description provided for @sixtyPerfect.
+  ///
+  /// In en, this message translates to:
+  /// **'All eight right.'**
+  String get sixtyPerfect;
+
+  /// No description provided for @sixtyScore.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{None right yet} =1{1 right so far} other{{n} right so far}}'**
+  String sixtyScore(int n);
+
+  /// No description provided for @sixtySecondsFor.
+  ///
+  /// In en, this message translates to:
+  /// **'seconds for eight\ntrue or false'**
+  String get sixtySecondsFor;
+
+  /// No description provided for @sixtySecondsLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{s} s'**
+  String sixtySecondsLeft(int s);
+
+  /// No description provided for @sixtyStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get sixtyStart;
+
+  /// No description provided for @sixtyTimeUp.
+  ///
+  /// In en, this message translates to:
+  /// **'before the time ran out'**
+  String get sixtyTimeUp;
+
+  /// No description provided for @sixtyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sixty seconds'**
+  String get sixtyTitle;
+
+  /// No description provided for @slideAverage.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Spot on, on average.} =1{1 point off, on average.} other{{n} points off, on average.}}'**
+  String slideAverage(int n);
+
+  /// No description provided for @slideNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Set it, check it. How far off you were is the point.'**
+  String get slideNote;
+
+  /// No description provided for @slideOff.
+  ///
+  /// In en, this message translates to:
+  /// **'{n, plural, =0{Spot on.} =1{You were 1 point off.} other{You were {n} points off.}}'**
+  String slideOff(int n);
+
+  /// No description provided for @slipEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No bets yet. Each one you place lands here.'**
+  String get slipEmpty;
+
+  /// No description provided for @stakeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Stake'**
+  String get stakeLabel;
+
+  /// No description provided for @stepOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {at} of {of}'**
+  String stepOf(int at, int of);
+
+  /// No description provided for @surpriseMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Surprise me'**
+  String get surpriseMe;
+
+  /// No description provided for @tapIfBigger.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap if bigger'**
+  String get tapIfBigger;
+
+  /// No description provided for @tapToTurn.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to turn it over'**
+  String get tapToTurn;
+
+  /// No description provided for @tfRight.
+  ///
+  /// In en, this message translates to:
+  /// **'Right. Open it for why.'**
+  String get tfRight;
+
+  /// No description provided for @tfWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'It\'s {side}. Open it for why.'**
+  String tfWrong(String side);
+
+  /// No description provided for @theAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'The answer: {said}.'**
+  String theAnswer(String said);
+
+  /// No description provided for @theAstute.
+  ///
+  /// In en, this message translates to:
+  /// **'The Astute'**
+  String get theAstute;
+
+  /// No description provided for @theLead.
+  ///
+  /// In en, this message translates to:
+  /// **'The lead'**
+  String get theLead;
+
+  /// No description provided for @throughTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Through time'**
+  String get throughTime;
+
+  /// No description provided for @throughTimeLine.
+  ///
+  /// In en, this message translates to:
+  /// **'From the ancient world to this year. Drag to travel'**
+  String get throughTimeLine;
+
+  /// No description provided for @todayLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get todayLabel;
+
+  /// No description provided for @todaysEdition.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s edition'**
+  String get todaysEdition;
+
+  /// No description provided for @toneCurious.
+  ///
+  /// In en, this message translates to:
+  /// **'Curious'**
+  String get toneCurious;
+
+  /// No description provided for @toneLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get toneLight;
+
+  /// No description provided for @toneSerious.
+  ///
+  /// In en, this message translates to:
+  /// **'Serious'**
+  String get toneSerious;
+
+  /// No description provided for @toneTough.
+  ///
+  /// In en, this message translates to:
+  /// **'Tough'**
+  String get toneTough;
+
+  /// No description provided for @unmaskBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Show it as published'**
+  String get unmaskBack;
+
+  /// No description provided for @unmaskFlipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn it the right way up'**
+  String get unmaskFlipped;
+
+  /// No description provided for @unmaskLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Same numbers, a different picture'**
+  String get unmaskLine;
+
+  /// No description provided for @unmaskStretched.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a fair scale'**
+  String get unmaskStretched;
+
+  /// No description provided for @unmaskTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Unmask the chart'**
+  String get unmaskTitle;
+
+  /// No description provided for @unmaskTotals.
+  ///
+  /// In en, this message translates to:
+  /// **'Make the comparison fair'**
+  String get unmaskTotals;
+
+  /// No description provided for @unmaskTruncated.
+  ///
+  /// In en, this message translates to:
+  /// **'Start the axis at zero'**
+  String get unmaskTruncated;
+
+  /// No description provided for @unmaskWindow.
+  ///
+  /// In en, this message translates to:
+  /// **'Show the whole series'**
+  String get unmaskWindow;
+
+  /// No description provided for @whatIfTrue.
+  ///
+  /// In en, this message translates to:
+  /// **'What if it\'s true?'**
+  String get whatIfTrue;
+
+  /// No description provided for @whatIfTrueLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Cards that keep working after you close them'**
+  String get whatIfTrueLine;
+
+  /// No description provided for @whatYouBelieve.
+  ///
+  /// In en, this message translates to:
+  /// **'What you believe'**
+  String get whatYouBelieve;
+
+  /// No description provided for @wrongLastTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong last time'**
+  String get wrongLastTime;
+
+  /// No description provided for @youLose.
+  ///
+  /// In en, this message translates to:
+  /// **'You lose {n}.'**
+  String youLose(int n);
+
+  /// No description provided for @youWin.
+  ///
+  /// In en, this message translates to:
+  /// **'You win {n}.'**
+  String youWin(int n);
+
+  /// No description provided for @yourPick.
+  ///
+  /// In en, this message translates to:
+  /// **'Your pick'**
+  String get yourPick;
 }
 
 class _AppLocalizationsDelegate

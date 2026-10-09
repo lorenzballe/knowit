@@ -2279,4 +2279,627 @@ class AppLocalizationsZh extends AppLocalizations {
   String journeyNew(int n) {
     return '新词 $n 个';
   }
+
+  @override
+  String get aMove => '一招';
+
+  @override
+  String get anotherOne => '换一张';
+
+  @override
+  String answerIs(String said) {
+    return '答案：$said';
+  }
+
+  @override
+  String get answeredAlready => '已作答';
+
+  @override
+  String get anyCard => '任意学科，任意书架，一张卡片';
+
+  @override
+  String betN(int n) {
+    return '下注 $n';
+  }
+
+  @override
+  String get betSlip => '你的投注单';
+
+  @override
+  String get betWord => '下注';
+
+  @override
+  String get biggerLabel => '更大';
+
+  @override
+  String get biggerNote => '每个数字都是某张卡片的答案。';
+
+  @override
+  String biggerScore(int right, int asked) {
+    return '$asked 题答对 $right 题。';
+  }
+
+  @override
+  String get biggerYouGotIt => '更大 · 答对了';
+
+  @override
+  String cameBackAfterDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 天后',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cameBackAfterWeek => '一周后';
+
+  @override
+  String cameBackAfterWeeks(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n 周后',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get check => '核对';
+
+  @override
+  String closerDone(String said, int right, int steps) {
+    return '答案是 $said。$steps 步答对 $right 步。';
+  }
+
+  @override
+  String closerNoLess(String v) {
+    return '不对：比 $v 少。';
+  }
+
+  @override
+  String closerNoMore(String v) {
+    return '不对：比 $v 多。';
+  }
+
+  @override
+  String get closerStart => '三步逼近答案。';
+
+  @override
+  String closerYesLess(String v) {
+    return '对：比 $v 少。';
+  }
+
+  @override
+  String closerYesMore(String v) {
+    return '对：比 $v 多。';
+  }
+
+  @override
+  String get corrections => '更正';
+
+  @override
+  String get didYouKnow => '你知道吗？';
+
+  @override
+  String get didYouKnowLine => '翻过来，然后：是新知道的，还是早就知道？';
+
+  @override
+  String get dragToSet => '拖动设定';
+
+  @override
+  String get dykAgain => '再来';
+
+  @override
+  String dykKnew(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '早就知道 $n 张',
+      zero: '没有早就知道的',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dykNew(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '新知道 $n 张',
+      zero: '今天没有新知',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get editionEnd => '今天这一期就到这里';
+
+  @override
+  String get editionTomorrow => '明天的一期早上发布';
+
+  @override
+  String get eraAncient => '古代世界';
+
+  @override
+  String get eraAncientWhen => '公元500年以前';
+
+  @override
+  String get eraEarlyModern => '近代早期';
+
+  @override
+  String get eraEarlyModernWhen => '1500年至1800年';
+
+  @override
+  String get eraMedieval => '中世纪';
+
+  @override
+  String get eraMedievalWhen => '500年至1500年';
+
+  @override
+  String eraMore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '这个时代还有 $n 张',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get eraNineteenth => '19世纪';
+
+  @override
+  String get eraNineteenthWhen => '1800年至1900年';
+
+  @override
+  String get eraRecent => '本世纪';
+
+  @override
+  String get eraRecentWhen => '2000年以来';
+
+  @override
+  String get eraRulerNow => '现在';
+
+  @override
+  String get eraRulerOld => '古代';
+
+  @override
+  String get eraShortAncient => '古代';
+
+  @override
+  String get eraShortEarlyModern => '1500–1800年';
+
+  @override
+  String get eraShortMedieval => '中世纪';
+
+  @override
+  String get eraShortNineteenth => '19世纪';
+
+  @override
+  String get eraShortRecent => '21世纪';
+
+  @override
+  String get eraShortTwentieth => '20世纪';
+
+  @override
+  String get eraTwentieth => '上个世纪';
+
+  @override
+  String get eraTwentiethWhen => '1900年至2000年';
+
+  @override
+  String get fewCards => '几张卡片讲明白';
+
+  @override
+  String get fewCardsLine => '一张卡片讲不清的时候';
+
+  @override
+  String get firstLabel => '始于';
+
+  @override
+  String get forYouNow => '此刻为你';
+
+  @override
+  String get goNarrow => '有把握就选窄的：奖励是三倍。';
+
+  @override
+  String get hardBadge => '难';
+
+  @override
+  String hidesIn(String where) {
+    return '藏在：$where';
+  }
+
+  @override
+  String get howSure => '我有多确定？为什么？';
+
+  @override
+  String get inNumbers => '数字看点';
+
+  @override
+  String inRange(int pts, String said) {
+    return '命中：+$pts 分。答案是 $said。';
+  }
+
+  @override
+  String inYourMoves(int n) {
+    return '你的招数 · $n 次';
+  }
+
+  @override
+  String itIs(String said) {
+    return '答案是 $said。';
+  }
+
+  @override
+  String get knewIt => '早就知道';
+
+  @override
+  String get less => '更少';
+
+  @override
+  String get lookFirst => '先看图表，再信标题。';
+
+  @override
+  String get markTried => '试过了';
+
+  @override
+  String minutesLabel(int n) {
+    return '$n 分钟';
+  }
+
+  @override
+  String missedRange(String said) {
+    return '没中：答案是 $said。';
+  }
+
+  @override
+  String get modeBigger => '哪个更大？';
+
+  @override
+  String get modeBiggerLine => '两个可以估算的数字，点更大的那个';
+
+  @override
+  String get modeCloser => '越来越近';
+
+  @override
+  String get modeCloserLine => '用三步“多还是少”逼近这个数字';
+
+  @override
+  String get modePick => '选一个';
+
+  @override
+  String get modePickLine => '三个数值，先选定再翻开卡片';
+
+  @override
+  String get modeRange => '押一个区间';
+
+  @override
+  String get modeRangeLine => '越窄赔率越高，前提是猜中';
+
+  @override
+  String get modeSlide => '拖一拖';
+
+  @override
+  String get modeSlideLine => '先定下答案，再看差了多少';
+
+  @override
+  String get modeStake => '下注吧';
+
+  @override
+  String modeStakeLine(int n) {
+    return '每天 $n 分，赢了押注翻倍';
+  }
+
+  @override
+  String get monthShelfLine => '每月换一个学科，人人相同';
+
+  @override
+  String moodMeta(int cards, int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      cards,
+      locale: localeName,
+      other: '$cards 张',
+    );
+    return '$_temp0 · $minutes 分钟';
+  }
+
+  @override
+  String get moodTime => '你有多少时间';
+
+  @override
+  String get moodTitle => '你的心情，你的时间';
+
+  @override
+  String get moodTone => '基调';
+
+  @override
+  String get more => '更多';
+
+  @override
+  String moreOrLess(String v) {
+    return '比 $v 多还是少？';
+  }
+
+  @override
+  String get moveComparedToWhat => '和什么比';
+
+  @override
+  String get moveComparedToWhatLine => '没有对照组，变化说明不了什么';
+
+  @override
+  String get moveSampling => '抽样';
+
+  @override
+  String get moveSamplingLine => '谁进了样本，决定了样本能说明什么';
+
+  @override
+  String mythDeckHint(int at, int of) {
+    return '第 $at/$of 张 · 滑动翻过';
+  }
+
+  @override
+  String nOfM(int at, int of) {
+    return '$at/$of';
+  }
+
+  @override
+  String get newMove => '新招';
+
+  @override
+  String get newToMe => '新知道';
+
+  @override
+  String get notEnoughPoints => '积分不足';
+
+  @override
+  String get notSureLine => '从 Astute 任意角落抽一张';
+
+  @override
+  String get notSureTitle => '不知道从哪开始？';
+
+  @override
+  String get openWord => '打开';
+
+  @override
+  String get pickOneFirst => '先选一个';
+
+  @override
+  String pointsToday(int n) {
+    return '今天 +$n';
+  }
+
+  @override
+  String get puzzleOfTheDay => '今日谜题';
+
+  @override
+  String rangeWidth(int w, int pts) {
+    return '±$w · $pts 分';
+  }
+
+  @override
+  String get rightLastTime => '上次答对了';
+
+  @override
+  String get sameForEveryoneCaps => '人人相同';
+
+  @override
+  String get sayFalse => '假';
+
+  @override
+  String get sayTrue => '真';
+
+  @override
+  String get seriesAnchors => '第一印象';
+
+  @override
+  String get seriesGrowth => '失控的数字';
+
+  @override
+  String seriesMeta(int n, int m) {
+    return '$n 张 · 约 $m 分钟';
+  }
+
+  @override
+  String get seriesOdds => '会骗人的概率';
+
+  @override
+  String get seriesRetold => '重讲历史';
+
+  @override
+  String seriesStrand(String name) {
+    return '几张卡片讲$name';
+  }
+
+  @override
+  String get seriesStudies => '研究为何会误导';
+
+  @override
+  String showAllN(int n) {
+    return '显示全部 $n 张';
+  }
+
+  @override
+  String get showFewer => '收起';
+
+  @override
+  String get sixtyAgain => '再玩一次';
+
+  @override
+  String sixtyIn(int s) {
+    return '用时 $s 秒';
+  }
+
+  @override
+  String get sixtyLine => '八道判断题，凭直觉';
+
+  @override
+  String get sixtyPerfect => '八道全对。';
+
+  @override
+  String sixtyScore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '目前答对 $n 道',
+      zero: '还没答对',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixtySecondsFor => '秒内完成\n八道判断题';
+
+  @override
+  String sixtySecondsLeft(int s) {
+    return '$s 秒';
+  }
+
+  @override
+  String get sixtyStart => '开始';
+
+  @override
+  String get sixtyTimeUp => '在时间耗尽前';
+
+  @override
+  String get sixtyTitle => '六十秒';
+
+  @override
+  String slideAverage(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '平均差 $n 个百分点。',
+      zero: '平均分毫不差。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get slideNote => '设定，再核对。重点是差了多少。';
+
+  @override
+  String slideOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '差了 $n 个百分点。',
+      zero: '分毫不差。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get slipEmpty => '还没有下注，下的每一注都会出现在这里。';
+
+  @override
+  String get stakeLabel => '押注';
+
+  @override
+  String stepOf(int at, int of) {
+    return '第 $at/$of 步';
+  }
+
+  @override
+  String get surpriseMe => '给我惊喜';
+
+  @override
+  String get tapIfBigger => '更大就点';
+
+  @override
+  String get tapToTurn => '点击翻面';
+
+  @override
+  String get tfRight => '答对了，打开看原因。';
+
+  @override
+  String tfWrong(String side) {
+    return '答案是$side，打开看原因。';
+  }
+
+  @override
+  String theAnswer(String said) {
+    return '答案：$said。';
+  }
+
+  @override
+  String get theAstute => 'The Astute';
+
+  @override
+  String get theLead => '头条';
+
+  @override
+  String get throughTime => '穿越时间';
+
+  @override
+  String get throughTimeLine => '从古代到今年，拖动穿越';
+
+  @override
+  String get todayLabel => '今天';
+
+  @override
+  String get todaysEdition => '今日版';
+
+  @override
+  String get toneCurious => '好奇';
+
+  @override
+  String get toneLight => '轻松';
+
+  @override
+  String get toneSerious => '严肃';
+
+  @override
+  String get toneTough => '硬核';
+
+  @override
+  String get unmaskBack => '看原版';
+
+  @override
+  String get unmaskFlipped => '把它正过来';
+
+  @override
+  String get unmaskLine => '同样的数字，不同的画面';
+
+  @override
+  String get unmaskStretched => '用公平的刻度';
+
+  @override
+  String get unmaskTitle => '揭穿图表';
+
+  @override
+  String get unmaskTotals => '公平比较';
+
+  @override
+  String get unmaskTruncated => '让坐标轴从零开始';
+
+  @override
+  String get unmaskWindow => '显示完整序列';
+
+  @override
+  String get whatIfTrue => '如果是真的呢？';
+
+  @override
+  String get whatIfTrueLine => '合上之后仍在发酵的卡片';
+
+  @override
+  String get whatYouBelieve => '你相信的事';
+
+  @override
+  String get wrongLastTime => '上次答错了';
+
+  @override
+  String youLose(int n) {
+    return '输掉 $n。';
+  }
+
+  @override
+  String youWin(int n) {
+    return '赢得 $n。';
+  }
+
+  @override
+  String get yourPick => '你的选择';
 }

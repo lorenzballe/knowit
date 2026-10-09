@@ -435,6 +435,69 @@ Sharing is deliberately *not* a paid perk. A card in someone's chat or story is
 the only free distribution the app has, so charging for it would mean charging
 readers to advertise it.
 
+### The mix: a form for every kind of card
+
+Under the shelves that were always there (today's, the top list, loved since
+the start, the ones that ask the most, the reader's own), Explore used to
+turn over themes that all looked the same: a name, a line, a row of small
+cards. They are gone. In their place each kind of card has a shelf laid out
+like what it holds, from artboards 131–141 (`lib/data/explore_mix.dart`
+deals them, `lib/widgets/explore/` draws them), dealt for the day from what
+the reader has not read, each card on one shelf only.
+
+The order is fixed, and reads in three movements.
+
+**Cards to read.**
+
+1. **A month of one subject** (131f's bento). The subject's mark is drawn
+   large on the lead cards: a star for Pop culture, a planet for Space. The
+   subject turns on the first of the month, through every subject but
+   Thinking before one comes back.
+2. **Myths, busted** (131e's deck, thrown aside one by one).
+3. **Numbers that surprise** (the figure itself).
+4. **Use it today** (131's checklist): tick what you tried.
+5. **Pick a side** (two halves).
+6. **For the sharpest**, **Where it came from**, **Seen, not read** and
+   **True stories** (133e).
+
+**Cards to play.**
+
+7. **True or false** (133e), answered on the shelf. The answer is kept like
+   any other, and the card counts as read.
+8. **What came back**: the cards due again, with what the reader said last
+   time (133d). Only there when something is due.
+9. **Sampling** and **Compared to what**: two of the questions that catch a
+   trick in a number (138b). Sampling asks who ended up being counted, since
+   that decides what the data can say; Compared to what asks for the number
+   to set a figure against.
+10. **Work it out** (133b). Every way of putting a number on something, on
+    one shelf: pick one, move it and check (138d), closer and closer (139d),
+    which is bigger (139c), bet a range (139a), place your bet (139b). Bets
+    come out of a hundred points a day. The figures are the cards' own
+    answers.
+11. **Unmask the chart** (138d). A real chart from a card plays its trick,
+    and then is redrawn honestly.
+12. **How sure am I, and why** (138c) and **What if it's true?** (138a).
+
+**Ways in by time.**
+
+13. **In a few cards** (140d's series, odds that lie among them).
+14. **Sixty seconds** (140d): eight claims against the clock, the same
+    eight for everybody that day, and the score and the misses at the end.
+15. **Your mood, your minutes** (140b). Pick a tone and the time you have;
+    the cards are from the bank, not the reader's own.
+16. **Today's edition** (141f): the same front page for everybody, the lead,
+    two columns, the day in numbers, a correction and a puzzle.
+17. **Through time** (141c's ruler). Pick an age and get its cards; they
+    change every day.
+18. **Did you know?** (141b): a pile to turn over, new to me or knew it.
+19. **Not sure where to start** (138f), at the very bottom: one card from
+    anywhere.
+
+The whole of Explore is free. It is what brings a reader back every day.
+The paid perks stay the three they are: five cards all the reader's own,
+the journey and the whole archive.
+
 ## Accounts, and what crosses to a new phone
 
 The app works signed out and always did. An account only decides whether the

@@ -2295,5 +2295,473 @@
     "type": "int"
    }
   }
- }
+ },
+ "aMove": "A move",
+ "anotherOne": "Another",
+ "answerIs": "Answer: {said}",
+ "@answerIs": {
+  "placeholders": {
+   "said": {
+    "type": "String"
+   }
+  }
+ },
+ "answeredAlready": "Answered already",
+ "anyCard": "Any subject, any shelf, one card",
+ "betN": "Bet {n}",
+ "@betN": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "betSlip": "Your bet slip",
+ "betWord": "Bet",
+ "biggerLabel": "Bigger",
+ "biggerNote": "Each figure is a card's own answer.",
+ "biggerScore": "Right on {right} of {asked}.",
+ "@biggerScore": {
+  "placeholders": {
+   "right": {
+    "type": "int"
+   },
+   "asked": {
+    "type": "int"
+   }
+  }
+ },
+ "biggerYouGotIt": "Bigger · you got it",
+ "cameBackAfterDays": "{n, plural, =1{After a day} other{After {n} days}}",
+ "@cameBackAfterDays": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "cameBackAfterWeek": "After a week",
+ "cameBackAfterWeeks": "{n, plural, =1{After a week} other{After {n} weeks}}",
+ "@cameBackAfterWeeks": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "check": "Check",
+ "closerDone": "It is {said}. You got {right} of {steps}.",
+ "@closerDone": {
+  "placeholders": {
+   "said": {
+    "type": "String"
+   },
+   "right": {
+    "type": "int"
+   },
+   "steps": {
+    "type": "int"
+   }
+  }
+ },
+ "closerNoLess": "No: it is less than {v}.",
+ "@closerNoLess": {
+  "placeholders": {
+   "v": {
+    "type": "String"
+   }
+  }
+ },
+ "closerNoMore": "No: it is more than {v}.",
+ "@closerNoMore": {
+  "placeholders": {
+   "v": {
+    "type": "String"
+   }
+  }
+ },
+ "closerStart": "Three steps to close in on it.",
+ "closerYesLess": "Right: it is less than {v}.",
+ "@closerYesLess": {
+  "placeholders": {
+   "v": {
+    "type": "String"
+   }
+  }
+ },
+ "closerYesMore": "Right: it is more than {v}.",
+ "@closerYesMore": {
+  "placeholders": {
+   "v": {
+    "type": "String"
+   }
+  }
+ },
+ "corrections": "Corrections",
+ "didYouKnow": "Did you know?",
+ "didYouKnowLine": "Turn it over, then: new to you, or knew it?",
+ "dragToSet": "Drag to set",
+ "dykAgain": "Again",
+ "dykKnew": "{n, plural, =0{None you knew} =1{1 you knew} other{{n} you knew}}",
+ "@dykKnew": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "dykNew": "{n, plural, =0{Nothing new today} =1{1 new to you} other{{n} new to you}}",
+ "@dykNew": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "editionEnd": "That's today's edition",
+ "editionTomorrow": "Tomorrow's is out in the morning",
+ "eraAncient": "The ancient world",
+ "eraAncientWhen": "Before 500",
+ "eraEarlyModern": "The early modern age",
+ "eraEarlyModernWhen": "1500 to 1800",
+ "eraMedieval": "The Middle Ages",
+ "eraMedievalWhen": "500 to 1500",
+ "eraMore": "{n, plural, =1{1 more from this age} other{{n} more from this age}}",
+ "@eraMore": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "eraNineteenth": "The nineteenth century",
+ "eraNineteenthWhen": "1800 to 1900",
+ "eraRecent": "This century",
+ "eraRecentWhen": "Since 2000",
+ "eraRulerNow": "Now",
+ "eraRulerOld": "Antiquity",
+ "eraShortAncient": "Antiquity",
+ "eraShortEarlyModern": "1500–1800",
+ "eraShortMedieval": "Middle Ages",
+ "eraShortNineteenth": "1800s",
+ "eraShortRecent": "2000s",
+ "eraShortTwentieth": "1900s",
+ "eraTwentieth": "The last century",
+ "eraTwentiethWhen": "1900 to 2000",
+ "fewCards": "In a few cards",
+ "fewCardsLine": "When one card isn't enough to explain it",
+ "firstLabel": "First",
+ "forYouNow": "For you, right now",
+ "goNarrow": "Go narrow when you're sure: it pays three times as much.",
+ "hardBadge": "Hard",
+ "hidesIn": "In {where}",
+ "@hidesIn": {
+  "placeholders": {
+   "where": {
+    "type": "String"
+   }
+  }
+ },
+ "howSure": "How sure am I, and why?",
+ "inNumbers": "In numbers",
+ "inRange": "In range: +{pts} points. It is {said}.",
+ "@inRange": {
+  "placeholders": {
+   "pts": {
+    "type": "int"
+   },
+   "said": {
+    "type": "String"
+   }
+  }
+ },
+ "inYourMoves": "In your moves · {n}×",
+ "@inYourMoves": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "itIs": "It is {said}.",
+ "@itIs": {
+  "placeholders": {
+   "said": {
+    "type": "String"
+   }
+  }
+ },
+ "knewIt": "Knew it",
+ "less": "Less",
+ "lookFirst": "Look at the chart before you believe the headline.",
+ "markTried": "Tried it",
+ "minutesLabel": "{n} min",
+ "@minutesLabel": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "missedRange": "Missed: it is {said}.",
+ "@missedRange": {
+  "placeholders": {
+   "said": {
+    "type": "String"
+   }
+  }
+ },
+ "modeBigger": "Which is bigger?",
+ "modeBiggerLine": "Two figures you can work out. Tap the bigger one",
+ "modeCloser": "Closer, closer",
+ "modeCloserLine": "Three steps of more or less to close in on the number",
+ "modePick": "Pick one",
+ "modePickLine": "Three amounts. Commit before you open the card",
+ "modeRange": "Bet a range",
+ "modeRangeLine": "The narrower you go, the more it pays, if you're right",
+ "modeSlide": "Move it",
+ "modeSlideLine": "Set your answer first, then see how far off you were",
+ "modeStake": "Place your bet",
+ "modeStakeLine": "{n} points a day. Win and you double your stake",
+ "@modeStakeLine": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "monthShelfLine": "A new subject every month, the same for everyone",
+ "moodMeta": "{cards, plural, =1{1 card} other{{cards} cards}} · {minutes} min",
+ "@moodMeta": {
+  "placeholders": {
+   "cards": {
+    "type": "int"
+   },
+   "minutes": {
+    "type": "int"
+   }
+  }
+ },
+ "moodTime": "Time you have",
+ "moodTitle": "Your mood, your minutes",
+ "moodTone": "Tone",
+ "more": "More",
+ "moreOrLess": "More or less than {v}?",
+ "@moreOrLess": {
+  "placeholders": {
+   "v": {
+    "type": "String"
+   }
+  }
+ },
+ "moveComparedToWhat": "Compared to what",
+ "moveComparedToWhatLine": "A change means nothing without a control",
+ "moveSampling": "Sampling",
+ "moveSamplingLine": "Who ended up in the sample decides what it can say",
+ "mythDeckHint": "{at} of {of} · swipe to turn it over",
+ "@mythDeckHint": {
+  "placeholders": {
+   "at": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "nOfM": "{at} of {of}",
+ "@nOfM": {
+  "placeholders": {
+   "at": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "newMove": "New to you",
+ "newToMe": "New to me",
+ "notEnoughPoints": "Not enough points",
+ "notSureLine": "One card from anywhere in Astute",
+ "notSureTitle": "Not sure where to start?",
+ "openWord": "Open",
+ "pickOneFirst": "Pick one first",
+ "pointsToday": "+{n} today",
+ "@pointsToday": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "puzzleOfTheDay": "Puzzle of the day",
+ "rangeWidth": "±{w} · {pts} pts",
+ "@rangeWidth": {
+  "placeholders": {
+   "w": {
+    "type": "int"
+   },
+   "pts": {
+    "type": "int"
+   }
+  }
+ },
+ "rightLastTime": "Right last time",
+ "sameForEveryoneCaps": "The same for everyone",
+ "sayFalse": "False",
+ "sayTrue": "True",
+ "seriesAnchors": "First impressions",
+ "seriesGrowth": "Numbers that run away",
+ "seriesMeta": "{n} cards · about {m} min",
+ "@seriesMeta": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   },
+   "m": {
+    "type": "int"
+   }
+  }
+ },
+ "seriesOdds": "Odds that lie",
+ "seriesRetold": "History, retold",
+ "seriesStrand": "{name}, in a few cards",
+ "@seriesStrand": {
+  "placeholders": {
+   "name": {
+    "type": "String"
+   }
+  }
+ },
+ "seriesStudies": "Why studies mislead",
+ "showAllN": "Show all {n}",
+ "@showAllN": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "showFewer": "Show fewer",
+ "sixtyAgain": "Play again",
+ "sixtyIn": "in {s} seconds",
+ "@sixtyIn": {
+  "placeholders": {
+   "s": {
+    "type": "int"
+   }
+  }
+ },
+ "sixtyLine": "Eight true or false. Go with your gut",
+ "sixtyPerfect": "All eight right.",
+ "sixtyScore": "{n, plural, =0{None right yet} =1{1 right so far} other{{n} right so far}}",
+ "@sixtyScore": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "sixtySecondsFor": "seconds for eight\ntrue or false",
+ "sixtySecondsLeft": "{s} s",
+ "@sixtySecondsLeft": {
+  "placeholders": {
+   "s": {
+    "type": "int"
+   }
+  }
+ },
+ "sixtyStart": "Start",
+ "sixtyTimeUp": "before the time ran out",
+ "sixtyTitle": "Sixty seconds",
+ "slideAverage": "{n, plural, =0{Spot on, on average.} =1{1 point off, on average.} other{{n} points off, on average.}}",
+ "@slideAverage": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "slideNote": "Set it, check it. How far off you were is the point.",
+ "slideOff": "{n, plural, =0{Spot on.} =1{You were 1 point off.} other{You were {n} points off.}}",
+ "@slideOff": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "slipEmpty": "No bets yet. Each one you place lands here.",
+ "stakeLabel": "Stake",
+ "stepOf": "Step {at} of {of}",
+ "@stepOf": {
+  "placeholders": {
+   "at": {
+    "type": "int"
+   },
+   "of": {
+    "type": "int"
+   }
+  }
+ },
+ "surpriseMe": "Surprise me",
+ "tapIfBigger": "Tap if bigger",
+ "tapToTurn": "Tap to turn it over",
+ "tfRight": "Right. Open it for why.",
+ "tfWrong": "It's {side}. Open it for why.",
+ "@tfWrong": {
+  "placeholders": {
+   "side": {
+    "type": "String"
+   }
+  }
+ },
+ "theAnswer": "The answer: {said}.",
+ "@theAnswer": {
+  "placeholders": {
+   "said": {
+    "type": "String"
+   }
+  }
+ },
+ "theAstute": "The Astute",
+ "theLead": "The lead",
+ "throughTime": "Through time",
+ "throughTimeLine": "From the ancient world to this year. Drag to travel",
+ "todayLabel": "Today",
+ "todaysEdition": "Today's edition",
+ "toneCurious": "Curious",
+ "toneLight": "Light",
+ "toneSerious": "Serious",
+ "toneTough": "Tough",
+ "unmaskBack": "Show it as published",
+ "unmaskFlipped": "Turn it the right way up",
+ "unmaskLine": "Same numbers, a different picture",
+ "unmaskStretched": "Use a fair scale",
+ "unmaskTitle": "Unmask the chart",
+ "unmaskTotals": "Make the comparison fair",
+ "unmaskTruncated": "Start the axis at zero",
+ "unmaskWindow": "Show the whole series",
+ "whatIfTrue": "What if it's true?",
+ "whatIfTrueLine": "Cards that keep working after you close them",
+ "whatYouBelieve": "What you believe",
+ "wrongLastTime": "Wrong last time",
+ "youLose": "You lose {n}.",
+ "@youLose": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "youWin": "You win {n}.",
+ "@youWin": {
+  "placeholders": {
+   "n": {
+    "type": "int"
+   }
+  }
+ },
+ "yourPick": "Your pick"
 }

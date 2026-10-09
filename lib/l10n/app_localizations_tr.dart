@@ -2335,4 +2335,639 @@ class AppLocalizationsTr extends AppLocalizations {
   String journeyNew(int n) {
     return '$n yeni';
   }
+
+  @override
+  String get aMove => 'Bir hamle';
+
+  @override
+  String get anotherOne => 'Başka';
+
+  @override
+  String answerIs(String said) {
+    return 'Cevap: $said';
+  }
+
+  @override
+  String get answeredAlready => 'Zaten cevaplandı';
+
+  @override
+  String get anyCard => 'Her konu, her raf, tek kart';
+
+  @override
+  String betN(int n) {
+    return '$n yatır';
+  }
+
+  @override
+  String get betSlip => 'Kuponun';
+
+  @override
+  String get betWord => 'Yatır';
+
+  @override
+  String get biggerLabel => 'Daha büyük';
+
+  @override
+  String get biggerNote => 'Her sayı bir kartın kendi cevabı.';
+
+  @override
+  String biggerScore(int right, int asked) {
+    return '$asked soruda $right doğru.';
+  }
+
+  @override
+  String get biggerYouGotIt => 'Daha büyük · bildin';
+
+  @override
+  String cameBackAfterDays(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n gün sonra',
+      one: 'Bir gün sonra',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cameBackAfterWeek => 'Bir hafta sonra';
+
+  @override
+  String cameBackAfterWeeks(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n hafta sonra',
+      one: 'Bir hafta sonra',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get check => 'Kontrol et';
+
+  @override
+  String closerDone(String said, int right, int steps) {
+    return 'Cevap $said. $steps adımda $right doğru.';
+  }
+
+  @override
+  String closerNoLess(String v) {
+    return 'Hayır: $v değerinden az.';
+  }
+
+  @override
+  String closerNoMore(String v) {
+    return 'Hayır: $v değerinden fazla.';
+  }
+
+  @override
+  String get closerStart => 'Yaklaşmak için üç adım.';
+
+  @override
+  String closerYesLess(String v) {
+    return 'Doğru: $v değerinden az.';
+  }
+
+  @override
+  String closerYesMore(String v) {
+    return 'Doğru: $v değerinden fazla.';
+  }
+
+  @override
+  String get corrections => 'Düzeltmeler';
+
+  @override
+  String get didYouKnow => 'Biliyor muydun?';
+
+  @override
+  String get didYouKnowLine =>
+      'Çevir, sonra: senin için yeni mi, yoksa biliyor muydun?';
+
+  @override
+  String get dragToSet => 'Ayarlamak için kaydır';
+
+  @override
+  String get dykAgain => 'Tekrar';
+
+  @override
+  String dykKnew(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n tanesini biliyordun',
+      one: '1 tanesini biliyordun',
+      zero: 'Bildiğin yok',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String dykNew(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n tanesi yeni',
+      one: '1 tanesi yeni',
+      zero: 'Bugün yeni bir şey yok',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get editionEnd => 'Bugünün baskısı bu kadar';
+
+  @override
+  String get editionTomorrow => 'Yarınki sabah çıkıyor';
+
+  @override
+  String get eraAncient => 'Antik dünya';
+
+  @override
+  String get eraAncientWhen => '500\'den önce';
+
+  @override
+  String get eraEarlyModern => 'Erken modern çağ';
+
+  @override
+  String get eraEarlyModernWhen => '1500\'den 1800\'e';
+
+  @override
+  String get eraMedieval => 'Orta Çağ';
+
+  @override
+  String get eraMedievalWhen => '500\'den 1500\'e';
+
+  @override
+  String eraMore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Bu çağdan $n tane daha',
+      one: 'Bu çağdan 1 tane daha',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get eraNineteenth => '19. yüzyıl';
+
+  @override
+  String get eraNineteenthWhen => '1800\'den 1900\'e';
+
+  @override
+  String get eraRecent => 'Bu yüzyıl';
+
+  @override
+  String get eraRecentWhen => '2000\'den beri';
+
+  @override
+  String get eraRulerNow => 'Şimdi';
+
+  @override
+  String get eraRulerOld => 'Antik çağ';
+
+  @override
+  String get eraShortAncient => 'Antik çağ';
+
+  @override
+  String get eraShortEarlyModern => '1500–1800';
+
+  @override
+  String get eraShortMedieval => 'Orta Çağ';
+
+  @override
+  String get eraShortNineteenth => '1800\'ler';
+
+  @override
+  String get eraShortRecent => '2000\'ler';
+
+  @override
+  String get eraShortTwentieth => '1900\'ler';
+
+  @override
+  String get eraTwentieth => 'Geçen yüzyıl';
+
+  @override
+  String get eraTwentiethWhen => '1900\'den 2000\'e';
+
+  @override
+  String get fewCards => 'Birkaç kartta';
+
+  @override
+  String get fewCardsLine => 'Tek kart açıklamaya yetmediğinde';
+
+  @override
+  String get firstLabel => 'İlk';
+
+  @override
+  String get forYouNow => 'Senin için, şimdi';
+
+  @override
+  String get goNarrow => 'Eminsen dar tut: üç kat kazandırır.';
+
+  @override
+  String get hardBadge => 'Zor';
+
+  @override
+  String hidesIn(String where) {
+    return 'Konu: $where';
+  }
+
+  @override
+  String get howSure => 'Ne kadar eminim, ve neden?';
+
+  @override
+  String get inNumbers => 'Rakamlarla';
+
+  @override
+  String inRange(int pts, String said) {
+    return 'Aralıkta: +$pts puan. Cevap $said.';
+  }
+
+  @override
+  String inYourMoves(int n) {
+    return 'Hamlelerinde · $n×';
+  }
+
+  @override
+  String itIs(String said) {
+    return 'Cevap $said.';
+  }
+
+  @override
+  String get knewIt => 'Biliyordum';
+
+  @override
+  String get less => 'Daha az';
+
+  @override
+  String get lookFirst => 'Başlığa inanmadan önce grafiğe bak.';
+
+  @override
+  String get markTried => 'Denedim';
+
+  @override
+  String minutesLabel(int n) {
+    return '$n dk';
+  }
+
+  @override
+  String missedRange(String said) {
+    return 'Kaçtı: cevap $said.';
+  }
+
+  @override
+  String get modeBigger => 'Hangisi büyük?';
+
+  @override
+  String get modeBiggerLine =>
+      'Tahmin edebileceğin iki sayı. Büyük olana dokun';
+
+  @override
+  String get modeCloser => 'Yaklaş';
+
+  @override
+  String get modeCloserLine =>
+      'Sayıya yaklaşmak için üç adım: daha fazla mı, az mı';
+
+  @override
+  String get modePick => 'Birini seç';
+
+  @override
+  String get modePickLine => 'Üç değer. Kartı açmadan önce karar ver';
+
+  @override
+  String get modeRange => 'Aralığa oyna';
+
+  @override
+  String get modeRangeLine => 'Ne kadar dar, o kadar çok kazandırır, bilirsen';
+
+  @override
+  String get modeSlide => 'Kaydır';
+
+  @override
+  String get modeSlideLine =>
+      'Önce cevabını ayarla, sonra ne kadar yanıldığını gör';
+
+  @override
+  String get modeStake => 'Bahsini koy';
+
+  @override
+  String modeStakeLine(int n) {
+    return 'Günde $n puan. Kazanırsan bahsin ikiye katlanır';
+  }
+
+  @override
+  String get monthShelfLine => 'Her ay yeni bir konu, herkes için aynı';
+
+  @override
+  String moodMeta(int cards, int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      cards,
+      locale: localeName,
+      other: '$cards kart',
+    );
+    return '$_temp0 · $minutes dk';
+  }
+
+  @override
+  String get moodTime => 'Ne kadar vaktin var';
+
+  @override
+  String get moodTitle => 'Ruh halin, dakikaların';
+
+  @override
+  String get moodTone => 'Ton';
+
+  @override
+  String get more => 'Daha fazla';
+
+  @override
+  String moreOrLess(String v) {
+    return '$v değerinden fazla mı, az mı?';
+  }
+
+  @override
+  String get moveComparedToWhat => 'Neye göre';
+
+  @override
+  String get moveComparedToWhatLine =>
+      'Kontrol grubu olmadan bir değişim hiçbir şey ifade etmez';
+
+  @override
+  String get moveSampling => 'Örneklem';
+
+  @override
+  String get moveSamplingLine =>
+      'Örnekleme kimin girdiği, ne söyleyebileceğini belirler';
+
+  @override
+  String mythDeckHint(int at, int of) {
+    return '$at/$of · çevirmek için kaydır';
+  }
+
+  @override
+  String nOfM(int at, int of) {
+    return '$at/$of';
+  }
+
+  @override
+  String get newMove => 'Senin için yeni';
+
+  @override
+  String get newToMe => 'Benim için yeni';
+
+  @override
+  String get notEnoughPoints => 'Yeterli puan yok';
+
+  @override
+  String get notSureLine => 'Astute\'un herhangi bir yerinden tek kart';
+
+  @override
+  String get notSureTitle => 'Nereden başlayacağını bilmiyor musun?';
+
+  @override
+  String get openWord => 'Aç';
+
+  @override
+  String get pickOneFirst => 'Önce birini seç';
+
+  @override
+  String pointsToday(int n) {
+    return 'bugün +$n';
+  }
+
+  @override
+  String get puzzleOfTheDay => 'Günün bulmacası';
+
+  @override
+  String rangeWidth(int w, int pts) {
+    return '±$w · $pts p';
+  }
+
+  @override
+  String get rightLastTime => 'Geçen sefer doğru';
+
+  @override
+  String get sameForEveryoneCaps => 'Herkes için aynı';
+
+  @override
+  String get sayFalse => 'Yanlış';
+
+  @override
+  String get sayTrue => 'Doğru';
+
+  @override
+  String get seriesAnchors => 'İlk izlenimler';
+
+  @override
+  String get seriesGrowth => 'Kontrolden çıkan sayılar';
+
+  @override
+  String seriesMeta(int n, int m) {
+    return '$n kart · yaklaşık $m dk';
+  }
+
+  @override
+  String get seriesOdds => 'Yalan söyleyen olasılıklar';
+
+  @override
+  String get seriesRetold => 'Yeniden anlatılan tarih';
+
+  @override
+  String seriesStrand(String name) {
+    return 'Birkaç kartta $name';
+  }
+
+  @override
+  String get seriesStudies => 'Araştırmalar neden yanıltır';
+
+  @override
+  String showAllN(int n) {
+    return 'Hepsini göster ($n)';
+  }
+
+  @override
+  String get showFewer => 'Daha az göster';
+
+  @override
+  String get sixtyAgain => 'Tekrar oyna';
+
+  @override
+  String sixtyIn(int s) {
+    return '$s saniyede';
+  }
+
+  @override
+  String get sixtyLine => 'Sekiz doğru mu yanlış mı. İçgüdünle git';
+
+  @override
+  String get sixtyPerfect => 'Sekizi de doğru.';
+
+  @override
+  String sixtyScore(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Şimdiye kadar $n doğru',
+      zero: 'Henüz doğru yok',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get sixtySecondsFor => 'saniyede sekiz\ndoğru mu yanlış mı';
+
+  @override
+  String sixtySecondsLeft(int s) {
+    return '$s sn';
+  }
+
+  @override
+  String get sixtyStart => 'Başla';
+
+  @override
+  String get sixtyTimeUp => 'süre dolmadan önce';
+
+  @override
+  String get sixtyTitle => 'Altmış saniye';
+
+  @override
+  String slideAverage(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: 'Ortalamada $n puan sapma.',
+      zero: 'Ortalamada tam isabet.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get slideNote => 'Ayarla, kontrol et. Önemli olan ne kadar saptığın.';
+
+  @override
+  String slideOff(int n) {
+    String _temp0 = intl.Intl.pluralLogic(
+      n,
+      locale: localeName,
+      other: '$n puan saptın.',
+      zero: 'Tam isabet.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get slipEmpty => 'Henüz bahis yok. Her bahsin buraya düşer.';
+
+  @override
+  String get stakeLabel => 'Bahis';
+
+  @override
+  String stepOf(int at, int of) {
+    return 'Adım $at/$of';
+  }
+
+  @override
+  String get surpriseMe => 'Beni şaşırt';
+
+  @override
+  String get tapIfBigger => 'Büyükse dokun';
+
+  @override
+  String get tapToTurn => 'Çevirmek için dokun';
+
+  @override
+  String get tfRight => 'Doğru. Nedenini görmek için aç.';
+
+  @override
+  String tfWrong(String side) {
+    return 'Cevap: $side. Nedenini görmek için aç.';
+  }
+
+  @override
+  String theAnswer(String said) {
+    return 'Cevap: $said.';
+  }
+
+  @override
+  String get theAstute => 'The Astute';
+
+  @override
+  String get theLead => 'Manşet';
+
+  @override
+  String get throughTime => 'Zamanda yolculuk';
+
+  @override
+  String get throughTimeLine => 'Antik dünyadan bu yıla. Gezmek için kaydır';
+
+  @override
+  String get todayLabel => 'Bugün';
+
+  @override
+  String get todaysEdition => 'Bugünün baskısı';
+
+  @override
+  String get toneCurious => 'Meraklı';
+
+  @override
+  String get toneLight => 'Hafif';
+
+  @override
+  String get toneSerious => 'Ciddi';
+
+  @override
+  String get toneTough => 'Zorlu';
+
+  @override
+  String get unmaskBack => 'Yayımlandığı gibi göster';
+
+  @override
+  String get unmaskFlipped => 'Doğru yöne çevir';
+
+  @override
+  String get unmaskLine => 'Aynı sayılar, farklı bir tablo';
+
+  @override
+  String get unmaskStretched => 'Adil bir ölçek kullan';
+
+  @override
+  String get unmaskTitle => 'Grafiğin maskesini düşür';
+
+  @override
+  String get unmaskTotals => 'Karşılaştırmayı adil yap';
+
+  @override
+  String get unmaskTruncated => 'Ekseni sıfırdan başlat';
+
+  @override
+  String get unmaskWindow => 'Serinin tamamını göster';
+
+  @override
+  String get whatIfTrue => 'Ya doğruysa?';
+
+  @override
+  String get whatIfTrueLine =>
+      'Kapattıktan sonra da işlemeye devam eden kartlar';
+
+  @override
+  String get whatYouBelieve => 'İnandıkların';
+
+  @override
+  String get wrongLastTime => 'Geçen sefer yanlış';
+
+  @override
+  String youLose(int n) {
+    return '$n kaybettin.';
+  }
+
+  @override
+  String youWin(int n) {
+    return '$n kazandın.';
+  }
+
+  @override
+  String get yourPick => 'Senin seçimin';
 }
