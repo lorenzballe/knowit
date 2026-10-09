@@ -2198,7 +2198,15 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      await _hold(tester, find.byType(HoldToKeep).first);
+      // On the question: a card with a scene keeps a press in its middle,
+      // and on some days the first card's scene is one you hold.
+      final card = tester.getRect(find.byType(HoldToKeep).first);
+      final press = await tester.startGesture(
+        Offset(card.center.dx, card.top + 90),
+      );
+      await tester.pump(const Duration(milliseconds: 900));
+      await press.up();
+      await tester.pumpAndSettle();
 
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getStringList('knowit.likedIds'), [_todaysFive.first.id]);
