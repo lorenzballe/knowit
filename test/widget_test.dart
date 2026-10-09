@@ -239,9 +239,13 @@ Future<List<String>> _sectionOrder(
 
 /// Hold a card down long enough to keep it — longer than the framework's
 /// own long press, which the card deliberately outlasts so that a slow tap
-/// stays a tap.
+/// stays a tap. It presses the question: on a card with a scene, the middle
+/// belongs to the scene, and a hold there plays it rather than liking.
 Future<void> _hold(WidgetTester tester, Finder card) async {
-  final press = await tester.startGesture(tester.getCenter(card));
+  final rect = tester.getRect(card);
+  final press = await tester.startGesture(
+    Offset(rect.center.dx, rect.top + 90),
+  );
   await tester.pump(const Duration(milliseconds: 900));
   await press.up();
   await tester.pumpAndSettle();
