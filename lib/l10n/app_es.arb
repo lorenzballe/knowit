@@ -288,8 +288,6 @@
   "climbedTo": "Hoy has subido a {rung}",
   "rightOfAsked": "{right} de {asked} correctas",
   "saidSure": "{sure}% de seguridad",
-  "cardsCameBack": "{n, plural, =1{1 tarjeta ha vuelto — respóndela otra vez} other{{n} tarjetas han vuelto — respóndelas otra vez}}",
-  "cameBack": "Han vuelto",
   "holdACardYouLike": "Si te gusta, mantenla",
   "likedToday": "{n, plural, =1{1 me gusta hoy} other{{n} me gusta hoy}}",
   "liked": "Me gusta",

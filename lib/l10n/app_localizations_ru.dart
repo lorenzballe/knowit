@@ -1302,22 +1302,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String cardsCameBack(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n карточки вернулись — ответьте ещё раз',
-      many: '$n карточек вернулось — ответьте ещё раз',
-      few: '$n карточки вернулись — ответьте ещё раз',
-      one: '$n карточка вернулась — ответьте ещё раз',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get cameBack => 'Вернулись';
-
-  @override
   String get holdACardYouLike => 'Нравится? Удержите';
 
   @override

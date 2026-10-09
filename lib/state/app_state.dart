@@ -1243,8 +1243,8 @@ class AppState extends ChangeNotifier {
   /// second is what transfer means.
   List<Pill> get dueReviews => _reviewsDue(today);
 
-  /// The cards that came due and found no room in the five: what waits
-  /// after the day, to be answered again.
+  /// The cards that came due and found no room in the five. They stay due,
+  /// and the finished day no longer points at them.
   List<Pill> get reviewsWaiting {
     final dealt = todaysDeck.map((p) => p.id).toSet();
     return dueReviews.where((p) => !dealt.contains(p.id)).toList();

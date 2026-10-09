@@ -1158,15 +1158,6 @@
    }
   }
  },
- "cardsCameBack": "{n, plural, =1{1 card came back — answer it again} other{{n} cards came back — answer them again}}",
- "@cardsCameBack": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "cameBack": "Came back",
  "holdACardYouLike": "Hold a card you like",
  "likedToday": "{n, plural, =1{1 liked today} other{{n} liked today}}",
  "@likedToday": {

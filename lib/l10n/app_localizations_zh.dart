@@ -1216,19 +1216,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String cardsCameBack(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n张卡片回来了 — 再答一次',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get cameBack => '回来的卡片';
-
-  @override
   String get holdACardYouLike => '喜欢就长按';
 
   @override
