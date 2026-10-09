@@ -1842,18 +1842,6 @@ abstract class AppLocalizations {
   /// **'said {sure}% sure'**
   String saidSure(int sure);
 
-  /// No description provided for @cardsCameBack.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =1{1 card came back — answer it again} other{{n} cards came back — answer them again}}'**
-  String cardsCameBack(int n);
-
-  /// No description provided for @cameBack.
-  ///
-  /// In en, this message translates to:
-  /// **'Came back'**
-  String get cameBack;
-
   /// No description provided for @holdACardYouLike.
   ///
   /// In en, this message translates to:

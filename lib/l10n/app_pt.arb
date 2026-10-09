@@ -287,8 +287,6 @@
   "climbedTo": "Hoje subiste para {rung}",
   "rightOfAsked": "{right} de {asked} certas",
   "saidSure": "{sure}% de certeza",
-  "cardsCameBack": "{n, plural, =1{1 carta voltou — responde outra vez} other{{n} cartas voltaram — responde outra vez}}",
-  "cameBack": "Voltaram",
   "holdACardYouLike": "Gostas? Mantém premida",
   "likedToday": "{n, plural, =1{1 gostada hoje} other{{n} gostadas hoje}}",
   "liked": "Gostei",

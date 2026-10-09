@@ -233,9 +233,13 @@ Future<List<String>> _sectionOrder(
 
 /// Hold a card down long enough to keep it — longer than the framework's
 /// own long press, which the card deliberately outlasts so that a slow tap
-/// stays a tap.
+/// stays a tap. It presses the question: on a card with a scene, the middle
+/// belongs to the scene, and a hold there plays it rather than liking.
 Future<void> _hold(WidgetTester tester, Finder card) async {
-  final press = await tester.startGesture(tester.getCenter(card));
+  final rect = tester.getRect(card);
+  final press = await tester.startGesture(
+    Offset(rect.center.dx, rect.top + 90),
+  );
   await tester.pump(const Duration(milliseconds: 900));
   await press.up();
   await tester.pumpAndSettle();
@@ -2449,8 +2453,7 @@ void main() {
     ) async {
       // Two cards due back, on two principles. A card comes back as the
       // same principle — itself, or a fresh context of it. On Astute+ one
-      // takes an asking slot; the other has nowhere to go and waits after
-      // the five.
+      // takes an asking slot; the other has nowhere to go and stays due.
       final question = questionOfTheDay(DateTime.now());
       final first = PillBank.cards.firstWhere(
         (p) =>
@@ -2487,13 +2490,11 @@ void main() {
       // may share its principle by chance: the pool is what it is.)
       expect(asks.map((p) => p.id), isNot(contains(second.id)));
 
-      // The one left over waits on the finished day.
+      // The one left over stays due, and the finished day has no line
+      // under the shelf pointing at it.
+      expect(app.reviewsWaiting, hasLength(1));
       await finish(tester);
-      expect(find.text('1 card came back — answer it again'), findsOneWidget);
-      await tester.tap(find.byKey(const ValueKey('review-line')));
-      await _settle(tester);
-      expect(find.text('Came back'), findsOneWidget);
-      expect(find.byType(DeckViewerScreen), findsOneWidget);
+      expect(find.textContaining('came back'), findsNothing);
     });
 
     testWidgets('on the free plan what came due waits, all of it', (
@@ -2520,7 +2521,7 @@ void main() {
       expect(app.reviewIdsToday, isEmpty);
       expect(app.reviewsWaiting, hasLength(1));
       await finish(tester);
-      expect(find.text('1 card came back — answer it again'), findsOneWidget);
+      expect(find.textContaining('came back'), findsNothing);
     });
 
     testWidgets('the day being read keeps the header it always had', (

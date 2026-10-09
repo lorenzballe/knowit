@@ -287,8 +287,6 @@
   "climbedTo": "Bugün seni {rung} basamağına çıkardı",
   "rightOfAsked": "{asked} sorudan {right} doğru",
   "saidSure": "%{sure} emin",
-  "cardsCameBack": "{n, plural, =1{1 kart geri geldi — yeniden cevapla} other{{n} kart geri geldi — yeniden cevapla}}",
-  "cameBack": "Geri gelenler",
   "holdACardYouLike": "Beğendin mi? Basılı tut",
   "likedToday": "{n, plural, =1{bugün 1 beğeni} other{bugün {n} beğeni}}",
   "liked": "Beğenilenler",

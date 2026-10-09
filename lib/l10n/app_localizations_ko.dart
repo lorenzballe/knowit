@@ -1218,19 +1218,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String cardsCameBack(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '카드 $n장이 돌아왔어요 — 다시 답해 보세요',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get cameBack => '돌아온 카드';
-
-  @override
   String get holdACardYouLike => '마음에 들면 길게 누르기';
 
   @override

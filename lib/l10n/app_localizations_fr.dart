@@ -1248,20 +1248,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String cardsCameBack(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '$n cartes sont revenues — réponds encore',
-      one: '1 carte est revenue — réponds encore',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get cameBack => 'Revenues';
-
-  @override
   String get holdACardYouLike => 'Tu aimes ? Maintiens';
 
   @override

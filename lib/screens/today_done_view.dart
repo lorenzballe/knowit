@@ -13,7 +13,6 @@ import '../sync/subscription.dart';
 import '../theme.dart';
 import '../widgets/flip_card.dart';
 import '../widgets/hold_to_keep.dart';
-import 'deck_viewer_screen.dart';
 import 'journey_screen.dart';
 import '../widgets/motion.dart';
 import '../widgets/magic_card.dart';
@@ -321,11 +320,6 @@ class _TodayDoneViewState extends State<TodayDoneView>
           padding: const EdgeInsets.fromLTRB(24, 6, 24, 0),
           child: _Tomorrow(lead: _tomorrowsLead(app)),
         ),
-        if (app.reviewsWaiting.isNotEmpty)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(24, 10, 24, 0),
-            child: _ReviewLine(app: app),
-          ),
         // The way on is the journey: where the day just went, on the
         // ladder, is the one thing worth a button at the end of it.
         Padding(
@@ -488,69 +482,6 @@ class _TodayDoneViewState extends State<TodayDoneView>
   }
 
   static String _two(int n) => n.toString().padLeft(2, '0');
-}
-
-/// The cards that came due and found no room in the five — Astute+ takes
-/// one a day at most, and the free day none — waiting to be answered again.
-class _ReviewLine extends StatelessWidget {
-  const _ReviewLine({required this.app});
-
-  final AppState app;
-
-  @override
-  Widget build(BuildContext context) {
-    final due = app.reviewsWaiting;
-    final Color ink = context.p.ink;
-    return Semantics(
-      button: true,
-      key: const ValueKey('review-line'),
-      child: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => DeckViewerScreen(
-              app: app,
-              deck: due,
-              title: context.l10n.cameBack,
-              answering: true,
-            ),
-          ),
-        ),
-        child: Row(
-          children: [
-            Icon(
-              Icons.replay_rounded,
-              size: 17,
-              color: ink.withValues(alpha: 0.45),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                context.l10n.cardsCameBack(due.length),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                style: AppText.body(
-                  size: 13.5,
-                  weight: FontWeight.w500,
-                  height: 1.35,
-                  color: ink.withValues(alpha: 0.6),
-                ),
-              ),
-            ),
-            const SizedBox(width: 8),
-            Text(
-              '\u2192',
-              style: AppText.body(
-                size: 13,
-                weight: FontWeight.w600,
-                color: ink.withValues(alpha: 0.42),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 /// A count as a word, for the labels that say "today's five".

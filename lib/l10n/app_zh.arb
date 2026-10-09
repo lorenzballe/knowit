@@ -287,8 +287,6 @@
   "climbedTo": "今天你升到了{rung}",
   "rightOfAsked": "{asked}题答对{right}题",
   "saidSure": "自信度{sure}%",
-  "cardsCameBack": "{n, plural, other{{n}张卡片回来了 — 再答一次}}",
-  "cameBack": "回来的卡片",
   "holdACardYouLike": "喜欢就长按",
   "likedToday": "{n, plural, other{今天喜欢了{n}张}}",
   "liked": "喜欢",
