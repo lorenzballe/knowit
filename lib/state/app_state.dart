@@ -6,6 +6,7 @@ import 'package:flutter/material.dart'
 import 'package:flutter/foundation.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/date_symbols.dart';
+import 'package:intl/intl.dart' show DateFormat;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../analytics.dart';
@@ -19,6 +20,7 @@ import '../data/topics.dart';
 import '../l10n/app_localizations.dart';
 import '../models/pill.dart';
 import '../models/reminder.dart';
+import '../models/trial.dart';
 import '../sync/board.dart';
 import '../sync/reader_snapshot.dart';
 import '../sync/served.dart';
@@ -99,8 +101,14 @@ class AppState extends ChangeNotifier {
   static const _kJudgements = 'knowit.judgements';
   static const _kTheme = 'knowit.theme';
   static const _kPushAsked = 'knowit.pushAsked';
+  static const _kPushDeferrals = 'knowit.pushDeferrals';
+  static const _kPushDeferredAfter = 'knowit.pushDeferredAfter';
   static const _kReviewAsked = 'knowit.reviewAsked';
   static const _kPushTokens = 'knowit.pushTokens';
+  static const _kTrialEnds = 'knowit.trialEnds';
+  static const _kTrialPrice = 'knowit.trialPrice';
+  static const _kTrialWarnedFor = 'knowit.trialWarnedFor';
+  static const _kTrialWarnedAt = 'knowit.trialWarnedAt';
 
   late SharedPreferences _prefs;
   bool ready = false;
@@ -224,6 +232,26 @@ class AppState extends ChangeNotifier {
   /// prompt and no second chance, so this is asked once and remembered.
   bool pushAsked = false;
 
+  /// How many times the app's own question about reminders, the sheet that
+  /// comes before the system's prompt, was answered "Not now". It comes back
+  /// after the next day finished, until [kPushDeferralsAllowed] of them.
+  int pushDeferrals = 0;
+
+  /// The last day the reader had finished when they last said "Not now", so
+  /// the sheet waits for a day finished after it. Null when they said it
+  /// before finishing any.
+  String? pushDeferredAfter;
+
+  /// The free trial the reader is in, as the store last described it, while
+  /// it is set to charge; null otherwise. See [FreeTrial].
+  FreeTrial? trial;
+
+  /// The trial the warning before its charge was last armed for, and when
+  /// that warning was set to land, so a warning whose moment has come is not
+  /// given a second time.
+  DateTime? _trialWarnedFor;
+  DateTime? _trialWarnedAt;
+
   /// Whether the store's rating prompt has been asked for, ever. Once is the
   /// whole budget: Apple shows it at most three times a year whatever an
   /// app asks, and a reader asked twice is a reader nagged.
@@ -322,8 +350,16 @@ class AppState extends ChangeNotifier {
     ownIdsToday = (_prefs.getStringList(_kOwnIds) ?? []).toSet();
     answers = _decodeAnswers(_prefs.getString(_kAnswers));
     pushAsked = _prefs.getBool(_kPushAsked) ?? false;
+    pushDeferrals = _prefs.getInt(_kPushDeferrals) ?? 0;
+    pushDeferredAfter = _prefs.getString(_kPushDeferredAfter);
     reviewAsked = _prefs.getBool(_kReviewAsked) ?? false;
     pushTokens = _prefs.getStringList(_kPushTokens) ?? [];
+    final DateTime? trialEnds = _instantOf(_prefs.getString(_kTrialEnds));
+    trial = trialEnds == null
+        ? null
+        : FreeTrial(endsAt: trialEnds, price: _prefs.getString(_kTrialPrice));
+    _trialWarnedFor = _instantOf(_prefs.getString(_kTrialWarnedFor));
+    _trialWarnedAt = _instantOf(_prefs.getString(_kTrialWarnedAt));
     judgements = _decodeJudgements(_prefs.getString(_kJudgements));
     deckHistory = _decodeHistory(_prefs.getString(_kDeckHistory));
     rungDates = _decodeDates(_prefs.getString(_kRungDates));
@@ -1721,6 +1757,10 @@ class AppState extends ChangeNotifier {
   /// than no toggle.
   bool remindersLive = false;
 
+  /// Whether the system lets the app notify this reader, as of the last time
+  /// it was checked or asked. False until then.
+  bool notificationsAllowed = false;
+
   Future<void> setNotifications(bool on) async {
     notificationsOn = on;
     await _prefs.setBool(_kNotifications, on);
@@ -1733,13 +1773,24 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> setNotifyTime(String time) async {
+  /// [quietly] stores the time and re-arms only what is already permitted.
+  /// It is for the sheet that asks for a time before the system's prompt,
+  /// which then puts that prompt itself: a second one springing from here
+  /// first would be the prompt the sheet exists to hold back. Nor is the
+  /// re-arming waited for — the prompt comes next, and its answer re-arms
+  /// everything again (see [notedPushAnswer]); a notification centre slow
+  /// to answer must not hold the prompt back.
+  Future<void> setNotifyTime(String time, {bool quietly = false}) async {
     notifyTime = time;
     await _prefs.setString(_kNotifyHour, time);
     // The hour a reader picks is the hour the content pipeline has to be
     // ready by, so it is worth knowing what they actually pick.
     Analytics.capture('reminder time set', {'at': time});
     notifyListeners();
+    if (quietly) {
+      unawaited(refreshDailyReminder());
+      return;
+    }
     await _applyReminder();
     notifyListeners();
   }
@@ -1758,11 +1809,21 @@ class AppState extends ChangeNotifier {
     // small thing; losing the settings screen with it is not.
     try {
       if (!notificationsOn) {
-        await _disarm();
         remindersLive = false;
+        // The switch is the daily nudge's. The warning that a trial is about
+        // to charge is not a nudge, so it stays wherever the system allows
+        // it, and nothing is asked for its sake.
+        if (trialWarning() == null) {
+          await _disarm();
+          return;
+        }
+        final bool allowed = await _hasPermission();
+        _noteAllowed(allowed);
+        await (allowed ? _armNow() : _disarm());
         return;
       }
       final granted = await _askPermission();
+      _noteAllowed(granted);
       if (!granted) {
         remindersLive = false;
         return;
@@ -1781,14 +1842,21 @@ class AppState extends ChangeNotifier {
   /// streak it was armed with, which is stale by the next morning. This
   /// keeps it both present and current, and stays silent where permission
   /// has not been given: that prompt belongs to a moment the reader chose.
+  ///
+  /// With the nudge switched off it still runs: the plan is then only the
+  /// warning before a trial's charge, or nothing, and arming nothing clears
+  /// what was armed before — a warning for a trial since cancelled must not
+  /// survive to say a charge is coming.
   Future<void> refreshDailyReminder() async {
-    if (!remindersSupported || !notificationsOn) return;
+    if (!remindersSupported) return;
     try {
       // No patience timer on this path. It is never awaited by anything
       // that shows on screen, so a centre that never answers costs nothing
       // here — and the timer itself outlived every widget test as a
       // pending timer, which is a worse fault than the one it guarded.
-      if (!await _hasPermission()) {
+      final bool allowed = await _hasPermission();
+      _noteAllowed(allowed);
+      if (!allowed) {
         remindersLive = false;
         return;
       }
@@ -1798,9 +1866,38 @@ class AppState extends ChangeNotifier {
     }
   }
 
+  /// Notes what the system says about notifying this reader, and tells the
+  /// screens when it moved: the profile's line about a trial's last days is
+  /// for a reader it will not let the app reach.
+  void _noteAllowed(bool allowed) {
+    if (allowed == notificationsAllowed) return;
+    notificationsAllowed = allowed;
+    notifyListeners();
+  }
+
   Future<void> _armNow() async {
-    await _arm(reminderPlan());
-    remindersLive = true;
+    final List<Reminder> plan = reminderPlan();
+    await _arm(plan);
+    remindersLive = notificationsOn;
+    // A warning once armed is remembered with the moment it lands, so that
+    // once the moment has come it counts as given and is not given again.
+    final FreeTrial? t = trial;
+    for (final Reminder r in plan) {
+      if (r.id == kTrialWarningId && t != null) {
+        await _noteTrialWarning(t.endsAt, r.when);
+      }
+    }
+  }
+
+  Future<void> _noteTrialWarning(DateTime ends, DateTime at) async {
+    if ((_trialWarnedFor?.isAtSameMomentAs(ends) ?? false) &&
+        (_trialWarnedAt?.isAtSameMomentAs(at) ?? false)) {
+      return;
+    }
+    _trialWarnedFor = ends;
+    _trialWarnedAt = at;
+    await _prefs.setString(_kTrialWarnedFor, ends.toUtc().toIso8601String());
+    await _prefs.setString(_kTrialWarnedAt, at.toUtc().toIso8601String());
   }
 
   /// How many days ahead the notifications are planned.
@@ -1815,45 +1912,193 @@ class AppState extends ChangeNotifier {
   /// freeze is holding, the card they were sure and wrong about, what two
   /// weeks came to — and after a fortnight it stops. Re-planned at every
   /// launch, so a reader who comes back is never told they were away.
+  ///
+  /// The fortnight is the daily nudge, so it is planned only while its
+  /// switch is on. The warning before a free trial's charge (see
+  /// [trialWarning]) is planned whatever the switch says, here and not
+  /// beside the plan: arming a plan cancels everything armed before it.
   List<Reminder> reminderPlan({DateTime? now}) {
     final l = _strings;
-    final parts = notifyTime.split(':');
-    final int hour = int.tryParse(parts.first) ?? 8;
-    final int minute = parts.length > 1 ? (int.tryParse(parts[1]) ?? 30) : 30;
+    final (int hour, int minute) = _notifyClock;
     final DateTime clock = now ?? DateTime.now();
     final DateTime? lastDone = dayClosed
         ? DateTime(today.year, today.month, today.day)
         : _dateOf(lastCompletionDate);
 
     final plan = <Reminder>[];
-    for (var i = 0; i <= kPlannedDays; i++) {
-      final day = DateTime(today.year, today.month, today.day + i);
-      final at = DateTime(day.year, day.month, day.day, hour, minute);
-      if (!at.isAfter(clock)) continue;
-      if (i == 0 && todayCompleted) continue;
-      final Pill lead = leadOn(day);
+    if (notificationsOn) {
+      for (var i = 0; i <= kPlannedDays; i++) {
+        final day = DateTime(today.year, today.month, today.day + i);
+        final at = DateTime(day.year, day.month, day.day, hour, minute);
+        if (!at.isAfter(clock)) continue;
+        if (i == 0 && todayCompleted) continue;
+        final Pill lead = leadOn(day);
 
-      // How long the reader will have been away when this one lands.
-      final int gap = lastDone == null ? 0 : day.difference(lastDone).inDays;
-      String title = l.nudgeTitle;
-      String body = lead.question;
-      if (gap == 2 && freezes > 0) {
-        title = l.nudgeFreezeTitle;
-        body = l.nudgeFreezeBody(lead.question);
-      } else if (gap == 7 && misses.isNotEmpty) {
-        final Miss miss = misses.first;
-        title = l.nudgeSureTitle;
-        body = l.nudgeSureBody(miss.pill.question, miss.confidence);
-      } else if (gap == 14) {
-        final double? off = confidenceGap;
-        title = l.nudgeTwoWeeksTitle(seenIds.length);
-        body = off == null
-            ? l.nudgeTwoWeeksBodyNoGap(answers.length, lead.question)
-            : l.nudgeTwoWeeksBody(off.round(), lead.question);
+        // How long the reader will have been away when this one lands.
+        final int gap = lastDone == null ? 0 : day.difference(lastDone).inDays;
+        String title = l.nudgeTitle;
+        String body = lead.question;
+        if (gap == 2 && freezes > 0) {
+          title = l.nudgeFreezeTitle;
+          body = l.nudgeFreezeBody(lead.question);
+        } else if (gap == 7 && misses.isNotEmpty) {
+          final Miss miss = misses.first;
+          title = l.nudgeSureTitle;
+          body = l.nudgeSureBody(miss.pill.question, miss.confidence);
+        } else if (gap == 14) {
+          final double? off = confidenceGap;
+          title = l.nudgeTwoWeeksTitle(seenIds.length);
+          body = off == null
+              ? l.nudgeTwoWeeksBodyNoGap(answers.length, lead.question)
+              : l.nudgeTwoWeeksBody(off.round(), lead.question);
+        }
+        plan.add(Reminder(id: i + 1, when: at, title: title, body: body));
       }
-      plan.add(Reminder(id: i + 1, when: at, title: title, body: body));
     }
+    final Reminder? warning = trialWarning(now: clock);
+    if (warning != null) plan.add(warning);
     return plan;
+  }
+
+  /// The reader's hour, as numbers.
+  (int, int) get _notifyClock {
+    final parts = notifyTime.split(':');
+    final int hour = int.tryParse(parts.first) ?? 8;
+    final int minute = parts.length > 1 ? (int.tryParse(parts[1]) ?? 30) : 30;
+    return (hour, minute);
+  }
+
+  /// The slot the warning before a trial's charge takes in the plan: apart
+  /// from the fortnight's, so re-planning replaces it rather than piling a
+  /// second one up. "reminder opened" reports it as its slot.
+  static const int kTrialWarningId = 100;
+
+  /// How far ahead a warning is set when its own moment has passed and the
+  /// trial has not ended: late, but still before the charge.
+  static const Duration kLateTrialWarning = Duration(minutes: 1);
+
+  /// The warning two days before a free trial turns into a paid year, at
+  /// the reader's hour: when it ends, what the year will cost, and the way
+  /// to stop it, in the phone's language and at the store's own price.
+  ///
+  /// Null when nothing will be charged — no trial, or one set not to renew
+  /// — when the store has not named the price, once the trial is over, and
+  /// once the warning has been given: armed for a moment that has come. A
+  /// trial whose warning moment passed unarmed — notifications allowed only
+  /// in its last two days, a phone that learnt of the trial late — is
+  /// warned a minute from now instead, still before the charge.
+  Reminder? trialWarning({DateTime? now}) {
+    final FreeTrial? t = trial;
+    final String? price = t?.price;
+    if (t == null || price == null) return null;
+    final DateTime clock = now ?? DateTime.now();
+    final DateTime ends = t.endsAt;
+    final DateTime? warnedAt = _trialWarnedAt;
+    if ((_trialWarnedFor?.isAtSameMomentAs(ends) ?? false) &&
+        warnedAt != null &&
+        !warnedAt.isAfter(clock)) {
+      return null;
+    }
+    final (int hour, int minute) = _notifyClock;
+    DateTime when = DateTime(ends.year, ends.month, ends.day - 2, hour, minute);
+    if (!when.isAfter(clock)) when = clock.add(kLateTrialWarning);
+    if (!when.isBefore(ends)) return null;
+    final AppLocalizations l = _strings;
+    return Reminder(
+      id: kTrialWarningId,
+      when: when,
+      title: l.trialWarningTitle(_daysBetween(when, ends)),
+      body: l.trialWarningBody(
+        _longDate(l.localeName, ends),
+        price,
+        // The way out, named exactly as the tab and the row are named.
+        '${l.tabProfile} → ${l.manageSubscription}',
+      ),
+    );
+  }
+
+  /// Whether a warning will land two days before the trial's charge: what
+  /// the reminder sheet may promise a reader who is in a trial. A warning
+  /// that can only come late is still given, but not promised as that.
+  bool get warnsBeforeTrialEnds {
+    final Reminder? warning = trialWarning();
+    final FreeTrial? t = trial;
+    return warning != null &&
+        t != null &&
+        _daysBetween(warning.when, t.endsAt) == 2;
+  }
+
+  /// The days left on a trial that will charge, in its last two, for a
+  /// reader the warning does not reach — the system will not notify them,
+  /// or no warning was armed for this trial. Null when there is nothing to
+  /// say. The profile says it in one quiet line, where the plan is.
+  int? trialNoticeDays({DateTime? now}) {
+    final FreeTrial? t = trial;
+    if (t == null) return null;
+    final DateTime clock = now ?? DateTime.now();
+    final Duration left = t.endsAt.difference(clock);
+    if (left <= Duration.zero || left > const Duration(days: 2)) return null;
+    final bool reached =
+        notificationsAllowed &&
+        (_trialWarnedFor?.isAtSameMomentAs(t.endsAt) ?? false);
+    return reached ? null : _daysBetween(clock, t.endsAt);
+  }
+
+  /// What the store says about the reader's free trial: one that will
+  /// charge, or none. Kept, like the plan, as the last thing the store said,
+  /// and the notifications re-planned at once — a trial started, cancelled
+  /// or turned into the year each moves the warning before the charge.
+  Future<void> applyTrial(FreeTrial? next) async {
+    final FreeTrial? before = trial;
+    // The store can describe the trial before it says what is on sale. The
+    // same trial keeps the price it was last given rather than losing it to
+    // a slow offering.
+    final FreeTrial? merged =
+        next != null &&
+            next.price == null &&
+            before != null &&
+            before.endsAt.isAtSameMomentAs(next.endsAt)
+        ? FreeTrial(endsAt: next.endsAt, price: before.price)
+        : next;
+    if (merged == before) return;
+    trial = merged;
+    final String? price = merged?.price;
+    if (merged == null) {
+      await _prefs.remove(_kTrialEnds);
+    } else {
+      await _prefs.setString(
+        _kTrialEnds,
+        merged.endsAt.toUtc().toIso8601String(),
+      );
+    }
+    if (price == null) {
+      await _prefs.remove(_kTrialPrice);
+    } else {
+      await _prefs.setString(_kTrialPrice, price);
+    }
+    notifyListeners();
+    await refreshDailyReminder();
+  }
+
+  /// Calendar days from [from] to [to]: 0 on the same day, 1 the day before.
+  /// Counted on dates rather than hours, so a clock change is not a day.
+  static int _daysBetween(DateTime from, DateTime to) => DateTime.utc(
+    to.year,
+    to.month,
+    to.day,
+  ).difference(DateTime.utc(from.year, from.month, from.day)).inDays;
+
+  /// A day of a month as the phone's language writes it — 23 October,
+  /// 23 ottobre, 10月23日 — for what is said with no screen to say it on.
+  static String _longDate(String locale, DateTime day) {
+    // The formats arrive with the app's localizations, which a plan made
+    // at launch can outrun; this loads them, and does nothing once loaded.
+    unawaited(initializeDateFormatting());
+    try {
+      return DateFormat.MMMMd(locale).format(day);
+    } catch (_) {
+      return DateFormat.MMMMd('en').format(day);
+    }
   }
 
   /// What the home-screen widgets show, handed over whenever it could have
@@ -2112,6 +2357,10 @@ class AppState extends ChangeNotifier {
     return DateTime(parts[0]!, parts[1]!, parts[2]!);
   }
 
+  /// A moment written down as ISO 8601, back on the phone's own clock.
+  static DateTime? _instantOf(String? raw) =>
+      raw == null ? null : DateTime.tryParse(raw)?.toLocal();
+
   /// The strings, in the phone's language, for what is said with no screen
   /// to say it on.
   AppLocalizations get _strings => lookupAppLocalizations(
@@ -2301,6 +2550,11 @@ class AppState extends ChangeNotifier {
     themeMode = ThemeMode.dark;
     seenIds = {};
     pushAsked = false;
+    pushDeferrals = 0;
+    pushDeferredAfter = null;
+    trial = null;
+    _trialWarnedFor = null;
+    _trialWarnedAt = null;
     reviewAsked = false;
     pushTokens = [];
     ownIdsToday = {};
@@ -2316,18 +2570,56 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// True once there is a day behind the reader and they have not been asked
-  /// about notifications yet. Asking before that spends the single prompt
-  /// iOS allows on someone who does not yet know what the app is.
-  bool get shouldAskForPush => !pushAsked && completedDates.isNotEmpty;
+  /// How many times the reminder sheet may be answered "Not now": the first
+  /// time it comes, and twice more.
+  static const int kPushDeferralsAllowed = 3;
+
+  /// True when the question about notifications is waiting to be put: a day
+  /// is behind the reader, the system's prompt has not been spent, and the
+  /// daily nudge has not been switched off. Asking before a day is behind
+  /// them spends the single prompt iOS allows on someone who does not yet
+  /// know what the app is.
+  ///
+  /// The question is the app's own sheet first (see main.dart), and "Not
+  /// now" there spends nothing: it comes back once another day has been
+  /// finished, and after the [kPushDeferralsAllowed]th it stops coming.
+  bool get shouldAskForPush {
+    if (pushAsked || !notificationsOn || completedDates.isEmpty) return false;
+    if (pushDeferrals >= kPushDeferralsAllowed) return false;
+    if (pushDeferrals == 0) return true;
+    final String? last = lastCompletionDate;
+    final String? after = pushDeferredAfter;
+    return last != null && (after == null || last.compareTo(after) > 0);
+  }
+
+  /// The reader answered the reminder sheet "Not now". Nothing of the
+  /// system's is spent; the sheet waits for the next day finished.
+  Future<void> notedPushDeferred() async {
+    pushDeferrals += 1;
+    pushDeferredAfter = lastCompletionDate;
+    await _prefs.setInt(_kPushDeferrals, pushDeferrals);
+    final String? after = pushDeferredAfter;
+    if (after == null) {
+      await _prefs.remove(_kPushDeferredAfter);
+    } else {
+      await _prefs.setString(_kPushDeferredAfter, after);
+    }
+    notifyListeners();
+  }
 
   /// True at the one moment worth asking the store for a rating: today's
-  /// five just read, a week of days in a row behind them, the notification
-  /// prompt already answered on an earlier day, and never asked before. A
-  /// reader who kept seven days has decided the app is theirs; the stars
-  /// that come in the first week otherwise come mostly from those who left.
+  /// five just read, a week of days in a row behind them, the question about
+  /// notifications answered on an earlier day and not waiting to be put
+  /// again, and never asked before. Answered is the system's prompt, a "Not
+  /// now" on the app's own sheet, or the nudge switched off. A reader who
+  /// kept seven days has decided the app is theirs; the stars that come in
+  /// the first week otherwise come mostly from those who left.
   bool get shouldAskForReview =>
-      !reviewAsked && pushAsked && dayClosed && liveStreak >= 7;
+      !reviewAsked &&
+      (pushAsked || pushDeferrals > 0 || !notificationsOn) &&
+      !shouldAskForPush &&
+      dayClosed &&
+      liveStreak >= 7;
 
   /// Noted before the prompt is shown, so a failure to show it is not a
   /// reason to ask again.

@@ -743,6 +743,79 @@
    }
   }
  },
+ "reminderAskTitle": "When should we remind you?",
+ "@reminderAskTitle": {
+  "description": "Title of the sheet that asks when to remind the reader. It comes before the system's own notification prompt, which iOS shows only once."
+ },
+ "reminderAskLine": "One notification a day, with a question from your cards.",
+ "@reminderAskLine": {
+  "description": "Under the sheet's title: what the reminder is. One notification a day, each carrying a question from the reader's cards (most days the first question of that day's five)."
+ },
+ "reminderAskTrialLine": "We’ll remind you two days before your trial ends.",
+ "@reminderAskTrialLine": {
+  "description": "On the reminder sheet, only for a reader in a free trial that will turn into a paid year: a notification also comes two days before it does."
+ },
+ "reminderAskMorning": "Morning",
+ "@reminderAskMorning": {
+  "description": "A choice on the reminder sheet, with 8:30 written beside it."
+ },
+ "reminderAskLunch": "Lunchtime",
+ "@reminderAskLunch": {
+  "description": "A choice on the reminder sheet, with 12:30 written beside it."
+ },
+ "reminderAskEvening": "Evening",
+ "@reminderAskEvening": {
+  "description": "A choice on the reminder sheet, with 19:00 written beside it."
+ },
+ "reminderAskOther": "Another time",
+ "@reminderAskOther": {
+  "description": "A choice on the reminder sheet that opens a clock, to pick any other time."
+ },
+ "reminderAskYes": "Remind me",
+ "@reminderAskYes": {
+  "description": "The reminder sheet's button: keeps the time chosen, then the system asks whether the app may send notifications."
+ },
+ "reminderAskNotNow": "Not now",
+ "@reminderAskNotNow": {
+  "description": "The reminder sheet's way out. Nothing is asked of the system; the sheet comes back after the next day the reader finishes, at most twice more."
+ },
+ "trialWarningTitle": "{days, plural, =0{Your Astute+ trial ends today.} =1{Your Astute+ trial ends tomorrow.} other{Your Astute+ trial ends in {days} days.}}",
+ "@trialWarningTitle": {
+  "description": "Title of the notification sent two days before a free trial turns into a paid year. {days} is how many calendar days are left: 0 is today, 1 tomorrow.",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "trialWarningBody": "On {date} your year starts at {price}. To keep going, do nothing. To stop: {path}.",
+ "@trialWarningBody": {
+  "description": "Body of that notification. {date} is the day the trial ends, as the language writes a day and month; {price} is the store's own price for the year; {path} is the way to the subscription, made of the tab's and the row's own names, e.g. 'Profile → Manage subscription'.",
+  "placeholders": {
+   "date": {
+    "type": "String"
+   },
+   "price": {
+    "type": "String"
+   },
+   "path": {
+    "type": "String"
+   }
+  }
+ },
+ "trialEndsNotice": "{days, plural, =0{Your trial ends today} =1{Your trial ends tomorrow} other{Your trial ends in {days} days}}",
+ "@trialEndsNotice": {
+  "description": "One quiet line on the profile in a free trial's last two days, for a reader no notification will reach. {days} is how many calendar days are left: 0 is today, 1 tomorrow. Followed by ' · ' and trialNoticeManage.",
+  "placeholders": {
+   "days": {
+    "type": "int"
+   }
+  }
+ },
+ "trialNoticeManage": "Manage",
+ "@trialNoticeManage": {
+  "description": "After the trial's line on the profile: opens the store's own screen for managing the subscription."
+ },
  "subjectsInTheMix": "{n} of {total} subjects in the mix",
  "@subjectsInTheMix": {
   "placeholders": {

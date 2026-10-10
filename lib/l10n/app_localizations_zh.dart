@@ -821,6 +821,65 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
+  String get reminderAskTitle => '什么时候提醒你？';
+
+  @override
+  String get reminderAskLine => '每天一条通知，附上你卡片里的一个问题。';
+
+  @override
+  String get reminderAskTrialLine => '我们会在试用结束前两天提醒你。';
+
+  @override
+  String get reminderAskMorning => '早上';
+
+  @override
+  String get reminderAskLunch => '中午';
+
+  @override
+  String get reminderAskEvening => '晚上';
+
+  @override
+  String get reminderAskOther => '其他时间';
+
+  @override
+  String get reminderAskYes => '提醒我';
+
+  @override
+  String get reminderAskNotNow => '暂不';
+
+  @override
+  String trialWarningTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '你的 Astute+ 试用将在 $days 天后结束。',
+      one: '你的 Astute+ 试用明天结束。',
+      zero: '你的 Astute+ 试用今天结束。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trialWarningBody(String date, String price, String path) {
+    return '$date起，你的年度订阅开始，价格为 $price。想继续，无需任何操作。想取消：$path。';
+  }
+
+  @override
+  String trialEndsNotice(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '试用 $days 天后结束',
+      one: '试用明天结束',
+      zero: '试用今天结束',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialNoticeManage => '管理';
+
+  @override
   String subjectsInTheMix(int n, int total) {
     return '$total 个主题中有 $n 个在组合里';
   }

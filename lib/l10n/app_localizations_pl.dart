@@ -888,6 +888,71 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
+  String get reminderAskTitle => 'O której mamy ci przypominać?';
+
+  @override
+  String get reminderAskLine =>
+      'Jedno powiadomienie dziennie, z pytaniem z twoich kart.';
+
+  @override
+  String get reminderAskTrialLine =>
+      'Przypomnimy ci dwa dni przed końcem okresu próbnego.';
+
+  @override
+  String get reminderAskMorning => 'Rano';
+
+  @override
+  String get reminderAskLunch => 'W południe';
+
+  @override
+  String get reminderAskEvening => 'Wieczorem';
+
+  @override
+  String get reminderAskOther => 'Inna godzina';
+
+  @override
+  String get reminderAskYes => 'Przypominaj mi';
+
+  @override
+  String get reminderAskNotNow => 'Nie teraz';
+
+  @override
+  String trialWarningTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Twój okres próbny Astute+ kończy się za $days dni.',
+      many: 'Twój okres próbny Astute+ kończy się za $days dni.',
+      few: 'Twój okres próbny Astute+ kończy się za $days dni.',
+      one: 'Twój okres próbny Astute+ kończy się jutro.',
+      zero: 'Twój okres próbny Astute+ kończy się dzisiaj.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trialWarningBody(String date, String price, String path) {
+    return '$date zaczyna się twój rok subskrypcji za $price. Żeby kontynuować, nie musisz nic robić. Żeby zrezygnować: $path.';
+  }
+
+  @override
+  String trialEndsNotice(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Okres próbny kończy się za $days dni',
+      many: 'Okres próbny kończy się za $days dni',
+      few: 'Okres próbny kończy się za $days dni',
+      one: 'Okres próbny kończy się jutro',
+      zero: 'Okres próbny kończy się dzisiaj',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialNoticeManage => 'Zarządzaj';
+
+  @override
   String subjectsInTheMix(int n, int total) {
     return '$n z $total tematów w miksie';
   }

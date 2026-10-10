@@ -1206,6 +1206,84 @@ abstract class AppLocalizations {
   /// **'Daily nudge moved to {time}.'**
   String dailyNudgeMovedTo(String time);
 
+  /// Title of the sheet that asks when to remind the reader. It comes before the system's own notification prompt, which iOS shows only once.
+  ///
+  /// In en, this message translates to:
+  /// **'When should we remind you?'**
+  String get reminderAskTitle;
+
+  /// Under the sheet's title: what the reminder is. One notification a day, each carrying a question from the reader's cards (most days the first question of that day's five).
+  ///
+  /// In en, this message translates to:
+  /// **'One notification a day, with a question from your cards.'**
+  String get reminderAskLine;
+
+  /// On the reminder sheet, only for a reader in a free trial that will turn into a paid year: a notification also comes two days before it does.
+  ///
+  /// In en, this message translates to:
+  /// **'We’ll remind you two days before your trial ends.'**
+  String get reminderAskTrialLine;
+
+  /// A choice on the reminder sheet, with 8:30 written beside it.
+  ///
+  /// In en, this message translates to:
+  /// **'Morning'**
+  String get reminderAskMorning;
+
+  /// A choice on the reminder sheet, with 12:30 written beside it.
+  ///
+  /// In en, this message translates to:
+  /// **'Lunchtime'**
+  String get reminderAskLunch;
+
+  /// A choice on the reminder sheet, with 19:00 written beside it.
+  ///
+  /// In en, this message translates to:
+  /// **'Evening'**
+  String get reminderAskEvening;
+
+  /// A choice on the reminder sheet that opens a clock, to pick any other time.
+  ///
+  /// In en, this message translates to:
+  /// **'Another time'**
+  String get reminderAskOther;
+
+  /// The reminder sheet's button: keeps the time chosen, then the system asks whether the app may send notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me'**
+  String get reminderAskYes;
+
+  /// The reminder sheet's way out. Nothing is asked of the system; the sheet comes back after the next day the reader finishes, at most twice more.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get reminderAskNotNow;
+
+  /// Title of the notification sent two days before a free trial turns into a paid year. {days} is how many calendar days are left: 0 is today, 1 tomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{Your Astute+ trial ends today.} =1{Your Astute+ trial ends tomorrow.} other{Your Astute+ trial ends in {days} days.}}'**
+  String trialWarningTitle(int days);
+
+  /// Body of that notification. {date} is the day the trial ends, as the language writes a day and month; {price} is the store's own price for the year; {path} is the way to the subscription, made of the tab's and the row's own names, e.g. 'Profile → Manage subscription'.
+  ///
+  /// In en, this message translates to:
+  /// **'On {date} your year starts at {price}. To keep going, do nothing. To stop: {path}.'**
+  String trialWarningBody(String date, String price, String path);
+
+  /// One quiet line on the profile in a free trial's last two days, for a reader no notification will reach. {days} is how many calendar days are left: 0 is today, 1 tomorrow. Followed by ' · ' and trialNoticeManage.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{Your trial ends today} =1{Your trial ends tomorrow} other{Your trial ends in {days} days}}'**
+  String trialEndsNotice(int days);
+
+  /// After the trial's line on the profile: opens the store's own screen for managing the subscription.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage'**
+  String get trialNoticeManage;
+
   /// No description provided for @subjectsInTheMix.
   ///
   /// In en, this message translates to:

@@ -1,3 +1,5 @@
+import 'dart:async' show Timer;
+
 import 'package:flutter/foundation.dart' show ValueListenable, kIsWeb;
 import 'package:flutter/gestures.dart' show PointerDeviceKind;
 import 'package:in_app_review/in_app_review.dart';
@@ -30,8 +32,10 @@ import 'sync/served.dart';
 import 'sync/tally.dart';
 import 'sync/trace.dart';
 import 'utils/home_widget.dart';
+import 'utils/reminders.dart' show remindersSupported;
 import 'theme.dart';
 import 'widgets/ambient.dart';
+import 'widgets/reminder_ask.dart';
 
 /// The seeded crowd for Explore's top list: the live bank, tilted to what
 /// readers keep — a question over a fact, a debate over both, the hard ones,
@@ -256,13 +260,41 @@ class _AstutoRootState extends State<AstutoRoot> {
   /// which on a phone is the moment the app leaves the screen.
   AppLifecycleListener? _lifecycle;
 
-  final Push _push = Push();
+  Push get _push => Push.instance;
+
+  /// True while the question about notifications is being put: the app's
+  /// own sheet, and the system's prompt behind it until it is answered.
   bool _askingForPush = false;
 
-  /// Whether the notification prompt was shown in this session: the store's
-  /// rating prompt never follows it in the same one, two system sheets in a
-  /// row being one too many.
+  /// Whether the question about notifications was put in this session — the
+  /// app's own sheet, and the system's prompt where it led there: the
+  /// store's rating prompt never follows it in the same one, two sheets in
+  /// a row being one too many.
   bool _pushAskedThisSession = false;
+
+  /// Whether the Today tab has a deck on its table: the five, or the card
+  /// after them, which is the evening's offer. Told by the shell.
+  bool _deckOnTable = true;
+
+  /// Whether the tabs are the top of the stack, nothing pushed over them —
+  /// no paywall, no screen a purchase ends on, no card, dialog or sheet.
+  /// Read from the route, which says so again whenever it changes.
+  bool _onTop = true;
+
+  /// A trial started in this session, while the system's prompt was still
+  /// unasked: the sheet is offered for it once the purchase's screens close.
+  bool _trialAskDue = false;
+
+  /// Whether the reader was in a trial when the app last looked, so one that
+  /// starts in this session can be told from one the phone already knew.
+  bool? _hadTrial;
+
+  /// The beat between the reminder sheet's moment arriving and the sheet
+  /// rising, so what the reader just did — the shelf coming up, a paywall
+  /// closing — lands first.
+  static const Duration _kReminderAskBeat = Duration(milliseconds: 1500);
+  Timer? _reminderAskTimer;
+
   bool _askingForReview = false;
   _Stage _stage = _Stage.intro;
   bool _stageResolved = false;
@@ -385,6 +417,10 @@ class _AstutoRootState extends State<AstutoRoot> {
     // Until the store has answered, the app should not decide the reader has
     // nothing: a launch with no network would drop them off their own plan.
     // A reviewer's code needs no store to answer: it is already on the phone.
+    // The trial goes first, so a plan that turns on with a trial is heard of
+    // with the trial already known — and for the same reason it waits for
+    // an answer: before one, no trial means "not asked", not "none".
+    if (store.ready) _app.applyTrial(store.trial);
     if (store.ready || store.reviewAccess) _app.applyEntitlement(store.isPlus);
   }
 
@@ -397,7 +433,10 @@ class _AstutoRootState extends State<AstutoRoot> {
 
   /// The one prompt iOS allows, spent at the only moment it is worth
   /// something: a day is finished, so there is a streak to protect and the
-  /// reader knows what they would be agreeing to.
+  /// reader knows what they would be agreeing to — and, on a phone, once
+  /// they have chosen a time on the app's own sheet (see [_offerReminder]).
+  /// Where no sheet can lead to it, it is asked for as it always was; there
+  /// it shows nothing and only settles that it was asked.
   Future<void> _askForPush() async {
     if (_askingForPush) return;
     _askingForPush = true;
@@ -408,6 +447,98 @@ class _AstutoRootState extends State<AstutoRoot> {
     Analytics.capture('push permission answered', {'granted': token != null});
     await _app.notedPushAnswer(token: token);
     _askingForPush = false;
+  }
+
+  /// Whether the app's own sheet can lead anywhere here: a phone, whose
+  /// reminders can be delivered, with a system prompt behind the sheet to
+  /// put. The web build has neither, and a test has no Firebase.
+  bool get _canOfferReminder => remindersSupported && _push.canAsk;
+
+  /// The app's own question about notifications: when, before the system
+  /// asks whether. A time chosen is kept, and then the system's prompt is
+  /// put exactly as it always was. "Not now" spends nothing, and the sheet
+  /// comes back after the next day finished (AppState.shouldAskForPush).
+  Future<void> _offerReminder(String reason) async {
+    if (_askingForPush) return;
+    _askingForPush = true;
+    // The sheet is a question too, and the store's rating prompt never
+    // follows one in the same session.
+    _pushAskedThisSession = true;
+    _trialAskDue = false;
+    Analytics.capture('push preprompt shown', {'reason': reason});
+    final String? at = await showReminderAsk(context, _app);
+    if (!mounted) return;
+    Analytics.capture('push preprompt answered', {'choice': at ?? 'not now'});
+    if (at == null) {
+      await _app.notedPushDeferred();
+      _askingForPush = false;
+      return;
+    }
+    // Kept quietly: the prompt is the one below, and only that one.
+    await _app.setNotifyTime(at, quietly: true);
+    _askingForPush = false;
+    if (mounted) await _askForPush();
+  }
+
+  /// Why the reminder sheet would rise now — 'trial' or 'day done' — or
+  /// null when this is not its moment.
+  ///
+  /// Never over anything: whatever is pushed over the tabs, from a paywall
+  /// to the screen a purchase ends on, keeps it waiting until it closes.
+  /// Never over the evening's offer either, the card after the fifth, which
+  /// stays on the table until it is thrown. The shelf that comes up under
+  /// it is the finished day at rest — on Astute+, which deals no such card,
+  /// straight after the fifth — and that is the day's moment; so is a launch
+  /// that opens on a finished day. A trial just started has its own moment:
+  /// the purchase's screens closed, whatever is on the table.
+  String? _reminderAskReason() {
+    if (_stage != _Stage.shell || !_onTop || !_canOfferReminder) return null;
+    if (_app.pushAsked || !_app.notificationsOn) return null;
+    if (_trialAskDue) return 'trial';
+    if (_app.shouldAskForPush && _app.dayClosed && !_deckOnTable) {
+      return 'day done';
+    }
+    return null;
+  }
+
+  /// Raises the reminder sheet a beat after its moment arrives, and only if
+  /// the moment is still there when the beat is over. Called whenever
+  /// anything it depends on moves: the state, the table, the stack.
+  void _considerReminderAsk() {
+    if (!mounted || _askingForPush) return;
+    if (_reminderAskReason() == null) {
+      _reminderAskTimer?.cancel();
+      _reminderAskTimer = null;
+      return;
+    }
+    if (_reminderAskTimer?.isActive ?? false) return;
+    _reminderAskTimer = Timer(_kReminderAskBeat, () {
+      _reminderAskTimer = null;
+      if (!mounted || _askingForPush) return;
+      final String? reason = _reminderAskReason();
+      if (reason != null) _offerReminder(reason);
+    });
+  }
+
+  /// Notes a trial that starts in this session — a purchase just made, or a
+  /// phone that has just heard of one — rather than one it knew at launch.
+  void _noteTrialStart() {
+    if (!_app.ready) return;
+    final bool inTrial = _app.trial != null;
+    if (_hadTrial == false && inTrial && _canOfferReminder) {
+      _trialAskDue = true;
+    }
+    if (_app.pushAsked || !_app.notificationsOn) _trialAskDue = false;
+    _hadTrial = inTrial;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Told again whenever the route stops or starts being the top of the
+    // stack: a paywall pushed over the tabs, and the moment it closes.
+    _onTop = ModalRoute.isCurrentOf(context) ?? true;
+    _considerReminderAsk();
   }
 
   void _onAppStateChanged() {
@@ -432,10 +563,15 @@ class _AstutoRootState extends State<AstutoRoot> {
         Analytics.screen(_stage.screen);
       }
     });
-    if (_stage == _Stage.shell && _app.shouldAskForPush) _askForPush();
+    _noteTrialStart();
+    if (_stage == _Stage.shell && _app.shouldAskForPush && !_canOfferReminder) {
+      _askForPush();
+    }
+    _considerReminderAsk();
     if (_stage == _Stage.shell &&
         _app.shouldAskForReview &&
-        !_pushAskedThisSession) {
+        !_pushAskedThisSession &&
+        !_trialAskDue) {
       _askForReview();
     }
   }
@@ -465,6 +601,7 @@ class _AstutoRootState extends State<AstutoRoot> {
 
   @override
   void dispose() {
+    _reminderAskTimer?.cancel();
     _app.removeListener(_onAppStateChanged);
     _lifecycle?.dispose();
     Subscription.instance.removeListener(_onEntitlementChanged);
@@ -494,6 +631,9 @@ class _AstutoRootState extends State<AstutoRoot> {
       ..start();
     setState(() => _stage = stage);
     Analytics.screen(stage.screen);
+    // Arriving on the tabs can be the sheet's moment: the onboarding's offer
+    // closing on a trial just started.
+    _considerReminderAsk();
   }
 
   /// A step passed over rather than answered.
@@ -671,6 +811,10 @@ class _AstutoRootState extends State<AstutoRoot> {
           app: _app,
           account: _account,
           widgetOpen: _widgetOpen,
+          onDeckOnTable: (onTable) {
+            _deckOnTable = onTable;
+            _considerReminderAsk();
+          },
           onSignedOut: () {
             setState(() {
               _stageResolved = true;
@@ -741,12 +885,17 @@ class AstutoShell extends StatefulWidget {
   /// card it names and clears it.
   final ValueNotifier<WidgetOpen?>? widgetOpen;
 
+  /// Told whenever the Today tab's table changes: a deck on it — the five,
+  /// or the card after them — or the shelf.
+  final ValueChanged<bool>? onDeckOnTable;
+
   const AstutoShell({
     super.key,
     required this.app,
     required this.account,
     required this.onSignedOut,
     this.widgetOpen,
+    this.onDeckOnTable,
   });
 
   @override
@@ -1009,6 +1158,7 @@ class _AstutoShellState extends State<AstutoShell>
         },
         onDeckOnTable: (onTable) {
           if (onTable != _deckOnTable) setState(() => _deckOnTable = onTable);
+          widget.onDeckOnTable?.call(onTable);
         },
       ),
       ExploreScreen(key: _explore, app: widget.app),

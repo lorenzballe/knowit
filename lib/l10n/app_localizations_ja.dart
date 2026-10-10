@@ -826,6 +826,65 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
+  String get reminderAskTitle => '何時にお知らせしましょうか？';
+
+  @override
+  String get reminderAskLine => '通知は1日1回、カードの中から質問を1つお届けします。';
+
+  @override
+  String get reminderAskTrialLine => 'トライアルが終わる2日前にお知らせします。';
+
+  @override
+  String get reminderAskMorning => '朝';
+
+  @override
+  String get reminderAskLunch => 'お昼';
+
+  @override
+  String get reminderAskEvening => '夜';
+
+  @override
+  String get reminderAskOther => '別の時間';
+
+  @override
+  String get reminderAskYes => '通知を受け取る';
+
+  @override
+  String get reminderAskNotNow => '今はしない';
+
+  @override
+  String trialWarningTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+のトライアルは$days日後に終了します。',
+      one: 'Astute+のトライアルは明日で終了します。',
+      zero: 'Astute+のトライアルは今日で終了します。',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trialWarningBody(String date, String price, String path) {
+    return '$dateに、$priceの年間プランが始まります。続ける場合は、何もしなくて大丈夫です。解約するには：$path';
+  }
+
+  @override
+  String trialEndsNotice(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'トライアルは$days日後に終了',
+      one: 'トライアルは明日で終了',
+      zero: 'トライアルは今日で終了',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialNoticeManage => '管理';
+
+  @override
   String subjectsInTheMix(int n, int total) {
     return '$total分野中$n分野がミックスに';
   }
