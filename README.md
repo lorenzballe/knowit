@@ -281,10 +281,13 @@ once.
 
 Two of the three shelves say what the canvas said. The middle one does not:
 the canvas ranks it by what everyone saved, and saving is counted now, but
-by the top list — so the rows stay "the ones that ask the most", which is
-the order they were always in. The third one the app can say for real,
-because the mix is the reader's own: **Because Space sits at full**, from
-the subject they pushed furthest up.
+by the top list. Its rows were "the ones that ask the most", hardest first,
+which nobody could read and which For the sharpest already is further
+down; they are **a question from every subject** now — cards with a right
+answer, one subject after another, the same for everyone and for good, so
+a row read is the only thing that moves it. The third one the app can say
+for real, because the mix is the reader's own: **Because Space sits at
+full**, from the subject they pushed furthest up.
 
 **Read or not.** A card read anywhere is read: a card opened in Explore
 and turned past, or open when the viewer closes, counts like one read in
@@ -292,7 +295,7 @@ the day (`markReadElsewhere`), so the day never hands it back as a daily
 card months later. Explore then treats its shelves by what they are for.
 The top list is one list for everybody, so a card the reader has read stays
 on its place, with a tick and *Read* under it. The shelves for finding
-things — today's, *loved since the start*, the ones that ask the most,
+things — today's, *loved since the start*, a question from every subject,
 *because Space* — hold only cards the reader has not read, because a card
 already read is not a find. Somebody who arrived late finds the best of
 what came before them; somebody who has been here two years finds the next
@@ -438,7 +441,7 @@ readers to advertise it.
 ### The mix: a form for every kind of card
 
 Under the shelves that were always there (today's, the top list, loved since
-the start, the ones that ask the most, the reader's own), Explore used to
+the start, a question from every subject, the reader's own), Explore used to
 turn over themes that all looked the same: a name, a line, a row of small
 cards. They are gone. In their place each kind of card has a shelf laid out
 like what it holds, from artboards 131–141 (`lib/data/explore_mix.dart`
@@ -455,7 +458,10 @@ The order is fixed, and reads in three movements.
    Thinking before one comes back.
 2. **Myths, busted** (131e's deck, thrown aside one by one).
 3. **Numbers that surprise** (the figure itself).
-4. **Use it today** (131's checklist): tick what you tried.
+4. **Use it today** (131's list): something to try, or to drop into a
+   conversation, before tonight. Each row is the thing itself and opens its
+   card. The rings to tick one off as tried are gone: nobody could tell what
+   they were for.
 5. **Pick a side** (two halves).
 6. **For the sharpest**, **Where it came from**, **Seen, not read** and
    **True stories** (133e).
@@ -464,16 +470,23 @@ The order is fixed, and reads in three movements.
 
 7. **True or false** (133e), answered on the shelf. The answer is kept like
    any other, and the card counts as read.
-8. **What came back**: the cards due again, with what the reader said last
-   time (133d). Only there when something is due.
-9. **Sampling** and **Compared to what**: two of the questions that catch a
-   trick in a number (138b). Sampling asks who ended up being counted, since
-   that decides what the data can say; Compared to what asks for the number
-   to set a figure against.
+8. **Do you still remember?** (133d): the cards answered days ago, back to
+   see if the answer stuck, each saying how long it waited and how it went
+   last time. Only there when something is due.
+9. **Who got counted?** and **Compared to what?**: two of the questions that
+   catch a trick in a number (138b), named like every other shelf, with what
+   the reader has done with the move level with the name. Who got counted
+   asks who ended up in a study, since that decides what it can tell you;
+   Compared to what asks for something to set a change against. They were a
+   move's name set large in a box of its own, which took more room than the
+   cards and still did not say what it meant.
 10. **Work it out** (133b). Every way of putting a number on something, on
-    one shelf: pick one, move it and check (138d), closer and closer (139d),
-    which is bigger (139c), bet a range (139a), place your bet (139b). Bets
-    come out of a hundred points a day. The figures are the cards' own
+    one row: pick one, move it and check (138d), closer and closer (139d),
+    which is bigger (139c), bet a range (139a), place your bet (139b). Two
+    of each, in an order drawn for the day — a round of every way, then
+    another, never two of a kind side by side — every card the same size and
+    saying in its corner which game it is. There is no choosing a way first.
+    Bets come out of a hundred points a day. The figures are the cards' own
     answers.
 11. **Unmask the chart** (138d). A real chart from a card plays its trick,
     and then is redrawn honestly.
@@ -1502,7 +1515,7 @@ one document, from the phone's own cache in milliseconds. `dealt_by` on
 `day started` says who dealt it.
 
 **Explore** is assembled once an hour for everybody (`explore/latest`:
-today's shelf, the ones that ask the most, the top of the week and the
+today's shelf, a question from every subject, the top of the week and the
 month over closed days, loved since the start, per subject) and once a day
 for each reader (`readers/{uid}/explore/current`: the subject that is theirs,
 and *For you* — what the profile puts first, one card per strand, at most
