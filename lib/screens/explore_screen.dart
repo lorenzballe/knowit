@@ -85,7 +85,7 @@ class ExploreScreenState extends State<ExploreScreen> {
     Tallies.instance.refresh();
     Served.instance.explore();
     // What was played on the shelves earlier today: the points left, the
-    // bets laid, the cards ticked off.
+    // bets laid, the guesses set.
     ExplorePlay.instance.load();
     _shelves.addListener(_scrolled);
   }
@@ -287,15 +287,17 @@ class ExploreScreenState extends State<ExploreScreen> {
             .take(8)
             .toList();
 
-    // The canvas ranks this shelf by what everyone saved. Saves are counted
-    // now, and they rank the top list above it; this shelf stays ranked by
-    // what the cards ask, which is a different question and the order it
-    // was always in.
+    // A question from every subject: cards with an answer to give, one
+    // subject after another, in an order that never turns over. It was
+    // called "the ones that ask the most" and ranked hardest first, which
+    // nobody could read, and which made it For the sharpest again further
+    // down. Only cards with a right answer, whoever dealt them, so the line
+    // under it is true of every row.
     final List<Pill> asking =
         (served != null
                 ? _only(served.asking)
-                : _only(pickedPills(seed: allTimeSeed, count: 120)))
-            .where(unread)
+                : _only(askingPills(seed: allTimeSeed, count: 120)))
+            .where((p) => unread(p) && p.isGraded)
             .take(6)
             .toList();
 
@@ -388,9 +390,9 @@ class ExploreScreenState extends State<ExploreScreen> {
 
     // Everything under the shelves that were always there: one form per
     // kind of card, dealt for the day from what the reader has not read,
-    // each card on one shelf only. Today's shelf, the ones that ask the most
-    // and the reader's own keep their cards, so nothing down here was just
-    // scrolled past.
+    // each card on one shelf only. Today's shelf, the question from every
+    // subject and the reader's own keep their cards, so nothing down here
+    // was just scrolled past.
     final int day = themeDay(DateTime.now());
     final ExploreMix mix = _mixFor(
       day: day,
@@ -412,9 +414,12 @@ class ExploreScreenState extends State<ExploreScreen> {
     final List<CameBackCard> cameBack = _cameBack();
     final l = context.l10n;
 
-    (String, bool) moveBadge(Principle move) {
+    Widget moveBadge(Principle move) {
       final int met = widget.app.masteryOf(move).met;
-      return met > 0 ? (l.inYourMoves(met), true) : (l.newMove, false);
+      return MoveBadge(
+        label: met > 0 ? l.inYourMoves(met) : l.newMove,
+        lit: met > 0,
+      );
     }
 
     return Stack(
@@ -512,8 +517,11 @@ class ExploreScreenState extends State<ExploreScreen> {
             if (asking.isNotEmpty) ...[
               const SizedBox(height: 24),
               _Shelf(
-                title: context.l10n.onesThatAskTheMost,
-                line: context.l10n.acrossEveryone,
+                key: const ValueKey('shelf-asking'),
+                title: _subject != null
+                    ? context.l10n.askingIn(_subject!)
+                    : context.l10n.askingTitle,
+                line: context.l10n.askingLine,
                 child: _RowList(
                   pills: asking,
                   isRead: read,
@@ -581,26 +589,11 @@ class ExploreScreenState extends State<ExploreScreen> {
                 key: ValueKey('theme-${t.key}'),
                 title: _themeTitle(context, t),
                 line: _themeLine(context, t),
-                child: ListenableBuilder(
-                  listenable: ExplorePlay.instance,
-                  builder: (context, _) => UseTodayList(
-                    pills: t.pills,
-                    isRead: read,
-                    onOpen: _open,
-                    isTried: (p) =>
-                        ExplorePlay.instance['tried:${p.id}'] == true,
-                    onTried: (p, on) {
-                      Analytics.capture('explore tried', {
-                        'pill_id': p.id,
-                        'tried': on,
-                      });
-                      ExplorePlay.instance.put(
-                        'tried:${p.id}',
-                        on ? true : null,
-                      );
-                    },
-                    onShown: (p) => _seen('theme-${t.key}', p),
-                  ),
+                child: UseTodayList(
+                  pills: t.pills,
+                  isRead: read,
+                  onOpen: _open,
+                  onShown: (p) => _seen('theme-${t.key}', p),
                 ),
               ),
             ],
@@ -691,44 +684,53 @@ class ExploreScreenState extends State<ExploreScreen> {
                 ),
               ),
             ],
+            // Two questions to ask of a number, each named like any other
+            // shelf, with what the reader has done with the move beside it.
             if (mix.sampling.length >= 3) ...[
               const SizedBox(height: 24),
-              MoveShelf(
+              _Shelf(
                 key: const ValueKey('mix-move-sampling'),
-                name: l.moveSampling,
+                title: l.moveSampling,
                 line: l.moveSamplingLine,
-                badge: moveBadge(Principle.sampling).$1,
-                badgeLit: moveBadge(Principle.sampling).$2,
-                pills: mix.sampling,
-                isRead: read,
-                onOpen: _open,
-                onShown: (p) => _seen('move-sampling', p),
+                trailing: moveBadge(Principle.sampling),
+                child: MoveRow(
+                  pills: mix.sampling,
+                  isRead: read,
+                  onOpen: _open,
+                  onShown: (p) => _seen('move-sampling', p),
+                ),
               ),
             ],
             if (mix.compared.length >= 3) ...[
               const SizedBox(height: 24),
-              MoveShelf(
+              _Shelf(
                 key: const ValueKey('mix-move-compared'),
-                name: l.moveComparedToWhat,
+                title: l.moveComparedToWhat,
                 line: l.moveComparedToWhatLine,
-                badge: moveBadge(Principle.counterfactual).$1,
-                badgeLit: moveBadge(Principle.counterfactual).$2,
-                pills: mix.compared,
-                isRead: read,
-                onOpen: _open,
-                onShown: (p) => _seen('move-counterfactual', p),
+                trailing: moveBadge(Principle.counterfactual),
+                child: MoveRow(
+                  pills: mix.compared,
+                  isRead: read,
+                  onOpen: _open,
+                  onShown: (p) => _seen('move-counterfactual', p),
+                ),
               ),
             ],
             if (!mix.work.isEmpty) ...[
               const SizedBox(height: 24),
-              WorkItOut(
+              _Shelf(
                 key: const ValueKey('mix-work'),
-                deal: mix.work,
-                isRead: read,
-                onOpen: _open,
-                answerOf: _answerOf,
-                onCommit: _commit,
-                onShown: (p) => _seen('work', p),
+                title: l.themeWorkItOut,
+                line: l.themeWorkItOutLine,
+                trailing: const WorkWallet(),
+                child: WorkItOut(
+                  deal: mix.work,
+                  isRead: read,
+                  onOpen: _open,
+                  answerOf: _answerOf,
+                  onCommit: _commit,
+                  onShown: (p) => _seen('work', p),
+                ),
               ),
             ],
             if (mix.unmask.isNotEmpty) ...[
@@ -1370,7 +1372,8 @@ class _SubjectRow extends StatelessWidget {
 }
 
 /// A shelf: what it holds, why it exists, and the cards — and, where the
-/// shelf can be turned, the control that turns it, level with its name.
+/// shelf can be turned, the control that turns it, level with its name, or
+/// what it keeps count of: the points left, a move met so many times.
 class _Shelf extends StatelessWidget {
   const _Shelf({
     super.key,

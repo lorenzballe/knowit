@@ -398,16 +398,17 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('tab-Explore')));
     await _settle(tester);
 
-    // A shelf says what it holds and why it is a shelf. The rows are ranked
-    // by what the cards ask; what readers kept is the top list's, which is
-    // always there — here, with no counts to read, as its places empty.
+    // A shelf says what it holds and why it is a shelf. The rows are a
+    // question from every subject; what readers kept is the top list's,
+    // which is always there — here, with no counts to read, as its places
+    // empty.
     expect(find.text("Today's shelf"), findsOneWidget);
     expect(find.text('The same for everyone, and only today'), findsOneWidget);
     expect(find.text('Top of the week'), findsOneWidget);
     expect(find.byKey(const ValueKey('top-empty')), findsOneWidget);
-    // Further down, the ones that ask most.
+    // Further down, a question from every subject.
     final Finder asking = find.text(
-      'The ones that ask the most',
+      'A question from every subject',
       skipOffstage: false,
     );
     await tester.scrollUntilVisible(
@@ -421,7 +422,10 @@ void main() {
     );
     expect(asking, findsOneWidget);
     expect(
-      find.text('Across everyone, not just your mix', skipOffstage: false),
+      find.text(
+        'The same for everyone. Answer first, then see why',
+        skipOffstage: false,
+      ),
       findsOneWidget,
     );
     // Under everything that was always there, the turning themes.
@@ -461,10 +465,10 @@ void main() {
     );
     final Pill elsewhere = shelf.firstWhere((p) => p.topic != 'Economics');
     // On a shelf, not on exactly one: the three shelves are three framings
-    // of the same pool — today's, the ones that ask most, everybody's — and
-    // a card can honestly qualify for two of them at once. What is being
-    // tested here is the filter, so what matters is that it is somewhere
-    // before and nowhere after.
+    // of the same pool — today's, a question from every subject,
+    // everybody's — and a card can honestly qualify for two of them at
+    // once. What is being tested here is the filter, so what matters is
+    // that it is somewhere before and nowhere after.
     expect(find.byKey(ValueKey('explore-${elsewhere.id}')), findsWidgets);
 
     await tester.tap(find.byKey(const ValueKey('subject-Economics-off')));
