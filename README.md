@@ -133,8 +133,8 @@ subjects they kept on, and with Astute+
 all five are the reader's own, at the level the app has measured, with a
 card that came due for review. **Your journey**: the level and the numbers,
 every subject opened strand by strand, what stayed when a card came back,
-and the card to say tonight — the screen is Astute+; the profile keeps the
-record itself free. **Your whole archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
+and the moves you keep missing — the screen is Astute+; the profile keeps
+the record itself free. **Your whole archive**: the free plan keeps a week. €3,99 a month, €29,99 a year with
 fourteen days free, the only free trial there is, offered once at the end
 of the onboarding with "continue free" written under it — to a reader who
 set their mix. That is where most trials start, on the first day, and a

@@ -780,7 +780,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get freePlan => 'Ücretsiz plan';
 
   @override
-  String get streakReset => 'Seri sıfırlandı';
+  String get welcomeBack => 'Tekrar hoş geldin';
 
   @override
   String youMissedDays(int n) {
@@ -864,7 +864,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get fivePillsADayPick =>
-      'Günde beş kart, her sabah taze yazılır. Karışımda istediğin konuları seç — sonra değiştirebilirsin.';
+      'Günde beş kart, her sabah yenileri. Karışımda istediğin konuları seç — sonra değiştirebilirsin.';
 
   @override
   String nSelected(int n) {
@@ -897,7 +897,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Her sabah taze yazılır ve bir kaynakla doğrulanır.';
+      'Bir model tarafından önceden yazılır, her biri kaynağıyla doğrulanır.';
 
   @override
   String get introQuestionTitle => 'Bir soru, sonra yanıt';
@@ -914,7 +914,7 @@ class AppLocalizationsTr extends AppLocalizations {
       'Daha az görmek için bir konuyu kıs, ya da tamamen kapat.';
 
   @override
-  String get introThirtyTitle => 'Günde otuz saniye';
+  String get introThirtyTitle => 'Günde iki dakika';
 
   @override
   String get introThirtyLine =>
@@ -1605,7 +1605,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get perkJourneyLine =>
-      'Seviyen, dal dal her konu, aklında kalanlar ve bu akşam anlatacağın kart.';
+      'Seviyen, dal dal her konu, aklında kalanlar ve kaçırmaya devam ettiğin hamleler.';
 
   @override
   String get topOfTheWeek => 'Haftanın en iyileri';

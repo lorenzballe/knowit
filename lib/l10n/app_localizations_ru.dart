@@ -822,7 +822,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get freePlan => 'Бесплатный план';
 
   @override
-  String get streakReset => 'Серия сброшена';
+  String get welcomeBack => 'С возвращением';
 
   @override
   String youMissedDays(int n) {
@@ -914,7 +914,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get fivePillsADayPick =>
-      'Пять карточек в день, свежие каждое утро. Выбери темы для микса — потом их можно изменить.';
+      'Пять карточек в день, каждое утро новые. Выбери темы для микса — потом их можно изменить.';
 
   @override
   String nSelected(int n) {
@@ -946,7 +946,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get introTopicsTitle => 'Девятнадцать тем, пять карточек';
 
   @override
-  String get introTopicsLine => 'Пишутся каждое утро и сверяются с источником.';
+  String get introTopicsLine =>
+      'Написаны заранее моделью, и каждая сверена со своим источником.';
 
   @override
   String get introQuestionTitle => 'Вопрос, потом ответ';
@@ -963,7 +964,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Убавь тему, чтобы видеть её реже, или выключи совсем.';
 
   @override
-  String get introThirtyTitle => 'Тридцать секунд в день';
+  String get introThirtyTitle => 'Две минуты в день';
 
   @override
   String get introThirtyLine =>
@@ -1671,7 +1672,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get perkJourneyLine =>
-      'Твой уровень, каждый предмет по веткам, что осталось, и карточка, о которой рассказать сегодня вечером.';
+      'Твой уровень, каждый предмет по веткам, что осталось, и ходы, которые ты продолжаешь упускать.';
 
   @override
   String get topOfTheWeek => 'Топ недели';

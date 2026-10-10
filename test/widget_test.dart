@@ -526,7 +526,9 @@ void main() {
     expect(first, findsOneWidget);
     expect(second, findsOneWidget);
     expect(tester.getCenter(first).dx, lessThan(tester.getCenter(second).dx));
-    expect(find.text('9 readers'), findsOneWidget);
+    // The order is the counts'; the cards print no count, since most of one
+    // is the launch crowd until real readers outnumber it.
+    expect(find.text('9 readers'), findsNothing);
     expect(find.byKey(ValueKey('top-${econToo.id}')), findsNothing);
 
     // The month brings it in, at the head of the list.
@@ -4177,21 +4179,34 @@ void main() {
         _ => '',
       };
 
-      // Four answers at 90%, only one of them right: badly overconfident.
-      await app.recordAnswer(graded[0].id, right(graded[0]), confidence: 90);
-      for (var i = 1; i < 4; i++) {
-        await app.recordAnswer(graded[i].id, 'rubbish', confidence: 90);
+      // Twelve answers at 90%, three of them right: badly overconfident.
+      final List<Pill> hits = graded
+          .where((p) => p.challenge is PickOne)
+          .take(3)
+          .toList();
+      final List<Pill> misses = graded
+          .where((p) => !hits.contains(p))
+          .take(9)
+          .toList();
+      for (final p in hits) {
+        await app.recordAnswer(p.id, right(p), confidence: 90);
+      }
+      // Four in, the verdict waits: too few answers to say anything.
+      await app.recordAnswer(misses[0].id, 'rubbish', confidence: 90);
+      expect(app.overconfidence, isNull);
+      for (final p in misses.skip(1)) {
+        await app.recordAnswer(p.id, 'rubbish', confidence: 90);
       }
 
       final buckets = app.calibration.toList();
       expect(buckets, hasLength(1));
       expect(buckets.single.said, 90);
-      expect(buckets.single.count, 4);
-      expect(buckets.single.right, 1);
+      expect(buckets.single.count, 12);
+      expect(buckets.single.right, 3);
       expect(buckets.single.actual, 25);
       expect(buckets.single.gap, 65);
       expect(app.overconfidence, 65);
-      expect(app.calibratedAnswers, 4);
+      expect(app.calibratedAnswers, 12);
     });
 
     test('a trend needs two full windows before it says anything', () async {
@@ -4381,7 +4396,7 @@ void main() {
     await tester.pumpWidget(const AstutoApp());
     await _settle(tester);
 
-    expect(find.text('STREAK RESET'), findsOneWidget);
+    expect(find.text('WELCOME BACK'), findsOneWidget);
     expect(find.textContaining('You missed'), findsOneWidget);
 
     await tester.tap(find.text("Start again with today's five"));
@@ -4561,7 +4576,7 @@ void main() {
         'Nineteen topics, five cards',
         'A question, then the answer',
         'You choose the mix',
-        'Thirty seconds a day',
+        'Two minutes a day',
       ];
 
       for (final (Size size, EdgeInsets pad) in sizes) {
@@ -4625,7 +4640,7 @@ void main() {
         ('Astute', 'Five smart things a day, ready to use in conversation'),
         (
           'Nineteen topics, five cards',
-          'Written fresh every morning, and checked against a source.',
+          'Written ahead by a model, and every one checked against its source.',
         ),
         (
           'A question, then the answer',
@@ -4636,7 +4651,7 @@ void main() {
           'Turn a topic down to see less of it, or off for good.',
         ),
         (
-          'Thirty seconds a day',
+          'Two minutes a day',
           'One notification, five cards, and a streak you will not want to break.',
         ),
       ];
@@ -4915,7 +4930,7 @@ void main() {
         );
         await _settle(tester);
       }
-      expect(find.text('Thirty seconds a day'), findsOneWidget);
+      expect(find.text('Two minutes a day'), findsOneWidget);
     }
 
     const List<String> parts = [

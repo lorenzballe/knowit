@@ -11,6 +11,7 @@ import '../analytics.dart';
 import '../cloud.dart';
 import '../debug_flags.dart';
 import '../state/app_state.dart';
+import '../state/progress.dart' show kCalibrationFloor;
 import '../sync/identity.dart';
 import '../sync/served.dart';
 import '../sync/trace.dart';
@@ -841,7 +842,11 @@ class _Calibration extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            context.l10n.acrossNAnswersHowSure(app.calibratedAnswers),
+            gap == null
+                ? context.l10n.journeyOffNotYet(
+                    kCalibrationFloor - app.judgements.length,
+                  )
+                : context.l10n.acrossNAnswersHowSure(app.calibratedAnswers),
             style: AppText.body(
               size: 12.5,
               height: 1.4,

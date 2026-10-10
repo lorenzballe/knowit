@@ -686,7 +686,7 @@
   }
  },
  "freePlan": "Free plan",
- "streakReset": "Streak reset",
+ "welcomeBack": "Welcome back",
  "youMissedDays": "{n, plural, =1{You missed\na day.} other{You missed\n{n} days.}}",
  "@youMissedDays": {
   "placeholders": {
@@ -759,7 +759,7 @@
  "everythingIsInDrag": "Everything is in. Drag a subject down to see less of it, or all the way to zero to drop it.",
  "next": "Next",
  "whatShouldWeTalkAbout": "What should we talk about?",
- "fivePillsADayPick": "Five cards a day, written fresh each morning. Pick the topics you want in the mix — you can change them later.",
+ "fivePillsADayPick": "Five cards a day, new every morning. Pick the topics you want in the mix — you can change them later.",
  "nSelected": "{n} selected",
  "@nSelected": {
   "placeholders": {
@@ -795,12 +795,12 @@
  "swipeToSeeMore": "Swipe to see more",
  "tagline": "Five smart things a day, ready to use in conversation",
  "introTopicsTitle": "Nineteen topics, five cards",
- "introTopicsLine": "Written fresh every morning, and checked against a source.",
+ "introTopicsLine": "Written ahead by a model, and every one checked against its source.",
  "introQuestionTitle": "A question, then the answer",
  "introQuestionLine": "Every card carries the one line that makes it worth saying out loud.",
  "introMixTitle": "You choose the mix",
  "introMixLine": "Turn a topic down to see less of it, or off for good.",
- "introThirtyTitle": "Thirty seconds a day",
+ "introThirtyTitle": "Two minutes a day",
  "introThirtyLine": "One notification, five cards, and a streak you will not want to break.",
  "introNotifyWhen": "Tomorrow, {time}",
  "@introNotifyWhen": {
@@ -1409,7 +1409,7 @@
  "continueFree": "Continue free",
  "archiveBeforeThisWeek": "Before this week",
  "weekKeptThreeOwn": "A week kept: tomorrow three of the five are yours.",
- "perkJourneyLine": "Your level, every subject strand by strand, what stayed, and the card to say tonight.",
+ "perkJourneyLine": "Your level, every subject strand by strand, what stayed, and the moves you keep missing.",
  "topOfTheWeek": "Top of the week",
  "topOfTheMonth": "Top of the month",
  "topIn": "Top in {subject}",

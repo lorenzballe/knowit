@@ -785,7 +785,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get freePlan => 'Gratis abonnement';
 
   @override
-  String get streakReset => 'Reeks op nul';
+  String get welcomeBack => 'Welkom terug';
 
   @override
   String youMissedDays(int n) {
@@ -870,7 +870,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get fivePillsADayPick =>
-      'Vijf kaarten per dag, elke ochtend vers geschreven. Kies de vakken die je in de mix wilt — je kunt ze later veranderen.';
+      'Vijf kaarten per dag, elke ochtend nieuwe. Kies de vakken die je in de mix wilt — je kunt ze later veranderen.';
 
   @override
   String nSelected(int n) {
@@ -904,7 +904,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Elke ochtend vers geschreven, en gecheckt tegen een bron.';
+      'Vooraf geschreven door een model, en elke kaart gecheckt aan de bron.';
 
   @override
   String get introQuestionTitle => 'Een vraag, dan het antwoord';
@@ -921,7 +921,7 @@ class AppLocalizationsNl extends AppLocalizations {
       'Zet een vak lager om er minder van te zien, of helemaal uit.';
 
   @override
-  String get introThirtyTitle => 'Dertig seconden per dag';
+  String get introThirtyTitle => 'Twee minuten per dag';
 
   @override
   String get introThirtyLine =>
@@ -1613,7 +1613,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get perkJourneyLine =>
-      'Je niveau, elk vak draad voor draad, wat bleef, en de kaart om vanavond te vertellen.';
+      'Je niveau, elk vak draad voor draad, wat bleef, en de zetten die je blijft missen.';
 
   @override
   String get topOfTheWeek => 'Top van de week';

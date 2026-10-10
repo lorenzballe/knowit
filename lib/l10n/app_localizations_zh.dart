@@ -759,7 +759,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get freePlan => '免费方案';
 
   @override
-  String get streakReset => '连续记录已重置';
+  String get welcomeBack => '欢迎回来';
 
   @override
   String youMissedDays(int n) {
@@ -841,7 +841,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get whatShouldWeTalkAbout => '我们聊什么？';
 
   @override
-  String get fivePillsADayPick => '每天五张卡片，每天早上新写。选出你想放进组合的主题——以后可以更改。';
+  String get fivePillsADayPick => '每天五张卡片，每天早上换新。选出你想放进组合的主题——以后可以更改。';
 
   @override
   String nSelected(int n) {
@@ -873,7 +873,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get introTopicsTitle => '十九个主题，五张卡片';
 
   @override
-  String get introTopicsLine => '每天早上新写，并与来源核对。';
+  String get introTopicsLine => '由模型提前写好，每一张都对照出处核查过。';
 
   @override
   String get introQuestionTitle => '先问，再答';
@@ -888,7 +888,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get introMixLine => '调低一个主题就少看到它，关掉就不再出现。';
 
   @override
-  String get introThirtyTitle => '每天三十秒';
+  String get introThirtyTitle => '每天两分钟';
 
   @override
   String get introThirtyLine => '一条通知，五张卡片，和一段你不想中断的连续记录。';
@@ -1560,7 +1560,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get weekKeptThreeOwn => '坚持了一周：明天五张里有三张是你的。';
 
   @override
-  String get perkJourneyLine => '你的等级、逐个分支的每个学科、你记住了什么，以及今晚要讲的那张卡片。';
+  String get perkJourneyLine => '你的等级、逐个分支的每个学科、你记住了什么，以及你一再错过的招。';
 
   @override
   String get topOfTheWeek => '本周热门';

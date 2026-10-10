@@ -764,7 +764,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get freePlan => '無料プラン';
 
   @override
-  String get streakReset => '連続記録リセット';
+  String get welcomeBack => 'おかえりなさい';
 
   @override
   String youMissedDays(int n) {
@@ -879,7 +879,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get introTopicsTitle => '19の分野、5枚のカード';
 
   @override
-  String get introTopicsLine => '毎朝新しく書かれ、出典と照合されます。';
+  String get introTopicsLine => 'モデルが前もって書き、一枚ずつ出典と照合しています。';
 
   @override
   String get introQuestionTitle => '問いがあって、答えがある';
@@ -894,7 +894,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get introMixLine => '分野を下げれば減り、切ればなくなります。';
 
   @override
-  String get introThirtyTitle => '1日30秒';
+  String get introThirtyTitle => '1日2分';
 
   @override
   String get introThirtyLine => '通知が1つ、カードが5枚、そして途切れさせたくない連続記録。';
@@ -1565,7 +1565,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get weekKeptThreeOwn => '1週間続いた：明日は5枚のうち3枚があなたのカード。';
 
   @override
-  String get perkJourneyLine => 'あなたのレベル、系統ごとの各分野、残ったこと、そして今夜話すカード。';
+  String get perkJourneyLine => 'あなたのレベル、系統ごとの各分野、残ったこと、そして何度も見逃している手。';
 
   @override
   String get topOfTheWeek => '今週のトップ';

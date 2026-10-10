@@ -1158,11 +1158,11 @@ abstract class AppLocalizations {
   /// **'Free plan'**
   String get freePlan;
 
-  /// No description provided for @streakReset.
+  /// No description provided for @welcomeBack.
   ///
   /// In en, this message translates to:
-  /// **'Streak reset'**
-  String get streakReset;
+  /// **'Welcome back'**
+  String get welcomeBack;
 
   /// No description provided for @youMissedDays.
   ///
@@ -1245,7 +1245,7 @@ abstract class AppLocalizations {
   /// No description provided for @fivePillsADayPick.
   ///
   /// In en, this message translates to:
-  /// **'Five cards a day, written fresh each morning. Pick the topics you want in the mix — you can change them later.'**
+  /// **'Five cards a day, new every morning. Pick the topics you want in the mix — you can change them later.'**
   String get fivePillsADayPick;
 
   /// No description provided for @nSelected.
@@ -1293,7 +1293,7 @@ abstract class AppLocalizations {
   /// No description provided for @introTopicsLine.
   ///
   /// In en, this message translates to:
-  /// **'Written fresh every morning, and checked against a source.'**
+  /// **'Written ahead by a model, and every one checked against its source.'**
   String get introTopicsLine;
 
   /// No description provided for @introQuestionTitle.
@@ -1323,7 +1323,7 @@ abstract class AppLocalizations {
   /// No description provided for @introThirtyTitle.
   ///
   /// In en, this message translates to:
-  /// **'Thirty seconds a day'**
+  /// **'Two minutes a day'**
   String get introThirtyTitle;
 
   /// No description provided for @introThirtyLine.
@@ -2427,7 +2427,7 @@ abstract class AppLocalizations {
   /// No description provided for @perkJourneyLine.
   ///
   /// In en, this message translates to:
-  /// **'Your level, every subject strand by strand, what stayed, and the card to say tonight.'**
+  /// **'Your level, every subject strand by strand, what stayed, and the moves you keep missing.'**
   String get perkJourneyLine;
 
   /// No description provided for @topOfTheWeek.

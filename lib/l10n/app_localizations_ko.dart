@@ -767,7 +767,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get freePlan => '무료 요금제';
 
   @override
-  String get streakReset => '연속 기록 초기화';
+  String get welcomeBack => '다시 오신 걸 환영해요';
 
   @override
   String youMissedDays(int n) {
@@ -850,7 +850,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get fivePillsADayPick =>
-      '하루 다섯 장, 매일 아침 새로 씁니다. 믹스에 넣을 주제를 고르세요 — 나중에 바꿀 수 있어요.';
+      '하루 다섯 장, 매일 아침 새로운 카드. 믹스에 넣을 주제를 고르세요 — 나중에 바꿀 수 있어요.';
 
   @override
   String nSelected(int n) {
@@ -882,7 +882,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get introTopicsTitle => '열아홉 개 주제, 다섯 장의 카드';
 
   @override
-  String get introTopicsLine => '매일 아침 새로 쓰고, 출처와 대조합니다.';
+  String get introTopicsLine => '모델이 미리 쓰고, 한 장 한 장 출처와 대조합니다.';
 
   @override
   String get introQuestionTitle => '질문, 그리고 답';
@@ -897,7 +897,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get introMixLine => '주제를 내리면 덜 보이고, 끄면 사라집니다.';
 
   @override
-  String get introThirtyTitle => '하루 30초';
+  String get introThirtyTitle => '하루 2분';
 
   @override
   String get introThirtyLine => '알림 하나, 카드 다섯 장, 그리고 끊고 싶지 않은 연속 기록.';
@@ -1573,7 +1573,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get weekKeptThreeOwn => '일주일 달성: 내일은 다섯 장 중 세 장이 당신의 카드.';
 
   @override
-  String get perkJourneyLine => '당신의 레벨, 갈래별 모든 주제, 남은 것, 그리고 오늘 밤 말할 카드.';
+  String get perkJourneyLine => '당신의 레벨, 갈래별 모든 주제, 남은 것, 그리고 계속 놓치는 수.';
 
   @override
   String get topOfTheWeek => '이번 주 인기 카드';

@@ -786,7 +786,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get freePlan => 'Piano gratuito';
 
   @override
-  String get streakReset => 'Serie azzerata';
+  String get welcomeBack => 'Bentornato';
 
   @override
   String youMissedDays(int n) {
@@ -870,7 +870,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get fivePillsADayPick =>
-      'Cinque carte al giorno, scritte fresche ogni mattina. Scegli le materie che vuoi nel mix — puoi cambiarle dopo.';
+      'Cinque carte al giorno, nuove ogni mattina. Scegli le materie che vuoi nel mix — puoi cambiarle dopo.';
 
   @override
   String nSelected(int n) {
@@ -904,7 +904,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Scritte fresche ogni mattina, e verificate su una fonte.';
+      'Scritte prima da un modello, e ognuna verificata sulla sua fonte.';
 
   @override
   String get introQuestionTitle => 'Una domanda, poi la risposta';
@@ -921,7 +921,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Abbassa una materia per vederne meno, o spegnila del tutto.';
 
   @override
-  String get introThirtyTitle => 'Trenta secondi al giorno';
+  String get introThirtyTitle => 'Due minuti al giorno';
 
   @override
   String get introThirtyLine =>
@@ -1614,7 +1614,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get perkJourneyLine =>
-      'Il tuo livello, ogni materia filone per filone, cosa ti è rimasto, e la carta da dire stasera.';
+      'Il tuo livello, ogni materia filone per filone, cosa ti è rimasto, e le mosse che continui a mancare.';
 
   @override
   String get topOfTheWeek => 'Top della settimana';

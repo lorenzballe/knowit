@@ -2055,10 +2055,13 @@ class _Placed extends StatelessWidget {
                   ),
                 ),
               ),
+              // No count on the card. Until real readers outnumber it, most
+              // of a number here is the launch crowd (TopSeed), and a
+              // made-up "1,204 readers" is the one thing an app about not
+              // being fooled cannot print. The order stays; the number waits
+              // until it is real.
               Text(
-                read
-                    ? '${context.l10n.readMark} · ${context.l10n.topReaders(readers)}'
-                    : context.l10n.topReaders(readers),
+                read ? context.l10n.readMark : '',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppText.body(
