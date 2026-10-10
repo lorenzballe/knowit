@@ -25,6 +25,7 @@ import '../widgets/explore/mood_minutes.dart';
 import '../widgets/explore/myth_deck.dart';
 import '../widgets/explore/series_shelf.dart';
 import '../widgets/explore/sixty_seconds.dart';
+import '../widgets/explore/spot_the_false.dart';
 import '../widgets/explore/surprise_me.dart';
 import '../widgets/explore/through_time.dart';
 import '../widgets/explore/unmask_chart.dart';
@@ -668,13 +669,29 @@ class ExploreScreenState extends State<ExploreScreen> {
                 key: ValueKey('theme-${t.key}'),
                 title: _themeTitle(context, t),
                 line: _themeLine(context, t),
-                child: TrueFalseRow(
-                  pills: t.pills,
-                  isRead: read,
-                  onOpen: _open,
-                  answerOf: _answerOf,
-                  onCommit: _commit,
-                  onShown: (p) => _seen('theme-${t.key}', p),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    TrueFalseRow(
+                      pills: t.pills,
+                      isRead: read,
+                      onOpen: _open,
+                      answerOf: _answerOf,
+                      onCommit: _commit,
+                      onShown: (p) => _seen('theme-${t.key}', p),
+                    ),
+                    // Three true and one false, under the row: the same
+                    // kind of card, played as a set.
+                    if (mix.spot case final SpotTheFalse spot) ...[
+                      const SizedBox(height: 16),
+                      SpotTheFalseBlock(
+                        spot: spot,
+                        onOpen: _open,
+                        onCommit: _commit,
+                        onShown: (p) => _seen('spot-false', p),
+                      ),
+                    ],
+                  ],
                 ),
               ),
             ],
