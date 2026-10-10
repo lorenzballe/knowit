@@ -891,7 +891,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get tagline =>
-      'Vijf slimme dingen per dag, klaar voor het volgende gesprek';
+      'Begrijp het waarom van dingen en hoe ver je op je kennis kunt vertrouwen';
 
   @override
   String get introTopicsTitle => 'Negentien vakken, vijf kaarten';
@@ -901,11 +901,11 @@ class AppLocalizationsNl extends AppLocalizations {
       'Vooraf geschreven door een model, en elke kaart gecheckt aan de bron.';
 
   @override
-  String get introQuestionTitle => 'Een vraag, dan het antwoord';
+  String get introQuestionTitle => 'Een vraag, hoe zeker, dan het waarom';
 
   @override
   String get introQuestionLine =>
-      'Elke kaart draagt de ene zin die het waard is hardop te zeggen.';
+      'Zeg eerst hoe zeker je bent. Gaandeweg zie je wat jouw ‘zeker’ waard is.';
 
   @override
   String get introMixTitle => 'Jij kiest de mix';

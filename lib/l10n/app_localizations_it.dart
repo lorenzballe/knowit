@@ -891,7 +891,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tagline =>
-      'Cinque cose intelligenti al giorno, pronte da usare in conversazione';
+      'Capisci il perché delle cose e scopri quanto fidarti di quello che sai';
 
   @override
   String get introTopicsTitle => 'Diciannove materie, cinque carte';
@@ -901,11 +901,12 @@ class AppLocalizationsIt extends AppLocalizations {
       'Scritte prima da un modello, e ognuna verificata sulla sua fonte.';
 
   @override
-  String get introQuestionTitle => 'Una domanda, poi la risposta';
+  String get introQuestionTitle =>
+      'Una domanda, quanto sei sicuro, poi il perché';
 
   @override
   String get introQuestionLine =>
-      'Ogni carta porta la frase che vale la pena dire ad alta voce.';
+      'Prima di\' quanto sei sicuro. Col tempo scopri quanto vale il tuo «sono sicuro».';
 
   @override
   String get introMixTitle => 'Il mix lo scegli tu';

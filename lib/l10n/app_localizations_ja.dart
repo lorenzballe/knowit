@@ -867,7 +867,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get swipeToSeeMore => 'スワイプして続きを見る';
 
   @override
-  String get tagline => '1日5つの賢い話題。会話でそのまま使えます';
+  String get tagline => '物事の「なぜ」を学び、自分の知識をどこまで信じていいかを知る';
 
   @override
   String get introTopicsTitle => '19の分野、5枚のカード';
@@ -876,10 +876,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get introTopicsLine => 'モデルが前もって書き、一枚ずつ出典と照合しています。';
 
   @override
-  String get introQuestionTitle => '問いがあって、答えがある';
+  String get introQuestionTitle => '問い、自信の度合い、そして理由';
 
   @override
-  String get introQuestionLine => 'どのカードにも、声に出す価値のあるひと言が入っています。';
+  String get introQuestionLine => '答えの前に自信を選びます。やがて、あなたの「間違いない」の価値がわかります。';
 
   @override
   String get introMixTitle => 'ミックスはあなたが決める';

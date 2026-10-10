@@ -893,7 +893,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get tagline =>
-      'Cinco cosas inteligentes al día, listas para usar en una conversación';
+      'Entiende el porqué de las cosas y cuánto puedes fiarte de lo que sabes';
 
   @override
   String get introTopicsTitle => 'Diecinueve temas, cinco tarjetas';
@@ -903,11 +903,12 @@ class AppLocalizationsEs extends AppLocalizations {
       'Escritas antes por un modelo, y cada una comprobada con su fuente.';
 
   @override
-  String get introQuestionTitle => 'Una pregunta, luego la respuesta';
+  String get introQuestionTitle =>
+      'Una pregunta, cuánta seguridad, luego el porqué';
 
   @override
   String get introQuestionLine =>
-      'Cada tarjeta lleva la frase que merece decirse en voz alta.';
+      'Primero di cuánta seguridad tienes. Con el tiempo verás cuánto vale tu «seguro».';
 
   @override
   String get introMixTitle => 'Tú eliges la mezcla';

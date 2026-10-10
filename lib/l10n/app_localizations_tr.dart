@@ -884,7 +884,8 @@ class AppLocalizationsTr extends AppLocalizations {
   String get swipeToSeeMore => 'Daha fazlası için kaydır';
 
   @override
-  String get tagline => 'Günde beş akıllı şey, sohbette kullanmaya hazır';
+  String get tagline =>
+      'Olayların nedenini anla, bildiklerine ne kadar güvenebileceğini gör';
 
   @override
   String get introTopicsTitle => 'On dokuz konu, beş kart';
@@ -894,11 +895,11 @@ class AppLocalizationsTr extends AppLocalizations {
       'Bir model tarafından önceden yazılır, her biri kaynağıyla doğrulanır.';
 
   @override
-  String get introQuestionTitle => 'Bir soru, sonra yanıt';
+  String get introQuestionTitle => 'Bir soru, ne kadar emin, sonra neden';
 
   @override
   String get introQuestionLine =>
-      'Her kart, yüksek sesle söylemeye değer o tek cümleyi taşır.';
+      'Önce ne kadar eminsin, söyle. Zamanla «eminim» sözünün değerini görürsün.';
 
   @override
   String get introMixTitle => 'Karışımı sen seçersin';

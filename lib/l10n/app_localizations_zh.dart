@@ -861,7 +861,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get swipeToSeeMore => '滑动查看更多';
 
   @override
-  String get tagline => '每天五件聪明事，随时可以拿来聊';
+  String get tagline => '弄懂事物背后的“为什么”，也看清自己知道的能信几分';
 
   @override
   String get introTopicsTitle => '十九个主题，五张卡片';
@@ -870,10 +870,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get introTopicsLine => '由模型提前写好，每一张都对照出处核查过。';
 
   @override
-  String get introQuestionTitle => '先问，再答';
+  String get introQuestionTitle => '一道题，有多确定，再看为什么';
 
   @override
-  String get introQuestionLine => '每张卡片都带着那句值得说出口的话。';
+  String get introQuestionLine => '先说你有几分把握。久而久之，你会知道自己的“确定”值多少。';
 
   @override
   String get introMixTitle => '组合由你决定';

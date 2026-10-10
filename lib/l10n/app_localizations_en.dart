@@ -888,7 +888,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get swipeToSeeMore => 'Swipe to see more';
 
   @override
-  String get tagline => 'Five smart things a day, ready to use in conversation';
+  String get tagline =>
+      'Learn the why behind things, and how far to trust what you know';
 
   @override
   String get introTopicsTitle => 'Nineteen topics, five cards';
@@ -898,11 +899,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Written ahead by a model, and every one checked against its source.';
 
   @override
-  String get introQuestionTitle => 'A question, then the answer';
+  String get introQuestionTitle => 'A question, how sure, then why';
 
   @override
   String get introQuestionLine =>
-      'Every card carries the one line that makes it worth saying out loud.';
+      'Say how sure you are first. In time you see what your “sure” is worth.';
 
   @override
   String get introMixTitle => 'You choose the mix';
