@@ -1012,8 +1012,9 @@ dashboards, and has to agree with three names here.
   iPhone: it shows them only on an install from TestFlight or Xcode. The
   Android build for Google Play has to be made with
   `--dart-define=DEBUG_TOOLS=false`. Apple's reviewers install with a
-  sandbox receipt too, so they do see them (see *Debug tools*, under *What
-  is not real yet*).
+  sandbox receipt too, so the build sent for review comes from the other
+  Codemagic workflow, *iOS · App Store (for review)*, made with
+  `DEBUG_TOOLS=false` (see *Debug tools*, under *What is not real yet*).
 - **A way out of the account**, which Apple requires inside any app that
   makes accounts (5.1.1(v)): *Delete account* at the foot of the profile's
   account rows. Whoever signed in with Apple or Google confirms with the
@@ -1311,7 +1312,9 @@ in `lib/debug_flags.dart`, from `main()`): it asks `AppDelegate.swift` on
 `astut/install` whether the install carries a sandbox receipt, which
 TestFlight's and Xcode's do and the App Store's does not, and shows the
 section only if it does. No answer within 300 ms is a no. Apple's reviewers
-install with a sandbox receipt as well, so they see the section too. Every
+install with a sandbox receipt as well, which is why `codemagic.yaml` has a
+second workflow, `ios-app-store` (*iOS · App Store (for review)*): the same
+build made with `DEBUG_TOOLS=false`, the one to submit. Every
 debug build has it. `--dart-define=DEBUG_TOOLS=false` takes it out of any
 build, except that the site, built that way, still shows it for a visit
 whose address says `?debug`. Android asks nothing, so the build for Google
