@@ -46,10 +46,11 @@
             android:name="com.posthog.posthog.AUTO_INIT"
             android:value="false" />
 
-        <!-- The home-screen widgets: the question of the day, the streak,
-             and today's five. Redrawn by the app whenever it has something
-             new, and by the system every half hour, which is how they turn
-             over at midnight on their own. -->
+        <!-- The home-screen widgets: today's card, the streak, today's five
+             and today's shelf, every card on them opening itself in the
+             app. Redrawn by the app whenever it has something new, and by
+             the system every half hour, which is how they turn over at
+             midnight, and the shelf every third hour, on their own. -->
         <receiver
             android:name=".AstutWidget"
             android:label="@string/widget_card_label"
@@ -82,6 +83,17 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/astut_five_widget_info" />
+        </receiver>
+        <receiver
+            android:name=".AstutShelfWidget"
+            android:label="@string/widget_shelf_label"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/astut_shelf_widget_info" />
         </receiver>
 
         <!-- The scheduled reminder is delivered by these. The plugin does not

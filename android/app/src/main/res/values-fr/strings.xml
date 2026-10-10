@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="widget_card_label">La carte du jour</string>
-    <string name="widget_description">La carte qui ouvre la matinée, et ta série.</string>
+    <string name="widget_description">La prochaine carte du jour, puis l\'étagère du jour.</string>
     <string name="widget_streak_label">Série</string>
     <string name="widget_streak_description">Tes jours d\'affilée, et la semaine.</string>
     <string name="widget_five_label">Les cinq du jour</string>
@@ -9,4 +9,7 @@
     <string name="widget_card_empty">Cinq cartes, deux minutes.</string>
     <string name="widget_streak_open">Ouvre Astute pour voir ta série ici.</string>
     <string name="widget_five_open">Ouvre Astute pour voir ici les cinq du jour.</string>
+    <string name="widget_shelf_label">L\'étagère du jour</string>
+    <string name="widget_shelf_description">Des cartes du haut d\'Explorer, les mêmes pour tous, et seulement aujourd\'hui.</string>
+    <string name="widget_shelf_open">Ouvre Astute pour voir ici l\'étagère du jour.</string>
 </resources>
