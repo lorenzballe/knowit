@@ -2950,6 +2950,113 @@ class AppLocalizationsNl extends AppLocalizations {
       'Van de oudheid tot dit jaar. Sleep om te reizen';
 
   @override
+  String leanHint(String or) {
+    return 'Schuif het ‘$or’ naar waar jij staat';
+  }
+
+  @override
+  String leanHow(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      '1': 'een beetje',
+      '2': 'alles afwegend',
+      '3': 'beslist',
+      'other': 'helemaal',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String leanSays(String side, String how) {
+    return '$side, $how';
+  }
+
+  @override
+  String leanTook(String side) {
+    return 'Je koos $side';
+  }
+
+  @override
+  String leanVerdict(String says) {
+    return '$says. Open hem voor de andere kant.';
+  }
+
+  @override
+  String get spotTitle => 'Welke is niet waar?';
+
+  @override
+  String get spotLine => 'Drie zijn waar. Eén niet.';
+
+  @override
+  String get spotPrompt => 'Tik op de bewering die volgens jou niet klopt';
+
+  @override
+  String get spotConfirm => 'Deze is niet waar';
+
+  @override
+  String get spotFound => 'Gevonden. De andere drie zijn waar.';
+
+  @override
+  String get spotMissed =>
+      'Niet deze: die is waar. De onware is doorgestreept.';
+
+  @override
+  String get spotWhy => 'Tik op een ervan om te lezen waarom';
+
+  @override
+  String get spotYours => 'Jouw keuze';
+
+  @override
+  String get yearHint => 'Typ een jaar';
+
+  @override
+  String get yearAd => 'n.Chr.';
+
+  @override
+  String get yearBc => 'v.Chr.';
+
+  @override
+  String yearNamed(String year) {
+    return '$year';
+  }
+
+  @override
+  String yearAdOf(String year) {
+    return '$year n.Chr.';
+  }
+
+  @override
+  String yearBcOf(String year) {
+    return '$year v.Chr.';
+  }
+
+  @override
+  String get yearGo => 'Ga naar dit jaar';
+
+  @override
+  String yearNearest(String year) {
+    return 'Het dichtst bij $year eerst';
+  }
+
+  @override
+  String yearNoneNamed(String year) {
+    return 'Geen kaart hier noemt een jaar rond $year. Deze komen uit zijn tijdperk.';
+  }
+
+  @override
+  String yearNoAge(String year) {
+    return 'Vandaag niets van rond $year. Dit is het dichtstbijzijnde tijdperk.';
+  }
+
+  @override
+  String yearFuture(String year) {
+    return '$year moet nog komen. Hier is deze eeuw.';
+  }
+
+  @override
+  String get yearZero =>
+      'Een jaar 0 bestond niet. Probeer 1 v.Chr. of 1 n.Chr.';
+
+  @override
   String get todayLabel => 'Vandaag';
 
   @override

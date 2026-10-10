@@ -3079,6 +3079,112 @@ class AppLocalizationsPl extends AppLocalizations {
       'Od starożytności po ten rok. Przeciągnij, by podróżować';
 
   @override
+  String leanHint(String or) {
+    return 'Przesuń „$or” tam, gdzie stoisz';
+  }
+
+  @override
+  String leanHow(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      '1': 'trochę',
+      '2': 'raczej',
+      '3': 'zdecydowanie',
+      'other': 'w pełni',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String leanSays(String side, String how) {
+    return '$side, $how';
+  }
+
+  @override
+  String leanTook(String side) {
+    return 'Twój wybór: $side';
+  }
+
+  @override
+  String leanVerdict(String says) {
+    return '$says. Otwórz, żeby poznać drugą stronę.';
+  }
+
+  @override
+  String get spotTitle => 'Znajdź fałsz';
+
+  @override
+  String get spotLine => 'Trzy są prawdziwe. Jedno nie.';
+
+  @override
+  String get spotPrompt => 'Stuknij to, które uważasz za fałszywe';
+
+  @override
+  String get spotConfirm => 'To jest fałszywe';
+
+  @override
+  String get spotFound => 'Znalezione. Pozostałe trzy są prawdziwe.';
+
+  @override
+  String get spotMissed =>
+      'Nie to: jest prawdziwe. Fałszywe jest przekreślone.';
+
+  @override
+  String get spotWhy => 'Stuknij dowolne, żeby przeczytać dlaczego';
+
+  @override
+  String get spotYours => 'Twój wybór';
+
+  @override
+  String get yearHint => 'Wpisz rok';
+
+  @override
+  String get yearAd => 'n.e.';
+
+  @override
+  String get yearBc => 'p.n.e.';
+
+  @override
+  String yearNamed(String year) {
+    return '$year';
+  }
+
+  @override
+  String yearAdOf(String year) {
+    return '$year n.e.';
+  }
+
+  @override
+  String yearBcOf(String year) {
+    return '$year p.n.e.';
+  }
+
+  @override
+  String get yearGo => 'Przejdź do tego roku';
+
+  @override
+  String yearNearest(String year) {
+    return 'Najpierw najbliższe roku $year';
+  }
+
+  @override
+  String yearNoneNamed(String year) {
+    return 'Żadna karta nie podaje tu roku bliskiego $year. Te są z jego epoki.';
+  }
+
+  @override
+  String yearNoAge(String year) {
+    return 'Dziś nic z okolic roku $year. To najbliższa epoka.';
+  }
+
+  @override
+  String yearFuture(String year) {
+    return 'Rok $year dopiero nadejdzie. Oto ten wiek.';
+  }
+
+  @override
+  String get yearZero => 'Roku 0 nie było. Spróbuj 1 p.n.e. lub 1 n.e.';
+
+  @override
   String get todayLabel => 'Dziś';
 
   @override

@@ -4326,6 +4326,156 @@ abstract class AppLocalizations {
   /// **'From the ancient world to this year. Drag to travel'**
   String get throughTimeLine;
 
+  /// Under a debate on the Pick a side shelf, before the reader has leant either way: the word between the two sides is a handle to drag.
+  ///
+  /// In en, this message translates to:
+  /// **'Slide the “{or}” to where you stand'**
+  String leanHint(String or);
+
+  /// How far the reader leant towards a side, from 1 (just past the middle) to 4 (the end of the track).
+  ///
+  /// In en, this message translates to:
+  /// **'{level, select, 1{a little} 2{on balance} 3{firmly} other{all the way}}'**
+  String leanHow(String level);
+
+  /// A side and how far the reader leans to it: Yes, firmly.
+  ///
+  /// In en, this message translates to:
+  /// **'{side}, {how}'**
+  String leanSays(String side, String how);
+
+  /// No description provided for @leanTook.
+  ///
+  /// In en, this message translates to:
+  /// **'You took {side}'**
+  String leanTook(String side);
+
+  /// No description provided for @leanVerdict.
+  ///
+  /// In en, this message translates to:
+  /// **'{says}. Open it for the other side.'**
+  String leanVerdict(String says);
+
+  /// No description provided for @spotTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Spot the false one'**
+  String get spotTitle;
+
+  /// No description provided for @spotLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Three are true. One is not.'**
+  String get spotLine;
+
+  /// No description provided for @spotPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the one you think is false'**
+  String get spotPrompt;
+
+  /// No description provided for @spotConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s the false one'**
+  String get spotConfirm;
+
+  /// No description provided for @spotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Found it. The other three are true.'**
+  String get spotFound;
+
+  /// No description provided for @spotMissed.
+  ///
+  /// In en, this message translates to:
+  /// **'Not that one: it\'s true. The false one is struck out.'**
+  String get spotMissed;
+
+  /// No description provided for @spotWhy.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap any of them to read why'**
+  String get spotWhy;
+
+  /// No description provided for @spotYours.
+  ///
+  /// In en, this message translates to:
+  /// **'Your pick'**
+  String get spotYours;
+
+  /// No description provided for @yearHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type a year'**
+  String get yearHint;
+
+  /// No description provided for @yearAd.
+  ///
+  /// In en, this message translates to:
+  /// **'AD'**
+  String get yearAd;
+
+  /// No description provided for @yearBc.
+  ///
+  /// In en, this message translates to:
+  /// **'BC'**
+  String get yearBc;
+
+  /// A year from 1000 on, inside a sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'{year}'**
+  String yearNamed(String year);
+
+  /// No description provided for @yearAdOf.
+  ///
+  /// In en, this message translates to:
+  /// **'AD {year}'**
+  String yearAdOf(String year);
+
+  /// No description provided for @yearBcOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{year} BC'**
+  String yearBcOf(String year);
+
+  /// No description provided for @yearGo.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to this year'**
+  String get yearGo;
+
+  /// No description provided for @yearNearest.
+  ///
+  /// In en, this message translates to:
+  /// **'Nearest to {year} first'**
+  String yearNearest(String year);
+
+  /// No description provided for @yearNoneNamed.
+  ///
+  /// In en, this message translates to:
+  /// **'No card here names a year near {year}. These are from its age.'**
+  String yearNoneNamed(String year);
+
+  /// No description provided for @yearNoAge.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing from around {year} here today. This is the nearest age.'**
+  String yearNoAge(String year);
+
+  /// No description provided for @yearFuture.
+  ///
+  /// In en, this message translates to:
+  /// **'{year} is still to come. Here is this century.'**
+  String yearFuture(String year);
+
+  /// No description provided for @yearZero.
+  ///
+  /// In en, this message translates to:
+  /// **'There was no year 0. Try 1 BC or AD 1.'**
+  String get yearZero;
+
   /// No description provided for @todayLabel.
   ///
   /// In en, this message translates to:

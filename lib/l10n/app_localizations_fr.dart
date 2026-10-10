@@ -2963,6 +2963,113 @@ class AppLocalizationsFr extends AppLocalizations {
       'Du monde antique à cette année. Fais glisser pour voyager';
 
   @override
+  String leanHint(String or) {
+    return 'Glisse le « $or » jusqu\'à ta position';
+  }
+
+  @override
+  String leanHow(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      '1': 'un peu',
+      '2': 'tout compte fait',
+      '3': 'fermement',
+      'other': 'à fond',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String leanSays(String side, String how) {
+    return '$side, $how';
+  }
+
+  @override
+  String leanTook(String side) {
+    return 'Tu as pris $side';
+  }
+
+  @override
+  String leanVerdict(String says) {
+    return '$says. Ouvre-la pour l\'autre camp.';
+  }
+
+  @override
+  String get spotTitle => 'Trouve la fausse';
+
+  @override
+  String get spotLine => 'Trois sont vraies. Une ne l\'est pas.';
+
+  @override
+  String get spotPrompt => 'Touche celle que tu crois fausse';
+
+  @override
+  String get spotConfirm => 'C\'est elle, la fausse';
+
+  @override
+  String get spotFound => 'Trouvé. Les trois autres sont vraies.';
+
+  @override
+  String get spotMissed =>
+      'Pas celle-là : elle est vraie. La fausse est barrée.';
+
+  @override
+  String get spotWhy => 'Touches-en une pour lire pourquoi';
+
+  @override
+  String get spotYours => 'Ton choix';
+
+  @override
+  String get yearHint => 'Tape une année';
+
+  @override
+  String get yearAd => 'apr. J.-C.';
+
+  @override
+  String get yearBc => 'av. J.-C.';
+
+  @override
+  String yearNamed(String year) {
+    return '$year';
+  }
+
+  @override
+  String yearAdOf(String year) {
+    return '$year apr. J.-C.';
+  }
+
+  @override
+  String yearBcOf(String year) {
+    return '$year av. J.-C.';
+  }
+
+  @override
+  String get yearGo => 'Aller à cette année';
+
+  @override
+  String yearNearest(String year) {
+    return 'Au plus près de $year d\'abord';
+  }
+
+  @override
+  String yearNoneNamed(String year) {
+    return 'Aucune carte ici ne cite une année proche de $year. Celles-ci sont de son époque.';
+  }
+
+  @override
+  String yearNoAge(String year) {
+    return 'Rien autour de $year ici aujourd\'hui. Voici l\'époque la plus proche.';
+  }
+
+  @override
+  String yearFuture(String year) {
+    return '$year est encore à venir. Voici ce siècle.';
+  }
+
+  @override
+  String get yearZero =>
+      'L\'an 0 n\'a pas existé. Essaie 1 av. J.-C. ou 1 apr. J.-C.';
+
+  @override
   String get todayLabel => 'Aujourd\'hui';
 
   @override
