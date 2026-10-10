@@ -540,14 +540,6 @@ List<Pill> pickedPills({
     Difficulty.easy => 2,
   };
 
-  int keyed(Pill p) {
-    var hash = 0;
-    for (final unit in '$seed${p.id}'.codeUnits) {
-      hash = (hash * 31 + unit) & 0x1FFFFFFF;
-    }
-    return hash;
-  }
-
   pool.sort((a, b) {
     final byRank = rank(a).compareTo(rank(b));
     if (byRank != 0) return byRank;
@@ -555,30 +547,58 @@ List<Pill> pickedPills({
       b.asksSomething ? 0 : 1,
     );
     if (byAsking != 0) return byAsking;
-    return keyed(a).compareTo(keyed(b));
+    return _keyed('$seed${a.id}').compareTo(_keyed('$seed${b.id}'));
   });
 
   if (topic != null) return pool.take(count).toList();
+  return _roundTheSubjects(pool, seed: seed, count: count);
+}
 
-  // One subject at a time, round the subjects, until the shelf is full.
-  // Ranked straight down, the shelf came out entirely Thinking — it is more
-  // than half the deck and it holds most of the hard cards — and six cards
-  // from one subject is not a shelf, it is the same card six times.
+/// Explore's questions from every subject, the same for everybody: the
+/// cards with a right answer to give, in [seed]'s order, one subject after
+/// another. Not ranked by how hard they are — For the sharpest is the shelf
+/// for that — so the rows are what their name says, a question from each
+/// subject in turn. functions/src/explore.ts deals the same list, card for
+/// card, for the phones the server answers.
+List<Pill> askingPills({required String seed, required int count}) {
+  final pool = PillBank.cards.where((p) => p.isGraded).toList()
+    ..sort((a, b) {
+      final int byKey = _keyed('$seed${a.id}')
+          .compareTo(_keyed('$seed${b.id}'));
+      // Two ids can share a key; their own order settles it, on the phone
+      // and on the server alike.
+      return byKey != 0 ? byKey : a.id.compareTo(b.id);
+    });
+  return _roundTheSubjects(pool, seed: seed, count: count);
+}
+
+/// The shelves' order key: `hash = (hash * 31 + unit) & 0x1FFFFFFF` over
+/// the text, the same on the server (functions/src/rng.ts, `keyed`).
+int _keyed(String text) {
+  var hash = 0;
+  for (final unit in text.codeUnits) {
+    hash = (hash * 31 + unit) & 0x1FFFFFFF;
+  }
+  return hash;
+}
+
+/// [pool] dealt one subject at a time, round the subjects in [seed]'s order
+/// of them, until there are [count].
+///
+/// Ranked straight down, a shelf came out entirely Thinking — it is more
+/// than half the deck and it holds most of the hard cards — and six cards
+/// from one subject is not a shelf, it is the same card six times.
+List<Pill> _roundTheSubjects(
+  List<Pill> pool, {
+  required String seed,
+  required int count,
+}) {
   final byTopic = <String, List<Pill>>{};
   for (final pill in pool) {
     byTopic.putIfAbsent(pill.topic, () => <Pill>[]).add(pill);
   }
   final order = byTopic.keys.toList()
-    ..sort((a, b) {
-      var ka = 0, kb = 0;
-      for (final unit in '$seed$a'.codeUnits) {
-        ka = (ka * 31 + unit) & 0x1FFFFFFF;
-      }
-      for (final unit in '$seed$b'.codeUnits) {
-        kb = (kb * 31 + unit) & 0x1FFFFFFF;
-      }
-      return ka.compareTo(kb);
-    });
+    ..sort((a, b) => _keyed('$seed$a').compareTo(_keyed('$seed$b')));
 
   final picked = <Pill>[];
   for (var round = 0; picked.length < count; round++) {

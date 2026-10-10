@@ -1,13 +1,13 @@
 // Explore, assembled on the server.
 //
 // The shelves the phone used to compute for itself, put together once for
-// everybody — today's shelf, the ones that ask the most, the top of the
+// everybody — today's shelf, a question from every subject, the top of the
 // week and the month, loved since the start — and once per reader, from
 // their profile, the shelf that is theirs. Every card on a shelf travels
 // whole, so a phone reads one document and draws, and a card the phone's
 // own bank has not got yet still shows.
 
-import { Bank, Card, asks, isDebate, dateKey, topicName } from './bank.js';
+import { Bank, Card, asks, graded, isDebate, dateKey, topicName } from './bank.js';
 import { Profile } from './profile.js';
 import { fit, leanOf } from './deal.js';
 import { keyed, unit } from './rng.js';
@@ -70,6 +70,25 @@ export function pickedCards(bank: Bank, seed: string, count: number, topic?: str
     return keyed(`${seed}${a.id}`) - keyed(`${seed}${b.id}`);
   });
   if (topic) return pool.slice(0, count);
+  return roundTheSubjects(pool, seed, count);
+}
+
+/**
+ * A question from every subject, the same for everybody: the cards with a right answer to give, in the seed's
+ * order, round the subjects. Not ranked by how hard they are — For the sharpest, on the phone, is the shelf for
+ * that — so the rows are what their name says. The phone's `askingPills`, card for card.
+ */
+export function askingCards(bank: Bank, seed: string, count: number): Card[] {
+  const pool = bank.live.filter(graded).sort((a, b) => {
+    const byKey = keyed(`${seed}${a.id}`) - keyed(`${seed}${b.id}`);
+    // Two ids can share a key; their own order settles it, by code unit, as Dart's compareTo does.
+    return byKey || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+  });
+  return roundTheSubjects(pool, seed, count);
+}
+
+/** [pool] dealt one subject at a time, round the subjects in the seed's order of them, until there are [count]. */
+function roundTheSubjects(pool: Card[], seed: string, count: number): Card[] {
   const byTopic = new Map<string, Card[]>();
   for (const c of pool) {
     const list = byTopic.get(c.topic) ?? [];
@@ -181,7 +200,7 @@ export function buildGlobalExplore(bank: Bank, tallies: Tallies, totals: Map<str
     version: bank.version,
     at: nowMs,
     today: pickedCards(bank, daySeed(todayUtc), 24),
-    asking: pickedCards(bank, ALL_TIME_SEED, 40),
+    asking: askingCards(bank, ALL_TIME_SEED, 40),
     topWeek: topList(bank, tallies, todayUtc, WEEK_DAYS, 10).map(card),
     topMonth: topList(bank, tallies, todayUtc, MONTH_DAYS, 10).map(card),
     loved: allTime(bank, totals, nowMs, 40).map(card),
