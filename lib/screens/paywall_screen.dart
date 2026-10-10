@@ -3,7 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart' show DateFormat;
+import 'package:intl/intl.dart' show DateFormat, NumberFormat;
 
 import '../analytics.dart';
 import '../l10n/l10n.dart';
@@ -57,6 +57,37 @@ List<({IconData icon, String title, String sub})> _perks(
     sub: l.perkArchiveLine,
   ),
 ];
+
+/// What the year comes to a month, in the store's own currency once it has
+/// answered: an American reader saw "\$29.99" on the tile and "€2,49 a month"
+/// under it. The store's figure first, then a twelfth of its price, then the
+/// price written into the app.
+String yearPerMonth() {
+  final StoreProduct? year = Subscription.instance.yearly?.storeProduct;
+  if (year == null) return _euros(kYearlyCents ~/ 12);
+  final String? perMonth = year.pricePerMonthString;
+  if (perMonth != null && perMonth.isNotEmpty) return perMonth;
+  try {
+    return NumberFormat.simpleCurrency(name: year.currencyCode)
+        .format(year.price / 12);
+  } catch (_) {
+    return _euros(kYearlyCents ~/ 12);
+  }
+}
+
+/// The year against twelve months of the month, from the store's two prices
+/// when it has both — the same currency, so the share is true wherever the
+/// reader is — and from the prices written into the app before. Null when
+/// the year saves nothing, so no badge claims it does.
+int? yearlySaving() {
+  final Subscription store = Subscription.instance;
+  final double? year = store.yearly?.storeProduct.price;
+  final double? month = store.monthly?.storeProduct.price;
+  final int saving = year != null && month != null && month > 0
+      ? (100 * (month * 12 - year) / (month * 12)).round()
+      : kYearlySavingPercent;
+  return saving > 0 ? saving : null;
+}
 
 /// What the store charges for [plan], or the price written into the app
 /// when it has not answered.
@@ -537,8 +568,11 @@ class _PaywallScreenState extends State<PaywallScreen> {
                           label: l.planYearly,
                           price: _priceFor(Plan.year),
                           per: l.perYearShort,
-                          note: l.aMonth(_euros(kYearlyCents ~/ 12)),
-                          badge: l.savePercent(kYearlySavingPercent),
+                          note: l.aMonth(yearPerMonth()),
+                          badge: switch (yearlySaving()) {
+                            final int saving => l.savePercent(saving),
+                            null => null,
+                          },
                           selected: _plan == Plan.year,
                           onTap: () => _pick(Plan.year),
                         ),
@@ -580,17 +614,24 @@ class _PaywallScreenState extends State<PaywallScreen> {
                     ],
                     onPressed: widget.app.isPlus ? null : _start,
                   ),
+                  // A reader already on Astute+ is sent to the store's own
+                  // place for their plan. This used to say "Cancel the
+                  // trial" and turn a flag off on the phone, while the store
+                  // went on and charged them.
                   if (widget.app.isPlus)
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
-                      onTap: () async {
-                        await widget.app.endPlus();
-                        if (context.mounted) _leave();
+                      onTap: () {
+                        Analytics.capture('manage subscription opened', {
+                          'is_plus': true,
+                          'from': 'paywall',
+                        });
+                        Subscription.instance.presentCustomerCenter();
                       },
                       child: Padding(
                         padding: const EdgeInsets.only(top: 10),
                         child: Text(
-                          l.cancelTheTrial,
+                          l.manageSubscription,
                           textAlign: TextAlign.center,
                           style: _smallPrint(context),
                         ),

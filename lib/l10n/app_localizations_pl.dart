@@ -140,12 +140,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get sameForEveryone => 'Ta sama dla wszystkich, i tylko dziś';
 
   @override
-  String get onesThatAskTheMost => 'Te, które pytają najwięcej';
-
-  @override
-  String get acrossEveryone => 'U wszystkich, nie tylko w twoim miksie';
-
-  @override
   String becauseSitsAtFull(String name) {
     return 'Bo $name jest na maksimum';
   }
@@ -818,7 +812,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get freePlan => 'Plan darmowy';
 
   @override
-  String get streakReset => 'Seria wyzerowana';
+  String get welcomeBack => 'Witaj z powrotem';
 
   @override
   String youMissedDays(int n) {
@@ -910,7 +904,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get fivePillsADayPick =>
-      'Pięć kart dziennie, pisanych świeżo każdego ranka. Wybierz tematy do miksu — możesz je później zmienić.';
+      'Pięć kart dziennie, co rano nowe. Wybierz tematy do miksu — możesz je później zmienić.';
 
   @override
   String nSelected(int n) {
@@ -944,7 +938,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Pisane świeżo każdego ranka i sprawdzone ze źródłem.';
+      'Pisane wcześniej przez model, a każda sprawdzona ze swoim źródłem.';
 
   @override
   String get introQuestionTitle => 'Pytanie, potem odpowiedź';
@@ -961,7 +955,7 @@ class AppLocalizationsPl extends AppLocalizations {
       'Ścisz temat, żeby widzieć go mniej, albo wyłącz na dobre.';
 
   @override
-  String get introThirtyTitle => 'Trzydzieści sekund dziennie';
+  String get introThirtyTitle => 'Dwie minuty dziennie';
 
   @override
   String get introThirtyLine =>
@@ -1345,16 +1339,18 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n karty wróciły — odpowiedz jeszcze raz',
-      many: '$n kart wróciło — odpowiedz jeszcze raz',
-      few: '$n karty wróciły — odpowiedz jeszcze raz',
-      one: '1 karta wróciła — odpowiedz jeszcze raz',
+      other:
+          '$n karty sprzed kilku dni wracają: sprawdź, czy pamiętasz odpowiedzi',
+      many: '$n kart sprzed kilku dni wraca: sprawdź, czy pamiętasz odpowiedzi',
+      few:
+          '$n karty sprzed kilku dni wracają: sprawdź, czy pamiętasz odpowiedzi',
+      one: '1 karta sprzed kilku dni wraca: sprawdź, czy pamiętasz odpowiedź',
     );
     return '$_temp0';
   }
 
   @override
-  String get cameBack => 'Wróciły';
+  String get cameBack => 'Pamiętasz jeszcze?';
 
   @override
   String get holdACardYouLike => 'Podoba się? Przytrzymaj';
@@ -1668,7 +1664,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get perkJourneyLine =>
-      'Twój poziom, każdy temat wątek po wątku, co zostało, i karta do opowiedzenia dziś wieczorem.';
+      'Twój poziom, każdy temat wątek po wątku, co zostało, i ruchy, które wciąż ci umykają.';
 
   @override
   String get topOfTheWeek => 'Top tygodnia';
@@ -1763,7 +1759,8 @@ class AppLocalizationsPl extends AppLocalizations {
   String get themePractical => 'Na dziś';
 
   @override
-  String get themePracticalLine => 'Coś do wypróbowania przed wieczorem';
+  String get themePracticalLine =>
+      'Coś do wypróbowania albo do wtrącenia w rozmowie, jeszcze przed wieczorem';
 
   @override
   String get themeOrigins => 'Skąd się wzięło';
@@ -1788,7 +1785,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get themeWorkItOut => 'Policz to';
 
   @override
-  String get themeWorkItOutLine => 'Liczba do znalezienia w głowie';
+  String get themeWorkItOutLine => 'Zgadnij liczbę, zanim zdradzi ją karta';
 
   @override
   String get themeSeen => 'Do obejrzenia';
@@ -2530,9 +2527,6 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get aMove => 'Ruch';
-
-  @override
   String get anotherOne => 'Inna';
 
   @override
@@ -2552,21 +2546,10 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get betSlip => 'Twój kupon';
-
-  @override
   String get betWord => 'Postaw';
 
   @override
   String get biggerLabel => 'Większe';
-
-  @override
-  String get biggerNote => 'Każda liczba to odpowiedź z jednej karty.';
-
-  @override
-  String biggerScore(int right, int asked) {
-    return 'Trafione: $right z $asked.';
-  }
 
   @override
   String get biggerYouGotIt => 'Większe · trafione';
@@ -2767,9 +2750,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get forYouNow => 'Dla ciebie, teraz';
 
   @override
-  String get goNarrow => 'Zawężaj, gdy masz pewność: płaci trzy razy więcej.';
-
-  @override
   String get hardBadge => 'Trudne';
 
   @override
@@ -2808,9 +2788,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get lookFirst => 'Spójrz na wykres, zanim uwierzysz w nagłówek.';
 
   @override
-  String get markTried => 'Wypróbowane';
-
-  @override
   String minutesLabel(int n) {
     return '$n min';
   }
@@ -2824,41 +2801,19 @@ class AppLocalizationsPl extends AppLocalizations {
   String get modeBigger => 'Co jest większe?';
 
   @override
-  String get modeBiggerLine => 'Dwie liczby do oszacowania. Stuknij większą';
-
-  @override
   String get modeCloser => 'Coraz bliżej';
-
-  @override
-  String get modeCloserLine =>
-      'Trzy kroki „więcej czy mniej”, żeby zbliżyć się do liczby';
 
   @override
   String get modePick => 'Wybierz jedną';
 
   @override
-  String get modePickLine => 'Trzy wartości. Zdecyduj, zanim otworzysz kartę';
-
-  @override
   String get modeRange => 'Obstaw przedział';
-
-  @override
-  String get modeRangeLine => 'Im węziej, tym więcej płaci, jeśli trafisz';
 
   @override
   String get modeSlide => 'Przesuń';
 
   @override
-  String get modeSlideLine =>
-      'Najpierw ustaw odpowiedź, potem zobacz, jak daleko było do prawdy';
-
-  @override
   String get modeStake => 'Postaw zakład';
-
-  @override
-  String modeStakeLine(int n) {
-    return '$n punktów dziennie. Wygrasz — podwajasz stawkę';
-  }
 
   @override
   String get monthShelfLine => 'Co miesiąc nowy temat, ten sam dla wszystkich';
@@ -2894,18 +2849,30 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get moveComparedToWhat => 'W porównaniu z czym';
+  String get moveComparedToWhat => 'W porównaniu z czym?';
 
   @override
   String get moveComparedToWhatLine =>
-      'Zmiana nic nie znaczy bez grupy kontrolnej';
+      'Zmiana nic nie znaczy, jeśli nie ma jej z czym porównać';
 
   @override
-  String get moveSampling => 'Próba';
+  String get askingTitle => 'Po pytaniu z każdego tematu';
+
+  @override
+  String askingIn(String subject) {
+    return 'Pytania: $subject';
+  }
+
+  @override
+  String get askingLine =>
+      'Te same dla wszystkich. Najpierw odpowiedz, potem zobacz dlaczego';
+
+  @override
+  String get moveSampling => 'Kogo policzono?';
 
   @override
   String get moveSamplingLine =>
-      'To, kto trafił do próby, decyduje, co może ona powiedzieć';
+      'To, kto trafia do badania, decyduje, co może ono powiedzieć';
 
   @override
   String mythDeckHint(int at, int of) {
@@ -2937,11 +2904,6 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get pickOneFirst => 'Najpierw wybierz';
-
-  @override
-  String pointsToday(int n) {
-    return '+$n dziś';
-  }
 
   @override
   String get puzzleOfTheDay => 'Łamigłówka dnia';
@@ -3049,23 +3011,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get sixtyTitle => 'Sześćdziesiąt sekund';
 
   @override
-  String slideAverage(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Średnio $n punktu różnicy.',
-      many: 'Średnio $n punktów różnicy.',
-      few: 'Średnio $n punkty różnicy.',
-      one: 'Średnio 1 punkt różnicy.',
-      zero: 'Średnio idealnie.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get slideNote => 'Ustaw, sprawdź. Liczy się, jak daleko był wynik.';
-
-  @override
   String slideOff(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -3078,10 +3023,6 @@ class AppLocalizationsPl extends AppLocalizations {
     );
     return '$_temp0';
   }
-
-  @override
-  String get slipEmpty =>
-      'Jeszcze nic nie obstawiono. Każdy zakład trafi tutaj.';
 
   @override
   String get stakeLabel => 'Stawka';

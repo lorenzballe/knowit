@@ -176,103 +176,73 @@ void main() {
   testWidgets('played: the six ways to work it out', (tester) async {
     await open(tester);
     await reach(tester, 'mix-work');
-    await shoot(tester, 'work-pick');
-    final Finder firstOption = find.byWidgetPredicate(
-      (w) =>
-          w.key is ValueKey<String> &&
-          RegExp(r'^pick-.*-0$').hasMatch((w.key! as ValueKey<String>).value),
-    );
-    if (firstOption.evaluate().isNotEmpty) {
-      await tester.tap(firstOption.first);
-      await settle(tester);
-      await shoot(tester, 'work-pick-answered');
-    }
-    // The chips are a lazy row: drag it until the one wanted is built.
-    final Finder chips = find
-        .ancestor(
-          of: find.byWidgetPredicate(
-            (w) =>
-                w.key is ValueKey<String> &&
-                (w.key! as ValueKey<String>).value.startsWith('work-pick-'),
-          ),
-          matching: find.byWidgetPredicate(
-            (w) => w is Scrollable && w.axisDirection == AxisDirection.right,
-          ),
+    await shoot(tester, 'work-row');
+    // One row of every way, in the day's order: bring the first card of each
+    // way to the front, by the row's own position, and play it there.
+    final ScrollPosition row = tester
+        .state<ScrollableState>(
+          find
+              .descendant(
+                of: find.byKey(const ValueKey('mix-work')),
+                matching: find.byWidgetPredicate(
+                  (w) =>
+                      w is Scrollable && w.axisDirection == AxisDirection.right,
+                ),
+              )
+              .first,
         )
-        .first;
-    for (final mode in ['slide', 'closer', 'bigger', 'range', 'stake']) {
-      final Finder chip = find.byKey(ValueKey('work-$mode-off'));
-      for (int i = 0; i < 12 && chip.evaluate().isEmpty; i++) {
-        await tester.drag(chips, const Offset(-90, 0));
+        .position;
+    Finder keyed(bool Function(String) test) => find.byWidgetPredicate(
+      (w) =>
+          w.key is ValueKey<String> && test((w.key! as ValueKey<String>).value),
+    );
+    for (final mode in [
+      'pick',
+      'slide',
+      'closer',
+      'bigger',
+      'range',
+      'stake',
+    ]) {
+      final Finder card = find.byKey(ValueKey('work-$mode-0'));
+      row.jumpTo(0);
+      await settle(tester);
+      for (int i = 0; i < 40 && card.evaluate().isEmpty; i++) {
+        row.jumpTo(row.pixels + 150);
         await settle(tester);
       }
-      if (chip.evaluate().isEmpty) continue;
-      await tester.ensureVisible(chip);
-      await tester.tap(chip);
+      if (card.evaluate().isEmpty) continue;
+      row.jumpTo(
+        (row.pixels + tester.getTopLeft(card).dx - 20).clamp(
+          0,
+          row.maxScrollExtent,
+        ),
+      );
       await settle(tester);
-      await reach(tester, 'mix-work', above: 70);
       await shoot(tester, 'work-$mode');
-      if (mode == 'slide' || mode == 'range') {
-        final String prefix = mode == 'slide' ? 'slide-check-' : 'range-bet-';
-        final Finder act = find.byWidgetPredicate(
-          (w) =>
-              w.key is ValueKey<String> &&
-              (w.key! as ValueKey<String>).value.startsWith(prefix),
-        );
-        if (act.evaluate().isNotEmpty) {
-          await tester.tap(act.first);
-          await settle(tester);
-          await shoot(tester, 'work-$mode-done');
-        }
+      Finder inCard(String pattern) => find.descendant(
+        of: card,
+        matching: keyed((k) => RegExp(pattern).hasMatch(k)),
+      );
+      final List<String> taps = switch (mode) {
+        'pick' => [r'^pick-.*-0$'],
+        'slide' => [r'^slide-check-'],
+        'closer' => [
+          r'^closer-.*-more$',
+          r'^closer-.*-less$',
+          r'^closer-.*-more$',
+        ],
+        'bigger' => [r'^bigger-'],
+        'range' => [r'^range-bet-'],
+        _ => [r'^stake-.*-o1$', r'^stake-bet-'],
+      };
+      for (final pattern in taps) {
+        final Finder target = inCard(pattern);
+        if (target.evaluate().isEmpty) break;
+        await tester.tap(target.first);
+        await settle(tester);
       }
-      if (mode == 'closer') {
-        for (final side in ['more', 'less', 'more']) {
-          final Finder tap = find.byWidgetPredicate(
-            (w) =>
-                w.key is ValueKey<String> &&
-                RegExp('^closer-.*-$side\$')
-                    .hasMatch((w.key! as ValueKey<String>).value),
-          );
-          if (tap.evaluate().isEmpty) break;
-          await tester.tap(tap.first);
-          await settle(tester);
-        }
-        await shoot(tester, 'work-closer-done');
-      }
-      if (mode == 'bigger') {
-        final Finder side = find.byWidgetPredicate(
-          (w) =>
-              w.key is ValueKey<String> &&
-              (w.key! as ValueKey<String>).value.startsWith('bigger-'),
-        );
-        if (side.evaluate().isNotEmpty) {
-          await tester.tap(side.first);
-          await settle(tester);
-          await shoot(tester, 'work-bigger-done');
-        }
-      }
-      if (mode == 'stake') {
-        final Finder option = find.byWidgetPredicate(
-          (w) =>
-              w.key is ValueKey<String> &&
-              RegExp(r'^stake-.*-o1$')
-                  .hasMatch((w.key! as ValueKey<String>).value),
-        );
-        if (option.evaluate().isNotEmpty) {
-          await tester.tap(option.first);
-          await settle(tester);
-          final Finder bet = find.byWidgetPredicate(
-            (w) =>
-                w.key is ValueKey<String> &&
-                (w.key! as ValueKey<String>).value.startsWith('stake-bet-'),
-          );
-          if (bet.evaluate().isNotEmpty) {
-            await tester.tap(bet.first);
-            await settle(tester);
-          }
-          await shoot(tester, 'work-stake-done');
-        }
-      }
+      await shoot(tester, 'work-$mode-done');
     }
   });
 

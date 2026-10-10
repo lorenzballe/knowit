@@ -178,6 +178,64 @@ void main() {
       expect(ids.toSet().length, ids.length);
     });
 
+    test('one row holds every card dealt, each once, two of each way', () {
+      int count(WorkKind k) => switch (k) {
+        WorkKind.pick => work.pick.length,
+        WorkKind.slide => work.slide.length,
+        WorkKind.closer => work.closer.length,
+        WorkKind.bigger => work.bigger.length,
+        WorkKind.range => work.range.length,
+        WorkKind.stake => work.stake.length,
+      };
+      for (final k in WorkKind.values) {
+        expect(count(k), kWorkEach, reason: k.name);
+      }
+      expect(work.row.toSet(), {
+        for (final k in WorkKind.values)
+          for (int i = 0; i < count(k); i++) (k, i),
+      });
+      expect(work.row, hasLength(work.row.toSet().length));
+    });
+
+    test('the row is mixed: every way in the first round, never two '
+        'side by side', () {
+      for (int day = 20730; day < 20760; day++) {
+        final row = workRow({
+          for (final k in WorkKind.values) k: kWorkEach,
+        }, day: day);
+        expect(row, hasLength(WorkKind.values.length * kWorkEach));
+        expect(
+          row.take(WorkKind.values.length).map((e) => e.$1).toSet(),
+          WorkKind.values.toSet(),
+          reason: 'day $day',
+        );
+        for (int i = 1; i < row.length; i++) {
+          expect(row[i].$1, isNot(row[i - 1].$1), reason: 'day $day: $row');
+        }
+      }
+    });
+
+    test('the row holds still all day and is drawn afresh the next', () {
+      final counts = {for (final k in WorkKind.values) k: kWorkEach};
+      expect(workRow(counts, day: 20735), workRow(counts, day: 20735));
+      final days = {
+        for (int day = 20735; day < 20745; day++)
+          workRow(counts, day: day).map((e) => e.$1.name).join(','),
+      };
+      expect(days.length, greaterThan(5));
+      // A way with fewer cards drops out of the later rounds, and the rest
+      // still never sit side by side.
+      final short = workRow({
+        WorkKind.pick: 3,
+        WorkKind.slide: 1,
+        WorkKind.closer: 3,
+      }, day: 20735);
+      expect(short, hasLength(7));
+      for (int i = 1; i < short.length; i++) {
+        expect(short[i].$1, isNot(short[i - 1].$1), reason: '$short');
+      }
+    });
+
     test('a share is the card\'s own answer, from 0 to 100', () {
       for (final c in [...work.slide, ...work.closer, ...work.range]) {
         expect(c.value, inInclusiveRange(0, 100), reason: c.pill.id);

@@ -142,12 +142,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get sameForEveryone => 'Одна на всех, и только сегодня';
 
   @override
-  String get onesThatAskTheMost => 'Те, что спрашивают больше всего';
-
-  @override
-  String get acrossEveryone => 'У всех, а не только в твоём миксе';
-
-  @override
   String becauseSitsAtFull(String name) {
     return 'Потому что $name на максимуме';
   }
@@ -822,7 +816,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get freePlan => 'Бесплатный план';
 
   @override
-  String get streakReset => 'Серия сброшена';
+  String get welcomeBack => 'С возвращением';
 
   @override
   String youMissedDays(int n) {
@@ -914,7 +908,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get fivePillsADayPick =>
-      'Пять карточек в день, свежие каждое утро. Выбери темы для микса — потом их можно изменить.';
+      'Пять карточек в день, каждое утро новые. Выбери темы для микса — потом их можно изменить.';
 
   @override
   String nSelected(int n) {
@@ -946,7 +940,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get introTopicsTitle => 'Девятнадцать тем, пять карточек';
 
   @override
-  String get introTopicsLine => 'Пишутся каждое утро и сверяются с источником.';
+  String get introTopicsLine =>
+      'Написаны заранее моделью, и каждая сверена со своим источником.';
 
   @override
   String get introQuestionTitle => 'Вопрос, потом ответ';
@@ -963,7 +958,7 @@ class AppLocalizationsRu extends AppLocalizations {
       'Убавь тему, чтобы видеть её реже, или выключи совсем.';
 
   @override
-  String get introThirtyTitle => 'Тридцать секунд в день';
+  String get introThirtyTitle => 'Две минуты в день';
 
   @override
   String get introThirtyLine =>
@@ -1350,16 +1345,20 @@ class AppLocalizationsRu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n карточки вернулись — ответьте ещё раз',
-      many: '$n карточек вернулось — ответьте ещё раз',
-      few: '$n карточки вернулись — ответьте ещё раз',
-      one: '$n карточка вернулась — ответьте ещё раз',
+      other:
+          '$n карточки, на которые вы отвечали несколько дней назад, вернулись: помните ответы?',
+      many:
+          '$n карточек, на которые вы отвечали несколько дней назад, вернулись: помните ответы?',
+      few:
+          '$n карточки, на которые вы отвечали несколько дней назад, вернулись: помните ответы?',
+      one:
+          '$n карточка, на которую вы отвечали несколько дней назад, вернулась: помните ответ?',
     );
     return '$_temp0';
   }
 
   @override
-  String get cameBack => 'Вернулись';
+  String get cameBack => 'Вы ещё помните?';
 
   @override
   String get holdACardYouLike => 'Нравится? Удержите';
@@ -1671,7 +1670,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get perkJourneyLine =>
-      'Твой уровень, каждый предмет по веткам, что осталось, и карточка, о которой рассказать сегодня вечером.';
+      'Твой уровень, каждый предмет по веткам, что осталось, и ходы, которые ты продолжаешь упускать.';
 
   @override
   String get topOfTheWeek => 'Топ недели';
@@ -1766,7 +1765,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get themePractical => 'Пригодится сегодня';
 
   @override
-  String get themePracticalLine => 'Что попробовать до вечера';
+  String get themePracticalLine =>
+      'Что попробовать или чем поделиться в разговоре — ещё до вечера';
 
   @override
   String get themeOrigins => 'Откуда это взялось';
@@ -1791,7 +1791,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get themeWorkItOut => 'Посчитайте';
 
   @override
-  String get themeWorkItOutLine => 'Число, которое найти в уме';
+  String get themeWorkItOutLine =>
+      'Угадайте число, прежде чем карточка его назовёт';
 
   @override
   String get themeSeen => 'Посмотреть';
@@ -2533,9 +2534,6 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get aMove => 'Приём';
-
-  @override
   String get anotherOne => 'Другую';
 
   @override
@@ -2555,21 +2553,10 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get betSlip => 'Ваш купон';
-
-  @override
   String get betWord => 'Поставить';
 
   @override
   String get biggerLabel => 'Больше';
-
-  @override
-  String get biggerNote => 'Каждое число — ответ одной из карточек.';
-
-  @override
-  String biggerScore(int right, int asked) {
-    return 'Верно: $right из $asked.';
-  }
 
   @override
   String get biggerYouGotIt => 'Больше · верно';
@@ -2769,9 +2756,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get forYouNow => 'Для вас, прямо сейчас';
 
   @override
-  String get goNarrow => 'Сужайте, когда уверены: это приносит втрое больше.';
-
-  @override
   String get hardBadge => 'Сложно';
 
   @override
@@ -2810,9 +2794,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get lookFirst => 'Посмотрите на график, прежде чем верить заголовку.';
 
   @override
-  String get markTried => 'Попробовано';
-
-  @override
   String minutesLabel(int n) {
     return '$n мин';
   }
@@ -2826,43 +2807,19 @@ class AppLocalizationsRu extends AppLocalizations {
   String get modeBigger => 'Что больше?';
 
   @override
-  String get modeBiggerLine =>
-      'Два числа, которые можно оценить. Нажмите на большее';
-
-  @override
   String get modeCloser => 'Ближе и ближе';
-
-  @override
-  String get modeCloserLine =>
-      'Три шага «больше или меньше», чтобы подобраться к числу';
 
   @override
   String get modePick => 'Выберите';
 
   @override
-  String get modePickLine =>
-      'Три варианта. Решите до того, как откроете карточку';
-
-  @override
   String get modeRange => 'Ставка на диапазон';
-
-  @override
-  String get modeRangeLine => 'Чем уже, тем больше выигрыш — если угадаете';
 
   @override
   String get modeSlide => 'Двигайте';
 
   @override
-  String get modeSlideLine =>
-      'Сначала задайте ответ, потом посмотрите, насколько ошиблись';
-
-  @override
   String get modeStake => 'Делайте ставку';
-
-  @override
-  String modeStakeLine(int n) {
-    return '$n очков в день. Выиграете — ставка удвоится';
-  }
 
   @override
   String get monthShelfLine => 'Каждый месяц новая тема, одна на всех';
@@ -2898,18 +2855,30 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get moveComparedToWhat => 'По сравнению с чем';
+  String get moveComparedToWhat => 'По сравнению с чем?';
 
   @override
   String get moveComparedToWhatLine =>
-      'Изменение ничего не значит без контрольной группы';
+      'Изменение ничего не значит, если его не с чем сравнить';
 
   @override
-  String get moveSampling => 'Выборка';
+  String get askingTitle => 'По вопросу из каждой темы';
+
+  @override
+  String askingIn(String subject) {
+    return 'Вопросы: $subject';
+  }
+
+  @override
+  String get askingLine =>
+      'Одни на всех. Сначала ответьте, потом узнайте почему';
+
+  @override
+  String get moveSampling => 'Кого посчитали?';
 
   @override
   String get moveSamplingLine =>
-      'Кто попал в выборку, то и решает, о чём она говорит';
+      'От того, кто попал в исследование, зависит, что оно может сказать';
 
   @override
   String mythDeckHint(int at, int of) {
@@ -2941,11 +2910,6 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get pickOneFirst => 'Сначала выберите';
-
-  @override
-  String pointsToday(int n) {
-    return '+$n сегодня';
-  }
 
   @override
   String get puzzleOfTheDay => 'Задача дня';
@@ -3054,23 +3018,6 @@ class AppLocalizationsRu extends AppLocalizations {
   String get sixtyTitle => 'Шестьдесят секунд';
 
   @override
-  String slideAverage(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'В среднем ошибка $n пункта.',
-      many: 'В среднем ошибка $n пунктов.',
-      few: 'В среднем ошибка $n пункта.',
-      one: 'В среднем ошибка $n пункт.',
-      zero: 'В среднем точно.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get slideNote => 'Задайте, проверьте. Важно, насколько вы ошиблись.';
-
-  @override
   String slideOff(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -3083,9 +3030,6 @@ class AppLocalizationsRu extends AppLocalizations {
     );
     return '$_temp0';
   }
-
-  @override
-  String get slipEmpty => 'Ставок пока нет. Каждая будет здесь.';
 
   @override
   String get stakeLabel => 'Ставка';

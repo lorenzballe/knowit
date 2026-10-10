@@ -5,7 +5,7 @@ import { Bank, asks, graded, editionOf, expiredOn, localDate, localHour, shiftDa
 import { keyed, unit } from './rng.js';
 import { buildProfile, readOnboarding, readTrace, weightsOn, dayNumberOf, Event, Snapshot, TASTE_LEAN } from './profile.js';
 import { arrangeDay, commonOfEdition, dealDay, dealOwn, explorerDay, questionOfEdition, EXPLORER_SHARE, OWN_FREE, OWN_REWARDED, PILLS_PER_DAY } from './deal.js';
-import { ALL_TIME_SEED, buildGlobalExplore, buildPersonalExplore, pickedCards, popularity, topList } from './explore.js';
+import { ALL_TIME_SEED, askingCards, buildGlobalExplore, buildPersonalExplore, pickedCards, popularity, topList } from './explore.js';
 import { search } from './search.js';
 import { askableDate, datesToPrepare } from './serve.js';
 
@@ -46,6 +46,24 @@ test('the shelves that turn over are the phone\'s, card for card', () => {
   assert.deepEqual(pickedCards(bank, ALL_TIME_SEED, 6).map((c) => c.id), [
     'language-double-negatives-3', 'economics-education-3', 'nature-bees-7', 'technology-training-9', 'thinking-h13', 'medicine-resistance-7',
   ]);
+  // Reference values printed by askingPills (lib/data/pills_repository.dart).
+  assert.deepEqual(askingCards(bank, ALL_TIME_SEED, 6).map((c) => c.id), [
+    'language-double-negatives-3', 'economics-averages-that-mislead-2', 'nature-bees-1', 'technology-training-4', 'thinking-h10', 'medicine-resistance-10',
+  ]);
+});
+
+test('a question from every subject: each one with an answer, one subject after another, not the hardest again', () => {
+  const asking = askingCards(bank, ALL_TIME_SEED, 40);
+  assert.equal(asking.length, 40);
+  assert.ok(asking.every(graded));
+  // A round of the subjects before any comes back.
+  const subjects = new Set(bank.live.map((c) => c.topic)).size;
+  assert.equal(new Set(asking.slice(0, subjects).map((c) => c.topic)).size, subjects);
+  // Not ranked hardest first: that is For the sharpest, further down the phone's Explore.
+  assert.ok(asking.filter((c) => c.difficulty !== 'hard').length > asking.length / 2);
+  // And it holds still: the same list every time it is asked for.
+  assert.deepEqual(askingCards(bank, ALL_TIME_SEED, 40).map((c) => c.id), asking.map((c) => c.id));
+  assert.deepEqual(buildGlobalExplore(bank, new Map(), new Map(), DAY, NOW).asking.map((c) => c.id), asking.map((c) => c.id));
 });
 
 test('the calendar is read, and chained past its end', () => {

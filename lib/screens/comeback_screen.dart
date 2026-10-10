@@ -49,7 +49,9 @@ class ComebackScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Eyebrow(context.l10n.streakReset, color: context.p.alert),
+              // A welcome, not a verdict: the counter is reset either way,
+              // and the reader who came back is the one worth talking to.
+              Eyebrow(context.l10n.welcomeBack),
               const SizedBox(height: 11),
               Text(
                 context.l10n.youMissedDays(missed),
@@ -86,9 +88,18 @@ class ComebackScreen extends StatelessWidget {
                     Eyebrow(context.l10n.whileYouWereAway),
                     const SizedBox(height: 14),
                     _MissedLine(
-                      color: context.p.alert,
+                      color: context.p.inkFaint,
                       text: context.l10n.pillsWentUnread(unread),
                     ),
+                    // What the lapse did not take: five days out of seven
+                    // still keep a week, and those weeks are still theirs.
+                    if (app.keptWeeks > 0) ...[
+                      const SizedBox(height: 11),
+                      _MissedLine(
+                        color: context.p.link,
+                        text: context.l10n.nWeeksKept(app.keptWeeks),
+                      ),
+                    ],
                     if (favourite != null) ...[
                       const SizedBox(height: 11),
                       _MissedLine(

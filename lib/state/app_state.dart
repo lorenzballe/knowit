@@ -1513,9 +1513,12 @@ class AppState extends ChangeNotifier {
   }
 
   /// How far the reader's confidence sits from their accuracy, in points.
-  /// Positive means overconfident — the usual direction.
+  /// Positive means overconfident — the usual direction. Null until there
+  /// are [kCalibrationFloor] answers to say it from, the same floor the
+  /// journey keeps: one answer said at 90% and missed is not "overconfident
+  /// by 90 points", and the profile used to say exactly that.
   double? get overconfidence {
-    if (judgements.isEmpty) return null;
+    if (judgements.length < kCalibrationFloor) return null;
     var claimed = 0.0;
     var right = 0;
     for (final j in judgements) {

@@ -282,18 +282,6 @@ abstract class AppLocalizations {
   /// **'The same for everyone, and only today'**
   String get sameForEveryone;
 
-  /// No description provided for @onesThatAskTheMost.
-  ///
-  /// In en, this message translates to:
-  /// **'The ones that ask the most'**
-  String get onesThatAskTheMost;
-
-  /// No description provided for @acrossEveryone.
-  ///
-  /// In en, this message translates to:
-  /// **'Across everyone, not just your mix'**
-  String get acrossEveryone;
-
   /// No description provided for @becauseSitsAtFull.
   ///
   /// In en, this message translates to:
@@ -1158,11 +1146,11 @@ abstract class AppLocalizations {
   /// **'Free plan'**
   String get freePlan;
 
-  /// No description provided for @streakReset.
+  /// No description provided for @welcomeBack.
   ///
   /// In en, this message translates to:
-  /// **'Streak reset'**
-  String get streakReset;
+  /// **'Welcome back'**
+  String get welcomeBack;
 
   /// No description provided for @youMissedDays.
   ///
@@ -1245,7 +1233,7 @@ abstract class AppLocalizations {
   /// No description provided for @fivePillsADayPick.
   ///
   /// In en, this message translates to:
-  /// **'Five cards a day, written fresh each morning. Pick the topics you want in the mix — you can change them later.'**
+  /// **'Five cards a day, new every morning. Pick the topics you want in the mix — you can change them later.'**
   String get fivePillsADayPick;
 
   /// No description provided for @nSelected.
@@ -1293,7 +1281,7 @@ abstract class AppLocalizations {
   /// No description provided for @introTopicsLine.
   ///
   /// In en, this message translates to:
-  /// **'Written fresh every morning, and checked against a source.'**
+  /// **'Written ahead by a model, and every one checked against its source.'**
   String get introTopicsLine;
 
   /// No description provided for @introQuestionTitle.
@@ -1323,7 +1311,7 @@ abstract class AppLocalizations {
   /// No description provided for @introThirtyTitle.
   ///
   /// In en, this message translates to:
-  /// **'Thirty seconds a day'**
+  /// **'Two minutes a day'**
   String get introThirtyTitle;
 
   /// No description provided for @introThirtyLine.
@@ -1929,13 +1917,13 @@ abstract class AppLocalizations {
   /// No description provided for @cardsCameBack.
   ///
   /// In en, this message translates to:
-  /// **'{n, plural, =1{1 card came back — answer it again} other{{n} cards came back — answer them again}}'**
+  /// **'{n, plural, =1{A card you answered days ago, back to see if it stuck} other{{n} cards you answered days ago, back to see if they stuck}}'**
   String cardsCameBack(int n);
 
   /// No description provided for @cameBack.
   ///
   /// In en, this message translates to:
-  /// **'Came back'**
+  /// **'Do you still remember?'**
   String get cameBack;
 
   /// No description provided for @holdACardYouLike.
@@ -2427,7 +2415,7 @@ abstract class AppLocalizations {
   /// No description provided for @perkJourneyLine.
   ///
   /// In en, this message translates to:
-  /// **'Your level, every subject strand by strand, what stayed, and the card to say tonight.'**
+  /// **'Your level, every subject strand by strand, what stayed, and the moves you keep missing.'**
   String get perkJourneyLine;
 
   /// No description provided for @topOfTheWeek.
@@ -2577,7 +2565,7 @@ abstract class AppLocalizations {
   /// No description provided for @themePracticalLine.
   ///
   /// In en, this message translates to:
-  /// **'Something to try before tonight'**
+  /// **'Something to try, or to drop into a conversation, before tonight'**
   String get themePracticalLine;
 
   /// No description provided for @themeOrigins.
@@ -2625,7 +2613,7 @@ abstract class AppLocalizations {
   /// No description provided for @themeWorkItOutLine.
   ///
   /// In en, this message translates to:
-  /// **'A number to reach in your head'**
+  /// **'Guess the number before the card tells you'**
   String get themeWorkItOutLine;
 
   /// No description provided for @themeSeen.
@@ -3546,12 +3534,6 @@ abstract class AppLocalizations {
   /// **'{n} new'**
   String journeyNew(int n);
 
-  /// No description provided for @aMove.
-  ///
-  /// In en, this message translates to:
-  /// **'A move'**
-  String get aMove;
-
   /// No description provided for @anotherOne.
   ///
   /// In en, this message translates to:
@@ -3582,12 +3564,6 @@ abstract class AppLocalizations {
   /// **'Bet {n}'**
   String betN(int n);
 
-  /// No description provided for @betSlip.
-  ///
-  /// In en, this message translates to:
-  /// **'Your bet slip'**
-  String get betSlip;
-
   /// No description provided for @betWord.
   ///
   /// In en, this message translates to:
@@ -3599,18 +3575,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Bigger'**
   String get biggerLabel;
-
-  /// No description provided for @biggerNote.
-  ///
-  /// In en, this message translates to:
-  /// **'Each figure is a card\'s own answer.'**
-  String get biggerNote;
-
-  /// No description provided for @biggerScore.
-  ///
-  /// In en, this message translates to:
-  /// **'Right on {right} of {asked}.'**
-  String biggerScore(int right, int asked);
 
   /// No description provided for @biggerYouGotIt.
   ///
@@ -3882,12 +3846,6 @@ abstract class AppLocalizations {
   /// **'For you, right now'**
   String get forYouNow;
 
-  /// No description provided for @goNarrow.
-  ///
-  /// In en, this message translates to:
-  /// **'Go narrow when you\'re sure: it pays three times as much.'**
-  String get goNarrow;
-
   /// No description provided for @hardBadge.
   ///
   /// In en, this message translates to:
@@ -3948,12 +3906,6 @@ abstract class AppLocalizations {
   /// **'Look at the chart before you believe the headline.'**
   String get lookFirst;
 
-  /// No description provided for @markTried.
-  ///
-  /// In en, this message translates to:
-  /// **'Tried it'**
-  String get markTried;
-
   /// No description provided for @minutesLabel.
   ///
   /// In en, this message translates to:
@@ -3972,23 +3924,11 @@ abstract class AppLocalizations {
   /// **'Which is bigger?'**
   String get modeBigger;
 
-  /// No description provided for @modeBiggerLine.
-  ///
-  /// In en, this message translates to:
-  /// **'Two figures you can work out. Tap the bigger one'**
-  String get modeBiggerLine;
-
   /// No description provided for @modeCloser.
   ///
   /// In en, this message translates to:
   /// **'Closer, closer'**
   String get modeCloser;
-
-  /// No description provided for @modeCloserLine.
-  ///
-  /// In en, this message translates to:
-  /// **'Three steps of more or less to close in on the number'**
-  String get modeCloserLine;
 
   /// No description provided for @modePick.
   ///
@@ -3996,23 +3936,11 @@ abstract class AppLocalizations {
   /// **'Pick one'**
   String get modePick;
 
-  /// No description provided for @modePickLine.
-  ///
-  /// In en, this message translates to:
-  /// **'Three amounts. Commit before you open the card'**
-  String get modePickLine;
-
   /// No description provided for @modeRange.
   ///
   /// In en, this message translates to:
   /// **'Bet a range'**
   String get modeRange;
-
-  /// No description provided for @modeRangeLine.
-  ///
-  /// In en, this message translates to:
-  /// **'The narrower you go, the more it pays, if you\'re right'**
-  String get modeRangeLine;
 
   /// No description provided for @modeSlide.
   ///
@@ -4020,23 +3948,11 @@ abstract class AppLocalizations {
   /// **'Move it'**
   String get modeSlide;
 
-  /// No description provided for @modeSlideLine.
-  ///
-  /// In en, this message translates to:
-  /// **'Set your answer first, then see how far off you were'**
-  String get modeSlideLine;
-
   /// No description provided for @modeStake.
   ///
   /// In en, this message translates to:
   /// **'Place your bet'**
   String get modeStake;
-
-  /// No description provided for @modeStakeLine.
-  ///
-  /// In en, this message translates to:
-  /// **'{n} points a day. Win and you double your stake'**
-  String modeStakeLine(int n);
 
   /// No description provided for @monthShelfLine.
   ///
@@ -4083,25 +3999,43 @@ abstract class AppLocalizations {
   /// No description provided for @moveComparedToWhat.
   ///
   /// In en, this message translates to:
-  /// **'Compared to what'**
+  /// **'Compared to what?'**
   String get moveComparedToWhat;
 
   /// No description provided for @moveComparedToWhatLine.
   ///
   /// In en, this message translates to:
-  /// **'A change means nothing without a control'**
+  /// **'A change means nothing without something to compare it with'**
   String get moveComparedToWhatLine;
+
+  /// No description provided for @askingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A question from every subject'**
+  String get askingTitle;
+
+  /// No description provided for @askingIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Questions in {subject}'**
+  String askingIn(String subject);
+
+  /// No description provided for @askingLine.
+  ///
+  /// In en, this message translates to:
+  /// **'The same for everyone. Answer first, then see why'**
+  String get askingLine;
 
   /// No description provided for @moveSampling.
   ///
   /// In en, this message translates to:
-  /// **'Sampling'**
+  /// **'Who got counted?'**
   String get moveSampling;
 
   /// No description provided for @moveSamplingLine.
   ///
   /// In en, this message translates to:
-  /// **'Who ended up in the sample decides what it can say'**
+  /// **'Who ends up in a study decides what it can tell you'**
   String get moveSamplingLine;
 
   /// No description provided for @mythDeckHint.
@@ -4157,12 +4091,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pick one first'**
   String get pickOneFirst;
-
-  /// No description provided for @pointsToday.
-  ///
-  /// In en, this message translates to:
-  /// **'+{n} today'**
-  String pointsToday(int n);
 
   /// No description provided for @puzzleOfTheDay.
   ///
@@ -4314,29 +4242,11 @@ abstract class AppLocalizations {
   /// **'Sixty seconds'**
   String get sixtyTitle;
 
-  /// No description provided for @slideAverage.
-  ///
-  /// In en, this message translates to:
-  /// **'{n, plural, =0{Spot on, on average.} =1{1 point off, on average.} other{{n} points off, on average.}}'**
-  String slideAverage(int n);
-
-  /// No description provided for @slideNote.
-  ///
-  /// In en, this message translates to:
-  /// **'Set it, check it. How far off you were is the point.'**
-  String get slideNote;
-
   /// No description provided for @slideOff.
   ///
   /// In en, this message translates to:
   /// **'{n, plural, =0{Spot on.} =1{You were 1 point off.} other{You were {n} points off.}}'**
   String slideOff(int n);
-
-  /// No description provided for @slipEmpty.
-  ///
-  /// In en, this message translates to:
-  /// **'No bets yet. Each one you place lands here.'**
-  String get slipEmpty;
 
   /// No description provided for @stakeLabel.
   ///

@@ -4,12 +4,12 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// What the reader did on Explore's shelves today: the bets laid and the
-/// points they came to, the guesses set on a slider, the cards ticked off as
-/// tried, the facts judged new or known, the round against the clock.
+/// points they came to, the guesses set on a slider, the facts judged new or
+/// known, the round against the clock.
 ///
 /// A day's play and nothing more. It is kept for the day it was made on,
 /// across a restart, and the next day starts clean — a hundred points again,
-/// nothing ticked — because the shelves are dealt afresh too. What is worth
+/// nothing guessed — because the shelves are dealt afresh too. What is worth
 /// keeping for good is kept where it always was: a commitment made on a shelf
 /// is an answer, recorded by [AppState] like any other.
 class ExplorePlay extends ChangeNotifier {
