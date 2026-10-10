@@ -1,17 +1,24 @@
 import SwiftUI
 import WidgetKit
 
-// Three widgets from one extension: today's card, the streak, and today's
-// five. The drawing is in AstutWidgetViews.swift; this is where the data
-// comes from and when each widget turns over.
+// Four widgets from one extension: today's card, the streak, today's five
+// and today's shelf. The drawing is in AstutWidgetViews.swift; this is where
+// the data comes from, when each widget turns over, and where a tap goes.
+//
+// Every widget is cards, and every card on one opens that very card: a card
+// of today's five opens on Today, a card of today's shelf in Explore. The
+// link names the widget, the card and where the card lives —
+// astute://widget?from=card.systemSmall&card=<id>&in=today — and the app
+// lands on it.
 //
 // The app writes everything down in the shared App Group each time it
-// runs: today's card and one for each of the next fourteen mornings, the
-// streak and the week, today's five and tomorrow's, and every line already
-// in the reader's language. Until that group exists on the Apple account
-// the extension cannot read any of it, so the card falls back to the
-// question of the day, which is the same for everybody and published on
-// the site, and the other two say where their data will come from.
+// runs: today's next card and the one each of the next fourteen mornings
+// opens on, the streak and the week, today's five and tomorrow's, today's
+// shelf and the next fortnight's, and every line already in the reader's
+// language. Until that group exists on the Apple account the extension
+// cannot read any of it, so today's card and the shelf fall back on today's
+// shelf as the site publishes it — the same for everybody — and the other
+// two say where their data will come from.
 
 // MARK: - What the app wrote down
 
@@ -44,9 +51,18 @@ enum Shared {
   }
 }
 
+/// Where a card lives in the app, as the links say it.
+enum CardPlace {
+  /// One of today's five, opened on Today.
+  static let today = "today"
+  /// A card of today's shelf, opened in Explore.
+  static let shelf = "shelf"
+}
+
 struct Snapshot {
   let date: String
   let edition: Int
+  let cardId: String
   let question: String
   let topic: String
   let color: String
@@ -57,6 +73,7 @@ struct Snapshot {
   let footStreak: String
   let footDone: String
   let ahead: [String: String]
+  let aheadId: [String: String]
   let aheadTopic: [String: String]
   let aheadColor: [String: String]
   let aheadInk: [String: String]
@@ -71,6 +88,11 @@ struct Snapshot {
   let fiveReadText: String
   let fiveDone: String
   let fiveWaiting: String
+  /// Today's shelf and the next fortnight's, by date, each a JSON list.
+  let shelves: [String: String]
+  let shelfTitle: String
+  let shelfFrom: String
+  let shelfLine: String
 
   init(_ d: UserDefaults, date: String) {
     func text(_ key: String) -> String { d.string(forKey: key) ?? "" }
@@ -79,6 +101,7 @@ struct Snapshot {
     }
     self.date = date
     edition = d.integer(forKey: "edition")
+    cardId = text("cardId")
     question = text("question")
     topic = text("topic")
     color = text("color")
@@ -89,6 +112,7 @@ struct Snapshot {
     footStreak = text("footStreak")
     footDone = text("footDone")
     ahead = map("ahead")
+    aheadId = map("aheadId")
     aheadTopic = map("aheadTopic")
     aheadColor = map("aheadColor")
     aheadInk = map("aheadInk")
@@ -104,32 +128,54 @@ struct Snapshot {
     fiveReadText = text("fiveReadText")
     fiveDone = text("fiveDone")
     fiveWaiting = text("fiveWaiting")
+    shelves = map("shelf")
+    shelfTitle = text("shelfTitle")
+    shelfFrom = text("shelfFrom")
+    shelfLine = text("shelfLine")
+  }
+
+  /// Today's shelf on a day, as the app handed it over: the cards at the
+  /// top of Explore that the reader has not read.
+  func shelf(_ key: String) -> [FiveCard] {
+    Snapshot.cards(shelves[key] ?? "")
   }
 
   static func cards(_ json: String) -> [FiveCard] {
     guard let list = try? JSONSerialization.jsonObject(with: Data(json.utf8)) as? [[String: Any]]
     else { return [] }
-    return list.map {
-      FiveCard(
-        topic: $0["topic"] as? String ?? "",
-        color: Color(hex: $0["color"] as? String ?? "", fallback: AstutPalette.night),
-        ink: Color(hex: $0["ink"] as? String ?? "", fallback: .white),
-        read: $0["read"] as? Bool ?? false)
-    }
+    return list.map { FiveCard.from($0) }
   }
 }
 
-// MARK: - The question of the day, from the site
+extension FiveCard {
+  /// A card as the app and the site write one: its id, subject, colour,
+  /// ink and question, and whether it has been read.
+  static func from(_ c: [String: Any]) -> FiveCard {
+    FiveCard(
+      topic: c["topic"] as? String ?? "",
+      color: Color(hex: c["color"] as? String ?? "", fallback: AstutPalette.night),
+      ink: Color(hex: c["ink"] as? String ?? "", fallback: .white),
+      read: c["read"] as? Bool ?? false,
+      id: c["id"] as? String ?? "",
+      question: c["question"] as? String ?? "")
+  }
+}
 
-/// Today's question and the next weeks', for a widget the app has not
-/// spoken to. Published with every deploy as widget/days.json.
+// MARK: - Today's shelf and the question of the day, from the site
+
+/// Today's shelf for the weeks ahead, and the question of the day beside
+/// it, for a widget the app has not spoken to. Published with every deploy
+/// as widget/days.json; every card on it carries its id, so a tap still
+/// opens that card.
 enum WebDays {
   struct Day {
     let edition: Int
+    let id: String
     let question: String
     let topic: String
     let color: String
     let ink: String
+    let shelf: [FiveCard]
   }
 
   static let url = URL(string: "https://astutetheapp.com/widget/days.json")!
@@ -160,14 +206,46 @@ enum WebDays {
     else { return [:] }
     var out: [String: Day] = [:]
     for (key, d) in days {
+      let shelf = (d["shelf"] as? [[String: Any]] ?? []).map { FiveCard.from($0) }
       out[key] = Day(
         edition: d["edition"] as? Int ?? 0,
+        id: d["id"] as? String ?? "",
         question: d["question"] as? String ?? "",
         topic: d["topic"] as? String ?? "",
         color: d["color"] as? String ?? "",
-        ink: d["ink"] as? String ?? "")
+        ink: d["ink"] as? String ?? "",
+        shelf: shelf.filter { !$0.question.isEmpty })
     }
     return out
+  }
+}
+
+// MARK: - Turning over through the day
+
+enum Turns {
+  /// The moments a day's shelf turns to its next card: from [start], and
+  /// then at every third hour until the day is over, so a widget showing
+  /// the shelf is not the same card all day.
+  static func times(from start: Date, through day: Date) -> [Date] {
+    let calendar = Calendar.current
+    var out = [start]
+    for hour in stride(from: 3, to: 24, by: 3) {
+      if let at = calendar.date(bySettingHour: hour, minute: 0, second: 0, of: day),
+        at > start
+      {
+        out.append(at)
+      }
+    }
+    return out
+  }
+
+  /// [count] cards of [shelf] for the [turn]th turn of the day, wrapping
+  /// round the shelf: the medium widget shows two, the large four.
+  static func window(_ shelf: [FiveCard], turn: Int, count: Int) -> [FiveCard] {
+    guard !shelf.isEmpty, count > 0 else { return [] }
+    let n = min(count, shelf.count)
+    let start = (turn * n) % shelf.count
+    return (0..<n).map { shelf[(start + $0) % shelf.count] }
   }
 }
 
@@ -176,6 +254,10 @@ enum WebDays {
 struct CardEntry: TimelineEntry {
   let date: Date
   let data: CardData
+  /// The card shown, by id, and where it lives in the app, so that a tap
+  /// opens it. Empty for a card with nothing behind it.
+  var card: String = ""
+  var place: String = CardPlace.today
 }
 
 struct CardProvider: TimelineProvider {
@@ -223,10 +305,12 @@ struct CardProvider: TimelineProvider {
     color: AstutPalette.night, ink: AstutPalette.cream,
     foot: "", footMark: .none, dots: [], dotsLine: "")
 
-  /// From the app: today's card as it wrote it, and each morning after it
-  /// from the calendar it handed over. The streak and the five are only
-  /// known for the day the app last saw; a later morning says what the day
-  /// is, not what it did.
+  /// From the app: today's next card to read, as it wrote it — and once
+  /// the five are read, today's shelf, turning over every third hour — and
+  /// each morning after it the card that morning opens on, from the
+  /// calendar it handed over. The streak and the five are only known for
+  /// the day the app last saw; a later morning says what the day is, not
+  /// what it did.
   static func entries(_ snap: Snapshot, from now: Date) -> [CardEntry] {
     let calendar = Calendar.current
     let base = Shared.days(from: snap.date, to: now)
@@ -237,6 +321,18 @@ struct CardProvider: TimelineProvider {
       else { continue }
       let key = Shared.key(day)
       let sameDay = key == snap.date
+      let start = i == 0 ? now : day
+      let edition = snap.edition + base + i
+      let read = snap.five.filter { $0.read }.count
+      if sameDay && snap.done {
+        let shelf = snap.shelf(key)
+        if !shelf.isEmpty {
+          out += shelfEntries(
+            shelf, from: start, through: day, edition: edition, foot: snap.shelfFrom,
+            dots: snap.five.map { $0.read }, dotsLine: snap.fiveDone)
+          continue
+        }
+      }
       let question = sameDay ? snap.question : (snap.ahead[key] ?? "")
       if question.isEmpty { continue }
       let topic = sameDay ? snap.topic : (snap.aheadTopic[key] ?? snap.topic)
@@ -251,12 +347,11 @@ struct CardProvider: TimelineProvider {
         foot = snap.footStreak
         mark = .streak
       }
-      let read = snap.five.filter { $0.read }.count
       out.append(
         CardEntry(
-          date: i == 0 ? now : day,
+          date: start,
           data: CardData(
-            edition: snap.edition + base + i,
+            edition: edition,
             topic: topic, question: question,
             color: Color(hex: color, fallback: AstutPalette.night),
             ink: Color(hex: ink, fallback: .white),
@@ -264,29 +359,62 @@ struct CardProvider: TimelineProvider {
             dots: sameDay ? snap.five.map { $0.read } : [],
             dotsLine: sameDay
               ? (read == snap.five.count && read > 0 ? snap.fiveDone : snap.fiveReadText)
-              : "")))
+              : ""),
+          card: sameDay ? snap.cardId : (snap.aheadId[key] ?? ""),
+          place: CardPlace.today))
     }
     return out
   }
 
-  /// From the site: the question of the day, for each morning it lists.
+  /// From the site: today's shelf, the same for everybody, turning over
+  /// every third hour — or, from a copy kept before the site carried the
+  /// shelf, the question of the day. A week of it; the timeline ends there
+  /// and the site is asked again.
   static func entries(_ days: [String: WebDays.Day], from now: Date) -> [CardEntry] {
     let calendar = Calendar.current
     var out: [CardEntry] = []
-    for i in 0...14 {
+    for i in 0...7 {
       guard
         let day = calendar.date(byAdding: .day, value: i, to: calendar.startOfDay(for: now)),
-        let d = days[Shared.key(day)], !d.question.isEmpty
+        let d = days[Shared.key(day)]
       else { continue }
+      let start = i == 0 ? now : day
+      if !d.shelf.isEmpty {
+        out += shelfEntries(
+          d.shelf, from: start, through: day, edition: d.edition,
+          foot: String(localized: "From today's shelf"), dots: [], dotsLine: "")
+      } else if !d.question.isEmpty {
+        out.append(
+          CardEntry(
+            date: start,
+            data: CardData(
+              edition: d.edition, topic: d.topic, question: d.question,
+              color: Color(hex: d.color, fallback: AstutPalette.night),
+              ink: Color(hex: d.ink, fallback: .white),
+              foot: String(localized: "Five cards a day, two minutes."), footMark: .none,
+              dots: [], dotsLine: ""),
+            card: d.id, place: CardPlace.shelf))
+      }
+    }
+    return out
+  }
+
+  /// Today's shelf across the rest of a day, a card at a time.
+  static func shelfEntries(
+    _ shelf: [FiveCard], from start: Date, through day: Date, edition: Int, foot: String,
+    dots: [Bool], dotsLine: String
+  ) -> [CardEntry] {
+    var out: [CardEntry] = []
+    for (turn, at) in Turns.times(from: start, through: day).enumerated() {
+      let card = shelf[turn % shelf.count]
       out.append(
         CardEntry(
-          date: i == 0 ? now : day,
+          date: at,
           data: CardData(
-            edition: d.edition, topic: d.topic, question: d.question,
-            color: Color(hex: d.color, fallback: AstutPalette.night),
-            ink: Color(hex: d.ink, fallback: .white),
-            foot: String(localized: "Five cards a day, two minutes."), footMark: .none,
-            dots: [], dotsLine: "")))
+            edition: edition, topic: card.topic, question: card.question,
+            color: card.color, ink: card.ink, foot: foot, footMark: .shelf,
+            dots: dots, dotsLine: dotsLine),
+          card: card.id, place: CardPlace.shelf))
     }
     return out
   }
@@ -307,16 +435,24 @@ struct CardWidgetView: View {
     }
   }
 
+  /// The card on the widget is the whole widget, so the whole widget opens
+  /// it.
+  private var link: URL? {
+    entry.card.isEmpty
+      ? AstutLink.from("card", family)
+      : AstutLink.card("card", family, id: entry.card, in: entry.place)
+  }
+
   var body: some View {
     switch size {
     case .rectangular:
       CardView(data: entry.data, size: .rectangular)
         .astutBackground(Color.clear)
-        .widgetURL(AstutLink.from("card", family))
+        .widgetURL(link)
     default:
       CardView(data: entry.data, size: size)
         .astutBackground(entry.data.color)
-        .widgetURL(AstutLink.from("card", family))
+        .widgetURL(link)
     }
   }
 }
@@ -331,7 +467,7 @@ struct TodayCardWidget: Widget {
       CardWidgetView(entry: entry)
     }
     .configurationDisplayName("Today's card")
-    .description("The card the morning opens on, and your streak.")
+    .description("The next of today's cards, then today's shelf.")
     .supportedFamilies(TodayCardWidget.families)
   }
 
@@ -486,11 +622,21 @@ struct FiveProvider: TimelineProvider {
   static let sample = FiveData(
     title: "TODAY'S FIVE",
     cards: [
-      FiveCard(topic: "Space", color: Color(hex: "#2B5CFF", fallback: .blue), ink: .white, read: true),
-      FiveCard(topic: "Economics", color: Color(hex: "#FFE600", fallback: .yellow), ink: .black, read: true),
-      FiveCard(topic: "Thinking", color: Color(hex: "#9B5CFF", fallback: .purple), ink: .white, read: false),
-      FiveCard(topic: "Language", color: Color(hex: "#00D9D9", fallback: .teal), ink: .black, read: false),
-      FiveCard(topic: "Nature", color: Color(hex: "#00D451", fallback: .green), ink: .black, read: false),
+      FiveCard(
+        topic: "Space", color: Color(hex: "#2B5CFF", fallback: .blue), ink: .white, read: true,
+        question: "Why does the catalogue of known planets look so strange?"),
+      FiveCard(
+        topic: "Economics", color: Color(hex: "#FFE600", fallback: .yellow), ink: .black,
+        read: true, question: "Should cities scrap rules requiring parking spaces?"),
+      FiveCard(
+        topic: "Thinking", color: Color(hex: "#9B5CFF", fallback: .purple), ink: .white,
+        read: false, question: "Is three hires from one university a reason to look elsewhere?"),
+      FiveCard(
+        topic: "Language", color: Color(hex: "#00D9D9", fallback: .teal), ink: .black,
+        read: false, question: "Why do so many languages call their mother something like ma?"),
+      FiveCard(
+        topic: "Nature", color: Color(hex: "#00D451", fallback: .green), ink: .black,
+        read: false, question: "How much could an ant scaled up a hundred times lift?"),
     ],
     line: "2 of 5 read")
 
@@ -536,18 +682,212 @@ struct FiveProvider: TimelineProvider {
   }
 }
 
+struct FiveWidgetView: View {
+  @Environment(\.widgetFamily) private var family
+  let entry: FiveEntry
+
+  private var large: Bool { family == .systemLarge }
+
+  /// Each card opens itself, on Today.
+  private var data: FiveData {
+    var out = entry.data
+    out.cards = entry.data.cards.map { card -> FiveCard in
+      var linked = card
+      if !card.id.isEmpty {
+        linked.link = AstutLink.card("five", family, id: card.id, in: CardPlace.today)
+      }
+      return linked
+    }
+    return out
+  }
+
+  /// A tap between the cards goes to the next one to read, which is the
+  /// card Today is waiting on.
+  private var next: URL? {
+    if let card = entry.data.cards.first(where: { !$0.read && !$0.id.isEmpty }) {
+      return AstutLink.card("five", family, id: card.id, in: CardPlace.today)
+    }
+    return AstutLink.from("five", family)
+  }
+
+  var body: some View {
+    FiveView(data: data, large: large)
+      .astutBackground(AstutPalette.night)
+      .widgetURL(next)
+  }
+}
+
 struct FiveWidget: Widget {
   let kind = "AstutFive"
 
   var body: some WidgetConfiguration {
     StaticConfiguration(kind: kind, provider: FiveProvider()) { entry in
-      FiveView(data: entry.data)
-        .astutBackground(AstutPalette.night)
-        .widgetURL(AstutLink.from("five", .systemMedium))
+      FiveWidgetView(entry: entry)
     }
     .configurationDisplayName("Today's five")
     .description("The five cards of the day, and how far you are.")
-    .supportedFamilies([.systemMedium])
+    .supportedFamilies([.systemMedium, .systemLarge])
+  }
+}
+
+// MARK: - Today's shelf
+
+struct ShelfEntry: TimelineEntry {
+  let date: Date
+  let title: String
+  let line: String
+  /// The whole shelf for the day; each widget shows its share of it.
+  let shelf: [FiveCard]
+  /// Which turn of the day this is, so the shelf moves on.
+  let turn: Int
+}
+
+struct ShelfProvider: TimelineProvider {
+  func placeholder(in context: Context) -> ShelfEntry {
+    ShelfEntry(
+      date: Date(), title: "TODAY'S SHELF", line: "", shelf: ShelfProvider.sample, turn: 0)
+  }
+
+  func getSnapshot(in context: Context, completion: @escaping (ShelfEntry) -> Void) {
+    if let snap = Shared.snapshot(), let first = ShelfProvider.entries(snap, from: Date()).first {
+      completion(first)
+    } else if let first = ShelfProvider.entries(WebDays.cached(), from: Date()).first {
+      completion(first)
+    } else {
+      completion(placeholder(in: context))
+    }
+  }
+
+  func getTimeline(in context: Context, completion: @escaping (Timeline<ShelfEntry>) -> Void) {
+    let now = Date()
+    if let snap = Shared.snapshot() {
+      let entries = ShelfProvider.entries(snap, from: now)
+      if !entries.isEmpty {
+        completion(Timeline(entries: entries, policy: .atEnd))
+        return
+      }
+    }
+    WebDays.fetch { days in
+      let entries = ShelfProvider.entries(days, from: now)
+      if entries.isEmpty {
+        // Nothing yet: offline on first run. Try again in half an hour.
+        completion(
+          Timeline(
+            entries: [
+              ShelfEntry(
+                date: now, title: ShelfProvider.title, line: "", shelf: [], turn: 0)
+            ],
+            policy: .after(now.addingTimeInterval(30 * 60))))
+      } else {
+        completion(Timeline(entries: entries, policy: .atEnd))
+      }
+    }
+  }
+
+  /// "TODAY'S SHELF" in the phone's language, for a widget the app has not
+  /// spoken to.
+  static var title: String {
+    String(localized: "Today's shelf").uppercased(with: Locale.current)
+  }
+
+  static let sample = [
+    FiveCard(
+      topic: "Nature", color: Color(hex: "#00D451", fallback: .green), ink: .black, read: false,
+      question: "An ant lifts 20 times its own weight. Scaled up 100 times, how much could it lift?"
+    ),
+    FiveCard(
+      topic: "Technology", color: Color(hex: "#00A6FF", fallback: .blue), ink: .black,
+      read: false,
+      question: "Two fingers land on a touch screen at once. How many points can it compute?"),
+    FiveCard(
+      topic: "Food", color: Color(hex: "#FF7A1A", fallback: .orange), ink: .black, read: false,
+      question: "Kona coffee grows low, yet rivals mountain coffee. What does altitude stand for?"),
+    FiveCard(
+      topic: "Space", color: Color(hex: "#2B5CFF", fallback: .blue), ink: .white, read: false,
+      question: "Why does the catalogue of known planets look so strange?"),
+  ]
+
+  /// From the app: today's shelf and the next fortnight's, a day at a time,
+  /// turning over every third hour.
+  static func entries(_ snap: Snapshot, from now: Date) -> [ShelfEntry] {
+    let calendar = Calendar.current
+    var out: [ShelfEntry] = []
+    for i in 0...14 {
+      guard
+        let day = calendar.date(byAdding: .day, value: i, to: calendar.startOfDay(for: now))
+      else { continue }
+      let shelf = snap.shelf(Shared.key(day))
+      if shelf.isEmpty { continue }
+      for (turn, at) in Turns.times(from: i == 0 ? now : day, through: day).enumerated() {
+        out.append(
+          ShelfEntry(
+            date: at, title: snap.shelfTitle, line: snap.shelfLine, shelf: shelf, turn: turn))
+      }
+    }
+    return out
+  }
+
+  /// From the site, for a widget the app has not spoken to: a week of it,
+  /// and then the site is asked again.
+  static func entries(_ days: [String: WebDays.Day], from now: Date) -> [ShelfEntry] {
+    let calendar = Calendar.current
+    var out: [ShelfEntry] = []
+    for i in 0...7 {
+      guard
+        let day = calendar.date(byAdding: .day, value: i, to: calendar.startOfDay(for: now)),
+        let d = days[Shared.key(day)], !d.shelf.isEmpty
+      else { continue }
+      for (turn, at) in Turns.times(from: i == 0 ? now : day, through: day).enumerated() {
+        out.append(
+          ShelfEntry(
+            date: at, title: title,
+            line: String(localized: "The same for everyone, and only today"),
+            shelf: d.shelf, turn: turn))
+      }
+    }
+    return out
+  }
+}
+
+struct ShelfWidgetView: View {
+  @Environment(\.widgetFamily) private var family
+  let entry: ShelfEntry
+
+  private var large: Bool { family == .systemLarge }
+
+  /// This turn's share of the shelf, each card opening itself in Explore.
+  private var data: ShelfData {
+    let shown = Turns.window(entry.shelf, turn: entry.turn, count: large ? 4 : 2)
+    let cards = shown.map { card -> FiveCard in
+      var linked = card
+      if !card.id.isEmpty {
+        linked.link = AstutLink.card("shelf", family, id: card.id, in: CardPlace.shelf)
+      }
+      return linked
+    }
+    return ShelfData(
+      title: entry.title, line: entry.line, cards: cards,
+      empty: String(localized: "Open Astute to see today's shelf here."))
+  }
+
+  /// A tap between the cards opens Explore, where the shelf is.
+  var body: some View {
+    ShelfView(data: data, large: large)
+      .astutBackground(AstutPalette.night)
+      .widgetURL(AstutLink.from("shelf", family, in: CardPlace.shelf))
+  }
+}
+
+struct ShelfWidget: Widget {
+  let kind = "AstutShelf"
+
+  var body: some WidgetConfiguration {
+    StaticConfiguration(kind: kind, provider: ShelfProvider()) { entry in
+      ShelfWidgetView(entry: entry)
+    }
+    .configurationDisplayName("Today's shelf")
+    .description("Cards from the top of Explore, the same for everyone, and only today.")
+    .supportedFamilies([.systemMedium, .systemLarge])
   }
 }
 
@@ -559,17 +899,39 @@ struct AstutWidgets: WidgetBundle {
     TodayCardWidget()
     StreakWidget()
     FiveWidget()
+    ShelfWidget()
   }
 }
 
-// MARK: - Which widget opened the app
+// MARK: - Where a tap goes
 
-/// The link a widget opens the app on, naming itself — "card.systemSmall",
+/// The link a widget opens the app on: which widget it was — "card.systemSmall",
 /// "streak.accessoryCircular" — so the app can say which widgets bring
-/// readers in.
+/// readers in, and, for a card, which card and where it lives, so the app
+/// opens exactly that card.
 enum AstutLink {
-  static func from(_ kind: String, _ family: WidgetFamily) -> URL? {
-    URL(string: "astute://widget?from=\(kind).\(family)")
+  /// A tap on no card in particular: the streak, the room between cards.
+  static func from(_ kind: String, _ family: WidgetFamily, in place: String? = nil) -> URL? {
+    link(kind, family, card: nil, in: place)
+  }
+
+  /// A tap on a card: one of today's five ("today") or a card of today's
+  /// shelf ("shelf").
+  static func card(_ kind: String, _ family: WidgetFamily, id: String, in place: String) -> URL? {
+    link(kind, family, card: id.isEmpty ? nil : id, in: place)
+  }
+
+  private static func link(
+    _ kind: String, _ family: WidgetFamily, card: String?, in place: String?
+  ) -> URL? {
+    var parts = URLComponents()
+    parts.scheme = "astute"
+    parts.host = "widget"
+    var items = [URLQueryItem(name: "from", value: "\(kind).\(family)")]
+    if let card { items.append(URLQueryItem(name: "card", value: card)) }
+    if let place { items.append(URLQueryItem(name: "in", value: place)) }
+    parts.queryItems = items
+    return parts.url
   }
 }
 

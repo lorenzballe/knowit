@@ -109,6 +109,25 @@ struct AstutLights: View {
   }
 }
 
+// MARK: - Links
+
+/// A card on a widget that opens that very card in the app. A medium or a
+/// large widget can hold a link for each card on it; a small one is a
+/// single tap, named by the widget itself, and the previews have no app to
+/// open — both pass nil, and the card is drawn the same either way.
+struct CardLink<Content: View>: View {
+  let url: URL?
+  @ViewBuilder let content: () -> Content
+
+  var body: some View {
+    if let url {
+      Link(destination: url) { content() }
+    } else {
+      content()
+    }
+  }
+}
+
 // MARK: - Today's card
 
 struct CardData {
@@ -117,7 +136,8 @@ struct CardData {
   var question: String
   var color: Color
   var ink: Color
-  /// The line at the foot: the streak, the day done, or the plain promise.
+  /// The line at the foot: the streak, the day done, the plain promise, or
+  /// that the card is from today's shelf.
   var foot: String
   var footMark: FootMark
   /// Today's five, read or not, for the large card; empty to leave out.
@@ -125,13 +145,14 @@ struct CardData {
   var dotsLine: String
 }
 
-enum FootMark { case streak, done, none }
+enum FootMark { case streak, done, shelf, none }
 
 enum CardSize { case small, medium, large, rectangular }
 
-/// The card the morning opens on: the subject's colour for a ground, the
+/// The next card to read today: the subject's colour for a ground, the
 /// subject as an eyebrow, the question set large, and the streak at the
-/// foot — the app's card, on the home screen.
+/// foot — the app's card, on the home screen. Once the five are read, a
+/// card of today's shelf, and the foot says so.
 struct CardView: View {
   let data: CardData
   let size: CardSize
@@ -167,6 +188,9 @@ struct CardView: View {
         Circle().fill(data.ink).frame(width: 6, height: 6)
       case .done:
         Image(systemName: "checkmark").font(.system(size: 9.5, weight: .heavy))
+      case .shelf:
+        // The compass Explore's tab wears, where today's shelf is.
+        Image(systemName: "safari").font(.system(size: 10, weight: .semibold))
       case .none:
         EmptyView()
       }
@@ -391,6 +415,12 @@ struct FiveCard {
   var color: Color
   var ink: Color
   var read: Bool
+  /// The card, by id, which is what a tap on it opens.
+  var id: String = ""
+  /// Its question, for the widgets with room to show it.
+  var question: String = ""
+  /// Where a tap on it goes; nil where the widget cannot hold a link.
+  var link: URL? = nil
 }
 
 struct FiveData {
@@ -403,9 +433,12 @@ struct FiveData {
 
 /// The day's five in their colours, in the order they are read: a card
 /// read is solid with a tick, a card still to read is its colour, faint,
-/// with a ring.
+/// with a ring. Medium, the five side by side with their subjects; large,
+/// one above the other, each with the start of its question. Every card
+/// opens itself.
 struct FiveView: View {
   let data: FiveData
+  var large = false
 
   private var cream: Color { AstutPalette.cream }
 
@@ -426,12 +459,20 @@ struct FiveView: View {
         }
       }
       Spacer(minLength: 8)
-      HStack(spacing: 7) {
-        ForEach(Array(data.cards.enumerated()), id: \.offset) { _, card in
-          tile(card)
+      if large {
+        VStack(spacing: 6) {
+          ForEach(Array(data.cards.enumerated()), id: \.offset) { _, card in
+            CardLink(url: card.link) { row(card) }
+          }
         }
+      } else {
+        HStack(spacing: 7) {
+          ForEach(Array(data.cards.enumerated()), id: \.offset) { _, card in
+            CardLink(url: card.link) { tile(card) }
+          }
+        }
+        .frame(maxHeight: 84)
       }
-      .frame(maxHeight: 84)
       Spacer(minLength: 8)
       Text(data.line)
         .font(AstutType.figtree(12, weight: 600))
@@ -442,12 +483,54 @@ struct FiveView: View {
     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
   }
 
-  private func tile(_ card: FiveCard) -> some View {
-    ZStack(alignment: .bottomLeading) {
+  /// A card's ground: solid once read, its colour faint with a ring while
+  /// it waits.
+  private func ground(_ card: FiveCard) -> some View {
+    ZStack {
       RoundedRectangle(cornerRadius: 13, style: .continuous)
         .fill(card.read ? card.color : card.color.opacity(0.2))
       RoundedRectangle(cornerRadius: 13, style: .continuous)
         .strokeBorder(card.color.opacity(card.read ? 0 : 0.75), lineWidth: 1.5)
+    }
+  }
+
+  /// The large widget's card: the subject over the start of the question,
+  /// as much of it as the row holds, and the tick at the end once read.
+  private func row(_ card: FiveCard) -> some View {
+    let ink = card.read ? card.ink : cream
+    return ZStack {
+      ground(card)
+      HStack(alignment: .center, spacing: 10) {
+        VStack(alignment: .leading, spacing: 2) {
+          Text(card.topic.uppercased())
+            .font(AstutType.figtree(8.5, weight: 700))
+            .tracking(0.9)
+            .lineLimit(1)
+            .minimumScaleFactor(0.7)
+            .foregroundStyle(ink.opacity(0.78))
+          Text(card.question)
+            .font(AstutType.fraunces(13.5, weight: 600))
+            .tracking(-0.2)
+            .lineLimit(2)
+            .minimumScaleFactor(0.85)
+            .foregroundStyle(ink)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        if card.read {
+          Image(systemName: "checkmark")
+            .font(.system(size: 11, weight: .heavy))
+            .foregroundStyle(card.ink)
+        }
+      }
+      .padding(.horizontal, 12)
+      .padding(.vertical, 6)
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+  }
+
+  private func tile(_ card: FiveCard) -> some View {
+    ZStack(alignment: .bottomLeading) {
+      ground(card)
       if card.read {
         Image(systemName: "checkmark")
           .font(.system(size: 11, weight: .heavy))
@@ -464,5 +547,109 @@ struct FiveView: View {
         .padding(.horizontal, 7)
         .padding(.bottom, 8)
     }
+  }
+}
+
+// MARK: - Today's shelf
+
+struct ShelfData {
+  /// "TODAY'S SHELF", in the reader's language.
+  var title: String
+  /// What the shelf is, under the title on the large widget.
+  var line: String
+  /// The cards on show: two on the medium widget, four on the large.
+  var cards: [FiveCard]
+  /// What to say while there is no shelf to show.
+  var empty: String
+}
+
+/// Today's shelf on the home screen: cards from the top of Explore, the
+/// same for everybody and only today, two side by side or four, each on
+/// its subject's colour with the subject as an eyebrow and the question
+/// set in the display face. Every card opens itself, in Explore.
+struct ShelfView: View {
+  let data: ShelfData
+  var large = false
+
+  private var cream: Color { AstutPalette.cream }
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: 0) {
+      Text(data.title)
+        .font(AstutType.figtree(10, weight: 700))
+        .tracking(1.5)
+        .lineLimit(1)
+        .minimumScaleFactor(0.7)
+        .foregroundStyle(cream.opacity(0.62))
+      if large && !data.line.isEmpty && !data.cards.isEmpty {
+        Text(data.line)
+          .font(AstutType.figtree(11.5, weight: 600))
+          .lineLimit(1)
+          .minimumScaleFactor(0.8)
+          .foregroundStyle(cream.opacity(0.5))
+          .padding(.top, 3)
+      }
+      Spacer(minLength: large ? 10 : 8)
+      if data.cards.isEmpty {
+        Text(data.empty)
+          .font(AstutType.fraunces(16.5, weight: 600))
+          .foregroundStyle(cream)
+          .lineLimit(3)
+          .minimumScaleFactor(0.7)
+        Spacer(minLength: 0)
+      } else if large {
+        VStack(spacing: 8) {
+          HStack(spacing: 8) {
+            cell(0)
+            cell(1)
+          }
+          HStack(spacing: 8) {
+            cell(2)
+            cell(3)
+          }
+        }
+      } else {
+        HStack(spacing: 8) {
+          cell(0)
+          cell(1)
+        }
+      }
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+  }
+
+  /// The card at [i], or the room it would take on a shelf that is short.
+  @ViewBuilder
+  private func cell(_ i: Int) -> some View {
+    if i < data.cards.count {
+      CardLink(url: data.cards[i].link) { face(data.cards[i]) }
+    } else {
+      Color.clear
+    }
+  }
+
+  private func face(_ card: FiveCard) -> some View {
+    let size: CGFloat = large ? 15.5 : 14
+    return VStack(alignment: .leading, spacing: 0) {
+      Text(card.topic.isEmpty ? "ASTUTE" : card.topic.uppercased())
+        .font(AstutType.figtree(8.5, weight: 700))
+        .tracking(1.1)
+        .lineLimit(1)
+        .minimumScaleFactor(0.7)
+        .foregroundStyle(card.ink.opacity(0.72))
+      Spacer(minLength: 6)
+      Text(card.question)
+        .font(AstutType.fraunces(size))
+        .tracking(-size * 0.02)
+        .lineSpacing(-size * 0.06)
+        .foregroundStyle(card.ink)
+        .lineLimit(large ? 6 : 4)
+        .minimumScaleFactor(0.7)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    .padding(large ? 12 : 11)
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    .background(
+      RoundedRectangle(cornerRadius: 15, style: .continuous).fill(card.color))
   }
 }
