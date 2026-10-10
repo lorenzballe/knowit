@@ -86,10 +86,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get removeFromSaved => 'Remove from saved';
 
   @override
-  String get saveThisPill => 'Save this pill';
+  String get saveThisPill => 'Save this card';
 
   @override
-  String get shareThisPill => 'Share this pill';
+  String get shareThisPill => 'Share this card';
 
   @override
   String cardOf(int k, int n) {
@@ -222,7 +222,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get yesterday => 'Yesterday';
 
   @override
-  String get noPillsMatchFilter => 'No pills match that filter yet.';
+  String get noPillsMatchFilter => 'No cards match that filter yet.';
 
   @override
   String nothingForTryTopic(String query) {
@@ -400,7 +400,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get signOutBody =>
-      'Your streak, saved pills and record stay on your account. This clears them from this device.';
+      'Your streak, saved cards and record stay on your account. This clears them from this device.';
 
   @override
   String get deleteAccount => 'Delete account';
@@ -446,7 +446,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get startOverBody =>
-      'Wipes everything on this device — streak, saved pills, answers, your judgement record, topics and plan — and reopens the intro.';
+      'Wipes everything on this device — streak, saved cards, answers, your judgement record, topics and plan — and reopens the intro.';
 
   @override
   String get wipeIt => 'Wipe it';
@@ -495,7 +495,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get yourFivePillsBeforeCoffee =>
-      'Your 5 pills, before the first coffee.';
+      'Your 5 cards, before the first coffee.';
 
   @override
   String get browserOnlySpeaksOpen =>
@@ -525,7 +525,52 @@ class AppLocalizationsEn extends AppLocalizations {
   String get manageSubscription => 'Manage subscription';
 
   @override
-  String get howPillsAreWritten => 'How pills are written';
+  String get howPillsAreWritten => 'How cards are written';
+
+  @override
+  String get howTitle => 'Every card here is written by an AI model.';
+
+  @override
+  String get howIntro =>
+      'We\'d rather say it up front than have you find out. Here is how a card reaches you.';
+
+  @override
+  String get howStep1Title => 'Written ahead, by a model';
+
+  @override
+  String get howStep1Line =>
+      'Each card is drafted to one brief: a question worth asking, an answer that says why, and one move you can use again.';
+
+  @override
+  String get howStep2Title => 'Checked against its source';
+
+  @override
+  String get howStep2Line =>
+      'Every card names where it comes from, and a second model reads it as a critic before it ships. What can\'t be backed up is cut.';
+
+  @override
+  String get howStep3Title => 'Five, dealt each morning';
+
+  @override
+  String get howStep3Line =>
+      'From the subjects you picked, and never one you have already read.';
+
+  @override
+  String get howStep4Title => 'Kept honest by readers';
+
+  @override
+  String get howStep4Line =>
+      'When enough readers say a card is wrong, it stops being dealt until a person has checked it.';
+
+  @override
+  String get howReportTitle => 'Found something wrong?';
+
+  @override
+  String get howReportLine =>
+      'Tap the flag next to a card\'s source to report it.';
+
+  @override
+  String get howFoot => 'Sources are checked again every month.';
 
   @override
   String get signingIn => 'Signing in…';
@@ -691,8 +736,8 @@ class AppLocalizationsEn extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'pills read',
-      one: 'pill read',
+      other: 'cards read',
+      one: 'card read',
     );
     return '$_temp0';
   }
@@ -702,8 +747,8 @@ class AppLocalizationsEn extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n pills read',
-      one: '1 pill read',
+      other: '$n cards read',
+      one: '1 card read',
     );
     return '$_temp0';
   }
@@ -771,8 +816,8 @@ class AppLocalizationsEn extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n pills went unread',
-      one: '1 pill went unread',
+      other: '$n cards went unread',
+      one: '1 card went unread',
     );
     return '$_temp0';
   }
@@ -823,7 +868,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fivePillsADayPick =>
-      'Five pills a day, written fresh each morning. Pick the topics you want in the mix — you can change them later.';
+      'Five cards a day, written fresh each morning. Pick the topics you want in the mix — you can change them later.';
 
   @override
   String nSelected(int n) {
@@ -852,7 +897,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tagline => 'Five smart things a day, ready to use in conversation';
 
   @override
-  String get introTopicsTitle => 'Eighteen topics, five pills';
+  String get introTopicsTitle => 'Nineteen topics, five cards';
 
   @override
   String get introTopicsLine =>
@@ -863,7 +908,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get introQuestionLine =>
-      'Every pill carries the one line that makes it worth saying out loud.';
+      'Every card carries the one line that makes it worth saying out loud.';
 
   @override
   String get introMixTitle => 'You choose the mix';
@@ -1282,7 +1327,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nothingLikedYet => 'Nothing liked yet';
 
   @override
-  String get likeThisPill => 'Like this pill';
+  String get likeThisPill => 'Like this card';
 
   @override
   String get removeFromLiked => 'Remove from liked';
@@ -1302,7 +1347,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tapTheBookmarkLandsHere =>
-      'Tap the bookmark on any pill and it lands here — the ones that changed how you think, kept.';
+      'Tap the bookmark on any card and it lands here — the ones that changed how you think, kept.';
 
   @override
   String get nudgeTitle => 'Your five are ready';

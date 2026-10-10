@@ -86,10 +86,10 @@ class AppLocalizationsJa extends AppLocalizations {
   String get removeFromSaved => '保存から外す';
 
   @override
-  String get saveThisPill => 'このピルを保存';
+  String get saveThisPill => 'このカードを保存';
 
   @override
-  String get shareThisPill => 'このピルを共有';
+  String get shareThisPill => 'このカードを共有';
 
   @override
   String cardOf(int k, int n) {
@@ -222,7 +222,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get yesterday => '昨日';
 
   @override
-  String get noPillsMatchFilter => 'この絞り込みに合うピルはまだありません。';
+  String get noPillsMatchFilter => 'この絞り込みに合うカードはまだありません。';
 
   @override
   String nothingForTryTopic(String query) {
@@ -397,7 +397,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get signOutQuestion => 'ログアウトしますか？';
 
   @override
-  String get signOutBody => '連続記録、保存したピル、記録はアカウントに残ります。この端末からは消去されます。';
+  String get signOutBody => '連続記録、保存したカード、記録はアカウントに残ります。この端末からは消去されます。';
 
   @override
   String get deleteAccount => 'アカウントを削除';
@@ -440,7 +440,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get startOverBody =>
-      'この端末のすべて（連続記録、保存したピル、回答、判断の記録、分野、プラン）を消去し、イントロを再表示します。';
+      'この端末のすべて（連続記録、保存したカード、回答、判断の記録、分野、プラン）を消去し、イントロを再表示します。';
 
   @override
   String get wipeIt => '消去';
@@ -487,7 +487,7 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get yourFivePillsBeforeCoffee => '最初のコーヒーの前に、5枚のピルを。';
+  String get yourFivePillsBeforeCoffee => '最初のコーヒーの前に、5枚のカードを。';
 
   @override
   String get browserOnlySpeaksOpen => 'ブラウザは開いている間しか話せないので、これにはスマホ版が必要です。';
@@ -516,7 +516,48 @@ class AppLocalizationsJa extends AppLocalizations {
   String get manageSubscription => 'サブスクリプションを管理';
 
   @override
-  String get howPillsAreWritten => 'ピルの作り方';
+  String get howPillsAreWritten => 'カードの作り方';
+
+  @override
+  String get howTitle => 'ここにあるカードは、すべてAIモデルが書いています。';
+
+  @override
+  String get howIntro => 'あとで気づかれるより、最初に伝えたいと考えています。カードがあなたに届くまでの流れです。';
+
+  @override
+  String get howStep1Title => 'モデルが前もって書く';
+
+  @override
+  String get howStep1Line =>
+      'どのカードもひとつの方針で書かれます。問う価値のある問い、理由を語る答え、そして繰り返し使える一手。';
+
+  @override
+  String get howStep2Title => '出典と照らし合わせる';
+
+  @override
+  String get howStep2Line =>
+      'どのカードにも出典があり、公開前に別のモデルが批評家として読みます。裏づけのないものは削られます。';
+
+  @override
+  String get howStep3Title => '毎朝、5枚を配る';
+
+  @override
+  String get howStep3Line => '選んだ分野から、まだ読んでいないカードだけを。';
+
+  @override
+  String get howStep4Title => '読者が正しさを保つ';
+
+  @override
+  String get howStep4Line => '十分な数の読者が誤りだと言ったカードは、人が確認するまで配られなくなります。';
+
+  @override
+  String get howReportTitle => '間違いを見つけましたか？';
+
+  @override
+  String get howReportLine => 'カードの出典の横にある旗をタップして報告できます。';
+
+  @override
+  String get howFoot => '出典は毎月見直しています。';
 
   @override
   String get signingIn => 'ログイン中…';
@@ -806,7 +847,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get fivePillsADayPick =>
-      '1日5枚のピルを、毎朝新しく。ミックスに入れる分野を選んでください — あとで変えられます。';
+      '1日5枚のカードを、毎朝新しく。ミックスに入れる分野を選んでください — あとで変えられます。';
 
   @override
   String nSelected(int n) {
@@ -835,7 +876,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get tagline => '1日5つの賢い話題。会話でそのまま使えます';
 
   @override
-  String get introTopicsTitle => '18の分野、5枚のピル';
+  String get introTopicsTitle => '19の分野、5枚のカード';
 
   @override
   String get introTopicsLine => '毎朝新しく書かれ、出典と照合されます。';
@@ -844,7 +885,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get introQuestionTitle => '問いがあって、答えがある';
 
   @override
-  String get introQuestionLine => 'どのピルにも、声に出す価値のあるひと言が入っています。';
+  String get introQuestionLine => 'どのカードにも、声に出す価値のあるひと言が入っています。';
 
   @override
   String get introMixTitle => 'ミックスはあなたが決める';

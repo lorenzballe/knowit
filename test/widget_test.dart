@@ -2153,7 +2153,7 @@ void main() {
       await finish(tester);
 
       expect(find.text('Hold a card you like'), findsOneWidget);
-      await tester.tap(find.bySemanticsLabel('Save this pill'));
+      await tester.tap(find.bySemanticsLabel('Save this card'));
       await _settle(tester);
       expect(find.bySemanticsLabel('Remove from saved'), findsOneWidget);
       // Saving is finding it again later; the header counts what was liked.
@@ -3526,10 +3526,10 @@ void main() {
       await tester.pumpWidget(viewer(app, [fact]));
       await tester.pumpAndSettle();
 
-      expect(find.bySemanticsLabel('Share this pill'), findsOneWidget);
+      expect(find.bySemanticsLabel('Share this card'), findsOneWidget);
       expect(app.isSaved(fact.id), isFalse);
 
-      await tester.tap(find.bySemanticsLabel('Save this pill'));
+      await tester.tap(find.bySemanticsLabel('Save this card'));
       await tester.pumpAndSettle();
       expect(app.isSaved(fact.id), isTrue);
       expect(find.bySemanticsLabel('Remove from saved'), findsOneWidget);
@@ -4557,7 +4557,7 @@ void main() {
       ];
       const titles = [
         'Astute',
-        'Eighteen topics, five pills',
+        'Nineteen topics, five cards',
         'A question, then the answer',
         'You choose the mix',
         'Thirty seconds a day',
@@ -4623,12 +4623,12 @@ void main() {
       const copy = [
         ('Astute', 'Five smart things a day, ready to use in conversation'),
         (
-          'Eighteen topics, five pills',
+          'Nineteen topics, five cards',
           'Written fresh every morning, and checked against a source.',
         ),
         (
           'A question, then the answer',
-          'Every pill carries the one line that makes it worth saying out loud.',
+          'Every card carries the one line that makes it worth saying out loud.',
         ),
         (
           'You choose the mix',

@@ -88,10 +88,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get removeFromSaved => 'Убрать из сохранённых';
 
   @override
-  String get saveThisPill => 'Сохранить эту пилюлю';
+  String get saveThisPill => 'Сохранить эту карточку';
 
   @override
-  String get shareThisPill => 'Поделиться пилюлей';
+  String get shareThisPill => 'Поделиться карточкой';
 
   @override
   String cardOf(int k, int n) {
@@ -237,7 +237,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get noPillsMatchFilter =>
-      'Под этот фильтр пока не подходит ни одна пилюля.';
+      'Под этот фильтр пока не подходит ни одна карточка.';
 
   @override
   String nothingForTryTopic(String query) {
@@ -418,7 +418,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get signOutBody =>
-      'Серия, сохранённые пилюли и история остаются в аккаунте. Это удалит их с этого устройства.';
+      'Серия, сохранённые карточки и история остаются в аккаунте. Это удалит их с этого устройства.';
 
   @override
   String get deleteAccount => 'Удалить аккаунт';
@@ -463,7 +463,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get startOverBody =>
-      'Удаляет всё на этом устройстве — серию, сохранённые пилюли, ответы, историю оценок, темы и план — и открывает вступление заново.';
+      'Удаляет всё на этом устройстве — серию, сохранённые карточки, ответы, историю оценок, темы и план — и открывает вступление заново.';
 
   @override
   String get wipeIt => 'Удалить';
@@ -511,7 +511,7 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
-  String get yourFivePillsBeforeCoffee => 'Твои 5 пилюль, до первого кофе.';
+  String get yourFivePillsBeforeCoffee => 'Твои 5 карточек, до первого кофе.';
 
   @override
   String get browserOnlySpeaksOpen =>
@@ -542,7 +542,52 @@ class AppLocalizationsRu extends AppLocalizations {
   String get manageSubscription => 'Управлять подпиской';
 
   @override
-  String get howPillsAreWritten => 'Как пишутся пилюли';
+  String get howPillsAreWritten => 'Как пишутся карточки';
+
+  @override
+  String get howTitle => 'Каждую карточку здесь пишет ИИ-модель.';
+
+  @override
+  String get howIntro =>
+      'Лучше скажем сразу, чем ты узнаешь сам. Вот как карточка доходит до тебя.';
+
+  @override
+  String get howStep1Title => 'Написана заранее, моделью';
+
+  @override
+  String get howStep1Line =>
+      'Каждая карточка пишется по одному заданию: вопрос, который стоит задать, ответ, объясняющий почему, и один ход, который пригодится снова.';
+
+  @override
+  String get howStep2Title => 'Проверена по источнику';
+
+  @override
+  String get howStep2Line =>
+      'Каждая карточка называет, откуда она, а вторая модель читает её как критик до публикации. То, что нельзя подтвердить, вырезается.';
+
+  @override
+  String get howStep3Title => 'Пять, каждое утро';
+
+  @override
+  String get howStep3Line =>
+      'Из тем, которые ты выбрал, и никогда та, что ты уже читал.';
+
+  @override
+  String get howStep4Title => 'Читатели следят за честностью';
+
+  @override
+  String get howStep4Line =>
+      'Когда достаточно читателей говорят, что карточка ошибочна, её перестают раздавать, пока её не проверит человек.';
+
+  @override
+  String get howReportTitle => 'Нашёл ошибку?';
+
+  @override
+  String get howReportLine =>
+      'Нажми на флажок рядом с источником карточки, чтобы сообщить о ней.';
+
+  @override
+  String get howFoot => 'Источники перепроверяются каждый месяц.';
 
   @override
   String get signingIn => 'Вход…';
@@ -721,10 +766,10 @@ class AppLocalizationsRu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'пилюли прочитано',
-      many: 'пилюль прочитано',
-      few: 'пилюли прочитаны',
-      one: 'пилюля прочитана',
+      other: 'карточки прочитано',
+      many: 'карточек прочитано',
+      few: 'карточки прочитаны',
+      one: 'карточка прочитана',
     );
     return '$_temp0';
   }
@@ -734,10 +779,10 @@ class AppLocalizationsRu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n пилюли прочитано',
-      many: '$n пилюль прочитано',
-      few: '$n пилюли прочитаны',
-      one: '$n пилюля прочитана',
+      other: '$n карточки прочитано',
+      many: '$n карточек прочитано',
+      few: '$n карточки прочитаны',
+      one: '$n карточка прочитана',
     );
     return '$_temp0';
   }
@@ -813,10 +858,10 @@ class AppLocalizationsRu extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n пилюли остались непрочитанными',
-      many: '$n пилюль остались непрочитанными',
-      few: '$n пилюли остались непрочитанными',
-      one: '$n пилюля осталась непрочитанной',
+      other: '$n карточки остались непрочитанными',
+      many: '$n карточек остались непрочитанными',
+      few: '$n карточки остались непрочитанными',
+      one: '$n карточка осталась непрочитанной',
     );
     return '$_temp0';
   }
@@ -869,7 +914,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get fivePillsADayPick =>
-      'Пять пилюль в день, свежие каждое утро. Выбери темы для микса — потом их можно изменить.';
+      'Пять карточек в день, свежие каждое утро. Выбери темы для микса — потом их можно изменить.';
 
   @override
   String nSelected(int n) {
@@ -898,7 +943,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get tagline => 'Пять умных вещей в день, готовых для разговора';
 
   @override
-  String get introTopicsTitle => 'Восемнадцать тем, пять пилюль';
+  String get introTopicsTitle => 'Девятнадцать тем, пять карточек';
 
   @override
   String get introTopicsLine => 'Пишутся каждое утро и сверяются с источником.';
@@ -908,7 +953,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get introQuestionLine =>
-      'В каждой пилюле — та самая фраза, которую стоит сказать вслух.';
+      'В каждой карточке — та самая фраза, которую стоит сказать вслух.';
 
   @override
   String get introMixTitle => 'Микс выбираешь ты';

@@ -157,7 +157,7 @@ Future<void> armReminders(List<Reminder> plan) async {
       const NotificationDetails(
         android: AndroidNotificationDetails(
           'knowit_daily',
-          'Daily pills',
+          'Daily cards',
           channelDescription: 'The nudge that your five are ready.',
           importance: Importance.defaultImportance,
           priority: Priority.defaultPriority,

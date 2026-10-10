@@ -86,10 +86,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get removeFromSaved => '取消收藏';
 
   @override
-  String get saveThisPill => '收藏这颗药丸';
+  String get saveThisPill => '收藏这张卡片';
 
   @override
-  String get shareThisPill => '分享这颗药丸';
+  String get shareThisPill => '分享这张卡片';
 
   @override
   String cardOf(int k, int n) {
@@ -222,7 +222,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get yesterday => '昨天';
 
   @override
-  String get noPillsMatchFilter => '还没有药丸符合这个筛选。';
+  String get noPillsMatchFilter => '还没有卡片符合这个筛选。';
 
   @override
   String nothingForTryTopic(String query) {
@@ -396,7 +396,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get signOutQuestion => '退出登录？';
 
   @override
-  String get signOutBody => '连续记录、收藏的药丸和记录会保留在账号里。此操作只会从这台设备上清除它们。';
+  String get signOutBody => '连续记录、收藏的卡片和记录会保留在账号里。此操作只会从这台设备上清除它们。';
 
   @override
   String get deleteAccount => '删除账号';
@@ -438,7 +438,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get startOverQuestion => '重新开始？';
 
   @override
-  String get startOverBody => '清除这台设备上的一切——连续记录、收藏的药丸、回答、判断记录、主题和方案——并重新打开引导。';
+  String get startOverBody => '清除这台设备上的一切——连续记录、收藏的卡片、回答、判断记录、主题和方案——并重新打开引导。';
 
   @override
   String get wipeIt => '清除';
@@ -485,7 +485,7 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get yourFivePillsBeforeCoffee => '第一杯咖啡之前，你的 5 颗药丸。';
+  String get yourFivePillsBeforeCoffee => '第一杯咖啡之前，你的 5 张卡片。';
 
   @override
   String get browserOnlySpeaksOpen => '浏览器只有打开时才能出声，所以这需要手机版。';
@@ -513,7 +513,46 @@ class AppLocalizationsZh extends AppLocalizations {
   String get manageSubscription => '管理订阅';
 
   @override
-  String get howPillsAreWritten => '药丸是怎么写出来的';
+  String get howPillsAreWritten => '卡片是怎么写出来的';
+
+  @override
+  String get howTitle => '这里的每张卡片都由 AI 模型撰写。';
+
+  @override
+  String get howIntro => '与其让你自己发现，不如我们先说清楚。下面是一张卡片到你手上的过程。';
+
+  @override
+  String get howStep1Title => '由模型提前写好';
+
+  @override
+  String get howStep1Line => '每张卡片都按同一要求写成：一个值得问的问题，一个讲清原因的答案，一个可以反复用的招。';
+
+  @override
+  String get howStep2Title => '对照出处核查';
+
+  @override
+  String get howStep2Line => '每张卡片都注明出处，发布前还有第二个模型以批评者的眼光通读。站不住的内容会被删掉。';
+
+  @override
+  String get howStep3Title => '每天早上发五张';
+
+  @override
+  String get howStep3Line => '来自你选的主题，绝不重复你读过的卡片。';
+
+  @override
+  String get howStep4Title => '由读者守住真实';
+
+  @override
+  String get howStep4Line => '当足够多的读者认为一张卡片有误，它会停止发放，直到有人核查过。';
+
+  @override
+  String get howReportTitle => '发现错误了？';
+
+  @override
+  String get howReportLine => '点一下卡片出处旁边的小旗即可举报。';
+
+  @override
+  String get howFoot => '出处每月重新核查一次。';
 
   @override
   String get signingIn => '登录中…';
@@ -672,8 +711,8 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '颗已读',
-      one: '颗已读',
+      other: '张已读',
+      one: '张已读',
     );
     return '$_temp0';
   }
@@ -683,8 +722,8 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '已读 $n 颗',
-      one: '已读 1 颗',
+      other: '已读 $n 张',
+      one: '已读 1 张',
     );
     return '$_temp0';
   }
@@ -752,8 +791,8 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '有 $n 颗药丸未读',
-      one: '有 1 颗药丸未读',
+      other: '有 $n 张卡片未读',
+      one: '有 1 张卡片未读',
     );
     return '$_temp0';
   }
@@ -802,7 +841,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get whatShouldWeTalkAbout => '我们聊什么？';
 
   @override
-  String get fivePillsADayPick => '每天五颗药丸，每天早上新写。选出你想放进组合的主题——以后可以更改。';
+  String get fivePillsADayPick => '每天五张卡片，每天早上新写。选出你想放进组合的主题——以后可以更改。';
 
   @override
   String nSelected(int n) {
@@ -831,7 +870,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get tagline => '每天五件聪明事，随时可以拿来聊';
 
   @override
-  String get introTopicsTitle => '十八个主题，五颗药丸';
+  String get introTopicsTitle => '十九个主题，五张卡片';
 
   @override
   String get introTopicsLine => '每天早上新写，并与来源核对。';
@@ -840,7 +879,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get introQuestionTitle => '先问，再答';
 
   @override
-  String get introQuestionLine => '每颗药丸都带着那句值得说出口的话。';
+  String get introQuestionLine => '每张卡片都带着那句值得说出口的话。';
 
   @override
   String get introMixTitle => '组合由你决定';

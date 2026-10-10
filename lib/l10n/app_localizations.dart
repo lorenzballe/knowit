@@ -213,13 +213,13 @@ abstract class AppLocalizations {
   /// No description provided for @saveThisPill.
   ///
   /// In en, this message translates to:
-  /// **'Save this pill'**
+  /// **'Save this card'**
   String get saveThisPill;
 
   /// No description provided for @shareThisPill.
   ///
   /// In en, this message translates to:
-  /// **'Share this pill'**
+  /// **'Share this card'**
   String get shareThisPill;
 
   /// No description provided for @cardOf.
@@ -405,7 +405,7 @@ abstract class AppLocalizations {
   /// No description provided for @noPillsMatchFilter.
   ///
   /// In en, this message translates to:
-  /// **'No pills match that filter yet.'**
+  /// **'No cards match that filter yet.'**
   String get noPillsMatchFilter;
 
   /// No description provided for @nothingForTryTopic.
@@ -621,7 +621,7 @@ abstract class AppLocalizations {
   /// No description provided for @signOutBody.
   ///
   /// In en, this message translates to:
-  /// **'Your streak, saved pills and record stay on your account. This clears them from this device.'**
+  /// **'Your streak, saved cards and record stay on your account. This clears them from this device.'**
   String get signOutBody;
 
   /// Profile row that deletes the reader's account (Apple requires it in the app).
@@ -699,7 +699,7 @@ abstract class AppLocalizations {
   /// No description provided for @startOverBody.
   ///
   /// In en, this message translates to:
-  /// **'Wipes everything on this device — streak, saved pills, answers, your judgement record, topics and plan — and reopens the intro.'**
+  /// **'Wipes everything on this device — streak, saved cards, answers, your judgement record, topics and plan — and reopens the intro.'**
   String get startOverBody;
 
   /// No description provided for @wipeIt.
@@ -789,7 +789,7 @@ abstract class AppLocalizations {
   /// No description provided for @yourFivePillsBeforeCoffee.
   ///
   /// In en, this message translates to:
-  /// **'Your 5 pills, before the first coffee.'**
+  /// **'Your 5 cards, before the first coffee.'**
   String get yourFivePillsBeforeCoffee;
 
   /// No description provided for @browserOnlySpeaksOpen.
@@ -837,8 +837,86 @@ abstract class AppLocalizations {
   /// No description provided for @howPillsAreWritten.
   ///
   /// In en, this message translates to:
-  /// **'How pills are written'**
+  /// **'How cards are written'**
   String get howPillsAreWritten;
+
+  /// No description provided for @howTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Every card here is written by an AI model.'**
+  String get howTitle;
+
+  /// No description provided for @howIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'d rather say it up front than have you find out. Here is how a card reaches you.'**
+  String get howIntro;
+
+  /// No description provided for @howStep1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Written ahead, by a model'**
+  String get howStep1Title;
+
+  /// No description provided for @howStep1Line.
+  ///
+  /// In en, this message translates to:
+  /// **'Each card is drafted to one brief: a question worth asking, an answer that says why, and one move you can use again.'**
+  String get howStep1Line;
+
+  /// No description provided for @howStep2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Checked against its source'**
+  String get howStep2Title;
+
+  /// No description provided for @howStep2Line.
+  ///
+  /// In en, this message translates to:
+  /// **'Every card names where it comes from, and a second model reads it as a critic before it ships. What can\'t be backed up is cut.'**
+  String get howStep2Line;
+
+  /// No description provided for @howStep3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Five, dealt each morning'**
+  String get howStep3Title;
+
+  /// No description provided for @howStep3Line.
+  ///
+  /// In en, this message translates to:
+  /// **'From the subjects you picked, and never one you have already read.'**
+  String get howStep3Line;
+
+  /// No description provided for @howStep4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Kept honest by readers'**
+  String get howStep4Title;
+
+  /// No description provided for @howStep4Line.
+  ///
+  /// In en, this message translates to:
+  /// **'When enough readers say a card is wrong, it stops being dealt until a person has checked it.'**
+  String get howStep4Line;
+
+  /// No description provided for @howReportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Found something wrong?'**
+  String get howReportTitle;
+
+  /// No description provided for @howReportLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the flag next to a card\'s source to report it.'**
+  String get howReportLine;
+
+  /// No description provided for @howFoot.
+  ///
+  /// In en, this message translates to:
+  /// **'Sources are checked again every month.'**
+  String get howFoot;
 
   /// No description provided for @signingIn.
   ///
@@ -1047,13 +1125,13 @@ abstract class AppLocalizations {
   /// No description provided for @pillReadWord.
   ///
   /// In en, this message translates to:
-  /// **'{n, plural, =1{pill read} other{pills read}}'**
+  /// **'{n, plural, =1{card read} other{cards read}}'**
   String pillReadWord(int n);
 
   /// No description provided for @nPillsRead.
   ///
   /// In en, this message translates to:
-  /// **'{n, plural, =1{1 pill read} other{{n} pills read}}'**
+  /// **'{n, plural, =1{1 card read} other{{n} cards read}}'**
   String nPillsRead(int n);
 
   /// No description provided for @nWeeksKept.
@@ -1107,7 +1185,7 @@ abstract class AppLocalizations {
   /// No description provided for @pillsWentUnread.
   ///
   /// In en, this message translates to:
-  /// **'{n, plural, =1{1 pill went unread} other{{n} pills went unread}}'**
+  /// **'{n, plural, =1{1 card went unread} other{{n} cards went unread}}'**
   String pillsWentUnread(int n);
 
   /// No description provided for @stillMostKeptTopic.
@@ -1167,7 +1245,7 @@ abstract class AppLocalizations {
   /// No description provided for @fivePillsADayPick.
   ///
   /// In en, this message translates to:
-  /// **'Five pills a day, written fresh each morning. Pick the topics you want in the mix — you can change them later.'**
+  /// **'Five cards a day, written fresh each morning. Pick the topics you want in the mix — you can change them later.'**
   String get fivePillsADayPick;
 
   /// No description provided for @nSelected.
@@ -1209,7 +1287,7 @@ abstract class AppLocalizations {
   /// No description provided for @introTopicsTitle.
   ///
   /// In en, this message translates to:
-  /// **'Eighteen topics, five pills'**
+  /// **'Nineteen topics, five cards'**
   String get introTopicsTitle;
 
   /// No description provided for @introTopicsLine.
@@ -1227,7 +1305,7 @@ abstract class AppLocalizations {
   /// No description provided for @introQuestionLine.
   ///
   /// In en, this message translates to:
-  /// **'Every pill carries the one line that makes it worth saying out loud.'**
+  /// **'Every card carries the one line that makes it worth saying out loud.'**
   String get introQuestionLine;
 
   /// No description provided for @introMixTitle.
@@ -1893,7 +1971,7 @@ abstract class AppLocalizations {
   /// No description provided for @likeThisPill.
   ///
   /// In en, this message translates to:
-  /// **'Like this pill'**
+  /// **'Like this card'**
   String get likeThisPill;
 
   /// No description provided for @removeFromLiked.
@@ -1929,7 +2007,7 @@ abstract class AppLocalizations {
   /// No description provided for @tapTheBookmarkLandsHere.
   ///
   /// In en, this message translates to:
-  /// **'Tap the bookmark on any pill and it lands here — the ones that changed how you think, kept.'**
+  /// **'Tap the bookmark on any card and it lands here — the ones that changed how you think, kept.'**
   String get tapTheBookmarkLandsHere;
 
   /// No description provided for @nudgeTitle.

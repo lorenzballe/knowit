@@ -60,8 +60,8 @@
  "tapToFlip": "TAP TO FLIP",
  "shareThisCard": "Share this card",
  "removeFromSaved": "Remove from saved",
- "saveThisPill": "Save this pill",
- "shareThisPill": "Share this pill",
+ "saveThisPill": "Save this card",
+ "shareThisPill": "Share this card",
  "cardOf": "Card {k} of {n}",
  "@cardOf": {
   "placeholders": {
@@ -200,7 +200,7 @@
   }
  },
  "yesterday": "Yesterday",
- "noPillsMatchFilter": "No pills match that filter yet.",
+ "noPillsMatchFilter": "No cards match that filter yet.",
  "nothingForTryTopic": "Nothing for \"{query}\". Try a topic instead.",
  "@nothingForTryTopic": {
   "placeholders": {
@@ -394,7 +394,7 @@
   }
  },
  "signOutQuestion": "Sign out?",
- "signOutBody": "Your streak, saved pills and record stay on your account. This clears them from this device.",
+ "signOutBody": "Your streak, saved cards and record stay on your account. This clears them from this device.",
  "deleteAccount": "Delete account",
  "@deleteAccount": {
   "description": "Profile row that deletes the reader's account (Apple requires it in the app)."
@@ -435,7 +435,7 @@
  },
  "signInNotAvailableBuild": "Signing in is not available on this build.",
  "startOverQuestion": "Start over?",
- "startOverBody": "Wipes everything on this device — streak, saved pills, answers, your judgement record, topics and plan — and reopens the intro.",
+ "startOverBody": "Wipes everything on this device — streak, saved cards, answers, your judgement record, topics and plan — and reopens the intro.",
  "wipeIt": "Wipe it",
  "yourRecord": "Your record",
  "appearance": "Appearance",
@@ -457,7 +457,7 @@
    }
   }
  },
- "yourFivePillsBeforeCoffee": "Your 5 pills, before the first coffee.",
+ "yourFivePillsBeforeCoffee": "Your 5 cards, before the first coffee.",
  "browserOnlySpeaksOpen": "A browser can only speak while it is open, so this one needs the phone build.",
  "nudgeOff": "Nudge off.",
  "nudgeOnEveryDayAt": "Nudge on, every day at {time}.",
@@ -479,7 +479,20 @@
   }
  },
  "manageSubscription": "Manage subscription",
- "howPillsAreWritten": "How pills are written",
+ "howPillsAreWritten": "How cards are written",
+ "howTitle": "Every card here is written by an AI model.",
+ "howIntro": "We'd rather say it up front than have you find out. Here is how a card reaches you.",
+ "howStep1Title": "Written ahead, by a model",
+ "howStep1Line": "Each card is drafted to one brief: a question worth asking, an answer that says why, and one move you can use again.",
+ "howStep2Title": "Checked against its source",
+ "howStep2Line": "Every card names where it comes from, and a second model reads it as a critic before it ships. What can't be backed up is cut.",
+ "howStep3Title": "Five, dealt each morning",
+ "howStep3Line": "From the subjects you picked, and never one you have already read.",
+ "howStep4Title": "Kept honest by readers",
+ "howStep4Line": "When enough readers say a card is wrong, it stops being dealt until a person has checked it.",
+ "howReportTitle": "Found something wrong?",
+ "howReportLine": "Tap the flag next to a card's source to report it.",
+ "howFoot": "Sources are checked again every month.",
  "signingIn": "Signing in…",
  "signInWithApple": "Sign in with Apple",
  "signInWithGoogle": "Sign in with Google",
@@ -632,7 +645,7 @@
    }
   }
  },
- "pillReadWord": "{n, plural, =1{pill read} other{pills read}}",
+ "pillReadWord": "{n, plural, =1{card read} other{cards read}}",
  "@pillReadWord": {
   "placeholders": {
    "n": {
@@ -640,7 +653,7 @@
    }
   }
  },
- "nPillsRead": "{n, plural, =1{1 pill read} other{{n} pills read}}",
+ "nPillsRead": "{n, plural, =1{1 card read} other{{n} cards read}}",
  "@nPillsRead": {
   "placeholders": {
    "n": {
@@ -691,7 +704,7 @@
   }
  },
  "whileYouWereAway": "While you were away",
- "pillsWentUnread": "{n, plural, =1{1 pill went unread} other{{n} pills went unread}}",
+ "pillsWentUnread": "{n, plural, =1{1 card went unread} other{{n} cards went unread}}",
  "@pillsWentUnread": {
   "placeholders": {
    "n": {
@@ -746,7 +759,7 @@
  "everythingIsInDrag": "Everything is in. Drag a subject down to see less of it, or all the way to zero to drop it.",
  "next": "Next",
  "whatShouldWeTalkAbout": "What should we talk about?",
- "fivePillsADayPick": "Five pills a day, written fresh each morning. Pick the topics you want in the mix — you can change them later.",
+ "fivePillsADayPick": "Five cards a day, written fresh each morning. Pick the topics you want in the mix — you can change them later.",
  "nSelected": "{n} selected",
  "@nSelected": {
   "placeholders": {
@@ -781,10 +794,10 @@
  },
  "swipeToSeeMore": "Swipe to see more",
  "tagline": "Five smart things a day, ready to use in conversation",
- "introTopicsTitle": "Eighteen topics, five pills",
+ "introTopicsTitle": "Nineteen topics, five cards",
  "introTopicsLine": "Written fresh every morning, and checked against a source.",
  "introQuestionTitle": "A question, then the answer",
- "introQuestionLine": "Every pill carries the one line that makes it worth saying out loud.",
+ "introQuestionLine": "Every card carries the one line that makes it worth saying out loud.",
  "introMixTitle": "You choose the mix",
  "introMixLine": "Turn a topic down to see less of it, or off for good.",
  "introThirtyTitle": "Thirty seconds a day",
@@ -1176,13 +1189,13 @@
   }
  },
  "nothingLikedYet": "Nothing liked yet",
- "likeThisPill": "Like this pill",
+ "likeThisPill": "Like this card",
  "removeFromLiked": "Remove from liked",
  "removedFromLiked": "Removed from liked.",
  "lessLikeThis": "Less like this",
  "whatYouLikedLandsHere": "The ones you'd read again",
  "holdToLikeLandsHere": "Hold any card you like and it lands here — and the app deals you more of the same.",
- "tapTheBookmarkLandsHere": "Tap the bookmark on any pill and it lands here — the ones that changed how you think, kept.",
+ "tapTheBookmarkLandsHere": "Tap the bookmark on any card and it lands here — the ones that changed how you think, kept.",
  "nudgeTitle": "Your five are ready",
  "nudgeFreezeTitle": "Your freeze is holding",
  "nudgeFreezeBody": "Yesterday is covered. Today: {question}",
