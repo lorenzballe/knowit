@@ -3,10 +3,12 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show FontLoader, SystemChannels;
+import 'package:flutter/services.dart'
+    show FontLoader, MethodCall, MethodChannel, SystemChannels;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:astuto/analytics.dart';
 import 'package:astuto/data/daily.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/topics.dart';
@@ -31,6 +33,7 @@ import 'package:astuto/widgets/hold_to_keep.dart';
 import 'package:astuto/sync/reader_snapshot.dart';
 import 'package:astuto/sync/served.dart';
 import 'package:astuto/sync/tally.dart';
+import 'package:astuto/utils/widget_open.dart';
 import 'package:astuto/widgets/brand_mark.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
 import 'package:astuto/theme.dart';
@@ -230,6 +233,104 @@ Future<List<String>> _sectionOrder(
   final order = seen.keys.toList()
     ..sort((a, b) => seen[a]!.compareTo(seen[b]!));
   return order;
+}
+
+/// The phone behind the widgets' channel: the tap it holds, given once and
+/// cleared the way the phone gives it, and every hand-over the app makes.
+class _WidgetPhone {
+  _WidgetPhone(this.tester, {this.tap});
+
+  final WidgetTester tester;
+
+  /// What the phone holds until the app asks: a map, as both phones send it
+  /// now, or the widget's name alone, as they used to.
+  Object? tap;
+
+  final List<Map<Object?, Object?>> handed = [];
+
+  static const MethodChannel channel = MethodChannel('astut/widget');
+
+  void listen() {
+    final messenger = tester.binding.defaultBinaryMessenger;
+    messenger.setMockMethodCallHandler(channel, (call) async {
+      switch (call.method) {
+        case 'takeOpenedFrom':
+          final Object? held = tap;
+          tap = null;
+          return held;
+        case 'installed':
+          return const <Object?>[];
+        case 'update':
+          handed.add(call.arguments as Map<Object?, Object?>);
+          return null;
+      }
+      return null;
+    });
+    addTearDown(() => messenger.setMockMethodCallHandler(channel, null));
+  }
+
+  /// A tap on the running app: the phone holds it and says so at once.
+  Future<void> tapRunning(Object link) async {
+    tap = link;
+    await tester.binding.defaultBinaryMessenger.handlePlatformMessage(
+      channel.name,
+      channel.codec.encodeMethodCall(const MethodCall('opened')),
+      (_) {},
+    );
+    await _settle(tester);
+  }
+}
+
+/// Whether the tab bar says [label] is the tab on screen.
+bool _onTab(WidgetTester tester, String label) =>
+    tester
+        .widget<Semantics>(
+          find.byKey(ValueKey('tab-$label'), skipOffstage: false),
+        )
+        .properties
+        .selected ??
+    false;
+
+/// Today's shelf at the top of Explore on a phone with no server and
+/// nothing read: the phone's own pick of the day.
+List<Pill> get _todaysShelf =>
+    pickedPills(seed: daySeed(DateTime.now()), count: 60).take(8).toList();
+
+/// What the app said, kept, so a test can read its measurement back.
+class _Said implements AnalyticsSink {
+  final List<(String, Map<String, Object>)> events = [];
+
+  @override
+  Future<void> capture(String event, Map<String, Object> properties) async =>
+      events.add((event, properties));
+
+  @override
+  Future<void> screen(String name) async {}
+
+  @override
+  Future<void> identify(String id, Map<String, Object> properties) async {}
+
+  @override
+  Future<void> reset() async {}
+
+  @override
+  Future<void> register(String key, Object value) async {}
+
+  @override
+  Future<void> setCollecting(bool on) async {}
+
+  @override
+  Future<void> setPerson(
+    Map<String, Object> set,
+    Map<String, Object> setOnce,
+  ) async {}
+
+  @override
+  Future<void> error(
+    Object error,
+    StackTrace? stack,
+    Map<String, Object> properties,
+  ) async {}
 }
 
 /// Hold a card down long enough to keep it — longer than the framework's
@@ -1331,6 +1432,264 @@ void main() {
           ).take(AppState.kWidgetShelf).map((p) => p.id),
         ),
       );
+    });
+
+    test('a tap is read from what the phone hands over, old or new', () {
+      final WidgetOpen open = WidgetOpen.read({
+        'from': 'five.systemMedium',
+        'card': 'space-1',
+        'in': 'today',
+      })!;
+      expect(open.from, 'five.systemMedium');
+      expect(open.kind, 'five');
+      expect(open.card, 'space-1');
+      expect(open.place, WidgetOpen.today);
+      // A build that only named the widget.
+      final WidgetOpen old = WidgetOpen.read('card.systemSmall')!;
+      expect(old.kind, 'card');
+      expect(old.card, isNull);
+      expect(old.place, isNull);
+      // Nothing, or nothing to go on.
+      expect(WidgetOpen.read(null), isNull);
+      expect(WidgetOpen.read(''), isNull);
+      expect(WidgetOpen.read(42), isNull);
+      expect(WidgetOpen.read(<String, Object?>{}), isNull);
+      expect(
+        WidgetOpen.read({'from': 'shelf.systemLarge', 'card': ''})!.card,
+        isNull,
+      );
+    });
+  });
+
+  group("A widget's tap lands on its card", () {
+    testWidgets("a card of today's shelf opens in Explore, among the shelf", (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final List<Pill> shelf = _todaysShelf;
+      // The app started by the tap.
+      final phone = _WidgetPhone(
+        tester,
+        tap: {'from': 'shelf.systemMedium', 'card': shelf[2].id, 'in': 'shelf'},
+      )..listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      final viewer = tester.widget<DeckViewerScreen>(
+        find.byType(DeckViewerScreen),
+      );
+      expect(
+        viewer.deck.map((p) => p.id),
+        orderedEquals(shelf.map((p) => p.id)),
+      );
+      expect(viewer.initialIndex, 2);
+      // As a tap on it in Explore opens it: nobody dealt it, so it is read.
+      expect(viewer.countsAsRead, isTrue);
+      expect(phone.tap, isNull, reason: 'a tap is taken once');
+
+      // Closed, the reader is in Explore, at the top: the shelf it came from.
+      await tester.tap(find.byIcon(Icons.close_rounded));
+      await _settle(tester);
+      expect(_onTab(tester, 'Explore'), isTrue);
+      expect(find.text("Today's shelf"), findsOneWidget);
+    });
+
+    testWidgets('a card of the five already read opens over Today, read back', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final phone = _WidgetPhone(tester)..listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await _swipeCardAway(tester);
+      await _swipeCardAway(tester);
+      final AppState app = tester
+          .widget<TodayScreen>(find.byType(TodayScreen))
+          .app;
+      expect(app.todayIndex, 2);
+      // Somewhere else in the app when the tap comes in.
+      await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+      await _settle(tester);
+
+      await phone.tapRunning({
+        'from': 'five.systemMedium',
+        'card': app.todaysDeck[1].id,
+        'in': 'today',
+      });
+
+      final viewer = tester.widget<DeckViewerScreen>(
+        find.byType(DeckViewerScreen),
+      );
+      // Among the cards read so far, and only those: the ones still to come
+      // are not to be turned over from here.
+      expect(
+        viewer.deck.map((p) => p.id),
+        orderedEquals(app.todaysDeck.take(2).map((p) => p.id)),
+      );
+      expect(viewer.initialIndex, 1);
+      expect(viewer.title, 'Today');
+      expect(viewer.countsAsRead, isFalse);
+
+      await tester.tap(find.byIcon(Icons.close_rounded));
+      await _settle(tester);
+      expect(_onTab(tester, 'Today'), isTrue);
+      expect(app.todayIndex, 2, reason: 'reading back moves nothing on');
+    });
+
+    testWidgets('a card of the five still to read opens Today, on the deck', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final phone = _WidgetPhone(tester)..listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      final AppState app = tester
+          .widget<TodayScreen>(find.byType(TodayScreen))
+          .app;
+      await _openProfile(tester);
+      expect(_onTab(tester, 'Profile'), isTrue);
+
+      // Further on than the next card: the five are read in order, so the
+      // deck is where it waits.
+      await phone.tapRunning({
+        'from': 'card.systemSmall',
+        'card': app.todaysDeck[3].id,
+        'in': 'today',
+      });
+      expect(_onTab(tester, 'Today'), isTrue);
+      expect(find.byType(DeckViewerScreen), findsNothing);
+      expect(find.byType(PillCardStack), findsOneWidget);
+      expect(app.todayIndex, 0);
+    });
+
+    testWidgets('the streak, an old tap, or a card the day does not hold, '
+        'opens Today', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final phone = _WidgetPhone(tester)..listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      for (final Object tap in [
+        {'from': 'streak.systemSmall'},
+        // From a build that only named the widget.
+        'five.home',
+        // A card from a day that is over.
+        {'from': 'card.systemLarge', 'card': 'gone-1', 'in': 'today'},
+      ]) {
+        await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+        await _settle(tester);
+        expect(_onTab(tester, 'Explore'), isTrue);
+        await phone.tapRunning(tap);
+        expect(_onTab(tester, 'Today'), isTrue, reason: '$tap');
+        expect(find.byType(DeckViewerScreen), findsNothing, reason: '$tap');
+      }
+    });
+
+    testWidgets('a tap waits for the tabs, through the come-back screen', (
+      tester,
+    ) async {
+      final DateTime now = DateTime.now();
+      SharedPreferences.setMockInitialValues({
+        ..._installed(),
+        'knowit.streak': 4,
+        'knowit.freezes': 0,
+        'knowit.lastCompletionDate': dateKey(
+          DateTime(now.year, now.month, now.day - 3),
+        ),
+      });
+      final List<Pill> shelf = _todaysShelf;
+      final phone = _WidgetPhone(
+        tester,
+        tap: {'from': 'shelf.systemLarge', 'card': shelf[0].id, 'in': 'shelf'},
+      )..listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      // The come-back screen first, and nothing opened over it — but the
+      // tap was taken, and is held.
+      final Finder again = find.text("Start again with today's five");
+      expect(again, findsOneWidget);
+      expect(find.byType(DeckViewerScreen), findsNothing);
+      expect(phone.tap, isNull);
+
+      await tester.tap(again);
+      await _settle(tester);
+      final viewer = tester.widget<DeckViewerScreen>(
+        find.byType(DeckViewerScreen),
+      );
+      expect(viewer.deck[viewer.initialIndex].id, shelf[0].id);
+    });
+
+    testWidgets(
+      'leaving hands the widgets the day; coming back follows a tap',
+      (tester) async {
+        SharedPreferences.setMockInitialValues(_installed());
+        final phone = _WidgetPhone(tester)..listen();
+        await tester.pumpWidget(const AstutoApp());
+        await _settle(tester);
+        await _openProfile(tester);
+        final int before = phone.handed.length;
+
+        // Out of the app: the widgets hear of the day on the way out.
+        for (final state in [
+          AppLifecycleState.inactive,
+          AppLifecycleState.hidden,
+          AppLifecycleState.paused,
+        ]) {
+          tester.binding.handleAppLifecycleStateChanged(state);
+        }
+        await tester.pump();
+        await tester.pump();
+        expect(phone.handed.length, greaterThan(before));
+
+        // A card on the home screen tapped, and the app back.
+        final List<Pill> shelf = _todaysShelf;
+        phone.tap = {
+          'from': 'shelf.systemMedium',
+          'card': shelf[5].id,
+          'in': 'shelf',
+        };
+        for (final state in [
+          AppLifecycleState.hidden,
+          AppLifecycleState.inactive,
+          AppLifecycleState.resumed,
+        ]) {
+          tester.binding.handleAppLifecycleStateChanged(state);
+        }
+        await _settle(tester);
+        final viewer = tester.widget<DeckViewerScreen>(
+          find.byType(DeckViewerScreen),
+        );
+        expect(viewer.deck[viewer.initialIndex].id, shelf[5].id);
+      },
+    );
+
+    testWidgets('the tap is said, with the card and where it lives', (
+      tester,
+    ) async {
+      final said = _Said();
+      Analytics.useForTest(said);
+      addTearDown(() => Analytics.useForTest(null));
+      SharedPreferences.setMockInitialValues(_installed());
+      final List<Pill> shelf = _todaysShelf;
+      _WidgetPhone(
+        tester,
+        tap: {'from': 'shelf.systemMedium', 'card': shelf[1].id, 'in': 'shelf'},
+      ).listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      final opened = [
+        for (final e in said.events)
+          if (e.$1 == 'app opened from widget') e.$2,
+      ];
+      expect(opened, [
+        {
+          'widget': 'shelf.systemMedium',
+          'pill_id': shelf[1].id,
+          'where': 'shelf',
+        },
+      ]);
     });
   });
 
