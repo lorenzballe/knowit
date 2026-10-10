@@ -848,6 +848,67 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
+  String get reminderAskTitle => 'Hoe laat wil je een herinnering?';
+
+  @override
+  String get reminderAskLine =>
+      'Eén melding per dag, met een vraag uit je kaarten.';
+
+  @override
+  String get reminderAskTrialLine =>
+      'We laten het je twee dagen voor het einde van je proefperiode weten.';
+
+  @override
+  String get reminderAskMorning => 'Ochtend';
+
+  @override
+  String get reminderAskLunch => 'Lunchtijd';
+
+  @override
+  String get reminderAskEvening => 'Avond';
+
+  @override
+  String get reminderAskOther => 'Ander tijdstip';
+
+  @override
+  String get reminderAskYes => 'Herinner me';
+
+  @override
+  String get reminderAskNotNow => 'Niet nu';
+
+  @override
+  String trialWarningTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Je Astute+-proefperiode eindigt over $days dagen.',
+      one: 'Je Astute+-proefperiode eindigt morgen.',
+      zero: 'Je Astute+-proefperiode eindigt vandaag.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trialWarningBody(String date, String price, String path) {
+    return 'Op $date begint je jaarabonnement voor $price. Wil je doorgaan, dan hoef je niets te doen. Opzeggen kan via $path.';
+  }
+
+  @override
+  String trialEndsNotice(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Je proefperiode eindigt over $days dagen',
+      one: 'Je proefperiode eindigt morgen',
+      zero: 'Je proefperiode eindigt vandaag',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialNoticeManage => 'Beheren';
+
+  @override
   String subjectsInTheMix(int n, int total) {
     return '$n van $total vakken in de mix';
   }

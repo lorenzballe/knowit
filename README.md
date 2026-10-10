@@ -620,7 +620,16 @@ anything is certain to run.
 
 Notifications are asked for once, after a first day is finished. iOS gives an
 app one prompt and no second chance, so spending it on a launch screen throws
-the channel away on someone who does not yet know what the app is.
+the channel away on someone who does not yet know what the app is. The app's
+own sheet asks first, and asks *when* rather than whether
+(`lib/widgets/reminder_ask.dart`): morning 08:30, lunchtime 12:30, evening
+19:00 or a time of the reader's own, starting on the time already set. It
+rises at a quiet moment — the shelf, once the card after the fifth has been
+thrown (straight after the fifth on Astute+), a launch onto a finished day,
+or the screens of a trial's purchase closing — and never over an offer or a
+paywall. A time chosen, the system's prompt follows; "Not now" spends
+nothing, and the sheet comes back after the next finished day, twice more at
+most.
 
 ## Project structure
 
@@ -1515,13 +1524,26 @@ card they were sure and wrong about; day fourteen, what two weeks came to —
 never "we miss you", and after a fortnight it stops. Re-planned at every
 launch, in the phone's language.
 
+**The trial says when it charges.** A reader in the year's free trial, set
+to renew, has one more notification in the plan: two days before the trial
+ends, at their hour — "Your Astute+ trial ends in 2 days." — with the date,
+the store's own price for the year and the way to stop it, Profile → Manage
+subscription (`AppState.trialWarning`). It is re-planned whenever the
+store's word moves: a trial started, cancelled or turned into the year. It
+stays when the daily nudge is switched off, is given once, and comes late
+rather than never when its hour has passed and the trial has not. A reader
+it cannot reach gets one quiet line under their plan on the profile in the
+trial's last two days instead, which opens the store's own screen.
+
 **The stars, asked once.** The store's own rating sheet (`in_app_review`)
 is asked for one time ever: at the end of a seventh day in a row, a moment
-after the shelf lands, never in the session the notification prompt was
-shown (`AppState.shouldAskForReview`). Nothing of the app's is asked
-first — Google forbids a question before its sheet, Apple allows only its
-own — and Apple decides whether to show it at all. Without it, the stars of
-a launch week come mostly from the readers who left.
+after the shelf lands, never in the session the question about
+notifications was put — the app's sheet or the system's prompt — nor while
+that question waits to come back (`AppState.shouldAskForReview`). Nothing
+of the app's is asked first — Google forbids a question before its sheet,
+Apple allows only its own — and Apple decides whether to show it at all.
+Without it, the stars of a launch week come mostly from the readers who
+left.
 
 **The rung, where the day happened.** The ladder lives on the profile,
 where nobody looks at the end of a day. So the finished day's one button

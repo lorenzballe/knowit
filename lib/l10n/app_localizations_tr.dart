@@ -842,6 +842,66 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
+  String get reminderAskTitle => 'Sana ne zaman hatırlatalım?';
+
+  @override
+  String get reminderAskLine => 'Günde bir bildirim, kartlarından bir soruyla.';
+
+  @override
+  String get reminderAskTrialLine =>
+      'Ücretsiz denemen bitmeden iki gün önce sana hatırlatacağız.';
+
+  @override
+  String get reminderAskMorning => 'Sabah';
+
+  @override
+  String get reminderAskLunch => 'Öğle arası';
+
+  @override
+  String get reminderAskEvening => 'Akşam';
+
+  @override
+  String get reminderAskOther => 'Başka bir saat';
+
+  @override
+  String get reminderAskYes => 'Hatırlat';
+
+  @override
+  String get reminderAskNotNow => 'Şimdi değil';
+
+  @override
+  String trialWarningTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ ücretsiz denemen $days gün sonra bitiyor.',
+      one: 'Astute+ ücretsiz denemen yarın bitiyor.',
+      zero: 'Astute+ ücretsiz denemen bugün bitiyor.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trialWarningBody(String date, String price, String path) {
+    return '$date tarihinde yıllık aboneliğin $price ile başlıyor. Devam etmek için hiçbir şey yapman gerekmiyor. İptal etmek için: $path.';
+  }
+
+  @override
+  String trialEndsNotice(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Ücretsiz denemen $days gün sonra bitiyor',
+      one: 'Ücretsiz denemen yarın bitiyor',
+      zero: 'Ücretsiz denemen bugün bitiyor',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialNoticeManage => 'Yönet';
+
+  @override
   String subjectsInTheMix(int n, int total) {
     return 'Karışımda $total konudan $n';
   }

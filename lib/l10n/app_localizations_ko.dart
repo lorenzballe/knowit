@@ -829,6 +829,65 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
+  String get reminderAskTitle => '몇 시에 알려 드릴까요?';
+
+  @override
+  String get reminderAskLine => '하루에 한 번, 카드 속 질문 하나를 알림으로 보내 드려요.';
+
+  @override
+  String get reminderAskTrialLine => '체험이 끝나기 이틀 전에 알려 드려요.';
+
+  @override
+  String get reminderAskMorning => '아침';
+
+  @override
+  String get reminderAskLunch => '점심';
+
+  @override
+  String get reminderAskEvening => '저녁';
+
+  @override
+  String get reminderAskOther => '다른 시간';
+
+  @override
+  String get reminderAskYes => '알림 받기';
+
+  @override
+  String get reminderAskNotNow => '나중에';
+
+  @override
+  String trialWarningTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Astute+ 체험이 $days일 후에 끝나요.',
+      one: 'Astute+ 체험이 내일 끝나요.',
+      zero: 'Astute+ 체험이 오늘 끝나요.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trialWarningBody(String date, String price, String path) {
+    return '$date부터 연간 구독이 $price에 시작돼요. 계속하려면 아무것도 하지 않아도 돼요. 해지하려면: $path';
+  }
+
+  @override
+  String trialEndsNotice(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '체험이 $days일 후에 끝나요',
+      one: '체험이 내일 끝나요',
+      zero: '체험이 오늘 끝나요',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialNoticeManage => '관리';
+
+  @override
   String subjectsInTheMix(int n, int total) {
     return '$total개 주제 중 $n개가 믹스에';
   }

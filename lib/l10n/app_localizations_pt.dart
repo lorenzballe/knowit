@@ -848,6 +848,67 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
+  String get reminderAskTitle => 'A que horas queres o lembrete?';
+
+  @override
+  String get reminderAskLine =>
+      'Uma notificação por dia, com uma pergunta das tuas cartas.';
+
+  @override
+  String get reminderAskTrialLine =>
+      'Vamos avisar-te dois dias antes de o período de teste terminar.';
+
+  @override
+  String get reminderAskMorning => 'De manhã';
+
+  @override
+  String get reminderAskLunch => 'Ao almoço';
+
+  @override
+  String get reminderAskEvening => 'Ao fim do dia';
+
+  @override
+  String get reminderAskOther => 'Outra hora';
+
+  @override
+  String get reminderAskYes => 'Lembra-me';
+
+  @override
+  String get reminderAskNotNow => 'Agora não';
+
+  @override
+  String trialWarningTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'O teu período de teste do Astute+ termina daqui a $days dias.',
+      one: 'O teu período de teste do Astute+ termina amanhã.',
+      zero: 'O teu período de teste do Astute+ termina hoje.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trialWarningBody(String date, String price, String path) {
+    return 'A $date começa o teu ano de subscrição, por $price. Para continuar, não tens de fazer nada. Para cancelar: $path.';
+  }
+
+  @override
+  String trialEndsNotice(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'O teu período de teste termina daqui a $days dias',
+      one: 'O teu período de teste termina amanhã',
+      zero: 'O teu período de teste termina hoje',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialNoticeManage => 'Gerir';
+
+  @override
   String subjectsInTheMix(int n, int total) {
     return '$n de $total temas na mistura';
   }

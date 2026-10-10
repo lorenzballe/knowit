@@ -13,12 +13,25 @@ import '../cloud.dart';
 class Push {
   Push({this.messagingOverride});
 
+  /// The app's one asker: a singleton for the reason the store is one, since
+  /// FirebaseMessaging is a singleton itself and there is only the one
+  /// prompt to put. Tests replace it rather than receive it.
+  static Push instance = Push();
+
+  @visibleForTesting
+  static void useForTest(Push value) => instance = value;
+
   /// Stands in for FirebaseMessaging, which is a singleton and cannot be
   /// faked. Null in the app.
   final FirebaseMessaging? messagingOverride;
 
   FirebaseMessaging? get _messaging =>
       messagingOverride ?? (Cloud.ready ? FirebaseMessaging.instance : null);
+
+  /// Whether this build can put the question to the system at all: a phone
+  /// with Firebase running. Without it [ask] answers at once and shows
+  /// nothing, so nothing should lead the reader up to it.
+  bool get canAsk => _messaging != null;
 
   /// The address to send to, once there is one.
   String? token;

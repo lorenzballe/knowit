@@ -850,6 +850,67 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get reminderAskTitle => '¿Cuándo quieres que te avisemos?';
+
+  @override
+  String get reminderAskLine =>
+      'Una notificación al día, con una pregunta de tus tarjetas.';
+
+  @override
+  String get reminderAskTrialLine =>
+      'Te avisaremos dos días antes de que termine tu prueba gratuita.';
+
+  @override
+  String get reminderAskMorning => 'Por la mañana';
+
+  @override
+  String get reminderAskLunch => 'A mediodía';
+
+  @override
+  String get reminderAskEvening => 'Por la tarde';
+
+  @override
+  String get reminderAskOther => 'Otra hora';
+
+  @override
+  String get reminderAskYes => 'Avísame';
+
+  @override
+  String get reminderAskNotNow => 'Ahora no';
+
+  @override
+  String trialWarningTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Tu prueba gratuita de Astute+ termina dentro de $days días.',
+      one: 'Tu prueba gratuita de Astute+ termina mañana.',
+      zero: 'Tu prueba gratuita de Astute+ termina hoy.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trialWarningBody(String date, String price, String path) {
+    return 'El $date empieza tu año de suscripción por $price. Para seguir, no tienes que hacer nada. Para cancelar: $path.';
+  }
+
+  @override
+  String trialEndsNotice(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Tu prueba gratuita termina dentro de $days días',
+      one: 'Tu prueba gratuita termina mañana',
+      zero: 'Tu prueba gratuita termina hoy',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialNoticeManage => 'Gestionar';
+
+  @override
   String subjectsInTheMix(int n, int total) {
     return '$n de $total temas en la mezcla';
   }

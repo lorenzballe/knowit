@@ -892,6 +892,71 @@ class AppLocalizationsRu extends AppLocalizations {
   }
 
   @override
+  String get reminderAskTitle => 'Во сколько тебе напоминать?';
+
+  @override
+  String get reminderAskLine =>
+      'Одно уведомление в день — с вопросом из твоих карточек.';
+
+  @override
+  String get reminderAskTrialLine =>
+      'Мы напомним тебе за два дня до конца пробного периода.';
+
+  @override
+  String get reminderAskMorning => 'Утром';
+
+  @override
+  String get reminderAskLunch => 'В обед';
+
+  @override
+  String get reminderAskEvening => 'Вечером';
+
+  @override
+  String get reminderAskOther => 'Другое время';
+
+  @override
+  String get reminderAskYes => 'Напоминать';
+
+  @override
+  String get reminderAskNotNow => 'Не сейчас';
+
+  @override
+  String trialWarningTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Пробный период Astute+ закончится через $days дня.',
+      many: 'Пробный период Astute+ закончится через $days дней.',
+      few: 'Пробный период Astute+ закончится через $days дня.',
+      one: 'Пробный период Astute+ заканчивается завтра.',
+      zero: 'Пробный период Astute+ заканчивается сегодня.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trialWarningBody(String date, String price, String path) {
+    return '$date начнётся твой год подписки за $price. Чтобы продолжить, ничего делать не нужно. Чтобы отменить: $path.';
+  }
+
+  @override
+  String trialEndsNotice(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Пробный период закончится через $days дня',
+      many: 'Пробный период закончится через $days дней',
+      few: 'Пробный период закончится через $days дня',
+      one: 'Пробный период заканчивается завтра',
+      zero: 'Пробный период заканчивается сегодня',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialNoticeManage => 'Управлять';
+
+  @override
   String subjectsInTheMix(int n, int total) {
     return '$n из $total тем в миксе';
   }

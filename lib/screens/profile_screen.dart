@@ -263,6 +263,7 @@ class ProfileScreen extends StatelessWidget {
           ],
           const SizedBox(height: 16),
           _RecordLine(app: app),
+          _TrialNotice(app: app),
           // Under the reader's own record and above everything else: the
           // offer is about the record, so it reads as the next thing to say
           // rather than as the loudest thing on the screen. It is also the
@@ -1284,6 +1285,63 @@ class _RecordLine extends StatelessWidget {
     return Text(
       parts.join('  ·  '),
       style: AppText.body(size: 13, color: context.p.inkMuted),
+    );
+  }
+}
+
+/// A free trial's last two days, said once and quietly under the line that
+/// names the plan, to a reader the warning before the charge does not reach
+/// (AppState.trialNoticeDays). It is that warning, shorter: when the trial
+/// ends, and the way to manage it — the store's own screen, which the
+/// Manage subscription row further down opens too.
+class _TrialNotice extends StatelessWidget {
+  const _TrialNotice({required this.app});
+
+  final AppState app;
+
+  @override
+  Widget build(BuildContext context) {
+    final int? days = app.trialNoticeDays();
+    if (days == null) return const SizedBox.shrink();
+    final l = context.l10n;
+    return Semantics(
+      button: true,
+      child: GestureDetector(
+        key: const ValueKey('trial-notice'),
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          Analytics.capture('manage subscription opened', {
+            'is_plus': app.isPlus,
+            'from': 'trial notice',
+            'days_left': days,
+          });
+          Subscription.instance.presentCustomerCenter();
+        },
+        // A whole line to tap, of a height a finger finds.
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 44),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(text: l.trialEndsNotice(days)),
+                  const TextSpan(text: '  ·  '),
+                  TextSpan(
+                    text: l.trialNoticeManage,
+                    style: AppText.body(
+                      size: 13,
+                      weight: FontWeight.w600,
+                      color: context.p.link,
+                    ),
+                  ),
+                ],
+              ),
+              style: AppText.body(size: 13, color: context.p.inkMuted),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

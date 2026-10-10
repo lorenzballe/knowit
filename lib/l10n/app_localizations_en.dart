@@ -846,6 +846,67 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get reminderAskTitle => 'When should we remind you?';
+
+  @override
+  String get reminderAskLine =>
+      'One notification a day, with a question from your cards.';
+
+  @override
+  String get reminderAskTrialLine =>
+      'We’ll remind you two days before your trial ends.';
+
+  @override
+  String get reminderAskMorning => 'Morning';
+
+  @override
+  String get reminderAskLunch => 'Lunchtime';
+
+  @override
+  String get reminderAskEvening => 'Evening';
+
+  @override
+  String get reminderAskOther => 'Another time';
+
+  @override
+  String get reminderAskYes => 'Remind me';
+
+  @override
+  String get reminderAskNotNow => 'Not now';
+
+  @override
+  String trialWarningTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Your Astute+ trial ends in $days days.',
+      one: 'Your Astute+ trial ends tomorrow.',
+      zero: 'Your Astute+ trial ends today.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trialWarningBody(String date, String price, String path) {
+    return 'On $date your year starts at $price. To keep going, do nothing. To stop: $path.';
+  }
+
+  @override
+  String trialEndsNotice(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Your trial ends in $days days',
+      one: 'Your trial ends tomorrow',
+      zero: 'Your trial ends today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialNoticeManage => 'Manage';
+
+  @override
   String subjectsInTheMix(int n, int total) {
     return '$n of $total subjects in the mix';
   }

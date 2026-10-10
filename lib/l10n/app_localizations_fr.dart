@@ -851,6 +851,67 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get reminderAskTitle => 'À quelle heure veux-tu ton rappel ?';
+
+  @override
+  String get reminderAskLine =>
+      'Une notification par jour, avec une question tirée de tes cartes.';
+
+  @override
+  String get reminderAskTrialLine =>
+      'On te préviendra deux jours avant la fin de ton essai.';
+
+  @override
+  String get reminderAskMorning => 'Le matin';
+
+  @override
+  String get reminderAskLunch => 'À midi';
+
+  @override
+  String get reminderAskEvening => 'Le soir';
+
+  @override
+  String get reminderAskOther => 'Une autre heure';
+
+  @override
+  String get reminderAskYes => 'Rappelle-moi';
+
+  @override
+  String get reminderAskNotNow => 'Pas maintenant';
+
+  @override
+  String trialWarningTitle(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Ton essai Astute+ se termine dans $days jours.',
+      one: 'Ton essai Astute+ se termine demain.',
+      zero: 'Ton essai Astute+ se termine aujourd\'hui.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String trialWarningBody(String date, String price, String path) {
+    return 'Le $date, ton année d\'abonnement démarre à $price. Pour continuer, tu n\'as rien à faire. Pour résilier : $path.';
+  }
+
+  @override
+  String trialEndsNotice(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Ton essai se termine dans $days jours',
+      one: 'Ton essai se termine demain',
+      zero: 'Ton essai se termine aujourd\'hui',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get trialNoticeManage => 'Gérer';
+
+  @override
   String subjectsInTheMix(int n, int total) {
     return '$n sujets sur $total dans le mix';
   }
