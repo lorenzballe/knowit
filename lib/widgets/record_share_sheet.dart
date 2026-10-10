@@ -7,7 +7,8 @@ import 'package:flutter/services.dart';
 import '../analytics.dart';
 import '../state/app_state.dart';
 import '../theme.dart';
-import '../utils/image_saver.dart';
+import '../l10n/l10n.dart';
+import '../utils/share_image.dart';
 import 'ui.dart';
 
 /// Opens the share sheet for the reader's own track record.
@@ -126,23 +127,31 @@ class _RecordShareSheetState extends State<_RecordShareSheet> {
   }
 
   Future<void> _shareImage() async {
+    final l = context.l10n;
     setState(() => _busy = true);
     try {
       final bytes = await _capture();
       if (bytes == null) {
-        _toast('Could not render the card.');
+        _toast(l.couldNotRenderCard);
         return;
       }
-      final saved = await savePng(bytes, 'knowit-record.png');
+      // The system share sheet, with the image in it, on a phone; a
+      // download in a browser. It used to save to a file only in a
+      // browser, and on a phone copied the words and said the image was
+      // "web-only": the record, the most shareable thing the app makes,
+      // never left the phone as a picture.
+      final shared = await shareCardImage(
+        bytes,
+        'astute-record.png',
+        _shareText,
+      );
       Analytics.capture('record shared', {
         'streak_days': widget.app.streak,
-        'as': saved ? 'image' : 'copied',
+        'as': shared ? 'image' : 'copied',
       });
-      if (saved) {
-        _toast('Image saved.');
-      } else {
+      if (!shared) {
         await Clipboard.setData(ClipboardData(text: _shareText));
-        _toast('Text copied — image export is web-only for now.');
+        _toast(l.textCopiedInstead);
       }
     } finally {
       if (mounted) setState(() => _busy = false);
@@ -155,7 +164,7 @@ class _RecordShareSheetState extends State<_RecordShareSheet> {
       'streak_days': widget.app.streak,
       'as': 'copied',
     });
-    _toast('Copied to clipboard.');
+    if (mounted) _toast(context.l10n.copiedToClipboard);
   }
 
   @override
