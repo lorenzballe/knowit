@@ -13,7 +13,7 @@
 1. **Android non si può pubblicare:** manca la chiave di firma (keystore), manca il flusso di build e caricamento su Play, mancano le impronte SHA in Firebase (senza, l'accesso con Google non funziona).
 2. **Gli strumenti da sviluppatore** (`lib/debug_flags.dart`) sono accesi nelle build: vanno spenti con `--dart-define=DEBUG_TOOLS=false` nelle build per il pubblico. **Già spenti sull'app web pubblica** (`deploy.yml`); su TestFlight restano finché servono a te.
 3. **Le schede degli store** (descrizioni, parole chiave, età, privacy, screenshot nelle misure giuste) non ci sono ancora.
-4. **iOS:** manca il file privacy `PrivacyInfo.xcprivacy`; da fare una volta il gruppo app `group.com.astuto.app`, la chiave certificato fissa, gli abbonamenti "pronti" e allegati alla versione.
+4. **iOS:** il file privacy `PrivacyInfo.xcprivacy` c'è, uno per l'app e uno per il widget: dice gli stessi dati di `site/privacy.html` e perché l'app legge `UserDefaults`. Le risposte al questionario privacy di App Store Connect sono quelle (il "Privacy Report" che Xcode genera dall'archivio le elenca). Da fare una volta il gruppo app `group.com.astuto.app`, la chiave certificato fissa, gli abbonamenti "pronti" e allegati alla versione.
 5. **Rischi in revisione:** il pulsante di accesso con email è visibile ma non funziona; il lavoro notturno delle carte (`cards.yml`) fallisce dal 21 settembre.
 
 ## L'ordine dei lavori

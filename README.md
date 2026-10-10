@@ -1184,6 +1184,22 @@ On the web the plugin brings no library of its own, so
 Nothing waits on it: a blocked CDN or a dead network costs the preview its
 numbers and not its first paint.
 
+**What the App Store is told.** `ios/Runner/PrivacyInfo.xcprivacy` says the
+same in Apple's terms, for the privacy report Xcode makes from an archive and
+the answers App Store Connect asks for: the account id; a device id (the
+notification token, and PostHog's id for the install); the email and the
+name a sign-in brings, and the name chosen in the app; the friend codes,
+which Apple counts as contacts; what the reader does, for the backup, the
+dealer and PostHog; the reasons written on cards and the notes on reports;
+purchases; the country and city PostHog works out from the IP address; and
+crashes, timings and other diagnostics. All of it is linked to the account,
+and none of it is used to track. It also says why the app reads
+`UserDefaults`: its own, through shared_preferences (`CA92.1`), and the App
+Group it writes the widget's data into (`1C8F.1`). The widget has a manifest
+of its own, which collects nothing and gives the same two reasons. Something
+new sent anywhere goes into the manifest and into `site/privacy.html`
+together.
+
 ## The mix, one layer down
 
 Artboard 86a, and the third screen of the onboarding. A subject is too coarse
