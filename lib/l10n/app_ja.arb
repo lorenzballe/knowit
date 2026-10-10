@@ -223,6 +223,8 @@
   "widgetFiveRead": "5枚中{n}枚読了",
   "widgetFiveDone": "5枚すべて読了",
   "widgetFiveWaiting": "新しい5枚が待っています",
+  "widgetShelfTitle": "今日の棚",
+  "widgetShelfFrom": "今日の棚から",
   "dayStreakCaps": "日連続",
   "sourceLabel": "出典 · {source}",
   "perkArchiveTitle": "あなたのアーカイブすべて",

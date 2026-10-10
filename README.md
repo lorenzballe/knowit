@@ -54,8 +54,9 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   store listings) and `assets/og.png`, the picture a shared link shows.
 - `/app/` is the app, built for the web: the live preview.
 - `/cards/cards.json` is the card bank the app refreshes from, and
-  `/widget/days.json` the question of the day the iPhone widget falls back
-  on. Both stay at the paths the app reads, and the old
+  `/widget/days.json` today's shelf the iPhone widgets fall back on, with
+  the question of the day beside it. Both stay at the paths the app reads,
+  and the old
   `lorenzballe.github.io/knowit/` addresses redirect to the domain.
 
 The domain is set in the repository's Settings → Pages → Custom domain, and
@@ -685,8 +686,8 @@ the pool can help it; a card that builds on another waits for it.
 The question of the day travels with the bank as a calendar, edition to
 card id, with the edition's eight reads beside it, frozen when written and
 extended a year ahead every night. No day deals them any more (see *The
-day, and whose it is*); the site and the widget's fallback read the
-question, and the phone and the server keep reading the same calendar. Before
+day, and whose it is*); the site reads the question, and the phone and the
+server keep reading the same calendar. Before
 the calendar existed it was computed from the pool on the fly, and a card
 added anywhere re-dealt every day since the epoch; now the app only
 computes past the calendar's end.
@@ -763,11 +764,11 @@ own, so the one card two friends could compare was the one a subscriber
 never saw, and the free plan had a feature that paying took away. The
 calendar is still kept — `editions.json` and `commons.json`, frozen by
 `bundle.py`, read the same way on the phone and the server — because the
-site shows its question, the widget falls back on it before the app has
-spoken to it, and a card of the day may come back in Explore. No day deals
-it. The reminder and the widget quote the first question of the reader's
-own day instead (`leadOn`), dealt the way the morning will deal it for a
-reader who has been away.
+site shows its question, and a card of the day may come back in Explore. No
+day deals it. The reminder quotes the first question of the reader's own day
+instead (`leadOn`), dealt the way the morning will deal it for a reader who
+has been away; the widget shows the next card of that day to read, which is
+the card a tap on it opens.
 
 **Two of five ask.** It was four, on the evidence that only answering
 trains anything, and the evidence has not changed — but a day that is four
@@ -820,47 +821,91 @@ by their owner.
 
 ## The home-screen widgets
 
-Three, drawn in the app's own type and colours, and each opens the app when
-tapped:
+Four, drawn in the app's own type and colours. Every one of them is cards —
+today's five, or today's shelf from the top of Explore, the same for
+everyone — and every card on one opens that very card in the app:
 
-- **Today's card** — the card the morning opens on: the first question of
-  the reader's own day, on either plan, on the subject's
-  colour, with the subject as an eyebrow, the question set large and the
-  streak in the foot. Small, medium, large (with a dot for each of the
+- **Today's card** — the next of today's five to read, which is the card
+  Today opens on: on its subject's colour, with the subject as an eyebrow,
+  the question set large and the streak in the foot. Once the five are read
+  it turns to today's shelf, a card at a time, moving on every third hour
+  so it is not the same card all day, with a line at the foot that says it
+  is from today's shelf. Small, medium, large (with a dot for each of the
   five), and the lock-screen rectangle on iOS 16+.
+- **Today's five** — the day's five in their colours, in the order they are
+  read, solid with a tick once read, and how far the day has got; each card
+  its own tap. Medium; and on iOS large, the five one above the other with
+  the start of each question.
+- **Today's shelf** — cards from the top of Explore, the same for everyone
+  and only today: two side by side, or four on the large one, each on its
+  subject's colour with its question in the display face, the shelf moving
+  on every third hour. Medium and large on iOS; a resizable 4×2 on Android,
+  with two.
 - **Streak** — the days in a row, large, and the week under it: seven dots,
   filled for a day read through, today's ringed. Small, and on the lock
   screen a ring for the week round the number, and a line.
-- **Today's five** — the day's five cards in their colours, in the order
-  they are read, solid with a tick once read, and how far the day has got.
-  Medium.
+
+**Where a tap goes.** A widget opens the app on a link that names it, and
+on a card the card and where it lives:
+`astute://widget?from=card.systemSmall&card=<id>&in=today` (or `in=shelf`)
+on iOS — the whole widget's `widgetURL` on the small ones and the lock
+screen, a `Link` per card on the medium and large — and the same three as
+intent extras on Android, with a pending intent per card. The app asks for
+it at launch, every time it comes back to the foreground, and when the phone
+says a tap has just come in, since a tap on a running app and its return to
+the foreground arrive in no promised order; asking clears it, so it is
+followed once. The tabs land on it (`AstutoShell._land`):
+
+- a card of today's five not read yet → Today, where the deck is waiting:
+  the five are read in order, so a card further on is still Today;
+- a card of today's five already read → Today, with that card open over it
+  in the viewer among the cards read so far, read back — the ones still to
+  come are not turned over from there;
+- a card of today's shelf → Explore, put back the way it opens, with that
+  card open in the viewer among the shelf, as a tap on it there opens it —
+  first, when the shelf in the app no longer holds it;
+- the streak, or a card from a day that is over → Today.
+
+Whatever was open over the tabs gives way, and a tap that comes in on the
+splash, through the first run or on the come-back screen waits for the tabs.
+Each is measured as `app opened from widget`, with the widget, the card and
+where it lives. On iOS the link's listener is registered before every
+plugin, because a launch's links are shown only to the first listener that
+claims them, and it claims a widget's link so that Flutter does not also try
+it as a route.
 
 The widgets are native — WidgetKit on iOS, `AppWidgetProvider`s on
 Android — and neither can run Dart, so the app hands over what they will
 need through the `astut/widget` channel (`homeWidgetData`), at launch, on
-coming back to the foreground and after every card: today's card with its
-colour and ink, the card, colour and subject for each of the next fourteen
-mornings, the streak and the week, today's five and tomorrow's, and every
-line they can say, already in the reader's language. So they turn over at
-midnight whether or not the app is opened — the week rolls a dot on, the
-five turn to tomorrow's, all still to read — and go quiet after a
-fortnight rather than lying.
+coming back to the foreground, after every card and on leaving: today's next
+card with its id, colour and ink; the card each of the next fourteen
+mornings opens on, the first of its five; the streak and the week; today's
+five and tomorrow's, every card with its id and question; today's shelf and
+each of the next fourteen mornings' — the server's for today once it has
+answered, and otherwise the phone's own pick, which is the server's too, less
+whatever the reader has read; and every line they can say, already in the
+reader's language. So they turn over at midnight whether or not the app is
+opened — the week rolls a dot on, the five turn to tomorrow's, all still to
+read, the shelf to tomorrow's — and go quiet after a fortnight rather than
+lying.
 
 On iOS, before the app has ever handed anything over — or while the App
-Group below is missing — today's card is not blank: it reads the question
-of the day from `widget/days.json`, which the web deploy publishes beside
-the app (`tool/widget_days.dart`, two months of editions), and keeps the
-last copy for when the phone is offline.
+Group below is missing — today's card and today's shelf are not blank: they
+read today's shelf from `widget/days.json`, which the web deploy publishes
+beside the app (`tool/widget_days.dart`, two months of it, every card with
+its id, so a tap still opens that card), and keep the last copy for when the
+phone is offline.
 
-**Android** is `AstutWidget.kt`, `AstutStreakWidget.kt` and
-`AstutFiveWidget.kt`, their layouts (grounds drawn white and tinted by the
-provider, since `RemoteViews` cannot recolour a shape), and the receivers in
-the manifest, named in the widget picker in all thirteen languages.
-`.github/workflows/android-check.yml` builds a debug APK on every push that
-touches them.
+**Android** is `AstutWidget.kt`, `AstutStreakWidget.kt`,
+`AstutFiveWidget.kt` and `AstutShelfWidget.kt`, their layouts (grounds drawn
+white and tinted by the provider, since `RemoteViews` cannot recolour a
+shape), and the receivers in the manifest, named in the widget picker in all
+thirteen languages. `MainActivity` is single-top, so a tap on a running app
+arrives in `onNewIntent`. `.github/workflows/android-check.yml` builds a
+debug APK on every push that touches them.
 
 **iOS** is the `AstutWidgetExtension` target in `Runner.xcodeproj`, built
-from `ios/AstutWidget/`: the three widgets in one `WidgetBundle`
+from `ios/AstutWidget/`: the four widgets in one `WidgetBundle`
 (`AstutWidget.swift`), the views they draw (`AstutWidgetViews.swift`),
 their names in the widget gallery in every language
 (`Localizable.xcstrings`), the fonts, taken from `assets/fonts/`, its
@@ -875,8 +920,9 @@ the hand-over into the group's defaults and asks WidgetKit to reload; the
 widgets' timeline providers read them back.
 
 **Seeing them without a phone.** `tool/widget_previews/Render.swift` draws
-every widget, home screen and lock screen, in Italian and in English, from
-the very views the extension uses, and
+every widget, home screen and lock screen — today's shelf medium and large
+and the large five among them, and today's card turned to the shelf — in
+Italian and in English, from the very views the extension uses, and
 `.github/workflows/widget-previews.yml` runs it on a Mac on every change
 and publishes the pictures on the `widget-previews` branch
 (`widgets-it.png`, `widgets-en.png`).
@@ -892,8 +938,9 @@ Two things the tree cannot do by itself:
   `com.astuto.app.AstutWidget` (the build registers the second if it is
   missing) open App Groups → Configure and tick it. Until then the build
   checks the profiles, leaves the group out of both entitlements instead of
-  failing at signing: today's card shows the question of the day from the
-  web, and the streak and the five ask for the app to be opened.
+  failing at signing: today's card and today's shelf show today's shelf
+  from the web, still opening the card tapped, and the streak and the five
+  ask for the app to be opened.
 - **Compiling it needs a Mac**, so `.github/workflows/ios-check.yml` runs
   `flutter build ios --release --no-codesign` on a GitHub macOS runner on
   every push to `main` that touches `ios/` or `lib/`, and lists what was
@@ -1109,9 +1156,10 @@ which link was opened; the store says what it put on sale and every change to
 the subscription — trial, renewal switched off, billing issue, expiry. Then
 the health of the app: the time to the first frame, Firebase starting, the
 store answering, the cards refreshing from the site, backups failing, and
-which reminder or widget brought the reader in, and which widgets they have
-placed. The profile in PostHog is kept to counts and choices — plan, streak,
-rung, what is set up — and a handful of them ride on every event.
+which reminder or widget brought the reader in — for a widget, the card
+tapped and where it lives — and which widgets they have placed. The
+profile in PostHog is kept to counts and choices — plan, streak, rung, what
+is set up — and a handful of them ride on every event.
 
 On the web the plugin brings no library of its own, so
 `lib/utils/analytics_boot_web.dart` puts posthog-js on the page and starts it.

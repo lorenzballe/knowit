@@ -975,6 +975,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get widgetFiveWaiting => '新しい5枚が待っています';
 
   @override
+  String get widgetShelfTitle => '今日の棚';
+
+  @override
+  String get widgetShelfFrom => '今日の棚から';
+
+  @override
   String get dayStreakCaps => '日連続';
 
   @override

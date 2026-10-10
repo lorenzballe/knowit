@@ -149,9 +149,55 @@ class ExploreScreenState extends State<ExploreScreen> {
     if (_shelves.hasClients) _shelves.jumpTo(0);
   }
 
+  /// A card of today's shelf, tapped on the home screen: the shelves put
+  /// back the way the tab opens, and the card opened among the shelf it
+  /// came from, exactly as a tap on it here opens it. The widget's shelf
+  /// can be a step ahead of this one — it leaves out what was read since
+  /// this morning, and a widget that has not heard from the app since
+  /// midnight picked its own — so a card that is not on the shelf here
+  /// opens first, with the shelf after it.
+  void openFromWidget(String pillId) {
+    showBest();
+    final List<Pill> shelf = _todaysShelf();
+    final int at = shelf.indexWhere((p) => p.id == pillId);
+    final Pill? card = at >= 0
+        ? shelf[at]
+        : Served.instance.lastExplore?.today
+                  .where((p) => p.id == pillId)
+                  .firstOrNull ??
+              pillById(pillId);
+    if (card == null) return;
+    _open(at >= 0 ? shelf : [card, ...shelf], card);
+  }
+
   List<Pill> _only(List<Pill> pills) => _subject == null
       ? pills
       : pills.where((p) => p.topic == _subject).toList();
+
+  /// The shelves for finding things are dealt once a day, from what the
+  /// reader had not read by then.
+  void _dealToday() {
+    final String today = daySeed(DateTime.now());
+    if (_dealtOn != today) {
+      _dealtOn = today;
+      _readWhenDealt = {...widget.app.seenIds};
+    }
+  }
+
+  /// Today's shelf, the same for everybody and changed at midnight — which
+  /// is what the canvas means by "written this morning": the server's when
+  /// it has answered, the phone's own pick before it, narrowed by the
+  /// subject row, and less what was read when it was dealt.
+  List<Pill> _todaysShelf() {
+    _dealToday();
+    final ServedExplore? served = Served.instance.lastExplore;
+    return (served != null
+            ? _only(served.today)
+            : _only(pickedPills(seed: daySeed(DateTime.now()), count: 60)))
+        .where((p) => !_readWhenDealt.contains(p.id))
+        .take(8)
+        .toList();
+  }
 
   /// What the shelves put in front of the reader, once per card per shelf
   /// per visit: a card shown and not opened is a thing the dealer can learn
@@ -248,18 +294,12 @@ class ExploreScreenState extends State<ExploreScreen> {
 
   /// The shelves, and a fade where they run under the tab bar.
   Widget _shelfList(BuildContext context) {
-    // Today's shelf is the same for everybody and changes at midnight —
-    // which is what the canvas means by "written this morning". Nothing
-    // here is dealt from the reader's own mix.
+    // Nothing here is dealt from the reader's own mix.
     // The shelves for finding things hold only cards the reader had not
     // read when they were dealt — a card already read is not a find. The
     // top list keeps them all, marked, because it is one list for
     // everybody; the others keep, marked, only what was read since.
-    final String today = daySeed(DateTime.now());
-    if (_dealtOn != today) {
-      _dealtOn = today;
-      _readWhenDealt = {...widget.app.seenIds};
-    }
+    _dealToday();
     bool unread(Pill p) => !_readWhenDealt.contains(p.id);
     bool read(Pill p) => widget.app.seenIds.contains(p.id);
 
@@ -279,13 +319,7 @@ class ExploreScreenState extends State<ExploreScreen> {
         if (pillById(id) case final Pill p) (p, n),
     ];
 
-    final List<Pill> fresh =
-        (served != null
-                ? _only(served.today)
-                : _only(pickedPills(seed: daySeed(DateTime.now()), count: 60)))
-            .where(unread)
-            .take(8)
-            .toList();
+    final List<Pill> fresh = _todaysShelf();
 
     // A question from every subject: cards with an answer to give, one
     // subject after another, in an order that never turns over. It was

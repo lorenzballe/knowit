@@ -883,6 +883,8 @@
  "@widgetFiveWaiting": {
   "description": "The five widget after midnight, before the app has dealt the new day."
  },
+ "widgetShelfTitle": "TODAY'S SHELF",
+ "widgetShelfFrom": "From today's shelf",
  "dayStreakCaps": "DAY STREAK",
  "sourceLabel": "Source · {source}",
  "@sourceLabel": {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="widget_card_label">Die Karte von heute</string>
-    <string name="widget_description">Die Karte, mit der der Morgen beginnt, und deine Serie.</string>
+    <string name="widget_description">Die nächste Karte von heute, danach das Regal von heute.</string>
     <string name="widget_streak_label">Serie</string>
     <string name="widget_streak_description">Deine Tage in Folge, und die Woche.</string>
     <string name="widget_five_label">Die fünf von heute</string>
@@ -9,4 +9,7 @@
     <string name="widget_card_empty">Fünf Karten, zwei Minuten.</string>
     <string name="widget_streak_open">Öffne Astute, um hier deine Serie zu sehen.</string>
     <string name="widget_five_open">Öffne Astute, um hier die fünf von heute zu sehen.</string>
+    <string name="widget_shelf_label">Das Regal von heute</string>
+    <string name="widget_shelf_description">Karten von oben in Entdecken, für alle gleich, und nur heute.</string>
+    <string name="widget_shelf_open">Öffne Astute, um hier das Regal von heute zu sehen.</string>
 </resources>

@@ -1849,36 +1849,61 @@ class AppState extends ChangeNotifier {
     return plan;
   }
 
-  /// What the home-screen widget shows, handed over whenever it could
-  /// have changed: at launch, on coming back, and when the day is done.
+  /// What the home-screen widgets show, handed over whenever it could have
+  /// changed: at launch, on coming back, after every card, and on leaving.
   ///
-  /// The card the morning opens on and the streak, and the same for each of
-  /// the next fourteen mornings, so the widget turns over at midnight on
-  /// its own: on either plan the first of the reader's own that asks.
-  /// Nothing about the reader beyond the streak: the widget is on the home
-  /// screen, where anyone can read it.
-  /// Everything the home-screen widget will need, handed over whole.
+  /// Every widget is cards, and every card on one opens that card: one of
+  /// today's five, or one of today's shelf at the top of Explore, the same
+  /// for everybody. So each card goes over with its id, and the widget
+  /// draws it the way the app does — the subject's colour for a ground, the
+  /// subject as an eyebrow, the question set large — with every line
+  /// already in the reader's language, since the widget has no translations
+  /// of its own.
   ///
-  /// The widget draws the card the way the app does — the subject's colour
-  /// for a ground, the subject as an eyebrow, the question set large — so it
-  /// is given the colour and the ink of each morning's card, not only its
-  /// question, and the three lines of its foot already in the reader's
-  /// language, since the widget has no translations of its own.
+  /// Today's card is the next of the five to read, which is the card Today
+  /// opens on; once they are read, the widget turns to today's shelf. Each
+  /// of the next fourteen mornings goes over too — the card it opens on and
+  /// its shelf — so the widgets turn over at midnight on their own, and go
+  /// quiet after a fortnight rather than lying. Nothing about the reader
+  /// beyond the streak: the widget is on the home screen, where anyone can
+  /// read it.
   Map<String, Object?> homeWidgetData() {
+    // The card the widget shows today: the next to read, or, the five read,
+    // the one the morning opened on, for a widget with no shelf to turn to.
+    final bool fiveRead = todayIndex >= todaysDeck.length;
+    final Pill card = fiveRead ? leadOn(today) : todaysDeck[todayIndex];
+    final List<Pill> tomorrows = tomorrowsDeck;
+
     final ahead = <String, String>{};
+    final aheadId = <String, String>{};
     final aheadTopic = <String, String>{};
     final aheadColor = <String, String>{};
     final aheadInk = <String, String>{};
+    final shelf = <String, String>{};
     for (var i = 0; i <= kPlannedDays; i++) {
       final day = DateTime(today.year, today.month, today.day + i);
-      final Pill lead = leadOn(day);
+      // Each later morning by the card it opens on — the first of its five,
+      // which is what the deck will show — so a tap on it lands on it.
+      final Pill opens = i == 0
+          ? card
+          : (i == 1 ? tomorrows : _deckAhead(day)).firstOrNull ?? leadOn(day);
       final String key = dateKey(day);
-      ahead[key] = lead.question;
-      aheadTopic[key] = lead.topic;
-      aheadColor[key] = hexOf(lead.color);
-      aheadInk[key] = hexOf(lead.ink);
+      ahead[key] = opens.question;
+      aheadId[key] = opens.id;
+      aheadTopic[key] = opens.topic;
+      aheadColor[key] = hexOf(opens.color);
+      aheadInk[key] = hexOf(opens.ink);
+      shelf[key] = jsonEncode([
+        for (final Pill p in widgetShelfOn(day))
+          {
+            'id': p.id,
+            'topic': p.topic,
+            'color': hexOf(p.color),
+            'ink': hexOf(p.ink),
+            'question': p.question,
+          },
+      ]);
     }
-    final Pill lead = leadOn(today);
     final AppLocalizations l = _strings;
 
     // The streak widget's week: the last seven days, oldest first, as a
@@ -1899,14 +1924,17 @@ class AppState extends ChangeNotifier {
     }
 
     // Today's five in the order they are read, and tomorrow's, so the five
-    // widget has the new day's colours at midnight without the app.
+    // widget has the new day's cards at midnight without the app — each
+    // with its id, so a tap opens it, and its question, for the large one.
     List<Map<String, Object>> five(List<Pill> deck, int read) => [
       for (final (int i, Pill p) in deck.indexed)
         {
+          'id': p.id,
           'topic': p.topic,
           'color': hexOf(p.color),
           'ink': hexOf(p.ink),
           'read': i < read,
+          'question': p.question,
         },
     ];
     final int readToday = todayIndex.clamp(0, todaysDeck.length);
@@ -1914,16 +1942,18 @@ class AppState extends ChangeNotifier {
     return {
       'edition': editionOf(today),
       'date': dateKey(today),
-      'question': lead.question,
-      'topic': lead.topic,
-      'color': hexOf(lead.color),
-      'ink': hexOf(lead.ink),
+      'cardId': card.id,
+      'question': card.question,
+      'topic': card.topic,
+      'color': hexOf(card.color),
+      'ink': hexOf(card.ink),
       'streak': liveStreak,
       'done': dayClosed,
       'footPlain': l.widgetFootPlain,
       'footStreak': l.widgetFootStreak(liveStreak),
       'footDone': l.widgetFootDone,
       'ahead': ahead,
+      'aheadId': aheadId,
       'aheadTopic': aheadTopic,
       'aheadColor': aheadColor,
       'aheadInk': aheadInk,
@@ -1933,14 +1963,69 @@ class AppState extends ChangeNotifier {
       'weekDone': week.toString(),
       'weekLabels': jsonEncode(weekLabels),
       'fiveJson': jsonEncode(five(todaysDeck, readToday)),
-      'fiveTomorrowJson': jsonEncode(five(tomorrowsDeck, 0)),
+      'fiveTomorrowJson': jsonEncode(five(tomorrows, 0)),
       'fiveRead': readToday,
       'fiveTitle': l.widgetFiveTitle,
       'fiveReadText': l.widgetFiveRead(readToday),
       'fiveDone': l.widgetFiveDone,
       'fiveWaiting': l.widgetFiveWaiting,
+      'shelf': shelf,
+      'shelfTitle': l.widgetShelfTitle,
+      'shelfFrom': l.widgetShelfFrom,
+      'shelfLine': l.sameForEveryone,
     };
   }
+
+  /// How many of today's shelf the widgets are handed: as many as the shelf
+  /// at the top of Explore holds.
+  static const int kWidgetShelf = 8;
+
+  /// Today's shelf on [day] as the widgets show it: the cards at the top of
+  /// Explore, the same for everybody — the server's for today when it has
+  /// answered, and otherwise the phone's own pick, which is the server's
+  /// too, from the same bank — less what this reader has read, so the
+  /// widget always has something new to offer.
+  List<Pill> widgetShelfOn(DateTime day) {
+    final ServedExplore? served = Served.instance.lastExplore;
+    final List<Pill> picked =
+        dateKey(day) == dateKey(today) &&
+            served != null &&
+            served.today.isNotEmpty
+        ? served.today
+        : _pickedOn(day);
+    return [
+      for (final Pill p in picked)
+        if (!seenIds.contains(p.id)) p,
+    ].take(kWidgetShelf).toList();
+  }
+
+  /// The phone's pick of a day's shelf, kept for as long as the bank it was
+  /// picked from: picking sorts the whole bank, and the widgets are handed
+  /// a fortnight of shelves after every card.
+  final Map<String, List<Pill>> _picked = {};
+  BankBundle? _pickedFrom;
+
+  List<Pill> _pickedOn(DateTime day) {
+    if (!identical(_pickedFrom, PillBank.current) || _picked.length > 40) {
+      _picked.clear();
+      _pickedFrom = PillBank.current;
+    }
+    return _picked.putIfAbsent(
+      daySeed(day),
+      () => pickedPills(seed: daySeed(day), count: 60),
+    );
+  }
+
+  /// The five a later morning will deal, as far as tonight can tell: the
+  /// phone's own deal for a reader who has been away since, which is how
+  /// [leadOn] reads it. Tomorrow is [tomorrowsDeck], which takes the
+  /// server's when the evening's ask came back.
+  List<Pill> _deckAhead(DateTime day) => _deal(
+    day,
+    exclude: {...seenIds, ...todaysDeck.map((p) => p.id)},
+    reviews: _reviewsDue(day),
+    own: ownCardsFor(plus: isPlus, streak: liveStreak),
+  ).cards;
 
   /// The reader as PostHog's profile holds them: the slow-moving facts
   /// worth cutting every chart by. Counts and enums, like every event.

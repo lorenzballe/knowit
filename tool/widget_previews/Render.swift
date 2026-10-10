@@ -23,6 +23,10 @@ struct Strings {
   let streakText: String
   let fiveTitle: String
   let fiveRead: String
+  let fiveDone: String
+  let shelfTitle: String
+  let shelfLine: String
+  let shelfFrom: String
   let week: [String]
 }
 
@@ -30,22 +34,75 @@ let italian = Strings(
   home: "Schermata Home", lock: "Blocco schermo",
   footStreak: "Serie di 12 giorni", footDone: "Fatto per oggi",
   streakCaption: "GIORNI DI SERIE", streakText: "12 giorni",
-  fiveTitle: "LE CINQUE DI OGGI", fiveRead: "2 su 5 lette",
+  fiveTitle: "LE CINQUE DI OGGI", fiveRead: "2 su 5 lette", fiveDone: "Tutte e cinque lette",
+  shelfTitle: "LO SCAFFALE DI OGGI", shelfLine: "Uguale per tutti, e solo oggi",
+  shelfFrom: "Dallo scaffale di oggi",
   week: ["V", "S", "D", "L", "M", "M", "G"])
 
 let english = Strings(
   home: "Home Screen", lock: "Lock Screen",
   footStreak: "12-day streak", footDone: "Done for today",
   streakCaption: "DAY STREAK", streakText: "12 days",
-  fiveTitle: "TODAY'S FIVE", fiveRead: "2 of 5 read",
+  fiveTitle: "TODAY'S FIVE", fiveRead: "2 of 5 read", fiveDone: "All five read",
+  shelfTitle: "TODAY'S SHELF", shelfLine: "The same for everyone, and only today",
+  shelfFrom: "From today's shelf",
   week: ["F", "S", "S", "M", "T", "W", "T"])
 
 let dark = Color(red: 16 / 255, green: 16 / 255, blue: 12 / 255)
+let thinking = Color(hex: "#F2F1EC", fallback: .white)
 let space = Color(hex: "#2B5CFF", fallback: .blue)
 let economics = Color(hex: "#FFE600", fallback: .yellow)
 let psychology = Color(hex: "#9B5CFF", fallback: .purple)
 let language = Color(hex: "#00D9D9", fallback: .teal)
 let nature = Color(hex: "#00D451", fallback: .green)
+let technology = Color(hex: "#00A6FF", fallback: .blue)
+let food = Color(hex: "#FF7A1A", fallback: .orange)
+
+/// Today's five, two read, with the start of each question for the large
+/// widget.
+let fiveCards = [
+  FiveCard(
+    topic: "Space", color: space, ink: .white, read: true,
+    question: "Why does the catalogue of known planets look so strange?"),
+  FiveCard(
+    topic: "Economics", color: economics, ink: dark, read: true,
+    question: "Should cities scrap rules requiring parking spaces?"),
+  FiveCard(
+    topic: "Psychology", color: psychology, ink: .white, read: false,
+    question:
+      "A manager has hired three people from the same university and now feels they should pick elsewhere. Is that reasoning sound?"
+  ),
+  FiveCard(
+    topic: "Language", color: language, ink: dark, read: false,
+    question: "Why do so many languages call a mother something close to “ma”?"),
+  FiveCard(
+    topic: "Nature", color: nature, ink: dark, read: false,
+    question:
+      "An ant lifts 20 times its own weight. Scaled up 100 times in every direction, how many times its own weight could it lift?"
+  ),
+]
+
+/// Four cards of today's shelf, the same for everybody.
+let shelfCards = [
+  FiveCard(
+    topic: "Nature", color: nature, ink: dark, read: false,
+    question:
+      "An ant lifts 20 times its own weight. Scaled up 100 times in every direction, how many times its own weight could it lift?"
+  ),
+  FiveCard(
+    topic: "Technology", color: technology, ink: dark, read: false,
+    question:
+      "A touch sensor reads each row and each column on its own. Two fingers land at once. How many possible touch points can it compute?"
+  ),
+  FiveCard(
+    topic: "Food", color: food, ink: dark, read: false,
+    question:
+      "Kona coffee in Hawaii grows below 1,000 m, yet rivals high-mountain coffees. What does altitude mostly stand in for?"
+  ),
+  FiveCard(
+    topic: "Thinking", color: thinking, ink: dark, read: false,
+    question: "A menu opens with a €95 tasting menu almost nobody orders. Why is it there?"),
+]
 
 /// A widget as the home screen frames it: its ground, the system's margin,
 /// and the rounded corner.
@@ -69,60 +126,73 @@ struct Gallery: View {
   let s: Strings
 
   var body: some View {
-    let five = FiveData(
-      title: s.fiveTitle,
-      cards: [
-        FiveCard(topic: "Space", color: space, ink: .white, read: true),
-        FiveCard(topic: "Economics", color: economics, ink: dark, read: true),
-        FiveCard(topic: "Psychology", color: psychology, ink: .white, read: false),
-        FiveCard(topic: "Language", color: language, ink: dark, read: false),
-        FiveCard(topic: "Nature", color: nature, ink: dark, read: false),
-      ],
-      line: s.fiveRead)
+    let five = FiveData(title: s.fiveTitle, cards: fiveCards, line: s.fiveRead)
     let streak = StreakData(
       streak: 12, caption: s.streakCaption, text: s.streakText, start: "",
       week: [true, true, true, true, true, true, false], labels: s.week)
 
-    VStack(alignment: .leading, spacing: 18) {
-      heading(s.home)
-      HStack(spacing: 24) {
-        Framed(width: 170, height: 170, ground: { space }) {
+    HStack(alignment: .top, spacing: 36) {
+      VStack(alignment: .leading, spacing: 18) {
+        heading(s.home)
+        HStack(spacing: 24) {
+          Framed(width: 170, height: 170, ground: { space }) {
+            CardView(
+              data: CardData(
+                edition: 24, topic: "Space",
+                question: "Why does the catalogue of known planets look so strange?",
+                color: space, ink: .white, foot: s.footStreak, footMark: .streak,
+                dots: [], dotsLine: ""),
+              size: .small)
+          }
+          Framed(width: 170, height: 170, ground: { AstutLights() }) {
+            StreakView(data: streak, size: .small)
+          }
+        }
+        // The five read: today's card has turned to today's shelf.
+        Framed(width: 364, height: 170, ground: { food }) {
           CardView(
             data: CardData(
-              edition: 24, topic: "Space",
-              question: "Why does the catalogue of known planets look so strange?",
-              color: space, ink: .white, foot: s.footStreak, footMark: .streak,
+              edition: 24, topic: "Food",
+              question:
+                "Kona coffee in Hawaii grows below 1,000 m, yet rivals high-mountain coffees. What does altitude mostly stand in for?",
+              color: food, ink: dark, foot: s.shelfFrom, footMark: .shelf,
               dots: [], dotsLine: ""),
-            size: .small)
+            size: .medium)
         }
-        Framed(width: 170, height: 170, ground: { AstutLights() }) {
-          StreakView(data: streak, size: .small)
+        Framed(width: 364, height: 170, ground: { AstutPalette.night }) {
+          FiveView(data: five)
+        }
+        Framed(width: 364, height: 382, ground: { psychology }) {
+          CardView(
+            data: CardData(
+              edition: 24, topic: "Psychology",
+              question:
+                "A manager has hired three people from the same university and now feels they should pick elsewhere. Is that reasoning sound?",
+              color: psychology, ink: .white, foot: s.footStreak, footMark: .streak,
+              dots: five.cards.map { $0.read }, dotsLine: s.fiveRead),
+            size: .large)
+        }
+        heading(s.lock).padding(.top, 10)
+        lockScreen(streak: streak)
+      }
+      VStack(alignment: .leading, spacing: 18) {
+        heading(s.shelfTitle)
+        Framed(width: 364, height: 170, ground: { AstutPalette.night }) {
+          ShelfView(
+            data: ShelfData(
+              title: s.shelfTitle, line: s.shelfLine, cards: Array(shelfCards.prefix(2)),
+              empty: ""))
+        }
+        Framed(width: 364, height: 382, ground: { AstutPalette.night }) {
+          ShelfView(
+            data: ShelfData(title: s.shelfTitle, line: s.shelfLine, cards: shelfCards, empty: ""),
+            large: true)
+        }
+        heading(s.fiveTitle).padding(.top, 10)
+        Framed(width: 364, height: 382, ground: { AstutPalette.night }) {
+          FiveView(data: five, large: true)
         }
       }
-      Framed(width: 364, height: 170, ground: { economics }) {
-        CardView(
-          data: CardData(
-            edition: 24, topic: "Economics",
-            question: "Should cities scrap rules requiring parking spaces?",
-            color: economics, ink: dark, foot: s.footDone, footMark: .done,
-            dots: [], dotsLine: ""),
-          size: .medium)
-      }
-      Framed(width: 364, height: 170, ground: { AstutPalette.night }) {
-        FiveView(data: five)
-      }
-      Framed(width: 364, height: 382, ground: { psychology }) {
-        CardView(
-          data: CardData(
-            edition: 24, topic: "Psychology",
-            question:
-              "A manager has hired three people from the same university and now feels they should pick elsewhere. Is that reasoning sound?",
-            color: psychology, ink: .white, foot: s.footStreak, footMark: .streak,
-            dots: five.cards.map { $0.read }, dotsLine: s.fiveRead),
-          size: .large)
-      }
-      heading(s.lock).padding(.top, 10)
-      lockScreen(streak: streak)
     }
     .padding(20)
     .background(

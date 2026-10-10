@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Today's shelf: two cards from the top of Explore, side by side, the
+     same for everybody and only today. Each is a card the way the app
+     draws one — its subject's colour for a ground, the subject as an
+     eyebrow, the question in the display face — and each opens itself.
+     The grounds are images the provider tints per card, since RemoteViews
+     cannot recolour a shape. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/shelf_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/widget_plain_night"
+        android:contentDescription="@null" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/shelf_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ASTUTE"
+            android:textColor="#9EF2F1EC"
+            android:textSize="10sp"
+            android:letterSpacing="0.15"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <LinearLayout
+            android:id="@+id/shelf_row"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:id="@+id/shelf_card_0"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp">
+
+                <ImageView
+                    android:id="@+id/shelf_ground_0"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/tile_fill"
+                    android:contentDescription="@null" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="11dp">
+
+                    <TextView
+                        android:id="@+id/shelf_topic_0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="8.5sp"
+                        android:letterSpacing="0.12"
+                        android:textStyle="bold"
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+
+                    <TextView
+                        android:id="@+id/shelf_question_0"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="6dp"
+                        android:gravity="bottom|start"
+                        android:text=""
+                        android:textSize="14sp"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMinTextSize="10sp"
+                        android:autoSizeMaxTextSize="15sp"
+                        android:lineSpacingMultiplier="1.08"
+                        android:maxLines="6"
+                        android:ellipsize="end"
+                        android:fontFamily="serif"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/shelf_card_1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp">
+
+                <ImageView
+                    android:id="@+id/shelf_ground_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/tile_fill"
+                    android:contentDescription="@null" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="11dp">
+
+                    <TextView
+                        android:id="@+id/shelf_topic_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="8.5sp"
+                        android:letterSpacing="0.12"
+                        android:textStyle="bold"
+                        android:maxLines="1"
+                        android:ellipsize="end" />
+
+                    <TextView
+                        android:id="@+id/shelf_question_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="6dp"
+                        android:gravity="bottom|start"
+                        android:text=""
+                        android:textSize="14sp"
+                        android:autoSizeTextType="uniform"
+                        android:autoSizeMinTextSize="10sp"
+                        android:autoSizeMaxTextSize="15sp"
+                        android:lineSpacingMultiplier="1.08"
+                        android:maxLines="6"
+                        android:ellipsize="end"
+                        android:fontFamily="serif"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/shelf_empty"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:text=""
+            android:textColor="#F2F1EC"
+            android:textSize="15sp"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:maxLines="3"
+            android:ellipsize="end" />
+    </LinearLayout>
+</FrameLayout>

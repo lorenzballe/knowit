@@ -1007,6 +1007,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get widgetFiveWaiting => 'Cinq nouvelles cartes t\'attendent';
 
   @override
+  String get widgetShelfTitle => 'L\'ÉTAGÈRE DU JOUR';
+
+  @override
+  String get widgetShelfFrom => 'De l\'étagère du jour';
+
+  @override
   String get dayStreakCaps => 'JOURS DE SÉRIE';
 
   @override

@@ -1005,6 +1005,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get widgetFiveWaiting => 'Fünf neue Karten warten';
 
   @override
+  String get widgetShelfTitle => 'DAS REGAL VON HEUTE';
+
+  @override
+  String get widgetShelfFrom => 'Aus dem Regal von heute';
+
+  @override
   String get dayStreakCaps => 'TAGE IN SERIE';
 
   @override

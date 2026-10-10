@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="widget_card_label">Dzisiejsza karta</string>
-    <string name="widget_description">Karta, od której zaczyna się ranek, i twoja seria.</string>
+    <string name="widget_description">Następna dzisiejsza karta, a potem dzisiejsza półka.</string>
     <string name="widget_streak_label">Seria</string>
     <string name="widget_streak_description">Twoje dni z rzędu i cały tydzień.</string>
     <string name="widget_five_label">Dzisiejsza piątka</string>
@@ -9,4 +9,7 @@
     <string name="widget_card_empty">Pięć kart, dwie minuty.</string>
     <string name="widget_streak_open">Otwórz Astute, by zobaczyć tu swoją serię.</string>
     <string name="widget_five_open">Otwórz Astute, by zobaczyć tu dzisiejszą piątkę.</string>
+    <string name="widget_shelf_label">Dzisiejsza półka</string>
+    <string name="widget_shelf_description">Karty z góry Odkrywaj, te same dla wszystkich, i tylko dziś.</string>
+    <string name="widget_shelf_open">Otwórz Astute, by zobaczyć tu dzisiejszą półkę.</string>
 </resources>

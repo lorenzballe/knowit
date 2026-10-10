@@ -1050,6 +1050,12 @@ class AppLocalizationsRu extends AppLocalizations {
   String get widgetFiveWaiting => 'Ждут пять новых карточек';
 
   @override
+  String get widgetShelfTitle => 'ПОЛКА ДНЯ';
+
+  @override
+  String get widgetShelfFrom => 'С полки дня';
+
+  @override
   String get dayStreakCaps => 'ДНЕЙ ПОДРЯД';
 
   @override

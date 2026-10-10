@@ -223,6 +223,8 @@
   "widgetFiveRead": "已读 {n}/5",
   "widgetFiveDone": "五张全部读完",
   "widgetFiveWaiting": "新的五张在等你",
+  "widgetShelfTitle": "今日书架",
+  "widgetShelfFrom": "来自今日书架",
   "dayStreakCaps": "天连续",
   "sourceLabel": "来源 · {source}",
   "perkArchiveTitle": "你的全部档案",

@@ -223,6 +223,8 @@
   "widgetFiveRead": "Прочитано {n} из 5",
   "widgetFiveDone": "Все пять прочитаны",
   "widgetFiveWaiting": "Ждут пять новых карточек",
+  "widgetShelfTitle": "ПОЛКА ДНЯ",
+  "widgetShelfFrom": "С полки дня",
   "dayStreakCaps": "ДНЕЙ ПОДРЯД",
   "sourceLabel": "Источник · {source}",
   "perkArchiveTitle": "Весь твой архив",
