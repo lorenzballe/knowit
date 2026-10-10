@@ -211,6 +211,8 @@
   "widgetFiveRead": "{n} de 5 leídas",
   "widgetFiveDone": "Las cinco, leídas",
   "widgetFiveWaiting": "Te esperan cinco cartas nuevas",
+  "widgetShelfTitle": "LA ESTANTERÍA DE HOY",
+  "widgetShelfFrom": "De la estantería de hoy",
   "dayStreakCaps": "DÍAS DE RACHA",
   "sourceLabel": "Fuente · {source}",
   "perkArchiveTitle": "Todo tu archivo",

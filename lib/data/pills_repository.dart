@@ -548,15 +548,23 @@ List<Pill> pickedPills({
     return hash;
   }
 
-  pool.sort((a, b) {
-    final byRank = rank(a).compareTo(rank(b));
+  // Each card's place worked out once, not at every comparison: a sort of
+  // the whole bank compares each card a dozen times, and the home-screen
+  // widget is handed a fortnight of these shelves after every card read.
+  final placed = [
+    for (final p in pool)
+      (pill: p, rank: rank(p), asking: p.asksSomething ? 0 : 1, key: keyed(p)),
+  ];
+  placed.sort((a, b) {
+    final byRank = a.rank.compareTo(b.rank);
     if (byRank != 0) return byRank;
-    final byAsking = (a.asksSomething ? 0 : 1).compareTo(
-      b.asksSomething ? 0 : 1,
-    );
+    final byAsking = a.asking.compareTo(b.asking);
     if (byAsking != 0) return byAsking;
-    return keyed(a).compareTo(keyed(b));
+    return a.key.compareTo(b.key);
   });
+  pool
+    ..clear()
+    ..addAll(placed.map((e) => e.pill));
 
   if (topic != null) return pool.take(count).toList();
 

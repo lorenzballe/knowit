@@ -211,6 +211,8 @@
   "widgetFiveRead": "5'te {n} okundu",
   "widgetFiveDone": "Beşi de okundu",
   "widgetFiveWaiting": "Yeni beş kart seni bekliyor",
+  "widgetShelfTitle": "BUGÜNÜN RAFI",
+  "widgetShelfFrom": "Bugünün rafından",
   "dayStreakCaps": "GÜNLÜK SERİ",
   "sourceLabel": "Kaynak · {source}",
   "perkArchiveTitle": "Tüm arşivin",

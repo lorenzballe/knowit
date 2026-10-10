@@ -29,6 +29,7 @@ import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/widgets/hold_to_keep.dart';
 import 'package:astuto/sync/reader_snapshot.dart';
+import 'package:astuto/sync/served.dart';
 import 'package:astuto/sync/tally.dart';
 import 'package:astuto/widgets/brand_mark.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
@@ -1041,7 +1042,8 @@ void main() {
   });
 
   group('The home-screen widget', () {
-    test('is handed today, the streak, and a fortnight of mornings', () async {
+    test('is handed the next card to read, the streak, and a fortnight of '
+        'mornings', () async {
       final yesterday = DateTime.now().subtract(const Duration(days: 1));
       SharedPreferences.setMockInitialValues({
         ..._installed(),
@@ -1056,20 +1058,26 @@ void main() {
       // Handed over at launch, without being asked.
       expect(pushed, hasLength(1));
       final data = pushed.single;
-      // The first question of the reader's own day.
+      // The card Today opens on: the next of the five to read, by id, so a
+      // tap on it lands on it — not the first that asks, which a deck that
+      // opens on a card that tells would not show first.
+      final Pill next = app.todaysDeck[app.todayIndex];
+      expect(data['edition'], editionOf(DateTime.now()));
+      expect(data['cardId'], next.id);
+      expect(data['question'], next.question);
+      expect(data['streak'], 7);
+      expect(data['done'], isFalse);
+      // The reminder still quotes the first question of the reader's own
+      // day; the widget shows the card the deck does.
       final Pill lead = app.leadOn(DateTime.now());
       expect(lead.asksSomething, isTrue);
       expect(app.ownIdsToday, contains(lead.id));
-      expect(data['edition'], editionOf(DateTime.now()));
-      expect(data['question'], lead.question);
-      expect(data['streak'], 7);
-      expect(data['done'], isFalse);
 
       // The card's own colour and ink, so the widget draws it the way the
       // app does — as "#RRGGBB", which is all Swift and Kotlin need to read.
-      expect(data['topic'], lead.topic);
-      expect(data['color'], AppState.hexOf(lead.color));
-      expect(data['ink'], AppState.hexOf(lead.ink));
+      expect(data['topic'], next.topic);
+      expect(data['color'], AppState.hexOf(next.color));
+      expect(data['ink'], AppState.hexOf(next.ink));
       expect(data['color'], matches(RegExp(r'^#[0-9A-F]{6}$')));
 
       // The foot's three lines, already in the reader's language: the
@@ -1078,32 +1086,46 @@ void main() {
       expect(data['footStreak'], '7-day streak');
       expect(data['footDone'], 'Done for today');
 
-      // The next fortnight, one question a day, so the widget turns over
-      // at midnight without the app — with each morning's colour and
-      // subject beside its question.
+      // The next fortnight, a card a morning, so the widget turns over at
+      // midnight without the app: the card each morning opens on, by id,
+      // with its colour and subject beside its question.
       final ahead = data['ahead'] as Map<String, String>;
+      final aheadId = data['aheadId'] as Map<String, String>;
       expect(ahead, hasLength(AppState.kPlannedDays + 1));
+      expect(aheadId.keys, orderedEquals(ahead.keys));
+      // Tomorrow opens on the first of tomorrow's five, the five widget's
+      // own for midnight.
+      final tomorrow = DateTime.now().add(const Duration(days: 1));
+      expect(aheadId[dateKey(tomorrow)], app.tomorrowsDeck.first.id);
       final third = DateTime.now().add(const Duration(days: 3));
-      final Pill thirdLead = app.leadOn(third);
-      expect(ahead[dateKey(third)], thirdLead.question);
+      final Pill thirdCard = PillBank.byId(aheadId[dateKey(third)]!)!;
+      expect(ahead[dateKey(third)], thirdCard.question);
+      expect(app.seenIds, isNot(contains(thirdCard.id)));
       final aheadColor = data['aheadColor'] as Map<String, String>;
       final aheadTopic = data['aheadTopic'] as Map<String, String>;
       final aheadInk = data['aheadInk'] as Map<String, String>;
       expect(aheadColor.keys, orderedEquals(ahead.keys));
-      expect(aheadColor[dateKey(third)], AppState.hexOf(thirdLead.color));
-      expect(aheadInk[dateKey(third)], AppState.hexOf(thirdLead.ink));
-      expect(aheadTopic[dateKey(third)], thirdLead.topic);
+      expect(aheadColor[dateKey(third)], AppState.hexOf(thirdCard.color));
+      expect(aheadInk[dateKey(third)], AppState.hexOf(thirdCard.ink));
+      expect(aheadTopic[dateKey(third)], thirdCard.topic);
       // And nothing a stranger reading the home screen should not see.
       expect(data.keys, isNot(contains('answers')));
 
-      // Again when the day is done, now saying so.
-      for (var i = 0; i < kPillsPerDay; i++) {
+      // A card in, the widget moves on to the next.
+      await app.advance();
+      await Future<void>.delayed(Duration.zero);
+      expect(pushed.last['cardId'], app.todaysDeck[1].id);
+
+      // Again when the day is done, now saying so — and with the card the
+      // morning opened on, for a widget with no shelf to turn to.
+      for (var i = 1; i < kPillsPerDay; i++) {
         await app.advance();
       }
       await Future<void>.delayed(Duration.zero);
       expect(pushed.last['done'], isTrue);
       expect(pushed.last['streak'], 8);
       expect(pushed.last['footStreak'], '8-day streak');
+      expect(pushed.last['cardId'], app.leadOn(DateTime.now()).id);
     });
 
     test('hands the streak its week and the five their colours', () async {
@@ -1191,6 +1213,124 @@ void main() {
       expect(AppState.hexOf(const Color(0xFF000000)), '#000000');
       // Opaque whatever the alpha: a widget ground is never see-through.
       expect(AppState.hexOf(const Color(0x80FFE600)), '#FFE600');
+    });
+
+    List<Map<String, Object?>> cardsIn(Object? json) => [
+      for (final c in jsonDecode(json as String) as List)
+        (c as Map).cast<String, Object?>(),
+    ];
+
+    test(
+      "hands over every card by id, and today's shelf for a fortnight",
+      () async {
+        SharedPreferences.setMockInitialValues(_installed());
+        final pushed = <Map<String, Object?>>[];
+        final app = AppState(pushWidget: (data) async => pushed.add(data));
+        await app.init();
+        await Future<void>.delayed(Duration.zero);
+        var data = pushed.last;
+
+        // Today's five, each with its id and its question: every card on the
+        // five widget opens itself, and the large one shows how it starts.
+        final five = cardsIn(data['fiveJson']);
+        expect(
+          five.map((c) => c['id']),
+          orderedEquals(app.todaysDeck.map((p) => p.id)),
+        );
+        expect(
+          five.map((c) => c['question']),
+          orderedEquals(app.todaysDeck.map((p) => p.question)),
+        );
+        expect(
+          cardsIn(data['fiveTomorrowJson']).map((c) => c['id']),
+          orderedEquals(app.tomorrowsDeck.map((p) => p.id)),
+        );
+
+        // Today's shelf, the same for everybody: with no server, the phone's
+        // own pick, which is what Explore shows at its top.
+        final shelf = data['shelf'] as Map<String, String>;
+        expect(shelf.keys, orderedEquals((data['ahead'] as Map).keys));
+        final DateTime now = DateTime.now();
+        final List<Pill> picked = pickedPills(seed: daySeed(now), count: 60);
+        final today = cardsIn(shelf[dateKey(now)]);
+        expect(today, hasLength(AppState.kWidgetShelf));
+        expect(
+          today.map((c) => c['id']),
+          orderedEquals(picked.take(AppState.kWidgetShelf).map((p) => p.id)),
+        );
+        final Pill first = picked.first;
+        expect(today.first, {
+          'id': first.id,
+          'topic': first.topic,
+          'color': AppState.hexOf(first.color),
+          'ink': AppState.hexOf(first.ink),
+          'question': first.question,
+        });
+        // And each morning ahead its own, so the shelf turns over at midnight
+        // without the app.
+        final DateTime later = DateTime(now.year, now.month, now.day + 5);
+        expect(
+          cardsIn(shelf[dateKey(later)]).map((c) => c['id']),
+          orderedEquals(
+            pickedPills(
+              seed: daySeed(later),
+              count: 60,
+            ).take(AppState.kWidgetShelf).map((p) => p.id),
+          ),
+        );
+        // Its lines, in the reader's language.
+        expect(data['shelfTitle'], "TODAY'S SHELF");
+        expect(data['shelfFrom'], "From today's shelf");
+        expect(data['shelfLine'], 'The same for everyone, and only today');
+
+        // A card of the shelf read in Explore is not offered again: the next
+        // of the day's pick takes its place.
+        await app.markReadElsewhere(first.id);
+        data = app.homeWidgetData();
+        final after = cardsIn((data['shelf'] as Map)[dateKey(now)]);
+        expect(after.map((c) => c['id']), isNot(contains(first.id)));
+        expect(after, hasLength(AppState.kWidgetShelf));
+        expect(after.last['id'], picked[AppState.kWidgetShelf].id);
+      },
+    );
+
+    test("today's shelf is the server's, once it has answered", () async {
+      final List<Pill> theirs = PillBank.cards.reversed.take(10).toList();
+      final MemoryServedStore store = MemoryServedStore()
+        ..shelves = ServedExplore(
+          day: dateKey(DateTime.now()),
+          today: theirs,
+          asking: const [],
+          topWeek: const [],
+          topMonth: const [],
+          loved: const [],
+          bySubject: const {},
+        );
+      final Served served = Served(storeOverride: store, uidOverride: 'me');
+      Served.useForTest(served);
+      addTearDown(() => Served.useForTest(Served()));
+      await served.explore();
+
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState(pushWidget: (_) async {});
+      await app.init();
+      final shelf = app.homeWidgetData()['shelf'] as Map<String, String>;
+      final DateTime now = DateTime.now();
+      expect(
+        cardsIn(shelf[dateKey(now)]).map((c) => c['id']),
+        orderedEquals(theirs.take(AppState.kWidgetShelf).map((p) => p.id)),
+      );
+      // Tomorrow's the server has not put together yet: the phone's pick.
+      final DateTime tomorrow = DateTime(now.year, now.month, now.day + 1);
+      expect(
+        cardsIn(shelf[dateKey(tomorrow)]).map((c) => c['id']),
+        orderedEquals(
+          pickedPills(
+            seed: daySeed(tomorrow),
+            count: 60,
+          ).take(AppState.kWidgetShelf).map((p) => p.id),
+        ),
+      );
     });
   });
 

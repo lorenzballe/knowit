@@ -961,6 +961,12 @@ class AppLocalizationsNl extends AppLocalizations {
   String get widgetFiveWaiting => 'Er wachten vijf nieuwe kaarten';
 
   @override
+  String get widgetShelfTitle => 'DE PLANK VAN VANDAAG';
+
+  @override
+  String get widgetShelfFrom => 'Van de plank van vandaag';
+
+  @override
   String get dayStreakCaps => 'DAGEN OP RIJ';
 
   @override

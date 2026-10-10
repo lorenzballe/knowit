@@ -954,6 +954,12 @@ class AppLocalizationsTr extends AppLocalizations {
   String get widgetFiveWaiting => 'Yeni beş kart seni bekliyor';
 
   @override
+  String get widgetShelfTitle => 'BUGÜNÜN RAFI';
+
+  @override
+  String get widgetShelfFrom => 'Bugünün rafından';
+
+  @override
   String get dayStreakCaps => 'GÜNLÜK SERİ';
 
   @override

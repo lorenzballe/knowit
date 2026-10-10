@@ -958,6 +958,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get widgetFiveWaiting => 'A new five is waiting';
 
   @override
+  String get widgetShelfTitle => 'TODAY\'S SHELF';
+
+  @override
+  String get widgetShelfFrom => 'From today\'s shelf';
+
+  @override
   String get dayStreakCaps => 'DAY STREAK';
 
   @override

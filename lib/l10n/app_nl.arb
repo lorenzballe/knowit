@@ -211,6 +211,8 @@
   "widgetFiveRead": "{n} van 5 gelezen",
   "widgetFiveDone": "Alle vijf gelezen",
   "widgetFiveWaiting": "Er wachten vijf nieuwe kaarten",
+  "widgetShelfTitle": "DE PLANK VAN VANDAAG",
+  "widgetShelfFrom": "Van de plank van vandaag",
   "dayStreakCaps": "DAGEN OP RIJ",
   "sourceLabel": "Bron · {source}",
   "perkArchiveTitle": "Je hele archief",

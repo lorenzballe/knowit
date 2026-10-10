@@ -211,6 +211,8 @@
   "widgetFiveRead": "Przeczytane: {n} z 5",
   "widgetFiveDone": "Wszystkie pięć przeczytane",
   "widgetFiveWaiting": "Czeka nowa piątka",
+  "widgetShelfTitle": "DZISIEJSZA PÓŁKA",
+  "widgetShelfFrom": "Z dzisiejszej półki",
   "dayStreakCaps": "DNI SERII",
   "sourceLabel": "Źródło · {source}",
   "perkArchiveTitle": "Całe twoje archiwum",

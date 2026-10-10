@@ -211,6 +211,8 @@
   "widgetFiveRead": "{n} sur 5 lues",
   "widgetFiveDone": "Les cinq sont lues",
   "widgetFiveWaiting": "Cinq nouvelles cartes t'attendent",
+  "widgetShelfTitle": "L'ÉTAGÈRE DU JOUR",
+  "widgetShelfFrom": "De l'étagère du jour",
   "dayStreakCaps": "JOURS DE SÉRIE",
   "sourceLabel": "Source · {source}",
   "perkArchiveTitle": "Toute ton archive",
