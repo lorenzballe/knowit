@@ -186,7 +186,7 @@ bool isNumberPick(Pill p) {
   return c.options.every((o) => RegExp(r'\d').hasMatch(o) && o.length <= 26);
 }
 
-/// Two shares side by side, for "which is bigger?": far enough apart that
+/// Two shares on one card, for "which is bigger?": far enough apart that
 /// the answer is a thing worked out, not a coin toss.
 typedef BiggerPair = (PercentCard, PercentCard);
 
@@ -218,8 +218,15 @@ List<BiggerPair> biggerPairs(
   return out;
 }
 
+/// The ways a number is played on "Work it out", each named on its card.
+enum WorkKind { pick, slide, closer, bigger, range, stake }
+
+/// How many cards each way of playing puts on the row: two of each makes a
+/// row of a dozen, every way met twice.
+const int kWorkEach = 2;
+
 /// Everything "Work it out" is played with on a day: the cards for each way
-/// of playing, none of them in two.
+/// of playing, none of them in two, and the one row they are laid out on.
 class WorkItOutDeal {
   const WorkItOutDeal({
     required this.pick,
@@ -228,6 +235,7 @@ class WorkItOutDeal {
     required this.bigger,
     required this.range,
     required this.stake,
+    required this.row,
   });
 
   /// Three amounts to choose from.
@@ -247,6 +255,10 @@ class WorkItOutDeal {
 
   /// Three amounts, and a stake on one of them.
   final List<Pill> stake;
+
+  /// The row as the shelf lays it out: each place a way of playing and which
+  /// of its cards, in the day's order.
+  final List<(WorkKind, int)> row;
 
   Iterable<Pill> get cards => [
     ...pick,
@@ -283,12 +295,13 @@ WorkItOutDeal workItOut(Iterable<Pill> pool, {required int day}) {
   }
 
   final used = <String>{};
-  final slide = take('slide', 4, used);
-  final closer = take('closer', 3, used);
-  final range = take('range', 4, used);
+  final slide = take('slide', kWorkEach, used);
+  final closer = take('closer', kWorkEach, used);
+  final range = take('range', kWorkEach, used);
   final bigger = biggerPairs(
     shares.where((c) => !used.contains(c.pill.id)).toList(),
     day: day,
+    count: kWorkEach,
   );
   for (final (a, b) in bigger) {
     used
@@ -298,13 +311,13 @@ WorkItOutDeal workItOut(Iterable<Pill> pool, {required int day}) {
   final List<Pill> amounts = pool
       .where((p) => !used.contains(p.id) && isNumberPick(p))
       .toList();
-  final pick = dealCards(amounts, salt: 'pick', day: day, count: 4);
+  final pick = dealCards(amounts, salt: 'pick', day: day, count: kWorkEach);
   used.addAll(pick.map((p) => p.id));
   final stake = dealCards(
     amounts.where((p) => !used.contains(p.id)),
     salt: 'stake',
     day: day,
-    count: 4,
+    count: kWorkEach,
   );
   return WorkItOutDeal(
     pick: pick,
@@ -313,7 +326,41 @@ WorkItOutDeal workItOut(Iterable<Pill> pool, {required int day}) {
     bigger: bigger,
     range: range,
     stake: stake,
+    row: workRow({
+      WorkKind.pick: pick.length,
+      WorkKind.slide: slide.length,
+      WorkKind.closer: closer.length,
+      WorkKind.bigger: bigger.length,
+      WorkKind.range: range.length,
+      WorkKind.stake: stake.length,
+    }, day: day),
   );
+}
+
+/// The order the row is laid out in: a round of every way of playing, then
+/// another, each round in an order drawn for the day. Shuffled whole, a row
+/// could open on three bets in a row; a round at a time, the first cards the
+/// reader sees are every kind there is. Never two of a kind side by side,
+/// where the seam of two rounds would put them so. The same on every phone
+/// all day, and a different row the next.
+List<(WorkKind, int)> workRow(Map<WorkKind, int> counts, {required int day}) {
+  final out = <(WorkKind, int)>[];
+  for (int round = 0; ; round++) {
+    final kinds = [
+      for (final k in WorkKind.values)
+        if ((counts[k] ?? 0) > round) k,
+    ];
+    if (kinds.isEmpty) return out;
+    kinds.sort(
+      (a, b) =>
+          shelfHash('$day:work:$round:${a.name}')
+              .compareTo(shelfHash('$day:work:$round:${b.name}')),
+    );
+    if (out.isNotEmpty && kinds.length > 1 && kinds.first == out.last.$1) {
+      kinds.add(kinds.removeAt(0));
+    }
+    out.addAll([for (final k in kinds) (k, round)]);
+  }
 }
 
 // ── Through time ─────────────────────────────────────────────────────────
