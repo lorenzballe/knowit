@@ -898,7 +898,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Escritas antes por um modelo, e cada uma verificada na sua fonte.';
+      'Escritas antes por um modelo, e cada uma cita a sua fonte.';
 
   @override
   String get introQuestionTitle =>

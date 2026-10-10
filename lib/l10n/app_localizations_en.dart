@@ -896,7 +896,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Written ahead by a model, and every one checked against its source.';
+      'Written ahead by a model, and each one names its source.';
 
   @override
   String get introQuestionTitle => 'A question, how sure, then why';

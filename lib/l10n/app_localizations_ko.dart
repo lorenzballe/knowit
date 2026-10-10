@@ -876,7 +876,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get introTopicsTitle => '열아홉 개 주제, 다섯 장의 카드';
 
   @override
-  String get introTopicsLine => '모델이 미리 쓰고, 한 장 한 장 출처와 대조합니다.';
+  String get introTopicsLine => '모델이 미리 쓰고, 한 장 한 장 출처를 밝힙니다.';
 
   @override
   String get introQuestionTitle => '질문, 확신 정도, 그리고 이유';

@@ -898,7 +898,7 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Vooraf geschreven door een model, en elke kaart gecheckt aan de bron.';
+      'Vooraf geschreven door een model, en elke kaart noemt haar bron.';
 
   @override
   String get introQuestionTitle => 'Een vraag, hoe zeker, dan het waarom';

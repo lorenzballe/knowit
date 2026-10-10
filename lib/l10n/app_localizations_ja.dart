@@ -873,7 +873,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get introTopicsTitle => '19の分野、5枚のカード';
 
   @override
-  String get introTopicsLine => 'モデルが前もって書き、一枚ずつ出典と照合しています。';
+  String get introTopicsLine => 'モデルが前もって書き、一枚ずつ出典を示しています。';
 
   @override
   String get introQuestionTitle => '問い、自信の度合い、そして理由';

@@ -899,7 +899,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Vorab von einem Modell geschrieben, und jede an ihrer Quelle geprüft.';
+      'Vorab von einem Modell geschrieben, und jede nennt ihre Quelle.';
 
   @override
   String get introQuestionTitle => 'Eine Frage, wie sicher, dann das Warum';

@@ -5148,7 +5148,7 @@ void main() {
         ),
         (
           'Nineteen topics, five cards',
-          'Written ahead by a model, and every one checked against its source.',
+          'Written ahead by a model, and each one names its source.',
         ),
         (
           'A question, how sure, then why',

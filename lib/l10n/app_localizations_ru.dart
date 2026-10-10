@@ -942,7 +942,7 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Написаны заранее моделью, и каждая сверена со своим источником.';
+      'Написаны заранее моделью, и каждая называет свой источник.';
 
   @override
   String get introQuestionTitle => 'Вопрос, уверенность, потом — почему';

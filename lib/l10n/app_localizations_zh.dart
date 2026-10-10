@@ -867,7 +867,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get introTopicsTitle => '十九个主题，五张卡片';
 
   @override
-  String get introTopicsLine => '由模型提前写好，每一张都对照出处核查过。';
+  String get introTopicsLine => '由模型提前写好，每一张都注明出处。';
 
   @override
   String get introQuestionTitle => '一道题，有多确定，再看为什么';

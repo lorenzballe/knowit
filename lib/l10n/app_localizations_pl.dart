@@ -938,7 +938,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Pisane wcześniej przez model, a każda sprawdzona ze swoim źródłem.';
+      'Pisane wcześniej przez model, a każda podaje swoje źródło.';
 
   @override
   String get introQuestionTitle => 'Pytanie, pewność, potem dlaczego';

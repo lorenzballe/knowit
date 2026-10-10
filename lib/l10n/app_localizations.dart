@@ -1281,7 +1281,7 @@ abstract class AppLocalizations {
   /// No description provided for @introTopicsLine.
   ///
   /// In en, this message translates to:
-  /// **'Written ahead by a model, and every one checked against its source.'**
+  /// **'Written ahead by a model, and each one names its source.'**
   String get introTopicsLine;
 
   /// No description provided for @introQuestionTitle.

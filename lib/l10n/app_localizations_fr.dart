@@ -901,7 +901,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Écrites à l\'avance par un modèle, et chacune vérifiée sur sa source.';
+      'Écrites à l\'avance par un modèle, et chacune cite sa source.';
 
   @override
   String get introQuestionTitle =>

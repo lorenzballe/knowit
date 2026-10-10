@@ -892,7 +892,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get introTopicsLine =>
-      'Bir model tarafından önceden yazılır, her biri kaynağıyla doğrulanır.';
+      'Bir model tarafından önceden yazılır, her biri kaynağını belirtir.';
 
   @override
   String get introQuestionTitle => 'Bir soru, ne kadar emin, sonra neden';
