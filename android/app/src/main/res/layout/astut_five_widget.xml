@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Today's five in their colours, in the order they are read: a card read
      is solid with a tick, a card still to read is its colour, faint, with
-     a ring. -->
+     a ring. Each tile has an id of its own, so each opens its own card. -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/five_root"
     android:layout_width="match_parent"
@@ -60,6 +60,7 @@
             android:orientation="horizontal">
 
             <FrameLayout
+                android:id="@+id/five_tile_0"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -109,6 +110,7 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/five_tile_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -158,6 +160,7 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/five_tile_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -207,6 +210,7 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/five_tile_3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -256,6 +260,7 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/five_tile_4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

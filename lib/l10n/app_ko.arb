@@ -223,6 +223,8 @@
   "widgetFiveRead": "5장 중 {n}장 읽음",
   "widgetFiveDone": "다섯 장 모두 읽음",
   "widgetFiveWaiting": "새로운 다섯 장이 기다려요",
+  "widgetShelfTitle": "오늘의 선반",
+  "widgetShelfFrom": "오늘의 선반에서",
   "dayStreakCaps": "일 연속",
   "sourceLabel": "출처 · {source}",
   "perkArchiveTitle": "당신의 모든 기록",

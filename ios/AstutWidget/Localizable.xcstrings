@@ -1,6 +1,82 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "Cards from the top of Explore, the same for everyone, and only today.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Karten von oben in Entdecken, für alle gleich, und nur heute."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tarjetas de lo alto de Explorar, iguales para todos, y solo hoy."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Des cartes du haut d'Explorer, les mêmes pour tous, et seulement aujourd'hui."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Carte dalla cima di Esplora, uguali per tutti, e solo oggi."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「探す」のいちばん上のカード。みんな同じ、今日だけ。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "탐색 맨 위의 카드들. 모두에게 같고, 오늘만."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kaarten van bovenaan Ontdek, voor iedereen hetzelfde, en alleen vandaag."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Karty z góry Odkrywaj, te same dla wszystkich, i tylko dziś."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cartas do topo de Explorar, iguais para todos, e só hoje."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Карточки с верха «Обзора», одни на всех, и только сегодня."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keşfet'in en üstündeki kartlar, herkes için aynı, ve yalnızca bugün."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "「探索」顶部的卡片，人人相同，仅限今天。"
+          }
+        }
+      }
+    },
     "Five cards a day, two minutes.": {
       "localizations": {
         "de": {
@@ -12,7 +88,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cinco cartas, dos minutos."
+            "value": "Cinco tarjetas, dos minutos."
           }
         },
         "fr": {
@@ -73,6 +149,82 @@
           "stringUnit": {
             "state": "translated",
             "value": "五张卡片，两分钟。"
+          }
+        }
+      }
+    },
+    "From today's shelf": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aus dem Regal von heute"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De la estantería de hoy"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De l'étagère du jour"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dallo scaffale di oggi"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日の棚から"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "오늘의 선반에서"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Van de plank van vandaag"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Z dzisiejszej półki"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Da estante de hoje"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "С полки дня"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bugünün rafından"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "来自今日书架"
           }
         }
       }
@@ -149,6 +301,82 @@
           "stringUnit": {
             "state": "translated",
             "value": "打开 Astute，在这里查看今天的五张。"
+          }
+        }
+      }
+    },
+    "Open Astute to see today's shelf here.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öffne Astute, um hier das Regal von heute zu sehen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre Astute para ver aquí la estantería de hoy."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvre Astute pour voir ici l'étagère du jour."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apri Astute per vedere qui lo scaffale di oggi."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Astuteを開くと、ここに今日の棚が表示されます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Astute를 열면 여기에 오늘의 선반이 보여요."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open Astute om hier de plank van vandaag te zien."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Otwórz Astute, by zobaczyć tu dzisiejszą półkę."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre o Astute para veres aqui a estante de hoje."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открой Astute, чтобы видеть здесь полку дня."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bugünün rafını burada görmek için Astute'u aç."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打开 Astute，在这里查看今日书架。"
           }
         }
       }
@@ -305,82 +533,6 @@
         }
       }
     },
-    "The card the morning opens on, and your streak.": {
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Die Karte, mit der der Morgen beginnt, und deine Serie."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La carta con la que empieza la mañana, y tu racha."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La carte qui ouvre la matinée, et ta série."
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "La carta con cui si apre la mattina, e la tua serie."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "朝いちばんのカードと、あなたの連続記録。"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "아침을 여는 카드와 당신의 연속 기록."
-          }
-        },
-        "nl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "De kaart waarmee de ochtend opent, en je reeks."
-          }
-        },
-        "pl": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Karta, od której zaczyna się ranek, i twoja seria."
-          }
-        },
-        "pt": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A carta com que abre a manhã, e a tua sequência."
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Карточка, с которой начинается утро, и твоя серия."
-          }
-        },
-        "tr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sabahın açıldığı kart ve serin."
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "清晨的第一张卡片，以及你的连续记录。"
-          }
-        }
-      }
-    },
     "The five cards of the day, and how far you are.": {
       "localizations": {
         "de": {
@@ -392,7 +544,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Las cinco cartas del día, y por dónde vas."
+            "value": "Las cinco tarjetas del día, y por dónde vas."
           }
         },
         "fr": {
@@ -453,6 +605,158 @@
           "stringUnit": {
             "state": "translated",
             "value": "今天的五张卡片，以及你读到了哪里。"
+          }
+        }
+      }
+    },
+    "The next of today's cards, then today's shelf.": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die nächste Karte von heute, danach das Regal von heute."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La próxima tarjeta de hoy, y luego la estantería de hoy."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La prochaine carte du jour, puis l'étagère du jour."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La prossima carta di oggi, poi lo scaffale di oggi."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "次に読む今日のカード、そのあとは今日の棚。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "오늘 읽을 다음 카드, 그다음엔 오늘의 선반."
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De volgende kaart van vandaag, daarna de plank van vandaag."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Następna dzisiejsza karta, a potem dzisiejsza półka."
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A próxima carta de hoje, e depois a estante de hoje."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Следующая карточка дня, а потом полка дня."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bugünün sıradaki kartı, ardından bugünün rafı."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今天的下一张卡片，读完后是今日书架。"
+          }
+        }
+      }
+    },
+    "The same for everyone, and only today": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Für alle gleich, und nur heute"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Igual para todos, y solo hoy"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La même pour tous, et seulement aujourd'hui"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uguale per tutti, e solo oggi"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "みんな同じ、今日だけ"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "모두에게 같고, 오늘만"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Voor iedereen hetzelfde, en alleen vandaag"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ta sama dla wszystkich, i tylko dziś"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Igual para todos, e só hoje"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Одна на всех, и только сегодня"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Herkes için aynı, ve yalnızca bugün"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "人人相同，仅限今天"
           }
         }
       }
@@ -605,6 +909,82 @@
           "stringUnit": {
             "state": "translated",
             "value": "今天的五张"
+          }
+        }
+      }
+    },
+    "Today's shelf": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das Regal von heute"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La estantería de hoy"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "L'étagère du jour"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lo scaffale di oggi"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日の棚"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "오늘의 선반"
+          }
+        },
+        "nl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "De plank van vandaag"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dzisiejsza półka"
+          }
+        },
+        "pt": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A estante de hoje"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Полка дня"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bugünün rafı"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日书架"
           }
         }
       }

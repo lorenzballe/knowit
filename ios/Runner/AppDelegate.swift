@@ -16,11 +16,21 @@ import WidgetKit
   }
 
   func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
+    // A tap on a widget opens the app on an astute://widget link that says
+    // which widget it was and which card; this is where the link arrives.
+    // Registered before every plugin: the launch's links are shown to one
+    // listener only, the first to claim them, and a plugin that answers for
+    // every launch would otherwise keep a widget's tap from the app that
+    // started from it.
+    engineBridge.pluginRegistry.registrar(forPlugin: "AstutWidgetOpens")?
+      .addSceneDelegate(WidgetOpens.shared)
+
     GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
 
-    // The home-screen widget cannot run Dart, so the app hands it what it
-    // will need — today's question, the streak, and the question for each
-    // of the next fourteen mornings — and asks WidgetKit to redraw.
+    // The home-screen widgets cannot run Dart, so the app hands them what
+    // they will need — today's cards and today's shelf, the streak, and the
+    // same for each of the next fourteen mornings — and asks WidgetKit to
+    // redraw.
     let channel = FlutterMethodChannel(
       name: "astut/widget",
       binaryMessenger: engineBridge.applicationRegistrar.messenger()
@@ -37,11 +47,7 @@ import WidgetKit
         result(FlutterMethodNotImplemented)
       }
     }
-
-    // A tap on a widget opens the app on an astute://widget link that says
-    // which widget it was; this is where the link arrives.
-    engineBridge.pluginRegistry.registrar(forPlugin: "AstutWidgetOpens")?
-      .addSceneDelegate(WidgetOpens.shared)
+    WidgetOpens.channel = channel
   }
 
   /// Everything the app handed over, under the key it came with: text,
@@ -88,52 +94,71 @@ import WidgetKit
     case "AstutWidget": return "card"
     case "AstutStreak": return "streak"
     case "AstutFive": return "five"
+    case "AstutShelf": return "shelf"
     default: return kind
     }
   }
 }
 
-/// Which widget's tap opened the app, held until Dart asks for it.
+/// Which widget's tap opened the app, and the card it named, held until
+/// Dart asks for it.
 final class WidgetOpens: NSObject, FlutterSceneLifeCycleDelegate {
   static let shared = WidgetOpens()
-  private static var pending: String?
 
-  /// The widget a tap came from, once: asking clears it.
-  static func take() -> String? {
+  /// The channel the app listens on, to be told a tap has come in.
+  static var channel: FlutterMethodChannel?
+
+  /// "from", and for a card "card" and "in": the link's own words.
+  private static var pending: [String: String]?
+
+  /// The tap, once: asking clears it.
+  static func take() -> [String: String]? {
     defer { pending = nil }
     return pending
   }
 
-  /// Keeps the widget named by an astute://widget?from=… link. Every other
-  /// link is left to whoever else is listening.
+  /// Keeps what an astute://widget link says: which widget, which card,
+  /// and where the card lives. Every other link is left to whoever else is
+  /// listening.
   @discardableResult
   static func note(_ url: URL) -> Bool {
     guard url.scheme == "astute", url.host == "widget" else { return false }
-    pending =
-      URLComponents(url: url, resolvingAgainstBaseURL: false)?
-      .queryItems?.first(where: { $0.name == "from" })?.value ?? "unknown"
+    var open = ["from": "unknown"]
+    for item in URLComponents(url: url, resolvingAgainstBaseURL: false)?.queryItems ?? [] {
+      guard ["from", "card", "in"].contains(item.name), let value = item.value, !value.isEmpty
+      else { continue }
+      open[item.name] = value
+    }
+    pending = open
     return true
   }
 
-  /// The app started from a widget's tap.
+  /// The app started from a widget's tap. Claimed, so that Flutter does not
+  /// also try the link as a route of its own, which it is not.
   @objc(scene:willConnectToSession:options:)
   func scene(
     _ scene: UIScene,
     willConnectTo session: UISceneSession,
     options connectionOptions: UIScene.ConnectionOptions?
   ) -> Bool {
-    for context in connectionOptions?.urlContexts ?? [] {
-      WidgetOpens.note(context.url)
+    var handled = false
+    for context in connectionOptions?.urlContexts ?? [] where WidgetOpens.note(context.url) {
+      handled = true
     }
-    return false
+    return handled
   }
 
-  /// The app, already running, brought forward by a widget's tap.
+  /// The app, already running, brought forward by a widget's tap. The app
+  /// is told at once: it also asks on coming back to the foreground, and
+  /// the phone does not promise which of the two happens first.
   @objc(scene:openURLContexts:)
   func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) -> Bool {
     var handled = false
     for context in URLContexts where WidgetOpens.note(context.url) {
       handled = true
+    }
+    if handled {
+      WidgetOpens.channel?.invokeMethod("opened", arguments: nil)
     }
     return handled
   }

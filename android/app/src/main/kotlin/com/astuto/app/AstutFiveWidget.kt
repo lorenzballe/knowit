@@ -6,12 +6,13 @@ import android.content.Context
 import android.graphics.Color
 import android.view.View
 import android.widget.RemoteViews
-import org.json.JSONArray
 import java.util.Locale
 
 /// Today's five on the home screen, in their colours and in the order
 /// they are read: a card read is solid with a tick, a card still to read
 /// is its colour, faint, with a ring. Above them, how far the day has got.
+/// Each card opens itself: one still to read on Today, where the deck is
+/// waiting, one read back over it.
 ///
 /// At midnight it turns to the new day's five, all still to read — dealt
 /// by the app the night before and written down with today's.
@@ -21,13 +22,12 @@ class AstutFiveWidget : AppWidgetProvider() {
     }
 
     companion object {
-        private class Card(val topic: String, val color: Int, val ink: Int, val read: Boolean)
-
         private const val CREAM = 0xFFF2F1EC.toInt()
         private const val TITLE = 0x9EF2F1EC.toInt()
         private const val LINE = 0xC7F2F1EC.toInt()
         private const val LABEL_OPEN = 0xE0F2F1EC.toInt()
 
+        private val TILES = intArrayOf(R.id.five_tile_0, R.id.five_tile_1, R.id.five_tile_2, R.id.five_tile_3, R.id.five_tile_4)
         private val FILLS = intArrayOf(R.id.five_fill_0, R.id.five_fill_1, R.id.five_fill_2, R.id.five_fill_3, R.id.five_fill_4)
         private val RINGS = intArrayOf(R.id.five_ring_0, R.id.five_ring_1, R.id.five_ring_2, R.id.five_ring_3, R.id.five_ring_4)
         private val CHECKS = intArrayOf(R.id.five_check_0, R.id.five_check_1, R.id.five_check_2, R.id.five_check_3, R.id.five_check_4)
@@ -40,7 +40,7 @@ class AstutFiveWidget : AppWidgetProvider() {
             fun text(key: String) = prefs.getString(key, "") ?: ""
 
             val gap = AstutWidget.daysBetween(stored, AstutWidget.todayKey())
-            val cards: List<Card>
+            val cards: List<WidgetCard>
             val line: String
             when {
                 stored.isEmpty() || !prefs.contains("fiveJson") -> {
@@ -48,12 +48,12 @@ class AstutFiveWidget : AppWidgetProvider() {
                     line = context.getString(R.string.widget_five_open)
                 }
                 gap <= 0 -> {
-                    cards = parseCards(text("fiveJson"))
+                    cards = WidgetCard.list(text("fiveJson"), CREAM, Color.BLACK).take(5)
                     val read = cards.count { it.read }
                     line = if (read == cards.size && read > 0) text("fiveDone") else text("fiveReadText")
                 }
                 gap == 1 -> {
-                    cards = parseCards(text("fiveTomorrowJson"))
+                    cards = WidgetCard.list(text("fiveTomorrowJson"), CREAM, Color.BLACK).take(5)
                     line = text("fiveWaiting")
                 }
                 else -> {
@@ -64,7 +64,13 @@ class AstutFiveWidget : AppWidgetProvider() {
             val title = if (stored.isEmpty()) "ASTUTE" else text("fiveTitle").ifEmpty { "ASTUTE" }
             val count = if (cards.isEmpty()) "" else "${cards.count { it.read }}/${cards.size}"
 
-            val pending = AstutWidget.openApp(context, "five.home")
+            // Between the cards, the next one to read: the card Today is
+            // waiting on.
+            val next = cards.firstOrNull { !it.read && it.id.isNotEmpty() }
+            val pending = AstutWidget.openApp(
+                context, AstutWidget.CODE_FIVE + TILES.size, "five.home",
+                next?.id, AstutWidget.PLACE_TODAY,
+            )
             for (id in ids) {
                 val views = RemoteViews(context.packageName, R.layout.astut_five_widget)
                 views.setTextViewText(R.id.five_title, title)
@@ -96,27 +102,20 @@ class AstutFiveWidget : AppWidgetProvider() {
                         LABELS[i],
                         if (card.read) (card.ink and 0x00FFFFFF) or (0xD9 shl 24) else LABEL_OPEN,
                     )
+                    // Each card its own tap, opening that card.
+                    if (card.id.isNotEmpty()) {
+                        views.setOnClickPendingIntent(
+                            TILES[i],
+                            AstutWidget.openApp(
+                                context, AstutWidget.CODE_FIVE + i, "five.home",
+                                card.id, AstutWidget.PLACE_TODAY,
+                            ),
+                        )
+                    }
                 }
                 views.setOnClickPendingIntent(R.id.five_root, pending)
                 manager.updateAppWidget(id, views)
             }
-        }
-
-        /// The five as the app writes them: a JSON list of
-        /// {topic, color, ink, read}.
-        private fun parseCards(json: String): List<Card> = try {
-            val list = JSONArray(json)
-            List(list.length()) {
-                val card = list.getJSONObject(it)
-                Card(
-                    topic = card.optString("topic", ""),
-                    color = AstutWidget.parse(card.optString("color", ""), CREAM),
-                    ink = AstutWidget.parse(card.optString("ink", ""), Color.BLACK),
-                    read = card.optBoolean("read", false),
-                )
-            }.take(5)
-        } catch (e: Exception) {
-            emptyList()
         }
     }
 }

@@ -3,10 +3,12 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show FontLoader, SystemChannels;
+import 'package:flutter/services.dart'
+    show FontLoader, MethodCall, MethodChannel, SystemChannels;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:astuto/analytics.dart';
 import 'package:astuto/data/daily.dart';
 import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/topics.dart';
@@ -29,7 +31,9 @@ import 'package:astuto/screens/mix_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/widgets/hold_to_keep.dart';
 import 'package:astuto/sync/reader_snapshot.dart';
+import 'package:astuto/sync/served.dart';
 import 'package:astuto/sync/tally.dart';
+import 'package:astuto/utils/widget_open.dart';
 import 'package:astuto/widgets/brand_mark.dart';
 import 'package:astuto/widgets/record_share_sheet.dart';
 import 'package:astuto/theme.dart';
@@ -239,6 +243,104 @@ Future<List<String>> _sectionOrder(
   final order = seen.keys.toList()
     ..sort((a, b) => seen[a]!.compareTo(seen[b]!));
   return order;
+}
+
+/// The phone behind the widgets' channel: the tap it holds, given once and
+/// cleared the way the phone gives it, and every hand-over the app makes.
+class _WidgetPhone {
+  _WidgetPhone(this.tester, {this.tap});
+
+  final WidgetTester tester;
+
+  /// What the phone holds until the app asks: a map, as both phones send it
+  /// now, or the widget's name alone, as they used to.
+  Object? tap;
+
+  final List<Map<Object?, Object?>> handed = [];
+
+  static const MethodChannel channel = MethodChannel('astut/widget');
+
+  void listen() {
+    final messenger = tester.binding.defaultBinaryMessenger;
+    messenger.setMockMethodCallHandler(channel, (call) async {
+      switch (call.method) {
+        case 'takeOpenedFrom':
+          final Object? held = tap;
+          tap = null;
+          return held;
+        case 'installed':
+          return const <Object?>[];
+        case 'update':
+          handed.add(call.arguments as Map<Object?, Object?>);
+          return null;
+      }
+      return null;
+    });
+    addTearDown(() => messenger.setMockMethodCallHandler(channel, null));
+  }
+
+  /// A tap on the running app: the phone holds it and says so at once.
+  Future<void> tapRunning(Object link) async {
+    tap = link;
+    await tester.binding.defaultBinaryMessenger.handlePlatformMessage(
+      channel.name,
+      channel.codec.encodeMethodCall(const MethodCall('opened')),
+      (_) {},
+    );
+    await _settle(tester);
+  }
+}
+
+/// Whether the tab bar says [label] is the tab on screen.
+bool _onTab(WidgetTester tester, String label) =>
+    tester
+        .widget<Semantics>(
+          find.byKey(ValueKey('tab-$label'), skipOffstage: false),
+        )
+        .properties
+        .selected ??
+    false;
+
+/// Today's shelf at the top of Explore on a phone with no server and
+/// nothing read: the phone's own pick of the day.
+List<Pill> get _todaysShelf =>
+    pickedPills(seed: daySeed(DateTime.now()), count: 60).take(8).toList();
+
+/// What the app said, kept, so a test can read its measurement back.
+class _Said implements AnalyticsSink {
+  final List<(String, Map<String, Object>)> events = [];
+
+  @override
+  Future<void> capture(String event, Map<String, Object> properties) async =>
+      events.add((event, properties));
+
+  @override
+  Future<void> screen(String name) async {}
+
+  @override
+  Future<void> identify(String id, Map<String, Object> properties) async {}
+
+  @override
+  Future<void> reset() async {}
+
+  @override
+  Future<void> register(String key, Object value) async {}
+
+  @override
+  Future<void> setCollecting(bool on) async {}
+
+  @override
+  Future<void> setPerson(
+    Map<String, Object> set,
+    Map<String, Object> setOnce,
+  ) async {}
+
+  @override
+  Future<void> error(
+    Object error,
+    StackTrace? stack,
+    Map<String, Object> properties,
+  ) async {}
 }
 
 /// Hold a card down long enough to keep it — longer than the framework's
@@ -1067,7 +1169,8 @@ void main() {
   });
 
   group('The home-screen widget', () {
-    test('is handed today, the streak, and a fortnight of mornings', () async {
+    test('is handed the next card to read, the streak, and a fortnight of '
+        'mornings', () async {
       final yesterday = DateTime.now().subtract(const Duration(days: 1));
       SharedPreferences.setMockInitialValues({
         ..._installed(),
@@ -1082,20 +1185,26 @@ void main() {
       // Handed over at launch, without being asked.
       expect(pushed, hasLength(1));
       final data = pushed.single;
-      // The first question of the reader's own day.
+      // The card Today opens on: the next of the five to read, by id, so a
+      // tap on it lands on it — not the first that asks, which a deck that
+      // opens on a card that tells would not show first.
+      final Pill next = app.todaysDeck[app.todayIndex];
+      expect(data['edition'], editionOf(DateTime.now()));
+      expect(data['cardId'], next.id);
+      expect(data['question'], next.question);
+      expect(data['streak'], 7);
+      expect(data['done'], isFalse);
+      // The reminder still quotes the first question of the reader's own
+      // day; the widget shows the card the deck does.
       final Pill lead = app.leadOn(DateTime.now());
       expect(lead.asksSomething, isTrue);
       expect(app.ownIdsToday, contains(lead.id));
-      expect(data['edition'], editionOf(DateTime.now()));
-      expect(data['question'], lead.question);
-      expect(data['streak'], 7);
-      expect(data['done'], isFalse);
 
       // The card's own colour and ink, so the widget draws it the way the
       // app does — as "#RRGGBB", which is all Swift and Kotlin need to read.
-      expect(data['topic'], lead.topic);
-      expect(data['color'], AppState.hexOf(lead.color));
-      expect(data['ink'], AppState.hexOf(lead.ink));
+      expect(data['topic'], next.topic);
+      expect(data['color'], AppState.hexOf(next.color));
+      expect(data['ink'], AppState.hexOf(next.ink));
       expect(data['color'], matches(RegExp(r'^#[0-9A-F]{6}$')));
 
       // The foot's three lines, already in the reader's language: the
@@ -1104,32 +1213,46 @@ void main() {
       expect(data['footStreak'], '7-day streak');
       expect(data['footDone'], 'Done for today');
 
-      // The next fortnight, one question a day, so the widget turns over
-      // at midnight without the app — with each morning's colour and
-      // subject beside its question.
+      // The next fortnight, a card a morning, so the widget turns over at
+      // midnight without the app: the card each morning opens on, by id,
+      // with its colour and subject beside its question.
       final ahead = data['ahead'] as Map<String, String>;
+      final aheadId = data['aheadId'] as Map<String, String>;
       expect(ahead, hasLength(AppState.kPlannedDays + 1));
+      expect(aheadId.keys, orderedEquals(ahead.keys));
+      // Tomorrow opens on the first of tomorrow's five, the five widget's
+      // own for midnight.
+      final tomorrow = DateTime.now().add(const Duration(days: 1));
+      expect(aheadId[dateKey(tomorrow)], app.tomorrowsDeck.first.id);
       final third = DateTime.now().add(const Duration(days: 3));
-      final Pill thirdLead = app.leadOn(third);
-      expect(ahead[dateKey(third)], thirdLead.question);
+      final Pill thirdCard = PillBank.byId(aheadId[dateKey(third)]!)!;
+      expect(ahead[dateKey(third)], thirdCard.question);
+      expect(app.seenIds, isNot(contains(thirdCard.id)));
       final aheadColor = data['aheadColor'] as Map<String, String>;
       final aheadTopic = data['aheadTopic'] as Map<String, String>;
       final aheadInk = data['aheadInk'] as Map<String, String>;
       expect(aheadColor.keys, orderedEquals(ahead.keys));
-      expect(aheadColor[dateKey(third)], AppState.hexOf(thirdLead.color));
-      expect(aheadInk[dateKey(third)], AppState.hexOf(thirdLead.ink));
-      expect(aheadTopic[dateKey(third)], thirdLead.topic);
+      expect(aheadColor[dateKey(third)], AppState.hexOf(thirdCard.color));
+      expect(aheadInk[dateKey(third)], AppState.hexOf(thirdCard.ink));
+      expect(aheadTopic[dateKey(third)], thirdCard.topic);
       // And nothing a stranger reading the home screen should not see.
       expect(data.keys, isNot(contains('answers')));
 
-      // Again when the day is done, now saying so.
-      for (var i = 0; i < kPillsPerDay; i++) {
+      // A card in, the widget moves on to the next.
+      await app.advance();
+      await Future<void>.delayed(Duration.zero);
+      expect(pushed.last['cardId'], app.todaysDeck[1].id);
+
+      // Again when the day is done, now saying so — and with the card the
+      // morning opened on, for a widget with no shelf to turn to.
+      for (var i = 1; i < kPillsPerDay; i++) {
         await app.advance();
       }
       await Future<void>.delayed(Duration.zero);
       expect(pushed.last['done'], isTrue);
       expect(pushed.last['streak'], 8);
       expect(pushed.last['footStreak'], '8-day streak');
+      expect(pushed.last['cardId'], app.leadOn(DateTime.now()).id);
     });
 
     test('hands the streak its week and the five their colours', () async {
@@ -1217,6 +1340,382 @@ void main() {
       expect(AppState.hexOf(const Color(0xFF000000)), '#000000');
       // Opaque whatever the alpha: a widget ground is never see-through.
       expect(AppState.hexOf(const Color(0x80FFE600)), '#FFE600');
+    });
+
+    List<Map<String, Object?>> cardsIn(Object? json) => [
+      for (final c in jsonDecode(json as String) as List)
+        (c as Map).cast<String, Object?>(),
+    ];
+
+    test(
+      "hands over every card by id, and today's shelf for a fortnight",
+      () async {
+        SharedPreferences.setMockInitialValues(_installed());
+        final pushed = <Map<String, Object?>>[];
+        final app = AppState(pushWidget: (data) async => pushed.add(data));
+        await app.init();
+        await Future<void>.delayed(Duration.zero);
+        var data = pushed.last;
+
+        // Today's five, each with its id and its question: every card on the
+        // five widget opens itself, and the large one shows how it starts.
+        final five = cardsIn(data['fiveJson']);
+        expect(
+          five.map((c) => c['id']),
+          orderedEquals(app.todaysDeck.map((p) => p.id)),
+        );
+        expect(
+          five.map((c) => c['question']),
+          orderedEquals(app.todaysDeck.map((p) => p.question)),
+        );
+        expect(
+          cardsIn(data['fiveTomorrowJson']).map((c) => c['id']),
+          orderedEquals(app.tomorrowsDeck.map((p) => p.id)),
+        );
+
+        // Today's shelf, the same for everybody: with no server, the phone's
+        // own pick, which is what Explore shows at its top.
+        final shelf = data['shelf'] as Map<String, String>;
+        expect(shelf.keys, orderedEquals((data['ahead'] as Map).keys));
+        final DateTime now = DateTime.now();
+        final List<Pill> picked = pickedPills(seed: daySeed(now), count: 60);
+        final today = cardsIn(shelf[dateKey(now)]);
+        expect(today, hasLength(AppState.kWidgetShelf));
+        expect(
+          today.map((c) => c['id']),
+          orderedEquals(picked.take(AppState.kWidgetShelf).map((p) => p.id)),
+        );
+        final Pill first = picked.first;
+        expect(today.first, {
+          'id': first.id,
+          'topic': first.topic,
+          'color': AppState.hexOf(first.color),
+          'ink': AppState.hexOf(first.ink),
+          'question': first.question,
+        });
+        // And each morning ahead its own, so the shelf turns over at midnight
+        // without the app.
+        final DateTime later = DateTime(now.year, now.month, now.day + 5);
+        expect(
+          cardsIn(shelf[dateKey(later)]).map((c) => c['id']),
+          orderedEquals(
+            pickedPills(
+              seed: daySeed(later),
+              count: 60,
+            ).take(AppState.kWidgetShelf).map((p) => p.id),
+          ),
+        );
+        // Its lines, in the reader's language.
+        expect(data['shelfTitle'], "TODAY'S SHELF");
+        expect(data['shelfFrom'], "From today's shelf");
+        expect(data['shelfLine'], 'The same for everyone, and only today');
+
+        // A card of the shelf read in Explore is not offered again: the next
+        // of the day's pick takes its place.
+        await app.markReadElsewhere(first.id);
+        data = app.homeWidgetData();
+        final after = cardsIn((data['shelf'] as Map)[dateKey(now)]);
+        expect(after.map((c) => c['id']), isNot(contains(first.id)));
+        expect(after, hasLength(AppState.kWidgetShelf));
+        expect(after.last['id'], picked[AppState.kWidgetShelf].id);
+      },
+    );
+
+    test("today's shelf is the server's, once it has answered", () async {
+      final List<Pill> theirs = PillBank.cards.reversed.take(10).toList();
+      final MemoryServedStore store = MemoryServedStore()
+        ..shelves = ServedExplore(
+          day: dateKey(DateTime.now()),
+          today: theirs,
+          asking: const [],
+          topWeek: const [],
+          topMonth: const [],
+          loved: const [],
+          bySubject: const {},
+        );
+      final Served served = Served(storeOverride: store, uidOverride: 'me');
+      Served.useForTest(served);
+      addTearDown(() => Served.useForTest(Served()));
+      await served.explore();
+
+      SharedPreferences.setMockInitialValues(_installed());
+      final app = AppState(pushWidget: (_) async {});
+      await app.init();
+      final shelf = app.homeWidgetData()['shelf'] as Map<String, String>;
+      final DateTime now = DateTime.now();
+      expect(
+        cardsIn(shelf[dateKey(now)]).map((c) => c['id']),
+        orderedEquals(theirs.take(AppState.kWidgetShelf).map((p) => p.id)),
+      );
+      // Tomorrow's the server has not put together yet: the phone's pick.
+      final DateTime tomorrow = DateTime(now.year, now.month, now.day + 1);
+      expect(
+        cardsIn(shelf[dateKey(tomorrow)]).map((c) => c['id']),
+        orderedEquals(
+          pickedPills(
+            seed: daySeed(tomorrow),
+            count: 60,
+          ).take(AppState.kWidgetShelf).map((p) => p.id),
+        ),
+      );
+    });
+
+    test('a tap is read from what the phone hands over, old or new', () {
+      final WidgetOpen open = WidgetOpen.read({
+        'from': 'five.systemMedium',
+        'card': 'space-1',
+        'in': 'today',
+      })!;
+      expect(open.from, 'five.systemMedium');
+      expect(open.kind, 'five');
+      expect(open.card, 'space-1');
+      expect(open.place, WidgetOpen.today);
+      // A build that only named the widget.
+      final WidgetOpen old = WidgetOpen.read('card.systemSmall')!;
+      expect(old.kind, 'card');
+      expect(old.card, isNull);
+      expect(old.place, isNull);
+      // Nothing, or nothing to go on.
+      expect(WidgetOpen.read(null), isNull);
+      expect(WidgetOpen.read(''), isNull);
+      expect(WidgetOpen.read(42), isNull);
+      expect(WidgetOpen.read(<String, Object?>{}), isNull);
+      expect(
+        WidgetOpen.read({'from': 'shelf.systemLarge', 'card': ''})!.card,
+        isNull,
+      );
+    });
+  });
+
+  group("A widget's tap lands on its card", () {
+    testWidgets("a card of today's shelf opens in Explore, among the shelf", (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final List<Pill> shelf = _todaysShelf;
+      // The app started by the tap.
+      final phone = _WidgetPhone(
+        tester,
+        tap: {'from': 'shelf.systemMedium', 'card': shelf[2].id, 'in': 'shelf'},
+      )..listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      final viewer = tester.widget<DeckViewerScreen>(
+        find.byType(DeckViewerScreen),
+      );
+      expect(
+        viewer.deck.map((p) => p.id),
+        orderedEquals(shelf.map((p) => p.id)),
+      );
+      expect(viewer.initialIndex, 2);
+      // As a tap on it in Explore opens it: nobody dealt it, so it is read.
+      expect(viewer.countsAsRead, isTrue);
+      expect(phone.tap, isNull, reason: 'a tap is taken once');
+
+      // Closed, the reader is in Explore, at the top: the shelf it came from.
+      await tester.tap(find.byIcon(Icons.close_rounded));
+      await _settle(tester);
+      expect(_onTab(tester, 'Explore'), isTrue);
+      expect(find.text("Today's shelf"), findsOneWidget);
+    });
+
+    testWidgets('a card of the five already read opens over Today, read back', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final phone = _WidgetPhone(tester)..listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      await _swipeCardAway(tester);
+      await _swipeCardAway(tester);
+      final AppState app = tester
+          .widget<TodayScreen>(find.byType(TodayScreen))
+          .app;
+      expect(app.todayIndex, 2);
+      // Somewhere else in the app when the tap comes in.
+      await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+      await _settle(tester);
+
+      await phone.tapRunning({
+        'from': 'five.systemMedium',
+        'card': app.todaysDeck[1].id,
+        'in': 'today',
+      });
+
+      final viewer = tester.widget<DeckViewerScreen>(
+        find.byType(DeckViewerScreen),
+      );
+      // Among the cards read so far, and only those: the ones still to come
+      // are not to be turned over from here.
+      expect(
+        viewer.deck.map((p) => p.id),
+        orderedEquals(app.todaysDeck.take(2).map((p) => p.id)),
+      );
+      expect(viewer.initialIndex, 1);
+      expect(viewer.title, 'Today');
+      expect(viewer.countsAsRead, isFalse);
+
+      await tester.tap(find.byIcon(Icons.close_rounded));
+      await _settle(tester);
+      expect(_onTab(tester, 'Today'), isTrue);
+      expect(app.todayIndex, 2, reason: 'reading back moves nothing on');
+    });
+
+    testWidgets('a card of the five still to read opens Today, on the deck', (
+      tester,
+    ) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final phone = _WidgetPhone(tester)..listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+      final AppState app = tester
+          .widget<TodayScreen>(find.byType(TodayScreen))
+          .app;
+      await _openProfile(tester);
+      expect(_onTab(tester, 'Profile'), isTrue);
+
+      // Further on than the next card: the five are read in order, so the
+      // deck is where it waits.
+      await phone.tapRunning({
+        'from': 'card.systemSmall',
+        'card': app.todaysDeck[3].id,
+        'in': 'today',
+      });
+      expect(_onTab(tester, 'Today'), isTrue);
+      expect(find.byType(DeckViewerScreen), findsNothing);
+      expect(find.byType(PillCardStack), findsOneWidget);
+      expect(app.todayIndex, 0);
+    });
+
+    testWidgets('the streak, an old tap, or a card the day does not hold, '
+        'opens Today', (tester) async {
+      SharedPreferences.setMockInitialValues(_installed());
+      final phone = _WidgetPhone(tester)..listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      for (final Object tap in [
+        {'from': 'streak.systemSmall'},
+        // From a build that only named the widget.
+        'five.home',
+        // A card from a day that is over.
+        {'from': 'card.systemLarge', 'card': 'gone-1', 'in': 'today'},
+      ]) {
+        await tester.tap(find.byKey(const ValueKey('tab-Explore')));
+        await _settle(tester);
+        expect(_onTab(tester, 'Explore'), isTrue);
+        await phone.tapRunning(tap);
+        expect(_onTab(tester, 'Today'), isTrue, reason: '$tap');
+        expect(find.byType(DeckViewerScreen), findsNothing, reason: '$tap');
+      }
+    });
+
+    testWidgets('a tap waits for the tabs, through the come-back screen', (
+      tester,
+    ) async {
+      final DateTime now = DateTime.now();
+      SharedPreferences.setMockInitialValues({
+        ..._installed(),
+        'knowit.streak': 4,
+        'knowit.freezes': 0,
+        'knowit.lastCompletionDate': dateKey(
+          DateTime(now.year, now.month, now.day - 3),
+        ),
+      });
+      final List<Pill> shelf = _todaysShelf;
+      final phone = _WidgetPhone(
+        tester,
+        tap: {'from': 'shelf.systemLarge', 'card': shelf[0].id, 'in': 'shelf'},
+      )..listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      // The come-back screen first, and nothing opened over it — but the
+      // tap was taken, and is held.
+      final Finder again = find.text("Start again with today's five");
+      expect(again, findsOneWidget);
+      expect(find.byType(DeckViewerScreen), findsNothing);
+      expect(phone.tap, isNull);
+
+      await tester.tap(again);
+      await _settle(tester);
+      final viewer = tester.widget<DeckViewerScreen>(
+        find.byType(DeckViewerScreen),
+      );
+      expect(viewer.deck[viewer.initialIndex].id, shelf[0].id);
+    });
+
+    testWidgets(
+      'leaving hands the widgets the day; coming back follows a tap',
+      (tester) async {
+        SharedPreferences.setMockInitialValues(_installed());
+        final phone = _WidgetPhone(tester)..listen();
+        await tester.pumpWidget(const AstutoApp());
+        await _settle(tester);
+        await _openProfile(tester);
+        final int before = phone.handed.length;
+
+        // Out of the app: the widgets hear of the day on the way out.
+        for (final state in [
+          AppLifecycleState.inactive,
+          AppLifecycleState.hidden,
+          AppLifecycleState.paused,
+        ]) {
+          tester.binding.handleAppLifecycleStateChanged(state);
+        }
+        await tester.pump();
+        await tester.pump();
+        expect(phone.handed.length, greaterThan(before));
+
+        // A card on the home screen tapped, and the app back.
+        final List<Pill> shelf = _todaysShelf;
+        phone.tap = {
+          'from': 'shelf.systemMedium',
+          'card': shelf[5].id,
+          'in': 'shelf',
+        };
+        for (final state in [
+          AppLifecycleState.hidden,
+          AppLifecycleState.inactive,
+          AppLifecycleState.resumed,
+        ]) {
+          tester.binding.handleAppLifecycleStateChanged(state);
+        }
+        await _settle(tester);
+        final viewer = tester.widget<DeckViewerScreen>(
+          find.byType(DeckViewerScreen),
+        );
+        expect(viewer.deck[viewer.initialIndex].id, shelf[5].id);
+      },
+    );
+
+    testWidgets('the tap is said, with the card and where it lives', (
+      tester,
+    ) async {
+      final said = _Said();
+      Analytics.useForTest(said);
+      addTearDown(() => Analytics.useForTest(null));
+      SharedPreferences.setMockInitialValues(_installed());
+      final List<Pill> shelf = _todaysShelf;
+      _WidgetPhone(
+        tester,
+        tap: {'from': 'shelf.systemMedium', 'card': shelf[1].id, 'in': 'shelf'},
+      ).listen();
+      await tester.pumpWidget(const AstutoApp());
+      await _settle(tester);
+
+      final opened = [
+        for (final e in said.events)
+          if (e.$1 == 'app opened from widget') e.$2,
+      ];
+      expect(opened, [
+        {
+          'widget': 'shelf.systemMedium',
+          'pill_id': shelf[1].id,
+          'where': 'shelf',
+        },
+      ]);
     });
   });
 

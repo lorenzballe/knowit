@@ -223,6 +223,8 @@
   "widgetFiveRead": "{n} su 5 lette",
   "widgetFiveDone": "Tutte e cinque lette",
   "widgetFiveWaiting": "Ti aspettano cinque carte nuove",
+  "widgetShelfTitle": "LO SCAFFALE DI OGGI",
+  "widgetShelfFrom": "Dallo scaffale di oggi",
   "dayStreakCaps": "GIORNI DI SERIE",
   "sourceLabel": "Fonte · {source}",
   "perkArchiveTitle": "Tutto il tuo archivio",

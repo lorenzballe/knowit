@@ -10,6 +10,7 @@ import 'cloud.dart';
 import 'data/pill_bank.dart';
 import 'debug_flags.dart';
 import 'screens/comeback_screen.dart';
+import 'screens/deck_viewer_screen.dart';
 import 'l10n/l10n.dart';
 import 'models/pill.dart';
 import 'screens/genres_screen.dart';
@@ -259,6 +260,11 @@ class _AstutoRootState extends State<AstutoRoot> {
   _Stage _stage = _Stage.intro;
   bool _stageResolved = false;
 
+  /// A home-screen widget's tap, waiting for the tabs. The splash, the
+  /// first run and the come-back screen hold it; the shell takes it the
+  /// moment it is built, and lands on the card it names.
+  final ValueNotifier<WidgetOpen?> _widgetOpen = ValueNotifier(null);
+
   @override
   void initState() {
     super.initState();
@@ -270,6 +276,10 @@ class _AstutoRootState extends State<AstutoRoot> {
         Analytics.capture('app paused', {'ms_in_app': Analytics.msSinceLaunch});
         _account.flush();
         Trace.instance.flush();
+        // The home screen is what the reader sees next, so the widgets
+        // hear of everything since the last card: a card of today's shelf
+        // read in Explore is not offered there again.
+        if (_app.ready) _app.refreshHomeWidget();
       },
       onDetach: () {
         _account.flush();
@@ -280,9 +290,14 @@ class _AstutoRootState extends State<AstutoRoot> {
       onResume: () {
         _app.refreshDailyReminder();
         _app.refreshHomeWidget();
+        _takeWidgetOpen();
         _sayWidgets();
       },
     );
+    // A widget's tap: the one that started the app, and any that brings it
+    // back, which the phone also says the moment it arrives.
+    onWidgetOpened(_takeWidgetOpen);
+    _takeWidgetOpen();
     _refreshPushToken();
     _startAccountAndStore();
     _app.addListener(_onAppStateChanged);
@@ -316,16 +331,26 @@ class _AstutoRootState extends State<AstutoRoot> {
     await store.start(accountId: _account.uid);
   }
 
+  /// Takes the widget whose tap brought the app forward, if one did, and
+  /// hands it to the tabs. Taking clears it, so whichever of launch, the
+  /// return to the foreground and the phone's own word asks first has it,
+  /// and the tap is followed once.
+  Future<void> _takeWidgetOpen() async {
+    final WidgetOpen? open = await takeWidgetOpen();
+    if (open == null || !mounted) return;
+    Analytics.capture('app opened from widget', {
+      'widget': open.from,
+      'pill_id': open.card,
+      'where': open.place,
+    });
+    _widgetOpen.value = open;
+  }
+
   static const _kWidgetsSaid = 'knowit.widgetsSaid';
 
-  /// Whether a widget's tap brought the reader in, and which widgets they
-  /// have placed — said when the set changes, not at every launch, and
-  /// carried on every event as a count.
+  /// Which widgets the reader has placed — said when the set changes, not
+  /// at every launch, and carried on every event as a count.
   Future<void> _sayWidgets() async {
-    final String? from = await takeWidgetOpen();
-    if (from != null) {
-      Analytics.capture('app opened from widget', {'widget': from});
-    }
     final List<String> placed = await installedHomeWidgets();
     final String summary = placed.isEmpty
         ? 'none'
@@ -408,6 +433,8 @@ class _AstutoRootState extends State<AstutoRoot> {
     _lifecycle?.dispose();
     Subscription.instance.removeListener(_onEntitlementChanged);
     _account.dispose();
+    onWidgetOpened(null);
+    _widgetOpen.dispose();
     super.dispose();
   }
 
@@ -607,6 +634,7 @@ class _AstutoRootState extends State<AstutoRoot> {
         return AstutoShell(
           app: _app,
           account: _account,
+          widgetOpen: _widgetOpen,
           onSignedOut: () {
             setState(() {
               _stageResolved = true;
@@ -673,11 +701,16 @@ class AstutoShell extends StatefulWidget {
   final Account account;
   final VoidCallback onSignedOut;
 
+  /// A home-screen widget's tap still to follow. The shell lands on the
+  /// card it names and clears it.
+  final ValueNotifier<WidgetOpen?>? widgetOpen;
+
   const AstutoShell({
     super.key,
     required this.app,
     required this.account,
     required this.onSignedOut,
+    this.widgetOpen,
   });
 
   @override
@@ -729,15 +762,108 @@ class _AstutoShellState extends State<AstutoShell>
     super.initState();
     _pages.addListener(_followPage);
     _jump.addListener(_followJump);
+    // A tap that came in before the tabs existed — on the splash, through
+    // the first run — is followed as soon as they do.
+    widget.widgetOpen?.addListener(_followWidget);
+    _followWidget();
+  }
+
+  @override
+  void didUpdateWidget(covariant AstutoShell old) {
+    super.didUpdateWidget(old);
+    if (old.widgetOpen == widget.widgetOpen) return;
+    old.widgetOpen?.removeListener(_followWidget);
+    widget.widgetOpen?.addListener(_followWidget);
+    _followWidget();
   }
 
   @override
   void dispose() {
+    widget.widgetOpen?.removeListener(_followWidget);
     _pages.removeListener(_followPage);
     _pages.dispose();
     _jump.dispose();
     _lit.dispose();
     super.dispose();
+  }
+
+  /// A widget's tap is followed after the frame: the pages have to be laid
+  /// out before one can be jumped to, and a card cannot be opened over a
+  /// tab that is not there yet.
+  void _followWidget() {
+    if (widget.widgetOpen?.value == null) return;
+    _afterFrame(_land);
+  }
+
+  /// Runs [then] after the next frame, and asks for that frame: a tap that
+  /// comes in while the app sits still would otherwise wait for the
+  /// reader's next touch to be followed.
+  void _afterFrame(VoidCallback then) {
+    WidgetsBinding.instance
+      ..addPostFrameCallback((_) => then())
+      ..ensureVisualUpdate();
+  }
+
+  /// Where a widget's tap lands: exactly on the card it showed.
+  ///
+  /// One of today's five still to read is the deck on Today — the five are
+  /// read in order, so the deck is where it is waiting. One already read
+  /// opens over Today, read back, among the cards read so far: the ones
+  /// still to come stay face down where they are. A card of today's shelf
+  /// opens in Explore, among the shelf it came from. Anything else — the
+  /// streak, a card from a day that is over — is Today.
+  void _land() {
+    final ValueNotifier<WidgetOpen?>? pending = widget.widgetOpen;
+    final WidgetOpen? open = pending?.value;
+    if (!mounted || pending == null || open == null) return;
+    if (!_pages.hasClients) {
+      _afterFrame(_land);
+      return;
+    }
+    pending.value = null;
+    final AppState app = widget.app;
+    final String? id = open.card;
+    // Whatever was open over the tabs gives way to the card asked for.
+    Navigator.of(context).popUntil((route) => route.isFirst);
+
+    final bool shelf =
+        open.place == WidgetOpen.shelf ||
+        (open.place == null && id == null && open.kind == 'shelf');
+    if (shelf) {
+      _goTo(1, by: 'widget');
+      if (id != null) _openOnShelf(id);
+      return;
+    }
+
+    _goTo(0, by: 'widget');
+    final int at = id == null
+        ? -1
+        : app.todaysDeck.indexWhere((p) => p.id == id);
+    if (at < 0 || at >= app.todayIndex) return;
+    final List<Pill> read = app.todaysDeck.take(app.todayIndex).toList();
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => DeckViewerScreen(
+          app: app,
+          deck: read,
+          title: context.l10n.tabToday,
+          initialIndex: at,
+        ),
+      ),
+    );
+  }
+
+  /// Opens a card of today's shelf in Explore, once the tab is there.
+  void _openOnShelf(String id, {int tries = 3}) {
+    _afterFrame(() {
+      if (!mounted) return;
+      final ExploreScreenState? explore = _explore.currentState;
+      if (explore != null) {
+        explore.openFromWidget(id);
+      } else if (tries > 0) {
+        _openOnShelf(id, tries: tries - 1);
+      }
+    });
   }
 
   /// The bar follows the page while the page is moving under a finger, or
@@ -773,21 +899,23 @@ class _AstutoShellState extends State<AstutoShell>
     ];
   }
 
-  /// Goes to a tab from the bar.
+  /// Goes to a tab from the bar, or for a widget's tap.
   ///
   /// The tab beside this one slides, because there is nothing in between to
   /// drag across. Two tabs apart, the page cuts instead: a slide would haul
   /// the middle screen over the glass on its way past, which is a screen
   /// nobody asked for. The bar carries that move on its own, and it moves
   /// from the tab you left to the tab you asked for without lighting the
-  /// one between them.
-  void _goTo(int tab) {
+  /// one between them. A widget's tap always cuts, and without the click:
+  /// the app is only just on the screen, and nobody touched the bar.
+  void _goTo(int tab, {String by = 'bar'}) {
     if (tab == _tab || !mounted) return;
-    HapticFeedback.selectionClick();
+    final bool fromBar = by == 'bar';
+    if (fromBar) HapticFeedback.selectionClick();
     final int from = _tab;
     setState(() => _tab = tab);
-    _noteTab(tab, by: 'bar');
-    if ((tab - from).abs() == 1) {
+    _noteTab(tab, by: by);
+    if ((tab - from).abs() == 1 && fromBar) {
       _jump.stop();
       _pages.animateToPage(
         tab,

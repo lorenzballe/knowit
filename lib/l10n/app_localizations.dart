@@ -1458,6 +1458,18 @@ abstract class AppLocalizations {
   /// **'A new five is waiting'**
   String get widgetFiveWaiting;
 
+  /// No description provided for @widgetShelfTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'TODAY\'S SHELF'**
+  String get widgetShelfTitle;
+
+  /// No description provided for @widgetShelfFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From today\'s shelf'**
+  String get widgetShelfFrom;
+
   /// No description provided for @dayStreakCaps.
   ///
   /// In en, this message translates to:

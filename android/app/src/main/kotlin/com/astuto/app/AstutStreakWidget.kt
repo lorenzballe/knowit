@@ -63,7 +63,8 @@ class AstutStreakWidget : AppWidgetProvider() {
                 context.getString(R.string.widget_streak_open)
             }
 
-            val pending = AstutWidget.openApp(context, "streak.home")
+            // The streak is no card: a tap opens Today, where the day is.
+            val pending = AstutWidget.openApp(context, AstutWidget.CODE_STREAK, "streak.home")
             for (id in ids) {
                 val views = RemoteViews(context.packageName, R.layout.astut_streak_widget)
                 views.setTextViewText(R.id.streak_caption, caption.ifEmpty { "ASTUTE" })

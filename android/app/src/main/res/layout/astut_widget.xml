@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- The card the morning opens on, drawn the way the app draws a card: the
-     subject's colour for a ground, the subject as an eyebrow, the question
-     set large, and a foot with the streak. The ground is an image so the
-     provider can tint it per card; RemoteViews cannot recolour a shape. -->
+<!-- The next card to read today, or once the five are read a card of
+     today's shelf, drawn the way the app draws a card: the subject's colour
+     for a ground, the subject as an eyebrow, the question set large, and a
+     foot with the streak. The ground is an image so the provider can tint
+     it per card; RemoteViews cannot recolour a shape. -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
     android:layout_width="match_parent"

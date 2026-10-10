@@ -1006,6 +1006,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get widgetFiveWaiting => 'Te esperan cinco tarjetas nuevas';
 
   @override
+  String get widgetShelfTitle => 'LA ESTANTERÍA DE HOY';
+
+  @override
+  String get widgetShelfFrom => 'De la estantería de hoy';
+
+  @override
   String get dayStreakCaps => 'DÍAS DE RACHA';
 
   @override

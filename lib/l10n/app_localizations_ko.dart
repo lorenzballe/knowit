@@ -978,6 +978,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get widgetFiveWaiting => '새로운 다섯 장이 기다려요';
 
   @override
+  String get widgetShelfTitle => '오늘의 선반';
+
+  @override
+  String get widgetShelfFrom => '오늘의 선반에서';
+
+  @override
   String get dayStreakCaps => '일 연속';
 
   @override

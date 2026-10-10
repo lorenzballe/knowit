@@ -223,6 +223,8 @@
   "widgetFiveRead": "{n} von 5 gelesen",
   "widgetFiveDone": "Alle fünf gelesen",
   "widgetFiveWaiting": "Fünf neue Karten warten",
+  "widgetShelfTitle": "DAS REGAL VON HEUTE",
+  "widgetShelfFrom": "Aus dem Regal von heute",
   "dayStreakCaps": "TAGE IN SERIE",
   "sourceLabel": "Quelle · {source}",
   "perkArchiveTitle": "Dein ganzes Archiv",

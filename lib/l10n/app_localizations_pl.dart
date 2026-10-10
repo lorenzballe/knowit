@@ -1047,6 +1047,12 @@ class AppLocalizationsPl extends AppLocalizations {
   String get widgetFiveWaiting => 'Czeka nowa piątka';
 
   @override
+  String get widgetShelfTitle => 'DZISIEJSZA PÓŁKA';
+
+  @override
+  String get widgetShelfFrom => 'Z dzisiejszej półki';
+
+  @override
   String get dayStreakCaps => 'DNI SERII';
 
   @override

@@ -969,6 +969,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get widgetFiveWaiting => '新的五张在等你';
 
   @override
+  String get widgetShelfTitle => '今日书架';
+
+  @override
+  String get widgetShelfFrom => '来自今日书架';
+
+  @override
   String get dayStreakCaps => '天连续';
 
   @override
