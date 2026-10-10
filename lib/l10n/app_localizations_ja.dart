@@ -132,12 +132,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get sameForEveryone => 'みんな同じ、今日だけ';
 
   @override
-  String get onesThatAskTheMost => 'いちばん問いかけてくるカード';
-
-  @override
-  String get acrossEveryone => 'あなたのミックスだけでなく、全員の中で';
-
-  @override
   String becauseSitsAtFull(String name) {
     return '$nameが最大だから';
   }
@@ -1219,13 +1213,13 @@ class AppLocalizationsJa extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n枚のカードが戻ってきました — もう一度答えましょう',
+      other: '数日前に答えた$n枚のカード。まだ覚えているか確かめよう',
     );
     return '$_temp0';
   }
 
   @override
-  String get cameBack => '戻ってきたカード';
+  String get cameBack => 'まだ覚えてる？';
 
   @override
   String get holdACardYouLike => '気に入ったら長押し';
@@ -1603,7 +1597,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get themePractical => '今日使える';
 
   @override
-  String get themePracticalLine => '今夜までに試せること';
+  String get themePracticalLine => '今夜までに試せること、会話のネタになること';
 
   @override
   String get themeOrigins => 'その始まり';
@@ -1627,7 +1621,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get themeWorkItOut => '計算してみよう';
 
   @override
-  String get themeWorkItOutLine => '頭の中で出す数字';
+  String get themeWorkItOutLine => 'カードが答えを言う前に、数字を当てよう';
 
   @override
   String get themeSeen => '見て分かる';
@@ -2273,9 +2267,6 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get aMove => '考え方の型';
-
-  @override
   String get anotherOne => '別のカード';
 
   @override
@@ -2295,21 +2286,10 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get betSlip => 'あなたの賭け票';
-
-  @override
   String get betWord => '賭ける';
 
   @override
   String get biggerLabel => '大きい';
-
-  @override
-  String get biggerNote => 'どの数字もカードの答えです。';
-
-  @override
-  String biggerScore(int right, int asked) {
-    return '$asked問中$right問正解。';
-  }
 
   @override
   String get biggerYouGotIt => '大きい・正解';
@@ -2490,9 +2470,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get forYouNow => '今のあなたに';
 
   @override
-  String get goNarrow => '自信があるなら狭く：3倍もらえます。';
-
-  @override
   String get hardBadge => '難問';
 
   @override
@@ -2531,9 +2508,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get lookFirst => '見出しを信じる前に、グラフを見よう。';
 
   @override
-  String get markTried => 'やってみた';
-
-  @override
   String minutesLabel(int n) {
     return '$n分';
   }
@@ -2547,39 +2521,19 @@ class AppLocalizationsJa extends AppLocalizations {
   String get modeBigger => 'どっちが大きい？';
 
   @override
-  String get modeBiggerLine => '見積もれる2つの数字。大きいほうをタップ';
-
-  @override
   String get modeCloser => 'だんだん近づく';
-
-  @override
-  String get modeCloserLine => '多いか少ないかの3ステップで数字に迫る';
 
   @override
   String get modePick => '1つ選ぶ';
 
   @override
-  String get modePickLine => '3つの数字。カードを開く前に決めよう';
-
-  @override
   String get modeRange => '範囲に賭ける';
-
-  @override
-  String get modeRangeLine => '狭いほど高配当、当たればね';
 
   @override
   String get modeSlide => '動かす';
 
   @override
-  String get modeSlideLine => 'まず答えを決めて、どれだけずれたか確かめよう';
-
-  @override
   String get modeStake => '賭けてみる';
-
-  @override
-  String modeStakeLine(int n) {
-    return '1日$nポイント。当たれば賭け金が2倍に';
-  }
 
   @override
   String get monthShelfLine => '毎月新しい分野、みんな同じ';
@@ -2612,16 +2566,27 @@ class AppLocalizationsJa extends AppLocalizations {
   }
 
   @override
-  String get moveComparedToWhat => '何と比べて';
+  String get moveComparedToWhat => '何と比べて？';
 
   @override
-  String get moveComparedToWhatLine => '比較対象がなければ、変化は何も語らない';
+  String get moveComparedToWhatLine => '比べるものがなければ、変化は何も語らない';
 
   @override
-  String get moveSampling => 'サンプル';
+  String get askingTitle => '分野ごとに1問';
 
   @override
-  String get moveSamplingLine => '誰がサンプルに入ったかで、言えることが決まる';
+  String askingIn(String subject) {
+    return '$subjectの問題';
+  }
+
+  @override
+  String get askingLine => 'みんな同じ。まず答えて、それから理由を';
+
+  @override
+  String get moveSampling => '誰が数えられた？';
+
+  @override
+  String get moveSamplingLine => '研究に誰が入ったかで、わかることが決まる';
 
   @override
   String mythDeckHint(int at, int of) {
@@ -2653,11 +2618,6 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get pickOneFirst => 'まず1つ選んで';
-
-  @override
-  String pointsToday(int n) {
-    return '今日 +$n';
-  }
 
   @override
   String get puzzleOfTheDay => '今日のパズル';
@@ -2755,20 +2715,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get sixtyTitle => '60秒';
 
   @override
-  String slideAverage(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '平均$nポイントのずれ。',
-      zero: '平均でぴったり。',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get slideNote => '決めて、確かめる。大事なのは、どれだけずれたか。';
-
-  @override
   String slideOff(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -2778,9 +2724,6 @@ class AppLocalizationsJa extends AppLocalizations {
     );
     return '$_temp0';
   }
-
-  @override
-  String get slipEmpty => 'まだ賭けていません。賭けるとここに並びます。';
 
   @override
   String get stakeLabel => '賭け金';

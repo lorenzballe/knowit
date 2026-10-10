@@ -10,20 +10,29 @@ import '../../state/explore_play.dart';
 import '../../theme.dart';
 import 'parts.dart';
 
-/// Work it out — every way the canvas found to play a number, on one shelf.
+/// Every card on the row is this size, whatever its game: a row of cards of
+/// six heights read as six shelves run together. Tall enough for the most a
+/// card ever holds, a range bet laid with its verdict and its why under a
+/// long question; anything less leaves the question the room.
+const double kWorkCardWidth = 300;
+const double kWorkCardHeight = 336;
+
+/// Work it out — every way the canvas found to play a number, on one row.
 ///
 /// 133b's three amounts to pick from, 138d's slider set and then checked,
 /// 139d's three steps of more or less, 139c's two figures and which is
 /// bigger, 139a's range that pays more the narrower it is, 139b's stake from
-/// a hundred points a day. Six ways, one shelf, a row of chips to move
-/// between them: they are one skill, putting a number on something before
-/// being told it, and six shelves of it would have buried everything under
-/// them.
+/// a hundred points a day. They were six rows behind a row of chips, and a
+/// reader had to choose a way before playing any of them. Now they are one
+/// row, two of each, laid out in an order drawn for the day: every card the
+/// same size, and each saying in its corner which game it is, so the reader
+/// knows what to do with it before reading a word of its question. They are
+/// one skill, putting a number on something before being told it.
 ///
 /// Every number is a card's own answer. A pick or a stake is the card
 /// answered, and is recorded as the card's answer like one given on Today;
 /// a guess on a slider or a range is a game with the card, kept for the day.
-class WorkItOut extends StatefulWidget {
+class WorkItOut extends StatelessWidget {
   const WorkItOut({
     super.key,
     required this.deal,
@@ -41,230 +50,112 @@ class WorkItOut extends StatefulWidget {
   final void Function(Pill, String) onCommit;
   final ValueChanged<Pill>? onShown;
 
-  @override
-  State<WorkItOut> createState() => _WorkItOutState();
-}
-
-enum _Mode { pick, slide, closer, bigger, range, stake }
-
-class _WorkItOutState extends State<WorkItOut> {
-  _Mode? _mode;
-
-  List<_Mode> get _modes => [
-    if (widget.deal.pick.isNotEmpty) _Mode.pick,
-    if (widget.deal.slide.isNotEmpty) _Mode.slide,
-    if (widget.deal.closer.isNotEmpty) _Mode.closer,
-    if (widget.deal.bigger.isNotEmpty) _Mode.bigger,
-    if (widget.deal.range.isNotEmpty) _Mode.range,
-    if (widget.deal.stake.isNotEmpty) _Mode.stake,
-  ];
-
-  String _label(BuildContext context, _Mode m) {
-    final l = context.l10n;
-    return switch (m) {
-      _Mode.pick => l.modePick,
-      _Mode.slide => l.modeSlide,
-      _Mode.closer => l.modeCloser,
-      _Mode.bigger => l.modeBigger,
-      _Mode.range => l.modeRange,
-      _Mode.stake => l.modeStake,
-    };
-  }
-
-  String _line(BuildContext context, _Mode m) {
-    final l = context.l10n;
-    return switch (m) {
-      _Mode.pick => l.modePickLine,
-      _Mode.slide => l.modeSlideLine,
-      _Mode.closer => l.modeCloserLine,
-      _Mode.bigger => l.modeBiggerLine,
-      _Mode.range => l.modeRangeLine,
-      _Mode.stake => l.modeStakeLine(ExplorePlay.dailyPoints),
-    };
-  }
+  /// The cards one place on the row holds: two for a comparison, one for
+  /// everything else.
+  List<Pill> _at(WorkKind kind, int i) => switch (kind) {
+    WorkKind.pick => [deal.pick[i]],
+    WorkKind.slide => [deal.slide[i].pill],
+    WorkKind.closer => [deal.closer[i].pill],
+    WorkKind.bigger => [deal.bigger[i].$1.pill, deal.bigger[i].$2.pill],
+    WorkKind.range => [deal.range[i].pill],
+    WorkKind.stake => [deal.stake[i]],
+  };
 
   @override
   Widget build(BuildContext context) {
-    final modes = _modes;
-    if (modes.isEmpty) return const SizedBox.shrink();
-    final _Mode mode = modes.contains(_mode) ? _mode! : modes.first;
-    final Color ink = context.p.ink;
+    // What the viewer pages through when a card on the row is opened: the
+    // row, in its order.
+    final List<Pill> shelf = [
+      for (final (kind, i) in deal.row) ..._at(kind, i),
+    ];
+    void open(Pill p) => onOpen(shelf, p);
     return ListenableBuilder(
       listenable: ExplorePlay.instance,
-      builder: (context, _) => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        context.l10n.themeWorkItOut,
-                        style: AppText.body(
-                          size: 16,
-                          weight: FontWeight.w600,
-                          height: 1,
-                          spacing: -0.2,
-                          color: ink,
-                        ),
-                      ),
-                      const SizedBox(height: 3),
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 200),
-                        child: Text(
-                          _line(context, mode),
-                          key: ValueKey(mode),
-                          style: AppText.body(
-                            size: 12,
-                            height: 1.3,
-                            color: ink.withValues(alpha: 0.42),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 10),
-                _Wallet(points: ExplorePlay.instance.points),
-              ],
-            ),
-          ),
-          const SizedBox(height: 11),
-          SizedBox(
-            height: 34,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              itemCount: modes.length,
-              separatorBuilder: (_, _) => const SizedBox(width: 6),
-              itemBuilder: (context, i) {
-                final bool on = modes[i] == mode;
-                return Semantics(
-                  key: ValueKey('work-${modes[i].name}-${on ? 'on' : 'off'}'),
-                  button: true,
-                  selected: on,
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onTap: () {
-                      Analytics.capture('explore work mode', {
-                        'mode': modes[i].name,
-                      });
-                      setState(() => _mode = modes[i]);
-                    },
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 220),
-                      padding: const EdgeInsets.symmetric(horizontal: 13),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: on
-                            ? context.p.inverse
-                            : ink.withValues(alpha: 0.06),
-                        borderRadius: BorderRadius.circular(11),
-                      ),
-                      child: Text(
-                        _label(context, modes[i]),
-                        style: AppText.body(
-                          size: 12.5,
-                          weight: FontWeight.w600,
-                          height: 1,
-                          color: on
-                              ? context.p.onInverse
-                              : ink.withValues(alpha: 0.62),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          const SizedBox(height: 12),
-          AnimatedSwitcher(
-            duration: const Duration(milliseconds: 220),
-            switchInCurve: Curves.easeOutCubic,
-            child: KeyedSubtree(
-              key: ValueKey(mode),
-              child: switch (mode) {
-                _Mode.pick => _PickRow(
-                  pills: widget.deal.pick,
-                  isRead: widget.isRead,
-                  onOpen: widget.onOpen,
-                  answerOf: widget.answerOf,
-                  onCommit: widget.onCommit,
-                  onShown: widget.onShown,
-                ),
-                _Mode.slide => _SlideRow(
-                  cards: widget.deal.slide,
-                  onOpen: widget.onOpen,
-                  onShown: widget.onShown,
-                ),
-                _Mode.closer => _CloserRow(
-                  cards: widget.deal.closer,
-                  onOpen: widget.onOpen,
-                  onShown: widget.onShown,
-                ),
-                _Mode.bigger => _BiggerList(
-                  pairs: widget.deal.bigger,
-                  onOpen: widget.onOpen,
-                  onShown: widget.onShown,
-                ),
-                _Mode.range => _RangeRow(
-                  cards: widget.deal.range,
-                  onOpen: widget.onOpen,
-                  onShown: widget.onShown,
-                ),
-                _Mode.stake => _StakeRow(
-                  pills: widget.deal.stake,
-                  onOpen: widget.onOpen,
-                  answerOf: widget.answerOf,
-                  onCommit: widget.onCommit,
-                  onShown: widget.onShown,
-                ),
-              },
-            ),
-          ),
-        ],
+      builder: (context, _) => SideRow(
+        height: kWorkCardHeight + 4,
+        count: deal.row.length,
+        itemBuilder: (context, at) {
+          final (WorkKind kind, int i) = deal.row[at];
+          for (final p in _at(kind, i)) {
+            onShown?.call(p);
+          }
+          return KeyedSubtree(
+            key: ValueKey('work-${kind.name}-$i'),
+            child: switch (kind) {
+              WorkKind.pick => _PickCard(
+                pill: deal.pick[i],
+                read: isRead(deal.pick[i]),
+                answer: answerOf(deal.pick[i]),
+                onOpen: () => open(deal.pick[i]),
+                onCommit: (said) => onCommit(deal.pick[i], said),
+              ),
+              WorkKind.slide => _SlideCard(
+                card: deal.slide[i],
+                read: isRead(deal.slide[i].pill),
+                onOpen: () => open(deal.slide[i].pill),
+              ),
+              WorkKind.closer => _CloserCard(
+                card: deal.closer[i],
+                read: isRead(deal.closer[i].pill),
+                onOpen: () => open(deal.closer[i].pill),
+              ),
+              WorkKind.bigger => _BiggerCard(
+                a: deal.bigger[i].$1,
+                b: deal.bigger[i].$2,
+                onOpen: open,
+              ),
+              WorkKind.range => _RangeCard(
+                card: deal.range[i],
+                read: isRead(deal.range[i].pill),
+                onOpen: () => open(deal.range[i].pill),
+              ),
+              WorkKind.stake => _StakeCard(
+                pill: deal.stake[i],
+                read: isRead(deal.stake[i]),
+                onOpen: () => open(deal.stake[i]),
+                onCommit: onCommit,
+                answered: answerOf(deal.stake[i]) != null,
+              ),
+            },
+          );
+        },
       ),
     );
   }
 }
 
-/// The day's points, level with the shelf's name.
-class _Wallet extends StatelessWidget {
-  const _Wallet({required this.points});
-
-  final int points;
+/// The day's points, level with the shelf's name: what a bet is paid from.
+class WorkWallet extends StatelessWidget {
+  const WorkWallet({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      key: const ValueKey('work-wallet'),
-      height: 30,
-      padding: const EdgeInsets.fromLTRB(8, 0, 11, 0),
-      decoration: BoxDecoration(
-        color: context.p.inverse,
-        borderRadius: BorderRadius.circular(99),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.adjust_rounded, size: 16, color: context.p.onInverse),
-          const SizedBox(width: 5),
-          Text(
-            '$points',
-            style: AppText.body(
-              size: 12.5,
-              weight: FontWeight.w700,
-              height: 1,
-              color: context.p.onInverse,
+    return ListenableBuilder(
+      listenable: ExplorePlay.instance,
+      builder: (context, _) => Container(
+        key: const ValueKey('work-wallet'),
+        height: 26,
+        padding: const EdgeInsets.fromLTRB(7, 0, 10, 0),
+        decoration: BoxDecoration(
+          color: context.p.inverse,
+          borderRadius: BorderRadius.circular(99),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.adjust_rounded, size: 15, color: context.p.onInverse),
+            const SizedBox(width: 5),
+            Text(
+              '${ExplorePlay.instance.points}',
+              style: AppText.body(
+                size: 12,
+                weight: FontWeight.w700,
+                height: 1,
+                color: context.p.onInverse,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -277,28 +168,62 @@ String _pct(num v) {
   return '${d.toStringAsFixed(1)}%';
 }
 
-/// The head and question every card on this shelf starts with.
-class _Top extends StatelessWidget {
-  const _Top({required this.pill, this.minHeight = 88, this.max = 18});
+/// The game a card is, as its corner says it.
+String _gameOf(BuildContext context, WorkKind kind) {
+  final l = context.l10n;
+  return switch (kind) {
+    WorkKind.pick => l.modePick,
+    WorkKind.slide => l.modeSlide,
+    WorkKind.closer => l.modeCloser,
+    WorkKind.bigger => l.modeBigger,
+    WorkKind.range => l.modeRange,
+    WorkKind.stake => l.modeStake,
+  };
+}
+
+/// The head of a card on this row: its subject on the left, as on every
+/// card, and in the corner, filled in the card's ink, the game it is.
+class _Head extends StatelessWidget {
+  const _Head({required this.pill, required this.kind, this.read = false});
 
   final Pill pill;
-  final double minHeight;
-  final double max;
+  final WorkKind kind;
+  final bool read;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
       children: [
-        CardHead(pill: pill),
-        const SizedBox(height: 12),
-        SizedBox(
-          height: minHeight,
-          child: CardQuestion(
-            text: pill.question,
-            color: pill.ink,
-            min: 11.5,
-            max: max,
+        Expanded(
+          child: CardHead(
+            pill: pill,
+            trailing: read ? ReadMark(pill: pill) : null,
+          ),
+        ),
+        const SizedBox(width: 8),
+        // The game wins the room: in a long language the subject's name
+        // gives way first, and the mark beside it still says the subject.
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 196),
+          child: Container(
+            key: ValueKey('work-game-${pill.id}'),
+            padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 4),
+            decoration: BoxDecoration(
+              color: pill.ink,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Text(
+              upper(context, _gameOf(context, kind)),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppText.label(
+                size: 9,
+                weight: FontWeight.w700,
+                spacing: 1,
+                height: 1,
+                color: pill.color,
+              ),
+            ),
           ),
         ),
       ],
@@ -306,13 +231,24 @@ class _Top extends StatelessWidget {
   }
 }
 
-/// A card of this shelf: 300 wide, the colour of its subject.
-class _Card extends StatelessWidget {
-  const _Card({required this.pill, required this.onOpen, required this.child});
+/// A card of this row: the size every card on it is, the colour of its
+/// subject, the head and the question, and under them the game.
+class _Frame extends StatelessWidget {
+  const _Frame({
+    required this.pill,
+    required this.kind,
+    required this.read,
+    required this.onOpen,
+    required this.game,
+  });
 
   final Pill pill;
+  final WorkKind kind;
+  final bool read;
   final VoidCallback onOpen;
-  final Widget child;
+
+  /// What is played: the options, the slider, the steps, the stake.
+  final Widget game;
 
   @override
   Widget build(BuildContext context) {
@@ -320,13 +256,34 @@ class _Card extends StatelessWidget {
       pill: pill,
       onTap: onOpen,
       child: Container(
-        width: 300,
+        width: kWorkCardWidth,
+        height: kWorkCardHeight,
         padding: const EdgeInsets.all(18),
         decoration: BoxDecoration(
           color: pill.color,
           borderRadius: BorderRadius.circular(22),
         ),
-        child: child,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _Head(pill: pill, kind: kind, read: read),
+            // The question takes what the game leaves: every question on
+            // the row starts at the same height, and every game sits on
+            // the card's foot.
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12, bottom: 12),
+                child: CardQuestion(
+                  text: pill.question,
+                  color: pill.ink,
+                  min: 11,
+                  max: 19,
+                ),
+              ),
+            ),
+            game,
+          ],
+        ),
       ),
     );
   }
@@ -452,84 +409,104 @@ class _Track extends StatelessWidget {
   }
 }
 
-// ── Pick one (133b) ──────────────────────────────────────────────────────
+/// The figure set so far, large, and what to do with it beside it.
+class _Figure extends StatelessWidget {
+  const _Figure({required this.pill, required this.value, required this.side});
 
-class _PickRow extends StatelessWidget {
-  const _PickRow({
-    required this.pills,
-    required this.isRead,
-    required this.onOpen,
-    required this.answerOf,
-    required this.onCommit,
-    this.onShown,
-  });
-
-  final List<Pill> pills;
-  final bool Function(Pill) isRead;
-  final void Function(List<Pill>, Pill) onOpen;
-  final String? Function(Pill) answerOf;
-  final void Function(Pill, String) onCommit;
-  final ValueChanged<Pill>? onShown;
+  final Pill pill;
+  final String value;
+  final Widget side;
 
   @override
   Widget build(BuildContext context) {
-    return SideRow(
-      height: 272,
-      count: pills.length,
-      itemBuilder: (context, i) {
-        final Pill p = pills[i];
-        onShown?.call(p);
-        final PickOne c = p.challenge as PickOne;
-        final int? said = int.tryParse(answerOf(p) ?? '');
-        final bool done = said != null;
-        return CardTap(
-          pill: p,
-          onTap: () => onOpen(pills, p),
-          child: Container(
-            width: 236,
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: p.color,
-              borderRadius: BorderRadius.circular(22),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CardHead(
-                  pill: p,
-                  trailing: isRead(p) ? ReadMark(pill: p) : null,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    child: CardQuestion(
-                      text: p.question,
-                      color: p.ink,
-                      min: 11,
-                      max: 16.5,
-                    ),
-                  ),
-                ),
-                for (int k = 0; k < c.options.length; k++) ...[
-                  if (k > 0) const SizedBox(height: 5),
-                  _option(context, p, c, k, said, done),
-                ],
-              ],
-            ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
+      children: [
+        Text(
+          value,
+          style: AppText.display(
+            size: 34,
+            weight: FontWeight.w600,
+            height: 1,
+            spacing: -1,
+            color: pill.ink,
           ),
-        );
-      },
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Align(alignment: Alignment.centerRight, child: side),
+        ),
+      ],
+    );
+  }
+}
+
+/// What a game came to, in a sentence on the card.
+class _Verdict extends StatelessWidget {
+  const _Verdict(this.text, {required this.pill, super.key});
+
+  final String text;
+  final Pill pill;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      maxLines: 3,
+      overflow: TextOverflow.ellipsis,
+      style: AppText.body(
+        size: 13,
+        weight: FontWeight.w600,
+        height: 1.35,
+        color: pill.ink,
+      ),
+    );
+  }
+}
+
+// ── Pick one (133b) ──────────────────────────────────────────────────────
+
+class _PickCard extends StatelessWidget {
+  const _PickCard({
+    required this.pill,
+    required this.read,
+    required this.answer,
+    required this.onOpen,
+    required this.onCommit,
+  });
+
+  final Pill pill;
+  final bool read;
+
+  /// What the reader answered on the card, if they have.
+  final String? answer;
+  final VoidCallback onOpen;
+  final ValueChanged<String> onCommit;
+
+  @override
+  Widget build(BuildContext context) {
+    final PickOne c = pill.challenge as PickOne;
+    final int? said = int.tryParse(answer ?? '');
+    final bool done = said != null;
+    return _Frame(
+      pill: pill,
+      kind: WorkKind.pick,
+      read: read,
+      onOpen: onOpen,
+      game: Column(
+        children: [
+          for (int k = 0; k < c.options.length; k++) ...[
+            if (k > 0) const SizedBox(height: 6),
+            _option(k, c, said, done),
+          ],
+        ],
+      ),
     );
   }
 
-  Widget _option(
-    BuildContext context,
-    Pill p,
-    PickOne c,
-    int k,
-    int? said,
-    bool done,
-  ) {
+  Widget _option(int k, PickOne c, int? said, bool done) {
+    final Pill p = pill;
     final bool right = k == c.correct;
     final bool lit = done && right;
     final bool wrongPick = done && k == said && !right;
@@ -538,13 +515,13 @@ class _PickRow extends StatelessWidget {
       button: !done,
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: done ? null : () => onCommit(p, '$k'),
+        onTap: done ? null : () => onCommit('$k'),
         child: AnimatedOpacity(
           duration: const Duration(milliseconds: 200),
           opacity: done && !lit && !wrongPick ? 0.4 : 1,
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 220),
-            height: 32,
+            height: 36,
             padding: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
               color: lit ? p.ink : fillOn(p),
@@ -583,50 +560,15 @@ class _PickRow extends StatelessWidget {
 
 // ── Move it, then check (138d) ───────────────────────────────────────────
 
-class _SlideRow extends StatelessWidget {
-  const _SlideRow({required this.cards, required this.onOpen, this.onShown});
-
-  final List<PercentCard> cards;
-  final void Function(List<Pill>, Pill) onOpen;
-  final ValueChanged<Pill>? onShown;
-
-  @override
-  Widget build(BuildContext context) {
-    final List<Pill> shelf = [for (final c in cards) c.pill];
-    final play = ExplorePlay.instance;
-    final offs = <double>[
-      for (final c in cards)
-        if (play['slide:${c.pill.id}'] case {'ck': true, 'v': final num v})
-          (v - c.value).abs(),
-    ];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        SideRow(
-          height: 340,
-          count: cards.length,
-          itemBuilder: (context, i) {
-            final PercentCard c = cards[i];
-            onShown?.call(c.pill);
-            return _SlideCard(card: c, onOpen: () => onOpen(shelf, c.pill));
-          },
-        ),
-        _Note(
-          offs.isEmpty
-              ? context.l10n.slideNote
-              : context.l10n.slideAverage(
-                  (offs.reduce((a, b) => a + b) / offs.length).round(),
-                ),
-        ),
-      ],
-    );
-  }
-}
-
 class _SlideCard extends StatelessWidget {
-  const _SlideCard({required this.card, required this.onOpen});
+  const _SlideCard({
+    required this.card,
+    required this.read,
+    required this.onOpen,
+  });
 
   final PercentCard card;
+  final bool read;
   final VoidCallback onOpen;
 
   @override
@@ -639,39 +581,28 @@ class _SlideCard extends StatelessWidget {
     final bool checked = kept['ck'] == true;
     final int off = (v - card.value).abs().round();
     final l = context.l10n;
-    return _Card(
+    return _Frame(
       pill: p,
+      kind: WorkKind.slide,
+      read: read,
       onOpen: onOpen,
-      child: Column(
+      game: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _Top(pill: p, minHeight: 76, max: 17),
-          const SizedBox(height: 10),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
-            children: [
-              Text(
-                _pct(v),
-                style: AppText.display(
-                  size: 34,
-                  weight: FontWeight.w600,
-                  height: 1,
-                  spacing: -1,
-                  color: p.ink,
-                ),
+          _Figure(
+            pill: p,
+            value: _pct(v),
+            side: Text(
+              upper(context, checked ? l.answerIs(card.said) : l.dragToSet),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppText.label(
+                size: 9,
+                weight: FontWeight.w700,
+                spacing: 1.2,
+                color: checked ? p.ink : subOn(p),
               ),
-              const Spacer(),
-              Text(
-                upper(context, checked ? l.answerIs(card.said) : l.dragToSet),
-                style: AppText.label(
-                  size: 9,
-                  weight: FontWeight.w700,
-                  spacing: 1.2,
-                  color: checked ? p.ink : subOn(p),
-                ),
-              ),
-            ],
+            ),
           ),
           const SizedBox(height: 10),
           _Track(
@@ -684,15 +615,10 @@ class _SlideCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           if (checked) ...[
-            Text(
+            _Verdict(
               '${l.itIs(inSentence(card.said))} ${l.slideOff(off)}',
               key: ValueKey('slide-said-${p.id}'),
-              style: AppText.body(
-                size: 13,
-                weight: FontWeight.w600,
-                height: 1.35,
-                color: p.ink,
-              ),
+              pill: p,
             ),
             _Why(p),
           ] else
@@ -717,32 +643,15 @@ class _SlideCard extends StatelessWidget {
 
 // ── Closer, closer (139d) ────────────────────────────────────────────────
 
-class _CloserRow extends StatelessWidget {
-  const _CloserRow({required this.cards, required this.onOpen, this.onShown});
-
-  final List<PercentCard> cards;
-  final void Function(List<Pill>, Pill) onOpen;
-  final ValueChanged<Pill>? onShown;
-
-  @override
-  Widget build(BuildContext context) {
-    final List<Pill> shelf = [for (final c in cards) c.pill];
-    return SideRow(
-      height: 360,
-      count: cards.length,
-      itemBuilder: (context, i) {
-        final PercentCard c = cards[i];
-        onShown?.call(c.pill);
-        return _CloserCard(card: c, onOpen: () => onOpen(shelf, c.pill));
-      },
-    );
-  }
-}
-
 class _CloserCard extends StatelessWidget {
-  const _CloserCard({required this.card, required this.onOpen});
+  const _CloserCard({
+    required this.card,
+    required this.read,
+    required this.onOpen,
+  });
 
   final PercentCard card;
+  final bool read;
   final VoidCallback onOpen;
 
   static const int steps = 3;
@@ -791,7 +700,7 @@ class _CloserCard extends StatelessWidget {
         label: more ? l.more : l.less,
         background: fillOn(p),
         foreground: p.ink,
-        height: 42,
+        height: 40,
         radius: 12,
         size: 13.5,
         expand: true,
@@ -810,14 +719,14 @@ class _CloserCard extends StatelessWidget {
       height: 1,
       color: subOn(p),
     );
-    return _Card(
+    return _Frame(
       pill: p,
+      kind: WorkKind.closer,
+      read: read,
       onOpen: onOpen,
-      child: Column(
+      game: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _Top(pill: p, minHeight: 80, max: 17),
-          const SizedBox(height: 12),
           LayoutBuilder(
             builder: (context, box) {
               final double w = box.maxWidth;
@@ -878,7 +787,7 @@ class _CloserCard extends StatelessWidget {
               Text('100%', style: tick),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: 12),
           if (!done) ...[
             Row(
               crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -910,18 +819,9 @@ class _CloserCard extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Row(children: [pick(false), const SizedBox(width: 8), pick(true)]),
-            const SizedBox(height: 12),
+            const SizedBox(height: 10),
           ],
-          Text(
-            message,
-            key: ValueKey('closer-said-${p.id}'),
-            style: AppText.body(
-              size: 13,
-              weight: FontWeight.w600,
-              height: 1.4,
-              color: p.ink,
-            ),
-          ),
+          _Verdict(message, key: ValueKey('closer-said-${p.id}'), pill: p),
           if (done) _Why(p),
         ],
       ),
@@ -931,64 +831,15 @@ class _CloserCard extends StatelessWidget {
 
 // ── Which is bigger? (139c) ──────────────────────────────────────────────
 
-class _BiggerList extends StatelessWidget {
-  const _BiggerList({required this.pairs, required this.onOpen, this.onShown});
-
-  final List<BiggerPair> pairs;
-  final void Function(List<Pill>, Pill) onOpen;
-  final ValueChanged<Pill>? onShown;
-
-  @override
-  Widget build(BuildContext context) {
-    final play = ExplorePlay.instance;
-    final List<Pill> shelf = [
-      for (final (a, b) in pairs) ...[a.pill, b.pill],
-    ];
-    int asked = 0, right = 0;
-    for (final (a, b) in pairs) {
-      final Object? pick = play['bigger:${a.pill.id}:${b.pill.id}'];
-      if (pick is int) {
-        asked++;
-        if ((pick == 0) == (a.value > b.value)) right++;
-      }
-    }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        for (final (a, b) in pairs) ...[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: _BiggerPairView(
-              a: a,
-              b: b,
-              onOpen: (p) => onOpen(shelf, p),
-              onShown: onShown,
-            ),
-          ),
-          const SizedBox(height: 10),
-        ],
-        _Note(
-          asked == 0
-              ? context.l10n.biggerNote
-              : context.l10n.biggerScore(right, asked),
-        ),
-      ],
-    );
-  }
-}
-
-class _BiggerPairView extends StatelessWidget {
-  const _BiggerPairView({
-    required this.a,
-    required this.b,
-    required this.onOpen,
-    this.onShown,
-  });
+/// Two cards' figures on one card, each half in its own subject's colour,
+/// and a tap on the half that is bigger. Once picked, both figures show and
+/// each half opens its own card.
+class _BiggerCard extends StatelessWidget {
+  const _BiggerCard({required this.a, required this.b, required this.onOpen});
 
   final PercentCard a;
   final PercentCard b;
   final ValueChanged<Pill> onOpen;
-  final ValueChanged<Pill>? onShown;
 
   @override
   Widget build(BuildContext context) {
@@ -998,13 +849,11 @@ class _BiggerPairView extends StatelessWidget {
     final int? picked = kept is int ? kept : null;
     final int bigger = a.value > b.value ? 0 : 1;
     final l = context.l10n;
-    onShown?.call(a.pill);
-    onShown?.call(b.pill);
 
-    Widget side(int j, PercentCard c) {
+    Widget half(int j, PercentCard c) {
+      final Pill p = c.pill;
       final bool done = picked != null;
       final bool big = done && j == bigger;
-      final Color ink = big ? context.p.onInverse : context.p.ink;
       final String tag = !done
           ? l.tapIfBigger
           : big
@@ -1012,124 +861,127 @@ class _BiggerPairView extends StatelessWidget {
           : (picked == j ? l.yourPick : '');
       return Expanded(
         child: GestureDetector(
-          key: ValueKey('bigger-${c.pill.id}'),
+          key: ValueKey('bigger-${p.id}'),
           behavior: HitTestBehavior.opaque,
           onTap: done
-              ? () => onOpen(c.pill)
+              ? () => onOpen(p)
               : () {
                   play.put(key, j);
                   Analytics.capture('explore bigger picked', {
                     'right': j == bigger,
                   });
                 },
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            constraints: const BoxConstraints(minHeight: 136),
-            padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: big
-                  ? context.p.inverse
-                  : context.p.ink.withValues(alpha: 0.06),
-              borderRadius: BorderRadius.circular(18),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 8,
-                      height: 8,
-                      decoration: BoxDecoration(
-                        color: c.pill.color,
-                        shape: BoxShape.circle,
+          child: ColoredBox(
+            color: p.color,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(
+                18,
+                j == 0 ? 18 : 14,
+                18,
+                j == 0 ? 14 : 18,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (j == 0)
+                    _Head(pill: p, kind: WorkKind.bigger)
+                  else
+                    CardHead(pill: p),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 9, bottom: 8),
+                      child: CardQuestion(
+                        text: p.question,
+                        color: p.ink,
+                        min: 10.5,
+                        max: 16,
                       ),
                     ),
-                    const SizedBox(width: 6),
-                    Expanded(
-                      child: Text(
-                        upper(context, c.pill.topic),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppText.label(
-                          size: 8.5,
-                          weight: FontWeight.w700,
-                          spacing: 1.1,
-                          color: ink.withValues(alpha: 0.55),
+                  ),
+                  // The figure, then what it came to: kept to the left, so
+                  // the seam's right end is free for the "or" between them.
+                  AnimatedOpacity(
+                    duration: const Duration(milliseconds: 250),
+                    opacity: done && !big ? 0.55 : 1,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          done ? _pct(c.value) : '?',
+                          style: AppText.display(
+                            size: 28,
+                            weight: FontWeight.w600,
+                            height: 1,
+                            spacing: -0.8,
+                            color: p.ink,
+                          ),
                         ),
-                      ),
+                        const SizedBox(width: 10),
+                        if (big) ...[
+                          Icon(Icons.check_rounded, size: 16, color: p.ink),
+                          const SizedBox(width: 4),
+                        ],
+                        Flexible(
+                          child: Text(
+                            upper(context, tag),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppText.label(
+                              size: 9,
+                              weight: FontWeight.w700,
+                              spacing: 1.2,
+                              color: big ? p.ink : subOn(p),
+                            ),
+                          ),
+                        ),
+                        // Room for the "or" on the seam.
+                        const SizedBox(width: 40),
+                      ],
                     ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  done ? _pct(c.value) : '?',
-                  style: AppText.display(
-                    size: 30,
-                    weight: FontWeight.w600,
-                    height: 1,
-                    spacing: -1,
-                    color: ink,
                   ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  c.pill.question,
-                  maxLines: 7,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.body(
-                    size: 12,
-                    weight: FontWeight.w500,
-                    height: 1.35,
-                    color: ink,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  upper(context, tag),
-                  style: AppText.label(
-                    size: 9,
-                    weight: FontWeight.w700,
-                    spacing: 1.2,
-                    color: ink.withValues(alpha: 0.5),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
       );
     }
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [side(0, a), const SizedBox(width: 8), side(1, b)],
+    return SizedBox(
+      width: kWorkCardWidth,
+      height: kWorkCardHeight,
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(22),
+            child: Column(children: [half(0, a), half(1, b)]),
           ),
-        ),
-        Container(
-          width: 30,
-          height: 30,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: context.p.surface,
-            shape: BoxShape.circle,
-            border: Border.all(color: context.p.ink.withValues(alpha: 0.18)),
-          ),
-          child: Text(
-            l.sideOr,
-            style: AppText.display(
-              size: 12,
-              weight: FontWeight.w600,
-              height: 1,
-              color: context.p.ink,
+          Positioned(
+            right: 18,
+            top: kWorkCardHeight / 2 - 15,
+            child: IgnorePointer(
+              child: Container(
+                width: 30,
+                height: 30,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: context.p.surface,
+                  shape: BoxShape.circle,
+                ),
+                child: Text(
+                  l.sideOr,
+                  style: AppText.display(
+                    size: 12,
+                    weight: FontWeight.w600,
+                    height: 1,
+                    color: context.p.ink,
+                  ),
+                ),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -1139,171 +991,15 @@ class _BiggerPairView extends StatelessWidget {
 /// How wide a range is, either side of the guess, and what it pays.
 const List<(int, int)> _widths = [(5, 30), (10, 20), (20, 10)];
 
-class _RangeRow extends StatelessWidget {
-  const _RangeRow({required this.cards, required this.onOpen, this.onShown});
-
-  final List<PercentCard> cards;
-  final void Function(List<Pill>, Pill) onOpen;
-  final ValueChanged<Pill>? onShown;
-
-  @override
-  Widget build(BuildContext context) {
-    final List<Pill> shelf = [for (final c in cards) c.pill];
-    final play = ExplorePlay.instance;
-    final l = context.l10n;
-    // What was laid today, read back: the points were paid when the bet
-    // was laid, and the slip only says what they came to.
-    final slip = <(PercentCard, int, int, int)>[];
-    int won = 0;
-    for (final c in cards) {
-      final Object? kept = play['range:${c.pill.id}'];
-      if (kept case {'lk': true, 'g': final num g, 'w': final num w}) {
-        final (int half, int pays) = _widths[w.toInt()];
-        final double lo = math.max(0, g - half).toDouble();
-        final double hi = math.min(100, g + half).toDouble();
-        final int paid = c.value >= lo && c.value <= hi ? pays : 0;
-        slip.add((c, lo.round(), hi.round(), paid));
-        won += paid;
-      }
-    }
-    final Color ink = context.p.ink;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        SideRow(
-          height: 384,
-          count: cards.length,
-          itemBuilder: (context, i) {
-            final PercentCard c = cards[i];
-            onShown?.call(c.pill);
-            return _RangeCard(card: c, onOpen: () => onOpen(shelf, c.pill));
-          },
-        ),
-        const SizedBox(height: 14),
-        Container(
-          key: const ValueKey('bet-slip'),
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
-          decoration: BoxDecoration(
-            color: ink.withValues(alpha: 0.06),
-            borderRadius: BorderRadius.circular(22),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.baseline,
-                textBaseline: TextBaseline.alphabetic,
-                children: [
-                  Expanded(
-                    child: Text(
-                      l.betSlip,
-                      style: AppText.body(
-                        size: 16,
-                        weight: FontWeight.w600,
-                        height: 1,
-                        spacing: -0.2,
-                        color: ink,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    l.pointsToday(won),
-                    style: AppText.body(
-                      size: 12.5,
-                      weight: FontWeight.w700,
-                      height: 1,
-                      color: winColor(context),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              if (slip.isEmpty)
-                Text(
-                  l.slipEmpty,
-                  style: AppText.body(
-                    size: 12.5,
-                    weight: FontWeight.w500,
-                    height: 1.4,
-                    color: ink.withValues(alpha: 0.55),
-                  ),
-                )
-              else
-                for (final (c, lo, hi, paid) in slip)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 8,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            color: c.pill.color,
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            c.pill.question,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: AppText.body(
-                              size: 12.5,
-                              weight: FontWeight.w500,
-                              height: 1.2,
-                              color: ink.withValues(alpha: 0.75),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          '$lo–$hi%',
-                          style: AppText.body(
-                            size: 12,
-                            weight: FontWeight.w600,
-                            height: 1,
-                            color: ink.withValues(alpha: 0.55),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          paid > 0 ? '+$paid' : '0',
-                          style: AppText.body(
-                            size: 12.5,
-                            weight: FontWeight.w700,
-                            height: 1,
-                            color: paid > 0
-                                ? winColor(context)
-                                : ink.withValues(alpha: 0.45),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-              const SizedBox(height: 4),
-              Text(
-                l.goNarrow,
-                style: AppText.body(
-                  size: 12,
-                  weight: FontWeight.w500,
-                  height: 1.4,
-                  color: ink.withValues(alpha: 0.55),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class _RangeCard extends StatelessWidget {
-  const _RangeCard({required this.card, required this.onOpen});
+  const _RangeCard({
+    required this.card,
+    required this.read,
+    required this.onOpen,
+  });
 
   final PercentCard card;
+  final bool read;
   final VoidCallback onOpen;
 
   @override
@@ -1324,39 +1020,26 @@ class _RangeCard extends StatelessWidget {
     void keep({double? guess, int? width, bool lock = false}) =>
         play.put(key, {'g': guess ?? g, 'w': width ?? wi, 'lk': lock});
 
-    return _Card(
+    return _Frame(
       pill: p,
+      kind: WorkKind.range,
+      read: read,
       onOpen: onOpen,
-      child: Column(
+      game: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _Top(pill: p, minHeight: 76, max: 17),
-          const SizedBox(height: 10),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
-            children: [
-              Text(
-                _pct(g),
-                style: AppText.display(
-                  size: 34,
-                  weight: FontWeight.w600,
-                  height: 1,
-                  spacing: -1,
-                  color: p.ink,
-                ),
+          _Figure(
+            pill: p,
+            value: _pct(g),
+            side: Text(
+              '${lo.round()}–${hi.round()}%',
+              style: AppText.body(
+                size: 11,
+                weight: FontWeight.w700,
+                height: 1,
+                color: p.ink,
               ),
-              const Spacer(),
-              Text(
-                '${lo.round()}–${hi.round()}%',
-                style: AppText.body(
-                  size: 11,
-                  weight: FontWeight.w700,
-                  height: 1,
-                  color: p.ink,
-                ),
-              ),
-            ],
+            ),
           ),
           const SizedBox(height: 10),
           _Track(
@@ -1367,14 +1050,24 @@ class _RangeCard extends StatelessWidget {
             onChanged: locked ? null : (x) => keep(guess: x),
           ),
           const SizedBox(height: 12),
-          Row(
-            children: [
-              for (int j = 0; j < _widths.length; j++) ...[
-                if (j > 0) const SizedBox(width: 6),
-                Expanded(
-                  child: AnimatedOpacity(
-                    duration: const Duration(milliseconds: 200),
-                    opacity: locked && j != wi ? 0.4 : 1,
+          // Once the bet is laid the widths have done their work: the band
+          // on the track still shows the one chosen, and the room goes to
+          // what the bet came to and why.
+          if (locked) ...[
+            _Verdict(
+              hit
+                  ? l.inRange(pays, inSentence(card.said))
+                  : l.missedRange(inSentence(card.said)),
+              key: ValueKey('range-said-${p.id}'),
+              pill: p,
+            ),
+            _Why(p),
+          ] else ...[
+            Row(
+              children: [
+                for (int j = 0; j < _widths.length; j++) ...[
+                  if (j > 0) const SizedBox(width: 6),
+                  Expanded(
                     child: FlatButton(
                       key: ValueKey('range-${p.id}-$j'),
                       label: l.rangeWidth(_widths[j].$1, _widths[j].$2),
@@ -1385,29 +1078,13 @@ class _RangeCard extends StatelessWidget {
                       size: 11,
                       padding: const EdgeInsets.symmetric(horizontal: 4),
                       expand: true,
-                      onTap: locked ? null : () => keep(width: j),
+                      onTap: () => keep(width: j),
                     ),
                   ),
-                ),
+                ],
               ],
-            ],
-          ),
-          const SizedBox(height: 12),
-          if (locked) ...[
-            Text(
-              hit
-                  ? l.inRange(pays, inSentence(card.said))
-                  : l.missedRange(inSentence(card.said)),
-              key: ValueKey('range-said-${p.id}'),
-              style: AppText.body(
-                size: 13,
-                weight: FontWeight.w600,
-                height: 1.35,
-                color: p.ink,
-              ),
             ),
-            _Why(p),
-          ] else
+            const SizedBox(height: 10),
             FlatButton(
               key: ValueKey('range-bet-${p.id}'),
               label: l.betWord,
@@ -1424,6 +1101,7 @@ class _RangeCard extends StatelessWidget {
                 });
               },
             ),
+          ],
         ],
       ),
     );
@@ -1434,49 +1112,17 @@ class _RangeCard extends StatelessWidget {
 
 const List<int> _stakes = [10, 20, 30];
 
-class _StakeRow extends StatelessWidget {
-  const _StakeRow({
-    required this.pills,
-    required this.onOpen,
-    required this.answerOf,
-    required this.onCommit,
-    this.onShown,
-  });
-
-  final List<Pill> pills;
-  final void Function(List<Pill>, Pill) onOpen;
-  final String? Function(Pill) answerOf;
-  final void Function(Pill, String) onCommit;
-  final ValueChanged<Pill>? onShown;
-
-  @override
-  Widget build(BuildContext context) {
-    return SideRow(
-      height: 348,
-      count: pills.length,
-      itemBuilder: (context, i) {
-        final Pill p = pills[i];
-        onShown?.call(p);
-        return _StakeCard(
-          pill: p,
-          onOpen: () => onOpen(pills, p),
-          onCommit: onCommit,
-          answered: answerOf(p) != null,
-        );
-      },
-    );
-  }
-}
-
 class _StakeCard extends StatelessWidget {
   const _StakeCard({
     required this.pill,
+    required this.read,
     required this.onOpen,
     required this.onCommit,
     required this.answered,
   });
 
   final Pill pill;
+  final bool read;
   final VoidCallback onOpen;
   final void Function(Pill, String) onCommit;
 
@@ -1501,14 +1147,14 @@ class _StakeCard extends StatelessWidget {
     void keep({int? option, int? stake, bool bet = false}) =>
         play.put(key, {'o': option ?? o, 'k': stake ?? k, 'dn': bet});
 
-    return _Card(
+    return _Frame(
       pill: p,
+      kind: WorkKind.stake,
+      read: read,
       onOpen: onOpen,
-      child: Column(
+      game: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _Top(pill: p, minHeight: 92, max: 18),
-          const SizedBox(height: 13),
           Row(
             children: [
               for (int j = 0; j < c.options.length; j++) ...[
@@ -1517,18 +1163,13 @@ class _StakeCard extends StatelessWidget {
               ],
             ],
           ),
-          const SizedBox(height: 13),
+          const SizedBox(height: 12),
           if (done) ...[
-            Text(
+            _Verdict(
               '${win ? l.youWin(_stakes[k]) : l.youLose(_stakes[k])} '
               '${l.theAnswer(c.options[c.correct])}',
               key: ValueKey('stake-said-${p.id}'),
-              style: AppText.body(
-                size: 13,
-                weight: FontWeight.w600,
-                height: 1.35,
-                color: p.ink,
-              ),
+              pill: p,
             ),
             _Why(p),
           ] else
@@ -1685,7 +1326,7 @@ class _Why extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.only(top: 6),
       child: Text(
         firstLines(pill.answer, max: 150),
         maxLines: 3,
@@ -1695,29 +1336,6 @@ class _Why extends StatelessWidget {
           weight: FontWeight.w500,
           height: 1.38,
           color: pill.ink.withValues(alpha: 0.78),
-        ),
-      ),
-    );
-  }
-}
-
-/// A line under a way of playing: how it went, or how to play it.
-class _Note extends StatelessWidget {
-  const _Note(this.text);
-
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 4, 20, 0),
-      child: Text(
-        text,
-        style: AppText.body(
-          size: 12,
-          weight: FontWeight.w500,
-          height: 1.4,
-          color: context.p.ink.withValues(alpha: 0.5),
         ),
       ),
     );

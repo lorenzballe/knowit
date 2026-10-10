@@ -835,14 +835,18 @@ class CameBackRow extends StatelessWidget {
                     children: [
                       Icon(Icons.replay_rounded, size: 14, color: p.color),
                       const SizedBox(width: 6),
-                      Text(
-                        upper(context, after(context, c.days)),
-                        style: AppText.label(
-                          size: 9,
-                          weight: FontWeight.w700,
-                          spacing: 1.1,
-                          height: 1,
-                          color: p.color,
+                      Flexible(
+                        child: Text(
+                          upper(context, after(context, c.days)),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppText.label(
+                            size: 9,
+                            weight: FontWeight.w700,
+                            spacing: 1.1,
+                            height: 1,
+                            color: p.color,
+                          ),
                         ),
                       ),
                     ],
@@ -863,15 +867,21 @@ class CameBackRow extends StatelessWidget {
                   children: [
                     SubjectIcon(subject: p.topic, size: 14, ink: subOn(p)),
                     const SizedBox(width: 7),
-                    Text(
-                      c.right
-                          ? context.l10n.rightLastTime
-                          : context.l10n.wrongLastTime,
-                      style: AppText.body(
-                        size: 11,
-                        weight: FontWeight.w600,
-                        height: 1,
-                        color: subOn(p),
+                    // Gives way in a language that takes more words to say
+                    // it, rather than running off the card.
+                    Flexible(
+                      child: Text(
+                        c.right
+                            ? context.l10n.rightLastTime
+                            : context.l10n.wrongLastTime,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppText.body(
+                          size: 11,
+                          weight: FontWeight.w600,
+                          height: 1,
+                          color: subOn(p),
+                        ),
                       ),
                     ),
                   ],
@@ -887,28 +897,19 @@ class CameBackRow extends StatelessWidget {
 
 // ── One move, many places (133c) ─────────────────────────────────────────
 
-/// A thinking move, named large in a box of its own, and under it the cards
-/// where it hides, each saying where: in a hiring change, in a famous study.
-class MoveShelf extends StatelessWidget {
-  const MoveShelf({
+/// The cards where one thinking move hides, each saying where: in a hiring
+/// change, in a famous study. The move is named over them the way every
+/// shelf is named; it was set large in a box of its own, and the name took
+/// more room than the cards and still did not say what it meant.
+class MoveRow extends StatelessWidget {
+  const MoveRow({
     super.key,
-    required this.name,
-    required this.line,
-    required this.badge,
-    required this.badgeLit,
     required this.pills,
     required this.isRead,
     required this.onOpen,
     this.onShown,
   });
 
-  final String name;
-  final String line;
-
-  /// What the reader has done with the move: met it so many times, or not
-  /// yet. Lit when they have.
-  final String badge;
-  final bool badgeLit;
   final List<Pill> pills;
   final bool Function(Pill) isRead;
   final OpenCard onOpen;
@@ -916,137 +917,103 @@ class MoveShelf extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color ink = context.p.ink;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          padding: const EdgeInsets.fromLTRB(18, 18, 18, 17),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(22),
-            border: Border.all(color: ink.withValues(alpha: 0.12)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Expanded(child: Kicker(context.l10n.aMove)),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 9,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: badgeLit ? context.p.inverse : null,
-                      borderRadius: BorderRadius.circular(8),
-                      border: badgeLit
-                          ? null
-                          : Border.all(color: ink.withValues(alpha: 0.3)),
-                    ),
-                    child: Text(
-                      badge,
-                      style: AppText.body(
-                        size: 10.5,
-                        weight: FontWeight.w700,
-                        height: 1,
-                        color: badgeLit ? context.p.onInverse : ink,
-                      ),
+    return SideRow(
+      height: 220,
+      count: pills.length,
+      itemBuilder: (context, i) {
+        final Pill p = pills[i];
+        onShown?.call(p);
+        return CardTap(
+          pill: p,
+          onTap: () => onOpen(pills, p),
+          child: Container(
+            width: 196,
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: p.color,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CardHead(
+                  pill: p,
+                  trailing: isRead(p) ? ReadMark(pill: p) : null,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 9),
+                    child: CardQuestion(
+                      text: p.question,
+                      color: p.ink,
+                      min: 10.5,
+                      max: 16,
                     ),
                   ),
-                ],
-              ),
-              const SizedBox(height: 9),
-              Text(
-                name,
-                style: AppText.display(
-                  size: 31,
-                  weight: FontWeight.w600,
-                  height: 1.02,
-                  spacing: -1,
-                  color: ink,
                 ),
-              ),
-              const SizedBox(height: 9),
-              Text(
-                line,
-                style: AppText.body(
-                  size: 13.5,
-                  height: 1.4,
-                  color: ink.withValues(alpha: 0.66),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 12),
-        SideRow(
-          height: 220,
-          count: pills.length,
-          itemBuilder: (context, i) {
-            final Pill p = pills[i];
-            onShown?.call(p);
-            return CardTap(
-              pill: p,
-              onTap: () => onOpen(pills, p),
-              child: Container(
-                width: 196,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: p.color,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CardHead(
-                      pill: p,
-                      trailing: isRead(p) ? ReadMark(pill: p) : null,
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 9),
-                        child: CardQuestion(
-                          text: p.question,
-                          color: p.ink,
-                          min: 10.5,
-                          max: 16,
+                Container(
+                  padding: const EdgeInsets.only(top: 9),
+                  decoration: BoxDecoration(
+                    border: Border(top: BorderSide(color: hairOn(p))),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.search_rounded, size: 14, color: p.ink),
+                      const SizedBox(width: 6),
+                      Expanded(
+                        child: Text(
+                          context.l10n.hidesIn(inSentence(genreLabel(p))),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppText.body(
+                            size: 11,
+                            weight: FontWeight.w600,
+                            height: 1,
+                            color: p.ink,
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(top: 9),
-                      decoration: BoxDecoration(
-                        border: Border(top: BorderSide(color: hairOn(p))),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.search_rounded, size: 14, color: p.ink),
-                          const SizedBox(width: 6),
-                          Expanded(
-                            child: Text(
-                              context.l10n.hidesIn(inSentence(genreLabel(p))),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppText.body(
-                                size: 11,
-                                weight: FontWeight.w600,
-                                height: 1,
-                                color: p.ink,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+/// What the reader has done with a move, level with the shelf's name: met
+/// it so many times, lit; or not yet, outlined.
+class MoveBadge extends StatelessWidget {
+  const MoveBadge({super.key, required this.label, required this.lit});
+
+  final String label;
+  final bool lit;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color ink = context.p.ink;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 6),
+      decoration: BoxDecoration(
+        color: lit ? context.p.inverse : null,
+        borderRadius: BorderRadius.circular(8),
+        border: lit ? null : Border.all(color: ink.withValues(alpha: 0.3)),
+      ),
+      child: Text(
+        label,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: AppText.body(
+          size: 10.5,
+          weight: FontWeight.w700,
+          height: 1,
+          color: lit ? context.p.onInverse : ink,
         ),
-      ],
+      ),
     );
   }
 }
@@ -1274,24 +1241,22 @@ class HowSureShelf extends StatelessWidget {
 
 // ── Use it today (131e) ──────────────────────────────────────────────────
 
-/// Something to try before tonight, as a list to tick: three rows, a ring on
-/// each to mark it tried, and the rest a tap away.
+/// Something to try, or to say, before tonight: three rows, each the thing
+/// itself in its card's colour, and the rest a tap away. A row opens its
+/// card. There was a ring on each to tick it off as tried, and nobody could
+/// tell what the ring was for.
 class UseTodayList extends StatefulWidget {
   const UseTodayList({
     super.key,
     required this.pills,
     required this.isRead,
     required this.onOpen,
-    required this.isTried,
-    required this.onTried,
     this.onShown,
   });
 
   final List<Pill> pills;
   final bool Function(Pill) isRead;
   final OpenCard onOpen;
-  final bool Function(Pill) isTried;
-  final void Function(Pill, bool) onTried;
   final ValueChanged<Pill>? onShown;
 
   @override
@@ -1350,70 +1315,34 @@ class _UseTodayListState extends State<UseTodayList> {
 
   Widget _row(BuildContext context, Pill p) {
     widget.onShown?.call(p);
-    final bool tried = widget.isTried(p);
     return CardTap(
       pill: p,
       onTap: () => widget.onOpen(widget.pills, p),
       child: Container(
-        padding: const EdgeInsets.fromLTRB(16, 14, 12, 14),
+        width: double.infinity,
+        padding: const EdgeInsets.fromLTRB(16, 14, 16, 15),
         decoration: BoxDecoration(
           color: p.color,
           borderRadius: BorderRadius.circular(17),
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CardHead(
-                    pill: p,
-                    trailing: widget.isRead(p) ? ReadMark(pill: p) : null,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    p.question,
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppText.display(
-                      size: 15,
-                      weight: FontWeight.w600,
-                      height: 1.18,
-                      spacing: -0.4,
-                      color: p.ink,
-                    ),
-                  ),
-                ],
-              ),
+            CardHead(
+              pill: p,
+              trailing: widget.isRead(p) ? ReadMark(pill: p) : null,
             ),
-            const SizedBox(width: 10),
-            Semantics(
-              key: ValueKey('tried-${p.id}-${tried ? 'on' : 'off'}'),
-              button: true,
-              checked: tried,
-              label: context.l10n.markTried,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () => widget.onTried(p, !tried),
-                child: Padding(
-                  padding: const EdgeInsets.all(4),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    width: 26,
-                    height: 26,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: tried ? p.ink : p.ink.withValues(alpha: 0),
-                      border: Border.all(
-                        color: p.ink.withValues(alpha: tried ? 1 : 0.7),
-                        width: 2,
-                      ),
-                    ),
-                    child: tried
-                        ? Icon(Icons.check_rounded, size: 16, color: p.color)
-                        : null,
-                  ),
-                ),
+            const SizedBox(height: 8),
+            Text(
+              p.question,
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+              style: AppText.display(
+                size: 15,
+                weight: FontWeight.w600,
+                height: 1.18,
+                spacing: -0.4,
+                color: p.ink,
               ),
             ),
           ],

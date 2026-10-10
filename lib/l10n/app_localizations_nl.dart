@@ -132,12 +132,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get sameForEveryone => 'Voor iedereen hetzelfde, en alleen vandaag';
 
   @override
-  String get onesThatAskTheMost => 'De kaarten die het meest vragen';
-
-  @override
-  String get acrossEveryone => 'Bij iedereen, niet alleen in jouw mix';
-
-  @override
   String becauseSitsAtFull(String name) {
     return 'Omdat $name helemaal bovenaan staat';
   }
@@ -1247,14 +1241,15 @@ class AppLocalizationsNl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n kaarten kwamen terug — beantwoord ze opnieuw',
-      one: '1 kaart kwam terug — beantwoord hem opnieuw',
+      other:
+          '$n kaarten die je dagen geleden beantwoordde, terug om te zien of het is blijven hangen',
+      one: 'Een kaart die je dagen geleden beantwoordde, terug om te zien of het is blijven hangen',
     );
     return '$_temp0';
   }
 
   @override
-  String get cameBack => 'Teruggekomen';
+  String get cameBack => 'Weet je het nog?';
 
   @override
   String get holdACardYouLike => 'Bevalt hij? Houd vast';
@@ -1657,7 +1652,8 @@ class AppLocalizationsNl extends AppLocalizations {
   String get themePractical => 'Vandaag te gebruiken';
 
   @override
-  String get themePracticalLine => 'Iets om vóór vanavond te proberen';
+  String get themePracticalLine =>
+      'Iets om te proberen, of om in een gesprek te laten vallen, vóór vanavond';
 
   @override
   String get themeOrigins => 'Waar het vandaan komt';
@@ -1683,7 +1679,8 @@ class AppLocalizationsNl extends AppLocalizations {
   String get themeWorkItOut => 'Reken het uit';
 
   @override
-  String get themeWorkItOutLine => 'Een getal om uit je hoofd te vinden';
+  String get themeWorkItOutLine =>
+      'Raad het getal voordat de kaart het je vertelt';
 
   @override
   String get themeSeen => 'Om te zien';
@@ -2373,9 +2370,6 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get aMove => 'Een zet';
-
-  @override
   String get anotherOne => 'Nog een';
 
   @override
@@ -2395,21 +2389,10 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get betSlip => 'Je wedbriefje';
-
-  @override
   String get betWord => 'Inzetten';
 
   @override
   String get biggerLabel => 'Groter';
-
-  @override
-  String get biggerNote => 'Elk getal is het antwoord van een kaart.';
-
-  @override
-  String biggerScore(int right, int asked) {
-    return '$right van de $asked goed.';
-  }
 
   @override
   String get biggerYouGotIt => 'Groter · goed';
@@ -2601,10 +2584,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get forYouNow => 'Voor jou, nu';
 
   @override
-  String get goNarrow =>
-      'Ga smal als je zeker bent: dat levert drie keer zoveel op.';
-
-  @override
   String get hardBadge => 'Moeilijk';
 
   @override
@@ -2643,9 +2622,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get lookFirst => 'Kijk naar de grafiek voor je de kop gelooft.';
 
   @override
-  String get markTried => 'Geprobeerd';
-
-  @override
   String minutesLabel(int n) {
     return '$n min';
   }
@@ -2659,43 +2635,19 @@ class AppLocalizationsNl extends AppLocalizations {
   String get modeBigger => 'Wat is groter?';
 
   @override
-  String get modeBiggerLine =>
-      'Twee getallen om in te schatten. Tik op de grootste';
-
-  @override
   String get modeCloser => 'Steeds dichterbij';
-
-  @override
-  String get modeCloserLine =>
-      'Drie stappen meer of minder om het getal in te sluiten';
 
   @override
   String get modePick => 'Kies er een';
 
   @override
-  String get modePickLine => 'Drie bedragen. Kies voor je de kaart opent';
-
-  @override
   String get modeRange => 'Zet in op een bereik';
-
-  @override
-  String get modeRangeLine =>
-      'Hoe smaller, hoe meer het oplevert, als je gelijk hebt';
 
   @override
   String get modeSlide => 'Schuif';
 
   @override
-  String get modeSlideLine =>
-      'Zet eerst je antwoord, zie dan hoe ver je ernaast zat';
-
-  @override
   String get modeStake => 'Plaats je inzet';
-
-  @override
-  String modeStakeLine(int n) {
-    return '$n punten per dag. Win en je verdubbelt je inzet';
-  }
 
   @override
   String get monthShelfLine =>
@@ -2730,18 +2682,30 @@ class AppLocalizationsNl extends AppLocalizations {
   }
 
   @override
-  String get moveComparedToWhat => 'Vergeleken waarmee';
+  String get moveComparedToWhat => 'Vergeleken waarmee?';
 
   @override
   String get moveComparedToWhatLine =>
-      'Een verandering zegt niets zonder controlegroep';
+      'Een verandering zegt niets zonder iets om haar mee te vergelijken';
 
   @override
-  String get moveSampling => 'De steekproef';
+  String get askingTitle => 'Uit elk vak een vraag';
+
+  @override
+  String askingIn(String subject) {
+    return 'Vragen over $subject';
+  }
+
+  @override
+  String get askingLine =>
+      'Voor iedereen hetzelfde. Eerst antwoorden, dan het waarom';
+
+  @override
+  String get moveSampling => 'Wie werd er geteld?';
 
   @override
   String get moveSamplingLine =>
-      'Wie in de steekproef belandt, bepaalt wat die kan zeggen';
+      'Wie in een onderzoek belandt, bepaalt wat het je kan vertellen';
 
   @override
   String mythDeckHint(int at, int of) {
@@ -2773,11 +2737,6 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get pickOneFirst => 'Kies er eerst een';
-
-  @override
-  String pointsToday(int n) {
-    return '+$n vandaag';
-  }
 
   @override
   String get puzzleOfTheDay => 'De puzzel van de dag';
@@ -2876,22 +2835,6 @@ class AppLocalizationsNl extends AppLocalizations {
   String get sixtyTitle => 'Zestig seconden';
 
   @override
-  String slideAverage(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: 'Gemiddeld $n punten ernaast.',
-      one: 'Gemiddeld 1 punt ernaast.',
-      zero: 'Gemiddeld precies goed.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get slideNote =>
-      'Instellen, controleren. Hoe ver je ernaast zat, daar gaat het om.';
-
-  @override
   String slideOff(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -2902,9 +2845,6 @@ class AppLocalizationsNl extends AppLocalizations {
     );
     return '$_temp0';
   }
-
-  @override
-  String get slipEmpty => 'Nog geen inzetten. Elke inzet komt hier.';
 
   @override
   String get stakeLabel => 'Inzet';

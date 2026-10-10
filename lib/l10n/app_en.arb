@@ -117,8 +117,6 @@
  "here": "here",
  "todaysShelf": "Today's shelf",
  "sameForEveryone": "The same for everyone, and only today",
- "onesThatAskTheMost": "The ones that ask the most",
- "acrossEveryone": "Across everyone, not just your mix",
  "becauseSitsAtFull": "Because {name} sits at full",
  "@becauseSitsAtFull": {
   "placeholders": {
@@ -1147,7 +1145,7 @@
    }
   }
  },
- "cardsCameBack": "{n, plural, =1{1 card came back — answer it again} other{{n} cards came back — answer them again}}",
+ "cardsCameBack": "{n, plural, =1{A card you answered days ago, back to see if it stuck} other{{n} cards you answered days ago, back to see if they stuck}}",
  "@cardsCameBack": {
   "placeholders": {
    "n": {
@@ -1155,7 +1153,7 @@
    }
   }
  },
- "cameBack": "Came back",
+ "cameBack": "Do you still remember?",
  "holdACardYouLike": "Hold a card you like",
  "likedToday": "{n, plural, =1{1 liked today} other{{n} liked today}}",
  "@likedToday": {
@@ -1441,7 +1439,7 @@
  "themeNumbers": "Numbers that surprise",
  "themeNumbersLine": "Where the figure is the twist",
  "themePractical": "Use it today",
- "themePracticalLine": "Something to try before tonight",
+ "themePracticalLine": "Something to try, or to drop into a conversation, before tonight",
  "themeOrigins": "Where it came from",
  "themeOriginsLine": "The beginnings of things you use every day",
  "themeStories": "True stories",
@@ -1449,7 +1447,7 @@
  "themeDebates": "Pick a side",
  "themeDebatesLine": "No right answer, only a better argument",
  "themeWorkItOut": "Work it out",
- "themeWorkItOutLine": "A number to reach in your head",
+ "themeWorkItOutLine": "Guess the number before the card tells you",
  "themeSeen": "Seen, not read",
  "themeSeenLine": "Cards that draw their point",
  "themeSharpest": "For the sharpest",
@@ -2296,7 +2294,6 @@
    }
   }
  },
- "aMove": "A move",
  "anotherOne": "Another",
  "answerIs": "Answer: {said}",
  "@answerIs": {
@@ -2316,21 +2313,8 @@
    }
   }
  },
- "betSlip": "Your bet slip",
  "betWord": "Bet",
  "biggerLabel": "Bigger",
- "biggerNote": "Each figure is a card's own answer.",
- "biggerScore": "Right on {right} of {asked}.",
- "@biggerScore": {
-  "placeholders": {
-   "right": {
-    "type": "int"
-   },
-   "asked": {
-    "type": "int"
-   }
-  }
- },
  "biggerYouGotIt": "Bigger · you got it",
  "cameBackAfterDays": "{n, plural, =1{After a day} other{After {n} days}}",
  "@cameBackAfterDays": {
@@ -2452,7 +2436,6 @@
  "fewCardsLine": "When one card isn't enough to explain it",
  "firstLabel": "First",
  "forYouNow": "For you, right now",
- "goNarrow": "Go narrow when you're sure: it pays three times as much.",
  "hardBadge": "Hard",
  "hidesIn": "In {where}",
  "@hidesIn": {
@@ -2494,7 +2477,6 @@
  "knewIt": "Knew it",
  "less": "Less",
  "lookFirst": "Look at the chart before you believe the headline.",
- "markTried": "Tried it",
  "minutesLabel": "{n} min",
  "@minutesLabel": {
   "placeholders": {
@@ -2512,24 +2494,11 @@
   }
  },
  "modeBigger": "Which is bigger?",
- "modeBiggerLine": "Two figures you can work out. Tap the bigger one",
  "modeCloser": "Closer, closer",
- "modeCloserLine": "Three steps of more or less to close in on the number",
  "modePick": "Pick one",
- "modePickLine": "Three amounts. Commit before you open the card",
  "modeRange": "Bet a range",
- "modeRangeLine": "The narrower you go, the more it pays, if you're right",
  "modeSlide": "Move it",
- "modeSlideLine": "Set your answer first, then see how far off you were",
  "modeStake": "Place your bet",
- "modeStakeLine": "{n} points a day. Win and you double your stake",
- "@modeStakeLine": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
  "monthShelfLine": "A new subject every month, the same for everyone",
  "moodMeta": "{cards, plural, =1{1 card} other{{cards} cards}} · {minutes} min",
  "@moodMeta": {
@@ -2554,10 +2523,20 @@
    }
   }
  },
- "moveComparedToWhat": "Compared to what",
- "moveComparedToWhatLine": "A change means nothing without a control",
- "moveSampling": "Sampling",
- "moveSamplingLine": "Who ended up in the sample decides what it can say",
+ "moveComparedToWhat": "Compared to what?",
+ "moveComparedToWhatLine": "A change means nothing without something to compare it with",
+ "askingTitle": "A question from every subject",
+ "askingIn": "Questions in {subject}",
+ "@askingIn": {
+  "placeholders": {
+   "subject": {
+    "type": "String"
+   }
+  }
+ },
+ "askingLine": "The same for everyone. Answer first, then see why",
+ "moveSampling": "Who got counted?",
+ "moveSamplingLine": "Who ends up in a study decides what it can tell you",
  "mythDeckHint": "{at} of {of} · swipe to turn it over",
  "@mythDeckHint": {
   "placeholders": {
@@ -2587,14 +2566,6 @@
  "notSureTitle": "Not sure where to start?",
  "openWord": "Open",
  "pickOneFirst": "Pick one first",
- "pointsToday": "+{n} today",
- "@pointsToday": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
  "puzzleOfTheDay": "Puzzle of the day",
  "rangeWidth": "±{w} · {pts} pts",
  "@rangeWidth": {
@@ -2675,15 +2646,6 @@
  "sixtyStart": "Start",
  "sixtyTimeUp": "before the time ran out",
  "sixtyTitle": "Sixty seconds",
- "slideAverage": "{n, plural, =0{Spot on, on average.} =1{1 point off, on average.} other{{n} points off, on average.}}",
- "@slideAverage": {
-  "placeholders": {
-   "n": {
-    "type": "int"
-   }
-  }
- },
- "slideNote": "Set it, check it. How far off you were is the point.",
  "slideOff": "{n, plural, =0{Spot on.} =1{You were 1 point off.} other{You were {n} points off.}}",
  "@slideOff": {
   "placeholders": {
@@ -2692,7 +2654,6 @@
    }
   }
  },
- "slipEmpty": "No bets yet. Each one you place lands here.",
  "stakeLabel": "Stake",
  "stepOf": "Step {at} of {of}",
  "@stepOf": {

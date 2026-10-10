@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -206,39 +208,45 @@ void main() {
     await _reach(tester, find.byKey(const ValueKey('work-wallet')));
     expect(find.text('100'), findsWidgets);
 
-    // The chips are a row that scrolls, and which one is lit first turns
-    // with the day: bring "Place your bet" in, unless it is already on.
-    final Finder chip = find.byKey(const ValueKey('work-stake-off'));
-    if (find.byKey(const ValueKey('work-stake-on')).evaluate().isEmpty) {
-      final Finder chips = find
-          .ancestor(
-            of: _keyed(
-              (k) =>
-                  k.startsWith('work-') &&
-                  (k.endsWith('-on') || k.endsWith('-off')),
-            ),
-            matching: find.byWidgetPredicate(
-              (w) => w is Scrollable && w.axisDirection == AxisDirection.right,
-            ),
-          )
-          .first;
-      for (var i = 0; i < 12 && chip.evaluate().isEmpty; i++) {
-        await tester.drag(chips, const Offset(-90, 0));
-        await _settle(tester);
-      }
-      // Built is not on screen: the last chip can sit past the edge.
-      await tester.ensureVisible(chip);
-      await _settle(tester);
-      await tester.tap(chip);
+    // Every way of playing is on one row, in the day's order: move along it
+    // until a bet is on screen. By the row's own position, so no drag is
+    // ever short enough to be a tap on a card.
+    final ScrollPosition row = tester
+        .state<ScrollableState>(
+          find
+              .descendant(
+                of: find.byKey(const ValueKey('mix-work')),
+                matching: find.byWidgetPredicate(
+                  (w) =>
+                      w is Scrollable && w.axisDirection == AxisDirection.right,
+                ),
+              )
+              .first,
+        )
+        .position;
+    final Finder card = _keyed((k) => RegExp(r'^work-stake-\d+$').hasMatch(k));
+    bool onScreen() =>
+        card.evaluate().isNotEmpty &&
+        tester.getRect(card.first).left >= 0 &&
+        tester.getRect(card.first).right <= 402;
+    for (var i = 0; i < 40 && !onScreen(); i++) {
+      row.jumpTo(math.min(row.pixels + 150, row.maxScrollExtent));
       await _settle(tester);
     }
-    expect(find.byKey(const ValueKey('work-stake-on')), findsOneWidget);
+    expect(onScreen(), isTrue);
+    // The card says what it is before anything is played on it.
+    expect(
+      find.descendant(of: card.first, matching: find.text('PLACE YOUR BET')),
+      findsOneWidget,
+    );
 
-    final Finder option = _keyed((k) => RegExp(r'^stake-.*-o0$').hasMatch(k));
-    await tester.tap(option.first);
+    Finder inCard(String pattern) => find.descendant(
+      of: card.first,
+      matching: _keyed((k) => RegExp(pattern).hasMatch(k)),
+    );
+    await tester.tap(inCard(r'^stake-.*-o0$'));
     await _settle(tester);
-    final Finder bet = _keyed((k) => k.startsWith('stake-bet-'));
-    await tester.tap(bet.first);
+    await tester.tap(inCard(r'^stake-bet-'));
     await _settle(tester);
 
     // Ten points staked: won, a hundred and ten; lost, ninety.

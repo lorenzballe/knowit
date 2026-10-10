@@ -132,12 +132,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sameForEveryone => '人人相同，仅限今天';
 
   @override
-  String get onesThatAskTheMost => '最爱发问的卡片';
-
-  @override
-  String get acrossEveryone => '来自所有人，而不只是你的组合';
-
-  @override
   String becauseSitsAtFull(String name) {
     return '因为 $name 已调到最高';
   }
@@ -1215,13 +1209,13 @@ class AppLocalizationsZh extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n张卡片回来了 — 再答一次',
+      other: '几天前答过的$n张卡片回来了，看看你还记不记得',
     );
     return '$_temp0';
   }
 
   @override
-  String get cameBack => '回来的卡片';
+  String get cameBack => '还记得吗？';
 
   @override
   String get holdACardYouLike => '喜欢就长按';
@@ -1604,7 +1598,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get themePractical => '今天就能用';
 
   @override
-  String get themePracticalLine => '今晚之前可以试试的事';
+  String get themePracticalLine => '今晚之前可以试试，或者聊天时说起的事';
 
   @override
   String get themeOrigins => '它从哪里来';
@@ -1628,7 +1622,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get themeWorkItOut => '算一算';
 
   @override
-  String get themeWorkItOutLine => '心算得出的数字';
+  String get themeWorkItOutLine => '在卡片揭晓之前，猜猜这个数字';
 
   @override
   String get themeSeen => '一看就懂';
@@ -2281,9 +2275,6 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get aMove => '一招';
-
-  @override
   String get anotherOne => '换一张';
 
   @override
@@ -2303,21 +2294,10 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get betSlip => '你的投注单';
-
-  @override
   String get betWord => '下注';
 
   @override
   String get biggerLabel => '更大';
-
-  @override
-  String get biggerNote => '每个数字都是某张卡片的答案。';
-
-  @override
-  String biggerScore(int right, int asked) {
-    return '$asked 题答对 $right 题。';
-  }
 
   @override
   String get biggerYouGotIt => '更大 · 答对了';
@@ -2502,9 +2482,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get forYouNow => '此刻为你';
 
   @override
-  String get goNarrow => '有把握就选窄的：奖励是三倍。';
-
-  @override
   String get hardBadge => '难';
 
   @override
@@ -2543,9 +2520,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get lookFirst => '先看图表，再信标题。';
 
   @override
-  String get markTried => '试过了';
-
-  @override
   String minutesLabel(int n) {
     return '$n 分钟';
   }
@@ -2559,39 +2533,19 @@ class AppLocalizationsZh extends AppLocalizations {
   String get modeBigger => '哪个更大？';
 
   @override
-  String get modeBiggerLine => '两个可以估算的数字，点更大的那个';
-
-  @override
   String get modeCloser => '越来越近';
-
-  @override
-  String get modeCloserLine => '用三步“多还是少”逼近这个数字';
 
   @override
   String get modePick => '选一个';
 
   @override
-  String get modePickLine => '三个数值，先选定再翻开卡片';
-
-  @override
   String get modeRange => '押一个区间';
-
-  @override
-  String get modeRangeLine => '越窄赔率越高，前提是猜中';
 
   @override
   String get modeSlide => '拖一拖';
 
   @override
-  String get modeSlideLine => '先定下答案，再看差了多少';
-
-  @override
   String get modeStake => '下注吧';
-
-  @override
-  String modeStakeLine(int n) {
-    return '每天 $n 分，赢了押注翻倍';
-  }
 
   @override
   String get monthShelfLine => '每月换一个学科，人人相同';
@@ -2624,16 +2578,27 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get moveComparedToWhat => '和什么比';
+  String get moveComparedToWhat => '和什么比？';
 
   @override
-  String get moveComparedToWhatLine => '没有对照组，变化说明不了什么';
+  String get moveComparedToWhatLine => '没有可以比较的东西，变化说明不了什么';
 
   @override
-  String get moveSampling => '抽样';
+  String get askingTitle => '每个主题一道题';
 
   @override
-  String get moveSamplingLine => '谁进了样本，决定了样本能说明什么';
+  String askingIn(String subject) {
+    return '$subject的题目';
+  }
+
+  @override
+  String get askingLine => '人人相同。先作答，再看原因';
+
+  @override
+  String get moveSampling => '谁被算进去了？';
+
+  @override
+  String get moveSamplingLine => '研究里有谁，决定了它能告诉你什么';
 
   @override
   String mythDeckHint(int at, int of) {
@@ -2665,11 +2630,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get pickOneFirst => '先选一个';
-
-  @override
-  String pointsToday(int n) {
-    return '今天 +$n';
-  }
 
   @override
   String get puzzleOfTheDay => '今日谜题';
@@ -2767,20 +2727,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get sixtyTitle => '六十秒';
 
   @override
-  String slideAverage(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '平均差 $n 个百分点。',
-      zero: '平均分毫不差。',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get slideNote => '设定，再核对。重点是差了多少。';
-
-  @override
   String slideOff(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -2790,9 +2736,6 @@ class AppLocalizationsZh extends AppLocalizations {
     );
     return '$_temp0';
   }
-
-  @override
-  String get slipEmpty => '还没有下注，下的每一注都会出现在这里。';
 
   @override
   String get stakeLabel => '押注';

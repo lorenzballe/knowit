@@ -132,12 +132,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get sameForEveryone => '모두에게 같고, 오늘만';
 
   @override
-  String get onesThatAskTheMost => '가장 많이 묻는 카드';
-
-  @override
-  String get acrossEveryone => '내 믹스만이 아니라 모두에게서';
-
-  @override
   String becauseSitsAtFull(String name) {
     return '$name이(가) 최대이기 때문에';
   }
@@ -1222,13 +1216,13 @@ class AppLocalizationsKo extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '카드 $n장이 돌아왔어요 — 다시 답해 보세요',
+      other: '며칠 전에 답한 카드 $n장이 돌아왔어요. 아직 기억하는지 확인해 보세요',
     );
     return '$_temp0';
   }
 
   @override
-  String get cameBack => '돌아온 카드';
+  String get cameBack => '아직 기억나요?';
 
   @override
   String get holdACardYouLike => '마음에 들면 길게 누르기';
@@ -1611,7 +1605,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get themePractical => '오늘 써먹기';
 
   @override
-  String get themePracticalLine => '오늘 밤 전에 해 볼 것';
+  String get themePracticalLine => '오늘 밤 전에 해 보거나 대화에서 꺼내 볼 것';
 
   @override
   String get themeOrigins => '어디서 왔을까';
@@ -1635,7 +1629,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get themeWorkItOut => '계산해 보기';
 
   @override
-  String get themeWorkItOutLine => '머릿속으로 구할 숫자';
+  String get themeWorkItOutLine => '카드가 알려 주기 전에 숫자를 맞혀 보세요';
 
   @override
   String get themeSeen => '눈으로 보기';
@@ -2283,9 +2277,6 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get aMove => '한 수';
-
-  @override
   String get anotherOne => '다른 카드';
 
   @override
@@ -2305,21 +2296,10 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get betSlip => '내 베팅 내역';
-
-  @override
   String get betWord => '걸기';
 
   @override
   String get biggerLabel => '더 큼';
-
-  @override
-  String get biggerNote => '모든 숫자는 카드의 답입니다.';
-
-  @override
-  String biggerScore(int right, int asked) {
-    return '$asked개 중 $right개 맞혔어요.';
-  }
 
   @override
   String get biggerYouGotIt => '더 큼 · 맞혔어요';
@@ -2504,9 +2484,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get forYouNow => '지금 당신을 위해';
 
   @override
-  String get goNarrow => '확신이 있으면 좁게: 세 배를 받아요.';
-
-  @override
   String get hardBadge => '어려움';
 
   @override
@@ -2545,9 +2522,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get lookFirst => '제목을 믿기 전에 그래프를 보세요.';
 
   @override
-  String get markTried => '해 봤어요';
-
-  @override
   String minutesLabel(int n) {
     return '$n분';
   }
@@ -2561,39 +2535,19 @@ class AppLocalizationsKo extends AppLocalizations {
   String get modeBigger => '어느 쪽이 클까?';
 
   @override
-  String get modeBiggerLine => '짐작할 수 있는 두 숫자. 큰 쪽을 누르세요';
-
-  @override
   String get modeCloser => '점점 가까이';
-
-  @override
-  String get modeCloserLine => '많다·적다 세 번으로 숫자에 다가가기';
 
   @override
   String get modePick => '하나 고르기';
 
   @override
-  String get modePickLine => '세 개의 값. 카드를 열기 전에 정하세요';
-
-  @override
   String get modeRange => '범위에 걸기';
-
-  @override
-  String get modeRangeLine => '좁을수록 더 받아요, 맞히면요';
 
   @override
   String get modeSlide => '움직이기';
 
   @override
-  String get modeSlideLine => '먼저 답을 정하고, 얼마나 빗나갔는지 보세요';
-
-  @override
   String get modeStake => '베팅하기';
-
-  @override
-  String modeStakeLine(int n) {
-    return '하루 $n점. 맞히면 건 점수가 두 배';
-  }
 
   @override
   String get monthShelfLine => '매달 새로운 주제, 모두에게 같아요';
@@ -2626,16 +2580,27 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get moveComparedToWhat => '무엇과 비교해서';
+  String get moveComparedToWhat => '무엇과 비교해서?';
 
   @override
-  String get moveComparedToWhatLine => '대조군이 없으면 변화는 아무 의미가 없어요';
+  String get moveComparedToWhatLine => '비교할 대상이 없으면 변화는 아무 의미가 없어요';
 
   @override
-  String get moveSampling => '표본';
+  String get askingTitle => '주제마다 한 문제';
 
   @override
-  String get moveSamplingLine => '누가 표본에 들어갔는지가 말할 수 있는 것을 정해요';
+  String askingIn(String subject) {
+    return '$subject 문제';
+  }
+
+  @override
+  String get askingLine => '모두에게 같아요. 먼저 답하고, 이유는 그다음에';
+
+  @override
+  String get moveSampling => '누가 포함됐을까?';
+
+  @override
+  String get moveSamplingLine => '연구에 누가 들어갔는지가 그 연구가 말해 줄 수 있는 것을 정해요';
 
   @override
   String mythDeckHint(int at, int of) {
@@ -2667,11 +2632,6 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get pickOneFirst => '먼저 하나 고르세요';
-
-  @override
-  String pointsToday(int n) {
-    return '오늘 +$n';
-  }
 
   @override
   String get puzzleOfTheDay => '오늘의 퍼즐';
@@ -2769,20 +2729,6 @@ class AppLocalizationsKo extends AppLocalizations {
   String get sixtyTitle => '60초';
 
   @override
-  String slideAverage(int n) {
-    String _temp0 = intl.Intl.pluralLogic(
-      n,
-      locale: localeName,
-      other: '평균 $n포인트 차이.',
-      zero: '평균적으로 정확해요.',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get slideNote => '정하고 확인하세요. 중요한 건 얼마나 빗나갔는지예요.';
-
-  @override
   String slideOff(int n) {
     String _temp0 = intl.Intl.pluralLogic(
       n,
@@ -2792,9 +2738,6 @@ class AppLocalizationsKo extends AppLocalizations {
     );
     return '$_temp0';
   }
-
-  @override
-  String get slipEmpty => '아직 베팅이 없어요. 걸면 여기에 쌓여요.';
 
   @override
   String get stakeLabel => '걸 점수';
