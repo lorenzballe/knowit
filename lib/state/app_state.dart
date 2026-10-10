@@ -99,6 +99,7 @@ class AppState extends ChangeNotifier {
   static const _kJudgements = 'knowit.judgements';
   static const _kTheme = 'knowit.theme';
   static const _kPushAsked = 'knowit.pushAsked';
+  static const _kReviewAsked = 'knowit.reviewAsked';
   static const _kPushTokens = 'knowit.pushTokens';
 
   late SharedPreferences _prefs;
@@ -223,6 +224,11 @@ class AppState extends ChangeNotifier {
   /// prompt and no second chance, so this is asked once and remembered.
   bool pushAsked = false;
 
+  /// Whether the store's rating prompt has been asked for, ever. Once is the
+  /// whole budget: Apple shows it at most three times a year whatever an
+  /// app asks, and a reader asked twice is a reader nagged.
+  bool reviewAsked = false;
+
   /// Every address the account can be reached at, this phone's included.
   /// Kept whole rather than reduced to this device, so backing up does not
   /// quietly unsubscribe the reader's other phone.
@@ -316,6 +322,7 @@ class AppState extends ChangeNotifier {
     ownIdsToday = (_prefs.getStringList(_kOwnIds) ?? []).toSet();
     answers = _decodeAnswers(_prefs.getString(_kAnswers));
     pushAsked = _prefs.getBool(_kPushAsked) ?? false;
+    reviewAsked = _prefs.getBool(_kReviewAsked) ?? false;
     pushTokens = _prefs.getStringList(_kPushTokens) ?? [];
     judgements = _decodeJudgements(_prefs.getString(_kJudgements));
     deckHistory = _decodeHistory(_prefs.getString(_kDeckHistory));
@@ -2294,6 +2301,7 @@ class AppState extends ChangeNotifier {
     themeMode = ThemeMode.dark;
     seenIds = {};
     pushAsked = false;
+    reviewAsked = false;
     pushTokens = [];
     ownIdsToday = {};
     reviewIdsToday = {};
@@ -2312,6 +2320,21 @@ class AppState extends ChangeNotifier {
   /// about notifications yet. Asking before that spends the single prompt
   /// iOS allows on someone who does not yet know what the app is.
   bool get shouldAskForPush => !pushAsked && completedDates.isNotEmpty;
+
+  /// True at the one moment worth asking the store for a rating: today's
+  /// five just read, a week of days in a row behind them, the notification
+  /// prompt already answered on an earlier day, and never asked before. A
+  /// reader who kept seven days has decided the app is theirs; the stars
+  /// that come in the first week otherwise come mostly from those who left.
+  bool get shouldAskForReview =>
+      !reviewAsked && pushAsked && dayClosed && liveStreak >= 7;
+
+  /// Noted before the prompt is shown, so a failure to show it is not a
+  /// reason to ask again.
+  Future<void> notedReviewAsked() async {
+    reviewAsked = true;
+    await _prefs.setBool(_kReviewAsked, true);
+  }
 
   /// Records the answer to that question, whatever it was. A refusal is
   /// remembered as firmly as a yes: asking twice is not possible anyway.

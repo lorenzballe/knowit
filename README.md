@@ -1388,8 +1388,9 @@ English. `flutter gen-l10n` turns the files into `AppLocalizations`, and
 
 The cards are not translated here. They are content, written by the model,
 and they will be translated where they are written; the same goes for the
-subject names, which are data the dealer matches on. The debug panel and
-the page on how pills are written stay English on purpose.
+subject names, which are data the dealer matches on. The debug panel stays
+English on purpose; the page on how cards are written is translated, like
+the rest.
 
 A phone set to a language the app does not have gets English. A string a
 language has not translated yet gets English on its own, so a language can
@@ -1441,6 +1442,14 @@ instead of the app — day two, that the freeze is holding; day seven, the
 card they were sure and wrong about; day fourteen, what two weeks came to —
 never "we miss you", and after a fortnight it stops. Re-planned at every
 launch, in the phone's language.
+
+**The stars, asked once.** The store's own rating sheet (`in_app_review`)
+is asked for one time ever: at the end of a seventh day in a row, a moment
+after the shelf lands, never in the session the notification prompt was
+shown (`AppState.shouldAskForReview`). Nothing of the app's is asked
+first — Google forbids a question before its sheet, Apple allows only its
+own — and Apple decides whether to show it at all. Without it, the stars of
+a launch week come mostly from the readers who left.
 
 **The rung, where the day happened.** The ladder lives on the profile,
 where nobody looks at the end of a day. So the finished day's one button
