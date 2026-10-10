@@ -1008,8 +1008,12 @@ dashboards, and has to agree with three names here.
   plan on sale, the buy button unlocks locally only on the web preview and
   in debug builds, so their gated screens can be seen; a store build says
   the purchase did not go through. And the developer tools at the foot of
-  the profile, which can switch Astute+ on, stay out of any build that goes
-  to review or to readers: build it with `--dart-define=DEBUG_TOOLS=false`.
+  the profile, which can switch Astute+ on, never reach a reader on an
+  iPhone: it shows them only on an install from TestFlight or Xcode. The
+  Android build for Google Play has to be made with
+  `--dart-define=DEBUG_TOOLS=false`. Apple's reviewers install with a
+  sandbox receipt too, so they do see them (see *Debug tools*, under *What
+  is not real yet*).
 - **A way out of the account**, which Apple requires inside any app that
   makes accounts (5.1.1(v)): *Delete account* at the foot of the profile's
   account rows. Whoever signed in with Apple or Google confirms with the
@@ -1184,6 +1188,22 @@ On the web the plugin brings no library of its own, so
 Nothing waits on it: a blocked CDN or a dead network costs the preview its
 numbers and not its first paint.
 
+**What the App Store is told.** `ios/Runner/PrivacyInfo.xcprivacy` says the
+same in Apple's terms, for the privacy report Xcode makes from an archive and
+the answers App Store Connect asks for: the account id; a device id (the
+notification token, and PostHog's id for the install); the email and the
+name a sign-in brings, and the name chosen in the app; the friend codes,
+which Apple counts as contacts; what the reader does, for the backup, the
+dealer and PostHog; the reasons written on cards and the notes on reports;
+purchases; the country and city PostHog works out from the IP address; and
+crashes, timings and other diagnostics. All of it is linked to the account,
+and none of it is used to track. It also says why the app reads
+`UserDefaults`: its own, through shared_preferences (`CA92.1`), and the App
+Group it writes the widget's data into (`1C8F.1`). The widget has a manifest
+of its own, which collects nothing and gives the same two reasons. Something
+new sent anywhere goes into the manifest and into `site/privacy.html`
+together.
+
 ## The mix, one layer down
 
 Artboard 86a, and the third screen of the onboarding. A subject is too coarse
@@ -1284,10 +1304,20 @@ store through RevenueCat rather than from a bool the app wrote to itself.
 and restart, toggle the plan, and a readout of what the app knows about
 itself: whether Firebase started and why not, the account id, the last auth
 error, whether the store answered, and whether PostHog is sending, opted out
-or not running at all. It is on in release builds on purpose,
-because TestFlight builds are release builds and that is where it is needed.
-One line in `lib/debug_flags.dart`, or `--dart-define=DEBUG_TOOLS=false`,
-turns it off.
+or not running at all. It is needed in release builds, because TestFlight
+builds are release builds, and the build testers get is the very binary then
+submitted to the App Store. So an iPhone decides at launch (`readDebugTools`
+in `lib/debug_flags.dart`, from `main()`): it asks `AppDelegate.swift` on
+`astut/install` whether the install carries a sandbox receipt, which
+TestFlight's and Xcode's do and the App Store's does not, and shows the
+section only if it does. No answer within 300 ms is a no. Apple's reviewers
+install with a sandbox receipt as well, so they see the section too. Every
+debug build has it. `--dart-define=DEBUG_TOOLS=false` takes it out of any
+build, except that the site, built that way, still shows it for a visit
+whose address says `?debug`. Android asks nothing, so the build for Google
+Play must be made with `DEBUG_TOOLS=false`. The decision itself is
+`debugToolsFor`, a pure function tested case by case in
+`test/debug_tools_test.dart`.
 
 ## What the evidence says, and what follows from it
 

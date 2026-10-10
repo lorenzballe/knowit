@@ -48,6 +48,23 @@ import WidgetKit
       }
     }
     WidgetOpens.channel = channel
+
+    // Whether this install came from TestFlight, for the profile's developer
+    // tools (lib/debug_flags.dart). Testers get the very binary that is then
+    // submitted to the App Store, so nothing it was built with can tell their
+    // phones from a reader's: only the install can.
+    let install = FlutterMethodChannel(
+      name: "astut/install",
+      binaryMessenger: engineBridge.applicationRegistrar.messenger()
+    )
+    install.setMethodCallHandler { call, result in
+      switch call.method {
+      case "isTestFlight":
+        result(AppDelegate.isTestFlight)
+      default:
+        result(FlutterMethodNotImplemented)
+      }
+    }
   }
 
   /// Everything the app handed over, under the key it came with: text,
@@ -97,6 +114,17 @@ import WidgetKit
     case "AstutShelf": return "shelf"
     default: return kind
     }
+  }
+
+  /// Whether this install's App Store receipt is a sandbox one, as every
+  /// TestFlight install's is. A build run from Xcode has one too, and so does
+  /// the copy Apple's reviewers install, since review buys in the sandbox as
+  /// well; an install from the App Store has a "receipt" instead. The
+  /// receipt's address is enough, and it is known at once on every iOS the
+  /// app runs on. AppTransaction, which replaces it from iOS 18, answers only
+  /// asynchronously, and only from iOS 16.
+  static var isTestFlight: Bool {
+    Bundle.main.appStoreReceiptURL?.lastPathComponent == "sandboxReceipt"
   }
 }
 
