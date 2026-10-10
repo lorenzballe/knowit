@@ -37,12 +37,32 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   the cards that flip, the plan picker and the questions. Today's question
   is shown live from `/widget/days.json`, the file the widget reads, with
   the edition in the first screen's kicker and the time to the next one. It
-  presents Astute on both stores, with Apple's and Google's own badges: a
-  phone's Download goes straight to its own store, a computer's to a code to
-  scan with the phone, which opens `/get` and from there the right store. It
+  presents Astute on the App Store, with Apple's own badge, and says Android
+  is coming: no page links to Google Play until the listing is live. An
+  iPhone's Download goes straight to the App Store, an Android phone's to
+  `/get`, which says the app is not there yet, and a computer's to a code to
+  scan with the phone, which opens `/get` and from there the App Store. It
   reads fully without JavaScript, and without motion for anyone who has
   asked their system for less. The screens in `site/assets/` are
   `tool/shots/` at 840×1826, as WebP.
+- **What the site measures**: the pages read and the store buttons pressed,
+  `$pageview` and `store clicked` (`store`, `page`, `ref`), into the same
+  PostHog project as the app, from `site/assets/main.js`. Nothing is kept on
+  the device: persistence is in memory, so there is no cookie and no
+  storage, and every page is a new anonymous visitor; no autocapture, no
+  replay, no flags or remote settings. A browser sending Do Not Track or
+  Global Privacy Control does not even fetch the library. posthog-js is the
+  slim build, vendored at a pinned version under `site/assets/vendor/`
+  (Apache-2.0 and MIT, its source-map comment dropped), so the site talks to
+  no PostHog host but `eu.i.posthog.com`. The app's share links carry
+  `?ref=share_day`, `share_card` or `share_record`: the ref goes on every
+  event, on the links to the site's other pages, so a visit keeps it, and
+  onto the store links as their campaign — `ct` on the App Store's, the
+  page's name when there is no ref, and the install referrer on Google
+  Play's, once there are any. Apple counts a `ct` only beside the account's
+  provider token, `APP_STORE_PROVIDER_TOKEN` in `tool/site/chrome.py`, which
+  is empty until the owner sets it; the comment there says where it is. The
+  web app under `/app/` has its own PostHog, below, and none of this.
 - `/privacy`, `/terms` and `/support` — the pages the stores ask for — share
   its nav, footer and `site/assets/site.css`: night paper, cream ink,
   Fraunces and Figtree served from the site itself, and on a wide screen a
@@ -51,7 +71,8 @@ GitHub Pages (`.github/workflows/deploy.yml`):
   markers each page carries; the deploy stops if a page has drifted. Astute
   is published by TheBaleCompany, and every page says so.
 - `robots.txt`, `sitemap.xml`, `manifest.webmanifest` (which names both
-  store listings) and `assets/og.png`, the picture a shared link shows.
+  store listings, the Play one ahead of its day) and `assets/og.png`, the
+  picture a shared link shows.
 - `/app/` is the app, built for the web: the live preview.
 - `/cards/cards.json` is the card bank the app refreshes from, and
   `/widget/days.json` today's shelf the iPhone widgets fall back on, with

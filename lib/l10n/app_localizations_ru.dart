@@ -934,7 +934,8 @@ class AppLocalizationsRu extends AppLocalizations {
   String get swipeToSeeMore => 'Листай дальше';
 
   @override
-  String get tagline => 'Пять умных вещей в день, готовых для разговора';
+  String get tagline =>
+      'Пойми, почему всё так, и насколько можно доверять тому, что знаешь';
 
   @override
   String get introTopicsTitle => 'Девятнадцать тем, пять карточек';
@@ -944,11 +945,11 @@ class AppLocalizationsRu extends AppLocalizations {
       'Написаны заранее моделью, и каждая сверена со своим источником.';
 
   @override
-  String get introQuestionTitle => 'Вопрос, потом ответ';
+  String get introQuestionTitle => 'Вопрос, уверенность, потом — почему';
 
   @override
   String get introQuestionLine =>
-      'В каждой карточке — та самая фраза, которую стоит сказать вслух.';
+      'Сначала отметь уверенность. Со временем узнаешь цену своему «точно».';
 
   @override
   String get introMixTitle => 'Микс выбираешь ты';

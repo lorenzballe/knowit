@@ -891,7 +891,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get swipeToSeeMore => 'Wischen für mehr';
 
   @override
-  String get tagline => 'Fünf kluge Dinge am Tag, bereit fürs nächste Gespräch';
+  String get tagline =>
+      'Versteh das Warum der Dinge und wie weit du deinem Wissen trauen kannst';
 
   @override
   String get introTopicsTitle => 'Neunzehn Fächer, fünf Karten';
@@ -901,11 +902,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Vorab von einem Modell geschrieben, und jede an ihrer Quelle geprüft.';
 
   @override
-  String get introQuestionTitle => 'Eine Frage, dann die Antwort';
+  String get introQuestionTitle => 'Eine Frage, wie sicher, dann das Warum';
 
   @override
   String get introQuestionLine =>
-      'Jede Karte trägt den einen Satz, der es wert ist, laut gesagt zu werden.';
+      'Sag erst, wie sicher du bist. Mit der Zeit siehst du, was dein „sicher“ wert ist.';
 
   @override
   String get introMixTitle => 'Du wählst den Mix';

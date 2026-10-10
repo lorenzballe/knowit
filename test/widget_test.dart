@@ -381,7 +381,9 @@ void main() {
 
     expect(find.text('Astute'), findsOneWidget);
     expect(
-      find.text('Five smart things a day, ready to use in conversation'),
+      find.text(
+        'Learn the why behind things, and how far to trust what you know',
+      ),
       findsOneWidget,
     );
     expect(find.text('Continue with Apple'), findsOneWidget);
@@ -5077,7 +5079,7 @@ void main() {
       const titles = [
         'Astute',
         'Nineteen topics, five cards',
-        'A question, then the answer',
+        'A question, how sure, then why',
         'You choose the mix',
         'Two minutes a day',
       ];
@@ -5140,14 +5142,17 @@ void main() {
       await pumpIntro(tester);
 
       const copy = [
-        ('Astute', 'Five smart things a day, ready to use in conversation'),
+        (
+          'Astute',
+          'Learn the why behind things, and how far to trust what you know',
+        ),
         (
           'Nineteen topics, five cards',
           'Written ahead by a model, and every one checked against its source.',
         ),
         (
-          'A question, then the answer',
-          'Every card carries the one line that makes it worth saying out loud.',
+          'A question, how sure, then why',
+          'Say how sure you are first. In time you see what your “sure” is worth.',
         ),
         (
           'You choose the mix',

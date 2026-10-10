@@ -870,7 +870,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get swipeToSeeMore => '밀어서 더 보기';
 
   @override
-  String get tagline => '하루 다섯 가지 똑똑한 이야기, 대화에서 바로 쓸 수 있게';
+  String get tagline => '왜 그런지 배우고, 내가 아는 것을 얼마나 믿어도 될지 알아보세요';
 
   @override
   String get introTopicsTitle => '열아홉 개 주제, 다섯 장의 카드';
@@ -879,10 +879,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get introTopicsLine => '모델이 미리 쓰고, 한 장 한 장 출처와 대조합니다.';
 
   @override
-  String get introQuestionTitle => '질문, 그리고 답';
+  String get introQuestionTitle => '질문, 확신 정도, 그리고 이유';
 
   @override
-  String get introQuestionLine => '모든 카드에는 소리 내어 말할 가치가 있는 한 문장이 있습니다.';
+  String get introQuestionLine => '답을 보기 전에 확신 정도를 고릅니다. 차츰 내 ‘확신’의 가치가 보입니다.';
 
   @override
   String get introMixTitle => '믹스는 당신이 정합니다';

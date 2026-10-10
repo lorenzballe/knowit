@@ -325,6 +325,9 @@ body.menu-open { overflow: hidden; }
 .stores.large img { height: 56px; }
 .stores.small img { height: 44px; }
 .stores.center { justify-content: center; }
+/* Where Google's badge goes once Astute is on Google Play: until then, a
+   line saying so, and no badge for a listing that is not there yet. */
+.stores-soon { font: 500 13px/1.3 var(--font-text); color: var(--cream-50); }
 @media (hover: hover) {
   .stores a { transition: translate .25s var(--ease), box-shadow .25s var(--ease); }
   .stores a:hover { translate: 0 -2px; box-shadow: 0 16px 30px -14px rgba(0, 0, 0, .85); }

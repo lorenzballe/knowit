@@ -1269,7 +1269,7 @@ abstract class AppLocalizations {
   /// No description provided for @tagline.
   ///
   /// In en, this message translates to:
-  /// **'Five smart things a day, ready to use in conversation'**
+  /// **'Learn the why behind things, and how far to trust what you know'**
   String get tagline;
 
   /// No description provided for @introTopicsTitle.
@@ -1287,13 +1287,13 @@ abstract class AppLocalizations {
   /// No description provided for @introQuestionTitle.
   ///
   /// In en, this message translates to:
-  /// **'A question, then the answer'**
+  /// **'A question, how sure, then why'**
   String get introQuestionTitle;
 
   /// No description provided for @introQuestionLine.
   ///
   /// In en, this message translates to:
-  /// **'Every card carries the one line that makes it worth saying out loud.'**
+  /// **'Say how sure you are first. In time you see what your “sure” is worth.'**
   String get introQuestionLine;
 
   /// No description provided for @introMixTitle.
