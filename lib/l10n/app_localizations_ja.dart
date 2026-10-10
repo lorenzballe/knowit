@@ -2815,7 +2815,112 @@ class AppLocalizationsJa extends AppLocalizations {
   String get throughTime => '時代をめぐる';
 
   @override
-  String get throughTimeLine => '古代から今年まで。ドラッグして旅しよう';
+  String get throughTimeLine => '古代から今年まで。ドラッグするか、年を入力しよう';
+
+  @override
+  String leanHint(String or) {
+    return '「$or」を自分の立場までスライド';
+  }
+
+  @override
+  String leanHow(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      '1': '少し',
+      '2': 'どちらかといえば',
+      '3': 'はっきり',
+      'other': '完全に',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String leanSays(String side, String how) {
+    return '$side（$how）';
+  }
+
+  @override
+  String leanTook(String side) {
+    return '選んだのは$side';
+  }
+
+  @override
+  String leanVerdict(String says) {
+    return '$says。反対側の意見はカードで。';
+  }
+
+  @override
+  String get spotTitle => '間違いを見つけよう';
+
+  @override
+  String get spotLine => '3つは正しく、1つは間違い。';
+
+  @override
+  String get spotPrompt => '間違いだと思うものをタップ';
+
+  @override
+  String get spotConfirm => 'これが間違い';
+
+  @override
+  String get spotFound => '正解。残りの3つは正しい。';
+
+  @override
+  String get spotMissed => 'それは正しい。間違いは取り消し線のもの。';
+
+  @override
+  String get spotWhy => 'どれかをタップして理由を読もう';
+
+  @override
+  String get spotYours => 'あなたの選択';
+
+  @override
+  String get yearHint => '年を入力';
+
+  @override
+  String get yearAd => '西暦';
+
+  @override
+  String get yearBc => '紀元前';
+
+  @override
+  String yearNamed(String year) {
+    return '$year年';
+  }
+
+  @override
+  String yearAdOf(String year) {
+    return '西暦$year年';
+  }
+
+  @override
+  String yearBcOf(String year) {
+    return '紀元前$year年';
+  }
+
+  @override
+  String get yearGo => 'この年へ';
+
+  @override
+  String yearNearest(String year) {
+    return '$yearに近い順';
+  }
+
+  @override
+  String yearNoneNamed(String year) {
+    return '$yearに近い年を挙げるカードはありません。同じ時代のカードです。';
+  }
+
+  @override
+  String yearNoAge(String year) {
+    return '今日は$yearごろのカードがありません。いちばん近い時代です。';
+  }
+
+  @override
+  String yearFuture(String year) {
+    return '$yearはまだ先。今世紀をどうぞ。';
+  }
+
+  @override
+  String get yearZero => '0年はありません。紀元前1年か西暦1年を試して。';
 
   @override
   String get todayLabel => '今日';

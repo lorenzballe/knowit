@@ -197,8 +197,13 @@ class _AnsweredLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (!pill.isGraded) {
+      // And how far, when the side was leant to on a shelf.
+      final int? level = leanLevel(given);
+      final String took = context.l10n.youTookTheSide(
+        pill.challenge.describe(given.response),
+      );
       return Text(
-        context.l10n.youTookTheSide(pill.challenge.describe(given.response)),
+        level == null ? took : '$took · ${context.l10n.leanHow('$level')}',
         style: AppText.body(
           size: 13,
           weight: FontWeight.w500,

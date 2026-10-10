@@ -1204,18 +1204,28 @@ class _YourLine extends StatelessWidget {
   static TextStyle _reason(Color ink) =>
       AppText.body(size: 13.5, height: 1.4, color: ink.withValues(alpha: 0.75));
 
+  /// How far the reader leant to the side, when it was leant to on a shelf
+  /// rather than tapped: "firmly", "all the way".
+  static String? _how(BuildContext context, Pill pill, Answer given) {
+    final int? level = pill.isGraded ? null : leanLevel(given);
+    return level == null ? null : context.l10n.leanHow('$level');
+  }
+
   /// The side taken, run in after its label: one line where two would
   /// say no more.
   static TextSpan _tookSpan(
     String caps,
     Pill pill,
     Answer given, {
+    String? how,
     bool short = false,
   }) => TextSpan(
     children: [
       TextSpan(text: '$caps  ', style: _label(pill.ink)),
       TextSpan(
-        text: pill.challenge.describe(given.response),
+        text: how == null
+            ? pill.challenge.describe(given.response)
+            : '${pill.challenge.describe(given.response)} · $how',
         style: _took(pill.ink),
       ),
       if (short && given.hasReason)
@@ -1238,7 +1248,13 @@ class _YourLine extends StatelessWidget {
 
     final took = _measureSpan(
       context,
-      _tookSpan(context.l10n.youTookCaps, pill, given, short: short),
+      _tookSpan(
+        context.l10n.youTookCaps,
+        pill,
+        given,
+        how: _how(context, pill, given),
+        short: short,
+      ),
       inner,
       scaler,
     );
@@ -1264,7 +1280,13 @@ class _YourLine extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text.rich(
-            _tookSpan(context.l10n.youTookCaps, pill, given, short: short),
+            _tookSpan(
+              context.l10n.youTookCaps,
+              pill,
+              given,
+              how: _how(context, pill, given),
+              short: short,
+            ),
           ),
           if (given.hasReason && !short) ...[
             const SizedBox(height: 6),

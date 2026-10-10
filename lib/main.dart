@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show ValueListenable, kIsWeb;
 import 'package:flutter/gestures.dart' show PointerDeviceKind;
+import 'package:in_app_review/in_app_review.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:posthog_flutter/posthog_flutter.dart' show PostHogWidget;
@@ -257,6 +258,12 @@ class _AstutoRootState extends State<AstutoRoot> {
 
   final Push _push = Push();
   bool _askingForPush = false;
+
+  /// Whether the notification prompt was shown in this session: the store's
+  /// rating prompt never follows it in the same one, two system sheets in a
+  /// row being one too many.
+  bool _pushAskedThisSession = false;
+  bool _askingForReview = false;
   _Stage _stage = _Stage.intro;
   bool _stageResolved = false;
 
@@ -394,6 +401,7 @@ class _AstutoRootState extends State<AstutoRoot> {
   Future<void> _askForPush() async {
     if (_askingForPush) return;
     _askingForPush = true;
+    _pushAskedThisSession = true;
     Analytics.capture('push permission asked');
     final String? token = await _push.ask();
     if (!mounted) return;
@@ -425,6 +433,34 @@ class _AstutoRootState extends State<AstutoRoot> {
       }
     });
     if (_stage == _Stage.shell && _app.shouldAskForPush) _askForPush();
+    if (_stage == _Stage.shell &&
+        _app.shouldAskForReview &&
+        !_pushAskedThisSession) {
+      _askForReview();
+    }
+  }
+
+  /// The store's own rating sheet, once, at the end of a seventh day in a
+  /// row (AppState.shouldAskForReview). Nothing of the app's is asked first:
+  /// Google forbids a question before its sheet and Apple allows only its
+  /// own. A moment after the day closes, so the shelf has landed first.
+  Future<void> _askForReview() async {
+    if (_askingForReview) return;
+    _askingForReview = true;
+    await _app.notedReviewAsked();
+    await Future<void>.delayed(const Duration(seconds: 2));
+    if (!mounted) return;
+    try {
+      final InAppReview review = InAppReview.instance;
+      if (!await review.isAvailable()) return;
+      Analytics.capture('rating prompt requested', {
+        'streak_days': _app.liveStreak,
+        'is_plus': _app.isPlus,
+      });
+      await review.requestReview();
+    } catch (_) {
+      // No store behind this build — a browser, a test: nothing to ask.
+    }
   }
 
   @override

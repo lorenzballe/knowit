@@ -78,6 +78,10 @@ dependencies:
   # over as WAV bytes (lib/widgets/scenes/music_view.dart), so no audio file
   # ships and no permission is asked: playback only, and only on a tap.
   audioplayers: ^6.8.1
+  # The store's own rating prompt, asked once, at the end of a seventh day
+  # in a row (lib/main.dart). Apple and Google show it or not as they see
+  # fit; the app never asks a question of its own before it.
+  in_app_review: ^2.0.12
 
 dev_dependencies:
   flutter_test:

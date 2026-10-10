@@ -265,6 +265,19 @@ const List<int> kReviewLadder = [2, 7, 21];
 /// without turning every card into a form.
 const List<int> kConfidenceLevels = [50, 60, 70, 80, 90];
 
+/// How far a reader leant to a side of a debate, from 1 to 4, kept as how
+/// sure they are of that side on the same scale: a step past the middle is
+/// 60, the end of the track 90, the most sure the app lets anyone say they
+/// are. The middle itself, 50, is no side at all, so it is never kept.
+int leanConfidence(int level) => 50 + 10 * level.clamp(1, 4);
+
+/// The lean a side was taken with, from 1 to 4, or null when it was taken
+/// with a button, which says nothing of how far.
+int? leanLevel(Answer answer) => switch (answer.confidence) {
+  final int c => ((c - 50) / 10).round().clamp(1, 4),
+  null => null,
+};
+
 /// The thing a card is actually training.
 ///
 /// A card is one instance; the principle is what should survive it. This

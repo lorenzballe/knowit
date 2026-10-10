@@ -2898,7 +2898,113 @@ class AppLocalizationsTr extends AppLocalizations {
   String get throughTime => 'Zamanda yolculuk';
 
   @override
-  String get throughTimeLine => 'Antik dünyadan bu yıla. Gezmek için kaydır';
+  String get throughTimeLine =>
+      'Antik dünyadan bu yıla. Kaydır ya da bir yıl yaz';
+
+  @override
+  String leanHint(String or) {
+    return '«$or» düğmesini durduğun yere kaydır';
+  }
+
+  @override
+  String leanHow(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      '1': 'biraz',
+      '2': 'genel olarak',
+      '3': 'kesinlikle',
+      'other': 'sonuna kadar',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String leanSays(String side, String how) {
+    return '$side, $how';
+  }
+
+  @override
+  String leanTook(String side) {
+    return 'Seçtiğin: $side';
+  }
+
+  @override
+  String leanVerdict(String says) {
+    return '$says. Karşı tarafı görmek için aç.';
+  }
+
+  @override
+  String get spotTitle => 'Yanlış olanı bul';
+
+  @override
+  String get spotLine => 'Üçü doğru. Biri değil.';
+
+  @override
+  String get spotPrompt => 'Yanlış olduğunu düşündüğüne dokun';
+
+  @override
+  String get spotConfirm => 'Yanlış olan bu';
+
+  @override
+  String get spotFound => 'Buldun. Diğer üçü doğru.';
+
+  @override
+  String get spotMissed => 'O değil: o doğru. Yanlış olanın üstü çizili.';
+
+  @override
+  String get spotWhy => 'Nedenini okumak için birine dokun';
+
+  @override
+  String get spotYours => 'Seçimin';
+
+  @override
+  String get yearHint => 'Bir yıl yaz';
+
+  @override
+  String get yearAd => 'MS';
+
+  @override
+  String get yearBc => 'MÖ';
+
+  @override
+  String yearNamed(String year) {
+    return '$year';
+  }
+
+  @override
+  String yearAdOf(String year) {
+    return 'MS $year';
+  }
+
+  @override
+  String yearBcOf(String year) {
+    return 'MÖ $year';
+  }
+
+  @override
+  String get yearGo => 'Bu yıla git';
+
+  @override
+  String yearNearest(String year) {
+    return 'Önce $year yılına en yakınlar';
+  }
+
+  @override
+  String yearNoneNamed(String year) {
+    return 'Buradaki hiçbir kart $year yılına yakın bir yıl anmıyor. Bunlar o çağdan.';
+  }
+
+  @override
+  String yearNoAge(String year) {
+    return 'Bugün $year civarından hiçbir şey yok. En yakın çağ bu.';
+  }
+
+  @override
+  String yearFuture(String year) {
+    return '$year henüz gelmedi. İşte bu yüzyıl.';
+  }
+
+  @override
+  String get yearZero => '0 yılı diye bir yıl yoktu. MÖ 1 ya da MS 1\'i dene.';
 
   @override
   String get todayLabel => 'Bugün';
