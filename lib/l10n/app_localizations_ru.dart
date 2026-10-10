@@ -3078,7 +3078,113 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get throughTimeLine =>
-      'От древнего мира до наших дней. Перетащите, чтобы путешествовать';
+      'От древнего мира до наших дней. Перетащите или введите год';
+
+  @override
+  String leanHint(String or) {
+    return 'Сдвиньте «$or» туда, где вы стоите';
+  }
+
+  @override
+  String leanHow(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      '1': 'немного',
+      '2': 'скорее',
+      '3': 'твёрдо',
+      'other': 'полностью',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String leanSays(String side, String how) {
+    return '$side, $how';
+  }
+
+  @override
+  String leanTook(String side) {
+    return 'Ваш выбор: $side';
+  }
+
+  @override
+  String leanVerdict(String says) {
+    return '$says. Откройте, чтобы узнать другую сторону.';
+  }
+
+  @override
+  String get spotTitle => 'Найдите ложное';
+
+  @override
+  String get spotLine => 'Три верны. Одно нет.';
+
+  @override
+  String get spotPrompt => 'Нажмите на то, что считаете ложным';
+
+  @override
+  String get spotConfirm => 'Это ложное';
+
+  @override
+  String get spotFound => 'Нашли. Остальные три верны.';
+
+  @override
+  String get spotMissed => 'Не это: оно верно. Ложное зачёркнуто.';
+
+  @override
+  String get spotWhy => 'Нажмите на любое, чтобы прочитать почему';
+
+  @override
+  String get spotYours => 'Ваш выбор';
+
+  @override
+  String get yearHint => 'Введите год';
+
+  @override
+  String get yearAd => 'н. э.';
+
+  @override
+  String get yearBc => 'до н. э.';
+
+  @override
+  String yearNamed(String year) {
+    return '$year г.';
+  }
+
+  @override
+  String yearAdOf(String year) {
+    return '$year г. н. э.';
+  }
+
+  @override
+  String yearBcOf(String year) {
+    return '$year г. до н. э.';
+  }
+
+  @override
+  String get yearGo => 'Перейти к этому году';
+
+  @override
+  String yearNearest(String year) {
+    return 'Сначала ближайшие к $year';
+  }
+
+  @override
+  String yearNoneNamed(String year) {
+    return 'Ни одна карточка здесь не называет год рядом с $year. Эти — из той же эпохи.';
+  }
+
+  @override
+  String yearNoAge(String year) {
+    return 'Сегодня нет ничего около $year. Вот ближайшая эпоха.';
+  }
+
+  @override
+  String yearFuture(String year) {
+    return '$year ещё впереди. Вот этот век.';
+  }
+
+  @override
+  String get yearZero =>
+      'Нулевого года не было. Попробуйте 1 г. до н. э. или 1 г. н. э.';
 
   @override
   String get todayLabel => 'Сегодня';

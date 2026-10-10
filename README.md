@@ -463,14 +463,27 @@ The order is fixed, and reads in three movements.
    conversation, before tonight. Each row is the thing itself and opens its
    card. The rings to tick one off as tried are gone: nobody could tell what
    they were for.
-5. **Pick a side** (two halves).
+5. **Pick a side** (two halves). The "or" between the two sides is a
+   handle: drag it towards a side and the side fills behind it, four steps
+   from a little to all the way. Let go past the middle and that is the
+   card's answer: the side, as the card's own buttons record it, and how
+   far, kept as how sure on the app's own scale (60 to 90; it never enters
+   calibration, which counts only cards with a right answer). The card
+   says the lean back, on the shelf and on its own reveal. There are no
+   counts of what other readers chose, so none is shown.
 6. **For the sharpest**, **Where it came from**, **Seen, not read** and
    **True stories** (133e).
 
 **Cards to play.**
 
 7. **True or false** (133e), answered on the shelf. The answer is kept like
-   any other, and the card counts as read.
+   any other, and the card counts as read. Under the row, **spot the false
+   one**: four claims from cards not read, three true and one false, from
+   four subjects, dealt for the day. A tap chooses, a second word confirms;
+   then the false one is struck out and each claim opens its card. Only the
+   claim picked is answered — "false", which is that card's own answer —
+   and all four count as read, so the day never deals one whose answer the
+   reveal has already given away.
 8. **Do you still remember?** (133d): the cards answered days ago, back to
    see if the answer stuck, each saying how long it waited and how it went
    last time. Only there when something is due.
@@ -503,7 +516,12 @@ The order is fixed, and reads in three movements.
 16. **Today's edition** (141f): the same front page for everybody, the lead,
     two columns, the day in numbers, a correction and a puzzle.
 17. **Through time** (141c's ruler). Pick an age and get its cards; they
-    change every day.
+    change every day. Or type a year, before Christ or after: it rolls into
+    place, the ruler slides to the age that holds it, and the cards are the
+    ones whose questions name the nearest years, looked for through every
+    card of that age no other shelf holds. A year no card is near, an age
+    with nothing today, a year still to come and a year 0 are each said
+    plainly.
 18. **Did you know?** (141b): a pile to turn over, new to me or knew it.
 19. **Not sure where to start** (138f), at the very bottom: one card from
     anywhere.

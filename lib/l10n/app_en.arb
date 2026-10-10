@@ -2705,7 +2705,123 @@
  "theAstute": "The Astute",
  "theLead": "The lead",
  "throughTime": "Through time",
- "throughTimeLine": "From the ancient world to this year. Drag to travel",
+ "throughTimeLine": "From the ancient world to this year. Drag, or type a year",
+ "leanHint": "Slide the “{or}” to where you stand",
+ "@leanHint": {
+  "description": "Under a debate on the Pick a side shelf, before the reader has leant either way: the word between the two sides is a handle to drag.",
+  "placeholders": {
+   "or": {
+    "type": "String"
+   }
+  }
+ },
+ "leanHow": "{level, select, 1{a little} 2{on balance} 3{firmly} other{all the way}}",
+ "@leanHow": {
+  "description": "How far the reader leant towards a side, from 1 (just past the middle) to 4 (the end of the track).",
+  "placeholders": {
+   "level": {
+    "type": "String"
+   }
+  }
+ },
+ "leanSays": "{side}, {how}",
+ "@leanSays": {
+  "description": "A side and how far the reader leans to it: Yes, firmly.",
+  "placeholders": {
+   "side": {
+    "type": "String"
+   },
+   "how": {
+    "type": "String"
+   }
+  }
+ },
+ "leanTook": "You took {side}",
+ "@leanTook": {
+  "placeholders": {
+   "side": {
+    "type": "String"
+   }
+  }
+ },
+ "leanVerdict": "{says}. Open it for the other side.",
+ "@leanVerdict": {
+  "placeholders": {
+   "says": {
+    "type": "String"
+   }
+  }
+ },
+ "spotTitle": "Spot the false one",
+ "spotLine": "Three are true. One is not.",
+ "spotPrompt": "Tap the one you think is false",
+ "spotConfirm": "That's the false one",
+ "spotFound": "Found it. The other three are true.",
+ "spotMissed": "Not that one: it's true. The false one is struck out.",
+ "spotWhy": "Tap any of them to read why",
+ "spotYours": "Your pick",
+ "yearHint": "Type a year",
+ "yearAd": "AD",
+ "yearBc": "BC",
+ "yearNamed": "{year}",
+ "@yearNamed": {
+  "description": "A year from 1000 on, inside a sentence.",
+  "placeholders": {
+   "year": {
+    "type": "String"
+   }
+  }
+ },
+ "yearAdOf": "AD {year}",
+ "@yearAdOf": {
+  "placeholders": {
+   "year": {
+    "type": "String"
+   }
+  }
+ },
+ "yearBcOf": "{year} BC",
+ "@yearBcOf": {
+  "placeholders": {
+   "year": {
+    "type": "String"
+   }
+  }
+ },
+ "yearGo": "Go to this year",
+ "yearNearest": "Nearest to {year} first",
+ "@yearNearest": {
+  "placeholders": {
+   "year": {
+    "type": "String"
+   }
+  }
+ },
+ "yearNoneNamed": "No card here names a year near {year}. These are from its age.",
+ "@yearNoneNamed": {
+  "placeholders": {
+   "year": {
+    "type": "String"
+   }
+  }
+ },
+ "yearNoAge": "Nothing from around {year} here today. This is the nearest age.",
+ "@yearNoAge": {
+  "placeholders": {
+   "year": {
+    "type": "String"
+   }
+  }
+ },
+ "yearFuture": "{year} is still to come. Here is this century.",
+ "@yearFuture": {
+  "placeholders": {
+   "year": {
+    "type": "String"
+   }
+  }
+ },
+ "yearZero": "There was no year 0. Try 1 BC or AD 1.",
  "todayLabel": "Today",
  "todaysEdition": "Today's edition",
  "toneCurious": "Curious",

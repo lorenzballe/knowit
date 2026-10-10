@@ -2825,7 +2825,112 @@ class AppLocalizationsZh extends AppLocalizations {
   String get throughTime => '穿越时间';
 
   @override
-  String get throughTimeLine => '从古代到今年，拖动穿越';
+  String get throughTimeLine => '从古代到今年，拖动，或输入一个年份';
+
+  @override
+  String leanHint(String or) {
+    return '把“$or”滑到你的立场';
+  }
+
+  @override
+  String leanHow(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      '1': '有一点',
+      '2': '总体上',
+      '3': '坚定地',
+      'other': '完全',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String leanSays(String side, String how) {
+    return '$side（$how）';
+  }
+
+  @override
+  String leanTook(String side) {
+    return '你选了$side';
+  }
+
+  @override
+  String leanVerdict(String says) {
+    return '$says。打开看另一方的理由。';
+  }
+
+  @override
+  String get spotTitle => '找出假的那条';
+
+  @override
+  String get spotLine => '三条是真的，一条不是。';
+
+  @override
+  String get spotPrompt => '点你认为是假的那条';
+
+  @override
+  String get spotConfirm => '这条是假的';
+
+  @override
+  String get spotFound => '找到了。其余三条都是真的。';
+
+  @override
+  String get spotMissed => '不是这条，它是真的。假的那条已划掉。';
+
+  @override
+  String get spotWhy => '点任意一条看原因';
+
+  @override
+  String get spotYours => '你的选择';
+
+  @override
+  String get yearHint => '输入年份';
+
+  @override
+  String get yearAd => '公元';
+
+  @override
+  String get yearBc => '公元前';
+
+  @override
+  String yearNamed(String year) {
+    return '$year年';
+  }
+
+  @override
+  String yearAdOf(String year) {
+    return '公元$year年';
+  }
+
+  @override
+  String yearBcOf(String year) {
+    return '公元前$year年';
+  }
+
+  @override
+  String get yearGo => '前往这一年';
+
+  @override
+  String yearNearest(String year) {
+    return '离$year最近的在前';
+  }
+
+  @override
+  String yearNoneNamed(String year) {
+    return '这里没有卡片提到$year附近的年份。这些来自同一时代。';
+  }
+
+  @override
+  String yearNoAge(String year) {
+    return '今天没有$year前后的卡片。这是最近的时代。';
+  }
+
+  @override
+  String yearFuture(String year) {
+    return '$year还没到来。这是本世纪。';
+  }
+
+  @override
+  String get yearZero => '没有公元0年。试试公元前1年或公元1年。';
 
   @override
   String get todayLabel => '今天';

@@ -2829,7 +2829,112 @@ class AppLocalizationsKo extends AppLocalizations {
   String get throughTime => '시간 여행';
 
   @override
-  String get throughTimeLine => '고대부터 올해까지. 끌어서 이동하세요';
+  String get throughTimeLine => '고대부터 올해까지. 끌거나, 연도를 입력하세요';
+
+  @override
+  String leanHint(String or) {
+    return '‘$or’를 내 입장까지 밀어 보세요';
+  }
+
+  @override
+  String leanHow(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      '1': '조금',
+      '2': '대체로',
+      '3': '확고하게',
+      'other': '완전히',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String leanSays(String side, String how) {
+    return '$side ($how)';
+  }
+
+  @override
+  String leanTook(String side) {
+    return '고른 쪽: $side';
+  }
+
+  @override
+  String leanVerdict(String says) {
+    return '$says. 반대편 주장은 카드를 열어 보세요.';
+  }
+
+  @override
+  String get spotTitle => '거짓을 찾아보세요';
+
+  @override
+  String get spotLine => '셋은 참, 하나는 거짓.';
+
+  @override
+  String get spotPrompt => '거짓이라고 생각하는 것을 누르세요';
+
+  @override
+  String get spotConfirm => '이게 거짓이에요';
+
+  @override
+  String get spotFound => '찾았어요. 나머지 셋은 참이에요.';
+
+  @override
+  String get spotMissed => '그건 참이에요. 거짓은 줄이 그어진 거예요.';
+
+  @override
+  String get spotWhy => '아무거나 눌러 이유를 읽어 보세요';
+
+  @override
+  String get spotYours => '내 선택';
+
+  @override
+  String get yearHint => '연도를 입력하세요';
+
+  @override
+  String get yearAd => '서기';
+
+  @override
+  String get yearBc => '기원전';
+
+  @override
+  String yearNamed(String year) {
+    return '$year년';
+  }
+
+  @override
+  String yearAdOf(String year) {
+    return '서기 $year년';
+  }
+
+  @override
+  String yearBcOf(String year) {
+    return '기원전 $year년';
+  }
+
+  @override
+  String get yearGo => '이 해로 가기';
+
+  @override
+  String yearNearest(String year) {
+    return '$year에 가까운 순서';
+  }
+
+  @override
+  String yearNoneNamed(String year) {
+    return '$year 가까운 해를 말하는 카드가 없어요. 같은 시대의 카드예요.';
+  }
+
+  @override
+  String yearNoAge(String year) {
+    return '오늘은 $year 무렵의 카드가 없어요. 가장 가까운 시대예요.';
+  }
+
+  @override
+  String yearFuture(String year) {
+    return '$year: 아직 오지 않은 해예요. 이번 세기를 보여 드려요.';
+  }
+
+  @override
+  String get yearZero => '0년은 없었어요. 기원전 1년이나 서기 1년을 입력해 보세요.';
 
   @override
   String get todayLabel => '오늘';

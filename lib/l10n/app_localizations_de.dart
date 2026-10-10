@@ -2940,7 +2940,115 @@ class AppLocalizationsDe extends AppLocalizations {
   String get throughTime => 'Durch die Zeit';
 
   @override
-  String get throughTimeLine => 'Von der Antike bis heute. Zum Reisen ziehen';
+  String get throughTimeLine =>
+      'Von der Antike bis heute. Zieh, oder tipp ein Jahr';
+
+  @override
+  String leanHint(String or) {
+    return 'Schieb das „$or“ dorthin, wo du stehst';
+  }
+
+  @override
+  String leanHow(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      '1': 'ein wenig',
+      '2': 'alles in allem',
+      '3': 'entschieden',
+      'other': 'voll und ganz',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String leanSays(String side, String how) {
+    return '$side, $how';
+  }
+
+  @override
+  String leanTook(String side) {
+    return 'Du hast $side gewählt';
+  }
+
+  @override
+  String leanVerdict(String says) {
+    return '$says. Öffne sie für die Gegenseite.';
+  }
+
+  @override
+  String get spotTitle => 'Finde die falsche';
+
+  @override
+  String get spotLine => 'Drei sind wahr. Eine nicht.';
+
+  @override
+  String get spotPrompt => 'Tippe auf die, die du für falsch hältst';
+
+  @override
+  String get spotConfirm => 'Das ist die falsche';
+
+  @override
+  String get spotFound => 'Gefunden. Die anderen drei sind wahr.';
+
+  @override
+  String get spotMissed =>
+      'Nicht diese: Sie ist wahr. Die falsche ist durchgestrichen.';
+
+  @override
+  String get spotWhy => 'Tippe auf eine, um zu lesen, warum';
+
+  @override
+  String get spotYours => 'Deine Wahl';
+
+  @override
+  String get yearHint => 'Gib ein Jahr ein';
+
+  @override
+  String get yearAd => 'n. Chr.';
+
+  @override
+  String get yearBc => 'v. Chr.';
+
+  @override
+  String yearNamed(String year) {
+    return '$year';
+  }
+
+  @override
+  String yearAdOf(String year) {
+    return '$year n. Chr.';
+  }
+
+  @override
+  String yearBcOf(String year) {
+    return '$year v. Chr.';
+  }
+
+  @override
+  String get yearGo => 'Zu diesem Jahr';
+
+  @override
+  String yearNearest(String year) {
+    return 'Am nächsten an $year zuerst';
+  }
+
+  @override
+  String yearNoneNamed(String year) {
+    return 'Keine Karte hier nennt ein Jahr nahe $year. Diese sind aus seiner Epoche.';
+  }
+
+  @override
+  String yearNoAge(String year) {
+    return 'Heute nichts aus der Zeit um $year. Das ist die nächste Epoche.';
+  }
+
+  @override
+  String yearFuture(String year) {
+    return '$year kommt erst noch. Hier ist dieses Jahrhundert.';
+  }
+
+  @override
+  String get yearZero =>
+      'Ein Jahr 0 gab es nicht. Versuch 1 v. Chr. oder 1 n. Chr.';
 
   @override
   String get todayLabel => 'Heute';

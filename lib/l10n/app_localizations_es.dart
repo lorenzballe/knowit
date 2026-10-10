@@ -2949,7 +2949,112 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get throughTimeLine =>
-      'Del mundo antiguo a este año. Arrastra para viajar';
+      'Del mundo antiguo a este año. Arrastra, o escribe un año';
+
+  @override
+  String leanHint(String or) {
+    return 'Desliza la «$or» hasta donde estás';
+  }
+
+  @override
+  String leanHow(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      '1': 'un poco',
+      '2': 'en general',
+      '3': 'con firmeza',
+      'other': 'del todo',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String leanSays(String side, String how) {
+    return '$side, $how';
+  }
+
+  @override
+  String leanTook(String side) {
+    return 'Elegiste $side';
+  }
+
+  @override
+  String leanVerdict(String says) {
+    return '$says. Ábrela para ver el otro bando.';
+  }
+
+  @override
+  String get spotTitle => 'Encuentra la falsa';
+
+  @override
+  String get spotLine => 'Tres son verdad. Una no.';
+
+  @override
+  String get spotPrompt => 'Toca la que creas que es falsa';
+
+  @override
+  String get spotConfirm => 'Esa es la falsa';
+
+  @override
+  String get spotFound => 'La encontraste. Las otras tres son verdad.';
+
+  @override
+  String get spotMissed => 'Esa no: es verdad. La falsa está tachada.';
+
+  @override
+  String get spotWhy => 'Toca cualquiera para leer por qué';
+
+  @override
+  String get spotYours => 'Tu elección';
+
+  @override
+  String get yearHint => 'Escribe un año';
+
+  @override
+  String get yearAd => 'd. C.';
+
+  @override
+  String get yearBc => 'a. C.';
+
+  @override
+  String yearNamed(String year) {
+    return '$year';
+  }
+
+  @override
+  String yearAdOf(String year) {
+    return '$year d. C.';
+  }
+
+  @override
+  String yearBcOf(String year) {
+    return '$year a. C.';
+  }
+
+  @override
+  String get yearGo => 'Ir a este año';
+
+  @override
+  String yearNearest(String year) {
+    return 'Primero lo más cercano a $year';
+  }
+
+  @override
+  String yearNoneNamed(String year) {
+    return 'Ninguna tarjeta de aquí nombra un año cercano a $year. Estas son de su época.';
+  }
+
+  @override
+  String yearNoAge(String year) {
+    return 'Hoy no hay nada de en torno a $year. Esta es la época más cercana.';
+  }
+
+  @override
+  String yearFuture(String year) {
+    return '$year aún está por llegar. Aquí está este siglo.';
+  }
+
+  @override
+  String get yearZero => 'No hubo año 0. Prueba 1 a. C. o 1 d. C.';
 
   @override
   String get todayLabel => 'Hoy';

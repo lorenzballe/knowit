@@ -2918,7 +2918,113 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get throughTimeLine =>
-      'From the ancient world to this year. Drag to travel';
+      'From the ancient world to this year. Drag, or type a year';
+
+  @override
+  String leanHint(String or) {
+    return 'Slide the “$or” to where you stand';
+  }
+
+  @override
+  String leanHow(String level) {
+    String _temp0 = intl.Intl.selectLogic(level, {
+      '1': 'a little',
+      '2': 'on balance',
+      '3': 'firmly',
+      'other': 'all the way',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String leanSays(String side, String how) {
+    return '$side, $how';
+  }
+
+  @override
+  String leanTook(String side) {
+    return 'You took $side';
+  }
+
+  @override
+  String leanVerdict(String says) {
+    return '$says. Open it for the other side.';
+  }
+
+  @override
+  String get spotTitle => 'Spot the false one';
+
+  @override
+  String get spotLine => 'Three are true. One is not.';
+
+  @override
+  String get spotPrompt => 'Tap the one you think is false';
+
+  @override
+  String get spotConfirm => 'That\'s the false one';
+
+  @override
+  String get spotFound => 'Found it. The other three are true.';
+
+  @override
+  String get spotMissed =>
+      'Not that one: it\'s true. The false one is struck out.';
+
+  @override
+  String get spotWhy => 'Tap any of them to read why';
+
+  @override
+  String get spotYours => 'Your pick';
+
+  @override
+  String get yearHint => 'Type a year';
+
+  @override
+  String get yearAd => 'AD';
+
+  @override
+  String get yearBc => 'BC';
+
+  @override
+  String yearNamed(String year) {
+    return '$year';
+  }
+
+  @override
+  String yearAdOf(String year) {
+    return 'AD $year';
+  }
+
+  @override
+  String yearBcOf(String year) {
+    return '$year BC';
+  }
+
+  @override
+  String get yearGo => 'Go to this year';
+
+  @override
+  String yearNearest(String year) {
+    return 'Nearest to $year first';
+  }
+
+  @override
+  String yearNoneNamed(String year) {
+    return 'No card here names a year near $year. These are from its age.';
+  }
+
+  @override
+  String yearNoAge(String year) {
+    return 'Nothing from around $year here today. This is the nearest age.';
+  }
+
+  @override
+  String yearFuture(String year) {
+    return '$year is still to come. Here is this century.';
+  }
+
+  @override
+  String get yearZero => 'There was no year 0. Try 1 BC or AD 1.';
 
   @override
   String get todayLabel => 'Today';

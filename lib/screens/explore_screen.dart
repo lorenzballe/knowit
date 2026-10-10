@@ -25,6 +25,7 @@ import '../widgets/explore/mood_minutes.dart';
 import '../widgets/explore/myth_deck.dart';
 import '../widgets/explore/series_shelf.dart';
 import '../widgets/explore/sixty_seconds.dart';
+import '../widgets/explore/spot_the_false.dart';
 import '../widgets/explore/surprise_me.dart';
 import '../widgets/explore/through_time.dart';
 import '../widgets/explore/unmask_chart.dart';
@@ -695,13 +696,39 @@ class ExploreScreenState extends State<ExploreScreen> {
                 key: ValueKey('theme-${t.key}'),
                 title: _themeTitle(context, t),
                 line: _themeLine(context, t),
-                child: TrueFalseRow(
-                  pills: t.pills,
-                  isRead: read,
-                  onOpen: _open,
-                  answerOf: _answerOf,
-                  onCommit: _commit,
-                  onShown: (p) => _seen('theme-${t.key}', p),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    TrueFalseRow(
+                      pills: t.pills,
+                      isRead: read,
+                      onOpen: _open,
+                      answerOf: _answerOf,
+                      onCommit: _commit,
+                      onShown: (p) => _seen('theme-${t.key}', p),
+                    ),
+                    // Three true and one false, under the row: the same
+                    // kind of card, played as a set.
+                    if (mix.spot case final SpotTheFalse spot) ...[
+                      const SizedBox(height: 16),
+                      SpotTheFalseBlock(
+                        spot: spot,
+                        onOpen: _open,
+                        // The pick is the one answer given; the reveal
+                        // tells all four, so all four count as read and
+                        // the day never deals one whose answer was shown.
+                        onCommit: (pill, response) async {
+                          await _commit(pill, response);
+                          for (final Pill other in spot.cards) {
+                            if (other.id != pill.id) {
+                              await widget.app.markReadElsewhere(other.id);
+                            }
+                          }
+                        },
+                        onShown: (p) => _seen('spot-false', p),
+                      ),
+                    ],
+                  ],
                 ),
               ),
             ],
@@ -865,6 +892,8 @@ class ExploreScreenState extends State<ExploreScreen> {
                 line: l.throughTimeLine,
                 child: ThroughTime(
                   eras: mix.eras,
+                  pool: mix.eraPool,
+                  day: day,
                   startAt: day % mix.eras.length,
                   isRead: read,
                   onOpen: _open,
@@ -1033,10 +1062,26 @@ class ExploreScreenState extends State<ExploreScreen> {
         shelf: t,
         isRead: read,
         onOpen: _open,
+        answerOf: (p) => widget.app.answerFor(p.id),
+        onLean: _lean,
         onShown: (p) => _seen('signature-${t.theme.name}', p),
       ),
     ),
   ];
+
+  /// A side leant to on the Pick a side shelf: the card's answer, the side
+  /// as the card's own buttons record it and how sure as the card asks it
+  /// of a question with a right answer, and the card counted as read, like
+  /// any answer given on a shelf.
+  Future<void> _lean(Pill pill, int side, int confidence) async {
+    Analytics.capture('explore leaned', {
+      'pill_id': pill.id,
+      'side': side,
+      'confidence': confidence,
+    });
+    await widget.app.recordAnswer(pill.id, '$side', confidence: confidence);
+    await widget.app.markReadElsewhere(pill.id);
+  }
 
   /// The third shelf: what it is called, why, and whose cards are on it.
   ///
