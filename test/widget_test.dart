@@ -770,8 +770,9 @@ void main() {
     await tester.tap(find.byIcon(Icons.ios_share_rounded));
     await _settle(tester);
 
-    // The share sheet, not the paywall.
-    expect(find.bySemanticsLabel('Share this card'), findsOneWidget);
+    // The share sheet, not the paywall: its title, which the button's own
+    // label now shares word for word.
+    expect(find.text('Share this card'), findsOneWidget);
     expect(_paywallHeadline, findsNothing);
   });
 
