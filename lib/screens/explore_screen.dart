@@ -846,6 +846,8 @@ class ExploreScreenState extends State<ExploreScreen> {
                 line: l.throughTimeLine,
                 child: ThroughTime(
                   eras: mix.eras,
+                  pool: mix.eraPool,
+                  day: day,
                   startAt: day % mix.eras.length,
                   isRead: read,
                   onOpen: _open,
