@@ -86,10 +86,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get removeFromSaved => 'Saklananlardan çıkar';
 
   @override
-  String get saveThisPill => 'Bu hapı sakla';
+  String get saveThisPill => 'Bu kartı sakla';
 
   @override
-  String get shareThisPill => 'Bu hapı paylaş';
+  String get shareThisPill => 'Bu kartı paylaş';
 
   @override
   String cardOf(int k, int n) {
@@ -222,7 +222,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get yesterday => 'Dün';
 
   @override
-  String get noPillsMatchFilter => 'Bu filtreye henüz uyan hap yok.';
+  String get noPillsMatchFilter => 'Bu filtreye henüz uyan kart yok.';
 
   @override
   String nothingForTryTopic(String query) {
@@ -400,7 +400,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get signOutBody =>
-      'Serin, sakladığın haplar ve sicilin hesabında kalır. Bu, onları bu cihazdan siler.';
+      'Serin, sakladığın kartlar ve sicilin hesabında kalır. Bu, onları bu cihazdan siler.';
 
   @override
   String get deleteAccount => 'Hesabı sil';
@@ -444,7 +444,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get startOverBody =>
-      'Bu cihazdaki her şeyi siler — seri, saklanan haplar, yanıtlar, karar sicilin, konular ve plan — ve tanıtımı yeniden açar.';
+      'Bu cihazdaki her şeyi siler — seri, saklanan kartlar, yanıtlar, karar sicilin, konular ve plan — ve tanıtımı yeniden açar.';
 
   @override
   String get wipeIt => 'Sil';
@@ -474,6 +474,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get howWellYouKnowYourself => 'Kendini ne kadar tanıyorsun';
 
   @override
+  String get journeyButtonLine =>
+      'Seviyen, kaçırmaya devam ettiğin hamleler, sorularla haftan';
+
+  @override
   String get isTheGapClosing => 'Aralık kapanıyor mu?';
 
   @override
@@ -488,7 +492,7 @@ class AppLocalizationsTr extends AppLocalizations {
   }
 
   @override
-  String get yourFivePillsBeforeCoffee => '5 hapın, ilk kahveden önce.';
+  String get yourFivePillsBeforeCoffee => '5 kartın, ilk kahveden önce.';
 
   @override
   String get browserOnlySpeaksOpen =>
@@ -519,7 +523,52 @@ class AppLocalizationsTr extends AppLocalizations {
   String get manageSubscription => 'Aboneliği yönet';
 
   @override
-  String get howPillsAreWritten => 'Haplar nasıl yazılıyor';
+  String get howPillsAreWritten => 'Kartlar nasıl yazılıyor';
+
+  @override
+  String get howTitle => 'Buradaki her kartı bir yapay zekâ modeli yazıyor.';
+
+  @override
+  String get howIntro =>
+      'Senin fark etmenden önce baştan söylemeyi tercih ederiz. Bir kart sana şöyle ulaşır.';
+
+  @override
+  String get howStep1Title => 'Önceden, bir model tarafından yazılır';
+
+  @override
+  String get howStep1Line =>
+      'Her kart tek bir talimata göre yazılır: sormaya değer bir soru, nedenini söyleyen bir yanıt ve yeniden kullanabileceğin bir hamle.';
+
+  @override
+  String get howStep2Title => 'Kaynağına göre kontrol edilir';
+
+  @override
+  String get howStep2Line =>
+      'Her kart nereden geldiğini söyler ve yayımlanmadan önce ikinci bir model onu eleştirmen gibi okur. Dayanağı olmayan çıkarılır.';
+
+  @override
+  String get howStep3Title => 'Her sabah beş kart';
+
+  @override
+  String get howStep3Line =>
+      'Seçtiğin konulardan, ve asla daha önce okuduğun bir kart değil.';
+
+  @override
+  String get howStep4Title => 'Okurlar dürüst tutar';
+
+  @override
+  String get howStep4Line =>
+      'Yeterince okur bir kartın yanlış olduğunu söylediğinde, bir insan kontrol edene kadar dağıtılmaz.';
+
+  @override
+  String get howReportTitle => 'Bir hata mı buldun?';
+
+  @override
+  String get howReportLine =>
+      'Bildirmek için bir kartın kaynağının yanındaki bayrağa dokun.';
+
+  @override
+  String get howFoot => 'Kaynaklar her ay yeniden kontrol edilir.';
 
   @override
   String get signingIn => 'Giriş yapılıyor…';
@@ -683,8 +732,8 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'hap okundu',
-      one: 'hap okundu',
+      other: 'kart okundu',
+      one: 'kart okundu',
     );
     return '$_temp0';
   }
@@ -694,8 +743,8 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n hap okundu',
-      one: '1 hap okundu',
+      other: '$n kart okundu',
+      one: '1 kart okundu',
     );
     return '$_temp0';
   }
@@ -763,8 +812,8 @@ class AppLocalizationsTr extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n hap okunmadan kaldı',
-      one: '1 hap okunmadan kaldı',
+      other: '$n kart okunmadan kaldı',
+      one: '1 kart okunmadan kaldı',
     );
     return '$_temp0';
   }
@@ -815,7 +864,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get fivePillsADayPick =>
-      'Günde beş hap, her sabah taze yazılır. Karışımda istediğin konuları seç — sonra değiştirebilirsin.';
+      'Günde beş kart, her sabah taze yazılır. Karışımda istediğin konuları seç — sonra değiştirebilirsin.';
 
   @override
   String nSelected(int n) {
@@ -844,7 +893,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get tagline => 'Günde beş akıllı şey, sohbette kullanmaya hazır';
 
   @override
-  String get introTopicsTitle => 'On sekiz konu, beş hap';
+  String get introTopicsTitle => 'On dokuz konu, beş kart';
 
   @override
   String get introTopicsLine =>
@@ -855,7 +904,7 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get introQuestionLine =>
-      'Her hap, yüksek sesle söylemeye değer o tek cümleyi taşır.';
+      'Her kart, yüksek sesle söylemeye değer o tek cümleyi taşır.';
 
   @override
   String get introMixTitle => 'Karışımı sen seçersin';

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart' hide Step;
 import 'package:intl/intl.dart' hide TextDirection;
 
 import '../data/pill_bank.dart';
-import '../data/pills_repository.dart' show dateKey;
+import '../data/pills_repository.dart' show dateKey, pillById;
 import '../data/topics.dart';
 import '../l10n/l10n.dart';
 import '../models/pill.dart';
@@ -116,6 +116,10 @@ class _JourneyScreenState extends State<JourneyScreen> {
                       _SureTile(record: record),
                       _MovesTile(app: app, record: record),
                     ),
+                    if (_MissingTile.missed(app).isNotEmpty) ...[
+                      gap,
+                      _MissingTile(app: app),
+                    ],
                     gap,
                     _MemoryTile(app: app, record: record),
                     gap,
@@ -127,6 +131,11 @@ class _JourneyScreenState extends State<JourneyScreen> {
                       _TopicsTile(app: app),
                       _WordsTile(app: app, record: record),
                     ),
+                    if (_WeekAsksTile.asksOf(app, record.today)
+                        case final List<Pill> asks when asks.isNotEmpty) ...[
+                      gap,
+                      _WeekAsksTile(app: app, asks: asks),
+                    ],
                     // The day, sent as five squares, once it is done: the
                     // way the app travels, kept at the foot of the tiles.
                     if (app.dayClosed) ...[
@@ -216,7 +225,11 @@ String _elided(BuildContext context, String text) =>
 
 /// A tile: the faint panel every number sits on.
 class _Box extends StatelessWidget {
-  const _Box({required this.child, this.padding = const EdgeInsets.all(16)});
+  const _Box({
+    super.key,
+    required this.child,
+    this.padding = const EdgeInsets.all(16),
+  });
 
   final Widget child;
   final EdgeInsets padding;
@@ -1903,6 +1916,211 @@ class _MovesTile extends StatelessWidget {
           ? null
           : l.journeyNewest(newest.label),
       foot: _Spark(values: weekly, height: 40, lo: 0, hi: top, steps: true),
+    );
+  }
+}
+
+// ── The moves you keep missing ────────────────────────────────────────────
+
+/// The moves the reader gets wrong most, weakest first: each one named, the
+/// reader's own record on it, and a bar.
+///
+/// Naming the move you missed, with your record on it, is the part of
+/// debiasing training that carried to a real decision months later
+/// (Sellier, Scopelliti & Morewedge, 2019); knowing you got card seven wrong
+/// is worth nothing by comparison. Only moves missed at least once — a move
+/// got right every time is not one you keep missing — and five at most:
+/// past those the list stops being the ones to work on.
+class _MissingTile extends StatelessWidget {
+  const _MissingTile({required this.app});
+
+  final AppState app;
+
+  static List<Mastery> missed(AppState app) =>
+      app.masteryByWeakness.where((m) => m.right < m.met).take(5).toList();
+
+  @override
+  Widget build(BuildContext context) {
+    final Color ink = context.p.ink;
+    final rows = missed(app);
+    return _Box(
+      key: const ValueKey('journey-missing'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            context.l10n.movesYouKeepMissing,
+            style: AppText.body(
+              size: 11.5,
+              weight: FontWeight.w600,
+              height: 1,
+              color: ink.withValues(alpha: 0.55),
+            ),
+          ),
+          for (final m in rows) ...[
+            const SizedBox(height: 16),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Expanded(
+                  child: Text(
+                    m.principle.label,
+                    style: AppText.body(
+                      size: 14,
+                      weight: FontWeight.w600,
+                      color: ink,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  '${m.right}/${m.met}',
+                  style: AppText.body(
+                    size: 13,
+                    weight: FontWeight.w600,
+                    color: m.isWeak
+                        ? context.p.alert
+                        : ink.withValues(alpha: 0.5),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 3),
+            Text(
+              m.principle.oneLine,
+              style: AppText.body(
+                size: 12,
+                height: 1.35,
+                color: ink.withValues(alpha: 0.5),
+              ),
+            ),
+            const SizedBox(height: 8),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(999),
+              child: LinearProgressIndicator(
+                value: m.share,
+                minHeight: 5,
+                backgroundColor: ink.withValues(alpha: 0.09),
+                valueColor: AlwaysStoppedAnimation(
+                  m.isWeak ? context.p.alert : ink,
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+// ── The week in questions ─────────────────────────────────────────────────
+
+/// The week, told back as the questions it left the reader with.
+///
+/// Every card ends on one question to carry into the day. Seven days of
+/// them, side by side, are a record of what the reader has been thinking
+/// about rather than of how much they read: the part of a habit a person
+/// would recognise as their own. Each opens the card it came from.
+class _WeekAsksTile extends StatelessWidget {
+  const _WeekAsksTile({required this.app, required this.asks});
+
+  final AppState app;
+  final List<Pill> asks;
+
+  /// The asks of the cards read in the seven days up to [now], newest
+  /// first, one per card, at most seven.
+  static List<Pill> asksOf(AppState app, DateTime now) {
+    final out = <Pill>[];
+    for (int back = 0; back < 7 && out.length < 7; back++) {
+      final DateTime day = DateTime(now.year, now.month, now.day - back);
+      for (final id in app.deckHistory[dateKey(day)] ?? const <String>[]) {
+        final Pill? p = pillById(id);
+        if (p != null &&
+            p.ask.isNotEmpty &&
+            app.seenIds.contains(id) &&
+            !out.contains(p)) {
+          out.add(p);
+        }
+        if (out.length == 7) break;
+      }
+    }
+    return out;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final Color ink = context.p.ink;
+    return _Box(
+      key: const ValueKey('journey-week-asks'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            _upper(context, l.weekRecapCaps),
+            style: AppText.body(
+              size: 11.5,
+              weight: FontWeight.w600,
+              height: 1,
+              spacing: 0.6,
+              color: ink.withValues(alpha: 0.55),
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            l.weekRecapLine,
+            style: AppText.body(
+              size: 12,
+              height: 1.3,
+              color: ink.withValues(alpha: 0.45),
+            ),
+          ),
+          for (final (int i, Pill pill) in asks.indexed) ...[
+            const SizedBox(height: 12),
+            Semantics(
+              button: true,
+              child: GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => DeckViewerScreen(
+                      app: app,
+                      deck: asks,
+                      title: l.yourJourney,
+                      initialIndex: i,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 3,
+                      height: 36,
+                      margin: const EdgeInsets.only(right: 12, top: 2),
+                      decoration: BoxDecoration(
+                        color: pill.color,
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        pill.ask,
+                        style: AppText.display(
+                          size: 15.5,
+                          height: 1.25,
+                          color: ink,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
     );
   }
 }

@@ -86,10 +86,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get removeFromSaved => 'Togli dai salvati';
 
   @override
-  String get saveThisPill => 'Salva questa pillola';
+  String get saveThisPill => 'Salva questa carta';
 
   @override
-  String get shareThisPill => 'Condividi questa pillola';
+  String get shareThisPill => 'Condividi questa carta';
 
   @override
   String cardOf(int k, int n) {
@@ -224,7 +224,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get noPillsMatchFilter =>
-      'Nessuna pillola corrisponde ancora a questo filtro.';
+      'Nessuna carta corrisponde ancora a questo filtro.';
 
   @override
   String nothingForTryTopic(String query) {
@@ -402,7 +402,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get signOutBody =>
-      'Serie, pillole salvate e record restano sul tuo account. Questo li cancella da questo dispositivo.';
+      'Serie, carte salvate e record restano sul tuo account. Questo li cancella da questo dispositivo.';
 
   @override
   String get deleteAccount => 'Elimina account';
@@ -448,7 +448,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get startOverBody =>
-      'Cancella tutto su questo dispositivo — serie, pillole salvate, risposte, il tuo record di giudizi, materie e piano — e riapre l\'introduzione.';
+      'Cancella tutto su questo dispositivo — serie, carte salvate, risposte, il tuo record di giudizi, materie e piano — e riapre l\'introduzione.';
 
   @override
   String get wipeIt => 'Cancella';
@@ -478,6 +478,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get howWellYouKnowYourself => 'Quanto ti conosci';
 
   @override
+  String get journeyButtonLine =>
+      'Il tuo livello, le mosse che continui a mancare, la tua settimana in domande';
+
+  @override
   String get isTheGapClosing => 'Il divario si sta chiudendo?';
 
   @override
@@ -493,7 +497,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get yourFivePillsBeforeCoffee =>
-      'Le tue 5 pillole, prima del primo caffè.';
+      'Le tue 5 carte, prima del primo caffè.';
 
   @override
   String get browserOnlySpeaksOpen =>
@@ -524,7 +528,52 @@ class AppLocalizationsIt extends AppLocalizations {
   String get manageSubscription => 'Gestisci abbonamento';
 
   @override
-  String get howPillsAreWritten => 'Come sono scritte le pillole';
+  String get howPillsAreWritten => 'Come sono scritte le carte';
+
+  @override
+  String get howTitle => 'Ogni carta qui è scritta da un modello di IA.';
+
+  @override
+  String get howIntro =>
+      'Preferiamo dirlo subito piuttosto che te ne accorga da solo. Ecco come una carta arriva fino a te.';
+
+  @override
+  String get howStep1Title => 'Scritta prima, da un modello';
+
+  @override
+  String get howStep1Line =>
+      'Ogni carta segue una sola consegna: una domanda che vale la pena porsi, una risposta che dice perché e una mossa da riusare.';
+
+  @override
+  String get howStep2Title => 'Controllata sulla sua fonte';
+
+  @override
+  String get howStep2Line =>
+      'Ogni carta dice da dove viene, e un secondo modello la legge da critico prima che esca. Quello che non regge viene tagliato.';
+
+  @override
+  String get howStep3Title => 'Cinque, distribuite ogni mattina';
+
+  @override
+  String get howStep3Line =>
+      'Dalle materie che hai scelto, e mai una che hai già letto.';
+
+  @override
+  String get howStep4Title => 'Tenute oneste dai lettori';
+
+  @override
+  String get howStep4Line =>
+      'Quando abbastanza lettori dicono che una carta è sbagliata, smette di essere distribuita finché una persona non l\'ha controllata.';
+
+  @override
+  String get howReportTitle => 'Hai trovato un errore?';
+
+  @override
+  String get howReportLine =>
+      'Tocca la bandierina accanto alla fonte di una carta per segnalarla.';
+
+  @override
+  String get howFoot => 'Le fonti vengono ricontrollate ogni mese.';
 
   @override
   String get signingIn => 'Accesso in corso…';
@@ -689,8 +738,8 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'pillole lette',
-      one: 'pillola letta',
+      other: 'carte lette',
+      one: 'carta letta',
     );
     return '$_temp0';
   }
@@ -700,8 +749,8 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n pillole lette',
-      one: '1 pillola letta',
+      other: '$n carte lette',
+      one: '1 carta letta',
     );
     return '$_temp0';
   }
@@ -769,8 +818,8 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n pillole non lette',
-      one: '1 pillola non letta',
+      other: '$n carte non lette',
+      one: '1 carta non letta',
     );
     return '$_temp0';
   }
@@ -821,7 +870,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get fivePillsADayPick =>
-      'Cinque pillole al giorno, scritte fresche ogni mattina. Scegli le materie che vuoi nel mix — puoi cambiarle dopo.';
+      'Cinque carte al giorno, scritte fresche ogni mattina. Scegli le materie che vuoi nel mix — puoi cambiarle dopo.';
 
   @override
   String nSelected(int n) {
@@ -851,7 +900,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Cinque cose intelligenti al giorno, pronte da usare in conversazione';
 
   @override
-  String get introTopicsTitle => 'Diciotto materie, cinque pillole';
+  String get introTopicsTitle => 'Diciannove materie, cinque carte';
 
   @override
   String get introTopicsLine =>
@@ -862,7 +911,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get introQuestionLine =>
-      'Ogni pillola porta la frase che vale la pena dire ad alta voce.';
+      'Ogni carta porta la frase che vale la pena dire ad alta voce.';
 
   @override
   String get introMixTitle => 'Il mix lo scegli tu';
@@ -1284,7 +1333,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get nothingLikedYet => 'Ancora niente di piaciuto';
 
   @override
-  String get likeThisPill => 'Mi piace questa pillola';
+  String get likeThisPill => 'Mi piace questa carta';
 
   @override
   String get removeFromLiked => 'Togli dai mi piace';
@@ -1304,7 +1353,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get tapTheBookmarkLandsHere =>
-      'Tocca il segnalibro su una pillola e finisce qui — quelle che ti hanno cambiato il modo di pensare, tenute.';
+      'Tocca il segnalibro su una carta e finisce qui — quelle che ti hanno cambiato il modo di pensare, tenute.';
 
   @override
   String get nudgeTitle => 'Le tue cinque sono pronte';

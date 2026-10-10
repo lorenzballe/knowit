@@ -86,10 +86,10 @@ class AppLocalizationsKo extends AppLocalizations {
   String get removeFromSaved => '보관에서 빼기';
 
   @override
-  String get saveThisPill => '이 알약 보관';
+  String get saveThisPill => '이 카드 보관';
 
   @override
-  String get shareThisPill => '이 알약 공유';
+  String get shareThisPill => '이 카드 공유';
 
   @override
   String cardOf(int k, int n) {
@@ -222,7 +222,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get yesterday => '어제';
 
   @override
-  String get noPillsMatchFilter => '이 필터에 맞는 알약이 아직 없어요.';
+  String get noPillsMatchFilter => '이 필터에 맞는 카드가 아직 없어요.';
 
   @override
   String nothingForTryTopic(String query) {
@@ -398,7 +398,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get signOutQuestion => '로그아웃할까요?';
 
   @override
-  String get signOutBody => '연속 기록, 보관한 알약, 기록은 계정에 남습니다. 이 기기에서만 지워집니다.';
+  String get signOutBody => '연속 기록, 보관한 카드, 기록은 계정에 남습니다. 이 기기에서만 지워집니다.';
 
   @override
   String get deleteAccount => '계정 삭제';
@@ -441,7 +441,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get startOverBody =>
-      '이 기기의 모든 것(연속 기록, 보관한 알약, 답, 판단 기록, 주제, 요금제)을 지우고 소개를 다시 엽니다.';
+      '이 기기의 모든 것(연속 기록, 보관한 카드, 답, 판단 기록, 주제, 요금제)을 지우고 소개를 다시 엽니다.';
 
   @override
   String get wipeIt => '지우기';
@@ -471,6 +471,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get howWellYouKnowYourself => '나를 얼마나 아는가';
 
   @override
+  String get journeyButtonLine => '나의 레벨, 계속 놓치는 수, 질문으로 돌아보는 한 주';
+
+  @override
   String get isTheGapClosing => '간격이 좁아지고 있나요?';
 
   @override
@@ -485,7 +488,7 @@ class AppLocalizationsKo extends AppLocalizations {
   }
 
   @override
-  String get yourFivePillsBeforeCoffee => '첫 커피 전에, 알약 다섯 장.';
+  String get yourFivePillsBeforeCoffee => '첫 커피 전에, 카드 다섯 장.';
 
   @override
   String get browserOnlySpeaksOpen =>
@@ -515,7 +518,48 @@ class AppLocalizationsKo extends AppLocalizations {
   String get manageSubscription => '구독 관리';
 
   @override
-  String get howPillsAreWritten => '알약이 만들어지는 방법';
+  String get howPillsAreWritten => '카드가 만들어지는 방법';
+
+  @override
+  String get howTitle => '여기 있는 모든 카드는 AI 모델이 씁니다.';
+
+  @override
+  String get howIntro => '나중에 알게 되기보다 처음부터 말씀드리고 싶어요. 카드가 여러분에게 오기까지의 과정입니다.';
+
+  @override
+  String get howStep1Title => '모델이 미리 씁니다';
+
+  @override
+  String get howStep1Line =>
+      '모든 카드는 하나의 지침을 따릅니다. 던질 가치가 있는 질문, 이유를 말해 주는 답, 다시 쓸 수 있는 한 수.';
+
+  @override
+  String get howStep2Title => '출처와 대조합니다';
+
+  @override
+  String get howStep2Line =>
+      '모든 카드는 출처를 밝히고, 공개 전에 두 번째 모델이 비평가로서 읽습니다. 뒷받침되지 않는 내용은 빠집니다.';
+
+  @override
+  String get howStep3Title => '매일 아침 다섯 장';
+
+  @override
+  String get howStep3Line => '고른 주제에서, 이미 읽은 카드는 다시 나오지 않아요.';
+
+  @override
+  String get howStep4Title => '독자가 정직함을 지킵니다';
+
+  @override
+  String get howStep4Line => '충분히 많은 독자가 틀렸다고 하면, 사람이 확인할 때까지 그 카드는 나오지 않습니다.';
+
+  @override
+  String get howReportTitle => '틀린 내용을 찾으셨나요?';
+
+  @override
+  String get howReportLine => '카드 출처 옆의 깃발을 누르면 신고할 수 있어요.';
+
+  @override
+  String get howFoot => '출처는 매달 다시 확인합니다.';
 
   @override
   String get signingIn => '로그인 중…';
@@ -835,7 +879,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get tagline => '하루 다섯 가지 똑똑한 이야기, 대화에서 바로 쓸 수 있게';
 
   @override
-  String get introTopicsTitle => '열여덟 개 주제, 다섯 장의 알약';
+  String get introTopicsTitle => '열아홉 개 주제, 다섯 장의 카드';
 
   @override
   String get introTopicsLine => '매일 아침 새로 쓰고, 출처와 대조합니다.';
@@ -844,7 +888,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get introQuestionTitle => '질문, 그리고 답';
 
   @override
-  String get introQuestionLine => '모든 알약에는 소리 내어 말할 가치가 있는 한 문장이 있습니다.';
+  String get introQuestionLine => '모든 카드에는 소리 내어 말할 가치가 있는 한 문장이 있습니다.';
 
   @override
   String get introMixTitle => '믹스는 당신이 정합니다';

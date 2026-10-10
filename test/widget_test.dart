@@ -42,6 +42,7 @@ import 'package:astuto/widgets/motion.dart';
 import 'package:astuto/widgets/pill_card.dart';
 import 'package:astuto/widgets/place_it.dart';
 import 'package:astuto/widgets/pill_card_stack.dart';
+import 'package:astuto/widgets/premium.dart';
 import 'package:astuto/widgets/ui.dart';
 
 /// Pumps a few frames so the async `SharedPreferences` load settles.
@@ -86,14 +87,23 @@ List<Pill> get _todaysFive {
 /// The paywall's headline, which is what a gate opens onto.
 final Finder _paywallHeadline = find.text('Every card, chosen for you.');
 
-/// Opens the journey from the profile: the level card is the way in — on
+/// Opens the journey from the profile: its button is the way in — on
 /// Astute+; on the free plan it is the paywall, and this expects that too.
 Future<void> _openJourney(WidgetTester tester, {bool plus = true}) async {
   await _openProfile(tester);
-  await tester.tap(find.text('Day one'));
-  await _settle(tester);
+  await _tapJourneyButton(tester);
   expect(find.byType(JourneyScreen), plus ? findsOneWidget : findsNothing);
   if (!plus) expect(_paywallHeadline, findsOneWidget);
+}
+
+/// The profile's way into the journey, under how well you know yourself:
+/// scrolled to, then pressed.
+Future<void> _tapJourneyButton(WidgetTester tester) async {
+  final Finder button = find.byKey(const ValueKey('profile-journey'));
+  await tester.scrollUntilVisible(button, 200, scrollable: _profileList);
+  await _settle(tester);
+  await tester.tap(button);
+  await _settle(tester);
 }
 
 /// Walks past the offer the onboarding ends on.
@@ -660,15 +670,24 @@ void main() {
       await tester.pumpWidget(const AstutoApp());
       await _settle(tester);
 
-      // The level card on the profile is the paywall on the free plan, and
-      // says so with a lock before it is pressed.
+      // The journey button on the profile is the paywall on the free plan,
+      // and says so with a lock before it is pressed.
+      await _openProfile(tester);
+      final Finder button = find.byKey(const ValueKey('profile-journey'));
+      await tester.scrollUntilVisible(button, 200, scrollable: _profileList);
+      await _settle(tester);
+      expect(
+        find.descendant(of: button, matching: find.byType(PlusLock)),
+        findsOneWidget,
+      );
+      // The level is the journey's: the profile no longer shows it.
+      expect(find.text('Day one'), findsNothing);
       await _openJourney(tester, plus: false);
       Navigator.of(tester.element(find.byType(PaywallScreen))).pop();
       await _settle(tester);
 
       // Taking the trial carries the reader through to the journey.
-      await tester.tap(find.text('Day one'));
-      await _settle(tester);
+      await _tapJourneyButton(tester);
       await tester.tap(find.textContaining('Try 14 days free, then'));
       await _settle(tester);
       expect(find.byType(JourneyScreen), findsOneWidget);
@@ -751,8 +770,9 @@ void main() {
     await tester.tap(find.byIcon(Icons.ios_share_rounded));
     await _settle(tester);
 
-    // The share sheet, not the paywall.
-    expect(find.bySemanticsLabel('Share this card'), findsOneWidget);
+    // The share sheet, not the paywall: its title, which the button's own
+    // label now shares word for word.
+    expect(find.text('Share this card'), findsOneWidget);
     expect(_paywallHeadline, findsNothing);
   });
 
@@ -2134,7 +2154,7 @@ void main() {
       await finish(tester);
 
       expect(find.text('Hold a card you like'), findsOneWidget);
-      await tester.tap(find.bySemanticsLabel('Save this pill'));
+      await tester.tap(find.bySemanticsLabel('Save this card'));
       await _settle(tester);
       expect(find.bySemanticsLabel('Remove from saved'), findsOneWidget);
       // Saving is finding it again later; the header counts what was liked.
@@ -3507,10 +3527,10 @@ void main() {
       await tester.pumpWidget(viewer(app, [fact]));
       await tester.pumpAndSettle();
 
-      expect(find.bySemanticsLabel('Share this pill'), findsOneWidget);
+      expect(find.bySemanticsLabel('Share this card'), findsOneWidget);
       expect(app.isSaved(fact.id), isFalse);
 
-      await tester.tap(find.bySemanticsLabel('Save this pill'));
+      await tester.tap(find.bySemanticsLabel('Save this card'));
       await tester.pumpAndSettle();
       expect(app.isSaved(fact.id), isTrue);
       expect(find.bySemanticsLabel('Remove from saved'), findsOneWidget);
@@ -4538,7 +4558,7 @@ void main() {
       ];
       const titles = [
         'Astute',
-        'Eighteen topics, five pills',
+        'Nineteen topics, five cards',
         'A question, then the answer',
         'You choose the mix',
         'Thirty seconds a day',
@@ -4604,12 +4624,12 @@ void main() {
       const copy = [
         ('Astute', 'Five smart things a day, ready to use in conversation'),
         (
-          'Eighteen topics, five pills',
+          'Nineteen topics, five cards',
           'Written fresh every morning, and checked against a source.',
         ),
         (
           'A question, then the answer',
-          'Every pill carries the one line that makes it worth saying out loud.',
+          'Every card carries the one line that makes it worth saying out loud.',
         ),
         (
           'You choose the mix',

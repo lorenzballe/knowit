@@ -5,15 +5,12 @@ import '../l10n/l10n.dart';
 
 import 'package:flutter/services.dart';
 
-import '../data/pills_repository.dart';
 import '../data/topics.dart';
-import '../models/pill.dart';
 import 'mix_screen.dart';
 import '../analytics.dart';
 import '../cloud.dart';
 import '../debug_flags.dart';
 import '../state/app_state.dart';
-import '../state/progress.dart';
 import '../sync/identity.dart';
 import '../sync/served.dart';
 import '../sync/trace.dart';
@@ -26,7 +23,6 @@ import '../widgets/premium.dart';
 import '../widgets/record_share_sheet.dart';
 import '../widgets/ui.dart';
 import 'archive_screen.dart';
-import 'progress_text.dart';
 import 'friends_screen.dart';
 import 'journey_screen.dart';
 import 'saved_screen.dart';
@@ -266,9 +262,6 @@ class ProfileScreen extends StatelessWidget {
           ],
           const SizedBox(height: 16),
           _RecordLine(app: app),
-          const SizedBox(height: 18),
-          _Path(app: app),
-          _WeekRecap(app: app),
           // Under the reader's own record and above everything else: the
           // offer is about the record, so it reads as the next thing to say
           // rather than as the loudest thing on the screen. It is also the
@@ -352,18 +345,12 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: 10),
             _ShareRecord(app: app),
           ],
-          if (app.trend != null) ...[
-            const SizedBox(height: 22),
-            Eyebrow(context.l10n.isTheGapClosing),
-            const SizedBox(height: 11),
-            _TrendPanel(app: app),
-          ],
-          if (app.masteryByWeakness.isNotEmpty) ...[
-            const SizedBox(height: 22),
-            Eyebrow(context.l10n.movesYouKeepMissing),
-            const SizedBox(height: 11),
-            _Mastery(app: app),
-          ],
+          // How well you know yourself is the one measurement kept here.
+          // Everything else the app counts — the level, the moves you keep
+          // missing, the week in questions, whether the gap is closing —
+          // is the journey, one button away.
+          const SizedBox(height: 22),
+          _JourneyButton(app: app),
           const SizedBox(height: 22),
           Eyebrow(context.l10n.dailyNudge),
           const SizedBox(height: 11),
@@ -1034,135 +1021,6 @@ class _ThemePicker extends StatelessWidget {
   }
 }
 
-/// How the reader is doing on each principle, weakest first.
-///
-/// This is the readout the evidence points at. Naming the move you missed,
-/// and showing your own record on it, is the part of debiasing training that
-/// carried to a real decision months later (Sellier, Scopelliti & Morewedge,
-/// 2019). Knowing you got card seven wrong is worth nothing by comparison.
-class _Mastery extends StatelessWidget {
-  final AppState app;
-  const _Mastery({required this.app});
-
-  @override
-  Widget build(BuildContext context) {
-    // The three you are worst at are the ones worth acting on, and they are
-    // free: a reader has to see the measurement before paying to keep it.
-    // What Astute+ adds is the rest of the board.
-    final all = app.masteryByWeakness;
-    final rows = app.isPlus ? all : all.take(3).toList();
-    final hidden = all.length - rows.length;
-
-    return PaperCard(
-      padding: const EdgeInsets.fromLTRB(18, 16, 18, 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ...rows.indexed.map((entry) {
-            final m = entry.$2;
-            final last = entry.$1 == rows.length - 1;
-            return Padding(
-              padding: EdgeInsets.only(bottom: last ? 6 : 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          m.principle.label,
-                          style: AppText.body(
-                            size: 14,
-                            weight: FontWeight.w600,
-                            color: context.p.ink,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        '${m.right}/${m.met}',
-                        style: AppText.body(
-                          size: 13,
-                          weight: FontWeight.w600,
-                          color: m.isWeak
-                              ? context.p.alert
-                              : context.p.inkMuted,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 3),
-                  Text(
-                    m.principle.oneLine,
-                    style: AppText.body(
-                      size: 12.5,
-                      height: 1.4,
-                      color: context.p.inkMuted,
-                    ),
-                  ),
-                  const SizedBox(height: 7),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(999),
-                    child: LinearProgressIndicator(
-                      value: m.share,
-                      minHeight: 5,
-                      backgroundColor: context.p.line,
-                      valueColor: AlwaysStoppedAnimation(
-                        m.isWeak ? context.p.alert : context.p.inverse,
-                      ),
-                    ),
-                  ),
-                  if (m.met < m.contexts) ...[
-                    const SizedBox(height: 5),
-                    Text(
-                      '${m.contexts - m.met} more '
-                      '${m.contexts - m.met == 1 ? 'context' : 'contexts'} '
-                      'of this to come',
-                      style: AppText.body(
-                        size: 11.5,
-                        color: context.p.inkFaint,
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            );
-          }),
-          if (hidden > 0)
-            Semantics(
-              button: true,
-              label: context.l10n.seeEveryPrincipleWithPlus,
-              child: GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () =>
-                    requirePlus(context, app, () {}, source: 'principles'),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 2, bottom: 8),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          '$hidden more '
-                          '${hidden == 1 ? 'principle' : 'principles'} '
-                          'being tracked',
-                          style: AppText.body(
-                            size: 13.5,
-                            weight: FontWeight.w600,
-                            color: context.p.inkMuted,
-                          ),
-                        ),
-                      ),
-                      const PlusLock(locked: true),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
 /// The one thing this app makes that no other daily-learning app holds: a
 /// number about the reader. It sits directly under the calibration rows, so
 /// it is offered at the moment the number has just been read.
@@ -1183,167 +1041,6 @@ class _ShareRecord extends StatelessWidget {
         color: context.p.onInverse,
       ),
       onPressed: () => showRecordShareSheet(context, app),
-    );
-  }
-}
-
-/// Whether the reader is actually getting better — the one question the
-/// subscription is sold on, so it has to exist before it is sold.
-///
-/// Free readers see that the answer is being kept and how many calls it
-/// rests on; the number itself is what Astute+ opens.
-class _TrendPanel extends StatelessWidget {
-  final AppState app;
-  const _TrendPanel({required this.app});
-
-  @override
-  Widget build(BuildContext context) {
-    final t = app.trend!;
-    final locked = !app.isPlus;
-
-    return PaperCard(
-      padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  locked
-                      ? context.l10n.lastCallsAgainstFirst(t.window)
-                      : t.isMoving
-                      ? (t.isImproving
-                            ? context.l10n.closedByPoints(
-                                t.closedBy.abs().round(),
-                              )
-                            : context.l10n.openedByPoints(
-                                t.closedBy.abs().round(),
-                              ))
-                      : context.l10n.holdingSteady,
-                  style: AppText.display(
-                    size: 18,
-                    weight: FontWeight.w600,
-                    height: 1.2,
-                    spacing: -0.5,
-                    color: context.p.ink,
-                  ),
-                ),
-              ),
-              PlusLock(locked: locked),
-            ],
-          ),
-          const SizedBox(height: 10),
-          if (locked)
-            Text(
-              context.l10n.measurementRunningPlus,
-              style: AppText.body(
-                size: 13,
-                height: 1.45,
-                color: context.p.inkMuted,
-              ),
-            )
-          else ...[
-            _TrendRow(
-              label: context.l10n.firstN(t.window),
-              gap: t.early,
-              muted: true,
-            ),
-            const SizedBox(height: 8),
-            _TrendRow(
-              label: context.l10n.lastN(t.window),
-              gap: t.recent,
-              muted: false,
-            ),
-            const SizedBox(height: 11),
-            Text(
-              t.isMoving
-                  ? (t.isImproving
-                        ? context.l10n.trackingMoreClosely
-                        : context.l10n.distanceHasGrown)
-                  : context.l10n.noRealMovementYet,
-              style: AppText.body(
-                size: 12.5,
-                height: 1.45,
-                color: context.p.inkMuted,
-              ),
-            ),
-          ],
-          if (locked) ...[
-            const SizedBox(height: 12),
-            ChunkyButton(
-              label: context.l10n.seeWhichWay,
-              height: 46,
-              fill: context.p.inverse,
-              ink: context.p.onInverse,
-              onPressed: () =>
-                  requirePlus(context, app, () {}, source: 'calibration'),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class _TrendRow extends StatelessWidget {
-  final String label;
-  final double gap;
-  final bool muted;
-  const _TrendRow({
-    required this.label,
-    required this.gap,
-    required this.muted,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final points = gap.abs().round();
-    final bool over = gap >= 0;
-    return Row(
-      children: [
-        SizedBox(
-          width: 74,
-          child: Text(
-            label,
-            style: AppText.body(
-              size: 13,
-              weight: FontWeight.w500,
-              color: context.p.inkMuted,
-            ),
-          ),
-        ),
-        Expanded(
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(999),
-            child: LinearProgressIndicator(
-              // Fills as the reader gets closer, not as they get further
-              // out: a long bar has to mean the good thing. 30 points out is
-              // a wide miss, and past that the bar is simply empty rather
-              // than pretending to more resolution.
-              value: (1 - points / 30).clamp(0.0, 1.0),
-              minHeight: 6,
-              backgroundColor: context.p.line,
-              valueColor: AlwaysStoppedAnimation(
-                muted ? context.p.lineStrong : context.p.inverse,
-              ),
-            ),
-          ),
-        ),
-        const SizedBox(width: 10),
-        Text(
-          points == 0
-              ? context.l10n.spotOn
-              : over
-              ? context.l10n.pointsOver(points)
-              : context.l10n.pointsUnder(points),
-          style: AppText.body(
-            size: 12.5,
-            weight: FontWeight.w600,
-            color: context.p.ink,
-          ),
-        ),
-      ],
     );
   }
 }
@@ -1558,142 +1255,6 @@ class _Headline extends StatelessWidget {
   }
 }
 
-/// The way up, as a ladder of what the reader can do rather than a
-/// syllabus of what they have covered.
-///
-/// The five cards a day are mixed on purpose, so a path made of chapters —
-/// fifteen cards on this, then fifteen on that — would have to break the
-/// deck to exist. This one does not care what the cards are about: every
-/// rung is a claim about the reader, and any five at all carry them up it.
-class _Path extends StatelessWidget {
-  const _Path({required this.app});
-
-  final AppState app;
-
-  @override
-  Widget build(BuildContext context) {
-    final standing = app.standing;
-    final Rung rung = standing.rung;
-    final Rung? next = standing.next;
-    final String? step = stepText(context, standing);
-
-    // The card is also the way into the journey it is a moment of — and
-    // the journey is Astute+, so on the free plan it is the paywall, with
-    // the lock on the card saying so first.
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: () => requirePlus(
-        context,
-        app,
-        () => Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (routeContext) => JourneyScreen(
-              app: app,
-              onBack: () => Navigator.of(routeContext).pop(),
-            ),
-          ),
-        ),
-        source: 'journey',
-      ),
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(16, 14, 16, 15),
-        decoration: BoxDecoration(
-          color: context.p.surfaceRaised,
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: context.p.line),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        rungName(context, rung),
-                        style: AppText.display(
-                          size: 21,
-                          weight: FontWeight.w600,
-                          height: 1.1,
-                          spacing: -0.5,
-                          color: context.p.ink,
-                        ),
-                      ),
-                      const SizedBox(height: 3),
-                      Text(
-                        rungClaim(context, rung),
-                        style: AppText.body(
-                          size: 13,
-                          height: 1.35,
-                          color: context.p.inkMuted,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      context.l10n.rungOfTotal(standing.at + 1, kRungs.length),
-                      style: AppText.label(
-                        size: 11,
-                        weight: FontWeight.w700,
-                        spacing: 1,
-                        color: context.p.ink.withValues(alpha: 0.32),
-                      ),
-                    ),
-                    if (!app.isPlus) ...[
-                      const SizedBox(height: 6),
-                      const PlusLock(locked: true),
-                    ],
-                  ],
-                ),
-              ],
-            ),
-            if (next != null) ...[
-              const SizedBox(height: 14),
-              // One bar, held to the least finished of the things the next
-              // rung asks for, so it never runs ahead of what is actually in
-              // the way.
-              ClipRRect(
-                borderRadius: BorderRadius.circular(999),
-                child: SizedBox(
-                  height: 5,
-                  child: Stack(
-                    children: [
-                      Container(color: context.p.ink.withValues(alpha: 0.09)),
-                      FractionallySizedBox(
-                        widthFactor: standing.toNext.clamp(0.02, 1.0),
-                        child: Container(color: context.p.ink),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                step == null
-                    ? context.l10n.nextRung(rungName(context, next))
-                    : context.l10n.stepThenRung(step, rungName(context, next)),
-                style: AppText.body(
-                  size: 12.5,
-                  height: 1.35,
-                  color: context.p.ink.withValues(alpha: 0.55),
-                ),
-              ),
-            ],
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 /// The rest of the numbers, on one line rather than in a row of boxes.
 class _RecordLine extends StatelessWidget {
   const _RecordLine({required this.app});
@@ -1722,106 +1283,83 @@ class _RecordLine extends StatelessWidget {
   }
 }
 
-/// The week, told back as the questions it left the reader with.
-///
-/// Every card ends on one question to carry into the day. Seven days of
-/// them, laid side by side, are the record of what the reader has been
-/// thinking about rather than how much they read — the part of a habit a
-/// person would recognise as their own. Free readers see the first; the
-/// rest of the week is Plus.
-class _WeekRecap extends StatelessWidget {
+/// The way into the journey: the level, the moves you keep missing, the
+/// week in questions and every other number the app keeps about the reader,
+/// on a screen of their own. The journey is Astute+, so on the free plan the
+/// button carries the lock and opens the plans instead.
+class _JourneyButton extends StatelessWidget {
+  const _JourneyButton({required this.app});
+
   final AppState app;
-
-  const _WeekRecap({required this.app});
-
-  /// The asks of the cards read in the last seven days, newest first.
-  static List<Pill> weekAsks(AppState app, DateTime now) {
-    final out = <Pill>[];
-    for (int back = 0; back < 7; back++) {
-      final day = now.subtract(Duration(days: back));
-      for (final id in app.deckHistory[dateKey(day)] ?? const <String>[]) {
-        final Pill? p = pillById(id);
-        if (p != null &&
-            p.ask.isNotEmpty &&
-            app.seenIds.contains(id) &&
-            !out.contains(p)) {
-          out.add(p);
-        }
-      }
-    }
-    return out;
-  }
 
   @override
   Widget build(BuildContext context) {
-    final List<Pill> asks = weekAsks(app, DateTime.now());
-    if (asks.isEmpty) return const SizedBox.shrink();
-    final Palette p = context.p;
-    final List<Pill> shown = app.isPlus ? asks.take(7).toList() : [asks.first];
-    final int locked = asks.length - shown.length;
-    return Padding(
-      key: const ValueKey('week-recap'),
-      padding: const EdgeInsets.only(top: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Eyebrow(context.l10n.weekRecapCaps),
-          const SizedBox(height: 6),
-          Text(
-            context.l10n.weekRecapLine,
-            style: AppText.body(size: 12.5, color: p.inkMuted),
-          ),
-          const SizedBox(height: 12),
-          for (final pill in shown)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 3,
-                    height: 38,
-                    margin: const EdgeInsets.only(right: 12, top: 2),
-                    decoration: BoxDecoration(
-                      color: pill.color,
-                      borderRadius: BorderRadius.circular(2),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      pill.ask,
-                      style: AppText.display(size: 15.5, color: p.ink),
-                    ),
-                  ),
-                ],
+    final bool locked = !app.isPlus;
+    return Semantics(
+      button: true,
+      child: GestureDetector(
+        key: const ValueKey('profile-journey'),
+        behavior: HitTestBehavior.opaque,
+        onTap: () => requirePlus(
+          context,
+          app,
+          () => Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (routeContext) => JourneyScreen(
+                app: app,
+                onBack: () => Navigator.of(routeContext).pop(),
               ),
             ),
-          if (locked > 0)
-            GestureDetector(
-              key: const ValueKey('week-recap-more'),
-              behavior: HitTestBehavior.opaque,
-              onTap: () => requirePlus(context, app, () {}, source: 'recap'),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 2),
-                child: Row(
+          ),
+          source: 'journey',
+        ),
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(18, 16, 16, 16),
+          decoration: BoxDecoration(
+            color: context.p.surfaceRaised,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: context.p.line),
+          ),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.lock_outline, size: 15, color: p.link),
-                    const SizedBox(width: 6),
-                    Expanded(
-                      child: Text(
-                        context.l10n.weekRecapMore(locked),
-                        style: AppText.body(
-                          size: 13,
-                          weight: FontWeight.w600,
-                          color: p.link,
-                        ),
+                    Text(
+                      context.l10n.yourJourney,
+                      style: AppText.display(
+                        size: 21,
+                        weight: FontWeight.w600,
+                        height: 1.1,
+                        spacing: -0.5,
+                        color: context.p.ink,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      context.l10n.journeyButtonLine,
+                      style: AppText.body(
+                        size: 13,
+                        height: 1.35,
+                        color: context.p.inkMuted,
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-        ],
+              const SizedBox(width: 12),
+              if (locked)
+                const PlusLock(locked: true)
+              else
+                Icon(
+                  Icons.chevron_right_rounded,
+                  size: 22,
+                  color: context.p.inkFaint,
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }

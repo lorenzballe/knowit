@@ -1,42 +1,32 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/l10n.dart';
 import '../theme.dart';
 import '../widgets/ui.dart';
 
-const _steps = [
-  (
-    n: '01',
-    title: 'A topic comes up',
-    sub:
-        'Rotated from the twelve you picked, weighted so you never get the '
-        'same one twice in a day.',
-  ),
-  (
-    n: '02',
-    title: 'The model drafts a pill',
-    sub:
-        'One question, one answer under 60 words, and the one move that '
-        'changes how you think about it.',
-  ),
-  (
-    n: '03',
-    title: 'It gets checked against a source',
-    sub: 'Every claim is matched to a public reference. No match, no pill.',
-  ),
-  (
-    n: '04',
-    title: 'You get five at 08:30',
-    sub: 'Written the same morning. Nothing recycled from yesterday.',
-  ),
-];
-
-/// The disclosure screen — says up front that the pills are model-written and
-/// lays out the pipeline.
+/// The disclosure screen — says up front that the cards are model-written,
+/// and how one reaches the reader.
+///
+/// Every line here is a claim about how the app works, so each has to stay
+/// true: the cards are written ahead into a bank, not the same morning;
+/// each names its source and is read by a second model before it ships;
+/// the day deals five the reader has not read; enough readers calling one
+/// untrue takes it out of the deal until a person has checked it
+/// (functions/src/scorecard.ts); and the sources are checked again each
+/// month. It used to promise a card drafted on the morning it was read and
+/// "the twelve you picked", which stopped being so long ago.
 class HowScreen extends StatelessWidget {
   const HowScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l = context.l10n;
+    final steps = [
+      (n: '01', title: l.howStep1Title, sub: l.howStep1Line),
+      (n: '02', title: l.howStep2Title, sub: l.howStep2Line),
+      (n: '03', title: l.howStep3Title, sub: l.howStep3Line),
+      (n: '04', title: l.howStep4Title, sub: l.howStep4Line),
+    ];
     return ScreenView(
       name: 'how',
       child: Scaffold(
@@ -51,7 +41,7 @@ class HowScreen extends StatelessWidget {
               ),
               const SizedBox(height: 22),
               Text(
-                'Every pill here is written by a model.',
+                l.howTitle,
                 style: AppText.display(
                   size: 31,
                   weight: FontWeight.w700,
@@ -62,8 +52,7 @@ class HowScreen extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                "We'd rather say it up front than have you find out. "
-                'Here is the whole pipeline.',
+                l.howIntro,
                 style: AppText.body(
                   size: 14.5,
                   height: 1.5,
@@ -71,8 +60,8 @@ class HowScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 22),
-              ..._steps.map(
-                (s) => Container(
+              for (final s in steps)
+                Container(
                   padding: const EdgeInsets.symmetric(vertical: 17),
                   decoration: BoxDecoration(
                     border: Border(top: BorderSide(color: context.p.line)),
@@ -117,7 +106,6 @@ class HowScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-              ),
               const SizedBox(height: 8),
               Container(
                 padding: const EdgeInsets.all(19),
@@ -129,7 +117,7 @@ class HowScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Found something wrong?',
+                      l.howReportTitle,
                       style: AppText.body(
                         size: 15,
                         weight: FontWeight.w600,
@@ -139,8 +127,7 @@ class HowScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Report any pill and it gets pulled from rotation until '
-                      'a human checks it.',
+                      l.howReportLine,
                       style: AppText.body(
                         size: 13,
                         height: 1.45,
@@ -152,7 +139,7 @@ class HowScreen extends StatelessWidget {
               ),
               const SizedBox(height: 22),
               Text(
-                'Model and source list updated monthly.',
+                l.howFoot,
                 textAlign: TextAlign.center,
                 style: AppText.body(
                   size: 11.5,

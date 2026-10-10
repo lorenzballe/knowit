@@ -88,10 +88,10 @@ class AppLocalizationsPl extends AppLocalizations {
   String get removeFromSaved => 'Usuń z zachowanych';
 
   @override
-  String get saveThisPill => 'Zachowaj tę pigułkę';
+  String get saveThisPill => 'Zachowaj tę kartę';
 
   @override
-  String get shareThisPill => 'Udostępnij tę pigułkę';
+  String get shareThisPill => 'Udostępnij tę kartę';
 
   @override
   String cardOf(int k, int n) {
@@ -235,7 +235,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get noPillsMatchFilter =>
-      'Żadna pigułka nie pasuje jeszcze do tego filtra.';
+      'Żadna karta nie pasuje jeszcze do tego filtra.';
 
   @override
   String nothingForTryTopic(String query) {
@@ -415,7 +415,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get signOutBody =>
-      'Twoja seria, zachowane pigułki i historia zostają na koncie. To usuwa je z tego urządzenia.';
+      'Twoja seria, zachowane karty i historia zostają na koncie. To usuwa je z tego urządzenia.';
 
   @override
   String get deleteAccount => 'Usuń konto';
@@ -461,7 +461,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get startOverBody =>
-      'Usuwa wszystko z tego urządzenia — serię, zachowane pigułki, odpowiedzi, historię ocen, tematy i plan — i otwiera wprowadzenie od nowa.';
+      'Usuwa wszystko z tego urządzenia — serię, zachowane karty, odpowiedzi, historię ocen, tematy i plan — i otwiera wprowadzenie od nowa.';
 
   @override
   String get wipeIt => 'Usuń';
@@ -491,6 +491,10 @@ class AppLocalizationsPl extends AppLocalizations {
   String get howWellYouKnowYourself => 'Jak dobrze znasz siebie';
 
   @override
+  String get journeyButtonLine =>
+      'Twój poziom, ruchy, które wciąż ci umykają, twój tydzień w pytaniach';
+
+  @override
   String get isTheGapClosing => 'Czy luka się domyka?';
 
   @override
@@ -505,8 +509,7 @@ class AppLocalizationsPl extends AppLocalizations {
   }
 
   @override
-  String get yourFivePillsBeforeCoffee =>
-      'Twoje 5 pigułek, przed pierwszą kawą.';
+  String get yourFivePillsBeforeCoffee => 'Twoje 5 kart, przed pierwszą kawą.';
 
   @override
   String get browserOnlySpeaksOpen =>
@@ -537,7 +540,52 @@ class AppLocalizationsPl extends AppLocalizations {
   String get manageSubscription => 'Zarządzaj subskrypcją';
 
   @override
-  String get howPillsAreWritten => 'Jak powstają pigułki';
+  String get howPillsAreWritten => 'Jak powstają karty';
+
+  @override
+  String get howTitle => 'Każdą kartę tutaj pisze model AI.';
+
+  @override
+  String get howIntro =>
+      'Wolimy powiedzieć to od razu, niż żebyś sam to odkrył. Oto jak karta do ciebie trafia.';
+
+  @override
+  String get howStep1Title => 'Napisana wcześniej, przez model';
+
+  @override
+  String get howStep1Line =>
+      'Każda karta powstaje według jednego zadania: pytanie warte zadania, odpowiedź, która mówi dlaczego, i jeden ruch do ponownego użycia.';
+
+  @override
+  String get howStep2Title => 'Sprawdzona ze źródłem';
+
+  @override
+  String get howStep2Line =>
+      'Każda karta podaje, skąd pochodzi, a drugi model czyta ją jako krytyk, zanim się ukaże. To, czego nie da się poprzeć, wylatuje.';
+
+  @override
+  String get howStep3Title => 'Pięć, rozdawanych co rano';
+
+  @override
+  String get howStep3Line =>
+      'Z tematów, które wybrałeś, i nigdy taka, którą już czytałeś.';
+
+  @override
+  String get howStep4Title => 'Czytelnicy pilnują uczciwości';
+
+  @override
+  String get howStep4Line =>
+      'Gdy wystarczająco wielu czytelników uzna kartę za błędną, przestaje być rozdawana, dopóki nie sprawdzi jej człowiek.';
+
+  @override
+  String get howReportTitle => 'Znalazłeś błąd?';
+
+  @override
+  String get howReportLine =>
+      'Dotknij flagi obok źródła karty, aby ją zgłosić.';
+
+  @override
+  String get howFoot => 'Źródła są sprawdzane ponownie co miesiąc.';
 
   @override
   String get signingIn => 'Logowanie…';
@@ -714,10 +762,10 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: 'pigułek przeczytanych',
-      many: 'pigułek przeczytanych',
-      few: 'pigułki przeczytane',
-      one: 'pigułka przeczytana',
+      other: 'kart przeczytanych',
+      many: 'kart przeczytanych',
+      few: 'karty przeczytane',
+      one: 'karta przeczytana',
     );
     return '$_temp0';
   }
@@ -727,10 +775,10 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n pigułek przeczytanych',
-      many: '$n pigułek przeczytanych',
-      few: '$n pigułki przeczytane',
-      one: '1 pigułka przeczytana',
+      other: '$n kart przeczytanych',
+      many: '$n kart przeczytanych',
+      few: '$n karty przeczytane',
+      one: '1 karta przeczytana',
     );
     return '$_temp0';
   }
@@ -806,10 +854,10 @@ class AppLocalizationsPl extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       n,
       locale: localeName,
-      other: '$n pigułek zostało nieprzeczytanych',
-      many: '$n pigułek zostało nieprzeczytanych',
-      few: '$n pigułki zostały nieprzeczytane',
-      one: '1 pigułka została nieprzeczytana',
+      other: '$n kart zostało nieprzeczytanych',
+      many: '$n kart zostało nieprzeczytanych',
+      few: '$n karty zostały nieprzeczytane',
+      one: '1 karta została nieprzeczytana',
     );
     return '$_temp0';
   }
@@ -862,7 +910,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get fivePillsADayPick =>
-      'Pięć pigułek dziennie, pisanych świeżo każdego ranka. Wybierz tematy do miksu — możesz je później zmienić.';
+      'Pięć kart dziennie, pisanych świeżo każdego ranka. Wybierz tematy do miksu — możesz je później zmienić.';
 
   @override
   String nSelected(int n) {
@@ -892,7 +940,7 @@ class AppLocalizationsPl extends AppLocalizations {
       'Pięć mądrych rzeczy dziennie, gotowych do użycia w rozmowie';
 
   @override
-  String get introTopicsTitle => 'Osiemnaście tematów, pięć pigułek';
+  String get introTopicsTitle => 'Dziewiętnaście tematów, pięć kart';
 
   @override
   String get introTopicsLine =>
@@ -903,7 +951,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get introQuestionLine =>
-      'Każda pigułka niesie to jedno zdanie, które warto powiedzieć na głos.';
+      'Każda karta niesie to jedno zdanie, które warto powiedzieć na głos.';
 
   @override
   String get introMixTitle => 'Ty wybierasz miks';
@@ -1336,7 +1384,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get nothingLikedYet => 'Jeszcze nic polubionego';
 
   @override
-  String get likeThisPill => 'Polub tę pigułkę';
+  String get likeThisPill => 'Polub tę kartę';
 
   @override
   String get removeFromLiked => 'Usuń z polubionych';
@@ -1356,7 +1404,7 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get tapTheBookmarkLandsHere =>
-      'Dotknij zakładki na pigułce, a trafi tutaj — te, które zmieniły twoje myślenie, zachowane.';
+      'Dotknij zakładki na karcie, a trafi tutaj — te, które zmieniły twoje myślenie, zachowane.';
 
   @override
   String get nudgeTitle => 'Twoja piątka jest gotowa';
