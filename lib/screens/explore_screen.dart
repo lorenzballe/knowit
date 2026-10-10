@@ -997,10 +997,26 @@ class ExploreScreenState extends State<ExploreScreen> {
         shelf: t,
         isRead: read,
         onOpen: _open,
+        answerOf: (p) => widget.app.answerFor(p.id),
+        onLean: _lean,
         onShown: (p) => _seen('signature-${t.theme.name}', p),
       ),
     ),
   ];
+
+  /// A side leant to on the Pick a side shelf: the card's answer, the side
+  /// as the card's own buttons record it and how sure as the card asks it
+  /// of a question with a right answer, and the card counted as read, like
+  /// any answer given on a shelf.
+  Future<void> _lean(Pill pill, int side, int confidence) async {
+    Analytics.capture('explore leaned', {
+      'pill_id': pill.id,
+      'side': side,
+      'confidence': confidence,
+    });
+    await widget.app.recordAnswer(pill.id, '$side', confidence: confidence);
+    await widget.app.markReadElsewhere(pill.id);
+  }
 
   /// The third shelf: what it is called, why, and whose cards are on it.
   ///
