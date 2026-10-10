@@ -493,6 +493,10 @@ class AppLocalizationsRu extends AppLocalizations {
   String get howWellYouKnowYourself => 'Насколько ты себя знаешь';
 
   @override
+  String get journeyButtonLine =>
+      'Твой уровень, ходы, которые ты продолжаешь упускать, твоя неделя в вопросах';
+
+  @override
   String get isTheGapClosing => 'Разрыв сокращается?';
 
   @override

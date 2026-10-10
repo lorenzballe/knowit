@@ -468,6 +468,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get howWellYouKnowYourself => '你有多了解自己';
 
   @override
+  String get journeyButtonLine => '你的等级、你一再错过的招，以及用问题回顾的一周';
+
+  @override
   String get isTheGapClosing => '差距在缩小吗？';
 
   @override

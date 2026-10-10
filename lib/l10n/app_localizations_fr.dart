@@ -480,6 +480,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get howWellYouKnowYourself => 'À quel point tu te connais';
 
   @override
+  String get journeyButtonLine =>
+      'Ton niveau, les coups que tu rates encore, ta semaine en questions';
+
+  @override
   String get isTheGapClosing => 'L\'écart se referme-t-il ?';
 
   @override

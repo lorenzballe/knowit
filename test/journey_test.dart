@@ -8,6 +8,7 @@ import 'package:astuto/data/pill_bank.dart';
 import 'package:astuto/data/pills_repository.dart';
 import 'package:astuto/l10n/app_localizations.dart';
 import 'package:astuto/models/pill.dart';
+import 'package:astuto/screens/deck_viewer_screen.dart';
 import 'package:astuto/screens/journey_screen.dart';
 import 'package:astuto/state/app_state.dart';
 import 'package:astuto/state/journey_record.dart';
@@ -339,6 +340,69 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.textContaining('you earned 12 points.'), findsOneWidget);
       expect(find.text('12 cards'), findsOneWidget);
+    });
+
+    testWidgets('the moves you keep missing and the week in questions '
+        'moved here from the profile, each question a tap from its card', (
+      tester,
+    ) async {
+      final DateTime now = DateTime.now();
+      final String today = dateKey(now);
+      final String yesterday = dateKey(
+        DateTime(now.year, now.month, now.day - 1),
+      );
+      // A card answered wrong: its move is one the reader missed.
+      final Pill missed = PillBank.cards.firstWhere(
+        (p) =>
+            p.isGraded &&
+            p.principle.isReal &&
+            !p.challenge.accepts('0') &&
+            p.challenge.accepts('1'),
+      );
+      final List<Pill> read = PillBank.cards
+          .where((p) => p.ask.isNotEmpty)
+          .take(3)
+          .toList();
+      final app = await _app({
+        'knowit.onboarded': true,
+        'knowit.plus': true,
+        'knowit.seenIds': [for (final p in read) p.id],
+        // Yesterday's: today's is the day the app deals on opening.
+        'knowit.deckHistory': jsonEncode({
+          yesterday: [for (final p in read) p.id],
+        }),
+        'knowit.answersJson': jsonEncode({
+          missed.id: {'r': '0', 'd': today},
+        }),
+      });
+      expect(app.masteryByWeakness, isNotEmpty);
+      await pump(tester, app);
+      final Finder list = find.byType(Scrollable).first;
+
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('journey-missing')),
+        300,
+        scrollable: list,
+      );
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey('journey-missing')),
+          matching: find.text(missed.principle.label),
+        ),
+        findsOneWidget,
+      );
+
+      await tester.scrollUntilVisible(
+        find.text(read.last.ask),
+        300,
+        scrollable: list,
+      );
+      for (final p in read) {
+        expect(find.text(p.ask), findsOneWidget);
+      }
+      await tester.tap(find.text(read.first.ask));
+      await tester.pumpAndSettle();
+      expect(find.byType(DeckViewerScreen), findsOneWidget);
     });
 
     testWidgets('before there is anything to say, dashes and why', (

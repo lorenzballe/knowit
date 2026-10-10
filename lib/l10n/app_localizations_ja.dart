@@ -470,6 +470,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get howWellYouKnowYourself => '自分をどれだけ知っているか';
 
   @override
+  String get journeyButtonLine => 'あなたのレベル、何度も見逃している手、問いで振り返る一週間';
+
+  @override
   String get isTheGapClosing => '差は縮まっている？';
 
   @override

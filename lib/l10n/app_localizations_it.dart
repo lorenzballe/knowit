@@ -478,6 +478,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get howWellYouKnowYourself => 'Quanto ti conosci';
 
   @override
+  String get journeyButtonLine =>
+      'Il tuo livello, le mosse che continui a mancare, la tua settimana in domande';
+
+  @override
   String get isTheGapClosing => 'Il divario si sta chiudendo?';
 
   @override

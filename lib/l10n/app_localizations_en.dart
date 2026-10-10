@@ -476,6 +476,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get howWellYouKnowYourself => 'How well you know yourself';
 
   @override
+  String get journeyButtonLine =>
+      'Your level, the moves you keep missing, your week in questions';
+
+  @override
   String get isTheGapClosing => 'Is the gap closing?';
 
   @override

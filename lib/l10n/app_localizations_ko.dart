@@ -471,6 +471,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get howWellYouKnowYourself => '나를 얼마나 아는가';
 
   @override
+  String get journeyButtonLine => '나의 레벨, 계속 놓치는 수, 질문으로 돌아보는 한 주';
+
+  @override
   String get isTheGapClosing => '간격이 좁아지고 있나요?';
 
   @override

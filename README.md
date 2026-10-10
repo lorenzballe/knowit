@@ -122,9 +122,9 @@ repaints at once, and the status bar follows it.
 genres under it, which is where the onboarding ends), Today with
 the card stack and, once the five are done, the shelf, Explore (shelves of
 cards nobody dealt you, with a search over the whole pool), Saved with its
-empty state, Profile (record, appearance, topics, coverage, calibration,
-daily nudge), the come-back screen after a lapsed streak, and the disclosure
-page on how pills are written.
+empty state, Profile (record, appearance, topics, how well you know
+yourself, the button into the journey, daily nudge), the come-back screen
+after a lapsed streak, and the disclosure page on how pills are written.
 
 **Astute+** — three things, all delivered, and everything else the same on
 both plans. **Five cards a day, all yours**: on the free plan two of the
@@ -1251,9 +1251,10 @@ is the one people already have an answer for.
 deck brings back a *different instance of the same principle* where one
 exists. Repeating the identical card tests whether you remember that card.
 
-The profile reports **the moves you keep missing** — per principle, across
-every context of it you have met — because naming the move and showing your
-own record on it is the part that carried to a real decision.
+The journey reports **the moves you keep missing** — per principle, across
+every context of it you have met, only the ones missed at least once —
+because naming the move and showing your own record on it is the part that
+carried to a real decision.
 
 ## How a card asks
 
@@ -1348,9 +1349,13 @@ incentives — would have to break the deck to exist. Instead each rung is a
 claim about the reader: *Reading*, *Answering* (you commit before turning
 the card over), *Saying how sure*, *Calibrated* (what you say you know,
 you know), *Holding* (it is still there weeks later), *Sharp*. Any five
-cards at all carry somebody up it. The profile shows the rung, one bar
+cards at all carry somebody up it. The journey shows the rung, one bar
 held to whichever requirement is furthest behind, and the single next
 step — telling somebody four things at once is telling them nothing.
+The profile keeps only how well you know yourself, and a button into the
+journey with the Astute+ lock on it for the free plan: the level, the moves
+you keep missing, whether the gap is closing and the week in questions are
+all the journey's.
 
 **Weeks kept.** Five days out of seven keeps a week, and the record counts
 the weeks in a row. The daily streak is the sharper number and the crueller

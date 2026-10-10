@@ -756,6 +756,12 @@ abstract class AppLocalizations {
   /// **'How well you know yourself'**
   String get howWellYouKnowYourself;
 
+  /// No description provided for @journeyButtonLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Your level, the moves you keep missing, your week in questions'**
+  String get journeyButtonLine;
+
   /// No description provided for @isTheGapClosing.
   ///
   /// In en, this message translates to:

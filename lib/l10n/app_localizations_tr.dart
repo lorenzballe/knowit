@@ -474,6 +474,10 @@ class AppLocalizationsTr extends AppLocalizations {
   String get howWellYouKnowYourself => 'Kendini ne kadar tanıyorsun';
 
   @override
+  String get journeyButtonLine =>
+      'Seviyen, kaçırmaya devam ettiğin hamleler, sorularla haftan';
+
+  @override
   String get isTheGapClosing => 'Aralık kapanıyor mu?';
 
   @override

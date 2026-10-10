@@ -477,6 +477,10 @@ class AppLocalizationsNl extends AppLocalizations {
   String get howWellYouKnowYourself => 'Hoe goed je jezelf kent';
 
   @override
+  String get journeyButtonLine =>
+      'Je niveau, de zetten die je blijft missen, je week in vragen';
+
+  @override
   String get isTheGapClosing => 'Sluit het gat?';
 
   @override
