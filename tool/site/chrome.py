@@ -51,7 +51,7 @@ def header(p, home):
       <a href="/support">Support</a>
     </div>
     <div class="menu-foot">
-      <p>Free on iPhone and Android · 13 languages · No ads</p>
+      <p>Free on iPhone and Android · App in 13 languages · No ads</p>
       <div class="stores small">
         {BADGES}
       </div>
@@ -71,7 +71,7 @@ def footer(p, home):
           <img src="/assets/icon.webp" width="30" height="30" alt="" loading="lazy">
           <span>Astute</span>
         </a>
-        <p>Five cards a day. A little sharper. Free on iPhone and Android, in thirteen languages, with no ads.</p>
+        <p>Five cards a day. A little sharper. Free on iPhone and Android, the app in thirteen languages, and no ads.</p>
         <div class="stores small">
         {BADGES}
         </div>
@@ -98,7 +98,7 @@ def footer(p, home):
     </div>
     <div class="foot-bottom">
       <span>© 2026 TheBaleCompany</span>
-      <span>Available in 13 languages</span>
+      <span>App in 13 languages · cards in English</span>
       <span class="tm">Apple, the Apple logo and App Store are trademarks of Apple Inc. Google Play and the Google Play logo are trademarks of Google LLC.</span>
     </div>
   </div>
