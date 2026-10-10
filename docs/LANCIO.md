@@ -11,7 +11,7 @@
 
 ## Cosa blocca l'uscita negli store, in ordine
 1. **Android non si può pubblicare:** manca la chiave di firma (keystore), manca il flusso di build e caricamento su Play, mancano le impronte SHA in Firebase (senza, l'accesso con Google non funziona).
-2. **Gli strumenti da sviluppatore** (`lib/debug_flags.dart`) sono accesi nelle build: vanno spenti con `--dart-define=DEBUG_TOOLS=false` nelle build per il pubblico. **Già spenti sull'app web pubblica** (`deploy.yml`); su TestFlight restano finché servono a te.
+2. **Gli strumenti da sviluppatore** (`lib/debug_flags.dart`): **su iPhone è fatto.** All'avvio il telefono dice da dove è stata installata l'app: gli strumenti compaiono su TestFlight e nelle build di debug, mai a chi scarica dall'App Store, anche se il binario è lo stesso. Se il telefono non risponde entro 300 ms restano spenti. Attenzione: anche la copia che installano i revisori Apple ha una ricevuta sandbox, quindi la sezione la vedono anche loro. **Su Android** la build per Google Play va fatta con `--dart-define=DEBUG_TOOLS=false` (da mettere nel flusso di Play, punto 1). **Già spenti sull'app web pubblica** (`deploy.yml`), dove `?debug` nell'indirizzo li riaccende per una visita.
 3. **Le schede degli store** (descrizioni, parole chiave, età, privacy, screenshot nelle misure giuste) non ci sono ancora.
 4. **iOS:** il file privacy `PrivacyInfo.xcprivacy` c'è, uno per l'app e uno per il widget: dice gli stessi dati di `site/privacy.html` e perché l'app legge `UserDefaults`. Le risposte al questionario privacy di App Store Connect sono quelle (il "Privacy Report" che Xcode genera dall'archivio le elenca). Da fare una volta il gruppo app `group.com.astuto.app`, la chiave certificato fissa, gli abbonamenti "pronti" e allegati alla versione.
 5. **Rischi in revisione:** il pulsante di accesso con email è visibile ma non funziona; il lavoro notturno delle carte (`cards.yml`) fallisce dal 21 settembre.
@@ -19,9 +19,9 @@
 ## L'ordine dei lavori
 | # | Cosa | Chi | Tempo |
 |---|---|---|---|
-| 1 | Build sicure: strumenti spenti, file privacy iOS, pulsante email nascosto | Claude | ½ giorno |
+| 1 | Build sicure: pulsante email nascosto (fatti: strumenti solo su TestFlight, file privacy iOS) | Claude | ½ giorno |
 | 2 | Portale Apple: gruppo app, chiave certificato, abbonamenti; una build TestFlight provata da capo a fondo | Proprietario, con istruzioni | ½–1 giorno |
-| 3 | Android: keystore nuovo, build e caricamento su Play (traccia interna), SHA in Firebase, modulo "Sicurezza dei dati" | Claude + proprietario per le console | 2–3 giorni |
+| 3 | Android: keystore nuovo, build e caricamento su Play (traccia interna, con `DEBUG_TOOLS=false`), SHA in Firebase, modulo "Sicurezza dei dati" | Claude + proprietario per le console | 2–3 giorni |
 | 4 | Schede degli store: testi, parole chiave, screenshot | Claude (skill `aso-*`, `mk-*`) | 2–3 giorni |
 | 5 | Contenuti: verificare le affermazioni rimaste, riparare `cards.yml` | Claude | 2–4 giorni |
 | 6 | Invio: iOS in revisione, Android prima in test chiuso | Proprietario | — |

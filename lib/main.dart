@@ -63,7 +63,11 @@ TopSeed launchCrowd() => TopSeed(
 Future<void> main() async {
   Analytics.launched();
   WidgetsFlutterBinding.ensureInitialized();
-  readDebugToolsFromAddress(web: kIsWeb);
+  // Settled before anything is built, since the profile and a failed
+  // sign-in both read it. An iPhone release build asks the phone where it
+  // was installed from, and waits for the answer no longer than
+  // kTestFlightWait.
+  await readDebugTools();
   // Never blocks the app: see Cloud.start.
   final Stopwatch cloud = Stopwatch()..start();
   await Cloud.start();
