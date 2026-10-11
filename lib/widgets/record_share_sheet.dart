@@ -10,6 +10,7 @@ import '../theme.dart';
 import '../l10n/l10n.dart';
 import '../utils/share_image.dart';
 import '../utils/share_link.dart';
+import '../utils/share_origin.dart';
 import 'ui.dart';
 
 /// Opens the share sheet for the reader's own track record.
@@ -145,6 +146,7 @@ class _RecordShareSheetState extends State<_RecordShareSheet> {
         bytes,
         'astute-record.png',
         _shareText,
+        origin: mounted ? shareOrigin(context) : null,
       );
       Analytics.capture('record shared', {
         'streak_days': widget.app.streak,

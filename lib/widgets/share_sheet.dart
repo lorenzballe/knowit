@@ -12,6 +12,7 @@ import '../models/pill.dart';
 import '../theme.dart';
 import '../utils/share_image.dart';
 import '../utils/share_link.dart';
+import '../utils/share_origin.dart';
 import 'ui.dart';
 import 'scaled_text.dart';
 
@@ -106,7 +107,12 @@ class _ShareSheetState extends State<_ShareSheet> {
       // in a browser it downloads. It used to copy the text on a phone and
       // say the image was "web-only", which meant the one thing this sheet
       // is for did not work on the one device anybody uses it on.
-      final shared = await shareCardImage(bytes, name, _shareText);
+      final shared = await shareCardImage(
+        bytes,
+        name,
+        _shareText,
+        origin: mounted ? shareOrigin(context) : null,
+      );
       Analytics.capture('pill shared', {
         'pill_id': widget.pill.id,
         'topic': widget.pill.topic,
